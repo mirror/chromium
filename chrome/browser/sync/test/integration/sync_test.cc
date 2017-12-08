@@ -217,6 +217,7 @@ SyncTest::SyncTest(TestType test_type)
     : test_type_(test_type),
       server_type_(SERVER_TYPE_UNDECIDED),
       num_clients_(-1),
+      configuration_refresher_(std::make_unique<ConfigurationRefresher>()),
       use_verifier_(true),
       create_gaia_account_at_runtime_(false) {
   sync_datatype_helper::AssociateWithTest(this);
@@ -642,6 +643,8 @@ void SyncTest::InitializeInvalidations(int index) {
       invalidation_service->DisableSelfNotifications();
     }
     fake_server_invalidation_services_[index] = invalidation_service;
+    configuration_refresher_->Observe(
+        ProfileSyncServiceFactory::GetForProfile(GetProfile(index)));
   } else {
     invalidation::P2PInvalidationService* p2p_invalidation_service =
         static_cast<invalidation::P2PInvalidationService*>(
@@ -777,6 +780,7 @@ void SyncTest::TearDownOnMainThread() {
   invalidation_forwarders_.clear();
   sync_refreshers_.clear();
   fake_server_invalidation_services_.clear();
+  configuration_refresher_.reset();
   clients_.clear();
 }
 
