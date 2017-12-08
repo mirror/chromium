@@ -16,6 +16,24 @@
       "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c3d110_7d5729b7",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-12-08T16:36:21Z",
+      "side": 1,
+      "message": "Thanks!\n\nCan you elaborate more on what the cost of this call is? If it\u0027s only the cost of GURL construction (or only marginally more expensive beyond this), I\u0027m not worried about it. We do this ~once per page load so there will be no measurable performance change to avoiding one GURL copy per page load, and the reduction in code complexity outweighs the special casing. Specifically, there is a code compexity cost in having a UrlNeedsSanitizing method which needs to be in sync with the SanitizeURL method, and we need to weight the pros and cons of this code complexity cost here.\n\nIf this is a real performance concern, you might also consider filing a bug to the various other teams who are using this pattern (a code search for ClearUsername() will show that this pattern is very common). Or we could file a bug against GURL to make it have reasonable cost when ReplaceComponents is a no op. Ideally, it should be easy to use APIs like this - having to know that ReplaceComponents is expensive (when there\u0027s no reason I can think of here why it should be when it\u0027s a no-op) and we should thus optimize every call site is suboptimal and adds complexity that can lead to bugs. Well designed APIs don\u0027t require every caller to special case like this if the need can be avoided in the implementation.",
+      "parentUuid": "340b9705_415b6c68",
+      "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
