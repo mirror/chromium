@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8957c7b5_b9f121b8",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-08T21:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8be27bc2_d4e73607",
+      "revId": "dbb1c91e9e886899a5044b09411cef842ca4b38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "734b7fb9_bfbc7fdb",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "dbb1c91e9e886899a5044b09411cef842ca4b38f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a7cfd3_640cd388",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-08T21:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "734b7fb9_bfbc7fdb",
+      "revId": "dbb1c91e9e886899a5044b09411cef842ca4b38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "94bfd37a_0743ed9d",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-08T21:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f6d1862_7373a133",
+      "revId": "dbb1c91e9e886899a5044b09411cef842ca4b38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dafe6fd_99ce7b91",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f954e34f_ce7107f2",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-08T21:34:39Z",
+      "side": 1,
+      "message": "I see. The document for CheckAndResetTimerErrors() is totally wrong.",
+      "parentUuid": "2dafe6fd_99ce7b91",
+      "revId": "dbb1c91e9e886899a5044b09411cef842ca4b38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dba6b14a_a129af0f",
         "filename": "ui/gl/gl_surface_glx.cc",
         "patchSetId": 11
@@ -84,6 +156,24 @@
       "revId": "dbb1c91e9e886899a5044b09411cef842ca4b38f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951e8dcb_ae130b7d",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-08T21:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba6b14a_a129af0f",
+      "revId": "dbb1c91e9e886899a5044b09411cef842ca4b38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
