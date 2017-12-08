@@ -9,6 +9,15 @@
 
 namespace data_reduction_proxy {
 
+namespace {
+const char* kUsedDataReductionProxyKey = "used_data_reduction_proxy";
+const char* kLofiRequestedKey = "lofi_requested";
+const char* kClientLofiRequestedKey = "client_lofi_requested";
+const char* kLitePageReceivedKey = "lite_page_received";
+const char* kLofiReceivedKey = "lofi_received";
+const char* kEffectiveConnectionTypeKey = "effective_connection_type";
+}  // namespace
+
 const void* const kDataReductionProxyUserDataKey =
     &kDataReductionProxyUserDataKey;
 
@@ -21,6 +30,31 @@ DataReductionProxyData::DataReductionProxyData()
       effective_connection_type_(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN) {}
 
 DataReductionProxyData::~DataReductionProxyData() {}
+
+// Convert from/to a base::Value.
+base::Value DataReductionProxyData::ToValue() {
+  base::Value value(base::Value::Type::DICTIONARY);
+  value.SetKey(kUsedDataReductionProxyKey,
+               base::Value(used_data_reduction_proxy_));
+  value.SetKey(kLofiRequestedKey, base::Value(lofi_requested_));
+  value.SetKey(kClientLofiRequestedKey, base::Value(client_lofi_requested_));
+  value.SetKey(kLitePageReceivedKey, base::Value(lite_page_received_));
+  value.SetKey(kLofiReceivedKey, base::Value(lofi_received_));
+  value.SetKey(kEffectiveConnectionTypeKey,
+               base::Value(effective_connection_type_));
+  return value;
+}
+
+DataReductionProxyData::DataReductionProxyData(const base::Value& value) {
+  used_data_reduction_proxy_ =
+      value.FindKey(kUsedDataReductionProxyKey)->GetBool();
+  lofi_requested_ = value.FindKey(kLofiRequestedKey)->GetBool();
+  client_lofi_requested_ = value.FindKey(kClientLofiRequestedKey)->GetBool();
+  lite_page_received_ = value.FindKey(kLitePageReceivedKey)->GetBool();
+  lofi_received_ = value.FindKey(kLofiReceivedKey)->GetBool();
+  effective_connection_type_ = net::EffectiveConnectionType(
+      value.FindKey(kEffectiveConnectionTypeKey)->GetInt());
+}
 
 std::unique_ptr<DataReductionProxyData> DataReductionProxyData::DeepCopy()
     const {

@@ -62,7 +62,7 @@ class TestNavigationURLLoaderDelegate : public NavigationURLLoaderDelegate {
                          std::unique_ptr<StreamHandle> body,
                          mojo::ScopedDataPipeConsumerHandle consumer_handle,
                          const net::SSLInfo& ssl_info,
-                         std::unique_ptr<NavigationData> navigation_data,
+                         base::Value navigation_data,
                          const GlobalRequestID& request_id,
                          bool is_download,
                          bool is_stream,

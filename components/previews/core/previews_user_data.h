@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/supports_user_data.h"
+#include "base/values.h"
 
 namespace net {
 class URLRequest;
@@ -21,6 +22,10 @@ class PreviewsUserData : public base::SupportsUserData::Data {
  public:
   PreviewsUserData(uint64_t page_id);
   ~PreviewsUserData() override;
+
+  // Convert from/to a base::Value.
+  base::Value ToValue();
+  explicit PreviewsUserData(const base::Value& value);
 
   // Makes a deep copy.
   std::unique_ptr<PreviewsUserData> DeepCopy() const;
