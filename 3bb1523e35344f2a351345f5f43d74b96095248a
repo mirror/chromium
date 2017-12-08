@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "243ce6dd_f9d8066e",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-08T08:20:02Z",
+      "side": 1,
+      "message": "What needs this,?",
+      "revId": "3bb1523e35344f2a351345f5f43d74b96095248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b1ff99_5234f09d",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-08T08:20:02Z",
+      "side": 1,
+      "message": "I don\u0027t see what registration object host has to with this.\n\nthe comment should explain why this can\u0027t die before the call back is invoked.",
+      "revId": "3bb1523e35344f2a351345f5f43d74b96095248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
