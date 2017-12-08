@@ -20,8 +20,8 @@
 #include "storage/browser/test/test_file_system_context.h"
 #include "storage/common/fileapi/file_system_types.h"
 #include "storage/common/fileapi/file_system_util.h"
-#include "storage/common/quota/quota_types.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/quota/storage_type.h"
 #include "url/gurl.h"
 
 using content::AsyncFileTestHelper;
@@ -36,8 +36,8 @@ const char kDummyURL2[] = "http://www.example.com";
 const char kDummyURL3[] = "http://www.bleh";
 
 // Declared to shorten the variable names.
-const storage::StorageType kTemporary = storage::kStorageTypeTemporary;
-const storage::StorageType kPersistent = storage::kStorageTypePersistent;
+const blink::StorageType kTemporary = blink::kStorageTypeTemporary;
+const blink::StorageType kPersistent = blink::kStorageTypePersistent;
 
 }  // namespace
 
@@ -45,7 +45,7 @@ class FileSystemQuotaClientTest : public testing::Test {
  public:
   FileSystemQuotaClientTest()
       : additional_callback_count_(0),
-        deletion_status_(storage::kQuotaStatusUnknown),
+        deletion_status_(blink::kQuotaStatusUnknown),
         weak_factory_(this) {}
 
   void SetUp() override {
@@ -59,7 +59,7 @@ class FileSystemQuotaClientTest : public testing::Test {
     const char* name;
     int64_t size;
     const char* origin_url;
-    storage::StorageType type;
+    blink::StorageType type;
   };
 
  protected:
@@ -69,7 +69,7 @@ class FileSystemQuotaClientTest : public testing::Test {
 
   void GetOriginUsageAsync(FileSystemQuotaClient* quota_client,
                            const std::string& origin_url,
-                           storage::StorageType type) {
+                           blink::StorageType type) {
     quota_client->GetOriginUsage(
         GURL(origin_url), type,
         base::Bind(&FileSystemQuotaClientTest::OnGetUsage,
@@ -78,14 +78,14 @@ class FileSystemQuotaClientTest : public testing::Test {
 
   int64_t GetOriginUsage(FileSystemQuotaClient* quota_client,
                          const std::string& origin_url,
-                         storage::StorageType type) {
+                         blink::StorageType type) {
     GetOriginUsageAsync(quota_client, origin_url, type);
     base::RunLoop().RunUntilIdle();
     return usage_;
   }
 
   const std::set<GURL>& GetOriginsForType(FileSystemQuotaClient* quota_client,
-                                          storage::StorageType type) {
+                                          blink::StorageType type) {
     origins_.clear();
     quota_client->GetOriginsForType(
         type,
@@ -96,7 +96,7 @@ class FileSystemQuotaClientTest : public testing::Test {
   }
 
   const std::set<GURL>& GetOriginsForHost(FileSystemQuotaClient* quota_client,
-                                          storage::StorageType type,
+                                          blink::StorageType type,
                                           const std::string& host) {
     origins_.clear();
     quota_client->GetOriginsForHost(
@@ -109,7 +109,7 @@ class FileSystemQuotaClientTest : public testing::Test {
 
   void RunAdditionalOriginUsageTask(FileSystemQuotaClient* quota_client,
                                     const std::string& origin_url,
-                                    storage::StorageType type) {
+                                    blink::StorageType type) {
     quota_client->GetOriginUsage(
         GURL(origin_url), type,
         base::Bind(&FileSystemQuotaClientTest::OnGetAdditionalUsage,
@@ -118,7 +118,7 @@ class FileSystemQuotaClientTest : public testing::Test {
 
   bool CreateFileSystemDirectory(const base::FilePath& file_path,
                                  const std::string& origin_url,
-                                 storage::StorageType storage_type) {
+                                 blink::StorageType storage_type) {
     storage::FileSystemType type =
         storage::QuotaStorageTypeToFileSystemType(storage_type);
     FileSystemURL url = file_system_context_->CreateCrackedFileSystemURL(
@@ -132,7 +132,7 @@ class FileSystemQuotaClientTest : public testing::Test {
   bool CreateFileSystemFile(const base::FilePath& file_path,
                             int64_t file_size,
                             const std::string& origin_url,
-                            storage::StorageType storage_type) {
+                            blink::StorageType storage_type) {
     if (file_path.empty())
       return false;
 
@@ -182,7 +182,7 @@ class FileSystemQuotaClientTest : public testing::Test {
   int64_t ComputeFilePathsCostForOriginAndType(const TestFile* files,
                                                int num_files,
                                                const std::string& origin_url,
-                                               storage::StorageType type) {
+                                               blink::StorageType type) {
     int64_t file_paths_cost = 0;
     for (int i = 0; i < num_files; i++) {
       if (files[i].type == type &&
@@ -199,8 +199,8 @@ class FileSystemQuotaClientTest : public testing::Test {
 
   void DeleteOriginData(FileSystemQuotaClient* quota_client,
                         const std::string& origin,
-                        storage::StorageType type) {
-    deletion_status_ = storage::kQuotaStatusUnknown;
+                        blink::StorageType type) {
+    deletion_status_ = blink::kQuotaStatusUnknown;
     quota_client->DeleteOriginData(
         GURL(origin), type,
         base::Bind(&FileSystemQuotaClientTest::OnDeleteOrigin,
@@ -208,7 +208,7 @@ class FileSystemQuotaClientTest : public testing::Test {
   }
 
   int64_t usage() const { return usage_; }
-  storage::QuotaStatusCode status() { return deletion_status_; }
+  blink::QuotaStatusCode status() { return deletion_status_; }
   int additional_callback_count() const { return additional_callback_count_; }
   void set_additional_callback_count(int count) {
     additional_callback_count_ = count;
@@ -225,7 +225,7 @@ class FileSystemQuotaClientTest : public testing::Test {
     ++additional_callback_count_;
   }
 
-  void OnDeleteOrigin(storage::QuotaStatusCode status) {
+  void OnDeleteOrigin(blink::QuotaStatusCode status) {
     deletion_status_ = status;
   }
 
@@ -235,7 +235,7 @@ class FileSystemQuotaClientTest : public testing::Test {
   int64_t usage_;
   int additional_callback_count_;
   std::set<GURL> origins_;
-  storage::QuotaStatusCode deletion_status_;
+  blink::QuotaStatusCode deletion_status_;
   base::WeakPtrFactory<FileSystemQuotaClientTest> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(FileSystemQuotaClientTest);
@@ -530,15 +530,15 @@ TEST_F(FileSystemQuotaClientTest, DeleteOriginTest) {
 
   DeleteOriginData(quota_client.get(), "http://foo.com/", kTemporary);
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(storage::kQuotaStatusOk, status());
+  EXPECT_EQ(blink::kQuotaStatusOk, status());
 
   DeleteOriginData(quota_client.get(), "http://bar.com/", kPersistent);
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(storage::kQuotaStatusOk, status());
+  EXPECT_EQ(blink::kQuotaStatusOk, status());
 
   DeleteOriginData(quota_client.get(), "http://buz.com/", kTemporary);
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(storage::kQuotaStatusOk, status());
+  EXPECT_EQ(blink::kQuotaStatusOk, status());
 
   EXPECT_EQ(0, GetOriginUsage(
       quota_client.get(), "http://foo.com/", kTemporary));

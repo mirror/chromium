@@ -52,6 +52,9 @@ jumbo_component("blink_common") {
     "origin_trials/trial_token.h",
     "origin_trials/trial_token_validator.cc",
     "origin_trials/trial_token_validator.h",
+    "quota/quota_status_code.cc",
+    "quota/quota_status_code.h",
+    "quota/storage_type.h",
     "sandbox_flags.h",
   ]
 
@@ -113,6 +116,7 @@ mojom("mojo_platform_bindings") {
     "clipboard/clipboard.mojom",
     "feature_policy/feature_policy.mojom",
     "page/page_visibility_state.mojom",
+    "quota/quota_types.mojom",
     "service_worker/navigation_preload_state.mojom",
     "service_worker/service_worker.mojom",
     "service_worker/service_worker_client.mojom",

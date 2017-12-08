@@ -40,7 +40,7 @@ class QuotaDispatcher : public WorkerThread::Observer {
     virtual ~Callback() {}
     virtual void DidQueryStorageUsageAndQuota(int64_t usage, int64_t quota) = 0;
     virtual void DidGrantStorageQuota(int64_t usage, int64_t granted_quota) = 0;
-    virtual void DidFail(storage::QuotaStatusCode status) = 0;
+    virtual void DidFail(blink::QuotaStatusCode status) = 0;
   };
 
   explicit QuotaDispatcher(
@@ -54,11 +54,11 @@ class QuotaDispatcher : public WorkerThread::Observer {
   void WillStopCurrentWorkerThread() override;
 
   void QueryStorageUsageAndQuota(const url::Origin& origin,
-                                 storage::StorageType type,
+                                 blink::StorageType type,
                                  std::unique_ptr<Callback> callback);
   void RequestStorageQuota(int render_frame_id,
                            const url::Origin& origin,
-                           storage::StorageType type,
+                           blink::StorageType type,
                            int64_t requested_size,
                            std::unique_ptr<Callback> callback);
 
@@ -69,14 +69,14 @@ class QuotaDispatcher : public WorkerThread::Observer {
  private:
   // Message handlers.
   void DidQueryStorageUsageAndQuota(int64_t request_id,
-                                    storage::QuotaStatusCode status,
+                                    blink::QuotaStatusCode status,
                                     int64_t current_usage,
                                     int64_t current_quota);
   void DidGrantStorageQuota(int64_t request_id,
-                            storage::QuotaStatusCode status,
+                            blink::QuotaStatusCode status,
                             int64_t current_usage,
                             int64_t granted_quota);
-  void DidFail(int request_id, storage::QuotaStatusCode error);
+  void DidFail(int request_id, blink::QuotaStatusCode error);
 
   content::mojom::QuotaDispatcherHostPtr quota_host_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;

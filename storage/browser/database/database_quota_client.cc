@@ -81,11 +81,11 @@ void DidDeleteOriginData(base::SequencedTaskRunner* original_task_runner,
     return;
   }
 
-  storage::QuotaStatusCode status;
+  blink::QuotaStatusCode status;
   if (result == net::OK)
-    status = storage::kQuotaStatusOk;
+    status = blink::kQuotaStatusOk;
   else
-    status = storage::kQuotaStatusUnknown;
+    status = blink::kQuotaStatusUnknown;
 
   original_task_runner->PostTask(FROM_HERE, base::BindOnce(callback, status));
 }
@@ -115,13 +115,13 @@ void DatabaseQuotaClient::OnQuotaManagerDestroyed() {
 }
 
 void DatabaseQuotaClient::GetOriginUsage(const GURL& origin_url,
-                                         storage::StorageType type,
+                                         blink::StorageType type,
                                          const GetUsageCallback& callback) {
   DCHECK(!callback.is_null());
   DCHECK(db_tracker_.get());
 
   // All databases are in the temp namespace for now.
-  if (type != storage::kStorageTypeTemporary) {
+  if (type != blink::kStorageTypeTemporary) {
     callback.Run(0);
     return;
   }
@@ -134,13 +134,13 @@ void DatabaseQuotaClient::GetOriginUsage(const GURL& origin_url,
 }
 
 void DatabaseQuotaClient::GetOriginsForType(
-    storage::StorageType type,
+    blink::StorageType type,
     const GetOriginsCallback& callback) {
   DCHECK(!callback.is_null());
   DCHECK(db_tracker_.get());
 
   // All databases are in the temp namespace for now.
-  if (type != storage::kStorageTypeTemporary) {
+  if (type != blink::kStorageTypeTemporary) {
     callback.Run(std::set<GURL>());
     return;
   }
@@ -154,14 +154,14 @@ void DatabaseQuotaClient::GetOriginsForType(
 }
 
 void DatabaseQuotaClient::GetOriginsForHost(
-    storage::StorageType type,
+    blink::StorageType type,
     const std::string& host,
     const GetOriginsCallback& callback) {
   DCHECK(!callback.is_null());
   DCHECK(db_tracker_.get());
 
   // All databases are in the temp namespace for now.
-  if (type != storage::kStorageTypeTemporary) {
+  if (type != blink::kStorageTypeTemporary) {
     callback.Run(std::set<GURL>());
     return;
   }
@@ -176,19 +176,19 @@ void DatabaseQuotaClient::GetOriginsForHost(
 }
 
 void DatabaseQuotaClient::DeleteOriginData(const GURL& origin,
-                                           storage::StorageType type,
+                                           blink::StorageType type,
                                            const DeletionCallback& callback) {
   DCHECK(!callback.is_null());
   DCHECK(db_tracker_.get());
 
   // All databases are in the temp namespace for now, so nothing to delete.
-  if (type != storage::kStorageTypeTemporary) {
-    callback.Run(storage::kQuotaStatusOk);
+  if (type != blink::kStorageTypeTemporary) {
+    callback.Run(blink::kQuotaStatusOk);
     return;
   }
 
   // DidDeleteOriginData() translates the net::Error response to a
-  // storage::QuotaStatusCode if necessary, and no-ops as appropriate if
+  // blink::QuotaStatusCode if necessary, and no-ops as appropriate if
   // DatabaseTracker::ScheduleDatabasesForDeletion will also invoke the
   // callback.
   auto delete_callback = base::BindRepeating(
@@ -202,8 +202,8 @@ void DatabaseQuotaClient::DeleteOriginData(const GURL& origin,
       static_cast<base::OnceCallback<void(int)>>(delete_callback));
 }
 
-bool DatabaseQuotaClient::DoesSupport(storage::StorageType type) const {
-  return type == storage::kStorageTypeTemporary;
+bool DatabaseQuotaClient::DoesSupport(blink::StorageType type) const {
+  return type == blink::kStorageTypeTemporary;
 }
 
 }  // namespace storage

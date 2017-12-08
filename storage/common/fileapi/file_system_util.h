@@ -12,8 +12,8 @@
 #include "base/files/file_path.h"
 #include "storage/common/fileapi/file_system_info.h"
 #include "storage/common/fileapi/file_system_types.h"
-#include "storage/common/quota/quota_types.h"
 #include "storage/common/storage_common_export.h"
+#include "third_party/WebKit/common/quota/storage_type.h"
 #include "third_party/WebKit/public/platform/WebFileError.h"
 #include "third_party/WebKit/public/platform/WebFileSystemType.h"
 
@@ -101,15 +101,15 @@ STORAGE_COMMON_EXPORT GURL GetFileSystemRootURI(const GURL& origin_url,
 STORAGE_COMMON_EXPORT std::string
 GetFileSystemName(const GURL& origin_url, FileSystemType type);
 
-// Converts FileSystemType |type| to/from the StorageType |storage_type| that
-// is used for the unified quota system.
-// (Basically this naively maps TEMPORARY storage type to TEMPORARY filesystem
-// type, PERSISTENT storage type to PERSISTENT filesystem type and vice versa.)
+// Converts FileSystemType |type| to/from the blink::StorageType |storage_type|
+// that is used for the unified quota system. (Basically this naively maps
+// TEMPORARY storage type to TEMPORARY filesystem type, PERSISTENT storage type
+// to PERSISTENT filesystem type and vice versa.)
 STORAGE_COMMON_EXPORT FileSystemType
-    QuotaStorageTypeToFileSystemType(storage::StorageType storage_type);
+QuotaStorageTypeToFileSystemType(blink::StorageType storage_type);
 
-STORAGE_COMMON_EXPORT storage::StorageType
-    FileSystemTypeToQuotaStorageType(FileSystemType type);
+STORAGE_COMMON_EXPORT blink::StorageType FileSystemTypeToQuotaStorageType(
+    FileSystemType type);
 
 // Returns the string representation of the given filesystem |type|.
 // Returns an empty string if the |type| is invalid.

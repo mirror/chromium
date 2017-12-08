@@ -41,8 +41,8 @@
 #include "storage/browser/test/sandbox_file_system_test_helper.h"
 #include "storage/browser/test/test_file_system_context.h"
 #include "storage/common/database/database_identifier.h"
-#include "storage/common/quota/quota_types.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/quota/storage_type.h"
 
 using content::AsyncFileTestHelper;
 using storage::FileSystemContext;
@@ -159,7 +159,7 @@ class ObfuscatedFileUtilTest : public testing::Test {
         origin_(GURL("http://www.example.com")),
         type_(storage::kFileSystemTypeTemporary),
         sandbox_file_system_(origin_, type_),
-        quota_status_(storage::kQuotaStatusUnknown),
+        quota_status_(blink::kQuotaStatusUnknown),
         usage_(-1),
         weak_factory_(this) {}
 
@@ -282,7 +282,7 @@ class ObfuscatedFileUtilTest : public testing::Test {
                                               sandbox_file_system_.type(),
                                               &usage_,
                                               &quota);
-    EXPECT_EQ(storage::kQuotaStatusOk, quota_status_);
+    EXPECT_EQ(blink::kQuotaStatusOk, quota_status_);
   }
 
   void RevokeUsageCache() {
@@ -823,7 +823,7 @@ class ObfuscatedFileUtilTest : public testing::Test {
   GURL origin_;
   storage::FileSystemType type_;
   SandboxFileSystemTestHelper sandbox_file_system_;
-  storage::QuotaStatusCode quota_status_;
+  blink::QuotaStatusCode quota_status_;
   int64_t usage_;
   storage::MockFileChangeObserver change_observer_;
   storage::ChangeObserverList change_observers_;

@@ -105,7 +105,7 @@ void StorageArea::SetItem(const String& key,
   storage_area_->SetItem(key, value, frame->GetDocument()->Url(), result);
   if (result != WebStorageArea::kResultOK)
     exception_state.ThrowDOMException(
-        kQuotaExceededError,
+        blink::kQuotaExceededError,
         "Setting the value of '" + key + "' exceeded the quota.");
 }
 

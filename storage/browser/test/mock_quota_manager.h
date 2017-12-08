@@ -17,16 +17,16 @@
 #include "storage/browser/quota/quota_client.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/browser/quota/quota_task.h"
-#include "storage/common/quota/quota_types.h"
+#include "third_party/WebKit/common/quota/storage_type.h"
 #include "url/gurl.h"
 
 using storage::GetOriginsCallback;
 using storage::QuotaClient;
 using storage::QuotaManager;
-using storage::QuotaStatusCode;
+using blink::QuotaStatusCode;
 using storage::SpecialStoragePolicy;
 using storage::StatusCallback;
-using storage::StorageType;
+using blink::StorageType;
 
 namespace content {
 
@@ -54,13 +54,13 @@ class MockQuotaManager : public QuotaManager {
   // called.  The internal quota value can be updated by calling
   // a helper method MockQuotaManagerProxy::SetQuota().
   void GetUsageAndQuota(const GURL& origin,
-                        storage::StorageType type,
+                        blink::StorageType type,
                         const UsageAndQuotaCallback& callback) override;
 
   // Overrides QuotaManager's implementation with a canned implementation that
   // allows clients to set up the origin database that should be queried. This
   // method will only search through the origins added explicitly via AddOrigin.
-  void GetOriginsModifiedSince(StorageType type,
+  void GetOriginsModifiedSince(blink::StorageType type,
                                base::Time modified_since,
                                const GetOriginsCallback& callback) override;
 
@@ -71,12 +71,12 @@ class MockQuotaManager : public QuotaManager {
   // QuotaClient::kAllClientsMask will remove all clients from the origin,
   // regardless of type.
   void DeleteOriginData(const GURL& origin,
-                        StorageType type,
+                        blink::StorageType type,
                         int quota_client_mask,
                         const StatusCallback& callback) override;
 
   // Helper method for updating internal quota info.
-  void SetQuota(const GURL& origin, StorageType type, int64_t quota);
+  void SetQuota(const GURL& origin, blink::StorageType type, int64_t quota);
 
   // Helper methods for timed-deletion testing:
   // Adds an origin to the canned list that will be searched through via
@@ -84,16 +84,16 @@ class MockQuotaManager : public QuotaManager {
   // which specifies the types of QuotaClients this canned origin contains
   // as a bitmask built from QuotaClient::IDs.
   bool AddOrigin(const GURL& origin,
-                 StorageType type,
+                 blink::StorageType type,
                  int quota_client_mask,
                  base::Time modified);
 
   // Helper methods for timed-deletion testing:
   // Checks an origin and type against the origins that have been added via
   // AddOrigin and removed via DeleteOriginData. If the origin exists in the
-  // canned list with the proper StorageType and client, returns true.
+  // canned list with the proper blink::StorageType and client, returns true.
   bool OriginHasData(const GURL& origin,
-                     StorageType type,
+                     blink::StorageType type,
                      QuotaClient::ID quota_client) const;
 
  protected:
@@ -104,16 +104,16 @@ class MockQuotaManager : public QuotaManager {
 
   // Contains the essential bits of information about an origin that the
   // MockQuotaManager needs to understand for time-based deletion:
-  // the origin itself, the StorageType and its modification time.
+  // the origin itself, the blink::StorageType and its modification time.
   struct OriginInfo {
     OriginInfo(const GURL& origin,
-               StorageType type,
+               blink::StorageType type,
                int quota_client_mask,
                base::Time modified);
     ~OriginInfo();
 
     GURL origin;
-    StorageType type;
+    blink::StorageType type;
     int quota_client_mask;
     base::Time modified;
   };
@@ -129,16 +129,16 @@ class MockQuotaManager : public QuotaManager {
     int64_t quota;
   };
 
-  typedef std::pair<GURL, StorageType> OriginAndType;
+  typedef std::pair<GURL, blink::StorageType> OriginAndType;
   typedef std::map<OriginAndType, StorageInfo> UsageAndQuotaMap;
 
   // This must be called via MockQuotaManagerProxy.
-  void UpdateUsage(const GURL& origin, StorageType type, int64_t delta);
+  void UpdateUsage(const GURL& origin, blink::StorageType type, int64_t delta);
   void DidGetModifiedSince(const GetOriginsCallback& callback,
                            std::set<GURL>* origins,
-                           StorageType storage_type);
+                           blink::StorageType storage_type);
   void DidDeleteOriginData(const StatusCallback& callback,
-                           QuotaStatusCode status);
+                           blink::QuotaStatusCode status);
 
   // The list of stored origins that have been added via AddOrigin.
   std::vector<OriginInfo> origins_;

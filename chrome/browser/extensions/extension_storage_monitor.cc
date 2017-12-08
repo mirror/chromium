@@ -121,12 +121,12 @@ class SingleExtensionStorageObserver : public storage::StorageObserver {
         should_uma_(should_uma) {
     // We always observe persistent storage usage.
     storage::StorageObserver::MonitorParams params(
-        storage::kStorageTypePersistent, origin, rate, false);
+        blink::kStorageTypePersistent, origin, rate, false);
     quota_manager_->AddStorageObserver(this, params);
     if (should_uma) {
       // And if this is for uma, we also observe temporary storage usage.
-      MonitorParams temporary_params(storage::kStorageTypeTemporary, origin,
-                                     rate, false);
+      MonitorParams temporary_params(blink::kStorageTypeTemporary, origin, rate,
+                                     false);
       quota_manager_->AddStorageObserver(this, temporary_params);
     }
   }
@@ -244,7 +244,7 @@ class ExtensionStorageMonitorIOHelper
 
 void SingleExtensionStorageObserver::OnStorageEvent(const Event& event) {
   if (should_uma_) {
-    if (event.filter.storage_type == storage::kStorageTypePersistent) {
+    if (event.filter.storage_type == blink::kStorageTypePersistent) {
       UMA_HISTOGRAM_MEMORY_KB(
           "Extensions.HostedAppUnlimitedStoragePersistentStorageUsage",
           event.usage);

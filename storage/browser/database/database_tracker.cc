@@ -117,7 +117,7 @@ void DatabaseTracker::DatabaseOpened(const std::string& origin_identifier,
     quota_manager_proxy_->NotifyStorageAccessed(
         storage::QuotaClient::kDatabase,
         storage::GetOriginFromIdentifier(origin_identifier),
-        storage::kStorageTypeTemporary);
+        blink::kStorageTypeTemporary);
 
   InsertOrUpdateDatabaseDetails(origin_identifier, database_name,
                                 database_description, estimated_size);
@@ -154,7 +154,7 @@ void DatabaseTracker::DatabaseClosed(const std::string& origin_identifier,
     quota_manager_proxy_->NotifyStorageAccessed(
         storage::QuotaClient::kDatabase,
         storage::GetOriginFromIdentifier(origin_identifier),
-        storage::kStorageTypeTemporary);
+        blink::kStorageTypeTemporary);
 
   UpdateOpenDatabaseSizeAndNotify(origin_identifier, database_name);
   if (database_connections_.RemoveConnection(origin_identifier, database_name))
@@ -372,8 +372,7 @@ bool DatabaseTracker::DeleteClosedDatabase(
     quota_manager_proxy_->NotifyStorageModified(
         storage::QuotaClient::kDatabase,
         storage::GetOriginFromIdentifier(origin_identifier),
-        storage::kStorageTypeTemporary,
-        -db_file_size);
+        blink::kStorageTypeTemporary, -db_file_size);
 
   // Clean up the main database and invalidate the cached record.
   databases_table_->DeleteDatabaseDetails(origin_identifier, database_name);
@@ -433,8 +432,7 @@ bool DatabaseTracker::DeleteOrigin(const std::string& origin_identifier,
     quota_manager_proxy_->NotifyStorageModified(
         storage::QuotaClient::kDatabase,
         storage::GetOriginFromIdentifier(origin_identifier),
-        storage::kStorageTypeTemporary,
-        -deleted_size);
+        blink::kStorageTypeTemporary, -deleted_size);
   }
 
   return true;
@@ -631,8 +629,7 @@ int64_t DatabaseTracker::UpdateOpenDatabaseInfoAndNotify(
       quota_manager_proxy_->NotifyStorageModified(
           storage::QuotaClient::kDatabase,
           storage::GetOriginFromIdentifier(origin_id),
-          storage::kStorageTypeTemporary,
-          new_size - old_size);
+          blink::kStorageTypeTemporary, new_size - old_size);
     for (auto& observer : observers_)
       observer.OnDatabaseSizeChanged(origin_id, name, new_size);
   }
