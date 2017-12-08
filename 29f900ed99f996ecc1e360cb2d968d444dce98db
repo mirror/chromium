@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5849a99e_489962f3",
+        "filename": "content/public/browser/web_contents.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-08T23:20:05Z",
+      "side": 1,
+      "message": "naming nit: IsBeingCaptured()\n\nMore generally, I regret having chosen the verb \"capture\" for this interface here. It\u0027s far too easy to confuse this with what \"capture\" means in other, related contexts; such as a WebContents\u0027s keyboard/input focus. That said, I\u0027m not sure what would be better (maybe always say, \"screen capture\"?). I had planned on revisiting the naming with http://crbug.com/540965.",
+      "range": {
+        "startLine": 395,
+        "startChar": 15,
+        "endLine": 395,
+        "endChar": 25
+      },
+      "revId": "29f900ed99f996ecc1e360cb2d968d444dce98db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

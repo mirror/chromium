@@ -34,6 +34,24 @@
       "revId": "79681532f16dc8a17b7dd12ba50d8d8180c82e7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347596df_1687072a",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-08T23:20:05Z",
+      "side": 0,
+      "message": "The \u003e\u003d 0 is a bug. It should have been \u003e 0 (no equals).\n\nAlso, two considerations here:\n\n1. The interpretation of GetPreferredSize() is that it represents the video capture size only when GetCapturerCount() \u003e 0. Otherwise, GetPreferredSize() is some unknown size (usually computed by the content embeddor). See (for normal, onscreen tab capture): https://cs.chromium.org/chromium/src/chrome/browser/ui/exclusive_access/fullscreen_controller.cc?rcl\u003d6d270000e1d6c1a24df1dbe0f01de343b429c7e9\u0026l\u003d222\n\n2. While all OffscreenTabs are meant to be captured, there is a possible race between when the OffscreenTab (plus its WebContents) is up-and-running and when tab capture on the offscreen tab is started. So, granted, it\u0027s extremely unlikely; but it *is* possible; that a page could load and go into fullscreen mode before screen capture starts.\n\nSo, I think it\u0027s probably safest to do this here:\n\n  if (contents-\u003eIsBeingCaptured() \u0026\u0026 !contents-\u003eGetPreferredSize().IsEmpty())",
+      "parentUuid": "b406099d_e1a59783",
+      "revId": "79681532f16dc8a17b7dd12ba50d8d8180c82e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
