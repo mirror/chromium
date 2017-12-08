@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aedc034_3115c52e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 51
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-08T01:39:25Z",
+      "side": 1,
+      "message": "Deprecate current ArcVideoDecodeAccelerator IPC and GpuArcVDA",
+      "revId": "83b6b5157a537b024772a7d65f7ea1bc3a84981c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9fcc97_1831e613",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 51
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-08T01:39:25Z",
+      "side": 1,
+      "message": "This CL is the first phase of the migration to a new IPC for ARC VideoDecodeAccelerator.\n\nTo maintain backwards-compatibility during the transition period, the existing VideoDecodeAccelerator mojo interface is renamed to VideoDecodeAcceleratorDeprecated, and its implementation, GpuArcVideoDecodeAccelerator, to GpuArcVideoDecodeAcceleratorDeprecated.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "83b6b5157a537b024772a7d65f7ea1bc3a84981c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbeaca47_f9d671d8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 51
+      },
+      "lineNbr": 33996,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-08T01:39:25Z",
+      "side": 1,
+      "message": "I think this should go in in the subsequent CL that adds this histogram?",
+      "revId": "83b6b5157a537b024772a7d65f7ea1bc3a84981c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
