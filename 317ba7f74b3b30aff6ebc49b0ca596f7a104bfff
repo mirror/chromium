@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "463ec224_6b6abd60",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-08T22:43:52Z",
+      "side": 1,
+      "message": "Maybe uppercase URI since it\u0027s in a comment (i.e. not in a camel-case name). (optional).",
+      "revId": "317ba7f74b3b30aff6ebc49b0ca596f7a104bfff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
