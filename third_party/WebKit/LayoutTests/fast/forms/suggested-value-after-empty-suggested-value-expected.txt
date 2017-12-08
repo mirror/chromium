@@ -64,8 +64,7 @@ Input before setting suggested values:
 |     <shadow:root>
 |       "TX"
 |   <shadow:root>
-|     <content>
-|       select="option,optgroup,hr"
+|     <slot>
 | "input.value: initial value"
 | "internals.suggestedValue(input): "
 | "inputWithPlaceholder.value: "
@@ -151,8 +150,7 @@ Input after setting suggestedValue:
 |     <shadow:root>
 |       "TX"
 |   <shadow:root>
-|     <content>
-|       select="option,optgroup,hr"
+|     <slot>
 | "input.value: initial value"
 | "internals.suggestedValue(input): "
 | "inputWithPlaceholder.value: "
@@ -238,8 +236,7 @@ After resetting suggestedValue value:
 |     <shadow:root>
 |       "TX"
 |   <shadow:root>
-|     <content>
-|       select="option,optgroup,hr"
+|     <slot>
 | "input.value: initial value"
 | "internals.suggestedValue(input): "
 | "inputWithPlaceholder.value: "
