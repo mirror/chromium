@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f84a7d4_6e2e6da0",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-08T00:37:50Z",
+      "side": 1,
+      "message": "Oops, this is incorrect. The main thread will miss the deadline in a lot of cases where we will invalidate. What we really want to say is that if our prediction was incorrect and we skipped the invalidation as a result, don\u0027t defer the invalidation in the next frame. While I was at it, it looks like main_thread_missed_last_deadline might not be the most appropriate to use here. Its fine if the raster misses the deadline, as long as the commit happens before it IMO. Because a pending tree is extra raster and update that is not cancelable.",
+      "parentUuid": "6ff39e2f_ff16d147",
+      "revId": "16613ec1dd2e6bb533a9cc67bd221cb381672758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35e8357b_aa417f25",
         "filename": "cc/scheduler/scheduler_state_machine.cc",
         "patchSetId": 10
@@ -39,6 +57,30 @@
       "revId": "16613ec1dd2e6bb533a9cc67bd221cb381672758",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37067380_93e91d15",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-08T00:37:50Z",
+      "side": 1,
+      "message": "Sorry I missed this comment earlier. Done.",
+      "parentUuid": "35e8357b_aa417f25",
+      "range": {
+        "startLine": 646,
+        "startChar": 7,
+        "endLine": 646,
+        "endChar": 48
+      },
+      "revId": "16613ec1dd2e6bb533a9cc67bd221cb381672758",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
