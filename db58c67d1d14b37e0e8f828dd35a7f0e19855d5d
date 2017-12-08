@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "809741ff_5eedf20d",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-08T19:06:36Z",
+      "side": 1,
+      "message": "Do you need display_root or just display_root-\u003eroot()?",
+      "range": {
+        "startLine": 366,
+        "startChar": 10,
+        "endLine": 366,
+        "endChar": 30
+      },
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
