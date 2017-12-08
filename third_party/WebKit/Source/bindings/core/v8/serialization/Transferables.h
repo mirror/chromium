@@ -12,11 +12,13 @@
 namespace blink {
 
 class DOMArrayBufferBase;
+class DOMSharedArrayBuffer;
 class ImageBitmap;
 class OffscreenCanvas;
 class MessagePort;
 
 using ArrayBufferArray = HeapVector<Member<DOMArrayBufferBase>>;
+using SharedArrayBufferArray = HeapVector<Member<DOMSharedArrayBuffer>>;
 using ImageBitmapArray = HeapVector<Member<ImageBitmap>>;
 using OffscreenCanvasArray = HeapVector<Member<OffscreenCanvas>>;
 using MessagePortArray = HeapVector<Member<MessagePort>>;
