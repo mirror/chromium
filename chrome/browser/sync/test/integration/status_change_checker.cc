@@ -5,7 +5,9 @@
 #include "chrome/browser/sync/test/integration/status_change_checker.h"
 
 #include "base/logging.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/single_thread_task_runner.h"
 #include "base/timer/timer.h"
 
 StatusChangeChecker::StatusChangeChecker() : timed_out_(false) {}
@@ -37,7 +39,9 @@ void StatusChangeChecker::StartBlockingWait() {
               base::Bind(&StatusChangeChecker::OnTimeout,
                          base::Unretained(this)));
 
+  task_runner_ = base::MessageLoop::current()->task_runner();
   base::RunLoop(base::RunLoop::Type::kNestableTasksAllowed).Run();
+  task_runner_ = nullptr;
 }
 
 void StatusChangeChecker::StopWaiting() {

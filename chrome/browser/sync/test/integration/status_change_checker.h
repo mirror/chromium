@@ -7,7 +7,12 @@
 
 #include <string>
 
+#include "base/memory/scoped_refptr.h"
 #include "base/time/time.h"
+
+namespace base {
+class SingleThreadTaskRunner;
+};
 
 // Interface for a helper class that can pump the message loop while waiting
 // for a certain state transition to take place.
@@ -62,6 +67,10 @@ class StatusChangeChecker {
 
   // Called when the blocking wait timeout is exceeded.
   void OnTimeout();
+
+  // A task runner for posting tasks to be executed while waiting. This is
+  // only valid during Wait().
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   bool timed_out_;
 };
