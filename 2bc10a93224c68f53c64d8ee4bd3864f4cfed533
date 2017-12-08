@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f39908f0_28a56294",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-08T20:32:54Z",
+      "side": 1,
+      "message": "git cl format likes it this way...",
+      "revId": "2bc10a93224c68f53c64d8ee4bd3864f4cfed533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
