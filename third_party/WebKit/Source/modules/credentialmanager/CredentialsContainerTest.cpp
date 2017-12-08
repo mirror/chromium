@@ -23,17 +23,15 @@ using ::testing::SaveArg;
 
 namespace {
 
-class MockCredentialManagerClient : public WebCredentialManagerClient {
+class MockCredentialManagerClient : public CredentialManagerClient {
  public:
-  MOCK_METHOD2(DispatchFailedSignIn,
-               void(const WebCredential&, NotificationCallbacks*));
   MOCK_METHOD2(DispatchStore,
                void(const WebCredential&, NotificationCallbacks*));
   MOCK_METHOD1(DispatchPreventSilentAccess, void(NotificationCallbacks*));
   MOCK_METHOD4(DispatchGet,
                void(WebCredentialMediationRequirement,
                     bool,
-                    const WebVector<WebURL>& federations,
+                    const WTF::Vector<KURL>& federations,
                     RequestCallbacks*));
 };
 
@@ -52,9 +50,9 @@ TEST(CredentialsContainerTest, TestGetWithDocumentDestroyed) {
         SecurityOrigin::CreateFromString("https://example.test"));
     scope.GetDocument().SetSecureContextStateForTesting(
         SecureContextState::kSecure);
-    ::testing::StrictMock<MockCredentialManagerClient> mock_client;
-    ProvideCredentialManagerClientTo(scope.GetPage(),
-                                     new CredentialManagerClient(&mock_client));
+    ::testing::StrictMock<MockCredentialManagerClient> mock_client(
+        scope.GetPage());
+    ProvideCredentialManagerClientTo(scope.GetPage(), &mock_client);
 
     // Request a credential.
     WebCredentialManagerClient::RequestCallbacks* callback = nullptr;

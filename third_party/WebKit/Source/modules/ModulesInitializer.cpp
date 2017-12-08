@@ -250,13 +250,6 @@ WebRemotePlaybackClient* ModulesInitializer::CreateWebRemotePlaybackClient(
   return HTMLMediaElementRemotePlayback::remote(html_media_element);
 }
 
-void ModulesInitializer::ProvideCredentialManagerClient(
-    Page& page,
-    WebCredentialManagerClient* web_credential_manager_client) const {
-  ::blink::ProvideCredentialManagerClientTo(
-      page, new CredentialManagerClient(web_credential_manager_client));
-}
-
 void ModulesInitializer::ProvideModulesToPage(Page& page,
                                               WebViewClient* client) const {
   MediaKeysController::ProvideMediaKeysTo(page);
@@ -267,6 +260,8 @@ void ModulesInitializer::ProvideModulesToPage(Page& page,
   ::blink::ProvideSpeechRecognitionTo(
       page, SpeechRecognitionClientProxy::Create(
                 client ? client->SpeechRecognizer() : nullptr));
+  ::blink::ProvideCredentialManagerClientTo(page,
+                                            new CredentialManagerClient(page));
 }
 
 void ModulesInitializer::ForceNextWebGLContextCreationToFail() const {
