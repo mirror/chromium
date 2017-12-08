@@ -16,6 +16,24 @@
       "revId": "804de3127cbc7b235fd30c7bb93598e5ae4b598d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d5e8d2_8a1763e4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5646,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-12-08T21:42:20Z",
+      "side": 1,
+      "message": "Unfortunately not, because it can return \"this\", and some callers need a non-const return value.",
+      "parentUuid": "dbc9e71c_134585bf",
+      "revId": "804de3127cbc7b235fd30c7bb93598e5ae4b598d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
