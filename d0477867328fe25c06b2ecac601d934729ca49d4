@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "527a55f5_2575b756",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-08T16:16:04Z",
+      "side": 1,
+      "message": "nit: Should this comment just be about managing the \"display of dialogs\" rather than \"tab modal dialogs\" since ChromeActivity doesn\u0027t have tab modal dialogs?",
+      "range": {
+        "startLine": 1197,
+        "startChar": 74,
+        "endLine": 1197,
+        "endChar": 83
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f1d99d_bdd99985",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-08T16:16:04Z",
+      "side": 1,
+      "message": "nit: JavaDoc",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 97,
+        "endChar": 84
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42dcce33_1ea49a3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-08T16:16:04Z",
+      "side": 1,
+      "message": "Is it possible to handle back press on app modal dialogs too e.g. in the ModalDialogManager?",
+      "range": {
+        "startLine": 109,
+        "startChar": 19,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba73db4_82293d93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-08T16:16:04Z",
+      "side": 1,
+      "message": "Should we null check activeTab here too? and below when removing the observer?",
+      "range": {
+        "startLine": 238,
+        "startChar": 12,
+        "endLine": 238,
+        "endChar": 21
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199e419c_7a9008f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialogView.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-08T16:16:04Z",
+      "side": 1,
+      "message": "nit: JavaDoc for this public method",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 87
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
