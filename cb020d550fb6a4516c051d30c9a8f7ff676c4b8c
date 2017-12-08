@@ -16,6 +16,24 @@
       "revId": "cb020d550fb6a4516c051d30c9a8f7ff676c4b8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5b0a57_f95e0dde",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-08T18:30:54Z",
+      "side": 1,
+      "message": "Right, we can remove the MRUI::GetRouteProviderExtensionId() method now. I\u0027ll do that in a separate patch.",
+      "parentUuid": "fa9bf2e4_9872b3f1",
+      "revId": "cb020d550fb6a4516c051d30c9a8f7ff676c4b8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
