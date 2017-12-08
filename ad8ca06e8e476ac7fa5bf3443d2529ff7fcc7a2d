@@ -1,0 +1,363 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e28a097d_fbde3c59",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "if (secondary_window_)",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f8a65a_bb2540d8",
+        "filename": "content/shell/browser/layout_test/blink_test_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "if (devtools_bindings_)",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9522df_2c2ec3a2",
+        "filename": "content/shell/browser/layout_test/layout_test_devtools_bindings.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "no explicit",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 10
+      },
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc04d5a5_89a5434a",
+        "filename": "content/shell/browser/layout_test/layout_test_devtools_bindings.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "Let\u0027s DCHECK(is_startup_test_).",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13fc5ed_a1b4d9ac",
+        "filename": "content/shell/browser/layout_test/layout_test_devtools_bindings.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "TestRunner._startupTestSetupFinished",
+      "range": {
+        "startLine": 150,
+        "startChar": 36,
+        "endLine": 150,
+        "endChar": 45
+      },
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f45d251_4932dd7f",
+        "filename": "content/shell/browser/layout_test/layout_test_devtools_bindings.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "override",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "216da979_4d8d3e8e",
+        "filename": "content/shell/browser/layout_test/layout_test_message_filter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "Remove this line, move to line 60.",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01efdc2d_e1a2d910",
+        "filename": "content/shell/browser/shell_devtools_bindings.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "Let\u0027s just move this check to where it matters - lines 209, 292.",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b40dabad_4db140e8",
+        "filename": "content/shell/browser/shell_devtools_bindings.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "virtual void Attach();",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 14
+      },
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f95e968_e6f5d06e",
+        "filename": "content/shell/browser/shell_devtools_bindings.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "Move to protected.",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c01940d_0c315f00",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "Let\u0027s move this to extension test runner.",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41defac6_8a7d79eb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "Do it old way for non-startup.",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf956aa_1568120e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/Main.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "Main.Main._instanceForTest",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab2bd5c_4e63696f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "Inline this.",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8331d4_dc8c354b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "TODO: remove",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3208c898_677cdc86",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "Host.isUnderStartupTest",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 10
+      },
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec4f9e8_9ddd9ac8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 27,
+        "startChar": 15,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a652702d_e01e7b08",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "delete TestRunner.onInspect;",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fbf6fa3_b0bd6a51",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 16
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-08T00:34:16Z",
+      "side": 1,
+      "message": "Inline this one, and do not loadHTML for startup.",
+      "revId": "ad8ca06e8e476ac7fa5bf3443d2529ff7fcc7a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
