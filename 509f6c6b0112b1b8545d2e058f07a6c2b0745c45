@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ca7fff8_ba452d32",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-08T01:27:48Z",
+      "side": 1,
+      "message": "\"system ui\" is very broad. The CL should probably be split up, but even if it is not this should be something like \"for app app list, launcher, and shelf\"",
+      "revId": "509f6c6b0112b1b8545d2e058f07a6c2b0745c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "528a840d_a72f7e21",
         "filename": "chrome/browser/ui/app_list/app_context_menu.cc",
         "patchSetId": 1
