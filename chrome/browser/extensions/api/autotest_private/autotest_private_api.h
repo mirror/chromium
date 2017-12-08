@@ -50,6 +50,8 @@ class AutotestPrivateLoginStatusFunction : public UIThreadExtensionFunction {
  private:
   ~AutotestPrivateLoginStatusFunction() override {}
   ResponseAction Run() override;
+
+  void OnCheckAuthenticating(bool is_authenticating);
 };
 
 class AutotestPrivateLockScreenFunction : public UIThreadExtensionFunction {
