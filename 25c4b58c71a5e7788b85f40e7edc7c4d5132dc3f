@@ -34,6 +34,24 @@
       "revId": "25c4b58c71a5e7788b85f40e7edc7c4d5132dc3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce55700_f9ac7767",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-12-08T04:04:40Z",
+      "side": 1,
+      "message": "The availability needs to be conveyed by means other than empty bounds, and so I\u0027ve opened a bug to make this change (and added a comment). In the absence of a floating keyboard, this method will have equivalent results and also has easy access to the .is_available field on the KeyboardStateDescriptor struct.",
+      "parentUuid": "e13e7496_c841e333",
+      "revId": "25c4b58c71a5e7788b85f40e7edc7c4d5132dc3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
