@@ -55,6 +55,13 @@ class CONTENT_EXPORT ServiceWorkerTimeoutTimer {
   int StartEvent(base::OnceCallback<void(int /* event_id */)> abort_callback);
   void EndEvent(int event_id);
 
+  // Pushes a task which is expected to run after any event starts. This should
+  // be called during it's idle (IsIdle() returns true).
+  void PushPendingTaskWhenIdle(base::OnceClosure pending_task);
+
+  // Returns true if the timer thinks no events ran for a while.
+  bool IsIdle() const;
+
   // Idle timeout duration since the last event has finished.
   static constexpr base::TimeDelta kIdleDelay =
       base::TimeDelta::FromSeconds(30);
@@ -98,6 +105,10 @@ class CONTENT_EXPORT ServiceWorkerTimeoutTimer {
   // For idle timeouts. Invoked when UpdateStatus() is called after
   // |idle_time_|.
   base::RepeatingClosure idle_callback_;
+
+  // Tasks waiting for the timer getting the next request to start an event
+  // by StartEvent(). The tasks will be posted to the task runner at the moment.
+  base::queue<base::OnceClosure> pending_tasks_;
 
   // |timer_| invokes UpdateEventStatus() periodically.
   base::RepeatingTimer timer_;

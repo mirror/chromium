@@ -53,7 +53,15 @@ ServiceWorkerTimeoutTimer::~ServiceWorkerTimeoutTimer() {
 
 int ServiceWorkerTimeoutTimer::StartEvent(
     base::OnceCallback<void(int /* event_id */)> abort_callback) {
-  idle_time_ = base::TimeTicks();
+  // Run all tasks which are queued when it's idle.
+  if (IsIdle()) {
+    idle_time_ = base::TimeTicks();
+    while (!pending_tasks_.empty()) {
+      std::move(pending_tasks_.front()).Run();
+      pending_tasks_.pop();
+    }
+  }
+
   const int event_id = NextEventId();
   std::set<EventInfo>::iterator iter;
   bool is_inserted;
@@ -72,6 +80,19 @@ void ServiceWorkerTimeoutTimer::EndEvent(int event_id) {
   id_event_map_.erase(iter);
   if (inflight_events_.empty())
     idle_time_ = tick_clock_->NowTicks() + kIdleDelay;
+}
+
+void ServiceWorkerTimeoutTimer::PushPendingTaskWhenIdle(
+    base::OnceClosure pending_task) {
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+  DCHECK(IsIdle());
+  pending_tasks_.emplace(std::move(pending_task));
+}
+
+bool ServiceWorkerTimeoutTimer::IsIdle() const {
+  if (idle_time_.is_null())
+    return false;
+  return idle_time_ < tick_clock_->NowTicks();
 }
 
 void ServiceWorkerTimeoutTimer::UpdateStatus() {

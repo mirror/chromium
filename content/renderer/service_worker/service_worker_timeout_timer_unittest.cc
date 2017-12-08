@@ -38,6 +38,11 @@ class MockEvent {
   int event_id_ = 0;
 };
 
+base::RepeatingClosure CreateReceiverWithCalledFlag(bool* out_is_called) {
+  return base::BindRepeating([](bool* out_is_called) { *out_is_called = true; },
+                             out_is_called);
+}
+
 }  // namespace
 
 class ServiceWorkerTimeoutTimerTest : public testing::Test {
@@ -74,10 +79,8 @@ TEST_F(ServiceWorkerTimeoutTimerTest, IdleTimer) {
       base::BindRepeating([](int) {});
 
   bool is_idle = false;
-  ServiceWorkerTimeoutTimer timer(
-      base::BindRepeating([](bool* out_is_idle) { *out_is_idle = true; },
-                          &is_idle),
-      task_runner()->GetMockTickClock());
+  ServiceWorkerTimeoutTimer timer(CreateReceiverWithCalledFlag(&is_idle),
+                                  task_runner()->GetMockTickClock());
   task_runner()->FastForwardBy(kIdleInterval);
   // |idle_callback| should be fired since there is no event.
   EXPECT_TRUE(is_idle);
@@ -132,10 +135,8 @@ TEST_F(ServiceWorkerTimeoutTimerTest, BecomeIdleAfterAbort) {
   EnableServicification();
 
   bool is_idle = false;
-  ServiceWorkerTimeoutTimer timer(
-      base::BindRepeating([](bool* out_is_idle) { *out_is_idle = true; },
-                          &is_idle),
-      task_runner()->GetMockTickClock());
+  ServiceWorkerTimeoutTimer timer(CreateReceiverWithCalledFlag(&is_idle),
+                                  task_runner()->GetMockTickClock());
 
   MockEvent event;
   int event_id = timer.StartEvent(event.CreateAbortCallback());
@@ -173,6 +174,25 @@ TEST_F(ServiceWorkerTimeoutTimerTest, AbortAllOnDestruction) {
 
   EXPECT_TRUE(event1.has_aborted());
   EXPECT_TRUE(event2.has_aborted());
+}
+
+TEST_F(ServiceWorkerTimeoutTimerTest, PushPendingTask) {
+  EnableServicification();
+  ServiceWorkerTimeoutTimer timer(base::BindRepeating(&base::DoNothing),
+                                  task_runner()->GetMockTickClock());
+  task_runner()->FastForwardBy(ServiceWorkerTimeoutTimer::kIdleDelay +
+                               ServiceWorkerTimeoutTimer::kUpdateInterval +
+                               base::TimeDelta::FromSeconds(1));
+  EXPECT_TRUE(timer.IsIdle());
+
+  bool did_task_run = false;
+  timer.PushPendingTaskWhenIdle(CreateReceiverWithCalledFlag(&did_task_run));
+
+  // Start a new event. StartEvent() should run the pending tasks.
+  MockEvent event;
+  timer.StartEvent(event.CreateAbortCallback());
+  EXPECT_FALSE(timer.IsIdle());
+  EXPECT_TRUE(did_task_run);
 }
 
 TEST_F(ServiceWorkerTimeoutTimerTest, NonS13nServiceWorker) {

@@ -19,6 +19,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "base/test/test_pending_task.h"
+#include "base/threading/sequence_local_storage_map.h"
 #include "base/threading/thread_checker_impl.h"
 #include "base/time/time.h"
 
@@ -253,6 +254,9 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
   // ownership of the thread it was created on.
   RunLoop::Delegate::Client* run_loop_client_ = nullptr;
   std::unique_ptr<ThreadTaskRunnerHandle> thread_task_runner_handle_;
+  internal::SequenceLocalStorageMap sequence_local_storage_map_;
+  std::unique_ptr<internal::ScopedSetSequenceLocalStorageMapForCurrentThread>
+      scoped_set_sequence_local_storage_map_for_current_thread_;
 
   // Set to true in RunLoop::Delegate::Quit() to signal the topmost
   // RunLoop::Delegate::Run() instance to stop, reset to false when it does.
