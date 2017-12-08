@@ -12,8 +12,8 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/animation/animation.h"
 #include "cc/animation/animation_host.h"
-#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
+#include "cc/animation/single_animation_player.h"
 #include "cc/animation/timing_function.h"
 #include "cc/base/switches.h"
 #include "cc/input/input_handler.h"
@@ -344,7 +344,9 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
     LayerTreeHostImpl::UpdateAnimationState(start_ready_animations);
     bool has_unfinished_animation = false;
     for (const auto& it : animation_host()->ticking_players_for_testing()) {
-      if (it->animation_ticker()->HasTickingAnimation()) {
+      if (((SingleAnimationPlayer*)(it.get()))
+              ->animation_ticker()
+              ->HasTickingAnimation()) {
         has_unfinished_animation = true;
         break;
       }
@@ -834,9 +836,10 @@ void LayerTreeTest::DispatchAddAnimationToPlayer(
     double animation_duration) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
-  if (player_to_receive_animation) {
-    AddOpacityTransitionToPlayer(player_to_receive_animation,
-                                 animation_duration, 0, 0.5, true);
+  if ((SingleAnimationPlayer*)(player_to_receive_animation)) {
+    AddOpacityTransitionToPlayer(
+        (SingleAnimationPlayer*)(player_to_receive_animation),
+        animation_duration, 0, 0.5, true);
   }
 }
 
