@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "2bd2f7a1_34197e03",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-08T15:36:14Z",
+      "side": 1,
+      "message": "Good point.\n\nNot related to this CL, is there any reason we have to keep the WTF-specific threading primitives? Or should we consider merging them to base:: types?",
+      "parentUuid": "85050890_99327f8d",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "209e10a5_20a82b5c",
         "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
         "patchSetId": 4
