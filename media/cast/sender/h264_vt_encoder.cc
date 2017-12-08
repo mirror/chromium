@@ -474,7 +474,7 @@ void H264VideoToolboxEncoder::EmitFrames() {
   }
 }
 
-void H264VideoToolboxEncoder::OnSuspend() {
+void H264VideoToolboxEncoder::OnSuspend(bool) {
   VLOG(1)
       << "OnSuspend: Emitting all frames and destroying compression session.";
   EmitFrames();

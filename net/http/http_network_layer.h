@@ -36,7 +36,7 @@ class NET_EXPORT HttpNetworkLayer : public HttpTransactionFactory,
   HttpNetworkSession* GetSession() override;
 
   // base::PowerObserver methods:
-  void OnSuspend() override;
+  void OnSuspend(bool) override;
   void OnResume() override;
 
  private:

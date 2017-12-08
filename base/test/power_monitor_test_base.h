@@ -32,7 +32,7 @@ class PowerMonitorTestObserver : public PowerObserver {
 
   // PowerObserver callbacks.
   void OnPowerStateChange(bool on_battery_power) override;
-  void OnSuspend() override;
+  void OnSuspend(bool) override;
   void OnResume() override;
 
   // Test status counts.

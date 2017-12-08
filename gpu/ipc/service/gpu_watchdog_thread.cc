@@ -459,7 +459,7 @@ void GpuWatchdogThread::OnAddPowerObserver() {
   power_monitor->AddObserver(this);
 }
 
-void GpuWatchdogThread::OnSuspend() {
+void GpuWatchdogThread::OnSuspend(bool) {
   suspended_ = true;
   suspend_time_ = base::Time::Now();
 

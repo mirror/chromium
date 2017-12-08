@@ -90,7 +90,7 @@ class MEDIA_EXPORT AudioRendererImpl
   void SetVolume(float volume) override;
 
   // base::PowerObserver implementation.
-  void OnSuspend() override;
+  void OnSuspend(bool) override;
   void OnResume() override;
 
   void SetPlayDelayCBForTesting(PlayDelayCBForTesting cb);

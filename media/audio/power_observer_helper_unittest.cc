@@ -53,7 +53,7 @@ class PowerObserverHelperTest : public testing::Test {
     power_observer_helper_ = std::make_unique<PowerObserverHelper>(
         power_observer_helper_thread_.task_runner(),
         base::BindRepeating(&PowerObserverHelperTest::OnSuspend,
-                            base::Unretained(this)),
+                            base::Unretained(this), true),
         base::BindRepeating(&PowerObserverHelperTest::OnResume,
                             base::Unretained(this)));
   }

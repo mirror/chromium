@@ -17,7 +17,7 @@ HighResolutionTimerManager::~HighResolutionTimerManager() = default;
 void HighResolutionTimerManager::OnPowerStateChange(bool on_battery_power) {
 }
 
-void HighResolutionTimerManager::OnSuspend() {}
+void HighResolutionTimerManager::OnSuspend(bool) {}
 
 void HighResolutionTimerManager::OnResume() {}
 

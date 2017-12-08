@@ -268,7 +268,7 @@ class PipelineImplTest : public ::testing::Test {
 
   void DoSuspend() {
     pipeline_->Suspend(
-        base::Bind(&CallbackHelper::OnSuspend, base::Unretained(&callbacks_)));
+        base::Bind(&CallbackHelper::OnSuspend, base::Unretained(&callbacks_), true));
     base::RunLoop().RunUntilIdle();
 
     // |renderer_| has been deleted, replace it.

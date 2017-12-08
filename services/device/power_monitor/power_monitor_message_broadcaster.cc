@@ -44,7 +44,7 @@ void PowerMonitorMessageBroadcaster::OnPowerStateChange(bool on_battery_power) {
   });
 }
 
-void PowerMonitorMessageBroadcaster::OnSuspend() {
+void PowerMonitorMessageBroadcaster::OnSuspend(bool) {
   clients_.ForAllPtrs(
       [](mojom::PowerMonitorClient* client) { client->Suspend(); });
 }

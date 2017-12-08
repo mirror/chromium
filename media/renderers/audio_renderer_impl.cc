@@ -615,7 +615,7 @@ void AudioRendererImpl::SetVolume(float volume) {
   sink_->SetVolume(volume);
 }
 
-void AudioRendererImpl::OnSuspend() {
+void AudioRendererImpl::OnSuspend(bool) {
   base::AutoLock auto_lock(lock_);
   is_suspending_ = true;
 }

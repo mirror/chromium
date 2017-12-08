@@ -241,7 +241,7 @@ class CONTENT_EXPORT MediaStreamManager
   void AddLogMessageOnIOThread(const std::string& message);
 
   // base::PowerObserver overrides.
-  void OnSuspend() override;
+  void OnSuspend(bool) override;
   void OnResume() override;
 
   // Called by the tests to specify a factory for creating

@@ -54,7 +54,7 @@ void PowerMonitorTestObserver::OnPowerStateChange(bool on_battery_power) {
   power_state_changes_++;
 }
 
-void PowerMonitorTestObserver::OnSuspend() {
+void PowerMonitorTestObserver::OnSuspend(bool) {
   suspends_++;
 }
 

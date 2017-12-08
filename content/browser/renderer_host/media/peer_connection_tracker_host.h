@@ -36,7 +36,7 @@ class PeerConnectionTrackerHost : public BrowserMessageFilter,
   void OnChannelClosing() override;
 
   // base::PowerObserver override.
-  void OnSuspend() override;
+  void OnSuspend(bool) override;
 
  protected:
   ~PeerConnectionTrackerHost() override;

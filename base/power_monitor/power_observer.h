@@ -17,7 +17,7 @@ class BASE_EXPORT PowerObserver {
   virtual void OnPowerStateChange(bool on_battery_power) {};
 
   // Notification that the system is suspending.
-  virtual void OnSuspend() {}
+  virtual void OnSuspend(bool) {}
 
   // Notification that the system is resuming.
   virtual void OnResume() {}

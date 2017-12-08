@@ -29,7 +29,7 @@ class PowerMonitorMessageBroadcaster : public base::PowerObserver,
 
   // base::PowerObserver:
   void OnPowerStateChange(bool on_battery_power) override;
-  void OnSuspend() override;
+  void OnSuspend(bool) override;
   void OnResume() override;
 
  private:
