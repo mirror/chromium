@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "902d05d3_8bcc2c9d",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-08T23:17:32Z",
+      "side": 1,
+      "message": "read description above.",
+      "range": {
+        "startLine": 449,
+        "startChar": 6,
+        "endLine": 449,
+        "endChar": 45
+      },
+      "revId": "eb6ea2d03bcd35d0c324fc66c5a73030070ffcf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca18d8e4_0e8dcd5f",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-08T23:17:32Z",
+      "side": 1,
+      "message": "note that this property applies to all builders in this bucket, unless they explicitly override it.",
+      "range": {
+        "startLine": 450,
+        "startChar": 5,
+        "endLine": 450,
+        "endChar": 35
+      },
+      "revId": "eb6ea2d03bcd35d0c324fc66c5a73030070ffcf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
