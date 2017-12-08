@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a8bd795_4ca0a1fc",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-08T18:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccac3283_a21eb3f4",
+      "revId": "d9245a93b712a3957a50ab64319c197b54ca2a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2ab1579_39c270a9",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "d9245a93b712a3957a50ab64319c197b54ca2a26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39948f6_858ab08a",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-08T18:35:24Z",
+      "side": 1,
+      "message": "Ok. I will to this.\n\nInitially I wanted to put all checks into ShouldApplyBlur(). I would need to store information about locking state somewhere. The code is a little bit spread out (animations can be started by SessionManager or by PowerButtonController), unlocking info is stored in SessionManager, LockStateController is already sending animation related events to LockStateObservers. All of this is order sensitive, so I decided not to touch it now, because it needs to be merge into 64.",
+      "parentUuid": "e2ab1579_39c270a9",
+      "revId": "d9245a93b712a3957a50ab64319c197b54ca2a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
