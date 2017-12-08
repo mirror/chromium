@@ -80,6 +80,30 @@
       "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff793da_b2a705cd",
+        "filename": "extensions/common/api/feedback_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-08T00:28:56Z",
+      "side": 1,
+      "message": "yeah, but if this is set only when value is not empty, the feedback UI would not show that string",
+      "parentUuid": "24c0c294_0650ac7d",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 48
+      },
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
