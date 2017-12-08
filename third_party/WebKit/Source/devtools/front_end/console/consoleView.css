@@ -385,6 +385,17 @@
     vertical-align: baseline;
     color: inherit;
     display: inline-block;
+    overflow-wrap: break-word;
+    max-width: 100%;
+}
+
+.console-object {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.console-object > .object-properties-preview > span {
+    white-space: pre-wrap;
 }
 
 .console-message-stack-trace-toggle {
