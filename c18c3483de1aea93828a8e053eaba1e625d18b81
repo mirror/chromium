@@ -16,6 +16,24 @@
       "revId": "c18c3483de1aea93828a8e053eaba1e625d18b81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e3dda5_b33422fc",
+        "filename": "gpu/skia_bindings/grcontext_for_gles2_interface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-12-08T19:18:04Z",
+      "side": 1,
+      "message": "I almost did that as it seemed simpler. Since you also suggested it I\u0027ve gone ahead and moved the call here.",
+      "parentUuid": "1c73001c_bdb88cdc",
+      "revId": "c18c3483de1aea93828a8e053eaba1e625d18b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
