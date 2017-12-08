@@ -39,7 +39,7 @@ void AddVariationHeaders(const std::unique_ptr<net::URLFetcher>& fetcher) {
   // non-incognito state here (i.e. contextual sugestions are not served in
   // incognito mode).
   variations::AppendVariationHeaders(fetcher->GetOriginalURL(),
-                                     /*incognito=*/false, /*uma_enabled=*/false,
+                                     /*incognito=*/false,
                                      /*is_signed_in=*/false, &headers);
   for (net::HttpRequestHeaders::Iterator it(headers); it.GetNext();) {
     fetcher->AddExtraRequestHeader(it.name() + ":" + it.value());

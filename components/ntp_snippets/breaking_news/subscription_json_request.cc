@@ -129,7 +129,6 @@ std::string SubscriptionJsonRequest::Builder::BuildHeaders() const {
   // not affect transmission of experiments coming from the variations server.
   variations::AppendVariationHeaders(url_,
                                      false,  // incognito
-                                     false,  // uma_enabled
                                      false,  // is_signed_in
                                      &headers);
   return headers.ToString();

@@ -484,7 +484,7 @@ SuggestionsServiceImpl::CreateSuggestionsRequest(
   // Note: It's OK to pass |is_signed_in| false if it's unknown, as it does
   // not affect transmission of experiments coming from the variations server.
   bool is_signed_in = false;
-  variations::AppendVariationHeaders(request->GetOriginalURL(), false, false,
+  variations::AppendVariationHeaders(request->GetOriginalURL(), false,
                                      is_signed_in, &headers);
   request->SetExtraRequestHeaders(headers.ToString());
   if (!access_token.empty()) {

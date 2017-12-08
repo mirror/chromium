@@ -192,7 +192,7 @@ OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetExtraRequestHeaders(
   // Note: It's OK to pass |is_signed_in| false if it's unknown, as it does
   // not affect transmission of experiments coming from the variations server.
   variations::AppendVariationHeaders(url,
-                                     /*incognito=*/false, /*uma_enabled=*/false,
+                                     /*incognito=*/false,
                                      /*is_signed_in=*/false, &headers);
   return headers.ToString();
 }
