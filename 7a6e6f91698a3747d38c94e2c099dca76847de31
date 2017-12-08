@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cddfcdd1_31d63278",
+        "filename": "content/browser/browser_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-08T00:22:27Z",
+      "side": 1,
+      "message": "Register this info on packaged_services_connection_ in ServiceManagerContext instead (see content/browser/service_manager/service_manager_context.cc, resource_coordinator registration is done there for one example).",
+      "revId": "7a6e6f91698a3747d38c94e2c099dca76847de31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cddd42_9bc4950b",
+        "filename": "content/public/app/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-08T00:22:27Z",
+      "side": 1,
+      "message": "Move this to the \"packaged_services_manifest\" target above instead.",
+      "revId": "7a6e6f91698a3747d38c94e2c099dca76847de31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
