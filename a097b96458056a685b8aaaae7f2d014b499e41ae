@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8fafd5f1_8f3ec678",
+        "filename": "net/disk_cache/blockfile/file_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-08T18:43:07Z",
+      "side": 1,
+      "message": "Hmm, could probably change that to just use LazyInstance\u003cscoped_refptr and avoid having extra type, but if you don\u0027t feel like it, feel free to go ahead...",
+      "parentUuid": "9c92379c_d909dbfc",
+      "range": {
+        "startLine": 66,
+        "startChar": 68,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "a097b96458056a685b8aaaae7f2d014b499e41ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c35ba96_13acc594",
         "filename": "net/disk_cache/blockfile/file_win.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "If there will be any IO scheduled after application is shutted down - than may be.\nIt is unread code path, but in context of fixing crash after lazy instances are destroyed, i think, it should be considered",
       "parentUuid": "1c35ba96_13acc594",
+      "range": {
+        "startLine": 70,
+        "startChar": 61,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "a097b96458056a685b8aaaae7f2d014b499e41ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64112a0_0cad9e5f",
+        "filename": "net/disk_cache/blockfile/file_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-08T18:43:07Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "a46cdf58_2018172c",
       "range": {
         "startLine": 70,
         "startChar": 61,
