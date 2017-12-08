@@ -387,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "bc39348f_bb3d157e",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-08T01:17:16Z",
+      "side": 1,
+      "message": "Display id is composed of manufacturer id, product code hash and output index. Actually for two monitor of the same model, I print out the ids and found that both manufacturer id and product code hash are the same, the only difference is index. (Both displays are connected with USB-C port.)",
+      "parentUuid": "1e3c868f_70112167",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "811c607a_ea33fa25",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 8
