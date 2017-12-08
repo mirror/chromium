@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac6636c0_c41e6c4b",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-08T20:37:34Z",
+      "side": 1,
+      "message": "This one isn\u0027t DMM, it\u0027s a real world distance that scales all the other DMM values for this (or any) element.",
+      "range": {
+        "startLine": 218,
+        "startChar": 23,
+        "endLine": 218,
+        "endChar": 43
+      },
+      "revId": "089516678eb04a3a9756dcb13c8b27a23c5667ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7811316e_c1e2409a",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-08T20:37:34Z",
+      "side": 1,
+      "message": "f suffix for consistency.",
+      "range": {
+        "startLine": 220,
+        "startChar": 47,
+        "endLine": 220,
+        "endChar": 51
+      },
+      "revId": "089516678eb04a3a9756dcb13c8b27a23c5667ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edebcf03_e32f5294",
+        "filename": "chrome/browser/vr/ui_scene_constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-12-08T20:37:34Z",
+      "side": 1,
+      "message": "Radians (yeah, their are violations above - we seem to have a mix (sigh))",
+      "range": {
+        "startLine": 220,
+        "startChar": 23,
+        "endLine": 220,
+        "endChar": 43
+      },
+      "revId": "089516678eb04a3a9756dcb13c8b27a23c5667ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
