@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f202ef67_4e8713e7",
+        "filename": "media/mojo/common/mojo_data_pipe_read_write_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-12-08T00:31:01Z",
+      "side": 1,
+      "message": "nit: Please negate the expression and swap the then-block with the else-block.",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 21
+      },
+      "revId": "e1e8d7b4ec1ea33f85c547133f152262fad15484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
