@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2f75bd0_e383d354",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/SourcesPanel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-08T01:25:56Z",
+      "side": 1,
+      "message": "if (!uiSourceCode.contentType().isFromSourceMap())",
+      "revId": "4ef72f2420b3d179c759b757d54313a46cac8479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
