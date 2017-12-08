@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45e04b28_5776c584",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-08T00:30:21Z",
+      "side": 1,
+      "message": "... Assuming a well behaved proc, this shouldn\u0027t be reachable, right? Also, no unittest? :P",
+      "revId": "8b66662e263e0558fc68eaf3fe68c4dc91322079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c684aad6_1ef33a8b",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-08T00:30:21Z",
+      "side": 1,
+      "message": "Kind of odd that this was already here given this couldn\u0027t actually be null.",
+      "revId": "8b66662e263e0558fc68eaf3fe68c4dc91322079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52f4928_66ab1656",
+        "filename": "components/history/core/browser/typed_url_sync_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-12-08T00:30:21Z",
+      "side": 1,
+      "message": "reproted",
+      "revId": "8b66662e263e0558fc68eaf3fe68c4dc91322079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
