@@ -133,6 +133,7 @@
           "blink::mojom::PresentationService",
           "blink::mojom::TextSuggestionHost",
           "blink::mojom::WebBluetoothService",
+          "blink::mojom::WebPackagePrefetchService",
           "blink::mojom::WebSocket",
 
           // TODO(beng): figure out how to overlay test interfaces like this.
