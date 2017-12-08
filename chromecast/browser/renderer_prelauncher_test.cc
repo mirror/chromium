@@ -48,6 +48,8 @@ void RendererPrelauncherTest::SetUp() {
 void RendererPrelauncherTest::PreRunTestOnMainThread() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   base::RunLoop().RunUntilIdle();
+  // Wait for 3 seconds for other threads to spin.
+  base::PlatformThread::Sleep(base::TimeDelta::FromSeconds(3));
 
   metrics::CastMetricsHelper::GetInstance()->SetDummySessionIdForTesting();
 }
