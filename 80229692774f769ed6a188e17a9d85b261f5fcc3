@@ -70,6 +70,24 @@
       "revId": "80229692774f769ed6a188e17a9d85b261f5fcc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02075c01_992061f6",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-12-08T00:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82977912_a2714839",
+      "revId": "80229692774f769ed6a188e17a9d85b261f5fcc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
