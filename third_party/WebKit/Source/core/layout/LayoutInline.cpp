@@ -313,6 +313,7 @@ LayoutRect LayoutInline::LocalCaretRect(
 
 void LayoutInline::AddChild(LayoutObject* new_child,
                             LayoutObject* before_child) {
+  DCHECK(!IsAnonymous() || !before_child && new_child->IsText());
   // Any table-part dom child of an inline element has anonymous wrappers in the
   // layout tree so we need to climb up to the enclosing anonymous table wrapper
   // and add the new child before that.
