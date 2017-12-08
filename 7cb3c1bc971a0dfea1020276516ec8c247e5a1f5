@@ -16,6 +16,24 @@
       "revId": "7cb3c1bc971a0dfea1020276516ec8c247e5a1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde98c55_4d88447e",
+        "filename": "gpu/command_buffer/service/client_service_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-12-08T15:50:06Z",
+      "side": 1,
+      "message": "I tried this initially but scoped_refptr isn\u0027t a POD type and can\u0027t be used as a value template argument.",
+      "parentUuid": "093246ec_14ad1b58",
+      "revId": "7cb3c1bc971a0dfea1020276516ec8c247e5a1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
