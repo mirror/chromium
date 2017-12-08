@@ -8,11 +8,8 @@
 #include <string>
 
 #include "base/macros.h"
+#include "services/metrics/public/cpp/ukm_source_id.h"
 #include "url/gurl.h"
-
-namespace ukm {
-class UkmRecorder;
-}
 
 namespace payments {
 
@@ -127,9 +124,7 @@ class JourneyLogger {
     NOT_SHOWN_REASON_MAX = 4,
   };
 
-  JourneyLogger(bool is_incognito,
-                const GURL& url,
-                ukm::UkmRecorder* ukm_recorder);
+  JourneyLogger(bool is_incognito, ukm::SourceId source_id);
   ~JourneyLogger();
 
   // Increments the number of selection adds for the specified section.
@@ -232,10 +227,7 @@ class JourneyLogger {
   // Accumulates the many events that have happened during the Payment Request.
   int events_;
 
-  const GURL url_;
-
-  // Not owned, will outlive this object.
-  ukm::UkmRecorder* ukm_recorder_;
+  ukm::SourceId source_id_;
 
   DISALLOW_COPY_AND_ASSIGN(JourneyLogger);
 };
