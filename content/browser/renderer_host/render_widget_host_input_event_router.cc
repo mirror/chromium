@@ -8,8 +8,11 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "components/viz/common/quads/surface_draw_quad.h"
+#include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/surfaces/surface_manager.h"
+#include "content/browser/compositor/surface_utils.h"
 #include "content/browser/frame_host/render_widget_host_view_guest.h"
+#include "content/browser/mus_util.h"
 #include "content/browser/renderer_host/cursor_manager.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
@@ -163,10 +166,11 @@ RenderWidgetHostInputEventRouter::~RenderWidgetHostInputEventRouter() {
 RenderWidgetHostViewBase* RenderWidgetHostInputEventRouter::FindEventTarget(
     RenderWidgetHostViewBase* root_view,
     const gfx::Point& point,
+    viz::EventSource source,
     gfx::Point* transformed_point) {
   gfx::PointF temp_point(*transformed_point);
   RenderWidgetHostViewBase* view =
-      FindEventTarget(root_view, gfx::PointF(point), &temp_point);
+      FindEventTarget(root_view, gfx::PointF(point), source, &temp_point);
   *transformed_point = gfx::ToFlooredPoint(temp_point);
   return view;
 }
@@ -174,24 +178,50 @@ RenderWidgetHostViewBase* RenderWidgetHostInputEventRouter::FindEventTarget(
 RenderWidgetHostViewBase* RenderWidgetHostInputEventRouter::FindEventTarget(
     RenderWidgetHostViewBase* root_view,
     const gfx::PointF& point,
+    viz::EventSource source,
     gfx::PointF* transformed_point) {
-  // Short circuit if owner_map has only one RenderWidgetHostView, no need for
-  // hit testing.
-  if (owner_map_.size() <= 1) {
-    *transformed_point = point;
-    return root_view;
+  viz::FrameSinkId frame_sink_id;
+
+  if (IsUsingMus()) {
+    // TODO(kenrb): I suspect this is wrong, since my understanding is that
+    // HostFrameSinkManager's HitTestQuery is for the whole window. This would
+    // have 2 problems: first, we don't have the FrameSinkId for the window
+    // here, only for the top-level RWHV; second, |point| is in the top-level
+    // frame's coordinate space, whereas if we are hit testing against the
+    // entire window then we will get the wrong result.
+    const auto& display_hit_test_query_map =
+        GetHostFrameSinkManager()->display_hit_test_query();
+    const auto iter =
+        display_hit_test_query_map.find(root_view->GetFrameSinkId());
+    if (iter == display_hit_test_query_map.end())
+      return root_view;
+    viz::HitTestQuery* query = iter->second.get();
+    // TODO(kenrb): Add the short circuit to avoid hit testing when there is
+    // only one RenderWidgetHostView in the map. It is absent right now to
+    // make it easier to test the Viz hit testing code in development.
+    viz::Target target =
+        query->FindTargetForLocation(source, gfx::ToFlooredPoint(point));
+    frame_sink_id = target.frame_sink_id;
+    *transformed_point = gfx::PointF(target.location_in_target);
+  } else {
+    // Short circuit if owner_map has only one RenderWidgetHostView, no need for
+    // hit testing.
+    if (owner_map_.size() <= 1) {
+      *transformed_point = point;
+      return root_view;
+    }
+
+    // The hittest delegate is used to reject hittesting quads based on extra
+    // hittesting data send by the renderer.
+    HittestDelegate delegate(hittest_data_);
+
+    // The conversion of point to transform_point is done over the course of the
+    // hit testing, and reflect transformations that would normally be applied
+    // in the renderer process if the event was being routed between frames
+    // within a single process with only one RenderWidgetHost.
+    frame_sink_id =
+        root_view->FrameSinkIdAtPoint(&delegate, point, transformed_point);
   }
-
-  // The hittest delegate is used to reject hittesting quads based on extra
-  // hittesting data send by the renderer.
-  HittestDelegate delegate(hittest_data_);
-
-  // The conversion of point to transform_point is done over the course of the
-  // hit testing, and reflect transformations that would normally be applied in
-  // the renderer process if the event was being routed between frames within a
-  // single process with only one RenderWidgetHost.
-  viz::FrameSinkId frame_sink_id =
-      root_view->FrameSinkIdAtPoint(&delegate, point, transformed_point);
 
   const FrameSinkIdOwnerMap::iterator iter = owner_map_.find(frame_sink_id);
   // If the point hit a Surface whose namspace is no longer in the map, then
@@ -243,7 +273,7 @@ void RenderWidgetHostInputEventRouter::RouteMouseEvent(
       mouse_capture_target_.target = nullptr;
   } else {
     target = FindEventTarget(root_view, event->PositionInWidget(),
-                             &transformed_point);
+                             viz::EventSource::MOUSE, &transformed_point);
   }
 
   // RenderWidgetHostViewGuest does not properly handle direct routing of mouse
@@ -318,8 +348,9 @@ void RenderWidgetHostInputEventRouter::RouteMouseWheelEvent(
     }
   } else if (root_view->wheel_scroll_latching_enabled()) {
     if (event->phase == blink::WebMouseWheelEvent::kPhaseBegan) {
-      wheel_target_.target = FindEventTarget(
-          root_view, event->PositionInWidget(), &transformed_point);
+      wheel_target_.target =
+          FindEventTarget(root_view, event->PositionInWidget(),
+                          viz::EventSource::MOUSE, &transformed_point);
       wheel_target_.delta =
           gfx::ToFlooredVector2d(transformed_point - event->PositionInWidget());
       target = wheel_target_.target;
@@ -347,7 +378,7 @@ void RenderWidgetHostInputEventRouter::RouteMouseWheelEvent(
   } else {  // !root_view->IsMouseLocked() &&
     // !root_view->wheel_scroll_latching_enabled()
     target = FindEventTarget(root_view, event->PositionInWidget(),
-                             &transformed_point);
+                             viz::EventSource::MOUSE, &transformed_point);
   }
 
   if (!target) {
@@ -452,7 +483,8 @@ void RenderWidgetHostInputEventRouter::RouteTouchEvent(
         gfx::Point original_point(event->touches[0].PositionInWidget().x,
                                   event->touches[0].PositionInWidget().y);
         touch_target_.target =
-            FindEventTarget(root_view, original_point, &transformed_point);
+            FindEventTarget(root_view, original_point, viz::EventSource::TOUCH,
+                            &transformed_point);
 
         // TODO(wjmaclean): Instead of just computing a delta, we should extract
         // the complete transform. We assume it doesn't change for the duration
@@ -886,9 +918,10 @@ RenderWidgetHostInputEventRouter::GetRenderWidgetHostAtPoint(
     gfx::PointF* transformed_point) {
   if (!root_view)
     return nullptr;
-  return RenderWidgetHostImpl::From(
-      FindEventTarget(root_view, point, transformed_point)
-          ->GetRenderWidgetHost());
+  return RenderWidgetHostImpl::From(FindEventTarget(root_view, point,
+                                                    viz::EventSource::MOUSE,
+                                                    transformed_point)
+                                        ->GetRenderWidgetHost());
 }
 
 void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
@@ -967,8 +1000,8 @@ void RenderWidgetHostInputEventRouter::RouteTouchscreenGestureEvent(
       (no_matching_id && is_gesture_start)) {
     gfx::Point transformed_point;
     gfx::Point original_point(event->x, event->y);
-    touchscreen_gesture_target_.target =
-        FindEventTarget(root_view, original_point, &transformed_point);
+    touchscreen_gesture_target_.target = FindEventTarget(
+        root_view, original_point, viz::EventSource::TOUCH, &transformed_point);
     touchscreen_gesture_target_.delta = transformed_point - original_point;
   } else if (is_gesture_start) {
     touchscreen_gesture_target_ = gesture_target_it->second;
@@ -1006,8 +1039,8 @@ void RenderWidgetHostInputEventRouter::RouteTouchpadGestureEvent(
       event->GetType() == blink::WebInputEvent::kGestureFlingStart) {
     gfx::Point transformed_point;
     gfx::Point original_point(event->x, event->y);
-    touchpad_gesture_target_.target =
-        FindEventTarget(root_view, original_point, &transformed_point);
+    touchpad_gesture_target_.target = FindEventTarget(
+        root_view, original_point, viz::EventSource::TOUCH, &transformed_point);
     // TODO(mohsen): Instead of just computing a delta, we should extract the
     // complete transform. We assume it doesn't change for the duration of the
     // touchpad gesture sequence, though this could be wrong; a better approach
