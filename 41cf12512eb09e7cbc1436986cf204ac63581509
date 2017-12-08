@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c03427ef_b1aa9603",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-08T22:55:36Z",
+      "side": 1,
+      "message": "where does this ID come from, and why does it need to be present now?  As with all IDs, is it unguessable?  If not, what happens should a client lie about it?",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 16
+      },
+      "revId": "41cf12512eb09e7cbc1436986cf204ac63581509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
