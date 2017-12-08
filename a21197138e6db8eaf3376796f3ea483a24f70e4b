@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d71a792_ddf1257a",
+        "filename": "chrome/browser/ui/cocoa/toolbar/toolbar_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1182956
+      },
+      "writtenOn": "2017-12-08T16:46:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be2a2cb3_4fad5716",
+      "range": {
+        "startLine": 529,
+        "startChar": 13,
+        "endLine": 529,
+        "endChar": 24
+      },
+      "revId": "a21197138e6db8eaf3376796f3ea483a24f70e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0094969e_8d0b6b59",
         "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "a21197138e6db8eaf3376796f3ea483a24f70e4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371f9a0c_3a7c0da7",
+        "filename": "ui/accessibility/platform/ax_platform_node_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1182956
+      },
+      "writtenOn": "2017-12-08T16:46:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0094969e_8d0b6b59",
+      "range": {
+        "startLine": 634,
+        "startChar": 13,
+        "endLine": 634,
+        "endChar": 24
+      },
+      "revId": "a21197138e6db8eaf3376796f3ea483a24f70e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
