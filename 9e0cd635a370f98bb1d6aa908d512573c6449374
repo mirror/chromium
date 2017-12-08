@@ -16,6 +16,24 @@
       "revId": "9e0cd635a370f98bb1d6aa908d512573c6449374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6292d4_b42cdee7",
+        "filename": "base/synchronization/waitable_event_watcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-08T12:09:53Z",
+      "side": 1,
+      "message": "This test exists as of 2009 https://chromium.googlesource.com/chromium/src/+/1c4947ffee0b7f5672737b542eb6adf466fcb223. Does this test still matter? AFAIK there is no such usages of the watcher.",
+      "parentUuid": "76086aba_80dab905",
+      "revId": "9e0cd635a370f98bb1d6aa908d512573c6449374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
