@@ -71,6 +71,7 @@ class TestEncrypter : public QuicEncrypter {
   }
   size_t GetKeySize() const override { return 0; }
   size_t GetNoncePrefixSize() const override { return 0; }
+  size_t GetIVSize() const override { return 0; }
   size_t GetMaxPlaintextSize(size_t ciphertext_size) const override {
     return ciphertext_size;
   }
@@ -114,6 +115,8 @@ class TestDecrypter : public QuicDecrypter {
     *output_length = ciphertext.length();
     return true;
   }
+  size_t GetKeySize() const override { return 0; }
+  size_t GetIVSize() const override { return 0; }
   QuicStringPiece GetKey() const override { return QuicStringPiece(); }
   QuicStringPiece GetNoncePrefix() const override { return QuicStringPiece(); }
   // Use a distinct value starting with 0xFFFFFF, which is never used by TLS.

@@ -102,6 +102,11 @@ class QUIC_EXPORT_PRIVATE QuicDecrypter {
                              size_t* output_length,
                              size_t max_output_length) = 0;
 
+  // Returns the size in bytes of a key for the algorithm.
+  virtual size_t GetKeySize() const = 0;
+  // Returns the size in bytes of an IV to use with the algorithm.
+  virtual size_t GetIVSize() const = 0;
+
   // The ID of the cipher. Return 0x03000000 ORed with the 'cryptographic suite
   // selector'.
   virtual uint32_t cipher_id() const = 0;

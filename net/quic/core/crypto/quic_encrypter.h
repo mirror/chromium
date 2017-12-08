@@ -95,6 +95,9 @@ class QUIC_EXPORT_PRIVATE QuicEncrypter {
   // Returns the size in bytes of the fixed initial part of the nonce.
   virtual size_t GetNoncePrefixSize() const = 0;
 
+  // Returns the size in bytes of an IV to use with the algorithm.
+  virtual size_t GetIVSize() const = 0;
+
   // Returns the maximum length of plaintext that can be encrypted
   // to ciphertext no larger than |ciphertext_size|.
   virtual size_t GetMaxPlaintextSize(size_t ciphertext_size) const = 0;
