@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfb234d6_8026c04f",
+        "filename": "BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-08T22:24:40Z",
+      "side": 1,
+      "message": "This is not right; gn_all is *only* defined in the root //BUILD.gn , and is used to ensure the reachability of all of the other targets we normally want to be built. Because of the way templates and intermediate targets work, I think it\u0027s unlikely that we\u0027ll get to a point where gn_all \u003d\u003d all; you\u0027d have to list too many random things that we don\u0027t actually care about.\n\n(which is what I realized when I stopped trying to make this work).\n\nI think it\u0027s actually safe to delete \"All\" at this point, as well.",
+      "revId": "daa166c47b14bc20431f3819ac72f5e57709e185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
