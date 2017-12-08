@@ -242,6 +242,8 @@ source_set("test_support") {
   sources = [
     "video/mock_video_frame_receiver.cc",
     "video/mock_video_frame_receiver.h",
+    "video/mojo_enabled_test_environment.cc",
+    "video/mojo_enabled_test_environment.h",
   ]
 
   deps = [
@@ -249,6 +251,7 @@ source_set("test_support") {
     "//base/test:test_support",
     "//media:test_support",
     "//media/capture/mojo:image_capture",
+    "//mojo/edk/system",
     "//testing/gmock",
     "//ui/gfx:test_support",
   ]
@@ -266,6 +269,7 @@ test("capture_unittests") {
     "video/linux/camera_config_chromeos_unittest.cc",
     "video/linux/v4l2_capture_delegate_unittest.cc",
     "video/mac/video_capture_device_factory_mac_unittest.mm",
+    "video/shared_memory_handle_provider_unittest.cc",
     "video/video_capture_device_client_unittest.cc",
     "video/video_capture_device_unittest.cc",
     "video_capture_types_unittest.cc",
@@ -310,7 +314,6 @@ test("capture_unittests") {
     deps += [
       "//chromeos:chromeos",
       "//media/capture/video/chromeos/mojo:arc_camera3",
-      "//mojo/edk/system",
       "//third_party/libdrm",
       "//third_party/libsync",
       "//third_party/minigbm",
