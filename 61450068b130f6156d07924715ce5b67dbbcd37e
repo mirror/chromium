@@ -2,6 +2,253 @@
   "comments": [
     {
       "key": {
+        "uuid": "eb719bc4_8484e097",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "ToString",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7ade2a_9abf2cec",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "ToString",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2cce8bf_d7ba3202",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "General style in Chromium code is to pass strings by const reference.",
+      "range": {
+        "startLine": 79,
+        "startChar": 15,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0c7b67_9c581712",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "Even if this is a RepeatingCallback it can be moved and that avoids reference count churn.",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 40
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b46977_3b7bc5e4",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "DCHECK(!address_.empty());",
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8c662e_b4323733",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "DCHECK(!control_point_length_id_.empty())?",
+      "range": {
+        "startLine": 101,
+        "startChar": 37,
+        "endLine": 101,
+        "endChar": 61
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47141834_9618bc68",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "DCHECK(!service_revision_id_.empty() ||\n       !service_revision_bitfield_id_.empty());\n\nIt would also probably be good to avoid calling GetCharactaristic() with an empty string.",
+      "range": {
+        "startLine": 122,
+        "startChar": 37,
+        "endLine": 122,
+        "endChar": 57
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834e1370_7e3f5402",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "DCHECK(!control_point_id_.empty());",
+      "range": {
+        "startLine": 196,
+        "startChar": 37,
+        "endLine": 196,
+        "endChar": 54
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70693c19_25764bee",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "DCHECK(!service_revision_bitfield_id_.empty());",
+      "range": {
+        "startLine": 218,
+        "startChar": 37,
+        "endLine": 218,
+        "endChar": 66
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b18516e_f539a2e7",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "b",
+      "range": {
+        "startLine": 454,
+        "startChar": 71,
+        "endLine": 454,
+        "endChar": 72
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b45bc4e_22b4d066",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "The static_cast is unnecessary.",
+      "range": {
+        "startLine": 459,
+        "startChar": 21,
+        "endLine": 459,
+        "endChar": 42
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09bff050_8736e929",
         "filename": "device/u2f/u2f_ble_connection.h",
         "patchSetId": 13
@@ -42,6 +289,47 @@
         "endLine": 99,
         "endChar": 22
       },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f89df40_f83f5a9a",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "I\u0027ve used \"WaitForResult\" before. This could also be made clearer by always saying,\n\nbool result \u003d callback.WaitForResult();\nEXPECT_FALSE(result);",
+      "parentUuid": "4ff76376_1ad39ca8",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 22
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9f3bc5_38c94e9b",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-08T02:28:52Z",
+      "side": 1,
+      "message": "I prefer being more precise about what is being waited for and using this pattern with an explicit base::RunLoop member:\n\nquit_closure_ \u003d run_loop_.QuitClosure();\nrun_loop_.Run();\nreturn success_;\n\nIn OnConnect(),\n\nsuccess_ \u003d success;\nstd::move(quit_closure_).Run();",
       "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
