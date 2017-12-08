@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad0e512_f6f263be",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-08T07:56:03Z",
+      "side": 1,
+      "message": "IsIdle() can be true for up to 30 seconds before the timer actually detects idle and calls RequestTermination right? I think we should have a flag or state like requested_termination_ instead of checking IsIdle().\n\nIt\u0027s also kind of confusing terminology. If a worker is \"idle\" I\u0027d expect it to be able to handle events immediately. So I think we should make the distinction between \"idle\" and \"requested termination\" in comments/naming too.",
+      "revId": "bb885c8cc88df3a2ae999dc8f62bc0978ae73f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
