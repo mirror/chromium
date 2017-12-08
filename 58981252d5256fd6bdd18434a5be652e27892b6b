@@ -16,6 +16,24 @@
       "revId": "58981252d5256fd6bdd18434a5be652e27892b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b4620d_ec8c5ae6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-12-08T22:14:28Z",
+      "side": 1,
+      "message": "Not sure if that\u0027s all that\u0027s needed, we\u0027ll see how the tryjobs feel about it.",
+      "parentUuid": "6d198b7e_bbafffd1",
+      "revId": "58981252d5256fd6bdd18434a5be652e27892b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
