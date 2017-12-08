@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "53fd74ec_a29204fc",
+        "filename": "chrome/browser/extensions/extension_storage_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-08T20:12:31Z",
+      "side": 1,
+      "message": "Does this mean that the previous registration was ineffective (because NOTIFICATION_PROFILE_DESTROYED is sent on a Source\u003cProfile\u003e not a Source\u003cBrowserContext\u003e), or did it magically work?",
+      "revId": "ececd371f7c9579606b787e824ca1a2cf86cc298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1652618_dfbfb466",
         "filename": "chrome/browser/extensions/extension_storage_monitor.cc",
         "patchSetId": 1
