@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42ed9e8b_f0e4e391",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1250943
+      },
+      "writtenOn": "2017-12-08T11:01:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20addd7d_45d68c56",
+      "range": {
+        "startLine": 134,
+        "startChar": 30,
+        "endLine": 134,
+        "endChar": 35
+      },
+      "revId": "537cf907472dee2fc26b085f2f44a2295cb13a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5cb9531_67f2f6b6",
         "filename": "ui/ozone/platform/wayland/wayland_touch.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-05T18:53:44Z",
       "side": 1,
       "message": "Please initialize: \u003d nullptr;\n\nWhat prevents wl_surface the from being destroyed prior to TouchPoint?\n\nI am concerned about the lifetime here. It think we likely need to make a call on WaylandTouch whenever a surface is destroyed to clean up touch points for that surface. Otherwise we\u0027ll have a dangling pointer here.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 12
+      },
+      "revId": "537cf907472dee2fc26b085f2f44a2295cb13a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdebd641_600d6db3",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1250943
+      },
+      "writtenOn": "2017-12-08T11:01:31Z",
+      "side": 1,
+      "message": "I looked into this, and there might me cases where WaylandWindow is destroyed(destroys surface also) and there touchpoints are left uncleared.\nThe current patchset handles this scenario.",
+      "parentUuid": "a5cb9531_67f2f6b6",
       "range": {
         "startLine": 26,
         "startChar": 2,
