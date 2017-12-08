@@ -7,6 +7,7 @@
 
 #include "base/base_export.h"
 #include "base/macros.h"
+#include "base/sequenced_task_runner.h"
 #include "build/build_config.h"
 
 #if defined(OS_WIN)
@@ -76,7 +77,7 @@ class BASE_EXPORT WaitableEventWatcher
 {
  public:
   using EventCallback = OnceCallback<void(WaitableEvent*)>;
-  WaitableEventWatcher();
+  explicit WaitableEventWatcher(scoped_refptr<SequencedTaskRunner> task_runner);
 
 #if defined(OS_WIN)
   ~WaitableEventWatcher() override;
@@ -146,6 +147,8 @@ class BASE_EXPORT WaitableEventWatcher
   // sequence.
   SequenceChecker sequence_checker_;
 #endif
+
+  scoped_refptr<SequencedTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(WaitableEventWatcher);
 };
