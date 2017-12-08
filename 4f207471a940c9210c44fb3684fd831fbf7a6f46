@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14f923ff_5ecef49b",
+        "filename": "ios/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-08T00:48:46Z",
+      "side": 1,
+      "message": "Do we have a bug for deprecation which we can reference here?",
+      "range": {
+        "startLine": 16,
+        "startChar": 55,
+        "endLine": 16,
+        "endChar": 65
+      },
+      "revId": "4f207471a940c9210c44fb3684fd831fbf7a6f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
