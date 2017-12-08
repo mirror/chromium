@@ -498,61 +498,88 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
   base::TimeTicks task_start_time;
   TRACE_TASK_EXECUTION("TaskQueueManager::ProcessTaskFromWorkQueue",
                        pending_task);
-  if (queue->GetShouldNotifyObservers()) {
-    for (auto& observer : task_observers_)
-      observer.WillProcessTask(pending_task);
-    queue->NotifyWillProcessTask(pending_task);
+  {
+    TRACE_EVENT0("renderer.scheduler", "TaskQueueManager::PreTaskObservers");
+    if (queue->GetShouldNotifyObservers()) {
+      {
+        TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
+                     "TaskQueueManager::TaskObservers");
+        for (auto& observer : task_observers_)
+          observer.WillProcessTask(pending_task);
+        queue->NotifyWillProcessTask(pending_task);
+      }
 
-    bool notify_time_observers = !controller_->IsNested() &&
-                                 (task_time_observers_.might_have_observers() ||
-                                  queue->RequiresTaskTiming());
-    if (notify_time_observers) {
-      task_start_time = time_before_task.Now();
-      task_start_time_sec = MonotonicTimeInSeconds(task_start_time);
-      for (auto& observer : task_time_observers_)
-        observer.WillProcessTask(task_start_time_sec);
-      queue->OnTaskStarted(pending_task, task_start_time);
+      {
+        TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
+                     "TaskQueueManager::TimeObservers");
+        bool notify_time_observers =
+            !controller_->IsNested() &&
+            (task_time_observers_.might_have_observers() ||
+             queue->RequiresTaskTiming());
+        if (notify_time_observers) {
+          task_start_time = time_before_task.Now();
+          task_start_time_sec = MonotonicTimeInSeconds(task_start_time);
+          for (auto& observer : task_time_observers_)
+            observer.WillProcessTask(task_start_time_sec);
+          queue->OnTaskStarted(pending_task, task_start_time);
+        }
+      }
     }
   }
 
-  TRACE_EVENT1("renderer.scheduler", "TaskQueueManager::RunTask", "queue",
-               queue->GetName());
-  // NOTE when TaskQueues get unregistered a reference ends up getting retained
-  // by |queues_to_delete_| which is cleared at the top of |DoWork|. This means
-  // we are OK to use raw pointers here.
-  internal::TaskQueueImpl* prev_executing_task_queue =
-      currently_executing_task_queue_;
-  currently_executing_task_queue_ = queue;
-  task_annotator_.RunTask("TaskQueueManager::PostTask", &pending_task);
-  // Detect if the TaskQueueManager just got deleted.  If this happens we must
-  // not access any member variables after this point.
-  if (!protect)
-    return ProcessTaskResult::kTaskQueueManagerDeleted;
+  {
+    TRACE_EVENT1("renderer.scheduler", "TaskQueueManager::RunTask", "queue",
+                 queue->GetName());
+    // NOTE when TaskQueues get unregistered a reference ends up getting
+    // retained by |queues_to_delete_| which is cleared at the top of |DoWork|.
+    // This means we are OK to use raw pointers here.
+    internal::TaskQueueImpl* prev_executing_task_queue =
+        currently_executing_task_queue_;
+    currently_executing_task_queue_ = queue;
+    task_annotator_.RunTask("TaskQueueManager::PostTask", &pending_task);
+    // Detect if the TaskQueueManager just got deleted.  If this happens we must
+    // not access any member variables after this point.
+    if (!protect)
+      return ProcessTaskResult::kTaskQueueManagerDeleted;
 
-  currently_executing_task_queue_ = prev_executing_task_queue;
-
-  double task_end_time_sec = 0;
-  if (queue->GetShouldNotifyObservers()) {
-    if (task_start_time_sec) {
-      *time_after_task = real_time_domain()->Now();
-      task_end_time_sec = MonotonicTimeInSeconds(*time_after_task);
-
-      for (auto& observer : task_time_observers_)
-        observer.DidProcessTask(task_start_time_sec, task_end_time_sec);
-    }
-
-    for (auto& observer : task_observers_)
-      observer.DidProcessTask(pending_task);
-    queue->NotifyDidProcessTask(pending_task);
+    currently_executing_task_queue_ = prev_executing_task_queue;
   }
 
-  if (task_start_time_sec && task_end_time_sec)
-    queue->OnTaskCompleted(pending_task, task_start_time, *time_after_task);
+  {
+    TRACE_EVENT0("renderer.scheduler", "TaskQueueManager::PostTaskObservers");
+    double task_end_time_sec = 0;
+    {
+      TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
+                   "TaskQueueManager::TimeObservers");
+      if (queue->GetShouldNotifyObservers()) {
+        if (task_start_time_sec) {
+          *time_after_task = real_time_domain()->Now();
+          task_end_time_sec = MonotonicTimeInSeconds(*time_after_task);
 
-  if (task_start_time_sec && task_end_time_sec &&
-      task_end_time_sec - task_start_time_sec > kLongTaskTraceEventThreshold) {
-    TRACE_EVENT_INSTANT1("blink", "LongTask", TRACE_EVENT_SCOPE_THREAD,
-                         "duration", task_end_time_sec - task_start_time_sec);
+          for (auto& observer : task_time_observers_)
+            observer.DidProcessTask(task_start_time_sec, task_end_time_sec);
+        }
+      }
+    }
+    {
+      TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
+                   "TaskQueueManager::TaskObservers");
+      if (queue->GetShouldNotifyObservers()) {
+        for (auto& observer : task_observers_)
+          observer.DidProcessTask(pending_task);
+        queue->NotifyDidProcessTask(pending_task);
+      }
+
+      if (task_start_time_sec && task_end_time_sec)
+        queue->OnTaskCompleted(pending_task, task_start_time, *time_after_task);
+    }
+
+    if (task_start_time_sec && task_end_time_sec &&
+        task_end_time_sec - task_start_time_sec >
+            kLongTaskTraceEventThreshold) {
+      TRACE_EVENT_INSTANT1("blink", "LongTask", TRACE_EVENT_SCOPE_THREAD,
+                           "duration", task_end_time_sec - task_start_time_sec);
+    }
   }
 
   return ProcessTaskResult::kExecuted;
