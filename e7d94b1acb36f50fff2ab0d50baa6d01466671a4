@@ -22,6 +22,30 @@
       "revId": "e7d94b1acb36f50fff2ab0d50baa6d01466671a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7df311_4598afbb",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-08T21:51:43Z",
+      "side": 0,
+      "message": "We also want to update the list when a second network interface is brought up when the system is online. Will we get net::NetworkChangeNotifier::CONNECTION_NONE notification in that case?",
+      "parentUuid": "3fe12f3d_ac24936d",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "e7d94b1acb36f50fff2ab0d50baa6d01466671a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
