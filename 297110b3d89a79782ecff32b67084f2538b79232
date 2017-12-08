@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af7ff07_f9ce241e",
+        "filename": "tools/cygprofile/compare_orderfiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-12-08T17:15:06Z",
+      "side": 1,
+      "message": "It would be more compact to have symbols be a set, and then return list(symbols). Then already_seen isn\u0027t necessary.\n\nOr even just return the set of symbols, as that\u0027s how it\u0027s used below.",
+      "revId": "297110b3d89a79782ecff32b67084f2538b79232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a8bfab_2c32680c",
+        "filename": "tools/cygprofile/compare_orderfiles.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-12-08T17:15:06Z",
+      "side": 1,
+      "message": "You should also print the total number of symbols in order to get a sense of scale of the # removed/added.",
+      "range": {
+        "startLine": 60,
+        "startChar": 17,
+        "endLine": 60,
+        "endChar": 24
+      },
+      "revId": "297110b3d89a79782ecff32b67084f2538b79232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
