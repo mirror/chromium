@@ -91,6 +91,7 @@ crbug.com/771643 virtual/spv175/compositing/overflow/border-radius-styles-with-c
 crbug.com/771643 virtual/spv175/compositing/overflow/composited-layer-under-border-radius-under-composited-layer.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/grandchild-composited-with-border-radius-ancestor.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/grandchild-with-border-radius-ancestor.html [ Failure ]
+crbug.com/771643 virtual/spv175/compositing/overflow/nested-border-radius-clipping.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/relpos-under-abspos-border-radius.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/scroll-ancestor-update.html [ Failure ]
 crbug.com/771643 virtual/spv175/compositing/overflow/scroll-neg-z-index-and-composited-child.html [ Failure ]
@@ -3716,3 +3717,4 @@ crbug.com/788390 [ Linux ] http/tests/media/autoplay/document-user-activation-fe
 crbug.com/788390 [ Linux ] http/tests/media/autoplay/document-user-activation-feature-policy-iframe-no-gesture.html [ Failure Pass Timeout ]
 crbug.com/788390 [ Linux ] http/tests/media/autoplay/document-user-activation-feature-policy-same-origin.html [ Failure Pass Timeout ]
 crbug.com/788390 [ Linux ] http/tests/media/autoplay/document-user-activation-iframe-delegation.html [ Failure Pass Timeout ]
+
