@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>source url test for USVString</title>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+  </head>
+  <body>
+    <div id="log"></div>
+    <script>
+    test(function () {
+        var s = document.createElement("source");
+        s.src = '\uD999';
+        assert_equals(s.src.substr(-('%EF%BF%BD'.length)), '%EF%BF%BD');
+    }, "unpaired surrogate codepoint should be replaced with U+FFFD");
+    </script>
+  </body>
+</html>
