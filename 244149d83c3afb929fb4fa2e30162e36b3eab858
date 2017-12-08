@@ -16,6 +16,24 @@
       "revId": "244149d83c3afb929fb4fa2e30162e36b3eab858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9262af18_84966c5b",
+        "filename": "ios/chrome/browser/snapshots/web_controller_snapshot_helper.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-08T10:19:15Z",
+      "side": 1,
+      "message": "I was finding original code \"!foo \u0026\u0026 bar\" harder to read, my mind was always trying to parse as \"!(foo \u0026\u0026 bar)\" which is incorrect. I don\u0027t have the issue with \"bar \u0026\u0026 !foo\" (it is also slightly faster as the property access is only done if visibleFrameOnly is YES, so we can avoid one method dispatch in some cases, but I have no idea how frequent it is).\n\nTL;DR: same semantic, somewhat easier to read when tired.",
+      "parentUuid": "ca1f6fd5_332d6dfe",
+      "revId": "244149d83c3afb929fb4fa2e30162e36b3eab858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
