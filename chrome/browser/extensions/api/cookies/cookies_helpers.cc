@@ -118,17 +118,11 @@ CookieStore CreateCookieStore(Profile* profile,
   return cookie_store;
 }
 
-void GetCookieListFromStore(
-    net::CookieStore* cookie_store,
-    const GURL& url,
-    net::CookieMonster::GetCookieListCallback callback) {
-  DCHECK(cookie_store);
-  if (!url.is_empty()) {
-    DCHECK(url.is_valid());
-    cookie_store->GetAllCookiesForURLAsync(url, std::move(callback));
-  } else {
-    cookie_store->GetAllCookiesAsync(std::move(callback));
-  }
+void CreateCookieOptions(net::CookieOptions* options) {
+  options->set_include_httponly();
+  options->set_same_site_cookie_mode(
+      net::CookieOptions::SameSiteCookieMode::INCLUDE_STRICT_AND_LAX);
+  options->set_do_not_update_access_time();
 }
 
 GURL GetURLFromCanonicalCookie(const net::CanonicalCookie& cookie) {
