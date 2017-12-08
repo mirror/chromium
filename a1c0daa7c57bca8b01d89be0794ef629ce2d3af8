@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e5473547_7bdfe715",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: Remove \"n\" or write it up.",
+      "range": {
+        "startLine": 518,
+        "startChar": 54,
+        "endLine": 518,
+        "endChar": 55
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43dcc376_a67c3301",
+        "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: It\u0027s not nice to have the GUID being randomly generated - ideally, the test data should be deterministic. Use RandomDataToGUIDString() or simply hardcode some test GUID in a constant.",
+      "range": {
+        "startLine": 524,
+        "startChar": 39,
+        "endLine": 524,
+        "endChar": 59
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c6c4eec_3f9b842a",
         "filename": "chrome/browser/chromeos/login/webview_login_browsertest.cc",
         "patchSetId": 5
@@ -13,6 +59,52 @@
       "writtenOn": "2017-12-06T22:19:31Z",
       "side": 1,
       "message": "The downside of what I mentioned regarding NSS\u0027s caching behaviour is that there\u0027s no guarantee this test won\u0027t be flakey.\n\nIf NSS has cached in memory (e.g. from a previous verification) this certificate, this test will fail, although not for it being wrong.\n\nUnfortunately, I don\u0027t have a good suggestion on how to deflake this - there\u0027s no way to force-clear that cache to gain deterministic behaviour, short of ensuring dedicated process launches. The test runner \u0027should\u0027 do this, but it\u0027s somewhat gross to depend on.\n\nI mention this for two reasons:\n- If it flakes, now you know why\n- Wondering if a future design (code cleanup rather than feature blocking) would be to supply the ONC certs to the ClientCertStore, now that we have that, and then have the tests check that the ClientCertStore had the ONC policies made available to them.\n\nThis avoids the complications of the original plan (importing into the NSS trust database and segmenting them), and allows greater future flexibility, while also not being potentially-flaky.\n\nNote the same applies for the *Known test below :)",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100500c9_485b4742",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: Add space for consistency.",
+      "range": {
+        "startLine": 63,
+        "startChar": 30,
+        "endLine": 63,
+        "endChar": 32
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4d5a7e_cfd24df4",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: \"nullptr\" (especially given that it\u0027s already using in this file)",
+      "range": {
+        "startLine": 67,
+        "startChar": 47,
+        "endLine": 67,
+        "endChar": 51
+      },
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -42,6 +134,23 @@
     },
     {
       "key": {
+        "uuid": "c50c893c_afe99619",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: GetStringWithoutPathExpansion() is marked as deprecated, so for new code use FindKey()+GetString().",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f09403b6_984412b6",
         "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.cc",
         "patchSetId": 5
@@ -53,6 +162,29 @@
       "writtenOn": "2017-12-06T22:19:31Z",
       "side": 1,
       "message": "Should this be a LOG(ERROR)? I\u0027m not sure the ChromeOS policies around logging, but normally I\u0027d push back on shipping this sort of log statement to the user, especially if ONC files are created by the server.\n\nMy $.02",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a20e735_a6540847",
+        "filename": "chrome/browser/chromeos/policy/device_network_configuration_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: \"Returns\"",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 12
+      },
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +225,155 @@
     },
     {
       "key": {
+        "uuid": "69a17ba8_a46af92a",
+        "filename": "chrome/browser/chromeos/policy/network_configuration_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: Remove this part of the comment? It\u0027s a void method.",
+      "range": {
+        "startLine": 68,
+        "startChar": 41,
+        "endLine": 68,
+        "endChar": 78
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75337bc_a5ab1764",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: You can omit \".get()\".",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb10a5a_9979beb0",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: Seems unused.",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36e12c1_18caff5d",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: Maybe name it \"UntrustedAuthorityCertsCache\" to make its meaning more obvious?",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef496ac_b7950ede",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85334d5_f1938dbb",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: Maybe provide a more explanative comment here?\nFirst, explaining that this member actually owns the needed CERTCertificate objects, which is enough for NSS to use them as intermediates for client cert discovery even though they are not passed anywhere as explicit parameters.\nSecond, noting something explicit like \"please don\u0027t delete this field despite that it looks unused\".\nThird (optionally), noting the concern explained by Ryan that the destruction of this list is not necessarily preventing these certs from being reused by NSS due to some caching, and that it\u0027s still fine as there\u0027s no security/privacy issue with their reuse.",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3406ca_64a32839",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: Probably ASSERT that the file was read successfully?",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e910c69_311e2453",
         "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
         "patchSetId": 5
@@ -104,6 +385,138 @@
       "writtenOn": "2017-12-06T22:19:31Z",
       "side": 1,
       "message": "push_back(std::move()) has the same performance characteristics here, and has the clarity of avoiding confusion over emplace_back\u0027s potential conversions",
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577286d5_70e7bce1",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: \"found\"",
+      "range": {
+        "startLine": 46,
+        "startChar": 64,
+        "endLine": 46,
+        "endChar": 68
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d4cb94_9c3e4ca1",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: \"The\"",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 8
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00af821_daa04582",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: It\u0027s a bit unclear from this comment what is the real goal of the test - IIUC, it\u0027s that NSS is able to find the cert that was passed into UntrustedAuthoritiesCache?",
+      "range": {
+        "startLine": 109,
+        "startChar": 29,
+        "endLine": 109,
+        "endChar": 67
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5943f67_ad9db4ac",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: Maybe just use AppendASCII()?",
+      "range": {
+        "startLine": 114,
+        "startChar": 35,
+        "endLine": 114,
+        "endChar": 59
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3032d668_a523b3c1",
+        "filename": "chrome/browser/chromeos/policy/untrusted_authorities_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit (optional): As you\u0027re actually testing that this variable is assigned to false, then it would be a bit more secure to initialize it with true. But not insisting as it can perhaps look weird for some (although I\u0027ve seen some testing code with such extended precautions in Chrome already :) ).",
+      "range": {
+        "startLine": 124,
+        "startChar": 33,
+        "endLine": 124,
+        "endChar": 38
+      },
+      "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6e113a_58ff9131",
+        "filename": "chromeos/network/onc/onc_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-08T00:32:51Z",
+      "side": 1,
+      "message": "nit: It\u0027s becoming unclear what is the return value - does it talk about the validation of the whole blob, or it\u0027s only about the parts for which non-null pointers were passed? Seems like the latter, but it should be documented here at least.",
       "revId": "a1c0daa7c57bca8b01d89be0794ef629ce2d3af8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
