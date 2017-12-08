@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec00a051_c4990ff5",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e84824c8_43ff319d",
+      "range": {
+        "startLine": 114,
+        "startChar": 26,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ceb8750_0d2678db",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f382e314_7bddb159",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "Initialization of array or object properties in Polymer should use a function to ensure that each element gets its own copy of the value, rather than having an object or array shared across all instances of the element (https://www.polymer-project.org/1.0/docs/devguide/properties#configure-values).",
+      "parentUuid": "1ceb8750_0d2678db",
+      "range": {
+        "startLine": 212,
+        "startChar": 25,
+        "endLine": 212,
+        "endChar": 0
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0607de82_8280a5b9",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1079d8f9_3ede29bb",
+      "range": {
+        "startLine": 377,
+        "startChar": 17,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16ad077f_a7d47dfb",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02166d2e_e5a75708",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ad077f_a7d47dfb",
+      "range": {
+        "startLine": 673,
+        "startChar": 22,
+        "endLine": 673,
+        "endChar": 23
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "86f9bc1b_6e401eff",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bd89e68_3f72ff5f",
+      "range": {
+        "startLine": 25,
+        "startChar": 23,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67d6912c_5d6c8e89",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09536b4_42eed62b",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67d6912c_5d6c8e89",
+      "range": {
+        "startLine": 5,
+        "startChar": 31,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d8d49da3_6dfdf6ea",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6325213_6e1de6aa",
+      "range": {
+        "startLine": 9,
+        "startChar": 55,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8288b4d5_fa1bc4b1",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
         "patchSetId": 6
@@ -183,6 +351,30 @@
       "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee87be06_9e01c025",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "Good point. I asked srahim@ for advice on this and will update the code as soon as we have a decision. Added a TODO, so that this won\u0027t block the CL.",
+      "parentUuid": "8288b4d5_fa1bc4b1",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "f0976476_d41759a6",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "Good point. The issue I was trying to solve was to avoid cases when only one of the variables was initialized (Polymer observers take care of that). Separating the initial and the current expanded state fixes the recursive issue.",
+      "parentUuid": "82ad89e5_bfaea36b",
+      "range": {
+        "startLine": 84,
+        "startChar": 60,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19ad3f5b_e4975b3d",
         "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
         "patchSetId": 6
@@ -229,6 +445,30 @@
       "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513b21b8_ff87bd6a",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19ad3f5b_e4975b3d",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 69
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "d059672e_6a701f90",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "I ran into initial state issues in tests, and the card would always start expanded. Added a comment.",
+      "parentUuid": "92b35900_d706d966",
+      "range": {
+        "startLine": 118,
+        "startChar": 56,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bef2b3d3_7a4849d9",
         "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
         "patchSetId": 6
@@ -275,6 +539,30 @@
       "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11526b5d_46e77cf6",
+        "filename": "chrome/browser/ui/webui/settings/chrome_cleanup_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-12-08T20:18:26Z",
+      "side": 1,
+      "message": "I need vacations!",
+      "parentUuid": "bef2b3d3_7a4849d9",
+      "range": {
+        "startLine": 352,
+        "startChar": 24,
+        "endLine": 352,
+        "endChar": 0
+      },
+      "revId": "6e6b3568aa22fbc8f2d42fef658af111cb874633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
