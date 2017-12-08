@@ -70,6 +70,24 @@
       "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "099a80e4_df0ce4f4",
+        "filename": "components/ukm/ukm_recorder_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-08T17:04:43Z",
+      "side": 1,
+      "message": "SGTM, just for the record I am less interested in implementing UrlNeedsSanitizing, it\u0027s probably not worth it. We\u0027d get most of the benefit from:\nif (!url.has_username() \u0026\u0026 !url.has_password())\n  return url;\n\nBut yeah obviously implementing this at GURL has benefits too,though it also has drawbacks too. The solution would need to:\n1. Go through all the replacements\n2. For each one, determine:\n  a. It is a no-op OR\n  b. It is Clear but the GURL does not have that element\n\nI can try to work on it.",
+      "parentUuid": "e383be42_7a761ba3",
+      "revId": "a8759ff644c9cff35abd1d34add5c02a135ce698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
