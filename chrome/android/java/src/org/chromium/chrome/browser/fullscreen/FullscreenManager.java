@@ -91,12 +91,12 @@ public abstract class FullscreenManager {
      * Updates the positions of the browser controls and content based on the desired position of
      * the current tab.
      *
-     * @param topControlsOffset The Y offset of the top controls.
-     * @param bottomControlsOffset The Y offset of the bottom controls.
+     * @param topControlsShownRatio The fraction of the top controls currently shown.
+     * @param bottomControlsShownRatio The fraction of the bottom controls currently shown.
      * @param topContentOffset The Y offset for the content.
      */
-    public abstract void setPositionsForTab(float topControlsOffset, float bottomControlsOffset,
-            float topContentOffset);
+    public abstract void setPositionsForTab(
+            float topControlsShownRatio, float bottomControlsShownRatio, float topContentOffset);
 
     /**
      * Updates the current ContentView's children and any popups with the correct offsets based on

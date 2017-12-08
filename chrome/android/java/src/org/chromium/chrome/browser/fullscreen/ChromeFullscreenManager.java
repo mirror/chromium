@@ -26,7 +26,6 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabSelectionType;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabModelObserver;
-import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.widget.ControlContainer;
 import org.chromium.content.browser.ContentVideoView;
 import org.chromium.content.browser.ContentViewCore;
@@ -476,7 +475,6 @@ public class ChromeFullscreenManager
         }
         boolean controlsResizeView =
                 topContentOffset > 0 || bottomControlOffset < getBottomControlsHeight();
-        controlsResizeView &= !VrShellDelegate.isInVr();
         mControlsResizeView = controlsResizeView;
         Tab tab = getTab();
         if (tab == null) return;
@@ -632,19 +630,19 @@ public class ChromeFullscreenManager
     public void setPositionsForTabToNonFullscreen() {
         Tab tab = getTab();
         if (tab == null || tab.canShowBrowserControls()) {
-            setPositionsForTab(0, 0, getTopControlsHeight());
+            setPositionsForTab(1.0f, 1.0f, getTopControlsHeight());
         } else {
-            setPositionsForTab(-getTopControlsHeight(), getBottomControlsHeight(), 0);
+            setPositionsForTab(0, 0, 0);
         }
     }
 
     @Override
-    public void setPositionsForTab(float topControlsOffset, float bottomControlsOffset,
-            float topContentOffset) {
+    public void setPositionsForTab(
+            float topControlsShownRatio, float bottomControlsShownRatio, float topContentOffset) {
         float rendererTopControlOffset =
-                Math.round(Math.max(topControlsOffset, -getTopControlsHeight()));
+                Math.round((1.0f - topControlsShownRatio) * -getTopControlsHeight());
         float rendererBottomControlOffset =
-                Math.round(Math.min(bottomControlsOffset, getBottomControlsHeight()));
+                Math.round((1.0f - bottomControlsShownRatio) * getBottomControlsHeight());
 
         float rendererTopContentOffset = Math.min(
                 Math.round(topContentOffset), rendererTopControlOffset + getTopControlsHeight());

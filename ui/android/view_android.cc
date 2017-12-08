@@ -368,24 +368,24 @@ void ViewAndroid::OnBackgroundColorChanged(unsigned int color) {
   Java_ViewAndroidDelegate_onBackgroundColorChanged(env, delegate, color);
 }
 
-void ViewAndroid::OnTopControlsChanged(float top_controls_offset,
+void ViewAndroid::OnTopControlsChanged(float top_controls_shown_ratio,
                                        float top_content_offset) {
   ScopedJavaLocalRef<jobject> delegate(GetViewAndroidDelegate());
   if (delegate.is_null())
     return;
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_ViewAndroidDelegate_onTopControlsChanged(
-      env, delegate, top_controls_offset, top_content_offset);
+      env, delegate, top_controls_shown_ratio, top_content_offset);
 }
 
-void ViewAndroid::OnBottomControlsChanged(float bottom_controls_offset,
+void ViewAndroid::OnBottomControlsChanged(float bottom_controls_shown_ratio,
                                           float bottom_content_offset) {
   ScopedJavaLocalRef<jobject> delegate(GetViewAndroidDelegate());
   if (delegate.is_null())
     return;
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_ViewAndroidDelegate_onBottomControlsChanged(
-      env, delegate, bottom_controls_offset, bottom_content_offset);
+      env, delegate, bottom_controls_shown_ratio, bottom_content_offset);
 }
 
 int ViewAndroid::GetSystemWindowInsetBottom() {
