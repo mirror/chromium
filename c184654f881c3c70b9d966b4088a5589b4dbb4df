@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a50e9a86_aec608f2",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T18:24:41Z",
+      "side": 1,
+      "message": "Would it be possible to move this to printing/units.h now that you\u0027re changing that file?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54313203_51c552ff",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T18:24:41Z",
+      "side": 1,
+      "message": "nit: size_t",
+      "range": {
+        "startLine": 164,
+        "startChar": 9,
+        "endLine": 164,
+        "endChar": 12
+      },
+      "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6218497f_f6a86160",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T18:24:41Z",
+      "side": 1,
+      "message": "This ownership entanglement looks a bit hard to maintain. I think it would be easier to manage if you held WeakPtr\u003cPrintJobHostImpl\u003e here instead of raw pointers, and while you\u0027re iterating the vector to notify the jobs, prune any dead objects. That should allow you to stop accessing |jobs_| from that class.\n\nThe only other reason why you want to give access to |this| on that class is to get the chromeos::CupsPrintJobManagerFactory::GetForBrowserContext(profile), but you can cache that in this class\u0027 ctor and just pass a reference to it.\n\nAs part of the KeyedService contract, you *must* stop using any other keyed services when the Shutdown() method is invoked, so at that point in time you must cancel any pending jobs (which you can safely do since you have their weakptrs) and any discovery sessions (which means you also need to store those somewhere in this class).",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712cbd57_708261f9",
+        "filename": "chrome/browser/chromeos/arc/print/arc_print_service.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T18:24:41Z",
+      "side": 1,
+      "message": "You don\u0027t need a mapping after the suggested changes, std::vector suffices.",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 20
+      },
+      "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1eae6a9_393e2ce0",
+        "filename": "chrome/browser/chromeos/arc/print/print_struct_traits.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-08T18:24:41Z",
+      "side": 1,
+      "message": "nit: when dealing with bitmasks, use uint32_t",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 23
+      },
+      "revId": "c184654f881c3c70b9d966b4088a5589b4dbb4df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
