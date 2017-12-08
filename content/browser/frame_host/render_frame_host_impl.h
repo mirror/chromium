@@ -899,6 +899,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void DidSetFramePolicyHeaders(
       blink::WebSandboxFlags sandbox_flags,
       const blink::ParsedFeaturePolicy& parsed_header) override;
+  void DidCommitSameDocumentNavigation(
+      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+          validated_params) override;
 
   // Registers Mojo interfaces that this frame host makes available.
   void RegisterMojoInterfaces();
@@ -1072,6 +1075,21 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // for this frame. May be overridden by friend subclasses for e.g. tests which
   // wish to intercept outgoing navigation control messages.
   virtual mojom::FrameNavigationControl* GetNavigationControl();
+
+  // Utility function used to detect and manage some race conditions that can
+  // appear when receiving a commit message from the renderer.
+  // A return value of true means that the commit should proceed.
+  // TODO(ahemery): This should be removed once mojo navigation interfaces are
+  // in place. See crbug.com/784904 for details.
+  bool DealWithRaceConditions();
+
+  // Utility function used to validate potentially harmful parameters sent by
+  // the renderer during the commit notification.
+  // A return value of true means that the commit should proceed.
+  // TODO(ahemery): Such checks should be part of a StructTraits template
+  // once FrameHostMsg_DidCommitProvisionalLoad_Params is a mojo structure.
+  bool ValidateProvisionalCommitParams(
+      FrameHostMsg_DidCommitProvisionalLoad_Params* validated_params);
 
   // For now, RenderFrameHosts indirectly keep RenderViewHosts alive via a
   // refcount that calls Shutdown when it reaches zero.  This allows each
