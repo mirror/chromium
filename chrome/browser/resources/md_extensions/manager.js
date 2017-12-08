@@ -412,7 +412,9 @@ cr.define('extensions', function() {
       const drawer = this.$$('#drawer');
       if (drawer && drawer.open) {
         drawer.closeDrawer();
-        this.showDrawer_ = false;
+        listenOnce(drawer, 'transitionend', function() {
+          this.showDrawer_ = false;
+        });
       }
 
       const optionsDialog = this.$$('#options-dialog');
