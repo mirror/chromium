@@ -4,6 +4,7 @@
 
 #include "net/spdy/chromium/spdy_session_pool.h"
 
+#include <algorithm>
 #include <utility>
 
 #include "base/logging.h"
@@ -13,6 +14,7 @@
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
 #include "base/values.h"
+#include "build/build_config.h"
 #include "net/base/address_list.h"
 #include "net/base/trace_constants.h"
 #include "net/http/http_network_session.h"
@@ -270,9 +272,12 @@ void SpdySessionPool::CloseCurrentIdleSessions() {
 }
 
 void SpdySessionPool::CloseAllSessions() {
-  while (!available_sessions_.empty()) {
+  do {
     CloseCurrentSessionsHelper(ERR_ABORTED, "Closing all sessions.",
                                false /* idle_only */);
+  } while (!available_sessions_.empty());
+  for (const SpdySession* session : sessions_) {
+    DCHECK(session->IsDraining());
   }
 }
 
@@ -530,7 +535,9 @@ void SpdySessionPool::CloseCurrentSessionsHelper(Error error,
       continue;
 
     (*it)->CloseSessionOnError(error, description);
+
     DCHECK(!IsSessionAvailable(*it));
+    DCHECK(!(*it) || (*it)->IsDraining());
   }
 }
 
