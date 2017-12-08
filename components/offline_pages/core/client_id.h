@@ -24,6 +24,8 @@ struct ClientId {
 
   std::string ToString() const;
 
+  std::string AppendToHistogramName(const char* histogram_name) const;
+
   // The namespace that identifies the client (of course 'namespace' is a
   // reserved word, so...).
   std::string name_space;
