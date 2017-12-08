@@ -64,6 +64,8 @@ class CommandUpdater {
   // state has not changed.
   void UpdateCommandEnabled(int id, bool state);
 
+  void DisableAllCommands();
+
  private:
   // A piece of data about a command - whether or not it is enabled, and a list
   // of objects that observe the enabled state of this command.

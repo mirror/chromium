@@ -22,7 +22,7 @@
 class Browser;
 @class BrowserActionsContainerView;
 @class BrowserActionsController;
-class CommandUpdater;
+class CommandUpdaterProxy;
 class LocationBarViewMac;
 @class MenuButton;
 class Profile;
@@ -60,7 +60,7 @@ class NotificationBridge;
   IBOutlet BrowserActionsContainerView* browserActionsContainerView_;
 
  @private
-  CommandUpdater* commands_;  // weak, one per window
+  CommandUpdaterProxy* commands_;  // weak, one per window
   Profile* profile_;  // weak, one per window
   Browser* browser_;  // weak, one per window
   std::unique_ptr<ToolbarControllerInternal::CommandObserverBridge>
@@ -101,7 +101,7 @@ class NotificationBridge;
 // Initialize the toolbar and register for command updates. The profile is
 // needed for initializing the location bar. The browser is needed for
 // the toolbar model and back/forward menus.
-- (id)initWithCommands:(CommandUpdater*)commands
+- (id)initWithCommands:(CommandUpdaterProxy*)commands
                profile:(Profile*)profile
                browser:(Browser*)browser;
 
