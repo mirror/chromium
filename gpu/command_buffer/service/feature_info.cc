@@ -17,6 +17,7 @@
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/command_buffer/service/texture_definition.h"
 #include "gpu/config/gpu_switches.h"
+#include "gpu/ipc/host/gpu_switches.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_fence.h"
 #include "ui/gl/gl_implementation.h"
@@ -1050,14 +1051,21 @@ void FeatureInfo::InitializeFeatures() {
     validators_.g_l_state.AddValue(GL_TEXTURE_BINDING_RECTANGLE_ARB);
   }
 
-#if defined(OS_MACOSX)
-  // TODO(dcastagna): Determine ycbcr_420v_image on CrOS at runtime
-  // querying minigbm. crbug.com/646148
   if (gl::GetGLImplementation() != gl::kGLImplementationOSMesaGL) {
+#if defined(OS_MACOSX)
     AddExtensionString("GL_CHROMIUM_ycbcr_420v_image");
     feature_flags_.chromium_image_ycbcr_420v = true;
-  }
+#elif defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+    // TODO(mcasas): |kEnableNativeGpuMemoryBuffers| lives in browser process,
+    // Gpu host, so we don't have it here, but that's the idea. Since I might
+    // not be able to work on this for a while, dumping it out.
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kEnableNativeGpuMemoryBuffers)) {
+      AddExtensionString("GL_CHROMIUM_ycbcr_420v_image");
+      feature_flags_.chromium_image_ycbcr_420v = true;
+    }
 #endif
+  }
 
   if (gl::HasExtension(extensions, "GL_APPLE_ycbcr_422")) {
     AddExtensionString("GL_CHROMIUM_ycbcr_422_image");

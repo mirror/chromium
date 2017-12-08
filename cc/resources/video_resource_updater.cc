@@ -872,6 +872,10 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForHardwarePlanes(
   external_resources.type = ExternalResourceTypeForHardwarePlanes(
       video_frame->format(), target, video_frame->NumTextures(), &buffer_format,
       use_stream_video_draw_quad_);
+
+  LOG(ERROR) << " |num_textures| : " << video_frame->NumTextures()
+             << ", |buffer_format| " << (int)buffer_format;
+
   if (external_resources.type == VideoFrameExternalResources::NONE) {
     DLOG(ERROR) << "Unsupported Texture format"
                 << media::VideoPixelFormatToString(video_frame->format());
