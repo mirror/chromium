@@ -6524,6 +6524,7 @@ void RenderFrameImpl::NavigateInternal(
                   item_for_history_navigation, history_load_type,
                   is_client_redirect);
     } else {
+      bool navigation_started = !browser_side_navigation;
       // Load the request.
       frame_->Load(request, load_type, item_for_history_navigation,
                    history_load_type, is_client_redirect,
@@ -6535,6 +6536,9 @@ void RenderFrameImpl::NavigateInternal(
       // otherwise it will result in a use-after-free bug.
       if (!weak_this)
         return;
+
+      if (!navigation_started && frame_ && !frame_->IsLoading())
+        Send(new FrameHostMsg_DidStopLoading(routing_id_));
     }
   } else {
     // The browser expects the frame to be loading this navigation. Inform it

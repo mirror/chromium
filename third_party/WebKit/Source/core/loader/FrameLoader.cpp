@@ -921,6 +921,9 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
   FrameLoadType new_load_type = (frame_load_type == kFrameLoadTypeStandard)
                                     ? DetermineFrameLoadType(request)
                                     : frame_load_type;
+
+  // TODO(clamy): Once PlzNavigate ships, we will no longer have same-document
+  // history navigations going through this path. Remove their handling.
   bool same_document_history_navigation =
       IsBackForwardLoadType(new_load_type) &&
       history_load_type == kHistorySameDocumentLoad;
