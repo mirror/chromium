@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/arc/common/video_accelerator_struct_traits.h"
+#include "components/arc/video_accelerator/video_accelerator_struct_traits.h"
 
 namespace mojo {
 
@@ -51,9 +51,6 @@ CHECK_PROFILE_ENUM(DOLBYVISION_MAX);
 CHECK_PROFILE_ENUM(THEORAPROFILE_MIN);
 CHECK_PROFILE_ENUM(THEORAPROFILE_ANY);
 CHECK_PROFILE_ENUM(THEORAPROFILE_MAX);
-CHECK_PROFILE_ENUM(AV1PROFILE_MIN);
-CHECK_PROFILE_ENUM(AV1PROFILE_PROFILE0);
-CHECK_PROFILE_ENUM(AV1PROFILE_MAX);
 CHECK_PROFILE_ENUM(VIDEO_CODEC_PROFILE_MAX);
 
 #undef CHECK_PROFILE_ENUM
@@ -95,7 +92,6 @@ bool EnumTraits<arc::mojom::VideoCodecProfile, media::VideoCodecProfile>::
     case arc::mojom::VideoCodecProfile::DOLBYVISION_PROFILE5:
     case arc::mojom::VideoCodecProfile::DOLBYVISION_PROFILE7:
     case arc::mojom::VideoCodecProfile::THEORAPROFILE_ANY:
-    case arc::mojom::VideoCodecProfile::AV1PROFILE_MIN:
       *output = static_cast<media::VideoCodecProfile>(input);
       return true;
   }
