@@ -44,6 +44,10 @@ enum SessionStorageUMA {
   SESSION_STORAGE_UMA_MAX
 };
 
+void DeleteDatabase(leveldb::DB* db) {
+  delete db;
+}
+
 }  // namespace
 
 // Layout of the database:
@@ -100,16 +104,21 @@ class SessionStorageDatabase::DBOperation {
   SessionStorageDatabase* session_storage_database_;
 };
 
-
-SessionStorageDatabase::SessionStorageDatabase(const base::FilePath& file_path)
+SessionStorageDatabase::SessionStorageDatabase(
+    const base::FilePath& file_path,
+    base::SequencedTaskRunner* commit_task_runner)
     : file_path_(file_path),
       db_error_(false),
       is_inconsistent_(false),
       invalid_db_deleted_(false),
-      operation_count_(0) {
-}
+      operation_count_(0),
+      commit_task_runner_(commit_task_runner) {}
 
 SessionStorageDatabase::~SessionStorageDatabase() {
+  if (commit_task_runner_) {
+    commit_task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&DeleteDatabase, db_.release()));
+  }
 }
 
 void SessionStorageDatabase::ReadAreaValues(
@@ -163,6 +172,8 @@ bool SessionStorageDatabase::CommitAreaChanges(
     const GURL& origin,
     bool clear_all_first,
     const DOMStorageValuesMap& changes) {
+  DCHECK(!commit_task_runner_ ||
+         commit_task_runner_->RunsTasksInCurrentSequence());
   // Even if |changes| is empty, we need to write the appropriate placeholders
   // in the database, so that it can be later shallow-copied successfully.
   if (!LazyOpen(true))
@@ -230,6 +241,8 @@ bool SessionStorageDatabase::CloneNamespace(
   // | namespace-2-                   | dummy               |
   // | namespace-2-origin1            | 1 (mapid) << references the same map
 
+  DCHECK(!commit_task_runner_ ||
+         commit_task_runner_->RunsTasksInCurrentSequence());
   if (!LazyOpen(true))
     return false;
   DBOperation operation(this);
@@ -257,6 +270,8 @@ bool SessionStorageDatabase::CloneNamespace(
 
 bool SessionStorageDatabase::DeleteArea(const std::string& namespace_id,
                                         const GURL& origin) {
+  DCHECK(!commit_task_runner_ ||
+         commit_task_runner_->RunsTasksInCurrentSequence());
   if (!LazyOpen(false)) {
     // No need to create the database if it doesn't exist.
     return true;
@@ -270,6 +285,8 @@ bool SessionStorageDatabase::DeleteArea(const std::string& namespace_id,
 }
 
 bool SessionStorageDatabase::DeleteNamespace(const std::string& namespace_id) {
+  DCHECK(!commit_task_runner_ ||
+         commit_task_runner_->RunsTasksInCurrentSequence());
   {
     // The caller should have called other methods to open the DB before this
     // function. Otherwise, DB stores nothing interesting related to the

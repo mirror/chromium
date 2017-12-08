@@ -17,6 +17,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/sequenced_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "content/common/content_export.h"
 #include "content/common/dom_storage/dom_storage_types.h"
@@ -42,13 +43,18 @@ namespace content {
 // origins. All DOMStorageAreas for session storage share the same
 // SessionStorageDatabase.
 
-// Only one thread is allowed to call the public functions other than
-// ReadAreaValues and ReadNamespacesAndOrigins. Other threads are allowed to
-// call ReadAreaValues and ReadNamespacesAndOrigins.
+// This class is not thread safe. Read-only methods (ReadAreaValues,
+// ReadNamespacesAndOrigins, and OnMemoryDump) may be called on any thread.
+// Methods that modify the database must be called on the same thread.
 class CONTENT_EXPORT SessionStorageDatabase :
     public base::RefCountedThreadSafe<SessionStorageDatabase> {
  public:
-  explicit SessionStorageDatabase(const base::FilePath& file_path);
+  // |file_path| is the path to the directory where the database will be
+  // created. |commit_task_runner| can be supplied to assert that the database
+  // is written to, and deleted on the correct sequence. |commit_task_runner|
+  // should only be null in unit tests.
+  SessionStorageDatabase(const base::FilePath& file_path,
+                         base::SequencedTaskRunner* commit_task_runner);
 
   // Reads the (key, value) pairs for |namespace_id| and |origin|. |result| is
   // assumed to be empty and any duplicate keys will be overwritten. If the
@@ -223,6 +229,10 @@ class CONTENT_EXPORT SessionStorageDatabase :
   // The number of database operations in progress. We need this so that we can
   // delete an inconsistent database at the right moment.
   int operation_count_;
+
+  // The sequenced task runner on which all methods which write/modify the
+  // database must run.
+  scoped_refptr<base::SequencedTaskRunner> commit_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(SessionStorageDatabase);
 };
