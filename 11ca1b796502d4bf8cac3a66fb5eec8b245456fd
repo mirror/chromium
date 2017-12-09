@@ -16,6 +16,24 @@
       "revId": "11ca1b796502d4bf8cac3a66fb5eec8b245456fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02050db1_05d2aae5",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-09T04:18:02Z",
+      "side": 1,
+      "message": "Yes, you are right. This is better. I could check current display number.",
+      "parentUuid": "67a16b56_988087a4",
+      "revId": "11ca1b796502d4bf8cac3a66fb5eec8b245456fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

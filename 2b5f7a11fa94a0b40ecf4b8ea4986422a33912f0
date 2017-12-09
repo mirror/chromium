@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9dd8c593_967f0890",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-09T04:18:02Z",
+      "side": 1,
+      "message": "Yes, it should be no-op, so I think it should be no harm to remove this. But we are using both |multi_display_mode_| and |reflecting_source_id_| to decide whether to call Close(), should I also remove |multi_display_mode_| as well?",
+      "parentUuid": "c66f09c0_c3006ebf",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d902c15_368bd4db",
         "filename": "ash/display/window_tree_host_manager.cc",
         "patchSetId": 8
@@ -87,6 +105,24 @@
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c996fb75_a431f1ca",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-09T04:18:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "80140f48_001ddc42",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +176,24 @@
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a390505_b246ac4b",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-09T04:18:02Z",
+      "side": 1,
+      "message": "After offline discussion, we decided to keep the logic of the test.",
+      "parentUuid": "6df81906_4415a57f",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -228,6 +282,24 @@
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bc7b29_d43328ae",
+        "filename": "chrome/browser/chromeos/display/display_preferences.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-09T04:18:02Z",
+      "side": 1,
+      "message": "Yes, in the new patch set, I avoid changing the stored preferences when we have less than two displays.",
+      "parentUuid": "2c45ae1c_6a68ad8f",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -354,6 +426,24 @@
     },
     {
       "key": {
+        "uuid": "d7970061_c806cd0d",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-09T04:18:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a1a4efb_2cb23855",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "951b453e_acce6024",
         "filename": "chrome/common/pref_names.cc",
         "patchSetId": 8
@@ -421,6 +511,24 @@
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c253b56c_fa83af2f",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-09T04:18:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "85e4ed8a_fd9beddb",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -495,6 +603,24 @@
     },
     {
       "key": {
+        "uuid": "29f00388_3d935204",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-09T04:18:02Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "ce0c2d52_50de8b05",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "811c607a_ea33fa25",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 8
@@ -562,6 +688,24 @@
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5a170a_44303120",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-09T04:18:02Z",
+      "side": 1,
+      "message": "Already removed.",
+      "parentUuid": "6f1ae028_c434ef20",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
