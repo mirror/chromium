@@ -93,6 +93,30 @@
       "revId": "009e1e62ad4f44e0bfc15d048b20f1672eebcff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07693f2_22dd7576",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-09T01:29:44Z",
+      "side": 1,
+      "message": "I just mean it seems you could simplify this early return condition to\n\n// if we don\u0027t have frames decoded, then we dont have any dropped or pwr-eff\nif (!stats_.video_frames_decoded)\n  return;",
+      "parentUuid": "513675d0_f8b14695",
+      "range": {
+        "startLine": 723,
+        "startChar": 34,
+        "endLine": 723,
+        "endChar": 70
+      },
+      "revId": "009e1e62ad4f44e0bfc15d048b20f1672eebcff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
