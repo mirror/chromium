@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69db0b82_4e7742c1",
+        "filename": "gpu/skia_bindings/grcontext_for_gles2_interface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-09T01:22:01Z",
+      "side": 1,
+      "message": "One possibility is for the caller to use zero for both max_* values, which would cause the ctor to call DetermineCacheLimitsFromAvailableMemory() to determine the limits and use that. This would simplify the usage in both the non-test cases.",
+      "revId": "93239b0477d922b2cfe787637bff5139530950ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
