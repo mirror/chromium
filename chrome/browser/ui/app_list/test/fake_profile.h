@@ -91,6 +91,7 @@ class FakeProfile : public Profile {
   bool WasCreatedByVersionOrLater(const std::string& version) override;
   void SetExitType(ExitType exit_type) override;
   ExitType GetLastSessionExitType() override;
+  content::CookieStoreConfig::SessionCookieMode GetSessionCookieMode() override;
 
  private:
   std::string name_;
