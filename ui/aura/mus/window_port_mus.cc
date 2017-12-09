@@ -108,6 +108,7 @@ WindowPortMus::RequestLayerTreeFrameSink(
       mojo::MakeRequest(&client);
 
   viz::ClientLayerTreeFrameSink::InitParams params;
+  params.compositor_task_runner = base::ThreadTaskRunnerHandle::Get();
   params.gpu_memory_buffer_manager = gpu_memory_buffer_manager;
   params.pipes.compositor_frame_sink_info = std::move(sink_info);
   params.pipes.client_request = std::move(client_request);
