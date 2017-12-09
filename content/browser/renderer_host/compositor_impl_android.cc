@@ -836,7 +836,7 @@ void CompositorImpl::InitializeDisplay(
           : std::make_unique<viz::DirectLayerTreeFrameSink>(
                 frame_sink_id_, GetHostFrameSinkManager(), manager,
                 display_.get(), context_provider,
-                nullptr /* worker_context_provider */,
+                nullptr /* worker_context_provider */, task_runner,
                 gpu_memory_buffer_manager,
                 viz::ServerSharedBitmapManager::current());
 
