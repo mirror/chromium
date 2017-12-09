@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9d14acb_e5370e9f",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-09T02:10:43Z",
+      "side": 1,
+      "message": "Noticed this while adding these. Should be cleared as well, though it shouldn\u0027t matter since we won\u0027t add values to it if we\u0027re not already reporting.",
+      "revId": "a9c9cbdda4580c7083a73ae69c7245a050700ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c69a6220_f88f384f",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-09T02:10:43Z",
+      "side": 1,
+      "message": "Minor cleanup to avoid copies; here and below.",
+      "revId": "a9c9cbdda4580c7083a73ae69c7245a050700ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

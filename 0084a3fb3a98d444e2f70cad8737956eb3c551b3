@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c7d828d_75d805ba",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-09T02:10:43Z",
+      "side": 0,
+      "message": "MaybeFinalizeWatchTime() already early-returns for this.",
+      "revId": "0084a3fb3a98d444e2f70cad8737956eb3c551b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "719583ac_02649a7e",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-09T02:10:43Z",
+      "side": 0,
+      "message": "Ditto, this is already all handled in MaybeFinalizeWatchTime().",
+      "revId": "0084a3fb3a98d444e2f70cad8737956eb3c551b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
