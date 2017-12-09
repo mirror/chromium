@@ -5,6 +5,7 @@
 #include "components/omnibox/browser/autocomplete_match_type.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "components/omnibox/browser/autocomplete_match.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 TEST(AutocompleteMatchTypeTest, AccessibilityLabels) {
@@ -12,9 +13,10 @@ TEST(AutocompleteMatchTypeTest, AccessibilityLabels) {
       base::UTF8ToUTF16("https://www.chromium.org");
   const base::string16& kTestTitle = base::UTF8ToUTF16("The Chromium Projects");
 
-  EXPECT_EQ(kTestUrl, AutocompleteMatchType::ToAccessibilityLabel(
-                          AutocompleteMatchType::URL_WHAT_YOU_TYPED, kTestUrl,
-                          kTestTitle));
+  AutocompleteMatch match;
+  match.type = AutocompleteMatchType::URL_WHAT_YOU_TYPED;
+  EXPECT_EQ(kTestUrl,
+            AutocompleteMatchType::ToAccessibilityLabel(match, kTestUrl));
   EXPECT_EQ(kTestTitle + base::UTF8ToUTF16(" ") + kTestUrl +
                 base::UTF8ToUTF16(" location from history"),
             AutocompleteMatchType::ToAccessibilityLabel(
