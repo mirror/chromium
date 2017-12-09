@@ -81,16 +81,23 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
     // Profile a sampled number of renderer processes.
     kRendererSampling = 5,
 
+    // Profile all renderer processes.
+    kAllRenderers = 6,
+
+    // By default, profile no processes. User may choose to start profiling for
+    // processes via chrome://memory-internals.
+    kManual = 7,
+
     kCount
   };
 
   // Returns the mode.
   Mode mode() const { return mode_; }
 
-  // Returns the mode set on the current process' command line.
-  static Mode GetCurrentMode();
+  // Returns the mode specified by the command line or via about://flags.
+  static Mode GetModeForStartup();
   static Mode ConvertStringToMode(const std::string& input);
-  bool ShouldProfileProcessType(int process_type);
+  bool ShouldProfileNonRendererProcessType(int process_type);
 
   // Launches the profiling process and returns a pointer to it.
   static ProfilingProcessHost* Start(
@@ -219,9 +226,6 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
 
   void StartProfilingRenderer(content::RenderProcessHost* host);
 
-  // SetRenderer.
-  void SetRendererSamplingAlwaysProfileForTest();
-
   void GetProfiledPidsOnIOThread(GetProfiledPidsCallback callback);
   void StartProfilingPidOnIOThread(base::ProcessId pid);
 
@@ -263,10 +267,6 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // profiled. That information is only known by the profiling service, and for
   // simplicity, it's easier to just track this variable in this process.
   std::unordered_set<void*> profiled_renderers_;
-
-  // For Tests. In kRendererSampling mode, overrides sampling to always profile
-  // a renderer process if one is already not going.
-  bool always_sample_for_tests_;
 
   // Must only ever be used from the UI thread. Will be called after the
   // profiling process dumps heaps into the trace log and MDPs have been given
