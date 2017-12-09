@@ -321,6 +321,7 @@ class TestingProfile : public Profile {
   bool IsGuestSession() const override;
   void SetExitType(ExitType exit_type) override {}
   ExitType GetLastSessionExitType() override;
+  content::CookieStoreConfig::SessionCookieMode GetSessionCookieMode() override;
   content::mojom::NetworkContextPtr CreateMainNetworkContext() override;
 #if defined(OS_CHROMEOS)
   void ChangeAppLocale(const std::string&, AppLocaleChangedVia) override {}
