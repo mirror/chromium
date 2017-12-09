@@ -508,6 +508,11 @@ Profile::ExitType OffTheRecordProfileImpl::GetLastSessionExitType() {
   return profile_->GetLastSessionExitType();
 }
 
+content::CookieStoreConfig::SessionCookieMode
+OffTheRecordProfileImpl::GetSessionCookieMode() {
+  return content::CookieStoreConfig::EPHEMERAL_SESSION_COOKIES;
+}
+
 #if defined(OS_CHROMEOS)
 void OffTheRecordProfileImpl::ChangeAppLocale(const std::string& locale,
                                               AppLocaleChangedVia) {
