@@ -148,6 +148,7 @@
 #include "content/common/service_manager/service_manager_connection_impl.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
+#include "content/network/restricted_cookie_manager.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
@@ -1796,6 +1797,27 @@ void RenderProcessHostImpl::CreateMessageFilters() {
 #endif
 }
 
+namespace {
+
+void GetRestrictedCookieManager(
+    RenderProcessHostImpl* render_process_host_impl,
+    network::mojom::RestrictedCookieManagerRequest request) {
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableExperimentalWebPlatformFeatures)) {
+    return;
+  }
+
+  StoragePartition* storage_partition =
+      render_process_host_impl->GetStoragePartition();
+  mojom::NetworkContext* network_context =
+      storage_partition->GetNetworkContext();
+  uint32_t render_process_id = render_process_host_impl->GetID();
+  network_context->GetRestrictedCookieManager(
+      std::move(request), render_process_id, MSG_ROUTING_NONE);
+}
+
+}  // anonymous namespace
+
 void RenderProcessHostImpl::RegisterMojoInterfaces() {
   auto registry = std::make_unique<service_manager::BinderRegistry>();
 
@@ -1959,6 +1981,9 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
         base::Bind(&BlobRegistryWrapper::Bind,
                    storage_partition_impl_->GetBlobRegistry(), GetID()));
   }
+
+  registry->AddInterface(
+      base::BindRepeating(GetRestrictedCookieManager, base::Unretained(this)));
 
   ServiceManagerConnection* service_manager_connection =
       BrowserContext::GetServiceManagerConnectionFor(browser_context_);

@@ -10,6 +10,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/workers/WorkerThread.h"
 #include "modules/cookie_store/CookieStore.h"
+#include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "platform/Supplementable.h"
 #include "platform/heap/Handle.h"
 #include "services/network/public/interfaces/restricted_cookie_manager.mojom-blink.h"
@@ -71,13 +72,22 @@ CookieStore* GlobalCookieStoreImpl<LocalDOMWindow>::GetCookieStore() {
   LocalDOMWindow* window = GetSupplementable();
   return GetCookieStore(window->document());
 }
-
-// TODO(crbug.com/729800): Add ServiceWorkerGlobalScope overload.
+template <>
+CookieStore* GlobalCookieStoreImpl<WorkerGlobalScope>::GetCookieStore() {
+  WorkerGlobalScope* global_scope = GetSupplementable();
+  return GetCookieStore(global_scope);
+}
 
 }  // namespace
 
 CookieStore* GlobalCookieStore::cookieStore(LocalDOMWindow& window) {
   return GlobalCookieStoreImpl<LocalDOMWindow>::From(window).GetCookieStore();
+}
+CookieStore* GlobalCookieStore::cookieStore(ServiceWorkerGlobalScope& worker) {
+  // ServiceWorkerGlobalScope is Supplementable<WorkerGlobalScope>, not
+  // Supplementable<ServiceWorkerGlobalScope>.
+  return GlobalCookieStoreImpl<WorkerGlobalScope>::From(worker)
+      .GetCookieStore();
 }
 
 }  // namespace blink

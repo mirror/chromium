@@ -177,8 +177,13 @@ void ExtractCookieURLs(ScriptState* script_state,
     Document* document = ToDocument(execution_context);
     cookie_url = document->CookieURL();
     site_for_cookies = document->SiteForCookies();
+  } else if (execution_context->IsServiceWorkerGlobalScope()) {
+    ServiceWorkerGlobalScope* scope =
+        ToServiceWorkerGlobalScope(execution_context);
+    // TODO(crbug.com/729800): Correct values?
+    cookie_url = scope->Url();
+    site_for_cookies = scope->Url();
   } else {
-    // TODO(crbug.com/729800): Add branch for service workers.
     NOTIMPLEMENTED();
   }
 }
