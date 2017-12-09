@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00ac4752_8b7ddb7d",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-09T00:22:50Z",
+      "side": 1,
+      "message": "Done, but getting timing right to test the old failure case is too hard. We already have a test which ensures we don\u0027t underflow in the background and it still passes with the new logic.",
+      "parentUuid": "1df553ac_4ac83759",
+      "range": {
+        "startLine": 608,
+        "startChar": 0,
+        "endLine": 608,
+        "endChar": 63
+      },
+      "revId": "009e1e62ad4f44e0bfc15d048b20f1672eebcff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bf05a14_0edd36a1",
         "filename": "media/renderers/video_renderer_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-08T21:34:54Z",
       "side": 1,
       "message": "Is the same true of video_frames_dropped?",
+      "range": {
+        "startLine": 723,
+        "startChar": 34,
+        "endLine": 723,
+        "endChar": 70
+      },
+      "revId": "009e1e62ad4f44e0bfc15d048b20f1672eebcff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513675d0_f8b14695",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-09T00:22:50Z",
+      "side": 1,
+      "message": "What do you mean? We don\u0027t have a video_frames_dropped_power_efficient?",
+      "parentUuid": "5bf05a14_0edd36a1",
       "range": {
         "startLine": 723,
         "startChar": 34,
