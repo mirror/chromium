@@ -117,6 +117,30 @@
       "revId": "009e1e62ad4f44e0bfc15d048b20f1672eebcff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a585787c_4e279bb2",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-09T01:39:07Z",
+      "side": 1,
+      "message": "Oh, that\u0027s not true. We can have frames dropped without any new decoded frames since last cycle.",
+      "parentUuid": "d07693f2_22dd7576",
+      "range": {
+        "startLine": 723,
+        "startChar": 34,
+        "endLine": 723,
+        "endChar": 70
+      },
+      "revId": "009e1e62ad4f44e0bfc15d048b20f1672eebcff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
