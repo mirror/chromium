@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f026afbd_43118a11",
+        "filename": "chrome/common/extensions/api/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-09T03:03:06Z",
+      "side": 1,
+      "message": "You can remove this one.",
+      "revId": "f8ab1d5c9da534ee94765bf055684a682effbad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
