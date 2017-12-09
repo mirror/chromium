@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14bc30a9_517e9cf3",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-09T01:18:32Z",
+      "side": 1,
+      "message": "nit: this path is used for some things that we\u0027re not going to port to RasterInterface (e.g. SharedMainThreadContextProvider() used by GLHelper), so maybe we should pass a flag to this function.",
+      "revId": "aff2f0c856ca4f40261e2094f6fde705a0013f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42749c4a_d4843f28",
+        "filename": "gpu/command_buffer/client/raster_implementation_gles.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-09T01:18:32Z",
+      "side": 1,
+      "message": "nit: unneeded (you use below), remove",
+      "revId": "aff2f0c856ca4f40261e2094f6fde705a0013f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
