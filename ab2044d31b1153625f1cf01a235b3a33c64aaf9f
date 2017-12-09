@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3d33eb7_83e13958",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-09T03:01:39Z",
+      "side": 1,
+      "message": "eww :(. Ah well, the truth can hurt.",
+      "revId": "ab2044d31b1153625f1cf01a235b3a33c64aaf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
