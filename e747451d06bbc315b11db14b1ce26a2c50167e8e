@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "029c1aa4_fa8053d8",
+        "filename": "chrome/browser/browser_process_platform_part_chromeos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-09T01:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "080af508_0595fc34",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 36
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adf7d472_bf675676",
         "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "74394a1b_46efc6e8",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-09T01:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adf7d472_bf675676",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf87974b_5b975b9c",
         "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-08T00:43:12Z",
       "side": 1,
       "message": "Why do you need for the flush to finish? Can\u0027t you execute them all at once?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f9bc9f_d81d735d",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-09T01:59:19Z",
+      "side": 1,
+      "message": "If IO load is high, it won\u0027t finish until Chrome is killed. So we want to start exit sequence only when preferences are saved.",
+      "parentUuid": "bf87974b_5b975b9c",
       "range": {
         "startLine": 26,
         "startChar": 2,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e7ea0499_eb74307f",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-09T01:59:19Z",
+      "side": 1,
+      "message": "This could be done in a separate CL, because I found that Chrome OS exit flow will still use some shared functions from anonymous namespace in application_lifetime.cc . It makes this refactoring a little bit more complicate than we want for this little fix ;)",
+      "parentUuid": "a78232c9_25896a11",
+      "range": {
+        "startLine": 38,
+        "startChar": 46,
+        "endLine": 38,
+        "endChar": 58
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98f1e7c0_46bc5da1",
         "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.h",
         "patchSetId": 2
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7f845704_41d24018",
+        "filename": "chrome/browser/chromeos/profiles/commit_pending_write_on_exit.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-09T01:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98f1e7c0_46bc5da1",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70e290a8_10451c1f",
         "filename": "chrome/browser/lifetime/application_lifetime.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52c49fb1_16a3ac3d",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-09T01:59:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70e290a8_10451c1f",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 24
+      },
+      "revId": "e747451d06bbc315b11db14b1ce26a2c50167e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
