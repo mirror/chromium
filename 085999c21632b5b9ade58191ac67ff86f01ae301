@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1b6b917_76a53787",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-09T06:56:24Z",
+      "side": 1,
+      "message": "Any preferences for behavior here?  The other option is to update the signature and return an empty MaybeLocal - maybe that would make more sense?",
+      "revId": "085999c21632b5b9ade58191ac67ff86f01ae301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
