@@ -22,6 +22,30 @@
       "revId": "358baf47af51727d835c322b572d377d9be494f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6024d1e9_da00c1cd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 42
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-09T00:54:10Z",
+      "side": 1,
+      "message": "\u003e Why didn\u0027t you try to have this logic in core/xmlhttprequest/XMLHttpRequest.cpp?\n\u003e Any problem?\n\nSorry, I didn\u0027t understand that was being suggested, or what you meant.  Maybe you can follow up by email with me, Nick, and Daniel, and we can see if there\u0027s a way to improve going forward?",
+      "parentUuid": "082700ce_2a53cb6b",
+      "range": {
+        "startLine": 620,
+        "startChar": 21,
+        "endLine": 620,
+        "endChar": 39
+      },
+      "revId": "358baf47af51727d835c322b572d377d9be494f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
