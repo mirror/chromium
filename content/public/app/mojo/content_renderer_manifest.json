@@ -45,6 +45,7 @@
         "browser": [
           "blink::mojom::AppBannerController",
           "blink::mojom::EngagementClient",
+          "blink::mojom::FullscreenVideoElementHandler",
           "blink::mojom::InstallationService",
           "blink::mojom::ManifestManager",
           "blink::mojom::TextSuggestionBackend",

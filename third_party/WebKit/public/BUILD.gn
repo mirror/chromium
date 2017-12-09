@@ -767,6 +767,7 @@ mojom("mojo_bindings") {
     "platform/content_security_policy.mojom",
     "platform/dedicated_worker_factory.mojom",
     "platform/display_mode.mojom",
+    "platform/fullscreen_video_element.mojom",
     "platform/media_download_in_product_help.mojom",
     "platform/media_engagement.mojom",
     "platform/mime_registry.mojom",

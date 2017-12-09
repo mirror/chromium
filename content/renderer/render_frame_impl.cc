@@ -195,6 +195,7 @@
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "third_party/WebKit/public/web/WebContextFeatures.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
+#include "third_party/WebKit/public/web/WebElementCollection.h"
 #include "third_party/WebKit/public/web/WebFindOptions.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
 #include "third_party/WebKit/public/web/WebFrameSerializer.h"
@@ -255,6 +256,7 @@ using blink::WebDocument;
 using blink::WebDOMEvent;
 using blink::WebDOMMessageEvent;
 using blink::WebElement;
+using blink::WebElementCollection;
 using blink::WebExternalPopupMenu;
 using blink::WebExternalPopupMenuClient;
 using blink::WebFindOptions;
@@ -1308,6 +1310,7 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
       pepper_last_mouse_event_target_(nullptr),
 #endif
       engagement_binding_(this),
+      fullscreen_binding_(this),
       media_engagement_binding_(this),
       frame_binding_(this),
       host_zoom_binding_(this),
@@ -1859,6 +1862,11 @@ void RenderFrameImpl::OnNavigate(
 void RenderFrameImpl::BindEngagement(
     blink::mojom::EngagementClientAssociatedRequest request) {
   engagement_binding_.Bind(std::move(request));
+}
+
+void RenderFrameImpl::BindFullscreen(
+    blink::mojom::FullscreenVideoElementHandlerAssociatedRequest request) {
+  fullscreen_binding_.Bind(std::move(request));
 }
 
 void RenderFrameImpl::BindMediaEngagement(
@@ -3023,6 +3031,21 @@ void RenderFrameImpl::SetEngagementLevel(const url::Origin& origin,
   }
 
   engagement_level_ = std::make_pair(origin, level);
+}
+
+// blink::mojom::FullscreenVideoElementHandler implementation ------------------
+void RenderFrameImpl::RequestFullscreenVideoElement() {
+  WebElement video_element =
+      frame_->GetDocument().GetElementsByHTMLTagName("video").FirstItem();
+
+  if (!video_element.IsNull()) {
+    // This is always initiated from browser side (which should require the user
+    // interacting with ui) which suffices for a user gesture even though there
+    // will have been no input to the frame at this point.
+    blink::WebScopedUserGesture gesture(frame_);
+
+    video_element.RequestFullscreen();
+  }
 }
 
 // blink::mojom::MediaEngagementClient implementation --------------------------
@@ -7053,6 +7076,9 @@ void RenderFrameImpl::HandlePepperImeCommit(const base::string16& text) {
 void RenderFrameImpl::RegisterMojoInterfaces() {
   GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&RenderFrameImpl::BindEngagement, weak_factory_.GetWeakPtr()));
+
+  GetAssociatedInterfaceRegistry()->AddInterface(
+      base::Bind(&RenderFrameImpl::BindFullscreen, weak_factory_.GetWeakPtr()));
 
   if (devtools_agent_) {
     GetAssociatedInterfaceRegistry()->AddInterface(
