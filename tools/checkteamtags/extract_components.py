@@ -146,6 +146,61 @@ def display_missing_info_OWNERS_files(stats, num_output_depth):
     print stats['OWNERS-missing-info-by-depth'][depth]
 
 
+def display_as_tree_to_depth(dirs, mappings, max_depth):
+    """Display ownership for the tree, stopping when covered or depth is reached."""
+    covered = set()
+    total = {}
+    missing = {}
+
+    def parent_is_covered(d):
+     if d:
+       return d in covered or parent_is_covered(os.path.dirname(d))
+     else:
+       return False
+
+    for d in sorted(dirs):
+      if d == '.':
+        continue
+      parent = os.path.dirname(d)
+      total.setdefault(parent, 0)
+      total[parent] += 1
+      missing.setdefault(parent, 0)
+      c = mappings['dir-to-component'].get(d)
+      if parent_is_covered(d):
+        continue
+      elif c:
+        covered.add(d)
+      else:
+        missing[parent] += 1
+
+    fmt = "%-56s, %3s, %-10s, %-38s, %-54s,%3s,%3s,%2s"
+    print fmt % ('directory', 'covered', 'eng_owner', 'bug_component',
+                 'mailing_list', 'missing_subdirs', 'total_subdirs', 'depth')
+    eng_owner = ''
+    for directory in [''] + sorted(dirs):
+      parent = os.path.dirname(directory)
+      depth = directory.count('/')
+      if directory == '.' or depth > max_depth:
+        continue
+      elif directory in covered:
+        covered = 'yes'
+        comp = mappings['dir-to-component'][directory]
+        mailing_list= mappings['component-to-team'].get(comp, '')
+        missing_subdirs = '-'
+        total_subdirs = '-'
+      else:
+        covered = 'no'
+        comp = '-'
+        mailing_list = '-'
+        if directory in total:
+          missing_subdirs = missing[directory]
+          total_subdirs = total[directory]
+        else:
+          missing_subdirs = total_subdirs = 0
+      print fmt % (directory, covered, comp, eng_owner, mailing_list,
+                   missing_subdirs, total_subdirs, depth)
+
+
 def main(argv):
   usage = """Usage: python %prog [options] [<root_dir>]
   root_dir  specifies the topmost directory to traverse looking for OWNERS
@@ -169,17 +224,20 @@ Examples:
                     help='Print warnings.')
   parser.add_option('-f', '--force_print', action='store_true',
                     help='Print the mappings despite errors.')
-  parser.add_option('-o', '--output_file', help='Specify file to write the '
+  parser.add_option('-o', '--output_file', metavar='FILE',
+                    help='Specify file to write the '
                     'mappings to instead of the default: <CWD>/'
                     'component_map.json (implies -w)')
   parser.add_option('-c', '--complete_coverage', action='store_true',
                     help='Print complete coverage statistic')
-  parser.add_option('-s', '--stat_coverage', type="int",
+  parser.add_option('-s', '--stat_coverage', metavar='N', type="int",
                     help='Specify directory depth to display coverage stats')
   parser.add_option('--include-subdirs', action='store_true', default=False,
                     help='List subdirectories without OWNERS file or component '
                     'tag as having same component as parent')
-  parser.add_option('-m', '--list_missing_info_by_depth', type="int",
+  parser.add_option('-t', '--display_as_tree_to_depth', metavar='N', type='int',
+                    help='List tree w/ ownership up to depth N')
+  parser.add_option('-m', '--list_missing_info_by_depth', metavar='N', type="int",
                     help='List OWNERS files that have missing team and '
                     'component information by depth')
   options, args = parser.parse_args(argv[1:])
@@ -200,6 +258,11 @@ Examples:
 
   if options.stat_coverage or options.complete_coverage:
     display_stat(stats, root, options)
+
+  if options.display_as_tree_to_depth:
+    display_as_tree_to_depth(scrape_result.keys(), mappings,
+                             options.display_as_tree_to_depth)
+    return 0
 
   if options.list_missing_info_by_depth:
     display_missing_info_OWNERS_files(stats,
