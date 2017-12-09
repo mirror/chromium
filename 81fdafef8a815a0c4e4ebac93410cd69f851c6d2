@@ -22,6 +22,30 @@
       "revId": "81fdafef8a815a0c4e4ebac93410cd69f851c6d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e8a48d_6b019874",
+        "filename": "ui/app_list/app_list_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-09T00:06:59Z",
+      "side": 1,
+      "message": "NotFromApp/FromApp is used in the shelf to differentiate the general context menus from the ones that show on the app icons.\n\nI am sharing this histogram between the shelf and the applist, and a \"NotFromApp\" context menu is not possible in today\u0027s applist.\n\nI see how that is a bit strange. I could make the histogram names different for shelf/applist and drop the histogram suffix on the AppList side. \nGetting more specific data can\u0027t be a bad thing!",
+      "parentUuid": "ca6fdebf_5ba2b620",
+      "range": {
+        "startLine": 182,
+        "startChar": 36,
+        "endLine": 182,
+        "endChar": 43
+      },
+      "revId": "81fdafef8a815a0c4e4ebac93410cd69f851c6d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
