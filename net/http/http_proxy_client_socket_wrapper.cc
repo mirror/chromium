@@ -620,7 +620,7 @@ int HttpProxyClientSocketWrapper::DoQuicProxyCreateSession() {
       proxy_server, quic_version_, ssl_params_->privacy_mode(), priority_,
       ssl_params_->ssl_config().GetCertVerifyFlags(),
       GURL("https://" + proxy_server.ToString()), net_log_,
-      &quic_net_error_details_,
+      &quic_net_error_details_, CompletionCallback(),
       base::Bind(&HttpProxyClientSocketWrapper::OnIOComplete,
                  base::Unretained(this)));
 }

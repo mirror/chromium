@@ -352,6 +352,10 @@ class QuicStreamFactory::Job {
     return stream_requests_;
   }
 
+  bool ExpectHostResolution() const {
+    return io_state_ == STATE_RESOLVE_HOST;
+  }
+
  private:
   enum IoState {
     STATE_NONE,
@@ -493,6 +497,11 @@ int QuicStreamFactory::Job::DoResolveHost() {
 
 int QuicStreamFactory::Job::DoResolveHostComplete(int rv) {
   dns_resolution_end_time_ = base::TimeTicks::Now();
+
+  for (QuicStreamRequest* request : stream_requests_) {
+    request->OnHostResolutionComplete(rv);
+  }
+
   if (rv != OK)
     return rv;
 
@@ -581,24 +590,27 @@ int QuicStreamFactory::Job::DoConnectComplete(int rv) {
 }
 
 QuicStreamRequest::QuicStreamRequest(QuicStreamFactory* factory)
-    : factory_(factory) {}
+    : factory_(factory), expect_host_resolution_callback_(false) {}
 
 QuicStreamRequest::~QuicStreamRequest() {
   if (factory_ && !callback_.is_null())
     factory_->CancelRequest(this);
 }
 
-int QuicStreamRequest::Request(const HostPortPair& destination,
-                               QuicTransportVersion quic_version,
-                               PrivacyMode privacy_mode,
-                               RequestPriority priority,
-                               int cert_verify_flags,
-                               const GURL& url,
-                               const NetLogWithSource& net_log,
-                               NetErrorDetails* net_error_details,
-                               const CompletionCallback& callback) {
+int QuicStreamRequest::Request(
+    const HostPortPair& destination,
+    QuicTransportVersion quic_version,
+    PrivacyMode privacy_mode,
+    RequestPriority priority,
+    int cert_verify_flags,
+    const GURL& url,
+    const NetLogWithSource& net_log,
+    NetErrorDetails* net_error_details,
+    const CompletionCallback& host_resolution_callback,
+    const CompletionCallback& callback) {
   DCHECK_NE(quic_version, QUIC_VERSION_UNSUPPORTED);
   DCHECK(net_error_details);
+  DCHECK(host_resolution_callback_.is_null());
   DCHECK(callback_.is_null());
   DCHECK(factory_);
 
@@ -606,9 +618,12 @@ int QuicStreamRequest::Request(const HostPortPair& destination,
   server_id_ = QuicServerId(HostPortPair::FromURL(url), privacy_mode);
 
   int rv = factory_->Create(server_id_, destination, quic_version, priority,
-                            cert_verify_flags, url, net_log, this);
+                            cert_verify_flags, url, net_log, this,
+                            &expect_host_resolution_callback_);
   if (rv == ERR_IO_PENDING) {
     net_log_ = net_log;
+    if (expect_host_resolution_callback_)
+      host_resolution_callback_ = host_resolution_callback;
     callback_ = callback;
   } else {
     factory_ = nullptr;
@@ -621,6 +636,12 @@ int QuicStreamRequest::Request(const HostPortPair& destination,
 void QuicStreamRequest::SetSession(
     std::unique_ptr<QuicChromiumClientSession::Handle> session) {
   session_ = move(session);
+}
+
+void QuicStreamRequest::OnHostResolutionComplete(int rv) {
+  // Don't reset |host_resolution_callback_|, might be called many times?
+  DCHECK(!host_resolution_callback_.is_null());
+  host_resolution_callback_.Run(rv);
 }
 
 void QuicStreamRequest::OnRequestComplete(int rv) {
@@ -888,7 +909,10 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
                               int cert_verify_flags,
                               const GURL& url,
                               const NetLogWithSource& net_log,
-                              QuicStreamRequest* request) {
+                              QuicStreamRequest* request,
+                              bool* expect_host_resolution_callback) {
+  *expect_host_resolution_callback = false;
+
   if (clock_skew_detector_.ClockSkewDetected(base::TimeTicks::Now(),
                                              base::Time::Now())) {
     while (!active_sessions_.empty()) {
@@ -938,6 +962,7 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
         NetLogEventType::HTTP_STREAM_JOB_BOUND_TO_QUIC_STREAM_FACTORY_JOB,
         job_net_log.source().ToEventParametersCallback());
     it->second->AddRequest(request);
+    *expect_host_resolution_callback = it->second->ExpectHostResolution();
     return ERR_IO_PENDING;
   }
 
@@ -968,6 +993,7 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
                                base::Unretained(this), job.get()));
   if (rv == ERR_IO_PENDING) {
     job->AddRequest(request);
+    *expect_host_resolution_callback = job->ExpectHostResolution();
     active_jobs_[server_id] = std::move(job);
     return rv;
   }
@@ -982,6 +1008,7 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
       return ERR_QUIC_PROTOCOL_ERROR;
     QuicChromiumClientSession* session = it->second;
     request->SetSession(session->CreateHandle());
+    return OK;
   }
   return rv;
 }
