@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d30ddaa5_4b4c42d8",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-fake-adapter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-09T02:03:03Z",
+      "side": 1,
+      "message": "Good TODO here, but please also add a brief description of what FakeAdapter is and link to the design doc getting us off FakeAdapter.",
+      "revId": "8091d8998efa366e4cece2298590f993df1ee1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
