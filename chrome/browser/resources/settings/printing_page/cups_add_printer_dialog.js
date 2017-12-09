@@ -189,6 +189,48 @@ Polymer({
   onProtocolChange_: function(event) {
     this.set('newPrinter.printerProtocol', event.target.value);
   },
+
+  /**
+   * This function uses regular expressions to determine whether the provided
+   * printer address is valid. Address can be either an ipv4/6 address or a
+   * hostname followed by an optional port.
+   * NOTE: The regular expressions are not very strict and might match invalid
+   * addresses. This was done to prevent writing complex and hard to maintain
+   * expressions.
+   * @param {String} name
+   * @param {String} address
+   * @return {boolean} Whether the add printer button is enabled.
+   * @private
+   */
+  canAddPrinter_: function(name, address) {
+    if (!name || !address)
+      return false;
+
+    var hostnamePrefix = '([a-z\\d]|[a-z\\d][a-z\\d\\-]{0,61}[a-z\\d])';
+
+    // Matches an arbitrary number of 'prefix patterns' which are separated by a
+    // dot.
+    var hostnameSuffix = '(\\.' + hostnamePrefix + ')*';
+
+    // Matches an optional port at the end of the address.
+    var portNumber = '(:\\d+)?';
+
+    var ipv6Full = '(([a-f\\d]){1,4}(:(:)?([a-f\\d]){1,4}){1,7})';
+
+    // Special cases for addresses using a shorthand notation.
+    var ipv6Prefix = '(::([a-f\\d]){1,4})';
+    var ipv6Suffix = '(([a-f\\d]){1,4}::)';
+
+    // Matches valid hostnames and ipv4 addresses.
+    var hostnameRegex =
+        new RegExp(`^${hostnamePrefix}${hostnameSuffix}${portNumber}$`, 'i');
+
+    // Matches valid ipv6 addresses.
+    var ipv6AddressRegex = new RegExp(
+        `^(${ipv6Full}|${ipv6Prefix}|${ipv6Suffix})${portNumber}$`, 'i');
+
+    return hostnameRegex.test(address) || ipv6AddressRegex.test(address);
+  },
 });
 
 Polymer({

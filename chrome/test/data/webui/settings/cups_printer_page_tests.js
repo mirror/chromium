@@ -68,15 +68,15 @@ class TestCupsPrintersBrowserProxy extends TestBrowserProxy {
 }
 
 suite('CupsAddPrinterDialogTests', function() {
-  function fillAddManuallyDialog(addDialog) {
+  function fillAddManuallyDialog(addDialog, nameValue, addressValue) {
     var name = addDialog.$$('#printerNameInput');
     var address = addDialog.$$('#printerAddressInput');
 
     assertTrue(!!name);
-    name.value = 'Test Printer';
+    name.value = nameValue;
 
     assertTrue(!!address);
-    address.value = '127.0.0.1';
+    address.value = addressValue;
   }
 
   function clickAddButton(dialog) {
@@ -142,6 +142,59 @@ suite('CupsAddPrinterDialogTests', function() {
   });
 
   /**
+   * Test that canAddPrinter_() in the add printer manually dialog correctly
+   * verifies addresses.
+   */
+  test('CanAddPrinter', function() {
+    // Starts in discovery dialog, select add manually button.
+    var discoveryDialog = dialog.$$('add-printer-discovery-dialog');
+    assertTrue(!!discoveryDialog);
+    MockInteractions.tap(discoveryDialog.$$('.secondary-button'));
+    Polymer.dom.flush();
+
+    var addDialog = dialog.$$('add-printer-manually-dialog');
+    assertTrue(!!addDialog);
+
+    var name = addDialog.$$('#printerNameInput');
+    var address = addDialog.$$('#printerAddressInput');
+
+    // Testing a valid ipv4 address.
+    fillAddManuallyDialog(addDialog, 'Test printer', '127.0.0.1');
+    assertTrue(addDialog.canAddPrinter_(name.value, address.value));
+
+    // Testing valid ipv6 addresses.
+    fillAddManuallyDialog(addDialog, 'Test printer', '1:2:a3:ff4:5:6:7:8');
+    assertTrue(addDialog.canAddPrinter_(name.value, address.value));
+
+    fillAddManuallyDialog(addDialog, 'Test printer', '1:::22');
+    assertTrue(addDialog.canAddPrinter_(name.value, address.value));
+
+    fillAddManuallyDialog(addDialog, 'Test printer', '::255');
+    assertTrue(addDialog.canAddPrinter_(name.value, address.value));
+
+    // Testing invalid ipv6 addresses.
+    fillAddManuallyDialog(addDialog, 'Test printer', '1:2:3:zs:2');
+    assertFalse(addDialog.canAddPrinter_(name.value, address.value));
+
+    // This is an invalid address, but it will be accepted by our regex. There
+    // is only supposed to be at most one instance of '::' in a valid ipv6
+    // address.
+    fillAddManuallyDialog(addDialog, 'Test printer', '1::2::3');
+    assertTrue(addDialog.canAddPrinter_(name.value, address.value));
+
+    // Testing valid hostnames
+    fillAddManuallyDialog(addDialog, 'Test printer', 'hello-world.com');
+    assertTrue(addDialog.canAddPrinter_(name.value, address.value));
+
+    fillAddManuallyDialog(addDialog, 'Test printer', 'hello.world.com:12345');
+    assertTrue(addDialog.canAddPrinter_(name.value, address.value));
+
+    // Testing invalid hostname.
+    fillAddManuallyDialog(addDialog, 'Test printer', 'helloworld!123.com');
+    assertFalse(addDialog.canAddPrinter_(name.value, address.value));
+  });
+
+  /**
    * Test that clicking on Add opens the model select page.
    */
   test('ValidAddOpensModelSelection', function() {
@@ -154,7 +207,7 @@ suite('CupsAddPrinterDialogTests', function() {
     // Now we should be in the manually add dialog.
     var addDialog = dialog.$$('add-printer-manually-dialog');
     assertTrue(!!addDialog);
-    fillAddManuallyDialog(addDialog);
+    fillAddManuallyDialog(addDialog, 'Test printer', '127.0.0.1');
 
     MockInteractions.tap(addDialog.$$('.action-button'));
     Polymer.dom.flush();
@@ -190,7 +243,7 @@ suite('CupsAddPrinterDialogTests', function() {
 
     var addDialog = dialog.$$('add-printer-manually-dialog');
     assertTrue(!!addDialog);
-    fillAddManuallyDialog(addDialog);
+    fillAddManuallyDialog(addDialog, 'Test printer', '127.0.0.1');
 
     // Verify that getCupsPrinterModelList is not called.
     cupsPrintersBrowserProxy.whenCalled('getCupsPrinterModelsList')
