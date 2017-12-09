@@ -16,6 +16,98 @@
       "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1306b67_db078a03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/ArrowBubbleDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-09T00:33:24Z",
+      "side": 1,
+      "message": "Just realized this (and the new base class) doesn\u0027t really support copying or cloning.  That\u0027s kind of incorrect but it seems to work fine in these cases!",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 48
+      },
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bbb2c3_31e49206",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/BubbleDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-09T00:33:24Z",
+      "side": 1,
+      "message": "Almost feels like the ArrowBubbleDrawable should lie to this one about the actual bounds/padding and let this stay private.  But I was trying to think about any side effects and it might be tricky as things ask for bounds/padding and I haven\u0027t thought through exactly how to structure it, so I\u0027m ok either way.",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 13
+      },
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f2763e3_c2f6ce75",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/BubbleDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-09T00:33:24Z",
+      "side": 1,
+      "message": "Do we need these?",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 57
+      },
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4375635_b5e05bde",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-09T00:33:24Z",
+      "side": 1,
+      "message": "Would it make sense to just have a showArrow() boolean on ArrowBubbleDrawable?  Then you could either keep this boolean in the constructor or have a setter on TextBubble.  Feels like that might keep most of this the same and would just disable some padding additions and draw steps in the drawable itself.",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 21
+      },
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
