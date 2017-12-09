@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "aeee54a2_9cd10ea9",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-09T02:15:30Z",
+      "side": 1,
+      "message": "No problem! Done.",
+      "parentUuid": "a2f1a782_3ca0469b",
+      "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b21e7ea_63a73f82",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 8
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "I see. Thanks! After offline discussion, after views-based login is available, we may consider letting login/lock screen completely control the timing of blur and dimming, instead of the wallpaper controller.",
       "parentUuid": "47586dae_99387376",
+      "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c506b049_a3f9aa41",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-09T02:15:30Z",
+      "side": 1,
+      "message": "Yea. Definitely refactoring of the whole blur/dim logic would be nice.\nThank you!",
+      "parentUuid": "06e658db_1574f8c6",
       "revId": "239cdc60d6b795a38cc3c5924fd39409615f13cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
