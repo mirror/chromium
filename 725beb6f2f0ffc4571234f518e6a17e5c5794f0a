@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b047b7c_78dfe262",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-12-09T16:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22aaa991_c9e5f5b6",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9add602b_006a1661",
         "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91957e1d_ab93a6bc",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 639,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-12-09T16:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9add602b_006a1661",
+      "range": {
+        "startLine": 639,
+        "startChar": 8,
+        "endLine": 639,
+        "endChar": 69
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "945adc6e_dffee5c3",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-12-09T16:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46583752_51eb2daf",
+      "range": {
+        "startLine": 640,
+        "startChar": 6,
+        "endLine": 640,
+        "endChar": 54
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff87003f_49ced8bd",
         "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9700347_4c26b801",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-12-09T16:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff87003f_49ced8bd",
+      "range": {
+        "startLine": 641,
+        "startChar": 34,
+        "endLine": 641,
+        "endChar": 49
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c68a292f_6c56cb77",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-12-09T16:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd388dd1_8221e09b",
+      "range": {
+        "startLine": 644,
+        "startChar": 8,
+        "endLine": 644,
+        "endChar": 55
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0ed2d7b_f5dd84e9",
         "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e43aa5_c2fa5741",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-12-09T16:10:39Z",
+      "side": 1,
+      "message": "I clears the variable outside the block. Since I only want to handle unload/load events of same extension in pair order.  Otherwise I don\u0027t think 1st IME is killed unexpectedly.",
+      "parentUuid": "f0ed2d7b_f5dd84e9",
+      "range": {
+        "startLine": 648,
+        "startChar": 4,
+        "endLine": 648,
+        "endChar": 30
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d13056d6_37adae07",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-12-09T16:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94a38d6c_38c4ebe7",
+      "range": {
+        "startLine": 661,
+        "startChar": 2,
+        "endLine": 661,
+        "endChar": 21
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57ae090f_06cc9175",
         "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
         "patchSetId": 1
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "1ea5732c_a9cd33d1",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-12-09T16:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57ae090f_06cc9175",
+      "range": {
+        "startLine": 668,
+        "startChar": 6,
+        "endLine": 669,
+        "endChar": 37
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8385478_d8fdc4b2",
         "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdbdf20_268d88f0",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1110604
+      },
+      "writtenOn": "2017-12-09T16:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8385478_d8fdc4b2",
+      "range": {
+        "startLine": 673,
+        "startChar": 8,
+        "endLine": 674,
+        "endChar": 49
+      },
+      "revId": "725beb6f2f0ffc4571234f518e6a17e5c5794f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
