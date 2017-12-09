@@ -1097,6 +1097,7 @@ GpuProcessTransportFactory::CreateContextCommon(
   attributes.bind_generates_resource = false;
   attributes.lose_context_when_out_of_memory = true;
   attributes.buffer_preserved = false;
+  attributes.enable_raster_interface = true;
 
   constexpr bool automatic_flushes = false;
 
