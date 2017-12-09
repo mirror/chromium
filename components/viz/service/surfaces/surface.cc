@@ -41,8 +41,9 @@ Surface::~Surface() {
   deadline_.Cancel();
 }
 
-void Surface::ResetSeenFirstFrameActivation() {
+void Surface::Reset(base::WeakPtr<SurfaceClient> client) {
   seen_first_frame_activation_ = false;
+  surface_client_ = client;
 }
 
 bool Surface::InheritActivationDeadlineFrom(
