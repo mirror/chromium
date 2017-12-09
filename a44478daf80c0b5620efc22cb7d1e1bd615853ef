@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "939e0cf1_68123f2c",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-09T03:02:57Z",
+      "side": 1,
+      "message": "having these 2 builders provides for smooth migration: only production builds will be displayed from both buildbot and luci(buildbucket) builders.",
+      "revId": "a44478daf80c0b5620efc22cb7d1e1bd615853ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
