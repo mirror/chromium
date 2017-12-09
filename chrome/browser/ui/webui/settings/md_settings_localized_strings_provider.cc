@@ -1044,6 +1044,7 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
        IDS_SETTINGS_INTERNET_NETWORK_SECTION_PROXY_ACCESSIBILITY_LABEL},
       {"networkShared", IDS_SETTINGS_INTERNET_NETWORK_SHARED},
       {"networkVpnBuiltin", IDS_NETWORK_TYPE_VPN_BUILTIN},
+      {"lostTetherPhoneTitle", IDS_SETTINGS_INTERNET_LOST_TETHER_PHONE_TITLE},
       {"tetherConnectionDialogTitle",
        IDS_SETTINGS_INTERNET_TETHER_CONNECTION_DIALOG_TITLE},
       {"tetherConnectionAvailableDeviceTitle",

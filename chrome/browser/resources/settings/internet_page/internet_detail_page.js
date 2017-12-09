@@ -64,6 +64,11 @@ Polymer({
     },
 
     /**
+     * @private
+     */
+    hasNetworkBeenLost_: {type: Boolean, value: false},
+
+    /**
      * Highest priority connected network or null.
      * @type {?CrOnc.NetworkStateProperties}
      */
@@ -131,8 +136,6 @@ Polymer({
   /**
    * Set to true to once the initial properties have been received. This
    * prevents setProperties from being called when setting default properties.
-   * This will also be set to false if the network no longer exists in the
-   * list of networks (e.g. it goes out of range).
    * @private {boolean}
    */
   networkPropertiesReceived_: false,
@@ -266,7 +269,7 @@ Polymer({
    */
   checkNetworkExists_: function(event) {
     var networkIds = event.detail;
-    this.networkPropertiesReceived_ = networkIds.indexOf(this.guid) != -1;
+    this.hasNetworkBeenLost_ = networkIds.indexOf(this.guid) == -1;
   },
 
   /**
@@ -331,6 +334,7 @@ Polymer({
 
     this.networkProperties = properties;
     this.networkPropertiesReceived_ = true;
+    this.hasNetworkBeenLost_ = false;
   },
 
   /**
@@ -352,6 +356,7 @@ Polymer({
       ConnectionState: state.ConnectionState,
     };
     this.networkPropertiesReceived_ = true;
+    this.hasNetworkBeenLost_ = false;
   },
 
   /**
@@ -385,12 +390,19 @@ Polymer({
 
   /**
    * @param {!CrOnc.NetworkProperties} networkProperties
+   * @param {boolean} hasNetworkBeenLost_
    * @return {string} The text to display for the network connection state.
    * @private
    */
-  getStateText_: function(networkProperties) {
+  getStateText_: function(networkProperties, hasNetworkBeenLost_) {
     if (!networkProperties.ConnectionState)
       return '';
+
+    if (hasNetworkBeenLost_ && networkProperties.Type == CrOnc.Type.TETHER) {
+      return this.i18n(
+          'lostTetherPhoneTitle', CrOnc.getNetworkName(networkProperties));
+    }
+
     return this.i18n('Onc' + networkProperties.ConnectionState);
   },
 
@@ -401,6 +413,16 @@ Polymer({
    */
   isConnectedState_: function(networkProperties) {
     return networkProperties.ConnectionState == CrOnc.ConnectionState.CONNECTED;
+  },
+
+  /**
+   *
+   */
+  isLostTetherNetwork_: function(networkProperties, hasNetworkBeenLost_) {
+    if (!networkProperties || !hasNetworkBeenLost_)
+      return false;
+
+    return networkProperties.Type == CrOnc.Type.TETHER;
   },
 
   /**
@@ -565,13 +587,19 @@ Polymer({
    * @param {!CrOnc.NetworkProperties} networkProperties
    * @param {?CrOnc.NetworkStateProperties} defaultNetwork
    * @param {!chrome.networkingPrivate.GlobalPolicy} globalPolicy
+   * @param {boolean} networkPropertiesReceived_
+   * @param {boolean} hasNetworkBeenLost_
    * @return {boolean} Whether or not to enable the network connect button.
    * @private
    */
-  enableConnect_: function(networkProperties, defaultNetwork, globalPolicy) {
+  enableConnect_: function(
+      networkProperties, defaultNetwork, globalPolicy,
+      networkPropertiesReceived_, hasNetworkBeenLost_) {
     if (!this.showConnect_(networkProperties, globalPolicy))
       return false;
-    if (!this.networkPropertiesReceived_)
+    if (!networkPropertiesReceived_)
+      return false;
+    if (hasNetworkBeenLost_)
       return false;
     if ((networkProperties.Type == CrOnc.Type.CELLULAR) &&
         (CrOnc.isSimLocked(networkProperties) ||
