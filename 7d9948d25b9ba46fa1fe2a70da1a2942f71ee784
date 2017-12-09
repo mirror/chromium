@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d32f10f8_85adb9ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-12-09T00:32:31Z",
+      "side": 1,
+      "message": "nit: cl/...",
+      "range": {
+        "startLine": 9,
+        "startChar": 24,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "7d9948d25b9ba46fa1fe2a70da1a2942f71ee784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec9dfe91_edb37ccc",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
         "patchSetId": 7
