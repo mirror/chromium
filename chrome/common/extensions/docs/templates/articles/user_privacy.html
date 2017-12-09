@@ -1,0 +1,82 @@
+<h1>Protect User Privacy</h1>
+
+<p>
+  Users will not use an extension if it compromises their privacy.
+  Protect and respect extension users
+  by taking the correct precautions to keep their identity safe.
+</p>
+
+<h2 id="required_permissions">Reduce Required Permissions</h2>
+
+<p>
+  What APIs an extension has access to
+  is granted in the permissions field of the <a href="/manifest">manifest</a>.
+  The more permissions granted,
+  the more avenues an attacker has to intercept information.
+</p>
+<p>
+  Only the APIs an extension depends on should be listed,
+  and consideration should be given to less invasive options.
+</p>
+<h3 id="activeTab">activeTab</h3>
+<p>
+  Extensions using the <a href="/tabs"><code>tabs</code></a>
+  API can often subsitute
+  <a href="/activeTab"><code>activeTab</code></a> instead.
+  The <code>activeTab</code>
+  permission will grant an extension temporary access to
+  the currently active tab,
+  only when the user <i>invokes</i> the extension.
+  Access is cut off when the user navigates away from or closes the current tab.
+  It serves as an alternative for many uses of
+  <code>&lt;all_urls&gt;</code>.
+
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Very Secure Extension",
+    "version": "1.0",
+    "description": "Example of a Secure Extension",
+    <b>"permissions": ["activeTab"],</b>
+    "manifest_version": 2
+  }
+</pre>
+<p>
+  The activeTab permission displays no warning messages durring installation.
+</p>
+
+<h2 id="optional_permissions">Opt for Optional Permissions</h2>
+<p>
+  Empower users to choose what features
+  and permissions they need from an extension by including
+  <a href="/permissions#manifest">optional permissions</a>.
+  If a feature is not essential to the core functionality of an extension,
+  make it optional
+  and move the API or domain into the optional permissions field.
+</p>
+<pre data-filename="manifest.json">
+  {
+    "name": "Very Secure Extension",
+    ...
+    <b>"optional_permissions": [ "tabs", "https://www.google.com/" ]</b>,
+    ...
+  }
+</pre>
+<p>
+  Including option permissions allows an extension to explain why it needs a
+  particular permission when the user enables the relevant feature.
+  Updating extensions with optional permissions instead of required permissions
+  will not disable the extension,
+  it will only make the new feature available.
+</p>
+<h2 id="data_collection">Limit and Secure User Information</h2>
+<p>
+  Only request and use the minimum user infromation an extension needs.
+  The less information an extension asks from a user
+  means less exposure if the extension is compromised.
+</p>
+<p>
+  Store and retrieve data in a secure server.
+  Register the domain and use HTTPS to connect.
+  Avoid keeping sensitive user data in the client side of an extension.
+</p>
