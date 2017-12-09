@@ -62,6 +62,7 @@ TEST(ClientLayerTreeFrameSinkTest,
       mojo::MakeRequest(&client);
 
   ClientLayerTreeFrameSink::InitParams init_params;
+  init_params.compositor_task_runner = base::ThreadTaskRunnerHandle::Get();
   init_params.gpu_memory_buffer_manager = &test_gpu_memory_buffer_manager;
   init_params.pipes.compositor_frame_sink_info = std::move(sink_info);
   init_params.pipes.client_request = std::move(client_request);
