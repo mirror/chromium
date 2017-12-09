@@ -614,7 +614,8 @@ static bool ParseHSLParameters(CSSParserTokenRange& range,
   if (!hsl_value)
     return false;
   double color_array[3];
-  color_array[0] = (((hsl_value->GetIntValue() % 360) + 360) % 360) / 360.0;
+  color_array[0] =
+      fmod(fmod(hsl_value->GetDoubleValue(), 360.0) + 360.0, 360.0) / 60.0;
   for (int i = 1; i < 3; i++) {
     if (!ConsumeCommaIncludingWhitespace(args))
       return false;
