@@ -23,6 +23,7 @@
 #include "ui/compositor/layer.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/keyboard/keyboard_util.h"
 
 namespace ash {
 namespace {
@@ -67,6 +68,12 @@ void LockScreen::Show(ScreenType type) {
   CHECK(!instance_);
   instance_ = new LockScreen(type);
 
+  // TODO(agawronska): Add tests for UI visibility when virtual keyboard
+  // present. Disable virtual keyboard overscroll because it interferes with
+  // scrolling login/lock content. See crbug.com/363635.
+  keyboard::SetKeyboardOverscrollOverride(
+      keyboard::KEYBOARD_OVERSCROLL_OVERRIDE_DISABLED);
+
   auto data_dispatcher = std::make_unique<LoginDataDispatcher>();
   auto* contents = BuildContentsView(
       ash::Shell::Get()->tray_action()->GetLockScreenNoteState(),
@@ -93,6 +100,9 @@ void LockScreen::Destroy() {
   window_->Close();
   delete instance_;
   instance_ = nullptr;
+
+  keyboard::SetKeyboardOverscrollOverride(
+      keyboard::KEYBOARD_OVERSCROLL_OVERRIDE_NONE);
 }
 
 void LockScreen::ToggleBlurForDebug() {
