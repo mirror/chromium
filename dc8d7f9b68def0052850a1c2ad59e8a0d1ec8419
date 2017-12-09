@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "021bce1f_7fcf1779",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-09T02:08:18Z",
+      "side": 1,
+      "message": "nit: you could also inline this:\nreturn RespondNow(OneArgument(std::make_unique\u003cbase::DictionaryValue\u003e()));",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 13
+      },
+      "revId": "dc8d7f9b68def0052850a1c2ad59e8a0d1ec8419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
