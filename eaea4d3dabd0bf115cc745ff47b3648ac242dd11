@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "0d0b005c_f1fd934f",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-09T03:38:33Z",
+      "side": 1,
+      "message": "You beat me to this. :) Also found it necessary for chromium.fyi.",
+      "range": {
+        "startLine": 273,
+        "startChar": 7,
+        "endLine": 273,
+        "endChar": 10
+      },
+      "revId": "eaea4d3dabd0bf115cc745ff47b3648ac242dd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5af27c83_1c608912",
         "filename": "testing/buildbot/test_suite_exceptions.pyl",
         "patchSetId": 2
@@ -48,6 +71,24 @@
       "writtenOn": "2017-12-09T03:08:59Z",
       "side": 1,
       "message": "This is the next part I want to write -- a script that verifies that all exceptions are actually used.",
+      "revId": "eaea4d3dabd0bf115cc745ff47b3648ac242dd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "49783674_2cbb90bc",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 2795,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-09T03:38:33Z",
+      "side": 1,
+      "message": "Yes. It should be added as part of the --check functionality of generate_buildbot_json.py. Sorry I haven\u0027t written it yet.",
+      "parentUuid": "5af27c83_1c608912",
       "revId": "eaea4d3dabd0bf115cc745ff47b3648ac242dd11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
