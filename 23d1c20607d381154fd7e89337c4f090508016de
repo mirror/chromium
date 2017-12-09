@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a2b2c13_9f493f11",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-12-09T22:15:19Z",
+      "side": 1,
+      "message": "As mentioned in the other comment, mus (without viz) is not going to use viz-hit-test for now. I think you can check for \"enable-viz\" [1] instead.\n\n[1] https://cs.chromium.org/chromium/src/components/viz/common/switches.cc?type\u003dcs\u0026q\u003denable%5C-viz\u0026sq\u003dpackage:chromium\u0026l\u003d20",
+      "range": {
+        "startLine": 185,
+        "startChar": 6,
+        "endLine": 185,
+        "endChar": 16
+      },
+      "revId": "23d1c20607d381154fd7e89337c4f090508016de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db132ca_dd31ff52",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-12-09T22:15:19Z",
+      "side": 1,
+      "message": "Yea there\u0027s one HTQ for every accelerated widget. It looks like the HTQ should be associated to the ui::Compositor\u0027s FrameSinkId [1], Kyle, is it possible to get that from here somehow? I was looking at how it\u0027s wired up but didn\u0027t find a clear way to get it.\n\n[1] https://cs.chromium.org/chromium/src/content/browser/compositor/viz_process_transport_factory.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d435",
+      "range": {
+        "startLine": 195,
+        "startChar": 40,
+        "endLine": 195,
+        "endChar": 49
+      },
+      "revId": "23d1c20607d381154fd7e89337c4f090508016de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad29aa16_e7473e9b",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-12-09T22:15:19Z",
+      "side": 1,
+      "message": "This is not needed since we are getting the HTQ from HostFrameSinkManager?",
+      "range": {
+        "startLine": 196,
+        "startChar": 37,
+        "endLine": 196,
+        "endChar": 52
+      },
+      "revId": "23d1c20607d381154fd7e89337c4f090508016de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
