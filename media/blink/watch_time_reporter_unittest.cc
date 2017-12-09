@@ -183,6 +183,14 @@ class WatchTimeReporterTest
       parent_->OnUnderflowUpdate(count);
     }
 
+    void UpdateAudioDecoderName(const std::string& name) override {
+      parent_->OnUpdateAudioDecoderName(name);
+    }
+
+    void UpdateVideoDecoderName(const std::string& name) override {
+      parent_->OnUpdateVideoDecoderName(name);
+    }
+
    private:
     WatchTimeReporterTest* parent_;
 
@@ -208,8 +216,8 @@ class WatchTimeReporterTest
                                        has_audio_, has_video_, false, is_mse,
                                        is_encrypted, false, initial_video_size,
                                        url::Origin(), true /* is_top_frame */),
-        base::Bind(&WatchTimeReporterTest::GetCurrentMediaTime,
-                   base::Unretained(this)),
+        base::BindRepeating(&WatchTimeReporterTest::GetCurrentMediaTime,
+                            base::Unretained(this)),
         this));
 
     // Setup the reporting interval to be immediate to avoid spinning real time
@@ -503,6 +511,8 @@ class WatchTimeReporterTest
   MOCK_METHOD2(OnWatchTimeUpdate, void(WatchTimeKey, base::TimeDelta));
   MOCK_METHOD1(OnUnderflowUpdate, void(int));
   MOCK_METHOD1(OnError, void(PipelineStatus));
+  MOCK_METHOD1(OnUpdateAudioDecoderName, void(const std::string&));
+  MOCK_METHOD1(OnUpdateVideoDecoderName, void(const std::string&));
 
   const bool has_video_;
   const bool has_audio_;
@@ -638,6 +648,39 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterUnderflow) {
   EXPECT_WATCH_TIME_FINALIZED();
   CycleReportingTimer();
   wtr_.reset();
+}
+
+TEST_P(WatchTimeReporterTest, WatchTimeReporterDecoderNames) {
+  Initialize(true, true, kSizeJustRight);
+
+  // Setup the initial decoder names; these should be sent immediately as soon
+  // they're called. Each should be called twice, once for foreground and once
+  // for background reporting.
+  const std::string kAudioDecoderNameBase = "FirstAudioDecoder";
+  const std::string kVideoDecoderNameBase = "FirstVideoDecoder";
+  if (has_audio_) {
+    EXPECT_CALL(*this, OnUpdateAudioDecoderName(kAudioDecoderNameBase))
+        .Times(2);
+    wtr_->OnAudioDecoderChange(kAudioDecoderNameBase);
+  }
+  if (has_video_) {
+    EXPECT_CALL(*this, OnUpdateVideoDecoderName(kVideoDecoderNameBase))
+        .Times(2);
+    wtr_->OnVideoDecoderChange(kVideoDecoderNameBase);
+  }
+
+  const std::string kFallbackAudioDecoderName = "SecondAudioDecoder";
+  const std::string kFallbackVideoDecoderName = "SecondVideoDecoder";
+  if (has_audio_) {
+    EXPECT_CALL(*this, OnUpdateAudioDecoderName(kFallbackAudioDecoderName))
+        .Times(2);
+    wtr_->OnAudioDecoderChange(kFallbackAudioDecoderName);
+  }
+  if (has_video_) {
+    EXPECT_CALL(*this, OnUpdateVideoDecoderName(kFallbackVideoDecoderName))
+        .Times(2);
+    wtr_->OnVideoDecoderChange(kFallbackVideoDecoderName);
+  }
 }
 
 TEST_P(WatchTimeReporterTest, WatchTimeReporterShownHidden) {

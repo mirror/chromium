@@ -35,6 +35,8 @@ class MEDIA_MOJO_EXPORT WatchTimeRecorder : public mojom::WatchTimeRecorder {
       const std::vector<WatchTimeKey>& watch_time_keys) override;
   void OnError(PipelineStatus status) override;
   void UpdateUnderflowCount(int32_t count) override;
+  void UpdateAudioDecoderName(const std::string& name) override;
+  void UpdateVideoDecoderName(const std::string& name) override;
 
   // Test helper method for determining if keys are not reported to UMA.
   static bool ShouldReportUmaForTesting(WatchTimeKey key);
@@ -70,6 +72,13 @@ class MEDIA_MOJO_EXPORT WatchTimeRecorder : public mojom::WatchTimeRecorder {
 
   int underflow_count_ = 0;
   PipelineStatus pipeline_status_ = PIPELINE_OK;
+
+  // Tracks decoder name changes over the lifetime of the recorder. Reported to
+  // UKM as a base::PersistentHash().
+  std::string initial_audio_decoder_name_;
+  std::string initial_video_decoder_name_;
+  std::string fallback_audio_decoder_name_;
+  std::string fallback_video_decoder_name_;
 
   DISALLOW_COPY_AND_ASSIGN(WatchTimeRecorder);
 };

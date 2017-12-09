@@ -59,11 +59,8 @@ WatchTimeReporter::WatchTimeReporter(mojom::PlaybackPropertiesPtr properties,
 WatchTimeReporter::~WatchTimeReporter() {
   background_reporter_.reset();
 
-  // If the timer is still running, finalize immediately, this is our last
-  // chance to capture metrics.
-  if (reporting_timer_.IsRunning())
-    MaybeFinalizeWatchTime(FinalizeTime::IMMEDIATELY);
-
+  // This is our last chance, so finalize now if there's anything remaining.
+  MaybeFinalizeWatchTime(FinalizeTime::IMMEDIATELY);
   if (base::PowerMonitor* pm = base::PowerMonitor::Get())
     pm->RemoveObserver(this);
 }
@@ -88,16 +85,9 @@ void WatchTimeReporter::OnSeeking() {
   if (background_reporter_)
     background_reporter_->OnSeeking();
 
-  if (!reporting_timer_.IsRunning())
-    return;
-
   // Seek is a special case that does not have hysteresis, when this is called
   // the seek is imminent, so finalize the previous playback immediately.
-
-  // Don't trample an existing end timestamp.
-  if (end_timestamp_ == kNoTimestamp)
-    end_timestamp_ = get_media_time_cb_.Run();
-  UpdateWatchTime();
+  MaybeFinalizeWatchTime(FinalizeTime::IMMEDIATELY);
 }
 
 void WatchTimeReporter::OnVolumeChange(double volume) {
@@ -196,6 +186,20 @@ void WatchTimeReporter::OnDisplayTypePictureInPicture() {
   OnDisplayTypeChanged(blink::WebMediaPlayer::DisplayType::kPictureInPicture);
 }
 
+void WatchTimeReporter::OnAudioDecoderChange(const std::string& name) {
+  DCHECK(properties_->has_audio);
+  recorder_->UpdateAudioDecoderName(name);
+  if (background_reporter_)
+    background_reporter_->OnAudioDecoderChange(name);
+}
+
+void WatchTimeReporter::OnVideoDecoderChange(const std::string& name) {
+  DCHECK(properties_->has_video);
+  recorder_->UpdateVideoDecoderName(name);
+  if (background_reporter_)
+    background_reporter_->OnVideoDecoderChange(name);
+}
+
 void WatchTimeReporter::OnPowerStateChange(bool on_battery_power) {
   if (!reporting_timer_.IsRunning())
     return;
@@ -250,7 +254,14 @@ void WatchTimeReporter::MaybeStartReportingTimer(
   if (reporting_timer_.IsRunning())
     return;
 
+  // Duplicate names will be elided on the reporting side.
+  if (properties_->has_audio && !start_stats_.audio_decoder_name.empty())
+    recorder_->UpdateAudioDecoderName(start_stats_.audio_decoder_name);
+  if (properties_->has_video && !start_stats_.video_decoder_name.empty())
+    recorder_->UpdateVideoDecoderName(start_stats_.video_decoder_name);
+
   underflow_count_ = 0;
+  pending_underflow_events_.clear();
   last_media_timestamp_ = last_media_power_timestamp_ =
       last_media_controls_timestamp_ = end_timestamp_for_power_ =
           last_media_display_type_timestamp_ = end_timestamp_for_display_type_ =
