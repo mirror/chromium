@@ -303,7 +303,7 @@ void MessageLoop::BindToCurrentThread() {
       internal::ScopedSetSequenceLocalStorageMapForCurrentThread>(
       &sequence_local_storage_map_);
 
-  run_loop_client_ = RunLoop::RegisterDelegateForCurrentThread(this);
+  RunLoop::RegisterDelegateForCurrentThread(this);
 }
 
 std::string MessageLoop::GetThreadName() const {
@@ -491,7 +491,7 @@ bool MessageLoop::DoIdleWork() {
   if (ProcessNextDelayedNonNestableTask())
     return true;
 
-  if (run_loop_client_->ShouldQuitWhenIdle())
+  if (should_quit_when_idle_callback_.Run())
     pump_->Quit();
 
   // When we return we will do a kernel wait for more tasks.
