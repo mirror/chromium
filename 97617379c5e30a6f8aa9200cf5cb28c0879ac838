@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46830193_ba225768",
+        "filename": "components/assist_ranker/base_predictor.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-09T00:30:04Z",
+      "side": 1,
+      "message": "since it is the only place using WebContents and the only usage is to get SourceId, do you mind getting SourceId and pass it in so we can get rid of content/public/browser deps?",
+      "revId": "97617379c5e30a6f8aa9200cf5cb28c0879ac838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
