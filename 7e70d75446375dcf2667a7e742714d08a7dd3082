@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5ae7669b_ad5addb0",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-09T01:54:18Z",
+      "side": 1,
+      "message": "Could we can make the ipv6 check stronger by testing that the address doesn\u0027t have 2 sets of ::?\n\n    let invalidIpv6Regex \u003d new Regex(\u0027.*::.*::.*\u0027);\n\n    ...\n\n    return hostnameRegex.test(address) ||\n        (ipv6AddressRegex.test(address) \u0026\u0026 !invalidIpv6Regex.test(address));\n\nThen this comment can just be changed to mention we don\u0027t support testing hostnames aren\u0027t longer than 255. WDYT?",
+      "parentUuid": "d54d2838_d496f3e5",
+      "range": {
+        "startLine": 197,
+        "startChar": 11,
+        "endLine": 198,
+        "endChar": 15
+      },
+      "revId": "7e70d75446375dcf2667a7e742714d08a7dd3082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6acf2b18_68491377",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 5
@@ -93,6 +117,29 @@
       "revId": "7e70d75446375dcf2667a7e742714d08a7dd3082",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "118ed070_a0168218",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-09T01:54:18Z",
+      "side": 1,
+      "message": "does this need square brackets around the ipv6 address?\n\nhttps://en.wikipedia.org/wiki/IPv6_address#Representation",
+      "range": {
+        "startLine": 230,
+        "startChar": 11,
+        "endLine": 230,
+        "endChar": 51
+      },
+      "revId": "7e70d75446375dcf2667a7e742714d08a7dd3082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b758fc9a_46c12b74",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-09T01:54:18Z",
+      "side": 1,
+      "message": "No need to change this if you don\u0027t add the dialog to the DOM (see comment on line 155)",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 67
+      },
+      "revId": "1f361f258b5c4f30eaf53ea31f674f9616f1d0e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778c3236_3bed95d4",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-09T01:54:18Z",
+      "side": 1,
+      "message": "Might be a good idea to add an id to the paper-button and assert that it\u0027s not disabled here. (assuming you keep 127.0.0.1 as the address)",
+      "revId": "1f361f258b5c4f30eaf53ea31f674f9616f1d0e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e41e0b_bb3fe195",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-09T01:54:18Z",
+      "side": 1,
+      "message": "You can simplify this test b/c you don\u0027t actually need the dialog to be in the dom to test your function. You should be able to:\n\ntest(\u0027ValidIPV4\u0027, function() {\n  var dialog \u003d document.createElement(\u0027add-printer-manually-dialog\u0027);\n  assertTrue(dialog.canAddPrinter_(\u0027Test printer\u0027, \u0027127.0.0.1\u0027));\n}\n\ntest(\u0027ValidIPV6\u0027, function() {\n  var dialog \u003d document.createElement(\u0027add-printer-manually-dialog\u0027);\n  assertTrue(dialog.canAddPrinter_(\u0027Test printer\u0027, \u00271:2:a3:ff4:5:6:7:8\u0027));\n}\n\nThis has the advantage that your test description becomes the test name, so we can debug easier if any part fails. Also, no need to comment each test b/c the description will explain what we\u0027re looking for.",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 61
+      },
+      "revId": "1f361f258b5c4f30eaf53ea31f674f9616f1d0e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02216fca_3cd0a45a",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-09T01:54:18Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a valid IPV6 address. Maybe this should be [1::]:22",
+      "range": {
+        "startLine": 169,
+        "startChar": 54,
+        "endLine": 169,
+        "endChar": 60
+      },
+      "revId": "1f361f258b5c4f30eaf53ea31f674f9616f1d0e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76b1601_b6b4e620",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-09T01:54:18Z",
+      "side": 1,
+      "message": "Other good invalid test cases might be:\n\u0027helloworld123-.com\u0027\n\u0027-helloworld123.com\u0027",
+      "range": {
+        "startLine": 193,
+        "startChar": 54,
+        "endLine": 193,
+        "endChar": 72
+      },
+      "revId": "1f361f258b5c4f30eaf53ea31f674f9616f1d0e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
