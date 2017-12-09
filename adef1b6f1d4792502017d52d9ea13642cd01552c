@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "dc4d8fc7_d8a9daf1",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-09T00:37:06Z",
+      "side": 1,
+      "message": "No it shouldn\u0027t change.  I tested with multiwindow and even when we get different activities we have the same BrowserContext object.",
+      "parentUuid": "4816a169_be7d3458",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79be36b7_c7ca114e",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
         "patchSetId": 15
