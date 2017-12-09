@@ -88,6 +88,7 @@ void LockLayoutManager::OnWindowBoundsChanged(aura::Window* window,
 void LockLayoutManager::OnVirtualKeyboardStateChanged(
     bool activated,
     aura::Window* root_window) {
+  LOG(ERROR) << "[XXX] OnVirtualKeyboardStateChanged";
   UpdateKeyboardObserverFromStateChanged(activated, root_window, root_window_,
                                          &keyboard_observer_);
 }
@@ -108,6 +109,7 @@ void LockLayoutManager::WillChangeVisibilityState(
 
 void LockLayoutManager::OnKeyboardWorkspaceOccludedBoundsChanging(
     const gfx::Rect& new_bounds) {
+  LOG(ERROR) << "[XXX] OnKeyboardWorkspaceOccludedBoundsChanging";
   OnWindowResized();
 }
 

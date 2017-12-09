@@ -9,12 +9,18 @@
 
 #include "ash/ash_export.h"
 #include "ash/session/session_observer.h"
+#include "ash/shell_observer.h"
 #include "ash/tray_action/tray_action_observer.h"
 #include "base/macros.h"
 #include "base/scoped_observer.h"
+#include "ui/keyboard/keyboard_controller_observer.h"
 
 namespace ui {
 class Layer;
+}
+
+namespace keyboard {
+class KeyboardController;
 }
 
 namespace ash {
@@ -24,7 +30,9 @@ class LoginDataDispatcher;
 class TrayAction;
 
 class ASH_EXPORT LockScreen : public TrayActionObserver,
-                              public SessionObserver {
+                              public SessionObserver,
+                              public ShellObserver,
+                              public keyboard::KeyboardControllerObserver {
  public:
   // The UI that this instance is displaying.
   enum class ScreenType { kLogin, kLock };
@@ -56,6 +64,14 @@ class ASH_EXPORT LockScreen : public TrayActionObserver,
   void OnSessionStateChanged(session_manager::SessionState state) override;
   void OnLockStateChanged(bool locked) override;
 
+  // ShellObserver:
+  void OnVirtualKeyboardStateChanged(bool activated,
+                                     aura::Window* root_window) override;
+
+  // keyboard::KeyboardControllerObserver:
+  void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
+  void OnKeyboardClosed() override;
+
  private:
   explicit LockScreen(ScreenType type);
   ~LockScreen() override;
@@ -71,6 +87,10 @@ class ASH_EXPORT LockScreen : public TrayActionObserver,
 
   ScopedObserver<TrayAction, TrayActionObserver> tray_action_observer_;
   ScopedSessionObserver session_observer_;
+
+  ScopedObserver<keyboard::KeyboardController,
+                 keyboard::KeyboardControllerObserver>
+      keyboard_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(LockScreen);
 };

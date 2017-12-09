@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/keyboard/keyboard_observer_register.h"
 #include "ash/login/ui/lock_contents_view.h"
 #include "ash/login/ui/lock_debug_view.h"
 #include "ash/login/ui/lock_window.h"
@@ -23,6 +24,7 @@
 #include "ui/compositor/layer.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/keyboard/keyboard_util.h"
 
 namespace ash {
 namespace {
@@ -50,11 +52,17 @@ LockScreen* instance_ = nullptr;
 }  // namespace
 
 LockScreen::LockScreen(ScreenType type)
-    : type_(type), tray_action_observer_(this), session_observer_(this) {
+    : type_(type),
+      tray_action_observer_(this),
+      session_observer_(this),
+      keyboard_observer_(this) {
   tray_action_observer_.Add(ash::Shell::Get()->tray_action());
+  Shell::Get()->AddShellObserver(this);
 }
 
-LockScreen::~LockScreen() = default;
+LockScreen::~LockScreen() {
+  Shell::Get()->RemoveShellObserver(this);
+}
 
 // static
 LockScreen* LockScreen::Get() {
@@ -66,6 +74,12 @@ LockScreen* LockScreen::Get() {
 void LockScreen::Show(ScreenType type) {
   CHECK(!instance_);
   instance_ = new LockScreen(type);
+
+  // TODO(agawronska): Add tests for UI visibility when virtual keyboard
+  // present. Disable virtual keyboard overscroll because it interferes with
+  // scrolling login/lock content. See crbug.com/363635.
+  keyboard::SetKeyboardOverscrollOverride(
+      keyboard::KEYBOARD_OVERSCROLL_OVERRIDE_DISABLED);
 
   auto data_dispatcher = std::make_unique<LoginDataDispatcher>();
   auto* contents = BuildContentsView(
@@ -93,6 +107,9 @@ void LockScreen::Destroy() {
   window_->Close();
   delete instance_;
   instance_ = nullptr;
+
+  keyboard::SetKeyboardOverscrollOverride(
+      keyboard::KEYBOARD_OVERSCROLL_OVERRIDE_NONE);
 }
 
 void LockScreen::ToggleBlurForDebug() {
@@ -136,6 +153,22 @@ void LockScreen::OnLockStateChanged(bool locked) {
   if (!locked)
     Destroy();
   Shell::Get()->metrics()->login_metrics_recorder()->Reset();
+}
+
+void LockScreen::OnVirtualKeyboardStateChanged(bool activated,
+                                               aura::Window* root_window) {
+  LOG(ERROR) << "[XXX] OnVirtualKeyboardStateChanged " << activated;
+  UpdateKeyboardObserverFromStateChanged(
+      activated, root_window, window_->GetNativeWindow()->GetRootWindow(),
+      &keyboard_observer_);
+}
+
+void LockScreen::OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) {
+  LOG(ERROR) << "[XXX] OnKeyboardBoundsChanging";
+}
+
+void LockScreen::OnKeyboardClosed() {
+  LOG(ERROR) << "[XXX] OnKeyboardClosed";
 }
 
 }  // namespace ash
