@@ -1148,10 +1148,12 @@ bool UnownedFormElementsAndFieldSetsToFormData(
     ExtractMask extract_mask,
     FormData* form,
     FormFieldData* field) {
+  LOG(ERROR) << "bt:" << __FUNCTION__ "<<";
   form->origin = GetCanonicalOriginForDocument(document);
   if (document.GetFrame()) {
     form->main_frame_origin = document.GetFrame()->Top()->GetSecurityOrigin();
   } else {
+    LOG(ERROR) << "bt:" << __FUNCTION__ ">>";
     form->main_frame_origin = url::Origin();
     NOTREACHED();
   }
@@ -1474,6 +1476,7 @@ bool WebFormElementToFormData(
     ExtractMask extract_mask,
     FormData* form,
     FormFieldData* field) {
+  LOG(ERROR) << "bt:" << __FUNCTION__ "<<";
   WebLocalFrame* frame = form_element.GetDocument().GetFrame();
   if (!frame)
     return false;
@@ -1484,6 +1487,7 @@ bool WebFormElementToFormData(
   if (frame->Top()) {
     form->main_frame_origin = frame->Top()->GetSecurityOrigin();
   } else {
+    LOG(ERROR) << "bt:" << __FUNCTION__ ">>";
     form->main_frame_origin = url::Origin();
     NOTREACHED();
   }
