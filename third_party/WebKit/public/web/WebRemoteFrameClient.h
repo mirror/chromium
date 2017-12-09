@@ -61,6 +61,9 @@ class WebRemoteFrameClient {
   // This frame was focused by another frame.
   virtual void FrameFocused() {}
 
+  // Print out this frame.
+  virtual void Print(const WebRect& rect, uint32_t uid) {}
+
  protected:
   virtual ~WebRemoteFrameClient() {}
 };

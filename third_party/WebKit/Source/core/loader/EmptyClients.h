@@ -438,6 +438,7 @@ class CORE_EXPORT EmptyRemoteFrameClient : public RemoteFrameClient {
   void SetIsInert(bool) override {}
   void UpdateRenderThrottlingStatus(bool is_throttled,
                                     bool subtree_throttled) override {}
+  void Print(const IntRect& rect, uint32_t uid) const override {}
 
   // FrameClient implementation.
   bool InShadowTree() const override { return false; }
