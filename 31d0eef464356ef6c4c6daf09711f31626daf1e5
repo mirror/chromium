@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "db111722_080acd6e",
+        "filename": "content/browser/devtools/protocol/target_auto_attacher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-09T00:30:47Z",
+      "side": 1,
+      "message": "is this ever true?",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1c399fd_00bf5008",
         "filename": "content/browser/devtools/protocol/target_auto_attacher.cc",
         "patchSetId": 1
@@ -30,6 +47,23 @@
       "writtenOn": "2017-12-09T00:24:48Z",
       "side": 1,
       "message": "Use stl algorithms!",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed78573c_b5119c9c",
+        "filename": "content/browser/devtools/protocol/target_auto_attacher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-09T00:30:47Z",
+      "side": 1,
+      "message": "this is set, isn\u0027t it? though find should work with scoped_refptrs.",
       "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -81,6 +115,23 @@
       "writtenOn": "2017-12-09T00:24:48Z",
       "side": 1,
       "message": "std::unique_ptr\u003cThrottle\u003e throttle \u003d\n      std::make_unique\u003cThrottle\u003e(weak_factory_.GetWeakPtr(), navigation_handle);\n  throttles_.insert(throttle.get());\n  return std::move(throttle);",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3f8a74_894533a2",
+        "filename": "content/browser/devtools/protocol/target_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-09T00:30:47Z",
+      "side": 1,
+      "message": "redundant?",
       "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
