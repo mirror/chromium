@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "f0dfa632_46776f87",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:30:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72467313_a7757565",
+      "range": {
+        "startLine": 301,
+        "startChar": 5,
+        "endLine": 301,
+        "endChar": 74
+      },
+      "revId": "99f3935efb3245bdc96d811e0bb4259336eeff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25c098d7_043d162f",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 1
@@ -89,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "bd07e608_3e2f2cc3",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:30:52Z",
+      "side": 1,
+      "message": "I\u0027ll try to come up with a name since none was suggested :P.\n\nWe care about WiFi too, but done.",
+      "parentUuid": "6ce2e1a3_60261d15",
+      "range": {
+        "startLine": 299,
+        "startChar": 2,
+        "endLine": 299,
+        "endChar": 19
+      },
+      "revId": "99f3935efb3245bdc96d811e0bb4259336eeff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c1efa70_b926071f",
         "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
         "patchSetId": 1
@@ -112,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "b4eb5d5a_03348e0c",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:30:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c1efa70_b926071f",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 19
+      },
+      "revId": "99f3935efb3245bdc96d811e0bb4259336eeff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ccb2e9d_293c0894",
         "filename": "chromeos/network/network_device_handler_impl.cc",
         "patchSetId": 1
@@ -123,6 +195,30 @@
       "writtenOn": "2017-12-08T23:53:24Z",
       "side": 1,
       "message": "nit: \" \u003d \" instead for readability.",
+      "range": {
+        "startLine": 116,
+        "startChar": 63,
+        "endLine": 116,
+        "endChar": 64
+      },
+      "revId": "99f3935efb3245bdc96d811e0bb4259336eeff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac7fe65_5b13bcef",
+        "filename": "chromeos/network/network_device_handler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:30:52Z",
+      "side": 1,
+      "message": "Meh. Done.",
+      "parentUuid": "5ccb2e9d_293c0894",
       "range": {
         "startLine": 116,
         "startChar": 63,
