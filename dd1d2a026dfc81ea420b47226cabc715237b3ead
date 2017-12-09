@@ -52,6 +52,24 @@
       "revId": "dd1d2a026dfc81ea420b47226cabc715237b3ead",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7d3df8_df105971",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageDecodingStore.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-09T03:34:10Z",
+      "side": 0,
+      "message": "I\u0027m not an expert on WTF\u0027s hash structures and was confused about the concept of deleted keys. Thought perhaps the DecoderCacheKeys were being deleted but left in-memory at some particular address (since DecoderCacheKey has no destructor), and that someone was supposed to come in and mutate its fields to be the deleted values.\n\nReading HashTable.h and related files I now understand that these deleted keys are only created via the traits\u0027 ConstructDeletedValue.",
+      "parentUuid": "487d9d76_5e001118",
+      "revId": "dd1d2a026dfc81ea420b47226cabc715237b3ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
