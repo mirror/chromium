@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb384bd3_30a2320e",
+        "filename": "ash/metrics/desktop_task_switch_metric_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-09T00:29:58Z",
+      "side": 0,
+      "message": "Thanks for cleaning things up!",
+      "revId": "336913fcf6f64351d8faba631695b50a0784e113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

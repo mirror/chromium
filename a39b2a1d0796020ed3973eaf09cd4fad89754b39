@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68a115af_8b42d6d2",
+        "filename": "ash/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-09T00:29:58Z",
+      "side": 1,
+      "message": "nit: alphabetize",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b7ce84_ba7ba5a3",
+        "filename": "ash/metrics/time_to_first_present_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-09T00:29:58Z",
+      "side": 1,
+      "message": "super-nit: \"present time\" reads kinda weird, maybe \"when it presented a valid frame\"?",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8a4eff_8ff35395",
+        "filename": "ash/metrics/time_to_first_present_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-09T00:29:58Z",
+      "side": 1,
+      "message": "Is this because the WindowTreeHost can outlive Shell?",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541f3bec_c66b6274",
+        "filename": "ash/mojo_test_interface_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-09T00:29:58Z",
+      "side": 1,
+      "message": "nit: alphabetize",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacbf985_05d59c44",
+        "filename": "ash/public/interfaces/process_creation_time_recorder.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-09T00:29:58Z",
+      "side": 1,
+      "message": "I wonder if this should be called Metrics or ShellMetrics or ProcessMetrics. Any idea if we\u0027re going to add more metrics-y stuff in the future?\n\nAside, not for this CL: I wonder if we should have a generic \"Shell\" mojo interface. It could become a dumping ground, but that might be better than a bunch of tiny interfaces.",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd945c6e_6961500e",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-09T00:29:58Z",
+      "side": 1,
+      "message": "Any particular reason not to alphabetize? It\u0027s so close! :-) Is there a teardown order issue with touch-devices controller?",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83057187_0ec90ac2",
+        "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-09T00:29:58Z",
+      "side": 1,
+      "message": "Could this live in ChromeBrowserMainPartsChromeOS? Maybe around here? https://cs.chromium.org/chromium/src/chrome/browser/chromeos/chrome_browser_main_chromeos.cc?q\u003dchrome_browser_.*chromeos\u0026sq\u003dpackage:chromium\u0026l\u003d841 \n\nI\u0027d like to get rid of this class, as noted in the class comment.",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a20befd_41647734",
+        "filename": "chrome/browser/ui/views/ash/time_to_first_present_recorder_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-09T00:29:58Z",
+      "side": 1,
+      "message": "DISABLED",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1763381e_cb516155",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3164,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-09T00:29:58Z",
+      "side": 1,
+      "message": "super-nit: Chrome\u003cspace\u003eOS. derat@ will thank you. :-)",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
