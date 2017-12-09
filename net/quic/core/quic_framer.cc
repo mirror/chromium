@@ -28,6 +28,7 @@
 #include "net/quic/platform/api/quic_map_util.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
 #include "net/quic/platform/api/quic_str_cat.h"
+#include "net/quic/platform/api/quic_text_utils.h"
 
 using std::string;
 
@@ -1376,10 +1377,25 @@ bool QuicFramer::ProcessAckFrame(QuicDataReader* reader,
     return false;
   }
 
+  if (FLAGS_quic_reloadable_flag_quic_strict_ack_handling &&
+      first_block_length == 0) {
+    QUIC_FLAG_COUNT(quic_reloadable_flag_quic_strict_ack_handling);
+    // For non-empty ACKs, the first block length must be non-zero.
+    if (largest_acked != 0 || num_ack_blocks != 0) {
+      set_detailed_error(
+          QuicStrCat("First block length is zero but ACK is "
+                     "not empty. largest acked is ",
+                     largest_acked, ", num ack blocks is ",
+                     QuicTextUtils::Uint64ToString(num_ack_blocks), ".")
+              .c_str());
+      return false;
+    }
+  }
+
   if (first_block_length > largest_acked + 1) {
     set_detailed_error(QuicStrCat("Underflow with first ack block length ",
                                   first_block_length, " largest acked is ",
-                                  largest_acked + 1, ".")
+                                  largest_acked, ".")
                            .c_str());
     return false;
   }

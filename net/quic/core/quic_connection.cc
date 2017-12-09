@@ -2357,10 +2357,14 @@ QuicConnection::ScopedPacketFlusher::ScopedPacketFlusher(
   // If caller wants us to include an ack, check the delayed-ack timer to see if
   // there's ack info to be sent.
   if (ShouldSendAck(ack_mode)) {
-    QUIC_DVLOG(1) << "Bundling ack with outgoing packet.";
     DCHECK(ack_mode == SEND_ACK || connection_->ack_frame_updated() ||
            connection_->stop_waiting_count_ > 1);
-    connection_->SendAck();
+
+    if (!FLAGS_quic_reloadable_flag_quic_strict_ack_handling ||
+        !connection_->GetUpdatedAckFrame().ack_frame->packets.Empty()) {
+      QUIC_DVLOG(1) << "Bundling ack with outgoing packet.";
+      connection_->SendAck();
+    }
   }
 }
 

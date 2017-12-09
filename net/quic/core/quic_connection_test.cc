@@ -2088,7 +2088,9 @@ TEST_P(QuicConnectionTest, RecordSentTimeBeforePacketSent) {
 }
 
 TEST_P(QuicConnectionTest, FramePacking) {
-  // Send an ack and two stream frames in 1 packet by queueing them.
+  // Send two stream frames in 1 packet by queueing them.
+  // If FLAGS_quic_reloadable_flag_quic_strict_ack_handling is false, the packet
+  // also bundles an empty ack frame and a stop_waiting frame.
   {
     QuicConnection::ScopedPacketFlusher flusher(&connection_,
                                                 QuicConnection::SEND_ACK);
@@ -2102,21 +2104,33 @@ TEST_P(QuicConnectionTest, FramePacking) {
   // Parse the last packet and ensure it's an ack and two stream frames from
   // two different streams.
   if (GetParam().no_stop_waiting) {
-    EXPECT_EQ(3u, writer_->frame_count());
+    EXPECT_EQ(FLAGS_quic_reloadable_flag_quic_strict_ack_handling ? 2u : 3u,
+              writer_->frame_count());
     EXPECT_TRUE(writer_->stop_waiting_frames().empty());
   } else {
-    EXPECT_EQ(4u, writer_->frame_count());
-    EXPECT_FALSE(writer_->stop_waiting_frames().empty());
+    EXPECT_EQ(FLAGS_quic_reloadable_flag_quic_strict_ack_handling ? 2u : 4u,
+              writer_->frame_count());
+
+    if (FLAGS_quic_reloadable_flag_quic_strict_ack_handling) {
+      EXPECT_TRUE(writer_->stop_waiting_frames().empty());
+    } else {
+      EXPECT_FALSE(writer_->stop_waiting_frames().empty());
+    }
   }
-  EXPECT_FALSE(writer_->ack_frames().empty());
+
+  if (FLAGS_quic_reloadable_flag_quic_strict_ack_handling) {
+    EXPECT_TRUE(writer_->ack_frames().empty());
+  } else {
+    EXPECT_FALSE(writer_->ack_frames().empty());
+  }
   ASSERT_EQ(2u, writer_->stream_frames().size());
   EXPECT_EQ(kClientDataStreamId1, writer_->stream_frames()[0]->stream_id);
   EXPECT_EQ(kClientDataStreamId2, writer_->stream_frames()[1]->stream_id);
 }
 
 TEST_P(QuicConnectionTest, FramePackingNonCryptoThenCrypto) {
-  // Send an ack and two stream frames (one non-crypto, then one crypto) in 2
-  // packets by queueing them.
+  // Send two stream frames (one non-crypto, then one crypto) in 2 packets by
+  // queueing them.
   {
     EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _)).Times(2);
     QuicConnection::ScopedPacketFlusher flusher(&connection_,
@@ -2135,8 +2149,8 @@ TEST_P(QuicConnectionTest, FramePackingNonCryptoThenCrypto) {
 }
 
 TEST_P(QuicConnectionTest, FramePackingCryptoThenNonCrypto) {
-  // Send an ack and two stream frames (one crypto, then one non-crypto) in 2
-  // packets by queueing them.
+  // Send two stream frames (one crypto, then one non-crypto) in 2 packets by
+  // queueing them.
   {
     EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _)).Times(2);
     QuicConnection::ScopedPacketFlusher flusher(&connection_,

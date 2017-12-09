@@ -2129,7 +2129,7 @@ TEST_P(QuicFramerTest, FirstAckFrameUnderflow) {
       {"Unable to read first ack block length.",
        {0x88, 0x88}},
       // num timestamps.
-      {"Underflow with first ack block length 34952 largest acked is 4661.",
+      {"Underflow with first ack block length 34952 largest acked is 4660.",
        {0x00}}
   };
 
@@ -2157,7 +2157,7 @@ TEST_P(QuicFramerTest, FirstAckFrameUnderflow) {
       {"Unable to read first ack block length.",
        {0x88, 0x88}},
       // num timestamps.
-      {"Underflow with first ack block length 34952 largest acked is 4661.",
+      {"Underflow with first ack block length 34952 largest acked is 4660.",
        {0x00}}
   };
 
@@ -2196,6 +2196,154 @@ TEST_P(QuicFramerTest, FirstAckFrameUnderflow) {
   std::unique_ptr<QuicEncryptedPacket> encrypted(
       AssemblePacketFromFragments(fragments));
   EXPECT_FALSE(framer_.ProcessPacket(*encrypted));
+  CheckFramingBoundaries(fragments, QUIC_INVALID_ACK_DATA);
+}
+
+TEST_P(QuicFramerTest, AckFrameFirstAckBlockLengthZero) {
+  FLAGS_quic_reloadable_flag_quic_strict_ack_handling = true;
+
+  // clang-format off
+  PacketFragments packet = {
+      // public flags (8 byte connection_id)
+      {"",
+       { 0x3C }},
+      // connection_id
+      {"",
+       { 0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10 }},
+      // packet number
+      {"",
+       { 0xBC, 0x9A, 0x78, 0x56, 0x34, 0x12 }},
+
+      // frame type (ack frame)
+      // (more than one ack block, 2 byte largest observed, 2 byte block length)
+      {"",
+       { 0x65 }},
+      // largest acked
+      {"Unable to read largest acked.",
+       { 0x34, 0x12 }},
+      // Zero delta time.
+      {"Unable to read ack delay time.",
+       { 0x00, 0x00 }},
+      // num ack blocks ranges.
+      {"Unable to read num of ack blocks.",
+       { 0x01 }},
+      // first ack block length.
+      {"Unable to read first ack block length.",
+       { 0x00, 0x00 }},
+      // gap to next block.
+      { "First block length is zero but ACK is not empty. "
+        "largest acked is 4660, num ack blocks is 1.",
+        { 0x01 }},
+      // ack block length.
+      { "First block length is zero but ACK is not empty. "
+        "largest acked is 4660, num ack blocks is 1.",
+        { 0xaf, 0x0e }},
+      // Number of timestamps.
+      { "First block length is zero but ACK is not empty. "
+        "largest acked is 4660, num ack blocks is 1.",
+        { 0x00 }},
+  };
+
+  PacketFragments packet39 = {
+      // public flags (8 byte connection_id)
+      {"",
+       { 0x3C }},
+      // connection_id
+      {"",
+       { 0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10 }},
+      // packet number
+      {"",
+       { 0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC }},
+
+      // frame type (ack frame)
+      // (more than one ack block, 2 byte largest observed, 2 byte block length)
+      {"",
+       { 0x65 }},
+      // largest acked
+      {"Unable to read largest acked.",
+       { 0x12, 0x34 }},
+      // Zero delta time.
+      {"Unable to read ack delay time.",
+       { 0x00, 0x00 }},
+      // num ack blocks ranges.
+      {"Unable to read num of ack blocks.",
+       { 0x01 }},
+      // first ack block length.
+      {"Unable to read first ack block length.",
+       { 0x00, 0x00 }},
+      // gap to next block.
+      { "First block length is zero but ACK is not empty. "
+        "largest acked is 4660, num ack blocks is 1.",
+        { 0x01 }},
+      // ack block length.
+      { "First block length is zero but ACK is not empty. "
+        "largest acked is 4660, num ack blocks is 1.",
+        { 0x0e, 0xaf }},
+      // Number of timestamps.
+      { "First block length is zero but ACK is not empty. "
+        "largest acked is 4660, num ack blocks is 1.",
+        { 0x00 }},
+  };
+
+  PacketFragments packet41 = {
+      // public flags (8 byte connection_id)
+      {"",
+       { 0x3C }},
+      // connection_id
+      {"",
+       { 0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10 }},
+      // packet number
+      {"",
+       { 0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC }},
+
+      // frame type (ack frame)
+      // (more than one ack block, 2 byte largest observed, 2 byte block length)
+      {"",
+       { 0xB5 }},
+      // num ack blocks ranges.
+      {"Unable to read num of ack blocks.",
+       { 0x01 }},
+      // Number of timestamps.
+      { "Unable to read num received packets.",
+        { 0x00 }},
+      // largest acked
+      {"Unable to read largest acked.",
+       { 0x12, 0x34 }},
+      // Zero delta time.
+      {"Unable to read ack delay time.",
+       { 0x00, 0x00 }},
+      // first ack block length.
+      {"Unable to read first ack block length.",
+       { 0x00, 0x00 }},
+      // gap to next block.
+      { "First block length is zero but ACK is not empty. "
+        "largest acked is 4660, num ack blocks is 1.",
+        { 0x01 }},
+      // ack block length.
+      { "First block length is zero but ACK is not empty. "
+        "largest acked is 4660, num ack blocks is 1.",
+        { 0x0e, 0xaf }},
+  };
+
+  // clang-format on
+  PacketFragments& fragments =
+      framer_.transport_version() > QUIC_VERSION_39
+          ? packet41
+          : (framer_.transport_version() > QUIC_VERSION_38 ? packet39 : packet);
+
+  std::unique_ptr<QuicEncryptedPacket> encrypted(
+      AssemblePacketFromFragments(fragments));
+
+  EXPECT_FALSE(framer_.ProcessPacket(*encrypted));
+  EXPECT_EQ(QUIC_INVALID_ACK_DATA, framer_.error());
+
+  ASSERT_TRUE(visitor_.header_.get());
+  EXPECT_TRUE(CheckDecryption(*encrypted, !kIncludeVersion,
+                              !kIncludeDiversificationNonce));
+
+  EXPECT_EQ(0u, visitor_.stream_frames_.size());
+  ASSERT_EQ(0u, visitor_.ack_frames_.size());
+
   CheckFramingBoundaries(fragments, QUIC_INVALID_ACK_DATA);
 }
 
