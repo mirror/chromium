@@ -71,6 +71,13 @@ class MEDIA_MOJO_EXPORT WatchTimeRecorder : public mojom::WatchTimeRecorder {
   int underflow_count_ = 0;
   PipelineStatus pipeline_status_ = PIPELINE_OK;
 
+  // Forces UKM reporting even if there are no "All" keys. Allows UKM to be
+  // recorded for playbacks that never have any watch time.
+  bool force_ukm_report_ = false;
+
+  // True if UKM has ever been reported during the lifetime of the recorder.
+  bool reported_ukm_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(WatchTimeRecorder);
 };
 

@@ -157,6 +157,7 @@ WatchTimeRecorder::WatchTimeRecorder(mojom::PlaybackPropertiesPtr properties)
             kRebuffersCountAudioVideoEme, kDiscardedWatchTimeAudioVideoEme}}) {}
 
 WatchTimeRecorder::~WatchTimeRecorder() {
+  force_ukm_report_ = !reported_ukm_;
   FinalizeWatchTime({});
 }
 
@@ -262,6 +263,24 @@ void WatchTimeRecorder::RecordUkmPlaybackData() {
   if (!ukm_recorder)
     return;
 
+  // Ensure we have an "All" watch time entry or we're shutting down, otherwise
+  // skip reporting. If we're in shutdown w/o WatchTime we will create an entry
+  // with just the properties of the playback if we haven't reported UKM before.
+  if (!force_ukm_report_ &&
+      !std::any_of(
+          aggregate_watch_time_info_.begin(), aggregate_watch_time_info_.end(),
+          [](const std::pair<WatchTimeKey, base::TimeDelta>& kv) {
+            return kv.first == WatchTimeKey::kAudioAll ||
+                   kv.first == WatchTimeKey::kAudioBackgroundAll ||
+                   kv.first == WatchTimeKey::kAudioVideoAll ||
+                   kv.first == WatchTimeKey::kAudioVideoBackgroundAll ||
+                   kv.first == WatchTimeKey::kVideoAll ||
+                   kv.first == WatchTimeKey::kVideoBackgroundAll;
+          })) {
+    return;
+  }
+
+  reported_ukm_ = true;
   const int32_t source_id = ukm_recorder->GetNewSourceID();
 
   // TODO(crbug.com/787209): Stop getting origin from the renderer.
