@@ -105,8 +105,9 @@ NSUInteger TextInputClientMac::GetCharacterIndexAtPoint(RenderWidgetHost* rwh,
   RenderWidgetHostImpl* rwhi = RenderWidgetHostImpl::From(rwh);
   if (!SendMessageToRenderWidget(rwhi,
                                  new TextInputClientMsg_CharacterIndexForPoint(
-                                     rwhi->GetRoutingID(), point)))
-    return NSNotFound;
+                                     rwhi->GetRoutingID(), point))) {
+    return SetCharacterIndexAndSignal(NSNotFound);
+  }
 
   // http://crbug.com/121917
   base::ThreadRestrictions::ScopedAllowWait allow_wait;
@@ -128,8 +129,9 @@ NSRect TextInputClientMac::GetFirstRectForRange(RenderWidgetHost* rwh,
   RenderWidgetHostImpl* rwhi = RenderWidgetHostImpl::From(rwh);
   if (!SendMessageToRenderWidget(
           rwhi, new TextInputClientMsg_FirstRectForCharacterRange(
-                    rwhi->GetRoutingID(), gfx::Range(range))))
-    return NSRect();
+                    rwhi->GetRoutingID(), gfx::Range(range)))) {
+    return SetFirstRectAndSignal(NSRect());
+  }
 
   // http://crbug.com/121917
   base::ThreadRestrictions::ScopedAllowWait allow_wait;
