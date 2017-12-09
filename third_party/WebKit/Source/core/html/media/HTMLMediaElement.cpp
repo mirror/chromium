@@ -2266,8 +2266,12 @@ String HTMLMediaElement::EffectivePreload() const {
 }
 
 WebMediaPlayer::Preload HTMLMediaElement::EffectivePreloadType() const {
-  if (Autoplay() && !autoplay_policy_->IsGestureNeededForPlayback())
+  LOG(INFO) << "autoplay: " << Autoplay();
+  LOG(INFO) << "isgestureneeded " << autoplay_policy_->IsGestureNeededForPlayback();
+  if (Autoplay() && !autoplay_policy_->IsGestureNeededForPlayback()) {
+    LOG(INFO) << "force preload auto";
     return WebMediaPlayer::kPreloadAuto;
+  }
 
   WebMediaPlayer::Preload preload = PreloadType();
   if (ignore_preload_none_ && preload == WebMediaPlayer::kPreloadNone)

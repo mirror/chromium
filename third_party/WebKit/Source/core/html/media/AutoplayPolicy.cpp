@@ -150,8 +150,14 @@ void AutoplayPolicy::DidMoveToNewDocument(Document& old_document) {
 }
 
 bool AutoplayPolicy::IsEligibleForAutoplayMuted() const {
-  return element_->IsHTMLVideoElement() && element_->muted() &&
-         RuntimeEnabledFeatures::AutoplayMutedVideosEnabled();
+  if (!RuntimeEnabledFeatures::AutoplayMutedVideosEnabled())
+    return false;
+
+  if (!element_->IsHTMLVideoElement())
+    return false;
+
+  bool inaudible = element_->muted() || !element_->HasAudio();
+  return inaudible;
 }
 
 void AutoplayPolicy::StartAutoplayMutedWhenVisible() {
@@ -268,7 +274,11 @@ bool AutoplayPolicy::IsOrWillBeAutoplayingMutedInternal(bool muted) const {
     return false;
   }
 
-  return muted && IsLockedPendingUserGesture();
+  // TODO(mlamouri): there is a slight duplication logic with the
+  // `IsEligibleForAutoplayMuted` method. Find a way to merge them without
+  // passing the muted attribute everywhere.
+  bool inaudible = muted || !element_->HasAudio();
+  return inaudible && IsLockedPendingUserGesture();
 }
 
 bool AutoplayPolicy::IsLockedPendingUserGesture() const {
@@ -304,24 +314,20 @@ bool AutoplayPolicy::IsGestureNeededForPlaybackIfPendingUserGestureIsLocked()
   if (element_->GetLoadType() == WebMediaPlayer::kLoadTypeMediaStream)
     return false;
 
-  // We want to allow muted video to autoplay if:
-  // - the flag is enabled;
-  // - Data Saver is not enabled;
-  // - Preload was not disabled (low end devices);
-  // - Autoplay is enabled in settings;
-  if (element_->IsHTMLVideoElement() && element_->muted() &&
-      RuntimeEnabledFeatures::AutoplayMutedVideosEnabled() &&
-      !(element_->GetDocument().GetSettings() &&
-        GetNetworkStateNotifier().SaveDataEnabled()) &&
-      !(element_->GetDocument().GetSettings() &&
-        element_->GetDocument()
-            .GetSettings()
-            ->GetForcePreloadNoneForMediaElements()) &&
-      IsAutoplayAllowedPerSettings()) {
-    return false;
+  // Autoplay muted is never allowed if:
+  // - Data Saver is enabled;
+  // - Preload was forced to none;
+  // - Autoplay settings is turned off.
+  if (!IsAutoplayAllowedPerSettings())
+    return true;
+
+  Settings* settings = element_->GetDocument().GetSettings();
+  if (settings && (GetNetworkStateNotifier().SaveDataEnabled() ||
+                   settings->GetForcePreloadNoneForMediaElements())) {
+    return true;
   }
 
-  return true;
+  return !IsEligibleForAutoplayMuted();
 }
 
 void AutoplayPolicy::OnVisibilityChangedForAutoplay(bool is_visible) {
