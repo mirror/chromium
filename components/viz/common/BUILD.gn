@@ -25,6 +25,10 @@ viz_component("resource_format") {
     "//skia",
     "//ui/gfx:buffer_types",
   ]
+
+  public_deps = [
+    "//gpu/command_buffer/client:gles2_interface",
+  ]
 }
 
 viz_component("common") {

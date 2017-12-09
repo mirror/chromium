@@ -51,6 +51,7 @@ class VIZ_COMMON_EXPORT InProcessContextProvider : public ContextProvider {
 
   gpu::ContextResult BindToCurrentThread() override;
   gpu::gles2::GLES2Interface* ContextGL() override;
+  gpu::raster::RasterInterface* RasterContext() override;
   gpu::ContextSupport* ContextSupport() override;
   class GrContext* GrContext() override;
   ContextCacheController* CacheController() override;
@@ -83,6 +84,7 @@ class VIZ_COMMON_EXPORT InProcessContextProvider : public ContextProvider {
 
   base::Lock context_lock_;
   std::unique_ptr<gpu::GLInProcessContext> context_;
+  std::unique_ptr<gpu::raster::RasterInterface> raster_context_;
   gpu::ContextResult context_result_;
   std::unique_ptr<skia_bindings::GrContextForGLES2Interface> gr_context_;
   std::unique_ptr<ContextCacheController> cache_controller_;
