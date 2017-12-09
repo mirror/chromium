@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "94cedc58_fbb1be4a",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-09T03:20:33Z",
+      "side": 1,
+      "message": "Could you add a chromium.memory comment here?",
+      "revId": "ab2044d31b1153625f1cf01a235b3a33c64aaf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9ec278_43057e7a",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-09T03:20:33Z",
+      "side": 1,
+      "message": "Could you add a chromium.memory comment here too?",
+      "range": {
+        "startLine": 59,
+        "startChar": 13,
+        "endLine": 59,
+        "endChar": 17
+      },
+      "revId": "ab2044d31b1153625f1cf01a235b3a33c64aaf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49be983_ce33305a",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-09T03:20:33Z",
+      "side": 1,
+      "message": "Thanks for fixing the alphabetical order here.",
+      "range": {
+        "startLine": 175,
+        "startChar": 3,
+        "endLine": 175,
+        "endChar": 25
+      },
+      "revId": "ab2044d31b1153625f1cf01a235b3a33c64aaf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3d33eb7_83e13958",
         "filename": "testing/buildbot/test_suites.pyl",
         "patchSetId": 2
@@ -31,6 +94,24 @@
       "side": 1,
       "message": "indeed, and this one has.",
       "parentUuid": "e3d33eb7_83e13958",
+      "revId": "ab2044d31b1153625f1cf01a235b3a33c64aaf9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1a4ec67_5af36680",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-09T03:20:33Z",
+      "side": 1,
+      "message": "First - I\u0027m sorry for not yet allowing composition test suites to refer to others – maybe that would have allowed the chromium.clang and chromium.memory bots to share some of these configurations. But thank you so much for working through this!",
+      "parentUuid": "e0fb9f41_fac8bab7",
       "revId": "ab2044d31b1153625f1cf01a235b3a33c64aaf9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
