@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b55f33b_9e4f2479",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-09T00:16:04Z",
+      "side": 1,
+      "message": "What is sublabel used for?",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 34
+      },
+      "revId": "f54c9ca367cc6911ca5b3d97764eba6c9d05f58a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
