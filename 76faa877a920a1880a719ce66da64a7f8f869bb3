@@ -16,6 +16,24 @@
       "revId": "76faa877a920a1880a719ce66da64a7f8f869bb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e171d279_c606ae90",
+        "filename": "ash/public/interfaces/login_screen.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-09T00:13:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e8775ef_563b3a4e",
+      "revId": "76faa877a920a1880a719ce66da64a7f8f869bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
