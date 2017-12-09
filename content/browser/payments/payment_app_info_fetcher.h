@@ -9,7 +9,7 @@
 #include <string>
 
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
+//#include "base/memory/ref_counted.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/public/browser/stored_payment_app.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -18,10 +18,10 @@
 
 namespace content {
 
-class PaymentAppInfoFetcher
-    : public base::RefCountedThreadSafe<PaymentAppInfoFetcher> {
+class PaymentAppInfoFetcher {
  public:
   PaymentAppInfoFetcher();
+  virtual ~PaymentAppInfoFetcher();
 
   struct PaymentAppInfo {
     PaymentAppInfo();
@@ -39,16 +39,12 @@ class PaymentAppInfoFetcher
              PaymentAppInfoFetchCallback callback);
 
  private:
-  friend class base::RefCountedThreadSafe<PaymentAppInfoFetcher>;
-
   // Keeps track of the web contents.
   class WebContentsHelper : public WebContentsObserver {
    public:
     explicit WebContentsHelper(WebContents* web_contents);
     ~WebContentsHelper() override;
   };
-
-  ~PaymentAppInfoFetcher();
 
   void StartFromUIThread(
       const std::unique_ptr<std::vector<std::pair<int, int>>>& provider_hosts);

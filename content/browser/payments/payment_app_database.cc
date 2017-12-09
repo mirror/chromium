@@ -249,7 +249,7 @@ void PaymentAppDatabase::FetchAndWritePaymentAppInfo(
     FetchAndWritePaymentAppInfoCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  payment_app_info_fetcher_ = new PaymentAppInfoFetcher();
+  payment_app_info_fetcher_ = base::MakeUnique<PaymentAppInfoFetcher>();
   payment_app_info_fetcher_->Start(
       context, service_worker_context_,
       base::BindOnce(&PaymentAppDatabase::FetchPaymentAppInfoCallback,
@@ -264,7 +264,7 @@ void PaymentAppDatabase::FetchPaymentAppInfoCallback(
     std::unique_ptr<PaymentAppInfoFetcher::PaymentAppInfo> app_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  payment_app_info_fetcher_ = nullptr;
+  payment_app_info_fetcher_.reset();
 
   service_worker_context_->FindReadyRegistrationForPattern(
       scope,

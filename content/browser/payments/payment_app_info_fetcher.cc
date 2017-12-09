@@ -20,6 +20,8 @@ namespace content {
 PaymentAppInfoFetcher::PaymentAppInfoFetcher()
     : fetched_payment_app_info_(std::make_unique<PaymentAppInfo>()) {}
 
+PaymentAppInfoFetcher::~PaymentAppInfoFetcher() {}
+
 PaymentAppInfoFetcher::PaymentAppInfo::PaymentAppInfo() {}
 
 PaymentAppInfoFetcher::PaymentAppInfo::~PaymentAppInfo() {}
@@ -38,7 +40,7 @@ void PaymentAppInfoFetcher::Start(
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&PaymentAppInfoFetcher::StartFromUIThread, this,
+      base::BindOnce(&PaymentAppInfoFetcher::StartFromUIThread, base::Unretained(this),
                      std::move(provider_hosts)));
 }
 
@@ -47,8 +49,6 @@ PaymentAppInfoFetcher::WebContentsHelper::WebContentsHelper(
     : WebContentsObserver(web_contents) {}
 
 PaymentAppInfoFetcher::WebContentsHelper::~WebContentsHelper() {}
-
-PaymentAppInfoFetcher::~PaymentAppInfoFetcher() {}
 
 void PaymentAppInfoFetcher::StartFromUIThread(
     const std::unique_ptr<std::vector<std::pair<int, int>>>& provider_hosts) {
@@ -76,7 +76,7 @@ void PaymentAppInfoFetcher::StartFromUIThread(
     web_contents_helper_ = std::make_unique<WebContentsHelper>(web_content);
 
     web_content->GetManifest(base::Bind(
-        &PaymentAppInfoFetcher::FetchPaymentAppManifestCallback, this));
+        &PaymentAppInfoFetcher::FetchPaymentAppManifestCallback, base::Unretained(this)));
     return;
   }
 
@@ -194,7 +194,7 @@ void PaymentAppInfoFetcher::FetchPaymentAppManifestCallback(
   bool can_download = content::ManifestIconDownloader::Download(
       web_contents_helper_->web_contents(), icon_url_, kPaymentAppIdealIconSize,
       kPaymentAppMinimumIconSize,
-      base::Bind(&PaymentAppInfoFetcher::OnIconFetched, this));
+      base::Bind(&PaymentAppInfoFetcher::OnIconFetched, base::Unretained(this)));
   // |can_download| is false only if web contents are  null or the icon URL is
   // not valid. Both of these conditions are manually checked above, so
   // |can_download| should never be false. The manual checks above are necessary
