@@ -30,6 +30,8 @@ struct WebPackageManifest {
 // TODO: Remove this indirection.
 class WebPackageReaderAdapterClient {
  public:
+  using RequestURLAndMethod = std::pair<GURL, std::string>;
+
   virtual ~WebPackageReaderAdapterClient() {}
 
   // Called at most once.

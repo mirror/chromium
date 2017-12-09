@@ -93,7 +93,11 @@ void WebPackageResponseHandler::AddCallbacks(
       producer_handle_.get(), MOJO_HANDLE_SIGNAL_WRITABLE,
       base::Bind(&WebPackageResponseHandler::OnPipeWritable,
                  base::Unretained(this)));
+  /*
   if (!read_buffers_.empty())
+    writable_handle_watcher_->ArmOrNotify();
+    */
+  if (data_receive_finished_)
     writable_handle_watcher_->ArmOrNotify();
 
   completion_callback_ = std::move(completion_callback);
@@ -105,6 +109,7 @@ void WebPackageResponseHandler::OnDataReceived(const void* data, size_t size) {
   size_t consumed = 0;
   // LOG(ERROR) << "[" << request_url_ << "] OnDataReceived:" << size;
 
+  /*
   if (producer_handle_.is_valid() && read_buffers_.empty()) {
     uint32_t available = 0;
     scoped_refptr<network::NetToMojoPendingBuffer> pending_write;
@@ -122,13 +127,16 @@ void WebPackageResponseHandler::OnDataReceived(const void* data, size_t size) {
   // Drop data if the pipe is closed.
   if (data_write_finished_)
     return;
+    */
 
   CHECK_LE(consumed, size);
   size_t remaining = size - consumed;
+  /*
   if (remaining == 0) {
     writable_handle_watcher_->ArmOrNotify();
     return;
   }
+  */
 
   auto buffer = base::MakeRefCounted<net::IOBuffer>(remaining);
   read_buffers_.push_back(
@@ -136,8 +144,10 @@ void WebPackageResponseHandler::OnDataReceived(const void* data, size_t size) {
   memcpy(buffer->data(), static_cast<const char*>(data) + consumed, remaining);
   // LOG(ERROR) << "- saving to the buffer: " << remaining;
 
+  /*
   if (producer_handle_.is_valid())
     writable_handle_watcher_->ArmOrNotify();
+    */
 }
 
 void WebPackageResponseHandler::OnNotifyFinished(int error_code) {
@@ -147,7 +157,9 @@ void WebPackageResponseHandler::OnNotifyFinished(int error_code) {
   data_receive_finished_ = true;
   if (read_buffers_.empty() && !source_stream_may_have_data_)
     data_write_finished_ = true;
-  MaybeCompleteAndNotify();
+  if (producer_handle_.is_valid())
+    writable_handle_watcher_->ArmOrNotify();
+  // MaybeCompleteAndNotify();
 }
 
 void WebPackageResponseHandler::GetCurrentReadBuffer(const char** buf,
@@ -164,6 +176,7 @@ void WebPackageResponseHandler::UpdateConsumedReadSize(size_t size) {
 void WebPackageResponseHandler::OnPipeWritable(MojoResult mojo_result) {
   if (mojo_result == MOJO_RESULT_FAILED_PRECONDITION) {
     LOG(ERROR) << "Canceled? " << request_url_;
+    data_write_finished_ = true;
     OnNotifyFinished(net::ERR_ABORTED);
     return;
   }
