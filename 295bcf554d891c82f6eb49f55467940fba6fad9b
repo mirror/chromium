@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1e7c38e_5c51f27f",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-09T02:14:03Z",
+      "side": 1,
+      "message": "^^",
+      "revId": "295bcf554d891c82f6eb49f55467940fba6fad9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797759f9_184ffa4e",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-09T02:14:03Z",
+      "side": 1,
+      "message": "TODO(tandrii): add dimensions, even though currently pin specific bots to a builder through automatic auto_builder_dimension (see above).\n\ndimensions: \"os:Windows\"\ndimensions: \"cpu:x86-64\"\ndimensions: \"cores:32\"",
+      "revId": "295bcf554d891c82f6eb49f55467940fba6fad9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
