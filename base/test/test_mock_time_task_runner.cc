@@ -196,10 +196,32 @@ TestMockTimeTaskRunner::TestMockTimeTaskRunner(Time start_time,
                                                TimeTicks start_ticks,
                                                Type type)
     : now_(start_time), now_ticks_(start_ticks), tasks_lock_cv_(&tasks_lock_) {
-  if (type == Type::kBoundToThread) {
-    run_loop_client_ = RunLoop::RegisterDelegateForCurrentThread(this);
-    thread_task_runner_handle_ = std::make_unique<ThreadTaskRunnerHandle>(
-        MakeRefCounted<NonOwningProxyTaskRunner>(this));
+  switch (type) {
+    case Type::kStandalone: {
+      // No custom setup required.
+      break;
+    }
+    case Type::kBoundToThread: {
+      thread_task_runner_handle_ = std::make_unique<ThreadTaskRunnerHandle>(
+          MakeRefCounted<NonOwningProxyTaskRunner>(this));
+      run_loop_client_ = RunLoop::RegisterDelegateForCurrentThread(this);
+      break;
+    }
+    case Type::kTakeOverThread: {
+      overriden_task_runner_ = ThreadTaskRunnerHandle::Get();
+      DCHECK(overriden_task_runner_);
+      thread_task_runner_handle_override_scope_ =
+          ThreadTaskRunnerHandle::OverrideForTesting(
+              MakeRefCounted<NonOwningProxyTaskRunner>(this),
+              ThreadTaskRunnerHandle::OverrideType::kTakeOverThread);
+
+      auto delegate_override_pair =
+          RunLoop::OverrideDelegateForCurrentThreadForTesting(this);
+      run_loop_client_ = delegate_override_pair.first;
+      overriden_delegate_ = delegate_override_pair.second;
+      DCHECK(overriden_delegate_);
+      break;
+    }
   }
 }
 
@@ -413,11 +435,15 @@ void TestMockTimeTaskRunner::Run(bool application_tasks_allowed) {
 void TestMockTimeTaskRunner::Quit() {
   DCHECK(thread_checker_.CalledOnValidThread());
   quit_run_loop_ = true;
+  if (overriden_delegate_)
+    overriden_delegate_->Quit();
 }
 
 void TestMockTimeTaskRunner::EnsureWorkScheduled() {
-  // Nothing to do: TestMockTimeTaskRunner::Run() will always process tasks and
-  // doesn't need an extra kick on nested runs.
+  // Nothing to do in TestMockTimeTaskRunner: TestMockTimeTaskRunner::Run() will
+  // always process tasks and doesn't need an extra kick on nested runs.
+  if (overriden_delegate_)
+    overriden_delegate_->EnsureWorkScheduled();
 }
 
 }  // namespace base

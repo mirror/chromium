@@ -31,6 +31,11 @@ class ThreadTaskRunnerHandle;
 // Runs pending tasks in the order of the tasks' post time + delay, and keeps
 // track of a mock (virtual) tick clock time that can be fast-forwarded.
 //
+// Note: A base::test::ScopedTaskEnvironment of type MOCK_TIME is preferred over
+// an explicit TestMockTimeTaskRunner. Only use a TestMockTimeTaskRunner in
+// tests that explictly need to simulate timings across multiple threads (e.g. a
+// regression test for a race condition).
+//
 // TestMockTimeTaskRunner has the following properties:
 //
 //   - Methods RunsTasksInCurrentSequence() and Post[Delayed]Task() can be
@@ -46,8 +51,8 @@ class ThreadTaskRunnerHandle;
 //     a TimeDelta, and that adding this delta to the starting values of Time
 //     and TickTime is still within their respective range.
 //
-// A TestMockTimeTaskRunner of Type::kBoundToThread has the following additional
-// properties:
+// A TestMockTimeTaskRunner of Type::kBoundToThread or Type::kTakeOverThread has
+// the following additional properties:
 //   - Thread/SequencedTaskRunnerHandle refers to it on its thread.
 //   - It can be driven by a RunLoop on the thread it was created on.
 //     RunLoop::Run() will result in running non-delayed tasks until idle and
@@ -59,7 +64,6 @@ class ThreadTaskRunnerHandle;
 //     delayed ones), it will block until more are posted. As usual,
 //     RunLoop::RunUntilIdle() is equivalent to RunLoop::Run() followed by an
 //     immediate RunLoop::QuitWhenIdle().
-//    -
 //
 // This is a slightly more sophisticated version of TestSimpleTaskRunner, in
 // that it supports running delayed tasks in the correct temporal order.
@@ -115,6 +119,9 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
     DISALLOW_COPY_AND_ASSIGN(ScopedContext);
   };
 
+  // Recall of mention at the top: prefer a base::test::ScopedTaskEnvironment
+  // over a TestMockTimeTaskRunner except in tests that explicitly need to
+  // simulate timings across multiple threads.
   enum class Type {
     // A TestMockTimeTaskRunner which can only be driven directly through its
     // API. Thread/SequencedTaskRunnerHandle will refer to it only in the scope
@@ -122,8 +129,15 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
     kStandalone,
     // A TestMockTimeTaskRunner which will associate to the thread it is created
     // on, enabling RunLoop to drive it and making
-    // Thread/SequencedTaskRunnerHandle refer to it on that thread.
+    // Thread/SequencedTaskRunnerHandle refer to it on that thread. There must
+    // not be an existing RunLoop::Delegate (e.g. MessageLoop) on this thread.
     kBoundToThread,
+    // Akin to kBoundToThread (RunLoop drives it and
+    // Thread/SequencedTaskRunnerHandle refers to it) but mocks time over an
+    // existing RunLoop::Delegate, forwarding tasks to it as they become ripe.
+    // This mode overrides the current RunLoop::Delegate and
+    // ThreadTaskRunnerHandle in this thread's environment.
+    kTakeOverThread,
   };
 
   // Constructs an instance whose virtual time will start at the Unix epoch, and
@@ -249,10 +263,19 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
   mutable Lock tasks_lock_;
   ConditionVariable tasks_lock_cv_;
 
-  // Members used to in TestMockTimeTaskRunners of Type::kBoundToThread to take
+  // Non-null in TestMockTimeTaskRunners of Type::kBoundToThread to take
   // ownership of the thread it was created on.
-  RunLoop::Delegate::Client* run_loop_client_ = nullptr;
   std::unique_ptr<ThreadTaskRunnerHandle> thread_task_runner_handle_;
+
+  // Non-null in TestMockTimeTaskRunners of Type::kTakeOverThread to control
+  // the overriden RunLoop::Delegate.
+  scoped_refptr<SingleThreadTaskRunner> overriden_task_runner_;
+  ScopedClosureRunner thread_task_runner_handle_override_scope_;
+  RunLoop::Delegate* overriden_delegate_;
+
+  // Non-null in TestMockTimeTaskRunners of Type::kBoundToThread or
+  // Type::kTakeOverThread to query RunLoop state during Run().
+  RunLoop::Delegate::Client* run_loop_client_ = nullptr;
 
   // Set to true in RunLoop::Delegate::Quit() to signal the topmost
   // RunLoop::Delegate::Run() instance to stop, reset to false when it does.
