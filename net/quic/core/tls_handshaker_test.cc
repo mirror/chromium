@@ -173,23 +173,12 @@ class TestQuicCryptoStream : public QuicCryptoStream {
   std::vector<string> pending_writes_;
 };
 
-namespace {
-
-SSL_CTX* new_ssl_ctx() {
-  SSL_CTX* ctx = SSL_CTX_new(TLS_with_buffers_method());
-  SSL_CTX_set_min_proto_version(ctx, TLS1_3_VERSION);
-  SSL_CTX_set_max_proto_version(ctx, TLS1_3_VERSION);
-  return ctx;
-}
-
-}  // namespace
-
 class TestQuicCryptoClientStream : public TestQuicCryptoStream {
  public:
   explicit TestQuicCryptoClientStream(QuicSession* session)
       : TestQuicCryptoStream(session),
         proof_verifier_(new FakeProofVerifier),
-        ssl_ctx_(new_ssl_ctx()),
+        ssl_ctx_(TlsClientHandshaker::CreateSslCtx()),
         handshaker_(new TlsClientHandshaker(
             this,
             session,
@@ -220,14 +209,11 @@ class TestQuicCryptoServerStream : public TestQuicCryptoStream {
                              FakeProofSource* proof_source)
       : TestQuicCryptoStream(session),
         proof_source_(proof_source),
-        ssl_ctx_(new_ssl_ctx()),
+        ssl_ctx_(TlsServerHandshaker::CreateSslCtx()),
         handshaker_(new TlsServerHandshaker(this,
                                             session,
                                             ssl_ctx_.get(),
-                                            proof_source_)) {
-    SSL_CTX_set_tlsext_servername_callback(
-        ssl_ctx_.get(), TlsServerHandshaker::SelectCertificateCallback);
-  }
+                                            proof_source_)) {}
 
   ~TestQuicCryptoServerStream() override = default;
 

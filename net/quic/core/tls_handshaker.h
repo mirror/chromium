@@ -45,6 +45,11 @@ class QUIC_EXPORT_PRIVATE TlsHandshaker : public QuicTlsAdapter::Visitor {
  protected:
   virtual void AdvanceHandshake() = 0;
 
+  // Creates an SSL_CTX and configures it with the options that are appropriate
+  // for both client and server. The caller is responsible for ownership of the
+  // newly created struct.
+  static bssl::UniquePtr<SSL_CTX> CreateSslCtx();
+
   // From a given SSL* |ssl|, returns a pointer to the TlsHandshaker that it
   // belongs to. This is a helper method for implementing callbacks set on an
   // SSL, as it allows the callback function to find the TlsHandshaker instance

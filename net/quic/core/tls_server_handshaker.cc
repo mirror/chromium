@@ -45,6 +45,14 @@ const SSL_PRIVATE_KEY_METHOD TlsServerHandshaker::kPrivateKeyMethod{
     &TlsServerHandshaker::PrivateKeyComplete,
 };
 
+// static
+bssl::UniquePtr<SSL_CTX> TlsServerHandshaker::CreateSslCtx() {
+  bssl::UniquePtr<SSL_CTX> ssl_ctx = TlsHandshaker::CreateSslCtx();
+  SSL_CTX_set_tlsext_servername_callback(
+      ssl_ctx.get(), TlsServerHandshaker::SelectCertificateCallback);
+  return ssl_ctx;
+}
+
 TlsServerHandshaker::TlsServerHandshaker(QuicCryptoStream* stream,
                                          QuicSession* session,
                                          SSL_CTX* ssl_ctx,

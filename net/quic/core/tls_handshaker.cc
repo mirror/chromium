@@ -102,6 +102,14 @@ QuicDecrypter* TlsHandshaker::CreateDecrypter(
   return decrypter;
 }
 
+// static
+bssl::UniquePtr<SSL_CTX> TlsHandshaker::CreateSslCtx() {
+  bssl::UniquePtr<SSL_CTX> ssl_ctx(SSL_CTX_new(TLS_with_buffers_method()));
+  SSL_CTX_set_min_proto_version(ssl_ctx.get(), TLS1_3_VERSION);
+  SSL_CTX_set_max_proto_version(ssl_ctx.get(), TLS1_3_VERSION);
+  return ssl_ctx;
+}
+
 TlsHandshaker::TlsHandshaker(QuicCryptoStream* stream,
                              QuicSession* session,
                              SSL_CTX* ssl_ctx)

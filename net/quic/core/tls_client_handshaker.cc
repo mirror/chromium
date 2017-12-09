@@ -54,6 +54,11 @@ TlsClientHandshaker::~TlsClientHandshaker() {
   }
 }
 
+// static
+bssl::UniquePtr<SSL_CTX> TlsClientHandshaker::CreateSslCtx() {
+  return TlsHandshaker::CreateSslCtx();
+}
+
 bool TlsClientHandshaker::CryptoConnect() {
   state_ = STATE_HANDSHAKE_RUNNING;
   // Configure certificate verification.
