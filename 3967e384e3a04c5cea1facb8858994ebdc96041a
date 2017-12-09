@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ed2d6772_3a540a9b",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-09T00:42:41Z",
+      "side": 1,
+      "message": "OK, let\u0027s file a bug: it would be good to understand what the requirements are. While it\u0027s important to migrate things from IPC to Mojo, it\u0027s also good to understand what the requirements around different interfaces are and better document them, given how Mojo decentralizes IPC. So I\u0027d like to at least get a basic understanding of this and update the comment before landing this CL.",
+      "parentUuid": "42acdf3c_1648f162",
+      "revId": "3967e384e3a04c5cea1facb8858994ebdc96041a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "852d3147_4978033f",
         "filename": "content/common/media/media_stream_track_metrics_host_messages.h",
         "patchSetId": 2
