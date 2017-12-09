@@ -25,22 +25,22 @@ class API_AVAILABLE(ios(11.0)) WKHTTPSystemCookieStore
 
   void GetCookiesForURLAsync(
       const GURL& url,
-      net::SystemCookieStore::SystemCookieCallbackForCookies callback) override;
+      SystemCookieStore::SystemCookieCallbackForCookies callback) override;
 
   void GetAllCookiesAsync(
-      net::SystemCookieStore::SystemCookieCallbackForCookies callback) override;
+      SystemCookieStore::SystemCookieCallbackForCookies callback) override;
 
   void DeleteCookieAsync(
       NSHTTPCookie* cookie,
-      net::SystemCookieStore::SystemCookieCallback callback) override;
+      SystemCookieStore::SystemCookieCallback callback) override;
 
   void SetCookieAsync(
       NSHTTPCookie* cookie,
       const base::Time* optional_creation_time,
-      net::SystemCookieStore::SystemCookieCallback callback) override;
+      SystemCookieStore::SystemCookieCallback callback) override;
 
   void ClearStoreAsync(
-      net::SystemCookieStore::SystemCookieCallback callback) override;
+      SystemCookieStore::SystemCookieCallback callback) override;
 
   NSHTTPCookieAcceptPolicy GetCookieAcceptPolicy() override;
 
