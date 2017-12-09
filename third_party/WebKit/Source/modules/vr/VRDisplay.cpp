@@ -727,12 +727,17 @@ void VRDisplay::submitFrame() {
     client->DrawingBufferClientRestoreFramebufferBinding();
     client->DrawingBufferClientRestoreRenderbufferBinding();
 
-    // We decompose the cloned handle, and use it to create a mojo::ScopedHandle
-    // which will own cleanup of the handle, and will be passed over IPC.
-    gfx::GpuMemoryBufferHandle gpu_handle =
-        CloneHandleForIPC(gpu_memory_buffer->GetHandle());
-    vr_presentation_provider_->SubmitFrameWithTextureHandle(
-        vr_frame_id_, mojo::WrapPlatformFile(gpu_handle.handle.GetHandle()));
+    if (gpu_memory_buffer) {
+      // TODO: should we tell the device that we failed to render?
+
+      // We decompose the cloned handle, and use it to create a
+      // mojo::ScopedHandle which will own cleanup of the handle, and will be
+      // passed over IPC.
+      gfx::GpuMemoryBufferHandle gpu_handle =
+          CloneHandleForIPC(gpu_memory_buffer->GetHandle());
+      vr_presentation_provider_->SubmitFrameWithTextureHandle(
+          vr_frame_id_, mojo::WrapPlatformFile(gpu_handle.handle.GetHandle()));
+    }
 #else
     NOTIMPLEMENTED();
 #endif
