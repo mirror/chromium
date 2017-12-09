@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f9e6eb1_3f0ceed1",
+        "filename": "services/resource_coordinator/observers/ipc_volume_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-12-09T04:19:25Z",
+      "side": 1,
+      "message": "Should this be RepeatingTimer? This is in the example in timer.h I see you use BindRepeating. Which is more preferred? I feel RepeatingTimer is more readable.",
+      "range": {
+        "startLine": 43,
+        "startChar": 18,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "85b6e0a46289735523cf5b60839f0166a948d687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c527b3fd_1b2adec2",
+        "filename": "services/resource_coordinator/observers/ipc_volume_reporter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-12-09T04:19:25Z",
+      "side": 1,
+      "message": "nit: Maybe put this before process, so the order is consistent with the checking below.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 55
+      },
+      "revId": "85b6e0a46289735523cf5b60839f0166a948d687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
