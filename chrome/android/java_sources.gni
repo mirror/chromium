@@ -491,6 +491,7 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/identity/UuidBasedUniqueIdentificationGenerator.java",
   "java/src/org/chromium/chrome/browser/incognito/IncognitoNotificationManager.java",
   "java/src/org/chromium/chrome/browser/incognito/IncognitoNotificationService.java",
+  "java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
   "java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarAndroid.java",
   "java/src/org/chromium/chrome/browser/infobar/AppBannerInfoBarDelegateAndroid.java",
   "java/src/org/chromium/chrome/browser/infobar/AutofillCreditCardFillingInfoBar.java",
