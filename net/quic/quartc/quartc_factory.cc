@@ -113,6 +113,7 @@ std::unique_ptr<QuartcSessionInterface> QuartcFactory::CreateQuartcSession(
   std::unique_ptr<QuicConnection> quic_connection =
       CreateQuicConnection(quartc_session_config, perspective);
   QuicTagVector copt;
+  copt.push_back(kNSTP);
   if (quartc_session_config.congestion_control ==
       QuartcCongestionControl::kBBR) {
     copt.push_back(kTBBR);
