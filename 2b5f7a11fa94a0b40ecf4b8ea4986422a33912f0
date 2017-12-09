@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "2b4d5a29_a4cfa2e6",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-09T19:58:09Z",
+      "side": 1,
+      "message": "Both variables will be updated in UpdateWindow() which is called later than CloseIfNotNecessary(). I think it should be fine to remove them.",
+      "parentUuid": "9dd8c593_967f0890",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d902c15_368bd4db",
         "filename": "ash/display/window_tree_host_manager.cc",
         "patchSetId": 8
