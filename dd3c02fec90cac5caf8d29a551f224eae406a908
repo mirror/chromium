@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38eace8a_182de820",
+        "filename": "ios/web/net/cookies/system_cookie_store_util_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T01:18:52Z",
+      "side": 1,
+      "message": "nit: s/import/include",
+      "range": {
+        "startLine": 5,
+        "startChar": 24,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "dd3c02fec90cac5caf8d29a551f224eae406a908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4eeb907_8ed94f4b",
+        "filename": "ios/web/net/cookies/system_cookie_store_util_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T01:18:52Z",
+      "side": 1,
+      "message": "nit: \"using testing::WaitUntilConditionOrTimeout\" and \"using testing::kWaitForCookiesTimeout\" can help with formatting",
+      "revId": "dd3c02fec90cac5caf8d29a551f224eae406a908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c064243_098e79b2",
+        "filename": "ios/web/net/cookies/system_cookie_store_util_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T01:18:52Z",
+      "side": 1,
+      "message": "Finish the comment?",
+      "range": {
+        "startLine": 71,
+        "startChar": 57,
+        "endLine": 71,
+        "endChar": 62
+      },
+      "revId": "dd3c02fec90cac5caf8d29a551f224eae406a908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02299f29_66183f0b",
+        "filename": "ios/web/net/cookies/system_cookie_store_util_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T01:18:52Z",
+      "side": 1,
+      "message": "Same comments about formatting",
+      "range": {
+        "startLine": 78,
+        "startChar": 18,
+        "endLine": 78,
+        "endChar": 45
+      },
+      "revId": "dd3c02fec90cac5caf8d29a551f224eae406a908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97c7f8e_043eb361",
+        "filename": "ios/web/net/cookies/system_cookie_store_util_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T01:18:52Z",
+      "side": 1,
+      "message": "This comments seems outdated.",
+      "range": {
+        "startLine": 87,
+        "startChar": 19,
+        "endLine": 87,
+        "endChar": 42
+      },
+      "revId": "dd3c02fec90cac5caf8d29a551f224eae406a908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d296180_359fc076",
+        "filename": "ios/web/net/cookies/system_cookie_store_util_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T01:18:52Z",
+      "side": 1,
+      "message": "Can we make this BrowserState Off The Record for iOS 11? This way cookie store will be ephemeral.",
+      "revId": "dd3c02fec90cac5caf8d29a551f224eae406a908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae48ef4_e24fcdfc",
+        "filename": "ios/web/net/cookies/system_cookie_store_util_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T01:18:52Z",
+      "side": 1,
+      "message": "Same comments about formatting",
+      "revId": "dd3c02fec90cac5caf8d29a551f224eae406a908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
