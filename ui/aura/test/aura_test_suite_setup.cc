@@ -67,9 +67,10 @@ void AuraTestSuiteSetup::ConfigureMus() {
 #if defined(USE_OZONE)
   input_device_client_ = std::make_unique<TestInputDeviceClient>();
 #endif
+
   context_factory_ = std::make_unique<test::AuraTestContextFactory>();
   env_->set_context_factory(context_factory_.get());
-  env_->set_context_factory_private(nullptr);
+  env_->set_context_factory_private(context_factory_.get());
 }
 #endif
 

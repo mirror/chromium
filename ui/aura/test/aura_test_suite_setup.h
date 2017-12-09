@@ -11,7 +11,6 @@
 #include "ui/base/ui_features.h"
 
 namespace ui {
-class ContextFactory;
 class InputDeviceClient;
 }  // namespace ui
 
@@ -22,6 +21,11 @@ class Env;
 #if BUILDFLAG(ENABLE_MUS)
 class TestWindowTreeClientDelegate;
 class TestWindowTreeClientSetup;
+
+namespace test {
+class AuraTestContextFactory;
+}
+
 #endif
 
 // Use this in TestSuites that use aura. It configures aura appropriately based
@@ -39,7 +43,7 @@ class AuraTestSuiteSetup {
   std::unique_ptr<aura::Env> env_;
 
 #if BUILDFLAG(ENABLE_MUS)
-  std::unique_ptr<ui::ContextFactory> context_factory_;
+  std::unique_ptr<test::AuraTestContextFactory> context_factory_;
   std::unique_ptr<TestWindowTreeClientDelegate>
       test_window_tree_client_delegate_;
   std::unique_ptr<TestWindowTreeClientSetup> window_tree_client_setup_;
