@@ -69,7 +69,9 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   void webkitExitFullscreen();
   bool webkitSupportsFullscreen();
   bool webkitDisplayingFullscreen();
-  bool UsesOverlayFullscreenVideo() const override;
+  void DidEnterFullscreen();
+  void DidExitFullscreen();
+  bool UsesOverlayFullscreenVideo() const;
 
   // Statistics
   unsigned webkitDecodedFrameCount() const;
@@ -150,6 +152,10 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   void MediaRemotingStopped() final;
   WebMediaPlayer::DisplayType DisplayType() const final;
 
+  // Notify the WebMediaPlayer that the display type has changed and run some
+  // logic related to the usage of overlays.
+  void DisplayTypeChanged();
+
  private:
   friend class MediaCustomControlsFullscreenDetectorTest;
   friend class HTMLMediaElementEventListenersTest;
@@ -190,6 +196,9 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   // controls are used would or would not have side effects.
   bool is_persistent_ = false;
   bool is_picture_in_picture_ = false;
+
+  // Whether this element is in overlay fullscreen mode.
+  bool in_overlay_fullscreen_video_ = false;
 };
 
 }  // namespace blink

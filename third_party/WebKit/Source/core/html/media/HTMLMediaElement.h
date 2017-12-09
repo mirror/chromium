@@ -263,9 +263,6 @@ class CORE_EXPORT HTMLMediaElement
   }
 
   bool IsFullscreen() const;
-  void DidEnterFullscreen();
-  void DidExitFullscreen();
-  virtual bool UsesOverlayFullscreenVideo() const { return false; }
 
   bool HasClosedCaptions() const;
   bool TextTracksVisible() const;
@@ -642,8 +639,6 @@ class CORE_EXPORT HTMLMediaElement
   bool tracks_are_ready_ : 1;
   bool processing_preference_change_ : 1;
   bool playing_remotely_ : 1;
-  // Whether this element is in overlay fullscreen mode.
-  bool in_overlay_fullscreen_video_ : 1;
 
   bool mostly_filling_viewport_ : 1;
 

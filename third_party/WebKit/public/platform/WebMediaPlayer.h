@@ -285,9 +285,6 @@ class WebMediaPlayer {
   // entering fullscreen, and the WebMediaPlayer is responsible for displaying
   // the video in enteredFullscreen().
   virtual bool SupportsOverlayFullscreenVideo() { return false; }
-  // Inform WebMediaPlayer when the element has entered/exited fullscreen.
-  virtual void EnteredFullscreen() {}
-  virtual void ExitedFullscreen() {}
 
   // Inform WebMediaPlayer when the element starts/stops being the dominant
   // visible content. This will only be called after the monitoring of the

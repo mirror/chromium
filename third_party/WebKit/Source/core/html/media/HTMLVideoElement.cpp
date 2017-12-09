@@ -43,6 +43,7 @@
 #include "core/imagebitmap/ImageBitmapOptions.h"
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutVideo.h"
+#include "core/layout/api/LayoutViewItem.h"
 #include "platform/Histogram.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/ImageBuffer.h"
@@ -299,8 +300,7 @@ void HTMLVideoElement::OnBecamePersistentVideo(bool value) {
       fullscreen_element->SetContainsPersistentVideo(false);
   }
 
-  if (GetWebMediaPlayer())
-    GetWebMediaPlayer()->OnDisplayTypeChanged(DisplayType());
+  DisplayTypeChanged();
 }
 
 bool HTMLVideoElement::IsPersistent() const {
@@ -401,6 +401,18 @@ bool HTMLVideoElement::webkitSupportsFullscreen() {
 
 bool HTMLVideoElement::webkitDisplayingFullscreen() {
   return IsFullscreen();
+}
+
+void HTMLVideoElement::DidEnterFullscreen() {
+  UpdateControlsVisibility();
+
+  DisplayTypeChanged();
+}
+
+void HTMLVideoElement::DidExitFullscreen() {
+  UpdateControlsVisibility();
+
+  DisplayTypeChanged();
 }
 
 bool HTMLVideoElement::UsesOverlayFullscreenVideo() const {
@@ -530,6 +542,36 @@ WebMediaPlayer::DisplayType HTMLVideoElement::DisplayType() const {
   if (is_picture_in_picture_)
     return WebMediaPlayer::DisplayType::kPictureInPicture;
   return HTMLMediaElement::DisplayType();
+}
+
+void HTMLVideoElement::DisplayTypeChanged() {
+  WebMediaPlayer::DisplayType display_type = DisplayType();
+
+  if (GetWebMediaPlayer())
+    GetWebMediaPlayer()->OnDisplayTypeChanged(display_type);
+
+  switch (display_type) {
+    case WebMediaPlayer::DisplayType::kInline:
+      if (in_overlay_fullscreen_video_) {
+        GetDocument()
+            .GetLayoutViewItem()
+            .Compositor()
+            ->SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
+      }
+      in_overlay_fullscreen_video_ = false;
+      break;
+    case WebMediaPlayer::DisplayType::kFullscreen:
+    case WebMediaPlayer::DisplayType::kPictureInPicture:
+      // Cache this in case the player is destroyed before leaving fullscreen.
+      in_overlay_fullscreen_video_ = UsesOverlayFullscreenVideo();
+      if (in_overlay_fullscreen_video_) {
+        GetDocument()
+            .GetLayoutViewItem()
+            .Compositor()
+            ->SetNeedsCompositingUpdate(kCompositingUpdateRebuildTree);
+      }
+      break;
+  }
 }
 
 bool HTMLVideoElement::IsRemotingInterstitialVisible() const {

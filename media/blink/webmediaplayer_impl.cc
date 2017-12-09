@@ -423,41 +423,6 @@ void WebMediaPlayerImpl::DisableOverlay() {
     MaybeSendOverlayInfoToDecoder();
 }
 
-void WebMediaPlayerImpl::EnteredFullscreen() {
-  overlay_info_.is_fullscreen = true;
-
-  // |always_enable_overlays_| implies that we're already in overlay mode, so
-  // take no action here.  Otherwise, switch to an overlay if it's allowed and
-  // if it will display properly.
-  if (!always_enable_overlays_ && overlay_mode_ != OverlayMode::kNoOverlays &&
-      DoesOverlaySupportMetadata()) {
-    EnableOverlay();
-  }
-
-  // We send this only if we can send multiple calls.  Otherwise, either (a)
-  // we already sent it and we don't have a callback anyway (we reset it when
-  // it's called in restart mode), or (b) we'll send this later when the surface
-  // actually arrives.  GVD assumes that the first overlay info will have the
-  // routing information.  Note that we set |is_fullscreen_| earlier, so that
-  // if EnableOverlay() can include fullscreen info in case it sends the overlay
-  // info before returning.
-  if (!decoder_requires_restart_for_overlay_)
-    MaybeSendOverlayInfoToDecoder();
-}
-
-void WebMediaPlayerImpl::ExitedFullscreen() {
-  overlay_info_.is_fullscreen = false;
-
-  // If we're in overlay mode, then exit it unless we're supposed to allow
-  // overlays all the time.
-  if (!always_enable_overlays_ && overlay_enabled_)
-    DisableOverlay();
-
-  // See EnteredFullscreen for why we do this.
-  if (!decoder_requires_restart_for_overlay_)
-    MaybeSendOverlayInfoToDecoder();
-}
-
 void WebMediaPlayerImpl::BecameDominantVisibleContent(bool isDominant) {
   if (observer_)
     observer_->OnBecameDominantVisibleContent(isDominant);
@@ -480,20 +445,64 @@ void WebMediaPlayerImpl::OnHasNativeControlsChanged(bool has_native_controls) {
 
 void WebMediaPlayerImpl::OnDisplayTypeChanged(
     WebMediaPlayer::DisplayType display_type) {
-  if (!watch_time_reporter_)
+  if (display_type_ == display_type)
     return;
 
+  // Update watch time.
+  if (watch_time_reporter_) {
+    switch (display_type) {
+      case WebMediaPlayer::DisplayType::kInline:
+        watch_time_reporter_->OnDisplayTypeInline();
+        break;
+      case WebMediaPlayer::DisplayType::kFullscreen:
+        watch_time_reporter_->OnDisplayTypeFullscreen();
+        break;
+      case WebMediaPlayer::DisplayType::kPictureInPicture:
+        watch_time_reporter_->OnDisplayTypePictureInPicture();
+        break;
+    }
+  }
+
+  // Handle overlays. With regards to overlays, kFullscreen and
+  // kPictureInPicture are the same state.
   switch (display_type) {
     case WebMediaPlayer::DisplayType::kInline:
-      watch_time_reporter_->OnDisplayTypeInline();
+      overlay_info_.is_fullscreen = false;
+
+      // If we're in overlay mode, then exit it unless we're supposed to be in
+      // overlay mode all the time.
+      if (!force_video_overlays_ && overlay_enabled_)
+        DisableOverlay();
+
       break;
     case WebMediaPlayer::DisplayType::kFullscreen:
-      watch_time_reporter_->OnDisplayTypeFullscreen();
-      break;
     case WebMediaPlayer::DisplayType::kPictureInPicture:
-      watch_time_reporter_->OnDisplayTypePictureInPicture();
+      overlay_info_.is_fullscreen = true;
+
+      // |force_video_overlays_| implies that we're already in overlay mode,
+      // take no action here.  Otherwise, switch to an overlay if it's allowed
+      // and if it will display properly.
+      if (!force_video_overlays_ && overlay_mode_ != OverlayMode::kNoOverlays &&
+          DoesOverlaySupportMetadata() && !overlay_enabled_) {
+        EnableOverlay();
+      }
+
       break;
   }
+
+  // We send this only if we can send multiple calls.  Otherwise, either (a)
+  // we already sent it and we don't have a callback anyway (we reset it when
+  // it's called in restart mode), or (b) we'll send this later when the surface
+  // actually arrives.  GVD assumes that the first overlay info will have the
+  // routing information.  Note that we set |is_fullscreen_| earlier, so that
+  // if EnableOverlay() can include fullscreen info in case it sends the overlay
+  // info before returning.
+  // This code might be called when there was no overlay changes (PIP to/from
+  // fullscreen). This should end up in a no-op.
+  if (!decoder_requires_restart_for_overlay_)
+    MaybeSendOverlayInfoToDecoder();
+
+  display_type_ = display_type;
 }
 
 void WebMediaPlayerImpl::DoLoad(LoadType load_type,
