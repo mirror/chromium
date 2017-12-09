@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62b6fbe4_4b49af8a",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-09T01:21:55Z",
+      "side": 1,
+      "message": "fixed: no parens in optional case.",
+      "parentUuid": "c691e3d1_24f4c94f",
+      "range": {
+        "startLine": 57,
+        "startChar": 36,
+        "endLine": 57,
+        "endChar": 41
+      },
+      "revId": "300a708baecee93bd21dea4ccd5b019e62ee81a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b382ff71_416c942d",
         "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-08T23:57:48Z",
       "side": 1,
       "message": "Is this class necessary? Can we just move testGenPreable() to CrExtensionsA11yTest directly and eliminate this class?",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 45
+      },
+      "revId": "300a708baecee93bd21dea4ccd5b019e62ee81a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77cdb4b7_ea512702",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-09T01:21:55Z",
+      "side": 1,
+      "message": "This class is necessary because we also want to test when no extensions are loaded for a11y.",
+      "parentUuid": "b382ff71_416c942d",
       "range": {
         "startLine": 87,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "300a708baecee93bd21dea4ccd5b019e62ee81a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9386edfa_65036f30",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-09T01:21:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44194dd1_4b89158d",
+      "range": {
+        "startLine": 106,
+        "startChar": 1,
+        "endLine": 106,
+        "endChar": 17
+      },
+      "revId": "300a708baecee93bd21dea4ccd5b019e62ee81a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
