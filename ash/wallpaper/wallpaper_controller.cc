@@ -325,6 +325,26 @@ base::FilePath WallpaperController::GetCustomWallpaperDir(
   return dir_chrome_os_custom_wallpapers_path_.Append(sub_dir);
 }
 
+void WallpaperController::PrepareWallpaperForLockScreenChange(bool locked) {
+  bool needs_blur = locked && IsBlurEnabled();
+  if (needs_blur != is_wallpaper_blurred_) {
+    for (auto* root_window_controller : Shell::GetAllRootWindowControllers()) {
+      WallpaperWidgetController* wallpaper_widget_controller =
+          root_window_controller->wallpaper_widget_controller();
+      if (wallpaper_widget_controller) {
+        wallpaper_widget_controller->SetWallpaperBlur(
+            needs_blur ? login_constants::kBlurSigma
+                       : login_constants::kClearBlurSigma);
+      }
+    }
+    is_wallpaper_blurred_ = needs_blur;
+    // TODO(crbug.com/776464): Replace the observer with mojo calls so that
+    // it works under mash and it's easier to add tests.
+    for (auto& observer : observers_)
+      observer.OnWallpaperBlurChanged();
+  }
+}
+
 void WallpaperController::OnDisplayConfigurationChanged() {
   gfx::Size max_display_size = GetMaxDisplaySizeInNative();
   if (current_max_display_size_ != max_display_size) {
@@ -412,9 +432,8 @@ bool WallpaperController::ShouldApplyDimming() const {
              switches::kAshDisableLoginDimAndBlur);
 }
 
-bool WallpaperController::ShouldApplyBlur() const {
-  return Shell::Get()->session_controller()->IsUserSessionBlocked() &&
-         !IsDevicePolicyWallpaper() &&
+bool WallpaperController::IsBlurEnabled() const {
+  return !IsDevicePolicyWallpaper() &&
          !base::CommandLine::ForCurrentProcess()->HasSwitch(
              switches::kAshDisableLoginDimAndBlur);
 }
@@ -670,7 +689,10 @@ void WallpaperController::InstallDesktopController(aura::Window* root_window) {
   }
 
   bool is_wallpaper_blurred;
-  if (ShouldApplyBlur()) {
+  auto* session_controller = Shell::Get()->session_controller();
+  if ((session_controller->IsUserSessionBlocked() ||
+       session_controller->IsUnlocking()) &&
+      IsBlurEnabled()) {
     component->SetWallpaperBlur(login_constants::kBlurSigma);
     is_wallpaper_blurred = true;
   } else {
