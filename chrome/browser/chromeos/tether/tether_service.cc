@@ -263,6 +263,18 @@ void TetherService::AdapterPoweredChanged(device::BluetoothAdapter* adapter,
 }
 
 void TetherService::DeviceListChanged() {
+  UpdateEnabledState();
+}
+
+void TetherService::DevicePropertiesUpdated(
+    const chromeos::DeviceState* device) {
+  if (device->Matches(NetworkTypePattern::Tether()) ||
+      device->Matches(NetworkTypePattern::WiFi())) {
+    UpdateEnabledState();
+  }
+}
+
+void TetherService::UpdateEnabledState() {
   bool was_pref_enabled = IsEnabledbyPreference();
   chromeos::NetworkStateHandler::TechnologyState tether_technology_state =
       network_state_handler_->GetTechnologyState(

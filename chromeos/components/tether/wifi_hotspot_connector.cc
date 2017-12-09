@@ -85,9 +85,9 @@ void WifiHotspotConnector::ConnectToWifiHotspot(
 
   // If Wi-Fi is enabled, continue with creating the configuration of the
   // hotspot. Otherwise, request that Wi-Fi be enabled and wait; see
-  // DeviceListChanged().
+  // UpdateWaitingForWifi.
   if (network_state_handler_->IsTechnologyEnabled(NetworkTypePattern::WiFi())) {
-    // Ensure that a possible previous pending callback to DeviceListChanged()
+    // Ensure that a possible previous pending callback to UpdateWaitingForWifi
     // won't result in a second call to CreateWifiConfiguration().
     is_waiting_for_wifi_to_enable_ = false;
 
@@ -95,7 +95,7 @@ void WifiHotspotConnector::ConnectToWifiHotspot(
   } else if (!is_waiting_for_wifi_to_enable_) {
     is_waiting_for_wifi_to_enable_ = true;
 
-    // Once Wi-Fi is enabled, DeviceListChanged() will be called.
+    // Once Wi-Fi is enabled, UpdateWaitingForWifi will be called.
     network_state_handler_->SetTechnologyEnabled(
         NetworkTypePattern::WiFi(), true /*enabled */,
         base::Bind(&WifiHotspotConnector::OnEnableWifiError,
@@ -111,13 +111,7 @@ void WifiHotspotConnector::OnEnableWifiError(
 }
 
 void WifiHotspotConnector::DeviceListChanged() {
-  if (is_waiting_for_wifi_to_enable_ &&
-      network_state_handler_->IsTechnologyEnabled(NetworkTypePattern::WiFi())) {
-    is_waiting_for_wifi_to_enable_ = false;
-
-    if (!ssid_.empty())
-      CreateWifiConfiguration();
-  }
+  UpdateWaitingForWifi();
 }
 
 void WifiHotspotConnector::NetworkPropertiesUpdated(
@@ -162,6 +156,22 @@ void WifiHotspotConnector::NetworkPropertiesUpdated(
     // Initiate a connection to the network.
     network_connect_->ConnectToNetworkId(wifi_network_guid_);
   }
+}
+
+void WifiHotspotConnector::DevicePropertiesUpdated(const DeviceState* device) {
+  if (device->Matches(NetworkTypePattern::WiFi()))
+    UpdateWaitingForWifi();
+}
+
+void WifiHotspotConnector::UpdateWaitingForWifi() {
+  if (!is_waiting_for_wifi_to_enable_ ||
+      !network_state_handler_->IsTechnologyEnabled(
+          NetworkTypePattern::WiFi())) {
+    return;
+  }
+  is_waiting_for_wifi_to_enable_ = false;
+  if (!ssid_.empty())
+    CreateWifiConfiguration();
 }
 
 void WifiHotspotConnector::CompleteActiveConnectionAttempt(bool success) {
