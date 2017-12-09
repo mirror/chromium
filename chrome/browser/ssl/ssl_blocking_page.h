@@ -58,6 +58,7 @@ class SSLBlockingPage
       const GURL& request_url,
       int options_mask,
       const base::Time& time_triggered,
+      const GURL& support_url,
       std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
       bool is_superfish,
       const base::Callback<void(content::CertificateRequestResultType)>&
@@ -84,6 +85,7 @@ class SSLBlockingPage
       const GURL& request_url,
       int options_mask,
       const base::Time& time_triggered,
+      const GURL& support_url,
       std::unique_ptr<SSLCertReporter> ssl_cert_reporter,
       bool overrideable,
       std::unique_ptr<ChromeMetricsHelper> metrics_helper,
