@@ -14,6 +14,7 @@
 #include "components/viz/common/resources/platform_color.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
+#include "gpu/command_buffer/client/raster_implementation_gles.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/command_buffer/service/framebuffer_completeness_cache.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
@@ -73,7 +74,10 @@ InProcessContextProvider::InProcessContextProvider(
           base::ThreadTaskRunnerHandle::Get())),
       cache_controller_(std::make_unique<ContextCacheController>(
           context_->GetImplementation(),
-          base::ThreadTaskRunnerHandle::Get())) {}
+          base::ThreadTaskRunnerHandle::Get())) {
+  raster_context_ = std::make_unique<gpu::raster::RasterImplementationGLES>(
+      context_->GetImplementation(), context_->GetCapabilities());
+}
 
 InProcessContextProvider::~InProcessContextProvider() = default;
 
@@ -83,6 +87,10 @@ gpu::ContextResult InProcessContextProvider::BindToCurrentThread() {
 
 gpu::gles2::GLES2Interface* InProcessContextProvider::ContextGL() {
   return context_->GetImplementation();
+}
+
+gpu::raster::RasterInterface* InProcessContextProvider::RasterContext() {
+  return raster_context_.get();
 }
 
 gpu::ContextSupport* InProcessContextProvider::ContextSupport() {
