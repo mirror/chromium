@@ -568,15 +568,10 @@
                  curve:UIViewAnimationCurveEaseInOut
             animations:^{
             }];
-
+  [self.toolbarViewController addToolbarExpansionAnimations:animator
+                                       forCompleteAnimation:animated];
   [self.locationBarView addExpandOmniboxAnimations:animator];
-  [self.toolbarViewController addToolbarExpansionAnimations:animator];
   [animator startAnimation];
-
-  if (!animated) {
-    [animator stopAnimation:NO];
-    [animator finishAnimationAtPosition:UIViewAnimatingPositionEnd];
-  }
 }
 
 // Animates |_toolbar| and |_locationBarView| for omnibox contraction.

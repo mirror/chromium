@@ -133,15 +133,26 @@
   return self;
 }
 
-- (void)addToolbarExpansionAnimations:(UIViewPropertyAnimator*)animator {
+- (void)addToolbarExpansionAnimations:(UIViewPropertyAnimator*)animator
+                 forCompleteAnimation:(BOOL)completeAnimation {
   // iPad should never try to animate.
   DCHECK(!IsIPadIdiom());
   [NSLayoutConstraint deactivateConstraints:self.regularToolbarConstraints];
   [NSLayoutConstraint activateConstraints:self.expandedToolbarConstraints];
+  self.expanded = YES;
   // By unhiding the button we will make it layout into the correct position in
   // the StackView.
   self.contractButton.hidden = NO;
   self.contractButton.alpha = 0;
+
+  // TODO(crbug.com/793504): Clean this up when we can handle these animation
+  // details from the PropertyAnimatorGroup. For a partial animation leave the
+  // Toolbar in an expanded state an only animate the contract button fading in.
+  if (!completeAnimation) {
+    [self animateContractButtonFadeIn];
+    [self setAllVisibleToolbarButtonsOpacity:0];
+    return;
+  }
 
   [UIViewPropertyAnimator
       runningPropertyAnimatorWithDuration:ios::material::kDuration2
@@ -168,31 +179,12 @@
   // When the locationBarContainer has been expanded the Contract button will
   // fade in.
   [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-    [self setHorizontalTranslationOffset:kToolbarButtonAnimationOffset
-                              forButtons:@[ self.contractButton ]];
-
-    [UIViewPropertyAnimator
-        runningPropertyAnimatorWithDuration:ios::material::kDuration1
-                                      delay:ios::material::kDuration4
-                                    options:UIViewAnimationOptionCurveEaseOut
-                                 animations:^{
-                                   self.contractButton.alpha = 1;
-                                   [self
-                                       setHorizontalTranslationOffset:0
-                                                           forButtons:@[
-                                                             self.contractButton
-                                                           ]];
-                                 }
-                                 completion:nil];
-  }];
-  [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+    [self animateContractButtonFadeIn];
     CGFloat borderWidth = (finalPosition == UIViewAnimatingPositionEnd)
                               ? 0
                               : kLocationBarBorderWidth;
     self.locationBarContainer.layer.borderWidth = borderWidth;
   }];
-
-  self.expanded = YES;
 }
 
 - (void)addToolbarContractionAnimations:(UIViewPropertyAnimator*)animator {
@@ -915,6 +907,24 @@
 }
 
 #pragma mark - Private
+
+// Animates |self.contractButton| fading in.
+- (void)animateContractButtonFadeIn {
+  [self setHorizontalTranslationOffset:kToolbarButtonAnimationOffset
+                            forButtons:@[ self.contractButton ]];
+  [UIViewPropertyAnimator
+      runningPropertyAnimatorWithDuration:ios::material::kDuration1
+                                    delay:ios::material::kDuration4
+                                  options:UIViewAnimationOptionCurveEaseOut
+                               animations:^{
+                                 self.contractButton.alpha = 1;
+                                 [self setHorizontalTranslationOffset:0
+                                                           forButtons:@[
+                                                             self.contractButton
+                                                           ]];
+                               }
+                               completion:nil];
+}
 
 // Sets the progress of the progressBar to 1 then hides it.
 - (void)stopProgressBar {
