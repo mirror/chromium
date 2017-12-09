@@ -43,9 +43,7 @@ class ProfileImplIOData : public ProfileIOData {
 
     // Init() must be called before ~Handle(). It records most of the
     // parameters needed to construct a ChromeURLRequestContextGetter.
-    void Init(const base::FilePath& cookie_path,
-              const base::FilePath& channel_id_path,
-              const base::FilePath& media_cache_path,
+    void Init(const base::FilePath& media_cache_path,
               int media_cache_max_size,
               const base::FilePath& extensions_cookie_path,
               const base::FilePath& profile_path,
@@ -128,8 +126,6 @@ class ProfileImplIOData : public ProfileIOData {
     ~LazyParams();
 
     // All of these parameters are intended to be read on the IO thread.
-    base::FilePath cookie_path;
-    base::FilePath channel_id_path;
     base::FilePath media_cache_path;
     int media_cache_max_size;
     base::FilePath extensions_cookie_path;

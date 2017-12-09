@@ -982,6 +982,11 @@ Profile::ExitType TestingProfile::GetLastSessionExitType() {
   return last_session_exited_cleanly_ ? EXIT_NORMAL : EXIT_CRASHED;
 }
 
+content::CookieStoreConfig::SessionCookieMode
+TestingProfile::GetSessionCookieMode() {
+  return content::CookieStoreConfig::EPHEMERAL_SESSION_COOKIES;
+}
+
 content::mojom::NetworkContextPtr TestingProfile::CreateMainNetworkContext() {
   return nullptr;
 }
