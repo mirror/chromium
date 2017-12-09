@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d54d2838_d496f3e5",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-12-09T00:53:16Z",
+      "side": 1,
+      "message": "For the most part I think the hostnames/ipv4 addresses should be quite strict. The only hole is that hostnames have a maximum length of 255 characters which is not currently being checked.\n\nThe ipv6 regex is quite a bit more permissive. For example the shorthand \u0027::\u0027 should only appear at most one time in a valid ipv6 address. However, it may appear an arbitrary amount of times in the submitted regex.",
+      "parentUuid": "e2bbaf09_2bb6c332",
+      "range": {
+        "startLine": 197,
+        "startChar": 11,
+        "endLine": 198,
+        "endChar": 15
+      },
+      "revId": "7e70d75446375dcf2667a7e742714d08a7dd3082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6acf2b18_68491377",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "7e70d75446375dcf2667a7e742714d08a7dd3082",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73062e00_991d279c",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-12-09T00:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6acf2b18_68491377",
+      "range": {
+        "startLine": 216,
+        "startChar": 24,
+        "endLine": 216,
+        "endChar": 29
+      },
+      "revId": "7e70d75446375dcf2667a7e742714d08a7dd3082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
