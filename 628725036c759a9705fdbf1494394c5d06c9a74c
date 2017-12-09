@@ -22,6 +22,30 @@
       "revId": "628725036c759a9705fdbf1494394c5d06c9a74c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32622a45_370bba2c",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-09T00:18:24Z",
+      "side": 1,
+      "message": "Chatted offline. This seems not an issue since ReadData() will return MOJO_RESULT_SHOULD_WAIT in this case.",
+      "parentUuid": "8eb7ba6a_c5826fb9",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 65
+      },
+      "revId": "628725036c759a9705fdbf1494394c5d06c9a74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
