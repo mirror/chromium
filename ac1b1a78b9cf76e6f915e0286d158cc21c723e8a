@@ -22,6 +22,30 @@
       "revId": "ac1b1a78b9cf76e6f915e0286d158cc21c723e8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61032a8_f92e8303",
+        "filename": "base/run_loop.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-12-09T22:36:01Z",
+      "side": 1,
+      "message": "Actually, nvm, it\u0027s obvious that this variable should be private since it\u0027s only meant to be modified by the override method, not by the Delegate itself.\n\nDone.",
+      "parentUuid": "61703864_3b6390d1",
+      "range": {
+        "startLine": 192,
+        "startChar": 42,
+        "endLine": 195,
+        "endChar": 27
+      },
+      "revId": "ac1b1a78b9cf76e6f915e0286d158cc21c723e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
