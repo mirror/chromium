@@ -22,6 +22,30 @@
       "revId": "38df250a0ee13f31ffe9e4baedfd75cb34c743f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37dbb1f_0d038f8d",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-09T02:22:37Z",
+      "side": 1,
+      "message": "I think the current way of doing it is fairly standard. Here\u0027s five examples (I think there are more, but I stopped at five because that seems like enough).\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/item_behavior.js?type\u003dcs\u0026sq\u003dpackage:chromium\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/kiosk_dialog.js?type\u003dcs\u0026q\u003dgetAutoLaunchButtonLabel_\u0026l\u003d169\n[3] https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/shortcut_input.js?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d136\n[4] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/internet_page/internet_subpage.js?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d288\n[5] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/people_page/lock_screen.js?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d372",
+      "parentUuid": "a6434b8d_67343736",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 30
+      },
+      "revId": "38df250a0ee13f31ffe9e4baedfd75cb34c743f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
