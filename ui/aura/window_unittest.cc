@@ -426,6 +426,13 @@ TEST_P(WindowTest, RootWindowHasValidLocalSurfaceId) {
   EXPECT_TRUE(root_window()->GetLocalSurfaceId().is_valid());
 }
 
+TEST_P(WindowTest, WindowEmbeddingClientHasValidLocalSurfaceId) {
+  std::unique_ptr<Window> window(CreateTestWindow(
+      SK_ColorWHITE, 1, gfx::Rect(10, 10, 300, 200), root_window()));
+  window->set_embed_frame_sink_id(viz::FrameSinkId(0, 1));
+  EXPECT_TRUE(window->GetLocalSurfaceId().is_valid());
+}
+
 // Test Window::ConvertPointToWindow() with transform to root_window.
 TEST_P(WindowTest, MoveCursorToWithTransformRootWindow) {
   gfx::Transform transform;
