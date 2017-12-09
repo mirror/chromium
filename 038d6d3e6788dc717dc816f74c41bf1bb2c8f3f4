@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65f76a4b_c63cb33a",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:20:07Z",
+      "side": 1,
+      "message": "It\u0027s not really a title it\u0027s a message; I would just drop the _TITLE suffix (from the JS name too).\n\nAlso, aren\u0027t we already showing the network name on the line above?",
+      "revId": "038d6d3e6788dc717dc816f74c41bf1bb2c8f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af48e7e5_0775cbdc",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:20:07Z",
+      "side": 1,
+      "message": "\"has been lost\" isn\u0027t standard nomenclature, I would name this \u0027outOfRange_\u0027 and use \u0027out of range\u0027 for the naming throughout. I realize there could be other reasons that a network is no longer visible, but I don\u0027t think we need to worry about that. It\u0027s better to describe an active state then a present perfect continuous state.\n\nAlso, add a trailing , after \u0027value: false\u0027, so that the clang formating is consistent with other properties.",
+      "revId": "038d6d3e6788dc717dc816f74c41bf1bb2c8f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f99009_94aeed55",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:20:07Z",
+      "side": 1,
+      "message": "no _ in params",
+      "revId": "038d6d3e6788dc717dc816f74c41bf1bb2c8f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f8a54b_06593dd5",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:20:07Z",
+      "side": 1,
+      "message": "Since we are adding this, it would make sense to show an \"Network out of range\" error for WiFi as well.",
+      "revId": "038d6d3e6788dc717dc816f74c41bf1bb2c8f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53fd4b3_0ad57d09",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:20:07Z",
+      "side": 1,
+      "message": "no _",
+      "revId": "038d6d3e6788dc717dc816f74c41bf1bb2c8f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359a89e4_e7641c3a",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:20:07Z",
+      "side": 1,
+      "message": "We should include WiFi, see above.",
+      "revId": "038d6d3e6788dc717dc816f74c41bf1bb2c8f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5622a05e_5d51accd",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:20:07Z",
+      "side": 1,
+      "message": "no _",
+      "revId": "038d6d3e6788dc717dc816f74c41bf1bb2c8f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10469b2_1ac79fcb",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:20:07Z",
+      "side": 1,
+      "message": "Combine these",
+      "revId": "038d6d3e6788dc717dc816f74c41bf1bb2c8f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4b9726_182fa262",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:20:07Z",
+      "side": 1,
+      "message": "Just add \"flex\" to the class and remove the id, i.e.\n\u003cdiv class\u003d\"flex\u003e\u003c/div\u003e\n\nYou\u0027ll need to include iron-flex, see other examples in this dir.",
+      "revId": "038d6d3e6788dc717dc816f74c41bf1bb2c8f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c379cb85_d44e77fa",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-09T01:20:07Z",
+      "side": 1,
+      "message": "Here we are literally showing the name on the same line.",
+      "revId": "038d6d3e6788dc717dc816f74c41bf1bb2c8f3f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
