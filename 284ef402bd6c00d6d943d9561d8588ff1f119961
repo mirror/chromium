@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c388d9d4_ca3312dc",
+        "filename": "components/offline_pages/core/file_existence_checker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-09T00:11:17Z",
+      "side": 1,
+      "message": "\u003d default?",
+      "range": {
+        "startLine": 31,
+        "startChar": 46,
+        "endLine": 31,
+        "endChar": 48
+      },
+      "revId": "284ef402bd6c00d6d943d9561d8588ff1f119961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b7febb_9d8eb0f3",
+        "filename": "components/offline_pages/core/file_existence_checker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-09T00:11:17Z",
+      "side": 1,
+      "message": "Making this more complicated, but was thinking of use cases.  Does it make sense to pass a list of pairs (key, file path) and get back that list?  That way we could pass in the guid or whatever offline pages uses and we don\u0027t have to do a O(N*M) resolution on the data to find the entries associated with the file path on the receiving end.\n\nI know this kind of ruins the purity of the API so I\u0027m ok not adding it... just an idea :).",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "284ef402bd6c00d6d943d9561d8588ff1f119961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4e8b87_9e2b8a5d",
+        "filename": "components/offline_pages/core/file_existence_checker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-09T00:11:17Z",
+      "side": 1,
+      "message": "Just curious if it makes sense to make this a static and just pass the task runner along with the other parameters.",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "284ef402bd6c00d6d943d9561d8588ff1f119961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
