@@ -6,6 +6,7 @@
 
 #include "chrome/browser/extensions/extension_storage_monitor.h"
 #include "chrome/browser/extensions/extension_system_factory.h"
+#include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "extensions/browser/extension_prefs_factory.h"
@@ -32,6 +33,7 @@ ExtensionStorageMonitorFactory::ExtensionStorageMonitorFactory()
           BrowserContextDependencyManager::GetInstance()) {
   DependsOn(ExtensionsBrowserClient::Get()->GetExtensionSystemFactory());
   DependsOn(ExtensionPrefsFactory::GetInstance());
+  DependsOn(NotificationDisplayServiceFactory::GetInstance());
 }
 
 ExtensionStorageMonitorFactory::~ExtensionStorageMonitorFactory() {
