@@ -393,9 +393,9 @@ TEST_F(WebRtcEventLogManagerTest, DISABLED_LocalLogIllegalPath) {
   EXPECT_TRUE(base::IsDirectoryEmpty(base_dir_));
 }
 
-#if defined(OS_POSIX)
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
 TEST_F(WebRtcEventLogManagerTest, LocalLogLegalPathWithoutPermissionsSanity) {
-  // Remove writing permissions from the entire directory.
+  // Remove write permissions from the entire directory.
   int permissions;
   ASSERT_TRUE(base::GetPosixFilePermissions(base_dir_, &permissions));
   constexpr int write_permissions = base::FILE_PERMISSION_WRITE_BY_USER |
@@ -421,7 +421,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogLegalPathWithoutPermissionsSanity) {
                           ExpectedResult::kFailure);
   EXPECT_TRUE(base::IsDirectoryEmpty(base_dir_));
 }
-#endif
+#endif  // defined(OS_POSIX) && !defined(OS_FUCHSIA)
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogEmptyStringHandledGracefully) {
   const base::FilePath file_path = LocalWebRtcEventLogStart(
