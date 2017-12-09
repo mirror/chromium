@@ -105,6 +105,29 @@
     },
     {
       "key": {
+        "uuid": "d4f3a989_d1910423",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-09T01:15:15Z",
+      "side": 1,
+      "message": "The BrowserState used to be passed in. What is the rationale for creating a new protocol and pulling the BrowserState via a delegate?",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 77
+      },
+      "revId": "6c01359f806906b1a3eabe821cde4e7ff4a7efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cec7ff7_aa11eb92",
         "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
         "patchSetId": 2
