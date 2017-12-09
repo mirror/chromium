@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include "base/command_line.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "ui/display/display_switches.h"
 #include "ui/display/manager/managed_display_info.h"
@@ -266,6 +267,13 @@ std::string DisplayIdListToString(const DisplayIdList& list) {
     sep = ",";
   }
   return s.str();
+}
+
+display::ManagedDisplayInfo CreateDisplayInfo(int64_t id,
+                                              const gfx::Rect& bounds) {
+  display::ManagedDisplayInfo info(id, "x-" + base::Int64ToString(id), false);
+  info.SetBounds(bounds);
+  return info;
 }
 
 }  // namespace display
