@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92cb9a79_fbb2abbc",
+        "filename": "docs/design/gpu_synchronization.md",
+        "patchSetId": 71
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-09T05:47:37Z",
+      "side": 1,
+      "message": "Thank you very much for this!",
+      "revId": "ba217c174731fcbad08783e3e8f706be8235ab2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
