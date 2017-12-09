@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45bae035_d059c75e",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-09T01:11:16Z",
+      "side": 1,
+      "message": "private: declarations should go after public:\n\nhttps://google.github.io/styleguide/cppguide.html#Class_Format",
+      "revId": "7364ceb6f1b3d75ec2fe29fdcf01d5c8228a3b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc1f0e1_08b6b3e0",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-09T01:11:16Z",
+      "side": 1,
+      "message": "Not sure adding an API to WebContentsObserver is the only way to accomplish this.\n\nI think the media route used for mirroring could carry some state information and the UI could observe that; we\u0027ve wanted to do this for a while anyway to better sync up the UX with the state of the MR (for example, to only navigate to route details once the Cast device has sent us a status message).\n\nDesigning a media route status API to meet the various needs of different cast modes is a bigger project, but if this feature is the only one that would ever use the capturer observer, maybe worth it if it can fix other issues too?\n\nOr maybe it makes sense to have the capturer observer API anyway, and we can tackle the route status issue later.",
+      "revId": "7364ceb6f1b3d75ec2fe29fdcf01d5c8228a3b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61fea95e_cfb70180",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-09T01:11:16Z",
+      "side": 1,
+      "message": "Please add a comment stating that this is implementing methods from a base class, e.g\n// content::PresentationServiceDelegate implementation.",
+      "revId": "7364ceb6f1b3d75ec2fe29fdcf01d5c8228a3b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8e44de_d657ee44",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-09T01:11:16Z",
+      "side": 1,
+      "message": "Can the declarations from here on down be private:?",
+      "revId": "7364ceb6f1b3d75ec2fe29fdcf01d5c8228a3b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfbc837_6de7ed60",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-09T01:11:16Z",
+      "side": 1,
+      "message": "Agreed, I think all of the code that launches various types of routes or otherwise interacts with the MR should be factored out into separate classes (as a separate refactoring/patch).",
+      "revId": "7364ceb6f1b3d75ec2fe29fdcf01d5c8228a3b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
