@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61703864_3b6390d1",
+        "filename": "base/run_loop.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-12-09T15:15:57Z",
+      "side": 1,
+      "message": "I guess this could also be a protected ShouldQuitWhenIdle() method with a private variable (initially hoped a protected variable could be overridden directly by another Delegate but that isn\u0027t the case).\n\nLet me know your preference.",
+      "range": {
+        "startLine": 192,
+        "startChar": 42,
+        "endLine": 195,
+        "endChar": 27
+      },
+      "revId": "ac1b1a78b9cf76e6f915e0286d158cc21c723e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
