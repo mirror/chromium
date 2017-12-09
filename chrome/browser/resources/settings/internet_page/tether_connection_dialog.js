@@ -25,6 +25,12 @@ Polymer({
     networkProperties: {
       type: Object,
     },
+
+    /**
+     * Whether the network has been lost (e.g., has gone out of range).
+     * @type {boolean}
+     */
+    isLostNetwork: Boolean,
   },
 
   open: function() {
@@ -155,5 +161,15 @@ Polymer({
     return this.i18n(
         'tetherConnectionDescriptionBattery',
         this.getBatteryPercentageAsString_(networkProperties));
+  },
+
+  /**
+   * @param {!CrOnc.NetworkProperties} networkProperties The network properties.
+   * @return {string}
+   * @private
+   */
+  getDeviceLostText_: function(networkProperties) {
+    return this.i18n(
+        'lostTetherPhoneTitle', CrOnc.getNetworkName(networkProperties));
   },
 });
