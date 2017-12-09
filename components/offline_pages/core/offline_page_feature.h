@@ -23,6 +23,7 @@ extern const base::Feature kOfflinePagesCTV2Feature;
 extern const base::Feature kOfflinePagesRenovationsFeature;
 extern const base::Feature kOfflinePagesResourceBasedSnapshotFeature;
 extern const base::Feature kOfflinePagesPrefetchingUIFeature;
+extern const base::Feature kOfflinePagesLimitlessPrefetchingFeature;
 
 // The parameter name used to find the experiment tag for prefetching offline
 // pages.
@@ -55,6 +56,10 @@ bool IsPrefetchingOfflinePagesEnabled();
 
 // Returns true if we should show UI for prefetched pages.
 bool IsOfflinePagesPrefetchingUIEnabled();
+
+// Returns true if prefetching offline pages should ignore its normal resource
+// usage limits.
+bool IsLimitlessPrefetchingEnabled();
 
 // Returns true if we enable load timing signals to be collected.
 bool IsOfflinePagesLoadSignalCollectingEnabled();
