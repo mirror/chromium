@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b273820b_45ffdd02",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-09T03:37:25Z",
+      "side": 1,
+      "message": "Can you instead use \n  content::TestBrowserThreadBundle thread_bundle_;\nand initialize it with\n        thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP)\n?",
+      "revId": "0cbff1a40b36431ea59d67e15d5c3e4702eef4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12e6128_344c9c7a",
+        "filename": "components/arc/timer/arc_timer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-09T03:37:25Z",
+      "side": 1,
+      "message": "ArcTimerBridge* const timer_bridge_;\n\notherwise the test crashes.",
+      "revId": "0cbff1a40b36431ea59d67e15d5c3e4702eef4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
