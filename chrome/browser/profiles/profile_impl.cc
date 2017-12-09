@@ -625,27 +625,12 @@ void ProfileImpl::DoFinalInit() {
   extensions_cookie_path =
       extensions_cookie_path.Append(chrome::kExtensionsCookieFilename);
 
-#if defined(OS_ANDROID)
-  SessionStartupPref::Type startup_pref_type =
-      SessionStartupPref::GetDefaultStartupType();
-#else
-  SessionStartupPref::Type startup_pref_type =
-      StartupBrowserCreator::GetSessionStartupPref(
-          *base::CommandLine::ForCurrentProcess(), this).type;
-#endif
-  content::CookieStoreConfig::SessionCookieMode session_cookie_mode =
-      content::CookieStoreConfig::PERSISTANT_SESSION_COOKIES;
-  if (GetLastSessionExitType() == Profile::EXIT_CRASHED ||
-      startup_pref_type == SessionStartupPref::LAST) {
-    session_cookie_mode = content::CookieStoreConfig::RESTORED_SESSION_COOKIES;
-  }
-
   // Make sure we initialize the ProfileIOData after everything else has been
   // initialized that we might be reading from the IO thread.
 
   io_data_.Init(cookie_path, channel_id_path, media_cache_path,
                 media_cache_max_size, extensions_cookie_path, GetPath(),
-                predictor_, session_cookie_mode, GetSpecialStoragePolicy(),
+                predictor_, GetSessionCookieMode(), GetSpecialStoragePolicy(),
                 CreateDomainReliabilityMonitor(local_state));
 
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -956,6 +941,26 @@ Profile::ExitType ProfileImpl::GetLastSessionExitType() {
   // it to be set by asking for the prefs.
   GetPrefs();
   return last_session_exit_type_;
+}
+
+content::CookieStoreConfig::SessionCookieMode
+ProfileImpl::GetSessionCookieMode() {
+#if defined(OS_ANDROID)
+  SessionStartupPref::Type startup_pref_type =
+      SessionStartupPref::GetDefaultStartupType();
+#else
+  SessionStartupPref::Type startup_pref_type =
+      StartupBrowserCreator::GetSessionStartupPref(
+          *base::CommandLine::ForCurrentProcess(), this)
+          .type;
+#endif
+  content::CookieStoreConfig::SessionCookieMode session_cookie_mode =
+      content::CookieStoreConfig::PERSISTANT_SESSION_COOKIES;
+  if (GetLastSessionExitType() == Profile::EXIT_CRASHED ||
+      startup_pref_type == SessionStartupPref::LAST) {
+    session_cookie_mode = content::CookieStoreConfig::RESTORED_SESSION_COOKIES;
+  }
+  return session_cookie_mode;
 }
 
 PrefService* ProfileImpl::GetPrefs() {
