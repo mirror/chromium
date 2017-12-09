@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33c9b998_e602311a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-edge-case.vtt",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fdb34d1_e69dd84f",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 7
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b90bab87_9af19224",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-edge-case.vtt",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T15:28:23Z",
       "side": 1,
       "message": "Should add a test here for the case where we see a \"--\u003e\" - preferably with something that \"id\"ish just before it too.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a0df93_c84f87b9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webvtt/parsing/file-parsing/tests/support/regions-edge-case.vtt",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "added few more cases with --\u003e. observed few region block considering success with code but not with parser.py. Based on spec if previous line before REGION block contains \u0027--\u003e\u0027 it is invalid region block. Based on that updated code.",
+      "parentUuid": "b90bab87_9af19224",
       "range": {
         "startLine": 20,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "22a7ecde_b8efc7f8",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a83b1ac_29aa1d21",
+      "range": {
+        "startLine": 144,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 22
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea33ee71_998d9a5f",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 15
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e68f3fe7_d9464efe",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea33ee71_998d9a5f",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 61
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21cfb3b5_63723723",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 15
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-07T15:28:23Z",
       "side": 1,
       "message": "After doing this current_region_ can be cleared. (If we need it we\u0027ll find it through the map.) I think doing that in a method (\"FinalizeRegion\", \"FlushRegion\" or something like that) could improve readability.",
+      "range": {
+        "startLine": 214,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 62
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd005169_5acb4579",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "not got this point.\ncurrent_region_ object can be deleted if it is not adding to map, so added code for that.",
+      "parentUuid": "21cfb3b5_63723723",
       "range": {
         "startLine": 214,
         "startChar": 4,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "8ca199f2_f4d126c9",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "added new function for handling this.",
+      "parentUuid": "66c1ebe8_67390d06",
+      "range": {
+        "startLine": 217,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 18
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83d24696_1e781f41",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 15
@@ -160,6 +304,30 @@
       "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f225e55_e9caa3ed",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83d24696_1e781f41",
+      "range": {
+        "startLine": 224,
+        "startChar": 9,
+        "endLine": 224,
+        "endChar": 16
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "cb1e8642_6c6061fa",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d6d04e9_596b419e",
+      "range": {
+        "startLine": 230,
+        "startChar": 5,
+        "endLine": 230,
+        "endChar": 67
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "833c490e_18ea6fef",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 15
@@ -206,6 +398,30 @@
       "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25474adc_e184b069",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "833c490e_18ea6fef",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 240,
+        "endChar": 49
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "4a4d0e88_91013816",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27f20e6a_76d68ef3",
+      "range": {
+        "startLine": 244,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 18
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b545b278_24db267b",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 15
@@ -252,6 +492,30 @@
       "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5db598_a7cb4196",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b545b278_24db267b",
+      "range": {
+        "startLine": 254,
+        "startChar": 6,
+        "endLine": 254,
+        "endChar": 15
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "c72a0a2e_4252bd78",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6e15368_01e1ad58",
+      "range": {
+        "startLine": 259,
+        "startChar": 5,
+        "endLine": 259,
+        "endChar": 11
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ccd37d3_f29ad004",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 15
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "acae697e_5942e52c",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ccd37d3_f29ad004",
+      "range": {
+        "startLine": 265,
+        "startChar": 2,
+        "endLine": 265,
+        "endChar": 16
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30499734_83eddeb2",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
         "patchSetId": 15
@@ -321,6 +633,30 @@
       "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38acb7d3_5e675322",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-09T12:51:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30499734_83eddeb2",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 23
+      },
+      "revId": "c20dbc21c0e8021c2874a2291ff2e33fecaf3bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
