@@ -2884,12 +2884,6 @@ Class GetRenderWidgetHostViewCocoaClassForTesting() {
     renderWidgetHostView_->render_widget_host_->SendScreenRects();
   renderWidgetHostView_->render_widget_host_->WasResized();
   renderWidgetHostView_->browser_compositor_->WasResized();
-
-  // Wait for the frame that WasResize might have requested. If the view is
-  // being made visible at a new size, then this call will have no effect
-  // because the view widget is still hidden, and the pause call in WasShown
-  // will have this effect for us.
-  renderWidgetHostView_->PauseForPendingResizeOrRepaintsAndDraw();
 }
 
 - (BOOL)canBecomeKeyView {
