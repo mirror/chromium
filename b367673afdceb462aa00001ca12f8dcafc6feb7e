@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc86fa44_4f88d418",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by what you mean \"present\". Do you mean SHA1_SIGNATURE_PRESENT?",
+      "parentUuid": "b0e39c32_faf6bc56",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 30
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1711367d_dab5cceb",
         "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
         "patchSetId": 20
@@ -68,6 +92,30 @@
       "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99b650a_d119de3a",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8cf91d7_786248e3",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 26
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,54 @@
     },
     {
       "key": {
+        "uuid": "5e95ec94_161f81d2",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a66234f1_3103f343",
+      "range": {
+        "startLine": 40,
+        "startChar": 29,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f9b7e73_64359a1a",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6834233b_e91ebcbf",
+      "range": {
+        "startLine": 39,
+        "startChar": 52,
+        "endLine": 40,
+        "endChar": 27
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4a893e0_a466789c",
         "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
         "patchSetId": 20
@@ -137,6 +233,30 @@
       "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4720c8f5_4f52fe7b",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4a893e0_a466789c",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 43,
+        "endChar": 19
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "08ae8ca4_a8e9e457",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9b368a7_3ce46300",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4133c21b_979f9d15",
         "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
         "patchSetId": 20
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "438a5a7c_fa8b9113",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4133c21b_979f9d15",
+      "range": {
+        "startLine": 48,
+        "startChar": 11,
+        "endLine": 48,
+        "endChar": 16
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5780f182_a3f6a87d",
         "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
         "patchSetId": 20
@@ -200,6 +368,24 @@
       "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a53601a_6d338cf1",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "Yes! I\u0027ll add a TODO here",
+      "parentUuid": "5780f182_a3f6a87d",
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +409,30 @@
       "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8323d124_aee815a0",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48eb50e7_d1727b3e",
+      "range": {
+        "startLine": 541,
+        "startChar": 8,
+        "endLine": 541,
+        "endChar": 18
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -273,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "dd30848b_d60b3948",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a135fec5_1aaa0901",
+      "range": {
+        "startLine": 542,
+        "startChar": 36,
+        "endLine": 542,
+        "endChar": 0
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f5127aa_c2c48c5e",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 20
@@ -293,6 +527,30 @@
       "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cc0181_c5f15845",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-09T02:05:23Z",
+      "side": 1,
+      "message": "DynamicInterstitials sounds good! I switched to it",
+      "parentUuid": "0f5127aa_c2c48c5e",
+      "range": {
+        "startLine": 738,
+        "startChar": 2,
+        "endLine": 738,
+        "endChar": 20
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
