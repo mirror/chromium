@@ -61,6 +61,11 @@ class PaymentsClientTest : public testing::Test,
         kAutofillSendBillingCustomerNumber);
   }
 
+  void EnableAutofillUpstreamSendDetectedValuesExperiment() {
+    scoped_feature_list_.InitAndEnableFeature(
+        kAutofillUpstreamSendDetectedValues);
+  }
+
   void EnableAutofillUpstreamSendPanFirstSixExperiment() {
     scoped_feature_list_.InitAndEnableFeature(kAutofillUpstreamSendPanFirstSix);
   }
@@ -103,7 +108,8 @@ class PaymentsClientTest : public testing::Test,
   void StartGettingUploadDetails() {
     token_service_->AddAccount("example@gmail.com");
     identity_provider_->LogIn("example@gmail.com");
-    client_->GetUploadDetails(BuildTestProfiles(), /*pan_first_six=*/"411111",
+    client_->GetUploadDetails(BuildTestProfiles(), /*detected_values=*/511,
+                              /*pan_first_six=*/"411111",
                               std::vector<const char*>(), "language-LOCALE");
   }
 
@@ -266,6 +272,26 @@ TEST_F(PaymentsClientTest, GetDetailsRemovesNonLocationData) {
   EXPECT_TRUE(GetUploadData().find("0162") == std::string::npos);
   EXPECT_TRUE(GetUploadData().find("834") == std::string::npos);
   EXPECT_TRUE(GetUploadData().find("0090") == std::string::npos);
+}
+
+TEST_F(PaymentsClientTest,
+       GetDetailsIncludesDetectedValuesInRequestIfExperimentOn) {
+  EnableAutofillUpstreamSendDetectedValuesExperiment();
+
+  StartGettingUploadDetails();
+
+  // Verify that the detected values were included in the request.
+  EXPECT_TRUE(GetUploadData().find("\"detected_values\":511") !=
+              std::string::npos);
+}
+
+TEST_F(PaymentsClientTest,
+       GetDetailsDoesNotIncludeDetectedValuesInRequestIfExperimentOff) {
+  StartGettingUploadDetails();
+
+  // Verify that the detected values were left out of the request.
+  EXPECT_TRUE(GetUploadData().find("\"detected_values\":511") ==
+              std::string::npos);
 }
 
 TEST_F(PaymentsClientTest,
