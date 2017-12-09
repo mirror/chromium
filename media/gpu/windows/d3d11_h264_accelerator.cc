@@ -75,9 +75,10 @@ H264Decoder::MetadataResult D3D11H264Accelerator::SubmitFrameMetadata(
   HRESULT hr;
   for (;;) {
     hr = video_context_->DecoderBeginFrame(
-        video_decoder_.Get(), our_pic->picture->output_view_.Get(), 0, nullptr);
+        video_decoder_.Get(), our_pic->picture->output_view().Get(), 0,
+        nullptr);
 
-    // If the hardware is busy, then signal to retry decoding later.
+    // If the hardware is busy, then we should make the call again later.
     if (hr == E_PENDING || hr == D3DERR_WASSTILLDRAWING)
       return H264Decoder::MetadataResult::kTryAgain;
     else if (!SUCCEEDED(hr))
