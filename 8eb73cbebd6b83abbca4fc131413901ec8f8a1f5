@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c29a8c45_a770bc1e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-09T16:00:32Z",
+      "side": 1,
+      "message": "IIUC, this means clang chose an underlying type for AlphaOption which cannot represent int(-1).  That implies that static_cast\u003cblink::ImageDecoder::AlphaOption\u003e(-1) itself is undefined, per [1].\n\nThen shouldn\u0027t clang also moan in ConstructDeletedValue(), where we *assign* that value?  It seems kinda strange to allow assignment but not comparison to certain (undefined?) values.\n\n[1] http://eel.is/c++draft/expr#static.cast-10",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "8eb73cbebd6b83abbca4fc131413901ec8f8a1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
