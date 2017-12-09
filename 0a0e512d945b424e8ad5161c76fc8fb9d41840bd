@@ -22,6 +22,74 @@
       "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59012c67_73d8a506",
+        "filename": "device/bluetooth/android/java/src/org/chromium/device/bluetooth/ChromeBluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-09T01:56:42Z",
+      "side": 1,
+      "message": "At a minimum we need to comment explaining why the warning is suppressed.  Hopefully we can avoid the need to suppress.",
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069dfe6e_a4c9eae2",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-09T01:56:42Z",
+      "side": 1,
+      "message": "I\u0027d prefer to see this encapsulated in base/android/jni_* files.  \nnyquist@chromium.org, WDYT?",
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b174a4a9_55c5e852",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-09T01:56:42Z",
+      "side": 1,
+      "message": "Describe the expected data format in a comment, please.  (And cite a reference for, if possible.)",
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1170bdbc_d86d4cda",
+        "filename": "device/bluetooth/bluetooth_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-09T01:56:42Z",
+      "side": 1,
+      "message": "Please add cross platform \u0027BluetoothTest\u0027 style tests for service \u0026 manufacturer data.  See overview info here:\nhttps://chromium.googlesource.com/chromium/src/+/master/device/bluetooth/test/README.md\nthen add to device/bluetooth/bluetooth_device_unittest.cc",
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
