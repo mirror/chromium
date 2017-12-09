@@ -511,6 +511,8 @@
       'Marshmallow Phone Tester (rel)',
       # chromium.clang
       'ToTAndroidCFI',
+      # TODO(dpranke): on chromium.swarm, this is probably also an accident.
+      'Android N5X Swarm',
     ],
     'key_removals': {
       'ToTAndroid x64': [
@@ -942,6 +944,12 @@
        'Fuchsia x64 SANDBOX',
     ],
     'modifications': {
+      # TODO(dpranke) - on chromium.swarm, remove this exception.
+      'Android N5X Swarm': {
+        'swarming': {
+          'shards': 4,
+        },
+      },
       'KitKat Tablet Tester': {
         'swarming': {
           'hard_timeout': 1200,
@@ -2511,7 +2519,13 @@
         'swarming': {
           'shards': 2,
         },
-      }
+      },
+      # on chromium.swarm, remove this exception.
+      'Android N5X Swarm': {
+        'swarming': {
+          'shards': 8,
+        },
+      },
     },
   },
   'url_unittests': {
@@ -2822,6 +2836,9 @@
       'Nougat Phone Tester',
       # chromium.clang
       'ToTAndroid x64',
+      # On chromium.swarm, this should possibly be being run (or removed
+      # from Android N5X Swarm).
+      'Android N5 Swarm',
     ],
     'key_removals': {
       # chromium.clang
