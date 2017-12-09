@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b44170f9_80c51598",
+        "filename": "ash/login/login_screen_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-09T01:12:36Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "cf98e492_9bef7202",
+      "revId": "6f5fe2c4d2a1fe42df9384fa5685d0df623d08c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "111532df_80bc8f20",
         "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "6f5fe2c4d2a1fe42df9384fa5685d0df623d08c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c468370_2fc66cf1",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-09T01:12:36Z",
+      "side": 1,
+      "message": "Thanks for the information. Removed.",
+      "parentUuid": "111532df_80bc8f20",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 8
+      },
+      "revId": "6f5fe2c4d2a1fe42df9384fa5685d0df623d08c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
