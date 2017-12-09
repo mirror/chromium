@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "4c04aedc_c07c6959",
+        "filename": "ios/chrome/browser/web/mailto_handler_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-09T00:10:21Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "e71c3207_7b889b28",
+      "revId": "70d28a4b6eeca3ee72792827dd1199595ed178ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a74e35f5_394e3d0f",
         "filename": "ios/chrome/browser/web/mailto_handler_manager.mm",
         "patchSetId": 7
