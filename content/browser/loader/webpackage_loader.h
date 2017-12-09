@@ -145,6 +145,8 @@ class WebPackageLoader : public mojom::URLLoader,
   bool finished_reading_package_ = false;
   bool detached_from_request_handler_ = false;
 
+  bool redirect_to_mainresource_happened_ = false;
+
   base::WeakPtrFactory<WebPackageLoader> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(WebPackageLoader);

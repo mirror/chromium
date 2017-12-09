@@ -27,7 +27,8 @@ bool WebPackageStreamResourcesEnabled() {
   static bool enable_streaming =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           "enable-webpackage-streaming");
-  LOG(ERROR) << "** WebPackageStreaming: " << enable_streaming;
+  if (enable_streaming)
+    LOG(ERROR) << "** WebPackageStreaming enabled";
   return enable_streaming;
 }
 
@@ -448,6 +449,7 @@ void WebPackageLoader::StartRedirectResponse(mojom::URLLoaderRequest request,
   client->OnReceiveRedirect(redirect_info, response_head);
   client->OnComplete(network::URLLoaderCompletionStatus(net::OK));
 
+  redirect_to_mainresource_happened_ = true;
   request_handler_->OnRedirectedToMainResource(webpackage_start_url_, reader_);
 }
 
