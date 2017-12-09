@@ -300,6 +300,7 @@ QuicSpdySession::QuicSpdySession(QuicConnection* connection,
       spdy_framer_(SpdyFramer::ENABLE_COMPRESSION),
       spdy_framer_visitor_(new SpdyFramerVisitor(this)) {
   if (use_hq_deframer_) {
+    QUIC_FLAG_COUNT(quic_reloadable_flag_quic_enable_hq_deframer);
     hq_deframer_.set_visitor(spdy_framer_visitor_.get());
     hq_deframer_.set_debug_visitor(spdy_framer_visitor_.get());
   } else {
