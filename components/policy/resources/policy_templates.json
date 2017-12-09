@@ -146,7 +146,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 404
+#   For your editing convenience: highest ID currently used: 405
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
 #
@@ -4491,6 +4491,27 @@
 
       If the policy is left not set, the default value 'MultiProfileUserBehaviorMustBePrimary' applies for enterprise-managed users and 'MultiProfileUserBehaviorUnrestricted' will be used for non-managed users.''',
       'arc_support': 'When multiple users are logged in, only the primary user can use Android apps.',
+    },
+    {
+      'name': 'SecondaryGoogleAccountSigninAllowed',
+      'type': 'main',
+      'schema': { 'type': 'boolean' },
+      'supported_on': ['chrome_os:65-'],
+      'features': {
+        # The case where a user is already signed into an unmanaged account cannot be handled right now and hence this is not dynamic.
+        'dynamic_refresh': False,
+        'per_profile': True,
+      },
+      'example_value': False,
+      'id': 405,
+      'caption': '''Allow Multiple Sign-in Within the Browser''',
+      'tags': [],
+      # crbug.com/443883
+      'desc': '''This setting allows users to switch between Google accounts within the content area of their browser window after they sign into their <ph name="PRODUCT_OS_NAME">$2<ex>Google Chrome OS</ex></ph> device.
+
+      To ensure that switching between Google accounts is effectively disabled, you will need to block multiple sign-in access, in addition to setting this policy.
+      You will also need to block incognito mode and set sign-in restrictions on your <ph name="PRODUCT_OS_NAME">$2<ex>Google Chrome OS</ex></ph> devices.
+      If this policy is not set, it defaults to true, i.e. signing in to a different account from the browser content area will be allowed.''',
     },
     {
       'name': 'InstantEnabled',
