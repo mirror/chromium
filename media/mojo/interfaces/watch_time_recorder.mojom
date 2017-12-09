@@ -62,6 +62,16 @@ interface WatchTimeRecorder {
   // Used to report mean values for rebuffering metrics. As with watch time,
   // this is an absolute count and not relative since the last call.
   UpdateUnderflowCount(int32 count);
+
+  // Updates the audio or video decoder name respectively. These first call will
+  // record the decoder name (as a base::PersistentHash()) to UKM, subsequent
+  // calls with a different name will be reported as fallback. For subsequent
+  // calls, only the last reported name will be recorded to UKM.
+  //
+  // If the same name sent to the first call is sent multiple times, it will not
+  // be recorded as the fallback decoder name, but will instead be elided.
+  UpdateAudioDecoderName(string name);
+  UpdateVideoDecoderName(string name);
 };
 
 // Provider interface used to avoid having a SetPlaybackProperties() type method

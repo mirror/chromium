@@ -813,6 +813,22 @@ be describing additional metrics about the same event.
       is true because we don't always know the codec.
     </summary>
   </metric>
+  <metric name="FallbackAudioDecoderNameHash">
+    <summary>
+      base::PersistentHash of fallback audio decoder name, zero if none. See
+      WatchTimeRecorderTest::PrintExpectedDecoderNameHashes or expected values.
+      Only present if the audio decoder changed during playback. If the decoder
+      changed multiple times, only the last reported name is recorded.
+    </summary>
+  </metric>
+  <metric name="FallbackVideoDecoderNameHash">
+    <summary>
+      base::PersistentHash of fallback audio decoder name, zero if none. See
+      WatchTimeRecorderTest::PrintExpectedDecoderNameHashes or expected values.
+      Only present if the audio decoder changed during playback. If the decoder
+      changed multiple times, only the last reported name is recorded.
+    </summary>
+  </metric>
   <metric name="HasAudio">
     <summary>
       Boolean value indicating the presence of audio.
@@ -821,6 +837,18 @@ be describing additional metrics about the same event.
   <metric name="HasVideo">
     <summary>
       Boolean value indicating the presence of video.
+    </summary>
+  </metric>
+  <metric name="InitialAudioDecoderNameHash">
+    <summary>
+      base::PersistentHash of audio decoder name, zero if none. See
+      WatchTimeRecorderTest::PrintExpectedDecoderNameHashes or expected values.
+    </summary>
+  </metric>
+  <metric name="InitialVideoDecoderNameHash">
+    <summary>
+      base::PersistentHash of video decoder name, zero if none. See
+      WatchTimeRecorderTest::PrintExpectedDecoderNameHashes or expected values.
     </summary>
   </metric>
   <metric name="IsBackground">

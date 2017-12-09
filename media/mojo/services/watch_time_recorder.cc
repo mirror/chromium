@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "base/hash.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/strings/string_piece.h"
 #include "media/base/limits.h"
@@ -249,6 +250,30 @@ void WatchTimeRecorder::UpdateUnderflowCount(int32_t count) {
   underflow_count_ = count;
 }
 
+void WatchTimeRecorder::UpdateAudioDecoderName(const std::string& name) {
+  if (initial_audio_decoder_name_ == name)
+    return;
+
+  if (initial_audio_decoder_name_.empty()) {
+    initial_audio_decoder_name_ = name;
+    return;
+  }
+
+  fallback_audio_decoder_name_ = name;
+}
+
+void WatchTimeRecorder::UpdateVideoDecoderName(const std::string& name) {
+  if (initial_video_decoder_name_ == name)
+    return;
+
+  if (initial_video_decoder_name_.empty()) {
+    initial_video_decoder_name_ = name;
+    return;
+  }
+
+  fallback_video_decoder_name_ = name;
+}
+
 // static
 bool WatchTimeRecorder::ShouldReportUmaForTesting(WatchTimeKey key) {
   return ShouldReportToUma(key);
@@ -328,6 +353,17 @@ void WatchTimeRecorder::RecordUkmPlaybackData() {
   builder.SetVideoCodec(properties_->video_codec);
   builder.SetHasAudio(properties_->has_audio);
   builder.SetHasVideo(properties_->has_video);
+
+  // Since the pool of video decoders is known, just hash the name and report it
+  // to UKM as an int32_t. We can reconstruct it later for dashboards, etc.
+  builder.SetInitialAudioDecoderNameHash(
+      base::PersistentHash(initial_audio_decoder_name_));
+  builder.SetInitialVideoDecoderNameHash(
+      base::PersistentHash(initial_video_decoder_name_));
+  builder.SetFallbackAudioDecoderNameHash(
+      base::PersistentHash(fallback_audio_decoder_name_));
+  builder.SetFallbackVideoDecoderNameHash(
+      base::PersistentHash(fallback_video_decoder_name_));
 
   builder.SetIsEME(properties_->is_eme);
   builder.SetIsMSE(properties_->is_mse);

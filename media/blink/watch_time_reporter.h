@@ -122,6 +122,13 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   void OnDisplayTypeFullscreen();
   void OnDisplayTypePictureInPicture();
 
+  // Sets the audio and video decoder names for reporting. Similar to OnError(),
+  // this value is always sent to the recorder regardless of whether we're
+  // currently reporting watch time or not. I.e., decoder names are treated
+  // similar to playback properties and not bound to a given watch time segment.
+  void OnAudioDecoderChange(const std::string& name);
+  void OnVideoDecoderChange(const std::string& name);
+
   // Setup the reporting interval to be immediate to avoid spinning real time
   // within the unit test.
   void set_reporting_interval_for_testing() {
@@ -180,6 +187,12 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   double volume_ = 1.0;
   int underflow_count_ = 0;
   std::vector<base::TimeDelta> pending_underflow_events_;
+
+  // Starting, last, and ending stats used for reporting WatchTime statistics.
+  PipelineStatistics start_stats_;
+  PipelineStatistics last_stats_;
+  PipelineStatistics end_stats_;
+
   blink::WebMediaPlayer::DisplayType display_type_ =
       blink::WebMediaPlayer::DisplayType::kInline;
   blink::WebMediaPlayer::DisplayType display_type_for_recording_ =
