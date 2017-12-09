@@ -410,7 +410,7 @@ void AutofillAgent::FillForm(int32_t id, const FormData& form) {
   was_query_node_autofilled_ = element_.IsAutofilled();
   form_util::FillForm(form, element_);
   if (!element_.Form().IsNull())
-    last_interacted_form_ = element_.Form();
+    UpdateLastInteractedForm(element_.Form());
 
   GetAutofillDriver()->DidFillAutofillFormData(form, base::TimeTicks::Now());
 }
@@ -787,12 +787,13 @@ void AutofillAgent::AjaxSucceeded() {
 void AutofillAgent::OnProvisionallySaveForm(const WebFormElement& form,
                                             const WebInputElement& element,
                                             ElementChangeSource source) {
+  LOG(ERROR) << "bt:" << __FUNCTION__;
   // Remember the last form the user interacted with.
   if (source == ElementChangeSource::WILL_SEND_SUBMIT_EVENT) {
-    last_interacted_form_ = form;
+    UpdateLastInteractedForm(form);
   } else if (source == ElementChangeSource::TEXTFIELD_CHANGED) {
     if (!element.Form().IsNull()) {
-      last_interacted_form_ = element.Form();
+      UpdateLastInteractedForm(element.Form());
     } else {
       // Remove invisible elements
       for (auto it = formless_elements_user_edited_.begin();
@@ -804,9 +805,9 @@ void AutofillAgent::OnProvisionallySaveForm(const WebFormElement& form,
         }
       }
       formless_elements_user_edited_.insert(element);
-      constructed_form_.reset(new FormData());
-      if (!CollectFormlessElements(constructed_form_.get())) {
-        constructed_form_.reset();
+      provisionally_saved_form_ = std::make_unique<FormData>();
+      if (!CollectFormlessElements(provisionally_saved_form_.get())) {
+        provisionally_saved_form_.reset();
       } else {
         last_interacted_form_.Reset();
       }
@@ -816,6 +817,7 @@ void AutofillAgent::OnProvisionallySaveForm(const WebFormElement& form,
 }
 
 void AutofillAgent::OnProbablyFormSubmitted() {
+  LOG(ERROR) << "bt:" << __FUNCTION__;
   // Uncomment below code once we check whether form submission
   // is successful in browser side.
   // FormData form_data;
@@ -826,11 +828,13 @@ void AutofillAgent::OnProbablyFormSubmitted() {
 }
 
 void AutofillAgent::OnFormSubmitted(const WebFormElement& form) {
+  LOG(ERROR) << "bt:" << __FUNCTION__;
   FireHostSubmitEvents(form, /*known_success=*/false);
   ResetLastInteractedElements();
 }
 
 void AutofillAgent::OnInferredFormSubmission(SubmissionSource source) {
+  LOG(ERROR) << "bt:" << __FUNCTION__;
   // Only handle iframe for FRAME_DETACHED or main frame for
   // SAME_DOCUMENT_NAVIGATION.
   if ((source == SubmissionSource::FRAME_DETACHED &&
@@ -841,19 +845,16 @@ void AutofillAgent::OnInferredFormSubmission(SubmissionSource source) {
   }
 
   if (source == SubmissionSource::FRAME_DETACHED) {
+    LOG(ERROR) << "bt:" << __FUNCTION__ << "a";
     // Should not access the frame because it is now detached. Instead, use
-    // |constructed_form_| or |last_interacted_form_| depending on whether the
-    // form is formless or not.
-    if (!last_interacted_form_.IsNull()) {
-      FireHostSubmitEvents(last_interacted_form_, /*known_success=*/true);
-    } else if (constructed_form_) {
-      FireHostSubmitEvents(*constructed_form_, /*known_success=*/true);
-    }
+    // |provisionally_saved_form_|.
+    if (provisionally_saved_form_)
+      FireHostSubmitEvents(*provisionally_saved_form_, /*known_success=*/true);
   } else {
+    LOG(ERROR) << "bt:" << __FUNCTION__ << "b";
     FormData form_data;
-    if (GetSubmittedForm(&form_data)) {
+    if (GetSubmittedForm(&form_data))
       FireHostSubmitEvents(form_data, /*known_success=*/true);
-    }
   }
   ResetLastInteractedElements();
 }
@@ -867,28 +868,50 @@ void AutofillAgent::RemoveFormObserver(Observer* observer) {
 }
 
 bool AutofillAgent::GetSubmittedForm(FormData* form) {
+  LOG(ERROR) << "bt:" << __FUNCTION__;
   if (!last_interacted_form_.IsNull()) {
-    return form_util::ExtractFormData(last_interacted_form_, form);
+    LOG(ERROR) << "bt:" << __FUNCTION__ << "a";
+    if (form_util::ExtractFormData(last_interacted_form_, form)) {
+      return true;
+    } else if (provisionally_saved_form_) {
+      LOG(ERROR) << "bt:" << __FUNCTION__ << "b";
+      *form = *provisionally_saved_form_;
+      return true;
+    }
+    LOG(ERROR) << "bt:" << __FUNCTION__ << "c";
   } else if (formless_elements_user_edited_.size() != 0 &&
              !form_util::IsSomeControlElementVisible(
                  formless_elements_user_edited_)) {
+    LOG(ERROR) << "bt:" << __FUNCTION__ << "d";
     // we check if all the elements the user has interacted with are gone,
-    // to decide if submission has occurred, and use the constructed_form_
-    // saved in OnProvisionallySaveForm() if fail to construct form.
+    // to decide if submission has occurred, and use the
+    // provisionally_saved_form_ saved in OnProvisionallySaveForm() if fail to
+    // construct form.
     if (CollectFormlessElements(form)) {
       return true;
-    } else if (constructed_form_) {
-      *form = *constructed_form_;
+    } else if (provisionally_saved_form_) {
+      LOG(ERROR) << "bt:" << __FUNCTION__ << "e";
+      *form = *provisionally_saved_form_;
       return true;
     }
   }
+  LOG(ERROR) << "bt:" << __FUNCTION__ << "f";
   return false;
 }
 
 void AutofillAgent::ResetLastInteractedElements() {
   last_interacted_form_.Reset();
   formless_elements_user_edited_.clear();
-  constructed_form_.reset();
+  provisionally_saved_form_.reset();
+}
+
+void AutofillAgent::UpdateLastInteractedForm(blink::WebFormElement form) {
+  last_interacted_form_ = form;
+  provisionally_saved_form_ = std::make_unique<FormData>();
+  if (!form_util::ExtractFormData(last_interacted_form_,
+                                  provisionally_saved_form_.get())) {
+    provisionally_saved_form_.reset();
+  }
 }
 
 const mojom::AutofillDriverPtr& AutofillAgent::GetAutofillDriver() {
