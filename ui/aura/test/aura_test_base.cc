@@ -83,6 +83,7 @@ void AuraTestBase::SetUp() {
   if (use_mus_) {
     mus_context_factory_ = std::make_unique<AuraTestContextFactory>();
     context_factory = mus_context_factory_.get();
+    context_factory_private = mus_context_factory_.get();
   } else {
     const bool enable_pixel_output = false;
     ui::InitializeContextFactoryForTests(enable_pixel_output, &context_factory,

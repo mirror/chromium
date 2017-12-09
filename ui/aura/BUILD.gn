@@ -284,6 +284,8 @@ jumbo_static_library("test_support") {
   deps = [
     "//base/test:test_support",
     "//cc:test_support",
+    "//components/viz/host",
+    "//components/viz/service",
     "//components/viz/test:test_support",
     "//services/ui/public/cpp/input_devices",
     "//services/ui/public/interfaces",
