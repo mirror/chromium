@@ -46,6 +46,7 @@ namespace {
 
 const char kBLEGattServiceUUID[] = "b3b7e28e-a000-3e17-bd86-6e97b9e28c11";
 const char kAdvertisementUUID[] = "0000fe50-0000-1000-8000-00805f9b34fb";
+const uint16_t kManufacturerID = 0x00E0;
 const int8_t kRssi = -30;
 const char kEidForPreviousTimeQuantum[] = "\x12\x34";
 const char kEidForCurrentTimeQuantum[] = "\xab\xcd";
@@ -205,9 +206,11 @@ class ProximityAuthBluetoothLowEnergyConnectionFinderTest
     uuid_list.push_back(advertisement_uuid);
     device::BluetoothDevice::ServiceDataMap service_data_map;
     service_data_map[advertisement_uuid] = eid_vector;
+    device::BluetoothDevice::ManufacturerDataMap manufacturer_data_map;
+    manufacturer_data_map[kManufacturerID] = eid_vector;
 
     device_->UpdateAdvertisementData(kRssi, uuid_list, service_data_map,
-                                     nullptr);
+                                     manufacturer_data_map, nullptr);
   }
 
   scoped_refptr<device::MockBluetoothAdapter> adapter_;
