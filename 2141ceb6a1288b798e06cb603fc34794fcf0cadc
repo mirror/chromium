@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79fc6c7f_796392c4",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-09T00:04:15Z",
+      "side": 1,
+      "message": "nit: blank line after.",
+      "revId": "2141ceb6a1288b798e06cb603fc34794fcf0cadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0099f938_f9bf4686",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-09T00:04:15Z",
+      "side": 1,
+      "message": "s/cloud print/Cloud Print/\n\nIf you filed a bug for the size doubling, can you include the bug number here for reference? Can you also reference bug 372240?",
+      "revId": "2141ceb6a1288b798e06cb603fc34794fcf0cadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f472aba_a1281f88",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-09T00:04:15Z",
+      "side": 1,
+      "message": "Should the type be: constexpr size_t ? I\u0027m surprised the string.size() comparison below works. As size() returns size_t which is unsigned and this is signed.",
+      "revId": "2141ceb6a1288b798e06cb603fc34794fcf0cadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585a23f6_a53b4ee4",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-09T00:04:15Z",
+      "side": 1,
+      "message": "What happens if you remove the static cast?",
+      "revId": "2141ceb6a1288b798e06cb603fc34794fcf0cadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
