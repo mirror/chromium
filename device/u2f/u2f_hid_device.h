@@ -42,6 +42,7 @@ class U2fHidDevice : public U2fDevice {
  private:
   FRIEND_TEST_ALL_PREFIXES(U2fHidDeviceTest, TestConnectionFailure);
   FRIEND_TEST_ALL_PREFIXES(U2fHidDeviceTest, TestDeviceError);
+  FRIEND_TEST_ALL_PREFIXES(U2fHidDeviceTest, TestDeviceInit);
 
   // Internal state machine states
   enum class State { INIT, CONNECTED, BUSY, IDLE, DEVICE_ERROR };

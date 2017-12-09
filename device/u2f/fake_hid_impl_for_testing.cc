@@ -6,19 +6,83 @@
 
 namespace device {
 
-bool FakeHidConnection::mock_connection_error_ = false;
+using ::testing::_;
+using ::testing::Invoke;
+using ::testing::WithArg;
+using ::testing::WithArgs;
 
-FakeHidConnection::FakeHidConnection(device::mojom::HidDeviceInfoPtr device)
-    : device_(std::move(device)) {}
+namespace {
 
-FakeHidConnection::~FakeHidConnection() {}
-
-void FakeHidConnection::Read(ReadCallback callback) {
-  std::vector<uint8_t> buffer = {'F', 'a', 'k', 'e', ' ', 'H', 'i', 'd'};
-  std::move(callback).Run(true, 0, buffer);
+std::string HexEncode(base::span<const uint8_t> in) {
+  return base::HexEncode(in.data(), in.size());
 }
 
-void FakeHidConnection::Write(uint8_t report_id,
+std::vector<uint8_t> HexDecode(base::StringPiece in) {
+  std::vector<uint8_t> out;
+  DCHECK(base::HexStringToBytes(in.as_string(), &out));
+  return out;
+}
+
+std::vector<uint8_t> MakePacket(base::StringPiece hex) {
+  std::vector<uint8_t> out = HexDecode(base::ToUpperASCII(hex));
+  for (size_t i = out.size(); i < 64; ++i) {
+    out.push_back(0);
+  }
+  return out;
+}
+
+}  // namespace
+
+bool MockHidConnection::mock_connection_error_ = false;
+
+MockHidConnection::MockHidConnection()
+    : binding_(this), channel_id_(HexDecode("01020304")) {}
+
+MockHidConnection::MockHidConnection(
+    device::mojom::HidConnectionRequest request)
+    : MockHidConnection() {
+  binding_.Bind(std::move(request));
+}
+
+MockHidConnection::~MockHidConnection() {}
+
+void MockHidConnection::FakeReadAndWrite() {
+  EXPECT_CALL(*this, ReadRef(_))
+      .WillRepeatedly(Invoke([this](ReadCallback& cb) {
+        std::move(cb).Run(
+            true, 0,
+            MakePacket(HexEncode(channel_id_) +
+                       "bf000106" /* U2FHID_ERR : CMD_INVALID */));
+      }));
+  EXPECT_CALL(*this, WriteRef(0, _, _))
+      .WillRepeatedly(WithArg<2>(
+          Invoke([](WriteCallback& cb) { std::move(cb).Run(true); })));
+}
+
+void MockHidConnection::MockChannelAllocation() {
+  EXPECT_CALL(*this, WriteRef(0, _, _))
+      .WillOnce(WithArgs<1, 2>(Invoke([this](const std::vector<uint8_t> buffer,
+                                             WriteCallback& cb) {
+        CHECK(nonce_.size() == 0);
+        nonce_ = std::vector<uint8_t>(buffer.begin() + 7, buffer.begin() + 15);
+        std::move(cb).Run(true);
+      })))
+      .RetiresOnSaturation();
+  EXPECT_CALL(*this, ReadRef(_))
+      .WillOnce(Invoke([this](ReadCallback& cb) {
+        CHECK(nonce_.size() == 8);
+        std::move(cb).Run(true, 0,
+                          MakePacket("ffffffff860011" + HexEncode(nonce_) +
+                                     HexEncode(channel_id_) + "0000000000"));
+      }))
+      .RetiresOnSaturation();
+}
+
+void MockHidConnection::Read(ReadCallback callback) {
+  ReadRef(callback);
+}
+
+void MockHidConnection::Write(uint8_t report_id,
                               const std::vector<uint8_t>& buffer,
                               WriteCallback callback) {
   if (mock_connection_error_) {
@@ -26,15 +90,15 @@ void FakeHidConnection::Write(uint8_t report_id,
     return;
   }
 
-  std::move(callback).Run(true);
+  return WriteRef(report_id, buffer, callback);
 }
 
-void FakeHidConnection::GetFeatureReport(uint8_t report_id,
+void MockHidConnection::GetFeatureReport(uint8_t report_id,
                                          GetFeatureReportCallback callback) {
   NOTREACHED();
 }
 
-void FakeHidConnection::SendFeatureReport(uint8_t report_id,
+void MockHidConnection::SendFeatureReport(uint8_t report_id,
                                           const std::vector<uint8_t>& buffer,
                                           SendFeatureReportCallback callback) {
   NOTREACHED();
@@ -79,12 +143,18 @@ void FakeHidManager::Connect(const std::string& device_guid,
     return;
   }
 
-  // Strongly binds an instance of FakeHidConnctionImpl.
-  device::mojom::HidConnectionPtr client;
-  mojo::MakeStrongBinding(
-      base::MakeUnique<FakeHidConnection>(it->second->Clone()),
-      mojo::MakeRequest(&client));
-  std::move(callback).Run(std::move(client));
+  device::mojom::HidConnectionPtr connection;
+  auto ch = connections_.find(device_guid);
+  if (ch == connections_.end()) {
+    auto impl = base::MakeUnique<MockHidConnection>();
+    impl->FakeReadAndWrite();
+    mojo::MakeStrongBinding(std::move(impl), mojo::MakeRequest(&connection));
+  } else {
+    connection = std::move(ch->second);
+    connections_.erase(ch);
+  }
+
+  std::move(callback).Run(std::move(connection));
 }
 
 void FakeHidManager::AddDevice(device::mojom::HidDeviceInfoPtr device) {
@@ -106,6 +176,12 @@ void FakeHidManager::RemoveDevice(const std::string device_guid) {
     client->DeviceRemoved(device_info->Clone());
   });
   devices_.erase(it);
+}
+
+void FakeHidManager::SetConnectionForDevice(
+    device::mojom::HidDeviceInfoPtr device,
+    device::mojom::HidConnectionPtr connection) {
+  connections_[device->guid] = std::move(connection);
 }
 
 }  // namespace device

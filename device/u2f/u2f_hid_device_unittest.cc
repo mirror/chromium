@@ -16,7 +16,6 @@
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "services/device/public/cpp/hid/hid_device_filter.h"
 #include "services/device/public/interfaces/hid.mojom.h"
-#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -27,6 +26,20 @@ void ResponseCallback(std::unique_ptr<device::U2fApduResponse>* output,
   *output = std::move(response);
 }
 
+device::mojom::HidDeviceInfoPtr TestHidDevice() {
+  auto c_info = device::mojom::HidCollectionInfo::New();
+  c_info->usage = device::mojom::HidUsageAndPage::New(1, 0xf1d0);
+  auto hid_device = device::mojom::HidDeviceInfo::New();
+  hid_device->guid = "A";
+  hid_device->product_name = "Test Fido device";
+  hid_device->serial_number = "123FIDO";
+  hid_device->bus_type = device::mojom::HidBusType::kHIDBusTypeUSB;
+  hid_device->collections.push_back(std::move(c_info));
+  hid_device->max_input_report_size = 64;
+  hid_device->max_output_report_size = 64;
+  return hid_device;
+}
+
 }  // namespace
 
 namespace device {
@@ -34,11 +47,11 @@ namespace device {
 class U2fDeviceEnumerate {
  public:
   explicit U2fDeviceEnumerate(device::mojom::HidManager* hid_manager)
-      : closure_(),
+      : run_loop_(),
+        closure_(run_loop_.QuitClosure()),
         callback_(base::BindOnce(&U2fDeviceEnumerate::ReceivedCallback,
                                  base::Unretained(this))),
-        hid_manager_(hid_manager),
-        run_loop_() {}
+        hid_manager_(hid_manager) {}
   ~U2fDeviceEnumerate() {}
 
   void ReceivedCallback(std::vector<device::mojom::HidDeviceInfoPtr> devices) {
@@ -54,7 +67,6 @@ class U2fDeviceEnumerate {
   }
 
   std::list<std::unique_ptr<U2fHidDevice>>& WaitForCallback() {
-    closure_ = run_loop_.QuitClosure();
     run_loop_.Run();
     return devices_;
   }
@@ -66,10 +78,10 @@ class U2fDeviceEnumerate {
  private:
   HidDeviceFilter filter_;
   std::list<std::unique_ptr<U2fHidDevice>> devices_;
+  base::RunLoop run_loop_;
   base::Closure closure_;
   device::mojom::HidManager::GetDevicesCallback callback_;
   device::mojom::HidManager* hid_manager_;
-  base::RunLoop run_loop_;
 };
 
 class TestVersionCallback {
@@ -143,6 +155,19 @@ class U2fHidDeviceTest : public testing::Test {
   }
 
  protected:
+  std::unique_ptr<MockHidConnection> SetUpDeviceWithMockConnection() {
+    auto hid_device = TestHidDevice();
+    // Add the device to the manager and inject a connection mock rather than
+    // using the default fake.
+    device::mojom::HidConnectionPtr conn_ptr;
+    auto connection =
+        std::make_unique<MockHidConnection>(mojo::MakeRequest(&conn_ptr));
+    fake_hid_manager_->SetConnectionForDevice(hid_device->Clone(),
+                                              std::move(conn_ptr));
+    fake_hid_manager_->AddDevice(std::move(hid_device));
+    return connection;
+  }
+
   device::mojom::HidManagerPtr hid_manager_;
   std::unique_ptr<FakeHidManager> fake_hid_manager_;
 
@@ -192,19 +217,7 @@ TEST_F(U2fHidDeviceTest, TestMultipleRequests) {
 TEST_F(U2fHidDeviceTest, TestConnectionFailure) {
   // Setup and enumerate mock device
   U2fDeviceEnumerate callback(hid_manager_.get());
-
-  auto c_info = device::mojom::HidCollectionInfo::New();
-  c_info->usage = device::mojom::HidUsageAndPage::New(1, 0xf1d0);
-
-  auto hid_device = device::mojom::HidDeviceInfo::New();
-  hid_device->guid = "A";
-  hid_device->product_name = "Test Fido device";
-  hid_device->serial_number = "123FIDO";
-  hid_device->bus_type = device::mojom::HidBusType::kHIDBusTypeUSB;
-  hid_device->collections.push_back(std::move(c_info));
-  hid_device->max_input_report_size = 64;
-  hid_device->max_output_report_size = 64;
-
+  auto hid_device = TestHidDevice();
   fake_hid_manager_->AddDevice(std::move(hid_device));
   hid_manager_->GetDevices(callback.callback());
 
@@ -243,19 +256,7 @@ TEST_F(U2fHidDeviceTest, TestConnectionFailure) {
 TEST_F(U2fHidDeviceTest, TestDeviceError) {
   // Setup and enumerate mock device
   U2fDeviceEnumerate callback(hid_manager_.get());
-
-  auto c_info = device::mojom::HidCollectionInfo::New();
-  c_info->usage = device::mojom::HidUsageAndPage::New(1, 0xf1d0);
-
-  auto hid_device = device::mojom::HidDeviceInfo::New();
-  hid_device->guid = "A";
-  hid_device->product_name = "Test Fido device";
-  hid_device->serial_number = "123FIDO";
-  hid_device->bus_type = device::mojom::HidBusType::kHIDBusTypeUSB;
-  hid_device->collections.push_back(std::move(c_info));
-  hid_device->max_input_report_size = 64;
-  hid_device->max_output_report_size = 64;
-
+  auto hid_device = TestHidDevice();
   fake_hid_manager_->AddDevice(std::move(hid_device));
   hid_manager_->GetDevices(callback.callback());
 
@@ -265,7 +266,7 @@ TEST_F(U2fHidDeviceTest, TestDeviceError) {
   ASSERT_EQ(static_cast<size_t>(1), u2f_devices.size());
   auto& device = u2f_devices.front();
   // Mock connection where writes always fail
-  FakeHidConnection::mock_connection_error_ = true;
+  MockHidConnection::mock_connection_error_ = true;
   device->state_ = U2fHidDevice::State::IDLE;
   std::unique_ptr<U2fApduResponse> response0(
       U2fApduResponse::CreateFromMessage(std::vector<uint8_t>({0x0, 0x0})));
@@ -289,12 +290,39 @@ TEST_F(U2fHidDeviceTest, TestDeviceError) {
       U2fApduResponse::CreateFromMessage(std::vector<uint8_t>({0x0, 0x0})));
   device->DeviceTransact(U2fApduCommand::CreateVersion(),
                          base::Bind(&ResponseCallback, &response3));
-  FakeHidConnection::mock_connection_error_ = false;
+  MockHidConnection::mock_connection_error_ = false;
 
   EXPECT_EQ(U2fHidDevice::State::DEVICE_ERROR, device->state_);
   EXPECT_EQ(nullptr, response1);
   EXPECT_EQ(nullptr, response2);
   EXPECT_EQ(nullptr, response3);
+}
+
+TEST_F(U2fHidDeviceTest, TestDeviceInit) {
+  auto connection = SetUpDeviceWithMockConnection();
+  connection->FakeReadAndWrite();
+  connection->MockChannelAllocation();
+
+  U2fDeviceEnumerate callback(fake_hid_manager_.get());
+  fake_hid_manager_->GetDevices(callback.callback());
+
+  std::list<std::unique_ptr<U2fHidDevice>>& u2f_devices =
+      callback.WaitForCallback();
+
+  ASSERT_EQ(static_cast<size_t>(1), u2f_devices.size());
+  auto& device = u2f_devices.front();
+
+  EXPECT_EQ(U2fHidDevice::State::INIT, device->state_);
+
+  // Send any message to lazily initialize the device.
+  std::unique_ptr<U2fApduResponse> response0(
+      U2fApduResponse::CreateFromMessage(std::vector<uint8_t>({0x0, 0x0})));
+  device->DeviceTransact(U2fApduCommand::CreateVersion(),
+                         base::Bind(&ResponseCallback, &response0));
+  base::RunLoop().RunUntilIdle();
+  testing::Mock::VerifyAndClearExpectations(&connection);
+
+  EXPECT_EQ(U2fHidDevice::State::IDLE, device->state_);
 }
 
 }  // namespace device
