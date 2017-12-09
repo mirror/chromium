@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9591cb2c_863c4643",
+        "filename": "content/browser/renderer_host/input/touch_emulator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-09T00:50:59Z",
+      "side": 1,
+      "message": "nit: empty line",
+      "revId": "57a8b60b6998af4d5aeb41492e8863eae99c34e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae3ffed_2c55650b",
+        "filename": "content/browser/renderer_host/input/touch_emulator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-09T00:50:59Z",
+      "side": 1,
+      "message": "TODO(einbinder): this relies on synchronous tap gesture generation and does not work for any other gestures. We should switch to callbacks which go through touches and gestures once that\u0027s available.",
+      "revId": "57a8b60b6998af4d5aeb41492e8863eae99c34e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
