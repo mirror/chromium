@@ -34,8 +34,6 @@ class MockSendTargetThread : public MockRenderThread {
 bool MockSendTargetThread::OnMessageReceived(const IPC::Message& msg) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(MockSendTargetThread, msg)
-    IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_UpdatePeerConnection,
-                        OnUpdatePeerConnection)
     IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_AddPeerConnection,
                         OnAddPeerConnection)
     IPC_MESSAGE_UNHANDLED(handled = false)
