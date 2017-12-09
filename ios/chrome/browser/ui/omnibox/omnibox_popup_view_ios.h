@@ -15,6 +15,7 @@
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_popup_provider.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_view_controller.h"
+#include "ui/accessibility/ax_node_data.h"
 
 class OmniboxEditModel;
 @class OmniboxPopupViewController;
@@ -51,6 +52,7 @@ class OmniboxPopupViewIOS : public OmniboxPopupView,
   gfx::Rect GetTargetBounds() override;
   void PaintUpdatesNow() override {}
   void OnDragCanceled() override {}
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override {}
 
   void UpdateEditViewIcon();
 
