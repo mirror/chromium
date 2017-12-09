@@ -151,4 +151,53 @@ TEST_F(NGInlineFragmentTraversalTest, InclusiveAncestorsOf) {
   EXPECT_EQ(iter, ancestors.end());
 }
 
+#define EXPECT_NEXT_BOX_OF_TYPE(iter, id, box_type, is_old_layout_root)     \
+  {                                                                         \
+    const auto& current = *iter++;                                          \
+    EXPECT_TRUE(current.fragment->IsBox()) << current.fragment->ToString(); \
+    EXPECT_EQ(GetLayoutObjectByElementId(id),                               \
+              current.fragment->GetLayoutObject());                         \
+    EXPECT_EQ(current.fragment->BoxType(), NGPhysicalFragment::box_type);   \
+    EXPECT_EQ(current.fragment->IsOldLayoutRoot(), is_old_layout_root);     \
+  }
+
+TEST_F(NGInlineFragmentTraversalTest, MixedLayoutTree) {
+  // TODO(layout-dev): Design more straightforward way to ensure old layout
+  // instead of using |contenteditable|.
+  SetBodyInnerHTML(
+      "<div id=container style='position: absolute'>"
+      "1"
+      "<span contenteditable id=float-old style='float:left'>X</span>"
+      "<span id=float-new style='float:left'>X</span>"
+      "2"
+      "<span contenteditable id=atomic-inline-old "
+      "style='display:inline-block'>Y</span>"
+      "<span id=atomic-inline-new style='display:inline-block'>Y</span>"
+      "3"
+      "<span contenteditable id=oof-old style='position: absolute'>Z</span>"
+      "<span id=oof-new style='position: absolute'>Z</span>"
+      "4"
+      "</div>");
+  auto descendants = NGInlineFragmentTraversal::DescendantsOf(
+      GetRootFragmentById("container"));
+  auto iter = descendants.begin();
+
+  const bool is_old_layout = true;
+  const bool is_new_layout = false;
+  EXPECT_NEXT_BOX_OF_TYPE(iter, "float-old", kFloating, is_old_layout);
+  EXPECT_NEXT_BOX_OF_TYPE(iter, "float-new", kFloating, is_new_layout);
+  EXPECT_NEXT_LINE_BOX(iter);
+  EXPECT_NEXT_TEXT(iter, "1");
+  EXPECT_NEXT_TEXT(iter, "2");
+  EXPECT_NEXT_BOX_OF_TYPE(iter, "atomic-inline-old", kInlineBlock,
+                          is_old_layout);
+  EXPECT_NEXT_BOX_OF_TYPE(iter, "atomic-inline-new", kInlineBlock,
+                          is_new_layout);
+  EXPECT_NEXT_TEXT(iter, "3");
+  EXPECT_NEXT_TEXT(iter, "4");
+  EXPECT_NEXT_BOX_OF_TYPE(iter, "oof-old", kOutOfFlowPositioned, is_old_layout);
+  EXPECT_NEXT_BOX_OF_TYPE(iter, "oof-new", kOutOfFlowPositioned, is_new_layout);
+  EXPECT_EQ(iter, descendants.end());
+}
+
 }  // namespace blink
