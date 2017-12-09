@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fca18fff_76f97d52",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-09T01:13:17Z",
+      "side": 1,
+      "message": "I tried enabling this on all supported activity types, but window.rAF continued to fire in CCT and WAA - is this expected?",
+      "range": {
+        "startLine": 236,
+        "startChar": 16,
+        "endLine": 236,
+        "endChar": 55
+      },
+      "revId": "66fb102ec035e10aad7bbe1a51e5ac7f71e02af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
