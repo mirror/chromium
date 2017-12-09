@@ -22,6 +22,30 @@
       "revId": "f1ec294c52f77ac43b4210935bc668ce4310ec3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a968a8f_a253f1fe",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T03:56:51Z",
+      "side": 1,
+      "message": "Nice catch! Fixed.",
+      "parentUuid": "bb476c60_e0a1b560",
+      "range": {
+        "startLine": 839,
+        "startChar": 55,
+        "endLine": 839,
+        "endChar": 66
+      },
+      "revId": "f1ec294c52f77ac43b4210935bc668ce4310ec3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
