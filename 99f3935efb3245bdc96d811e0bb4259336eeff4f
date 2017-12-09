@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "08539619_ec76ce94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-09T00:17:42Z",
+      "side": 1,
+      "message": "can you mention that this also changes when OnDeviceListChanged event is triggered.",
+      "revId": "99f3935efb3245bdc96d811e0bb4259336eeff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72467313_a7757565",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-09T00:17:42Z",
+      "side": 1,
+      "message": "nit: this should not apply to this method anymore, right?",
+      "range": {
+        "startLine": 301,
+        "startChar": 5,
+        "endLine": 301,
+        "endChar": 74
+      },
+      "revId": "99f3935efb3245bdc96d811e0bb4259336eeff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25c098d7_043d162f",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 1
@@ -13,6 +53,30 @@
       "writtenOn": "2017-12-08T23:53:24Z",
       "side": 1,
       "message": "nit: I\u0027d prefer if we moved DeviceListChanged()\u0027s implementation to a helper function and call it from both places.",
+      "range": {
+        "startLine": 299,
+        "startChar": 2,
+        "endLine": 299,
+        "endChar": 19
+      },
+      "revId": "99f3935efb3245bdc96d811e0bb4259336eeff4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce2e1a3_60261d15",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-09T00:17:42Z",
+      "side": 1,
+      "message": "Also, you could change this to ignore non-tether device updates.",
+      "parentUuid": "25c098d7_043d162f",
       "range": {
         "startLine": 299,
         "startChar": 2,
