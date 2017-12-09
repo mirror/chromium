@@ -146,6 +146,9 @@ bool {{proxy_name}}::{{method.name}}(
 {%-     for param in method.response_parameters -%}
           , out_param_{{param.name}}
 {%-     endfor %}));
+#if BUILDFLAG(MOJO_TRACE_ENABLED)
+  TRACE_EVENT0("mojom", "{{namespace_as_string}}::{{class_name}}::{{method.name}}");
+#endif
   ignore_result(receiver_->AcceptWithResponder(&message, std::move(responder)));
   return result;
 }
@@ -174,6 +177,9 @@ void {{proxy_name}}::{{method.name}}(
       "message")}}
 {%-   endif %}
 
+#if BUILDFLAG(MOJO_TRACE_ENABLED)
+  TRACE_EVENT0("mojom", "{{namespace_as_string}}::{{class_name}}::{{method.name}}");
+#endif
 {%- if method.response_parameters != None %}
   std::unique_ptr<mojo::MessageReceiver> responder(
       new {{class_name}}_{{method.name}}_ForwardToCallback(
@@ -256,7 +262,8 @@ class {{class_name}}_{{method.name}}_ProxyToResponder {
 bool {{class_name}}_{{method.name}}_ForwardToCallback::Accept(
     mojo::Message* message) {
 #if BUILDFLAG(MOJO_TRACE_ENABLED)
-  TRACE_EVENT1("mojom", "{{method.name}}", "message", message->name());
+  TRACE_EVENT1("mojom", "{{namespace_as_string}}::{{class_name}}::{{method.name}}Callback",
+               "message", message->name());
 #endif
   mojo::internal::MessageDispatchContext dispatch_context(message);
 {%-     if method|method_supports_lazy_serialization %}
@@ -305,7 +312,8 @@ void {{class_name}}_{{method.name}}_ProxyToResponder::Run(
 {%-   endif %}
 
 #if BUILDFLAG(MOJO_TRACE_ENABLED)
-  TRACE_EVENT1("mojom", "{{method.name}}", "message", message.name());
+  TRACE_EVENT1("mojom", "(Service){{namespace_as_string}}::{{class_name}}::{{method.name}}Callback",
+               "message", message.name());
 #endif
   message.set_request_id(request_id_);
   ignore_result(responder_->Accept(&message));
@@ -319,9 +327,6 @@ void {{class_name}}_{{method.name}}_ProxyToResponder::Run(
 {%-   if method.sync %}
 bool {{class_name}}_{{method.name}}_HandleSyncResponse::Accept(
     mojo::Message* message) {
-#if BUILDFLAG(MOJO_TRACE_ENABLED)
-  TRACE_EVENT1("mojom", "{{method.name}}", "message", message->name());
-#endif
 {%-     if method|method_supports_lazy_serialization %}
   if (!message->is_serialized()) {
     auto context =
@@ -376,7 +381,8 @@ bool {{class_name}}StubDispatch::Accept(
 {%-   for method in interface.methods %}
     case internal::k{{class_name}}_{{method.name}}_Name: {
 #if BUILDFLAG(MOJO_TRACE_ENABLED)
-  TRACE_EVENT1("mojom", "{{method.name}}", "message", message->name());
+  TRACE_EVENT1("mojom", "(Service){{namespace_as_string}}::{{class_name}}::{{method.name}}",
+               "message", message->name());
 #endif
 {%-     if method.response_parameters == None %}
       mojo::internal::MessageDispatchContext context(message);
@@ -428,7 +434,8 @@ bool {{class_name}}StubDispatch::AcceptWithResponder(
 {%-   for method in interface.methods %}
     case internal::k{{class_name}}_{{method.name}}_Name: {
 #if BUILDFLAG(MOJO_TRACE_ENABLED)
-  TRACE_EVENT1("mojom", "{{method.name}}", "message", message->name());
+  TRACE_EVENT1("mojom", "(Service){{namespace_as_string}}::{{class_name}}::{{method.name}}",
+               "message", message->name());
 #endif
 {%-     if method.response_parameters != None %}
       mojo::internal::MessageDispatchContext context(message);
@@ -495,9 +502,6 @@ bool {{class_name}}RequestValidator::Accept(mojo::Message* message) {
   switch (message->header()->name) {
 {%- for method in interface.methods %}
     case internal::k{{class_name}}_{{method.name}}_Name: {
-#if BUILDFLAG(MOJO_TRACE_ENABLED)
-  TRACE_EVENT1("mojom", "{{method.name}}", "message", message->name());
-#endif
 {%-   if method.response_parameters != None %}
       if (!mojo::internal::ValidateMessageIsRequestExpectingResponse(
               message, &validation_context)) {
@@ -544,9 +548,6 @@ bool {{class_name}}ResponseValidator::Accept(mojo::Message* message) {
   switch (message->header()->name) {
 {%- for method in interface.methods if method.response_parameters != None %}
     case internal::k{{class_name}}_{{method.name}}_Name: {
-#if BUILDFLAG(MOJO_TRACE_ENABLED)
-  TRACE_EVENT1("mojom", "{{method.name}}", "message", message->name());
-#endif
       if (!mojo::internal::ValidateMessagePayload<
                internal::{{class_name}}_{{method.name}}_ResponseParams_Data>(
                     message, &validation_context)) {
