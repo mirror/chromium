@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f55cfb8_ed39388c",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-09T00:18:35Z",
+      "side": 1,
+      "message": "Since this logic is being repeated multiple times it could be moved into SensorEntry.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 3
+      },
+      "revId": "6f62fa795dea6947532b0677a8d0ea31dddd6d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc6bb70_1e05507d",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-09T00:18:35Z",
+      "side": 1,
+      "message": "What if you wrote this like this and moved the suspend logic into a SensorEntry::Stop function:\n\nrelative_orientation_sensor_.Stop();\nif (relative_orientation_sensor_.sensor_statue \u003d\u003d SensorState::SHOULD_SUSPEND \u0026\u0026\n    fall_back_to_absolute_orientation_sensor_)\n  should_suspend_absolute_orientation_sensor_ \u003d true;\n}\n\nabsolute_orientation_sensor_.Stop();",
+      "revId": "6f62fa795dea6947532b0677a8d0ea31dddd6d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404d3e80_d5554296",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-09T00:18:35Z",
+      "side": 1,
+      "message": "What do you think about writing this as:\n\nif (!sensor_provider_) {\n  RenderFrame* const render_frame \u003d GetRenderFrame();\n  if (!render_frame)\n    return;\n\n  CHECK(render_frame-\u003eGetRemoteInterfaces());\n\n  render_frame-\u003eGetRemoteInterfaces()-\u003eGetInterface(\n      mojo::MakeRequest(\u0026sensor_provider_));\n  sensor_provider_.set_connection_error_handler(\n      base::Bind(\u0026DeviceSensorEventPump::HandleSensorProviderError,\n                 base::Unretained(this)));\n}\n\nif (absolute_) {\n  absolute_orientation_sensor_.Start(sensor_provider_.get());\n} else {\n  fall_back_to_absolute_orientation_sensor_ \u003d true;\n  should_suspend_absolute_orientation_sensor_ \u003d false;\n  relative_orientation_sensor_.Start(sensor_provider_.get());\n}\n\nDidStartIfPossible();\n\nMove the logic in GetSensor into SensorEntry::Start plus the logic to call Resume() if the sensor is in the SUSPENDED state.",
+      "revId": "6f62fa795dea6947532b0677a8d0ea31dddd6d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "623c93c8_755ade10",
+        "filename": "content/renderer/device_sensors/device_orientation_event_pump_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-09T00:18:35Z",
+      "side": 1,
+      "message": "These casts are unnecessary, you should be able to use:\n\nEXPECT_DOUBLE_EQ(2, received_data.beta);",
+      "range": {
+        "startLine": 344,
+        "startChar": 15,
+        "endLine": 344,
+        "endChar": 34
+      },
+      "revId": "6f62fa795dea6947532b0677a8d0ea31dddd6d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfce8b36_b1ee17c2",
+        "filename": "content/renderer/device_sensors/fake_sensor_and_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-09T00:18:35Z",
+      "side": 1,
+      "message": "Put this in a new //services/device/public/cpp/generic_sensor:test_support source_set and share it with device_sensor_browsertest.cc and generic_sensor_browsertest.cc. It\u0027s fine to do this in a follow-up patch if refactoring of these other tests would be required.",
+      "revId": "6f62fa795dea6947532b0677a8d0ea31dddd6d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
