@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c78e2190_b90dcb30",
+        "filename": "ipc/ipc_message_utils.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-09T01:21:13Z",
+      "side": 1,
+      "message": "Maybe note that this is going to seal it for you, but that it\u0027s a developer error (or is this just for you debugging?)",
+      "revId": "bb03db3876743077af933c69b824f28ce0e9a79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35eaf9e_80c2b595",
+        "filename": "mojo/edk/embedder/platform_shared_buffer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-09T01:21:13Z",
+      "side": 1,
+      "message": "Maybe DuplicateReadOnlyPlatformHandle() ?",
+      "range": {
+        "startLine": 98,
+        "startChar": 23,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "bb03db3876743077af933c69b824f28ce0e9a79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
