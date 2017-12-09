@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd1eba3f_74703ee3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-09T12:58:16Z",
+      "side": 1,
+      "message": "Can you add\n  DCHECK(fragment.IsBlocklayotuRoot())\nhere? This is the purpose of the kOldLayoutRoot. Paint code checks inside of the box may need different painter if IsBlocklayotuRoot().\n\nActually, as long as this behavior is preserved (i.e., all old layout is one of IsBlocklayotuRoot(), we might not need the type at all. Since tests are passing, I\u0027m fine to remove it or go with this patch for now and consider removing in future.",
+      "revId": "b9d08711719532f6f2bd08a4f66ce13ddd9678e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
