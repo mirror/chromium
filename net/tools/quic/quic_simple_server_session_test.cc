@@ -64,15 +64,6 @@ class QuicSimpleServerSessionPeer {
       QuicSimpleServerSession* s) {
     return s->CreateOutgoingDynamicStream();
   }
-
-  static QuicDeque<PromisedStreamInfo>* promised_streams(
-      QuicSimpleServerSession* s) {
-    return &(s->promised_streams_);
-  }
-
-  static QuicStreamId hightest_promised_stream_id(QuicSimpleServerSession* s) {
-    return s->highest_promised_stream_id_;
-  }
 };
 
 namespace {

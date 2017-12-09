@@ -207,10 +207,6 @@ class QuicClientBase {
   }
   void reset_writer() { writer_.reset(); }
 
-  QuicByteCount initial_max_packet_length() {
-    return initial_max_packet_length_;
-  }
-
   ProofVerifier* proof_verifier() const;
 
   void set_bind_to_address(QuicIpAddress address) {
@@ -218,8 +214,6 @@ class QuicClientBase {
   }
 
   QuicIpAddress bind_to_address() const { return bind_to_address_; }
-
-  void set_local_port(int local_port) { local_port_ = local_port; }
 
   int local_port() const { return local_port_; }
 
@@ -277,14 +271,6 @@ class QuicClientBase {
   virtual QuicConnectionId GenerateNewConnectionId();
 
   QuicAlarmFactory* alarm_factory() { return alarm_factory_.get(); }
-
-  void set_num_sent_client_hellos(int num_sent_client_hellos) {
-    num_sent_client_hellos_ = num_sent_client_hellos;
-  }
-
-  void set_num_stateless_rejects_received(int num_stateless_rejects_received) {
-    num_stateless_rejects_received_ = num_stateless_rejects_received;
-  }
 
   // Subclasses may need to explicitly clear the session on destruction
   // if they create it with objects that will be destroyed before this is.
