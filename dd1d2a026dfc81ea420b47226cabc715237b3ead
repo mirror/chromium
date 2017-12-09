@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "477c930e_fe9eb934",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageDecodingStore.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-09T02:01:34Z",
+      "side": 0,
+      "message": "Why is the test of !value.gen_ being removed too? I\u0027m having a hard time understanding this code and how it\u0027s safe_to_compare_to_empty_or_deleted (per DefaultHash\u003cblink::DecoderCacheKey\u003e), and in particular who resets the fields of DecoderCacheKey, if that\u0027s what happens.",
+      "revId": "dd1d2a026dfc81ea420b47226cabc715237b3ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
