@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c18c9a9_0ce5c7b4",
+        "filename": "testing/buildbot/chromium.webkit.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-09T03:03:58Z",
+      "side": 0,
+      "message": "These were unnecessarily specified; I didn\u0027t see any point in trying to accommodate that.",
+      "revId": "8ac366fa089e0959da91e9c774fe34b5610885d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4443f06_72e3d842",
+        "filename": "testing/buildbot/chromium.webkit.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-09T03:03:58Z",
+      "side": 1,
+      "message": "This is in fact the default, but the generator makes this explicit, which is probably a good thing. There are other builders where things are explicitly set to false, so there\u0027s not an easy way to delete the whole dict and I felt it\u0027s better to leave things like this.",
+      "revId": "eaea4d3dabd0bf115cc745ff47b3648ac242dd11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
