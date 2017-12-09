@@ -17,7 +17,6 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_observer.h"
-#include "ui/aura/window_tree_host.h"
 #include "ui/base/class_property.h"
 #include "ui/base/ui_base_switches_util.h"
 #include "ui/display/display.h"
@@ -302,13 +301,11 @@ void WindowPortMus::SetFrameSinkIdFromServer(
 
 const viz::LocalSurfaceId& WindowPortMus::GetOrAllocateLocalSurfaceId(
     const gfx::Size& surface_size_in_pixels) {
-  if (last_surface_size_in_pixels_ == surface_size_in_pixels &&
-      local_surface_id_.is_valid()) {
-    return local_surface_id_;
+  if (last_surface_size_in_pixels_ != surface_size_in_pixels ||
+      !local_surface_id_.is_valid()) {
+    local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
+    last_surface_size_in_pixels_ = surface_size_in_pixels;
   }
-
-  local_surface_id_ = parent_local_surface_id_allocator_.GenerateId();
-  last_surface_size_in_pixels_ = surface_size_in_pixels;
 
   // If the FrameSinkId is available, then immediately embed the SurfaceId.
   // The newly generated frame by the embedder will block in the display
@@ -404,10 +401,10 @@ void WindowPortMus::AllocateLocalSurfaceId() {
 const viz::LocalSurfaceId& WindowPortMus::GetLocalSurfaceId() {
   if (switches::IsMusHostingViz())
     return local_surface_id_;
-  if (window_->GetRootWindow() != window_)
+  if (!window_->IsEmbeddingClient() && !window_->IsRootWindow())
     return local_surface_id_;
-  return GetOrAllocateLocalSurfaceId(
-      window_->GetHost()->GetBoundsInPixels().size());
+  return GetOrAllocateLocalSurfaceId(gfx::ConvertSizeToPixel(
+      GetDeviceScaleFactor(), window_->bounds().size()));
 }
 
 std::unique_ptr<WindowMusChangeData>
