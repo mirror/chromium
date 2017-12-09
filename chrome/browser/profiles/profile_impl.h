@@ -143,6 +143,7 @@ class ProfileImpl : public Profile {
   bool WasCreatedByVersionOrLater(const std::string& version) override;
   void SetExitType(ExitType exit_type) override;
   ExitType GetLastSessionExitType() override;
+  content::CookieStoreConfig::SessionCookieMode GetSessionCookieMode() override;
 
 #if defined(OS_CHROMEOS)
   void ChangeAppLocale(const std::string& locale, AppLocaleChangedVia) override;
