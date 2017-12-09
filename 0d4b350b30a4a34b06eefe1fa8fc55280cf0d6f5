@@ -188,6 +188,30 @@
       "revId": "0d4b350b30a4a34b06eefe1fa8fc55280cf0d6f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ab36e0_298d4890",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-09T21:55:05Z",
+      "side": 1,
+      "message": "Sorry, ignore my previous 2 comments. Checked the unit tests in \nsignin_header_helper_unittest; they are exhaustive for Mirror and cover DICE tests too. These tests duplicate what is tested there. Removed this file.",
+      "parentUuid": "1d1faed2_69b88e9c",
+      "range": {
+        "startLine": 19,
+        "startChar": 32,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "0d4b350b30a4a34b06eefe1fa8fc55280cf0d6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
