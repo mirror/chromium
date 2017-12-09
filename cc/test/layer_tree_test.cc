@@ -217,9 +217,10 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
         this, raster_buffer_provider, resource_pool);
   }
 
-  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
-    LayerTreeHostImpl::WillBeginImplFrame(args);
+  bool WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
+    bool has_damage = LayerTreeHostImpl::WillBeginImplFrame(args);
     test_hooks_->WillBeginImplFrameOnThread(this, args);
+    return has_damage;
   }
 
   void DidFinishImplFrame() override {
