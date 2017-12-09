@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c6c6639_27d2ce33",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-09T00:16:59Z",
+      "side": 1,
+      "message": "We need to know the URL to decide (in the --isolate-origins case).",
+      "range": {
+        "startLine": 329,
+        "startChar": 28,
+        "endLine": 329,
+        "endChar": 62
+      },
+      "revId": "0282d2d2e093b20a00bebcf3212bea8a71940ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
