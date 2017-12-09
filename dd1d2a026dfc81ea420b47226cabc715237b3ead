@@ -16,6 +16,24 @@
       "revId": "dd1d2a026dfc81ea420b47226cabc715237b3ead",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd34b93f_6fd0ca2b",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageDecodingStore.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-09T02:28:02Z",
+      "side": 0,
+      "message": "To be explicit: I could approve this if the only change were to the comparison of value.alpha_option_. Also, you could consider adding a kIllegalAlphaOption to ImageDecoder.h and using that only in ConstructDeletedValue and here; that would also seem safe (and would eliminate the static_cast).",
+      "parentUuid": "477c930e_fe9eb934",
+      "revId": "dd1d2a026dfc81ea420b47226cabc715237b3ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
