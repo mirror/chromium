@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e3d6508_7e1098f2",
+        "filename": "extensions/browser/api/metrics_private/metrics_private_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-09T00:42:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5331568a_d93e4dbd",
+      "range": {
+        "startLine": 176,
+        "startChar": 16,
+        "endLine": 176,
+        "endChar": 27
+      },
+      "revId": "397fd542727bb49bfb9e3497daf7ff998eecfd96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50e6e7c6_e28bd15e",
         "filename": "extensions/common/api/metrics_private.json",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "397fd542727bb49bfb9e3497daf7ff998eecfd96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed967fc_0cd08e06",
+        "filename": "extensions/common/api/metrics_private.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-09T00:42:14Z",
+      "side": 1,
+      "message": "Changed \"consider\" to \"use\", since it doesn\u0027t make much sense to be optional. Otherwise, makes sense and done.",
+      "parentUuid": "50e6e7c6_e28bd15e",
+      "range": {
+        "startLine": 194,
+        "startChar": 120,
+        "endLine": 194,
+        "endChar": 168
+      },
+      "revId": "397fd542727bb49bfb9e3497daf7ff998eecfd96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
