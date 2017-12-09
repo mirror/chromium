@@ -46,6 +46,30 @@
       "revId": "0282d2d2e093b20a00bebcf3212bea8a71940ea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a9ec69c_91def6ed",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-09T01:33:40Z",
+      "side": 1,
+      "message": "Thanks for catching this - I glanced over the old code quickly and in my haste didn\u0027t notice that it was also looking at the origin.  One thing that surprised me was that none of the tryjobs were red - we might want to add some test coverage to ensure that non-isolated-documents are not blocked by default (even if some origins were passed to --isolate-origins cmdline flag).  Maybe something to add to content/browser/isolated_origin_browsertest.cc",
+      "parentUuid": "65231715_36267756",
+      "range": {
+        "startLine": 329,
+        "startChar": 28,
+        "endLine": 329,
+        "endChar": 62
+      },
+      "revId": "0282d2d2e093b20a00bebcf3212bea8a71940ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
