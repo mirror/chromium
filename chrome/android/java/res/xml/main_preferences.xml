@@ -70,6 +70,11 @@
         android:key="data_reduction"
         android:order="12"
         android:title="@string/data_reduction_title"/>
+    <org.chromium.chrome.browser.preferences.ChromeBasePreference
+        android:fragment="org.chromium.chrome.browser.preferences.DownloadPreferences"
+        android:key="downloads"
+        android:order="12"
+        android:title="@string/prefs_download"/>
     <Preference
         android:fragment="org.chromium.chrome.browser.preferences.AboutChromePreferences"
         android:key="about_chrome"
