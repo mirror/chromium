@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "aaf44e1d_b07b7800",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3067,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-09T00:23:12Z",
+      "side": 1,
+      "message": "I didn\u0027t check all 177 call sites.\nBut it does seem like this happens sometimes:\nhttps://cs.chromium.org/chromium/src/components/viz/service/display/surface_aggregator_pixeltest.cc?l\u003d109\n\nBut to my point, I still think it makes it a bit harder for the next person to understand where the initialization happens and that it must happen first.",
+      "parentUuid": "69ea0948_9c532f56",
+      "range": {
+        "startLine": 3067,
+        "startChar": 1,
+        "endLine": 3067,
+        "endChar": 3
+      },
+      "revId": "6d694d82923cb5a3d2c03675da9a803554fa82cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fb4df51_159a4c26",
         "filename": "components/viz/common/surfaces/parent_local_surface_id_allocator.h",
         "patchSetId": 4
