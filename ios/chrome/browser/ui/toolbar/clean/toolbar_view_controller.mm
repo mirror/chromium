@@ -877,7 +877,7 @@
           constraintEqualToAnchor:self.view.trailingAnchor],
       [self.locationBarContainerStackView.topAnchor
           constraintEqualToAnchor:self.topSafeAnchor
-                         constant:kLocationBarVerticalMargin],
+                         constant:kExpandedLocationBarVerticalMargin],
     ];
   }
   return _expandedToolbarConstraints;
