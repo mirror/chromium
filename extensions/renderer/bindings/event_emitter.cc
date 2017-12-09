@@ -162,6 +162,11 @@ v8::Local<v8::Value> EventEmitter::DispatchSync(
 
   v8::TryCatch try_catch(isolate);
   for (const auto& listener : listeners) {
+    // Any of the listeners could invalidate the context. If that happens,
+    // bail out.
+    if (!binding::IsContextValid(context))
+      return v8::Undefined(isolate);
+
     // NOTE(devlin): Technically, any listener here could suspend JS execution
     // (through e.g. calling alert() or print()). That should suspend this
     // message loop as well (though a nested message loop will run). This is a
