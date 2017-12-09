@@ -34,6 +34,24 @@
       "revId": "43da860847fcf4e0c4c4f71a268930c944efc539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3c2abb_73bb279d",
+        "filename": "gpu/config/gpu_driver_bug_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2758,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-09T00:13:32Z",
+      "side": 1,
+      "message": "Looked at the about:gpu information and the bug again. The reports are widespread across multiple devices and there\u0027s no good way to identify just this GPU. (Not sure that a GL_VENDOR check of \"Hisilicon Technologies\" and a GL_RENDERER check of \"Immersion.16\" is a good idea.) Therefore I think you\u0027ve actually got the best idea already here.",
+      "parentUuid": "95b63b32_40cf2f44",
+      "revId": "43da860847fcf4e0c4c4f71a268930c944efc539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
