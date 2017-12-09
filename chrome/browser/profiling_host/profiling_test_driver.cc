@@ -281,11 +281,6 @@ void ProfilingTestDriver::RunInitializationOnUIThreadAndSignal() {
 bool ProfilingTestDriver::RunInitializationOnUIThread() {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
 
-  if (options_.mode == ProfilingProcessHost::Mode::kRendererSampling) {
-    profiling::ProfilingProcessHost::GetInstance()
-        ->SetRendererSamplingAlwaysProfileForTest();
-  }
-
   LOG(ERROR) << "RunInitializationOnUIThread: "
              << base::CommandLine::ForCurrentProcess()->GetCommandLineString();
   if (!CheckOrStartProfiling())
