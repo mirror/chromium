@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbc56cc5_3c2e7510",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-09T01:17:21Z",
+      "side": 1,
+      "message": "mind making this method take a const base::FilePath\u0026 instead?",
+      "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319d7bab_854f7b52",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-09T01:17:21Z",
+      "side": 1,
+      "message": "DCHECK_GE(mount_id, 0)\n\nbut did you mean for this DCHECK to be outside of this if statement? mount_id doesn\u0027t look like it gets used before returning here, but it *does* get used below.",
+      "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e22c52_bc76c9d6",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-09T01:17:21Z",
+      "side": 1,
+      "message": "nit: provider_service_mount_result, or feel free to just call this \"result\"",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
