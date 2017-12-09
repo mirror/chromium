@@ -90,6 +90,7 @@ CHROMEOS_EXPORT extern const char kDisableLockScreenApps[];
 CHROMEOS_EXPORT extern const char kTetherStub[];
 CHROMEOS_EXPORT extern const char kDisableMdOobe[];
 CHROMEOS_EXPORT extern const char kDisableMdErrorScreen[];
+CHROMEOS_EXPORT extern const char kDisableNetworkSettingsConfig[];
 CHROMEOS_EXPORT extern const char kEnableNetworkPortalNotification[];
 CHROMEOS_EXPORT extern const char kEnablePhysicalKeyboardAutocorrect[];
 CHROMEOS_EXPORT extern const char kEnableRequestTabletSite[];
@@ -130,7 +131,6 @@ CHROMEOS_EXPORT extern const char kLoginUser[];
 CHROMEOS_EXPORT extern const char kMemoryPressureThresholds[];
 CHROMEOS_EXPORT extern const char kNaturalScrollDefault[];
 CHROMEOS_EXPORT extern const char kNeedArcMigrationPolicyCheck[];
-CHROMEOS_EXPORT extern const char kNetworkSettingsConfig[];
 CHROMEOS_EXPORT extern const char kNoteTakingAppIds[];
 CHROMEOS_EXPORT extern const char kOobeBootstrappingMaster[];
 CHROMEOS_EXPORT extern const char kOobeForceShowScreen[];
@@ -167,17 +167,12 @@ GetMemoryPressureThresholds();
 // converted to GAIA IDs.
 CHROMEOS_EXPORT bool IsGaiaIdMigrationStarted();
 
-// Returns true if this is a Cellular First device.
 CHROMEOS_EXPORT bool IsCellularFirstDevice();
-
-// Returns true if the locale is supported by voice interaction.
 CHROMEOS_EXPORT bool IsVoiceInteractionLocalesSupported();
-
-// Returns true if voice interaction flags are enabled.
 CHROMEOS_EXPORT bool IsVoiceInteractionFlagsEnabled();
-
-// Returns true if voice interaction is enabled.
 CHROMEOS_EXPORT bool IsVoiceInteractionEnabled();
+
+CHROMEOS_EXPORT bool IsNetworkSettingsConfigEnabled();
 
 // Returns true if Zip Archiver is enabled for unpacking files.
 CHROMEOS_EXPORT bool IsZipArchiverUnpackerEnabled();
