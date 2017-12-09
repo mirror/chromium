@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/hash.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
@@ -436,6 +437,10 @@ TEST_F(WatchTimeRecorderTest, BasicUkmAudioVideo) {
                properties->natural_size.width());
     EXPECT_UKM(UkmEntry::kVideoNaturalHeightName,
                properties->natural_size.height());
+    EXPECT_UKM(UkmEntry::kInitialAudioDecoderNameHashName, 0);
+    EXPECT_UKM(UkmEntry::kInitialVideoDecoderNameHashName, 0);
+    EXPECT_UKM(UkmEntry::kFallbackAudioDecoderNameHashName, 0);
+    EXPECT_UKM(UkmEntry::kFallbackVideoDecoderNameHashName, 0);
 
     EXPECT_NO_UKM(UkmEntry::kMeanTimeBetweenRebuffersName);
     EXPECT_NO_UKM(UkmEntry::kWatchTime_ACName);
@@ -477,6 +482,16 @@ TEST_F(WatchTimeRecorderTest, BasicUkmAudioVideoWithExtras) {
   wtr_->UpdateUnderflowCount(3);
   wtr_->OnError(PIPELINE_ERROR_DECODE);
 
+  const std::string kAudioDecoderName = "FirstAudioDecoder";
+  const std::string kVideoDecoderName = "FirstVideoDecoder";
+  wtr_->UpdateAudioDecoderName(kAudioDecoderName);
+  wtr_->UpdateVideoDecoderName(kVideoDecoderName);
+
+  const std::string kFallbackAudioDecoderName = "SecondAudioDecoder";
+  const std::string kFallbackVideoDecoderName = "SecondVideoDecoder";
+  wtr_->UpdateAudioDecoderName(kFallbackAudioDecoderName);
+  wtr_->UpdateVideoDecoderName(kFallbackVideoDecoderName);
+
   wtr_.reset();
   base::RunLoop().RunUntilIdle();
 
@@ -499,6 +514,15 @@ TEST_F(WatchTimeRecorderTest, BasicUkmAudioVideoWithExtras) {
                kWatchTime3.InMilliseconds());
     EXPECT_UKM(UkmEntry::kMeanTimeBetweenRebuffersName,
                kWatchTime2.InMilliseconds() / 3);
+
+    EXPECT_UKM(UkmEntry::kInitialAudioDecoderNameHashName,
+               base::PersistentHash(kAudioDecoderName));
+    EXPECT_UKM(UkmEntry::kInitialVideoDecoderNameHashName,
+               base::PersistentHash(kVideoDecoderName));
+    EXPECT_UKM(UkmEntry::kFallbackAudioDecoderNameHashName,
+               base::PersistentHash(kFallbackAudioDecoderName));
+    EXPECT_UKM(UkmEntry::kFallbackVideoDecoderNameHashName,
+               base::PersistentHash(kFallbackVideoDecoderName));
 
     EXPECT_UKM(UkmEntry::kIsBackgroundName, properties->is_background);
     EXPECT_UKM(UkmEntry::kAudioCodecName, properties->audio_codec);
@@ -547,6 +571,10 @@ TEST_F(WatchTimeRecorderTest, BasicUkmAudioVideoBackground) {
                properties->natural_size.width());
     EXPECT_UKM(UkmEntry::kVideoNaturalHeightName,
                properties->natural_size.height());
+    EXPECT_UKM(UkmEntry::kInitialAudioDecoderNameHashName, 0);
+    EXPECT_UKM(UkmEntry::kInitialVideoDecoderNameHashName, 0);
+    EXPECT_UKM(UkmEntry::kFallbackAudioDecoderNameHashName, 0);
+    EXPECT_UKM(UkmEntry::kFallbackVideoDecoderNameHashName, 0);
 
     EXPECT_NO_UKM(UkmEntry::kMeanTimeBetweenRebuffersName);
     EXPECT_NO_UKM(UkmEntry::kWatchTime_ACName);
@@ -558,7 +586,94 @@ TEST_F(WatchTimeRecorderTest, BasicUkmAudioVideoBackground) {
     EXPECT_NO_UKM(UkmEntry::kWatchTime_DisplayPictureInPictureName);
   }
 }
+
+TEST_F(WatchTimeRecorderTest, TestDecoderNamesNoDuplicate) {
+  mojom::PlaybackPropertiesPtr properties = mojom::PlaybackProperties::New(
+      kCodecAAC, kCodecH264, true, true, false, false, false, false,
+      gfx::Size(800, 600), url::Origin::Create(GURL(kTestOrigin)), true);
+  provider_->AcquireWatchTimeRecorder(properties.Clone(),
+                                      mojo::MakeRequest(&wtr_));
+
+  // Sending the same name twice, it shouldn't matter and definitely shouldn't
+  // get set as the fallback decoder name.
+  const std::string kAudioDecoderName = "FirstAudioDecoder";
+  const std::string kVideoDecoderName = "FirstVideoDecoder";
+  wtr_->UpdateAudioDecoderName(kAudioDecoderName);
+  wtr_->UpdateAudioDecoderName(kAudioDecoderName);
+  wtr_->UpdateVideoDecoderName(kVideoDecoderName);
+  wtr_->UpdateVideoDecoderName(kVideoDecoderName);
+  wtr_.reset();
+  base::RunLoop().RunUntilIdle();
+
+  const auto& entries = test_recorder_->GetEntriesByName(UkmEntry::kEntryName);
+  EXPECT_EQ(1u, entries.size());
+  for (const auto* entry : entries) {
+    test_recorder_->ExpectEntrySourceHasUrl(entry, GURL(kTestOrigin));
+    EXPECT_UKM(UkmEntry::kInitialAudioDecoderNameHashName,
+               base::PersistentHash(kAudioDecoderName));
+    EXPECT_UKM(UkmEntry::kInitialVideoDecoderNameHashName,
+               base::PersistentHash(kVideoDecoderName));
+    EXPECT_UKM(UkmEntry::kFallbackAudioDecoderNameHashName, 0);
+    EXPECT_UKM(UkmEntry::kFallbackVideoDecoderNameHashName, 0);
+  }
+}
+
+TEST_F(WatchTimeRecorderTest, TestDecoderNamesFallbackReportsLast) {
+  mojom::PlaybackPropertiesPtr properties = mojom::PlaybackProperties::New(
+      kCodecAAC, kCodecH264, true, true, false, false, false, false,
+      gfx::Size(800, 600), url::Origin::Create(GURL(kTestOrigin)), true);
+  provider_->AcquireWatchTimeRecorder(properties.Clone(),
+                                      mojo::MakeRequest(&wtr_));
+
+  const std::string kAudioDecoderName = "FirstAudioDecoder";
+  const std::string kVideoDecoderName = "FirstVideoDecoder";
+  wtr_->UpdateAudioDecoderName(kAudioDecoderName);
+  wtr_->UpdateVideoDecoderName(kVideoDecoderName);
+
+  const std::string kFallbackAudioDecoderName = "SecondAudioDecoder";
+  const std::string kFallbackVideoDecoderName = "SecondVideoDecoder";
+  wtr_->UpdateAudioDecoderName(kFallbackAudioDecoderName);
+  wtr_->UpdateVideoDecoderName(kFallbackVideoDecoderName);
+
+  // The fallback decoder should be recorded as the last one; even if we end up
+  // returning to the initial decoder. E.g., GpuVideoDecoder ->
+  // FFmpegVideoDecoder -> GpuVideoDecoder.
+  const std::string kFallbackAudioDecoderName2 = "ThirdAudioDecoder";
+  const std::string kFallbackVideoDecoderName2 = "ThirdVideoDecoder";
+  wtr_->UpdateAudioDecoderName(kFallbackAudioDecoderName2);
+  wtr_->UpdateVideoDecoderName(kFallbackVideoDecoderName2);
+  wtr_->UpdateAudioDecoderName(kAudioDecoderName);
+  wtr_->UpdateVideoDecoderName(kVideoDecoderName);
+
+  wtr_.reset();
+  base::RunLoop().RunUntilIdle();
+
+  const auto& entries = test_recorder_->GetEntriesByName(UkmEntry::kEntryName);
+  EXPECT_EQ(1u, entries.size());
+  for (const auto* entry : entries) {
+    test_recorder_->ExpectEntrySourceHasUrl(entry, GURL(kTestOrigin));
+    EXPECT_UKM(UkmEntry::kInitialAudioDecoderNameHashName,
+               base::PersistentHash(kAudioDecoderName));
+    EXPECT_UKM(UkmEntry::kInitialVideoDecoderNameHashName,
+               base::PersistentHash(kVideoDecoderName));
+    EXPECT_UKM(UkmEntry::kFallbackAudioDecoderNameHashName,
+               base::PersistentHash(kFallbackAudioDecoderName2));
+    EXPECT_UKM(UkmEntry::kFallbackVideoDecoderNameHashName,
+               base::PersistentHash(kFallbackVideoDecoderName2));
+  }
+}
+
 #undef EXPECT_UKM
 #undef EXPECT_NO_UKM
+
+TEST_F(WatchTimeRecorderTest, DISABLED_PrintExpectedDecoderNameHashes) {
+  const std::string kDecoderNames[] = {
+      "FFmpegAudioDecoder", "FFmpegVideoDecoder", "GpuVideoDecoder",
+      "MojoVideoDecoder",   "MojoAudioDecoder",   "VpxVideoDecoder",
+      "AomVideoDecoder"};
+  printf("%18s = 0\n", "None");
+  for (const auto& name : kDecoderNames)
+    printf("%18s = %d\n", name.c_str(), base::PersistentHash(name));
+}
 
 }  // namespace media
