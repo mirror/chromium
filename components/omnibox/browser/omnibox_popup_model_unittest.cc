@@ -34,6 +34,7 @@ class TestOmniboxPopupView : public OmniboxPopupView {
   gfx::Rect GetTargetBounds() override { return gfx::Rect(); }
   void PaintUpdatesNow() override {}
   void OnDragCanceled() override {}
+  void GetAccessibleNodeData(ui::AXNodeData*) override;
 };
 
 }  // namespace
