@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "309e5ebd_e0652dba",
+        "filename": "chrome/browser/resources/print_preview/new/dpi_settings.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-09T02:20:21Z",
+      "side": 1,
+      "message": "Nit: Remove blank line.",
+      "revId": "8619b9ded19a0090d5d1042ac9b219f905c129cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd00ebf6_acbb6995",
+        "filename": "chrome/browser/resources/print_preview/new/settings_select.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-09T02:20:21Z",
+      "side": 1,
+      "message": "Nit: Indent off by +1.",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 7
+      },
+      "revId": "8619b9ded19a0090d5d1042ac9b219f905c129cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
