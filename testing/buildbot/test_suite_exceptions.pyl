@@ -335,6 +335,8 @@
     'remove_from': [
       # TODO(kbr): on chromium.android this removal looks like an accident.
       'Marshmallow Phone Tester (rel)',
+      # TODO(dpranke): on chromium.swarm, this is probably also an accident.
+      'Android N5X Swarm',
     ],
     'modifications': {
       'KitKat Phone Tester (dbg)': {
@@ -656,6 +658,12 @@
        'Fuchsia x64 SANDBOX',
     ],
     'modifications': {
+      # TODO(dpranke) - on chromium.swarm, remove this exception.
+      'Android N5X Swarm': {
+        'swarming': {
+          'shards': 4,
+        },
+      },
       'KitKat Tablet Tester': {
         'swarming': {
           'hard_timeout': 1200,
@@ -1968,6 +1976,12 @@
           'shards': 2,
         },
       },
+      # on chromium.swarm, remove this exception.
+      'Android N5X Swarm': {
+        'swarming': {
+          'shards': 8,
+        },
+      },
     },
   },
   'url_unittests': {
@@ -2224,6 +2238,9 @@
       'KitKat Phone Tester (rel)',
       'KitKat Tablet Tester',
       'Nougat Phone Tester',
+      # On chromium.swarm, this should possibly be being run (or removed
+      # from Android N5X Swarm).
+      'Android N5 Swarm',
     ],
     'modifications': {
       'Lollipop Phone Tester': {
