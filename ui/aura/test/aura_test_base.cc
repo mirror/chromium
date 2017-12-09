@@ -81,8 +81,12 @@ void AuraTestBase::SetUp() {
   ui::ContextFactory* context_factory = nullptr;
   ui::ContextFactoryPrivate* context_factory_private = nullptr;
   if (use_mus_) {
-    mus_context_factory_ = std::make_unique<AuraTestContextFactory>();
+    frame_sink_manager_impl_.SetLocalClient(&host_frame_sink_manager_);
+    host_frame_sink_manager_.SetLocalManager(&frame_sink_manager_impl_);
+    mus_context_factory_ = std::make_unique<AuraTestContextFactory>(
+        &frame_sink_manager_impl_, &host_frame_sink_manager_);
     context_factory = mus_context_factory_.get();
+    context_factory_private = mus_context_factory_.get();
   } else {
     const bool enable_pixel_output = false;
     ui::InitializeContextFactoryForTests(enable_pixel_output, &context_factory,

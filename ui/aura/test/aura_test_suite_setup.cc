@@ -67,9 +67,13 @@ void AuraTestSuiteSetup::ConfigureMus() {
 #if defined(USE_OZONE)
   input_device_client_ = std::make_unique<TestInputDeviceClient>();
 #endif
-  context_factory_ = std::make_unique<test::AuraTestContextFactory>();
+
+  frame_sink_manager_impl_.SetLocalClient(&host_frame_sink_manager_);
+  host_frame_sink_manager_.SetLocalManager(&frame_sink_manager_impl_);
+  context_factory_ = std::make_unique<test::AuraTestContextFactory>(
+      &frame_sink_manager_impl_, &host_frame_sink_manager_);
   env_->set_context_factory(context_factory_.get());
-  env_->set_context_factory_private(nullptr);
+  env_->set_context_factory_private(context_factory_.get());
 }
 #endif
 

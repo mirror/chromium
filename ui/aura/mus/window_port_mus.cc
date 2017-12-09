@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "components/viz/client/local_surface_id_provider.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/transient_window_client.h"
 #include "ui/aura/env.h"
@@ -37,7 +38,9 @@ WindowMus* WindowMus::Get(Window* window) {
 
 WindowPortMus::WindowPortMus(WindowTreeClient* client,
                              WindowMusType window_mus_type)
-    : WindowMus(window_mus_type), window_tree_client_(client) {}
+    : WindowMus(window_mus_type),
+      window_tree_client_(client),
+      weak_ptr_factory_(this) {}
 
 WindowPortMus::~WindowPortMus() {
   client_surface_embedder_.reset();
@@ -553,25 +556,56 @@ std::unique_ptr<cc::LayerTreeFrameSink>
 WindowPortMus::CreateLayerTreeFrameSink() {
   DCHECK_EQ(window_mus_type(), WindowMusType::LOCAL);
   DCHECK(!local_layer_tree_frame_sink_);
-  auto frame_sink = RequestLayerTreeFrameSink(
-      nullptr,
-      aura::Env::GetInstance()->context_factory()->GetGpuMemoryBufferManager());
-  local_layer_tree_frame_sink_ = frame_sink->GetWeakPtr();
-  auto size_in_pixel =
-      gfx::ConvertSizeToPixel(GetDeviceScaleFactor(), window_->bounds().size());
-  // Make sure |local_surface_id_| and |last_surface_size_in_pixels_| are
-  // correct for the new created |frame_sink|.
-  GetOrAllocateLocalSurfaceId(size_in_pixel);
-  return std::move(frame_sink);
+  if (switches::IsMusHostingViz()) {
+    auto frame_sink =
+        RequestLayerTreeFrameSink(nullptr, aura::Env::GetInstance()
+                                               ->context_factory()
+                                               ->GetGpuMemoryBufferManager());
+    local_layer_tree_frame_sink_ = frame_sink->GetWeakPtr();
+    auto size_in_pixel = gfx::ConvertSizeToPixel(GetDeviceScaleFactor(),
+                                                 window_->bounds().size());
+    // Make sure |local_surface_id_| and |last_surface_size_in_pixels_| are
+    // correct for the new created |frame_sink|.
+    GetOrAllocateLocalSurfaceId(size_in_pixel);
+    return std::move(frame_sink);
+  } else {
+    auto* context_factory_private =
+        aura::Env::GetInstance()->context_factory_private();
+    auto frame_sink_id = GetFrameSinkId();
+    auto frame_sink = std::make_unique<LayerTreeFrameSinkLocal>(
+        frame_sink_id, context_factory_private->GetHostFrameSinkManager(),
+        window_->GetName());
+    frame_sink->SetSurfaceChangedCallback(base::BindRepeating(
+        &WindowPortMus::OnSurfaceChanged, weak_ptr_factory_.GetWeakPtr()));
+    if (window_->GetRootWindow())
+      window_->layer()->GetCompositor()->AddFrameSink(frame_sink_id);
+    local_layer_tree_frame_sink_ = frame_sink->GetWeakPtr();
+    auto size_in_pixel = gfx::ConvertSizeToPixel(GetDeviceScaleFactor(),
+                                                 window_->bounds().size());
+    // Make sure |local_surface_id_| and |last_surface_size_in_pixels_| are
+    // correct for the new created |frame_sink|.
+    GetOrAllocateLocalSurfaceId(size_in_pixel);
+    return std::move(frame_sink);
+  }
 }
 
 viz::SurfaceId WindowPortMus::GetSurfaceId() const {
   return viz::SurfaceId(window_->embed_frame_sink_id(), local_surface_id_);
 }
 
-void WindowPortMus::OnWindowAddedToRootWindow() {}
+void WindowPortMus::OnWindowAddedToRootWindow() {
+  if (switches::IsMusHostingViz())
+    return;
+  if (local_layer_tree_frame_sink_)
+    window_->layer()->GetCompositor()->AddFrameSink(GetFrameSinkId());
+}
 
-void WindowPortMus::OnWillRemoveWindowFromRootWindow() {}
+void WindowPortMus::OnWillRemoveWindowFromRootWindow() {
+  if (switches::IsMusHostingViz())
+    return;
+  if (local_layer_tree_frame_sink_)
+    window_->layer()->GetCompositor()->RemoveFrameSink(GetFrameSinkId());
+}
 
 void WindowPortMus::OnEventTargetingPolicyChanged() {
   SetEventTargetingPolicy(window_->event_targeting_policy());
@@ -615,6 +649,21 @@ void WindowPortMus::UpdateClientSurfaceEmbedder() {
 
   client_surface_embedder_->SetPrimarySurfaceId(primary_surface_id_);
   client_surface_embedder_->SetFallbackSurfaceInfo(fallback_surface_info_);
+}
+
+void WindowPortMus::OnSurfaceChanged(const viz::SurfaceInfo& surface_info) {
+  DCHECK(!switches::IsMusHostingViz());
+  DCHECK_EQ(surface_info.id().frame_sink_id(), GetFrameSinkId());
+  DCHECK_EQ(surface_info.id().local_surface_id(), local_surface_id_);
+  scoped_refptr<viz::SurfaceReferenceFactory> reference_factory =
+      aura::Env::GetInstance()
+          ->context_factory_private()
+          ->GetFrameSinkManager()
+          ->surface_manager()
+          ->reference_factory();
+  window_->layer()->SetShowPrimarySurface(
+      surface_info.id(), window_->bounds().size(), reference_factory);
+  window_->layer()->SetFallbackSurfaceId(surface_info.id());
 }
 
 }  // namespace aura

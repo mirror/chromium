@@ -11,6 +11,8 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/test/scoped_task_environment.h"
+#include "components/viz/host/host_frame_sink_manager.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/aura/mus/property_converter.h"
 #include "ui/aura/mus/window_manager_delegate.h"
@@ -171,6 +173,8 @@ class AuraTestBase : public testing::Test,
   bool teardown_called_ = false;
   PropertyConverter property_converter_;
   std::unique_ptr<AuraTestHelper> helper_;
+  viz::FrameSinkManagerImpl frame_sink_manager_impl_;
+  viz::HostFrameSinkManager host_frame_sink_manager_;
   std::unique_ptr<AuraTestContextFactory> mus_context_factory_;
   std::vector<std::unique_ptr<WindowTreeHostMus>> window_tree_hosts_;
   std::vector<std::unique_ptr<ui::PointerEvent>> observed_pointer_events_;
