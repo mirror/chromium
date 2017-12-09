@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "111532df_80bc8f20",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-09T00:22:31Z",
+      "side": 1,
+      "message": "why is this needed?\nThe callback passed to IsReadyForPassword should keep a reference to |this|, thus keeping it alive.",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 8
+      },
+      "revId": "6f5fe2c4d2a1fe42df9384fa5685d0df623d08c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
