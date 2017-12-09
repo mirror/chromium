@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18ea330e_3e16aa94",
+        "filename": "components/safe_browsing/base_resource_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-12-09T01:20:55Z",
+      "side": 1,
+      "message": "A thought: I think this isn\u0027t just when it\u0027s \u0027safe\u0027.  Maybe it should be -- that is, maybe we shouldn\u0027t record it if there\u0027s an interstitial. It hasn\u0027t mattered too much in the past, since interstitials are rare, but it would effect the vvvery high percentiles.",
+      "revId": "9bc4cee947f0a8b88d3217242cb10ea862252f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e089f98_d4a7780c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 72383,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-12-09T01:20:55Z",
+      "side": 1,
+      "message": "nit: Add \"This is the sum of .MainFrame and .Subresource\"",
+      "revId": "9bc4cee947f0a8b88d3217242cb10ea862252f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
