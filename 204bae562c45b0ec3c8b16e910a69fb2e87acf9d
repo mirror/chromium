@@ -33,6 +33,24 @@
       "revId": "204bae562c45b0ec3c8b16e910a69fb2e87acf9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0ae97d_6f709fd5",
+        "filename": "chrome/browser/extensions/data_deleter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-09T20:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d61c9edf_04b346ec",
+      "revId": "204bae562c45b0ec3c8b16e910a69fb2e87acf9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
