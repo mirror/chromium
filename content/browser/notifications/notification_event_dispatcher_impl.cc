@@ -49,7 +49,7 @@ void NotificationEventFinished(
 // ServiceWorkerStatusCode result. Will call NotificationEventFinished with a
 // PersistentNotificationStatus derived from the service worker status.
 void ServiceWorkerNotificationEventFinished(
-    const NotificationDispatchCompleteCallback& dispatch_complete_callback,
+    NotificationDispatchCompleteCallback const* dispatch_complete_callback,
     ServiceWorkerStatusCode service_worker_status) {
 #if defined(OS_ANDROID)
   // This LOG(INFO) deliberately exists to help track down the cause of
@@ -87,7 +87,7 @@ void ServiceWorkerNotificationEventFinished(
       status = PERSISTENT_NOTIFICATION_STATUS_SERVICE_WORKER_ERROR;
       break;
   }
-  NotificationEventFinished(dispatch_complete_callback, status);
+  NotificationEventFinished(*dispatch_complete_callback, status);
 }
 
 // Dispatches the given notification action event on
@@ -209,10 +209,10 @@ void DispatchNotificationClickEventOnWorker(
     const NotificationDatabaseData& notification_database_data,
     const base::Optional<int>& action_index,
     const base::Optional<base::string16>& reply,
-    const ServiceWorkerVersion::LegacyStatusCallback& callback) {
+    ServiceWorkerVersion::StatusCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   int request_id = service_worker->StartRequest(
-      ServiceWorkerMetrics::EventType::NOTIFICATION_CLICK, callback);
+      ServiceWorkerMetrics::EventType::NOTIFICATION_CLICK, std::move(callback));
 
   int action_index_int = -1 /* no value */;
   if (action_index.has_value())
@@ -232,15 +232,16 @@ void DoDispatchNotificationClickEvent(
     const scoped_refptr<PlatformNotificationContext>& notification_context,
     const ServiceWorkerRegistration* service_worker_registration,
     const NotificationDatabaseData& notification_database_data) {
-  ServiceWorkerVersion::LegacyStatusCallback status_callback = base::Bind(
-      &ServiceWorkerNotificationEventFinished, dispatch_complete_callback);
   service_worker_registration->active_version()->RunAfterStartWorker(
       ServiceWorkerMetrics::EventType::NOTIFICATION_CLICK,
       base::BindOnce(
           &DispatchNotificationClickEventOnWorker,
           base::WrapRefCounted(service_worker_registration->active_version()),
-          notification_database_data, action_index, reply, status_callback),
-      status_callback);
+          notification_database_data, action_index, reply,
+          base::BindOnce(&ServiceWorkerNotificationEventFinished,
+                         &dispatch_complete_callback)),
+      base::BindOnce(&ServiceWorkerNotificationEventFinished,
+                     &dispatch_complete_callback));
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +253,7 @@ void OnPersistentNotificationDataDeleted(
     const NotificationDispatchCompleteCallback& dispatch_complete_callback,
     bool success) {
   if (service_worker_status != SERVICE_WORKER_OK) {
-    ServiceWorkerNotificationEventFinished(dispatch_complete_callback,
+    ServiceWorkerNotificationEventFinished(&dispatch_complete_callback,
                                            service_worker_status);
     return;
   }
@@ -268,12 +269,12 @@ void DeleteNotificationDataFromDatabase(
     const std::string& notification_id,
     const GURL& origin,
     const scoped_refptr<PlatformNotificationContext>& notification_context,
-    const NotificationDispatchCompleteCallback& dispatch_complete_callback,
+    NotificationDispatchCompleteCallback const* dispatch_complete_callback,
     ServiceWorkerStatusCode status_code) {
   notification_context->DeleteNotificationData(
       notification_id, origin,
       base::Bind(&OnPersistentNotificationDataDeleted, status_code,
-                 dispatch_complete_callback));
+                 *dispatch_complete_callback));
 }
 
 // Dispatches the notificationclose event on |service_worker|. Must be called on
@@ -281,10 +282,10 @@ void DeleteNotificationDataFromDatabase(
 void DispatchNotificationCloseEventOnWorker(
     const scoped_refptr<ServiceWorkerVersion>& service_worker,
     const NotificationDatabaseData& notification_database_data,
-    const ServiceWorkerVersion::LegacyStatusCallback& callback) {
+    ServiceWorkerVersion::StatusCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   int request_id = service_worker->StartRequest(
-      ServiceWorkerMetrics::EventType::NOTIFICATION_CLOSE, callback);
+      ServiceWorkerMetrics::EventType::NOTIFICATION_CLOSE, std::move(callback));
 
   service_worker->event_dispatcher()->DispatchNotificationCloseEvent(
       notification_database_data.notification_id,
@@ -292,8 +293,7 @@ void DispatchNotificationCloseEventOnWorker(
       service_worker->CreateSimpleEventCallback(request_id));
 }
 
-// Actually dispatches the notification close event on the service worker
-// registration.
+// Dispatches the notification close event on the service worker registration.
 void DoDispatchNotificationCloseEvent(
     const std::string& notification_id,
     bool by_user,
@@ -301,20 +301,24 @@ void DoDispatchNotificationCloseEvent(
     const scoped_refptr<PlatformNotificationContext>& notification_context,
     const ServiceWorkerRegistration* service_worker_registration,
     const NotificationDatabaseData& notification_database_data) {
-  const ServiceWorkerVersion::LegacyStatusCallback dispatch_event_callback =
-      base::Bind(&DeleteNotificationDataFromDatabase, notification_id,
-                 notification_database_data.origin, notification_context,
-                 dispatch_complete_callback);
   if (by_user) {
     service_worker_registration->active_version()->RunAfterStartWorker(
         ServiceWorkerMetrics::EventType::NOTIFICATION_CLOSE,
         base::BindOnce(
             &DispatchNotificationCloseEventOnWorker,
             base::WrapRefCounted(service_worker_registration->active_version()),
-            notification_database_data, dispatch_event_callback),
-        dispatch_event_callback);
+            notification_database_data,
+            base::BindOnce(&DeleteNotificationDataFromDatabase, notification_id,
+                           notification_database_data.origin,
+                           notification_context, &dispatch_complete_callback)),
+        base::BindOnce(&DeleteNotificationDataFromDatabase, notification_id,
+                       notification_database_data.origin, notification_context,
+                       &dispatch_complete_callback));
   } else {
-    dispatch_event_callback.Run(ServiceWorkerStatusCode::SERVICE_WORKER_OK);
+    DeleteNotificationDataFromDatabase(
+        notification_id, notification_database_data.origin,
+        notification_context, &dispatch_complete_callback,
+        ServiceWorkerStatusCode::SERVICE_WORKER_OK);
   }
 }
 
