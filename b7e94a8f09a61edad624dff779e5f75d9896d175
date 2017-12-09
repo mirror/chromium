@@ -237,6 +237,30 @@
       "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3842e189_fd2851b3",
+        "filename": "ui/views/widget/root_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-12-09T00:43:13Z",
+      "side": 1,
+      "message": "Any window that doesn\u0027t use system titlebars needs this to work through their own window movement/resizing. The only non-browser window I can think of is the task manager, and that doesn\u0027t use system titlebars. If you can\u0027t think of any other counterexamples, go for it.",
+      "parentUuid": "26de63cd_8b1b1238",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 80
+      },
+      "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
