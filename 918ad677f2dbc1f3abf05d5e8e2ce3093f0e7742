@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cd7af38_5b9cbb7d",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "nit: s/import/include",
+      "range": {
+        "startLine": 17,
+        "startChar": 17,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb0c5a49_6cb7767c",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "Can we explain in the comments why the code below is necessary?",
+      "range": {
+        "startLine": 419,
+        "startChar": 18,
+        "endLine": 419,
+        "endChar": 19
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5093b0a1_bfd969b4",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "This will not run in production code.",
+      "range": {
+        "startLine": 422,
+        "startChar": 11,
+        "endLine": 422,
+        "endChar": 27
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0b5ac3_fb574ded",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "nit: s/import/include",
+      "range": {
+        "startLine": 16,
+        "startChar": 28,
+        "endLine": 16,
+        "endChar": 57
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde05c22_5fb8f0c2",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "Would it be useful to explain why someone want to load restore_session.html?",
+      "range": {
+        "startLine": 19,
+        "startChar": 50,
+        "endLine": 19,
+        "endChar": 65
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afbacc1c_e32a2b31",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "nit: s/import/include",
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4672cd64_81f82ca5",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "In Chromium we use anonymous namespace instead of statics.",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 12
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb9199e_2556bd8e",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "This one is used in tests. Can we make this public?\n\nFrom Unit testing best practices:\n\"Though increasing visibility should be avoided for methods, it\u0027s generally fine on constants to help keep tests in sync as those constants change. \"\n\nhttp://go/unit-test-practices#public-apis",
+      "range": {
+        "startLine": 16,
+        "startChar": 18,
+        "endLine": 16,
+        "endChar": 36
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdd5d0e_a76746a7",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "Can we use SchemeHostPort or GURL replacement API for this?",
+      "range": {
+        "startLine": 24,
+        "startChar": 49,
+        "endLine": 24,
+        "endChar": 60
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc36e7e_c28e88fe",
+        "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "nit: std::make_unique\n\nAnd no need for ptr_util.h include",
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a88927_8290cbe2",
+        "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-09T00:57:17Z",
+      "side": 1,
+      "message": "nit: This does not test cases when IsRestoreSessionUrl return true. SO maybe we should rename the method?",
+      "range": {
+        "startLine": 45,
+        "startChar": 38,
+        "endLine": 45,
+        "endChar": 57
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
