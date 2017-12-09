@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb1096c_fb2848cd",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "My version checking logic is:\n\nThe sdkmanager --list output is with \u0027Installed packages\u0027 at first section, example:\n\nInstalled packages:\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d] 100% Computing updates...             \n  Path                        | Version | Description                                       |\n  -------                     | ------- | -------                                           |\n  build-tools;27.0.1          | 27.0.1  | Android SDK Build-Tools 27.0.1                    |     \n  emulator                    | 26.0.3  | Android Emulator                                  | \n  extras;android;m2repository | 41.0.0  | Android Support Repository, rev 41                | \n  platform-tools              | 26.0.2  | Android SDK Platform-Tools 26.0.2                 | \n  platforms;android-27        | 1       | Android SDK Platform 27                           | \n  sources;android-25          | 1       | Sources for Android 25                            | \n  tools                       | 26.1.1  | Android SDK Tools                                 | \n\nAvailable Packages:\n....\n\n\nWhen meets a line contains the package name, grap the version between the first and second \u0027|\u0027.\n\nThe first section ends with a new line, so the checking loop ends when reaches a \u0027\\n\u0027.",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca45d0d5_0289de60",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "This change basically is for \u0027platforms;android-27\u0027, that CIPD version is \u0027android-27\u0027, but config.gni only needs \"27\" for default_android_sdk_version.",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8a638e_8c1e3a5d",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Checking all jar file names in tools/lib. Whichever name matches \u0027-...-dev\u0027, use it as version instead. Otherwise just use what found in sdkmanager --list.",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

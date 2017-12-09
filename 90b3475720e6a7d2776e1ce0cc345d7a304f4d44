@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e8508af_692a3424",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fca1e66c_588b23ac",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72ddf233_691e1f46",
         "filename": "tools/android/sdk_update_script.py",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-07T05:01:37Z",
       "side": 1,
       "message": "This would conceivably change once we rehome the SDK, right?",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6d3e5b_de2e9ebd",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t realize the \u0027sdkmanager\u0027 path would be changed after rehome SDK...\nYes you are right, I think the path should be changed as long as gclient hooks is able to CIPD download sdk.\n\nI can add a \u0027TODO\u0027 on it.",
+      "parentUuid": "72ddf233_691e1f46",
       "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1f83a8a9_c3f5b8e0",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3977518c_31e326f3",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4190b799_0c61bbcf",
         "filename": "tools/android/sdk_update_script.py",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65594e6b_6c18d6e0",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4190b799_0c61bbcf",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e62d8612_17eecde6",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Done. Changed \u0027upload_sdk_cmd\u0027 below too.",
+      "parentUuid": "152fffbf_b401dac9",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb035daa_7056c749",
         "filename": "tools/android/sdk_update_script.py",
         "patchSetId": 8
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6d9d05ac_47777fb4",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb035daa_7056c749",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "462de38f_d6271ef9",
         "filename": "tools/android/sdk_update_script.py",
         "patchSetId": 8
@@ -118,6 +226,24 @@
       "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a040c777_fa8d44c3",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "462de38f_d6271ef9",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +278,24 @@
       "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10ff44a_8c282537",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c8acf56_40e34711",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "b5cb3e23_ec87e137",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "This is a good example! Will refactor the pattern following that format.",
+      "parentUuid": "106c882a_26068344",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "957907a8_9392f078",
         "filename": "tools/android/sdk_update_script.py",
         "patchSetId": 8
@@ -224,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "f21c8b26_ef19b84c",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Done.\nCheck all file names in tools/lib, if any file with pattern \u0027-...-dev\u0027, change version of \u0027tools\u0027 to it.",
+      "parentUuid": "957907a8_9392f078",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08403fc1_ebb9d88a",
         "filename": "tools/android/sdk_update_script.py",
         "patchSetId": 8
@@ -235,6 +415,24 @@
       "writtenOn": "2017-12-07T05:01:37Z",
       "side": 1,
       "message": "To clarify: as written, a user updating the SDK would do:\n\n  $ sdk_update_script.py download\n  $ sdk_update_script.py package -p build-tools --version 27.0.1\n  $ sdk_update_script.py package -p platforms --version 27\n  $ ...\n\n?",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4158e33_e11a8563",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "Correct, basically user would update sdk by those commands. And both \u0027download\u0027 and \u0027package\u0027 functions are able to explicitly specify single package, or work on the set of default packages.\n\nI will write docstring at head of the file for instruction.",
+      "parentUuid": "08403fc1_ebb9d88a",
       "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -270,6 +468,24 @@
       "side": 1,
       "message": "hmm... we have a default set of packages that we download; what prevents us from having the same set of packages as the default here?",
       "parentUuid": "14ed1b4b_fb1b8d90",
+      "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07221226_77551aca",
+        "filename": "tools/android/sdk_update_script.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-09T00:29:10Z",
+      "side": 1,
+      "message": "It makes sense to package the default packages as \u0027download` here. To upload the packages without \u0027;version\u0027 in name, need to parse and fetch their versions from Installed packages via `sdkmanager --list`.\n\nWith the way of checking sdkmanager list, I think it\u0027s not required to have \u0027--version\u0027.",
+      "parentUuid": "54406464_e9c5e23e",
       "revId": "90b3475720e6a7d2776e1ce0cc345d7a304f4d44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
