@@ -3059,15 +3059,15 @@ class LayerTreeHostInvalidLocalSurfaceIdDefersCommit
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
 
   void AllowCommits() override {
-    local_surface_id_ = allocator_.GenerateId();
-    PostSetLocalSurfaceIdToMainThread(local_surface_id_);
+    PostSetLocalSurfaceIdToMainThread(allocator_.GenerateId());
   }
 
-  bool IsCommitAllowed() const override { return local_surface_id_.is_valid(); }
+  bool IsCommitAllowed() const override {
+    return allocator_.LastGeneratedId().is_valid();
+  }
 
  private:
   viz::ParentLocalSurfaceIdAllocator allocator_;
-  viz::LocalSurfaceId local_surface_id_;
 };
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostInvalidLocalSurfaceIdDefersCommit);
