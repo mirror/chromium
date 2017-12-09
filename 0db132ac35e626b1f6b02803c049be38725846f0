@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c29e49da_c7253df3",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-09T01:26:23Z",
+      "side": 1,
+      "message": "nit:\nauto result \u003d std::make_unique\u003cbase::DictionaryValue\u003e();\n\n(here and in Run() )",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 75
+      },
+      "revId": "0db132ac35e626b1f6b02803c049be38725846f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05dfb4d4_eee272fe",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-09T01:26:23Z",
+      "side": 1,
+      "message": "can you ifdef the whole method rather than implementation only.",
+      "revId": "0db132ac35e626b1f6b02803c049be38725846f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
