@@ -258,6 +258,30 @@
       "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9701903_96d88782",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-09T00:39:22Z",
+      "side": 1,
+      "message": "I see, thanks for the explanation!",
+      "parentUuid": "a485e1a2_1c1991d0",
+      "range": {
+        "startLine": 751,
+        "startChar": 19,
+        "endLine": 751,
+        "endChar": 28
+      },
+      "revId": "fae2c7822e1fbe13754bf4769a70112ebeb4f656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
