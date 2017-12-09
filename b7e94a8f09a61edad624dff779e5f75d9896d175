@@ -213,6 +213,30 @@
       "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26de63cd_8b1b1238",
+        "filename": "ui/views/widget/root_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-09T00:32:26Z",
+      "side": 1,
+      "message": "Are there any other types of windows besides browser windows that need the drag handler?  If not, I think moving the drag code into DesktopLinuxBrowserFrameView makes sense.\n\nIf there are, could make X11WindowEventFilter early-return if the window is a browser window and handle the drag in DesktopLinuxBrowserFrameView anyway?",
+      "parentUuid": "89b3041d_a97708f6",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 374,
+        "endChar": 80
+      },
+      "revId": "b7e94a8f09a61edad624dff779e5f75d9896d175",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
