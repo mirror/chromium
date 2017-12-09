@@ -16,6 +16,24 @@
       "revId": "b3854cebd8f9972c5d94d0ad2160e9ce9ad931ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09459b7e_7cb76a75",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-09T01:00:27Z",
+      "side": 1,
+      "message": "Good suggestion. Done",
+      "parentUuid": "3c7438a1_3f4d49c5",
+      "revId": "b3854cebd8f9972c5d94d0ad2160e9ce9ad931ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
