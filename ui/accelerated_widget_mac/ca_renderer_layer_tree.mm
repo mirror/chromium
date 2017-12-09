@@ -692,6 +692,35 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
   }
   if (update_rect) {
     gfx::RectF dip_rect = gfx::RectF(rect);
+
+    // If the layer's aspect ratio could be made to match the video's aspect
+    // ratio by expanding either dimension by a fractional pixel, do so. The
+    // mismatch probably resulted from rounding the dimensions to integers.
+    // This works around a macOS 10.13 bug which breaks detached fullscreen
+    // playback of slightly distorted videos (https://crbug.com/792632).
+    if (use_av_layer) {
+      const auto av_rect(
+          cv_pixel_buffer ? gfx::RectF(CVPixelBufferGetWidth(cv_pixel_buffer),
+                                       CVPixelBufferGetHeight(cv_pixel_buffer))
+                          : gfx::RectF(IOSurfaceGetWidth(io_surface),
+                                       IOSurfaceGetHeight(io_surface)));
+      const CGFloat av_ratio = av_rect.width() / av_rect.height();
+      const CGFloat layer_ratio = dip_rect.width() / dip_rect.height();
+      const CGFloat ratio_error = av_ratio / layer_ratio;
+
+      if (ratio_error > 1) {
+        const float width_correction =
+            dip_rect.width() * ratio_error - dip_rect.width();
+        if (width_correction < 1)
+          dip_rect.Inset(-width_correction / 2, 0);
+      } else if (ratio_error < 1) {
+        const float height_correction =
+            dip_rect.height() / ratio_error - dip_rect.height();
+        if (height_correction < 1)
+          dip_rect.Inset(0, -height_correction / 2);
+      }
+    }
+
     dip_rect.Scale(1 / scale_factor);
     [ca_layer setPosition:CGPointMake(dip_rect.x(), dip_rect.y())];
     [ca_layer setBounds:CGRectMake(0, 0, dip_rect.width(), dip_rect.height())];
