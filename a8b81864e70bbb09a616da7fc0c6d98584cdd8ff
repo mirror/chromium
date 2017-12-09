@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78b4f71a_83b1a68a",
+        "filename": "luci-milo-dev.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-09T00:56:05Z",
+      "side": 1,
+      "message": "Changing this file to keep it up-to-date in development version of LUCI UI helps foundation team debug issues.",
+      "revId": "a8b81864e70bbb09a616da7fc0c6d98584cdd8ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "598d6149_c5e73ccb",
+        "filename": "luci-milo-dev.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-09T00:56:05Z",
+      "side": 1,
+      "message": "two \"name: ...\" blocks instruct LUCI UI (aka luci-milo) to show builds from either builder, however only **production** (that is not experimental) builds will be shown. This allows for smooth migration from one to another my means of flipping experimental flag.",
+      "revId": "a8b81864e70bbb09a616da7fc0c6d98584cdd8ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0a23986_271a1d2d",
+        "filename": "luci-milo-dev.cfg",
+        "patchSetId": 3
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-09T00:56:05Z",
+      "side": 1,
+      "message": "for future migrations, you don\u0027t need to set up a new console, you can just add your builder(s) below.",
+      "range": {
+        "startLine": 1448,
+        "startChar": 0,
+        "endLine": 1455,
+        "endChar": 35
+      },
+      "revId": "a8b81864e70bbb09a616da7fc0c6d98584cdd8ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
