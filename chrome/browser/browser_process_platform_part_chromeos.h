@@ -118,6 +118,8 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
 
   ui::InputDeviceControllerClient* GetInputDeviceControllerClient();
 
+  void StartCommitPendingWriteOnExit(base::OnceClosure on_finish);
+
  private:
   void CreateProfileHelper();
 
