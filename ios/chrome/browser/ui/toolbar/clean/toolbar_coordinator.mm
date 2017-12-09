@@ -569,13 +569,16 @@
             animations:^{
             }];
 
-  [self.locationBarView addExpandOmniboxAnimations:animator];
-  [self.toolbarViewController addToolbarExpansionAnimations:animator];
-  [animator startAnimation];
-
-  if (!animated) {
-    [animator stopAnimation:NO];
-    [animator finishAnimationAtPosition:UIViewAnimatingPositionEnd];
+  if (animated) {
+    [self.locationBarView addExpandOmniboxAnimations:animator];
+    [self.toolbarViewController addToolbarExpansionAnimations:animator
+                                         forCompleteAnimation:YES];
+    [animator startAnimation];
+  } else {
+    [self.locationBarView addExpandOmniboxAnimations:animator];
+    [self.toolbarViewController addToolbarExpansionAnimations:animator
+                                         forCompleteAnimation:NO];
+    [animator startAnimation];
   }
 }
 
