@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "450bacfe_d6a89759",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-09T01:30:52Z",
+      "side": 1,
+      "message": "Probably you do not need this boolean any more by doing this:\n  const bool need_start_processing \u003d pending_read_cbs_.empty();\n  pending_read_cbs_.push_back(std::move(read_cb));\n  pending_buffers_.push_back(std::move(media_buffer));\n\n  if (need_start_processing)\n    ProcessPendingReads();",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 12
+      },
+      "revId": "29c74b657ec1dbc92ffb0456339a12b744178b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81cee3d4_9a911328",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-09T01:30:52Z",
+      "side": 1,
+      "message": "nit: Ln183-194 might be a little bit simpler by the following:\nif (buffer-\u003eend_of_stream() || !buffer-\u003edata_size()) {\n  CompleteCurrentRead();\n  continue;\n}\nuint32_t buffer_size \u003d base::checked_cast\u003cuint32_t\u003e(buffer-\u003edata_size());",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 5
+      },
+      "revId": "29c74b657ec1dbc92ffb0456339a12b744178b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b790da5_368822ef",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-09T01:30:52Z",
+      "side": 1,
+      "message": "Similarly, this might be able to be removed.",
+      "range": {
+        "startLine": 314,
+        "startChar": 7,
+        "endLine": 314,
+        "endChar": 13
+      },
+      "revId": "29c74b657ec1dbc92ffb0456339a12b744178b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
