@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b9c2508_6129250a",
+        "filename": "content/browser/devtools/protocol/target_auto_attacher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-09T00:24:48Z",
+      "side": 1,
+      "message": "That\u0027s something new!",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c399fd_00bf5008",
+        "filename": "content/browser/devtools/protocol/target_auto_attacher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-09T00:24:48Z",
+      "side": 1,
+      "message": "Use stl algorithms!",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9680c2_4077664e",
+        "filename": "content/browser/devtools/protocol/target_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-09T00:24:48Z",
+      "side": 1,
+      "message": "Comment that this is owned by the navigation handle.",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85abb060_f1de547e",
+        "filename": "content/browser/devtools/protocol/target_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-09T00:24:48Z",
+      "side": 1,
+      "message": "I\u0027d like to see more symmetry here.",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3f3d43_105730d1",
+        "filename": "content/browser/devtools/protocol/target_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-09T00:24:48Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cThrottle\u003e throttle \u003d\n      std::make_unique\u003cThrottle\u003e(weak_factory_.GetWeakPtr(), navigation_handle);\n  throttles_.insert(throttle.get());\n  return std::move(throttle);",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c791fdba_c18177ae",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-09T00:24:48Z",
+      "side": 1,
+      "message": "How about a 4-10 line comment here?",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff056cb3_4508ebc2",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-09T00:24:48Z",
+      "side": 1,
+      "message": "Let\u0027s move this check into CreateThrottleForNavigation and use RFH in a definitive state.",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a090068c_6b53bb3b",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-09T00:24:48Z",
+      "side": 1,
+      "message": "GetOrCreateForDangling",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22955d39_bbfc743e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/NetworkLog.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-09T00:24:48Z",
+      "side": 1,
+      "message": "We need to go over these.",
+      "revId": "31d0eef464356ef6c4c6daf09711f31626daf1e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
