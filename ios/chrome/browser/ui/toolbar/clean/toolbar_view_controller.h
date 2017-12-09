@@ -48,7 +48,12 @@
 
 // Adds the toolbar expanded state animations to |animator|, and changes the
 // toolbar constraints in preparation for the animation.
-- (void)addToolbarExpansionAnimations:(UIViewPropertyAnimator*)animator;
+// If |completeAnimation| YES, the Toolbar will animate its buttons fading out,
+// the locationBarContainer expanding and the contract Button fading in.
+// If |completeAnimation| NO, only the contract Button fading in will be
+// animated.
+- (void)addToolbarExpansionAnimations:(UIViewPropertyAnimator*)animator
+                 forCompleteAnimation:(BOOL)completeAnimation;
 // Adds the toolbar contracted state animations to |animator|, and changes the
 // toolbar constraints in preparation for the animation.
 - (void)addToolbarContractionAnimations:(UIViewPropertyAnimator*)animator;
