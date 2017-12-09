@@ -20,45 +20,12 @@
   "sdk": "iphonesimulator11.0",
   "tests": [
     {
-      "include": "eg_tests.json",
-      "device type": "iPhone 6s Plus",
-      "os": "10.0",
-      "xcode version": "9.0"
-    },
-    {
-      "include": "eg_tests.json",
+      "app": "ios_chrome_ui_egtests",
       "device type": "iPhone 7",
       "os": "11.0",
-      "xcode version": "9.0"
-    },
-    {
-      "include": "eg_tests.json",
-      "device type": "iPad Air 2",
-      "os": "11.0",
-      "xcode version": "9.0"
-    },
-    {
-      "include": "eg_tests.json",
-      "device type": "iPad Air 2",
-      "os": "10.0",
-      "xcode version": "9.0"
-    },
-    {
-      "include": "eg_tests.json",
-      "device type": "iPhone X",
-      "os": "11.0",
-      "xcode version": "9.0"
-    },
-    {
-      "include": "eg_cq_tests.json",
-      "device type": "iPad Air 2",
-      "os": "10.0",
-      "xcode version": "9.0"
-    },
-    {
-      "include": "eg_cq_tests.json",
-      "device type": "iPhone X",
-      "os": "11.0",
+      "sharding": "ios/chrome/browser",
+      "shard size": 6,
+      "xctest": true,
       "xcode version": "9.0"
     }
   ]
