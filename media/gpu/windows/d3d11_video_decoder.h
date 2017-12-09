@@ -31,8 +31,7 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoder : public VideoDecoder {
  public:
   D3D11VideoDecoder(
       scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
-      base::RepeatingCallback<gpu::CommandBufferStub*()> get_stub_cb,
-      deprecated::OutputWithReleaseMailboxCB output_cb);
+      base::RepeatingCallback<gpu::CommandBufferStub*()> get_stub_cb);
   ~D3D11VideoDecoder() override;
 
   // VideoDecoder implementation:
@@ -50,17 +49,6 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoder : public VideoDecoder {
   int GetMaxDecodeRequests() const override;
 
  private:
-  // Call |output_cb| with a release cb that will hop back to the impl thread
-  // to run |impl_thread_cb| when |video_frame| is released.
-  void OutputWithThreadHoppingRelease(
-      deprecated::OutputWithReleaseMailboxCB output_cb,
-      deprecated::ReleaseMailboxCB impl_thread_cb,
-      const scoped_refptr<VideoFrame>& video_frame);
-
-  // ReleaseCB that's run on our thread, but posts it to the impl thread.
-  void OnMailboxReleased(deprecated::ReleaseMailboxCB impl_thread_cb,
-                         const gpu::SyncToken& token);
-
   // The implementation, which we trampoline to the impl thread.
   // This must be freed on the impl thread.
   std::unique_ptr<D3D11VideoDecoderImpl> impl_;
@@ -70,8 +58,6 @@ class MEDIA_GPU_EXPORT D3D11VideoDecoder : public VideoDecoder {
 
   // Task runner for |impl_|.  This must be the GPU main thread.
   scoped_refptr<base::SequencedTaskRunner> impl_task_runner_;
-
-  deprecated::OutputWithReleaseMailboxCB output_cb_;
 
   base::WeakPtrFactory<D3D11VideoDecoder> weak_factory_;
 
