@@ -40,11 +40,9 @@ struct Manifest {
   // or there is a parsing failure.
   bool prefer_related_applications;
 
-  // A 32 bit color value or kInvalidOrMissingColor if not set.
-  int64 theme_color;
+  uint32? theme_color;
 
-  // A 32 bit color value or kInvalidOrMissingColor if not set.
-  int64 background_color;
+  uint32? background_color;
 
   // A URL of the HTML splash screen.
   url.mojom.Url? splash_screen_url;

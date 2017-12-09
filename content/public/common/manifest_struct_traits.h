@@ -63,11 +63,11 @@ struct StructTraits<blink::mojom::ManifestDataView, content::Manifest> {
     return m.orientation;
   }
 
-  static int64_t theme_color(const content::Manifest& m) {
+  static base::Optional<SkColor> theme_color(const content::Manifest& m) {
     return m.theme_color;
   }
 
-  static int64_t background_color(const content::Manifest& m) {
+  static base::Optional<SkColor> background_color(const content::Manifest& m) {
     return m.background_color;
   }
 

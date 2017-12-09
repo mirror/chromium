@@ -14,6 +14,7 @@
 #include "base/strings/nullable_string16.h"
 #include "base/strings/string16.h"
 #include "content/common/content_export.h"
+#include "third_party/skia/include/core/SkColor.h"
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h"
 #include "ui/gfx/geometry/size.h"
@@ -136,19 +137,11 @@ struct CONTENT_EXPORT Manifest {
   // or there is a parsing failure.
   bool prefer_related_applications;
 
-  // This is a 64 bit integer because we need to represent an error state. The
-  // color itself should only be 32 bits long if the value is not
-  // kInvalidOrMissingColor and can be safely cast to SkColor if is valid.
-  // Set to kInvalidOrMissingColor if parsing failed or field is not
-  // present.
-  int64_t theme_color;
+  // Their will be no value if the parsing failed or the field was not present.
+  base::Optional<SkColor> theme_color;
 
-  // This is a 64 bit integer because we need to represent an error state. The
-  // color itself should only be 32 bits long if the value is not
-  // kInvalidOrMissingColor and can be safely cast to SkColor if is valid.
-  // Set to kInvalidOrMissingColor if parsing failed or field is not
-  // present.
-  int64_t background_color;
+  // Their will be no value if the parsing failed or the field was not present.
+  base::Optional<SkColor> background_color;
 
   // A URL of the HTML splash screen.
   // Empty if the parsing failed or the field was not present.
@@ -166,10 +159,6 @@ struct CONTENT_EXPORT Manifest {
   // IPC. The renderer process should truncate the strings before sending the
   // Manifest and the browser process must do the same when receiving it.
   static const size_t kMaxIPCStringLength;
-
-  // Constant representing an invalid color. Set to a value outside the
-  // range of a 32-bit integer.
-  static const int64_t kInvalidOrMissingColor;
 };
 
 } // namespace content
