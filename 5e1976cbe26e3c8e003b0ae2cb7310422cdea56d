@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05d8d803_f620e37f",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T00:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80a498bf_b6a91c3b",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "524e4472_5d4dc7b2",
         "filename": "cc/trees/layer_tree_frame_sink.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd22861_de0e23b8",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T00:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "524e4472_5d4dc7b2",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aa353868_fbf43f81",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T00:54:13Z",
+      "side": 1,
+      "message": "Done. I reused the OnContextLost method though instead of a new method.",
+      "parentUuid": "59de1a52_af39c39d",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8ce93b5_b5ff002b",
         "filename": "cc/trees/layer_tree_frame_sink.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9be8a4_dd1b8112",
+        "filename": "cc/trees/layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T00:54:13Z",
+      "side": 1,
+      "message": "We\u0027re destroying the worker_context_lost_forwarder_ not worker_context_provider_ below. Command buffer context providers must be destroyed (last deref) on the thread they\u0027re bound to or the thread they\u0027re created (main thread). So compositor context provider can be destroyed on compositor thread or main thread, but worker context provider must be destroyed on the main thread. Furthermore, the memory dump deregistration in ~ContextProviderCommandBuffer is thread affine so we must destroy compositor context provider on compositor thread.",
+      "parentUuid": "f8ce93b5_b5ff002b",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f4e7a14d_290b3e4f",
+        "filename": "cc/trees/layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T00:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72b184f6_27e5c3fa",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40e5dc46_c49204e6",
         "filename": "components/viz/client/client_layer_tree_frame_sink.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4332a905_1324435f",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T00:54:13Z",
+      "side": 1,
+      "message": "renamed to compositor_task_runner",
+      "parentUuid": "40e5dc46_c49204e6",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ba147a1b_0aa2b867",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T00:54:13Z",
+      "side": 1,
+      "message": "changed to \"before BindToCurrentThread from the same thread that the context is bound to, or at anytime while the lock is acquired after checking for context loss.\"",
+      "parentUuid": "0b082d72_af77827d",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c1b742b_d72ca2f7",
         "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ed77a1_6aa71c47",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T00:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c1b742b_d72ca2f7",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "aa3e3be9_1cc6ebdf",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T00:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efbc08e9_7a2a3867",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd2b7879_41b89105",
         "filename": "content/browser/compositor/viz_process_transport_factory.cc",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db69986a_34a3c51d",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-09T00:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd2b7879_41b89105",
+      "revId": "5e1976cbe26e3c8e003b0ae2cb7310422cdea56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
