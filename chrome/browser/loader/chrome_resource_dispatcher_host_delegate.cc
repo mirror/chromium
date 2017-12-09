@@ -505,8 +505,10 @@ void ChromeResourceDispatcherHostDelegate::RequestBeginning(
         !is_off_the_record &&
         !io_data->google_services_account_id()->GetValue().empty();
     variations::AppendVariationHeaders(
-        request->url(), is_off_the_record, is_signed_in,
-        !is_off_the_record && io_data->GetMetricsEnabledStateOnIOThread(),
+        request->url(),
+        is_off_the_record ? variations::InIncognito::YES
+                          : variations::InIncognito::NO,
+        is_signed_in ? variations::SignedIn::YES : variations::SignedIn::NO,
         &headers);
     request->SetExtraRequestHeaders(headers);
   }
