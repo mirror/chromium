@@ -22,6 +22,30 @@
       "revId": "c009fc2cfb662c32e29037508d09469bfbf21d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d3edf1_8267508d",
+        "filename": "content/browser/child_process_security_policy_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-09T01:26:49Z",
+      "side": 1,
+      "message": "Woops, yes, thanks for catching that! It does indeed fix the leak.",
+      "parentUuid": "a49b52ca_dfa79b79",
+      "range": {
+        "startLine": 1068,
+        "startChar": 4,
+        "endLine": 1068,
+        "endChar": 10
+      },
+      "revId": "c009fc2cfb662c32e29037508d09469bfbf21d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
