@@ -132,6 +132,62 @@ class ServiceWorkerContextRequestHandlerTest : public testing::Test {
         nullptr);
   }
 
+  // Tests if net::LOAD_BYPASS_CACHE is set for a resource fetch for the main
+  // script.
+  void TestBypassCacheForMainScript(bool bypass) {
+    // TODO(https://crbug.com/675540): Remove the following command line switch
+    // when updateViaCache is shipped to stable.
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kEnableExperimentalWebPlatformFeatures);
+
+    base::HistogramTester histograms;
+    std::unique_ptr<net::URLRequest> request(CreateRequest(script_url_));
+    std::unique_ptr<ServiceWorkerContextRequestHandler> handler(
+        CreateHandler(RESOURCE_TYPE_SERVICE_WORKER));
+    std::unique_ptr<net::URLRequestJob> job(
+        handler->MaybeCreateJob(request.get(), nullptr, nullptr));
+    ASSERT_TRUE(job.get());
+    ServiceWorkerWriteToCacheJob* sw_job =
+        static_cast<ServiceWorkerWriteToCacheJob*>(job.get());
+    histograms.ExpectUniqueSample(
+        "ServiceWorker.ContextRequestHandlerStatus.NewWorker.MainScript",
+        static_cast<int>(
+            ServiceWorkerContextRequestHandler::CreateJobStatus::WRITE_JOB),
+        1);
+    if (bypass)
+      ASSERT_TRUE(sw_job->net_request_->load_flags() & net::LOAD_BYPASS_CACHE);
+    else
+      ASSERT_FALSE(sw_job->net_request_->load_flags() & net::LOAD_BYPASS_CACHE);
+  }
+
+  // Tests if net::LOAD_BYPASS_CACHE is set for a resource fetch for the
+  // imported script.
+  void TestBypassCacheForImportedScript(bool bypass) {
+    // TODO(https://crbug.com/675540): Remove the following command line switch
+    // when updateViaCache is shipped to stable.
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kEnableExperimentalWebPlatformFeatures);
+
+    base::HistogramTester histograms;
+    std::unique_ptr<net::URLRequest> request(CreateRequest(import_script_url_));
+    std::unique_ptr<ServiceWorkerContextRequestHandler> handler(
+        CreateHandler(RESOURCE_TYPE_SCRIPT));
+    std::unique_ptr<net::URLRequestJob> job(
+        handler->MaybeCreateJob(request.get(), nullptr, nullptr));
+    EXPECT_TRUE(job);
+    ServiceWorkerWriteToCacheJob* sw_job =
+        static_cast<ServiceWorkerWriteToCacheJob*>(job.get());
+    histograms.ExpectUniqueSample(
+        "ServiceWorker.ContextRequestHandlerStatus.NewWorker.ImportedScript",
+        static_cast<int>(
+            ServiceWorkerContextRequestHandler::CreateJobStatus::WRITE_JOB),
+        1);
+    if (bypass)
+      ASSERT_TRUE(sw_job->net_request_->load_flags() & net::LOAD_BYPASS_CACHE);
+    else
+      ASSERT_FALSE(sw_job->net_request_->load_flags() & net::LOAD_BYPASS_CACHE);
+  }
+
  protected:
   TestBrowserThreadBundle browser_thread_bundle_;
   std::unique_ptr<EmbeddedWorkerTestHelper> helper_;
@@ -151,6 +207,18 @@ class ServiceWorkerContextRequestHandlerTest : public testing::Test {
 TEST_F(ServiceWorkerContextRequestHandlerTest, UpdateBefore24Hours) {
   // Give the registration a very recent last update time and pretend
   // we're installing a new version.
+  registration_->set_last_update_check(base::Time::Now());
+  version_->SetStatus(ServiceWorkerVersion::NEW);
+
+  TestBypassCacheForMainScript(true);
+  TestBypassCacheForImportedScript(false);
+}
+
+// TODO(https://crbug.com/675540): Remove the
+// UpdateBefore24HoursWithoutUpdateViaCache test when the update_via_cache flag
+// is shipped to stable as this is to test the legacy behavior.
+TEST_F(ServiceWorkerContextRequestHandlerTest,
+       UpdateBefore24HoursWithoutUpdateViaCache) {
   registration_->set_last_update_check(base::Time::Now());
   version_->SetStatus(ServiceWorkerVersion::NEW);
 
@@ -174,52 +242,82 @@ TEST_F(ServiceWorkerContextRequestHandlerTest, UpdateBefore24Hours) {
   EXPECT_FALSE(sw_job->net_request_->load_flags() & net::LOAD_BYPASS_CACHE);
 }
 
+TEST_F(ServiceWorkerContextRequestHandlerTest,
+       UpdateBefore24HoursWithUpdateViaCacheAll) {
+  registration_->set_update_via_cache(
+      blink::mojom::ServiceWorkerUpdateViaCache::kAll);
+  // Give the registration a very recent last update time and pretend
+  // we're installing a new version.
+  registration_->set_last_update_check(base::Time::Now());
+  version_->SetStatus(ServiceWorkerVersion::NEW);
+
+  TestBypassCacheForMainScript(false);
+  TestBypassCacheForImportedScript(false);
+}
+
+TEST_F(ServiceWorkerContextRequestHandlerTest,
+       UpdateBefore24HoursWithUpdateViaCacheNone) {
+  registration_->set_update_via_cache(
+      blink::mojom::ServiceWorkerUpdateViaCache::kNone);
+  // Give the registration a very recent last update time and pretend
+  // we're installing a new version.
+  registration_->set_last_update_check(base::Time::Now());
+  version_->SetStatus(ServiceWorkerVersion::NEW);
+
+  TestBypassCacheForMainScript(true);
+  TestBypassCacheForImportedScript(true);
+}
+
 TEST_F(ServiceWorkerContextRequestHandlerTest, UpdateAfter24Hours) {
+  // Give the registration a old update time and pretend
+  // we're installing a new version.
+  registration_->set_last_update_check(base::Time::Now() -
+                                       base::TimeDelta::FromDays(7));
+  version_->SetStatus(ServiceWorkerVersion::NEW);
+
+  TestBypassCacheForMainScript(true);
+  TestBypassCacheForImportedScript(true);
+}
+
+TEST_F(ServiceWorkerContextRequestHandlerTest,
+       UpdateAfter24HoursWithUpdateViaCacheAll) {
+  registration_->set_update_via_cache(
+      blink::mojom::ServiceWorkerUpdateViaCache::kAll);
+  // Give the registration a old update time and pretend
+  // we're installing a new version.
+  registration_->set_last_update_check(base::Time::Now() -
+                                       base::TimeDelta::FromDays(7));
+  version_->SetStatus(ServiceWorkerVersion::NEW);
+
+  TestBypassCacheForMainScript(true);
+  TestBypassCacheForImportedScript(true);
+}
+
+TEST_F(ServiceWorkerContextRequestHandlerTest,
+       UpdateAfter24HoursWithUpdateViaCacheNone) {
+  registration_->set_update_via_cache(
+      blink::mojom::ServiceWorkerUpdateViaCache::kNone);
   // Give the registration a old update time and pretend
   // we're installing a new version.
   registration_->set_last_update_check(
       base::Time::Now() - base::TimeDelta::FromDays(7));
   version_->SetStatus(ServiceWorkerVersion::NEW);
 
-  // Conduct a resource fetch for the main script.
-  base::HistogramTester histograms;
-  std::unique_ptr<net::URLRequest> request(CreateRequest(script_url_));
-  std::unique_ptr<ServiceWorkerContextRequestHandler> handler(
-      CreateHandler(RESOURCE_TYPE_SERVICE_WORKER));
-  std::unique_ptr<net::URLRequestJob> job(
-      handler->MaybeCreateJob(request.get(), nullptr, nullptr));
-  ASSERT_TRUE(job.get());
-  ServiceWorkerWriteToCacheJob* sw_job =
-      static_cast<ServiceWorkerWriteToCacheJob*>(job.get());
-  histograms.ExpectUniqueSample(
-      "ServiceWorker.ContextRequestHandlerStatus.NewWorker.MainScript",
-      static_cast<int>(
-          ServiceWorkerContextRequestHandler::CreateJobStatus::WRITE_JOB),
-      1);
-
-  // Verify the net request is initialized to bypass the browser cache.
-  EXPECT_TRUE(sw_job->net_request_->load_flags() & net::LOAD_BYPASS_CACHE);
+  TestBypassCacheForMainScript(true);
+  TestBypassCacheForImportedScript(true);
 }
 
 TEST_F(ServiceWorkerContextRequestHandlerTest, UpdateForceBypassCache) {
+  registration_->set_update_via_cache(
+      blink::mojom::ServiceWorkerUpdateViaCache::kAll);
   // Give the registration a very recent last update time and pretend
   // we're installing a new version.
   registration_->set_last_update_check(base::Time::Now());
   version_->SetStatus(ServiceWorkerVersion::NEW);
   version_->set_force_bypass_cache_for_scripts(true);
 
-  // Conduct a resource fetch for the main script.
-  std::unique_ptr<net::URLRequest> request(CreateRequest(script_url_));
-  std::unique_ptr<ServiceWorkerContextRequestHandler> handler(
-      CreateHandler(RESOURCE_TYPE_SERVICE_WORKER));
-  std::unique_ptr<net::URLRequestJob> job(
-      handler->MaybeCreateJob(request.get(), nullptr, nullptr));
-  ASSERT_TRUE(job.get());
-  ServiceWorkerWriteToCacheJob* sw_job =
-      static_cast<ServiceWorkerWriteToCacheJob*>(job.get());
-
-  // Verify the net request is initialized to bypass the browser cache.
-  EXPECT_TRUE(sw_job->net_request_->load_flags() & net::LOAD_BYPASS_CACHE);
+  TestBypassCacheForMainScript(true);
+  TestBypassCacheForImportedScript(true);
 }
 
 TEST_F(ServiceWorkerContextRequestHandlerTest,
