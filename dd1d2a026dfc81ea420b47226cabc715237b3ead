@@ -34,6 +34,24 @@
       "revId": "dd1d2a026dfc81ea420b47226cabc715237b3ead",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487d9d76_5e001118",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageDecodingStore.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-09T02:39:25Z",
+      "side": 0,
+      "message": "I believe (but I\u0027m not super familiar with how WTF\u0027s hash structures work) that just having a size_ that\u0027s (-1,-1) is enough mark a key as deleted. That\u0027s why I removed the gen_ comparison: it shouldn\u0027t matter.\n\nI believe safe_to_compare_to_empty_or_deleted still holds: any valid key will compare non-equal to a deleted key, because a valid key can\u0027t, I belive, have a negative size like that.\n\nThe reason I\u0027m removing gen_ also is that since I\u0027m arguing that there\u0027s no need to compare the alpha_option_, there\u0027s by the same reasoning no need to compare gen_ and it would be odd to leave it in.\n\n\nI\u0027m not sure what you mean by \"who resets the fields of DecoderCachceKey\". I don\u0027t think they need to be reset for the deleted key case, besides that the size_ fields needs to be set to -1,-1.",
+      "parentUuid": "bd34b93f_6fd0ca2b",
+      "revId": "dd1d2a026dfc81ea420b47226cabc715237b3ead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
