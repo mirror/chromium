@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1d2b910_3c3e0d45",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-09T00:55:05Z",
+      "side": 1,
+      "message": "Nit: please use std::move() if passing callback by value (ditto here and below)",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "bcac64b65f3068ab69476b61976c19a8e8a510de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9098295c_14057bf3",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-09T00:55:05Z",
+      "side": 1,
+      "message": "Nit: std::make_unique",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 25
+      },
+      "revId": "bcac64b65f3068ab69476b61976c19a8e8a510de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a4f062_edcea756",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-09T00:55:05Z",
+      "side": 1,
+      "message": "file_task_runner doesn\u0027t always seem to have the same check... should it even be legal to pass a null io_task_runner_? It seems like it makes the code more complicated, even though it should \"never\" happen. Tracing around, it already seems to be the case that this is never null, but it would be good to be explicit about it... maybe enforce that this is always set in a followup?",
+      "range": {
+        "startLine": 115,
+        "startChar": 49,
+        "endLine": 115,
+        "endChar": 64
+      },
+      "revId": "bcac64b65f3068ab69476b61976c19a8e8a510de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7b3923_05046896",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-09T00:55:05Z",
+      "side": 1,
+      "message": "How about just passing io_task_runner_ as the third argument to AddInterface here? That way, things will always happen on io_task_runner_ and the code doesn\u0027t need to manually thread hop.",
+      "revId": "bcac64b65f3068ab69476b61976c19a8e8a510de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
