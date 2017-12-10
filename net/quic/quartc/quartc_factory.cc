@@ -118,9 +118,11 @@ std::unique_ptr<QuartcSessionInterface> QuartcFactory::CreateQuartcSession(
       QuartcCongestionControl::kBBR) {
     copt.push_back(kTBBR);
 
-    FLAGS_quic_reloadable_flag_quic_bbr_slower_startup = true;
-    FLAGS_quic_reloadable_flag_quic_bbr_fully_drain_queue = true;
-    FLAGS_quic_reloadable_flag_quic_bbr_less_probe_rtt = true;
+    // Note: These settings have no effect for Exoblaze builds since
+    // SetQuicReloadableFlag() gets stubbed out.
+    SetQuicReloadableFlag(quic_bbr_slower_startup, true);
+    SetQuicReloadableFlag(quic_bbr_fully_drain_queue, true);
+    SetQuicReloadableFlag(quic_bbr_less_probe_rtt, true);
     for (const auto option : quartc_session_config.bbr_options) {
       switch (option) {
         case (QuartcBbrOptions::kSlowerStartup):

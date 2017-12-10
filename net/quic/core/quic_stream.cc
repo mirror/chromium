@@ -73,7 +73,7 @@ QuicStream::QuicStream(QuicStreamId id, QuicSession* session)
           session->allow_multiple_acks_for_data()),
       buffered_data_threshold_(GetQuicFlag(FLAGS_quic_buffered_data_threshold)),
       remove_on_stream_frame_discarded_(
-          FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded) {
+          GetQuicReloadableFlag(quic_remove_on_stream_frame_discarded)) {
   SetFromConfig();
 }
 

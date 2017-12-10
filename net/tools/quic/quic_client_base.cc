@@ -81,7 +81,7 @@ bool QuicClientBase::Connect() {
     while (EncryptionBeingEstablished()) {
       WaitForEvents();
     }
-    if (FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support &&
+    if (GetQuicReloadableFlag(enable_quic_stateless_reject_support) &&
         connected()) {
       // Resend any previously queued data.
       ResendSavedData();
@@ -169,7 +169,7 @@ bool QuicClientBase::WaitForEvents() {
   DCHECK(session() != nullptr);
   if (!connected() &&
       session()->error() == QUIC_CRYPTO_HANDSHAKE_STATELESS_REJECT) {
-    DCHECK(FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support);
+    DCHECK(GetQuicReloadableFlag(enable_quic_stateless_reject_support));
     QUIC_DLOG(INFO) << "Detected stateless reject while waiting for events.  "
                     << "Attempting to reconnect.";
     Connect();

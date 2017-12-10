@@ -378,7 +378,7 @@ class EndToEndTest : public QuicTestWithParam<TestParams> {
     // client as well according to the test parameter.
     copt.push_back(GetParam().congestion_control_tag);
     if (GetParam().congestion_control_tag == kTPCC &&
-        FLAGS_quic_reloadable_flag_quic_enable_pcc) {
+        GetQuicReloadableFlag(quic_enable_pcc)) {
       copt.push_back(kTPCC);
     }
 
@@ -425,8 +425,8 @@ class EndToEndTest : public QuicTestWithParam<TestParams> {
   }
 
   void StartServer() {
-    FLAGS_quic_reloadable_flag_quic_use_cheap_stateless_rejects =
-        GetParam().use_cheap_stateless_reject;
+    SetQuicReloadableFlag(quic_use_cheap_stateless_rejects,
+                          GetParam().use_cheap_stateless_reject);
 
     auto* test_server = new QuicTestServer(
         crypto_test_utils::ProofSourceForTesting(), server_config_,
@@ -442,8 +442,9 @@ class EndToEndTest : public QuicTestWithParam<TestParams> {
         QuicServerPeer::GetDispatcher(server_thread_->server());
     QuicDispatcherPeer::UseWriter(dispatcher, server_writer_);
 
-    FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support =
-        GetParam().server_uses_stateless_rejects_if_peer_supported;
+    SetQuicReloadableFlag(
+        enable_quic_stateless_reject_support,
+        GetParam().server_uses_stateless_rejects_if_peer_supported);
 
     server_writer_->Initialize(QuicDispatcherPeer::GetHelper(dispatcher),
                                QuicDispatcherPeer::GetAlarmFactory(dispatcher),
@@ -505,7 +506,7 @@ class EndToEndTest : public QuicTestWithParam<TestParams> {
         client_->client()->client_session()->connection()->GetStats();
     // TODO(ianswett): Determine why this becomes even more flaky with BBR
     // enabled.  b/62141144
-    if (!had_packet_loss && !FLAGS_quic_reloadable_flag_quic_default_to_bbr) {
+    if (!had_packet_loss && !GetQuicReloadableFlag(quic_default_to_bbr)) {
       EXPECT_EQ(0u, client_stats.packets_lost);
     }
     EXPECT_EQ(0u, client_stats.packets_discarded);
@@ -1781,7 +1782,7 @@ TEST_P(EndToEndTest, FlowControlsSynced) {
       QuicSpdySessionPeer::GetHeadersStream(client_session)->flow_controller();
   QuicFlowController* server_header_stream_flow_controller =
       QuicSpdySessionPeer::GetHeadersStream(server_session)->flow_controller();
-  if (FLAGS_quic_reloadable_flag_quic_send_max_header_list_size) {
+  if (GetQuicReloadableFlag(quic_send_max_header_list_size)) {
     // Both client and server are sending this SETTINGS frame, and the send
     // window is consumed. But because of timing issue, the server may send or
     // not send the frame, and the client may send/ not send / receive / not
@@ -1805,7 +1806,7 @@ TEST_P(EndToEndTest, FlowControlsSynced) {
             ->flow_controller());
   }
 
-  if (FLAGS_quic_reloadable_flag_quic_send_max_header_list_size) {
+  if (GetQuicReloadableFlag(quic_send_max_header_list_size)) {
     // Client *may* have received the SETTINGs frame.
     // TODO(fayang): Rewrite this part because it is hacky.
     float ratio1 = static_cast<float>(QuicFlowControllerPeer::ReceiveWindowSize(

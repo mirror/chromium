@@ -80,7 +80,8 @@ class MockQuicCryptoServerStream : public QuicCryptoServerStream {
       : QuicCryptoServerStream(
             crypto_config,
             compressed_certs_cache,
-            FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support,
+            GetQuicReloadableFlag(
+                enable_quic_stateless_reject_support),  // NOLINT
             session,
             helper) {}
   ~MockQuicCryptoServerStream() override = default;

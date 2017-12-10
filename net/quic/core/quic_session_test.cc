@@ -562,7 +562,7 @@ TEST_P(QuicSessionTestServer, OnCanWriteBundlesStreams) {
   CryptoHandshakeMessage msg;
   MockPacketWriter* writer = static_cast<MockPacketWriter*>(
       QuicConnectionPeer::GetWriter(session_.connection()));
-  if (FLAGS_quic_reloadable_flag_quic_send_max_header_list_size) {
+  if (GetQuicReloadableFlag(quic_send_max_header_list_size)) {
     EXPECT_CALL(*writer, WritePacket(_, _, _, _, _))
         .WillOnce(Return(WriteResult(WRITE_STATUS_OK, 0)));
   }
@@ -827,7 +827,7 @@ TEST_P(QuicSessionTestServer, InvalidGoAway) {
 // Test that server session will send a connectivity probe in response to a
 // connectivity probe on the same path.
 TEST_P(QuicSessionTestServer, ServerReplyToConnecitivityProbe) {
-  if (!FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing) {
+  if (!GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     return;
   }
   QuicSocketAddress old_peer_address =
@@ -837,7 +837,7 @@ TEST_P(QuicSessionTestServer, ServerReplyToConnecitivityProbe) {
   QuicSocketAddress new_peer_address =
       QuicSocketAddress(QuicIpAddress::Loopback4(), kTestPort + 1);
 
-  if (FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing) {
+  if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     MockPacketWriter* writer = static_cast<MockPacketWriter*>(
         QuicConnectionPeer::GetWriter(session_.connection()));
     EXPECT_CALL(*writer, WritePacket(_, _, _, new_peer_address, _))
@@ -850,7 +850,7 @@ TEST_P(QuicSessionTestServer, ServerReplyToConnecitivityProbe) {
   }
   session_.OnConnectivityProbeReceived(session_.self_address(),
                                        new_peer_address);
-  if (FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing) {
+  if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     EXPECT_EQ(old_peer_address, session_.peer_address());
   } else {
     EXPECT_EQ(new_peer_address, session_.peer_address());

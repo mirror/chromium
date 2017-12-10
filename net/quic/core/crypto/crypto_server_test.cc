@@ -122,8 +122,8 @@ class CryptoServerTest : public QuicTestWithParam<TestParams> {
     client_version_string_ = QuicVersionLabelToString(
         QuicVersionToQuicVersionLabel(client_version_));
 
-    FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support =
-        GetParam().enable_stateless_rejects;
+    SetQuicReloadableFlag(enable_quic_stateless_reject_support,
+                          GetParam().enable_stateless_rejects);
     use_stateless_rejects_ = GetParam().use_stateless_rejects;
   }
 

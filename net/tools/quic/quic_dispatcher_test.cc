@@ -86,7 +86,7 @@ class TestQuicSpdyServerSession : public QuicServerSessionBase {
       QuicCompressedCertsCache* compressed_certs_cache) override {
     return new QuicCryptoServerStream(
         crypto_config, compressed_certs_cache,
-        FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support, this,
+        GetQuicReloadableFlag(enable_quic_stateless_reject_support), this,
         stream_helper());
   }
 
@@ -527,7 +527,7 @@ TEST_F(QuicDispatcherTest, OKSeqNoPacketProcessed) {
 
 TEST_F(QuicDispatcherTest, TooBigSeqNoPacketToTimeWaitListManager) {
   CreateTimeWaitListManager();
-  FLAGS_quic_restart_flag_quic_enable_accept_random_ipn = false;
+  SetQuicRestartFlag(quic_enable_accept_random_ipn, false);
   QuicSocketAddress client_address(QuicIpAddress::Loopback4(), 1);
   QuicConnectionId connection_id = 1;
 
@@ -545,7 +545,7 @@ TEST_F(QuicDispatcherTest, TooBigSeqNoPacketToTimeWaitListManager) {
                 PACKET_8BYTE_CONNECTION_ID, PACKET_6BYTE_PACKET_NUMBER,
                 QuicDispatcher::kMaxReasonableInitialPacketNumber + 1);
   connection_id = 2;
-  FLAGS_quic_restart_flag_quic_enable_accept_random_ipn = true;
+  SetQuicRestartFlag(quic_enable_accept_random_ipn, true);
   ProcessPacket(client_address, connection_id, true, SerializeCHLO(),
                 PACKET_8BYTE_CONNECTION_ID, PACKET_6BYTE_PACKET_NUMBER,
                 kMaxRandomInitialPacketNumber +
@@ -679,7 +679,7 @@ class MockQuicCryptoServerStream : public QuicCryptoServerStream {
       : QuicCryptoServerStream(
             &crypto_config,
             compressed_certs_cache,
-            FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support,
+            GetQuicReloadableFlag(enable_quic_stateless_reject_support),
             session,
             helper),
         handshake_confirmed_(false) {}
@@ -755,8 +755,8 @@ class QuicDispatcherStatelessRejectTest
   // crypto_stream1_.
   void SetUp() override {
     QuicDispatcherTest::SetUp();
-    FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support =
-        GetParam().enable_stateless_rejects_via_flag;
+    SetQuicReloadableFlag(enable_quic_stateless_reject_support,
+                          GetParam().enable_stateless_rejects_via_flag);
   }
 
   // Returns true or false, depending on whether the server will emit
@@ -848,7 +848,7 @@ TEST_P(QuicDispatcherStatelessRejectTest, ParameterizedBasicTest) {
 }
 
 TEST_P(QuicDispatcherStatelessRejectTest, CheapRejects) {
-  FLAGS_quic_reloadable_flag_quic_use_cheap_stateless_rejects = true;
+  SetQuicReloadableFlag(quic_use_cheap_stateless_rejects, true);
   CreateTimeWaitListManager();
 
   QuicSocketAddress client_address(QuicIpAddress::Loopback4(), 1);
@@ -900,7 +900,7 @@ TEST_P(QuicDispatcherStatelessRejectTest, CheapRejects) {
 }
 
 TEST_P(QuicDispatcherStatelessRejectTest, BufferNonChlo) {
-  FLAGS_quic_reloadable_flag_quic_use_cheap_stateless_rejects = true;
+  SetQuicReloadableFlag(quic_use_cheap_stateless_rejects, true);
   CreateTimeWaitListManager();
 
   const QuicSocketAddress client_address(QuicIpAddress::Loopback4(), 1);
@@ -1224,10 +1224,10 @@ class BufferedPacketStoreTest
       : QuicDispatcherTest(),
         client_addr_(QuicIpAddress::Loopback4(), 1234),
         signed_config_(new QuicSignedServerConfig) {
-    FLAGS_quic_reloadable_flag_quic_use_cheap_stateless_rejects =
-        GetParam().support_cheap_stateless_reject;
-    FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support =
-        GetParam().enable_stateless_rejects_via_flag;
+    SetQuicReloadableFlag(quic_use_cheap_stateless_rejects,
+                          GetParam().support_cheap_stateless_reject);
+    SetQuicReloadableFlag(enable_quic_stateless_reject_support,
+                          GetParam().enable_stateless_rejects_via_flag);
   }
 
   void SetUp() override {
@@ -1635,8 +1635,8 @@ class AsyncGetProofTest : public QuicDispatcherTest {
         client_addr_(QuicIpAddress::Loopback4(), 1234),
         crypto_config_peer_(&crypto_config_),
         signed_config_(new QuicSignedServerConfig) {
-    FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support = true;
-    FLAGS_quic_reloadable_flag_quic_use_cheap_stateless_rejects = true;
+    SetQuicReloadableFlag(enable_quic_stateless_reject_support, true);
+    SetQuicReloadableFlag(quic_use_cheap_stateless_rejects, true);
   }
 
   void SetUp() override {

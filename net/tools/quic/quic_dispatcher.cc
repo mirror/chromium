@@ -56,7 +56,7 @@ class PacketCollector : public QuicPacketCreator::DelegateInterface,
   explicit PacketCollector(QuicBufferAllocator* allocator)
       : send_buffer_(
             allocator,
-            FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2) {}
+            GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)) {}
   ~PacketCollector() override = default;
 
   // QuicPacketCreator::DelegateInterface methods:
@@ -416,7 +416,7 @@ void QuicDispatcher::ProcessUnauthenticatedHeaderFate(
     case kFateTimeWait:
       // MaybeRejectStatelessly or OnExpiredPackets might have already added the
       // connection to time wait, in which case it should not be added again.
-      if (!FLAGS_quic_reloadable_flag_quic_use_cheap_stateless_rejects ||
+      if (!GetQuicReloadableFlag(quic_use_cheap_stateless_rejects) ||
           !time_wait_list_manager_->IsConnectionIdInTimeWait(connection_id)) {
         // Add this connection_id to the time-wait state, to safely reject
         // future packets.
@@ -475,7 +475,7 @@ QuicDispatcher::QuicPacketFate QuicDispatcher::ValidityChecks(
   if (header.packet_number == kInvalidPacketNumber) {
     return kFateTimeWait;
   }
-  if (FLAGS_quic_restart_flag_quic_enable_accept_random_ipn) {
+  if (GetQuicRestartFlag(quic_enable_accept_random_ipn)) {
     QUIC_FLAG_COUNT_N(quic_restart_flag_quic_enable_accept_random_ipn, 1, 2);
     // Accepting Initial Packet Numbers in 1...((2^31)-1) range... check
     // maximum accordingly.
@@ -900,8 +900,8 @@ void QuicDispatcher::MaybeRejectStatelessly(QuicConnectionId connection_id,
                                             ParsedQuicVersion version) {
   // TODO(rch): This logic should probably live completely inside the rejector.
   if (!FLAGS_quic_allow_chlo_buffering ||
-      !FLAGS_quic_reloadable_flag_quic_use_cheap_stateless_rejects ||
-      !FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support ||
+      !GetQuicReloadableFlag(quic_use_cheap_stateless_rejects) ||
+      !GetQuicReloadableFlag(enable_quic_stateless_reject_support) ||
       !ShouldAttemptCheapStatelessRejection()) {
     // Not use cheap stateless reject.
     ChloAlpnExtractor alpn_extractor;

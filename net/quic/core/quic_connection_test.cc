@@ -1056,7 +1056,7 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
                                              ConnectionCloseSource::FROM_SELF));
     // Call ProcessDataPacket rather than ProcessPacket, as we should not get a
     // packet call to the visitor.
-    if (FLAGS_quic_restart_flag_quic_enable_accept_random_ipn) {
+    if (GetQuicRestartFlag(quic_enable_accept_random_ipn)) {
       ProcessDataPacket(kMaxRandomInitialPacketNumber + 6000);
     } else {
       ProcessDataPacket(6000);
@@ -1170,7 +1170,7 @@ TEST_P(QuicConnectionTest, SelfAddressChangeAtServer) {
   QuicIpAddress host;
   host.FromString("1.1.1.1");
   QuicSocketAddress self_address(host, 123);
-  if (FLAGS_quic_reloadable_flag_quic_allow_address_change_for_udp_proxy) {
+  if (GetQuicReloadableFlag(quic_allow_address_change_for_udp_proxy)) {
     EXPECT_CALL(visitor_, AllowSelfAddressChange()).WillOnce(Return(false));
   }
   EXPECT_CALL(visitor_, OnConnectionClosed(QUIC_ERROR_MIGRATING_ADDRESS, _, _));
@@ -1306,7 +1306,7 @@ TEST_P(QuicConnectionTest, ReceiveConnectivityProbingAtServer) {
                                   kPeerAddress);
   EXPECT_EQ(kPeerAddress, connection_.peer_address());
 
-  if (FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing) {
+  if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     EXPECT_CALL(visitor_, OnConnectionMigration(PORT_CHANGE)).Times(0);
     EXPECT_CALL(visitor_, OnConnectivityProbeReceived(_, _)).Times(1);
   } else {
@@ -1326,7 +1326,7 @@ TEST_P(QuicConnectionTest, ReceiveConnectivityProbingAtServer) {
       ConstructReceivedPacket(*probing_packet, clock_.Now()));
 
   ProcessReceivedPacket(kSelfAddress, kNewPeerAddress, *received);
-  if (FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing) {
+  if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     EXPECT_EQ(kPeerAddress, connection_.peer_address());
   } else {
     EXPECT_EQ(kNewPeerAddress, connection_.peer_address());
@@ -1355,7 +1355,7 @@ TEST_P(QuicConnectionTest, MigrateAfterProbingAtServer) {
                                   kPeerAddress);
   EXPECT_EQ(kPeerAddress, connection_.peer_address());
 
-  if (FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing) {
+  if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     EXPECT_CALL(visitor_, OnConnectionMigration(PORT_CHANGE)).Times(0);
     EXPECT_CALL(visitor_, OnConnectivityProbeReceived(_, _)).Times(1);
   } else {
@@ -1373,7 +1373,7 @@ TEST_P(QuicConnectionTest, MigrateAfterProbingAtServer) {
   std::unique_ptr<QuicReceivedPacket> received(
       ConstructReceivedPacket(*probing_packet, clock_.Now()));
   ProcessReceivedPacket(kSelfAddress, kNewPeerAddress, *received);
-  if (FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing) {
+  if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     EXPECT_EQ(kPeerAddress, connection_.peer_address());
   } else {
     EXPECT_EQ(kNewPeerAddress, connection_.peer_address());
@@ -1381,7 +1381,7 @@ TEST_P(QuicConnectionTest, MigrateAfterProbingAtServer) {
 
   // Process another non-probing packet with the new peer address on server
   // side will start peer migration.
-  if (FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing) {
+  if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     EXPECT_CALL(visitor_, OnConnectionMigration(PORT_CHANGE)).Times(1);
   } else {
     EXPECT_CALL(visitor_, OnConnectionMigration(PORT_CHANGE)).Times(0);
@@ -1440,7 +1440,7 @@ TEST_P(QuicConnectionTest, ReceiveConnectivityProbingAtClient) {
   // Process a padded PING packet with a different self address on client side
   // is effectively receiving a connectivity probing.
   EXPECT_CALL(visitor_, OnConnectionMigration(PORT_CHANGE)).Times(0);
-  if (FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing) {
+  if (GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)) {
     EXPECT_CALL(visitor_, OnConnectivityProbeReceived(_, _)).Times(1);
   }
 
@@ -1670,7 +1670,7 @@ TEST_P(QuicConnectionTest, RejectPacketTooFarOut) {
 
   // Call ProcessDataPacket rather than ProcessPacket, as we should not get a
   // packet call to the visitor.
-  if (FLAGS_quic_restart_flag_quic_enable_accept_random_ipn) {
+  if (GetQuicRestartFlag(quic_enable_accept_random_ipn)) {
     ProcessDataPacket(kMaxRandomInitialPacketNumber + 6000);
   } else {
     ProcessDataPacket(6000);
@@ -2086,7 +2086,7 @@ TEST_P(QuicConnectionTest, RecordSentTimeBeforePacketSent) {
 
 TEST_P(QuicConnectionTest, FramePacking) {
   // Send two stream frames in 1 packet by queueing them.
-  // If FLAGS_quic_reloadable_flag_quic_strict_ack_handling is false, the packet
+  // If quic_strict_ack_handling is false, the packet
   // also bundles an empty ack frame and a stop_waiting frame.
   {
     QuicConnection::ScopedPacketFlusher flusher(&connection_,
@@ -2101,21 +2101,21 @@ TEST_P(QuicConnectionTest, FramePacking) {
   // Parse the last packet and ensure it's an ack and two stream frames from
   // two different streams.
   if (GetParam().no_stop_waiting) {
-    EXPECT_EQ(FLAGS_quic_reloadable_flag_quic_strict_ack_handling ? 2u : 3u,
+    EXPECT_EQ(GetQuicReloadableFlag(quic_strict_ack_handling) ? 2u : 3u,
               writer_->frame_count());
     EXPECT_TRUE(writer_->stop_waiting_frames().empty());
   } else {
-    EXPECT_EQ(FLAGS_quic_reloadable_flag_quic_strict_ack_handling ? 2u : 4u,
+    EXPECT_EQ(GetQuicReloadableFlag(quic_strict_ack_handling) ? 2u : 4u,
               writer_->frame_count());
 
-    if (FLAGS_quic_reloadable_flag_quic_strict_ack_handling) {
+    if (GetQuicReloadableFlag(quic_strict_ack_handling)) {
       EXPECT_TRUE(writer_->stop_waiting_frames().empty());
     } else {
       EXPECT_FALSE(writer_->stop_waiting_frames().empty());
     }
   }
 
-  if (FLAGS_quic_reloadable_flag_quic_strict_ack_handling) {
+  if (GetQuicReloadableFlag(quic_strict_ack_handling)) {
     EXPECT_TRUE(writer_->ack_frames().empty());
   } else {
     EXPECT_FALSE(writer_->ack_frames().empty());
@@ -3771,7 +3771,7 @@ TEST_P(QuicConnectionTest, NewTimeoutAfterSendSilentClose) {
 }
 
 TEST_P(QuicConnectionTest, TimeoutAfterSendSilentCloseAndTLP) {
-  FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp = true;
+  SetQuicReloadableFlag(quic_explicit_close_after_tlp, true);
   // Same test as above, but complete a handshake which enables silent close,
   // but sending TLPs causes the connection close to be sent.
   EXPECT_TRUE(connection_.connected());
@@ -3826,7 +3826,7 @@ TEST_P(QuicConnectionTest, TimeoutAfterSendSilentCloseAndTLP) {
 }
 
 TEST_P(QuicConnectionTest, TimeoutAfterSendSilentCloseWithOpenStreams) {
-  FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp = true;
+  SetQuicReloadableFlag(quic_explicit_close_after_tlp, true);
   // Same test as above, but complete a handshake which enables silent close,
   // but having open streams causes the connection close to be sent.
   EXPECT_TRUE(connection_.connected());
@@ -4014,7 +4014,7 @@ TEST_P(QuicConnectionTest, TimeoutAfter5ClientRTOs) {
 }
 
 TEST_P(QuicConnectionTest, TimeoutAfter3ClientRTOs) {
-  FLAGS_quic_reloadable_flag_quic_enable_3rtos = true;
+  SetQuicReloadableFlag(quic_enable_3rtos, true);
   connection_.SetMaxTailLossProbes(2);
   EXPECT_TRUE(connection_.connected());
   EXPECT_CALL(*send_algorithm_, SetFromConfig(_, _));
