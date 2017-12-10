@@ -51,6 +51,7 @@ class OmniboxPopupViewIOS : public OmniboxPopupView,
   gfx::Rect GetTargetBounds() override;
   void PaintUpdatesNow() override {}
   void OnDragCanceled() override {}
+  int32_t GetAccessibilityId() override;
 
   void UpdateEditViewIcon();
 
