@@ -1,0 +1,911 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ca01b2_403581b8",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "DCHECK(!pool_infos_.empty());",
+      "range": {
+        "startLine": 15,
+        "startChar": 71,
+        "endLine": 15,
+        "endChar": 72
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd71c0c_719e6eb4",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "ImageIndex::refs() calls ReferenceSet::at(), which does a binary a search. Recommend caching the results to prevent redundant lookup, e.g.:\n\n  const ReferenceSet\u0026 ref_set \u003d image_index_.refs(type);\n  IndirectReference ref \u003d ref_set.at(location);\n\nand use |ref_set| lines 33 and 41.",
+      "range": {
+        "startLine": 31,
+        "startChar": 39,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af12fdf6_d5e8928a",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Update comment; from TargetAffinity, looks like 0 is used for targets without Label?",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 67
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3932861f_4aeb8568",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Just use |pool_tag| ?",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 47,
+        "endChar": 65
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b33b47_b486c17a",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Now that |label \u003d\u003d 0| is possible, would we have collision of unassigned labels that have different types?",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73609ed8_2683ca53",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "We already know size of |pool_infos_| is image_index_.PoolCount(). So perhaps\n\n  for (auto\u0026 pool_info : pool_infos):\n    max_width \u003d std::max(max_width, pool_info.bound);\n\n?",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 61
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9170ae5_df8e81bb",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "DCHECK(labels.empty() || *max_element(labels.begin(), labels.end()) \u003c bound);\n\nAlso, if we can only assign label once, maybe:\n\nDCHECK(pool_infos_[pool.value()].empty());\n\n?",
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7afeb00_dae8aa62",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "must",
+      "range": {
+        "startLine": 136,
+        "startChar": 75,
+        "endLine": 137,
+        "endChar": 16
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b3f90d_88ce2f27",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Plural?",
+      "range": {
+        "startLine": 19,
+        "startChar": 62,
+        "endLine": 19,
+        "endChar": 78
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9543371_f4c3097b",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "[[[Tentative review]]]\nSee if this affects results.",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 22
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf8f1ca_ab4867e3",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Update.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d3afa1_afac6201",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Perhaps |*_image| should be renamed |*_image_index| -- unless ImageIndex should henceforth be the main \"image\" data, in which the case the old ConstBufferView images should be |*_raw_image|?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 54
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3d5e89_ddbbba92",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Make this plural?",
+      "range": {
+        "startLine": 28,
+        "startChar": 62,
+        "endLine": 28,
+        "endChar": 78
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163ce2b0_1dbb3a5b",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "|old_view| and |new_view|?",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 42
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabe4e40_39992cf3",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "|old_view| and |new_view|?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 53
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869d1208_33c40ba2",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "|old_view| and |new_view|?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 42
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4b0af2_fef1cdcf",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "It\u0027s weird and unrepresentative to use case to pass two identiacal |image_index| to GetTokenSimilarity(). Suggest going back to using 2 ImageIndex, but switch up dummy data values to illustrate affinity.  E.g.:\n\"ab1122334455\" vs.\n\"a1b122334455\"\n\nAlso, note that in the old test, the initialized references are different between |old_index|and |new_index| (target 2 got ragged to 1).",
+      "range": {
+        "startLine": 59,
+        "startChar": 13,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89d1cd1_3f08fae1",
+        "filename": "chrome/installer/zucchini/equivalence_map_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Length-0 equivalence seems unrealistic?",
+      "range": {
+        "startLine": 116,
+        "startChar": 49,
+        "endLine": 116,
+        "endChar": 50
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e7e54e_7256455a",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Unused, can delete?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 44
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea6f566_c0681386",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Make these const, without default values?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 32
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "142ae37e_f5048f60",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "// Key within a pool of references with same semantics.",
+      "range": {
+        "startLine": 85,
+        "startChar": 18,
+        "endLine": 85,
+        "endChar": 19
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19910c8_0f03ac58",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Need to be updated. Since we\u0027ll remove LabelManager only, just delete entries on the deleted functions.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89b1c76_16d548c5",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "NIT: Extract the std::is_sorted() call to local function IsReferenceListSorted(). Call\n  DCHECK(IsReferenceListSorted(references_));\nadn end of both InitReferences() ?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7e83cd_f61809ab",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Since size is known, may as well add:\n  references_.reserve(refs.size());",
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cdeb90_338045e6",
+        "filename": "chrome/installer/zucchini/reference_set.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "DCHECK_NE(pos, references_.begin());",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 8
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d6ae1b_c8153c94",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "// Container of distinct indirect references of a single type, along with traits.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 79
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f3a7b8_b1efc5a7",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Would it be appropriate to make this inherit from ReferenceTypeTraits?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7137d3_6520b92a",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Don\u0027t need, since there are 2 params?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 10
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5756271e_2080f5b1",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "NIT: \"Either one of the...\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 8
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef77f3a8_eaa0c461",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "NIT: |offset|",
+      "range": {
+        "startLine": 48,
+        "startChar": 32,
+        "endLine": 48,
+        "endChar": 34
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0769bd5_3214a0f1",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "NIT: Rename to num_types() or type_count(). Reason: Class name is ReferenceSet, so size() suggests that it\u0027s size of the set, i.e., number of references.",
+      "range": {
+        "startLine": 52,
+        "startChar": 9,
+        "endLine": 52,
+        "endChar": 13
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51910d86_14436168",
+        "filename": "chrome/installer/zucchini/reference_set.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "NIT: of distinct",
+      "range": {
+        "startLine": 59,
+        "startChar": 10,
+        "endLine": 59,
+        "endChar": 12
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e5ebe7_b27935b9",
+        "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "#include \"chrome/installer/zucchini/image_utils.h\"\n\nFor \"include what you use\", I think it\u0027s ambiguous whether tests can skip includes in the \"main .h file\" included at top (like for the \"main .cc file\"). My take is \"no\", because:\n- A test might not have a \"main .h file\".\n- This reduces reduce churn in the unittest if we update .h file (e.g., replace includes with forward declaration).",
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6b58f3_a2fa1056",
+        "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "If you\u0027d like:\n\nclass ReferenceSetTest : public testing::Test {\n protected:\n  TargetPool target_pool_ \u003d TargetPool{{0, 2, 3, 5}};\n  ReferenceSet reference_set_ \u003d\n      ReferenceSet{{2, TypeTag(0), PoolTag(0)}, target_pool_};\n};",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 2
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e18f35_fda89c44",
+        "filename": "chrome/installer/zucchini/reference_set_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "NIT: \"Each reference has\" ?",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 25
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2b871b_80ca4c17",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "NIT: Put \"List of associated...\" first (for less ambiguity re. \"associated\").",
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a889699e_66f7eb2b",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "NIT: \"The following functions insert each new target in\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 56
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337dab0a_0a7b3161",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "Rename to num_tagets() or target_count()?",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4f96b7_bd0e66cf",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "NIT: \"Stores\" seems redundant. Removing it will allow the comment to fit on the same line as |targets_|. :)",
+      "range": {
+        "startLine": 55,
+        "startChar": 5,
+        "endLine": 55,
+        "endChar": 11
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2be0774_2e99877e",
+        "filename": "chrome/installer/zucchini/target_pool.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "NIT: Make |types_| come first?",
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca4649e_7c82ebf1",
+        "filename": "chrome/installer/zucchini/target_pool_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-10T21:11:23Z",
+      "side": 1,
+      "message": "#include \"chrome/installer/zucchini/image_utils.h\"",
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
