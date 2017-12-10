@@ -14,7 +14,8 @@ enum PaymentComplete {
 
 [
     RuntimeEnabled=PaymentRequest,
-    SecureContext
+    SecureContext,
+    Exposed=Window
 ] interface PaymentResponse {
     serializer = {attribute};
 

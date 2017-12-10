@@ -6,7 +6,8 @@
 
 [
     RuntimeEnabled=PaymentRequest,
-    SecureContext
+    SecureContext,
+    Exposed=Window
 ] interface PaymentAddress {
     serializer = {attribute};
     readonly attribute DOMString country;
