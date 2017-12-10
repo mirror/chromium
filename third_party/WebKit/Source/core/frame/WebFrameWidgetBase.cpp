@@ -239,7 +239,14 @@ WebFloatPoint WebFrameWidgetBase::ViewportToRootFrame(
 }
 
 WebViewImpl* WebFrameWidgetBase::View() const {
-  return ToWebLocalFrameImpl(LocalRoot())->ViewImpl();
+  if (auto* local_root = LocalRoot())
+    return ToWebLocalFrameImpl(local_root)->ViewImpl();
+
+  // WebFrameWidget is created in the call to CreateFrame. The corresponding
+  // RenderWidget, however, might not swap in right away (InstallNewoDocument()
+  // will lead to it swapping in). During this interval LocalRoot() is nullptr
+  // (see https://crbug.com/792345).
+  return nullptr;
 }
 
 Page* WebFrameWidgetBase::GetPage() const {
