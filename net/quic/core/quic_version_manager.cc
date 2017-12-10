@@ -10,33 +10,42 @@
 namespace net {
 
 QuicVersionManager::QuicVersionManager(
-    QuicTransportVersionVector supported_versions)
+    ParsedQuicVersionVector supported_versions)
     : enable_version_43_(GetQuicFlag(FLAGS_quic_enable_version_43)),
       enable_version_42_(GetQuicFlag(FLAGS_quic_enable_version_42)),
-      allowed_supported_versions_(supported_versions),
-      filtered_supported_versions_(
-          FilterSupportedTransportVersions(supported_versions)) {}
+      allowed_supported_versions_(std::move(supported_versions)) {
+  RefilterSupportedVersions();
+}
 
 QuicVersionManager::~QuicVersionManager() {}
 
 const QuicTransportVersionVector&
 QuicVersionManager::GetSupportedTransportVersions() {
-  MaybeRefilterSupportedTransportVersions();
+  MaybeRefilterSupportedVersions();
+  return filtered_transport_versions_;
+}
+
+const ParsedQuicVersionVector& QuicVersionManager::GetSupportedVersions() {
+  MaybeRefilterSupportedVersions();
   return filtered_supported_versions_;
 }
 
-void QuicVersionManager::MaybeRefilterSupportedTransportVersions() {
+void QuicVersionManager::MaybeRefilterSupportedVersions() {
   if (enable_version_43_ != GetQuicFlag(FLAGS_quic_enable_version_43) ||
       enable_version_42_ != GetQuicFlag(FLAGS_quic_enable_version_42)) {
     enable_version_43_ = GetQuicFlag(FLAGS_quic_enable_version_43);
     enable_version_42_ = GetQuicFlag(FLAGS_quic_enable_version_42);
-    RefilterSupportedTransportVersions();
+    RefilterSupportedVersions();
   }
 }
 
-void QuicVersionManager::RefilterSupportedTransportVersions() {
+void QuicVersionManager::RefilterSupportedVersions() {
   filtered_supported_versions_ =
-      FilterSupportedTransportVersions(allowed_supported_versions_);
+      FilterSupportedVersions(allowed_supported_versions_);
+  filtered_transport_versions_.clear();
+  for (ParsedQuicVersion version : filtered_supported_versions_) {
+    filtered_transport_versions_.push_back(version.transport_version);
+  }
 }
 
 }  // namespace net
