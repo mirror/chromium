@@ -63,6 +63,7 @@ class OmniboxPopupContentsView : public views::View,
   gfx::Rect GetTargetBounds() override;
   void PaintUpdatesNow() override;
   void OnDragCanceled() override;
+  int32_t GetAccessibilityId() override;
 
   // gfx::AnimationDelegate:
   void AnimationProgressed(const gfx::Animation* animation) override;
@@ -72,6 +73,7 @@ class OmniboxPopupContentsView : public views::View,
   views::View* GetTooltipHandlerForPoint(const gfx::Point& point) override;
   bool OnMouseDragged(const ui::MouseEvent& event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
+  void GetAccessibleNodeData(ui::AXNodeData*) override;
 
  private:
   class AutocompletePopupWidget;
