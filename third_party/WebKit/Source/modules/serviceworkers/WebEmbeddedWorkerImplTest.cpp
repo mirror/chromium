@@ -16,7 +16,6 @@
 #include "public/platform/WebContentSettingsClient.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/platform/WebURLResponse.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/web/WebEmbeddedWorkerStartData.h"
@@ -26,6 +25,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
 
+#if 0
 namespace blink {
 namespace {
 
@@ -381,3 +381,4 @@ TEST_F(WebEmbeddedWorkerImplTest, PauseAfterDownload) {
 }
 
 }  // namespace blink
+#endif

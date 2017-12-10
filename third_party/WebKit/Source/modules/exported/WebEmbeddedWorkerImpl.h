@@ -49,6 +49,9 @@ namespace blink {
 
 class ContentSecurityPolicy;
 class ServiceWorkerInstalledScriptsManager;
+class WebURL;
+template <typename T>
+class WebVector;
 class WorkerInspectorProxy;
 class WorkerScriptLoader;
 class WorkerThread;
@@ -61,7 +64,9 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
  public:
   WebEmbeddedWorkerImpl(
       std::unique_ptr<WebServiceWorkerContextClient>,
-      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
+      WebVector<WebURL> installed_scripts_urls,
+      mojo::ScopedMessagePipeHandle installed_scripts_manager_request,
+      mojo::ScopedMessagePipeHandle installed_scripts_manager_host_ptr,
       std::unique_ptr<ServiceWorkerContentSettingsProxy>,
       service_manager::mojom::blink::InterfaceProviderPtrInfo);
   ~WebEmbeddedWorkerImpl() override;

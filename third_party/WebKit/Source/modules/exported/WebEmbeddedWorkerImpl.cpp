@@ -74,12 +74,15 @@ namespace blink {
 
 std::unique_ptr<WebEmbeddedWorker> WebEmbeddedWorker::Create(
     std::unique_ptr<WebServiceWorkerContextClient> client,
-    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
-        installed_scripts_manager,
+    WebVector<WebURL> installed_scripts_urls,
+    mojo::ScopedMessagePipeHandle installed_scripts_manager_request,
+    mojo::ScopedMessagePipeHandle installed_scripts_manager_host_ptr,
     mojo::ScopedMessagePipeHandle content_settings_handle,
     mojo::ScopedMessagePipeHandle interface_provider) {
   return std::make_unique<WebEmbeddedWorkerImpl>(
-      std::move(client), std::move(installed_scripts_manager),
+      std::move(client), std::move(installed_scripts_urls),
+      std::move(installed_scripts_manager_request),
+      std::move(installed_scripts_manager_host_ptr),
       std::make_unique<ServiceWorkerContentSettingsProxy>(
           // Chrome doesn't use interface versioning.
           mojom::blink::WorkerContentSettingsProxyPtrInfo(
@@ -91,8 +94,9 @@ std::unique_ptr<WebEmbeddedWorker> WebEmbeddedWorker::Create(
 
 WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
     std::unique_ptr<WebServiceWorkerContextClient> client,
-    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
-        installed_scripts_manager,
+    WebVector<WebURL> installed_scripts_urls,
+    mojo::ScopedMessagePipeHandle installed_scripts_manager_request,
+    mojo::ScopedMessagePipeHandle installed_scripts_manager_host_ptr,
     std::unique_ptr<ServiceWorkerContentSettingsProxy> content_settings_client,
     service_manager::mojom::blink::InterfaceProviderPtrInfo
         interface_provider_info)
@@ -103,10 +107,13 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
       waiting_for_debugger_state_(kNotWaitingForDebugger),
       interface_provider_info_(std::move(interface_provider_info)) {
   if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
-      installed_scripts_manager) {
+      installed_scripts_manager_request.is_valid()) {
+    DCHECK(installed_scripts_manager_host_ptr.is_valid());
     installed_scripts_manager_ =
         std::make_unique<ServiceWorkerInstalledScriptsManager>(
-            std::move(installed_scripts_manager));
+            std::move(installed_scripts_urls),
+            std::move(installed_scripts_manager_request),
+            std::move(installed_scripts_manager_host_ptr));
   }
 }
 

@@ -40,8 +40,10 @@ namespace blink {
 
 class WebContentSettingsClient;
 class WebServiceWorkerContextClient;
-class WebServiceWorkerInstalledScriptsManager;
 class WebString;
+class WebURL;
+template <typename T>
+class WebVector;
 struct WebConsoleMessage;
 struct WebEmbeddedWorkerStartData;
 
@@ -55,7 +57,9 @@ class BLINK_EXPORT WebEmbeddedWorker {
   // WorkerGlobalScope.
   static std::unique_ptr<WebEmbeddedWorker> Create(
       std::unique_ptr<WebServiceWorkerContextClient>,
-      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
+      WebVector<WebURL> installed_scripts_urls,
+      mojo::ScopedMessagePipeHandle installed_scripts_manager_request,
+      mojo::ScopedMessagePipeHandle installed_scripts_manager_host_ptr,
       mojo::ScopedMessagePipeHandle content_settings_handle,
       mojo::ScopedMessagePipeHandle interface_provider);
 
