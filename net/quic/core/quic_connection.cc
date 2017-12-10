@@ -178,7 +178,7 @@ QuicConnection::QuicConnection(
     QuicPacketWriter* writer,
     bool owns_writer,
     Perspective perspective,
-    const QuicTransportVersionVector& supported_versions)
+    const ParsedQuicVersionVector& supported_versions)
     : framer_(supported_versions,
               helper->GetClock()->ApproximateNow(),
               perspective),
@@ -406,14 +406,14 @@ void QuicConnection::SetNumOpenStreams(size_t num_streams) {
 }
 
 bool QuicConnection::SelectMutualVersion(
-    const QuicTransportVersionVector& available_versions) {
+    const ParsedQuicVersionVector& available_versions) {
   // Try to find the highest mutual version by iterating over supported
   // versions, starting with the highest, and breaking out of the loop once we
   // find a matching version in the provided available_versions vector.
-  const QuicTransportVersionVector& supported_versions =
+  const ParsedQuicVersionVector& supported_versions =
       framer_.supported_versions();
   for (size_t i = 0; i < supported_versions.size(); ++i) {
-    const QuicTransportVersion& version = supported_versions[i];
+    const ParsedQuicVersion& version = supported_versions[i];
     if (QuicContainsValue(available_versions, version)) {
       framer_.set_version(version);
       return true;
@@ -452,9 +452,9 @@ void QuicConnection::OnPublicResetPacket(const QuicPublicResetPacket& packet) {
 }
 
 bool QuicConnection::OnProtocolVersionMismatch(
-    QuicTransportVersion received_version) {
+    ParsedQuicVersion received_version) {
   QUIC_DLOG(INFO) << ENDPOINT << "Received packet with mismatched version "
-                  << received_version;
+                  << ParsedQuicVersionToString(received_version);
   // TODO(satyamshekhar): Implement no server state in this mode.
   if (perspective_ == Perspective::IS_CLIENT) {
     const string error_details = "Protocol version mismatch.";
@@ -463,10 +463,11 @@ bool QuicConnection::OnProtocolVersionMismatch(
                                  ConnectionCloseSource::FROM_SELF);
     return false;
   }
-  DCHECK_NE(transport_version(), received_version);
+  DCHECK_NE(version(), received_version);
 
   if (debug_visitor_ != nullptr) {
-    debug_visitor_->OnProtocolVersionMismatch(received_version);
+    debug_visitor_->OnProtocolVersionMismatch(
+        received_version.transport_version);
   }
 
   switch (version_negotiation_state_) {
@@ -495,11 +496,13 @@ bool QuicConnection::OnProtocolVersionMismatch(
   }
 
   version_negotiation_state_ = NEGOTIATED_VERSION;
-  visitor_->OnSuccessfulVersionNegotiation(received_version);
+  visitor_->OnSuccessfulVersionNegotiation(received_version.transport_version);
   if (debug_visitor_ != nullptr) {
-    debug_visitor_->OnSuccessfulVersionNegotiation(received_version);
+    debug_visitor_->OnSuccessfulVersionNegotiation(
+        received_version.transport_version);
   }
-  QUIC_DLOG(INFO) << ENDPOINT << "version negotiated " << received_version;
+  QUIC_DLOG(INFO) << ENDPOINT << "version negotiated "
+                  << ParsedQuicVersionToString(received_version);
 
   // Store the new version.
   framer_.set_version(received_version);
@@ -533,7 +536,7 @@ void QuicConnection::OnVersionNegotiationPacket(
     return;
   }
 
-  if (QuicContainsValue(packet.versions, transport_version())) {
+  if (QuicContainsValue(packet.versions, version())) {
     const string error_details =
         "Server already supports client's version and should have accepted the "
         "connection.";
@@ -551,9 +554,9 @@ void QuicConnection::OnVersionNegotiationPacket(
         QUIC_INVALID_VERSION,
         QuicStrCat(
             "No common version found. Supported versions: {",
-            QuicTransportVersionVectorToString(framer_.supported_versions()),
+            ParsedQuicVersionVectorToString(framer_.supported_versions()),
             "}, peer supported versions: {",
-            QuicTransportVersionVectorToString(packet.versions), "}"),
+            ParsedQuicVersionVectorToString(packet.versions), "}"),
         ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
     return;
   }
@@ -1161,7 +1164,7 @@ void QuicConnection::SendVersionNegotiationPacket() {
     return;
   }
   QUIC_DLOG(INFO) << ENDPOINT << "Sending version negotiation packet: {"
-                  << QuicTransportVersionVectorToString(
+                  << ParsedQuicVersionVectorToString(
                          framer_.supported_versions())
                   << "}";
   std::unique_ptr<QuicEncryptedPacket> version_packet(
@@ -1488,7 +1491,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
                         ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
         return false;
       } else {
-        DCHECK_EQ(header.version, transport_version());
+        DCHECK_EQ(header.version, version());
         version_negotiation_state_ = NEGOTIATED_VERSION;
         visitor_->OnSuccessfulVersionNegotiation(transport_version());
         if (debug_visitor_ != nullptr) {

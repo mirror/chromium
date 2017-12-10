@@ -283,13 +283,44 @@ TEST_F(QuicVersionsTest, QuicVersionToString) {
   }
 }
 
+TEST_F(QuicVersionsTest, ParsedQuicVersionToString) {
+  ParsedQuicVersion unsupported(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED);
+  ParsedQuicVersion version35(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_35);
+  EXPECT_EQ("Q035", ParsedQuicVersionToString(version35));
+  EXPECT_EQ("0", ParsedQuicVersionToString(unsupported));
+
+  ParsedQuicVersionVector versions_vector = {version35};
+  EXPECT_EQ("Q035", ParsedQuicVersionVectorToString(versions_vector));
+
+  versions_vector = {unsupported, version35};
+  EXPECT_EQ("0,Q035", ParsedQuicVersionVectorToString(versions_vector));
+
+  // Make sure that all supported versions are present in
+  // ParsedQuicVersionToString.
+  FLAGS_quic_supports_tls_handshake = true;
+  for (QuicTransportVersion transport_version : kSupportedTransportVersions) {
+    for (HandshakeProtocol protocol : kSupportedHandshakeProtocols) {
+      EXPECT_NE("0", ParsedQuicVersionToString(
+                         ParsedQuicVersion(protocol, transport_version)));
+    }
+  }
+}
+
 TEST_F(QuicVersionsTest, FilterSupportedTransportVersionsAllVersions) {
   QuicTransportVersionVector all_versions = {QUIC_VERSION_35, QUIC_VERSION_37,
                                              QUIC_VERSION_38, QUIC_VERSION_39};
+  ParsedQuicVersionVector parsed_versions;
+  for (QuicTransportVersion version : all_versions) {
+    parsed_versions.push_back(ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, version));
+  }
 
   QuicTransportVersionVector filtered_versions =
       FilterSupportedTransportVersions(all_versions);
   ASSERT_EQ(all_versions, filtered_versions);
+
+  ParsedQuicVersionVector filtered_parsed_versions =
+      FilterSupportedVersions(parsed_versions);
+  ASSERT_EQ(parsed_versions, filtered_parsed_versions);
 }
 
 TEST_F(QuicVersionsTest, LookUpVersionByIndex) {
@@ -304,6 +335,31 @@ TEST_F(QuicVersionsTest, LookUpVersionByIndex) {
     }
   }
 }
+
+TEST_F(QuicVersionsTest, LookUpParsedVersionByIndex) {
+  ParsedQuicVersionVector all_versions = AllSupportedVersions();
+  int version_count = all_versions.size();
+  for (int i = -5; i <= version_count + 1; ++i) {
+    if (i >= 0 && i < version_count) {
+      EXPECT_EQ(all_versions[i], ParsedVersionOfIndex(all_versions, i)[0]);
+    } else {
+      EXPECT_EQ(
+          ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+          ParsedVersionOfIndex(all_versions, i)[0]);
+    }
+  }
+}
+
+TEST_F(QuicVersionsTest, ParsedVersionsToTransportVersions) {
+  ParsedQuicVersionVector all_versions = AllSupportedVersions();
+  QuicTransportVersionVector transport_versions =
+      ParsedVersionsToTransportVersions(all_versions);
+  ASSERT_EQ(all_versions.size(), transport_versions.size());
+  for (size_t i = 0; i < all_versions.size(); ++i) {
+    EXPECT_EQ(transport_versions[i], all_versions[i].transport_version);
+  }
+}
+
 // This test may appear to be so simplistic as to be unnecessary,
 // yet a typo was made in doing the #defines and it was caught
 // only in some test far removed from here... Better safe than sorry.
