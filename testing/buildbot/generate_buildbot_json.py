@@ -11,6 +11,7 @@ import argparse
 import ast
 import collections
 import copy
+import itertools
 import json
 import os
 import string
@@ -27,18 +28,34 @@ class BaseGenerator(object):
   def __init__(self, bb_gen):
     self.bb_gen = bb_gen
 
-  def generate(self, waterfall, name, config, input_tests):
+  def generate(self, waterfall, tester_name, tester_config, input_tests):
     raise NotImplementedError()
 
   def sort(self, tests):
     raise NotImplementedError()
 
 
+def cmp_tests(a, b):
+  # Prefer to compare based on the "test" key.
+  val = cmp(a['test'], b['test'])
+  if val != 0:
+    return val
+  if 'name' in a and 'name' in b:
+    return cmp(a['name'], b['name']) # pragma: no cover
+  if 'name' not in a and 'name' not in b:
+    return 0 # pragma: no cover
+  # Prefer to put variants of the same test after the first one.
+  if 'name' in a:
+    return 1
+  # 'name' is in b.
+  return -1 # pragma: no cover
+
+
 class GTestGenerator(BaseGenerator):
   def __init__(self, bb_gen):
     super(GTestGenerator, self).__init__(bb_gen)
 
-  def generate(self, waterfall, name, config, input_tests):
+  def generate(self, waterfall, tester_name, tester_config, input_tests):
     # The relative ordering of some of the tests is important to
     # minimize differences compared to the handwritten JSON files, since
     # Python's sorts are stable and there are some tests with the same
@@ -47,39 +64,25 @@ class GTestGenerator(BaseGenerator):
     gtests = []
     for test_name, test_config in sorted(input_tests.iteritems()):
       test = self.bb_gen.generate_gtest(
-        waterfall, name, config, test_name, test_config)
+        waterfall, tester_name, tester_config, test_name, test_config)
       if test:
         # generate_gtest may veto the test generation on this tester.
         gtests.append(test)
     return gtests
 
   def sort(self, tests):
-    def cmp_gtests(a, b):
-      # Prefer to compare based on the "test" key.
-      val = cmp(a['test'], b['test'])
-      if val != 0:
-        return val
-      if 'name' in a and 'name' in b:
-        return cmp(a['name'], b['name']) # pragma: no cover
-      if 'name' not in a and 'name' not in b:
-        return 0 # pragma: no cover
-      # Prefer to put variants of the same test after the first one.
-      if 'name' in a:
-        return 1
-      # 'name' is in b.
-      return -1 # pragma: no cover
-    return sorted(tests, cmp=cmp_gtests)
+    return sorted(tests, cmp=cmp_tests)
 
 
 class IsolatedScriptTestGenerator(BaseGenerator):
   def __init__(self, bb_gen):
     super(IsolatedScriptTestGenerator, self).__init__(bb_gen)
 
-  def generate(self, waterfall, name, config, input_tests):
+  def generate(self, waterfall, tester_name, tester_config, input_tests):
     isolated_scripts = []
     for test_name, test_config in sorted(input_tests.iteritems()):
       test = self.bb_gen.generate_isolated_script_test(
-        waterfall, name, config, test_name, test_config)
+        waterfall, tester_name, tester_config, test_name, test_config)
       if test:
         isolated_scripts.append(test)
     return isolated_scripts
@@ -92,11 +95,11 @@ class ScriptGenerator(BaseGenerator):
   def __init__(self, bb_gen):
     super(ScriptGenerator, self).__init__(bb_gen)
 
-  def generate(self, waterfall, name, config, input_tests):
+  def generate(self, waterfall, tester_name, tester_config, input_tests):
     scripts = []
     for test_name, test_config in sorted(input_tests.iteritems()):
       test = self.bb_gen.generate_script_test(
-        waterfall, name, config, test_name, test_config)
+        waterfall, tester_name, tester_config, test_name, test_config)
       if test:
         scripts.append(test)
     return scripts
@@ -109,11 +112,11 @@ class JUnitGenerator(BaseGenerator):
   def __init__(self, bb_gen):
     super(JUnitGenerator, self).__init__(bb_gen)
 
-  def generate(self, waterfall, name, config, input_tests):
+  def generate(self, waterfall, tester_name, tester_config, input_tests):
     scripts = []
     for test_name, test_config in sorted(input_tests.iteritems()):
       test = self.bb_gen.generate_junit_test(
-        waterfall, name, config, test_name, test_config)
+        waterfall, tester_name, tester_config, test_name, test_config)
       if test:
         scripts.append(test)
     return scripts
@@ -126,7 +129,7 @@ class CTSGenerator(BaseGenerator):
   def __init__(self, bb_gen):
     super(CTSGenerator, self).__init__(bb_gen)
 
-  def generate(self, waterfall, name, config, input_tests):
+  def generate(self, waterfall, tester_name, tester_config, input_tests):
     # These only contain one entry and it's the contents of the input tests'
     # dictionary, verbatim.
     cts_tests = []
@@ -141,17 +144,17 @@ class InstrumentationTestGenerator(BaseGenerator):
   def __init__(self, bb_gen):
     super(InstrumentationTestGenerator, self).__init__(bb_gen)
 
-  def generate(self, waterfall, name, config, input_tests):
+  def generate(self, waterfall, tester_name, tester_config, input_tests):
     scripts = []
     for test_name, test_config in sorted(input_tests.iteritems()):
       test = self.bb_gen.generate_instrumentation_test(
-        waterfall, name, config, test_name, test_config)
+        waterfall, tester_name, tester_config, test_name, test_config)
       if test:
         scripts.append(test)
     return scripts
 
   def sort(self, tests):
-    return sorted(tests, key=lambda x: x['test'])
+    return sorted(tests, cmp=cmp_tests)
 
 
 class BBJSONGenerator(object):
@@ -240,23 +243,24 @@ class BBJSONGenerator(object):
         elif a[key] == b[key]:
           pass # same leaf value
         elif isinstance(a[key], list) and isinstance(b[key], list):
-          # TODO(kbr): this only works properly if the two arrays are
-          # the same length, which is currently always the case in the
-          # swarming dimension_sets that we have to merge. It will fail
-          # to merge / override 'args' arrays which are different
-          # length.
-          #
-          # Fundamentally we want different behavior for arrays of
-          # dictionaries vs. arrays of strings.
-          for idx in xrange(len(b[key])):
-            try:
-              a[key][idx] = self.dictionary_merge(a[key][idx], b[key][idx],
-                                                  path + [str(key), str(idx)],
-                                                  update=update)
-            except (IndexError, TypeError): # pragma: no cover
-              raise BBGenErr('Error merging list keys ' + str(key) +
-                              ' and indices ' + str(idx) + ' between ' +
-                              str(a) + ' and ' + str(b)) # pragma: no cover
+          if all(isinstance(x, str)
+                 for x in itertools.chain(a[key], b[key])):
+            a[key] = sorted(a[key] + b[key])
+          else:
+            # TODO(kbr): this only works properly if the two arrays are
+            # the same length, which is currently always the case in the
+            # swarming dimension_sets that we have to merge. It will fail
+            # to merge / override 'args' arrays which are different
+            # length.
+            for idx in xrange(len(b[key])):
+              try:
+                a[key][idx] = self.dictionary_merge(a[key][idx], b[key][idx],
+                                                    path + [str(key), str(idx)],
+                                                    update=update)
+              except (IndexError, TypeError): # pragma: no cover
+                raise BBGenErr('Error merging list keys ' + str(key) +
+                               ' and indices ' + str(idx) + ' between ' +
+                               str(a) + ' and ' + str(b)) # pragma: no cover
         elif update: # pragma: no cover
           a[key] = b[key] # pragma: no cover
         else:
@@ -330,7 +334,8 @@ class BBJSONGenerator(object):
     self.initialize_swarming_dictionary_for_test(result, tester_config)
     if self.is_android(tester_config) and tester_config.get('use_swarming',
                                                             True):
-      if not tester_config.get('skip_merge_script', False):
+      if result['swarming']['can_use_on_swarming_builders'] and not \
+         tester_config.get('skip_merge_script', False):
         result['merge'] = {
           'args': [
             '--bucket',
@@ -402,7 +407,10 @@ class BBJSONGenerator(object):
                                      test_name, test_config):
       return None
     result = copy.deepcopy(test_config)
-    result['test'] = test_name
+    if 'test' in result and result['test'] != test_name:
+      result['name'] = test_name
+    else:
+      result['test'] = test_name
     return result
 
   def get_test_generator_map(self):

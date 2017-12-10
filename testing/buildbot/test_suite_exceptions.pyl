@@ -30,6 +30,8 @@
       'Nougat Phone Tester',
       # chromium.clang
       'ToTAndroid x64',
+      # chromium.fyi
+      'Out of Process Profiling Android',
     ],
     'modifications': {
       'Lollipop Tablet Tester': {
@@ -54,6 +56,11 @@
       # chromium.clang
       'ToTAndroidCFI',
       'ToTLinuxMSan',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
     ],
     'modifications': {
       'Linux ASan LSan Tests (1)': {
@@ -91,6 +98,13 @@
       'ToTWinCFI',
       'ToTWinCFI64',
       'ToTWinThinLTO64',
+      # chromium.fyi
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'Out of Process Profiling Windows',
+      'UBSanVptr Linux',
+      'Win 10 Fast Ring',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
       'Linux Chromium OS ASan LSan Tests (1)',
@@ -132,11 +146,21 @@
       'ToTWinCFI',
       'ToTWinCFI64',
       'ToTWinThinLTO64',
+      # chromium.fyi
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'Out of Process Profiling Windows',
+      'Win 10 Fast Ring',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
     ],
   },
   'base_unittests': {
+    'remove_from': [
+      # chromium.linux
+      'Fuchsia x64',
+    ],
     'modifications': {
       # chromium.android
       'KitKat Tablet Tester': {
@@ -170,6 +194,12 @@
           'shards': 5,
         },
       },
+      # chromium.fyi
+      'Out of Process Profiling Mac': {
+        'swarming': {
+          'shards': 5,
+        },
+      },
     },
   },
   'battor_agent_unittests': {
@@ -196,6 +226,16 @@
       'CrWinAsan(dll)',
       'CrWinAsanCov',
       'ToTLinuxMSan',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Chromium Win 10 GCE Tests',
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'Win 10 Fast Ring',
       # On chromium.linux, unclear why these only run on "Linux Tests".
       'Cast Audio Linux',
       'Cast Linux',
@@ -267,6 +307,16 @@
       'CrWinAsan(dll)',
       'CrWinAsanCov',
       'ToTLinuxMSan',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Chromium Win 10 GCE Tests',
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'Win 10 Fast Ring',
       # On chromium.linux, unclear why these only run on "Linux Tests".
       'Linux Tests (dbg)(1)',
       'Linux Tests (dbg)(1)(32)',
@@ -405,15 +455,14 @@
       # chromium.clang
       'CrWinAsanCov',
       'ToTLinuxUBSanVptr',
+      # chromium.fyi
+      'CrWinAsanCov tester',
+      'UBSanVptr Linux',
       # chromium.memory
       'Linux TSan Tests',
     ],
     'modifications': {
-      'Win7 Tests (dbg)(1)': {
-        'swarming': {
-          'shards': 20,
-        },
-      },
+      # chromium.chromiumos
       'Linux ChromiumOS Tests (dbg)(1)': {
         'swarming': {
           'shards': 20,
@@ -485,9 +534,18 @@
         'args': [
           '--gtest_filter=-SaveType/SavePageMultiFrameBrowserTest.ObjectElements/0',
         ],
+      },
+      # chromium.fyi
+      'Out of Process Profiling Linux': {
         'swarming': {
-          'shards': 10,
+          'shards': 5,
         },
+      },
+      'ThinLTO Linux ToT': {
+        # TODO(kbr): remove this spurious filter.
+        'args': [
+          '--gtest_filter=-SaveType/SavePageMultiFrameBrowserTest.ObjectElements/0',
+        ],
       },
       # chromium.memory
       'Linux Chromium OS ASan LSan Tests (1)': {
@@ -532,7 +590,49 @@
           'shards':  10,
         },
       },
+      # chromium.win
+      'Win7 Tests (dbg)(1)': {
+        'swarming': {
+          'shards': 20,
+        },
+      },
     },
+  },
+  'boringssl_crypto_tests': {
+    'remove_from': [
+      # On chromium.android, unclear why these aren't run on all bots.
+      'KitKat Tablet Tester',
+      'Lollipop Phone Tester',
+      'Lollipop Tablet Tester',
+      'Marshmallow 64 bit Tester',
+      'Marshmallow Phone Tester (rel)',
+      'Marshmallow Tablet Tester',
+      'Nougat Phone Tester',
+      # chromium.chromiumos
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
+      # On chromium.mac, unclear why these aren't run on "Mac10.12 Tests".
+      'Mac10.12 Tests',
+    ],
+  },
+  'boringssl_ssl_tests': {
+    'remove_from': [
+      # On chromium.android, unclear why these aren't run on all bots.
+      'KitKat Tablet Tester',
+      'Lollipop Phone Tester',
+      'Lollipop Tablet Tester',
+      'Marshmallow 64 bit Tester',
+      'Marshmallow Phone Tester (rel)',
+      'Marshmallow Tablet Tester',
+      'Nougat Phone Tester',
+      # chromium.chromiumos
+      'Linux ChromiumOS Tests (dbg)(1)',
+      'linux-chromeos-dbg',
+      'linux-chromeos-rel',
+      # On chromium.mac, unclear why these aren't run on "Mac10.12 Tests".
+      'Mac10.12 Tests',
+    ],
   },
   'cacheinvalidation_unittests': {
     'remove_from': [
@@ -608,6 +708,8 @@
       # chromium.clang
       'ToTAndroidCFI',
       'ToTLinuxThinLTO',
+      # chromium.fyi
+      'ThinLTO Linux ToT',
       # chromium.memory
       'Mac ASan 64 Tests (1)',
     ],
@@ -657,6 +759,16 @@
       'Mac',
     ],
   },
+  'chrome_app_unittests': {
+    'remove_from': [
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Mac',
+    ],
+  },
   'chrome_elf_import_unittests': {
     'remove_from': [
       # chromium.clang
@@ -680,6 +792,12 @@
       'ToTWinCFI',
       'ToTWinCFI64',
       'ToTWinThinLTO64',
+      # chromium.fyi
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'Out of Process Profiling Windows',
+      'Win 10 Fast Ring',
     ],
   },
   'chrome_public_test_apk': {
@@ -692,11 +810,17 @@
       'Android N5X Swarm',
     ],
     'key_removals': {
+      # chromium.clang
       'ToTAndroid x64': [
+        'args',
+      ],
+      # chromium.fyi
+      'Out of Process Profiling Android': [
         'args',
       ],
     },
     'modifications': {
+      # chromium.android
       'KitKat Phone Tester (dbg)': {
         'swarming': {
           'shards': 20,
@@ -740,6 +864,13 @@
           'hard_timeout': 0,
         },
       },
+      # chromium.fyi
+      'Out of Process Profiling Android': {
+        'swarming': {
+          'shards': 1,
+          'hard_timeout': 0,
+        },
+      },
     },
   },
   'chrome_public_test_vr_apk': {
@@ -752,6 +883,8 @@
       'Marshmallow Tablet Tester',
       # chromium.clang
       'ToTAndroid x64',
+      # chromium.fyi
+      'Out of Process Profiling Android',
     ],
     'modifications': {
       'Lollipop Phone Tester': {
@@ -783,10 +916,15 @@
   },
   'chrome_sync_shell_test_apk': {
     'key_removals': {
+      # chromium.clang
       'ToTAndroid x64': [
         'args',
       ],
       'ToTAndroidCFI': [
+        'args',
+      ],
+      # chromium.fyi
+      'Out of Process Profiling Android': [
         'args',
       ],
     },
@@ -819,6 +957,12 @@
         },
       },
       'ToTAndroidCFI': {
+        'swarming': {
+          'hard_timeout': 0,
+        },
+      },
+      # chromium.fyi
+      'Out of Process Profiling Android': {
         'swarming': {
           'hard_timeout': 0,
         },
@@ -866,6 +1010,13 @@
       'ToTLinuxUBSanVptr',
       'ToTMac',
       'ToTMacASan',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Linux',
+      'Out of Process Profiling Mac',
       # On chromium.linux, unclear why these aren't run on the Cast bots.
       'Cast Audio Linux',
       'Cast Linux',
@@ -907,6 +1058,7 @@
     'remove_from': [
       # chromium.clang
       'ToTLinuxUBSanVptr',
+      'UBSanVptr Linux',
       # On chromium.linux, unclear why these aren't run on the Cast bots.
       'Cast Audio Linux',
       'Cast Linux',
@@ -971,6 +1123,12 @@
       'ToTWinCFI',
       'ToTWinCFI64',
       'ToTWinThinLTO64',
+      # chromium.fyi
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'Out of Process Profiling Windows',
+      'Win 10 Fast Ring',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
       'Linux TSan Tests',
@@ -1081,6 +1239,10 @@
     'remove_from': [
       # chromium.clang
       'ToTMac',
+      # chromium.fyi
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Mac',
       # On chromium.linux, unclear why these only run on "Linux Tests".
       'Linux Tests (dbg)(1)',
       'Linux Tests (dbg)(1)(32)',
@@ -1104,6 +1266,10 @@
         'args',
       ],
       'ToTAndroidCFI': [
+        'args',
+      ],
+      # chromium.fyi
+      'Out of Process Profiling Android': [
         'args',
       ],
     },
@@ -1145,12 +1311,23 @@
           'shards': 1,
         },
       },
+      # chromium.fyi
+      'Out of Process Profiling Android': {
+        'swarming': {
+          'hard_timeout': 0,
+          'shards': 1,
+        },
+      },
     },
   },
   'content_unittests': {
     'remove_from': [
-       # TODO(dpranke) - remove this exception.
-       'Fuchsia x64 SANDBOX',
+      # TODO(dpranke) - remove this exception.
+      'Fuchsia x64 SANDBOX',
+
+      # chromium.fyi
+      'Fuchsia (dbg)',
+      'Fuchsia ARM64',
     ],
     'modifications': {
       # TODO(dpranke) - on chromium.swarm, remove this exception.
@@ -1159,6 +1336,7 @@
           'shards': 4,
         },
       },
+      # chromium.android
       'KitKat Tablet Tester': {
         'swarming': {
           'hard_timeout': 1200,
@@ -1174,6 +1352,12 @@
           'hard_timeout': 1500,
         },
       },
+      # chromium.fyi
+      'Site Isolation Android': {
+        'swarming': {
+          'hard_timeout': 0,
+        },
+      },
     },
   },
   'crashpad_tests': {
@@ -1183,6 +1367,11 @@
       'CrWinAsan(dll)',
       'CrWinAsanCov',
       'ToTMacASan',
+      # chromium.fyi
+      'Chromium Win 10 GCE Tests',
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
     ],
   },
   'crypto_unittests': {
@@ -1224,6 +1413,12 @@
       # chromium.clang
       'ToTMac',
       'ToTMacASan',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Mac',
       # chromium.memory
       'Mac ASan 64 Tests (1)',
       # chromium.win
@@ -1279,6 +1474,9 @@
       'Nougat Phone Tester',
       # chromium.clang
       'ToTAndroidCFI',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11 Force Mac Toolchain',
       # chromium.memory
       'Mac ASan 64 Tests (1)',
       # chromium.win
@@ -1318,6 +1516,13 @@
       'ToTLinuxLLD',
       'ToTMac',
       'ToTMacASan',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Linux',
+      'Out of Process Profiling Mac',
       # On chromium.mac, unclear why these aren't run.
       'Mac10.10 Tests',
       'Mac10.11 Tests',
@@ -1411,6 +1616,14 @@
       'ToTLinuxLLD',
       'ToTLinuxMSan',
       'ToTLinuxUBSanVptr',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Chromium Win 10 GCE Tests',
+      'Out of Process Profiling Linux',
+      'Out of Process Profiling Mac',
       # On chromium.linux, unclear why these aren't run on Cast.
       'Cast Audio Linux',
       'Cast Linux',
@@ -1437,6 +1650,10 @@
       'CFI Linux (icall)',
       'CFI Linux ToT',
       'ToTLinuxThinLTO',
+      # chromium.fyi
+      'Out of Process Profiling Linux',
+      'ThinLTO Linux ToT',
+      'UBSanVptr Linux',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
       'Linux CFI',
@@ -1456,6 +1673,8 @@
   },
   'gl_unittests': {
     'remove_from': [
+      # chromium.fyi
+      'Out of Process Profiling Linux',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
     ],
@@ -1543,6 +1762,13 @@
       'ToTLinuxLLD',
       'ToTLinuxMSan',
       'ToTLinuxUBSanVptr',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Linux',
+      'Out of Process Profiling Mac',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
     ],
@@ -1575,6 +1801,8 @@
       # chromium.clang
       'CrWinClngLLD64dbg',
       'ToTLinuxLLD',
+      # chromium.fyi
+      'Win 10 Fast Ring',
       # chromium.linux
       'Linux Tests (dbg)(1)(32)',
     ],
@@ -1657,28 +1885,39 @@
       'ToTWinCFI',
       'ToTWinCFI64',
       'ToTWinThinLTO64',
+      # chromium.fyi
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'Out of Process Profiling Windows',
+      'Win 10 Fast Ring',
     ],
   },
   'interactive_ui_tests': {
     'remove_from': [
       # chromium.clang
       'ToTLinuxUBSanVptr',
+      # chromium.fyi
+      'Chromium Win 10 GCE Tests',
       # chromium.memory
       'Linux TSan Tests',
     ],
     'modifications': {
+      # chromium.clang
       'CFI Linux (icall)': {
         'swarming': {
           'shards': 1,
         },
       },
-      # Unclear why this isn't sharded.
-      'Linux Tests': {
+      # chromium.sandbox
+      'Linux Tests SANDBOX': {
         'swarming': {
           'shards': 1,
         },
       },
-      'Linux Tests SANDBOX': {
+      # chromium.linux
+      # Unclear why this isn't sharded.
+      'Linux Tests': {
         'swarming': {
           'shards': 1,
         },
@@ -1693,6 +1932,7 @@
           'shards': 3,
         },
       },
+      # chromium.chromiumos
       'Linux ChromiumOS Tests (dbg)(1)': {
         'swarming': {
           'shards': 3,
@@ -1708,6 +1948,19 @@
           'shards': 3,
         },
       },
+      # chromium.fyi
+      'Out of Process Profiling Mac': {
+        'swarming': {
+          'shards': 1,
+        },
+      },
+      'Site Isolation Linux': {
+        'args': [
+          # TODO(kbr): unclear why this isn't specified on "Site Isolation Win".
+          '--test-launcher-filter-file=../../testing/buildbot/filters/site-per-process.interactive_ui_tests.filter',
+        ],
+      },
+      # chromium.mac
       # Unclear why this isn't swarmed.
       'Mac10.10 Tests': {
         'swarming': {
@@ -1726,6 +1979,7 @@
           'shards': 1,
         },
       },
+      # chromium.win
       'Win7 Tests (dbg)(1)': {
         'swarming': {
           'shards': 4,
@@ -1751,6 +2005,10 @@
     },
   },
   'ipc_tests': {
+    'remove_from': [
+      # chromium.linux
+      'Fuchsia x64',
+    ],
     'modifications': {
       'KitKat Tablet Tester': {
         'swarming': {
@@ -1814,6 +2072,11 @@
       'ToTLinuxLLD',
       'ToTLinuxThinLTO',
       'ToTLinuxUBSanVptr',
+      # chromium.fyi
+      'Out of Process Profiling Android',
+      'Out of Process Profiling Linux',
+      'ThinLTO Linux ToT',
+      'UBSanVptr Linux',
       # On chromium.linux, unclear why these aren't run.
       'Linux Tests',
       'Linux Tests (dbg)(1)',
@@ -1851,12 +2114,38 @@
       # chromium.memory
       'Linux Chromium OS ASan LSan Tests (1)',
     ],
+    'modifications': {
+      # chromium.chromiumos
+      'linux-chromeos-rel': {
+        'args': [
+          '--test-launcher-filter-file=../../testing/buildbot/filters/mash.browser_tests.filter',
+        ],
+      },
+      # chromium.fyi
+      'Mojo ChromiumOS': {
+        'args': [
+          '--test-launcher-filter-file=../../testing/buildbot/filters/mojo.fyi.mash.browser_tests.filter',
+        ],
+      },
+    },
+  },
+  'mash_unittests': {
+    'remove_from': [
+      # chromium.fyi
+      'Mojo ChromiumOS',
+    ],
   },
   'mac_installer_unittests': {
     'remove_from': [
       # chromium.clang
       'ToTMac',
       'ToTMacASan',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Mac',
     ],
   },
   'media_blink_unittests': {
@@ -1868,6 +2157,8 @@
       'Nougat Phone Tester',
       # chromium.clang
       'ToTAndroid x64',
+      # chromium.fyi
+      'Out of Process Profiling Android',
     ],
     'modifications': {
       'Lollipop Tablet Tester': {
@@ -1893,6 +2184,10 @@
     'remove_from': [
       # chromium.clang
       'ToTLinuxUBSanVptr',
+      # chromium.linux
+      'Fuchsia x64',
+      # chromium.fyi
+      'Fuchsia ARM64',
     ],
     'modifications': {
       'KitKat Tablet Tester': {
@@ -1927,6 +2222,13 @@
       'Mac10.9 Tests',
       'Mac10.9 Tests (dbg)',
 
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Mac',
+
       # On chromium.linux, unclear why these aren't run.
       'Linux Tests',
 
@@ -1952,6 +2254,10 @@
 
       # chromium.clang
       'ToTMac',
+      # chromium.fyi
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Mac',
       # On chromium.mac, unclear why these only run on "Mac10.9 Tests".
       'Mac10.10 Tests',
       'Mac10.11 Tests',
@@ -1993,9 +2299,10 @@
       # chromium.clang
       'ToTLinuxASan',
       'ToTLinuxUBSanVptr',
-      # On chromium.linux, unclear why these aren't run on Cast.
+      # chromium.linux
       'Cast Audio Linux',
       'Cast Linux',
+      'Fuchsia x64',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
       'Linux Chromium OS ASan LSan Tests (1)',
@@ -2024,9 +2331,10 @@
       # chromium.clang
       'ToTLinuxASan',
       'ToTLinuxUBSanVptr',
-      # On chromium.linux, unclear why these aren't run on Cast.
+      # chromium.linux
       'Cast Audio Linux',
       'Cast Linux',
+      'Fuchsia x64',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
       'Linux Chromium OS ASan LSan Tests (1)',
@@ -2056,9 +2364,10 @@
       # chromium.clang
       'ToTLinuxASan',
       'ToTLinuxUBSanVptr',
-      # On chromium.linux, unclear why these aren't run on Cast.
+      # chromium.linux
       'Cast Audio Linux',
       'Cast Linux',
+      'Fuchsia x64',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
       'Linux Chromium OS ASan LSan Tests (1)',
@@ -2088,9 +2397,10 @@
       # chromium.clang
       'ToTLinuxASan',
       'ToTLinuxUBSanVptr',
-      # On chromium.linux, unclear why these aren't run on Cast.
+      # chromium.linux
       'Cast Audio Linux',
       'Cast Linux',
+      'Fuchsia x64',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
       'Linux Chromium OS ASan LSan Tests (1)',
@@ -2115,6 +2425,8 @@
       'Nougat Phone Tester',
       # chromium.clang
       'ToTAndroid x64',
+      # chromium.fyi
+      'Out of Process Profiling Android',
     ],
     'modifications': {
       # chromium.android
@@ -2157,6 +2469,9 @@
       'ToTLinuxMSan',
       'ToTLinuxThinLTO',
       'ToTLinuxUBSanVptr',
+      # chromium.fyi
+      'ThinLTO Linux ToT',
+      'UBSanVptr Linux',
       # chromium.memory
       'Linux Chromium OS ASan LSan Tests (1)',
     ],
@@ -2166,6 +2481,12 @@
       # chromium.clang
       'ToTLinuxASan',
       'ToTLinuxUBSanVptr',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Mac',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
     ],
@@ -2183,7 +2504,14 @@
   },
   'net_unittests': {
     'remove_from': [
+      # chromium.clang
       'CrWinAsanCov',
+      # chromium.fyi
+      'CrWinAsanCov tester',
+      'Fuchsia (dbg)',
+      'Fuchsia ARM64',
+      # chromium.linux
+      'Fuchsia x64',
     ],
     'modifications': {
       # chromium.android
@@ -2290,6 +2618,8 @@
       # chromium.clang
       'ToTAndroid x64',
       'ToTAndroidCFI',
+      # chromium.fyi
+      'Out of Process Profiling Android',
       # On chromium.linux, unclear why these aren't run on 32-bit.
       'Linux Tests (dbg)(1)(32)',
     ],
@@ -2316,6 +2646,8 @@
       # chromium.clang
       'ToTAndroid x64',
       'ToTAndroidCFI',
+      # chromium.fyi
+      'Out of Process Profiling Android',
     ],
     'modifications': {
       'Marshmallow 64 bit Tester': {
@@ -2347,6 +2679,8 @@
       # chromium.clang
       'ToTAndroid x64',
       'ToTAndroidCFI',
+      # chromium.fyi
+      'Out of Process Profiling Android',
       # On chromium.linux, unclear why these aren't run on 32-bit.
       'Linux Tests (dbg)(1)(32)',
     ],
@@ -2365,6 +2699,8 @@
       # chromium.clang
       'ToTAndroid x64',
       'ToTAndroidCFI',
+      # chromium.fyi
+      'Out of Process Profiling Android',
     ],
     'modifications': {
       'Marshmallow 64 bit Tester': {
@@ -2435,9 +2771,12 @@
       'Linux ChromiumOS Tests (dbg)(1)',
       'linux-chromeos-dbg',
       'linux-chromeos-rel',
-      # On chromium.linux, unclear why these aren't run on Cast.
+      # chromium.fyi
+      'Chromium Win 10 GCE Tests',
+      # chromium.linux
       'Cast Audio Linux',
       'Cast Linux',
+      'Fuchsia x64',
       'Linux Tests (dbg)(1)(32)',
       # On chromium.mac, unclear why these aren't run.
       'Mac10.10 Tests',
@@ -2467,6 +2806,17 @@
       'ToTAndroidASan',
       'ToTLinuxMSan',
       'ToTLinuxThinLTO',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'ThinLTO Linux ToT',
+      'UBSanVptr Linux',
+      'Win 10 Fast Ring',
       # On chromium.linux, unclear why these aren't run on Cast.
       'Cast Audio Linux',
       'Cast Linux',
@@ -2484,11 +2834,19 @@
       ],
     },
     'modifications': {
+      # chromium.android
       'Marshmallow Phone Tester (rel)': {
         'swarming': {
           'hard_timeout': 300,
         },
       },
+      # chromium.fyi
+      'Chromium Win 10 GCE Tests': {
+        'args': [
+          '--test-launcher-filter-file=../../testing/buildbot/filters/win10.services_unittests.filter',
+        ],
+      },
+      # chromium.win
       'Win10 Tests x64': {
         'args': [
           '--test-launcher-filter-file=../../testing/buildbot/filters/win10.services_unittests.filter',
@@ -2498,6 +2856,9 @@
   },
   'site_per_process_browser_tests': {
     'remove_from': [
+      # chromium.fyi
+      'Site Isolation Android',
+      # chromium.linux
       'Linux Tests (dbg)(1)(32)',
     ],
     'modifications': {
@@ -2518,6 +2879,14 @@
     'remove_from': [
       'Linux Tests (dbg)(1)(32)',
     ],
+    'modifications': {
+      # chromium.fyi
+      'Site Isolation Android': {
+        'swarming': {
+          'shards': 6,
+        },
+      },
+    },
   },
   'site_per_process_content_unittests': {
     'remove_from': [
@@ -2526,6 +2895,9 @@
   },
   'site_per_process_unit_tests': {
     'remove_from': [
+      # chromium.fyi
+      'Site Isolation Android',
+      # chromium.linux
       'Linux Tests (dbg)(1)(32)',
     ],
     'modifications': {
@@ -2588,6 +2960,12 @@
       'Linux ChromiumOS Tests (dbg)(1)',
       'linux-chromeos-dbg',
       'linux-chromeos-rel',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Mac',
       # On chromium.win, unclear why these aren't run.
       'Win 7 Tests x64 (1)',
       'Win10 Tests x64',
@@ -2600,6 +2978,8 @@
     'remove_from': [
       # TODO(dpranke) - remove this exception.
       'Fuchsia x64 SANDBOX',
+      # chromium.fyi
+      'Fuchsia ARM64',
     ],
     'modifications': {
       'KitKat Tablet Tester': {
@@ -2626,6 +3006,10 @@
       'ToTLinuxLLD',
       'ToTLinuxThinLTO',
       'ToTLinuxUBSanVptr',
+      # chromium.fyi
+      'Out of Process Profiling Mac',
+      'ThinLTO Linux ToT',
+      'UBSanVptr Linux',
     ],
     'modifications': {
       # chromium.android
@@ -2794,6 +3178,11 @@
           '--jobs=1',
         ],
       },
+      'Out of Process Profiling Mac': {
+        'swarming': {
+          'shards': 2,
+        },
+      },
     },
   },
   'traffic_annotation_auditor_unittests': {
@@ -2832,6 +3221,10 @@
     },
   },
   'ui_base_unittests': {
+    'remove_from': [
+      # chromium.linux
+      'Fuchsia x64',
+    ],
     'modifications': {
       'KitKat Tablet Tester': {
         'swarming': {
@@ -2871,6 +3264,8 @@
     'remove_from': [
       # chromium.clang
       'CrWinAsanCov',
+      # chromium.fyi
+      'CrWinAsanCov tester',
       # On chromium.linux, unclear why these aren't run on Cast.
       'Cast Audio Linux',
       'Cast Linux',
@@ -2994,6 +3389,12 @@
       'ToTLinuxLLD',
       'ToTLinuxThinLTO',
       'ToTLinuxUBSanVptr',
+      # chromium.fyi
+      'Chromium Win 10 GCE Tests',
+      'Out of Process Profiling Android',
+      'Out of Process Profiling Linux',
+      'ThinLTO Linux ToT',
+      'UBSanVptr Linux',
       # chromium.win
       'Win10 Tests x64',
       # chromium.memory
@@ -3043,6 +3444,9 @@
       'Nougat Phone Tester',
       # chromium.clang
       'ToTAndroid x64',
+      # chromium.fyi
+      'Chromium Win 10 GCE Tests',
+      'Out of Process Profiling Android',
       # chromium.win
       'Win 7 Tests x64 (1)',
       'Win10 Tests x64',
@@ -3083,6 +3487,10 @@
       'Marshmallow Tablet Tester',
       # chromium.clang
       'ToTAndroid x64',
+      # chromium.fyi
+      'Chromium Win 10 GCE Tests',
+      'Out of Process Profiling Android',
+      'VR Linux',
       # chromium.win
       'Win 7 Tests x64 (1)',
       'Win10 Tests x64',
@@ -3094,6 +3502,9 @@
     'remove_from': [
       # chromium.clang
       'ToTMac',
+      # chromium.fyi
+      'Chromium Mac 10.11',
+      'Out of Process Profiling Mac',
       # chromium.linux
       'Linux Tests (dbg)(1)',
       'Linux Tests (dbg)(1)(32)',
@@ -3111,6 +3522,48 @@
       ],
     },
     'modifications': {
+      # chromium.fyi
+      'Browser Side Navigation Linux': {
+        'args': [
+          '--additional-driver-flag',
+          '--disable-browser-side-navigation',
+        ],
+        'swarming': {
+          # TODO(kbr): specify this for this builder instead.
+          'dimension_sets': [
+            {
+              'os': 'Ubuntu-14.04',
+            },
+          ],
+        },
+      },
+      'WebKit Linux layout_ng Dummy Builder': {
+        'args': [
+          '--additional-driver-flag=--enable-blink-features=LayoutNG',
+          '--additional-driver-flag=--enable-blink-features=LayoutNGPaintFragments',
+          '--additional-driver-flag=--enable-slimming-paint-v175',
+        ],
+        'swarming': {
+          'shards': 15,
+        },
+      },
+      'WebKit Linux root_layer_scrolls Dummy Builder': {
+        'args': [
+          '--additional-driver-flag=--root-layer-scrolls',
+        ],
+        'swarming': {
+          'shards': 15,
+        },
+      },
+      'WebKit Linux slimming_paint_v2 Dummy Builder': {
+        'args': [
+          '--additional-driver-flag=--enable-slimming-paint-v2',
+        ],
+        'swarming': {
+          'shards': 15,
+        },
+      },
+      # chromium.linux
       'Linux Tests': {
         'swarming': {
           'dimension_sets': [
@@ -3122,6 +3575,7 @@
           'shards': 6,
         },
       },
+      # chromium.sandbox
       'Linux Tests SANDBOX': {
         'swarming': {
           'dimension_sets': [
@@ -3133,6 +3587,7 @@
           'shards': 6,
         },
       },
+      # chromium.mac
       'Mac10.10 Tests': {
         # TODO(kbr): this is essentially redundant.
         'swarming': {
@@ -3341,6 +3796,7 @@
         'shards': 2,
       },
 
+      # chromium.win
       'Win7 Tests (dbg)(1)': {
         'args': [
           '--debug',
@@ -3367,6 +3823,10 @@
     'remove_from': [
       # chromium.clang
       'ToTMac',
+      # chromium.fyi
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.13',
+      'Out of Process Profiling Mac',
       # On chromium.linux, unclear why these only run on "Linux Tests".
       'Linux Tests (dbg)(1)',
       'Linux Tests (dbg)(1)(32)',
@@ -3402,6 +3862,17 @@
       'ToTAndroidCFI',
       'ToTLinuxMSan',
       'ToTLinuxThinLTO',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Chromium Win 10 GCE Tests',
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'ThinLTO Linux ToT',
+      'Win 10 Fast Ring',
       # On chromium.linux, unclear why these only run on "Linux Tests".
       'Cast Audio Linux',
       'Cast Linux',
@@ -3461,6 +3932,8 @@
       # On chromium.swarm, this should possibly be being run (or removed
       # from Android N5X Swarm).
       'Android N5 Swarm',
+      # chromium.fyi
+      'Out of Process Profiling Android',
     ],
     'key_removals': {
       # chromium.clang
@@ -3528,6 +4001,12 @@
       'ToTWinCFI',
       'ToTWinCFI64',
       'ToTWinThinLTO64',
+      # chromium.fyi
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'Out of Process Profiling Windows',
+      'Win 10 Fast Ring',
       # chromium.memory
       'Linux ASan LSan Tests (1)',
       'Linux Chromium OS ASan LSan Tests (1)',
@@ -3555,6 +4034,16 @@
       'CrWinAsanCov',
       'ToTAndroidCFI',
       'ToTLinuxMSan',
+      # chromium.fyi
+      'Chromium Mac 10.10 MacViews',
+      'Chromium Mac 10.11',
+      'Chromium Mac 10.11 Force Mac Toolchain',
+      'Chromium Mac 10.13',
+      'Chromium Win 10 GCE Tests',
+      'CrWinAsan tester',
+      'CrWinAsan(dll) tester',
+      'CrWinAsanCov tester',
+      'Win 10 Fast Ring',
       # On chromium.linux, unclear why these only run on "Linux Tests".
       'Cast Audio Linux',
       'Cast Linux',
@@ -3605,6 +4094,9 @@
   },
   'zucchini_unittests': {
     'remove_from': [
+      # chromium.fyi
+      'Chromium Win 10 GCE Tests',
+      # chromium.win
       'Win10 Tests x64',
     ],
   },
