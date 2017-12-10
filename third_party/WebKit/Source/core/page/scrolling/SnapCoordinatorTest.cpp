@@ -107,10 +107,43 @@ class SnapCoordinatorTest
         </div>
       </div>
       )HTML");
+
     GetDocument().UpdateStyleAndLayout();
+
+    Element* scroller_element = GetDocument().getElementById("scroller");
+
+    // (#area.left - #area.scroll-snap-margin) -
+    //  (#scroller.right - #scroller.scroll-padding)
+    single_area_visible_x_min_ =
+        (200 - 8) - (scroller_element->clientWidth() - 10);
+    // (#area.top - #area.scroll-snap-margin) -
+    //  (#scroller.bottom - #scroller.scroll-padding)
+    single_area_visible_y_min_ =
+        (200 - 8) - (scroller_element->clientHeight() - 10);
+    // (#area.right + #area.scroll-snap-margin) -
+    //  (#scroller.left + #scroller.scroll-padding)
+    single_area_visible_x_max_ = (200 + 100 + 8) - (0 + 10);
+    // (#area.bottom + #area.scroll-snap-margin) -
+    //  (#scroller.top + #scroller.scroll-padding)
+    single_area_visible_y_max_ = (200 + 100 + 8) - (0 + 10);
+
+    scrollable_x_ = scroller_element->GetLayoutBox()
+                        ->GetScrollableArea()
+                        ->MaximumScrollOffset()
+                        .Width();
+    scrollable_y_ = scroller_element->GetLayoutBox()
+                        ->GetScrollableArea()
+                        ->MaximumScrollOffset()
+                        .Height();
   }
 
   std::unique_ptr<DummyPageHolder> page_holder_;
+  double scrollable_x_;
+  double scrollable_y_;
+  double single_area_visible_x_min_;
+  double single_area_visible_y_min_;
+  double single_area_visible_x_max_;
+  double single_area_visible_y_max_;
 };
 
 INSTANTIATE_TEST_CASE_P(All, SnapCoordinatorTest, ::testing::Bool());
@@ -312,12 +345,16 @@ TEST_P(SnapCoordinatorTest,
     EXPECT_EQ(expected.snap_area_list.size(), actual.snap_area_list.size()); \
   }
 
-#define EXPECT_EQ_AREA(expected, actual)                                   \
-  {                                                                        \
-    EXPECT_EQ(expected.snap_axis, actual.snap_axis);                       \
-    EXPECT_EQ(expected.snap_offset.Width(), actual.snap_offset.Width());   \
-    EXPECT_EQ(expected.snap_offset.Height(), actual.snap_offset.Height()); \
-    EXPECT_EQ(expected.must_snap, actual.must_snap);                       \
+#define EXPECT_EQ_AREA(expected, actual)                                     \
+  {                                                                          \
+    EXPECT_EQ(expected.snap_axis, actual.snap_axis);                         \
+    EXPECT_EQ(expected.snap_offset.Width(), actual.snap_offset.Width());     \
+    EXPECT_EQ(expected.snap_offset.Height(), actual.snap_offset.Height());   \
+    EXPECT_EQ(expected.visible_area.X(), actual.visible_area.X());           \
+    EXPECT_EQ(expected.visible_area.Y(), actual.visible_area.Y());           \
+    EXPECT_EQ(expected.visible_area.Width(), actual.visible_area.Width());   \
+    EXPECT_EQ(expected.visible_area.Height(), actual.visible_area.Height()); \
+    EXPECT_EQ(expected.must_snap, actual.must_snap);                         \
   }
 
 // The following tests check EnsureSnapContainerData().
@@ -332,15 +369,6 @@ TEST_P(SnapCoordinatorTest, StartAlignmentCalculation) {
       snap_coordinator->EnsureSnapContainerData(
           *scroller_element->GetLayoutBox());
 
-  double scrollable_x = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Width();
-  double scrollable_y = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Height();
-
   // (#area.left - #area.scroll-snap-margin) - (#scroller.scroll-padding)
   double snap_offset_x = (200 - 8) - 10;
   // (#area.top - #area.scroll-snap-margin) - (#scroller.scroll-padding)
@@ -350,9 +378,13 @@ TEST_P(SnapCoordinatorTest, StartAlignmentCalculation) {
 
   SnapContainerData expected_container(
       ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
-      ScrollOffset(), ScrollOffset(scrollable_x, scrollable_y));
+      ScrollOffset(), ScrollOffset(scrollable_x_, scrollable_y_));
   SnapAreaData expected_area(
-      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y), must_snap);
+      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y),
+      FloatRect(single_area_visible_x_min_, single_area_visible_y_min_,
+                single_area_visible_x_max_ - single_area_visible_x_min_,
+                single_area_visible_y_max_ - single_area_visible_y_min_),
+      must_snap);
   expected_container.AddSnapAreaData(expected_area);
 
   EXPECT_EQ_CONTAINER(expected_container, actual_container);
@@ -371,27 +403,37 @@ TEST_P(SnapCoordinatorTest, NegativeMarginStartAlignmentCalculation) {
       snap_coordinator->EnsureSnapContainerData(
           *scroller_element->GetLayoutBox());
 
-  double scrollable_x = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Width();
-  double scrollable_y = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Height();
-
   // (#area.left - #area.scroll-snap-margin) - (#scroller.scroll-padding)
   double snap_offset_x = (200 - (-8)) - 10;
   // (#area.top - #area.scroll-snap-margin) - (#scroller.scroll-padding)
   double snap_offset_y = (200 - (-8)) - 10;
 
+  // (#area.left - #area.scroll-snap-margin) -
+  //  (#scroller.right - #scroller.scroll-padding)
+  single_area_visible_x_min_ =
+      (200 - (-8)) - (scroller_element->clientWidth() - 10);
+  // (#area.top - #area.scroll-snap-margin) -
+  //  (#scroller.bottom - #scroller.scroll-padding)
+  single_area_visible_y_min_ =
+      (200 - (-8)) - (scroller_element->clientHeight() - 10);
+  // (#area.right + #area.scroll-snap-margin) -
+  //  (#scroller.left + #scroller.scroll-padding)
+  single_area_visible_x_max_ = (200 + 100 + (-8)) - (0 + 10);
+  // (#area.bottom + #area.scroll-snap-margin) -
+  //  (#scroller.top + #scroller.scroll-padding)
+  single_area_visible_y_max_ = (200 + 100 + (-8)) - (0 + 10);
+
   bool must_snap = false;
 
   SnapContainerData expected_container(
       ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
-      ScrollOffset(), ScrollOffset(scrollable_x, scrollable_y));
+      ScrollOffset(), ScrollOffset(scrollable_x_, scrollable_y_));
   SnapAreaData expected_area(
-      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y), must_snap);
+      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y),
+      FloatRect(single_area_visible_x_min_, single_area_visible_y_min_,
+                single_area_visible_x_max_ - single_area_visible_x_min_,
+                single_area_visible_y_max_ - single_area_visible_y_min_),
+      must_snap);
   expected_container.AddSnapAreaData(expected_area);
 
   EXPECT_EQ_CONTAINER(expected_container, actual_container);
@@ -409,15 +451,6 @@ TEST_P(SnapCoordinatorTest, CenterAlignmentCalculation) {
       snap_coordinator->EnsureSnapContainerData(
           *scroller_element->GetLayoutBox());
 
-  double scrollable_x = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Width();
-  double scrollable_y = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Height();
-
   // (#area.left + #area.right) / 2 - #scroller.width / 2
   double snap_offset_x =
       (200 + (200 + 100)) / 2 - float(scroller_element->clientWidth()) / 2;
@@ -429,9 +462,13 @@ TEST_P(SnapCoordinatorTest, CenterAlignmentCalculation) {
 
   SnapContainerData expected_container(
       ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
-      ScrollOffset(), ScrollOffset(scrollable_x, scrollable_y));
+      ScrollOffset(), ScrollOffset(scrollable_x_, scrollable_y_));
   SnapAreaData expected_area(
-      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y), must_snap);
+      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y),
+      FloatRect(single_area_visible_x_min_, single_area_visible_y_min_,
+                single_area_visible_x_max_ - single_area_visible_x_min_,
+                single_area_visible_y_max_ - single_area_visible_y_min_),
+      must_snap);
   expected_container.AddSnapAreaData(expected_area);
 
   EXPECT_EQ_CONTAINER(expected_container, actual_container);
@@ -463,15 +500,6 @@ TEST_P(SnapCoordinatorTest, AsymmetricalCenterAlignmentCalculation) {
       snap_coordinator->EnsureSnapContainerData(
           *scroller_element->GetLayoutBox());
 
-  double scrollable_x = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Width();
-  double scrollable_y = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Height();
-
   // (#area.left - #area.scroll-snap-margin-left +
   //  #area.right + #area.scroll-snap-margin-right) / 2 -
   // (#scroller.left + #scroller.scroll-padding-left +
@@ -488,13 +516,32 @@ TEST_P(SnapCoordinatorTest, AsymmetricalCenterAlignmentCalculation) {
       (200 - 2 + (200 + 100 + 6)) / 2 -
       (0 + 10 + float(scroller_element->clientHeight()) - 14) / 2;
 
+  // (#area.left - #area.scroll-snap-margin-left) -
+  //  (#scroller.right - #scroller.scroll-padding-right)
+  single_area_visible_x_min_ =
+      (200 - 8) - (scroller_element->clientWidth() - 12);
+  // (#area.top - #area.scroll-snap-margin-top) -
+  //  (#scroller.bottom - #scroller.scroll-padding-bottom)
+  single_area_visible_y_min_ =
+      (200 - 2) - (scroller_element->clientHeight() - 14);
+  // (#area.right + #area.scroll-snap-margin-right) -
+  //  (#scroller.left + #scroller.scroll-padding-left)
+  single_area_visible_x_max_ = (200 + 100 + 4) - (0 + 16);
+  // (#area.bottom + #area.scroll-snap-margin-bottom) -
+  //  (#scroller.top + #scroller.scroll-padding-top)
+  single_area_visible_y_max_ = (200 + 100 + 6) - (0 + 10);
+
   bool must_snap = false;
 
   SnapContainerData expected_container(
       ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
-      ScrollOffset(), ScrollOffset(scrollable_x, scrollable_y));
+      ScrollOffset(), ScrollOffset(scrollable_x_, scrollable_y_));
   SnapAreaData expected_area(
-      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y), must_snap);
+      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y),
+      FloatRect(single_area_visible_x_min_, single_area_visible_y_min_,
+                single_area_visible_x_max_ - single_area_visible_x_min_,
+                single_area_visible_y_max_ - single_area_visible_y_min_),
+      must_snap);
   expected_container.AddSnapAreaData(expected_area);
 
   EXPECT_EQ_CONTAINER(expected_container, actual_container);
@@ -512,15 +559,6 @@ TEST_P(SnapCoordinatorTest, EndAlignmentCalculation) {
       snap_coordinator->EnsureSnapContainerData(
           *scroller_element->GetLayoutBox());
 
-  double scrollable_x = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Width();
-  double scrollable_y = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Height();
-
   // (#area.right + #area.scroll-snap-margin)
   // - (#scroller.right - #scroller.scroll-padding)
   double snap_offset_x =
@@ -535,9 +573,13 @@ TEST_P(SnapCoordinatorTest, EndAlignmentCalculation) {
 
   SnapContainerData expected_container(
       ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
-      ScrollOffset(), ScrollOffset(scrollable_x, scrollable_y));
+      ScrollOffset(), ScrollOffset(scrollable_x_, scrollable_y_));
   SnapAreaData expected_area(
-      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y), must_snap);
+      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y),
+      FloatRect(single_area_visible_x_min_, single_area_visible_y_min_,
+                single_area_visible_x_max_ - single_area_visible_x_min_,
+                single_area_visible_y_max_ - single_area_visible_y_min_),
+      must_snap);
   expected_container.AddSnapAreaData(expected_area);
 
   EXPECT_EQ_CONTAINER(expected_container, actual_container);
@@ -556,15 +598,6 @@ TEST_P(SnapCoordinatorTest, OverflowedSnapPositionCalculation) {
       snap_coordinator->EnsureSnapContainerData(
           *scroller_element->GetLayoutBox());
 
-  double scrollable_x = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Width();
-  double scrollable_y = scroller_element->GetLayoutBox()
-                            ->GetScrollableArea()
-                            ->MaximumScrollOffset()
-                            .Height();
-
   // (#area.right + #area.scroll-snap-margin)
   //  - (#scroller.right - #scroller.scroll-padding)
   // = (100 + 8) - (clientWidth - 10) < 0
@@ -577,13 +610,31 @@ TEST_P(SnapCoordinatorTest, OverflowedSnapPositionCalculation) {
   // As scrollOffset cannot be set to a negative number, we set it to 0.
   double snap_offset_y = 0;
 
+  // (#area.left - #area.scroll-snap-margin-left) -
+  //  (#scroller.right - #scroller.scroll-padding-right)
+  single_area_visible_x_min_ = (0 - 8) - (scroller_element->clientWidth() - 10);
+  // (#area.top - #area.scroll-snap-margin-top) -
+  //  (#scroller.bottom - #scroller.scroll-padding-bottom)
+  single_area_visible_y_min_ =
+      (0 - 8) - (scroller_element->clientHeight() - 10);
+  // (#area.right + #area.scroll-snap-margin-right) -
+  //  (#scroller.left + #scroller.scroll-padding-left)
+  single_area_visible_x_max_ = (100 + 8) - (0 + 10);
+  // (#area.bottom + #area.scroll-snap-margin-bottom) -
+  //  (#scroller.top + #scroller.scroll-padding-top)
+  single_area_visible_y_max_ = (100 + 8) - (0 + 10);
+
   bool must_snap = false;
 
   SnapContainerData expected_container(
       ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
-      ScrollOffset(), ScrollOffset(scrollable_x, scrollable_y));
+      ScrollOffset(), ScrollOffset(scrollable_x_, scrollable_y_));
   SnapAreaData expected_area(
-      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y), must_snap);
+      SnapAxis::kBoth, ScrollOffset(snap_offset_x, snap_offset_y),
+      FloatRect(single_area_visible_x_min_, single_area_visible_y_min_,
+                single_area_visible_x_max_ - single_area_visible_x_min_,
+                single_area_visible_y_max_ - single_area_visible_y_min_),
+      must_snap);
   expected_container.AddSnapAreaData(expected_area);
 
   EXPECT_EQ_CONTAINER(expected_container, actual_container);
@@ -673,11 +724,12 @@ TEST_P(SnapCoordinatorTest, FindsClosestSnapOffsetIndependently) {
   ScrollOffset current_offset(100, 100);
   SnapAreaData snap_x_only(SnapAxis::kX,
                            ScrollOffset(80, SnapAreaData::kInvalidScrollOffset),
-                           false);
+                           FloatRect(0, 0, 360, 380), false);
   SnapAreaData snap_y_only(SnapAxis::kY,
                            ScrollOffset(SnapAreaData::kInvalidScrollOffset, 70),
-                           false);
-  SnapAreaData snap_on_both(SnapAxis::kBoth, ScrollOffset(50, 150), false);
+                           FloatRect(0, 0, 360, 380), false);
+  SnapAreaData snap_on_both(SnapAxis::kBoth, ScrollOffset(50, 150),
+                            FloatRect(0, 0, 360, 380), false);
   container_data.AddSnapAreaData(snap_x_only);
   container_data.AddSnapAreaData(snap_y_only);
   container_data.AddSnapAreaData(snap_on_both);
@@ -694,11 +746,12 @@ TEST_P(SnapCoordinatorTest, FindsClosestSnapOffsetOnAxisValueBoth) {
   ScrollOffset current_offset(40, 150);
   SnapAreaData snap_x_only(SnapAxis::kX,
                            ScrollOffset(80, SnapAreaData::kInvalidScrollOffset),
-                           false);
+                           FloatRect(0, 0, 360, 380), false);
   SnapAreaData snap_y_only(SnapAxis::kY,
                            ScrollOffset(SnapAreaData::kInvalidScrollOffset, 70),
-                           false);
-  SnapAreaData snap_on_both(SnapAxis::kBoth, ScrollOffset(50, 150), false);
+                           FloatRect(0, 0, 360, 380), false);
+  SnapAreaData snap_on_both(SnapAxis::kBoth, ScrollOffset(50, 150),
+                            FloatRect(0, 0, 360, 380), false);
   container_data.AddSnapAreaData(snap_x_only);
   container_data.AddSnapAreaData(snap_y_only);
   container_data.AddSnapAreaData(snap_on_both);
@@ -715,14 +768,57 @@ TEST_P(SnapCoordinatorTest, DoesNotSnapOnNonScrolledAxis) {
   ScrollOffset current_offset(100, 100);
   SnapAreaData snap_x_only(SnapAxis::kX,
                            ScrollOffset(80, SnapAreaData::kInvalidScrollOffset),
-                           false);
+                           FloatRect(0, 0, 360, 380), false);
   SnapAreaData snap_y_only(SnapAxis::kY,
                            ScrollOffset(SnapAreaData::kInvalidScrollOffset, 70),
-                           false);
+                           FloatRect(0, 0, 360, 380), false);
   container_data.AddSnapAreaData(snap_x_only);
   container_data.AddSnapAreaData(snap_y_only);
   ScrollOffset snapped_offset = SnapCoordinator::FindSnapOffset(
       current_offset, container_data, true, false);
+  EXPECT_EQ(80, snapped_offset.Width());
+  EXPECT_EQ(100, snapped_offset.Height());
+}
+
+TEST_P(SnapCoordinatorTest, DoesNotSnapOnNonVisibleAreas) {
+  SnapContainerData container_data(
+      ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
+      ScrollOffset(), ScrollOffset(360, 380));
+  ScrollOffset current_offset(100, 100);
+  SnapAreaData non_visible_x(SnapAxis::kBoth, ScrollOffset(70, 70),
+                             FloatRect(0, 0, 90, 200), false);
+  SnapAreaData non_visible_y(SnapAxis::kBoth, ScrollOffset(70, 70),
+                             FloatRect(0, 0, 200, 90), false);
+  SnapAreaData visible(SnapAxis::kBoth, ScrollOffset(60, 60),
+                       FloatRect(0, 0, 360, 380), false);
+  container_data.AddSnapAreaData(non_visible_x);
+  container_data.AddSnapAreaData(non_visible_y);
+  container_data.AddSnapAreaData(visible);
+  ScrollOffset snapped_offset = SnapCoordinator::FindSnapOffset(
+      current_offset, container_data, true, true);
+  EXPECT_EQ(60, snapped_offset.Width());
+  EXPECT_EQ(60, snapped_offset.Height());
+}
+
+TEST_P(SnapCoordinatorTest, SnapOnClosestAxisIfVisibilityConflicts) {
+  SnapContainerData container_data(
+      ScrollSnapType(false, SnapAxis::kBoth, SnapStrictness::kMandatory),
+      ScrollOffset(), ScrollOffset(360, 380));
+  ScrollOffset current_offset(100, 100);
+
+  // Both areas are currently visible. However, if we snap to them on x and y
+  // indepently, none is visible after snapping. So we only snap on the axis
+  // that has a closer snap point.
+  SnapAreaData snap_x_only(SnapAxis::kX,
+                           ScrollOffset(80, SnapAreaData::kInvalidScrollOffset),
+                           FloatRect(60, 60, 60, 60), false);
+  SnapAreaData snap_y_only(
+      SnapAxis::kY, ScrollOffset(SnapAreaData::kInvalidScrollOffset, 130),
+      FloatRect(90, 90, 60, 60), false);
+  container_data.AddSnapAreaData(snap_x_only);
+  container_data.AddSnapAreaData(snap_y_only);
+  ScrollOffset snapped_offset = SnapCoordinator::FindSnapOffset(
+      current_offset, container_data, true, true);
   EXPECT_EQ(80, snapped_offset.Width());
   EXPECT_EQ(100, snapped_offset.Height());
 }
