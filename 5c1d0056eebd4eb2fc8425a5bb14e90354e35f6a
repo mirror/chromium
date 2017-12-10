@@ -16,6 +16,74 @@
       "revId": "5c1d0056eebd4eb2fc8425a5bb14e90354e35f6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80581ceb_a23b83d2",
+        "filename": "content/network/cookie_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-10T23:08:01Z",
+      "side": 1,
+      "message": "nit: Could you add a comment here on why these default cookie options are set?\nI see extensions is also setting these options, so I am not sure why we need these here as well.",
+      "revId": "5c1d0056eebd4eb2fc8425a5bb14e90354e35f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc33a34_31489a9b",
+        "filename": "content/network/cookie_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-10T23:08:01Z",
+      "side": 1,
+      "message": "These members are not changed after construction. Can these be const as well?",
+      "revId": "5c1d0056eebd4eb2fc8425a5bb14e90354e35f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac934f2d_b1f2e182",
+        "filename": "content/network/cookie_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-10T23:08:01Z",
+      "side": 1,
+      "message": "nit: s/should/should not?",
+      "revId": "5c1d0056eebd4eb2fc8425a5bb14e90354e35f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47dfc29e_7b7814d0",
+        "filename": "services/network/public/interfaces/cookie_manager.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-10T23:08:01Z",
+      "side": 1,
+      "message": "nit: s/that/whose?\nCould you also give examples in the comment here? \n\nThe path and domain do not have to match exactly for a cookie to be deleted. If you could summarize the rules using a few examples, that will be very helpful.",
+      "revId": "5c1d0056eebd4eb2fc8425a5bb14e90354e35f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
