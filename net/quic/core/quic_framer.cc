@@ -2477,11 +2477,9 @@ bool QuicFramer::StartsWithChlo(QuicStreamId id,
 }
 
 QuicStringPiece QuicFramer::TruncateErrorString(QuicStringPiece error) {
-  if (error.length() <= kMaxErrorStringLength ||
-      !FLAGS_quic_reloadable_flag_quic_truncate_long_details) {
+  if (error.length() <= kMaxErrorStringLength) {
     return error;
   }
-  QUIC_FLAG_COUNT(quic_reloadable_flag_quic_truncate_long_details);
   return QuicStringPiece(error.data(), kMaxErrorStringLength);
 }
 
