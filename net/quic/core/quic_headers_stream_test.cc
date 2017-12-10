@@ -133,28 +133,36 @@ class ForceHolAckListener : public QuicAckListenerInterface {
   DISALLOW_COPY_AND_ASSIGN(ForceHolAckListener);
 };
 
-typedef testing::tuple<QuicTransportVersion, Perspective> TestParamsTuple;
-
 struct TestParams {
-  explicit TestParams(TestParamsTuple params)
-      : version(testing::get<0>(params)), perspective(testing::get<1>(params)) {
-    QUIC_LOG(INFO) << "TestParams: version: " << QuicVersionToString(version)
+  TestParams(const ParsedQuicVersion& version, Perspective perspective)
+      : version(version), perspective(perspective) {
+    QUIC_LOG(INFO) << "TestParams: version: "
+                   << ParsedQuicVersionToString(version)
                    << ", perspective: " << perspective;
   }
 
-  QuicTransportVersion version;
+  TestParams(const TestParams& other)
+      : version(other.version), perspective(other.perspective) {}
+
+  ParsedQuicVersion version;
   Perspective perspective;
 };
 
-class QuicHeadersStreamTest : public QuicTestWithParam<TestParamsTuple> {
+std::vector<TestParams> GetTestParams() {
+  std::vector<TestParams> params;
+  ParsedQuicVersionVector all_supported_versions = AllSupportedVersions();
+  for (size_t i = 0; i < all_supported_versions.size(); ++i) {
+    for (Perspective p : {Perspective::IS_SERVER, Perspective::IS_CLIENT}) {
+      params.emplace_back(all_supported_versions[i], p);
+    }
+  }
+  return params;
+}
+
+class QuicHeadersStreamTest : public QuicTestWithParam<TestParams> {
  public:
-  // Constructing the test_params_ object will set the necessary flags before
-  // the MockQuicConnection is constructed, which we need because the latter
-  // will construct a SpdyFramer that will use those flags to decide whether
-  // to construct a decoder adapter.
   QuicHeadersStreamTest()
-      : test_params_(GetParam()),
-        connection_(new StrictMock<MockQuicConnection>(&helper_,
+      : connection_(new StrictMock<MockQuicConnection>(&helper_,
                                                        &alarm_factory_,
                                                        perspective(),
                                                        GetVersion())),
@@ -288,15 +296,15 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParamsTuple> {
     headers_handler_.reset();
   }
 
-  Perspective perspective() const { return test_params_.perspective; }
+  Perspective perspective() const { return GetParam().perspective; }
 
   QuicTransportVersion transport_version() const {
-    return test_params_.version;
+    return GetParam().version.transport_version;
   }
 
-  QuicTransportVersionVector GetVersion() {
-    QuicTransportVersionVector versions;
-    versions.push_back(transport_version());
+  ParsedQuicVersionVector GetVersion() {
+    ParsedQuicVersionVector versions;
+    versions.push_back(GetParam().version);
     return versions;
   }
 
@@ -311,7 +319,6 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParamsTuple> {
   static const bool kFrameComplete = true;
   static const bool kHasPriority = true;
 
-  const TestParams test_params_;
   MockQuicConnectionHelper helper_;
   MockAlarmFactory alarm_factory_;
   StrictMock<MockQuicConnection>* connection_;
@@ -335,12 +342,9 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParamsTuple> {
 };
 
 // Run all tests with each version, perspective (client or server)..
-INSTANTIATE_TEST_CASE_P(
-    Tests,
-    QuicHeadersStreamTest,
-    ::testing::Combine(::testing::ValuesIn(AllSupportedTransportVersions()),
-                       ::testing::Values(Perspective::IS_CLIENT,
-                                         Perspective::IS_SERVER)));
+INSTANTIATE_TEST_CASE_P(Tests,
+                        QuicHeadersStreamTest,
+                        ::testing::ValuesIn(GetTestParams()));
 
 TEST_P(QuicHeadersStreamTest, StreamId) {
   EXPECT_EQ(3u, headers_stream_->id());

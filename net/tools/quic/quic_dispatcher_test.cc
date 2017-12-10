@@ -176,7 +176,7 @@ class QuicDispatcherTest : public QuicTest {
   explicit QuicDispatcherTest(std::unique_ptr<ProofSource> proof_source)
       : helper_(&eps_, QuicAllocator::BUFFER_POOL),
         alarm_factory_(&eps_),
-        version_manager_(AllSupportedTransportVersions()),
+        version_manager_(AllSupportedVersions()),
         crypto_config_(QuicCryptoServerConfig::TESTING,
                        QuicRandom::GetInstance(),
                        std::move(proof_source)),
@@ -240,7 +240,7 @@ class QuicDispatcherTest : public QuicTest {
                      QuicPacketNumberLength packet_number_length,
                      QuicPacketNumber packet_number) {
     ProcessPacket(client_address, connection_id, has_version_flag,
-                  CurrentSupportedTransportVersions().front(), data,
+                  CurrentSupportedVersions().front(), data,
                   connection_id_length, packet_number_length, packet_number);
   }
 
@@ -248,12 +248,12 @@ class QuicDispatcherTest : public QuicTest {
   void ProcessPacket(QuicSocketAddress client_address,
                      QuicConnectionId connection_id,
                      bool has_version_flag,
-                     QuicTransportVersion version,
+                     ParsedQuicVersion version,
                      const string& data,
                      QuicConnectionIdLength connection_id_length,
                      QuicPacketNumberLength packet_number_length,
                      QuicPacketNumber packet_number) {
-    QuicTransportVersionVector versions(SupportedTransportVersions(version));
+    ParsedQuicVersionVector versions(SupportedVersions(version));
     std::unique_ptr<QuicEncryptedPacket> packet(ConstructEncryptedPacket(
         connection_id, has_version_flag, false, packet_number, data,
         connection_id_length, packet_number_length, &versions));
@@ -387,8 +387,9 @@ TEST_F(QuicDispatcherTest, StatelessVersionNegotiation) {
               CreateQuicSession(1, client_address, QuicStringPiece("hq")))
       .Times(0);
   QuicTransportVersion version =
-      static_cast<QuicTransportVersion>(QuicVersionMin() - 1);
-  ProcessPacket(client_address, 1, true, version, SerializeCHLO(),
+      static_cast<QuicTransportVersion>(QuicTransportVersionMin() - 1);
+  ParsedQuicVersion parsed_version(PROTOCOL_QUIC_CRYPTO, version);
+  ProcessPacket(client_address, 1, true, parsed_version, SerializeCHLO(),
                 PACKET_8BYTE_CONNECTION_ID, PACKET_6BYTE_PACKET_NUMBER, 1);
 }
 
@@ -563,10 +564,11 @@ TEST_F(QuicDispatcherTest, SupportedTransportVersionsChangeInFlight) {
   EXPECT_CALL(*dispatcher_, CreateQuicSession(connection_id, client_address,
                                               QuicStringPiece("hq")))
       .Times(0);
-  ProcessPacket(client_address, connection_id, true,
-                static_cast<QuicTransportVersion>(QuicVersionMin() - 1),
-                SerializeCHLO(), PACKET_8BYTE_CONNECTION_ID,
-                PACKET_6BYTE_PACKET_NUMBER, 1);
+  ParsedQuicVersion version(
+      PROTOCOL_QUIC_CRYPTO,
+      static_cast<QuicTransportVersion>(QuicTransportVersionMin() - 1));
+  ProcessPacket(client_address, connection_id, true, version, SerializeCHLO(),
+                PACKET_8BYTE_CONNECTION_ID, PACKET_6BYTE_PACKET_NUMBER, 1);
   ++connection_id;
   EXPECT_CALL(*dispatcher_, CreateQuicSession(connection_id, client_address,
                                               QuicStringPiece("hq")))
@@ -608,7 +610,8 @@ TEST_F(QuicDispatcherTest, SupportedTransportVersionsChangeInFlight) {
   EXPECT_CALL(*dispatcher_, CreateQuicSession(connection_id, client_address,
                                               QuicStringPiece("hq")))
       .Times(0);
-  ProcessPacket(client_address, connection_id, true, QUIC_VERSION_43,
+  ProcessPacket(client_address, connection_id, true,
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_43),
                 SerializeCHLO(), PACKET_8BYTE_CONNECTION_ID,
                 PACKET_6BYTE_PACKET_NUMBER, 1);
 
@@ -628,7 +631,8 @@ TEST_F(QuicDispatcherTest, SupportedTransportVersionsChangeInFlight) {
                                base::Unretained(this), connection_id))));
   EXPECT_CALL(*dispatcher_,
               ShouldCreateOrBufferPacketForConnection(connection_id));
-  ProcessPacket(client_address, connection_id, true, QUIC_VERSION_43,
+  ProcessPacket(client_address, connection_id, true,
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_43),
                 SerializeCHLO(), PACKET_8BYTE_CONNECTION_ID,
                 PACKET_6BYTE_PACKET_NUMBER, 1);
 
@@ -638,7 +642,8 @@ TEST_F(QuicDispatcherTest, SupportedTransportVersionsChangeInFlight) {
   EXPECT_CALL(*dispatcher_, CreateQuicSession(connection_id, client_address,
                                               QuicStringPiece("hq")))
       .Times(0);
-  ProcessPacket(client_address, connection_id, true, QUIC_VERSION_42,
+  ProcessPacket(client_address, connection_id, true,
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_42),
                 SerializeCHLO(), PACKET_8BYTE_CONNECTION_ID,
                 PACKET_6BYTE_PACKET_NUMBER, 1);
 
@@ -658,7 +663,8 @@ TEST_F(QuicDispatcherTest, SupportedTransportVersionsChangeInFlight) {
                                base::Unretained(this), connection_id))));
   EXPECT_CALL(*dispatcher_,
               ShouldCreateOrBufferPacketForConnection(connection_id));
-  ProcessPacket(client_address, connection_id, true, QUIC_VERSION_42,
+  ProcessPacket(client_address, connection_id, true,
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_42),
                 SerializeCHLO(), PACKET_8BYTE_CONNECTION_ID,
                 PACKET_6BYTE_PACKET_NUMBER, 1);
 }
@@ -2125,12 +2131,16 @@ TEST_F(AsyncGetProofTest, DispatcherFailedToPickUpVersionForAsyncProof) {
   // because of QUIC_INVALID_STREAM_DATA.
 
   // Send a CHLO with v39. Dispatcher framer's version is set to v39.
-  ProcessPacket(client_addr_, 1, true, QUIC_VERSION_39, SerializeCHLO(),
-                PACKET_8BYTE_CONNECTION_ID, PACKET_6BYTE_PACKET_NUMBER, 1);
+  ProcessPacket(client_addr_, 1, true,
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_39),
+                SerializeCHLO(), PACKET_8BYTE_CONNECTION_ID,
+                PACKET_6BYTE_PACKET_NUMBER, 1);
 
   // Send another CHLO with v37. Dispatcher framer's version is set to v37.
-  ProcessPacket(client_addr_, 2, true, QUIC_VERSION_37, SerializeCHLO(),
-                PACKET_8BYTE_CONNECTION_ID, PACKET_6BYTE_PACKET_NUMBER, 1);
+  ProcessPacket(client_addr_, 2, true,
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_37),
+                SerializeCHLO(), PACKET_8BYTE_CONNECTION_ID,
+                PACKET_6BYTE_PACKET_NUMBER, 1);
   ASSERT_EQ(GetFakeProofSource()->NumPendingCallbacks(), 2);
 
   // Complete the ProofSource::GetProof call for v39. This would cause the

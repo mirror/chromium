@@ -241,14 +241,14 @@ class TestSession : public QuicSpdySession {
   bool writev_consumes_all_data_;
 };
 
-class QuicSessionTestBase : public QuicTestWithParam<QuicTransportVersion> {
+class QuicSessionTestBase : public QuicTestWithParam<ParsedQuicVersion> {
  protected:
   explicit QuicSessionTestBase(Perspective perspective)
-      : connection_(new StrictMock<MockQuicConnection>(
-            &helper_,
-            &alarm_factory_,
-            perspective,
-            SupportedTransportVersions(GetParam()))),
+      : connection_(
+            new StrictMock<MockQuicConnection>(&helper_,
+                                               &alarm_factory_,
+                                               perspective,
+                                               SupportedVersions(GetParam()))),
         session_(connection_) {
     session_.config()->SetInitialStreamFlowControlWindowToSend(
         kInitialStreamFlowControlWindowForTest);
@@ -329,7 +329,7 @@ class QuicSessionTestServer : public QuicSessionTestBase {
 
 INSTANTIATE_TEST_CASE_P(Tests,
                         QuicSessionTestServer,
-                        ::testing::ValuesIn(AllSupportedTransportVersions()));
+                        ::testing::ValuesIn(AllSupportedVersions()));
 
 TEST_P(QuicSessionTestServer, PeerAddress) {
   EXPECT_EQ(QuicSocketAddress(QuicIpAddress::Loopback4(), kTestPort),
@@ -1340,7 +1340,7 @@ class QuicSessionTestClient : public QuicSessionTestBase {
 
 INSTANTIATE_TEST_CASE_P(Tests,
                         QuicSessionTestClient,
-                        ::testing::ValuesIn(AllSupportedTransportVersions()));
+                        ::testing::ValuesIn(AllSupportedVersions()));
 
 TEST_P(QuicSessionTestClient, AvailableStreamsClient) {
   ASSERT_TRUE(session_.GetOrCreateDynamicStream(6) != nullptr);
