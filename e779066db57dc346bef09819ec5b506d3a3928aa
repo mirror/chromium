@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23b763d9_5912e9b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-10T23:09:08Z",
+      "side": 1,
+      "message": "Let\u0027s add a bit, like:\n\nThis is meant to help with finding repro steps when the active URL is for a subframe.  Note that the main frame\u0027s full URL is not available in all cases, such as for out-of-process iframes.",
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340d39ca_6261c721",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-10T23:09:08Z",
+      "side": 1,
+      "message": "Just curious, why is this done in a different way than |url|?  Was there a change in the recommended way to set crash keys, and the above code hasn\u0027t been updated yet?  (Should it be?)\n\nI\u0027ll mostly defer to a crash key reviewer here (e.g., rsesek), which I assume we\u0027ll need anyway.",
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a276b233_18e84b91",
+        "filename": "chrome/common/crash_keys.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-10T23:09:08Z",
+      "side": 1,
+      "message": "Can we be more precise here, to help people understand what this means in crash reports?  It certainly wasn\u0027t what I thought it was (i.e., the URL of the most recent frame to commit in the process).\n\nIt looks like it gets updated to be the frame which is processing any IPC message, or being told to navigate, or that fails a navigation.  I\u0027m a bit surprised it isn\u0027t updated on commit.  Is that always covered by the IPC message handler case?  Aren\u0027t we losing that in Mojo?",
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32eceb9a_125dff3b",
+        "filename": "chrome/common/crash_keys.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-10T23:09:08Z",
+      "side": 1,
+      "message": "Maybe we should be declaring the top frame\u0027s origin (or whatever format we end up with) here as well, so that it\u0027s near the description of what it means?",
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a782cd09_ce254844",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-10T23:09:08Z",
+      "side": 1,
+      "message": "Maybe we can log the main frame\u0027s origin (or whatever) here as well?  It\u0027s potentially useful-- I think we\u0027ve seen this particular crash in subframes and wondered which WebUI page it was.",
+      "range": {
+        "startLine": 154,
+        "startChar": 42,
+        "endLine": 154,
+        "endChar": 55
+      },
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f548ac7_ae115aeb",
+        "filename": "content/ppapi_plugin/ppapi_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-10T23:09:08Z",
+      "side": 1,
+      "message": "Yeah, looks like there\u0027s no easy way to get it in this case, given the call sites.",
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5590ed98_c63d463c",
+        "filename": "content/public/common/content_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-10T23:09:08Z",
+      "side": 1,
+      "message": "Can you clarify what \"top origin\" means?  Maybe something about how the active URL is any frame that is navigating or processing an IPC message, and that we also want to know where the main frame is to help diagnose crashes.",
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70166ad_13f0276e",
+        "filename": "content/public/common/content_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-10T23:09:08Z",
+      "side": 1,
+      "message": "Might want to clarify why it\u0027s a string rather than a url::Origin.  (I\u0027m guessing it\u0027s more efficient that way?)",
+      "range": {
+        "startLine": 85,
+        "startChar": 45,
+        "endLine": 85,
+        "endChar": 56
+      },
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade3a594_868ff707",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-10T23:09:08Z",
+      "side": 1,
+      "message": "Yes, this is an improvement over leaving the old active URL in place when the main frame isn\u0027t local.",
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
