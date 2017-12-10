@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "246b954a_6b87ef92",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-10T23:13:21Z",
+      "side": 1,
+      "message": "It seems a bit weird to pass |process_id| to both the constructor and Init.",
+      "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e938bcbf_8e3d8362",
+        "filename": "content/browser/appcache/appcache_frontend_proxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-10T23:13:21Z",
+      "side": 1,
+      "message": "const",
+      "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120e6476_cb2f80e8",
+        "filename": "content/common/appcache.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-10T23:13:21Z",
+      "side": 1,
+      "message": "I think this is more of an AppCacheFrontend.",
+      "range": {
+        "startLine": 107,
+        "startChar": 10,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f285b5f5_1dc07727",
+        "filename": "content/renderer/appcache/appcache_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-10T23:13:21Z",
+      "side": 1,
+      "message": "mojom::AppCacheRenderer: (or whatever it ends up being named)",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
