@@ -84,9 +84,9 @@ QuicPacketNumber LargestAcked(const QuicAckFrame& frame) {
 
   if (!frame.packets.Empty() &&
       frame.packets.Max() != frame.deprecated_largest_observed) {
-    QUIC_BUG << "Peer last received packet: " << frame.packets.Max()
-             << " which is not equal to largest observed: "
-             << frame.deprecated_largest_observed;
+    QUIC_PEER_BUG << "Peer last received packet: " << frame.packets.Max()
+                  << " which is not equal to largest observed: "
+                  << frame.deprecated_largest_observed;
   }
 
   return frame.packets.Empty() ? 0 : frame.packets.Max();
