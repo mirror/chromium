@@ -49,6 +49,8 @@ const char* const kSystemFontsForFontconfig[] = {
     "/usr/share/fonts/truetype/msttcorefonts/Verdana_Bold.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Verdana_Bold_Italic.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Verdana_Italic.ttf",
+    // The DejaVuSans font is used by the css2.1 tests.
+    "/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
 };
 
 const size_t kNumSystemFontsForFontconfig =
