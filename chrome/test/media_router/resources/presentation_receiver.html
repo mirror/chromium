@@ -11,7 +11,8 @@
             } else {
               connection.send('Pong: ' + event.data);
             }
-          }
+          };
+          connection.send('ready');
         };
       };
 
