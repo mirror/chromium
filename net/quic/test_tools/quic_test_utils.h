@@ -871,7 +871,7 @@ class MockQuicConnectionDebugVisitor : public QuicConnectionDebugVisitor {
 
   MOCK_METHOD1(OnIncorrectConnectionId, void(QuicConnectionId));
 
-  MOCK_METHOD1(OnProtocolVersionMismatch, void(QuicTransportVersion));
+  MOCK_METHOD1(OnProtocolVersionMismatch, void(ParsedQuicVersion));
 
   MOCK_METHOD1(OnPacketHeader, void(const QuicPacketHeader& header));
 
