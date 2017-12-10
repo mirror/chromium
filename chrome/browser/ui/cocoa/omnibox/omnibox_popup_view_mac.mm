@@ -152,6 +152,10 @@ void OmniboxPopupViewMac::PaintUpdatesNow() {
   [matrix_ selectRowIndex:model_->selected_line()];
 }
 
+int32_t OmniboxPopupViewMac::GetAccessibilityId() {
+  return -1;  // Accessibility support not currently provided.
+}
+
 void OmniboxPopupViewMac::OnMatrixRowSelected(OmniboxPopupMatrix* matrix,
                                               size_t row) {
   model_->SetSelectedLine(row, false, false);
