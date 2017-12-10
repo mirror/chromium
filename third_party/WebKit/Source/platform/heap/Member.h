@@ -250,12 +250,12 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
  protected:
   ALWAYS_INLINE void WriteBarrier(const T* value) const {
     if (value) {
-      // The following method for retrieving a page works as allocation of
-      // mixins on large object pages is prohibited.
-      BasePage* const page = PageFromObject(value);
-      if (page->IsIncrementalMarking()) {
-        DCHECK(ThreadState::Current()->IsIncrementalMarking());
-        ThreadState::Current()->Heap().WriteBarrierInternal(page, value);
+      if (ThreadState::Current()->IsIncrementalMarking()) {
+        // The following method for retrieving a page works as allocation of
+        // mixins on large object pages is prohibited.
+        DCHECK(PageFromObject(value)->IsIncrementalMarking());
+        ThreadState::Current()->Heap().WriteBarrierInternal(
+            PageFromObject(value), value);
       }
     }
   }
