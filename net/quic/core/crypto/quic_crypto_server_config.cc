@@ -35,6 +35,7 @@
 #include "net/quic/platform/api/quic_bug_tracker.h"
 #include "net/quic/platform/api/quic_clock.h"
 #include "net/quic/platform/api/quic_endian.h"
+#include "net/quic/platform/api/quic_flag_utils.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_hostname_utils.h"
 #include "net/quic/platform/api/quic_logging.h"
@@ -1490,6 +1491,12 @@ void QuicCryptoServerConfig::BuildRejection(
   QuicStringPiece client_cached_cert_hashes;
   if (client_hello.GetStringPiece(kCCRT, &client_cached_cert_hashes)) {
     params->client_cached_cert_hashes = client_cached_cert_hashes.as_string();
+  } else {
+    if (FLAGS_quic_reloadable_flag_quic_2rtt_drop_client_cached_certs) {
+      params->client_cached_cert_hashes.clear();
+      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_2rtt_drop_client_cached_certs,
+                        1, 2);
+    }
   }
 
   const string compressed =
@@ -1553,9 +1560,18 @@ string QuicCryptoServerConfig::CompressChain(
     return *cached_value;
   }
 
-  const string compressed =
-      CertCompressor::CompressChain(chain->certs, client_common_set_hashes,
-                                    client_common_set_hashes, common_sets);
+  string compressed;
+  if (FLAGS_quic_reloadable_flag_quic_2rtt_drop_client_cached_certs) {
+    compressed =
+        CertCompressor::CompressChain(chain->certs, client_common_set_hashes,
+                                      client_cached_cert_hashes, common_sets);
+    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_2rtt_drop_client_cached_certs,
+                      2, 2);
+  } else {
+    compressed =
+        CertCompressor::CompressChain(chain->certs, client_common_set_hashes,
+                                      client_common_set_hashes, common_sets);
+  }
 
   // Insert the newly compressed cert to cache.
   compressed_certs_cache->Insert(chain, client_common_set_hashes,

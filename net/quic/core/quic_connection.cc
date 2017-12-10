@@ -466,8 +466,7 @@ bool QuicConnection::OnProtocolVersionMismatch(
   DCHECK_NE(version(), received_version);
 
   if (debug_visitor_ != nullptr) {
-    debug_visitor_->OnProtocolVersionMismatch(
-        received_version.transport_version);
+    debug_visitor_->OnProtocolVersionMismatch(received_version);
   }
 
   switch (version_negotiation_state_) {
