@@ -29,7 +29,15 @@ class PaintTestConfigurations
         ScopedSlimmingPaintV175ForTest(GetParam() & kSlimmingPaintV175),
         ScopedSlimmingPaintV2ForTest(GetParam() & kSlimmingPaintV2),
         ScopedPaintUnderInvalidationCheckingForTest(
-            GetParam() & kUnderInvalidationChecking) {}
+            GetParam() & kUnderInvalidationChecking) {
+    // Check RuntimeEnabledFeature implication relationships.
+    DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() ||
+           RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+    DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() ||
+           RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+    DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() ||
+           RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+  }
 };
 
 static constexpr unsigned kDefaultPaintTestConfigurations[] = {
@@ -37,18 +45,13 @@ static constexpr unsigned kDefaultPaintTestConfigurations[] = {
     kSlimmingPaintV175,
     kSlimmingPaintV2,
     kRootLayerScrolling,
-    kSlimmingPaintV175 | kRootLayerScrolling,
-    kSlimmingPaintV2 | kRootLayerScrolling,
 };
 
 static constexpr unsigned kSlimmingPaintNonV1TestConfigurations[] = {
-    kSlimmingPaintV175, kSlimmingPaintV175 | kRootLayerScrolling,
-    kSlimmingPaintV2, kSlimmingPaintV2 | kRootLayerScrolling,
-};
+    kSlimmingPaintV175, kSlimmingPaintV2};
 
 static constexpr unsigned kSlimmingPaintV2TestConfigurations[] = {
-    kSlimmingPaintV2, kSlimmingPaintV2 | kRootLayerScrolling,
-};
+    kSlimmingPaintV2};
 
 static constexpr unsigned kSlimmingPaintVersions[] = {
     0, kSlimmingPaintV175, kSlimmingPaintV2,
