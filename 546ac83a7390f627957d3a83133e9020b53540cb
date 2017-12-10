@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c471223f_aa52a96c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObjectTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-10T21:11:26Z",
+      "side": 1,
+      "message": "Should be ASSERT_TRUE, since you dereference it later on.",
+      "revId": "546ac83a7390f627957d3a83133e9020b53540cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
