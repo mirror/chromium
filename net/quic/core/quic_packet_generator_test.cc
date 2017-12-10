@@ -149,14 +149,10 @@ class TestPacketGenerator : public QuicPacketGenerator {
 class QuicPacketGeneratorTest : public QuicTest {
  public:
   QuicPacketGeneratorTest()
-      : framer_(AllSupportedTransportVersions(),
+      : framer_(AllSupportedVersions(),
                 QuicTime::Zero(),
                 Perspective::IS_CLIENT),
-        generator_(42,
-                   &framer_,
-                   &random_generator_,
-                   &delegate_,
-                   &producer_),
+        generator_(42, &framer_, &random_generator_, &delegate_, &producer_),
         creator_(QuicPacketGeneratorPeer::GetPacketCreator(&generator_)) {
     creator_->SetEncrypter(ENCRYPTION_FORWARD_SECURE,
                            new NullEncrypter(Perspective::IS_CLIENT));

@@ -161,8 +161,7 @@ MockFramerVisitor::MockFramerVisitor() {
 
 MockFramerVisitor::~MockFramerVisitor() {}
 
-bool NoOpFramerVisitor::OnProtocolVersionMismatch(
-    QuicTransportVersion version) {
+bool NoOpFramerVisitor::OnProtocolVersionMismatch(ParsedQuicVersion version) {
   return false;
 }
 
@@ -269,7 +268,7 @@ MockQuicConnection::MockQuicConnection(MockQuicConnectionHelper* helper,
                          helper,
                          alarm_factory,
                          perspective,
-                         AllSupportedTransportVersions()) {}
+                         AllSupportedVersions()) {}
 
 MockQuicConnection::MockQuicConnection(QuicSocketAddress address,
                                        MockQuicConnectionHelper* helper,
@@ -280,7 +279,7 @@ MockQuicConnection::MockQuicConnection(QuicSocketAddress address,
                          helper,
                          alarm_factory,
                          perspective,
-                         AllSupportedTransportVersions()) {}
+                         AllSupportedVersions()) {}
 
 MockQuicConnection::MockQuicConnection(QuicConnectionId connection_id,
                                        MockQuicConnectionHelper* helper,
@@ -291,13 +290,13 @@ MockQuicConnection::MockQuicConnection(QuicConnectionId connection_id,
                          helper,
                          alarm_factory,
                          perspective,
-                         CurrentSupportedTransportVersions()) {}
+                         CurrentSupportedVersions()) {}
 
 MockQuicConnection::MockQuicConnection(
     MockQuicConnectionHelper* helper,
     MockAlarmFactory* alarm_factory,
     Perspective perspective,
-    const QuicTransportVersionVector& supported_versions)
+    const ParsedQuicVersionVector& supported_versions)
     : MockQuicConnection(QuicEndian::NetToHost64(kTestConnectionId),
                          QuicSocketAddress(TestPeerIPAddress(), kTestPort),
                          helper,
@@ -311,7 +310,7 @@ MockQuicConnection::MockQuicConnection(
     MockQuicConnectionHelper* helper,
     MockAlarmFactory* alarm_factory,
     Perspective perspective,
-    const QuicTransportVersionVector& supported_versions)
+    const ParsedQuicVersionVector& supported_versions)
     : QuicConnection(connection_id,
                      address,
                      helper,
@@ -331,8 +330,7 @@ void MockQuicConnection::AdvanceTime(QuicTime::Delta delta) {
   static_cast<MockQuicConnectionHelper*>(helper())->AdvanceTime(delta);
 }
 
-bool MockQuicConnection::OnProtocolVersionMismatch(
-    QuicTransportVersion version) {
+bool MockQuicConnection::OnProtocolVersionMismatch(ParsedQuicVersion version) {
   return false;
 }
 
@@ -345,7 +343,7 @@ PacketSavingConnection::PacketSavingConnection(
     MockQuicConnectionHelper* helper,
     MockAlarmFactory* alarm_factory,
     Perspective perspective,
-    const QuicTransportVersionVector& supported_versions)
+    const ParsedQuicVersionVector& supported_versions)
     : MockQuicConnection(helper,
                          alarm_factory,
                          perspective,
@@ -602,11 +600,19 @@ QuicIpAddress TestPeerIPAddress() {
   return QuicIpAddress::Loopback4();
 }
 
-QuicTransportVersion QuicVersionMax() {
+ParsedQuicVersion QuicVersionMax() {
+  return AllSupportedVersions().front();
+}
+
+ParsedQuicVersion QuicVersionMin() {
+  return AllSupportedVersions().back();
+}
+
+QuicTransportVersion QuicTransportVersionMax() {
   return AllSupportedTransportVersions().front();
 }
 
-QuicTransportVersion QuicVersionMin() {
+QuicTransportVersion QuicTransportVersionMin() {
   return AllSupportedTransportVersions().back();
 }
 
@@ -641,7 +647,7 @@ QuicEncryptedPacket* ConstructEncryptedPacket(
     const string& data,
     QuicConnectionIdLength connection_id_length,
     QuicPacketNumberLength packet_number_length,
-    QuicTransportVersionVector* versions) {
+    ParsedQuicVersionVector* versions) {
   return ConstructEncryptedPacket(connection_id, version_flag, reset_flag,
                                   packet_number, data, connection_id_length,
                                   packet_number_length, versions,
@@ -655,7 +661,7 @@ QuicEncryptedPacket* ConstructEncryptedPacket(
     const string& data,
     QuicConnectionIdLength connection_id_length,
     QuicPacketNumberLength packet_number_length,
-    QuicTransportVersionVector* versions,
+    ParsedQuicVersionVector* versions,
     Perspective perspective) {
   QuicPacketHeader header;
   header.connection_id = connection_id;
@@ -669,7 +675,7 @@ QuicEncryptedPacket* ConstructEncryptedPacket(
   QuicFrames frames;
   frames.push_back(frame);
   QuicFramer framer(
-      versions != nullptr ? *versions : CurrentSupportedTransportVersions(),
+      versions != nullptr ? *versions : CurrentSupportedVersions(),
       QuicTime::Zero(), perspective);
 
   std::unique_ptr<QuicPacket> packet(
@@ -699,7 +705,7 @@ QuicEncryptedPacket* ConstructMisFramedEncryptedPacket(
     const string& data,
     QuicConnectionIdLength connection_id_length,
     QuicPacketNumberLength packet_number_length,
-    QuicTransportVersionVector* versions,
+    ParsedQuicVersionVector* versions,
     Perspective perspective) {
   QuicPacketHeader header;
   header.connection_id = connection_id;
@@ -712,9 +718,8 @@ QuicEncryptedPacket* ConstructMisFramedEncryptedPacket(
   QuicFrame frame(&stream_frame);
   QuicFrames frames;
   frames.push_back(frame);
-  QuicFramer framer(
-      versions != nullptr ? *versions : AllSupportedTransportVersions(),
-      QuicTime::Zero(), perspective);
+  QuicFramer framer(versions != nullptr ? *versions : AllSupportedVersions(),
+                    QuicTime::Zero(), perspective);
 
   std::unique_ptr<QuicPacket> packet(
       BuildUnsizedDataPacket(&framer, header, frames));
@@ -817,6 +822,12 @@ QuicTransportVersionVector SupportedTransportVersions(
   return versions;
 }
 
+ParsedQuicVersionVector SupportedVersions(ParsedQuicVersion version) {
+  ParsedQuicVersionVector versions;
+  versions.push_back(version);
+  return versions;
+}
+
 MockQuicConnectionDebugVisitor::MockQuicConnectionDebugVisitor() {}
 
 MockQuicConnectionDebugVisitor::~MockQuicConnectionDebugVisitor() {}
@@ -833,15 +844,16 @@ MockConnectionCloseDelegate::~MockConnectionCloseDelegate() {}
 MockPacketCreatorDelegate::MockPacketCreatorDelegate() {}
 MockPacketCreatorDelegate::~MockPacketCreatorDelegate() {}
 
-void CreateClientSessionForTest(QuicServerId server_id,
-                                bool supports_stateless_rejects,
-                                QuicTime::Delta connection_start_time,
-                                QuicTransportVersionVector supported_versions,
-                                MockQuicConnectionHelper* helper,
-                                MockAlarmFactory* alarm_factory,
-                                QuicCryptoClientConfig* crypto_client_config,
-                                PacketSavingConnection** client_connection,
-                                TestQuicSpdyClientSession** client_session) {
+void CreateClientSessionForTest(
+    QuicServerId server_id,
+    bool supports_stateless_rejects,
+    QuicTime::Delta connection_start_time,
+    const ParsedQuicVersionVector& supported_versions,
+    MockQuicConnectionHelper* helper,
+    MockAlarmFactory* alarm_factory,
+    QuicCryptoClientConfig* crypto_client_config,
+    PacketSavingConnection** client_connection,
+    TestQuicSpdyClientSession** client_session) {
   CHECK(crypto_client_config);
   CHECK(client_connection);
   CHECK(client_session);
@@ -862,7 +874,7 @@ void CreateClientSessionForTest(QuicServerId server_id,
 void CreateServerSessionForTest(
     QuicServerId server_id,
     QuicTime::Delta connection_start_time,
-    QuicTransportVersionVector supported_versions,
+    ParsedQuicVersionVector supported_versions,
     MockQuicConnectionHelper* helper,
     MockAlarmFactory* alarm_factory,
     QuicCryptoServerConfig* server_crypto_config,

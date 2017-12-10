@@ -209,6 +209,7 @@ class QUIC_EXPORT_PRIVATE QuicConnectionDebugVisitor
 
   // Called when the protocol version on the received packet doensn't match
   // current protocol version of the connection.
+  // TODO(nharper): Change this to take a ParsedQuicVersion.
   virtual void OnProtocolVersionMismatch(QuicTransportVersion version) {}
 
   // Called when the complete header of a packet has been parsed.
@@ -325,7 +326,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
                  QuicPacketWriter* writer,
                  bool owns_writer,
                  Perspective perspective,
-                 const QuicTransportVersionVector& supported_versions);
+                 const ParsedQuicVersionVector& supported_versions);
   ~QuicConnection() override;
 
   // Sets connection parameters from the supplied |config|.
@@ -435,20 +436,16 @@ class QUIC_EXPORT_PRIVATE QuicConnection
     return framer_.transport_version();
   }
 
-  // The QuicVersionLabel for the version this connection is using.
-  QuicVersionLabel version_label() const {
-    return framer_.last_version_label();
-  }
+  ParsedQuicVersion version() const { return framer_.version(); }
 
   // The versions of the protocol that this connection supports.
-  const QuicTransportVersionVector& supported_versions() const {
+  const ParsedQuicVersionVector& supported_versions() const {
     return framer_.supported_versions();
   }
 
   // From QuicFramerVisitorInterface
   void OnError(QuicFramer* framer) override;
-  bool OnProtocolVersionMismatch(
-      QuicTransportVersion received_version) override;
+  bool OnProtocolVersionMismatch(ParsedQuicVersion received_version) override;
   void OnPacket() override;
   void OnPublicResetPacket(const QuicPublicResetPacket& packet) override;
   void OnVersionNegotiationPacket(
@@ -529,7 +526,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   bool goaway_received() const { return goaway_received_; }
 
   // Must only be called on client connections.
-  const QuicTransportVersionVector& server_supported_versions() const {
+  const ParsedQuicVersionVector& server_supported_versions() const {
     DCHECK_EQ(Perspective::IS_CLIENT, perspective_);
     return server_supported_versions_;
   }
@@ -751,8 +748,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // Selects and updates the version of the protocol being used by selecting a
   // version from |available_versions| which is also supported. Returns true if
   // such a version exists, false otherwise.
-  bool SelectMutualVersion(
-      const QuicTransportVersionVector& available_versions);
+  bool SelectMutualVersion(const ParsedQuicVersionVector& available_versions);
 
   // Returns the current per-packet options for the connection.
   PerPacketOptions* per_packet_options() { return per_packet_options_; }
@@ -1112,7 +1108,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
 
   // If non-empty this contains the set of versions received in a
   // version negotiation packet.
-  QuicTransportVersionVector server_supported_versions_;
+  ParsedQuicVersionVector server_supported_versions_;
 
   // The size of the packet we are targeting while doing path MTU discovery.
   QuicByteCount mtu_discovery_target_;
