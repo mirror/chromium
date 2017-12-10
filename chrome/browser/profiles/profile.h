@@ -16,6 +16,7 @@
 #include "components/domain_reliability/clear_mode.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/cookie_store_factory.h"
 #include "content/public/common/network_service.mojom.h"
 
 #if !defined(OS_ANDROID)
@@ -288,6 +289,11 @@ class Profile : public content::BrowserContext {
 
   // Returns how the last session was shutdown.
   virtual ExitType GetLastSessionExitType() = 0;
+
+  // Returns the config that controls whether session cookies are saved and
+  // restored.
+  virtual content::CookieStoreConfig::SessionCookieMode
+  GetSessionCookieMode() = 0;
 
   // Creates the main NetworkContext for the profile, or returns nullptr to
   // defer NetworkContext creation to the caller.

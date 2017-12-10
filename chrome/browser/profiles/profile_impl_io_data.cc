@@ -132,8 +132,6 @@ ProfileImplIOData::Handle::~Handle() {
 }
 
 void ProfileImplIOData::Handle::Init(
-    const base::FilePath& cookie_path,
-    const base::FilePath& channel_id_path,
     const base::FilePath& media_cache_path,
     int media_cache_max_size,
     const base::FilePath& extensions_cookie_path,
@@ -149,8 +147,6 @@ void ProfileImplIOData::Handle::Init(
 
   LazyParams* lazy_params = new LazyParams();
 
-  lazy_params->cookie_path = cookie_path;
-  lazy_params->channel_id_path = channel_id_path;
   lazy_params->media_cache_path = media_cache_path;
   lazy_params->media_cache_max_size = media_cache_max_size;
   lazy_params->extensions_cookie_path = extensions_cookie_path;
@@ -418,38 +414,43 @@ void ProfileImplIOData::InitializeInternal(
   builder->set_network_quality_estimator(
       io_thread_globals->network_quality_estimator.get());
 
-  // Create a single task runner to use with the CookieStore and ChannelIDStore.
-  scoped_refptr<base::SequencedTaskRunner> cookie_background_task_runner =
-      base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::BACKGROUND,
-           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+  if (profile_params->main_network_context_params->cookie_path) {
+    // Create a single task runner to use with the CookieStore and
+    // ChannelIDStore.
+    scoped_refptr<base::SequencedTaskRunner> cookie_background_task_runner =
+        base::CreateSequencedTaskRunnerWithTraits(
+            {base::MayBlock(), base::TaskPriority::BACKGROUND,
+             base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
-  // Set up server bound cert service.
-  DCHECK(!lazy_params_->channel_id_path.empty());
-  scoped_refptr<QuotaPolicyChannelIDStore> channel_id_db =
-      new QuotaPolicyChannelIDStore(lazy_params_->channel_id_path,
-                                    cookie_background_task_runner,
-                                    lazy_params_->special_storage_policy.get());
-  std::unique_ptr<net::ChannelIDService> channel_id_service(
-      base::MakeUnique<net::ChannelIDService>(
-          new net::DefaultChannelIDStore(channel_id_db.get())));
+    // Set up server bound cert service.
+    DCHECK(!profile_params->main_network_context_params->channel_id_path.value()
+                .empty());
+    scoped_refptr<QuotaPolicyChannelIDStore> channel_id_db =
+        new QuotaPolicyChannelIDStore(
+            profile_params->main_network_context_params->channel_id_path
+                .value(),
+            cookie_background_task_runner,
+            lazy_params_->special_storage_policy.get());
+    std::unique_ptr<net::ChannelIDService> channel_id_service(
+        base::MakeUnique<net::ChannelIDService>(
+            new net::DefaultChannelIDStore(channel_id_db.get())));
 
-  // Set up cookie store.
-  DCHECK(!lazy_params_->cookie_path.empty());
+    // Set up cookie store.
+    content::CookieStoreConfig cookie_config(
+        profile_params->main_network_context_params->cookie_path.value(),
+        lazy_params_->session_cookie_mode,
+        lazy_params_->special_storage_policy.get());
+    cookie_config.crypto_delegate = cookie_config::GetCookieCryptoDelegate();
+    cookie_config.channel_id_service = channel_id_service.get();
+    cookie_config.background_task_runner = cookie_background_task_runner;
+    std::unique_ptr<net::CookieStore> cookie_store(
+        content::CreateCookieStore(cookie_config));
 
-  content::CookieStoreConfig cookie_config(
-      lazy_params_->cookie_path, lazy_params_->session_cookie_mode,
-      lazy_params_->special_storage_policy.get());
-  cookie_config.crypto_delegate = cookie_config::GetCookieCryptoDelegate();
-  cookie_config.channel_id_service = channel_id_service.get();
-  cookie_config.background_task_runner = cookie_background_task_runner;
-  std::unique_ptr<net::CookieStore> cookie_store(
-      content::CreateCookieStore(cookie_config));
+    cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
 
-  cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
-
-  builder->SetCookieAndChannelIdStores(std::move(cookie_store),
-                                       std::move(channel_id_service));
+    builder->SetCookieAndChannelIdStores(std::move(cookie_store),
+                                         std::move(channel_id_service));
+  }
 
   AddProtocolHandlersToBuilder(builder, protocol_handlers);
 

@@ -204,3 +204,8 @@ void FakeProfile::SetExitType(ExitType exit_type) {
 Profile::ExitType FakeProfile::GetLastSessionExitType() {
   return EXIT_NORMAL;
 }
+
+content::CookieStoreConfig::SessionCookieMode
+FakeProfile::GetSessionCookieMode() {
+  return content::CookieStoreConfig::EPHEMERAL_SESSION_COOKIES;
+}
