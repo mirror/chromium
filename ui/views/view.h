@@ -1160,6 +1160,11 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
     gfx::Point start_pt;
   };
 
+  // Accessibility -------------------------------------------------------------
+
+  // The accessibility element used to represent this View.
+  std::unique_ptr<NativeViewAccessibility> native_view_accessibility_;
+
   // Size and disposition ------------------------------------------------------
 
   // Calculates the natural size for the View, to be taken into consideration
@@ -1801,11 +1806,6 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // Input  --------------------------------------------------------------------
 
   std::unique_ptr<ViewTargeter> targeter_;
-
-  // Accessibility -------------------------------------------------------------
-
-  // The accessibility element used to represent this View.
-  std::unique_ptr<NativeViewAccessibility> native_view_accessibility_;
 
   // Observers -------------------------------------------------------------
 

@@ -46,6 +46,7 @@ class OmniboxPopupViewMac : public OmniboxPopupView,
   // everything.  Popup should already be visible.
   void PaintUpdatesNow() override;
   void OnDragCanceled() override {}
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override {}
 
   // Overridden from OmniboxPopupMatrixDelegate:
   void OnMatrixRowSelected(OmniboxPopupMatrix* matrix, size_t row) override;
