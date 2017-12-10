@@ -170,7 +170,7 @@ int QuicSpdyClientBase::GetNumReceivedServerConfigUpdatesFromSession() {
 void QuicSpdyClientBase::MaybeAddDataToResend(const SpdyHeaderBlock& headers,
                                               QuicStringPiece body,
                                               bool fin) {
-  if (!FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support) {
+  if (!GetQuicReloadableFlag(enable_quic_stateless_reject_support)) {
     return;
   }
 

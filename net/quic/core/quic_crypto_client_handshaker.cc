@@ -351,7 +351,7 @@ void QuicCryptoClientHandshaker::DoSendCHLO(
 
   // If the server nonce is empty, copy over the server nonce from a previous
   // SREJ, if there is one.
-  if (FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support &&
+  if (GetQuicReloadableFlag(enable_quic_stateless_reject_support) &&
       crypto_negotiated_params_->server_nonce.empty() &&
       cached->has_server_nonce()) {
     crypto_negotiated_params_->server_nonce = cached->GetNextServerNonce();

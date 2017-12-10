@@ -1314,7 +1314,7 @@ void QuicCryptoServerConfig::EvaluateClientHelloAfterGetProof(
   QUIC_DVLOG(1) << "No 0-RTT replay protection in QUIC_VERSION_33 and higher.";
   // If the server nonce is empty and we're requiring handshake confirmation
   // for DoS reasons then we must reject the CHLO.
-  if (FLAGS_quic_reloadable_flag_quic_require_handshake_confirmation &&
+  if (GetQuicReloadableFlag(quic_require_handshake_confirmation) &&
       info->server_nonce.empty()) {
     info->reject_reasons.push_back(SERVER_NONCE_REQUIRED_FAILURE);
   }
@@ -1452,7 +1452,7 @@ void QuicCryptoServerConfig::BuildRejection(
     QuicByteCount total_framing_overhead,
     QuicByteCount chlo_packet_size,
     CryptoHandshakeMessage* out) const {
-  if (FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support &&
+  if (GetQuicReloadableFlag(enable_quic_stateless_reject_support) &&
       use_stateless_rejects) {
     QUIC_DVLOG(1) << "QUIC Crypto server config returning stateless reject "
                   << "with server-designated connection ID "

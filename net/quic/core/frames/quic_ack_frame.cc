@@ -78,7 +78,7 @@ std::ostream& operator<<(std::ostream& os, const QuicAckFrame& ack_frame) {
 }
 
 QuicPacketNumber LargestAcked(const QuicAckFrame& frame) {
-  if (!FLAGS_quic_reloadable_flag_quic_deprecate_largest_observed) {
+  if (!GetQuicReloadableFlag(quic_deprecate_largest_observed)) {
     return frame.deprecated_largest_observed;
   }
 
@@ -93,7 +93,7 @@ QuicPacketNumber LargestAcked(const QuicAckFrame& frame) {
 }
 
 PacketNumberQueue::PacketNumberQueue()
-    : use_deque_(FLAGS_quic_reloadable_flag_quic_frames_deque3) {
+    : use_deque_(GetQuicReloadableFlag(quic_frames_deque3)) {
   if (use_deque_) {
     QUIC_FLAG_COUNT(quic_reloadable_flag_quic_frames_deque3);
   }
