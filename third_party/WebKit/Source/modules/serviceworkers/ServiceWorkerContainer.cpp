@@ -180,15 +180,6 @@ void ServiceWorkerContainer::RegisterServiceWorkerImpl(
 
   scoped_refptr<const SecurityOrigin> document_origin =
       execution_context->GetSecurityOrigin();
-  String error_message;
-  // Restrict to secure origins:
-  // https://w3c.github.io/webappsec/specs/powerfulfeatures/#settings-privileged
-  if (!execution_context->IsSecureContext(error_message)) {
-    callbacks->OnError(WebServiceWorkerError(
-        mojom::blink::ServiceWorkerErrorType::kSecurity, error_message));
-    return;
-  }
-
   KURL page_url = KURL(NullURL(), document_origin->ToString());
   if (!SchemeRegistry::ShouldTreatURLSchemeAsAllowingServiceWorkers(
           page_url.Protocol())) {
@@ -342,12 +333,6 @@ ScriptPromise ServiceWorkerContainer::getRegistration(
 
   scoped_refptr<const SecurityOrigin> document_origin =
       execution_context->GetSecurityOrigin();
-  String error_message;
-  if (!execution_context->IsSecureContext(error_message)) {
-    resolver->Reject(DOMException::Create(kSecurityError, error_message));
-    return promise;
-  }
-
   KURL page_url = KURL(NullURL(), document_origin->ToString());
   if (!SchemeRegistry::ShouldTreatURLSchemeAsAllowingServiceWorkers(
           page_url.Protocol())) {
@@ -395,12 +380,6 @@ ScriptPromise ServiceWorkerContainer::getRegistrations(
   ExecutionContext* execution_context = ExecutionContext::From(script_state);
   scoped_refptr<const SecurityOrigin> document_origin =
       execution_context->GetSecurityOrigin();
-  String error_message;
-  if (!execution_context->IsSecureContext(error_message)) {
-    resolver->Reject(DOMException::Create(kSecurityError, error_message));
-    return promise;
-  }
-
   KURL page_url = KURL(NullURL(), document_origin->ToString());
   if (!SchemeRegistry::ShouldTreatURLSchemeAsAllowingServiceWorkers(
           page_url.Protocol())) {
