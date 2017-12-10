@@ -70,7 +70,7 @@ class QuicStreamTest : public QuicTestWithParam<bool> {
   QuicStreamTest()
       : initial_flow_control_window_bytes_(kMaxPacketSize),
         zero_(QuicTime::Delta::Zero()),
-        supported_versions_(AllSupportedTransportVersions()) {
+        supported_versions_(AllSupportedVersions()) {
     headers_[":host"] = "www.google.com";
     headers_[":path"] = "/index.hml";
     headers_[":scheme"] = "https";
@@ -153,7 +153,7 @@ class QuicStreamTest : public QuicTestWithParam<bool> {
   QuicWriteBlockedList* write_blocked_list_;
   uint32_t initial_flow_control_window_bytes_;
   QuicTime::Delta zero_;
-  QuicTransportVersionVector supported_versions_;
+  ParsedQuicVersionVector supported_versions_;
   const QuicStreamId kTestStreamId = 5u;
 };
 

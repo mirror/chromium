@@ -180,8 +180,7 @@ class QuicCryptoServerStreamTest : public QuicTestWithParam<bool> {
   crypto_test_utils::FakeClientOptions client_options_;
 
   // Which QUIC versions the client and server support.
-  QuicTransportVersionVector supported_versions_ =
-      AllSupportedTransportVersions();
+  ParsedQuicVersionVector supported_versions_ = AllSupportedVersions();
 };
 
 INSTANTIATE_TEST_CASE_P(Tests, QuicCryptoServerStreamTest, testing::Bool());

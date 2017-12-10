@@ -13,21 +13,25 @@ namespace net {
 // Used to generate filtered supported versions based on flags.
 class QUIC_EXPORT_PRIVATE QuicVersionManager {
  public:
-  explicit QuicVersionManager(QuicTransportVersionVector supported_versions);
+  explicit QuicVersionManager(ParsedQuicVersionVector supported_versions);
   virtual ~QuicVersionManager();
 
   // Returns currently supported QUIC versions.
+  // TODO(nharper): Remove this method once it is unused.
   const QuicTransportVersionVector& GetSupportedTransportVersions();
+
+  // Returns currently supported QUIC versions.
+  const ParsedQuicVersionVector& GetSupportedVersions();
 
  protected:
   // Maybe refilter filtered_supported_versions_ based on flags.
-  void MaybeRefilterSupportedTransportVersions();
+  void MaybeRefilterSupportedVersions();
 
   // Refilters filtered_supported_versions_.
-  virtual void RefilterSupportedTransportVersions();
+  virtual void RefilterSupportedVersions();
 
   const QuicTransportVersionVector& filtered_supported_versions() const {
-    return filtered_supported_versions_;
+    return filtered_transport_versions_;
   }
 
  private:
@@ -36,10 +40,14 @@ class QUIC_EXPORT_PRIVATE QuicVersionManager {
   // FLAGS_quic_enable_version_42
   bool enable_version_42_;
   // The list of versions that may be supported.
-  QuicTransportVersionVector allowed_supported_versions_;
+  ParsedQuicVersionVector allowed_supported_versions_;
   // This vector contains QUIC versions which are currently supported based on
   // flags.
-  QuicTransportVersionVector filtered_supported_versions_;
+  ParsedQuicVersionVector filtered_supported_versions_;
+  // This vector contains the transport versions from
+  // |filtered_supported_versions_|. No guarantees are made that the same
+  // transport version isn't repeated.
+  QuicTransportVersionVector filtered_transport_versions_;
 };
 
 }  // namespace net
