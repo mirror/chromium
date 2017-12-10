@@ -209,8 +209,7 @@ class QUIC_EXPORT_PRIVATE QuicConnectionDebugVisitor
 
   // Called when the protocol version on the received packet doensn't match
   // current protocol version of the connection.
-  // TODO(nharper): Change this to take a ParsedQuicVersion.
-  virtual void OnProtocolVersionMismatch(QuicTransportVersion version) {}
+  virtual void OnProtocolVersionMismatch(ParsedQuicVersion version) {}
 
   // Called when the complete header of a packet has been parsed.
   virtual void OnPacketHeader(const QuicPacketHeader& header) {}

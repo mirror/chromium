@@ -522,7 +522,7 @@ void QuicConnectionLogger::OnDuplicatePacket(QuicPacketNumber packet_number) {
 }
 
 void QuicConnectionLogger::OnProtocolVersionMismatch(
-    QuicTransportVersion received_version) {
+    ParsedQuicVersion received_version) {
   // TODO(rtenneti): Add logging.
 }
 
