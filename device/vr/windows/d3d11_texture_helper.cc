@@ -235,13 +235,19 @@ void D3D11TextureHelper::AllocateBackBuffer() {
   }
 }
 
-Microsoft::WRL::ComPtr<ID3D11Texture2D> D3D11TextureHelper::GetBackbuffer() {
+const Microsoft::WRL::ComPtr<ID3D11Texture2D>&
+D3D11TextureHelper::GetBackbuffer() {
   return render_state_.target_texture_;
 }
 
 void D3D11TextureHelper::SetBackbuffer(
     Microsoft::WRL::ComPtr<ID3D11Texture2D> back_buffer) {
   render_state_.target_texture_ = back_buffer;
+}
+
+const Microsoft::WRL::ComPtr<ID3D11Device>& D3D11TextureHelper::GetDevice() {
+  EnsureInitialized();
+  return render_state_.d3d11_device_;
 }
 
 bool D3D11TextureHelper::EnsureInitialized() {
