@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "85a07bb1_79763668",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-10T15:55:23Z",
+      "side": 1,
+      "message": "I\u0027ve added that the UMA stats are Android for now, olka@ let me know if you\u0027d like me to remove them entirely and I will do that.",
+      "parentUuid": "1978ead7_95388dd1",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88cb0225_b553fe60",
         "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
         "patchSetId": 4
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "I don\u0027t think we need to overthink here. We can just document the behavior and explain how it can be potentially extended in the future.\nUnderlying hardware buffer size is already available to WebAudio, right? This function does not give any extra info on it.",
       "parentUuid": "0b5c0371_01fe684c",
+      "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04470671_672f914b",
+        "filename": "content/renderer/media/renderer_webaudiodevice_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-10T15:55:23Z",
+      "side": 1,
+      "message": "Ok, done! I\u0027ve moved this logic into GetExactBufferSize now, let me know if that looks better.",
+      "parentUuid": "7888d811_7e2bfffb",
       "revId": "7b48a8fd497c32fa80a0d07eb3882d18cc6f8fcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
