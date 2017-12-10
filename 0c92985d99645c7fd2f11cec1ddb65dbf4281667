@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7247208d_66b88ec7",
+        "filename": "device/vr/oculus/oculus_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "749b4818_a0fdd9bb",
+      "range": {
+        "startLine": 23,
+        "startChar": 58,
+        "endLine": 23,
+        "endChar": 65
+      },
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a31bd14_5ba5190f",
         "filename": "device/vr/oculus/oculus_device.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8167c80_aff168ad",
+        "filename": "device/vr/oculus/oculus_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a31bd14_5ba5190f",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 23
+      },
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "44ff8d83_cc0f73af",
+        "filename": "device/vr/oculus/oculus_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b7c03d4_13700f5e",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 59
+      },
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99b2eb9b_454f5144",
         "filename": "device/vr/oculus/oculus_device.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0bd08752_b4d65a95",
+        "filename": "device/vr/oculus/oculus_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99b2eb9b_454f5144",
+      "range": {
+        "startLine": 123,
+        "startChar": 33,
+        "endLine": 123,
+        "endChar": 45
+      },
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4041d8af_95724bf4",
         "filename": "device/vr/oculus/oculus_device.h",
         "patchSetId": 3
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "daf2f629_53e990c2",
+        "filename": "device/vr/oculus/oculus_device.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "I was trying to avoid pulling in oculus headers throughout the code for a single type, but I\u0027ll just include it.  That is how the header declares the type.",
+      "parentUuid": "4041d8af_95724bf4",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57f7e5b3_f607e8e7",
         "filename": "device/vr/oculus/oculus_device.h",
         "patchSetId": 3
@@ -125,6 +239,24 @@
       "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc89b41_d6ca3131",
+        "filename": "device/vr/oculus/oculus_device.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "part of oculus sdk - its meant to be an opaque handle-like object that happens to be a pointer if you look at the details.",
+      "parentUuid": "57f7e5b3_f607e8e7",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "3f17520e_4d76837e",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed8b8690_849e9b64",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 34
+      },
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e281be94_e5f5571f",
         "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.cc",
         "patchSetId": 3
@@ -182,6 +338,24 @@
       "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189f703c_2228e335",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "Double checked API documentation, and deadzone handling is already applied, so there is no reason.  changed these to zeros, but added a comment that deadzone is already applied.",
+      "parentUuid": "e281be94_e5f5571f",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +376,24 @@
     },
     {
       "key": {
+        "uuid": "041f8c15_c7c5d9a6",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "the enum contains several types we don\u0027t want to handle here - I\u0027m only handling left/right controllers.\n\nI can add a NOTREACHED() to ensure we don\u0027t hit the default case.",
+      "parentUuid": "8d10ab32_a5010766",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c345252b_52be875d",
         "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.h",
         "patchSetId": 3
@@ -216,6 +408,24 @@
       "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e951ddb_25d1114a",
+        "filename": "device/vr/oculus/oculus_gamepad_data_fetcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "I\u0027ll just include the oculus headers",
+      "parentUuid": "c345252b_52be875d",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +446,24 @@
     },
     {
       "key": {
+        "uuid": "6f4b20fa_db400975",
+        "filename": "device/vr/oculus/oculus_render_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "Windows and Android have slightly different submit paths currently, which will be reconciled.  On desktop we should not reach this code, and this code should not be run on other platforms.",
+      "parentUuid": "eee5a377_53b2f8f6",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8979ea6_7f8fe790",
         "filename": "device/vr/windows/d3d11_texture_helper.h",
         "patchSetId": 3
@@ -247,6 +475,24 @@
       "writtenOn": "2017-12-08T23:22:10Z",
       "side": 1,
       "message": "Nit: should accessing this really copy? Maybe it should return a const Microsoft::WRL::ComPtr\u003cID3D11Device\u003e\u0026 - then the caller can copy if it really needs to, and the normal case (where no copy is needed) won\u0027t incur AddRef() churn.\n\nSame comment for GetBackBuffer(), though that\u0027s pre-existing.",
+      "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06d4f08_369dfdde",
+        "filename": "device/vr/windows/d3d11_texture_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-10T20:09:08Z",
+      "side": 1,
+      "message": "I\u0027ve always consider AddRef cheap enough.  I can change both to const references.",
+      "parentUuid": "e8979ea6_7f8fe790",
       "revId": "0c92985d99645c7fd2f11cec1ddb65dbf4281667",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
