@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "f2a5873b_d153696c",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99dcb3ad_a1785265",
+      "range": {
+        "startLine": 106,
+        "startChar": 56,
+        "endLine": 106,
+        "endChar": 78
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37230368_f7e3986c",
         "filename": "chrome/browser/chromeos/login/users/user_manager_unittest.cc",
         "patchSetId": 9
@@ -53,6 +77,30 @@
       "writtenOn": "2017-11-15T15:07:41Z",
       "side": 1,
       "message": "Why is this needed here? If this is to prevent state from leaking to other test runs, shouldn\u0027t it be done in TearDown()?",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 18
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a93daf4_88549387",
+        "filename": "chrome/browser/chromeos/login/users/user_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "You have to call ResetUserManager() after calling UserLoggedIn() or else you crash due to dangling observers.\n\nMany tests want to check assertions after calling ResetUserManager() so it\u0027s not always appropriate to call it in TearDown(). Mostly, I\u0027m just following the example used everywhere else in the file (for example, see ScreenLockAvailability in this same file).",
+      "parentUuid": "37230368_f7e3986c",
       "range": {
         "startLine": 283,
         "startChar": 2,
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "c3839015_de9b7f60",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b0c5298_35362af9",
+      "range": {
+        "startLine": 14,
+        "startChar": 21,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8ae703d_4bb8aba4",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
         "patchSetId": 9
@@ -99,6 +171,30 @@
       "writtenOn": "2017-11-15T15:07:41Z",
       "side": 1,
       "message": "Is it ok that we\u0027re not calling service()-\u003eRefreshPolicy here anymore?",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 191,
+        "endChar": 29
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0826a80e_e68245cb",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "Yes, this is very very intentional. If initialization is complete, we\u0027re in the synchronous-profile-load flow (i.e. after a browser restart). The old behavior where we forced a policy refresh was working around a problem where waiting_for_initial_policy_fetch_ was set even when we were in synchronous-profile-load mode, which has now been fixed.\n\nBasically, if we\u0027re in synchronous-profile-load mode, and we don\u0027t have cached policy, we invoke the fatal_error_callback_ -- otherwise, we mark our policy as loaded (no need to refresh since we already have cached data).",
+      "parentUuid": "b8ae703d_4bb8aba4",
       "range": {
         "startLine": 191,
         "startChar": 4,
@@ -134,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "e2558e43_e4e789eb",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "Done, but typically we don\u0027t do that because that\u0027s kind of the default when you aren\u0027t using a WeakPointerFactory.",
+      "parentUuid": "c6977f0c_a374aae5",
+      "range": {
+        "startLine": 207,
+        "startChar": 25,
+        "endLine": 207,
+        "endChar": 35
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2de055c_162a68a2",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
         "patchSetId": 9
@@ -154,6 +274,30 @@
       "revId": "c1731ce87818feef286c390fb0802baa95431149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f603a0a9_ca9350ba",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "Great point, and I suspect this fixes a bug when trying to load policy for a secondary user. I\u0027ve changed to pass in the user\u0027s account id.",
+      "parentUuid": "e2de055c_162a68a2",
+      "range": {
+        "startLine": 399,
+        "startChar": 49,
+        "endLine": 399,
+        "endChar": 62
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +324,30 @@
     },
     {
       "key": {
+        "uuid": "07dc2b6a_b26543ba",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "No, it\u0027s just checking our expectation that we\u0027re adding only a single flag (kProfileRequiresPolicy). It\u0027s kind of a dumb DCHECK() but we do this elsewhere so I copied it here as well.",
+      "parentUuid": "68d23a55_ec0ae0f0",
+      "range": {
+        "startLine": 414,
+        "startChar": 0,
+        "endLine": 415,
+        "endChar": 32
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b57fdb_c0eb45ae",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.h",
         "patchSetId": 9
@@ -200,6 +368,30 @@
       "revId": "c1731ce87818feef286c390fb0802baa95431149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91860ef6_942502b9",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "I think this naming is appropriate for a setter, but I\u0027ve updated the documentation to clarify the behavior.",
+      "parentUuid": "b3b57fdb_c0eb45ae",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 24
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +418,30 @@
     },
     {
       "key": {
+        "uuid": "c0759ea7_9addd8b7",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31e05707_bf7b8018",
+      "range": {
+        "startLine": 353,
+        "startChar": 7,
+        "endLine": 353,
+        "endChar": 28
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e0cd365_c62f3892",
         "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
         "patchSetId": 9
@@ -246,6 +462,30 @@
       "revId": "c1731ce87818feef286c390fb0802baa95431149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cff0c0d8_4296c0d6",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "In general, we want to know if users have policy in known_users. Long term this will be valuable, so I\u0027d like to keep this up-to-date whenever possible (for example, some of the ext4 migration stuff would\u0027ve been easier to handle if we knew prior to mounting cryptohome if a given user had policy).",
+      "parentUuid": "5e0cd365_c62f3892",
+      "range": {
+        "startLine": 186,
+        "startChar": 30,
+        "endLine": 186,
+        "endChar": 54
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +512,30 @@
     },
     {
       "key": {
+        "uuid": "8a9d9e4c_d66cdd2b",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9be4b7a9_fcb559a3",
+      "range": {
+        "startLine": 218,
+        "startChar": 26,
+        "endLine": 218,
+        "endChar": 31
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d9ea3a1_c65fb243",
         "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
         "patchSetId": 9
@@ -292,6 +556,30 @@
       "revId": "c1731ce87818feef286c390fb0802baa95431149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcfe5ae8_30c1ac6e",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d9ea3a1_c65fb243",
+      "range": {
+        "startLine": 361,
+        "startChar": 18,
+        "endLine": 361,
+        "endChar": 26
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -329,6 +617,24 @@
     },
     {
       "key": {
+        "uuid": "6bc059b2_6ad5e736",
+        "filename": "components/user_manager/known_user.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9146018_4a38779a",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81e49cab_41c6342e",
         "filename": "components/user_manager/known_user.h",
         "patchSetId": 9
@@ -343,6 +649,24 @@
       "revId": "c1731ce87818feef286c390fb0802baa95431149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30cf01c_d535398f",
+        "filename": "components/user_manager/known_user.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-10T13:21:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81e49cab_41c6342e",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
