@@ -490,13 +490,14 @@ void VrShell::OnTabRemoved(JNIEnv* env,
 void VrShell::ConnectPresentingService(
     device::mojom::VRSubmitFrameClientPtr submit_client,
     device::mojom::VRPresentationProviderRequest request,
-    device::mojom::VRDisplayInfoPtr display_info) {
-  PostToGlThread(
-      FROM_HERE,
-      base::Bind(&VrShellGl::ConnectPresentingService,
-                 gl_thread_->GetVrShellGl(),
-                 base::Passed(submit_client.PassInterface()),
-                 base::Passed(&request), base::Passed(&display_info)));
+    device::mojom::VRDisplayInfoPtr display_info,
+    device::mojom::VRRequestPresentOptionsPtr present_options) {
+  PostToGlThread(FROM_HERE,
+                 base::Bind(&VrShellGl::ConnectPresentingService,
+                            gl_thread_->GetVrShellGl(),
+                            base::Passed(submit_client.PassInterface()),
+                            base::Passed(&request), base::Passed(&display_info),
+                            base::Passed(&present_options)));
 }
 
 base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeContentSurface(
@@ -542,8 +543,11 @@ void VrShell::ContentSurfaceChanged(jobject surface) {
   compositor_->SurfaceChanged(content_surface_);
 }
 
-void VrShell::GvrDelegateReady(gvr::ViewerType viewer_type) {
-  delegate_provider_->SetDelegate(this, viewer_type);
+void VrShell::GvrDelegateReady(
+    gvr::ViewerType viewer_type,
+    device::mojom::VRDisplayFrameTransportOptionsPtr transport_options) {
+  delegate_provider_->SetDelegate(this, viewer_type,
+                                  std::move(transport_options));
 }
 
 void VrShell::OnPhysicalBackingSizeChanged(

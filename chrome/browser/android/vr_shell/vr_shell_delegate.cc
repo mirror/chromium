@@ -61,8 +61,8 @@ VrShellDelegate::~VrShellDelegate() {
   device::VRDevice* device = GetDevice();
   if (device)
     device->OnExitPresent();
-  if (!present_callback_.is_null())
-    base::ResetAndReturn(&present_callback_).Run(false);
+  if (!on_present_result_callback_.is_null())
+    base::ResetAndReturn(&on_present_result_callback_).Run(false);
 }
 
 device::GvrDelegateProvider* VrShellDelegate::CreateVrShellDelegate() {
@@ -80,8 +80,10 @@ VrShellDelegate* VrShellDelegate::GetNativeVrShellDelegate(
       Java_VrShellDelegate_getNativePointer(env, jdelegate));
 }
 
-void VrShellDelegate::SetDelegate(VrShell* vr_shell,
-                                  gvr::ViewerType viewer_type) {
+void VrShellDelegate::SetDelegate(
+    VrShell* vr_shell,
+    gvr::ViewerType viewer_type,
+    device::mojom::VRDisplayFrameTransportOptionsPtr transport_options) {
   vr_shell_ = vr_shell;
   device::VRDevice* device = GetDevice();
   // When VrShell is created, we disable magic window mode as the user is inside
@@ -90,9 +92,10 @@ void VrShellDelegate::SetDelegate(VrShell* vr_shell,
   if (device)
     device->SetMagicWindowEnabled(false);
 
+  transport_options_ = std::move(transport_options);
   if (pending_successful_present_request_) {
-    CHECK(!present_callback_.is_null());
-    base::ResetAndReturn(&present_callback_).Run(true);
+    CHECK(!on_present_result_callback_.is_null());
+    base::ResetAndReturn(&on_present_result_callback_).Run(true);
   }
   JNIEnv* env = AttachCurrentThread();
   std::unique_ptr<VrCoreInfo> vr_core_info = MakeVrCoreInfo(env);
@@ -111,18 +114,20 @@ void VrShellDelegate::RemoveDelegate() {
 void VrShellDelegate::SetPresentResult(JNIEnv* env,
                                        const JavaParamRef<jobject>& obj,
                                        jboolean success) {
-  CHECK(!present_callback_.is_null());
-  base::ResetAndReturn(&present_callback_).Run(static_cast<bool>(success));
+  CHECK(!on_present_result_callback_.is_null());
+  base::ResetAndReturn(&on_present_result_callback_)
+      .Run(static_cast<bool>(success));
 }
 
 void VrShellDelegate::OnPresentResult(
     device::mojom::VRSubmitFrameClientPtr submit_client,
     device::mojom::VRPresentationProviderRequest request,
     device::mojom::VRDisplayInfoPtr display_info,
-    base::Callback<void(bool)> callback,
+    device::mojom::VRRequestPresentOptionsPtr present_options,
+    device::mojom::VRDisplayHost::RequestPresentCallback callback,
     bool success) {
   if (!success) {
-    std::move(callback).Run(false);
+    std::move(callback).Run(false, nullptr);
     return;
   }
 
@@ -130,17 +135,22 @@ void VrShellDelegate::OnPresentResult(
     // We have to wait until the GL thread is ready since we have to pass it
     // the VRSubmitFrameClient.
     pending_successful_present_request_ = true;
-    present_callback_ =
+    on_present_result_callback_ =
         base::Bind(&VrShellDelegate::OnPresentResult, base::Unretained(this),
                    base::Passed(&submit_client), base::Passed(&request),
-                   base::Passed(&display_info), base::Passed(&callback));
+                   base::Passed(&display_info), base::Passed(&present_options),
+                   base::Passed(&callback));
     return;
   }
 
   vr_shell_->ConnectPresentingService(
-      std::move(submit_client), std::move(request), std::move(display_info));
+      std::move(submit_client), std::move(request), std::move(display_info),
+      std::move(present_options));
 
-  std::move(callback).Run(true);
+  // Keep ownership of our copy of transport_options_ and pass a copy
+  // to the callback, in case we present multiple times during the
+  // lifetime of the delegate.
+  std::move(callback).Run(true, transport_options_.Clone());
   pending_successful_present_request_ = false;
 }
 
@@ -205,17 +215,19 @@ void VrShellDelegate::RequestWebVRPresent(
     device::mojom::VRSubmitFrameClientPtr submit_client,
     device::mojom::VRPresentationProviderRequest request,
     device::mojom::VRDisplayInfoPtr display_info,
-    base::Callback<void(bool)> callback) {
-  if (!present_callback_.is_null()) {
+    device::mojom::VRRequestPresentOptionsPtr present_options,
+    device::mojom::VRDisplayHost::RequestPresentCallback callback) {
+  if (!on_present_result_callback_.is_null()) {
     // Can only handle one request at a time. This is also extremely unlikely to
     // happen in practice.
-    std::move(callback).Run(false);
+    std::move(callback).Run(false, nullptr);
     return;
   }
-  present_callback_ =
+  on_present_result_callback_ =
       base::Bind(&VrShellDelegate::OnPresentResult, base::Unretained(this),
                  base::Passed(&submit_client), base::Passed(&request),
-                 base::Passed(&display_info), base::Passed(&callback));
+                 base::Passed(&display_info), base::Passed(&present_options),
+                 base::Passed(&callback));
 
   // If/When VRShell is ready for use it will call SetPresentResult.
   JNIEnv* env = AttachCurrentThread();

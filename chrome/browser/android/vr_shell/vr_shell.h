@@ -156,7 +156,8 @@ class VrShell : device::GvrGamepadDataProvider,
   void ContentWasShown();
 
   void ContentSurfaceChanged(jobject surface);
-  void GvrDelegateReady(gvr::ViewerType viewer_type);
+  void GvrDelegateReady(gvr::ViewerType viewer_type,
+                        device::mojom::VRDisplayFrameTransportOptionsPtr);
 
   void OnPhysicalBackingSizeChanged(
       JNIEnv* env,
@@ -199,7 +200,8 @@ class VrShell : device::GvrGamepadDataProvider,
   void ConnectPresentingService(
       device::mojom::VRSubmitFrameClientPtr submit_client,
       device::mojom::VRPresentationProviderRequest request,
-      device::mojom::VRDisplayInfoPtr display_info);
+      device::mojom::VRDisplayInfoPtr display_info,
+      device::mojom::VRRequestPresentOptionsPtr present_options);
 
   // device::GvrGamepadDataProvider implementation.
   void UpdateGamepadData(device::GvrGamepadData) override;
