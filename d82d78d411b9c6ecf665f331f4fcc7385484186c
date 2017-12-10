@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8a4634a_54cfaf4d",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ffbdce0_dfb6a6a8",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ccba1db_80bd310e",
         "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.h",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12fe15c5_9c1bec71",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ccba1db_80bd310e",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2d27f0f9_50d20153",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "No.  I think it could be in a prior version but I didn\u0027t change this.  Changed to a ctor DCHECK.",
+      "parentUuid": "6b6420a6_b2fb5125",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73eddf91_505e3a2c",
         "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
         "patchSetId": 16
@@ -67,6 +121,24 @@
       "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863c291b_5c7bc49f",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "73eddf91_505e3a2c",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "94d114eb_55ae818b",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Good catch; no it\u0027s not.  I added tests for this.",
+      "parentUuid": "cc666b10_6044244e",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c354e08_9b49b768",
         "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
         "patchSetId": 16
@@ -101,6 +191,24 @@
       "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1039509_955ea976",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "This case is only possible if OTRProfileRegistration was already destroyed, hence entry-\u003esecond (the refcount) is 1.",
+      "parentUuid": "6c354e08_9b49b768",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9a0adc87_384e6dde",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85215666_ca6d47de",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65272b73_a8d838ee",
         "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
         "patchSetId": 16
@@ -135,6 +261,24 @@
       "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a63615_0bf0ebc3",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Ah, ok.  Removed as part of the other NotificationObserver fix.",
+      "parentUuid": "65272b73_a8d838ee",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "291045c1_919ef501",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92421cae_e0dead59",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ca769ab_a2429c0e",
         "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
         "patchSetId": 16
@@ -169,6 +331,24 @@
       "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7a75ad_6fd6028b",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "No.  Removed.",
+      "parentUuid": "0ca769ab_a2429c0e",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +375,30 @@
     },
     {
       "key": {
+        "uuid": "2e4304a0_9b5686d0",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7a0d791_d8ae4300",
+      "range": {
+        "startLine": 61,
+        "startChar": 21,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9118e2a_6810406a",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window.h",
         "patchSetId": 16
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "ec13db92_9b76d3d8",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9118e2a_6810406a",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a328780c_0b5c5233",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
         "patchSetId": 16
@@ -223,6 +445,24 @@
       "writtenOn": "2017-12-07T23:27:58Z",
       "side": 1,
       "message": "Hmm... so if I were to start a offscreen presentation / PresentationReceiverWindow from an OTR profile, the presentation OTR profile will end up in a place parallel to the \"real\" OTR profile. This might have some interesting implications, although Media Router does terminate routes started from an OTR profile when the OTR profile is destroyed.",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab10201_1303cd92",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Yes, I think the offscreen presentation / PRW behavior will be the same whether you start them from an OTR profile or not.  This would mean they would outlive the user\u0027s OTR windows if Media Router didn\u0027t have that behavior.",
+      "parentUuid": "a328780c_0b5c5233",
       "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -246,6 +486,24 @@
     },
     {
       "key": {
+        "uuid": "7a47c3eb_d9762f0f",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Yes, I was thinking about that option too.  Done.",
+      "parentUuid": "21c7e426_3874f921",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "004376d1_fe521cc1",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
         "patchSetId": 16
@@ -260,6 +518,24 @@
       "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce23c58_f2bbf97f",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "It also resets termination_callback_, which std::move(termination_callback_).Run() doesn\u0027t actually do.",
+      "parentUuid": "004376d1_fe521cc1",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -280,6 +556,24 @@
     },
     {
       "key": {
+        "uuid": "876f1b8f_e96d763b",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "Admittedly minor but I prefer it to be private since it\u0027s a PRW-\u003ePRWDelegate signal so there should be no need to call PRWController::WindowClosing directly.",
+      "parentUuid": "0d7b6ade_3a42de27",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80964307_3206934a",
         "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.cc",
         "patchSetId": 16
@@ -294,6 +588,24 @@
       "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3894d94f_bc974f5c",
+        "filename": "chrome/browser/ui/views/media_router/presentation_receiver_window_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-10T00:26:15Z",
+      "side": 1,
+      "message": "These are used by LocationBarView, which assumes they already exist.",
+      "parentUuid": "80964307_3206934a",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
