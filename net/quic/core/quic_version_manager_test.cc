@@ -18,7 +18,7 @@ class QuicVersionManagerTest : public QuicTest {};
 TEST_F(QuicVersionManagerTest, QuicVersionManager) {
   SetQuicFlag(&FLAGS_quic_enable_version_43, false);
   SetQuicFlag(&FLAGS_quic_enable_version_42, false);
-  QuicVersionManager manager(AllSupportedTransportVersions());
+  QuicVersionManager manager(AllSupportedVersions());
 
   EXPECT_EQ(FilterSupportedTransportVersions(AllSupportedTransportVersions()),
             manager.GetSupportedTransportVersions());

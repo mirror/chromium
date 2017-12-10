@@ -26,6 +26,11 @@ QuicVersionLabel MakeVersionLabel(char a, char b, char c, char d) {
 
 }  // namespace
 
+std::ostream& operator<<(std::ostream& os, const ParsedQuicVersion& version) {
+  os << ParsedQuicVersionToString(version);
+  return os;
+}
+
 QuicVersionLabel CreateQuicVersionLabel(ParsedQuicVersion parsed_version) {
   char proto = 0;
   switch (parsed_version.handshake_protocol) {
@@ -88,27 +93,61 @@ ParsedQuicVersion ParseQuicVersionLabel(QuicVersionLabel version_label) {
 
 QuicTransportVersionVector AllSupportedTransportVersions() {
   QuicTransportVersionVector supported_versions;
-  for (size_t i = 0; i < arraysize(kSupportedTransportVersions); ++i) {
-    supported_versions.push_back(kSupportedTransportVersions[i]);
+  for (QuicTransportVersion version : kSupportedTransportVersions) {
+    supported_versions.push_back(version);
   }
   return supported_versions;
 }
 
+ParsedQuicVersionVector AllSupportedVersions() {
+  ParsedQuicVersionVector supported_versions;
+  for (HandshakeProtocol protocol : kSupportedHandshakeProtocols) {
+    if (protocol == PROTOCOL_TLS1_3 && !FLAGS_quic_supports_tls_handshake) {
+      continue;
+    }
+    for (QuicTransportVersion version : kSupportedTransportVersions) {
+      supported_versions.push_back(ParsedQuicVersion(protocol, version));
+    }
+  }
+  return supported_versions;
+}
+
+// TODO(nharper): Remove this function when it is no longer in use.
 QuicTransportVersionVector CurrentSupportedTransportVersions() {
   return FilterSupportedTransportVersions(AllSupportedTransportVersions());
 }
 
+ParsedQuicVersionVector CurrentSupportedVersions() {
+  return FilterSupportedVersions(AllSupportedVersions());
+}
+
+// TODO(nharper): Remove this function when it is no longer in use.
 QuicTransportVersionVector FilterSupportedTransportVersions(
     QuicTransportVersionVector versions) {
-  QuicTransportVersionVector filtered_versions(versions.size());
-  filtered_versions.clear();  // Guaranteed by spec not to change capacity.
+  ParsedQuicVersionVector parsed_versions;
   for (QuicTransportVersion version : versions) {
-    if (version == QUIC_VERSION_43) {
+    parsed_versions.push_back(ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, version));
+  }
+  ParsedQuicVersionVector filtered_parsed_versions =
+      FilterSupportedVersions(parsed_versions);
+  QuicTransportVersionVector filtered_versions;
+  for (ParsedQuicVersion version : filtered_parsed_versions) {
+    filtered_versions.push_back(version.transport_version);
+  }
+  return filtered_versions;
+}
+
+ParsedQuicVersionVector FilterSupportedVersions(
+    ParsedQuicVersionVector versions) {
+  ParsedQuicVersionVector filtered_versions;
+  filtered_versions.reserve(versions.size());
+  for (ParsedQuicVersion version : versions) {
+    if (version.transport_version == QUIC_VERSION_43) {
       if (GetQuicFlag(FLAGS_quic_enable_version_43) &&
           GetQuicFlag(FLAGS_quic_enable_version_42)) {
         filtered_versions.push_back(version);
       }
-    } else if (version == QUIC_VERSION_42) {
+    } else if (version.transport_version == QUIC_VERSION_42) {
       if (GetQuicFlag(FLAGS_quic_enable_version_42)) {
         filtered_versions.push_back(version);
       }
@@ -130,6 +169,30 @@ QuicTransportVersionVector VersionOfIndex(
     version.push_back(QUIC_VERSION_UNSUPPORTED);
   }
   return version;
+}
+
+ParsedQuicVersionVector ParsedVersionOfIndex(
+    const ParsedQuicVersionVector& versions,
+    int index) {
+  ParsedQuicVersionVector version;
+  int version_count = versions.size();
+  if (index >= 0 && index < version_count) {
+    version.push_back(versions[index]);
+  } else {
+    version.push_back(
+        ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED));
+  }
+  return version;
+}
+
+QuicTransportVersionVector ParsedVersionsToTransportVersions(
+    const ParsedQuicVersionVector& versions) {
+  QuicTransportVersionVector transport_versions;
+  transport_versions.resize(versions.size());
+  for (size_t i = 0; i < versions.size(); ++i) {
+    transport_versions[i] = versions[i].transport_version;
+  }
+  return transport_versions;
 }
 
 QuicVersionLabel QuicVersionToQuicVersionLabel(
@@ -170,6 +233,10 @@ string QuicVersionToString(QuicTransportVersion transport_version) {
   }
 }
 
+string ParsedQuicVersionToString(ParsedQuicVersion version) {
+  return QuicVersionLabelToString(CreateQuicVersionLabel(version));
+}
+
 string QuicTransportVersionVectorToString(
     const QuicTransportVersionVector& versions) {
   string result = "";
@@ -178,6 +245,18 @@ string QuicTransportVersionVectorToString(
       result.append(",");
     }
     result.append(QuicVersionToString(versions[i]));
+  }
+  return result;
+}
+
+string ParsedQuicVersionVectorToString(
+    const ParsedQuicVersionVector& versions) {
+  string result = "";
+  for (size_t i = 0; i < versions.size(); ++i) {
+    if (i != 0) {
+      result.append(",");
+    }
+    result.append(ParsedQuicVersionToString(versions[i]));
   }
   return result;
 }
