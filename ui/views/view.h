@@ -1381,6 +1381,12 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   std::string DoPrintViewGraph(bool first, View* view_with_children);
 #endif
 
+  // Accessibility -------------------------------------------------------------
+
+  // The unique accessibility id, used for the target of relationships, or -1
+  // if no accessibility object exists.
+  virtual int32_t GetAccessibilityId();
+
  private:
   friend class internal::PreEventDispatchHandler;
   friend class internal::PostEventDispatchHandler;

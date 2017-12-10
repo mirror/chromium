@@ -7,6 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/accessibility/platform/ax_platform_node.h"
+#include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/events/event_utils.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/views/controls/native/native_view_host.h"
@@ -57,7 +58,7 @@ ui::AXPlatformNode* FromNativeWindow(gfx::NativeWindow native_window) {
 }  // namespace
 
 NativeViewAccessibilityBase::NativeViewAccessibilityBase(View* view)
-    : view_(view) {
+    : view_(view), unique_id_(ui::GetNextAXPlatformNodeUniqueId()) {
   ax_node_ = ui::AXPlatformNode::Create(this);
   DCHECK(ax_node_);
 
@@ -96,6 +97,7 @@ const ui::AXNodeData& NativeViewAccessibilityBase::GetData() const {
   }
 
   view_->GetAccessibleNodeData(&data_);
+  data_.id = unique_id_;
   data_.location = GetBoundsInScreen();
   base::string16 description;
   view_->GetTooltipText(gfx::Point(), &description);
@@ -248,6 +250,10 @@ bool NativeViewAccessibilityBase::ShouldIgnoreHoveredStateForTesting() {
 bool NativeViewAccessibilityBase::IsOffscreen() const {
   // TODO: need to implement.
   return false;
+}
+
+int32_t NativeViewAccessibilityBase::GetId() const {
+  return unique_id_;
 }
 
 gfx::RectF NativeViewAccessibilityBase::GetBoundsInScreen() const {

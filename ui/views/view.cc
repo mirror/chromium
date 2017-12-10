@@ -1466,6 +1466,12 @@ void View::NotifyAccessibilityEvent(
   }
 }
 
+int32_t View::GetAccessibilityId() {
+  if (!native_view_accessibility_)
+    native_view_accessibility_ = NativeViewAccessibility::Create(this);
+  return native_view_accessibility_ ? native_view_accessibility_->GetId() : -1;
+}
+
 // Scrolling -------------------------------------------------------------------
 
 void View::ScrollRectToVisible(const gfx::Rect& rect) {
