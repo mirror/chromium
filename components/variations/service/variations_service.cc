@@ -14,8 +14,8 @@
 #include "base/build_time.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/metrics/sparse_histogram.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/sys_info.h"
@@ -261,11 +261,10 @@ VariationsService::VariationsService(
           ::switches::kForceFieldTrials);
   UMA_HISTOGRAM_BOOLEAN("Variations.SafeMode.FellBackToSafeMode",
                         fall_back_to_safe_mode);
-  UMA_HISTOGRAM_SPARSE_SLOWLY("Variations.SafeMode.Streak.Crashes",
-                              std::min(std::max(num_crashes, 0), 100));
-  UMA_HISTOGRAM_SPARSE_SLOWLY(
-      "Variations.SafeMode.Streak.FetchFailures",
-      std::min(std::max(num_failures_to_fetch, 0), 100));
+  base::UmaHistogramSparse("Variations.SafeMode.Streak.Crashes",
+                           std::min(std::max(num_crashes, 0), 100));
+  base::UmaHistogramSparse("Variations.SafeMode.Streak.FetchFailures",
+                           std::min(std::max(num_failures_to_fetch, 0), 100));
 }
 
 VariationsService::~VariationsService() {
@@ -586,7 +585,7 @@ void VariationsService::OnURLFetchComplete(const net::URLFetcher* source) {
       pending_seed_request_.release());
   const net::URLRequestStatus& status = request->GetStatus();
   const int response_code = request->GetResponseCode();
-  UMA_HISTOGRAM_SPARSE_SLOWLY(
+  base::UmaHistogramSparse(
       "Variations.SeedFetchResponseOrErrorCode",
       status.is_success() ? response_code : status.error());
 
