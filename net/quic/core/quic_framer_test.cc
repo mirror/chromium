@@ -4862,7 +4862,6 @@ TEST_P(QuicFramerTest, BuildCloseFramePacket) {
 }
 
 TEST_P(QuicFramerTest, BuildTruncatedCloseFramePacket) {
-  FLAGS_quic_reloadable_flag_quic_truncate_long_details = true;
   QuicPacketHeader header;
   header.connection_id = kConnectionId;
   header.reset_flag = false;
@@ -5066,7 +5065,6 @@ TEST_P(QuicFramerTest, BuildGoAwayPacket) {
 }
 
 TEST_P(QuicFramerTest, BuildTruncatedGoAwayPacket) {
-  FLAGS_quic_reloadable_flag_quic_truncate_long_details = true;
   QuicPacketHeader header;
   header.connection_id = kConnectionId;
   header.reset_flag = false;
