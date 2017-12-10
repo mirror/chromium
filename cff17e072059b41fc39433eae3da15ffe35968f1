@@ -16,6 +16,24 @@
       "revId": "cff17e072059b41fc39433eae3da15ffe35968f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7958ee5_a04fecea",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-10T19:56:14Z",
+      "side": 1,
+      "message": "I started with chromium_linux_gtests, but there were actually more diffs that way. I think it\u0027ll make a lot more sense to collapse things once we get rid of the browser_side_* steps.",
+      "parentUuid": "3e2e0854_94560c09",
+      "revId": "cff17e072059b41fc39433eae3da15ffe35968f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
