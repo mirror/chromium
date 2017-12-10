@@ -18,6 +18,7 @@ void InitCommandLineShlib(const std::vector<std::string>& argv) {
   base::CommandLine::ForCurrentProcess()->InitFromArgv(argv);
 
   logging::InitLogging(logging::LoggingSettings());
+  logging::SetLogItems(true, true, false, false);
 }
 
 }  // namespace chromecast
