@@ -364,6 +364,7 @@ jumbo_source_set("wtf_unittests_sources") {
     "text/TextCodecTest.cpp",
     "text/TextCodecUTF8Test.cpp",
     "text/TextEncodingTest.cpp",
+    "text/UTF8Test.cpp",
     "text/WTFStringTest.cpp",
     "typed_arrays/ArrayBufferBuilderTest.cpp",
   ]

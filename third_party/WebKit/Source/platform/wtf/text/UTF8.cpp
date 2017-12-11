@@ -57,23 +57,28 @@ inline int InlineUTF8SequenceLength(char b0) {
 static const unsigned char kFirstByteMark[7] = {0x00, 0x00, 0xC0, 0xE0,
                                                 0xF0, 0xF8, 0xFC};
 
+namespace {
+
+static const UChar32 kByteMask = 0xBF;
+static const UChar32 kByteMark = 0x80;
+
+}  // namespace
+
 ConversionResult ConvertLatin1ToUTF8(const LChar** source_start,
                                      const LChar* source_end,
                                      char** target_start,
                                      char* target_end) {
   ConversionResult result = kConversionOK;
+
   const LChar* source = *source_start;
   char* target = *target_start;
   while (source < source_end) {
-    UChar32 ch;
-    unsigned short bytes_to_write = 0;
-    const UChar32 kByteMask = 0xBF;
-    const UChar32 kByteMark = 0x80;
-    const LChar* old_source =
-        source;  // In case we have to back up because of target overflow.
-    ch = static_cast<unsigned short>(*source++);
+    // In case we have to back up because of target overflow.
+    const LChar* old_source = source;
+    UChar32 ch = static_cast<unsigned short>(*source++);
 
     // Figure out how many bytes the result will require
+    unsigned short bytes_to_write = 0;
     if (ch < (UChar32)0x80)
       bytes_to_write = 1;
     else
@@ -95,6 +100,7 @@ ConversionResult ConvertLatin1ToUTF8(const LChar** source_start,
     }
     target += bytes_to_write;
   }
+
   *source_start = source;
   *target_start = target;
   return result;
@@ -106,44 +112,47 @@ ConversionResult ConvertUTF16ToUTF8(const UChar** source_start,
                                     char* target_end,
                                     bool strict) {
   ConversionResult result = kConversionOK;
+
   const UChar* source = *source_start;
   char* target = *target_start;
+
   while (source < source_end) {
-    UChar32 ch;
-    unsigned short bytes_to_write = 0;
-    const UChar32 kByteMask = 0xBF;
-    const UChar32 kByteMark = 0x80;
-    const UChar* old_source =
-        source;  // In case we have to back up because of target overflow.
-    ch = static_cast<unsigned short>(*source++);
-    // If we have a surrogate pair, convert to UChar32 first.
-    if (ch >= 0xD800 && ch <= 0xDBFF) {
-      // If the 16 bits following the high surrogate are in the source buffer...
+    // In case we have to back up because of target overflow.
+    const UChar* old_source = source;
+
+    UChar32 ch = static_cast<unsigned short>(*source++);
+
+    if (U_IS_LEAD(ch)) {
+      // It's a high surrogate.
       if (source < source_end) {
         UChar32 ch2 = static_cast<unsigned short>(*source);
-        // If it's a low surrogate, convert to UChar32.
-        if (ch2 >= 0xDC00 && ch2 <= 0xDFFF) {
-          ch = ((ch - 0xD800) << 10) + (ch2 - 0xDC00) + 0x0010000;
+        if (U_IS_TRAIL(ch2)) {
+          // It's a low surrogate. Decode them into |ch|.
+          ch = U16_GET_SUPPLEMENTARY(ch, ch2);
           ++source;
-        } else if (strict) {  // it's an unpaired high surrogate
-          --source;           // return to the illegal value itself
+        } else if (strict) {
+          // Found an unpaired high surrogate.
+          --source;
           result = kSourceIllegal;
           break;
         }
-      } else {     // We don't have the 16 bits following the high surrogate.
-        --source;  // return to the high surrogate
+      } else {
+        // Low surrogate not found in the buffer.
+        --source;
         result = kSourceExhausted;
         break;
       }
     } else if (strict) {
-      // UTF-16 surrogate values are illegal in UTF-32
-      if (ch >= 0xDC00 && ch <= 0xDFFF) {
-        --source;  // return to the illegal value itself
+      // Found a low surrogate not following a high surrogate.
+      if (U_IS_TRAIL(ch)) {
+        --source;
         result = kSourceIllegal;
         break;
       }
     }
+
     // Figure out how many bytes the result will require
+    unsigned short bytes_to_write = 0;
     if (ch < (UChar32)0x80) {
       bytes_to_write = 1;
     } else if (ch < (UChar32)0x800) {
@@ -179,6 +188,7 @@ ConversionResult ConvertUTF16ToUTF8(const UChar** source_start,
     }
     target += bytes_to_write;
   }
+
   *source_start = source;
   *target_start = target;
   return result;
