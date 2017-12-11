@@ -22,6 +22,30 @@
       "revId": "3e0a83671a2f20ac78b087e01c76f01aaa1eed9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba983361_edd9b093",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_constants.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-11T14:08:51Z",
+      "side": 1,
+      "message": "The omnibox has currently a different appearance in the Clean Toolbar.\nI need to fix it.\nFor now I plan to land this CL has it fixes a difference in the way the omnibox is displayed (i.e. a border where there should have none).\nAfter I will look at the difference in appearance and tweak the constants to see how I can have the same behavior as the current omnibox.",
+      "parentUuid": "f1b22c0f_ab3615a8",
+      "range": {
+        "startLine": 24,
+        "startChar": 42,
+        "endLine": 24,
+        "endChar": 46
+      },
+      "revId": "3e0a83671a2f20ac78b087e01c76f01aaa1eed9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
