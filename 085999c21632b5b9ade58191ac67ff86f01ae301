@@ -16,6 +16,41 @@
       "revId": "085999c21632b5b9ade58191ac67ff86f01ae301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857c41c1_b3d0d090",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-11T15:50:56Z",
+      "side": 1,
+      "message": "Hmm. I don\u0027t know what the results of this are used for as much as you. MaybeLocal without an exception thrown is a little odd. Is it useful to return the results from the listeners that did manage to run (i.e. \"break;\")?",
+      "parentUuid": "a1b6b917_76a53787",
+      "revId": "085999c21632b5b9ade58191ac67ff86f01ae301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8347453_3a2da06a",
+        "filename": "extensions/renderer/bindings/event_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-11T15:50:56Z",
+      "side": 1,
+      "message": "super-nit: since we already limit the lifetime of this so much, is there value to going through the base::RepeatingClosure abstraction, as opposed to writing this out?\n\nstruct ListenerClosureData {\n  EventEmitterUnittest\u0026 test;\n  bool did_invalidate_context;\n} closure_data \u003d {*this, false};\n\nauto listener_wrapper \u003d [](const v8::FunctionCallbackInfo\u003cv8::Value\u003e\u0026 info) {\n  auto\u0026 data \u003d *static_cast\u003cListenerClosureData*\u003e(\n      info.Data().As\u003cv8::External\u003e()-\u003eValue());\n  data.test.DisposeContextWrapper(\u0026data.did_invalidate_context);\n};\n\nI don\u0027t feel strongly; if you like the callback better, we can use that. (Though once I eventually get to making a nicer callback-\u003efunction converter for stuff like this in gin, that will be shorter yet. :P)",
+      "revId": "085999c21632b5b9ade58191ac67ff86f01ae301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
