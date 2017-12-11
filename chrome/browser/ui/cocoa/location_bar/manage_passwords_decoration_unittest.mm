@@ -14,6 +14,7 @@
 #include "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
+#include "chrome/test/base/testing_command_updater.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
@@ -32,8 +33,8 @@ class TestCommandUpdaterDelegate : public CommandUpdaterDelegate {
  public:
   TestCommandUpdaterDelegate() : id_(0) {}
 
-  void ExecuteCommandWithDisposition(int id, WindowOpenDisposition disposition)
-      override {
+  void ExecuteCommandWithDispositionImpl(
+      int id, WindowOpenDisposition disposition) override {
     id_ = id;
   }
 
@@ -68,7 +69,7 @@ class ManagePasswordsDecorationTest : public CocoaTest {
 
  private:
   TestCommandUpdaterDelegate commandDelegate_;
-  CommandUpdater commandUpdater_;
+  TestingCommandUpdater commandUpdater_;
   ManagePasswordsDecoration decoration_;
 };
 
