@@ -8,14 +8,14 @@
 #include <string>
 #include <vector>
 
-#include "base/callback.h"
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/process/process_handle.h"
 #include "content/common/content_export.h"
 
 namespace content {
 
-typedef void (*AccessibilityEventCallback)(std::string);
+using AccessibilityEventCallback = base::RepeatingCallback<void(std::string)>;
 
 class BrowserAccessibilityManager;
 
