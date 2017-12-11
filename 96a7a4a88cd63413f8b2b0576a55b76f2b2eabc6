@@ -1,0 +1,226 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "531a6279_b2e5a249",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "One thing for consideration: Do we want/need to explicitly clean up UDPSocketImpl instances during network service shutdown?\n\nUsing strong binding means that UDPSocketImpl may outlive other things in the network service. So it needs to be careful what things it can access and when.\n\n(A general guideline is to avoid strong binding whenever possible.)",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9500050d_299d10bc",
+        "filename": "net/interfaces/address_family.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "The common practice is to use \"foo.mojom\", in this case \"net.mojom\".\n\n(I know that this is following the other mojom files in the same folder. Maybe we should consider changing them all together. I don\u0027t think it needs to block this CL, though.)",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8beae070_5218c7e4",
+        "filename": "net/interfaces/address_family_traits.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "Please use the exact same name as the file name.",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59d9034_bb53ced7",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "I didn\u0027t find this class. Do you mean \"when it is sent to the client using UDPSocketReceiver\"?",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64845dee_94e6d959",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "\"Mojo buffer\" doesn\u0027t seem very clear to me.\nDo you mean: the client side may receive a lot of OnReceived() calls in a short period of time, and before they are dispatched, the data will take up memory at the client side?",
+      "range": {
+        "startLine": 110,
+        "startChar": 49,
+        "endLine": 110,
+        "endChar": 60
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6515e64_25c72cae",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "I thought UDP always send/receive the entire datagram (or not send/receive at all)?",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae93edb6_5e0ec8a7",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "I don\u0027t think |socket_| itself fails elegantly when it receives unexpected calls. For example:\nhttps://cs.chromium.org/chromium/src/net/socket/udp_socket_posix.cc?rcl\u003da2d271c95121fa9831a1acc3fc707dbc0a3cb293\u0026l\u003d461\n\nIt uses a DCHECK to assert that it only expects a Connect() call after Open(). (And other methods on it do similar DCHECKs, too.) This states a precondition for the method, but it is not error handling.\n\nAs a public API, UDPSocketImpl has to handle invalid inputs/call sequences carefully. Otherwise, a malicious sender (or not-so-careful sender) can easily crash or corrupt the network service.",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2064de6_5fdd8fc3",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "Should this be done before line 213?",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffd4d14_acf8292d",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "nit: this makes a copy. please consider std::move().\n(I know it is just tests :) , but sometimes people try to copy examples from tests to write production code.)",
+      "range": {
+        "startLine": 20,
+        "startChar": 61,
+        "endLine": 20,
+        "endChar": 69
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e315ebb_12962cc9",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "This expects 0 \u003e\u003d result. If that is always true, why do we need line 52?",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a06e2f_9314dd08",
+        "filename": "services/network/udp_socket_test_util.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "Please consider using DCHECK(result !\u003d 0 || data)",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa00ab41_f8bf8896",
+        "filename": "services/network/udp_socket_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-12-11T20:01:26Z",
+      "side": 1,
+      "message": "why it is divided by 5 here?",
+      "range": {
+        "startLine": 198,
+        "startChar": 38,
+        "endLine": 198,
+        "endChar": 39
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
