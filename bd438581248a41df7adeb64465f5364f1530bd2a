@@ -16,6 +16,24 @@
       "revId": "bd438581248a41df7adeb64465f5364f1530bd2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c20b40b_0c24c03e",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2288,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-11T18:30:35Z",
+      "side": 1,
+      "message": "Good point, updated to get all bounds changes.",
+      "parentUuid": "3d6a0bc3_cfe04ecc",
+      "revId": "bd438581248a41df7adeb64465f5364f1530bd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
