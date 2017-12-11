@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1b2a790_4bc3e90b",
+        "filename": "ui/base/models/tree_node_model.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:37:47Z",
+      "side": 1,
+      "message": "Did you intend to add this?",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "81922aa3f846e376c25be78de2e8aceeb3864a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
