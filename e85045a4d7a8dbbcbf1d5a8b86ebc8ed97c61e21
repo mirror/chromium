@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54636138_62b2defc",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-11T18:11:13Z",
+      "side": 1,
+      "message": "optional: I wonder if we should include some context here to ensure that the frame hasn\u0027t navigated away by this point.",
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf60068_2de41c89",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-11T18:11:13Z",
+      "side": 1,
+      "message": "Can you document why we restrict to scripts.",
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2b8543_b3dbae45",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-11T18:11:13Z",
+      "side": 1,
+      "message": "include base/strings/stringprintf.h",
+      "range": {
+        "startLine": 446,
+        "startChar": 29,
+        "endLine": 446,
+        "endChar": 41
+      },
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c70a6c6_d7d8f45b",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-11T18:11:13Z",
+      "side": 1,
+      "message": "nit: include with the other bools.",
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0749228a_eaa67744",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-11T18:11:13Z",
+      "side": 1,
+      "message": "rephrase nit: \"Message to print to the console if the response is blocked for a script. Will be empty if the request does not need to be blocked.",
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809a5cc3_fb499dc6",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-11T18:11:13Z",
+      "side": 1,
+      "message": "Why not just:\n\nbool is_nocors_plugin_request \u003d resource_type \u003d\u003d RESOURCE_TYPE_PLUGIN_RESOURCE \u0026\u0026 fetch_request_mode \u003d\u003d network::mojom::FetchRequestMode::kNoCORS.",
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
