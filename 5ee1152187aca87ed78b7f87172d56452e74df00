@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "011ecdb8_78115e63",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-11T22:23:25Z",
+      "side": 1,
+      "message": "Please remove the \"(Service)\" string. This is confusing because \"service\" actually means something specific in chromium code using Mojo, but it only has meaning at layers above Mojo bindings.\n\nCan we say \"dispatch\" or \"receive\" or something instead?",
+      "revId": "5ee1152187aca87ed78b7f87172d56452e74df00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da3bbcc_407f56e7",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-11T22:23:25Z",
+      "side": 1,
+      "message": "Same comment as above",
+      "revId": "5ee1152187aca87ed78b7f87172d56452e74df00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bb3dba_3680b445",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-11T22:23:25Z",
+      "side": 1,
+      "message": "same",
+      "revId": "5ee1152187aca87ed78b7f87172d56452e74df00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
