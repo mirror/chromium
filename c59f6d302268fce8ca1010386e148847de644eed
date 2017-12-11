@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "8dcd9456_386b7f67",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-11T14:10:56Z",
+      "side": 1,
+      "message": "I do not have a clear answer about performance pros-cons, but it just sounds natural that InvalidInstance is a const value. But I do not have a strong preference here.\nAck.",
+      "parentUuid": "e90f3543_15b07018",
+      "range": {
+        "startLine": 105,
+        "startChar": 27,
+        "endLine": 105,
+        "endChar": 45
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb4797ba_d627c14c",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
         "patchSetId": 2
@@ -131,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "56be362d_130918b0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-11T14:10:56Z",
+      "side": 1,
+      "message": "Hum... I see.\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Precede-setters-with-the-word-Set_use-bare-words-for-getters\nThis seems to be the guide that reflects this mail thread discussion.",
+      "parentUuid": "3694023a_1e2f20dd",
+      "range": {
+        "startLine": 47,
+        "startChar": 25,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7662a1f7_bece8466",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
         "patchSetId": 2
@@ -166,6 +214,30 @@
       "side": 1,
       "message": "I generally don\u0027t like to use inheritance to remove code duplication when they don\u0027t have a conceptual is-a relationship. In this case, ResourceLoadSchedulerTest is for one experiment and RendererSideResourceSchedulerTest is for another experiment and I feel just having this class inherit ResourceLoadSchedulerTest is not the right thing to do. Perhaps we could create a common parent class and have two subclasses...",
       "parentUuid": "7662a1f7_bece8466",
+      "range": {
+        "startLine": 64,
+        "startChar": 42,
+        "endLine": 64,
+        "endChar": 64
+      },
+      "revId": "c59f6d302268fce8ca1010386e148847de644eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e486d550_144be549",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadSchedulerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-12-11T14:10:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e8e883e_df47cbae",
       "range": {
         "startLine": 64,
         "startChar": 42,
