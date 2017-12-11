@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f1d409c_1e761aaa",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T18:51:15Z",
+      "side": 1,
+      "message": "I don\u0027t have any strong recollection why we didn\u0027t move to ratios (I know that I wasn\u0027t terribly convinced we ever needed to make that change, but we\u0027re past that decision now).  I think is likely my place of concern.  As soon as we start using a mixture of ratio and PIX then it seems like we are more likely to have an off by one error.  I think if we want to move to ratio, we need to remove the top_shown_pix and bottom_shown_pix being sent out.\n\nI think we\u0027d want to store both the ratio and height in this class instead of just the prev_*_shown_pix_ var.  Then I think we\u0027d need to start sending up the ratio and size in PX of the various controls to let the final position be in charge of doing the final calculation.",
+      "revId": "dc1c11a8e07392d9869dff04d07d97c881ed678d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
