@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8028e899_ec825b76",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-11T21:51:45Z",
+      "side": 1,
+      "message": "I assume we care about the loading state of this frame only, not overall WebContents (aka tab), right? If so, we are good here : ), otherwise move this code to the if (!frame_tree_-\u003eIsLoading()) block up on 574.",
+      "revId": "4b64d842872be49b74c94811807281fb18216f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
