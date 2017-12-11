@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b350a677_b27b5734",
+        "filename": "third_party/WebKit/Source/platform/scheduler/utility/webthread_impl_for_utility_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-11T13:07:47Z",
+      "side": 1,
+      "message": "Do we need this abstraction?\n\nNote that now blink::WebTaskRunner inherits from base::SingleThreadTaskRunner.",
+      "revId": "2b5a3dbcbdac675f65cdd56f61949bd5c687f881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
