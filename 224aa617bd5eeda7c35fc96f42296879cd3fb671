@@ -16,6 +16,24 @@
       "revId": "224aa617bd5eeda7c35fc96f42296879cd3fb671",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9e0dbc_d7783cf4",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/respect-clip-for-non-composited-scrollers-when-prefering-compositing-over-lcd-text-expected.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-12-11T16:03:10Z",
+      "side": 0,
+      "message": "I have removed the test. I read the PaintLayerScrollableArea code, does clip-path make a non-composited scroller?",
+      "parentUuid": "399a7eb5_76dd6789",
+      "revId": "224aa617bd5eeda7c35fc96f42296879cd3fb671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

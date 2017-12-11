@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90dedeaa_f3908a88",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-12-11T16:03:10Z",
+      "side": 1,
+      "message": "The test fails because in SPv1.75, ancestor clips are not applied to the mask, I talked with Xianzhu and he suggests marking it as a failure for now.",
+      "parentUuid": "528a6dea_19371d4c",
+      "revId": "3029c8bc153e876ae539c79d35fd79fc13e0cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c389e81_aad676b7",
         "filename": "third_party/WebKit/LayoutTests/platform/mac/virtual/service-worker-script-streaming/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-cross-origin-response-expected.txt",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T15:23:52Z",
       "side": 1,
       "message": "Was this a flaky rebase result? It doesn\u0027t seem like it should be an expected change from your patch.",
+      "revId": "3029c8bc153e876ae539c79d35fd79fc13e0cdaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004e70e9_3201827f",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac/virtual/service-worker-script-streaming/http/tests/serviceworker/chromium.respond-to-same-origin-request-with-cross-origin-response-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-12-11T16:03:10Z",
+      "side": 1,
+      "message": "Oh, yes, it\u0027s just a flacky result, I\u0027ll remove it, sorry.",
+      "parentUuid": "9c389e81_aad676b7",
       "revId": "3029c8bc153e876ae539c79d35fd79fc13e0cdaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
