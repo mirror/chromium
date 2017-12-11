@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2156a40d_60c2cd05",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-11T20:42:45Z",
+      "side": 1,
+      "message": "With this change, there is no test coverage that RendererSampling will actually trigger a renderer to be profiled either in the unittest or the e2e scenario.\n\nIf possible, can we cover in a unittest?\n\nIf not, then I think we should preserve the e2e test as, compared to every other switch here, that is the most complex logic.",
+      "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03614ac_74d1e39f",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-11T20:42:45Z",
+      "side": 1,
+      "message": "Can we rename this to StartManualProfiling?\n\nThere\u0027s too many \"Start**\" related calls in this file that it\u0027s hard to know why this one always changes the mode to manual.",
+      "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda6d6c4_b1068f19",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-11T20:42:45Z",
+      "side": 1,
+      "message": "Hmm... I think we might have a threading problem here. There\u0027s one codepath where mode() is read from the IO thread.\n\nWe need lock set/get access to the mode_ variable. :(\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/profiling_host/profiling_process_host.cc?l\u003d682",
+      "range": {
+        "startLine": 614,
+        "startChar": 4,
+        "endLine": 614,
+        "endChar": 11
+      },
+      "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97adef83_2a9449be",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-11T20:42:45Z",
+      "side": 1,
+      "message": "Can this be unittested w/o having to do a lot of insane infrastructure/setup?\n\nSpecifically, it\u0027d be nice to assert that StartProfiling() changes the mode.",
+      "range": {
+        "startLine": 615,
+        "startChar": 3,
+        "endLine": 615,
+        "endChar": 0
+      },
+      "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2e2f3b_4c4c5e55",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-12-11T20:42:45Z",
+      "side": 1,
+      "message": "Can we reference where to look?",
+      "range": {
+        "startLine": 745,
+        "startChar": 35,
+        "endLine": 745,
+        "endChar": 44
+      },
+      "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
