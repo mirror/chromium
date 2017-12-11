@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0079f7a6_985a191b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstallService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29bec05d_2b1c32d0",
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a9b9312_d423b9d4",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00347936_4b961976",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Moved the check space logic to WebApkInstallService. Let me know if you think it is still too big.",
+      "parentUuid": "3a9b9312_d423b9d4",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 31
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9c9cf5c2_7cde89f1",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50d95d2e_afc34820",
+      "range": {
+        "startLine": 36,
+        "startChar": 38,
+        "endLine": 36,
+        "endChar": 68
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed80f4c3_dfe0433a",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90e9cd7_7011beeb",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed80f4c3_dfe0433a",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 23
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "18d03fe1_22468afd",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "The method does not block. We should never have space_manager_ \u003d\u003d nullptr.\nThis is just to prevent crashing in the case space_manager_ is not initialized. Removed the space_manager_ field as it is no longer needed.",
+      "parentUuid": "2c894f4f_e56ca0aa",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afcfa65c_7d6e20f6",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 3
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "6cc1a769_0d1af60d",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afcfa65c_7d6e20f6",
+      "range": {
+        "startLine": 105,
+        "startChar": 1,
+        "endLine": 109,
+        "endChar": 3
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1c07ed6_fec82431",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 3
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "5f900cb4_e333fe7c",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1c07ed6_fec82431",
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e87f3af_0dbcb34d",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 3
@@ -165,6 +321,24 @@
       "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c3af1f_02b8db1e",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "As discussed, this should be OK as the callback always run after cache is cleared.",
+      "parentUuid": "6e87f3af_0dbcb34d",
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "3c0f51f9_b185fc6a",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65c5c93_0baa4bbe",
+      "range": {
+        "startLine": 118,
+        "startChar": 6,
+        "endLine": 118,
+        "endChar": 69
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c4321c8_f26724f7",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 3
@@ -211,6 +409,30 @@
       "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d8e618_d5a877a2",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c4321c8_f26724f7",
+      "range": {
+        "startLine": 123,
+        "startChar": 24,
+        "endLine": 123,
+        "endChar": 40
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "e23688c6_49c2171e",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Thanks for catching, forget to delete the pointer in the OnBrowsingDataRemoverDone function.\n\nFor the bare new, I was referring some examples. Seems we need it here as the free time is outside the function scope.\n\nhttps://cs.chromium.org/chromium/src/content/browser/devtools/protocol/network_handler.cc?type\u003dcs\u0026q\u003dDevtoolsClearCacheObserver\u0026sq\u003dpackage:chromium\u0026l\u003d782\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/browsing_data/browsing_data_important_sites_util.cc?type\u003dcs\u0026q\u003dBrowsingDataTaskObserver\u0026sq\u003dpackage:chromium\u0026l\u003d64",
+      "parentUuid": "59e08ebd_8ffd8e36",
+      "range": {
+        "startLine": 140,
+        "startChar": 19,
+        "endLine": 140,
+        "endChar": 22
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea046dca_52bf4138",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 3
@@ -248,6 +494,24 @@
       "writtenOn": "2017-12-07T16:23:09Z",
       "side": 1,
       "message": "For the sake of being conservative, we should:\n- pass in a base::Callback instead of this Java_WebApkInstallService_checkFreeSpaceAndSetStatus()\n- use a weak ptr from |WebApkInstallService::weak_ptr_factory_| to generate the base::Callback\n- Have the base::Callback point to a static method in WebApkInstallService, perhaps WebApkInstallService::OnFreeSpaceCheckCompleted()",
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6adbdf_c334f432",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "We need to set the space_status_ field in C++ once the Java side is done, I guess the callback shouldn\u0027t be static?",
+      "parentUuid": "ea046dca_52bf4138",
       "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -277,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "df48ca13_18280aca",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3fd07f1_5a0b2c24",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 43
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9accfac4_dcbf163f",
         "filename": "chrome/browser/banners/app_banner_infobar_delegate_android.cc",
         "patchSetId": 3
@@ -297,6 +585,30 @@
       "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cfee322_ed6aa6fe",
+        "filename": "chrome/browser/banners/app_banner_infobar_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-11T05:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9accfac4_dcbf163f",
+      "range": {
+        "startLine": 65,
+        "startChar": 3,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "2c469509e48a0966e200bde7fdb19bdb15643a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
