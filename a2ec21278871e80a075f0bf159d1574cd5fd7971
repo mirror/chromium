@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "749804a2_9bb513ab",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-11T21:15:11Z",
+      "side": 1,
+      "message": "To answer another piece of the question:\n\nMy understanding is ARMvX represents a revision of the instruction set. Those instructions can have both a 32- and 64-bit variant.\nAn x86 equiv might be mov eax, 32-bit-value and mov rax, 64-bit-value\n\n\"arm64\" here refers to AArch64, which was introduced in ARMv8.\nSo you could say \"arm64\" implies at least ARMv8. But that doesn\u0027t mean ARMv8 implies \"arm64\" -- ARMv8 also runs on 32-bit chips, such as the Cortex-A32 which is ARMv8-A but only 32-bit.\n\nAdenilson can likely correct me if I\u0027m saying anything wrong here.",
+      "parentUuid": "a3d8a0ed_eb412b8b",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 24
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79449965_91aa9d4c",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 2
