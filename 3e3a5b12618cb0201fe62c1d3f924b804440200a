@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9514647_29987c97",
+        "filename": "components/cronet/android/cronet_library_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-12-11T17:55:42Z",
+      "side": 1,
+      "message": "I thought CronetInitOnInitThread() was only called once?",
+      "range": {
+        "startLine": 93,
+        "startChar": 7,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "3e3a5b12618cb0201fe62c1d3f924b804440200a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
