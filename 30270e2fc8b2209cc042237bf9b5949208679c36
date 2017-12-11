@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "596301fa_1da603fd",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T19:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3961de4f_e63749eb",
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b6243cb_35f90c8f",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87e9716_2b76125d",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T19:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b6243cb_35f90c8f",
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c9068977_97b14548",
+        "filename": "device/u2f/u2f_ble_discovery_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T19:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d20d36b_0aec1151",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08b6f4e3_0a4618ae",
         "filename": "device/u2f/u2f_discovery.cc",
         "patchSetId": 2
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "e8192c4f_fe4b897d",
+        "filename": "device/u2f/u2f_discovery.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T19:18:19Z",
+      "side": 1,
+      "message": "Done, there is not really a benefit in this case. I suppose these algorithms are most useful if a for-each loop is not an option, e.g. if C++11 is not available or you are only operating on a partial range. Here is a talk by Sean Parent on this topic: https://channel9.msdn.com/Events/GoingNative/2013/Cpp-Seasoning",
+      "parentUuid": "08b6f4e3_0a4618ae",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 76
+      },
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cafb63f_47f84d2a",
         "filename": "device/u2f/u2f_discovery.h",
         "patchSetId": 2
@@ -96,6 +180,24 @@
       "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e48865_e8633219",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T19:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cafb63f_47f84d2a",
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "c53ac0c6_2624bd50",
+        "filename": "device/u2f/u2f_discovery_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T19:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1f25e4c_f45c7b0e",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 9
+      },
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fda9aa5b_380d4dcb",
         "filename": "device/u2f/u2f_request.h",
         "patchSetId": 2
@@ -136,6 +262,24 @@
       "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be64bfd_082f28d0",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T19:18:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fda9aa5b_380d4dcb",
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
