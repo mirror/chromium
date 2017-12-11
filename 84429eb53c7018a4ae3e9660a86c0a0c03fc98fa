@@ -68,6 +68,23 @@
       "revId": "84429eb53c7018a4ae3e9660a86c0a0c03fc98fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8ae207_ccc80845",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 41
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-11T01:51:50Z",
+      "side": 1,
+      "message": "Nit: perhaps extract destructor body into private method CloseIfNeeded() and call it from here and destructor?",
+      "revId": "84429eb53c7018a4ae3e9660a86c0a0c03fc98fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "8059ae96_90e42757",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 36
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-11T01:51:50Z",
+      "side": 1,
+      "message": "I think this comment was missed? (Also other comments in PS36 on this file).",
+      "parentUuid": "a74c6126_b5bff3e1",
+      "range": {
+        "startLine": 24,
+        "startChar": 28,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "1b3e5ad62cd51200cb3ce25cd8a064aef7ece715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c77cfa43_57df56be",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 36
@@ -1000,6 +1024,30 @@
     },
     {
       "key": {
+        "uuid": "ab595449_87c7352e",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-11T01:51:50Z",
+      "side": 1,
+      "message": "Right, sorry, misread the argument to this method.",
+      "parentUuid": "ba8427bd_a60ee6b5",
+      "range": {
+        "startLine": 474,
+        "startChar": 0,
+        "endLine": 475,
+        "endChar": 69
+      },
+      "revId": "1b3e5ad62cd51200cb3ce25cd8a064aef7ece715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b633b036_fa6a1987",
         "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 36
@@ -1217,6 +1265,24 @@
       "side": 1,
       "message": "As I said in comment l.474, handle is closed in any case.",
       "parentUuid": "8305b697_dce5b336",
+      "revId": "1b3e5ad62cd51200cb3ce25cd8a064aef7ece715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a29468c_f144e95a",
+        "filename": "components/arc/video_accelerator/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-11T01:51:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3779e708_d7bd4405",
       "revId": "1b3e5ad62cd51200cb3ce25cd8a064aef7ece715",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
