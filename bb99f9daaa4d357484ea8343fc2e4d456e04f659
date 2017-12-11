@@ -16,6 +16,24 @@
       "revId": "bb99f9daaa4d357484ea8343fc2e4d456e04f659",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4fd6cf_a85210df",
+        "filename": "chrome/android/webapk/shell_apk/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T13:50:27Z",
+      "side": 1,
+      "message": "\"locales\" in locales.gni does not match with\n\nlocale suffixes in chrome/android/webapk/strings/translations/\n\nare we doing something wrong?",
+      "parentUuid": "1f589aa9_5cd281d0",
+      "revId": "bb99f9daaa4d357484ea8343fc2e4d456e04f659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
