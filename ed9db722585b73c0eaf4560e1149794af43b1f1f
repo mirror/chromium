@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "4266207c_49a7d0fe",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-11T04:08:53Z",
+      "side": 1,
+      "message": "Sounds reasonable.\n\n+1 to using WTF\u0027s threading primitives in this CL and revisit the discussion later.",
+      "parentUuid": "ae93c029_19ca25c0",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "209e10a5_20a82b5c",
         "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
         "patchSetId": 4
