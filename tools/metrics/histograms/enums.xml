@@ -21224,7 +21224,7 @@ Called by update_gpu_driver_bug_workaround_entries.py.-->
 </enum>
 
 <enum name="HttpCacheParallelWritingPattern">
-  <int value="0" label="Undefined"/>
+  <int value="0" label="Writers not needed or not yet joined"/>
   <int value="1" label="Create Writers"/>
   <int value="2" label="Joined Writing"/>
   <int value="3" label="Not joined Range Request"/>
