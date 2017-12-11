@@ -34,6 +34,24 @@
       "revId": "fb414d53f2768ca944ad3a6545859f1bf938bef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cdafc2_3447353c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/import_notifier_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-11T16:15:55Z",
+      "side": 1,
+      "message": "You\u0027re right. What I originally had in mind was to actually have two new tests, then I thought it might be too verbose that way, so I came up with that suggestion, which, as you said, isn\u0027t really more logical. Let\u0027s keep it this way. FWIW, this module is under heavy development, so there are plenty of chances I can and will refactor logic and perfect style.",
+      "parentUuid": "f40bf74b_175b71d7",
+      "revId": "fb414d53f2768ca944ad3a6545859f1bf938bef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
