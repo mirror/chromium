@@ -984,7 +984,7 @@ TEST_P(VisualViewportTest,
 
 // Test that the scrollFocusedEditableElementIntoRect method works with the
 // visual viewport.
-TEST_P(VisualViewportTest, DISABLED_TestScrollFocusedEditableElementIntoView) {
+TEST_P(VisualViewportTest, DISABLED_TestScrollFocusedEditableElementIntoRect) {
   InitializeWithDesktopSettings();
   WebView()->Resize(IntSize(500, 300));
 
@@ -995,7 +995,7 @@ TEST_P(VisualViewportTest, DISABLED_TestScrollFocusedEditableElementIntoView) {
   WebView()->ResizeVisualViewport(IntSize(200, 100));
   WebView()->SetInitialFocus(false);
   visual_viewport.SetLocation(FloatPoint());
-  WebView()->ScrollFocusedEditableElementIntoView();
+  WebView()->ScrollFocusedEditableElementIntoRect(IntRect(0, 0, 500, 200));
 
   EXPECT_EQ(ScrollOffset(0, GetFrame()->View()->MaximumScrollOffset().Height()),
             GetFrame()->View()->GetScrollOffset());
@@ -1008,7 +1008,7 @@ TEST_P(VisualViewportTest, DISABLED_TestScrollFocusedEditableElementIntoView) {
   visual_viewport.SetLocation(FloatPoint(0, 0));
 
   WebView()->SetPageScaleFactor(2);
-  WebView()->ScrollFocusedEditableElementIntoView();
+  WebView()->ScrollFocusedEditableElementIntoRect(IntRect(0, 0, 500, 200));
   EXPECT_EQ(ScrollOffset(0, GetFrame()->View()->MaximumScrollOffset().Height()),
             GetFrame()->View()->GetScrollOffset());
   EXPECT_FLOAT_POINT_EQ(FloatPoint(125, 150),
@@ -1025,7 +1025,7 @@ TEST_P(VisualViewportTest, DISABLED_TestScrollFocusedEditableElementIntoView) {
   visual_viewport.SetLocation(FloatPoint(30, 50));
 
   WebView()->SetPageScaleFactor(2);
-  WebView()->ScrollFocusedEditableElementIntoView();
+  WebView()->ScrollFocusedEditableElementIntoRect(IntRect(0, 0, 500, 200));
   EXPECT_EQ(ScrollOffset(200 - 30 - 75, 600 - 50 - 65),
             GetFrame()->View()->GetScrollOffset());
   EXPECT_FLOAT_POINT_EQ(FloatPoint(30, 50),
