@@ -16,6 +16,24 @@
       "revId": "554cf1205e5be1eaa3462262817e8b97dc8b39f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c9720d_8757e454",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-12-11T22:30:29Z",
+      "side": 1,
+      "message": "Yes this is needed because with a composited-scrolling border-radius clip, the painting root will have both InnerBorderRadiusClip and OverflowClip node, while having !ShouldRespectRootLayerClip().\n\nThis is actually a bug I introduced when I wrote these DCHECKs, this code path was never exercised until this CL. Sorry about that and thanks for fixing!\n\nBy the way, I think these kind of property state inference should all go to RarePaintData, where we already have a bunch of helper functions, but let\u0027s leave that to a follow-up cleanup.",
+      "parentUuid": "ddc00cb2_8e4de692",
+      "revId": "554cf1205e5be1eaa3462262817e8b97dc8b39f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
