@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2a1cf6a_ec60d011",
+        "filename": "tools/traffic_annotation/auditor/instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T13:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d029ff50_c0ba4b43",
+      "range": {
+        "startLine": 236,
+        "startChar": 75,
+        "endLine": 236,
+        "endChar": 76
+      },
+      "revId": "e8ce6074318d7bb8834e535fc7ff78f43adf1a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8854e0ff_82abf3bc",
         "filename": "tools/traffic_annotation/auditor/instance.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e8ce6074318d7bb8834e535fc7ff78f43adf1a68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195aea83_46b7e687",
+        "filename": "tools/traffic_annotation/auditor/instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T13:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8854e0ff_82abf3bc",
+      "range": {
+        "startLine": 263,
+        "startChar": 2,
+        "endLine": 263,
+        "endChar": 3
+      },
+      "revId": "e8ce6074318d7bb8834e535fc7ff78f43adf1a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1c39989e_1203eaf9",
+        "filename": "tools/traffic_annotation/auditor/instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T13:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda48894_2041a647",
+      "range": {
+        "startLine": 291,
+        "startChar": 10,
+        "endLine": 291,
+        "endChar": 17
+      },
+      "revId": "e8ce6074318d7bb8834e535fc7ff78f43adf1a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c6269ac_1ee2db56",
         "filename": "tools/traffic_annotation/auditor/instance.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "67bfd489_256c6fab",
+        "filename": "tools/traffic_annotation/auditor/instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T13:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c6269ac_1ee2db56",
+      "range": {
+        "startLine": 54,
+        "startChar": 56,
+        "endLine": 54,
+        "endChar": 57
+      },
+      "revId": "e8ce6074318d7bb8834e535fc7ff78f43adf1a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61547dee_ca59c9b4",
         "filename": "tools/traffic_annotation/auditor/instance.h",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-11T12:34:47Z",
       "side": 1,
       "message": "I would argue that the proto field numbers are an implementation detail that does not belong to the external interface of this class. It would be better to use an enum here (which you can still treat as int wherever you need).\n\nBut  given that we already refer to the proto field numbers through constants in traffic_annotation::NetworkTrafficAnnotation_TrafficSemantics, it doesn\u0027t make as much difference in the rest of the code.\n\nFor serialization in annotations.xml, we would either convert them to strings (which we probably don\u0027t want because of file size, but it would make manual editing and comprehension easier), or just reindex them as 0,1,2,...\n\nI guess there\u0027s not that much benefit, so treat this comment as optional.",
+      "range": {
+        "startLine": 55,
+        "startChar": 41,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "e8ce6074318d7bb8834e535fc7ff78f43adf1a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2039b4b2_5fcfe48a",
+        "filename": "tools/traffic_annotation/auditor/instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T13:44:11Z",
+      "side": 1,
+      "message": "Noted, I will add this to the list of things to do (consider) later.",
+      "parentUuid": "61547dee_ca59c9b4",
       "range": {
         "startLine": 55,
         "startChar": 41,
@@ -137,6 +257,30 @@
       "revId": "e8ce6074318d7bb8834e535fc7ff78f43adf1a68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c997302_e4b8bf8b",
+        "filename": "tools/traffic_annotation/auditor/instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T13:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2167507_780378e5",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 4
+      },
+      "revId": "e8ce6074318d7bb8834e535fc7ff78f43adf1a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
