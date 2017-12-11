@@ -16,6 +16,24 @@
       "revId": "588f2f7ab24665bdd1d4ba824f5e8f022295006d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1aead39_1d3b5613",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-11T20:41:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "7d1d3b18_0981755f",
+      "revId": "588f2f7ab24665bdd1d4ba824f5e8f022295006d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
