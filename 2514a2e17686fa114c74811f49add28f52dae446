@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a8df861_3cd24e6d",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-11T17:29:35Z",
+      "side": 1,
+      "message": "optional nit: I think it could be a good idea to group these with the locationBar constraints. Specially since these could move to the LocationBarContainer class in the near future.",
+      "revId": "2514a2e17686fa114c74811f49add28f52dae446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120af7e2_35d861a5",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-11T17:29:35Z",
+      "side": 1,
+      "message": "nit: use initWithImage and save a line :D",
+      "revId": "2514a2e17686fa114c74811f49add28f52dae446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
