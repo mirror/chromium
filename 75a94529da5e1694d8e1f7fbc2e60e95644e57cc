@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "f185b317_1d67f2cc",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-11T17:05:18Z",
+      "side": 1,
+      "message": "|win_bitmap| is a COM object being passed to a COM method. Does DetectFacesAsync() not take a reference to its argument?",
+      "parentUuid": "cdc9e0df_40b9fa9f",
+      "revId": "75a94529da5e1694d8e1f7fbc2e60e95644e57cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0baf6547_7a2ec887",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 10
