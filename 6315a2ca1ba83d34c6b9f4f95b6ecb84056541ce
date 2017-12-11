@@ -16,6 +16,24 @@
       "revId": "6315a2ca1ba83d34c6b9f4f95b6ecb84056541ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f65761_68b0c620",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-11T18:56:56Z",
+      "side": 0,
+      "message": "Updated",
+      "parentUuid": "53cbf4b3_cc0da4b0",
+      "revId": "6315a2ca1ba83d34c6b9f4f95b6ecb84056541ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
