@@ -58,6 +58,7 @@ public class AddressEditor
     private EditorModel mEditor;
     private ProgressDialog mProgressDialog;
     private boolean mEmailFieldIncluded;
+    private boolean mIsNewAddress;
 
     /**
      * Builds an address editor.
@@ -102,18 +103,18 @@ public class AddressEditor
 
         // If |toEdit| is null, we're creating a new autofill profile with the country code of the
         // default locale on this device.
-        boolean isNewAddress = toEdit == null;
+        mIsNewAddress = toEdit == null;
 
         // Ensure that |address| and |mProfile| are always not null.
         final AutofillAddress address =
-                isNewAddress ? new AutofillAddress(mContext, new AutofillProfile()) : toEdit;
+                mIsNewAddress ? new AutofillAddress(mContext, new AutofillProfile()) : toEdit;
         mProfile = address.getProfile();
 
         // The title of the editor depends on whether we're adding a new address or editing an
         // existing address.
         mEditor =
-                new EditorModel(isNewAddress ? mContext.getString(R.string.autofill_create_profile)
-                                             : toEdit.getEditTitle());
+                new EditorModel(mIsNewAddress ? mContext.getString(R.string.autofill_create_profile)
+                                              : toEdit.getEditTitle());
 
         // When edit is called, a new form is started, so the country on the
         // dropdown list is not changed. => mRecentlySelectedCountry should be null.
@@ -341,9 +342,11 @@ public class AddressEditor
         if (mEditorDialog.isDismissed()) return;
 
         mAddressFields.put(AddressField.ADMIN_AREA,
-                (contains(adminAreaCodes, mProfile.getRegion())
-                        || contains(adminAreaNames, mProfile.getRegion()))
-                        ? EditorFieldModel.createDropdown()
+                (adminAreaCodes != null && adminAreaCodes.length == adminAreaNames.length)
+                        ? EditorFieldModel.createDropdown(null /* label */,
+                                  mAutofillProfileBridge.getAdminAreaDropdownList(
+                                          adminAreaCodes, adminAreaNames),
+                                  mContext.getString(R.string.select))
                         : EditorFieldModel.createTextInput(
                                   EditorFieldModel.INPUT_TYPE_HINT_REGION));
 
@@ -358,16 +361,17 @@ public class AddressEditor
             // For example, "US" will not add dependent locality to the editor. A "JP" address will
             // start with a person's full name or a with a prefecture name, depending on whether the
             // language code is "ja-Latn" or "ja".
-            addAddressFieldsToEditor(mRecentlySelectedCountry, Locale.getDefault().getLanguage(),
-                    adminAreaCodes, adminAreaNames);
+            addAddressFieldsToEditor(mRecentlySelectedCountry, Locale.getDefault().getLanguage());
             // Notify EditorDialog that the fields in the model have changed. EditorDialog should
             // re-read the model and update the UI accordingly.
             mHandler.post(mCountryChangeCallback);
         } else {
-            // This should be called when all required fields are put in mAddressField.
-            setAddressFieldValuesFromCache();
-            addAddressFieldsToEditor(mCountryField.getValue().toString(),
-                    mProfile.getLanguageCode(), adminAreaCodes, adminAreaNames);
+            if (!mIsNewAddress) {
+                // This should be called when all required fields are put in mAddressField.
+                setAddressFieldValuesFromCache();
+            }
+            addAddressFieldsToEditor(
+                    mCountryField.getValue().toString(), mProfile.getLanguageCode());
             mEditorDialog.show(mEditor);
         }
     }
@@ -404,8 +408,7 @@ public class AddressEditor
      * Adds fields to the editor model based on the country and language code of
      * the profile that's being edited.
      */
-    private void addAddressFieldsToEditor(String countryCode, String languageCode,
-            String[] adminAreaCodes, String[] adminAreaNames) {
+    private void addAddressFieldsToEditor(String countryCode, String languageCode) {
         mAddressUiComponents =
                 mAutofillProfileBridge.getAddressUiComponents(countryCode, languageCode);
         // In terms of order, country must be the first field.
@@ -419,11 +422,6 @@ public class AddressEditor
             field.setLabel(component.label);
             field.setIsFullLine(component.isFullLine || component.id == AddressField.LOCALITY
                     || component.id == AddressField.DEPENDENT_LOCALITY);
-
-            if (component.id == AddressField.ADMIN_AREA && field.isDropdownField()) {
-                field.setDropdownKeyValues(mAutofillProfileBridge.getAdminAreaDropdownList(
-                        adminAreaCodes, adminAreaNames));
-            }
 
             // Libaddressinput formats do not always require the full name (RECIPIENT), but
             // PaymentRequest does.
