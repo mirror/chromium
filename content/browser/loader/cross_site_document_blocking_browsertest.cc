@@ -9,6 +9,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/resource_type.h"
@@ -289,12 +290,18 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, BlockForVariousTargets) {
 
   // TODO(nick): Split up these cases, and add positive assertions here about
   // what actually happens in these various resource-block cases.
+  std::unique_ptr<content::ConsoleObserverDelegate> console_delegate(
+      new content::ConsoleObserverDelegate(
+          shell()->web_contents(),
+          "*Blocked origin '*' from receiving cross-site document*"));
+  shell()->web_contents()->SetDelegate(console_delegate.get());
   GURL foo("http://foo.com/cross_site_document_request_target.html");
   EXPECT_TRUE(NavigateToURL(shell(), foo));
   WaitForLoadStop(shell()->web_contents());
 
-  // TODO(creis): Wait for all the subresources to load and ensure renderer
-  // process is still alive.
+  // TODO(creis): Wait for all the subresources to load (not just the first
+  // console message) and ensure renderer process is still alive.
+  console_delegate->Wait();
 }
 
 class CrossSiteDocumentBlockingKillSwitchTest
