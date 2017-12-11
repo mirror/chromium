@@ -778,6 +778,18 @@ void AXObjectCacheImpl::PostNotification(AXObject* object,
     notification_post_timer_.StartOneShot(TimeDelta(), BLINK_FROM_HERE);
 }
 
+void AXObjectCacheImpl::MarkDirty(Node* node) {
+  MarkDirty(Get(node));
+}
+
+void AXObjectCacheImpl::MarkDirty(LayoutObject* object) {
+  MarkDirty(Get(object));
+}
+
+void AXObjectCacheImpl::MarkDirty(AXObject* object) {
+  PostNotification(object, kAXNodeChanged);
+}
+
 bool AXObjectCacheImpl::IsAriaOwned(const AXObject* object) const {
   return relation_cache_->IsAriaOwned(object);
 }
@@ -794,16 +806,16 @@ void AXObjectCacheImpl::UpdateAriaOwns(
 }
 
 void AXObjectCacheImpl::CheckedStateChanged(Node* node) {
-  PostNotification(node, AXObjectCacheImpl::kAXCheckedStateChanged);
+  MarkDirty(node);
 }
 
 void AXObjectCacheImpl::ListboxOptionStateChanged(HTMLOptionElement* option) {
-  PostNotification(option, kAXCheckedStateChanged);
+  MarkDirty(option);
 }
 
 void AXObjectCacheImpl::ListboxSelectedChildrenChanged(
     HTMLSelectElement* select) {
-  PostNotification(select, kAXSelectedChildrenChanged);
+  MarkDirty(select);
 }
 
 void AXObjectCacheImpl::ListboxActiveIndexChanged(HTMLSelectElement* select) {
@@ -857,15 +869,7 @@ void AXObjectCacheImpl::HandleAriaExpandedChange(Node* node) {
 }
 
 void AXObjectCacheImpl::HandleAriaSelectedChanged(Node* node) {
-  AXObject* obj = Get(node);
-  if (!obj)
-    return;
-
-  PostNotification(obj, kAXCheckedStateChanged);
-
-  AXObject* listbox = obj->ParentObjectUnignored();
-  if (listbox && listbox->RoleValue() == kListBoxRole)
-    PostNotification(listbox, kAXSelectedChildrenChanged);
+  MarkDirty(node);
 }
 
 void AXObjectCacheImpl::HandleActiveDescendantChanged(Node* node) {
@@ -944,7 +948,7 @@ void AXObjectCacheImpl::HandleAttributeChanged(const QualifiedName& attr_name,
   else if (attr_name == aria_hiddenAttr)
     ChildrenChanged(element->parentNode());
   else if (attr_name == aria_invalidAttr)
-    PostNotification(element, AXObjectCacheImpl::kAXInvalidStatusChanged);
+    MarkDirty(element);
   else if (attr_name == aria_ownsAttr)
     ChildrenChanged(element);
   else
@@ -1145,7 +1149,7 @@ void AXObjectCacheImpl::DidHideMenuListPopup(LayoutMenuList* menu_list) {
 }
 
 void AXObjectCacheImpl::HandleLoadComplete(Document* document) {
-  PostNotification(GetOrCreate(document), kAXLoadComplete);
+  MarkDirty(document);
   AddPermissionStatusListener();
 }
 
@@ -1166,15 +1170,12 @@ void AXObjectCacheImpl::HandleScrolledToAnchor(const Node* anchor_node) {
 
 void AXObjectCacheImpl::HandleScrollPositionChanged(
     LocalFrameView* frame_view) {
-  AXObject* target_ax_object =
-      GetOrCreate(frame_view->GetFrame().GetDocument());
-  PostPlatformNotification(target_ax_object, kAXScrollPositionChanged);
+  MarkDirty(document_);
 }
 
 void AXObjectCacheImpl::HandleScrollPositionChanged(
     LayoutObject* layout_object) {
-  PostPlatformNotification(GetOrCreate(layout_object),
-                           kAXScrollPositionChanged);
+  MarkDirty(layout_object);
 }
 
 const AtomicString& AXObjectCacheImpl::ComputedRoleForNode(Node* node) {
@@ -1290,33 +1291,22 @@ void AXObjectCacheImpl::Trace(blink::Visitor* visitor) {
   AXObjectCache::Trace(visitor);
 }
 
-STATIC_ASSERT_ENUM(kWebAXEventActiveDescendantChanged,
-                   AXObjectCacheImpl::kAXActiveDescendantChanged);
 STATIC_ASSERT_ENUM(kWebAXEventAriaAttributeChanged,
                    AXObjectCacheImpl::kAXAriaAttributeChanged);
 STATIC_ASSERT_ENUM(kWebAXEventAutocorrectionOccured,
                    AXObjectCacheImpl::kAXAutocorrectionOccured);
 STATIC_ASSERT_ENUM(kWebAXEventBlur, AXObjectCacheImpl::kAXBlur);
-STATIC_ASSERT_ENUM(kWebAXEventCheckedStateChanged,
-                   AXObjectCacheImpl::kAXCheckedStateChanged);
 STATIC_ASSERT_ENUM(kWebAXEventChildrenChanged,
                    AXObjectCacheImpl::kAXChildrenChanged);
 STATIC_ASSERT_ENUM(kWebAXEventClicked, AXObjectCacheImpl::kAXClicked);
-STATIC_ASSERT_ENUM(kWebAXEventDocumentSelectionChanged,
-                   AXObjectCacheImpl::kAXDocumentSelectionChanged);
 STATIC_ASSERT_ENUM(kWebAXEventExpandedChanged,
                    AXObjectCacheImpl::kAXExpandedChanged);
 STATIC_ASSERT_ENUM(kWebAXEventFocus,
                    AXObjectCacheImpl::kAXFocusedUIElementChanged);
 STATIC_ASSERT_ENUM(kWebAXEventHide, AXObjectCacheImpl::kAXHide);
 STATIC_ASSERT_ENUM(kWebAXEventHover, AXObjectCacheImpl::kAXHover);
-STATIC_ASSERT_ENUM(kWebAXEventInvalidStatusChanged,
-                   AXObjectCacheImpl::kAXInvalidStatusChanged);
 STATIC_ASSERT_ENUM(kWebAXEventLayoutComplete,
                    AXObjectCacheImpl::kAXLayoutComplete);
-STATIC_ASSERT_ENUM(kWebAXEventLiveRegionChanged,
-                   AXObjectCacheImpl::kAXLiveRegionChanged);
-STATIC_ASSERT_ENUM(kWebAXEventLoadComplete, AXObjectCacheImpl::kAXLoadComplete);
 STATIC_ASSERT_ENUM(kWebAXEventLocationChanged,
                    AXObjectCacheImpl::kAXLocationChanged);
 STATIC_ASSERT_ENUM(kWebAXEventMenuListItemSelected,
@@ -1325,16 +1315,13 @@ STATIC_ASSERT_ENUM(kWebAXEventMenuListItemUnselected,
                    AXObjectCacheImpl::kAXMenuListItemUnselected);
 STATIC_ASSERT_ENUM(kWebAXEventMenuListValueChanged,
                    AXObjectCacheImpl::kAXMenuListValueChanged);
+STATIC_ASSERT_ENUM(kWebAXEventNodeChanged, AXObjectCacheImpl::kAXNodeChanged);
 STATIC_ASSERT_ENUM(kWebAXEventRowCollapsed, AXObjectCacheImpl::kAXRowCollapsed);
 STATIC_ASSERT_ENUM(kWebAXEventRowCountChanged,
                    AXObjectCacheImpl::kAXRowCountChanged);
 STATIC_ASSERT_ENUM(kWebAXEventRowExpanded, AXObjectCacheImpl::kAXRowExpanded);
-STATIC_ASSERT_ENUM(kWebAXEventScrollPositionChanged,
-                   AXObjectCacheImpl::kAXScrollPositionChanged);
 STATIC_ASSERT_ENUM(kWebAXEventScrolledToAnchor,
                    AXObjectCacheImpl::kAXScrolledToAnchor);
-STATIC_ASSERT_ENUM(kWebAXEventSelectedChildrenChanged,
-                   AXObjectCacheImpl::kAXSelectedChildrenChanged);
 STATIC_ASSERT_ENUM(kWebAXEventSelectedTextChanged,
                    AXObjectCacheImpl::kAXSelectedTextChanged);
 STATIC_ASSERT_ENUM(kWebAXEventShow, AXObjectCacheImpl::kAXShow);

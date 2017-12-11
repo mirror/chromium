@@ -81,6 +81,8 @@ api::automation::EventType ToAutomationEvent(ui::AXEvent event_type) {
       return api::automation::EVENT_TYPE_MOUSEPRESSED;
     case ui::AX_EVENT_MOUSE_RELEASED:
       return api::automation::EVENT_TYPE_MOUSERELEASED;
+    case ui::AX_EVENT_NODE_CHANGED:
+      return api::automation::EVENT_TYPE_NONE;
     case ui::AX_EVENT_ROW_COLLAPSED:
       return api::automation::EVENT_TYPE_ROWCOLLAPSED;
     case ui::AX_EVENT_ROW_COUNT_CHANGED:

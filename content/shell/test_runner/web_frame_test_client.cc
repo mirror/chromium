@@ -240,9 +240,6 @@ void WebFrameTestClient::PostAccessibilityEvent(const blink::WebAXObject& obj,
 
   const char* event_name = nullptr;
   switch (event) {
-    case blink::kWebAXEventActiveDescendantChanged:
-      event_name = "ActiveDescendantChanged";
-      break;
     case blink::kWebAXEventAriaAttributeChanged:
       event_name = "AriaAttributeChanged";
       break;
@@ -252,17 +249,11 @@ void WebFrameTestClient::PostAccessibilityEvent(const blink::WebAXObject& obj,
     case blink::kWebAXEventBlur:
       event_name = "Blur";
       break;
-    case blink::kWebAXEventCheckedStateChanged:
-      event_name = "CheckedStateChanged";
-      break;
     case blink::kWebAXEventChildrenChanged:
       event_name = "ChildrenChanged";
       break;
     case blink::kWebAXEventClicked:
       event_name = "Clicked";
-      break;
-    case blink::kWebAXEventDocumentSelectionChanged:
-      event_name = "DocumentSelectionChanged";
       break;
     case blink::kWebAXEventFocus:
       event_name = "Focus";
@@ -273,17 +264,8 @@ void WebFrameTestClient::PostAccessibilityEvent(const blink::WebAXObject& obj,
     case blink::kWebAXEventHover:
       event_name = "Hover";
       break;
-    case blink::kWebAXEventInvalidStatusChanged:
-      event_name = "InvalidStatusChanged";
-      break;
     case blink::kWebAXEventLayoutComplete:
       event_name = "LayoutComplete";
-      break;
-    case blink::kWebAXEventLiveRegionChanged:
-      event_name = "LiveRegionChanged";
-      break;
-    case blink::kWebAXEventLoadComplete:
-      event_name = "LoadComplete";
       break;
     case blink::kWebAXEventLocationChanged:
       event_name = "LocationChanged";
@@ -297,6 +279,9 @@ void WebFrameTestClient::PostAccessibilityEvent(const blink::WebAXObject& obj,
     case blink::kWebAXEventMenuListValueChanged:
       event_name = "MenuListValueChanged";
       break;
+    case blink::kWebAXEventNodeChanged:
+      event_name = "NodeChanged";
+      break;
     case blink::kWebAXEventRowCollapsed:
       event_name = "RowCollapsed";
       break;
@@ -306,14 +291,8 @@ void WebFrameTestClient::PostAccessibilityEvent(const blink::WebAXObject& obj,
     case blink::kWebAXEventRowExpanded:
       event_name = "RowExpanded";
       break;
-    case blink::kWebAXEventScrollPositionChanged:
-      event_name = "ScrollPositionChanged";
-      break;
     case blink::kWebAXEventScrolledToAnchor:
       event_name = "ScrolledToAnchor";
-      break;
-    case blink::kWebAXEventSelectedChildrenChanged:
-      event_name = "SelectedChildrenChanged";
       break;
     case blink::kWebAXEventSelectedTextChanged:
       event_name = "SelectedTextChanged";

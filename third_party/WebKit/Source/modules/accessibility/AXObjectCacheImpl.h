@@ -58,32 +58,25 @@ class MODULES_EXPORT AXObjectCacheImpl
   static AXObjectCache* Create(Document&);
 
   enum AXNotification {
-    kAXActiveDescendantChanged,
     kAXAriaAttributeChanged,
     kAXAutocorrectionOccured,
     kAXBlur,
-    kAXCheckedStateChanged,
     kAXChildrenChanged,
     kAXClicked,
-    kAXDocumentSelectionChanged,
     kAXExpandedChanged,
     kAXFocusedUIElementChanged,
     kAXHide,
     kAXHover,
-    kAXInvalidStatusChanged,
     kAXLayoutComplete,
-    kAXLiveRegionChanged,
-    kAXLoadComplete,
     kAXLocationChanged,
     kAXMenuListItemSelected,
     kAXMenuListItemUnselected,
     kAXMenuListValueChanged,
+    kAXNodeChanged,
     kAXRowCollapsed,
     kAXRowCountChanged,
     kAXRowExpanded,
-    kAXScrollPositionChanged,
     kAXScrolledToAnchor,
-    kAXSelectedChildrenChanged,
     kAXSelectedTextChanged,
     kAXShow,
     kAXTextChanged,
@@ -205,6 +198,10 @@ class MODULES_EXPORT AXObjectCacheImpl
   void PostNotification(LayoutObject*, AXNotification);
   void PostNotification(Node*, AXNotification);
   void PostNotification(AXObject*, AXNotification);
+
+  void MarkDirty(LayoutObject*);
+  void MarkDirty(Node*);
+  void MarkDirty(AXObject*);
 
   //
   // Aria-owns support.

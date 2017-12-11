@@ -2116,14 +2116,7 @@ bool AXLayoutObject::OnNativeSetValueAction(const String& string) {
 //
 
 void AXLayoutObject::HandleActiveDescendantChanged() {
-  if (!GetLayoutObject())
-    return;
-
-  AXObject* focused_object = AXObjectCache().FocusedObject();
-  if (focused_object == this && SupportsActiveDescendant()) {
-    AXObjectCache().PostNotification(
-        GetLayoutObject(), AXObjectCacheImpl::kAXActiveDescendantChanged);
-  }
+  AXObjectCache().MarkDirty(this);
 }
 
 void AXLayoutObject::HandleAriaExpandedChanged() {

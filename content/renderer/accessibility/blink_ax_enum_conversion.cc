@@ -317,36 +317,24 @@ ui::AXRole AXRoleFromBlink(blink::WebAXRole role) {
 
 ui::AXEvent AXEventFromBlink(blink::WebAXEvent event) {
   switch (event) {
-    case blink::kWebAXEventActiveDescendantChanged:
-      return ui::AX_EVENT_ACTIVEDESCENDANTCHANGED;
     case blink::kWebAXEventAriaAttributeChanged:
       return ui::AX_EVENT_ARIA_ATTRIBUTE_CHANGED;
     case blink::kWebAXEventAutocorrectionOccured:
       return ui::AX_EVENT_AUTOCORRECTION_OCCURED;
     case blink::kWebAXEventBlur:
       return ui::AX_EVENT_BLUR;
-    case blink::kWebAXEventCheckedStateChanged:
-      return ui::AX_EVENT_CHECKED_STATE_CHANGED;
     case blink::kWebAXEventChildrenChanged:
       return ui::AX_EVENT_CHILDREN_CHANGED;
     case blink::kWebAXEventClicked:
       return ui::AX_EVENT_CLICKED;
-    case blink::kWebAXEventDocumentSelectionChanged:
-      return ui::AX_EVENT_DOCUMENT_SELECTION_CHANGED;
     case blink::kWebAXEventExpandedChanged:
       return ui::AX_EVENT_EXPANDED_CHANGED;
     case blink::kWebAXEventFocus:
       return ui::AX_EVENT_FOCUS;
     case blink::kWebAXEventHover:
       return ui::AX_EVENT_HOVER;
-    case blink::kWebAXEventInvalidStatusChanged:
-      return ui::AX_EVENT_INVALID_STATUS_CHANGED;
     case blink::kWebAXEventLayoutComplete:
       return ui::AX_EVENT_LAYOUT_COMPLETE;
-    case blink::kWebAXEventLiveRegionChanged:
-      return ui::AX_EVENT_LIVE_REGION_CHANGED;
-    case blink::kWebAXEventLoadComplete:
-      return ui::AX_EVENT_LOAD_COMPLETE;
     case blink::kWebAXEventLocationChanged:
       return ui::AX_EVENT_LOCATION_CHANGED;
     case blink::kWebAXEventMenuListItemSelected:
@@ -355,18 +343,16 @@ ui::AXEvent AXEventFromBlink(blink::WebAXEvent event) {
       return ui::AX_EVENT_MENU_LIST_ITEM_SELECTED;
     case blink::kWebAXEventMenuListValueChanged:
       return ui::AX_EVENT_MENU_LIST_VALUE_CHANGED;
+    case blink::kWebAXEventNodeChanged:
+      return ui::AX_EVENT_NODE_CHANGED;
     case blink::kWebAXEventRowCollapsed:
       return ui::AX_EVENT_ROW_COLLAPSED;
     case blink::kWebAXEventRowCountChanged:
       return ui::AX_EVENT_ROW_COUNT_CHANGED;
     case blink::kWebAXEventRowExpanded:
       return ui::AX_EVENT_ROW_EXPANDED;
-    case blink::kWebAXEventScrollPositionChanged:
-      return ui::AX_EVENT_SCROLL_POSITION_CHANGED;
     case blink::kWebAXEventScrolledToAnchor:
       return ui::AX_EVENT_SCROLLED_TO_ANCHOR;
-    case blink::kWebAXEventSelectedChildrenChanged:
-      return ui::AX_EVENT_SELECTED_CHILDREN_CHANGED;
     case blink::kWebAXEventSelectedTextChanged:
       return ui::AX_EVENT_TEXT_SELECTION_CHANGED;
     case blink::kWebAXEventTextChanged:
@@ -374,8 +360,7 @@ ui::AXEvent AXEventFromBlink(blink::WebAXEvent event) {
     case blink::kWebAXEventValueChanged:
       return ui::AX_EVENT_VALUE_CHANGED;
     default:
-      // We can't add an assertion here, that prevents us
-      // from adding new event enums in Blink.
+      NOTREACHED();
       return ui::AX_EVENT_NONE;
   }
 }

@@ -57,6 +57,7 @@
     mouse_moved,
     mouse_pressed,
     mouse_released,
+    node_changed,
     row_collapsed,             // Web / Mac
     row_count_changed,         // Web / Mac
     row_expanded,              // Web / Mac

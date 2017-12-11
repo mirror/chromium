@@ -2385,17 +2385,6 @@ void AXNodeObject::ChildrenChanged() {
        parent = parent->ParentObjectIfExists()) {
     parent->SetNeedsToUpdateChildren();
 
-    // These notifications always need to be sent because screenreaders are
-    // reliant on them to perform.  In other words, they need to be sent even
-    // when the screen reader has not accessed this live region since the last
-    // update.
-
-    // If this element supports ARIA live regions, then notify the AT of
-    // changes.
-    if (parent->IsLiveRegion())
-      AXObjectCache().PostNotification(parent,
-                                       AXObjectCacheImpl::kAXLiveRegionChanged);
-
     // If this element is an ARIA text box or content editable, post a "value
     // changed" notification on it so that it behaves just like a native input
     // element or textarea.
@@ -2412,11 +2401,6 @@ void AXNodeObject::SelectionChanged() {
   if (IsFocused() || IsWebArea()) {
     AXObjectCache().PostNotification(this,
                                      AXObjectCacheImpl::kAXSelectedTextChanged);
-    if (GetDocument()) {
-      AXObject* document_object = AXObjectCache().GetOrCreate(GetDocument());
-      AXObjectCache().PostNotification(
-          document_object, AXObjectCacheImpl::kAXDocumentSelectionChanged);
-    }
   } else {
     AXObject::SelectionChanged();  // Calls selectionChanged on parent.
   }
@@ -2431,10 +2415,6 @@ void AXNodeObject::TextChanged() {
     AXObject* parent = cache.Get(parent_node);
     if (!parent)
       continue;
-
-    if (parent->IsLiveRegion())
-      cache.PostNotification(parent_node,
-                             AXObjectCacheImpl::kAXLiveRegionChanged);
 
     // If this element is an ARIA text box or content editable, post a "value
     // changed" notification on it so that it behaves just like a native input

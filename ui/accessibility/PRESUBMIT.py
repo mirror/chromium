@@ -99,8 +99,6 @@ def CheckEnumsMatch(input_api, output_api):
                     output_api)
   CheckMatchingEnum(ax_enums, 'AXState', automation_enums, 'StateType', errs,
                     output_api)
-  CheckMatchingEnum(ax_enums, 'AXEvent', automation_enums, 'EventType', errs,
-                    output_api)
   CheckMatchingEnum(ax_enums, 'AXNameFrom', automation_enums, 'NameFromType',
                     errs, output_api)
   CheckMatchingEnum(ax_enums, 'AXRestriction', automation_enums,
