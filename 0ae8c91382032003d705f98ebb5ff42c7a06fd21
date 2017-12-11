@@ -34,6 +34,24 @@
       "revId": "0ae8c91382032003d705f98ebb5ff42c7a06fd21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c7cdc9_aa689ede",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-11T08:09:40Z",
+      "side": 1,
+      "message": "Thanks, I think I now understand what element can be optimized.\n\nI checked Mozilla\u0027s HasWeirdParserInsertionMode,\nhttps://dxr.mozilla.org/mozilla-central/search?q\u003d%2Bfunction-ref%3AnsINode%3A%3ASetHasWeirdParserInsertionMode%28%29\nand HTMLSharedElement class,\nhttps://dxr.mozilla.org/mozilla-central/source/dom/html/HTMLSharedElement.h\ncalls SetHasWeirdParserInsertionMode() when the element is \u003chtml\u003e or \u003chead\u003e.\nBut this function lacks check for IsHTMLHeadElement().\n\nImagine in the future someone adds a new HTML \u003cfoo\u003e element, which has some special\nparsing rule and cannot apply this optimization - how the implementer can notice\nthat this function has to be modified, in addition to adding HTMLFooElement.{h,cpp}?",
+      "parentUuid": "f1633624_9b0174b3",
+      "revId": "0ae8c91382032003d705f98ebb5ff42c7a06fd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
