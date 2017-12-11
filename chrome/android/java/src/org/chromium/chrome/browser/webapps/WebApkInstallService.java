@@ -11,11 +11,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ShortcutHelper;
+import org.chromium.chrome.browser.metrics.WebApkUma;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
@@ -86,4 +88,29 @@ public class WebApkInstallService {
         notificationManager.cancel(
                 WEBAPK_INSTALL_NOTIFICATION_TAG_PREFIX + notificationId, PLATFORM_ID);
     }
+
+    @CalledByNative
+    private static void checkFreeSpace(final long callbackPointer) {
+        new AsyncTask<Void, Void, Integer>() {
+            @Override
+            protected Integer doInBackground(Void... params) {
+                long availableSpaceInByte = WebApkUma.getAvailableSpaceAboveLowSpaceLimit();
+
+                if (availableSpaceInByte > 0) return SpaceStatus.ENOUGH_SPACE;
+
+                long cacheSizeInByte = WebApkUma.getCacheDirSize();
+                if (cacheSizeInByte + availableSpaceInByte > 0) {
+                    return SpaceStatus.ENOUGH_SPACE_AFTER_FREE_UP_CACHE;
+                }
+                return SpaceStatus.NOT_ENOUGH_SPACE;
+            }
+
+            @Override
+            protected void onPostExecute(Integer result) {
+                nativeOnGetSpaceStatus(result, callbackPointer);
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    private static native void nativeOnGetSpaceStatus(int status, long callbackPointer);
 }

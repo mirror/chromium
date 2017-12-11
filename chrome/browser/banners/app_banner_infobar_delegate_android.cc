@@ -61,6 +61,11 @@ bool AppBannerInfoBarDelegateAndroid::Create(
            ->AddInfoBar(std::move(infobar)))
     return false;
 
+  if (is_webapk) {
+    WebApkInstallService::Get(web_contents->GetBrowserContext())
+        ->TriggerFreeSpaceCheck();
+  }
+
   return true;
 }
 
