@@ -22,6 +22,30 @@
       "revId": "51304e01b57e329187636d124c331612383c3bc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a933cb_cebe9d65",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-12-11T15:20:11Z",
+      "side": 1,
+      "message": "Bookmarks in Firefox have favicons. I think it should be possible to get them from favicons.sqlite database.\n\nThere\u0027s hash number available in moz_places.url_hash column (places.sqlite database). Corresponding hash number is also available in moz_pages_with_icons.page_url_hash column (favicons.sqlite database). I don\u0027t know if these hashes are unique. Maybe it\u0027s better to compare URLs? What do you think?\n\nI didn\u0027t have time for detailed investigation today. I\u0027ll try to create a patch tomorrow. I\u0027ll also add some test code.",
+      "parentUuid": "8033f3fb_5bf3e236",
+      "range": {
+        "startLine": 724,
+        "startChar": 0,
+        "endLine": 725,
+        "endChar": 65
+      },
+      "revId": "51304e01b57e329187636d124c331612383c3bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
