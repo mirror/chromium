@@ -301,7 +301,6 @@ class ResourceSchedulerTest : public testing::Test {
     // to be done before initializing the scheduler because the client is
     // created on the call to |InitializeScheduler|, which is where the initial
     // limits for the delayable requests in flight are computed.
-    network_quality_estimator_.set_bandwidth_delay_product_kbits(120);
     network_quality_estimator_.set_effective_connection_type(
         net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
     // Initialize the scheduler.
@@ -370,17 +369,23 @@ class ResourceSchedulerTest : public testing::Test {
     bool experiment_enabled = false;
     if (lower_delayable_count_enabled) {
       experiment_enabled = true;
-      params["MaxEffectiveConnectionType"] = "2G";
-      params["MaxBDPKbits1"] = "130";
+      params["MinEffectiveConnectionType1"] = "Slow-2G";
+      params["MaxEffectiveConnectionType1"] = "2G";
       params["MaxDelayableRequests1"] = "2";
-      params["MaxBDPKbits2"] = "160";
+
+      params["MinEffectiveConnectionType2"] = "3G";
+      params["MaxEffectiveConnectionType2"] = "3G";
       params["MaxDelayableRequests2"] = "4";
     }
 
     if (non_delayable_weight > 0.0) {
       experiment_enabled = true;
-      params["MaxEffectiveConnectionType"] = "2G";
-      params["NonDelayableWeight"] = base::NumberToString(non_delayable_weight);
+      params["MinEffectiveConnectionType1"] = "Slow-2G";
+      params["MaxEffectiveConnectionType1"] = "2G";
+      if (params["MaxDelayableRequests1"] == "")
+        params["MaxDelayableRequests1"] = "10";
+      params["NonDelayableWeight1"] =
+          base::NumberToString(non_delayable_weight);
     }
 
     base::FieldTrialParamAssociator::GetInstance()->ClearAllParamsForTesting();
@@ -403,7 +408,7 @@ class ResourceSchedulerTest : public testing::Test {
     scoped_feature_list->InitWithFeatureList(std::move(feature_list));
   }
 
-  void ReadConfigTestHelper(size_t num_bdp_ranges,
+  void ReadConfigTestHelper(size_t num_ranges,
                             const std::string& max_ect_string) {
     base::FieldTrialParamAssociator::GetInstance()->ClearAllParamsForTesting();
     const char kTrialName[] = "TrialName";
@@ -413,11 +418,13 @@ class ResourceSchedulerTest : public testing::Test {
     base::FieldTrialParamAssociator::GetInstance()->ClearAllParamsForTesting();
     base::test::ScopedFeatureList scoped_feature_list;
     std::map<std::string, std::string> params;
-    params["MaxEffectiveConnectionType"] = max_ect_string;
-    for (size_t bdp_range_index = 1; bdp_range_index <= num_bdp_ranges;
+    for (size_t bdp_range_index = 1; bdp_range_index <= num_ranges;
          bdp_range_index++) {
       std::string index_str = base::NumberToString(bdp_range_index);
-      params["MaxBDPKbits" + index_str] = index_str + "00";
+
+      params["MinEffectiveConnectionType" + index_str] = "Slow-2G";
+      params["MaxEffectiveConnectionType" + index_str] = max_ect_string;
+
       params["MaxDelayableRequests" + index_str] = index_str + "0";
     }
 
@@ -431,17 +438,18 @@ class ResourceSchedulerTest : public testing::Test {
         field_trial);
     scoped_feature_list.InitWithFeatureList(std::move(feature_list));
 
-    ResourceScheduler::MaxRequestsForBDPRanges bdp_ranges =
+    ResourceScheduler::MaxRequestsForNQRanges nq_ranges =
         ResourceScheduler::GetMaxDelayableRequestsExperimentConfigForTests();
 
     // Check that the configuration was parsed and stored correctly.
-    ASSERT_EQ(bdp_ranges.size(), num_bdp_ranges);
-    for (size_t bdp_range_index = 1; bdp_range_index <= num_bdp_ranges;
-         bdp_range_index++) {
-      EXPECT_EQ(bdp_ranges[bdp_range_index - 1].max_bdp_kbits,
-                (int64_t)(bdp_range_index * 100));
-      EXPECT_EQ(bdp_ranges[bdp_range_index - 1].max_requests,
-                bdp_range_index * 10u);
+    ASSERT_EQ(nq_ranges.size(), num_ranges);
+    for (size_t index = 1; index <= num_ranges; index++) {
+      EXPECT_EQ(net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G,
+                nq_ranges[index - 1].min_effective_connection_type);
+      EXPECT_EQ(net::GetEffectiveConnectionTypeForName(max_ect_string).value(),
+                nq_ranges[index - 1].max_effective_connection_type);
+      EXPECT_EQ(index * 10u, nq_ranges[index - 1].max_requests);
+      EXPECT_EQ(0, nq_ranges[index - 1].non_delayable_weight);
     }
   }
 
@@ -1528,7 +1536,6 @@ TEST_F(ResourceSchedulerTest, RequestLimitOverrideOutsideECTRange) {
     // Set BDP to 120 kbits, which lies in the configuration bucket. Set the
     // effective connection type to a value for which the experiment should not
     // be run.
-    network_quality_estimator_.set_bandwidth_delay_product_kbits(120);
     network_quality_estimator_.set_effective_connection_type(ect);
 
     // The limit will matter only once the page has a body, since delayable
@@ -1572,9 +1579,8 @@ TEST_F(ResourceSchedulerTest, RequestLimitOverrideConfigOutsideBDPRange) {
   // The BDP should lie outside the provided ranges. Here, the BDP is set to
   // 200, which lies outside the configuration BDP buckets.
   // The effective connection type is set to Slow-2G.
-  network_quality_estimator_.set_bandwidth_delay_product_kbits(200);
   network_quality_estimator_.set_effective_connection_type(
-      net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
+      net::EFFECTIVE_CONNECTION_TYPE_4G);
   InitializeScheduler();
 
   // The limit should be the default limit, which is 10 delayable requests
@@ -1616,7 +1622,6 @@ TEST_F(ResourceSchedulerTest, RequestLimitOverrideFixedForPageLoad) {
   InitializeThrottleDelayableExperiment(&scoped_feature_list, true, 0.0);
   // BDP value is in range for which the limit is overridden to 2. The
   // effective connection type is set to Slow-2G.
-  network_quality_estimator_.set_bandwidth_delay_product_kbits(120);
   network_quality_estimator_.set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
   InitializeScheduler();
@@ -1656,7 +1661,6 @@ TEST_F(ResourceSchedulerTest, RequestLimitOverrideFixedForPageLoad) {
   // Change the BDP to go outside the experiment buckets and change the network
   // type to 2G. This should not affect the limit calculated at the beginning of
   // the page load.
-  network_quality_estimator_.set_bandwidth_delay_product_kbits(50);
   network_quality_estimator_.set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_2G);
 
@@ -1675,9 +1679,8 @@ TEST_F(ResourceSchedulerTest, RequestLimitReducedAcrossPageLoads) {
   InitializeThrottleDelayableExperiment(&scoped_feature_list, true, 0.0);
   // BDP value is in range for which the limit is overridden to 4. The
   // effective connection type is set to Slow-2G.
-  network_quality_estimator_.set_bandwidth_delay_product_kbits(150);
   network_quality_estimator_.set_effective_connection_type(
-      net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
+      net::EFFECTIVE_CONNECTION_TYPE_3G);
   InitializeScheduler();
 
   // The limit will matter only once the page has a body, since delayable
@@ -1706,7 +1709,6 @@ TEST_F(ResourceSchedulerTest, RequestLimitReducedAcrossPageLoads) {
   // Change the network quality so that the BDP value is in range for which the
   // limit is overridden to 2. The effective connection type is set to
   // Slow-2G.
-  network_quality_estimator_.set_bandwidth_delay_product_kbits(120);
   network_quality_estimator_.set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
   // Trigger a navigation event which will recompute limits. Also insert a body,
@@ -1785,12 +1787,13 @@ TEST_F(ResourceSchedulerTest, ReadInvalidConfigTest) {
 
   base::test::ScopedFeatureList scoped_feature_list;
   std::map<std::string, std::string> params;
-  params["MaxEffectiveConnectionType"] = "2G";
+
   // Skip configuration parameters for index 2 to test that the parser stops
   // when it cannot find the parameters for an index.
   for (int bdp_range_index : {1, 3, 4}) {
     std::string index_str = base::IntToString(bdp_range_index);
-    params["MaxBDPKbits" + index_str] = index_str + "00";
+    params["MinEffectiveConnectionType" + index_str] = "Slow-2G";
+    params["MaxEffectiveConnectionType" + index_str] = "2G";
     params["MaxDelayableRequests" + index_str] = index_str + "0";
   }
   // Add some bad configuration strigs to ensure that the parser does not break.
@@ -1807,15 +1810,15 @@ TEST_F(ResourceSchedulerTest, ReadInvalidConfigTest) {
       field_trial);
   scoped_feature_list.InitWithFeatureList(std::move(feature_list));
 
-  ResourceScheduler::MaxRequestsForBDPRanges bdp_ranges =
+  ResourceScheduler::MaxRequestsForNQRanges nq_ranges =
       ResourceScheduler::GetMaxDelayableRequestsExperimentConfigForTests();
 
   // Only the first configuration parameter must be read because a match was not
   // found for index 2. The configuration parameters with index 3 and 4 must be
   // ignored, even though they are valid configuration parameters.
-  EXPECT_EQ(bdp_ranges.size(), 1u);
-  EXPECT_EQ(bdp_ranges[0].max_bdp_kbits, 100);
-  EXPECT_EQ(bdp_ranges[0].max_requests, 10u);
+  EXPECT_EQ(nq_ranges.size(), 1u);
+  // EXPECT_EQ(nq_ranges[0].max_bdp_kbits, 100);
+  EXPECT_EQ(nq_ranges[0].max_requests, 10u);
 }
 
 // Test that the maximum effective connection type is read correctly when it is

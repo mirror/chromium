@@ -69,11 +69,13 @@ class CONTENT_EXPORT ResourceScheduler {
   // A struct that stores a bandwidth delay product (BDP) and the maximum number
   // of delayable requests when the observed BDP is below (inclusive) the
   // specified BDP.
-  struct MaxRequestsForBDPRange {
-    int64_t max_bdp_kbits;
+  struct MaxRequestsForNQRange {
+    net::EffectiveConnectionType min_effective_connection_type;
+    net::EffectiveConnectionType max_effective_connection_type;
     size_t max_requests;
+    double non_delayable_weight;
   };
-  typedef std::vector<MaxRequestsForBDPRange> MaxRequestsForBDPRanges;
+  typedef std::vector<MaxRequestsForNQRange> MaxRequestsForNQRanges;
 
   explicit ResourceScheduler(bool enabled);
   ~ResourceScheduler();
@@ -134,9 +136,9 @@ class CONTENT_EXPORT ResourceScheduler {
                            net::RequestPriority new_priority);
 
   // Public for tests.
-  static MaxRequestsForBDPRanges
+  static MaxRequestsForNQRanges
   GetMaxDelayableRequestsExperimentConfigForTests() {
-    return ThrottleDelayble::GetMaxRequestsForBDPRanges();
+    return ThrottleDelayble::GetMaxRequestsForNQRanges();
   }
 
   bool priority_requests_delayable() const {
@@ -189,14 +191,14 @@ class CONTENT_EXPORT ResourceScheduler {
     ~ThrottleDelayble();
 
     // Returns the maximum delayable requests based on the current
-    // value of the bandwidth delay product (BDP). It falls back to the default
+    // value of the network quality. It falls back to the default
     // limit on three conditions:
     // 1. |network_quality_estimator| is null.
     // 2. The current effective connection type is
     // net::EFFECTIVE_CONNECTION_TYPE_OFFLINE or
     // net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN.
-    // 3. The current value of the BDP is not in any of the ranges in
-    // |max_requests_for_bdp_ranges_|.
+    // 3. The current value of the effective connection type is not in any of
+    // the ranges in |max_requests_for_network_quality_ranges_|.
     size_t GetMaxDelayableRequests(
         const net::NetworkQualityEstimator* network_quality_estimator) const;
 
@@ -211,32 +213,28 @@ class CONTENT_EXPORT ResourceScheduler {
     friend class ResourceScheduler;
 
     // Reads experiment parameters and creates a vector  of
-    // |MaxRequestsForBDPRange| to populate |max_requests_for_bdp_ranges_|. It
-    // looks for configuration parameters with sequential numeric suffixes, and
-    // stops looking after the first failure to find an experimetal parameter.
-    // The BDP values are specified in kilobits. A sample configuration is given
-    // below:
-    // "MaxBDPKbits1": "150",
-    // "MaxDelayableRequests1": "2",
-    // "MaxBDPKbits2": "200",
-    // "MaxDelayableRequests2": "4",
-    // "MaxEffectiveConnectionType": "3G"
-    // This config implies that when BDP <= 150, then the maximum number of
-    // non-delayable requests should be limited to 2. When BDP > 150 and <= 200,
-    // it should be limited to 4. For BDP > 200, the default value should be
-    // used.
-    static MaxRequestsForBDPRanges GetMaxRequestsForBDPRanges();
+    // |MaxRequestsForBDPRange| to populate
+    // |max_requests_for_network_quality_ranges_|. It looks for configuration
+    // parameters with sequential numeric suffixes, and stops looking after the
+    // first failure to find an experimetal parameter. A sample configuration is
+    // given below: "MinEffectiveConnectionType1": "Slow-2G",
+    // "MaxEffectiveConnectionType1": "2G",
+    // "MaxDelayableRequests1": "6",
+    // "NonDelayableWeight1": "2",
+    // "MinEffectiveConnectionType2": "3G",
+    // "MaxEffectiveConnectionType2": "3G",
+    // "MaxDelayableRequests2": "12",
+    // "NonDelayableWeight2": "3",
+    // This config implies that when Effective Connection Type (ECT) is Slow-2G
+    // or 2G, then the maximum number of non-delayable requests should be
+    // limited to 6, and the non-delayable request weight should be set to 2.
+    // When ECT is 3G, it should be limited to 12. For ECT of 4G, the default
+    // value should be used.
+    static MaxRequestsForNQRanges GetMaxRequestsForNQRanges();
 
     // The number of delayable requests in-flight for different ranges of the
     // bandwidth delay product (BDP).
-    const MaxRequestsForBDPRanges max_requests_for_bdp_ranges_;
-
-    // The maximum ECT for which the experiment should be enabled.
-    const net::EffectiveConnectionType max_effective_connection_type_;
-
-    // The weight of a non-delayable request when counting the effective number
-    // of non-delayable requests in-flight.
-    const double non_delayable_weight_;
+    const MaxRequestsForNQRanges max_requests_for_network_quality_ranges_;
   };
 
   typedef int64_t ClientId;
