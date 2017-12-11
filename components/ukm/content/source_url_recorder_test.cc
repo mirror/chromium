@@ -52,12 +52,8 @@ TEST_F(SourceUrlRecorderWebContentsObserverTest, InitialUrl) {
     EXPECT_EQ(final_url, kv.second->url());
     EXPECT_EQ(initial_url, kv.second->initial_url());
   }
-}
 
-TEST_F(SourceUrlRecorderWebContentsObserverTest, IgnoreUnsupportedScheme) {
-  NavigationSimulator::NavigateAndCommitFromBrowser(web_contents(),
-                                                    GURL("about:blank"));
-  EXPECT_EQ(0ul, test_ukm_recorder_.sources_count());
+  EXPECT_EQ(final_url, GetAssociatedURLForWebContentsDocument());
 }
 
 TEST_F(SourceUrlRecorderWebContentsObserverTest, IgnoreUrlInSubframe) {

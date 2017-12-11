@@ -79,15 +79,8 @@ IN_PROC_BROWSER_TEST_F(SourceUrlRecorderWebContentsObserverBrowserTest, Basic) {
   EXPECT_NE(nullptr, source);
   EXPECT_EQ(url, source->url());
   EXPECT_TRUE(source->initial_url().is_empty());
-}
 
-IN_PROC_BROWSER_TEST_F(SourceUrlRecorderWebContentsObserverBrowserTest,
-                       IgnoreUnsupportedScheme) {
-  GURL url("about:blank");
-  content::NavigationHandleObserver observer(shell()->web_contents(), url);
-  content::NavigateToURL(shell(), url);
-  EXPECT_TRUE(observer.has_committed());
-  EXPECT_EQ(nullptr, GetSourceForNavigationId(observer.navigation_id()));
+  EXPECT_EQ(url, GetAssociatedURLForWebContentsDocument());
 }
 
 IN_PROC_BROWSER_TEST_F(SourceUrlRecorderWebContentsObserverBrowserTest,
