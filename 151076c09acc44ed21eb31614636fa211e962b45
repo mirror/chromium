@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce594310_1a3d9447",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2372,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-11T18:59:22Z",
+      "side": 0,
+      "message": "Matt, any specific reason this was blocked for the NTP? Perhaps this was added before we faded out NTP content on omnibox focus?",
+      "range": {
+        "startLine": 2372,
+        "startChar": 20,
+        "endLine": 2372,
+        "endChar": 31
+      },
+      "revId": "151076c09acc44ed21eb31614636fa211e962b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
