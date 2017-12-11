@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ec4bbdb_f9bb256c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/performance-tojson.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-11T16:36:59Z",
+      "side": 1,
+      "message": "drive-by nit: this is super repetitive; why not something like:\n\nfor (let key of [\"navigationStart\", \"unloadEventStart\", ...]) {\n  assert_equals(jsonTiming[key], timing[key], `performance.toJSON().timing.${key} should match performance.timing.${key}`);\n  assert_equals(json2[key], timing[key], `performance.timing.toJSON().${key} should match performance.timing.${key}`);\n}",
+      "revId": "ee7f814675d43d660199178e25f01e46e1dd7825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
