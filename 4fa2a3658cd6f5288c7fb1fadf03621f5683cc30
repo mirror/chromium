@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff81136b_75cd70fc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-not-exposed.https.worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T17:36:01Z",
+      "side": 1,
+      "message": "No license header in wpt, please. See:\n\nhttps://github.com/w3c/web-platform-tests/pull/8377#issuecomment-346173789",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "4fa2a3658cd6f5288c7fb1fadf03621f5683cc30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4f4adc_cae780bb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-not-exposed.https.worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T17:36:01Z",
+      "side": 1,
+      "message": "Please check PaymentAddress, PaymentResponse, and PaymentRequestUpdateEvent as well.",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "4fa2a3658cd6f5288c7fb1fadf03621f5683cc30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
