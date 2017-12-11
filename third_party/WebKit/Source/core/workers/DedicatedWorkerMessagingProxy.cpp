@@ -15,8 +15,7 @@
 #include "core/workers/DedicatedWorker.h"
 #include "core/workers/DedicatedWorkerObjectProxy.h"
 #include "core/workers/DedicatedWorkerThread.h"
-#include "core/workers/GlobalScopeCreationParams.h"
-#include "core/workers/WorkerClients.h"
+rinclude "core/workers/WorkerClients.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WebTaskRunner.h"
@@ -26,7 +25,7 @@
 #include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
 #include "third_party/WebKit/public/platform/dedicated_worker_factory.mojom-blink.h"
 
-namespace blink {
+    namespace blink {
 namespace {
 
 service_manager::mojom::blink::InterfaceProviderPtrInfo
@@ -62,12 +61,9 @@ DedicatedWorkerMessagingProxy::DedicatedWorkerMessagingProxy(
 
 DedicatedWorkerMessagingProxy::~DedicatedWorkerMessagingProxy() = default;
 
-void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
-    const KURL& script_url,
-    const String& user_agent,
-    const String& source_code,
-    ReferrerPolicy referrer_policy,
-    const v8_inspector::V8StackTraceId& stack_id) {
+void DedicatedWorkerMessagingProxy::Initialize(
+    std::unique_ptr<GlobalScopeCreationParams> creation_params,
+    const KURL& script_url, const v8_inspector::V8StackTraceId& stack_id) {
   DCHECK(IsParentContextThread());
   if (AskedToTerminate()) {
     // Worker.terminate() could be called from JS before the thread was
@@ -75,23 +71,7 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
     return;
   }
 
-  Document* document = ToDocument(GetExecutionContext());
-  const SecurityOrigin* starter_origin = document->GetSecurityOrigin();
-
-  ContentSecurityPolicy* csp = document->GetContentSecurityPolicy();
-  DCHECK(csp);
-
-  auto global_scope_creation_params =
-      std::make_unique<GlobalScopeCreationParams>(
-          script_url, user_agent, csp->Headers().get(), referrer_policy,
-          starter_origin, ReleaseWorkerClients(), document->AddressSpace(),
-          OriginTrialContext::GetTokens(document).get(),
-          std::make_unique<WorkerSettings>(document->GetSettings()),
-          kV8CacheOptionsDefault,
-          ConnectToWorkerInterfaceProvider(document,
-                                           SecurityOrigin::Create(script_url)));
-
-  InitializeWorkerThread(std::move(global_scope_creation_params),
+  InitializeWorkerThread(std::move(creation_params),
                          CreateBackingThreadStartupData(ToIsolate(document)),
                          script_url, stack_id, source_code);
 }

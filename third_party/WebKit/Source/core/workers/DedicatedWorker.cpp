@@ -30,6 +30,7 @@ namespace blink {
 
 DedicatedWorker* DedicatedWorker::Create(ExecutionContext* context,
                                          const String& url,
+                                         const WorkerOptions& options,
                                          ExceptionState& exception_state) {
   DCHECK(IsMainThread());
   Document* document = ToDocument(context);
@@ -45,15 +46,17 @@ DedicatedWorker* DedicatedWorker::Create(ExecutionContext* context,
   if (!script_url.IsValid())
     return nullptr;
 
-  DedicatedWorker* worker = new DedicatedWorker(context, script_url);
+  DedicatedWorker* worker = new DedicatedWorker(context, script_url, options);
   worker->Start();
   return worker;
 }
 
 DedicatedWorker::DedicatedWorker(ExecutionContext* context,
-                                 const KURL& script_url)
+                                 const KURL& script_url,
+                                 const WorkerOptions& options)
     : AbstractWorker(context),
       script_url_(script_url),
+      options_(options),
       context_proxy_(CreateMessagingProxy(context)) {
   DCHECK(IsMainThread());
   DCHECK(script_url_.IsValid());
@@ -166,6 +169,22 @@ void DedicatedWorker::OnFinished(const v8_inspector::V8StackTraceId& stack_id) {
                           script_loader_->SourceText());
   }
   script_loader_ = nullptr;
+}
+
+void DedicatedWorker::StartWorkerThread(
+    const v8_inspector::V8StackTraceId& stack_id) {
+  Document* document = ToDocument(GetExecutionContext());
+  const SecurityOrigin* starter_origin = document->GetSecurityOrigin();
+  auto creation_params = std::make_unique<GlobalScopeCreationParams>(
+      script_url_, user_agent,
+      document->GetContentSecurityPolicy()->Headers().get(), referrer_policy,
+      starter_origin, ReleaseWorkerClients(), document->AddressSpace(),
+      OriginTrialContext::GetTokens(document).get(),
+      std::make_unique<WorkerSettings>(document->GetSettings()),
+      kV8CacheOptionsDefault,
+      ConnectToWorkerInterfaceProvider(document,
+                                       SecurityOrigin::Create(script_url_)));
+  context_proxy_->Initialize(std::move(creation_params), script_url, stack_id);
 }
 
 const AtomicString& DedicatedWorker::InterfaceName() const {
