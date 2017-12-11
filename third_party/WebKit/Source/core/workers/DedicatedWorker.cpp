@@ -14,6 +14,7 @@
 #include "core/frame/UseCounter.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/inspector/MainThreadDebugger.h"
+#include "core/origin_trials/OriginTrialContext.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/DedicatedWorkerMessagingProxy.h"
 #include "core/workers/WorkerClients.h"
@@ -25,11 +26,32 @@
 #include "public/platform/WebContentSettingsClient.h"
 #include "public/web/WebFrameClient.h"
 #include "services/network/public/interfaces/fetch_api.mojom-blink.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
+#include "third_party/WebKit/public/platform/dedicated_worker_factory.mojom-blink.h"
 
 namespace blink {
 
+namespace {
+
+service_manager::mojom::blink::InterfaceProviderPtrInfo
+ConnectToWorkerInterfaceProvider(
+    Document* document,
+    scoped_refptr<const SecurityOrigin> script_origin) {
+  mojom::blink::DedicatedWorkerFactoryPtr worker_factory;
+  document->GetInterfaceProvider()->GetInterface(&worker_factory);
+  service_manager::mojom::blink::InterfaceProviderPtrInfo
+      interface_provider_ptr;
+  worker_factory->CreateDedicatedWorker(
+      script_origin, mojo::MakeRequest(&interface_provider_ptr));
+  return interface_provider_ptr;
+}
+
+}  // namespace
+
 DedicatedWorker* DedicatedWorker::Create(ExecutionContext* context,
                                          const String& url,
+                                         const WorkerOptions& options,
                                          ExceptionState& exception_state) {
   DCHECK(IsMainThread());
   Document* document = ToDocument(context);
@@ -45,15 +67,24 @@ DedicatedWorker* DedicatedWorker::Create(ExecutionContext* context,
   if (!script_url.IsValid())
     return nullptr;
 
-  DedicatedWorker* worker = new DedicatedWorker(context, script_url);
-  worker->Start();
+  DedicatedWorker* worker = new DedicatedWorker(context, script_url, options);
+  v8_inspector::V8StackTraceId stack_id =
+      MainThreadDebugger::Instance()->StoreCurrentStackTrace("Worker Created");
+  if (options.type() == "classic")
+    worker->StartAsClassicScript(stack_id);
+  else if (options.type() == "module")
+    worker->StartAsModuleScript(stack_id);
+  else
+    NOTREACHED() << "Invalid type: " << options.type();
   return worker;
 }
 
 DedicatedWorker::DedicatedWorker(ExecutionContext* context,
-                                 const KURL& script_url)
+                                 const KURL& script_url,
+                                 const WorkerOptions& options)
     : AbstractWorker(context),
       script_url_(script_url),
+      options_(options),
       context_proxy_(CreateMessagingProxy(context)) {
   DCHECK(IsMainThread());
   DCHECK(script_url_.IsValid());
@@ -82,7 +113,8 @@ void DedicatedWorker::postMessage(ScriptState* script_state,
                                                  std::move(channels), stack_id);
 }
 
-void DedicatedWorker::Start() {
+void DedicatedWorker::StartAsClassicScript(
+    const v8_inspector::V8StackTraceId& stack_id) {
   DCHECK(IsMainThread());
   network::mojom::FetchRequestMode fetch_request_mode =
       network::mojom::FetchRequestMode::kSameOrigin;
@@ -93,8 +125,6 @@ void DedicatedWorker::Start() {
     fetch_credentials_mode = network::mojom::FetchCredentialsMode::kInclude;
   }
 
-  v8_inspector::V8StackTraceId stack_id =
-      MainThreadDebugger::Instance()->StoreCurrentStackTrace("Worker Created");
   script_loader_ = WorkerScriptLoader::Create();
   script_loader_->LoadAsynchronously(
       *GetExecutionContext(), script_url_, WebURLRequest::kRequestContextWorker,
@@ -102,6 +132,16 @@ void DedicatedWorker::Start() {
       GetExecutionContext()->GetSecurityContext().AddressSpace(),
       WTF::Bind(&DedicatedWorker::OnResponse, WrapPersistent(this)),
       WTF::Bind(&DedicatedWorker::OnFinished, WrapPersistent(this), stack_id));
+}
+
+void DedicatedWorker::StartAsModuleScript(
+    const v8_inspector::V8StackTraceId& stack_id) {
+  DCHECK(IsMainThread());
+  // Specify empty source code here because WorkerGlobalScope will fetch it as
+  // opposed to classic script that is fetched on the main thread.
+  context_proxy_->StartWorkerGlobalScope(CreateGlobalScopeCreationParams(),
+                                         script_url_, stack_id,
+                                         String() /* source_code */);
 }
 
 void DedicatedWorker::terminate() {
@@ -159,13 +199,31 @@ void DedicatedWorker::OnFinished(const v8_inspector::V8StackTraceId& stack_id) {
           script_loader_->GetReferrerPolicy(),
           kDoNotSupportReferrerPolicyLegacyKeywords, &referrer_policy);
     }
-    context_proxy_->StartWorkerGlobalScope(
-        script_loader_->Url(), GetExecutionContext()->UserAgent(),
-        script_loader_->SourceText(), referrer_policy, stack_id);
+    std::unique_ptr<GlobalScopeCreationParams> creation_params =
+        CreateGlobalScopeCreationParams();
+    creation_params->referrer_policy = referrer_policy;
+    context_proxy_->StartWorkerGlobalScope(std::move(creation_params),
+                                           script_url_, stack_id,
+                                           script_loader_->SourceText());
     probe::scriptImported(GetExecutionContext(), script_loader_->Identifier(),
                           script_loader_->SourceText());
   }
   script_loader_ = nullptr;
+}
+
+std::unique_ptr<GlobalScopeCreationParams>
+DedicatedWorker::CreateGlobalScopeCreationParams() {
+  Document* document = ToDocument(GetExecutionContext());
+  const SecurityOrigin* starter_origin = document->GetSecurityOrigin();
+  return std::make_unique<GlobalScopeCreationParams>(
+      script_url_, GetExecutionContext()->UserAgent(),
+      document->GetContentSecurityPolicy()->Headers().get(),
+      kReferrerPolicyDefault, starter_origin, nullptr /* worker_clients */,
+      document->AddressSpace(), OriginTrialContext::GetTokens(document).get(),
+      std::make_unique<WorkerSettings>(document->GetSettings()),
+      kV8CacheOptionsDefault,
+      ConnectToWorkerInterfaceProvider(document,
+                                       SecurityOrigin::Create(script_url_)));
 }
 
 const AtomicString& DedicatedWorker::InterfaceName() const {
