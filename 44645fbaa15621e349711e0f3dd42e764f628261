@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a249a79b_2c015753",
+        "filename": "third_party/WebKit/LayoutTests/VirtualTestSuites",
+        "patchSetId": 1
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-11T11:12:48Z",
+      "side": 1,
+      "message": "Darn :( There some irony in adding a flag to disable a flag...",
+      "parentUuid": "d371ffb8_9f19e791",
+      "range": {
+        "startLine": 603,
+        "startChar": 14,
+        "endLine": 603,
+        "endChar": 59
+      },
+      "revId": "44645fbaa15621e349711e0f3dd42e764f628261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcaccf2e_bd0c89ca",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-allowed-by-feature-policy-attribute-redirect-on-load.https.sub.html",
         "patchSetId": 1
