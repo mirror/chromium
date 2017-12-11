@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af3a143b_144c1e0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-11T21:51:07Z",
+      "side": 0,
+      "message": "we said we\u0027d keep it for TWA so please bring some of this back.\n\nAdditionally, if we were doing a partial remove, this seems like the wrong slice. We should always keep the codebase in a comprehensible/consistent state. I don\u0027t think this satisfies that because now there\u0027s code which removes from sVisibleNotifications but that\u0027s the only case that modifies it. Instead it would probably be best to recommend we remove it entirely instead of keeping a subset of the code (which would be non-functional) around",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 89
+      },
+      "revId": "50fe92953f4739f17a62303fedbf8db9234317c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
