@@ -22,6 +22,30 @@
       "revId": "96afa0ebd28f69d3d01f03a745aad3738adeba8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e995a40_915f8c66",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T19:24:51Z",
+      "side": 1,
+      "message": "I\u0027d like title to be on the provider:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/798192/3/chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java#1133\n\nI\u0027d like to get to the world where getCurrentTab isn\u0027t exposed at all.",
+      "parentUuid": "c0e52a20_35d4d522",
+      "range": {
+        "startLine": 1131,
+        "startChar": 20,
+        "endLine": 1131,
+        "endChar": 78
+      },
+      "revId": "96afa0ebd28f69d3d01f03a745aad3738adeba8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
