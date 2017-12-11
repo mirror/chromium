@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a822003_347a6fad",
+        "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-11T23:48:44Z",
+      "side": 1,
+      "message": "I think so; this is the recommended pattern for mojo interface impls: https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#explicitly-reject-bad-input.",
+      "parentUuid": "ca0a62c9_b70bb554",
+      "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8502a010_45151bc7",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "87d3fb3b_ef7ee1fc",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-11T23:48:44Z",
+      "side": 1,
+      "message": "According to https://crbug.com/371690, service workers aren\u0027t exposed to dedicated or shared workers.",
+      "parentUuid": "8502a010_45151bc7",
+      "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ebe04e9_e8098ad7",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchBridge.cpp",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-11T14:38:05Z",
       "side": 1,
       "message": "I\u0027ve seen this pattern before. In tests and/or situations where there isn\u0027t a service, and we can\u0027t get the InterfaceProvider, the calls that use GetService() (i.e. lines 51, 61, 69 etc) will crash on being a null pointer.\n\nWe should either have a NOTREACHED() in the else {} case of this conditional, or add null checks to all users.",
+      "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61be6996_6654cd09",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchBridge.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-11T23:48:44Z",
+      "side": 1,
+      "message": "mojo::MakeRequest() always initialises the InterfacePtr; if this fails, any requests made using the InterfacePtr will be dropped on the floor, but the BackgroundFetchService* will never be null.\n\nOn the other hand, dropping requests on the floor will result in BackgroundFetchManager\u0027s ScriptPromiseResolvers DCHECKing when they are destructed without being resolved, but this is already a problem if the connection breaks.",
+      "parentUuid": "3ebe04e9_e8098ad7",
       "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
