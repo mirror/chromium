@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "9510befe_42490ee9",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "Per Unit testing best practices: \"Test code using real APIs - don’t define back doors only for tests.\" Is it possible to avoid having a function which is only used in tests?\n\nhttp://go/unit-test-practices#public-apis",
+      "parentUuid": "196173fe_ead9ccf7",
+      "range": {
+        "startLine": 19,
+        "startChar": 50,
+        "endLine": 19,
+        "endChar": 65
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afbacc1c_e32a2b31",
         "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
         "patchSetId": 2

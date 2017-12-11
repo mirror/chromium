@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cf6638d_f3b6eb75",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "Not related to your CL, bug could be important in general. Why do we use \"reload\" type for state restoration?",
+      "range": {
+        "startLine": 385,
+        "startChar": 31,
+        "endLine": 385,
+        "endChar": 53
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00da893c_e90ece89",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "nit: s/GURL(\"http://www.0.com\")/\"http://www.0.com\"",
+      "range": {
+        "startLine": 590,
+        "startChar": 25,
+        "endLine": 590,
+        "endChar": 28
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfdc905a_5d31da3f",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "Can we use kRestoreSessionTargetUrlQueryKey here?",
+      "range": {
+        "startLine": 673,
+        "startChar": 68,
+        "endLine": 673,
+        "endChar": 77
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3861c3_694eafb4",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "nit: ASSERT_TRUE(item);\n\n|if (item !\u003d nullptr)| comparison style is rarely used in Chromium",
+      "range": {
+        "startLine": 678,
+        "startChar": 2,
+        "endLine": 678,
+        "endChar": 11
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5501d691_4e458a43",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "nit: s/Create/Creates",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8479ff_c2f683cc",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "Could you please add comments for this constant",
+      "range": {
+        "startLine": 15,
+        "startChar": 29,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cc9f46_140354d6",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "nit: Should we use url::kAboutBlankURL ?",
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7005d8_deb119be",
+        "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "nit: s/import/include",
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b49388_58e30c95",
+        "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "Do we need this include?",
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909288bd_f162ebff",
+        "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "Can we use a constant for \"session\"?",
+      "range": {
+        "startLine": 37,
+        "startChar": 51,
+        "endLine": 37,
+        "endChar": 58
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee62dcf_fe6a62d8",
+        "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:22:52Z",
+      "side": 1,
+      "message": "Can we parse this JSON to a dictionary to avoid duplicating \"offset\", \"titles\" and other constants?",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
