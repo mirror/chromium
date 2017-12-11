@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1e0cb10_d32e7efe",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-11T18:49:47Z",
+      "side": 0,
+      "message": "I removed this padding by accident, need to put it back. Kudos to Justin for noticing.",
+      "revId": "b36a00bfde5f4d4dde4b98362a00dffcca717236",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
