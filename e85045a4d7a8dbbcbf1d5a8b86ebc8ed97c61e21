@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc01e6b2_78673bd8",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-11T22:14:41Z",
+      "side": 1,
+      "message": "\u003e optional: I wonder if we should include some context here to ensure that the frame hasn\u0027t navigated away by this point.\n\nThis should be solved by plumbing this message with the response instead of through RFH, so it may not be worth spending time on at the moment.  I added a TODO and filed https://crbug.com/793937 for it.",
+      "parentUuid": "54636138_62b2defc",
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faf60068_2de41c89",
         "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40bd6487_b1224532",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-11T22:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faf60068_2de41c89",
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "1fbb3e00_40bc2867",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-11T22:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac2b8543_b3dbae45",
+      "range": {
+        "startLine": 446,
+        "startChar": 29,
+        "endLine": 446,
+        "endChar": 41
+      },
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c70a6c6_d7d8f45b",
         "filename": "content/browser/loader/cross_site_document_resource_handler.h",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7035ad9d_57515287",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-11T22:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c70a6c6_d7d8f45b",
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5d4e2401_889506ee",
+        "filename": "content/browser/loader/cross_site_document_resource_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-11T22:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0749228a_eaa67744",
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "809a5cc3_fb499dc6",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 1
@@ -107,6 +203,24 @@
       "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d27645c_04717351",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-11T22:14:41Z",
+      "side": 1,
+      "message": "\u003e Why not just:\n\u003e \n\u003e bool is_nocors_plugin_request \u003d resource_type \u003d\u003d RESOURCE_TYPE_PLUGIN_RESOURCE \u0026\u0026 fetch_request_mode \u003d\u003d network::mojom::FetchRequestMode::kNoCORS.\n\nHa.  I think I had more code and DLOGs here as I was tossing this together, and hadn\u0027t cleaned it up yet.  :)  Fixed.",
+      "parentUuid": "809a5cc3_fb499dc6",
+      "revId": "e85045a4d7a8dbbcbf1d5a8b86ebc8ed97c61e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
