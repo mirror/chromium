@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c3d3490_83817fc3",
+        "filename": "content/public/common/url_loader.mojom",
+        "patchSetId": 53
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-11T20:47:11Z",
+      "side": 1,
+      "message": "Drive-by nit after the fact: I would prefer that we avoid introducing structures like this. They add a small amount of message overhead and don\u0027t really have much value IMHO. The difference (in code volume, I guess?) between one param and two params is negligible, and now instead of passing two arguments a caller has to allocate a new heap object just to wrap the same two arguments.",
+      "revId": "3a4ca9f52450a1f27422978e044d9cc3aa5fd1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
