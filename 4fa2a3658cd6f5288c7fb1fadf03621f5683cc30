@@ -93,6 +93,30 @@
       "revId": "4fa2a3658cd6f5288c7fb1fadf03621f5683cc30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d004ec3_8c425670",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-not-exposed.https.worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T18:49:30Z",
+      "side": 1,
+      "message": "assert_false(\u0027PaymentResponse\u0027 in self) should work, thought? Right. Can we add it for consistency?",
+      "parentUuid": "34e01c9d_33715688",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "4fa2a3658cd6f5288c7fb1fadf03621f5683cc30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
