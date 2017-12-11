@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "29ac119c_491329d0",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-11T13:22:46Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "722f43ce_b8f09b9b",
+      "range": {
+        "startLine": 229,
+        "startChar": 4,
+        "endLine": 230,
+        "endChar": 49
+      },
+      "revId": "7e22c5a1032d86e6bb2e3a2930c8f090ae8cffeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33dfbe07_aac3d381",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 17
@@ -187,6 +211,30 @@
       "revId": "7e22c5a1032d86e6bb2e3a2930c8f090ae8cffeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956a4991_ada174d5",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-12-11T13:22:46Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand what you mean by this second paragraph - I didn\u0027t ask about the literal sequence \"seen \u0027--\u003e\u0027\" (note that the ending has both a \u0027 and a \" - the font on Gerrit makes that hard to see...), but rather if this condition could\u0027ve been detected elsewhere, and transitioned to another state. We can go with the current form for now thoug, but feel free to clean it up/improve upon it.",
+      "parentUuid": "7ae81152_78da2da3",
+      "range": {
+        "startLine": 258,
+        "startChar": 6,
+        "endLine": 260,
+        "endChar": 47
+      },
+      "revId": "7e22c5a1032d86e6bb2e3a2930c8f090ae8cffeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
