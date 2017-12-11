@@ -185,11 +185,12 @@ ui::EventDispatchDetails InputMethodWin::DispatchKeyEvent(ui::KeyEvent* event) {
           switches::kDisableMergeKeyCharEvents) &&
       char_msgs.size() <= 1 && GetEngine() &&
       GetEngine()->IsInterestedInKeyEvent()) {
-    ui::IMEEngineHandlerInterface::KeyEventDoneCallback callback = base::Bind(
-        &InputMethodWin::ProcessKeyEventDone, weak_ptr_factory_.GetWeakPtr(),
-        base::Owned(new ui::KeyEvent(*event)),
-        base::Owned(new std::vector<MSG>(char_msgs)));
-    GetEngine()->ProcessKeyEvent(*event, callback);
+    ui::IMEEngineHandlerInterface::KeyEventDoneCallback callback =
+        base::BindOnce(&InputMethodWin::ProcessKeyEventDone,
+                       weak_ptr_factory_.GetWeakPtr(),
+                       base::Owned(new ui::KeyEvent(*event)),
+                       base::Owned(new std::vector<MSG>(char_msgs)));
+    GetEngine()->ProcessKeyEvent(*event, std::move(callback));
     return ui::EventDispatchDetails();
   }
 
