@@ -327,6 +327,8 @@ const StringTranslationEntry kWiFiSecurityTable[] = {
     {::onc::wifi::kWPA_PSK, shill::kSecurityPsk},
     {::onc::wifi::kWPA_EAP, shill::kSecurity8021x},
     {::onc::wifi::kWEP_8021X, shill::kSecurityWep},
+    {::onc::wifi::kWPA_PSK, shill::kSecurityFtPsk},
+    {::onc::wifi::kWPA_EAP, shill::kSecurityFt8021x},
     {NULL}};
 
 const StringTranslationEntry kEAPOuterTable[] = {
