@@ -37,6 +37,8 @@ class MockPageLoadObserver
   MOCK_METHOD2(OnPageResourceLoad,
                void(const net::URLRequest& request,
                     data_use_measurement::DataUse* data_use));
+  MOCK_METHOD1(OnPageDidFinishLoad,
+               void(data_use_measurement::DataUse* data_use));
   MOCK_METHOD1(OnPageLoadComplete,
                void(data_use_measurement::DataUse* data_use));
 };
@@ -495,9 +497,14 @@ TEST_F(ChromeDataUseAscriberTest, PageLoadObserverNotified) {
   EXPECT_EQ(content::GlobalRequestID(kRenderProcessId, 0),
             recorder_entry.main_frame_request_id());
   EXPECT_EQ(GURL("http://mobile.test.com"), recorder_entry.data_use().url());
+
+  EXPECT_CALL(mock_observer, OnPageDidFinishLoad(&recorder_entry.data_use()))
+      .Times(1);
+  ascriber()->DidFinishLoad(kRenderProcessId, kRenderFrameId,
+                            GURL("http://mobile.test.com"));
+
   EXPECT_CALL(mock_observer, OnPageLoadComplete(&recorder_entry.data_use()))
       .Times(1);
-
   ascriber()->RenderFrameDeleted(kRenderProcessId, kRenderFrameId, -1, -1);
   ascriber()->OnUrlRequestDestroyed(request.get());
 
