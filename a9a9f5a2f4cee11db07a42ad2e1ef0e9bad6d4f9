@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06edf46d_ef2083b4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-11T19:07:04Z",
+      "side": 1,
+      "message": "Do any of these events need to be acked before they are dropped, in particular to the gesture provider? Or is returning false sufficient?",
+      "revId": "a9a9f5a2f4cee11db07a42ad2e1ef0e9bad6d4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
