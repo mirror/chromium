@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ee22342_07fa11fd",
+        "filename": "tools/fuchsia/local-sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-11T22:48:16Z",
+      "side": 1,
+      "message": "nit: Better to hash filename and path as well to account for the case when a file is renamed or moved",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "2381f870ad919d2d074a5d9964477be704d029f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
