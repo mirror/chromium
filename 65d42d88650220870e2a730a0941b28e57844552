@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "647295be_2ea2f4c1",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-11T13:04:00Z",
+      "side": 1,
+      "message": "It turns out that returning a boolean makes things difficult since the callback passed to RequestPlanesReadyCallback may take ownership of data passed to it, and it\u0027s difficult to reuse that data in a different codepath. So, I think I will go with the always posting a task approach.",
+      "parentUuid": "a0f245da_e65dd5a7",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf14b0ef_9eeb3006",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
         "patchSetId": 1
@@ -181,6 +199,24 @@
       "revId": "65d42d88650220870e2a730a0941b28e57844552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad786a01_a1f3333c",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-11T13:04:00Z",
+      "side": 1,
+      "message": "Good point about the context switch cost. I\u0027ll add the comment for now and we can revisit.",
+      "parentUuid": "b030da64_0dfabc1c",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -369,6 +405,24 @@
       "revId": "65d42d88650220870e2a730a0941b28e57844552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc2dcc2_d420818b",
+        "filename": "ui/ozone/platform/drm/gpu/overlay_plane.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-11T13:04:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b7d8dc2_c227e3a5",
+      "revId": "65d42d88650220870e2a730a0941b28e57844552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
