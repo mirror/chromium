@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fd796ed_021da184",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-not-exposed.https.worker.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T19:27:50Z",
+      "side": 1,
+      "message": "And PaymentAddress?",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "4cd947afab49fadebd69d6093aa5810a2fd2992f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
