@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a9e0a991_3287811e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T01:08:29Z",
+      "side": 1,
+      "message": "- I think that your suggestion (from the next comment) makes clarifying that if the link comes from another browser we don\u0027t do any rewriting unnecessary.\n- You are right that this wouldn\u0027t work if a user has multiple versions of Chrome and launches a WebAPK link from one of them. This should be an uncommon scenario. I have added a clarification to shortcut_info.h",
+      "parentUuid": "5969e6ae_45998eaf",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 53
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e7ce348_3d1dc224",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9a1ca789_92a32625",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T01:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e7ce348_3d1dc224",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fff4d18a_67293ef8",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
         "patchSetId": 2
@@ -82,6 +130,30 @@
       "writtenOn": "2017-11-23T04:09:08Z",
       "side": 1,
       "message": "This is more accurately written as:\n\nif the WebAPK is launched from the same host browser package",
+      "range": {
+        "startLine": 351,
+        "startChar": 50,
+        "endLine": 351,
+        "endChar": 87
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578cb5ad_15dd7191",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T01:08:29Z",
+      "side": 1,
+      "message": "I have modified the comment to make this point clearer. (though I did not use your suggestion)",
+      "parentUuid": "fff4d18a_67293ef8",
       "range": {
         "startLine": 351,
         "startChar": 50,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "ba9a9d8c_33d99bcf",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T01:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a77322d_65576f97",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 364,
+        "endChar": 95
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5759eb7f_41051fde",
         "filename": "chrome/browser/android/shortcut_info.h",
         "patchSetId": 2
@@ -128,6 +224,30 @@
       "writtenOn": "2017-11-23T04:09:08Z",
       "side": 1,
       "message": "Please clarify this comment to make it clear that this is external intents from other Android apps, and not from Chrome",
+      "range": {
+        "startLine": 46,
+        "startChar": 49,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b252490f_ed37cbc0",
+        "filename": "chrome/browser/android/shortcut_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T01:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5759eb7f_41051fde",
       "range": {
         "startLine": 46,
         "startChar": 49,
