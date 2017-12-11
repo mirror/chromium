@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "e5c9a7e6_34d08ff4",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-12-11T19:29:58Z",
+      "side": 1,
+      "message": "Is 64 short enough to not need that change?",
+      "parentUuid": "227f48e5_d7210cf6",
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a276b233_18e84b91",
         "filename": "chrome/common/crash_keys.h",
         "patchSetId": 1
