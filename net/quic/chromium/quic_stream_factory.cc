@@ -671,6 +671,7 @@ QuicStreamFactory::QuicStreamFactory(
     bool migrate_sessions_early,
     bool migrate_sessions_on_network_change_v2,
     bool migrate_sessions_early_v2,
+    int max_time_on_non_default_network_seconds,
     bool allow_server_migration,
     bool race_cert_verification,
     bool estimate_initial_rtt,
@@ -720,6 +721,8 @@ QuicStreamFactory::QuicStreamFactory(
           NetworkChangeNotifier::AreNetworkHandlesSupported()),
       migrate_sessions_early_v2_(migrate_sessions_early_v2 &&
                                  migrate_sessions_on_network_change_v2_),
+      max_time_on_non_default_network_seconds_(
+          max_time_on_non_default_network_seconds),
       migrate_sessions_on_network_change_(
           !migrate_sessions_on_network_change_v2_ &&
           migrate_sessions_on_network_change &&
@@ -1435,7 +1438,8 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
       clock_, transport_security_state_, std::move(server_info), server_id,
       require_confirmation, migrate_sessions_early_,
       migrate_sessions_on_network_change_, migrate_sessions_early_v2_,
-      migrate_sessions_on_network_change_v2_, yield_after_packets_,
+      migrate_sessions_on_network_change_v2_,
+      max_time_on_non_default_network_seconds_, yield_after_packets_,
       yield_after_duration_, cert_verify_flags, config, &crypto_config_,
       network_connection_.connection_description(), dns_resolution_start_time,
       dns_resolution_end_time, &push_promise_index_, push_delegate_,
