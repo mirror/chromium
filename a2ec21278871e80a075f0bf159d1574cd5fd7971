@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba2f9f88_400e9b46",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-11T19:48:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6feafaa5_952a56bd",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f3f248d_68145cb5",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a89395_adb2ac5b",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-11T19:48:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2f3f248d_68145cb5",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 34
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "da34ab7d_924439d7",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-11T19:48:59Z",
+      "side": 1,
+      "message": "\u0027arm\u0027 would be a default Chromium build (i.e. 32bits or aarch32) while \u0027arm64\u0027 would be a 64bits build (or aarch64).\n\nIt seems that the default Chrome build is targeting armv7 (32bits only).\n\nBasically I figured it out a way to use this crc32 instruction even for regular builds (armv7), and falling into it only if the CPU reports support for it (e.g. armv8 device running a 32bits chrome build).\n\nWe probably should implement a similar approach for skia too.",
+      "parentUuid": "b84fef73_740969a6",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 24
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79449965_91aa9d4c",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 2
@@ -130,6 +202,30 @@
       "writtenOn": "2017-12-11T19:11:46Z",
       "side": 1,
       "message": "This section is from before we enclosed the static_library(\"zlib_arm_crc32\") in if (platforms) {\n\nThe problem at that time was we were building this library for platforms which wouldn\u0027t actually use it. We still had to build something though.\n\nHowever, I believe we can remove this section and only provide static_library(\"zlib_arm_crc32\") on platforms which we actually plan to build it on.\n\nSaid another way, we get to this section because we are building ARM + iOS or ARM + ChromeOS. But we could have just excluded iOS and ChromeOS in the outer-most if().",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 7
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c28cb3a_e439c7aa",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-11T19:48:59Z",
+      "side": 1,
+      "message": "I will try to remove it and see if it makes all the bots happy (IIRC, fuchsia-arm was broken without this).",
+      "parentUuid": "79449965_91aa9d4c",
       "range": {
         "startLine": 131,
         "startChar": 6,
@@ -192,6 +288,24 @@
       "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac8c4f2_ff9cca2d",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-11T19:48:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d643964f_4c7e0f87",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
