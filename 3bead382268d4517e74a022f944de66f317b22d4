@@ -553,6 +553,24 @@
     },
     {
       "key": {
+        "uuid": "856fb799_d931fc25",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30612,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T20:41:06Z",
+      "side": 1,
+      "message": "your additional information in that case was copying the content of Enum.\n\nWhat you could provide in this case is information on how the pages make given category. Which will be a great context on hover.",
+      "parentUuid": "bc498fe8_88bf388f",
+      "revId": "3bead382268d4517e74a022f944de66f317b22d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e5e152d_e8e12cb6",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
