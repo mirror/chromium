@@ -23,6 +23,7 @@ CloneableMessage CloneableMessage::ShallowClone() const {
     clone.blobs.push_back(mojom::SerializedBlob::New(
         blob->uuid, blob->content_type, blob->size, std::move(blob_clone)));
   }
+  clone.sharedArrayBufferContentsVector = sharedArrayBufferContentsVector.Clone();
   return clone;
 }
 
