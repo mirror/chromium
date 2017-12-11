@@ -89,4 +89,12 @@ public class NativeLibraries {
 #else
       "";
 #endif
+
+   public static String sCpuAbi =
+#if defined(ANDROID_APP_ABI_STRING)
+     ANDROID_APP_ABI_STRING;
+#else
+     "";
+#endif
+
 }
