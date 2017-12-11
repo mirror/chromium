@@ -365,6 +365,10 @@ def AddGTestOptions(parser):
       help=('If present, test artifacts will be uploaded to this Google '
             'Storage bucket.'))
 
+  parser.add_argument(
+      '--chartjson-result-file',
+      help='If present, store chartjson results on this path.')
+
 
 def AddInstrumentationTestOptions(parser):
   """Adds Instrumentation test options to |parser|."""
