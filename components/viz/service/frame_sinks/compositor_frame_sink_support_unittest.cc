@@ -69,6 +69,17 @@ class FakeFrameSinkManagerClient : public mojom::FrameSinkManagerClient {
   }
 
   // mojom::FrameSinkManagerClient:
+  void OnSurfaceCreated(const SurfaceId& surface_id) override {
+    auto iter = temporary_references_to_assign_.find(surface_id);
+    if (iter == temporary_references_to_assign_.end()) {
+      manager_->DropTemporaryReference(surface_id);
+      return;
+    }
+
+    manager_->AssignTemporaryReference(surface_id, iter->second);
+    temporary_references_to_assign_.erase(iter);
+  }
+
   void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override {
     auto iter = temporary_references_to_assign_.find(surface_info.id());
     if (iter == temporary_references_to_assign_.end()) {
