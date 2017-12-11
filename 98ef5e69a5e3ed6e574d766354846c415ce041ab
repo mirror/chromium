@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25e0684e_7c6469d6",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-11T15:18:10Z",
+      "side": 1,
+      "message": "nit: I would initialize this to false, just in case someone refactors the code below later.",
+      "revId": "98ef5e69a5e3ed6e574d766354846c415ce041ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e7380c_47356845",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-11T15:18:10Z",
+      "side": 1,
+      "message": "Please add a test for blur. We don\u0027t seem to have any tests of blur states. It can be something simple, like changing the session state and checking to see if blur is on or off.",
+      "revId": "98ef5e69a5e3ed6e574d766354846c415ce041ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d22ef7_fa567e20",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-11T15:18:10Z",
+      "side": 1,
+      "message": "nit: Is the screen already locked when this is called? If not, like it\u0027s starting the transition, I would call the parameter |locking|.",
+      "revId": "98ef5e69a5e3ed6e574d766354846c415ce041ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ddf68f3_7cc02609",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-11T15:18:10Z",
+      "side": 1,
+      "message": "nit: Please comment why this is necessary.",
+      "revId": "98ef5e69a5e3ed6e574d766354846c415ce041ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
