@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bf56c03_637bbb2c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 92447,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-11T23:34:47Z",
+      "side": 1,
+      "message": "https://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#State-When-It-Is-Recorded\n\nditto below\n(once per GC run?)",
+      "revId": "ccf2e055a51e7992db733c6845f3ad253f2f0f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
