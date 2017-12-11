@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06f0ff46_0d7df173",
+        "filename": "chrome/browser/chromeos/smb_client/smb_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-11T23:53:46Z",
+      "side": 1,
+      "message": "Put inline comments of the argument names where you pass magic/opaque values (like integer of boolean literals). Since no-one can tell what those 3 falses represent.\n\ncapabilities_(false /* foo */, false /* writable */, etc...)",
+      "revId": "9ffe53fdf3f27666c767aa8db611530f7d24e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e7608d_cd3a86fb",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-11T23:53:46Z",
+      "side": 1,
+      "message": "I actually think this should be GE but lets sync with Allen before changing. We return -1 as an error. I\u0027d argue it\u0027s actually a bug that the daemon starts with 1 rather than 0. Since -1/\u003c0 is an error, 0 is not used, and 1+ are id\u0027s. It doesn\u0027t make sense for 0 to be neither an error nor a valid id.",
+      "revId": "9ffe53fdf3f27666c767aa8db611530f7d24e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b20e22_57fae0d9",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-11T23:53:46Z",
+      "side": 1,
+      "message": "Didn\u0027t we say we were changing this to FilePath? Or are you doing that somewhere else?",
+      "revId": "9ffe53fdf3f27666c767aa8db611530f7d24e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
