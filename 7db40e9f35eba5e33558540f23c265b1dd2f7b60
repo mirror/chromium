@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cc046dd_02a80a44",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-11T17:03:19Z",
+      "side": 1,
+      "message": "When is details_link_ null?",
+      "revId": "7db40e9f35eba5e33558540f23c265b1dd2f7b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
