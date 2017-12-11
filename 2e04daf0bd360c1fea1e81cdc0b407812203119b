@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed8507b9_ca891731",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/Linker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-11T18:54:30Z",
+      "side": 1,
+      "message": "Done. Updated the comment.",
+      "parentUuid": "b6b800fd_bd93b569",
+      "revId": "2e04daf0bd360c1fea1e81cdc0b407812203119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ffa237d_941e7a56",
         "filename": "base/android/java/src/org/chromium/base/library_loader/Linker.java",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "2e04daf0bd360c1fea1e81cdc0b407812203119b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bbe701_44dbf8e9",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/Linker.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-11T18:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3b2abbf_d74e1301",
+      "revId": "2e04daf0bd360c1fea1e81cdc0b407812203119b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
