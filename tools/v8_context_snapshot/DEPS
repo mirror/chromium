@@ -2,6 +2,7 @@ include_rules = [
   "+base",
   "+v8",
   "+third_party/WebKit/public",
+  "+third_party/WebKit/Source/platform",
   "+gin/v8_initializer.h",
   "+mojo/edk/embedder",
   "+services/service_manager/public",

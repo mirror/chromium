@@ -90,6 +90,7 @@ if (use_v8_context_snapshot) {
       "//gin:gin",
       "//mojo/edk/system:system",
       "//services/service_manager/public/cpp",
+      "//third_party/WebKit/Source/platform:platform",
       "//third_party/WebKit/public:blink",
       "//v8",
     ]
