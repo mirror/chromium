@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "700566dd_a2f2951a",
+        "filename": "net/disk_cache/disk_cache_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T19:00:07Z",
+      "side": 1,
+      "message": "Hmm, Gavin seems to have preferred it, but I can\u0027t find clear guidance in the style guide.\nI\u0027m reverting it since it\u0027s not relevant to this change.",
+      "parentUuid": "36d64c16_44a3d0b9",
+      "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d865c8e_9efeb312",
         "filename": "net/disk_cache/disk_cache_perftest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-04T21:11:05Z",
       "side": 1,
       "message": "How can you have next_offset \u003e data_len? Shouldn\u0027t it be at most next_offset \u003d\u003d data_len if we just finished writing the whole buffer?",
+      "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cada527_d25df613",
+        "filename": "net/disk_cache/disk_cache_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T19:00:07Z",
+      "side": 1,
+      "message": "You can\u0027t, so I changed it, though I didn\u0027t feel anything negative about the previous version, probably as I perceived it as a negation of next_offset \u003c data_len, which is the \"in-progress\" condition.",
+      "parentUuid": "4d865c8e_9efeb312",
       "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,41 @@
     },
     {
       "key": {
+        "uuid": "fd17825e_c4506e90",
+        "filename": "net/disk_cache/disk_cache_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T19:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8f5d277_012cb64c",
+      "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "888d6cbc_e93d1489",
+        "filename": "net/disk_cache/disk_cache_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T19:00:07Z",
+      "side": 1,
+      "message": "This one actually could happen because of the next_offset + kChunkSize (as opposed to + expected_read_size) previously below.",
+      "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59284727_c6e10c85",
         "filename": "net/disk_cache/disk_cache_perftest.cc",
         "patchSetId": 2
@@ -64,6 +135,24 @@
       "writtenOn": "2017-12-04T21:11:05Z",
       "side": 1,
       "message": "Looks like leftover debugging code?",
+      "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c5ab1a_cfd36f5b",
+        "filename": "net/disk_cache/disk_cache_perftest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T19:00:07Z",
+      "side": 1,
+      "message": "Hmm, kinda but not really. It\u0027s more of a \"useful LOG(INFO), but without Maks having to worry about remembering if a certain flag is needed to get it to show\" --- it\u0027s pretty important to know what path the test is being run on, especially if one drive is solid state and one isn\u0027t.",
+      "parentUuid": "59284727_c6e10c85",
       "revId": "af0036798d681c5f7d2802dfb285ee319470dee1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
