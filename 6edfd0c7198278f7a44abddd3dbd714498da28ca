@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09482596_a5e54935",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-12-11T03:52:32Z",
+      "side": 1,
+      "message": "Yup, I\u0027m just splitting the OnKeyboardBoundsChanging method up and so it\u0027s called from the same location as the other ing-verb notifications.",
+      "parentUuid": "6b062608_1d60bd27",
+      "revId": "6edfd0c7198278f7a44abddd3dbd714498da28ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3090aa40_029c961a",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 3
