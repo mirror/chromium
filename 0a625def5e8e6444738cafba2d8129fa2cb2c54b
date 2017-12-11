@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e35a34_6bdfdf28",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:54:09Z",
+      "side": 1,
+      "message": "nit: extensive use of auto makes this code hard to read.",
+      "range": {
+        "startLine": 565,
+        "startChar": 4,
+        "endLine": 565,
+        "endChar": 9
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a92c472_95b72f32",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:54:09Z",
+      "side": 1,
+      "message": "Chromium style guide says no else after return.",
+      "range": {
+        "startLine": 571,
+        "startChar": 2,
+        "endLine": 571,
+        "endChar": 10
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9799a0_aff6ccf6",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:54:09Z",
+      "side": 1,
+      "message": "Under what conditions does the frame_sink outlive this?",
+      "range": {
+        "startLine": 579,
+        "startChar": 4,
+        "endLine": 579,
+        "endChar": 14
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281d17f0_6cff4c46",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:54:09Z",
+      "side": 1,
+      "message": "This code we be easier to follow if it was:\nif (window_-\u003elayer()-\u003eGetCompositor())\nIs that possible?",
+      "range": {
+        "startLine": 581,
+        "startChar": 8,
+        "endLine": 581,
+        "endChar": 32
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a99cb6bb_a9909223",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:54:09Z",
+      "side": 1,
+      "message": "What happens if the root changes? Say this function is called before the window has a valid root, is moved to a new root?",
+      "range": {
+        "startLine": 583,
+        "startChar": 6,
+        "endLine": 583,
+        "endChar": 44
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee7ddbd_6f96827c",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:54:09Z",
+      "side": 1,
+      "message": "Is it possible to share this part of the conditional between the two branches? Perhaps by declaraing frame_sink outside the ifs?",
+      "range": {
+        "startLine": 586,
+        "startChar": 4,
+        "endLine": 591,
+        "endChar": 33
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
