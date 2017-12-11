@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ec7d9c9b_4f1f7987",
+        "filename": "third_party/WebKit/Source/core/html/forms/FileInputType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-11T22:05:44Z",
+      "side": 1,
+      "message": "Thanks! That makes the code much more readable! Should we change KeyboardClickableInputTypeView::HandleKeypressEvent() as well? It seems to me that the logic should be the same between this override and that method. Doing that in the next PS.\n\nAlso, the repeat() test doesn\u0027t make sense to me here.\n\n* keypress: We want to ignore both repeats and non-repeats in keypress; we\u0027re worried about a repeat auto-committing the dialog, but the initial invoke here doesn\u0027t need to be repeated for that to happen.\n* keyup: doesn\u0027t repeat; only occurs when the key is actually released.\n\nWhat am missing?",
+      "parentUuid": "427f2172_6321007d",
+      "revId": "24636f6437e06b42c7158215c3ec9cd5eebcfe57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9b05fce_27cf8755",
         "filename": "third_party/WebKit/Source/core/html/forms/FileInputType.cpp",
         "patchSetId": 1
@@ -87,6 +105,24 @@
       "revId": "24636f6437e06b42c7158215c3ec9cd5eebcfe57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bba6cd7_ca64102b",
+        "filename": "third_party/WebKit/Source/core/html/forms/FileInputType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-11T22:05:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a45f063e_255c9668",
+      "revId": "24636f6437e06b42c7158215c3ec9cd5eebcfe57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
