@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6d487a7_3878a678",
+        "filename": "sandbox/linux/syscall_broker/broker_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-11T22:18:03Z",
+      "side": 1,
+      "message": "|| !sb ?",
+      "revId": "94d01fe8ef274bfee012f8a1c811b80a24fb37dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b6dd37_835c99bc",
+        "filename": "sandbox/linux/syscall_broker/broker_client.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-11T22:18:03Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "94d01fe8ef274bfee012f8a1c811b80a24fb37dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
