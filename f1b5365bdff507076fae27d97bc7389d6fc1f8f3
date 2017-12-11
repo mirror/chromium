@@ -123,6 +123,30 @@
     },
     {
       "key": {
+        "uuid": "1f418f52_2012e449",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-12-11T21:10:34Z",
+      "side": 1,
+      "message": "Forgive me if I\u0027m missing something, but it looks like the system info transferred here is what actually ends up in the feedback report. The FeedbackRequest calls into the C++ private feedback API to collect the data and then sends it later in the sendReportNow() method. At this point the logs are concatenated and compressed and I\u0027m not sure we can replace one portion of the log without refactoring the whole feedback pathway.\n\nIt doesn\u0027t seem to create jank, in any case. The feedback dialog loads for a while but I think that would happen anyway if we\u0027re waiting for debugd.",
+      "parentUuid": "f2941643_8026f40e",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 26
+      },
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d35a41e6_dd6180d2",
         "filename": "extensions/common/api/feedback_private.idl",
         "patchSetId": 5
