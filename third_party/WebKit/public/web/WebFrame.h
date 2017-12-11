@@ -201,6 +201,10 @@ class BLINK_EXPORT WebFrame {
   void DetachFromParent();
 #endif
 
+  // Mark this frame's document as having received a user gesture, based on
+  // one of its descendants having processed a user gesture.
+  virtual void SetHasReceivedUserGesture() = 0;
+
  protected:
   explicit WebFrame(WebTreeScopeType);
   virtual ~WebFrame();
