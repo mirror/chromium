@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "654adc33_0b9100d0",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-11T18:53:57Z",
+      "side": 1,
+      "message": "Ah right then we don\u0027t even need the weak ref and just get() the singleton... But the singleton issues is still there anyway. We plan a big UI refactoring (https://docs.google.com/document/d/1nP9NjTvsSMZvkR_aWRZPdy67wRINomgQ7AfEtbsIwzg/edit#), maybe it\u0027s worth raising then to see if we can tackle that as well?",
+      "parentUuid": "c759c606_324409d5",
+      "range": {
+        "startLine": 553,
+        "startChar": 19,
+        "endLine": 553,
+        "endChar": 34
+      },
+      "revId": "9bd70a7da1a34c3863f4c08ecedb72694292762f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d70c302_3ee13344",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
         "patchSetId": 1
