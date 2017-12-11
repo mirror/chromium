@@ -16,6 +16,24 @@
       "revId": "eee88582b5300e34aa2ea56bc5da17457e67aa00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de8dcec_e178df5c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-11T09:26:50Z",
+      "side": 1,
+      "message": "Well, we cannot do it right *here*, but yes, only Presto renders that testcase correctly. This CL got rid of width weirdness from table flex items, and as you point out, we need something similar for heights.\n\nSee crbug.com/667785",
+      "parentUuid": "bf1aeb9d_f043324a",
+      "revId": "eee88582b5300e34aa2ea56bc5da17457e67aa00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
