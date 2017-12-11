@@ -65,7 +65,8 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
       const RendererSettings& renderer_settings,
       mojom::CompositorFrameSinkAssociatedRequest request,
       mojom::CompositorFrameSinkClientPtr client,
-      mojom::DisplayPrivateAssociatedRequest display_private_request) override;
+      mojom::DisplayPrivateAssociatedRequest display_private_request,
+      mojom::DisplayPrivateClientPtr display_private_client) override;
   void CreateCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
       mojom::CompositorFrameSinkRequest request,
