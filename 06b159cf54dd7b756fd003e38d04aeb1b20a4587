@@ -16,6 +16,24 @@
       "revId": "06b159cf54dd7b756fd003e38d04aeb1b20a4587",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c3dca4_c4ac64c3",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-12-11T18:45:14Z",
+      "side": 1,
+      "message": "Done (and thanks for catching that, missed that one).",
+      "parentUuid": "421cf826_d7a97a6b",
+      "revId": "06b159cf54dd7b756fd003e38d04aeb1b20a4587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
