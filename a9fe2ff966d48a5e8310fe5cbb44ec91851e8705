@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77e5fccc_b1867df7",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-11T23:53:15Z",
+      "side": 1,
+      "message": "If page_lifecycle_state_ changes from kActive to kHidden (or vice versa), DidResume() will fire. Is that allowed? Is that possible?",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
