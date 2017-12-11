@@ -130,6 +130,11 @@ def _ParseArgs(args):
       '--app-as-shared-lib',
       action='store_true',
       help='Make a resource package that can be loaded as shared library.')
+  parser.add_option(
+      '--shared-resources-whitelist',
+      help='An R.txt file acting as a whitelist for resources that should be '
+      'non-final and have their package id changed at runtime in R.java. All '
+      'resources are to be included if no whitelist is provided.')
 
   parser.add_option('--resource-dirs',
                     default='[]',
@@ -244,7 +249,7 @@ def _ParseArgs(args):
 
 
 def _CreateRJavaFiles(srcjar_dir, main_r_txt_file, packages, r_txt_files,
-                     shared_resources, non_constant_id):
+                     shared_resources, non_constant_id, whitelist_r_txt_file):
   assert len(packages) == len(r_txt_files), 'Need one R.txt file per package'
 
   # Map of (resource_type, name) -> Entry.
@@ -254,8 +259,18 @@ def _CreateRJavaFiles(srcjar_dir, main_r_txt_file, packages, r_txt_files,
     entry = entry._replace(value=_FixPackageIds(entry.value))
     all_resources[(entry.resource_type, entry.name)] = entry
 
+  if whitelist_r_txt_file:
+    whitelisted_resources = set()
+    for entry in _ParseTextSymbolsFile(whitelist_r_txt_file):
+      entry = entry._replace(value=_FixPackageIds(entry.value))
+      whitelisted_resources.add(entry)
+  else:
+    whitelisted_resources = set(all_resources.values())
+
   # Map of package_name->resource_type->entry
   resources_by_package = (
+      collections.defaultdict(lambda: collections.defaultdict(list)))
+  whitelisted_resources_by_package = (
       collections.defaultdict(lambda: collections.defaultdict(list)))
   # Build the R.java files using each package's R.txt file, but replacing
   # each entry's placeholder value with correct values from all_resources.
@@ -265,6 +280,7 @@ def _CreateRJavaFiles(srcjar_dir, main_r_txt_file, packages, r_txt_files,
                        'android_resources() targets must use unique package '
                        'names, or no package name at all.') % package)
     resources_by_type = resources_by_package[package]
+    whitelisted_resources_by_type = whitelisted_resources_by_package[package]
     # The sub-R.txt files have the wrong values at this point. Read them to
     # figure out which entries belong to them, but use the values from the
     # main R.txt file.
@@ -287,13 +303,16 @@ def _CreateRJavaFiles(srcjar_dir, main_r_txt_file, packages, r_txt_files,
       # fields.
       if entry:
         resources_by_type[entry.resource_type].append(entry)
+        if entry in whitelisted_resources:
+          whitelisted_resources_by_type[entry.resource_type].append(entry)
 
   for package, resources_by_type in resources_by_package.iteritems():
     package_r_java_dir = os.path.join(srcjar_dir, *package.split('.'))
     build_utils.MakeDirectory(package_r_java_dir)
     package_r_java_path = os.path.join(package_r_java_dir, 'R.java')
-    java_file_contents = _CreateRJavaFile(
-        package, resources_by_type, shared_resources, non_constant_id)
+    java_file_contents = _CreateRJavaFile(package, resources_by_type,
+        shared_resources, non_constant_id,
+        whitelisted_resources_by_package[package])
     with open(package_r_java_path, 'w') as f:
       f.write(java_file_contents)
 
@@ -324,8 +343,13 @@ def _FixPackageIds(resource_value):
 
 
 def _CreateRJavaFile(package, resources_by_type, shared_resources,
-                     non_constant_id):
+                     non_constant_id, whitelisted_resources_by_type):
   """Generates the contents of a R.java file."""
+
+  final_resources_by_type = {
+      t: [e for e in resources_by_type[t]
+          if e not in whitelisted_resources_by_type[t]]
+          for t in sorted(resources_by_type)}
   # Keep these assignments all on one line to make diffing against regular
   # aapt-generated files easier.
   create_id = ('{{ e.resource_type }}.{{ e.name }} ^= packageIdTransform;')
@@ -343,7 +367,10 @@ public final class R {
     private static boolean sResourcesDidLoad;
     {% for resource_type in resource_types %}
     public static final class {{ resource_type }} {
-        {% for e in resources[resource_type] %}
+        {% for e in final_resources[resource_type] %}
+        public static final {{ e.java_type }} {{ e.name }} = {{ e.value }};
+        {% endfor %}
+        {% for e in whitelisted_resources[resource_type] %}
         public static {{ final }}{{ e.java_type }} {{ e.name }} = {{ e.value }};
         {% endfor %}
     }
@@ -355,7 +382,7 @@ public final class R {
         int packageIdTransform = (packageId ^ 0x7f) << 24;
         {% for resource_type in resource_types %}
         onResourcesLoaded{{ resource_type|title }}(packageIdTransform);
-        {% for e in resources[resource_type] %}
+        {% for e in whitelisted_resources[resource_type] %}
         {% if e.java_type == 'int[]' %}
         for(int i = 0; i < {{ e.resource_type }}.{{ e.name }}.length; ++i) {
             """ + create_id_arr + """
@@ -367,7 +394,7 @@ public final class R {
     {% for res_type in resource_types %}
     private static void onResourcesLoaded{{ res_type|title }} (
             int packageIdTransform) {
-        {% for e in resources[res_type] %}
+        {% for e in whitelisted_resources[res_type] %}
         {% if res_type != 'styleable' and e.java_type != 'int[]' %}
         """ + create_id + """
         {% endif %}
@@ -383,7 +410,9 @@ public final class R {
                          resources=resources_by_type,
                          resource_types=sorted(resources_by_type),
                          shared_resources=shared_resources,
-                         final=final)
+                         final=final,
+                         final_resources=final_resources_by_type,
+                         whitelisted_resources=whitelisted_resources_by_type)
 
 
 def _CrunchDirectory(aapt, input_dir, output_dir):
@@ -733,7 +762,8 @@ def _CreateRTxtAndSrcJar(options, r_txt_path, srcjar_dir):
   if packages:
     shared_resources = options.shared_resources or options.app_as_shared_lib
     _CreateRJavaFiles(srcjar_dir, r_txt_path, packages, r_txt_files,
-                     shared_resources, options.non_constant_id)
+        shared_resources, options.non_constant_id,
+        options.shared_resources_whitelist)
 
   if options.srcjar_out:
     build_utils.ZipDir(options.srcjar_out, srcjar_dir)
@@ -839,11 +869,13 @@ def main(args):
   if options.apk_path:
     input_strings.extend(_CreatePackageApkArgs(options))
 
-  input_paths = [
+  possible_input_paths = [
     options.aapt_path,
     options.android_manifest,
     options.android_sdk_jar,
+    options.shared_resources_whitelist,
   ]
+  input_paths = [x for x in possible_input_paths if x]
   input_paths.extend(options.dependencies_res_zips)
   input_paths.extend(options.extra_r_text_files)
 
