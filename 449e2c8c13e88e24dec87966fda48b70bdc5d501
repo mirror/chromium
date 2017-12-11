@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "038737b3_9cf4be9a",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-11T18:31:21Z",
+      "side": 1,
+      "message": "nit: \"... to *the* non-default ...\"",
+      "range": {
+        "startLine": 181,
+        "startChar": 39,
+        "endLine": 181,
+        "endChar": 42
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c2fef2_afdb2303",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-11T18:31:21Z",
+      "side": 1,
+      "message": "nit: I\u0027d remove \"num_\" since that\u0027s sorted and still reads clearly.",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 72
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4597bb35_fd480a04",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-11T18:31:21Z",
+      "side": 1,
+      "message": "How do we know this is the path-degrading case?",
+      "range": {
+        "startLine": 1664,
+        "startChar": 71,
+        "endLine": 1664,
+        "endChar": 0
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc8a42e_0c8d036b",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-11T18:31:21Z",
+      "side": 1,
+      "message": "nit: Avoid first-person in comments.",
+      "range": {
+        "startLine": 1666,
+        "startChar": 9,
+        "endLine": 1666,
+        "endChar": 11
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37206b4_91862b5c",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-11T18:31:21Z",
+      "side": 1,
+      "message": "Do we have a test for this?",
+      "range": {
+        "startLine": 1863,
+        "startChar": 75,
+        "endLine": 1863,
+        "endChar": 0
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec498dcb_1e5d557c",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-11T18:31:21Z",
+      "side": 1,
+      "message": "Do you think a new enum value might be a good idea?",
+      "range": {
+        "startLine": 1873,
+        "startChar": 33,
+        "endLine": 1873,
+        "endChar": 58
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
