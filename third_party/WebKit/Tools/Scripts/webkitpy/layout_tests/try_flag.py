@@ -61,7 +61,8 @@ class TryFlag(object):
 
     def _clear_expectations(self):
         path = self._flag_expectations_path()
-        self._filesystem.write_text_file(path, '')
+        content = self._filesystem.read_text_file(path)
+        self._filesystem.write_text_file(path, content[content.find('#'):])
         self._git.add_list([path])
         self._git.commit_locally_with_message(
             'Flag try job: clear expectations for %s.' % self._args.flag)
