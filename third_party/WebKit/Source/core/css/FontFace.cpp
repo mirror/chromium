@@ -717,21 +717,18 @@ void FontFace::InitCSSFontFace(ExecutionContext* context, const CSSValue* src) {
 
     if (!item.IsLocal()) {
       if (ContextAllowsDownload(context) && item.IsSupportedFormat()) {
-        FontResource* fetched = item.Fetch(context);
-        if (fetched) {
-          FontSelector* font_selector = nullptr;
-          if (context->IsDocument()) {
-            font_selector =
-                ToDocument(context)->GetStyleEngine().GetFontSelector();
-          } else if (context->IsWorkerGlobalScope()) {
-            font_selector = ToWorkerGlobalScope(context)->GetFontSelector();
-          } else {
-            NOTREACHED();
-          }
-          source =
-              new RemoteFontFaceSource(css_font_face_, fetched, font_selector,
-                                       CSSValueToFontDisplay(display_.Get()));
+        FontSelector* font_selector = nullptr;
+        if (context->IsDocument()) {
+          font_selector =
+              ToDocument(context)->GetStyleEngine().GetFontSelector();
+        } else if (context->IsWorkerGlobalScope()) {
+          font_selector = ToWorkerGlobalScope(context)->GetFontSelector();
+        } else {
+          NOTREACHED();
         }
+        source = new RemoteFontFaceSource(
+            css_font_face_, item, context, font_selector,
+            CSSValueToFontDisplay(display_.Get()));
       }
     } else {
       source = new LocalFontFaceSource(item.GetResource());
