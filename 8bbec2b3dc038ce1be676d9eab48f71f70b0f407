@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd0bde40_d9d5443f",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-11T20:18:09Z",
+      "side": 1,
+      "message": "ShapeResult contains direction info. Can we use that?",
+      "range": {
+        "startLine": 104,
+        "startChar": 20,
+        "endLine": 104,
+        "endChar": 39
+      },
+      "revId": "8bbec2b3dc038ce1be676d9eab48f71f70b0f407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b91462a_f1d7375a",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-11T20:18:09Z",
+      "side": 1,
+      "message": "nit: typo of \"lacks\"?",
+      "range": {
+        "startLine": 113,
+        "startChar": 66,
+        "endLine": 113,
+        "endChar": 71
+      },
+      "revId": "8bbec2b3dc038ce1be676d9eab48f71f70b0f407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7864f1a_432eb193",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-11T20:18:09Z",
+      "side": 1,
+      "message": "Can we add a TODO for composition highlights?",
+      "revId": "8bbec2b3dc038ce1be676d9eab48f71f70b0f407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
