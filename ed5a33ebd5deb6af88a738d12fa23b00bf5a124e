@@ -16,6 +16,24 @@
       "revId": "ed5a33ebd5deb6af88a738d12fa23b00bf5a124e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eba64be_21c4a61f",
+        "filename": "base/observer_list.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T18:48:34Z",
+      "side": 1,
+      "message": "Looking at http://go/soverflow/6471019 and http://en.cppreference.com/w/cpp/iterator/iterator it seems like std::iterator is deprecated starting in C++17, so I would like to avoid that. However, it looks like I forgot to include the |pointer| typedef, fixed now.",
+      "parentUuid": "50cfe8b8_b596eeb1",
+      "revId": "ed5a33ebd5deb6af88a738d12fa23b00bf5a124e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
