@@ -24,6 +24,7 @@
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_utils.h"
 #include "content/public/test/browser_side_navigation_test_utils.h"
+#include "content/public/test/test_navigation_throttle.h"
 #include "content/test/test_navigation_url_loader.h"
 #include "content/test/test_render_view_host.h"
 #include "content/test/test_render_widget_host.h"
@@ -576,7 +577,20 @@ void TestRenderFrameHost::PrepareForCommitInternal(
   response->head.socket_address = socket_address;
   // TODO(carlosk): ideally with PlzNavigate it should be possible someday to
   // fully commit the navigation at this call to CallOnResponseStarted.
+
+  // Ensure there aren't any throttles deferring the response.
+  auto throttle =
+      std::make_unique<TestNavigationThrottle>(request->navigation_handle());
+  base::RunLoop run_loop;
+  throttle->SetCallback(TestNavigationThrottle::WILL_PROCESS_RESPONSE,
+                        run_loop.QuitClosure());
+  throttle->SetCallback(TestNavigationThrottle::WILL_FAIL_REQUEST,
+                        run_loop.QuitClosure());
+  throttle->SetFinishCallback(run_loop.QuitClosure());
+  request->navigation_handle()->RegisterThrottleForTesting(std::move(throttle));
+
   url_loader->CallOnResponseStarted(response, MakeEmptyStream(), nullptr);
+  run_loop.Run();
 }
 
 void TestRenderFrameHost::PrepareForCommitIfNecessary() {
