@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3122ae92_245aba7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-11T23:47:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a9e0a991_3287811e",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 53
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e7ce348_3d1dc224",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
         "patchSetId": 2
@@ -166,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "675ddb49_387a7910",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-11T23:47:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "578cb5ad_15dd7191",
+      "range": {
+        "startLine": 351,
+        "startChar": 50,
+        "endLine": 351,
+        "endChar": 87
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a77322d_65576f97",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
         "patchSetId": 2
@@ -257,6 +305,30 @@
       "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09477510_fc9ef424",
+        "filename": "chrome/browser/android/shortcut_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-11T23:47:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b252490f_ed37cbc0",
+      "range": {
+        "startLine": 46,
+        "startChar": 49,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "2a5a9861f777b0ec2c8aa6e258d8fc8d7aaa4f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
