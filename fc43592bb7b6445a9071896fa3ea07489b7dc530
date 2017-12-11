@@ -129,6 +129,29 @@
     },
     {
       "key": {
+        "uuid": "bed6bef5_57900a36",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-11T18:57:35Z",
+      "side": 1,
+      "message": "One other nit:  Briefly mention why this isn\u0027t in ApplyContextParamsToBuilder (QuotaPolicyCookieStore magic, and the crypto delegate), and add a TODO to move it.",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 28
+      },
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0349198_602d10b2",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 12
