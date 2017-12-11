@@ -454,10 +454,9 @@ TEST_F(PredictorTest, HSTSRedirectSubresources) {
       kHttpsUrl, kSubresourceUrl, kUseRate, referral_list.get());
   predictor.DeserializeReferrers(*referral_list.get());
 
-  predictor.PreconnectUrlAndSubresources(kHttpUrl, GURL());
-  ASSERT_EQ(2u, observer.preconnected_urls_.size());
-  EXPECT_EQ(kHttpsUrl, observer.preconnected_urls_[0]);
-  EXPECT_EQ(kSubresourceUrl, observer.preconnected_urls_[1]);
+  predictor.PredictFrameSubresources(kHttpUrl, GURL());
+  ASSERT_EQ(1u, observer.preconnected_urls_.size());
+  EXPECT_EQ(kSubresourceUrl, observer.preconnected_urls_[0]);
 
   predictor.Shutdown();
 }
@@ -481,10 +480,9 @@ TEST_F(PredictorTest, HSTSRedirectLearnedSubresource) {
   // kHttpsUrl during the navigation.
   predictor.LearnFromNavigation(kHttpUrl, kSubresourceUrl);
 
-  predictor.PreconnectUrlAndSubresources(kHttpUrl, GURL());
-  ASSERT_EQ(2u, observer.preconnected_urls_.size());
-  EXPECT_EQ(kHttpsUrl, observer.preconnected_urls_[0]);
-  EXPECT_EQ(kSubresourceUrl, observer.preconnected_urls_[1]);
+  predictor.PredictFrameSubresources(kHttpUrl, GURL());
+  ASSERT_EQ(1u, observer.preconnected_urls_.size());
+  EXPECT_EQ(kSubresourceUrl, observer.preconnected_urls_[0]);
 
   predictor.Shutdown();
 }

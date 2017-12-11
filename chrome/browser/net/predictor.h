@@ -148,10 +148,6 @@ class Predictor {
   // preconnect to the search server).
   void AnticipateOmniboxUrl(const GURL& url, bool preconnectable);
 
-  // Preconnect a URL and all of its subresource domains.
-  void PreconnectUrlAndSubresources(const GURL& url,
-                                    const GURL& site_for_cookies);
-
   static std::vector<GURL> GetPredictedUrlListAtStartup(
       PrefService* user_prefs);
 
@@ -319,6 +315,8 @@ class Predictor {
   FRIEND_TEST_ALL_PREFIXES(PredictorTest, ProxyDefinitelyEnabled);
   FRIEND_TEST_ALL_PREFIXES(PredictorTest, ProxyDefinitelyNotEnabled);
   FRIEND_TEST_ALL_PREFIXES(PredictorTest, ProxyMaybeEnabled);
+  FRIEND_TEST_ALL_PREFIXES(PredictorTest, HSTSRedirectSubresources);
+  FRIEND_TEST_ALL_PREFIXES(PredictorTest, HSTSRedirectLearnedSubresource);
   friend class WaitForResolutionHelper;  // For testing.
   friend class PredictorBrowserTest;
 
