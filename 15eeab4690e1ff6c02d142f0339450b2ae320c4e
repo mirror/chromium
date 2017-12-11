@@ -22,6 +22,30 @@
       "revId": "15eeab4690e1ff6c02d142f0339450b2ae320c4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb5c87e_a827ff66",
+        "filename": "content/test/data/media/peerconnection-source-feed-switch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212208
+      },
+      "writtenOn": "2017-12-11T15:48:15Z",
+      "side": 1,
+      "message": "No, this is just an extra verification. The main test is to see nothing crashes. This check we use for the switch resolution test and added here but it doesn\u0027t work for some reason.\n\nCould remove this to clean up this test in here, wdyt?",
+      "parentUuid": "80cff329_e0e49e10",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "15eeab4690e1ff6c02d142f0339450b2ae320c4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
