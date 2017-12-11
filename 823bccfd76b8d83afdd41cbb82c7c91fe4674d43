@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7902cca_906d6253",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T17:15:26Z",
+      "side": 1,
+      "message": "nit: could use the new lambda syntax sugar here",
+      "revId": "823bccfd76b8d83afdd41cbb82c7c91fe4674d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1e0ca0_b553241b",
+        "filename": "android_webview/java/src/org/chromium/android_webview/WebViewChromiumRunQueue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T17:15:26Z",
+      "side": 1,
+      "message": "private",
+      "revId": "823bccfd76b8d83afdd41cbb82c7c91fe4674d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17033253_ae3bda52",
+        "filename": "android_webview/java/src/org/chromium/android_webview/WebViewChromiumRunQueue.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T17:15:26Z",
+      "side": 1,
+      "message": "top of class",
+      "revId": "823bccfd76b8d83afdd41cbb82c7c91fe4674d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
