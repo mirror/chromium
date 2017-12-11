@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "1f7db4b6_4775942b",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-11T15:37:08Z",
+      "side": 1,
+      "message": "Ah, indeed. Thanks.",
+      "parentUuid": "f9afd74c_e4d95936",
+      "revId": "e3988afe7c6d0800ac26b54dc3f71e20c0573c73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7e5d595_2f8e9bab",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 1
