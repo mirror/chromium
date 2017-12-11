@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b84fef73_740969a6",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T19:39:50Z",
+      "side": 1,
+      "message": "Oooh, ok.  ARMv8 !\u003d arm64, huh?  There are \"arm\" and \"arm64\" ARMv8 builds?",
+      "parentUuid": "a8dc4e62_9dd5fd0c",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 24
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79449965_91aa9d4c",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 2
@@ -153,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "d643964f_4c7e0f87",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T19:39:50Z",
+      "side": 1,
+      "message": "Agreed.  (Though to date I haven\u0027t found any way of doing CPU detection on iOS short of forking off a process, running the fancy code, and waiting for it to crash...)\n\nThere is a slight wrinkle to this, in that Apple\u0027s clang used to claim that the 64-bit iPhones support CRC32 via #defines even though they didn\u0027t.  I think this has been fixed in the latest XCode release, but that might be why code involving CRC32 does some paranoid if(!is_ios) { ... }.",
+      "parentUuid": "969c55f2_e493398b",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6816885_f940513a",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 2
@@ -205,6 +247,24 @@
       "side": 1,
       "message": "Is getauxval() available from within the sandbox Chrome\u0027s renderers are in?\nIIRC that is the reason we had to go the NDK route.",
       "parentUuid": "489c8c02_b6d8deb1",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe094bb9_df1a38fd",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T19:39:50Z",
+      "side": 1,
+      "message": "I thought so, but I guess it\u0027s worth double checking.",
+      "parentUuid": "06eaa3eb_3e5ffbfd",
       "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
