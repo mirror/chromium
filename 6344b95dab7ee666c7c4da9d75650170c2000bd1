@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02292cc0_b2e25ce9",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T19:24:36Z",
+      "side": 1,
+      "message": "Don\u0027t fully understand why this needs to be explicitly sized to take up the entire available space. There is probably an easier way to do this.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 49
+      },
+      "revId": "6344b95dab7ee666c7c4da9d75650170c2000bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e643f94_9fee01da",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T19:24:36Z",
+      "side": 1,
+      "message": "Can we get rid of this ID?\n\n#show-more-items \u003e a {\n  ...\n}",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "6344b95dab7ee666c7c4da9d75650170c2000bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb071fa_d6432994",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T19:24:36Z",
+      "side": 1,
+      "message": "Why is this container needed? The root of the custom element already serves as the container. You can style the root using :host {...} in CSS.",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "6344b95dab7ee666c7c4da9d75650170c2000bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a698311_4910cf28",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T19:24:36Z",
+      "side": 1,
+      "message": "as\u003d\"visibleItem\" makes the code bigger, for no good reason. How about the following?\n\n\u003ctemplate is\u003d\"dom-repeat\" items\u003d\"[[visibleItems_]]\"\u003e\n  \u003cli class\u003d\"visible-item\"\u003e[[item]]\u003c/li\u003e\n  ...\n\u003c/template\u003e",
+      "range": {
+        "startLine": 35,
+        "startChar": 60,
+        "endLine": 35,
+        "endChar": 76
+      },
+      "revId": "6344b95dab7ee666c7c4da9d75650170c2000bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50320143_87b50912",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T19:24:36Z",
+      "side": 1,
+      "message": "What is the benefit/reason for using an \u003ca\u003e tag here? Does this element act as a link at all?",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 12
+      },
+      "revId": "6344b95dab7ee666c7c4da9d75650170c2000bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b571636f_973ac2e4",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T19:24:36Z",
+      "side": 1,
+      "message": "Is there a reason for this to have a default value? Can it just be\nitemsToShow: Array,\n\nand be populated whenever the parent passes down some data?",
+      "revId": "6344b95dab7ee666c7c4da9d75650170c2000bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c89836_5deae4cd",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T19:24:36Z",
+      "side": 1,
+      "message": "this.browserProxy_ is only used in  this method. Is there a reason to cache it as a member variable? Why not just a local var?\n\nconst browserProxy \u003d settings.ChromeCleanupProxyImpl.getInstance();\nbrowserProxy.getMoreItemsPluralString(...);",
+      "range": {
+        "startLine": 152,
+        "startChar": 6,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "6344b95dab7ee666c7c4da9d75650170c2000bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb6dadf_850dd10c",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T19:24:36Z",
+      "side": 1,
+      "message": ".then(linkText \u003d\u003e {\n  this.moreItemsLinkText_ \u003d linkText;\n});",
+      "revId": "6344b95dab7ee666c7c4da9d75650170c2000bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf908e8a_3a3661de",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T19:24:36Z",
+      "side": 1,
+      "message": "Unnecessary member method. See previous comment.",
+      "revId": "6344b95dab7ee666c7c4da9d75650170c2000bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
