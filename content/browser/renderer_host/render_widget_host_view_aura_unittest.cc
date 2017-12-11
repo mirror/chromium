@@ -1966,6 +1966,47 @@ TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
   EXPECT_TRUE(gesture_event->data.scroll_end.synthetic);
 }
 
+// Tests that latching breaks when the difference between location of the first
+// wheel event in the sequence and the location of the current wheel event is
+// larger than some maximum threshold.
+TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
+       TimerBasedLatchingBreaksWithMouseMove) {
+  view_->InitAsChild(nullptr);
+  view_->Show();
+  sink_->ClearMessages();
+
+  ui::MouseWheelEvent event(gfx::Vector2d(0, 5), gfx::Point(2, 2),
+                            gfx::Point(2, 2), ui::EventTimeForNow(), 0, 0);
+  view_->OnMouseEvent(&event);
+  base::RunLoop().RunUntilIdle();
+  MockWidgetInputHandler::MessageVector events =
+      GetAndResetDispatchedMessages();
+
+  EXPECT_TRUE(events[0]->ToEvent());
+  const WebMouseWheelEvent* wheel_event =
+      static_cast<const WebMouseWheelEvent*>(
+          events[0]->ToEvent()->Event()->web_event.get());
+  EXPECT_EQ(WebMouseWheelEvent::kPhaseBegan, wheel_event->phase);
+  events[0]->ToEvent()->CallCallback(INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
+  events = GetAndResetDispatchedMessages();
+
+  // Send the second wheel event with a different location.
+  ui::MouseWheelEvent event2(
+      gfx::Vector2d(0, 5), gfx::Point(2 + kWheelLatchingSlopRegion, 2),
+      gfx::Point(2 + kWheelLatchingSlopRegion, 2), ui::EventTimeForNow(), 0, 0);
+  view_->OnMouseEvent(&event2);
+  base::RunLoop().RunUntilIdle();
+  events = GetAndResetDispatchedMessages();
+  EXPECT_EQ("MouseWheel GestureScrollEnd MouseWheel", GetMessageNames(events));
+  wheel_event = static_cast<const WebMouseWheelEvent*>(
+      events[0]->ToEvent()->Event()->web_event.get());
+  EXPECT_EQ(WebMouseWheelEvent::kPhaseEnded, wheel_event->phase);
+
+  wheel_event = static_cast<const WebMouseWheelEvent*>(
+      events[2]->ToEvent()->Event()->web_event.get());
+  EXPECT_EQ(WebMouseWheelEvent::kPhaseBegan, wheel_event->phase);
+}
+
 // Tests that a gesture fling start with touchpad source resets wheel phase
 // state.
 TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
