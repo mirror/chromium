@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e7e3c34_a0888623",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-11T18:10:24Z",
+      "side": 1,
+      "message": "Done (though I\u0027m not sure what value the restrictions have)",
+      "parentUuid": "2d807311_dfbfa238",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8db27945_5d35b7d6",
         "filename": "ash/display/mirror_window_controller.cc",
         "patchSetId": 6
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e29cd689_f454f334",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-11T18:10:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dba7bf80_e1e4fc77",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1d50a45_2bf14d96",
         "filename": "ash/display/mirror_window_controller.cc",
         "patchSetId": 6
@@ -68,6 +104,24 @@
       "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b202af_10413b34",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-11T18:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d50a45_2bf14d96",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "9b41d29e_5e3273ed",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-11T18:10:24Z",
+      "side": 1,
+      "message": "It hasn\u0027t been necessary in my local testing or in the CQ\u0027s coverage; lmk if you want checks.",
+      "parentUuid": "968e9dd7_bffb31a2",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9d98bab_6505c8d7",
         "filename": "ash/window_manager.cc",
         "patchSetId": 6
@@ -99,6 +171,24 @@
       "writtenOn": "2017-12-11T16:20:06Z",
       "side": 1,
       "message": "Maybe there could be a AshWindowTreeHost::GetForDisplayId() that returns the right thing?",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc73377f_c5657816",
+        "filename": "ash/window_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-11T18:10:24Z",
+      "side": 1,
+      "message": "I added support for looking up mirror display WTHs in WindowTreeHostManager::GetAshWindowTreeHostForDisplayId, lmk if that\u0027s not right.",
+      "parentUuid": "e9d98bab_6505c8d7",
       "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -169,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "6e42ca56_2cb56395",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-11T18:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19f07b5a_1af12cb6",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e080de6b_7af456fa",
         "filename": "ui/aura/window_tree_host_observer.h",
         "patchSetId": 6
@@ -183,6 +291,24 @@
       "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f9a4e9_e713d07c",
+        "filename": "ui/aura/window_tree_host_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-11T18:10:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e080de6b_7af456fa",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
