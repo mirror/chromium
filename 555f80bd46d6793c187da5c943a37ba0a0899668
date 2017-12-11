@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d48bb6b0_4fc9a85b",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-11T18:37:34Z",
+      "side": 1,
+      "message": "Can you dcheck that if you\u0027re in writers and have a network transaction that you\u0027re in a range request?",
+      "revId": "555f80bd46d6793c187da5c943a37ba0a0899668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
