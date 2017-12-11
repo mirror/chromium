@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c46df79c_e145ebd9",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-11T08:23:31Z",
+      "side": 1,
+      "message": "DCHECK(callback \u0026\u0026 *callback); maybe",
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6d909e_6246acdb",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 4
@@ -13,6 +30,23 @@
       "writtenOn": "2017-12-11T05:39:59Z",
       "side": 1,
       "message": "Is this the same as \"const NotificationDispatchCompleteCallback*\"?\n\nconst* is rarely seen in Chromium codebase.",
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c5fb63_4a71c766",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-11T08:23:31Z",
+      "side": 1,
+      "message": "DCHECK(dispatch_complete_callback \u0026\u0026 *dispatch_complete_callback);",
       "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
