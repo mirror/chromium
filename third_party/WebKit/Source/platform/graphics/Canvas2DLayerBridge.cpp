@@ -653,7 +653,7 @@ bool Canvas2DLayerBridge::PrepareTransferableResource(
 
   FlushRecording();
   scoped_refptr<CanvasResource> frame = resource_provider_->ProduceFrame();
-  if (frame) {
+  if (frame && frame->IsValid()) {
     // Note frame is kept alive via a reference kept in out_release_callback.
     frame->PrepareTransferableResource(out_resource, out_release_callback);
     out_resource->color_space = color_params_.GetSamplerGfxColorSpace();
