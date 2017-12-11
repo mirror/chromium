@@ -19,6 +19,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/numerics/ranges.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/sys_info.h"
@@ -1583,8 +1584,9 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
 
   bool top_changed = !FloatEquals(top_shown_pix, prev_top_shown_pix_);
   if (top_changed) {
-    float translate = top_shown_pix - top_controls_pix;
-    view_.OnTopControlsChanged(translate, top_shown_pix);
+    float shown_ratio =
+        base::ClampToRange(top_shown_pix / top_controls_pix, 0.0f, 1.0f);
+    view_.OnTopControlsChanged(shown_ratio, top_shown_pix);
     prev_top_shown_pix_ = top_shown_pix;
   }
 
@@ -1592,9 +1594,11 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   float bottom_shown_pix =
       bottom_controls_pix * frame_metadata.bottom_controls_shown_ratio;
   bool bottom_changed = !FloatEquals(bottom_shown_pix, prev_bottom_shown_pix_);
+
   if (bottom_changed) {
-    float translate = bottom_controls_pix - bottom_shown_pix;
-    view_.OnBottomControlsChanged(translate, bottom_shown_pix);
+    float shown_ratio =
+        base::ClampToRange(bottom_shown_pix / bottom_controls_pix, 0.0f, 1.0f);
+    view_.OnBottomControlsChanged(shown_ratio, bottom_shown_pix);
     prev_bottom_shown_pix_ = bottom_shown_pix;
   }
 

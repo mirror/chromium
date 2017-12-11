@@ -29,13 +29,14 @@ class TabViewAndroidDelegate extends ViewAndroidDelegate {
     }
 
     @Override
-    public void onTopControlsChanged(float topControlsOffsetY, float topContentOffsetY) {
-        mTab.onOffsetsChanged(topControlsOffsetY, Float.NaN, topContentOffsetY);
+    public void onTopControlsChanged(float topControlsShownRatio, float topContentOffsetY) {
+        mTab.onOffsetsChanged(topControlsShownRatio, Float.NaN, topContentOffsetY);
     }
 
     @Override
-    public void onBottomControlsChanged(float bottomControlsOffsetY, float bottomContentOffsetY) {
-        mTab.onOffsetsChanged(Float.NaN, bottomControlsOffsetY, Float.NaN);
+    public void onBottomControlsChanged(
+            float bottomControlsShownRatio, float bottomContentOffsetY) {
+        mTab.onOffsetsChanged(Float.NaN, bottomControlsShownRatio, Float.NaN);
     }
 
     @Override

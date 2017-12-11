@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.tab;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -356,8 +355,8 @@ public class Tab
     private TabRedirectHandler mTabRedirectHandler;
 
     private FullscreenManager mFullscreenManager;
-    private float mPreviousTopControlsOffsetY = Float.NaN;
-    private float mPreviousBottomControlsOffsetY = Float.NaN;
+    private float mPreviousTopControlsShownRatio = Float.NaN;
+    private float mPreviousBottomControlsShownRatio = Float.NaN;
     private float mPreviousContentOffsetY = Float.NaN;
 
     /**
@@ -2051,8 +2050,8 @@ public class Tab
             mInfoBarContainer = null;
         }
 
-        mPreviousTopControlsOffsetY = Float.NaN;
-        mPreviousBottomControlsOffsetY = Float.NaN;
+        mPreviousTopControlsShownRatio = Float.NaN;
+        mPreviousBottomControlsShownRatio = Float.NaN;
         mPreviousContentOffsetY = Float.NaN;
 
         mNeedsReload = false;
@@ -2522,7 +2521,7 @@ public class Tab
     }
 
     private static Rect getEstimatedContentSize(Context context) {
-        return ExternalPrerenderHandler.estimateContentSize((Application) context, false);
+        return ExternalPrerenderHandler.estimateContentSize(context, false);
     }
 
     /**
@@ -2721,17 +2720,19 @@ public class Tab
     /**
      * Called when offset values related with fullscreen functionality has been changed by the
      * compositor.
-     * @param topControlsOffsetY The Y offset of the top controls in physical pixels.
+     * @param topControlsShownRatio The fraction of the top controls currently shown.
      *    {@code Float.NaN} if the value is invalid and the cached value should be used.
-     * @param bottomControlsOffsetY The Y offset of the bottom controls in physical pixels.
+     * @param bottomControlsShownRatio The fraction of the bottom controls currently shown.
      *    {@code Float.NaN} if the value is invalid and the cached value should be used.
      * @param contentOffsetY The Y offset of the content in physical pixels.
      */
     void onOffsetsChanged(
-            float topControlsOffsetY, float bottomControlsOffsetY, float contentOffsetY) {
-        if (!Float.isNaN(topControlsOffsetY)) mPreviousTopControlsOffsetY = topControlsOffsetY;
-        if (!Float.isNaN(bottomControlsOffsetY)) {
-            mPreviousBottomControlsOffsetY = bottomControlsOffsetY;
+            float topControlsShownRatio, float bottomControlsShownRatio, float contentOffsetY) {
+        if (!Float.isNaN(topControlsShownRatio)) {
+            mPreviousTopControlsShownRatio = topControlsShownRatio;
+        }
+        if (!Float.isNaN(bottomControlsShownRatio)) {
+            mPreviousBottomControlsShownRatio = bottomControlsShownRatio;
         }
         if (!Float.isNaN(contentOffsetY)) mPreviousContentOffsetY = contentOffsetY;
 
@@ -2739,8 +2740,8 @@ public class Tab
         if (isShowingSadTab() || isNativePage()) {
             mFullscreenManager.setPositionsForTabToNonFullscreen();
         } else {
-            mFullscreenManager.setPositionsForTab(mPreviousTopControlsOffsetY,
-                    mPreviousBottomControlsOffsetY, mPreviousContentOffsetY);
+            mFullscreenManager.setPositionsForTab(mPreviousTopControlsShownRatio,
+                    mPreviousBottomControlsShownRatio, mPreviousContentOffsetY);
         }
         TabModelImpl.setActualTabSwitchLatencyMetricRequired();
     }
@@ -2877,10 +2878,9 @@ public class Tab
     public void setFullscreenManager(FullscreenManager manager) {
         mFullscreenManager = manager;
         if (mFullscreenManager != null) {
-            boolean topOffsetsInitialized = !Float.isNaN(mPreviousTopControlsOffsetY)
+            boolean topOffsetsInitialized = !Float.isNaN(mPreviousTopControlsShownRatio)
                     && !Float.isNaN(mPreviousContentOffsetY);
-            boolean bottomOffsetsInitialized =
-                    !Float.isNaN(mPreviousBottomControlsOffsetY);
+            boolean bottomOffsetsInitialized = !Float.isNaN(mPreviousBottomControlsShownRatio);
             boolean isChromeHomeEnabled = FeatureUtilities.isChromeHomeEnabled();
 
             // Make sure the dominant control offsets have been set.
@@ -2888,9 +2888,8 @@ public class Tab
                     || (!bottomOffsetsInitialized && isChromeHomeEnabled)) {
                 mFullscreenManager.setPositionsForTabToNonFullscreen();
             } else {
-                mFullscreenManager.setPositionsForTab(mPreviousTopControlsOffsetY,
-                        mPreviousBottomControlsOffsetY,
-                        mPreviousContentOffsetY);
+                mFullscreenManager.setPositionsForTab(mPreviousTopControlsShownRatio,
+                        mPreviousBottomControlsShownRatio, mPreviousContentOffsetY);
             }
             updateFullscreenEnabledState();
         }
