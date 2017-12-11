@@ -10690,6 +10690,16 @@
                         "continue",
                         "cancel"
                     ]
+                },
+                {
+                    "id": "CertificateErrorOverrideMode",
+                    "description": "How certificate errors should be overridden. In \"handle-events\" mode, the client can continue\nor deny individual certificate error events. In \"ignore-all\" mode, all certificate errors will\nbe ignored, i.e. all certificates will be accepted. \"disabled\" disables the override.",
+                    "type": "string",
+                    "enum": [
+                        "disabled",
+                        "handle-events",
+                        "ignore-all"
+                    ]
                 }
             ],
             "commands": [
@@ -10719,12 +10729,20 @@
                 },
                 {
                     "name": "setOverrideCertificateErrors",
-                    "description": "Enable/disable overriding certificate errors. If enabled, all certificate error events need to\nbe handled by the DevTools client and should be answered with handleCertificateError commands.",
+                    "description": "Enable/disable overriding certificate errors. In mode \"handle-events\", all certificate error\nevents need to be handled by the DevTools client and should be answered with\nhandleCertificateError commands.",
                     "parameters": [
                         {
                             "name": "override",
-                            "description": "If true, certificate errors will be overridden.",
+                            "description": "If true, certificate errors will be overridden in mode \"handle-events\".",
+                            "deprecated": true,
+                            "optional": true,
                             "type": "boolean"
+                        },
+                        {
+                            "name": "mode",
+                            "description": "Whether and how certificate error handling should be overridden.",
+                            "optional": true,
+                            "$ref": "CertificateErrorOverrideMode"
                         }
                     ]
                 }
@@ -10732,7 +10750,7 @@
             "events": [
                 {
                     "name": "certificateError",
-                    "description": "There is a certificate error. If overriding certificate errors is enabled, then it should be\nhandled with the handleCertificateError command. Note: this event does not fire if the\ncertificate error has been allowed internally.",
+                    "description": "There is a certificate error. If overriding certificate errors is enabled in mode\n\"handle-events\", then it should be handled with the handleCertificateError command.\nNote: this event does not fire if the certificate error has been allowed internally.",
                     "parameters": [
                         {
                             "name": "eventId",

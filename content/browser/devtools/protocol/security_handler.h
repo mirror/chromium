@@ -42,7 +42,9 @@ class SecurityHandler : public DevToolsDomainHandler,
   Response Enable() override;
   Response Disable() override;
   Response HandleCertificateError(int event_id, const String& action) override;
-  Response SetOverrideCertificateErrors(bool override) override;
+  Response SetOverrideCertificateErrors(
+      Maybe<bool> override,
+      Maybe<Security::CertificateErrorOverrideMode> mode) override;
 
   // NotifyCertificateError will send a CertificateError event. Returns true if
   // the error is expected to be handled by a corresponding
@@ -66,7 +68,8 @@ class SecurityHandler : public DevToolsDomainHandler,
   RenderFrameHostImpl* host_;
   int last_cert_error_id_ = 0;
   CertErrorCallbackMap cert_error_callbacks_;
-  bool certificate_errors_overriden_ = false;
+  Security::CertificateErrorOverrideMode certificate_errors_override_mode_ =
+      Security::CertificateErrorOverrideModeEnum::Disabled;
 
   DISALLOW_COPY_AND_ASSIGN(SecurityHandler);
 };
