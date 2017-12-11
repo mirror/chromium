@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "ac690bd7_227bc03b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-11T09:39:37Z",
+      "side": 1,
+      "message": "Promise? :) In addition to the fact that callers should make a conscious choice about which kind of rowspan they want to get, now ColSpan() and RowSpan() also behave quite differently, so that the angles of this room are no longer right and predictable, and it makes me dizzy.",
+      "parentUuid": "a2949169_b6f9356e",
+      "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58b6025a_5e4f8aa6",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
         "patchSetId": 2
@@ -261,6 +279,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "89f11ad2_08232a3a",
+      "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0dd66bf5_bb5b4310",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-11T09:39:37Z",
+      "side": 1,
+      "message": "Ack, this makes sense now. We have to refrain from doing stuff on the fly if rowspan is 0; it\u0027s pretty much as if we\u0027re being inserted before something.",
+      "parentUuid": "2f336f9b_3c27daa2",
       "revId": "cb393b954adbdbc514bd487d2237fcc85815880b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
