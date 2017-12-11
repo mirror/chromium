@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ebb1f9c_1a92785f",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T06:46:02Z",
+      "side": 1,
+      "message": "Are you sure always using \"kLtr\" is correct, or do this for now? If the latter, please add \"TODO\" comment. If the former, great to add a comment why we can always use \"kLtr\" here.",
+      "revId": "cd6bd00dc745016cbae4e34e5e0f722dc7615408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84ccde65_2522a312",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T06:46:02Z",
+      "side": 1,
+      "message": "Close! There\u0027s a static function that does this. Please see:\n static CharacterRange GetCharacterRange()\nin ShapeResultBuffer.",
+      "revId": "cd6bd00dc745016cbae4e34e5e0f722dc7615408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
