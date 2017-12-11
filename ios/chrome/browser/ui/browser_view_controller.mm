@@ -1791,6 +1791,12 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     Tab* topTab = [_model currentTab];
     UIImage* image = [topTab updateSnapshotWithOverlay:YES
                                       visibleFrameOnly:self.isToolbarOnScreen];
+    // The size of the |image| above can be wrong if the snapshot fails, grab
+    // the correct size here.
+    CGRect imageFrame = self.isToolbarOnScreen
+                            ? [topTab snapshotContentArea]
+                            : [topTab.webController.view bounds];
+
     // Add three layers in order on top of the contentArea for the animation:
     // 1. The black "background" screen.
     UIView* background = [[UIView alloc] initWithFrame:[_contentArea bounds]];
@@ -1817,7 +1823,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     // 3. A new, blank CardView to represent the new tab being added.
     // Launch the new background tab animation.
     page_animation_util::AnimateNewBackgroundPageWithCompletion(
-        topCard, [_contentArea frame], IsPortrait(), ^{
+        topCard, [_contentArea frame], imageFrame, IsPortrait(), ^{
           [background removeFromSuperview];
           [topCard removeFromSuperview];
           self.inNewTabAnimation = NO;
