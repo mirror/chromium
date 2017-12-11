@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a83f1a67_bf724f48",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-11T17:56:50Z",
+      "side": 1,
+      "message": "Nit: move this to a local variable to make this call and line 532 less verbose.\n\ni.e.\n\nconst std::string\u0026 original_sn \u003d\n    field_trial_creator_.seed_store().variations_serial_number();\n\nif (!EncryptString(original_sn, \u0026encrypted_sn)) {\n} else {\n  pending_seed_request_-\u003eAddExtraRequestHeader(\n          \"If-None-Match:\" + original_sn);\n}",
+      "revId": "7bf043fdc791942befcfd9a1cfa263fbca188d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16bb2069_968d7c44",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-11T17:56:50Z",
+      "side": 1,
+      "message": "Nit: Reword this comment. How about:\n\n // When re-trying via HTTP, return immediately. OnURLFetchComplete() will be called\n // with the result of that retry.",
+      "range": {
+        "startLine": 671,
+        "startChar": 48,
+        "endLine": 671,
+        "endChar": 49
+      },
+      "revId": "7bf043fdc791942befcfd9a1cfa263fbca188d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19213710_f3f87969",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-11T17:56:50Z",
+      "side": 1,
+      "message": "Nit: No {}",
+      "revId": "7bf043fdc791942befcfd9a1cfa263fbca188d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c83493_83d12de7",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-11T17:56:50Z",
+      "side": 1,
+      "message": "Mention that if it\u0027s not set, HTTP retries will not be attempted.",
+      "range": {
+        "startLine": 327,
+        "startChar": 55,
+        "endLine": 327,
+        "endChar": 0
+      },
+      "revId": "7bf043fdc791942befcfd9a1cfa263fbca188d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
