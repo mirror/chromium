@@ -16,6 +16,24 @@
       "revId": "795f13207d250c54415d5070bf04c1e23f0e8e07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe660ca_66d79d1c",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-11T15:18:34Z",
+      "side": 0,
+      "message": "Restored the comment above. I\u0027m not entirely sure if the TODO is particularly useful anymore so I removed it.",
+      "parentUuid": "4a99ccb4_8b1e4315",
+      "revId": "795f13207d250c54415d5070bf04c1e23f0e8e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
