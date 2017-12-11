@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c75a250_41c89563",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/eventsource/eventsource-url-usvstring.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-11T09:36:37Z",
+      "side": 1,
+      "message": "Can you use .endsWith() here? Looks like it\u0027s available on the most recent versions of all browsers now.",
+      "range": {
+        "startLine": 14,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "dbf7cc2926a3d9255d785d927b0d794b60336613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e68f1a_1c05a9f1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/eventsource/eventsource-url-usvstring.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-11T09:36:37Z",
+      "side": 1,
+      "message": "As soon as the test finishes running the whole page will be closed, so this won\u0027t do anything, but is also harmless.",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 14
+      },
+      "revId": "dbf7cc2926a3d9255d785d927b0d794b60336613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7993a9_4afdb733",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/browsers/history/the-location-interface/location_hash_usvstring.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-11T09:36:37Z",
+      "side": 1,
+      "message": "No title at all would be fine, or \"location.hash test for USVString\" perhaps, as in the other test.",
+      "range": {
+        "startLine": 4,
+        "startChar": 11,
+        "endLine": 4,
+        "endChar": 34
+      },
+      "revId": "dbf7cc2926a3d9255d785d927b0d794b60336613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334325c2_b7b65382",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/dom/source-element-usvstring.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-11T09:36:37Z",
+      "side": 1,
+      "message": ".endsWith here too.",
+      "range": {
+        "startLine": 14,
+        "startChar": 23,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "dbf7cc2926a3d9255d785d927b0d794b60336613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
