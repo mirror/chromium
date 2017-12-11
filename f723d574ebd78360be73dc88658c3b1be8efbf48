@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64b5fab4_94537c5d",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-11T07:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24d128df_02167a81",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0f26d5_72da30e2",
         "filename": "services/shape_detection/text_detection_impl_win.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a48e55_54a25345",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-11T07:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c0f26d5_72da30e2",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 73
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "13afc7e9_bdc32b34",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-11T07:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ff2957_f142e49e",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 59
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "302f8d1b_773a81b0",
         "filename": "services/shape_detection/text_detection_impl_win.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d122e863_10729bb6",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-11T07:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "302f8d1b_773a81b0",
+      "range": {
+        "startLine": 40,
+        "startChar": 39,
+        "endLine": 40,
+        "endChar": 46
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaf403d2_2052fc40",
         "filename": "services/shape_detection/text_detection_impl_win.cc",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-08T11:30:08Z",
       "side": 1,
       "message": "Latin 1 is much more than \"en\". if the language of the to-be-detected text cannot be sniffed out, can you at least default to the current locale (g_browser_process-\u003eGetApplicationLocale()), provided that it can be represented in Latin 1? jshin@ may know more about how to figure that out.",
+      "range": {
+        "startLine": 42,
+        "startChar": 57,
+        "endLine": 42,
+        "endChar": 61
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714e394e_aed41446",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-11T07:02:21Z",
+      "side": 1,
+      "message": "Latin 1 is used in English and other Western languages as documented in here [1],but is it confused if the current locale doesn\u0027t include Latin?\n\n[1] https://en.wikipedia.org/wiki/Windows-1252",
+      "parentUuid": "eaf403d2_2052fc40",
       "range": {
         "startLine": 42,
         "startChar": 57,
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "1c440d02_8aa18233",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-11T07:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61a2b414_a8998fb3",
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41e61fbe_ca5c7d60",
         "filename": "services/shape_detection/text_detection_impl_win.h",
         "patchSetId": 4
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "f7a7eee2_7689e81a",
+        "filename": "services/shape_detection/text_detection_impl_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-11T07:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41e61fbe_ca5c7d60",
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc93a5f0_734dfbbb",
         "filename": "services/shape_detection/text_detection_impl_win_unittest.cc",
         "patchSetId": 4
@@ -165,6 +321,24 @@
       "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8acfe2_db4ce211",
+        "filename": "services/shape_detection/text_detection_impl_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-11T07:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc93a5f0_734dfbbb",
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +385,30 @@
       "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e134ac_db7924d3",
+        "filename": "services/shape_detection/text_detection_impl_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-11T07:02:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4211965a_98c160ce",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
