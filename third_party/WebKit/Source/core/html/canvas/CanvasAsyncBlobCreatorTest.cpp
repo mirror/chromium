@@ -23,7 +23,6 @@ class MockCanvasAsyncBlobCreator : public CanvasAsyncBlobCreator {
                              MimeType mime_type,
                              Document* document)
       : CanvasAsyncBlobCreator(data,
-                               nullptr,
                                mime_type,
                                size,
                                nullptr,

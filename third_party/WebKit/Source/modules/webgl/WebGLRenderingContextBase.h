@@ -1685,7 +1685,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
                            GLint,
                            const IntRect&);
 
-  scoped_refptr<StaticBitmapImage> MakeImageSnapshot(SkImageInfo&) const;
+  scoped_refptr<StaticBitmapImage> MakeImageSnapshot(SkImageInfo&);
   const unsigned version_;
 
   bool IsPaintable() const final { return GetDrawingBuffer(); }

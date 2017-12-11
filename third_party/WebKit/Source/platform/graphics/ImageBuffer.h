@@ -38,7 +38,6 @@
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/graphics/GraphicsTypes3D.h"
 #include "platform/graphics/ImageBufferSurface.h"
-#include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/paint/PaintFlags.h"
 #include "platform/graphics/paint/PaintRecord.h"
 #include "platform/transforms/AffineTransform.h"
@@ -165,32 +164,22 @@ class PLATFORM_EXPORT ImageBuffer {
   std::unique_ptr<ImageBufferSurface> surface_;
 };
 
-class ImageDataBuffer {
- public:
+struct ImageDataBuffer {
+  STACK_ALLOCATED();
   ImageDataBuffer(const IntSize& size, const unsigned char* data)
-      : data_(data), uses_pixmap_(false), size_(size) {}
-  ImageDataBuffer(const SkPixmap& pixmap)
-      : pixmap_(pixmap),
-        uses_pixmap_(true),
-        size_(IntSize(pixmap.width(), pixmap.height())) {}
-  PLATFORM_EXPORT ImageDataBuffer(scoped_refptr<StaticBitmapImage>);
-
+      : data_(data), size_(size) {}
   String PLATFORM_EXPORT ToDataURL(const String& mime_type,
                                    const double& quality) const;
   bool PLATFORM_EXPORT EncodeImage(const String& mime_type,
                                    const double& quality,
                                    Vector<unsigned char>* encoded_image) const;
-  const unsigned char* Pixels() const;
+  const unsigned char* Pixels() const { return data_; }
   const IntSize& size() const { return size_; }
   int Height() const { return size_.Height(); }
   int Width() const { return size_.Width(); }
 
- private:
   const unsigned char* data_;
-  SkPixmap pixmap_;
-  bool uses_pixmap_ = false;
-  IntSize size_;
-  scoped_refptr<StaticBitmapImage> image_bitmap_;
+  const IntSize size_;
 };
 
 }  // namespace blink
