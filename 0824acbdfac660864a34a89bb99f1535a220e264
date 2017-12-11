@@ -684,6 +684,30 @@
     },
     {
       "key": {
+        "uuid": "e2aae3cb_d6735726",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-11T12:42:27Z",
+      "side": 1,
+      "message": "\u003e * Is this not a simple getter? \n\nNo, it\u0027s not.\n\n\u003e Is the fact that it\u0027s virtual the thing that makes the difference?\n\nYes.\n\n\u003e * If we do change to CamelCase, shall it be WebRtcEventLogManager() or GetWebRtcEventLogManager()? The former might be confused for the class\u0027s ctor. What do you prefer?\n\nBoth are good. Since it\u0027s virtual, I think I prefer GetWebRtcEventLogManager(), but up to you.",
+      "parentUuid": "f4f088b9_cf8a02f4",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 9
+      },
+      "revId": "0824acbdfac660864a34a89bb99f1535a220e264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b84edc4_de29775a",
         "filename": "content/browser/webrtc/webrtc_internals_unittest.cc",
         "patchSetId": 7
