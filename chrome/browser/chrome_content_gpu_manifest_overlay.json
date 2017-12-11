@@ -5,6 +5,8 @@
       "provides": {
         "browser": [
           "arc::mojom::ProtectedBufferManager",
+          "arc::mojom::VideoDecodeAcceleratorDeprecated",
+          "arc::mojom::VideoDecodeClientDeprecated",
           "arc::mojom::VideoDecodeAccelerator",
           "arc::mojom::VideoDecodeClient",
           "arc::mojom::VideoEncodeAccelerator",
