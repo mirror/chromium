@@ -46,7 +46,6 @@ class WindowAndroid;
 namespace vr {
 class BrowserUiInterface;
 class ToolbarHelper;
-class WebContentsEventForwarder;
 }  // namespace vr
 
 namespace vr_shell {
@@ -86,10 +85,13 @@ class VrShell : device::GvrGamepadDataProvider,
           float display_height_meters,
           int display_width_pixels,
           int display_height_pixels);
-  void SwapContents(
+  void SwapContents(JNIEnv* env,
+                    const base::android::JavaParamRef<jobject>& obj,
+                    const base::android::JavaParamRef<jobject>& web_contents,
+                    float android_view_dip_scale);
+  void SetAndroidGestureTarget(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
-      const base::android::JavaParamRef<jobject>& web_contents,
       const base::android::JavaParamRef<jobject>& android_ui_gesture_target);
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
   void OnTriggerEvent(JNIEnv* env,
@@ -132,11 +134,6 @@ class VrShell : device::GvrGamepadDataProvider,
   void ExitCct();
   void ToggleCardboardGamepad(bool enabled);
   void ToggleGvrGamepad(bool enabled);
-  base::android::ScopedJavaGlobalRef<jobject> TakeContentSurface(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj);
-  void RestoreContentSurface(JNIEnv* env,
-                             const base::android::JavaParamRef<jobject>& obj);
   void SetHistoryButtonsEnabled(JNIEnv* env,
                                 const base::android::JavaParamRef<jobject>& obj,
                                 jboolean can_go_back,
@@ -156,6 +153,7 @@ class VrShell : device::GvrGamepadDataProvider,
   void ContentWasShown();
 
   void ContentSurfaceChanged(jobject surface);
+  void ContentOverlaySurfaceChanged(jobject surface);
   void GvrDelegateReady(gvr::ViewerType viewer_type);
 
   void OnPhysicalBackingSizeChanged(
@@ -164,12 +162,12 @@ class VrShell : device::GvrGamepadDataProvider,
       const base::android::JavaParamRef<jobject>& jweb_contents,
       jint width,
       jint height);
-  void ContentPhysicalBoundsChanged(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& object,
-      jint width,
-      jint height,
-      jfloat dpr);
+  void BufferBoundsChanged(JNIEnv* env,
+                           const base::android::JavaParamRef<jobject>& object,
+                           jint content_width,
+                           jint content_height,
+                           jint overlay_width,
+                           jint overlay_height);
 
   // Perform a UI action triggered by the javascript API.
   void DoUiAction(const UiAction action,
@@ -250,7 +248,6 @@ class VrShell : device::GvrGamepadDataProvider,
   VrShellDelegate* delegate_provider_ = nullptr;
   base::android::ScopedJavaGlobalRef<jobject> j_vr_shell_;
 
-  std::unique_ptr<vr::WebContentsEventForwarder> web_contents_event_forwarder_;
   std::unique_ptr<AndroidUiGestureTarget> android_ui_gesture_target_;
   std::unique_ptr<VrMetricsHelper> metrics_helper_;
 
@@ -268,8 +265,6 @@ class VrShell : device::GvrGamepadDataProvider,
 
   device::mojom::GeolocationConfigPtr geolocation_config_;
 
-  jobject content_surface_ = nullptr;
-  bool taken_surface_ = false;
   base::CancelableClosure poll_capturing_media_task_;
   bool is_capturing_audio_ = false;
   bool is_capturing_video_ = false;
