@@ -52,7 +52,9 @@ std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
 @implementation PrerenderTestCase
 
 // Test that tapping the prerendered suggestions opens it.
-- (void)testTapPrerenderSuggestions {
+// TODO(crbug.com/793802): Re-enable when the multiple
+// OmniboxPopupTruncatingLabel issue is resolved.
+- (void)FLAKY_testTapPrerenderSuggestions {
   // TODO(crbug.com/793306): Re-enable the test on iOS 11 iPad once the
   // alternate letters problem is fixed.
   if (IsIPadIdiom()) {
