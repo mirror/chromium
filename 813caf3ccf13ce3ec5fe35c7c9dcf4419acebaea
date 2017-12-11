@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "7c8d61a4_48ca64e3",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-11T06:35:19Z",
+      "side": 1,
+      "message": "\u003e This permission is (initially) only covering the new Async Clipboard API which is always in the Renderer.\n\nHmm I\u0027m not exactly sure what you mean. I understand that the APIs run in the renderer (in blink) but I would expect them to send IPCs to the browser to access clipboard data? The idea is that we want permissions to be checked on the browser side of that IPC rather than the renderer, otherwise a compromised renderer can access the clipboard.\n\nIt may be that a compromised renderer will still be able to check the clipboard due to existing IPCs. But it would still be nice to try to enforce that check in the browser so that we\u0027re not making that issue worse. dcheng@ may have thoughts.",
+      "parentUuid": "2982ead2_c0ed06d2",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a1e94a5_d5472e1b",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 1

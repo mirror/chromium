@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7091563_7bda349b",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-11T06:35:19Z",
+      "side": 1,
+      "message": "I was under the impression that we weren\u0027t keeping the user gesture requirement?",
+      "revId": "953f8d1c31c2f484ea28c60ad56e4bddcdcf5307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1efa0bdd_729a41ef",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-11T06:35:19Z",
+      "side": 1,
+      "message": "Is there a strong reason not to keep the focus requirement here? Would it be better to be consistent?",
+      "revId": "953f8d1c31c2f484ea28c60ad56e4bddcdcf5307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33432b38_62fbbb75",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-11T06:35:19Z",
+      "side": 1,
+      "message": "This seems more complicated than where I thought we landed. My understanding was that we basically got rid of the notion of \"full\" access. Could we solely rely on the focus requirement for clipboard write?",
+      "revId": "953f8d1c31c2f484ea28c60ad56e4bddcdcf5307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be972ca5_7a82ba10",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-11T06:35:19Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s necessary to check this. If we do check it (for example if we wanted to allow other embedders to use the check) I would require it in addition to the focus check.",
+      "revId": "953f8d1c31c2f484ea28c60ad56e4bddcdcf5307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
