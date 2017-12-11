@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_impl.h"
 
 #include "base/compiler_specific.h"
 #include "chrome/browser/command_observer.h"
@@ -11,7 +11,8 @@
 
 class FakeCommandUpdaterDelegate : public CommandUpdaterDelegate {
  public:
-  void ExecuteCommandWithDisposition(int id, WindowOpenDisposition) override {
+  void ExecuteCommandWithDispositionImpl(
+      int id, WindowOpenDisposition) override {
     EXPECT_EQ(1, id);
   }
 };
@@ -30,9 +31,9 @@ class FakeCommandObserver : public CommandObserver {
   bool enabled_;
 };
 
-TEST(CommandUpdaterTest, TestBasicAPI) {
+TEST(CommandUpdaterImplTest, TestBasicAPI) {
   FakeCommandUpdaterDelegate delegate;
-  CommandUpdater command_updater(&delegate);
+  CommandUpdaterImpl command_updater(&delegate);
 
   // Unsupported command
   EXPECT_FALSE(command_updater.SupportsCommand(0));
@@ -56,9 +57,9 @@ TEST(CommandUpdaterTest, TestBasicAPI) {
   command_updater.ExecuteCommand(2);
 }
 
-TEST(CommandUpdaterTest, TestObservers) {
+TEST(CommandUpdaterImplTest, TestObservers) {
   FakeCommandUpdaterDelegate delegate;
-  CommandUpdater command_updater(&delegate);
+  CommandUpdaterImpl command_updater(&delegate);
 
   // Create an observer for the command 2 and add it to the controller, then
   // update the command.
@@ -75,9 +76,9 @@ TEST(CommandUpdaterTest, TestObservers) {
   EXPECT_FALSE(observer.enabled());
 }
 
-TEST(CommandUpdaterTest, TestObserverRemovingAllCommands) {
+TEST(CommandUpdaterImplTest, TestObserverRemovingAllCommands) {
   FakeCommandUpdaterDelegate delegate;
-  CommandUpdater command_updater(&delegate);
+  CommandUpdaterImpl command_updater(&delegate);
 
   // Create two observers for the commands 1-3 as true, remove one using the
   // single remove command, then set the command to false. Ensure that the

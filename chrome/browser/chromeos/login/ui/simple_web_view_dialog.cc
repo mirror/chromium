@@ -12,7 +12,7 @@
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/ui/captive_portal_window_proxy.h"
-#include "chrome/browser/command_updater.h"
+#include "chrome/browser/command_updater_impl.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ssl/security_state_tab_helper.h"
@@ -132,7 +132,7 @@ SimpleWebViewDialog::SimpleWebViewDialog(Profile* profile)
       location_bar_(NULL),
       web_view_(NULL),
       bubble_model_delegate_(new StubBubbleModelDelegate) {
-  command_updater_.reset(new CommandUpdater(this));
+  command_updater_.reset(new CommandUpdaterImpl(this));
   command_updater_->UpdateCommandEnabled(IDC_BACK, true);
   command_updater_->UpdateCommandEnabled(IDC_FORWARD, true);
   command_updater_->UpdateCommandEnabled(IDC_STOP, true);
@@ -192,11 +192,10 @@ void SimpleWebViewDialog::Init() {
   forward_->set_id(VIEW_ID_FORWARD_BUTTON);
 
   // Location bar.
-  location_bar_ =
-      new LocationBarView(NULL, profile_, command_updater_.get(), this, true);
+  location_bar_ = new LocationBarView(NULL, profile_, this, this, true);
 
   // Reload button.
-  reload_ = new ReloadButton(profile_, command_updater_.get());
+  reload_ = new ReloadButton(profile_, this);
   reload_->set_triggerable_event_flags(ui::EF_LEFT_MOUSE_BUTTON |
                                        ui::EF_MIDDLE_MOUSE_BUTTON);
   reload_->set_tag(IDC_RELOAD);
@@ -300,8 +299,8 @@ content::WebContents* SimpleWebViewDialog::GetActiveWebContents() const {
   return web_view_->web_contents();
 }
 
-void SimpleWebViewDialog::ExecuteCommandWithDisposition(int id,
-                                                        WindowOpenDisposition) {
+void SimpleWebViewDialog::ExecuteCommandWithDispositionImpl(
+    int id, WindowOpenDisposition) {
   WebContents* web_contents = web_view_->web_contents();
   switch (id) {
     case IDC_BACK:
@@ -330,6 +329,42 @@ void SimpleWebViewDialog::ExecuteCommandWithDisposition(int id,
     default:
       NOTREACHED();
   }
+}
+
+bool SimpleWebViewDialog::SupportsCommand(int id) const {
+  return command_updater_->SupportsCommand(id);
+}
+
+bool SimpleWebViewDialog::IsCommandEnabled(int id) const {
+  return command_updater_->IsCommandEnabled(id);
+}
+
+bool SimpleWebViewDialog::ExecuteCommand(int id) {
+  return command_updater_->ExecuteCommand(id);
+}
+
+bool SimpleWebViewDialog::ExecuteCommandWithDisposition(
+    int id, WindowOpenDisposition disposition) {
+  return command_updater_->ExecuteCommandWithDisposition(id, disposition);
+}
+
+void SimpleWebViewDialog::AddCommandObserver(int id,
+                                             CommandObserver* observer) {
+  command_updater_->AddCommandObserver(id, observer);
+}
+
+void SimpleWebViewDialog::RemoveCommandObserver(int id,
+                                                CommandObserver* observer) {
+  command_updater_->RemoveCommandObserver(id, observer);
+}
+
+void SimpleWebViewDialog::RemoveCommandObserver(CommandObserver* observer) {
+  command_updater_->RemoveCommandObserver(observer);
+}
+
+bool SimpleWebViewDialog::UpdateCommandEnabled(int id, bool state) {
+  command_updater_->UpdateCommandEnabled(id, state);
+  return true;
 }
 
 void SimpleWebViewDialog::LoadImages() {

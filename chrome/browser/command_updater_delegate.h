@@ -13,7 +13,7 @@ class CommandUpdaterDelegate {
  public:
   // Performs the action associated with the command with the specified ID and
   // using the given disposition.
-  virtual void ExecuteCommandWithDisposition(
+  virtual void ExecuteCommandWithDispositionImpl(
       int id,
       WindowOpenDisposition disposition) = 0;
 
