@@ -70,6 +70,30 @@
       "revId": "e7d94b1acb36f50fff2ab0d50baa6d01466671a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49850c07_a3850546",
+        "filename": "content/browser/renderer_host/p2p/socket_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-11T19:42:30Z",
+      "side": 0,
+      "message": "I see. That seems suboptimal as the offline signal is emitted even when system is not actually offline, so some observers would disconnect even when it\u0027s not necessary.\n\nJust to make sure I understand the expected behavior, what\u0027s expected sequence of signals in the following 3 scenarios:\n 1. WiFi and Etherenet connected, then user disconnects WiFi.\n 2. WiFi is connected, then user connects Ethernet.\n 3. There are two active Ethernet connections, user disconnects one of them.\n 3. There is one active Ethernet connection, user connects second one.\n\nDo we expected CONNECTION_NONE followed by CONNECTION_ETHERNET in all 3 scenarios?",
+      "parentUuid": "ca9b4707_531e98e8",
+      "range": {
+        "startLine": 165,
+        "startChar": 11,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "e7d94b1acb36f50fff2ab0d50baa6d01466671a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
