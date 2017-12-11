@@ -144,6 +144,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
           connect_using_default_network, migrate_sessions_on_network_change,
           migrate_sessions_early, migrate_sessions_on_network_change_v2,
           migrate_sessions_early_v2, kMaxTimeOnNonDefaultNetworkSecs,
+          kMaxNumMigrationsToNonDefaultNetworkOnPathDegrading,
           allow_server_migration, race_cert_verification, estimate_initial_rtt,
           env->connection_options, env->client_connection_options,
           enable_token_binding);

@@ -59,6 +59,8 @@ const char kQuicMigrateSessionsOnNetworkChangeV2[] =
     "migrate_sessions_on_network_change_v2";
 const char kQuicMaxTimeOnNonDefaultNetworkSeconds[] =
     "max_time_on_non_default_network_seconds";
+const char kQuicMaxNumMigrationsToNonDefaultNetworkOnPathDegrading[] =
+    "max_num_migrations_to_non_default_network_on_path_degrading";
 const char kQuicUserAgentId[] = "user_agent_id";
 const char kQuicMigrateSessionsEarly[] = "migrate_sessions_early";
 const char kQuicMigrateSessionsEarlyV2[] = "migrate_sessions_early_v2";
@@ -304,6 +306,7 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
 
       bool quic_migrate_sessions_on_network_change_v2 = false;
       int quic_max_time_on_non_default_network_seconds = 0;
+      int quic_max_num_migrations_to_non_default_network_on_path_degrading = 0;
       if (quic_args->GetBoolean(kQuicMigrateSessionsOnNetworkChangeV2,
                                 &quic_migrate_sessions_on_network_change_v2)) {
         session_params->quic_migrate_sessions_on_network_change_v2 =
@@ -313,6 +316,13 @@ void URLRequestContextConfig::ParseAndSetExperimentalOptions(
                 &quic_max_time_on_non_default_network_seconds)) {
           session_params->quic_max_time_on_non_default_network_seconds =
               quic_max_time_on_non_default_network_seconds;
+        }
+        if (quic_args->GetInteger(
+                kQuicMaxNumMigrationsToNonDefaultNetworkOnPathDegrading,
+                &quic_max_num_migrations_to_non_default_network_on_path_degrading)) {
+          session_params
+              ->quic_max_num_migrations_to_non_default_network_on_path_degrading =
+              quic_max_num_migrations_to_non_default_network_on_path_degrading;
         }
       }
 
