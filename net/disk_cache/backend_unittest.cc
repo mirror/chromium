@@ -2168,7 +2168,7 @@ void DiskCacheBackendTest::BackendTransaction(const std::string& name,
   cache_.reset();
   cache_impl_ = NULL;
 
-  ASSERT_TRUE(CheckCacheIntegrity(cache_path_, new_eviction_, mask));
+  ASSERT_TRUE(CheckCacheIntegrity(cache_path_, new_eviction_, MaxSize(), mask));
   success_ = true;
 }
 
@@ -2427,7 +2427,8 @@ TEST_F(DiskCacheBackendTest, DeleteOld) {
   ASSERT_THAT(cb.GetResult(rv), IsOk());
   base::ThreadRestrictions::SetIOAllowed(prev);
   cache_.reset();
-  EXPECT_TRUE(CheckCacheIntegrity(cache_path_, new_eviction_, mask_));
+  EXPECT_TRUE(CheckCacheIntegrity(cache_path_, new_eviction_, /*max_size = */ 0,
+                                  mask_));
 }
 #endif
 
