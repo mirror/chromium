@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5cc5fe1b_01265168",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-11T06:22:16Z",
+      "side": 1,
+      "message": "This was just an oversight when I was resolving merge conflict.\n\nReverted. Thanks for catching this.",
+      "parentUuid": "64cd25b5_9db5c6aa",
+      "revId": "1bb216923438ae2d9a4360ddc7c6c3d8ecb0a01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e1c291d_9368b9b3",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-11T03:46:45Z",
       "side": 1,
       "message": "The code below is a bit hard to follow, and seems to be doing similar work twice for each step. Isn\u0027t there any way to make it easier to read? Add some helper functions to NGLogicalOffset, ContainingBlockInfo, etc.?",
+      "revId": "1bb216923438ae2d9a4360ddc7c6c3d8ecb0a01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a6d011_353a76e0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-11T06:22:16Z",
+      "side": 1,
+      "message": "I agree that the code below is not just hard to follow, but awful. \n\nBut the computation it is doing is very hard to understand.\nIt took me 2 days just to figure out what to do.\n\nThere is nothing I see that can be sanely refactored into helper methods.\nIt is just \"convert logical to physical to logical to physical.....\"\n\nBest I could do was to write a detailed comment. If you really understand the comment,\ncode does make sense.\n\nIf you have any concrete suggestions on how to make it better, I\u0027d\nlove to implement them.",
+      "parentUuid": "7e1c291d_9368b9b3",
       "revId": "1bb216923438ae2d9a4360ddc7c6c3d8ecb0a01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
