@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a99ccb4_8b1e4315",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-11T15:02:55Z",
+      "side": 0,
+      "message": "The comment still applies to things other than DropTemporaryReference() right? Or are those used elsewhere too?",
+      "revId": "795f13207d250c54415d5070bf04c1e23f0e8e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
