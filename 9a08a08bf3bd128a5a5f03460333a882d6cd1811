@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acf3ddf4_41b12b65",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T16:38:24Z",
+      "side": 1,
+      "message": "From Unit testing best practices: \"Test code using real APIs - don’t define back doors only for tests.\"\n\nhttp://go/unit-test-practices#public-apis\n\nCan we use following code to accomplish the same result?:\n[webController setOverlayPreviewMode:YES];\n[webController triggerPendingLoad];",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 29
+      },
+      "revId": "9a08a08bf3bd128a5a5f03460333a882d6cd1811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5756e7c_257d9c01",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T16:38:24Z",
+      "side": 1,
+      "message": "If I understand the code WebState::TakeSnapshot will not force a reload. It just takes a snapshot of an empty view if CanTakeSnapshot. If my understanding is correct, can we update this comment to make less ambiguous?",
+      "range": {
+        "startLine": 841,
+        "startChar": 40,
+        "endLine": 841,
+        "endChar": 46
+      },
+      "revId": "9a08a08bf3bd128a5a5f03460333a882d6cd1811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0344e9d7_d37bd389",
+        "filename": "ios/web/web_state/web_state_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T16:38:24Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 155,
+        "startChar": 62,
+        "endLine": 155,
+        "endChar": 67
+      },
+      "revId": "9a08a08bf3bd128a5a5f03460333a882d6cd1811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
