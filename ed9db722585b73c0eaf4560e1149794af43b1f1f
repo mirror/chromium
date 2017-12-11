@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "ae93c029_19ca25c0",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-11T02:33:16Z",
+      "side": 1,
+      "message": "WTF::MutexBase supports recursive lock, while base one doesn\u0027t, was the biggest when I looked last time. We\u0027ll need to either have the base one support it or remove recursive usage in Blink. Reg: non-recursive ones I suspect migrating them to base ones would be trivial. (Putting aside, allowing these base ones in Blink itself doesn\u0027t seem too harmful, mod potential minor confusion.)",
+      "parentUuid": "2bd2f7a1_34197e03",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "209e10a5_20a82b5c",
         "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
         "patchSetId": 4
