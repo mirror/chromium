@@ -22,6 +22,30 @@
       "revId": "ec42e8531dcda166d4ac9c42047e7f061e314c77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac798a6_97d3b84b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/DownloadPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-11T19:47:51Z",
+      "side": 1,
+      "message": "Turns out getting path for the default directory is also going to be nontrivial (and dependent on the directory selector) so replacing both parts for a future CL.",
+      "parentUuid": "4d59bd4c_c5de055b",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 87
+      },
+      "revId": "ec42e8531dcda166d4ac9c42047e7f061e314c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
