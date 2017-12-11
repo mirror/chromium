@@ -14,6 +14,8 @@
 #include "chrome/browser/chromeos/ash_config.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
+#include "components/arc/common/video_decode_accelerator.mojom.h"
+#include "components/arc/common/video_decode_accelerator_deprecated.mojom.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/gpu_service_registry.h"
 #include "content/public/common/service_manager_connection.h"
@@ -54,6 +56,15 @@ class VideoAcceleratorFactoryService : public mojom::VideoAcceleratorFactory {
 
   ~VideoAcceleratorFactoryService() override = default;
 
+  void CreateDecodeAcceleratorDeprecated(
+      mojom::VideoDecodeAcceleratorDeprecatedRequest request) override {
+    content::BrowserThread::PostTask(
+        content::BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&content::BindInterfaceInGpuProcess<
+                           mojom::VideoDecodeAcceleratorDeprecated>,
+                       std::move(request)));
+  }
+
   void CreateDecodeAccelerator(
       mojom::VideoDecodeAcceleratorRequest request) override {
     content::BrowserThread::PostTask(
@@ -89,6 +100,12 @@ class VideoAcceleratorFactoryServiceMus
 
   ~VideoAcceleratorFactoryServiceMus() override {
     DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  }
+
+  void CreateDecodeAcceleratorDeprecated(
+      mojom::VideoDecodeAcceleratorDeprecatedRequest request) override {
+    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    arc_->CreateVideoDecodeAcceleratorDeprecated(std::move(request));
   }
 
   void CreateDecodeAccelerator(
