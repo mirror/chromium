@@ -95,7 +95,8 @@ class VizHostProxyImpl : public VizHostProxy {
       manager_->CreateRootCompositorFrameSink(
           frame_sink_id, surface_handle, force_software_compositing,
           renderer_settings, std::move(request), std::move(client),
-          std::move(display_private_request));
+          std::move(display_private_request),
+          nullptr /* display_private_client */);
     }
   }
 
