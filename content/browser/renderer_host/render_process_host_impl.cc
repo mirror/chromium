@@ -3904,6 +3904,7 @@ void RenderProcessHostImpl::OnProcessLaunched() {
     // propagate priority changes immediately to ChildProcessLauncher.
 #if defined(OS_ANDROID)
     UpdateProcessPriority();
+    GetRendererInterface()->SetProcessBackgrounded(priority_.background);
 #endif
 
     // Share histograms between the renderer and this process.
