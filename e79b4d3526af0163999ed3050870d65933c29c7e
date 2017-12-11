@@ -16,6 +16,24 @@
       "revId": "e79b4d3526af0163999ed3050870d65933c29c7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4492809c_3d627b47",
+        "filename": "media/gpu/vaapi_video_encode_accelerator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-12-11T07:30:09Z",
+      "side": 1,
+      "message": "Yeah, almost subjectively chosen. What we need to pass the CTS is about 4119 bytes. So, I choose 8192 byte.",
+      "parentUuid": "9a193885_cf0a6614",
+      "revId": "e79b4d3526af0163999ed3050870d65933c29c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
