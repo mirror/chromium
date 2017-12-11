@@ -69,6 +69,24 @@
       "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f3d8a6_a989644d",
+        "filename": "content/utility/utility_main.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-11T17:49:00Z",
+      "side": 1,
+      "message": "generally, see man strace. But the output is unwieldy and not always useful.  I was hoping you might know that there is an error returned from a particular section of the code to narrow it down... But I\u0027ll poke around.\n\nQuickest repro?",
+      "parentUuid": "d4d7d64f_25315792",
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
