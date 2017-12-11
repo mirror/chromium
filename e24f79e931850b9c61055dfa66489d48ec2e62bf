@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8e298300_dd05fd76",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-12-11T11:09:52Z",
+      "side": 1,
+      "message": "Yeah it seems like a big cl, I will fix this in 3 follow up cls, like https://chromium-review.googlesource.com/c/chromium/src/+/818742\nThe v8_snapshot_generator and utility_thread does not return a task runner on calling ToSingleThreadTaskRunner().",
+      "parentUuid": "2404f1be_6d4e1b61",
+      "revId": "e24f79e931850b9c61055dfa66489d48ec2e62bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35d46843_1c8245e3",
         "filename": "gin/isolate_holder.cc",
         "patchSetId": 5
