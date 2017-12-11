@@ -17,7 +17,6 @@
 #include "base/files/file.h"
 #include "base/files/file_util.h"
 #include "base/json/json_parser.h"
-#include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string_number_conversions.h"
@@ -791,7 +790,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       // Create the printer map in the cache, and populate it.
       auto& manufacturer_metadata = it->second;
       CHECK(manufacturer_metadata.printers.get() == nullptr);
-      manufacturer_metadata.printers = base::MakeUnique<
+      manufacturer_metadata.printers = std::make_unique<
           std::unordered_map<std::string, ResolvePrintersResponse>>();
 
       for (const auto& entry : contents) {
