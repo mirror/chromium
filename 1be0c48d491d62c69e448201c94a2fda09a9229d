@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9a2722c_327d90d7",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-11T03:44:28Z",
+      "side": 1,
+      "message": "double negative to the win! :P\nDone.",
+      "parentUuid": "be7b7dc7_72eb4544",
+      "range": {
+        "startLine": 442,
+        "startChar": 58,
+        "endLine": 442,
+        "endChar": 71
+      },
+      "revId": "1be0c48d491d62c69e448201c94a2fda09a9229d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b43f055_d861d84c",
         "filename": "cc/scheduler/scheduler.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "1be0c48d491d62c69e448201c94a2fda09a9229d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800f7ac3_6c471635",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-12-11T03:44:28Z",
+      "side": 1,
+      "message": "Having it next to main_thread_missed_last_deadline_ feels like it would make it easier to understand the difference between them. And yeah, I felt using a state bit instead of a deadline makes for an easier logic to follow. And the state machine is the best place to track it.",
+      "parentUuid": "0b43f055_d861d84c",
+      "range": {
+        "startLine": 451,
+        "startChar": 21,
+        "endLine": 451,
+        "endChar": 64
+      },
+      "revId": "1be0c48d491d62c69e448201c94a2fda09a9229d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
