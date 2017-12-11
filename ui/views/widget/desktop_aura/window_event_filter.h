@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "ui/events/event_handler.h"
+#include "ui/views/linux_ui/linux_ui.h"
 #include "ui/views/views_export.h"
 
 namespace views {
