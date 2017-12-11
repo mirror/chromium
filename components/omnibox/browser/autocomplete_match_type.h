@@ -76,6 +76,13 @@ struct AutocompleteMatchType {
   static base::string16 ToAccessibilityLabel(
       const AutocompleteMatch& match,
       const base::string16& match_text,
+      size_t match_index,
+      size_t total_matches,
+      int* label_prefix_length = nullptr);
+
+  static base::string16 ToAccessibilityLabel(
+      const AutocompleteMatch& match,
+      const base::string16& match_text,
       int* label_prefix_length = nullptr);
 };
 
