@@ -22,6 +22,7 @@
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/interfaces/arc.mojom.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
+#include "ui/base/ui_base_switches_util.h"
 
 namespace arc {
 
@@ -113,9 +114,9 @@ class VideoAcceleratorFactoryServiceMus
 
 std::unique_ptr<mojom::VideoAcceleratorFactory>
 CreateVideoAcceleratorFactory() {
-  if (chromeos::GetAshConfig() == ash::Config::CLASSIC)
-    return std::make_unique<VideoAcceleratorFactoryService>();
-  return std::make_unique<VideoAcceleratorFactoryServiceMus>();
+  if (switches::IsMusHostingViz())
+    return std::make_unique<VideoAcceleratorFactoryServiceMus>();
+  return std::make_unique<VideoAcceleratorFactoryService>();
 }
 
 }  // namespace
