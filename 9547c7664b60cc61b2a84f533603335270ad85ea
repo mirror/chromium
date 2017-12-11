@@ -22,6 +22,23 @@
       "revId": "9547c7664b60cc61b2a84f533603335270ad85ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c35870_36a292c4",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-11T04:07:52Z",
+      "side": 1,
+      "message": "optional: Should we DCHECK(AskedToTerminate())?",
+      "revId": "9547c7664b60cc61b2a84f533603335270ad85ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
