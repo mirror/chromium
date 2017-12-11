@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "454d0181_ff3b926e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-11T19:01:35Z",
+      "side": 1,
+      "message": "Since the CL contains some other change beyond renaming and revising comments, could you make the CL description more specific? Like, which functions are changed, and how they are changed.",
+      "revId": "cb7da231784c7f46932c1d6f3931591c7e07f902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

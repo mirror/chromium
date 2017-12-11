@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "085f574a_bb93e6b8",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-11T19:01:35Z",
+      "side": 0,
+      "message": "Should flip to true since TryDHTMLCopy() and DispatchCopyEvent() have opposite return values.",
+      "range": {
+        "startLine": 493,
+        "startChar": 11,
+        "endLine": 493,
+        "endChar": 16
+      },
+      "revId": "97461ea219a24a5bf9ffe51cf4a7eb1d1633aeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd0b11e_0abc4520",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-11T19:01:35Z",
+      "side": 0,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 504,
+        "startChar": 11,
+        "endLine": 504,
+        "endChar": 16
+      },
+      "revId": "97461ea219a24a5bf9ffe51cf4a7eb1d1633aeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d110b49_7666a4b1",
         "filename": "third_party/WebKit/Source/core/editing/Editor.h",
         "patchSetId": 1
