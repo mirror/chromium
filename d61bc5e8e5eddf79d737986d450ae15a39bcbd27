@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58db264b_2a307ff2",
+        "filename": "chromeos/network/managed_network_configuration_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-11T13:08:49Z",
+      "side": 0,
+      "message": "Note: This looks like a test to make sure if mock set up works well. So, removed, too.\nIf not (i.e., if we should keep this), please let me know.",
+      "revId": "d61bc5e8e5eddf79d737986d450ae15a39bcbd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
