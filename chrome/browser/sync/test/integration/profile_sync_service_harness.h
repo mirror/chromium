@@ -139,6 +139,9 @@ class ProfileSyncServiceHarness {
   // Signals that sync setup is complete, and that PSS may begin syncing.
   void FinishSyncSetup();
 
+  // Run all tasks posted to the sync thread task runner.
+  void RunSyncThreadTasks();
+
  private:
   ProfileSyncServiceHarness(Profile* profile,
                             const std::string& username,

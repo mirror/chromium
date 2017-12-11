@@ -13,11 +13,14 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/synchronization/waitable_event.h"
+#include "base/threading/thread.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/test/integration/quiesce_status_change_checker.h"
 #include "chrome/browser/sync/test/integration/single_client_status_change_checker.h"
+#include "chrome/browser/sync/test/integration/status_change_checker.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
@@ -90,6 +93,47 @@ class SyncSetupChecker : public SingleClientStatusChangeChecker {
   }
 
   std::string GetDebugMessage() const override { return "Sync Setup"; }
+};
+
+class ThreadTaskFlusher : public StatusChangeChecker {
+ public:
+  ThreadTaskFlusher(base::Thread* thread)
+      : thread_(thread),
+        done_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
+              base::WaitableEvent::InitialState::NOT_SIGNALED) {
+    thread->task_runner()->PostTask(
+        FROM_HERE, base::BindOnce(&ThreadTaskFlusher::FlushComplete,
+                                  base::Unretained(this)));
+  }
+
+  std::string GetDebugMessage() const override { return "AwaitThreadFlush"; }
+
+  bool IsExitConditionSatisfied() override {
+    LOG(ERROR) << "ThreadTaskFlusher::IsExitConditionSatisfied...";
+    if (!thread_->message_loop())
+      return true;
+    return done_.IsSignaled();
+  }
+
+ protected:
+  base::TimeDelta GetTimeoutDuration() override {
+    // Timeout isn't allowed because it would leave a posted task trying to
+    // access this object. This could be avoided with a WeakPtr but hasn't
+    // been necessary.
+    return base::TimeDelta::FromDays(999);
+  }
+
+ private:
+  void FlushComplete() {
+    done_.Signal();
+    task_runner_->PostTask(FROM_HERE,
+                           base::BindOnce(&ThreadTaskFlusher::StopWaiting,
+                                          base::Unretained(this)));
+    LOG(ERROR) << "ThreadTaskFlusher::FlushComplete...";
+  }
+
+  base::Thread* const thread_;
+  base::WaitableEvent done_;
 };
 
 }  // namespace
@@ -363,6 +407,11 @@ bool ProfileSyncServiceHarness::IsSyncDisabled() const {
 void ProfileSyncServiceHarness::FinishSyncSetup() {
   sync_blocker_.reset();
   service()->SetFirstSetupComplete();
+}
+
+void ProfileSyncServiceHarness::RunSyncThreadTasks() {
+  ThreadTaskFlusher flusher(service()->sync_thread_.get());
+  flusher.Wait();
 }
 
 SyncCycleSnapshot ProfileSyncServiceHarness::GetLastCycleSnapshot() const {
