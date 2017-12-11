@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a392316_fc548e92",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3148,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-11T14:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cb35c09_717cecf5",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b47a6beb_1c4912f9",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d94367_e1a3cdbb",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-11T14:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b47a6beb_1c4912f9",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "379f5afa_cba700c3",
+        "filename": "content/renderer/media/audio_input_ipc_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-11T14:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccc7019f_2aa1da46",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65aeb74a_996c1994",
         "filename": "content/renderer/media/audio_input_ipc_factory.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d8de98_c50f8930",
+        "filename": "content/renderer/media/audio_input_ipc_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-11T14:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65aeb74a_996c1994",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,41 @@
     },
     {
       "key": {
+        "uuid": "4a722e19_890e35ca",
+        "filename": "content/renderer/media/audio_input_ipc_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-11T14:54:23Z",
+      "side": 1,
+      "message": "If I remember correctly from the output factory review, I wanted to return \"scoped_refptr\u003cbase::SingleThreadTaskRunner\u003e\", but Olga didn\u0027t like if since there is extra ref counting in cases when the user just wants to post a task (e.g. factory-\u003eio_task_runner()-\u003ePostTask(...);). I, on the other hand, didn\u0027t want \"base::SingleThreadTaskRunner*\", since I want ownership sharing to be explicit in the interface. This signature seems to meet both of our requirements :).",
+      "parentUuid": "4702db11_c33fb690",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1752686_a8a9301f",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4991,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-11T14:54:23Z",
+      "side": 1,
+      "message": "I don\u0027t think this is safe (GetRemoteInterfaces is reset on navigation, which may lead to the request being dropped). I\u0027ll ask you for another review round when it\u0027s fixed.",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bc22e6b_402dba5b",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 8
@@ -101,6 +208,24 @@
       "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb0987b_409fcda3",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-11T14:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bc22e6b_402dba5b",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
