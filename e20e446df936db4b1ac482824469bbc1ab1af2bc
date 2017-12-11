@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22c3f241_dccd655f",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T11:48:39Z",
+      "side": 1,
+      "message": "Can we just call main_contents-\u003eSetVisible(false) here?\n\nIt would be good to skip the SetPaintToLayer() calls if we can since it complicates other things (e.g. focus rings).\n\nI think there are some clipping issues around layers specific to Windows too.. (e.g. Issue 593203 has trouble rounding corners for Windows).",
+      "revId": "e20e446df936db4b1ac482824469bbc1ab1af2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faad33bb_0c47322a",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T11:48:39Z",
+      "side": 1,
+      "message": "(and set it back to visible here)",
+      "revId": "e20e446df936db4b1ac482824469bbc1ab1af2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
