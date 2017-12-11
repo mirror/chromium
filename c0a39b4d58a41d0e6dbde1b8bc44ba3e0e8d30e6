@@ -16,6 +16,23 @@
       "revId": "c0a39b4d58a41d0e6dbde1b8bc44ba3e0e8d30e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f953771_44beef6d",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-11T22:19:20Z",
+      "side": 1,
+      "message": "I believe you want to do this on in AccessibilityManager::PostUnloadChromeVox as well (then you can eliminate PowerManagerClient include as well).",
+      "revId": "c0a39b4d58a41d0e6dbde1b8bc44ba3e0e8d30e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
