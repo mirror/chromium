@@ -252,8 +252,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
   WaitUntilObserver* observer = WaitUntilObserver::Create(
       WorkerGlobalScope(), WaitUntilObserver::kMessage, event_id);
 
-  Event* event =
-      ExtendableMessageEvent::Create(value, origin, ports, source, observer);
+  Event* event = ExtendableMessageEvent::Create(std::move(value), origin, ports,
+                                                source, observer);
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
 }
 
@@ -277,8 +277,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
   WaitUntilObserver* observer = WaitUntilObserver::Create(
       WorkerGlobalScope(), WaitUntilObserver::kMessage, event_id);
 
-  Event* event =
-      ExtendableMessageEvent::Create(value, origin, ports, source, observer);
+  Event* event = ExtendableMessageEvent::Create(std::move(value), origin, ports,
+                                                source, observer);
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
 }
 

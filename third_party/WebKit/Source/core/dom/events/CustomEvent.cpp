@@ -25,6 +25,8 @@
 
 #include "core/dom/events/CustomEvent.h"
 
+#include <memory>
+
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
 
@@ -63,7 +65,7 @@ ScriptValue CustomEvent::detail(ScriptState* script_state) const {
   // Returns a clone of |detail_| if the world is different.
   if (!world_ || world_->GetWorldId() != script_state->World().GetWorldId()) {
     v8::Local<v8::Value> value = detail_.NewLocal(isolate);
-    scoped_refptr<SerializedScriptValue> serialized =
+    std::unique_ptr<SerializedScriptValue> serialized =
         SerializedScriptValue::SerializeAndSwallowExceptions(isolate, value);
     return ScriptValue(script_state, serialized->Deserialize(isolate));
   }

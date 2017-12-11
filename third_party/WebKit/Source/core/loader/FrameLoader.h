@@ -171,7 +171,7 @@ class CORE_EXPORT FrameLoader final {
 
   void UpdateForSameDocumentNavigation(const KURL&,
                                        SameDocumentNavigationSource,
-                                       scoped_refptr<SerializedScriptValue>,
+                                       std::unique_ptr<SerializedScriptValue>,
                                        HistoryScrollRestorationType,
                                        FrameLoadType,
                                        Document*);
@@ -246,7 +246,7 @@ class CORE_EXPORT FrameLoader final {
                  HistoryItem*);
 
   void LoadInSameDocument(const KURL&,
-                          scoped_refptr<SerializedScriptValue> state_object,
+                          std::unique_ptr<SerializedScriptValue> state_object,
                           FrameLoadType,
                           HistoryItem*,
                           ClientRedirectPolicy,

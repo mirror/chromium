@@ -1047,7 +1047,7 @@ TEST_P(ParameterizedWebFrameTest, DispatchMessageEventWithOriginCheck) {
 
 namespace {
 
-scoped_refptr<SerializedScriptValue> SerializeString(
+std::unique_ptr<SerializedScriptValue> SerializeString(
     const StringView& message,
     ScriptState* script_state) {
   // This is inefficient, but avoids duplicating serialization logic for the
@@ -1068,10 +1068,10 @@ TEST_P(ParameterizedWebFrameTest, PostMessageThenDetach) {
   LocalFrame* frame =
       ToLocalFrame(web_view_helper.WebView()->GetPage()->MainFrame());
   NonThrowableExceptionState exception_state;
-  scoped_refptr<SerializedScriptValue> message =
+  std::unique_ptr<SerializedScriptValue> message =
       SerializeString("message", ToScriptStateForMainWorld(frame));
   MessagePortArray message_ports;
-  frame->DomWindow()->postMessage(message, message_ports, "*",
+  frame->DomWindow()->postMessage(std::move(message), message_ports, "*",
                                   frame->DomWindow(), exception_state);
   web_view_helper.Reset();
   EXPECT_FALSE(exception_state.HadException());
@@ -11941,27 +11941,31 @@ TEST_F(WebFrameTest, RecordSameDocumentNavigationToHistogram) {
 
   FrameLoader& main_frame_loader =
       web_view_helper.WebView()->MainFrameImpl()->GetFrame()->Loader();
-  scoped_refptr<SerializedScriptValue> message =
+  std::unique_ptr<SerializedScriptValue> message1 =
       SerializeString("message", ToScriptStateForMainWorld(frame));
   tester.ExpectTotalCount(histogramName, 0);
   main_frame_loader.UpdateForSameDocumentNavigation(
-      ToKURL("about:blank"), kSameDocumentNavigationHistoryApi, message,
-      kScrollRestorationAuto, kFrameLoadTypeInitialHistoryLoad,
-      frame->GetDocument());
+      ToKURL("about:blank"), kSameDocumentNavigationHistoryApi,
+      std::move(message1), kScrollRestorationAuto,
+      kFrameLoadTypeInitialHistoryLoad, frame->GetDocument());
   // The bucket index corresponds to the definition of
   // |SinglePageAppNavigationType|.
   tester.ExpectBucketCount(histogramName,
                            kSPANavTypeHistoryPushStateOrReplaceState, 1);
+  std::unique_ptr<SerializedScriptValue> message2 =
+      SerializeString("message", ToScriptStateForMainWorld(frame));
   main_frame_loader.UpdateForSameDocumentNavigation(
-      ToKURL("about:blank"), kSameDocumentNavigationDefault, message,
-      kScrollRestorationManual, kFrameLoadTypeBackForward,
+      ToKURL("about:blank"), kSameDocumentNavigationDefault,
+      std::move(message2), kScrollRestorationManual, kFrameLoadTypeBackForward,
       frame->GetDocument());
   tester.ExpectBucketCount(histogramName,
                            kSPANavTypeSameDocumentBackwardOrForward, 1);
+  std::unique_ptr<SerializedScriptValue> message3 =
+      SerializeString("message", ToScriptStateForMainWorld(frame));
   main_frame_loader.UpdateForSameDocumentNavigation(
-      ToKURL("about:blank"), kSameDocumentNavigationDefault, message,
-      kScrollRestorationManual, kFrameLoadTypeInitialHistoryLoad,
-      frame->GetDocument());
+      ToKURL("about:blank"), kSameDocumentNavigationDefault,
+      std::move(message3), kScrollRestorationManual,
+      kFrameLoadTypeInitialHistoryLoad, frame->GetDocument());
   tester.ExpectBucketCount(histogramName, kSPANavTypeOtherFragmentNavigation,
                            1);
   // kSameDocumentNavigationHistoryApi and kFrameLoadTypeBackForward is an

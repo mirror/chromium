@@ -5,6 +5,8 @@
 #ifndef IDBValueWrapping_h
 #define IDBValueWrapping_h
 
+#include <memory>
+
 #include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
@@ -175,7 +177,7 @@ class MODULES_EXPORT IDBValueWrapper {
 
  private:
   // V8 value serialization state.
-  scoped_refptr<SerializedScriptValue> serialized_value_;
+  std::unique_ptr<SerializedScriptValue> serialized_value_;
   Vector<scoped_refptr<BlobDataHandle>> blob_handles_;
   Vector<WebBlobInfo> blob_info_;
 

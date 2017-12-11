@@ -27,6 +27,8 @@
 #ifndef Internals_h
 #define Internals_h
 
+#include <memory>
+
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptValue.h"
@@ -432,8 +434,9 @@ class Internals final : public ScriptWrappable {
   DOMRectList* draggableRegions(Document*, ExceptionState&);
   DOMRectList* nonDraggableRegions(Document*, ExceptionState&);
 
-  DOMArrayBuffer* serializeObject(scoped_refptr<SerializedScriptValue>) const;
-  scoped_refptr<SerializedScriptValue> deserializeBuffer(DOMArrayBuffer*) const;
+  DOMArrayBuffer* serializeObject(std::unique_ptr<SerializedScriptValue>) const;
+  std::unique_ptr<SerializedScriptValue> deserializeBuffer(
+      DOMArrayBuffer*) const;
 
   DOMArrayBuffer* serializeWithInlineWasm(ScriptValue) const;
   ScriptValue deserializeBufferContainingWasm(ScriptState*,

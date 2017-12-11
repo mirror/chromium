@@ -2523,9 +2523,10 @@ void RenderFrameImpl::OnPostMessageEvent(
         WebString::FromUTF16(params.target_origin));
   }
 
-  WebDOMMessageEvent msg_event(
-      serialized_script_value, WebString::FromUTF16(params.source_origin),
-      source_frame, frame_->GetDocument(), std::move(params.message_ports));
+  WebDOMMessageEvent msg_event(std::move(serialized_script_value),
+                               WebString::FromUTF16(params.source_origin),
+                               source_frame, frame_->GetDocument(),
+                               std::move(params.message_ports));
   frame_->DispatchMessageEventWithOriginCheck(target_origin, msg_event);
 }
 

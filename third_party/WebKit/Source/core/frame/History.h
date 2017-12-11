@@ -59,12 +59,12 @@ class CORE_EXPORT History final : public ScriptWrappable,
   void forward(ScriptState*, ExceptionState&);
   void go(ScriptState*, int delta, ExceptionState&);
 
-  void pushState(scoped_refptr<SerializedScriptValue>,
+  void pushState(std::unique_ptr<SerializedScriptValue>,
                  const String& title,
                  const String& url,
                  ExceptionState&);
 
-  void replaceState(scoped_refptr<SerializedScriptValue> data,
+  void replaceState(std::unique_ptr<SerializedScriptValue> data,
                     const String& title,
                     const String& url,
                     ExceptionState& exception_state) {
@@ -93,7 +93,7 @@ class CORE_EXPORT History final : public ScriptWrappable,
 
   KURL UrlForState(const String& url);
 
-  void StateObjectAdded(scoped_refptr<SerializedScriptValue>,
+  void StateObjectAdded(std::unique_ptr<SerializedScriptValue>,
                         const String& title,
                         const String& url,
                         HistoryScrollRestorationType,
@@ -104,7 +104,7 @@ class CORE_EXPORT History final : public ScriptWrappable,
 
   bool ShouldThrottleStateObjectChanges();
 
-  scoped_refptr<SerializedScriptValue> last_state_object_requested_;
+  std::unique_ptr<SerializedScriptValue> last_state_object_requested_;
   struct {
     int count;
     TimeTicks last_updated;

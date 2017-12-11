@@ -40,8 +40,8 @@ class CORE_EXPORT V8ScriptValueSerializer
   explicit V8ScriptValueSerializer(scoped_refptr<ScriptState>,
                                    const Options& = Options());
 
-  scoped_refptr<SerializedScriptValue> Serialize(v8::Local<v8::Value>,
-                                                 ExceptionState&);
+  std::unique_ptr<SerializedScriptValue> Serialize(v8::Local<v8::Value>,
+                                                   ExceptionState&);
 
  protected:
   // Returns true if the DOM object was successfully written.
@@ -100,7 +100,7 @@ class CORE_EXPORT V8ScriptValueSerializer
   void FreeBufferMemory(void* buffer) override;
 
   scoped_refptr<ScriptState> script_state_;
-  scoped_refptr<SerializedScriptValue> serialized_script_value_;
+  std::unique_ptr<SerializedScriptValue> serialized_script_value_;
   v8::ValueSerializer serializer_;
   const Transferables* transferables_ = nullptr;
   const ExceptionState* exception_state_ = nullptr;
@@ -114,7 +114,7 @@ class CORE_EXPORT V8ScriptValueSerializer
 };
 
 // For code testing V8ScriptValueSerializer
-scoped_refptr<SerializedScriptValue> SerializedValue(
+std::unique_ptr<SerializedScriptValue> SerializedValue(
     const Vector<uint8_t>& bytes);
 
 }  // namespace blink

@@ -27,6 +27,9 @@
 #ifndef PopStateEvent_h
 #define PopStateEvent_h
 
+#include <memory>
+#include <utility>
+
 #include "core/dom/events/Event.h"
 #include "core/events/PopStateEventInit.h"
 #include "platform/bindings/DOMWrapperWorld.h"
@@ -44,7 +47,8 @@ class PopStateEvent final : public Event {
  public:
   ~PopStateEvent() override;
   static PopStateEvent* Create();
-  static PopStateEvent* Create(scoped_refptr<SerializedScriptValue>, History*);
+  static PopStateEvent* Create(std::unique_ptr<SerializedScriptValue>,
+                               History*);
   static PopStateEvent* Create(ScriptState*,
                                const AtomicString&,
                                const PopStateEventInit&);
@@ -53,7 +57,7 @@ class PopStateEvent final : public Event {
   SerializedScriptValue* SerializedState() const {
     return serialized_state_.get();
   }
-  void SetSerializedState(scoped_refptr<SerializedScriptValue> state) {
+  void SetSerializedState(std::unique_ptr<SerializedScriptValue> state) {
     DCHECK(!serialized_state_);
     serialized_state_ = std::move(state);
   }
@@ -68,9 +72,9 @@ class PopStateEvent final : public Event {
  private:
   PopStateEvent();
   PopStateEvent(ScriptState*, const AtomicString&, const PopStateEventInit&);
-  PopStateEvent(scoped_refptr<SerializedScriptValue>, History*);
+  PopStateEvent(std::unique_ptr<SerializedScriptValue>, History*);
 
-  scoped_refptr<SerializedScriptValue> serialized_state_;
+  std::unique_ptr<SerializedScriptValue> serialized_state_;
   scoped_refptr<DOMWrapperWorld> world_;
   TraceWrapperV8Reference<v8::Value> state_;
   Member<History> history_;

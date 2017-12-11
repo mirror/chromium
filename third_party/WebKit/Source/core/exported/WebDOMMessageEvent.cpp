@@ -42,12 +42,11 @@
 
 namespace blink {
 
-WebDOMMessageEvent::WebDOMMessageEvent(
-    const WebSerializedScriptValue& message_data,
-    const WebString& origin,
-    const WebFrame* source_frame,
-    const WebDocument& target_document,
-    WebVector<MessagePortChannel> channels)
+WebDOMMessageEvent::WebDOMMessageEvent(WebSerializedScriptValue message_data,
+                                       const WebString& origin,
+                                       const WebFrame* source_frame,
+                                       const WebDocument& target_document,
+                                       WebVector<MessagePortChannel> channels)
     : WebDOMMessageEvent(MessageEvent::Create()) {
   DOMWindow* window = nullptr;
   if (source_frame)
@@ -64,13 +63,14 @@ WebDOMMessageEvent::WebDOMMessageEvent(
   // TODO(esprehn): Chromium always passes empty string for lastEventId, is that
   // right?
   Unwrap<MessageEvent>()->initMessageEvent("message", false, false,
-                                           message_data, origin,
+                                           std::move(message_data), origin,
                                            "" /*lastEventId*/, window, ports);
 }
 
-WebSerializedScriptValue WebDOMMessageEvent::Data() const {
-  return WebSerializedScriptValue(
-      ConstUnwrap<MessageEvent>()->DataAsSerializedScriptValue());
+WebString WebDOMMessageEvent::DataString() const {
+  return WebString(ConstUnwrap<MessageEvent>()
+                       ->DataAsSerializedScriptValue()
+                       ->ToWireString());
 }
 
 WebString WebDOMMessageEvent::Origin() const {

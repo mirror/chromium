@@ -413,14 +413,14 @@ void LocalDOMWindow::EnqueueHashchangeEvent(const String& old_url,
 }
 
 void LocalDOMWindow::EnqueuePopstateEvent(
-    scoped_refptr<SerializedScriptValue> state_object) {
+    std::unique_ptr<SerializedScriptValue> state_object) {
   // FIXME: https://bugs.webkit.org/show_bug.cgi?id=36202 Popstate event needs
   // to fire asynchronously
   DispatchEvent(PopStateEvent::Create(std::move(state_object), history()));
 }
 
 void LocalDOMWindow::StatePopped(
-    scoped_refptr<SerializedScriptValue> state_object) {
+    std::unique_ptr<SerializedScriptValue> state_object) {
   if (!GetFrame())
     return;
 

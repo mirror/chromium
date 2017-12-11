@@ -349,7 +349,7 @@ void LoadablePluginPlaceholder::DidFinishIconRepositionForTestingCallback() {
           content::V8ValueConverter::Create()->ToV8Value(
               &value,
               element.GetDocument().GetFrame()->MainWorldScriptContext()));
-  blink::WebDOMMessageEvent msg_event(message_data);
+  blink::WebDOMMessageEvent msg_event(std::move(message_data));
 
   plugin()->Container()->EnqueueMessageEvent(msg_event);
 }

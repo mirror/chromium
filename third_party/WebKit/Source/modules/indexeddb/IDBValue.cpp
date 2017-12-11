@@ -112,7 +112,7 @@ Vector<String> IDBValue::GetUUIDs() const {
   return uuids;
 }
 
-scoped_refptr<SerializedScriptValue> IDBValue::CreateSerializedValue() const {
+std::unique_ptr<SerializedScriptValue> IDBValue::CreateSerializedValue() const {
   return SerializedScriptValue::Create(data_);
 }
 

@@ -389,7 +389,7 @@ static v8::Local<v8::Value> DeserializeIDBValueData(v8::Isolate* isolate,
   if (!value || value->IsNull())
     return v8::Null(isolate);
 
-  scoped_refptr<SerializedScriptValue> serialized_value =
+  std::unique_ptr<SerializedScriptValue> serialized_value =
       value->CreateSerializedValue();
   SerializedScriptValue::DeserializeOptions options;
   options.blob_info = value->BlobInfo();

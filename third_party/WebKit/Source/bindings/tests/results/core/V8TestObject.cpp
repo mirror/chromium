@@ -879,7 +879,7 @@ static void serializedScriptValueAttributeAttributeSetter(v8::Local<v8::Value> v
   ExceptionState exceptionState(isolate, ExceptionState::kSetterContext, "TestObject", "serializedScriptValueAttribute");
 
   // Prepare the value to be set.
-  scoped_refptr<SerializedScriptValue> cppValue = NativeValueTraits<SerializedScriptValue>::NativeValue(info.GetIsolate(), v8Value, SerializedScriptValue::SerializeOptions(SerializedScriptValue::kNotForStorage), exceptionState);
+  std::unique_ptr<SerializedScriptValue> cppValue = NativeValueTraits<SerializedScriptValue>::NativeValue(info.GetIsolate(), v8Value, SerializedScriptValue::SerializeOptions(SerializedScriptValue::kNotForStorage), exceptionState);
   if (exceptionState.HadException())
     return;
 
@@ -5909,7 +5909,7 @@ static void voidMethodSerializedScriptValueArgMethod(const v8::FunctionCallbackI
     return;
   }
 
-  scoped_refptr<SerializedScriptValue> serializedScriptValueArg;
+  std::unique_ptr<SerializedScriptValue> serializedScriptValueArg;
   serializedScriptValueArg = NativeValueTraits<SerializedScriptValue>::NativeValue(info.GetIsolate(), info[0], SerializedScriptValue::SerializeOptions(SerializedScriptValue::kNotForStorage), exceptionState);
   if (exceptionState.HadException())
     return;
@@ -8492,7 +8492,7 @@ static void postMessageImpl(const char* interfaceName, TestObject* instance, con
     }
   }
 
-  scoped_refptr<SerializedScriptValue> message;
+  std::unique_ptr<SerializedScriptValue> message;
   if (instance->CanTransferArrayBuffersAndImageBitmaps()) {
     // This instance supports sending array buffers by move semantics.
     SerializedScriptValue::SerializeOptions options;

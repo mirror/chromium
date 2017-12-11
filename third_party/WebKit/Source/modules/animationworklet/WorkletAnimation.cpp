@@ -4,6 +4,8 @@
 
 #include "modules/animationworklet/WorkletAnimation.h"
 
+#include <memory>
+
 #include "bindings/modules/v8/animation_effect_read_only_or_animation_effect_read_only_sequence.h"
 #include "core/animation/ElementAnimations.h"
 #include "core/animation/KeyframeEffectModel.h"
@@ -151,7 +153,7 @@ WorkletAnimation* WorkletAnimation::Create(
     String animator_name,
     const AnimationEffectReadOnlyOrAnimationEffectReadOnlySequence& effects,
     DocumentTimelineOrScrollTimeline timeline,
-    scoped_refptr<SerializedScriptValue> options,
+    std::unique_ptr<SerializedScriptValue> options,
     ExceptionState& exception_state) {
   DCHECK(IsMainThread());
 
@@ -179,7 +181,7 @@ WorkletAnimation::WorkletAnimation(
     Document& document,
     const HeapVector<Member<KeyframeEffectReadOnly>>& effects,
     DocumentTimelineOrScrollTimeline timeline,
-    scoped_refptr<SerializedScriptValue> options)
+    std::unique_ptr<SerializedScriptValue> options)
     : animator_name_(animator_name),
       play_state_(Animation::kIdle),
       document_(document),

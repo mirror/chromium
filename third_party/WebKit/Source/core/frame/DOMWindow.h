@@ -89,7 +89,7 @@ class CORE_EXPORT DOMWindow : public EventTargetWithInlineData,
   // Indexed properties
   DOMWindow* AnonymousIndexedGetter(uint32_t index) const;
 
-  void postMessage(scoped_refptr<SerializedScriptValue> message,
+  void postMessage(std::unique_ptr<SerializedScriptValue> message,
                    const MessagePortArray&,
                    const String& target_origin,
                    LocalDOMWindow* source,
