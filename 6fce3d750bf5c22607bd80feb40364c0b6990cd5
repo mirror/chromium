@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6b8abd7_894f1bc5",
+        "filename": "chrome/android/java/res/xml/download_preferences.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-11T16:18:43Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like this is used for any attributes. I think it can be removed.",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 54
+      },
+      "revId": "6fce3d750bf5c22607bd80feb40364c0b6990cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b267eb72_fba1eb2d",
+        "filename": "chrome/android/java/res/xml/main_preferences.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-11T16:18:43Z",
+      "side": 1,
+      "message": "This should be order 13 and AboutChromePreferences should be updated to 14.",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "6fce3d750bf5c22607bd80feb40364c0b6990cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938844e3_320440fa",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-11T16:18:43Z",
+      "side": 1,
+      "message": "This strings already exist as IDS_MENU_DOWNLOADS (and at least one other id..). Please re-use the existing string to save APK size and translation cost.\n\nLocation exists as well, but the uses I could find are all geolocation, so it might make sense to add this new string since it\u0027s a different type of location.",
+      "revId": "6fce3d750bf5c22607bd80feb40364c0b6990cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe621fc9_f2913454",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-11T16:18:43Z",
+      "side": 1,
+      "message": "This description should talk about location referring to the device directory where downloads are stored. It will be used by translators to provide an accurate translation, so it should be as descriptive as possible.",
+      "range": {
+        "startLine": 1154,
+        "startChar": 57,
+        "endLine": 1154,
+        "endChar": 97
+      },
+      "revId": "6fce3d750bf5c22607bd80feb40364c0b6990cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecff7139_59923b5b",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-11T16:18:43Z",
+      "side": 1,
+      "message": "Should this stay disabled by default until the preference TODO\u0027s are finished?",
+      "range": {
+        "startLine": 205,
+        "startChar": 51,
+        "endLine": 205,
+        "endChar": 77
+      },
+      "revId": "6fce3d750bf5c22607bd80feb40364c0b6990cd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
