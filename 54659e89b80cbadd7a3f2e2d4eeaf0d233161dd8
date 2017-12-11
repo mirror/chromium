@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6065236a_b68785c7",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "Nit: braces around multiline if are typical",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef51928_cce0881d",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "Nit: just return false.\n, No need to be fancy here it is unreachable code",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec9a6da_3870d8ac",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "ShouldBypassCache is the meaning of this whole if.\n\ncan we name it something like ShouldBypassCacheDueToUpdateViaCache()",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed285caa_b5698ad4",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "expect_bypass",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5989b0ab_73a20516",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "Use ScopedFeatureList at the beginning of the test instead",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f125a39_ab766006",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "Histograms don\u0027t look interesting for this test.",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646f249f_48b73ebe",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "Maybe EXPECt_ for these",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97f07b0_201aabb5",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "expect_bypass",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728c06af_f6b60ddd",
+        "filename": "content/browser/service_worker/service_worker_context_request_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "Ditto comments as above\n\nSeems we should be able to share code better without the histograms too.",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73de13b4_54b45c23",
+        "filename": "content/browser/service_worker/service_worker_database.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "I thought the spec decided this value is mutable? We don\u0027t make a new registration when updateViaCache changes.",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e64fec_e4808945",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "MakeRefCounted",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558c2c38_b56e80d6",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "https",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ea43e4_cf33579d",
+        "filename": "content/browser/service_worker/service_worker_registration.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "I think this has to trigger an update IPC to all the registration objects in the renderer. Is that intended as followup work?",
+      "revId": "54659e89b80cbadd7a3f2e2d4eeaf0d233161dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

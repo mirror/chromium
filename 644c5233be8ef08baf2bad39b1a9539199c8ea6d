@@ -210,6 +210,24 @@
       "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3237d37_f01c029c",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T00:50:48Z",
+      "side": 1,
+      "message": "Filed https://github.com/w3c/ServiceWorker/issues/1189",
+      "parentUuid": "be197b72_d6d1f06a",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
