@@ -16,6 +16,24 @@
       "revId": "428f9f887b10dafdfbccf2268137f64537ff7c1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc47562_c20ea274",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-11T23:37:44Z",
+      "side": 1,
+      "message": "No, it also checks IsDirectCompositionSupported.",
+      "parentUuid": "d7baab8d_dca9ad6c",
+      "revId": "428f9f887b10dafdfbccf2268137f64537ff7c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
