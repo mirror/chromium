@@ -16,6 +16,24 @@
       "revId": "c7d0d3718e854503a18379905b3ec113fbb43add",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad921846_dc9e4e6c",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-11T17:38:52Z",
+      "side": 1,
+      "message": "Good suggestion. If for readability, herpas even moving to a new module/file would help.\n\nI\u0027ll do that in a follow up to not make this commit less readable.",
+      "parentUuid": "c67f5e01_32513805",
+      "revId": "c7d0d3718e854503a18379905b3ec113fbb43add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
