@@ -16,6 +16,24 @@
       "revId": "1699b1ef11bea6a2bd096482edea781626e6695c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661a34e2_6343989c",
+        "filename": "content/browser/web_contents/web_contents_view_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T23:30:44Z",
+      "side": 1,
+      "message": "Addressed Ted\u0027s feedback - now it gets the manager when necessary, rather than keeping the raw pointer.",
+      "parentUuid": "65b4411a_0fa24b3f",
+      "revId": "1699b1ef11bea6a2bd096482edea781626e6695c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
