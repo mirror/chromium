@@ -43,6 +43,7 @@
 #include "components/app_modal/app_modal_dialog_queue.h"
 #include "components/app_modal/javascript_app_modal_dialog.h"
 #include "components/bookmarks/browser/bookmark_model.h"
+#include "components/favicon/content/content_favicon_driver.h"
 #include "components/history/core/browser/history_service_observer.h"
 #include "components/omnibox/browser/autocomplete_controller.h"
 #include "components/omnibox/browser/omnibox_edit_model.h"
@@ -597,6 +598,70 @@ void BrowserActivationWaiter::OnBrowserSetLastActive(Browser* browser) {
   BrowserList::RemoveObserver(this);
   if (message_loop_runner_.get() && message_loop_runner_->loop_running())
     message_loop_runner_->Quit();
+}
+
+FaviconDownloadsWaiter::FaviconDownloadsWaiter(
+    content::WebContents* web_contents)
+    : WebContentsObserver(web_contents), weak_factory_(this) {
+}
+FaviconDownloadsWaiter::~FaviconDownloadsWaiter() = default;
+
+void FaviconDownloadsWaiter::AlsoRequireUrl(const GURL& url) {
+  required_url_ = url;
+}
+
+void FaviconDownloadsWaiter::AlsoRequireTitle(const base::string16& title) {
+  required_title_ = title;
+}
+
+void FaviconDownloadsWaiter::Wait() {
+  base::RunLoop run_loop;
+  quit_closure_ = run_loop.QuitClosure();
+  run_loop.Run();
+}
+
+void FaviconDownloadsWaiter::DidStopLoading() {
+  TestUrlAndTitle();
+}
+
+void FaviconDownloadsWaiter::TitleWasSet(content::NavigationEntry* entry) {
+  TestUrlAndTitle();
+}
+
+void FaviconDownloadsWaiter::TestUrlAndTitle() {
+  if (!required_url_.is_empty() &&
+      required_url_ != web_contents()->GetLastCommittedURL()) {
+    return;
+  }
+
+  if (required_title_.has_value() &&
+      *required_title_ != web_contents()->GetTitle()) {
+    return;
+  }
+
+  // We need to poll periodically because Delegate::OnFaviconUpdated() is not
+  // guaranteed to be called upon completion of the last database request /
+  // download. In particular, OnFaviconUpdated() might not be called if a
+  // database request confirms the data sent in the previous
+  // OnFaviconUpdated() call.
+  CheckStopWaitingPeriodically();
+}
+
+void FaviconDownloadsWaiter::CheckStopWaitingPeriodically() {
+  EndLoopIfCanStopWaiting();
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::BindOnce(&FaviconDownloadsWaiter::CheckStopWaitingPeriodically,
+                     weak_factory_.GetWeakPtr()),
+      base::TimeDelta::FromSeconds(1));
+}
+
+void FaviconDownloadsWaiter::EndLoopIfCanStopWaiting() {
+  if (!quit_closure_.is_null() &&
+      !favicon::ContentFaviconDriver::FromWebContents(web_contents())
+           ->HasPendingTasksForTest()) {
+    std::move(quit_closure_).Run();
+  }
 }
 
 }  // namespace ui_test_utils

@@ -312,6 +312,43 @@ class BrowserActivationWaiter : public chrome::BrowserListObserver {
   DISALLOW_COPY_AND_ASSIGN(BrowserActivationWaiter);
 };
 
+// Waits for the following the finish:
+// - The pending navigation.
+// - FaviconHandler's pending favicon database requests.
+// - FaviconHandler's pending downloads.
+// - Optionally, for a specific page URL (as a mechanism to wait of Javascript
+//   completion).
+class FaviconDownloadsWaiter : public content::WebContentsObserver {
+ public:
+  explicit FaviconDownloadsWaiter(content::WebContents* web_contents);
+  ~FaviconDownloadsWaiter() override;
+
+  void AlsoRequireUrl(const GURL& url);
+
+  void AlsoRequireTitle(const base::string16& title);
+
+  void Wait();
+
+ private:
+  // content::WebContentsObserver:
+  void DidStopLoading() override;
+
+  void TitleWasSet(content::NavigationEntry* entry) override;
+
+  void TestUrlAndTitle();
+
+  void CheckStopWaitingPeriodically();
+
+  void EndLoopIfCanStopWaiting();
+
+  base::OnceClosure quit_closure_;
+  GURL required_url_;
+  base::Optional<base::string16> required_title_;
+  base::WeakPtrFactory<FaviconDownloadsWaiter> weak_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(FaviconDownloadsWaiter);
+};
+
 }  // namespace ui_test_utils
 
 #endif  // CHROME_TEST_BASE_UI_TEST_UTILS_H_
