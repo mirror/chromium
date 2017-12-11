@@ -166,6 +166,30 @@
       "revId": "4bad8e7424488a70ebb796012c75d3b520fa08cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9a63f8_0ce33c0a",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T21:49:59Z",
+      "side": 1,
+      "message": "I think this metric is used for SadTab CMP. Peter, are you OK to have a change in Sad Tab CMP count in the next release?",
+      "parentUuid": "179e0988_c43d9320",
+      "range": {
+        "startLine": 373,
+        "startChar": 25,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "4bad8e7424488a70ebb796012c75d3b520fa08cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
