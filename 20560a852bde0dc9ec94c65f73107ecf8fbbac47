@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f290eee8_801c9d6b",
+        "filename": "chrome/browser/notifications/transient_notification_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-11T19:05:59Z",
+      "side": 1,
+      "message": "it seems as though we\u0027ll be in a broken state if you don\u0027t fix this TODO in this CL (?)",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "20560a852bde0dc9ec94c65f73107ecf8fbbac47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
