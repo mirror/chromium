@@ -85,6 +85,11 @@ class ASH_EXPORT WallpaperController
   static const char kOriginalWallpaperSubDir[];
   static const char kThumbnailWallpaperSubDir[];
 
+  // The directory and file name to save the downloaded device policy controlled
+  // wallpaper.
+  static const char kDeviceWallpaperDir[];
+  static const char kDeviceWallpaperFile[];
+
   WallpaperController();
   ~WallpaperController() override;
 
@@ -216,6 +221,8 @@ class ASH_EXPORT WallpaperController
       const GURL& wallpaper_url,
       const base::FilePath& file_path,
       const base::FilePath& resized_directory) override;
+  void SetDeviceWallpaperPolicyEnforced(bool enforced) override;
+  void SetDevicePolicyWallpaperIfApplicable() override;
   void ShowUserWallpaper(mojom::WallpaperUserInfoPtr user_info) override;
   void ShowSigninWallpaper() override;
   void RemoveUserWallpaper(mojom::WallpaperUserInfoPtr user_info,
@@ -224,6 +231,8 @@ class ASH_EXPORT WallpaperController
                     const wallpaper::WallpaperInfo& wallpaper_info) override;
   void AddObserver(mojom::WallpaperObserverAssociatedPtrInfo observer) override;
   void GetWallpaperColors(GetWallpaperColorsCallback callback) override;
+  void GetDevicePolicyWallpaperFilePath(
+      GetDevicePolicyWallpaperFilePathCallback callback) override;
 
   // WallpaperResizerObserver:
   void OnWallpaperResized() override;
@@ -293,6 +302,12 @@ class ASH_EXPORT WallpaperController
   // Returns whether the current wallpaper is set by device policy.
   bool IsDevicePolicyWallpaper() const;
 
+  base::FilePath GetDevicePolicyWallpaperFilePath() const;
+
+  // Returns true if device wallpaper policy is in effect and we are at the
+  // login screen right now.
+  bool ShouldSetDevicePolicyWallpaper() const;
+
   // When wallpaper resizes, we can check which displays will be affected. For
   // simplicity, we only lock the compositor for the internal display.
   void GetInternalDisplayCompositorLock();
@@ -343,6 +358,9 @@ class ASH_EXPORT WallpaperController
   int wallpaper_reload_delay_;
 
   bool is_wallpaper_blurred_ = false;
+
+  // Whether the device wallpaper policy is enforced on this device.
+  bool is_device_wallpaper_policy_enforced_ = false;
 
   scoped_refptr<base::SequencedTaskRunner> sequenced_task_runner_;
 

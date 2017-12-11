@@ -182,6 +182,10 @@ const char WallpaperController::kLargeWallpaperSubDir[] = "large";
 const char WallpaperController::kOriginalWallpaperSubDir[] = "original";
 const char WallpaperController::kThumbnailWallpaperSubDir[] = "thumb";
 
+const char WallpaperController::kDeviceWallpaperDir[] = "device_wallpaper";
+const char WallpaperController::kDeviceWallpaperFile[] =
+    "device_wallpaper_image.jpg";
+
 WallpaperController::WallpaperController()
     : locked_(false),
       wallpaper_mode_(WALLPAPER_NONE),
@@ -591,6 +595,12 @@ void WallpaperController::SetCustomizedDefaultWallpaper(
   NOTIMPLEMENTED();
 }
 
+void WallpaperController::SetDeviceWallpaperPolicyEnforced(bool enforced) {
+  is_device_wallpaper_policy_enforced_ = enforced;
+}
+
+void WallpaperController::SetDevicePolicyWallpaperIfApplicable() {}
+
 void WallpaperController::ShowUserWallpaper(
     mojom::WallpaperUserInfoPtr user_info) {
   NOTIMPLEMENTED();
@@ -625,6 +635,11 @@ void WallpaperController::AddObserver(
 void WallpaperController::GetWallpaperColors(
     GetWallpaperColorsCallback callback) {
   std::move(callback).Run(prominent_colors_);
+}
+
+void WallpaperController::GetDevicePolicyWallpaperFilePath(
+    GetDevicePolicyWallpaperFilePathCallback callback) {
+  std::move(callback).Run(GetDevicePolicyWallpaperFilePath());
 }
 
 void WallpaperController::OnWallpaperResized() {
@@ -866,6 +881,29 @@ bool WallpaperController::IsDevicePolicyWallpaper() const {
     return current_wallpaper_->wallpaper_info().type ==
            wallpaper::WallpaperType::DEVICE;
   return false;
+}
+
+base::FilePath WallpaperController::GetDevicePolicyWallpaperFilePath() const {
+  DCHECK(!dir_chrome_os_wallpapers_path_.empty());
+  return dir_chrome_os_wallpapers_path_.Append(kDeviceWallpaperDir)
+      .Append(kDeviceWallpaperFile);
+}
+
+bool WallpaperController::ShouldSetDevicePolicyWallpaper() const {
+  if (!is_device_wallpaper_policy_enforced_)
+    return false;
+
+  session_manager::SessionState state =
+      Shell::Get()->session_controller()->GetSessionState();
+  if (state != session_manager::SessionState::LOGIN_PRIMARY &&
+      state != session_manager::SessionState::LOGIN_SECONDARY) {
+    return false;
+  }
+
+  // If the file doesn't exist, it might because the device wallpaper file
+  // download is still in progress. SetDevicePolicyWallpaperIfApplicable() will
+  // be called later when the file is downloaded successfully.
+  return base::PathExists(GetDevicePolicyWallpaperFilePath());
 }
 
 void WallpaperController::GetInternalDisplayCompositorLock() {

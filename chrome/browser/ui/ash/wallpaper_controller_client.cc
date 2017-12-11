@@ -9,6 +9,7 @@
 #include "base/sha1.h"
 #include "base/strings/string_number_conversions.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
+#include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/common/chrome_paths.h"
 #include "chromeos/cryptohome/system_salt_getter.h"
 #include "components/user_manager/known_user.h"
@@ -86,7 +87,8 @@ wallpaper::WallpaperFilesId HashWallpaperFilesIdStr(
 
 }  // namespace
 
-WallpaperControllerClient::WallpaperControllerClient() : binding_(this) {
+WallpaperControllerClient::WallpaperControllerClient()
+    : policy_handler_(this), binding_(this) {
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -190,6 +192,10 @@ void WallpaperControllerClient::SetCustomizedDefaultWallpaper(
                                                        resized_directory);
 }
 
+void WallpaperControllerClient::SetDevicePolicyWallpaperIfApplicable() {
+  wallpaper_controller_->SetDevicePolicyWallpaperIfApplicable();
+}
+
 void WallpaperControllerClient::ShowUserWallpaper(const AccountId& account_id) {
   ash::mojom::WallpaperUserInfoPtr user_info =
       AccountIdToWallpaperUserInfo(account_id);
@@ -218,6 +224,21 @@ void WallpaperControllerClient::OpenWallpaperPicker() {
   chromeos::WallpaperManager::Get()->OpenWallpaperPicker();
 }
 
+void WallpaperControllerClient::OnDeviceWallpaperChanged() {
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(true /*=enforced*/);
+  wallpaper_controller_->SetDevicePolicyWallpaperIfApplicable();
+}
+
+void WallpaperControllerClient::OnDeviceWallpaperPolicyCleared() {
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(false /*=enforced*/);
+}
+
+void WallpaperControllerClient::GetDeviceWallpaperFilePath(
+    ash::mojom::WallpaperController::GetDevicePolicyWallpaperFilePathCallback
+        callback) {
+  wallpaper_controller_->GetDevicePolicyWallpaperFilePath(std::move(callback));
+}
+
 void WallpaperControllerClient::FlushForTesting() {
   wallpaper_controller_.FlushForTesting();
 }
@@ -239,4 +260,6 @@ void WallpaperControllerClient::BindAndSetClient() {
   wallpaper_controller_->SetClientAndPaths(std::move(client), user_data_path,
                                            chromeos_wallpapers_path,
                                            chromeos_custom_wallpapers_path);
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(
+      policy_handler_.IsDeviceWallpaperPolicyEnforced());
 }

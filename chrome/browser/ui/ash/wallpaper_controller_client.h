@@ -7,6 +7,7 @@
 
 #include "ash/public/interfaces/wallpaper.mojom.h"
 #include "base/macros.h"
+#include "chrome/browser/ui/ash/wallpaper_policy_handler.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 namespace wallpaper {
@@ -17,7 +18,9 @@ enum WallpaperType;
 
 // Handles method calls sent from ash to chrome. Also sends messages from chrome
 // to ash.
-class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient {
+class WallpaperControllerClient
+    : public ash::mojom::WallpaperControllerClient,
+      public chromeos::WallpaperPolicyHandler::Delegate {
  public:
   WallpaperControllerClient();
   ~WallpaperControllerClient() override;
@@ -54,6 +57,7 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient {
   void SetCustomizedDefaultWallpaper(const GURL& wallpaper_url,
                                      const base::FilePath& file_path,
                                      const base::FilePath& resized_directory);
+  void SetDevicePolicyWallpaperIfApplicable();
   void ShowUserWallpaper(const AccountId& account_id);
   void ShowSigninWallpaper();
   void RemoveUserWallpaper(const AccountId& account_id);
@@ -61,12 +65,21 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient {
   // ash::mojom::WallpaperControllerClient:
   void OpenWallpaperPicker() override;
 
+  // chromeos::WallpaperPolicyHandler::Delegate:
+  void OnDeviceWallpaperChanged() override;
+  void OnDeviceWallpaperPolicyCleared() override;
+  void GetDeviceWallpaperFilePath(
+      ash::mojom::WallpaperController::GetDevicePolicyWallpaperFilePathCallback
+          callback) override;
+
   // Flushes the mojo pipe to ash.
   void FlushForTesting();
 
  private:
   // Binds this object to its mojo interface and sets it as the ash client.
   void BindAndSetClient();
+
+  chromeos::WallpaperPolicyHandler policy_handler_;
 
   // WallpaperController interface in ash.
   ash::mojom::WallpaperControllerPtr wallpaper_controller_;
