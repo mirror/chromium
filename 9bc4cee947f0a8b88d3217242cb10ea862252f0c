@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "577a7acd_2703c517",
+        "filename": "components/safe_browsing/base_resource_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-11T16:16:08Z",
+      "side": 1,
+      "message": "I removed that sentence. I think we could probably just add \"Safe\" and \"Unsafe\" breakouts in a followup.",
+      "parentUuid": "18ea330e_3e16aa94",
+      "revId": "9bc4cee947f0a8b88d3217242cb10ea862252f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e089f98_d4a7780c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9bc4cee947f0a8b88d3217242cb10ea862252f0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08ab1d9_576af041",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 72383,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-11T16:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e089f98_d4a7780c",
+      "revId": "9bc4cee947f0a8b88d3217242cb10ea862252f0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
