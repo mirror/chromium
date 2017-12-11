@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b975720c_ec8b078c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-11T18:15:01Z",
+      "side": 1,
+      "message": "Why if? Should always be there. Also, pass it in constructor instead.",
+      "revId": "4d09e94baef416bb06929cf7a28e8ba0b83b85c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
