@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4525979a_9895eff0",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T19:34:20Z",
+      "side": 1,
+      "message": "why?",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cbc26a0_4ffdb004",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T19:34:20Z",
+      "side": 1,
+      "message": "curious: are you pulling in algorithm for this line only?",
+      "range": {
+        "startLine": 149,
+        "startChar": 47,
+        "endLine": 149,
+        "endChar": 55
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a799e451_df788cb5",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T19:34:20Z",
+      "side": 1,
+      "message": "There is an interesting case of cognitive dissonance here: Max and Limitless in one name.\nI understand that they speak to different aspects of the feature, but maybe it is worth calling out in documentation of this const.",
+      "range": {
+        "startLine": 168,
+        "startChar": 32,
+        "endLine": 168,
+        "endChar": 64
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97574f35_b8a555f8",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T19:34:20Z",
+      "side": 1,
+      "message": "Human brain (i.e. memory) is fascinating :)\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/801330/7/components/offline_pages/core/offline_page_metadata_store_sql.h#76\n\nFix above as well.",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 14
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41727978_a231346c",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T19:34:20Z",
+      "side": 1,
+      "message": "nit: fix typo",
+      "range": {
+        "startLine": 334,
+        "startChar": 17,
+        "endLine": 334,
+        "endChar": 30
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26365979_a445f766",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T19:34:20Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 335,
+        "startChar": 13,
+        "endLine": 335,
+        "endChar": 17
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5829ce7f_dd712f41",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T19:34:20Z",
+      "side": 1,
+      "message": "items_after_run?",
+      "range": {
+        "startLine": 377,
+        "startChar": 36,
+        "endLine": 377,
+        "endChar": 52
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ffc53c_90fbe0a9",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T19:34:20Z",
+      "side": 1,
+      "message": "\u003cmeme\u003eAin\u0027t nobody got time for that...\u003c/meme\u003e",
+      "range": {
+        "startLine": 380,
+        "startChar": 4,
+        "endLine": 380,
+        "endChar": 60
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
