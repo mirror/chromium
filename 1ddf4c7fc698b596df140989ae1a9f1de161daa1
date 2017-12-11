@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "a13d9d57_6c174538",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T21:09:13Z",
+      "side": 1,
+      "message": "nit: add {} because condition is multiline.",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 11
+      },
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8bbc71e_ea051688",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T21:09:13Z",
+      "side": 1,
+      "message": "How can I check whether a Not trusted OfflinePage is shown?\n\nDid you consider making it:\nIsShownOfflinePageTrusted()\nwhich could be complemented by:\nIsShownOfflinePageNotTrusted()\n\nor do you specifically want to make 2 checks:\nWe are showing offline page, and the page is trusted?",
+      "range": {
+        "startLine": 261,
+        "startChar": 27,
+        "endLine": 261,
+        "endChar": 54
+      },
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd5a0f5_dd7b4490",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T21:09:13Z",
+      "side": 1,
+      "message": "Given we need this information in UI (on Java side) I am wondering if this is something we can add to an offline page.\nWDYT?",
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9456f838_a58d48b6",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T21:09:13Z",
+      "side": 1,
+      "message": "Please document this. Also is Offline part necessary in the name given we already have the context of offline tab helper?",
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14175c0a_55ce30d6",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 2
