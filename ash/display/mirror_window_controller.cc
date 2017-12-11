@@ -215,12 +215,15 @@ void MirrorWindowController::UpdateWindow(
       if (reflector_) {
         reflector_->AddMirroringLayer(mirror_window->layer());
       } else if (aura::Env::GetInstance()->context_factory_private()) {
-        reflector_ =
-            aura::Env::GetInstance()
-                ->context_factory_private()
-                ->CreateReflector(
-                    Shell::GetPrimaryRootWindow()->GetHost()->compositor(),
-                    mirror_window->layer());
+        // Mus should create the accelerated widget asynchronously.
+        if (host->GetAcceleratedWidget() != gfx::kNullAcceleratedWidget) {
+          reflector_ =
+              aura::Env::GetInstance()
+                  ->context_factory_private()
+                  ->CreateReflector(
+                      Shell::GetPrimaryRootWindow()->GetHost()->compositor(),
+                      mirror_window->layer());
+        }
       } else {
         // TODO: Config::MUS needs to support reflector.
         // http://crbug.com/601869.
@@ -318,6 +321,15 @@ void MirrorWindowController::OnHostResized(aura::WindowTreeHost* host) {
   }
 }
 
+void MirrorWindowController::OnAcceleratedWidgetOverridden(
+    aura::WindowTreeHost* host) {
+  MirroringHostInfo* info = mirroring_host_info_map_[host->GetDisplayId()];
+  reflector_ =
+      aura::Env::GetInstance()->context_factory_private()->CreateReflector(
+          Shell::GetPrimaryRootWindow()->GetHost()->compositor(),
+          info->mirror_window->layer());
+}
+
 display::Display MirrorWindowController::GetDisplayForRootWindow(
     const aura::Window* root) const {
   for (const auto& pair : mirroring_host_info_map_) {
@@ -335,7 +347,8 @@ display::Display MirrorWindowController::GetDisplayForRootWindow(
 
 AshWindowTreeHost* MirrorWindowController::GetAshWindowTreeHostForDisplayId(
     int64_t id) {
-  CHECK_EQ(1u, mirroring_host_info_map_.count(id));
+  if (mirroring_host_info_map_.count(id) == 0)
+    return nullptr;
   return mirroring_host_info_map_[id]->ash_host.get();
 }
 
