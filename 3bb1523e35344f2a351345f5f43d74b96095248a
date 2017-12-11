@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e0d5901f_2bf5f985",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T01:17:34Z",
+      "side": 1,
+      "message": "nit: Opposite condition seems simpler.\n\nif (!context_) {\n  std::move(callback).Run(kAbort, ...);\n  return;\n}\n\nif (registration)\n  registration-\u003eClaimClients();",
+      "revId": "3bb1523e35344f2a351345f5f43d74b96095248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "243ce6dd_f9d8066e",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 2
@@ -37,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "50cddc68_43ff69be",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T01:17:34Z",
+      "side": 1,
+      "message": "(*context_-\u003eservice_worker_host)-\u003eDoSomething(); seems fine.",
+      "revId": "3bb1523e35344f2a351345f5f43d74b96095248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74b1ff99_5234f09d",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 2
@@ -66,6 +100,24 @@
       "side": 1,
       "message": "Sorry, my fault.\n\nHow about:\n// As ServiceWorkerVersion holds the mojo connection to |this| while the worker is running, so we can guarantee |this| is alive before the callback is invoked.",
       "parentUuid": "74b1ff99_5234f09d",
+      "revId": "3bb1523e35344f2a351345f5f43d74b96095248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc89dcdf_aeaaca89",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1260,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T01:17:34Z",
+      "side": 1,
+      "message": "I think you can simply say the relationship of the ownership.\n\n// base::Unretained(this) is safe because the callback passed to ClaimClients() is owned by |context_-\u003eservice_worker_host|, which is owned by |this| and won\u0027t outlive |this|.",
+      "parentUuid": "4a1791b3_58cead9f",
       "revId": "3bb1523e35344f2a351345f5f43d74b96095248a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
