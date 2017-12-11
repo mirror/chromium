@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "613ee6bd_46d2f027",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-11T05:20:51Z",
+      "side": 1,
+      "message": "That sounds reasonable. The feature policies are exposed to developers in the sense that they will be parsed but not used. But that\u0027s probably ok.",
+      "parentUuid": "8a23c318_ffe75c01",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b21f15c_c2e87a64",
         "filename": "third_party/WebKit/common/feature_policy/feature_policy_feature.h",
         "patchSetId": 5
