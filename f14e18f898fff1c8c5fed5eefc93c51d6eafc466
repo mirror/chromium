@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ab63b60_75d6e7e0",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-11T21:51:03Z",
+      "side": 1,
+      "message": "This is copied over from third_party/icu\u0027s fuzzer BUILD.gn file. It and may other fuzzer BUILD.gn files all have an empty group. I think it\u0027s just there to keep GN happy.\n\nThere are no dependencies, because fuzzer_tests like zlib_uncompress_fuzzer didn\u0027t have any explicit dependencies before this CL either. I\u0027m guessing zlib_uncompress_fuzzer and other fuzzer targets are built explicitly on fuzzing bots?",
+      "parentUuid": "ab471995_491bac2a",
+      "revId": "f14e18f898fff1c8c5fed5eefc93c51d6eafc466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cc34f6f_7a8d4b63",
         "filename": "third_party/zlib/contrib/tests/fuzzers/BUILD.gn",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f14e18f898fff1c8c5fed5eefc93c51d6eafc466",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4981d8a_96bd4826",
+        "filename": "third_party/zlib/contrib/tests/fuzzers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-11T21:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cc34f6f_7a8d4b63",
+      "revId": "f14e18f898fff1c8c5fed5eefc93c51d6eafc466",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
