@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "0a44b3b9_f21d9c32",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-11T15:06:51Z",
+      "side": 1,
+      "message": "Good catch.\n\nYes eventually, but this will require refactoring the overlay system.",
+      "parentUuid": "2552b810_d821cc4d",
+      "revId": "1a5433b424881dd0e23703e4e1fa95c28e304bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7aceba4_3a90c460",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_cache.mm",
         "patchSetId": 1
