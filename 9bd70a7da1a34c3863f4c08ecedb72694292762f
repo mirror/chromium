@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3233b678_fe047786",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-11T17:29:53Z",
+      "side": 1,
+      "message": "I don\u0027t see any usage of the method...",
+      "range": {
+        "startLine": 11,
+        "startChar": 45,
+        "endLine": 11,
+        "endChar": 66
+      },
+      "revId": "9bd70a7da1a34c3863f4c08ecedb72694292762f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51420e41_ce25040f",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-11T17:29:53Z",
+      "side": 1,
+      "message": "Trying to understand the code here... this might only used for the very first time we want to get accounts and the first task hasn\u0027t returned yet, right? Should the value be updated to the latest task or reset to null to release the initial task? \nThen maybe it could be a list of tasks and make |mUpdateTasksCounter| redundant?",
+      "range": {
+        "startLine": 65,
+        "startChar": 37,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "9bd70a7da1a34c3863f4c08ecedb72694292762f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710e3e82_0d6d933d",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-11T17:29:53Z",
+      "side": 1,
+      "message": "nit: The lint is related to the fact that the task might be going on in the background while the activity died, but it will block it from being GC\u0027ed. Make the task static and use a weak ref to the facade to avoid the warning instead?\n\nAlso, this gets triggered from a broadcast receiver but I couldn\u0027t see where the broadcast receiver gets unregistered. we don\u0027t do it?",
+      "range": {
+        "startLine": 553,
+        "startChar": 19,
+        "endLine": 553,
+        "endChar": 34
+      },
+      "revId": "9bd70a7da1a34c3863f4c08ecedb72694292762f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d70c302_3ee13344",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-11T17:29:53Z",
+      "side": 1,
+      "message": "nit: keep nested classes together at the end of the file",
+      "range": {
+        "startLine": 554,
+        "startChar": 12,
+        "endLine": 554,
+        "endChar": 17
+      },
+      "revId": "9bd70a7da1a34c3863f4c08ecedb72694292762f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
