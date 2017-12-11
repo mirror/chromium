@@ -10,7 +10,8 @@
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 
-@protocol KeyCommandsPlumbing<NSObject>
+@protocol SettingsNavigationControllerDelegate;
+@protocol KeyCommandsPlumbing<NSObject>;
 
 #pragma mark Query information
 
@@ -45,15 +46,17 @@
 
 @end
 
-// Handles the keyboard commands registration and handling for the
-// BrowserViewController.
-@interface KeyCommandsProvider : NSObject
+    // Handles the keyboard commands registration and handling for the
+    // BrowserViewController.
+    @interface KeyCommandsProvider : NSObject
 
-- (NSArray*)keyCommandsForConsumer:(id<KeyCommandsPlumbing>)consumer
-                baseViewController:(UIViewController*)baseViewController
-                        dispatcher:
-                            (id<ApplicationCommands, BrowserCommands>)dispatcher
-                       editingText:(BOOL)editingText;
+                                     -
+                                     (NSArray*)keyCommandsForConsumer
+    : (id<KeyCommandsPlumbing>)consumer baseViewController
+    : (UIViewController*)baseViewController dispatcher
+    : (id<ApplicationCommands, BrowserCommands>)dispatcher settingsDelegate
+    : (id<SettingsNavigationControllerDelegate>)settingsDelegate editingText
+    : (BOOL)editingText;
 
 @end
 

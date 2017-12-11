@@ -166,9 +166,6 @@ namespace {
 // Preference key used to store which profile is current.
 NSString* kIncognitoCurrentKey = @"IncognitoActive";
 
-// Constants for deferred initialization of preferences observer.
-NSString* const kPrefObserverInit = @"PrefObserverInit";
-
 // Constants for deferring notifying the AuthenticationService of a new cold
 // start.
 NSString* const kAuthenticationServiceNotification =
@@ -2041,20 +2038,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
       presentViewController:accountsViewController
                    animated:YES
                  completion:nil];
-}
-
-- (void)showSettingsFromViewController:(UIViewController*)baseViewController {
-  if (_settingsNavigationController)
-    return;
-  [[DeferredInitializationRunner sharedInstance]
-      runBlockIfNecessary:kPrefObserverInit];
-  DCHECK(_localStatePrefObserverBridge);
-  _settingsNavigationController = [SettingsNavigationController
-      newSettingsMainControllerWithBrowserState:_mainBrowserState
-                                       delegate:self];
-  [baseViewController presentViewController:_settingsNavigationController
-                                   animated:YES
-                                 completion:nil];
 }
 
 - (void)dismissSigninInteractionCoordinator {
