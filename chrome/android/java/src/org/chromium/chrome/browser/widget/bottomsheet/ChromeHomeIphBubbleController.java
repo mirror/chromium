@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.widget.bottomsheet;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.PopupWindow.OnDismissListener;
@@ -22,6 +23,7 @@ import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 import org.chromium.chrome.browser.widget.ViewHighlighter;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
+import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.FeatureConstants;
@@ -41,7 +43,7 @@ public class ChromeHomeIphBubbleController {
      */
     private static final String HELP_BUBBLE_TIMEOUT_PARAM_NAME = "x_iph-timeout-duration-ms";
 
-    private ViewAnchoredTextBubble mHelpBubble;
+    private TextBubble mHelpBubble;
     private LayoutManagerChrome mLayoutManager;
     private BottomToolbarPhone mToolbar;
     private View mControlContainer;
@@ -149,14 +151,23 @@ public class ChromeHomeIphBubbleController {
         if (!fromMenu && !showRefreshIph && !showColdStartIph) return;
 
         // Determine which strings to use.
+        boolean showAtTopOfScreen = showRefreshIph
+                && ChromeFeatureList.isEnabled(
+                           ChromeFeatureList.CHROME_HOME_PULL_TO_REFRESH_IPH_AT_TOP);
         boolean showExpandButtonHelpBubble = !showRefreshIph && mToolbar.isUsingExpandButton();
         View anchorView = showExpandButtonHelpBubble
                 ? mControlContainer.findViewById(R.id.expand_sheet_button)
                 : mControlContainer;
-        int stringId = showRefreshIph ? R.string.bottom_sheet_pull_to_refresh_help_bubble_message
-                                      : showExpandButtonHelpBubble
-                        ? R.string.bottom_sheet_accessibility_expand_button_help_bubble_message
-                        : R.string.bottom_sheet_help_bubble_message;
+        int stringId = 0;
+        if (showRefreshIph) {
+            stringId = showAtTopOfScreen
+                    ? R.string.bottom_sheet_pull_to_refresh_help_bubble_accessibility_message
+                    : R.string.bottom_sheet_pull_to_refresh_help_bubble_message;
+        } else if (showExpandButtonHelpBubble) {
+            stringId = R.string.bottom_sheet_accessibility_expand_button_help_bubble_message;
+        } else {
+            stringId = R.string.bottom_sheet_help_bubble_message;
+        }
         int accessibilityStringId = showRefreshIph
                 ? R.string.bottom_sheet_pull_to_refresh_help_bubble_accessibility_message
                 : stringId;
@@ -176,8 +187,14 @@ public class ChromeHomeIphBubbleController {
                 mFullscreenManager.getBrowserVisibilityDelegate().showControlsPersistent();
 
         // Create the help bubble and setup dismissal behavior.
-        mHelpBubble =
-                new ViewAnchoredTextBubble(mContext, anchorView, stringId, accessibilityStringId);
+        View topAnchorView = (View) mBottomSheet.getParent();
+        if (showAtTopOfScreen) {
+            mHelpBubble =
+                    new TextBubble(mContext, topAnchorView, stringId, accessibilityStringId, false);
+        } else {
+            mHelpBubble = new ViewAnchoredTextBubble(
+                    mContext, anchorView, stringId, accessibilityStringId);
+        }
 
         if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PERSISTENT_IPH)) {
             int dismissTimeout = ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
@@ -217,7 +234,18 @@ public class ChromeHomeIphBubbleController {
         // Show the bubble.
         int inset = mContext.getResources().getDimensionPixelSize(
                 R.dimen.bottom_sheet_help_bubble_inset);
-        mHelpBubble.setInsetPx(0, inset, 0, inset);
+        if (!showAtTopOfScreen) {
+            ((ViewAnchoredTextBubble) mHelpBubble).setInsetPx(0, inset, 0, inset);
+        } else {
+            Rect anchorRect = new Rect();
+            int[] locationInWindow = new int[2];
+            topAnchorView.getLocationInWindow(locationInWindow);
+            anchorRect.top = locationInWindow[1];
+            anchorRect.bottom = anchorRect.top + inset;
+            anchorRect.left = locationInWindow[0] + topAnchorView.getWidth() / 2;
+            anchorRect.right = anchorRect.left;
+            mHelpBubble.setAnchorRect(anchorRect);
+        }
         mHelpBubble.show();
     }
 
@@ -225,7 +253,7 @@ public class ChromeHomeIphBubbleController {
      * @return The bottom sheet's help bubble if it exists.
      */
     @VisibleForTesting
-    public @Nullable ViewAnchoredTextBubble getHelpBubbleForTests() {
+    public @Nullable TextBubble getHelpBubbleForTests() {
         return mHelpBubble;
     }
 }

@@ -7,39 +7,30 @@ package org.chromium.chrome.browser.widget.textbubble;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RoundRectShape;
 import android.support.annotation.ColorInt;
-import android.support.v4.graphics.drawable.DrawableCompat;
 
 import org.chromium.chrome.R;
 
 /**
  * A {@link Drawable} that is a bubble with an arrow pointing out of either the top or bottom.
  */
-class ArrowBubbleDrawable extends Drawable implements Drawable.Callback {
-    private final Rect mCachedBubblePadding = new Rect();
-
-    private final int mRadiusPx;
+class ArrowBubbleDrawable extends BubbleDrawable {
     private final int mArrowWidthPx;
     private final int mArrowHeightPx;
 
     private final Path mArrowPath;
     private final Paint mArrowPaint;
 
-    private final Drawable mBubbleDrawable;
-
     private int mArrowXOffsetPx;
     private boolean mArrowOnTop;
 
     public ArrowBubbleDrawable(Context context) {
-        mRadiusPx = context.getResources().getDimensionPixelSize(R.dimen.text_bubble_corner_radius);
+        super(context);
+
         mArrowWidthPx =
                 context.getResources().getDimensionPixelSize(R.dimen.text_bubble_arrow_width);
         mArrowHeightPx =
@@ -57,12 +48,6 @@ class ArrowBubbleDrawable extends Drawable implements Drawable.Callback {
         mArrowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mArrowPaint.setColor(Color.WHITE);
         mArrowPaint.setStyle(Paint.Style.FILL);
-
-        mBubbleDrawable = DrawableCompat.wrap(new ShapeDrawable(
-                new RoundRectShape(new float[] {mRadiusPx, mRadiusPx, mRadiusPx, mRadiusPx,
-                    mRadiusPx, mRadiusPx, mRadiusPx, mRadiusPx}, null, null)));
-
-        mBubbleDrawable.setCallback(this);
     }
 
     /**
@@ -102,35 +87,16 @@ class ArrowBubbleDrawable extends Drawable implements Drawable.Callback {
         return mArrowOnTop;
     }
 
-    /**
-     * @param color The color to make the bubble and arrow.
-     */
+    @Override
     public void setBubbleColor(@ColorInt int color) {
-        DrawableCompat.setTint(mBubbleDrawable, color);
         mArrowPaint.setColor(color);
-        invalidateSelf();
-    }
-
-    // Drawable.Callback implementation.
-    @Override
-    public void invalidateDrawable(Drawable who) {
-        invalidateSelf();
-    }
-
-    @Override
-    public void scheduleDrawable(Drawable who, Runnable what, long when) {
-        scheduleSelf(what, when);
-    }
-
-    @Override
-    public void unscheduleDrawable(Drawable who, Runnable what) {
-        unscheduleSelf(what);
+        super.setBubbleColor(color);
     }
 
     // Drawable implementation.
     @Override
     public void draw(Canvas canvas) {
-        mBubbleDrawable.draw(canvas);
+        super.draw(canvas);
 
         canvas.save();
         // If the arrow is on the bottom, flip the arrow before drawing.
@@ -159,19 +125,8 @@ class ArrowBubbleDrawable extends Drawable implements Drawable.Callback {
 
     @Override
     public void setAlpha(int alpha) {
-        mBubbleDrawable.setAlpha(alpha);
         mArrowPaint.setAlpha(alpha);
-        invalidateSelf();
-    }
-
-    @Override
-    public void setColorFilter(ColorFilter cf) {
-        assert false : "Unsupported";
-    }
-
-    @Override
-    public int getOpacity() {
-        return PixelFormat.TRANSLUCENT;
+        super.setAlpha(alpha);
     }
 
     @Override
