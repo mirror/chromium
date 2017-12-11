@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d432ffe_ee4334e9",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-11T06:53:58Z",
+      "side": 1,
+      "message": "Looks like this function is currently called from 2 places: one from this file, and\nthe other from core/testing/Internals.cpp, for |window.internals.elementFromPoint()|\ntest-only API.\n\nThe latter may want to get more \"raw\" element than retargeted one, so could you check\nits usage in tests and consider splitting the function into two?",
+      "revId": "0f1c405c2f7993e21d2088ebd32ef596ba17a599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

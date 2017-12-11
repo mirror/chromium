@@ -69,6 +69,24 @@
       "revId": "2c6870cef4a6a0d849b8f5545f44f14eece37494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3466039_a2c8f71d",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-11T06:53:58Z",
+      "side": 1,
+      "message": "As HitTestPoint() returns an Element, did you try \nreturn Retarget(HitTestPoint(x, y, ...));\nas ElementFromPoint()?",
+      "parentUuid": "46bb5390_b2f59078",
+      "revId": "2c6870cef4a6a0d849b8f5545f44f14eece37494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
