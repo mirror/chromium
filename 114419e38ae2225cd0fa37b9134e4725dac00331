@@ -22,6 +22,53 @@
       "revId": "114419e38ae2225cd0fa37b9134e4725dac00331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b5091eb_3a5634d4",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-11T23:12:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0ca4b7a1_c0a274c6",
+      "range": {
+        "startLine": 753,
+        "startChar": 58,
+        "endLine": 753,
+        "endChar": 70
+      },
+      "revId": "114419e38ae2225cd0fa37b9134e4725dac00331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0da23973_46c7d4fd",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-11T23:12:24Z",
+      "side": 1,
+      "message": "For consistency, if you\u0027re scoring against the term \"h\",\nthe terms vector should contain on element (\"h\").",
+      "range": {
+        "startLine": 754,
+        "startChar": 6,
+        "endLine": 754,
+        "endChar": 59
+      },
+      "revId": "114419e38ae2225cd0fa37b9134e4725dac00331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
