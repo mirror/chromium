@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebeb73d3_ea2e8b0b",
+        "filename": "ui/gl/gl_image_native_pixmap.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-11T20:46:53Z",
+      "side": 0,
+      "message": "nit: maybe keep this and set it when initialized instead of adding \"gfx::BufferFormat format_\"",
+      "revId": "8f33cf78cb418199b52c6d35a80524788becccff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

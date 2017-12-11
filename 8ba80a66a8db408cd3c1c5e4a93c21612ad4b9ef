@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a46e607_f5c0a283",
+        "filename": "components/viz/service/display_embedder/buffer_queue.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-11T20:46:53Z",
+      "side": 1,
+      "message": "can we remove this state?",
+      "revId": "8ba80a66a8db408cd3c1c5e4a93c21612ad4b9ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e4bf97_98763f3b",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-11T20:46:53Z",
+      "side": 1,
+      "message": "nit: ImageFormatForGpuMemoryBufferFormat, as that is more consistent with naming below. e.g. we use the term \"image format\" below and image is the first part of the function name..",
+      "revId": "8ba80a66a8db408cd3c1c5e4a93c21612ad4b9ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a701f85_431c56b7",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-11T20:46:53Z",
+      "side": 1,
+      "message": "this function doesn\u0027t make sense if we make it a one-to-one mapping. we should remove it as part of this patch.",
+      "revId": "8ba80a66a8db408cd3c1c5e4a93c21612ad4b9ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b964d92_f181a225",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-11T20:46:53Z",
+      "side": 1,
+      "message": "nit: s/BufferFormatToInternalFormat/InternalFormat/ for consistency",
+      "revId": "8ba80a66a8db408cd3c1c5e4a93c21612ad4b9ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9929062_790d02b8",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-11T20:46:53Z",
+      "side": 1,
+      "message": "nit: set this below instead when having succeeded with init. next to \"pixmap_ \u003d pixmap\"",
+      "revId": "8ba80a66a8db408cd3c1c5e4a93c21612ad4b9ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
