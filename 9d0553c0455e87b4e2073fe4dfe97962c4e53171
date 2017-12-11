@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfec075e_57365e19",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-12-11T13:19:38Z",
+      "side": 1,
+      "message": "Is there anything in the observer that should be checked for correctness after the removal?",
+      "range": {
+        "startLine": 37,
+        "startChar": 49,
+        "endLine": 37,
+        "endChar": 57
+      },
+      "revId": "9d0553c0455e87b4e2073fe4dfe97962c4e53171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5018bd_32ba9534",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-12-11T13:19:38Z",
+      "side": 1,
+      "message": "Does it delete itself or is it owned by the profile?",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "9d0553c0455e87b4e2073fe4dfe97962c4e53171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8216a39b_fe184318",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-12-11T13:19:38Z",
+      "side": 1,
+      "message": "Move this above the blank line so it has a clear association with ClearBrowsingData.",
+      "range": {
+        "startLine": 325,
+        "startChar": 2,
+        "endLine": 325,
+        "endChar": 14
+      },
+      "revId": "9d0553c0455e87b4e2073fe4dfe97962c4e53171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
