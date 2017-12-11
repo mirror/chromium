@@ -63,6 +63,9 @@ class SystemLogUploader : public UploadJob::Delegate {
 
     virtual ~Delegate() {}
 
+    // Dumps current policy in JSON format and invokes |callback|.
+    virtual void DumpPolicyAsJSON(base::OnceClosure callback) = 0;
+
     // Loads system logs and invokes |upload_callback|.
     virtual void LoadSystemLogs(const LogUploadCallback& upload_callback) = 0;
 
@@ -99,6 +102,10 @@ class SystemLogUploader : public UploadJob::Delegate {
 
   // Starts the system log loading process.
   void StartLogUpload();
+
+  // Called when policy is dumped to JSON, so it can be uploaded with system
+  // logs.
+  void OnPolicyDumped();
 
   // The callback is invoked by the Delegate if system logs have been loaded
   // from disk, uploads system logs.

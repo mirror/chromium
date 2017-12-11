@@ -21,6 +21,8 @@
 #include "chrome/browser/chromeos/policy/upload_job_impl.h"
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service.h"
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service_factory.h"
+#include "chrome/browser/policy/policy_conversions.h"
+#include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/chrome_switches.h"
 #include "components/feedback/anonymizer_tool.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
@@ -39,10 +41,12 @@ constexpr char kSystemLogUploadUrlTail[] = "/upload";
 // The cutoff point (in bytes) after which log contents are ignored.
 const size_t kLogCutoffSize = 50 * 1024 * 1024;  // 50 MiB.
 
+const char* const kPolicyDumpFileLocation = "/var/log/policy_dump.json";
+
 // The file names of the system logs to upload.
 // Note: do not add anything to this list without checking for PII in the file.
 const char* const kSystemLogFileNames[] = {
-    "/var/log/bios_info.txt",
+    kPolicyDumpFileLocation,  "/var/log/bios_info.txt",
     "/var/log/chrome/chrome", "/var/log/chrome/chrome.PREVIOUS",
     "/var/log/eventlog.txt",  "/var/log/platform_info.txt",
     "/var/log/messages",      "/var/log/messages.1",
@@ -82,6 +86,11 @@ std::unique_ptr<SystemLogUploader::SystemLogs> ReadFiles() {
   return system_logs;
 }
 
+void DoWritePoliciesToJSONFile(const std::string& data) {
+  base::WriteFile(base::FilePath(kPolicyDumpFileLocation), data.c_str(),
+                  data.size());
+}
+
 // An implementation of the |SystemLogUploader::Delegate|, that is used to
 // create an upload job and load system logs from the disk.
 class SystemLogDelegate : public SystemLogUploader::Delegate {
@@ -91,6 +100,7 @@ class SystemLogDelegate : public SystemLogUploader::Delegate {
   ~SystemLogDelegate() override;
 
   // SystemLogUploader::Delegate:
+  void DumpPolicyAsJSON(base::OnceClosure callback) override;
   void LoadSystemLogs(const LogUploadCallback& upload_callback) override;
 
   std::unique_ptr<UploadJob> CreateUploadJob(
@@ -109,6 +119,17 @@ SystemLogDelegate::SystemLogDelegate(
     : task_runner_(task_runner) {}
 
 SystemLogDelegate::~SystemLogDelegate() {}
+
+void SystemLogDelegate::DumpPolicyAsJSON(base::OnceClosure callback) {
+  std::string json_policies =
+      policy::GetAllPolicyValuesAsJSON(ProfileManager::GetLastUsedProfile());
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
+      base::BindOnce(&DoWritePoliciesToJSONFile, json_policies),
+      std::move(callback));
+}
 
 void SystemLogDelegate::LoadSystemLogs(
     const LogUploadCallback& upload_callback) {
@@ -311,10 +332,10 @@ void SystemLogUploader::StartLogUpload() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (upload_enabled_) {
-    SYSLOG(INFO) << "Starting system log upload.";
+    SYSLOG(INFO) << "Dumping policy as JSON.";
     log_upload_in_progress_ = true;
-    syslog_delegate_->LoadSystemLogs(base::Bind(
-        &SystemLogUploader::UploadSystemLogs, weak_factory_.GetWeakPtr()));
+    syslog_delegate_->DumpPolicyAsJSON(base::BindOnce(
+        &SystemLogUploader::OnPolicyDumped, weak_factory_.GetWeakPtr()));
   } else {
     // If upload is disabled, schedule the next attempt after 12h.
     SYSLOG(INFO) << "System log upload is disabled, rescheduling.";
@@ -322,6 +343,14 @@ void SystemLogUploader::StartLogUpload() {
     last_upload_attempt_ = base::Time::NowFromSystemTime();
     ScheduleNextSystemLogUpload(upload_frequency_);
   }
+}
+
+void SystemLogUploader::OnPolicyDumped() {
+  // Must be called on the main thread.
+  DCHECK(thread_checker_.CalledOnValidThread());
+  SYSLOG(INFO) << "Starting system log upload.";
+  syslog_delegate_->LoadSystemLogs(base::BindRepeating(
+      &SystemLogUploader::UploadSystemLogs, weak_factory_.GetWeakPtr()));
 }
 
 void SystemLogUploader::ScheduleNextSystemLogUpload(base::TimeDelta frequency) {

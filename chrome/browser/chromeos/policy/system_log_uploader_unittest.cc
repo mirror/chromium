@@ -117,6 +117,10 @@ class MockSystemLogDelegate : public SystemLogUploader::Delegate {
       : is_upload_error_(is_upload_error), system_logs_(system_logs) {}
   ~MockSystemLogDelegate() override {}
 
+  void DumpPolicyAsJSON(base::OnceClosure callback) override {
+    std::move(callback).Run();
+  };
+
   void LoadSystemLogs(const LogUploadCallback& upload_callback) override {
     EXPECT_TRUE(is_upload_allowed_);
     upload_callback.Run(
