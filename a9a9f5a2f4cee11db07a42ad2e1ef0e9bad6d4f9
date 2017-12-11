@@ -16,6 +16,24 @@
       "revId": "a9a9f5a2f4cee11db07a42ad2e1ef0e9bad6d4f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079103a8_53320b3d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-11T20:01:17Z",
+      "side": 1,
+      "message": "Returning false should be sufficient. It is impossible to call an ack with type undefined in the non-mojo world.",
+      "parentUuid": "06edf46d_ef2083b4",
+      "revId": "a9a9f5a2f4cee11db07a42ad2e1ef0e9bad6d4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
