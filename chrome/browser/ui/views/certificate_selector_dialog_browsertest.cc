@@ -45,7 +45,7 @@ class CertificateSelectorDialogTest : public DialogBrowserTest {
   CertificateSelectorDialogTest() {}
 
   // DialogBrowserTest:
-  void ShowDialog(const std::string& name) override {
+  void ShowUI(const std::string& name) override {
     cert_1_ =
         net::ImportCertFromFile(net::GetTestCertsDirectory(), "client_1.pem");
     cert_2_ =
@@ -67,6 +67,6 @@ class CertificateSelectorDialogTest : public DialogBrowserTest {
 
 // Invokes a dialog that allows the user select a certificate. See
 // test_browser_dialog.h.
-IN_PROC_BROWSER_TEST_F(CertificateSelectorDialogTest, InvokeDialog_default) {
-  RunDialog();
+IN_PROC_BROWSER_TEST_F(CertificateSelectorDialogTest, InvokeUI_default) {
+  ShowAndVerifyUI();
 }

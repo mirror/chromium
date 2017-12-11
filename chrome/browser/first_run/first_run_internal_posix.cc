@@ -39,7 +39,7 @@ namespace {
 // certain builds, and only if the user has not already set preferences. In a
 // real, official-build first run, initializes the default metrics reporting if
 // the dialog should be shown.
-bool ShouldShowFirstRunDialog() {
+bool ShouldShowFirstShowAndVerifyUI() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kForceFirstRunDialog)) {
     return true;
@@ -81,7 +81,7 @@ bool ShouldShowFirstRunDialog() {
 
 void DoPostImportPlatformSpecificTasks(Profile* profile) {
 #if !defined(OS_CHROMEOS)
-  if (!ShouldShowFirstRunDialog())
+  if (!ShouldShowFirstShowAndVerifyUI())
     return;
 
   if (GetBeforeShowFirstRunDialogHookForTesting())
