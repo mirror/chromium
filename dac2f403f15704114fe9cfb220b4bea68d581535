@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb81edad_93fbd8d0",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-11T16:10:46Z",
+      "side": 1,
+      "message": "nit: V8ObjectBuilder::GetScriptState exists, so you can get away without explicitly passing the ScriptState* through",
+      "revId": "dac2f403f15704114fe9cfb220b4bea68d581535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172f31c7_6531f764",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-11T16:10:46Z",
+      "side": 1,
+      "message": "Do watch out a bit here: timeOrigin is before the other members of the Performance interface, but technically I think WebIDL does specify the order in which properties are listed, so if, e.g. memory were added in the future, we would naively put them out of the order specified. (I doubt this matters much, but my reading is that the spec does require the same ordering across implementations.)",
+      "revId": "dac2f403f15704114fe9cfb220b4bea68d581535",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
