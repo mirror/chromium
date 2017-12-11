@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3394d0b3_8e1f0de0",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-11T00:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1d2b910_3c3e0d45",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 42
+      },
+      "revId": "bcac64b65f3068ab69476b61976c19a8e8a510de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9098295c_14057bf3",
         "filename": "services/device/device_service.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "bcac64b65f3068ab69476b61976c19a8e8a510de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377e0801_172f237b",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-11T00:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9098295c_14057bf3",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 25
+      },
+      "revId": "bcac64b65f3068ab69476b61976c19a8e8a510de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a49b3929_ef46ecac",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-11T00:06:28Z",
+      "side": 1,
+      "message": "change to DCHECK here",
+      "parentUuid": "b3a4f062_edcea756",
+      "range": {
+        "startLine": 115,
+        "startChar": 49,
+        "endLine": 115,
+        "endChar": 64
+      },
+      "revId": "bcac64b65f3068ab69476b61976c19a8e8a510de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c7b3923_05046896",
         "filename": "services/device/device_service.cc",
         "patchSetId": 8
@@ -85,6 +157,24 @@
       "revId": "bcac64b65f3068ab69476b61976c19a8e8a510de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1826fb_7d9efb6b",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-11T00:06:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c7b3923_05046896",
+      "revId": "bcac64b65f3068ab69476b61976c19a8e8a510de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
