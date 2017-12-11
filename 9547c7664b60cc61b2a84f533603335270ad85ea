@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47c4effd_1947cca8",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-11T04:55:45Z",
+      "side": 1,
+      "message": "Fixed and moved.",
+      "parentUuid": "dc112c6a_cebd6dc1",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 11
+      },
+      "revId": "9547c7664b60cc61b2a84f533603335270ad85ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53c35870_36a292c4",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
         "patchSetId": 4
