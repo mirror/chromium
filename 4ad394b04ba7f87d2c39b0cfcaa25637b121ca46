@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45596c26_a46aa387",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3681,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-12-11T10:19:43Z",
+      "side": 1,
+      "message": "Drive by: Do you think it is clear to all users that \"upgrading\" here refers to buying a new device? I\u0027m afraid that the subtlety of \"update\" vs. \"upgrade\" may be lost on a lot of people.\n\nWhat about: \"Please consider getting a new device.\"",
+      "range": {
+        "startLine": 3681,
+        "startChar": 68,
+        "endLine": 3681,
+        "endChar": 94
+      },
+      "revId": "4ad394b04ba7f87d2c39b0cfcaa25637b121ca46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
