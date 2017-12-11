@@ -9,6 +9,7 @@
 
 #include "base/callback.h"
 #include "base/containers/queue.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
@@ -52,11 +53,6 @@ class NotificationDisplayServiceImpl : public NotificationDisplayService {
   void AddNotificationHandler(NotificationHandler::Type notification_type,
                               std::unique_ptr<NotificationHandler> handler);
 
-  // Returns the notification handler that was registered for the given type.
-  // May return null.
-  NotificationHandler* GetNotificationHandler(
-      NotificationHandler::Type notification_type);
-
   // Removes an implementation object added via AddNotificationHandler.
   void RemoveNotificationHandler(NotificationHandler::Type notification_type);
 
@@ -68,8 +64,17 @@ class NotificationDisplayServiceImpl : public NotificationDisplayService {
   void Close(NotificationHandler::Type notification_type,
              const std::string& notification_id) override;
   void GetDisplayed(const DisplayedNotificationsCallback& callback) override;
+  void Shutdown() override;
 
  private:
+  friend class StubNotificationDisplayService;
+  FRIEND_TEST_ALL_PREFIXES(PlatformNotificationServiceBrowserTest,
+                           KeepAliveRegistryPendingNotificationEvent);
+
+  // Returns the notification handler that was registered for the given type.
+  NotificationHandler* GetNotificationHandler(
+      NotificationHandler::Type notification_type);
+
   // Called when the NotificationPlatformBridge may have been initialized.
   void OnNotificationPlatformBridgeReady(bool success);
 

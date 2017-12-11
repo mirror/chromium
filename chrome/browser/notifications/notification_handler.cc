@@ -11,19 +11,19 @@ NotificationHandler::~NotificationHandler() = default;
 void NotificationHandler::OnShow(Profile* profile,
                                  const std::string& notification_id) {}
 
-void NotificationHandler::OnClose(Profile* profile,
-                                  const GURL& origin,
-                                  const std::string& notification_id,
-                                  bool by_user,
-                                  base::OnceClosure completed_closure) {
-  std::move(completed_closure).Run();
-}
-
 void NotificationHandler::OnClick(Profile* profile,
                                   const GURL& origin,
                                   const std::string& notification_id,
                                   const base::Optional<int>& action_index,
                                   const base::Optional<base::string16>& reply,
+                                  base::OnceClosure completed_closure) {
+  std::move(completed_closure).Run();
+}
+
+void NotificationHandler::OnClose(Profile* profile,
+                                  const GURL& origin,
+                                  const std::string& notification_id,
+                                  bool by_user,
                                   base::OnceClosure completed_closure) {
   std::move(completed_closure).Run();
 }
@@ -38,3 +38,5 @@ void NotificationHandler::OpenSettings(Profile* profile, const GURL& origin) {
   // to handle user interaction with it.
   NOTREACHED();
 }
+
+void NotificationHandler::Shutdown() {}
