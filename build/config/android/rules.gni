@@ -2117,6 +2117,7 @@ if (enable_java_templates) {
           "NATIVE_LIBRARIES_LIST=" +
               "@FileArg($_rebased_ordered_libraries_json:java_libraries_list)",
           "NATIVE_LIBRARIES_VERSION_NUMBER=$_native_lib_version_arg",
+          "ANDROID_APP_ABI_STRING=\"$android_app_abi\"",
         ]
         if (_use_chromium_linker) {
           defines += [ "ENABLE_CHROMIUM_LINKER" ]
