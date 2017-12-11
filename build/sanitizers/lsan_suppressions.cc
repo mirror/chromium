@@ -14,7 +14,7 @@
 // newlines. See http://dev.chromium.org/developers/testing/leaksanitizer
 // for the instructions on writing suppressions.
 char kLSanDefaultSuppressions[] =
-    // Intentional leak used as sanity test for Valgrind/memcheck.
+    // Intentional leak used as sanity test for LSAN.
     "leak:base::ToolsSanityTest_MemoryLeak_Test::TestBody\n"
 
     // ================ Leaks in third-party code ================

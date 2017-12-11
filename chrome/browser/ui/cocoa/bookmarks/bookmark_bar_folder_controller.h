@@ -144,7 +144,7 @@ const CGFloat kBookmarkBottomVerticalPadding = 0.0;
   CGFloat verticalScrollArrowHeight_;
 
   // Set to YES to prevent any node animations. Useful for unit testing so that
-  // incomplete animations do not cause valgrind complaints.
+  // incomplete animations do not cause LSAN complaints.
   BOOL ignoreAnimations_;
 
   int selectedIndex_;

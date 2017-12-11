@@ -28,7 +28,7 @@
 #define WTF_DynamicAnnotations_h
 
 /* This file defines dynamic annotations for use with dynamic analysis
- * tool such as ThreadSanitizer, Valgrind, etc.
+ * tools such as ThreadSanitizer.
  *
  * Dynamic annotation is a source code annotation that affects
  * the generated code (that is, the annotation is not a comment).
