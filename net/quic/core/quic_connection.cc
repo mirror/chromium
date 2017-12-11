@@ -183,7 +183,7 @@ QuicConnection::QuicConnection(
               helper->GetClock()->ApproximateNow(),
               perspective),
       server_reply_to_connectivity_probes_(
-          FLAGS_quic_reloadable_flag_quic_server_reply_to_connectivity_probing),
+          GetQuicReloadableFlag(quic_server_reply_to_connectivity_probing)),
       current_packet_content_(NO_FRAMES_RECEIVED),
       current_peer_migration_type_(NO_CHANGE),
       helper_(helper),
@@ -258,7 +258,7 @@ QuicConnection::QuicConnection(
           perspective,
           clock_,
           &stats_,
-          FLAGS_quic_reloadable_flag_quic_default_to_bbr ? kBBR : kCubicBytes,
+          GetQuicReloadableFlag(quic_default_to_bbr) ? kBBR : kCubicBytes,
           kNack),
       version_negotiation_state_(START_NEGOTIATION),
       perspective_(perspective),
@@ -361,7 +361,7 @@ void QuicConnection::SetFromConfig(const QuicConfig& config) {
   if (config.HasClientSentConnectionOption(k5RTO, perspective_)) {
     close_connection_after_five_rtos_ = true;
   }
-  if (FLAGS_quic_reloadable_flag_quic_enable_3rtos &&
+  if (GetQuicReloadableFlag(quic_enable_3rtos) &&
       config.HasClientSentConnectionOption(k3RTO, perspective_)) {
     QUIC_FLAG_COUNT(quic_reloadable_flag_quic_enable_3rtos);
     close_connection_after_three_rtos_ = true;
@@ -1221,7 +1221,7 @@ void QuicConnection::SendRstStream(QuicStreamId id,
     return;
   }
   // Flush stream frames of reset stream.
-  if (FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded &&
+  if (GetQuicReloadableFlag(quic_remove_on_stream_frame_discarded) &&
       packet_generator_.HasPendingStreamFramesOfStream(id)) {
     QUIC_FLAG_COUNT_N(
         quic_reloadable_flag_quic_remove_on_stream_frame_discarded, 2, 2);
@@ -1416,7 +1416,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
     if (self_address_.port() != last_packet_destination_address_.port() ||
         self_address_.host().Normalized() !=
             last_packet_destination_address_.host().Normalized()) {
-      if (!FLAGS_quic_reloadable_flag_quic_allow_address_change_for_udp_proxy ||
+      if (!GetQuicReloadableFlag(quic_allow_address_change_for_udp_proxy) ||
           !visitor_->AllowSelfAddressChange()) {
         CloseConnection(
             QUIC_ERROR_MIGRATING_ADDRESS,
@@ -1428,7 +1428,7 @@ bool QuicConnection::ProcessValidatedPacket(const QuicPacketHeader& header) {
     self_address_ = last_packet_destination_address_;
   }
 
-  if (FLAGS_quic_restart_flag_quic_enable_accept_random_ipn) {
+  if (GetQuicRestartFlag(quic_enable_accept_random_ipn)) {
     QUIC_FLAG_COUNT_N(quic_restart_flag_quic_enable_accept_random_ipn, 2, 2);
     // Configured to accept any packet number in range 1...0x7fffffff
     // as initial packet number.
@@ -2252,7 +2252,7 @@ void QuicConnection::CheckForTimeout() {
   if (idle_duration >= idle_network_timeout_) {
     const string error_details = "No recent network activity.";
     QUIC_DVLOG(1) << ENDPOINT << error_details;
-    if (FLAGS_quic_reloadable_flag_quic_explicit_close_after_tlp &&
+    if (GetQuicReloadableFlag(quic_explicit_close_after_tlp) &&
         (sent_packet_manager_.GetConsecutiveTlpCount() > 0 ||
          sent_packet_manager_.GetConsecutiveRtoCount() > 0 ||
          visitor_->HasOpenDynamicStreams())) {
@@ -2362,7 +2362,7 @@ QuicConnection::ScopedPacketFlusher::ScopedPacketFlusher(
     DCHECK(ack_mode == SEND_ACK || connection_->ack_frame_updated() ||
            connection_->stop_waiting_count_ > 1);
 
-    if (!FLAGS_quic_reloadable_flag_quic_strict_ack_handling ||
+    if (!GetQuicReloadableFlag(quic_strict_ack_handling) ||
         !connection_->GetUpdatedAckFrame().ack_frame->packets.Empty()) {
       QUIC_DVLOG(1) << "Bundling ack with outgoing packet.";
       connection_->SendAck();

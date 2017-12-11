@@ -673,7 +673,7 @@ TEST_F(QuicStreamTest, CancelStream) {
               SendRstStream(stream_->id(), QUIC_STREAM_CANCELLED, 9));
   stream_->Reset(QUIC_STREAM_CANCELLED);
   stream_->OnStreamFrameDiscarded(0, 9, false);
-  if (!FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded) {
+  if (!GetQuicReloadableFlag(quic_remove_on_stream_frame_discarded)) {
     EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
   } else {
     EXPECT_EQ(1u, QuicStreamPeer::SendBuffer(stream_).size());
@@ -700,7 +700,7 @@ TEST_F(QuicStreamTest, RstFrameReceivedStreamNotFinishSending) {
               SendRstStream(stream_->id(), QUIC_RST_ACKNOWLEDGEMENT, 9));
   stream_->OnStreamReset(rst_frame);
   stream_->OnStreamFrameDiscarded(0, 9, false);
-  if (!FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded) {
+  if (!GetQuicReloadableFlag(quic_remove_on_stream_frame_discarded)) {
     EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
   } else {
     EXPECT_EQ(1u, QuicStreamPeer::SendBuffer(stream_).size());
@@ -745,7 +745,7 @@ TEST_F(QuicStreamTest, ConnectionClosed) {
   stream_->OnConnectionClosed(QUIC_INTERNAL_ERROR,
                               ConnectionCloseSource::FROM_SELF);
   stream_->OnStreamFrameDiscarded(0, 9, false);
-  if (!FLAGS_quic_reloadable_flag_quic_remove_on_stream_frame_discarded) {
+  if (!GetQuicReloadableFlag(quic_remove_on_stream_frame_discarded)) {
     EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
   } else {
     EXPECT_EQ(1u, QuicStreamPeer::SendBuffer(stream_).size());
@@ -906,7 +906,7 @@ TEST_F(QuicStreamTest, WriteMemSlices) {
 }
 
 TEST_F(QuicStreamTest, StreamDataGetAckedMultipleTimes) {
-  FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2 = true;
+  SetQuicReloadableFlag(quic_allow_multiple_acks_for_data2, true);
   Initialize(kShouldProcessData);
   QuicReferenceCountedPointer<MockAckListener> mock_ack_listener(
       new StrictMock<MockAckListener>);

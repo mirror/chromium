@@ -2198,7 +2198,8 @@ TEST_P(QuicFramerTest, FirstAckFrameUnderflow) {
 }
 
 TEST_P(QuicFramerTest, AckFrameFirstAckBlockLengthZero) {
-  FLAGS_quic_reloadable_flag_quic_strict_ack_handling = true;
+  SetQuicReloadableFlag(quic_strict_ack_handling,
+                     true);
 
   // clang-format off
   PacketFragments packet = {
@@ -4097,7 +4098,7 @@ TEST_P(QuicFramerTest, BuildAckFramePacketOneAckBlockMaxLength) {
   header.packet_number = kPacketNumber;
 
   QuicAckFrame ack_frame = InitAckFrame(kPacketNumber);
-  FLAGS_quic_reloadable_flag_quic_frames_deque3 = true;
+  SetQuicReloadableFlag(quic_frames_deque3, true);
   ack_frame.ack_delay_time = QuicTime::Delta::Zero();
 
   QuicFrames frames = {QuicFrame(&ack_frame)};

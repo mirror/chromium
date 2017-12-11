@@ -402,7 +402,7 @@ class QuicCryptoClientStreamStatelessTest : public QuicTest {
     crypto_test_utils::SetupCryptoServerConfigForTest(
         server_connection_->clock(), server_connection_->random_generator(),
         &server_crypto_config_, options);
-    FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support = true;
+    SetQuicReloadableFlag(enable_quic_stateless_reject_support, true);
   }
 
   MockQuicConnectionHelper helper_;
@@ -422,7 +422,7 @@ class QuicCryptoClientStreamStatelessTest : public QuicTest {
 };
 
 TEST_F(QuicCryptoClientStreamStatelessTest, StatelessReject) {
-  FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support = true;
+  SetQuicReloadableFlag(enable_quic_stateless_reject_support, true);
 
   QuicCryptoClientConfig::CachedState* client_state =
       client_crypto_config_.LookupOrCreate(server_id_);

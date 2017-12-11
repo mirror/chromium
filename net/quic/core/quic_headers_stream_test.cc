@@ -464,7 +464,7 @@ TEST_P(QuicHeadersStreamTest, ProcessPushPromise) {
 }
 
 TEST_P(QuicHeadersStreamTest, ProcessPushPromiseDisabledSetting) {
-  FLAGS_quic_reloadable_flag_quic_respect_http2_settings_frame = true;
+  SetQuicReloadableFlag(quic_respect_http2_settings_frame, true);
   session_.OnConfigNegotiated();
   SpdySettingsIR data;
   // Respect supported settings frames SETTINGS_ENABLE_PUSH.
@@ -633,7 +633,7 @@ TEST_P(QuicHeadersStreamTest, ProcessSpdyRstStreamFrame) {
 }
 
 TEST_P(QuicHeadersStreamTest, ProcessSpdySettingsFrame) {
-  FLAGS_quic_reloadable_flag_quic_respect_http2_settings_frame = false;
+  SetQuicReloadableFlag(quic_respect_http2_settings_frame, false);
   SpdySettingsIR data;
   data.AddSetting(SETTINGS_HEADER_TABLE_SIZE, 0);
   SpdySerializedFrame frame(framer_->SerializeFrame(data));
@@ -647,8 +647,8 @@ TEST_P(QuicHeadersStreamTest, ProcessSpdySettingsFrame) {
 }
 
 TEST_P(QuicHeadersStreamTest, RespectHttp2SettingsFrameSupportedFields) {
-  FLAGS_quic_reloadable_flag_quic_respect_http2_settings_frame = true;
-  FLAGS_quic_reloadable_flag_quic_send_max_header_list_size = true;
+  SetQuicReloadableFlag(quic_respect_http2_settings_frame, true);
+  SetQuicReloadableFlag(quic_send_max_header_list_size, true);
   const uint32_t kTestHeaderTableSize = 1000;
   SpdySettingsIR data;
   // Respect supported settings frames SETTINGS_HEADER_TABLE_SIZE,
@@ -664,8 +664,8 @@ TEST_P(QuicHeadersStreamTest, RespectHttp2SettingsFrameSupportedFields) {
 }
 
 TEST_P(QuicHeadersStreamTest, RespectHttp2SettingsFrameUnsupportedFields) {
-  FLAGS_quic_reloadable_flag_quic_respect_http2_settings_frame = true;
-  FLAGS_quic_reloadable_flag_quic_send_max_header_list_size = true;
+  SetQuicReloadableFlag(quic_respect_http2_settings_frame, true);
+  SetQuicReloadableFlag(quic_send_max_header_list_size, true);
   SpdySettingsIR data;
   // Does not support SETTINGS_MAX_CONCURRENT_STREAMS,
   // SETTINGS_INITIAL_WINDOW_SIZE, SETTINGS_ENABLE_PUSH and
@@ -840,7 +840,7 @@ TEST_P(QuicHeadersStreamTest, AckSentData) {
   EXPECT_CALL(session_,
               WritevData(headers_stream_, kHeadersStreamId, _, _, NO_FIN))
       .WillRepeatedly(Invoke(MockQuicSession::ConsumeAllData));
-  if (!FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2) {
+  if (!GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)) {
     EXPECT_CALL(*connection_, CloseConnection(QUIC_INTERNAL_ERROR, _, _));
   }
   InSequence s;
@@ -884,7 +884,7 @@ TEST_P(QuicHeadersStreamTest, AckSentData) {
   headers_stream_->OnStreamFrameAcked(7, 7, false, QuicTime::Delta::Zero());
   // Unsent data is acked.
   EXPECT_CALL(*ack_listener2, OnPacketAcked(7, _));
-  if (FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2) {
+  if (GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)) {
     headers_stream_->OnStreamFrameAcked(14, 10, false, QuicTime::Delta::Zero());
   } else {
     EXPECT_QUIC_BUG(headers_stream_->OnStreamFrameAcked(
@@ -934,7 +934,7 @@ TEST_P(QuicHeadersStreamTest, FrameContainsMultipleHeaders) {
 }
 
 TEST_P(QuicHeadersStreamTest, HeadersGetAckedMultipleTimes) {
-  if (!FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2) {
+  if (!GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)) {
     return;
   }
   EXPECT_CALL(session_,

@@ -71,7 +71,7 @@ class QuicCryptoServerStreamTest : public QuicTestWithParam<bool> {
             QuicCompressedCertsCache::kQuicCompressedCertsCacheSize),
         server_id_(kServerHostname, kServerPort, PRIVACY_MODE_DISABLED),
         client_crypto_config_(crypto_test_utils::ProofVerifierForTesting()) {
-    FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support = false;
+    SetQuicReloadableFlag(enable_quic_stateless_reject_support, false);
   }
 
   void Initialize() { InitializeServer(); }
@@ -230,7 +230,7 @@ TEST_P(QuicCryptoServerStreamTest, ForwardSecureAfterCHLO) {
 }
 
 TEST_P(QuicCryptoServerStreamTest, StatelessRejectAfterCHLO) {
-  FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support = true;
+  SetQuicReloadableFlag(enable_quic_stateless_reject_support, true);
   Initialize();
 
   InitializeFakeClient(/* supports_stateless_rejects= */ true);
@@ -264,7 +264,7 @@ TEST_P(QuicCryptoServerStreamTest, StatelessRejectAfterCHLO) {
 }
 
 TEST_P(QuicCryptoServerStreamTest, ConnectedAfterStatelessHandshake) {
-  FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support = true;
+  SetQuicReloadableFlag(enable_quic_stateless_reject_support, true);
   Initialize();
 
   InitializeFakeClient(/* supports_stateless_rejects= */ true);
@@ -311,7 +311,7 @@ TEST_P(QuicCryptoServerStreamTest, ConnectedAfterStatelessHandshake) {
 }
 
 TEST_P(QuicCryptoServerStreamTest, NoStatelessRejectIfNoClientSupport) {
-  FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support = true;
+  SetQuicReloadableFlag(enable_quic_stateless_reject_support, true);
   Initialize();
 
   // The server is configured to use stateless rejects, but the client does not
@@ -434,7 +434,7 @@ TEST_P(QuicCryptoServerStreamTest, SendSCUPAfterHandshakeComplete) {
   // crypto_test_utils::MovePackets stops processing parsing following packets.
   // Actually, crypto stream test should use QuicSession instead of
   // QuicSpdySession (b/32366134).
-  FLAGS_quic_reloadable_flag_quic_send_max_header_list_size = false;
+  SetQuicReloadableFlag(quic_send_max_header_list_size, false);
   Initialize();
 
   InitializeFakeClient(/* supports_stateless_rejects= */ false);
