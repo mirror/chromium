@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3b5b3ed_5659c102",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/share/ShareMenuActionHandlerIntegrationTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-11T19:11:32Z",
+      "side": 1,
+      "message": "Should the pageUrl parameter be httpCanonicalUrl for each of these, assuming that pageUrl is equivalent to visible url?",
+      "revId": "e01565dafd9834068b4cde9e5a862bc41d029a0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
