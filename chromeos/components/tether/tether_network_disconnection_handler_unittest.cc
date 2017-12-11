@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "base/memory/ptr_util.h"
 #include "base/test/scoped_task_environment.h"
 #include "chromeos/components/tether/fake_active_host.h"
 #include "chromeos/components/tether/fake_disconnect_tethering_request_sender.h"
@@ -64,9 +63,9 @@ class TetherNetworkDisconnectionHandlerTest : public NetworkStateTest {
     wifi_service_path_ =
         ConfigureService(CreateConnectedWifiConfigurationJsonString());
 
-    fake_active_host_ = base::MakeUnique<FakeActiveHost>();
+    fake_active_host_ = std::make_unique<FakeActiveHost>();
     fake_disconnect_tethering_request_sender_ =
-        base::MakeUnique<FakeDisconnectTetheringRequestSender>();
+        std::make_unique<FakeDisconnectTetheringRequestSender>();
     mock_network_configuration_remover_ =
         base::WrapUnique(new NiceMock<MockNetworkConfigurationRemover>);
 
