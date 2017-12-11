@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af91f93d_45530413",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T07:06:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand how the explanation (\"since callbacks of the events...\")  relates to |timeout_timer|. can you elaborate a bit more?",
+      "revId": "699dae568e05ca4e84cea9448ac4e28d736a6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e059e00_d1ceb000",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T07:06:59Z",
+      "side": 1,
+      "message": "This comment may be more illuminating in front of the DCHECK above.",
+      "revId": "699dae568e05ca4e84cea9448ac4e28d736a6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9541b8e_c89801e8",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T07:06:59Z",
+      "side": 1,
+      "message": "I think this might improve with more verbose naming:\n\nOnIdleTimeout() {\n  (*instance_host_)-\u003eRequestTermination();\n}\n\nRequestedTermination() {\n  return DidIdleTimeout()/WasIdleCallbackCalled()\n}",
+      "revId": "699dae568e05ca4e84cea9448ac4e28d736a6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f018635f_fc5a957d",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T07:06:59Z",
+      "side": 1,
+      "message": "It\u0027d also be good to explain why we only have this special function for FetchEvent.",
+      "revId": "699dae568e05ca4e84cea9448ac4e28d736a6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d9606c_c1faca2e",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T07:06:59Z",
+      "side": 1,
+      "message": "the worker has to be terminated by the browser process. It does this due to idle timeout.",
+      "revId": "699dae568e05ca4e84cea9448ac4e28d736a6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc581dc4_4fc80658",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T07:06:59Z",
+      "side": 1,
+      "message": "We could also say it gets reset to false if StartEvent() is called.",
+      "revId": "699dae568e05ca4e84cea9448ac4e28d736a6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55480af_701a5334",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T07:06:59Z",
+      "side": 1,
+      "message": "This comment is now a bit confusing: there\u0027s \"|idle_time_|\" to mean \"has no events\", and \"IsIdle()\" to mean the idle timeout occurred.\n\nI feel we need some more verbose terminology. How about OnIdle() -\u003e OnIdleTimeout() and IsIdle() -\u003e CalledIdleCallback() or DidIdleTimeout()?",
+      "revId": "699dae568e05ca4e84cea9448ac4e28d736a6004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
