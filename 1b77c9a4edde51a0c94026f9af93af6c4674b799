@@ -16,6 +16,24 @@
       "revId": "1b77c9a4edde51a0c94026f9af93af6c4674b799",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d693c1_13cfaa29",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-11T04:13:50Z",
+      "side": 1,
+      "message": "Thanks, that was a bad merge on my part when these moved up in this file. Will be fixed in the next patch set.",
+      "parentUuid": "32d651d4_1d829ecc",
+      "revId": "1b77c9a4edde51a0c94026f9af93af6c4674b799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
