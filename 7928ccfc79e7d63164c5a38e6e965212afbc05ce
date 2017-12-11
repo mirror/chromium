@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "816e2582_d96199a5",
+        "filename": "base/test/android/url_utils.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-11T23:25:48Z",
+      "side": 1,
+      "message": "Should this be\n\n  class BASE_EXPORT UrlUtils\n\n?\n\nAlso, could you just add a class comment that this is in fact the JNI brdige for the Java-class?",
+      "revId": "7928ccfc79e7d63164c5a38e6e965212afbc05ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb40065c_4bf4030f",
+        "filename": "base/test/android/url_utils.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-11T23:25:48Z",
+      "side": 1,
+      "message": "Since this is meant to in fact be used by other parts of the code base, maybe copy the documentation from the Java method here?",
+      "revId": "7928ccfc79e7d63164c5a38e6e965212afbc05ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf17e06_b27f7d91",
+        "filename": "base/test/android/url_utils.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-11T23:25:48Z",
+      "side": 1,
+      "message": "Do you need a default constructor?",
+      "revId": "7928ccfc79e7d63164c5a38e6e965212afbc05ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
