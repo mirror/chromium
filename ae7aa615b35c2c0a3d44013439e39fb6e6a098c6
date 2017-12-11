@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbbea194_726b697f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-11T23:28:09Z",
+      "side": 1,
+      "message": "Could this be null if the other array isn\u0027t?",
+      "range": {
+        "startLine": 346,
+        "startChar": 52,
+        "endLine": 346,
+        "endChar": 73
+      },
+      "revId": "ae7aa615b35c2c0a3d44013439e39fb6e6a098c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355c34af_a604b7c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/AddressDropDownAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-11T23:28:09Z",
+      "side": 1,
+      "message": "Feels like this should be passed in or something, but for now it\u0027s ok!",
+      "range": {
+        "startLine": 70,
+        "startChar": 45,
+        "endLine": 70,
+        "endChar": 93
+      },
+      "revId": "ae7aa615b35c2c0a3d44013439e39fb6e6a098c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
