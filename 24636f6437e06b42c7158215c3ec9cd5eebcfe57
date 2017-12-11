@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "427f2172_6321007d",
+        "filename": "third_party/WebKit/Source/core/html/forms/FileInputType.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-12-11T05:35:06Z",
+      "side": 1,
+      "message": "I think we should use key() instead of charCode(). Maybe we can check for ToKeyboardEvent(event)-\u003ekey() \u003d\u003d \"Enter\" \u0026\u0026 !ToKeyboardEvent(event)-\u003erepeat() like HTMLAnchorElement does.",
+      "parentUuid": "97b644c6_08ca0ffa",
+      "revId": "24636f6437e06b42c7158215c3ec9cd5eebcfe57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9b05fce_27cf8755",
         "filename": "third_party/WebKit/Source/core/html/forms/FileInputType.cpp",
         "patchSetId": 1
