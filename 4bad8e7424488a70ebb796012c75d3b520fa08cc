@@ -70,6 +70,30 @@
       "revId": "4bad8e7424488a70ebb796012c75d3b520fa08cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33988a22_b4aa764f",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T17:23:30Z",
+      "side": 1,
+      "message": "If I understand Sylvain\u0027s other comment correctly, I think this metric is trying to measure how \"far\" a user can go (in terms of number of page loads) before switching to an evicted tab. Higher is better because the cost of reviving of evicted tab is incurred less frequently.\n\nAssuming this, I agree with Sylvain that it seems more correct to count offline page as a page load because it appears to the user like one. Eugene, would you agree that this is the correct end state?\n\nSeparately there\u0027s the question of how to roll out this change. Is anyone looking at this UMA metric regularly that we need to notify of the expected change? I\u0027m not sure how noticeable the change will be. For example, the bug was shipped in M61. There is only a mild decrease in the metric in 95th percentile compared to M60, and it\u0027s hard to tell if it\u0027s due to the bug or part of the larger decreasing trend that seemed to have started around M56. I wonder if the impact on UMA metric for fixing this bug would be like a tree falling in a forest no one knows about... in which case, I think we should probably just ship the fix.",
+      "parentUuid": "ab56e533_a5c40950",
+      "range": {
+        "startLine": 373,
+        "startChar": 25,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "4bad8e7424488a70ebb796012c75d3b520fa08cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
