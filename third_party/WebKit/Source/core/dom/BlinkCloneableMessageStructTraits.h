@@ -27,6 +27,9 @@ struct StructTraits<blink::mojom::blink::CloneableMessage::DataView,
   static Vector<blink::mojom::blink::SerializedBlobPtr> blobs(
       blink::BlinkCloneableMessage& input);
 
+  static blink::mojom::blink::SerializedArrayBufferContentsVectorPtr
+  sharedArrayBufferContentsVector(blink::BlinkCloneableMessage& input);
+
   static bool Read(blink::mojom::blink::CloneableMessage::DataView,
                    blink::BlinkCloneableMessage* out);
 };

@@ -22,6 +22,11 @@ struct BLINK_COMMON_EXPORT
     return input.blobs;
   }
 
+  static blink::mojom::SerializedArrayBufferContentsVectorPtr&
+  sharedArrayBufferContentsVector(blink::CloneableMessage& input) {
+    return input.sharedArrayBufferContentsVector;
+  }
+
   static bool Read(blink::mojom::CloneableMessage::DataView data,
                    blink::CloneableMessage* out);
 };
