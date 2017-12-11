@@ -88,6 +88,7 @@ class ServerWindow : public viz::HostFrameSinkClient {
 
   void Add(ServerWindow* child);
   void Remove(ServerWindow* child);
+  void RemoveAllChildren();
   void Reorder(ServerWindow* relative, mojom::OrderDirection diretion);
   void StackChildAtBottom(ServerWindow* child);
   void StackChildAtTop(ServerWindow* child);
