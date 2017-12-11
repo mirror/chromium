@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "0a4d732e_899df7cd",
+        "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-11T15:26:29Z",
+      "side": 0,
+      "message": "\u003e My original question still stands: The CL description says you are removing icons that aren\u0027t used (which to me says \u0027find all icons with refcount 0 and remove\u0027,\n\nSome icon files are being removed.\n\n\u003e but the code changes show something different (the ref count on this icon is going down by one). I presume the CL description is out of date (in which case it should be amended), but I can\u0027t find justification in the bug, for example, for removing an icon from this dialog. Is this a request made by UX? Is this icon never shown anymore? What is it?\n\nThe new style notifications are already default and don\u0027t use this image. They only use the \"small image\" below.",
+      "parentUuid": "4843825e_678c18e6",
+      "range": {
+        "startLine": 50,
+        "startChar": 53,
+        "endLine": 50,
+        "endChar": 69
+      },
+      "revId": "db2008f2bd72d8888fb3d0534c841c4bbc04d095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52b823b9_2f81426b",
         "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
         "patchSetId": 3
