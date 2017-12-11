@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "738bd2a7_bb93860a",
+        "filename": "services/shape_detection/text_detection_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-11T15:52:14Z",
+      "side": 1,
+      "message": "huh. i still find \"Create\" to be an odd name for this since the doc comment doesn\u0027t talk about it creating anything. is this the norm in mojo-land? why isn\u0027t this called \"BindToRequest\" or something?",
+      "revId": "3d7111b9333786f92b6579b4577069d51d8f4eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
