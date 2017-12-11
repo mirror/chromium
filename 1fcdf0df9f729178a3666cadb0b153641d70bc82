@@ -153,6 +153,30 @@
       "revId": "1fcdf0df9f729178a3666cadb0b153641d70bc82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ba3d35_f58104ba",
+        "filename": "extensions/browser/api/socket/socket.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T11:08:13Z",
+      "side": 1,
+      "message": "Thanks Reilly, I updated the text reflecting this and added further investigation of options for extensions to the known gaps list of traffic annotations (go/audited-network-requests)",
+      "parentUuid": "79a9a0f0_3123faf3",
+      "range": {
+        "startLine": 160,
+        "startChar": 13,
+        "endLine": 160,
+        "endChar": 44
+      },
+      "revId": "1fcdf0df9f729178a3666cadb0b153641d70bc82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
