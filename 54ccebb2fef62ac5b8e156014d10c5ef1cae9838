@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c71f0c75_6076f36e",
+        "filename": "media/audio/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1848e24_3678be73",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a53eb141_506e28a6",
         "filename": "services/audio/OWNERS",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "02a54bfe_78ab769b",
+        "filename": "services/audio/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Presubmit does not accept it, it insists on adding individual OWNERS files\nhttps://cs.chromium.org/chromium/src/PRESUBMIT.py?type\u003dcs\u0026q\u003d%22file://ipc/SECURITY_OWNERS%22\u0026sq\u003dpackage:chromium\u0026l\u003d1538.",
+      "parentUuid": "a53eb141_506e28a6",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd7d5cc_3f1424ca",
         "filename": "services/audio/README.md",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820c7d7c_3212482e",
+        "filename": "services/audio/README.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cd7d5cc_3f1424ca",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "ab0140ae_7f2a1649",
+        "filename": "services/audio/audio_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ee34f62_5a7e4ac2",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6db4faf8_ba7f6e53",
         "filename": "services/audio/audio_service.h",
         "patchSetId": 10
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "ed6c81f7_afa5890a",
+        "filename": "services/audio/audio_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6db4faf8_ba7f6e53",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0425ce04_a993879e",
         "filename": "services/audio/in_process_audio_manager_accessor.h",
         "patchSetId": 10
@@ -107,6 +203,24 @@
       "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2206bdf_55696a3f",
+        "filename": "services/audio/in_process_audio_manager_accessor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0425ce04_a993879e",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "587a2e48_916cee4e",
+        "filename": "services/audio/in_process_audio_manager_accessor.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaac1d3e_cf6b90d7",
+      "range": {
+        "startLine": 25,
+        "startChar": 22,
+        "endLine": 25,
+        "endChar": 26
+      },
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d738d67d_d02f6e37",
         "filename": "services/audio/public/cpp/BUILD.gn",
         "patchSetId": 10
@@ -144,6 +282,24 @@
       "writtenOn": "2017-12-06T15:13:24Z",
       "side": 1,
       "message": "Why are they public? If they are used from elsewhere, don\u0027t they need an EXPORT macro?",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae4ed4a_d68fff17",
+        "filename": "services/audio/public/cpp/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Could you clarify?",
+      "parentUuid": "d738d67d_d02f6e37",
       "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "c768e1b0_95890c2a",
+        "filename": "services/audio/public/cpp/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Did not manage to convince presubmit.",
+      "parentUuid": "5cb4eac1_1266051a",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "492c2ecb_728cb837",
         "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
         "patchSetId": 10
@@ -184,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "597ac46b_3410e880",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "492c2ecb_728cb837",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bc82684_3e517126",
         "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
         "patchSetId": 10
@@ -195,6 +387,24 @@
       "writtenOn": "2017-12-06T15:13:24Z",
       "side": 1,
       "message": "Taking the address of this function is a bit problematic, it may break if overloads are added in the future AFAICT. How about having a helper function in an unnamed namespace instead?",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39f8e02_3692ab74",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "That is a problem common to all cases of binding an interface method, right?",
+      "parentUuid": "4bc82684_3e517126",
       "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "43037985_2a165af4",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddc0cf0b_a4e2284f",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3acb93dd_815079a0",
         "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
         "patchSetId": 10
@@ -232,6 +460,24 @@
       "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52148d99_8130b3b9",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3acb93dd_815079a0",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +498,24 @@
     },
     {
       "key": {
+        "uuid": "d6044e69_768a00a2",
+        "filename": "services/audio/public/interfaces/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Same here",
+      "parentUuid": "790c4e92_c6083f30",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea6815f4_6605cd63",
         "filename": "services/audio/test/OWNERS",
         "patchSetId": 10
@@ -269,6 +533,24 @@
     },
     {
       "key": {
+        "uuid": "163d4d34_68590a6a",
+        "filename": "services/audio/test/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Presubmit insists. I added those per its recommendation.",
+      "parentUuid": "ea6815f4_6605cd63",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f9e3740_09808634",
         "filename": "services/audio/test/audio_system_to_mojo_adapter_test.cc",
         "patchSetId": 10
@@ -280,6 +562,24 @@
       "writtenOn": "2017-12-06T18:31:12Z",
       "side": 1,
       "message": "FYI since this CL already has one +1 :)",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4249770e_7e1baff1",
+        "filename": "services/audio/test/audio_system_to_mojo_adapter_test.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-11T18:28:39Z",
+      "side": 1,
+      "message": "Done now.",
+      "parentUuid": "6f9e3740_09808634",
       "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
