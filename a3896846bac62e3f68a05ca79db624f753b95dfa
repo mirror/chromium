@@ -22,6 +22,30 @@
       "revId": "a3896846bac62e3f68a05ca79db624f753b95dfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b07d51b_dfe5489e",
+        "filename": "chrome/browser/command_updater_proxy.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-11T21:51:04Z",
+      "side": 1,
+      "message": "True, that makes perfect sense. Done.",
+      "parentUuid": "0279fd37_12b925bb",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "a3896846bac62e3f68a05ca79db624f753b95dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
