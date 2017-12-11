@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f3081e89_f0da4bfb",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-11T21:08:43Z",
+      "side": 1,
+      "message": "Sorry I completely missed this. Thanks for the reminder! :)",
+      "parentUuid": "698b2271_c417ea9f",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 57
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2711b60d_23abbeb1",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 6
@@ -375,6 +399,30 @@
       "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27501f3_1a7c40dd",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-11T21:08:43Z",
+      "side": 1,
+      "message": "Ah, I misunderstood your comment. Added which sorting order was violated on each of the out of order keys.",
+      "parentUuid": "385b3177_894c62e9",
+      "range": {
+        "startLine": 439,
+        "startChar": 55,
+        "endLine": 439,
+        "endChar": 58
+      },
+      "revId": "b1f7266be9994b91412d31a4b8e40651b3093856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
