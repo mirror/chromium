@@ -913,6 +913,7 @@ void WifiConfigView::Init(bool show_8021x) {
   if (network) {
     if (network->type() == shill::kTypeWifi) {
       if (network->security_class() == shill::kSecurity8021x ||
+          network->security_class() == shill::kSecurityFt8021x ||
           network->IsDynamicWep()) {
         show_8021x = true;
       }
