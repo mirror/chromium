@@ -22,6 +22,8 @@
 
 namespace {
 const CGFloat kLeadingButtonEdgeOffset = 9;
+const CGFloat kTextFieldLeadingOffsetNoImage = 16;
+const CGFloat kTextFieldLeadingOffsetImage = 6;
 }  // namespace
 
 @interface OmniboxTextFieldIOS ()
@@ -96,8 +98,9 @@ const CGFloat kLeadingButtonEdgeOffset = 9;
                                                   tintColor:tintColor];
     [self addSubview:_textField];
 
-    _leadingTextfieldConstraint =
-        [_textField.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+    _leadingTextfieldConstraint = [_textField.leadingAnchor
+        constraintEqualToAnchor:self.leadingAnchor
+                       constant:kTextFieldLeadingOffsetNoImage];
 
     [NSLayoutConstraint activateConstraints:@[
       [_textField.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
@@ -129,7 +132,8 @@ const CGFloat kLeadingButtonEdgeOffset = 9;
       [_leadingButton.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
       self.leadingButtonLeadingConstraint,
       [self.leadingButton.trailingAnchor
-          constraintEqualToAnchor:self.textField.leadingAnchor],
+          constraintEqualToAnchor:self.textField.leadingAnchor
+                         constant:-kTextFieldLeadingOffsetImage],
     ]];
   }
 }
