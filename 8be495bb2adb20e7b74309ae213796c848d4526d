@@ -34,6 +34,24 @@
       "revId": "8be495bb2adb20e7b74309ae213796c848d4526d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c47a65c0_87a3b2f5",
+        "filename": "content/browser/accessibility/accessibility_event_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-11T23:13:36Z",
+      "side": 0,
+      "message": "Unfortunately it doesn\u0027t compile with callback_forward. If you know how\nto fix it please let me know, but forward declarations and templates\ndon\u0027t easily match.",
+      "parentUuid": "b1eb35d7_e6e0d2d4",
+      "revId": "8be495bb2adb20e7b74309ae213796c848d4526d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
