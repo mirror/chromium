@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fd268f7_205a25a9",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-11T23:14:27Z",
+      "side": 1,
+      "message": "WDTY of tracking this [1] navigation as well (The one in the body of the page if there are no extensions that also links to the store)\n\n[1]https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/item_list.html?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d64",
+      "revId": "36c3661a07de836ee54bc753b0450c2c29c235da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
