@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "gpu/command_buffer/client/client_transfer_cache.h"
+#include "base/optional.h"
 #include "gpu/command_buffer/client/gles2_cmd_helper.h"
 #include "gpu/command_buffer/client/mapped_memory.h"
 
@@ -11,7 +12,7 @@ namespace gpu {
 ClientTransferCache::ClientTransferCache() = default;
 ClientTransferCache::~ClientTransferCache() = default;
 
-TransferCacheEntryId ClientTransferCache::CreateCacheEntry(
+void ClientTransferCache::CreateCacheEntry(
     gles2::GLES2CmdHelper* helper,
     MappedMemoryManager* mapped_memory,
     const cc::ClientTransferCacheEntry& entry) {
@@ -22,37 +23,65 @@ TransferCacheEntryId ClientTransferCache::CreateCacheEntry(
       reinterpret_cast<uint8_t*>(mapped_alloc.address()), mapped_alloc.size()));
   DCHECK(succeeded);
 
-  TransferCacheEntryId id =
+  ClientDiscardableHandle::Id id =
       discardable_manager_.CreateHandle(helper->command_buffer());
   ClientDiscardableHandle handle = discardable_manager_.GetHandle(id);
 
-  helper->CreateTransferCacheEntryINTERNAL(
-      id.GetUnsafeValue(), handle.shm_id(), handle.byte_offset(),
-      static_cast<uint32_t>(entry.Type()), mapped_alloc.shm_id(),
-      mapped_alloc.offset(), mapped_alloc.size());
+  // Store the mapping from the given namespace/id to the transfer cache id.
+  DCHECK(!FindDiscardableHandleId(entry.Type(), entry.Id()));
+  discardable_handle_id_map_[entry.Type()][entry.Id()] = id;
 
-  return id;
+  helper->CreateTransferCacheEntryINTERNAL(
+      static_cast<uint32_t>(entry.Type()), entry.Id(), handle.shm_id(),
+      handle.byte_offset(), mapped_alloc.shm_id(), mapped_alloc.offset(),
+      mapped_alloc.size());
 }
 
-bool ClientTransferCache::LockTransferCacheEntry(TransferCacheEntryId id) {
-  if (discardable_manager_.LockHandle(id))
+bool ClientTransferCache::LockTransferCacheEntry(
+    cc::TransferCacheEntryType type,
+    uint32_t id) {
+  auto discardable_handle_id = FindDiscardableHandleId(type, id);
+  if (!discardable_handle_id)
+    return false;
+
+  if (discardable_manager_.LockHandle(*discardable_handle_id))
     return true;
 
   // Could not lock. Entry is already deleted service side.
+  discardable_handle_id_map_[type].erase(id);
   return false;
 }
 
 void ClientTransferCache::UnlockTransferCacheEntry(
     gles2::GLES2CmdHelper* helper,
-    TransferCacheEntryId id) {
-  helper->UnlockTransferCacheEntryINTERNAL(id.GetUnsafeValue());
+    cc::TransferCacheEntryType type,
+    uint32_t id) {
+  helper->UnlockTransferCacheEntryINTERNAL(static_cast<uint32_t>(type), id);
 }
 
 void ClientTransferCache::DeleteTransferCacheEntry(
     gles2::GLES2CmdHelper* helper,
-    TransferCacheEntryId id) {
-  discardable_manager_.FreeHandle(id);
-  helper->DeleteTransferCacheEntryINTERNAL(id.GetUnsafeValue());
+    cc::TransferCacheEntryType type,
+    uint32_t id) {
+  auto discardable_handle_id = FindDiscardableHandleId(type, id);
+  if (discardable_handle_id) {
+    discardable_manager_.FreeHandle(*discardable_handle_id);
+    helper->DeleteTransferCacheEntryINTERNAL(static_cast<uint32_t>(type), id);
+  }
+}
+
+base::Optional<ClientDiscardableHandle::Id>
+ClientTransferCache::FindDiscardableHandleId(cc::TransferCacheEntryType type,
+                                             uint32_t id) {
+  auto discardable_handle_id_map_it = discardable_handle_id_map_.find(type);
+  if (discardable_handle_id_map_it == discardable_handle_id_map_.end())
+    return base::nullopt;
+
+  auto& id_map = discardable_handle_id_map_it->second;
+  auto id_map_it = id_map.find(id);
+  if (id_map_it == id_map.end())
+    return base::nullopt;
+  return id_map_it->second;
 }
 
 }  // namespace gpu
