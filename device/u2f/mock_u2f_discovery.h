@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "device/u2f/mock_u2f_device.h"
 #include "device/u2f/u2f_device.h"
 #include "device/u2f/u2f_discovery.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -16,25 +17,15 @@ namespace device {
 
 class MockU2fDiscovery : public U2fDiscovery {
  public:
-  class MockDelegate : public Delegate {
+  class MockObserver : public Observer {
    public:
-    MockDelegate();
-    ~MockDelegate();
+    MockObserver();
+    ~MockObserver();
 
-    MOCK_METHOD1(OnStarted, void(bool));
-    MOCK_METHOD1(OnStopped, void(bool));
-    MOCK_METHOD1(OnDeviceAddedStr, void(const std::string&));
-    MOCK_METHOD1(OnDeviceRemovedStr, void(const std::string&));
-
-    // Workaround for GMock's inability to handle move-only types.
-    // Only the device id is forwarded to avoid implementing a custom matcher.
-    void OnDeviceAdded(std::unique_ptr<U2fDevice> device) override;
-    void OnDeviceRemoved(base::StringPiece device_id) override;
-
-    base::WeakPtr<MockDelegate> GetWeakPtr();
-
-   private:
-    base::WeakPtrFactory<MockDelegate> weak_factory_;
+    MOCK_METHOD2(DiscoveryStarted, void(U2fDiscovery*, bool));
+    MOCK_METHOD2(DiscoveryStopped, void(U2fDiscovery*, bool));
+    MOCK_METHOD2(DeviceAdded, void(U2fDiscovery*, U2fDevice*));
+    MOCK_METHOD2(DeviceRemoved, void(U2fDiscovery*, U2fDevice*));
   };
 
   MockU2fDiscovery();
@@ -43,10 +34,10 @@ class MockU2fDiscovery : public U2fDiscovery {
   MOCK_METHOD0(Start, void());
   MOCK_METHOD0(Stop, void());
 
-  Delegate* delegate() { return delegate_.get(); }
+  bool AddDevice(std::unique_ptr<U2fDevice> device) override;
+  bool RemoveDevice(base::StringPiece device_id) override;
 
-  void AddDevice(std::unique_ptr<U2fDevice> device);
-  void RemoveDevice(base::StringPiece device_id);
+  base::ObserverList<Observer>& GetObservers();
 
   void StartSuccess();
   void StartFailure();
