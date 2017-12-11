@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66def478_4f290563",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-11T16:25:04Z",
+      "side": 1,
+      "message": "I was wondering if this assumption in the file format was going to bite us. I think this is something we\u0027ll need to allow for more cleanly going forward. \n\nGenerally speaking, I agree that two bots with the same name on different waterfalls should try to run the same thing, but I can imagine cases where we\u0027ll want to have \"CI-only\" tests or \"tryjob-only\" tests; I\u0027ve wanted this in the past for the chromium recipe, and have had to use workarounds instead.",
+      "revId": "6bad1cc88bbd7a97cbd4349ac08519b01afa1651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
