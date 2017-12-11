@@ -4,15 +4,10 @@
 
 package org.chromium.chrome.browser.webapps;
 
-import static org.chromium.webapk.lib.common.WebApkConstants.WEBAPK_PACKAGE_PREFIX;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.text.TextUtils;
 
-import org.chromium.base.ActivityState;
-import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
@@ -41,28 +36,10 @@ public class WebApkDisclosureNotificationManager {
     private static Set<String> sVisibleNotifications = new HashSet<>();
 
     /**
-     * If we're showing a WebApk that's not with an expected package, it must be an
-     * "Unbound WebApk" (crbug.com/714735). If we are not in a WebAPK but we have a BrowserSession
-     * then it must be a Trusted Web Activity.
-     *
-     * For the above show a notification that it's running in Chrome.
+     * Show a disclosure notification that WebApk is running in Chrome.
+     * Currently we do not show disclosure and this is a no-op.
      */
-    static void maybeShowDisclosure(WebappActivity activity, WebappDataStorage storage) {
-        String packageName = activity.getNativeClientPackageName();
-        boolean isUnboundAPK = activity.isVerified() && !TextUtils.isEmpty(packageName)
-                && !packageName.startsWith(WEBAPK_PACKAGE_PREFIX);
-        boolean isNotificationAllowed = !storage.hasDismissedDisclosure()
-                && !sVisibleNotifications.contains(packageName)
-                && !WebappActionsNotificationManager.isEnabled();
-        if (!isUnboundAPK || !isNotificationAllowed) return;
-
-        int activityState = ApplicationStatus.getStateForActivity(activity);
-        if (activityState == ActivityState.STARTED || activityState == ActivityState.RESUMED
-                || activityState == ActivityState.PAUSED) {
-            sVisibleNotifications.add(packageName);
-            WebApkDisclosureNotificationManager.showDisclosure(activity.mWebappInfo);
-        }
-    }
+    static void maybeShowDisclosure(WebappActivity activity, WebappDataStorage storage) {}
 
     /**
      * Shows the privacy disclosure informing the user that Chrome is being used.
