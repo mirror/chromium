@@ -16,6 +16,24 @@
       "revId": "1121ac5a901bdea3a6e14f4169650d1a431cb7d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c013f9b1_d41c0d89",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-11T18:53:37Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure how to do this, it might be something like having an OOPIF call requestAnimationFrame() and trying to close itself in the callback. It isn\u0027t clear from the crash stacks what might be triggering it. I think there is some time sensitivity around these bug fixes, so would it make sense to add a test in a follow-up?",
+      "parentUuid": "34bea19b_c97f4c9d",
+      "revId": "1121ac5a901bdea3a6e14f4169650d1a431cb7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
