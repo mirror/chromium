@@ -86,7 +86,6 @@ void DataReductionProxyDataUseObserver::OnPageLoadCommit(
 void DataReductionProxyDataUseObserver::OnPageResourceLoad(
     const net::URLRequest& request,
     data_use_measurement::DataUse* data_use) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   if (!request.url().SchemeIs(url::kHttpsScheme) &&
       !request.url().SchemeIs(url::kHttpScheme)) {
@@ -130,6 +129,12 @@ void DataReductionProxyDataUseObserver::OnPageResourceLoad(
             ? data_use->url().HostNoBrackets()
             : kOtherHostName);
   }
+}
+
+void DataReductionProxyDataUseObserver::OnPageDidFinishLoad(
+    data_use_measurement::DataUse* data_use) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  // TODO(dougarnett): 781885 - estimate data saving for NoScript.
 }
 
 }  // namespace data_reduction_proxy

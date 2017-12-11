@@ -50,6 +50,10 @@ class DataUseAscriber {
 
     // The page load completed. This is when the tab is closed or another
     // navigation starts due to omnibox search, link clicks, page reload, etc.
+    virtual void OnPageDidFinishLoad(DataUse* data_use) = 0;
+
+    // The page load completed. This is when the tab is closed or another
+    // navigation starts due to omnibox search, link clicks, page reload, etc.
     virtual void OnPageLoadComplete(DataUse* data_use) = 0;
   };
 

@@ -450,9 +450,31 @@ void ChromeDataUseAscriber::DidFinishMainFrameNavigation(
   }
 }
 
+void ChromeDataUseAscriber::DidFinishLoad(int render_process_id,
+                                          int render_frame_id,
+                                          const GURL& validated_url) {
+  RenderFrameHostID main_frame(render_process_id, render_frame_id);
+
+  auto main_frame_it = main_render_frame_entry_map_.find(main_frame);
+  if (main_frame_it == main_render_frame_entry_map_.end())
+    return;
+
+  DataUseRecorderEntry entry = main_frame_it->second.data_use_recorder;
+  DataUse& data_use = entry->data_use();
+  if (data_use.url().is_valid()) {
+    DCHECK_EQ(validated_url, data_use.url());
+    NotifyDidFinishLoad(entry);
+  }
+}
+
 void ChromeDataUseAscriber::NotifyPageLoadCommit(DataUseRecorderEntry entry) {
   for (auto& observer : observers_)
     observer.OnPageLoadCommit(&entry->data_use());
+}
+
+void ChromeDataUseAscriber::NotifyDidFinishLoad(DataUseRecorderEntry entry) {
+  for (auto& observer : observers_)
+    observer.OnPageDidFinishLoad(&entry->data_use());
 }
 
 void ChromeDataUseAscriber::NotifyDataUseCompleted(DataUseRecorderEntry entry) {
