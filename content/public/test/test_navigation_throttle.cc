@@ -4,6 +4,8 @@
 
 #include "content/public/test/test_navigation_throttle.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/optional.h"
 #include "content/public/browser/browser_thread.h"
@@ -14,7 +16,10 @@ namespace content {
 TestNavigationThrottle::TestNavigationThrottle(NavigationHandle* handle)
     : NavigationThrottle(handle), weak_ptr_factory_(this) {}
 
-TestNavigationThrottle::~TestNavigationThrottle() {}
+TestNavigationThrottle::~TestNavigationThrottle() {
+  if (!finish_closure_.is_null())
+    std::move(finish_closure_).Run();
+}
 
 NavigationThrottle::ThrottleCheckResult
 TestNavigationThrottle::WillStartRequest() {
@@ -71,6 +76,10 @@ void TestNavigationThrottle::SetResponseForAllMethods(
 void TestNavigationThrottle::SetCallback(ThrottleMethod method,
                                          base::Closure callback) {
   method_properties_[method].callback = callback;
+}
+
+void TestNavigationThrottle::SetFinishCallback(base::OnceClosure callback) {
+  finish_closure_ = std::move(callback);
 }
 
 void TestNavigationThrottle::OnWillRespond() {}

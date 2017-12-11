@@ -151,6 +151,8 @@ class RecentTabHelperTest
  private:
   void OnGetAllPagesDone(const std::vector<OfflinePageItem>& result);
 
+  base::test::ScopedFeatureList scoped_feature_list_;
+
   RecentTabHelper* recent_tab_helper_;   // Owned by WebContents.
   OfflinePageModel* model_;              // Keyed service.
   TestDelegate* default_test_delegate_;  // Created at SetUp.
@@ -205,6 +207,13 @@ RecentTabHelperTest::RecentTabHelperTest()
       weak_ptr_factory_(this) {}
 
 void RecentTabHelperTest::SetUp() {
+  // TODO(csharrison): Once ScopedTaskEnvironment supports mock time on the UI
+  // thread, remove this and refactor this class to avoid the
+  // ScopedMockTimeMEssageLoopTaskRunner. The reason this feature doesn't quite
+  // work with this test suite is because it causes navigation utilities like
+  // NavigationSimulator to run a RunLoop waiting for the navigation to proceed
+  // through stages like WillProcessResponse.
+  scoped_feature_list_.InitFromCommandLine("", "AsyncNavigationIntercept");
   ChromeRenderViewHostTestHarness::SetUp();
 
   mocked_main_runner_ =

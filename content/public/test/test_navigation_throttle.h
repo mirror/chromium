@@ -81,6 +81,7 @@ class TestNavigationThrottle : public NavigationThrottle {
 
   // Callback to be called when the given method is called.
   void SetCallback(ThrottleMethod method, base::RepeatingClosure callback);
+  void SetFinishCallback(base::OnceClosure callback);
 
  protected:
   // A method that subclasses can override to be called immediately before a
@@ -110,6 +111,8 @@ class TestNavigationThrottle : public NavigationThrottle {
     int call_count = 0;
   };
   MethodProperties method_properties_[NUM_THROTTLE_METHODS];
+
+  base::OnceClosure finish_closure_;
 
   base::WeakPtrFactory<TestNavigationThrottle> weak_ptr_factory_;
 
