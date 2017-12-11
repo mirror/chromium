@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "277af157_a16eeb03",
+        "filename": "tools/gn/args.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2017-12-11T23:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a420fa4_56efb225",
+      "revId": "235d0916a8e0307637f3cddad2906369604b75df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62be0a2e_6e1f6460",
         "filename": "tools/gn/args.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "235d0916a8e0307637f3cddad2906369604b75df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a2ca89_17177a8d",
+        "filename": "tools/gn/args.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2017-12-11T23:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62be0a2e_6e1f6460",
+      "revId": "235d0916a8e0307637f3cddad2906369604b75df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d40bd658_74cb5263",
+        "filename": "tools/gn/args.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2017-12-11T23:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a9f7209_06515d98",
+      "range": {
+        "startLine": 49,
+        "startChar": 57,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "235d0916a8e0307637f3cddad2906369604b75df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "394937e8_8b12350f",
         "filename": "tools/gn/args.h",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "235d0916a8e0307637f3cddad2906369604b75df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8833bf_5c953c1c",
+        "filename": "tools/gn/args.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002225
+      },
+      "writtenOn": "2017-12-11T23:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "394937e8_8b12350f",
+      "revId": "235d0916a8e0307637f3cddad2906369604b75df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
