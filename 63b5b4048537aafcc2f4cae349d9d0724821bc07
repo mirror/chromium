@@ -16,6 +16,24 @@
       "revId": "63b5b4048537aafcc2f4cae349d9d0724821bc07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43050fa6_2de08062",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-12-11T21:03:03Z",
+      "side": 1,
+      "message": "I think there should be a better way that creates hit test data provider with host_impl when creating the frame sink. But I haven\u0027t figured out how the plumbing works. So in order to do the demo, I added this hack. LTHI will call this function before SubmitCompositorFrame (https://chromium-review.googlesource.com/c/chromium/src/+/786349/6/cc/trees/layer_tree_host_impl.cc).",
+      "parentUuid": "61bb8501_036f47ae",
+      "revId": "63b5b4048537aafcc2f4cae349d9d0724821bc07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
