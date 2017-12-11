@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4799892_3e3f9113",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-11T19:20:17Z",
+      "side": 1,
+      "message": "Phase is dropped here. Is that intentional? Needs explanation.",
+      "revId": "563a7bd1dd71a8661c78b450e929520994e00e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b93b4f6_476b584f",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-11T19:20:17Z",
+      "side": 1,
+      "message": "What about the other phases? Should we pass the phase to WebWidget directly? Or (if we only need layout), perhaps use a different enum (layout vs full).",
+      "revId": "563a7bd1dd71a8661c78b450e929520994e00e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fee9e9_d3a7be57",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-11T19:20:17Z",
+      "side": 1,
+      "message": "You are skipping this part, and also background color below. You probably don\u0027t need it, but I\u0027m worried that we have different implementations for all phases and layout only. Perhaps one should call another in this case?",
+      "revId": "563a7bd1dd71a8661c78b450e929520994e00e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
