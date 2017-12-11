@@ -74,8 +74,7 @@ using content::RenderViewHost;
 // Flaky on Mac ASAN:
 //    http://crbug.com/428670
 
-#if !BUILDFLAG(ENABLE_NACL) || \
-    (defined(OS_MACOSX) && defined(ADDRESS_SANITIZER))
+#if 1
 
 #define MAYBE_PPAPI_NACL(test_name) DISABLED_##test_name
 #define MAYBE_PPAPI_PNACL(test_name) DISABLED_##test_name
@@ -1093,7 +1092,7 @@ IN_PROC_BROWSER_TEST_F(OutOfProcessPPAPITest, InputEvent_AcceptTouchEvent) {
       LIST_TEST(View_ScrollOffsetChange) \
   )
 
-IN_PROC_BROWSER_TEST_F(OutOfProcessPPAPITest, View) {
+IN_PROC_BROWSER_TEST_F(OutOfProcessPPAPITest, DISABLED_View) {
   RUN_VIEW_SUBTESTS;
 }
 IN_PROC_BROWSER_TEST_F(PPAPINaClNewlibTest, MAYBE_PPAPI_NACL(View)) {
