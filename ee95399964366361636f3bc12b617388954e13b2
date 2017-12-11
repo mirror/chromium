@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e35fcaf_d8a64137",
+        "filename": "ui/views/widget/desktop_aura/window_event_filter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-12-11T21:01:36Z",
+      "side": 1,
+      "message": "This is fine as long as you add a null check; it is theoretically possible for |target| to be an aura::Window with a views::Widget.",
+      "range": {
+        "startLine": 102,
+        "startChar": 76,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "ee95399964366361636f3bc12b617388954e13b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
