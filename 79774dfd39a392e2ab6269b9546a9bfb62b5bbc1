@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be6777a_29f59dfa",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-12-11T18:49:31Z",
+      "side": 1,
+      "message": "nit: Comparing the pointers of class names is enough here. As I glanced the Chromium code, I saw some code comparing just the pointer addresses, instead of comparing the contents of class name strings. But I don\u0027t have a strong opinion, it\u0027s up to you.",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 43
+      },
+      "revId": "79774dfd39a392e2ab6269b9546a9bfb62b5bbc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf284ed1_2c694aa3",
+        "filename": "ui/message_center/views/message_popup_collection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-12-11T18:49:31Z",
+      "side": 1,
+      "message": "nit: remove",
+      "range": {
+        "startLine": 200,
+        "startChar": 4,
+        "endLine": 200,
+        "endChar": 29
+      },
+      "revId": "79774dfd39a392e2ab6269b9546a9bfb62b5bbc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
