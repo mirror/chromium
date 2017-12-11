@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6162143b_b7dd8691",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-11T20:15:07Z",
+      "side": 1,
+      "message": "This should be in the .cc and just forward declare in the .h.",
+      "revId": "86bf34db6ef50287da5b53f4e079d623fa82e612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
