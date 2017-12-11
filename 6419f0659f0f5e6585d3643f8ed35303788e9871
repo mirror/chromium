@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4be358b2_cdd0951c",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-11T21:43:35Z",
+      "side": 1,
+      "message": "This casting is fragile. I would either modify LanguageState to include isManaged and make other properties optional, or have this return Array\u003c!LanguageState|!ForcedLanguageState\u003e (and typedef ForcedLanguageState).",
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537bf016_ea169a39",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-11T21:43:35Z",
+      "side": 1,
+      "message": "This *should* be redundant since the set above is replacing spellCheckLanguages_ completely.",
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4266c4fc_9ba77b7d",
+        "filename": "chrome/browser/spellchecker/spellcheck_language_policy_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-11T21:43:35Z",
+      "side": 1,
+      "message": "nit: \u0027pref_value\u0027 is a little unclear here since we are also setting kEnableSpellcheck below. I would suggest something like \u0027forced_language_list\u0027.",
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
