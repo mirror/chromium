@@ -120,7 +120,7 @@ void HttpCache::Writers::AddTransaction(
       IsValidResponseForWriter(info.partial != nullptr, &(info.response_info));
 
   if (all_writers_.empty()) {
-    DCHECK_EQ(PARALLEL_WRITING_NONE, parallel_writing_pattern_);
+    DCHECK_EQ(PARALLEL_WRITING_UNSET, parallel_writing_pattern_);
     parallel_writing_pattern_ = initial_writing_pattern;
     if (parallel_writing_pattern_ != PARALLEL_WRITING_JOIN)
       is_exclusive_ = true;
@@ -234,7 +234,7 @@ bool HttpCache::Writers::ContainsOnlyIdleWriters() const {
 }
 
 bool HttpCache::Writers::CanAddWriters(ParallelWritingPattern* reason) {
-  *reason = PARALLEL_WRITING_NONE;
+  *reason = PARALLEL_WRITING_UNSET;
   //  While cleaning up writers (truncation) we should delay adding new writers.
   //  The caller can try again later.
   if (next_state_ == State::ASYNC_OP_COMPLETE_PRE_TRUNCATE ||

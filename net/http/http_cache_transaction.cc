@@ -179,7 +179,7 @@ HttpCache::Transaction::Transaction(RequestPriority priority, HttpCache* cache)
       validation_cause_(VALIDATION_CAUSE_UNDEFINED),
       cant_conditionalize_zero_freshness_from_memhint_(false),
       recorded_histograms_(false),
-      parallel_writing_pattern_(PARALLEL_WRITING_NONE),
+      parallel_writing_pattern_(PARALLEL_WRITING_UNSET),
       moved_network_transaction_to_writers_(false),
       websocket_handshake_stream_base_create_helper_(NULL),
       in_do_loop_(false),
@@ -668,7 +668,7 @@ void HttpCache::Transaction::MaybeSetParallelWritingPatternForMetrics(
   // It's possible a transaction could not join existing writers and then
   // creates a new writers. In that case the original reason for not being able
   // to join writers should be logged.
-  if (parallel_writing_pattern_ == PARALLEL_WRITING_NONE)
+  if (parallel_writing_pattern_ == PARALLEL_WRITING_UNSET)
     parallel_writing_pattern_ = pattern;
 }
 

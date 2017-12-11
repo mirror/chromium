@@ -1105,10 +1105,14 @@ void HttpCache::ProcessDoneHeadersQueue(ActiveEntry* entry) {
         transaction->WriteModeTransactionAboutToBecomeReader();
         auto return_val = entry->readers.insert(transaction);
         DCHECK(return_val.second);
+        transaction->MaybeSetParallelWritingPatternForMetrics(
+            PARALLEL_WRITING_NONE_CACHE_READ);
       }
     } else {  // mode READ
       auto return_val = entry->readers.insert(transaction);
       DCHECK(return_val.second);
+      transaction->MaybeSetParallelWritingPatternForMetrics(
+          PARALLEL_WRITING_NONE_CACHE_READ);
     }
   }
 
@@ -1273,9 +1277,9 @@ void HttpCache::OnProcessQueuedTransactions(ActiveEntry* entry) {
   // wait till the response is complete. If the response is not yet started, the
   // done_headers_queue transaction should start writing it.
   if (!entry->done_headers_queue.empty()) {
-    ParallelWritingPattern reason = PARALLEL_WRITING_NONE;
+    ParallelWritingPattern reason = PARALLEL_WRITING_UNSET;
     if (entry->writers && !entry->writers->CanAddWriters(&reason)) {
-      if (reason != PARALLEL_WRITING_NONE) {
+      if (reason != PARALLEL_WRITING_UNSET) {
         for (auto* done_headers_transaction : entry->done_headers_queue) {
           done_headers_transaction->MaybeSetParallelWritingPatternForMetrics(
               reason);

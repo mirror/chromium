@@ -193,7 +193,7 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // Invoked when HttpCache decides whether this transaction should join
   // parallel writing or create a new writers object. This is then used
   // for logging metrics. Can be called repeatedly, but doesn't change once the
-  // value has been set to something other than PARALLEL_WRITING_NONE.
+  // value has been set to something other than PARALLEL_WRITING_UNSET.
   void MaybeSetParallelWritingPatternForMetrics(ParallelWritingPattern pattern);
 
  private:

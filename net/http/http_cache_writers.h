@@ -276,7 +276,7 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
 
   // True if multiple transactions are not allowed e.g. for partial requests.
   bool is_exclusive_ = false;
-  ParallelWritingPattern parallel_writing_pattern_ = PARALLEL_WRITING_NONE;
+  ParallelWritingPattern parallel_writing_pattern_ = PARALLEL_WRITING_UNSET;
 
   // Current priority of the request. It is always the maximum of all the writer
   // transactions.
