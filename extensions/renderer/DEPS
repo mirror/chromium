@@ -24,3 +24,12 @@ include_rules = [
   "+services/service_manager/public/cpp",
 ]
 
+specific_include_rules = {
+  ".*(test|test_util)\.(cc|h)$": [
+    "+content/public/test",
+
+    # Temporarily allowed testing includes.  See above.
+    # TODO(jamescook): Remove these. http://crbug.com/162530
+    "+chrome/test/base/chrome_render_view_test.h",
+  ],
+}
