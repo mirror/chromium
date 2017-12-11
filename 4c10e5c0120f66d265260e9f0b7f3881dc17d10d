@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "158cbe02_487c8fd3",
+        "filename": "extensions/browser/extension_event_histogram_value.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-11T20:06:43Z",
+      "side": 1,
+      "message": "Please run this script to update enums.xml.  LGTM with that done.",
+      "range": {
+        "startLine": 434,
+        "startChar": 67,
+        "endLine": 434,
+        "endChar": 0
+      },
+      "revId": "4c10e5c0120f66d265260e9f0b7f3881dc17d10d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
