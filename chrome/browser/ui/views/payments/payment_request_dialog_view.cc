@@ -159,6 +159,11 @@ void PaymentRequestDialogView::ShowErrorMessage() {
     observer_for_testing_->OnErrorMessageShown();
 }
 
+void PaymentRequestDialogView::ShowProcessingSpinner() {
+  throbber_.Start();
+  throbber_overlay_.SetVisible(true);
+}
+
 void PaymentRequestDialogView::OnStartUpdating(
     PaymentRequestSpec::UpdateReason reason) {
   ShowProcessingSpinner();
@@ -327,11 +332,6 @@ void PaymentRequestDialogView::ShowContactInfoEditor(
 void PaymentRequestDialogView::EditorViewUpdated() {
   if (observer_for_testing_)
     observer_for_testing_->OnEditorViewUpdated();
-}
-
-void PaymentRequestDialogView::ShowProcessingSpinner() {
-  throbber_.Start();
-  throbber_overlay_.SetVisible(true);
 }
 
 void PaymentRequestDialogView::HideProcessingSpinner() {

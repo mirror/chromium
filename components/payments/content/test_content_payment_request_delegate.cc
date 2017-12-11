@@ -31,6 +31,10 @@ void TestContentPaymentRequestDelegate::ShowErrorMessage() {
   core_delegate_.ShowErrorMessage();
 }
 
+void TestContentPaymentRequestDelegate::ShowProcessingSpinner() {
+  core_delegate_.ShowProcessingSpinner();
+}
+
 bool TestContentPaymentRequestDelegate::IsBrowserWindowActive() const {
   return core_delegate_.IsBrowserWindowActive();
 }

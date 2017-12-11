@@ -5,6 +5,8 @@
 #include "components/payments/content/service_worker_payment_instrument.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/payments/core/test_payment_request_delegate.h"
 #include "content/public/browser/stored_payment_app.h"
 #include "content/public/test/test_browser_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -102,10 +104,13 @@ class ServiceWorkerPaymentInstrumentTest : public testing::Test,
     stored_app->user_hint = "Visa 4012 ... 1881";
     stored_app->prefer_related_applications = false;
 
+    pdm_ = std::make_unique<autofill::TestPersonalDataManager>();
+    delegate_ = std::make_unique<TestPaymentRequestDelegate>(pdm_.get());
+
     instrument_ = std::make_unique<ServiceWorkerPaymentInstrument>(
         &browser_context_, GURL("https://testmerchant.com"),
         GURL("https://testmerchant.com/bobpay"), spec_.get(),
-        std::move(stored_app));
+        std::move(stored_app), delegate_.get());
   }
 
   ServiceWorkerPaymentInstrument* GetInstrument() { return instrument_.get(); }
@@ -122,6 +127,8 @@ class ServiceWorkerPaymentInstrumentTest : public testing::Test,
   content::TestBrowserContext browser_context_;
 
   std::unique_ptr<PaymentRequestSpec> spec_;
+  std::unique_ptr<autofill::PersonalDataManager> pdm_;
+  std::unique_ptr<PaymentRequestDelegate> delegate_;
   std::unique_ptr<ServiceWorkerPaymentInstrument> instrument_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerPaymentInstrumentTest);
