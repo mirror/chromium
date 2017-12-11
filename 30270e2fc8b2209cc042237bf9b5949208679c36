@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3961de4f_e63749eb",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-11T17:56:12Z",
+      "side": 1,
+      "message": "Let\u0027s ensure that the invariant holds that |u2f_discovery_| is null here, and add a DCHECK to that effect.",
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6243cb_35f90c8f",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-11T17:56:12Z",
+      "side": 1,
+      "message": "Should we reset |u2f_discovery_| here as well? Same below.",
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cafb63f_47f84d2a",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-11T17:56:12Z",
+      "side": 1,
+      "message": "If you are changing this already, let\u0027s add a virtual dtor as required by the style guide.",
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda9aa5b_380d4dcb",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-11T17:56:12Z",
+      "side": 1,
+      "message": "Maybe it is obvious, but for good measure, can you add a comment here that the discoveries must outlive the request?",
+      "revId": "30270e2fc8b2209cc042237bf9b5949208679c36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
