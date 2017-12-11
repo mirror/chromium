@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55d3ffd3_f96dd2fc",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-11T01:16:52Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "57e895b5_a51fce39",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "db2008f2bd72d8888fb3d0534c841c4bbc04d095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b31ff7a1_456c09ba",
         "filename": "chrome/browser/ui/extensions/extension_installed_notification.cc",
         "patchSetId": 3
