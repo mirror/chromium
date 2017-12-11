@@ -4,6 +4,8 @@
 
 #import "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.h"
 
+#import <UIKit/UIKit.h>
+
 #include "base/ios/ios_util.h"
 #include "base/logging.h"
 #include "base/mac/foundation_util.h"
@@ -148,12 +150,23 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
   // Module containing the reauthentication mechanism for viewing and copying
   // passwords.
   ReauthenticationModule* reauthenticationModule_;
+  // Boolean containing whether the export button and functionality are enabled
+  // or not.
+  BOOL exportEnabled_;
 }
+
 // Kick off async request to get logins from password store.
 - (void)getLoginsFromPasswordStore;
+
+// Alert dialogue to confirm passwords export upon pressing the export
+// passwords button.
+@property(nonatomic, strong) UIAlertController* exportConfirmation;
+
 @end
 
 @implementation SavePasswordsCollectionViewController
+
+@synthesize exportConfirmation = exportConfirmation_;
 
 #pragma mark - Initialization
 
@@ -470,7 +483,43 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
     exportPasswordsItem_.textColor = [[MDCPalette greyPalette] tint500];
     exportPasswordsItem_.accessibilityTraits = UIAccessibilityTraitNotEnabled;
     [self reconfigureCellsForItems:@[ exportPasswordsItem_ ]];
+    exportEnabled_ = NO;
+  } else {
+    exportEnabled_ = YES;
   }
+}
+
+- (void)startPasswordsExportFlow {
+  __weak SavePasswordsCollectionViewController* weakSelf = self;
+  exportConfirmation_ = [UIAlertController
+      alertControllerWithTitle:nil
+                       message:l10n_util::GetNSString(
+                                   IDS_IOS_EXPORT_PASSWORDS_ALERT_MESSAGE)
+                preferredStyle:UIAlertControllerStyleActionSheet];
+  UIAlertAction* cancelAction =
+      [UIAlertAction actionWithTitle:l10n_util::GetNSString(
+                                         IDS_IOS_EXPORT_PASSWORDS_CANCEL_BUTTON)
+                               style:UIAlertActionStyleCancel
+                             handler:^(UIAlertAction* action) {
+                               weakSelf.exportConfirmation = nil;
+                             }];
+  [exportConfirmation_ addAction:cancelAction];
+
+  UIAlertAction* exportAction = [UIAlertAction
+      actionWithTitle:l10n_util::GetNSString(IDS_IOS_EXPORT_PASSWORDS)
+                style:UIAlertActionStyleDefault
+              handler:^(UIAlertAction* action) {
+                SavePasswordsCollectionViewController* strongSelf = weakSelf;
+                if (!strongSelf) {
+                  return;
+                }
+                // TODO(crbug.com/789122): Ask for password serialization
+                // and wire re-authentication.
+                strongSelf.exportConfirmation = nil;
+              }];
+  [exportConfirmation_ addAction:exportAction];
+
+  [self presentViewController:exportConfirmation_ animated:YES completion:nil];
 }
 
 #pragma mark UICollectionViewDelegate
@@ -518,10 +567,13 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
       [self openDetailedViewForForm:*blacklistedForms_[indexPath.item]];
       break;
     case ItemTypeExportPasswordsButton:
+      DCHECK_EQ(SectionIdentifierExportPasswordsButton,
+                [model sectionIdentifierForSection:indexPath.section]);
       DCHECK(base::FeatureList::IsEnabled(
           password_manager::features::kPasswordExport));
-      // TODO(crbug.com/789122): Trigger alert dialogue to confirm passwords
-      // export.
+      if (exportEnabled_) {
+        [self startPasswordsExportFlow];
+      }
       break;
     default:
       NOTREACHED();
