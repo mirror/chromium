@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "6b4cc9b3_50d258f8",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-11T14:18:31Z",
+      "side": 1,
+      "message": "Gotcha. What if we just leave this test as-is and convert it to a servicetest in either the same CL where we move Geolocation to being hosted in the Device Service or an immediate followup CL that finishes the isolation of the geolocation C++ code inside the Device Service? It seems like a shame to disable the test if not necessary.",
+      "parentUuid": "75afcd5a_ad8d44a8",
+      "revId": "71a009b070ae5110d04f8221c303883f7cf6f837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d203f65_2a258b80",
         "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
         "patchSetId": 12
@@ -142,6 +160,30 @@
       "side": 1,
       "message": "Done.",
       "parentUuid": "2d203f65_2a258b80",
+      "range": {
+        "startLine": 96,
+        "startChar": 17,
+        "endLine": 96,
+        "endChar": 32
+      },
+      "revId": "71a009b070ae5110d04f8221c303883f7cf6f837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f86e7f2_86866aca",
+        "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-11T14:18:31Z",
+      "side": 1,
+      "message": "Thanks!\n\nSorry, what I mean is: Could we not just do the standard constructor of ScopedGeolocationOverrider (that only takes in the lat, long pair) and then pass content::ServiceManagerConnection::GetForProcess()::GetConnector() to the production code? Then we wouldn\u0027t need a separate constructor for ScopedGeolocationOverrider at all.",
+      "parentUuid": "090984c5_4615626e",
       "range": {
         "startLine": 96,
         "startChar": 17,
