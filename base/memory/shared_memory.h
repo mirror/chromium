@@ -109,6 +109,15 @@ class BASE_EXPORT SharedMemory {
 #if defined(OS_POSIX) && !defined(OS_FUCHSIA)
   // This method requires that the SharedMemoryHandle is backed by a POSIX fd.
   static int GetFdFromSharedMemoryHandle(const SharedMemoryHandle& handle);
+
+  // Creates a shared memory object from existing handles.
+  // |handle| corresponds to an already opened memory object, and
+  // |read_only_handle|, if valid, refers to the same memory object but can only
+  // be mapped to read-only memory regions. |size| must correspond to the size
+  // of the memory object.
+  void Create(const SharedMemoryHandle& handle,
+              const SharedMemoryHandle& read_only_handle,
+              size_t size);
 #endif
 
   // Creates a shared memory object as described by the options struct.

@@ -9,7 +9,6 @@
 #include <utility>
 
 #include "base/debug/alias.h"
-#include "base/memory/ptr_util.h"
 #include "base/process/memory.h"
 #include "base/process/process_metrics.h"
 #include "base/trace_event/trace_event.h"
@@ -92,21 +91,54 @@ void CollectMemoryUsageAndDie(const gfx::Size& size, size_t alloc_size) {
 // Allocates a block of shared memory of the given size. Returns nullptr on
 // failure.
 std::unique_ptr<base::SharedMemory> AllocateSharedMemory(size_t buf_size) {
-  mojo::ScopedSharedBufferHandle mojo_buf =
+  // NOTE: We use Mojo to allocate the shared buffer handle since this code may
+  // run in a sandbox, and shared memory allocation may require unavailable
+  // privileges. Mojo shared memory allocations are implicitly brokered as
+  // needed.
+  mojo::ScopedSharedBufferHandle buffer =
       mojo::SharedBufferHandle::Create(buf_size);
-  if (!mojo_buf->is_valid()) {
+  if (!buffer->is_valid()) {
     LOG(WARNING) << "Browser failed to allocate shared memory";
     return nullptr;
   }
 
-  base::SharedMemoryHandle shared_buf;
-  if (mojo::UnwrapSharedMemoryHandle(std::move(mojo_buf), &shared_buf, nullptr,
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA) && !defined(OS_MACOSX)
+  mojo::ScopedSharedBufferHandle read_only_buffer =
+      buffer->Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY);
+
+  base::SharedMemoryHandle handle;
+  if (mojo::UnwrapSharedMemoryHandle(std::move(buffer), &handle, nullptr,
                                      nullptr) != MOJO_RESULT_OK) {
     LOG(WARNING) << "Browser failed to allocate shared memory";
     return nullptr;
   }
 
-  return base::MakeUnique<base::SharedMemory>(shared_buf, false);
+  // TODO(rockot): We should consider introducing a mojo::UnwrapSharedMemory
+  // API which can handle read-only-sharable base::SharedMemory objects properly
+  // on POSIX. This would eliminate the need to unwrap the read-only handle
+  // separately before reconstructing a base::SharedMemory below.
+  base::SharedMemoryHandle read_only_handle;
+  if (mojo::UnwrapSharedMemoryHandle(std::move(read_only_buffer),
+                                     &read_only_handle, nullptr,
+                                     nullptr) != MOJO_RESULT_OK) {
+    LOG(WARNING) << "Browser failed to allocate shared memory";
+    return nullptr;
+  }
+
+  auto memory = std::make_unique<base::SharedMemory>();
+  memory->Create(handle, read_only_handle, buf_size);
+#else
+  base::SharedMemoryHandle handle;
+  if (mojo::UnwrapSharedMemoryHandle(std::move(buffer), &handle, nullptr,
+                                     nullptr) != MOJO_RESULT_OK) {
+    LOG(WARNING) << "Browser failed to allocate shared memory";
+    return nullptr;
+  }
+
+  auto memory = std::make_unique<base::SharedMemory>(std::move(handle), false);
+#endif
+
+  return memory;
 }
 
 }  // namespace
@@ -138,7 +170,7 @@ std::unique_ptr<SharedBitmap> ClientSharedBitmapManager::AllocateSharedBitmap(
   // remains available.
   memory->Close();
 
-  return base::MakeUnique<ClientSharedBitmap>(
+  return std::make_unique<ClientSharedBitmap>(
       shared_bitmap_allocation_notifier_, std::move(memory), id,
       sequence_number);
 }
@@ -154,7 +186,7 @@ std::unique_ptr<SharedBitmap>
 ClientSharedBitmapManager::GetBitmapForSharedMemory(base::SharedMemory* mem) {
   SharedBitmapId id = SharedBitmap::GenerateId();
   uint32_t sequence_number = NotifyAllocatedSharedBitmap(mem, id);
-  return base::MakeUnique<ClientSharedBitmap>(
+  return std::make_unique<ClientSharedBitmap>(
       shared_bitmap_allocation_notifier_, mem, id, sequence_number);
 }
 
@@ -163,15 +195,15 @@ ClientSharedBitmapManager::GetBitmapForSharedMemory(base::SharedMemory* mem) {
 uint32_t ClientSharedBitmapManager::NotifyAllocatedSharedBitmap(
     base::SharedMemory* memory,
     const SharedBitmapId& id) {
-  base::SharedMemoryHandle handle_to_send =
-      base::SharedMemory::DuplicateHandle(memory->handle());
+  base::SharedMemoryHandle handle_to_send = memory->GetReadOnlyHandle();
   if (!base::SharedMemory::IsHandleValid(handle_to_send)) {
     LOG(ERROR) << "Failed to duplicate shared memory handle for bitmap.";
     return 0;
   }
 
   mojo::ScopedSharedBufferHandle buffer_handle = mojo::WrapSharedMemoryHandle(
-      handle_to_send, memory->mapped_size(), true /* read_only */);
+      handle_to_send, memory->mapped_size(),
+      mojo::UnwrappedSharedMemoryHandleProtection::kReadOnly);
 
   {
     base::AutoLock lock(lock_);

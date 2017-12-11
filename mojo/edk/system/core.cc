@@ -1046,7 +1046,8 @@ MojoResult Core::WrapPlatformSharedBufferHandle(
 
   base::UnguessableToken token =
       base::UnguessableToken::Deserialize(guid->high, guid->low);
-  bool read_only = flags & MOJO_PLATFORM_SHARED_BUFFER_HANDLE_FLAG_READ_ONLY;
+  const bool read_only =
+      flags & MOJO_PLATFORM_SHARED_BUFFER_HANDLE_FLAG_HANDLE_IS_READ_ONLY;
   scoped_refptr<PlatformSharedBuffer> platform_buffer =
       PlatformSharedBuffer::CreateFromPlatformHandle(size, read_only, token,
                                                      std::move(handle));
@@ -1105,7 +1106,7 @@ MojoResult Core::UnwrapPlatformSharedBufferHandle(
   DCHECK(flags);
   *flags = MOJO_PLATFORM_SHARED_BUFFER_HANDLE_FLAG_NONE;
   if (platform_shared_buffer->IsReadOnly())
-    *flags |= MOJO_PLATFORM_SHARED_BUFFER_HANDLE_FLAG_READ_ONLY;
+    *flags |= MOJO_PLATFORM_SHARED_BUFFER_HANDLE_FLAG_HANDLE_IS_READ_ONLY;
 
   ScopedPlatformHandle handle = platform_shared_buffer->PassPlatformHandle();
   return ScopedPlatformHandleToMojoPlatformHandle(std::move(handle),

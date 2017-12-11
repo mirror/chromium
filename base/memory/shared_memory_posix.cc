@@ -76,6 +76,18 @@ int SharedMemory::GetFdFromSharedMemoryHandle(
   return handle.GetHandle();
 }
 
+void SharedMemory::Create(const SharedMemoryHandle& handle,
+                          const SharedMemoryHandle& read_only_handle,
+                          size_t size) {
+  DCHECK(handle.IsValid());
+  DCHECK(!readonly_shm_.IsValid() || readonly_shm_.GetGUID() == shm_.GetGUID());
+
+  shm_ = handle;
+  readonly_shm_ = read_only_handle;
+  requested_size_ = size;
+  mapped_id_ = shm_.GetGUID();
+}
+
 bool SharedMemory::CreateAndMapAnonymous(size_t size) {
   return CreateAnonymous(size) && Map(size);
 }
