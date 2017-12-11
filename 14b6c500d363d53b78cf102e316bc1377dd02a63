@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb077f7b_9044aed3",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1249643
+      },
+      "writtenOn": "2017-12-11T07:00:14Z",
+      "side": 0,
+      "message": "Should I revive kDisableClientSidePhishingDetection and discard all changes? and is it possible to stop CSD Phishing using IPC_MESSAGE_HANDLER?",
+      "parentUuid": "1c7cc1f6_fd9b4571",
+      "revId": "14b6c500d363d53b78cf102e316bc1377dd02a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15ef1bf7_dddfdfdc",
         "filename": "chrome/browser/safe_browsing/local_database_manager.cc",
         "patchSetId": 2
