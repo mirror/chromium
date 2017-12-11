@@ -85,6 +85,7 @@ class CONTENT_EXPORT OverscrollWindowAnimation
 
   // OverscrollControllerDelegate:
   gfx::Size GetDisplaySize() const override;
+  void OnDidOverscroll(const ui::DidOverscrollParams& params) override {}
   bool OnOverscrollUpdate(float delta_x, float delta_y) override;
   void OnOverscrollComplete(OverscrollMode overscroll_mode) override;
   void OnOverscrollModeChange(OverscrollMode old_mode,

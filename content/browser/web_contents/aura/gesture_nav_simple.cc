@@ -545,9 +545,21 @@ gfx::Size GestureNavSimple::GetDisplaySize() const {
       .size();
 }
 
+void GestureNavSimple::OnDidOverscroll(const ui::DidOverscrollParams& params) {
+  overscroll_behavior_ = params.overscroll_behavior;
+}
+
 bool GestureNavSimple::OnOverscrollUpdate(float delta_x, float delta_y) {
   if (!affordance_ || affordance_->IsFinishing())
     return false;
+
+  if (overscroll_behavior_.x != cc::OverscrollBehavior::OverscrollBehaviorType::
+                                    kOverscrollBehaviorTypeAuto) :
+    delta_x = 0;
+  if (overscroll_behavior_.y != cc::OverscrollBehavior::OverscrollBehaviorType::
+                                    kOverscrollBehaviorTypeAuto) :
+    delta_y = 0;
+
   float delta = std::abs(mode_ == OVERSCROLL_SOUTH ? delta_y : delta_x);
   DCHECK_LE(delta, max_delta_);
   affordance_->SetDragProgress(delta / completion_threshold_);
