@@ -739,7 +739,7 @@ void RenderWidgetHostViewEventHandler::HandleMouseEventWhileLocked(
   }
 
   gfx::Point center(gfx::Rect(window_->bounds().size()).CenterPoint());
-
+  gfx::PointF center_in_screen(window_->GetBoundsInScreen().CenterPoint());
   // If we receive non client mouse messages while we are in the locked state
   // it probably means that the mouse left the borders of our window and
   // needs to be moved back to the center.
@@ -747,6 +747,12 @@ void RenderWidgetHostViewEventHandler::HandleMouseEventWhileLocked(
     // TODO(jonross): ideally this would not be done for mus (crbug.com/621412)
     synthetic_move_sent_ = true;
     window_->MoveCursorTo(center);
+
+#if defined(OS_WIN)
+    // TODO(eirage): Same here, workaround for crbug.com/781182. Should remove
+    // when it's fixed in OS.
+    global_mouse_position_ = center_in_screen;
+#endif
     return;
   }
 
@@ -788,6 +794,13 @@ void RenderWidgetHostViewEventHandler::HandleMouseEventWhileLocked(
     if (ShouldMoveToCenter()) {
       synthetic_move_sent_ = true;
       window_->MoveCursorTo(center);
+
+#if defined(OS_WIN)
+      // TODO(eirage): Set the global position after move cursor is a workaround
+      // for crbug.com/781182. It caused by a bug from Windows update 16299.
+      // This should be remove once the bug is fixed in OS.
+      global_mouse_position_ = center_in_screen;
+#endif
     }
     bool is_selection_popup = NeedsInputGrab(popup_child_host_view_);
     // Forward event to renderer.
