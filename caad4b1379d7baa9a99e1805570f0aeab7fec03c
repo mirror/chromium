@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83eb3583_040fac8d",
+        "filename": "DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-11T23:01:06Z",
+      "side": 1,
+      "message": "This needs to be conditional on a variable, rather than rely on a runtime check. If we use the latter (a) it\u0027s not obvious, and (b) if something silently changes it\u0027s too hard to tell. Please follow the pattern of `checkout_telemetry_dependencies`.",
+      "revId": "caad4b1379d7baa9a99e1805570f0aeab7fec03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fb0a3e_e99e3a11",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-11T23:01:06Z",
+      "side": 1,
+      "message": "You\u0027ll want this import(\"//build/config/gclient_args.gni\") and make this conditional on `checkout_oculus_sdk` or something like that, to ensure that you don\u0027t try to build this if you don\u0027t actually have the SDK.",
+      "revId": "caad4b1379d7baa9a99e1805570f0aeab7fec03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
