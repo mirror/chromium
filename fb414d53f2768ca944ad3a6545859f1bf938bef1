@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08006402_0affd7e1",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/import_notifier_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-11T15:43:01Z",
+      "side": 1,
+      "message": "Nit: it\u0027d be better to have a new test_empty_rebaselined_tests_and_test_expectations for the two new assertions.",
+      "revId": "fb414d53f2768ca944ad3a6545859f1bf938bef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
