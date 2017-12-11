@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6fce3fcd_5ace6769",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-11T21:44:09Z",
+      "side": 1,
+      "message": "Reverted.",
+      "parentUuid": "4525979a_9895eff0",
+      "range": {
+        "startLine": 136,
+        "startChar": 4,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cbc26a0_4ffdb004",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929c9b2c_8978bb92",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-11T21:44:09Z",
+      "side": 1,
+      "message": "Yes. I don\u0027t see why not?",
+      "parentUuid": "0cbc26a0_4ffdb004",
+      "range": {
+        "startLine": 149,
+        "startChar": 47,
+        "endLine": 149,
+        "endChar": 55
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b1558238_83ae97f1",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-11T21:44:09Z",
+      "side": 1,
+      "message": "Agreed with the naming issue so I slightly renamed the constant. Let me know if you have a better name suggestion.\nI think the explanation you are looking for is in the header comment. Here I\u0027m explaining where this choice of value comes from as an implementation note and to provide context to the linked issue.",
+      "parentUuid": "a799e451_df788cb5",
+      "range": {
+        "startLine": 168,
+        "startChar": 32,
+        "endLine": 168,
+        "endChar": 64
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97574f35_b8a555f8",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d642bec_78f8aedb",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-11T21:44:09Z",
+      "side": 1,
+      "message": "As this is a non-class type it is OK to be \"static const\" per guidelines.",
+      "parentUuid": "97574f35_b8a555f8",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 14
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8a35ee4d_0a9a7067",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-11T21:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41727978_a231346c",
+      "range": {
+        "startLine": 334,
+        "startChar": 17,
+        "endLine": 334,
+        "endChar": 30
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26365979_a445f766",
         "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4342bc0_004cea07",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-11T21:44:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26365979_a445f766",
+      "range": {
+        "startLine": 335,
+        "startChar": 13,
+        "endLine": 335,
+        "endChar": 17
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "904da557_089d32e9",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-11T21:44:09Z",
+      "side": 1,
+      "message": "Nice catch! This was a copy paste so I also fixed the original code.",
+      "parentUuid": "5829ce7f_dd712f41",
+      "range": {
+        "startLine": 377,
+        "startChar": 36,
+        "endLine": 377,
+        "endChar": 52
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55ffc53c_90fbe0a9",
         "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cdc65cf_652f839e",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-11T21:44:09Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "55ffc53c_90fbe0a9",
+      "range": {
+        "startLine": 380,
+        "startChar": 4,
+        "endLine": 380,
+        "endChar": 60
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
