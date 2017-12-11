@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a8384f_f1199ca6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T15:16:00Z",
+      "side": 1,
+      "message": "Nit: WebApk -\u003e WebAPK",
+      "revId": "d0ec3912f24fa424f2e604aaedbf4cf95d9ea82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e6c1c2_1b7f589e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T15:16:00Z",
+      "side": 1,
+      "message": "Nit: You can make this comment one line /** ... */",
+      "revId": "d0ec3912f24fa424f2e604aaedbf4cf95d9ea82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f6ed35_7c5ac1ca",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T15:16:00Z",
+      "side": 1,
+      "message": "As documented in callback.h you should include callback_forward.h instead",
+      "revId": "d0ec3912f24fa424f2e604aaedbf4cf95d9ea82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4c7ac8_09d88386",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T15:16:00Z",
+      "side": 1,
+      "message": "- Maybe change the comment to:\n\"Clear Chrome\u0027s cache. Run |callback| once clearing the cache is complete.\"\n- Maybe rename this function FreeCacheAsync(). What the callback does is not relevant to this function\n- base::OnceClosure is typedefed to base::OnceCallback\u003cvoid()\u003e (Also, cool I did not know about base::OnceCallback / base::OnceClosure before)\n- We might as well pass content::BrowsingDataRemover* as a parameter. I think that it makes things clearer",
+      "revId": "d0ec3912f24fa424f2e604aaedbf4cf95d9ea82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81281de3_8d3aba64",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T15:16:00Z",
+      "side": 1,
+      "message": "I was wrong. We do need to call\n\nremover_-\u003eRemoveObserver(this)\n\nhere",
+      "revId": "d0ec3912f24fa424f2e604aaedbf4cf95d9ea82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f314df_27c0f086",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T15:16:00Z",
+      "side": 1,
+      "message": "Can we inline EnoughSpaceToInstall(). EnoughSpaceToInstall() has just one caller.",
+      "revId": "d0ec3912f24fa424f2e604aaedbf4cf95d9ea82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "615ea5eb_3e216757",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T15:16:00Z",
+      "side": 1,
+      "message": "I think that this might be clearer:\n\nbase::OnceClosure freed_cache_callback \u003d base::BindOnce(\u0026WebApkInstaller::InstallAsync, \n    browser_context_, shortcut_info, primary_icon, badge_icon, finish_callback);\nFinishCallback finish_callback \u003d base::Bind(\n      \u0026WebApkInstallService::OnFinishedInstall, weak_ptr_factory_.GetWeakPtr(),\n      base::Passed(\u0026observer), shortcut_info, primary_icon);\n\nif (space_status_ \u003d\u003d ENOUGH_SPACE_AFTER_FREE_UP_CACHE) {\n  ...\n  cache_cleaner_-\u003eFreeCache(\n      content::BrowserContext::GetBrowsingDataRemover(browser_context_), freed_cache_callback);\n  return;\n}\nfreed_cache_callback.Run();\n\nRationale:\n- It is obvious that the same parameters are passed when calling the function in the if \u0026 else branch\n- I prefer renaming the non-static non-public WebApkInstaller::InstallAsync() to WebApkInstaller::InstallAsyncImpl() rather than renaming the static-public method. It is more important for public APIs to be clean than for private APIs to be clean\n- It is Chrome policy to prefer early returns over if/else ladders",
+      "revId": "d0ec3912f24fa424f2e604aaedbf4cf95d9ea82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bbfe552_0b66b2ee",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T15:16:00Z",
+      "side": 1,
+      "message": "In theory, this class should not be destroyed prior to WebApkInstallService::SetSpaceStatus() being called. But it is not guaranteed.\n\nWe should either:\n- Have C++ own the Java class.\n- Pass a pointer to a C++ callback instead of a pointer to WebApkInstallService. The callback would use WebApkInstallService::weak_ptr_factory_. AddWebappWithSkBitmap() in shortcut_helper.cc does this.\n\nEverywhere else seems do:\nreinterpret_cast\u003cintptr_t\u003e(this)",
+      "revId": "d0ec3912f24fa424f2e604aaedbf4cf95d9ea82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae236313_10834bf8",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-11T15:16:00Z",
+      "side": 1,
+      "message": "Nit: InstallAsync() (The bananas make it clear that this is a function)",
+      "revId": "d0ec3912f24fa424f2e604aaedbf4cf95d9ea82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
