@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "a3d8a0ed_eb412b8b",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-11T20:12:47Z",
+      "side": 1,
+      "message": "\u003e  There are \"arm\" and \"arm64\" ARMv8 builds?\n\nIt seems that there are aarch64 builds of the WebView in a few android versions, but it is not widespread.\n\nI asked around about it and it seems that increased memory use in 64bits by Chrome kind of pushed towards keeping things in 32bits for the time being.",
+      "parentUuid": "da34ab7d_924439d7",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 24
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79449965_91aa9d4c",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 2
