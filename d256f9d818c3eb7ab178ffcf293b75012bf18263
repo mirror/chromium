@@ -83,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "b92d820c_f3f21a27",
+        "filename": "gpu/command_buffer/client/raster_interface.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-11T19:06:45Z",
+      "side": 1,
+      "message": "There is a doc linked in the bug....\n\nAdded link to commit message.",
+      "parentUuid": "5eb6e62a_54c1a1e9",
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37b88259_da6d6d0b",
         "filename": "gpu/raster/raster_texture_format.h",
         "patchSetId": 26
@@ -94,6 +112,30 @@
       "writtenOn": "2017-12-11T18:51:50Z",
       "side": 1,
       "message": "Do these map directly viz::ResourceFormat? I\u0027m a little hesitant about adding another enum like this. Can we just use viz::ResourceFormat instead? AFAIK it\u0027s a separate subcomponent so it shouldn\u0027t cause any dependency problems",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 18
+      },
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea2ea1b_88510d27",
+        "filename": "gpu/raster/raster_texture_format.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-11T19:06:45Z",
+      "side": 1,
+      "message": "That would create a circular dependency viz -\u003e gpu -\u003e viz (at least, the dependency checkers yelled at me).\n\nUltimately we should have one enum, at a level that both gpu \u0026 viz can see.  There is significant re-factoring and simplification of RasterInterface to do after this initial patch.  Part of it is also fixing the layering between cc::paint \u0026 GLES2Interface.",
+      "parentUuid": "37b88259_da6d6d0b",
       "range": {
         "startLine": 13,
         "startChar": 5,
