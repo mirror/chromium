@@ -16,6 +16,24 @@
       "revId": "b24dc26a4c00c9043cb2c38403a6a1a60b1fd101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f56bfc_1f7e305a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-11T20:10:15Z",
+      "side": 1,
+      "message": "Looks good \u003e manually add/remove clients, because the tests are simulating revalidation on MemoryCache and thus merging AddClient() to ResourceFetcher makes the tests less clear.\n\nnit: which do you prefer, |resource-\u003eAddClient(client)| or |client-\u003eSetResource(resource)|?",
+      "parentUuid": "ec8db979_191bd2bc",
+      "revId": "b24dc26a4c00c9043cb2c38403a6a1a60b1fd101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49dfc959_2d3d27e5",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResourceTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-11T20:10:15Z",
+      "side": 0,
+      "message": "+1 to the current patchset, i.e. leaving this as a Prune() test, to minimize the changes in this CL. Prune()-related tests are anyway outdated and need to be updated, but it should be done separately.\nFYI +hajimehoshi@\n\nContext:\n\nThis was introduced in https://codereview.chromium.org/2141843003\nto test that AddClient() triggers re-creation of what was discarded by Prune().\n\nThe situations has changed since then:\n- Most (all?) of ResourceClients for ImageResource have been removed.\n- Prune() doesn\u0027t discard |image_|, so AddClient() no longer needs to re-create something (like AddObserver() does nothing in this context), and thus there\u0027s nothing to test related to AddClient(). If we want to test that the things work well after Prune() for ImageResource, then we should test that blink::Image works well after blink::Image::DestroyDecodedData().\n\nSo I think we no longer need this test in the original context, but +1 for keeping as a Prune test just in case it is good for test coverage (the test coverage around Prune() is quite low). Let\u0027s clean up or remove later separately if needed.",
+      "parentUuid": "075e7257_16a54701",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42a9bd2c_ef7b5052",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCacheTest.cpp",
         "patchSetId": 2
@@ -30,6 +48,41 @@
       "writtenOn": "2017-12-08T23:18:41Z",
       "side": 0,
       "message": "ResourceClients are irrelevant to pruning policy, as far as I can tell. We don\u0027t prune on last client removal, and MemoryCache only prunes when it gets an OnPurgeMemory() callback.",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "925da8cc_405b8b12",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCacheTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-11T20:10:15Z",
+      "side": 0,
+      "message": "Also, pruning doesn\u0027t affect the lifetime of Resources and MemoryCache\u0027s size, so the tests around pruning are outdated.\n\nHowever, the clients in TestClientRemoval() and TestResourcePruningAtEndOfTask() might still have meanings, i.e. we are testing that ResourceClients are actually irrelevant to pruning, so I prefer keeping these clients, unless they are serious blockers.\n\nIf we want to keep the FooResource::Fetch(client) style, then we might be able to\nmove the client creation earlier (before FakeDecodedResource::Create() etc.),\nrename FakeDecodedResource::Create() to Fetch() and make it take a ResourceClient argument.",
+      "parentUuid": "42a9bd2c_ef7b5052",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6934feeb_35898fb3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCacheTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-11T20:10:15Z",
+      "side": 0,
+      "message": "This client became",
       "revId": "06d36e78907996e8778c06caa177f663920c2396",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "414cad15_d701dacf",
+        "filename": "third_party/WebKit/Source/platform/loader/testing/MockResourceClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-11T20:10:15Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "3d1fb3f5_05f6e292",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "832a9fd3_e6cd0664",
         "filename": "third_party/WebKit/Source/platform/loader/testing/MockResourceClient.h",
         "patchSetId": 2
@@ -67,6 +138,24 @@
       "revId": "06d36e78907996e8778c06caa177f663920c2396",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df364b8_eefe11da",
+        "filename": "third_party/WebKit/Source/platform/loader/testing/MockResourceClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-11T20:10:15Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "832a9fd3_e6cd0664",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
