@@ -106,7 +106,9 @@ class DeclarativeContentCssConditionTracker
 
    private:
     // content::WebContentsObserver overrides.
-    bool OnMessageReceived(const IPC::Message& message) override;
+    bool OnMessageReceived(
+        const IPC::Message& message,
+        content::RenderFrameHost* render_frame_host) override;
     void WebContentsDestroyed() override;
 
     void OnWatchedPageChange(const std::vector<std::string>& css_selectors);
