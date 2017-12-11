@@ -152,6 +152,24 @@
       "revId": "5e3b84165c469e153a3149b79af10d9bd607c70a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10bed32_a8298e5a",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-11T09:10:59Z",
+      "side": 1,
+      "message": "Yes but the doodle does not animate (here I when I say animate, I mean like a gif. We usually have to tap on it to animate it). So the NTP will be presented with the doodle directly on the page, instead of being animated in with the Google logo then showing the doodle.",
+      "parentUuid": "4f2b547b_c300372c",
+      "revId": "5e3b84165c469e153a3149b79af10d9bd607c70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
