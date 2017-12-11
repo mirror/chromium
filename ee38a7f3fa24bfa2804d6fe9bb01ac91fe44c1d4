@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aa42cc3_d6fa07df",
+        "filename": "chrome/browser/metrics/chrome_browser_main_extra_parts_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-11T20:31:13Z",
+      "side": 1,
+      "message": "Probably change this to UmaHistogramSparse.",
+      "range": {
+        "startLine": 338,
+        "startChar": 2,
+        "endLine": 338,
+        "endChar": 27
+      },
+      "revId": "ee38a7f3fa24bfa2804d6fe9bb01ac91fe44c1d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
