@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ca4b7a1_c0a274c6",
+        "filename": "components/omnibox/browser/history_quick_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-12-11T21:40:32Z",
+      "side": 1,
+      "message": "This is the only line that changed from the previous CL.\n\n -      history::URLRow(GURL(url_text)), VisitInfoVector(), ASCIIToUTF16(\"\"),\n +      history::URLRow(GURL(url_text)), VisitInfoVector(), ASCIIToUTF16(\"h\"),",
+      "range": {
+        "startLine": 753,
+        "startChar": 58,
+        "endLine": 753,
+        "endChar": 70
+      },
+      "revId": "114419e38ae2225cd0fa37b9134e4725dac00331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
