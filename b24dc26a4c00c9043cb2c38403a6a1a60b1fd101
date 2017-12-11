@@ -34,6 +34,24 @@
       "revId": "b24dc26a4c00c9043cb2c38403a6a1a60b1fd101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f229c0_d2406fed",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-11T21:56:30Z",
+      "side": 1,
+      "message": "At this specific layer, |resource-\u003eAddClient(client)|, because the test is focused on Resource behavior more than ResourceClient behavior, and because I hope ResourceClient::SetResource() to have as few callsites as possible.\n\nIn general, I hope few tests will need to use SetResource(). ResourceTest can use AddClient(), and hopefully most/all other tests can go through FooResource::Fetch() and therefore the SetResource() call in ResourceFetcher::RequestResource().",
+      "parentUuid": "73f56bfc_1f7e305a",
+      "revId": "b24dc26a4c00c9043cb2c38403a6a1a60b1fd101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

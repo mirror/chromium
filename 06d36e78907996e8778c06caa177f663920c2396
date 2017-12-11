@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8ec27936_8fbaebe2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCacheTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-11T21:56:30Z",
+      "side": 0,
+      "message": "I drastically reworked this to make it use a proper Fetch() (though the data is faked).",
+      "parentUuid": "925da8cc_405b8b12",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6934feeb_35898fb3",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCacheTest.cpp",
         "patchSetId": 3
@@ -83,6 +101,24 @@
       "writtenOn": "2017-12-11T20:10:15Z",
       "side": 0,
       "message": "This client became",
+      "revId": "06d36e78907996e8778c06caa177f663920c2396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252bdd51_c7463219",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/MemoryCacheTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-11T21:56:30Z",
+      "side": 0,
+      "message": "I assume this was an accidental comment, and https://chromium-review.googlesource.com/c/chromium/src/+/818197/2/third_party/WebKit/Source/platform/loader/fetch/MemoryCacheTest.cpp#b237 is the relevant discussion?",
+      "parentUuid": "6934feeb_35898fb3",
       "revId": "06d36e78907996e8778c06caa177f663920c2396",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
