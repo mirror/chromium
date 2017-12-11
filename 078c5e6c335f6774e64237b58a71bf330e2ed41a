@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e32f62e5_feeadb20",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-11T19:19:19Z",
+      "side": 1,
+      "message": "Done, re-arranged test and fixture definitions so they\u0027re next to each other.",
+      "parentUuid": "10974275_10ccfb03",
+      "range": {
+        "startLine": 155,
+        "startChar": 26,
+        "endLine": 155,
+        "endChar": 70
+      },
+      "revId": "078c5e6c335f6774e64237b58a71bf330e2ed41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10c5ed34_bf4feb41",
         "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "078c5e6c335f6774e64237b58a71bf330e2ed41a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1478e912_85547333",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-11T19:19:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10c5ed34_bf4feb41",
+      "range": {
+        "startLine": 169,
+        "startChar": 10,
+        "endLine": 169,
+        "endChar": 70
+      },
+      "revId": "078c5e6c335f6774e64237b58a71bf330e2ed41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
