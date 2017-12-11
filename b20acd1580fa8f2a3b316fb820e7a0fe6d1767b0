@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cbb8909_318abcb6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-11T17:28:49Z",
+      "side": 1,
+      "message": "At least s/resizes/resize.\n\nBut really I think a better description would be something like this:\n\nRemove logic to adjust leading offset from the omnibox textfield.\n\nThe omnibox textfield moves its text content area to account for the\nleftView; however the leftView is now replaced with leadingButton in\nthe LocationBarView, so the leading offset should not be adjusted on\nthe textfield level.\nThis CL makes LocationBarView inset the textfield from the leading side\nas necessary, and makes the textfield always align the text area to the\nleading edge. \n\nWDYT?a",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "b20acd1580fa8f2a3b316fb820e7a0fe6d1767b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efba640_48a98b8f",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-11T17:28:49Z",
+      "side": 1,
+      "message": "Please add comments to these, like \"Offset from the leading edge to the textfield when no image is shown\" and \"Space between the leading button and the textfield when a button is shown\".",
+      "revId": "b20acd1580fa8f2a3b316fb820e7a0fe6d1767b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
