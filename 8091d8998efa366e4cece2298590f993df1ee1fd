@@ -16,6 +16,24 @@
       "revId": "8091d8998efa366e4cece2298590f993df1ee1fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d392891_31bab1ea",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-fake-adapter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-11T13:07:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d30ddaa5_4b4c42d8",
+      "revId": "8091d8998efa366e4cece2298590f993df1ee1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
