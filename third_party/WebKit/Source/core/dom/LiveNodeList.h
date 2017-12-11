@@ -59,6 +59,8 @@ class CORE_EXPORT LiveNodeList : public NodeList, public LiveNodeListBase {
 
   void InvalidateCache(Document* old_document = nullptr) const final;
   void InvalidateCacheForAttribute(const QualifiedName*) const;
+  void InvalidateAndDisableCache() const;
+  void EnableCache() const;
 
   // Collection IndexCache API.
   bool CanTraverseBackward() const { return true; }
