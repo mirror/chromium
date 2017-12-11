@@ -34,7 +34,7 @@ class URLLoaderFactoryImpl final : public mojom::URLLoaderFactory {
                                 traffic_annotation) override;
   void Clone(mojom::URLLoaderFactoryRequest request) override;
 
-  static void CreateLoaderAndStart(
+  CONTENT_EXPORT static void CreateLoaderAndStart(
       ResourceRequesterInfo* requester_info,
       mojom::URLLoaderRequest request,
       int32_t routing_id,
