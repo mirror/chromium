@@ -356,6 +356,11 @@ TEST(SharedMemoryTest, GetReadOnlyHandle) {
                         contents.size()));
   EXPECT_TRUE(readonly_shmem.Unmap());
 
+#if defined(OS_ANDROID)
+  // On Android, mapping a region through a read-only descriptor makes the
+  // region read-only. Any writable mapping attempt should fail.
+  ASSERT_FALSE(writable_shmem.Map(contents.size()));
+#else
   // Make sure the writable instance is still writable.
   ASSERT_TRUE(writable_shmem.Map(contents.size()));
   StringPiece new_contents = "Goodbye";
@@ -363,6 +368,7 @@ TEST(SharedMemoryTest, GetReadOnlyHandle) {
   EXPECT_EQ(new_contents,
             StringPiece(static_cast<const char*>(writable_shmem.memory()),
                         new_contents.size()));
+#endif
 
   // We'd like to check that if we send the read-only segment to another
   // process, then that other process can't reopen it read/write.  (Since that
@@ -567,6 +573,29 @@ TEST(SharedMemoryTest, AnonymousExecutable) {
                         PROT_READ | PROT_EXEC));
 }
 #endif  // !defined(OS_IOS)
+
+#if defined(OS_ANDROID)
+// This test is restricted to Android since there is no way on other platforms
+// to guarantee that a region can never be mapped with PROT_EXEC. E.g. on
+// Linux, anonymous shared regions come from /dev/shm which can be mounted
+// without 'noexec'. In this case, anything can perform an mprotect() to
+// change the protection mask of a given page.
+TEST(SharedMemoryTest, AnonymousIsNotExecutableByDefault) {
+  const uint32_t kTestSize = 1 << 16;
+
+  SharedMemory shared_memory;
+  SharedMemoryCreateOptions options;
+  options.size = kTestSize;
+
+  EXPECT_TRUE(shared_memory.Create(options));
+  EXPECT_TRUE(shared_memory.Map(shared_memory.requested_size()));
+
+  errno = 0;
+  EXPECT_EQ(-1, mprotect(shared_memory.memory(), shared_memory.requested_size(),
+                         PROT_READ | PROT_EXEC));
+  EXPECT_EQ(EACCES, errno);
+}
+#endif  // OS_ANDROID
 
 // Android supports a different permission model than POSIX for its "ashmem"
 // shared memory implementation. So the tests about file permissions are not
@@ -808,5 +837,74 @@ TEST(SharedMemoryTest, MappedId) {
   memory.Unmap();
   EXPECT_TRUE(memory.mapped_id().is_empty());
 }
+
+#if defined(OS_ANDROID)
+TEST(SharedMemoryTest, ReadOnlyRegions) {
+  const uint32_t kDataSize = 1024;
+  SharedMemory memory;
+  SharedMemoryCreateOptions options;
+  options.size = kDataSize;
+  EXPECT_TRUE(memory.Create(options));
+
+  EXPECT_FALSE(memory.handle().IsRegionReadOnly());
+
+  // Check that it is possible to map the region directly from the fd.
+  int region_fd = memory.handle().GetHandle();
+  EXPECT_GE(region_fd, 0);
+  void* address =
+      mmap(NULL, kDataSize, PROT_READ | PROT_WRITE, MAP_SHARED, region_fd, 0);
+  bool success = address && address != (void*)-1;
+  EXPECT_TRUE(address);
+  EXPECT_NE(address, (void*)-1);
+  if (success)
+    munmap(address, kDataSize);
+
+  ASSERT_TRUE(memory.handle().SetRegionReadOnly());
+  EXPECT_TRUE(memory.handle().IsRegionReadOnly());
+
+  // Check that it is no longer possible to map the region read/write.
+  errno = 0;
+  address =
+      mmap(NULL, kDataSize, PROT_READ | PROT_WRITE, MAP_SHARED, region_fd, 0);
+  success = address && address != (void*)-1;
+  EXPECT_FALSE(success);
+  EXPECT_EQ(EPERM, errno);
+  if (success)
+    munmap(address, kDataSize);
+}
+
+TEST(SharedMemoryTest, ReadOnlyDescriptors) {
+  const uint32_t kDataSize = 1024;
+  SharedMemory memory;
+  SharedMemoryCreateOptions options;
+  options.size = kDataSize;
+  EXPECT_TRUE(memory.Create(options));
+
+  EXPECT_FALSE(memory.handle().IsRegionReadOnly());
+
+  // Getting a read-only descriptor should not make the region read-only itself.
+  SharedMemoryHandle ro_handle = memory.GetReadOnlyHandle();
+  EXPECT_FALSE(memory.handle().IsRegionReadOnly());
+
+  // Mapping a writable region from a read-only descriptor should not
+  // be possible.
+  SharedMemory rw_region(ro_handle.Duplicate(), /* read_only */ false);
+  EXPECT_FALSE(rw_region.Map(kDataSize));
+
+  // Not shall it turn the region read-only itself.
+  EXPECT_FALSE(ro_handle.IsRegionReadOnly());
+
+  // Mapping a read-only region from a read-only descriptor should work.
+  SharedMemory ro_region(ro_handle.Duplicate(), /* read_only */ true);
+  EXPECT_TRUE(ro_region.Map(kDataSize));
+
+  // And it should turn the region read-only too.
+  EXPECT_TRUE(ro_handle.IsRegionReadOnly());
+  EXPECT_TRUE(memory.handle().IsRegionReadOnly());
+  EXPECT_FALSE(memory.Map(kDataSize));
+
+  ro_handle.Close();
+}
+#endif  // OS_ANDROID
 
 }  // namespace base
