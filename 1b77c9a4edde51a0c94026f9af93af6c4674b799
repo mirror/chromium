@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32d651d4_1d829ecc",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-11T02:16:43Z",
+      "side": 1,
+      "message": "These two appear up on line 362, so you need to merge them together.",
+      "revId": "1b77c9a4edde51a0c94026f9af93af6c4674b799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
