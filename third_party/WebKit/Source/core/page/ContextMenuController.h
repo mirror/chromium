@@ -69,6 +69,10 @@ class CORE_EXPORT ContextMenuController final
 
   Node* ContextMenuNodeForFrame(LocalFrame*);
 
+  void SetHitTestResultForTests(const HitTestResult& hit_test_result) {
+    hit_test_result_ = hit_test_result;
+  }
+
  private:
   explicit ContextMenuController(Page*);
 
