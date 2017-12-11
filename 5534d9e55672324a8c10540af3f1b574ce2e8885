@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1ef3101_88f1bae7",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-11T22:21:27Z",
+      "side": 1,
+      "message": "Feel free to rename this function - it\u0027s a super confusing name and would probably make things clearer with a different name.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "5534d9e55672324a8c10540af3f1b574ce2e8885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc9c2a2_ca46c98a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-11T22:21:27Z",
+      "side": 1,
+      "message": "We should store this in vr_shell, rather than here. These options are tied to the lifespan of VrShell (and we can just add a getter there).",
+      "revId": "5534d9e55672324a8c10540af3f1b574ce2e8885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acb93e8_e362691d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-11T22:21:27Z",
+      "side": 1,
+      "message": "Why are we exposing this option if we never change it?",
+      "range": {
+        "startLine": 576,
+        "startChar": 21,
+        "endLine": 576,
+        "endChar": 48
+      },
+      "revId": "5534d9e55672324a8c10540af3f1b574ce2e8885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
