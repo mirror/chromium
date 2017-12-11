@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2fb5d727_14781476",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 1891,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T03:14:46Z",
+      "side": 1,
+      "message": "unintentional change?",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd54633d_91c77b75",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
         "patchSetId": 6
@@ -133,6 +150,57 @@
     },
     {
       "key": {
+        "uuid": "69499e7d_2effd860",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T03:14:46Z",
+      "side": 1,
+      "message": "Can remove this comment.",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6c23f4_0ad42fe2",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T03:14:46Z",
+      "side": 1,
+      "message": "Can remove this comment.",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35e9485_7eccdebe",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T03:14:46Z",
+      "side": 1,
+      "message": "Why #if 0?",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44bf41b6_15ba76b3",
         "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
         "patchSetId": 6
@@ -144,6 +212,23 @@
       "writtenOn": "2017-12-11T02:17:47Z",
       "side": 1,
       "message": "Could you include WebVector.h instead of forward declaration for the template class?\nhttps://google.github.io/styleguide/cppguide.html#Forward_Declarations",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1950ced7_a2512686",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T03:14:46Z",
+      "side": 1,
+      "message": "These untyped ScopedMessagePipeHandles are a bit unfortunate. Would it make sense to annotate them like this:\n\n mojo::ScopedMessagePipeHandle /* mojom::blink::InstalledScriptsManagerRequest */ installed_scripts_manager_request,\nmojo::ScopedMessagePipeHandle /* mojom::blink::InstalledScriptsManagerHostPtr */ installed_scripts_manager_host_ptr,\nmojo::ScopedMessagePipeHandle /* mojom::blink::WorkerContentSettingsProxyPtrInfo */ content_settings_handle,\n\nAnd have a comment that we need to use ScopedMessagePipeHandle to pass Mojo types between non-Blink and Blink variants?",
       "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
