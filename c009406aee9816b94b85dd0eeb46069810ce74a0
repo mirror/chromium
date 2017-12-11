@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "5a1dac33_5d08619d",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-11T06:17:51Z",
+      "side": 1,
+      "message": "nit: only one owner -\u003e only owner",
+      "revId": "c009406aee9816b94b85dd0eeb46069810ce74a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d7d490_f7dd9920",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-11T06:17:51Z",
+      "side": 1,
+      "message": "service_worker_host is ref-counted and in my understanding the internal interface is destructed on the IO thread, did we check how the callbacks are owned internally?",
+      "revId": "c009406aee9816b94b85dd0eeb46069810ce74a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "213d1fb4_ac9fb17e",
         "filename": "third_party/WebKit/common/service_worker/service_worker.mojom",
         "patchSetId": 4
