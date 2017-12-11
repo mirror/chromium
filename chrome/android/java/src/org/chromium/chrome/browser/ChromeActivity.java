@@ -132,6 +132,7 @@ import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.vr_shell.VrIntentUtils;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
+import org.chromium.chrome.browser.vr_shell.VrViewContainer;
 import org.chromium.chrome.browser.webapps.AddToHomescreenManager;
 import org.chromium.chrome.browser.widget.ControlContainer;
 import org.chromium.chrome.browser.widget.FadingBackgroundView;
@@ -151,6 +152,7 @@ import org.chromium.policy.CombinedPolicyProvider.PolicyChangeListener;
 import org.chromium.printing.PrintManagerDelegateImpl;
 import org.chromium.printing.PrintingController;
 import org.chromium.printing.PrintingControllerImpl;
+import org.chromium.ui.UiUtils;
 import org.chromium.ui.base.ActivityWindowAndroid;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.PageTransition;
@@ -309,6 +311,14 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         ApplicationInitialization.enableFullscreenFlags(
                 getResources(), this, getControlContainerHeightResource());
         getWindow().setBackgroundDrawable(getBackgroundDrawable());
+
+        View content = getWindow().findViewById(android.R.id.content);
+        ViewGroup parent = (ViewGroup) content.getParent();
+        VrViewContainer vr_view = new VrViewContainer(this);
+        vr_view.setId(R.id.vr_view_container);
+        UiUtils.removeViewFromParent(content);
+        parent.addView(vr_view);
+        vr_view.addView(content);
 
         mFullscreenManager = createFullscreenManager();
         mCreatedFullscreenManager = true;
@@ -801,15 +811,14 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         maybeRemoveWindowBackground();
 
         Tab tab = getActivityTab();
-        if (tab == null) return;
         if (hasFocus) {
-            tab.onActivityShown();
+            if (tab != null) tab.onActivityShown();
             VrShellDelegate.onActivityShown(this);
         } else {
             boolean stopped = ApplicationStatus.getStateForActivity(this) == ActivityState.STOPPED;
             if (stopped) {
                 VrShellDelegate.onActivityHidden(this);
-                tab.onActivityHidden();
+                if (tab != null) tab.onActivityHidden();
             }
         }
     }
