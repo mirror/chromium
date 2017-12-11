@@ -1591,16 +1591,16 @@ ImageData* BaseRenderingContext2D::getImageData(
   }
 
   WTF::ArrayBufferContents contents;
-  bool is_gpu_readback_invoked = false;
-  if (!buffer->GetImageData(image_data_rect, contents,
-                            &is_gpu_readback_invoked)) {
+
+  const CanvasColorParams& color_params = buffer->ColorParams();
+  if (!StaticBitmapImage::ConvertToArrayBufferContents(
+          buffer->NewImageSnapshot(kPreferNoAcceleration,
+                                   kSnapshotReasonGetImageData),
+          contents, image_data_rect, color_params, buffer->IsAccelerated())) {
     exception_state.ThrowRangeError("Out of memory at ImageData creation");
     return nullptr;
   }
-
-  if (is_gpu_readback_invoked) {
-    DidInvokeGPUReadbackInCurrentFrame();
-  }
+  DidInvokeGPUReadbackInCurrentFrame();
 
   NeedsFinalizeFrame();
 
