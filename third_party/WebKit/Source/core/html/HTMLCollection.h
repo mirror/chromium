@@ -80,6 +80,8 @@ class CORE_EXPORT HTMLCollection : public ScriptWrappable,
   virtual ~HTMLCollection();
   void InvalidateCache(Document* old_document = nullptr) const override;
   void InvalidateCacheForAttribute(const QualifiedName*) const;
+  void InvalidateAndDisableCache() const;
+  void EnableCache() const;
 
   // DOM API
   unsigned length() const;
@@ -175,6 +177,8 @@ class CORE_EXPORT HTMLCollection : public ScriptWrappable,
 
   void SetNamedItemCache(NamedItemCache* cache) const {
     DCHECK(!named_item_cache_);
+    if (collection_items_cache_.IsDisabled())
+      return;
     // Do not repeat registration for the same invalidation type.
     if (InvalidationType() != kInvalidateOnIdNameAttrChange)
       GetDocument().RegisterNodeListWithIdNameCache(this);

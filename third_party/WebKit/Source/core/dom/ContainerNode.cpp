@@ -967,7 +967,8 @@ void ContainerNode::DetachLayoutTree(const AttachContext& context) {
 void ContainerNode::ChildrenChanged(const ChildrenChange& change) {
   GetDocument().IncDOMTreeVersion();
   GetDocument().NotifyChangeChildren(*this);
-  InvalidateNodeListCachesInAncestors(nullptr, nullptr, &change);
+  if (!NodeListCachesInAncestorsAreDisabled())
+    InvalidateNodeListCachesInAncestors(nullptr, nullptr, &change);
   if (change.IsChildInsertion()) {
     if (!ChildNeedsStyleRecalc()) {
       SetChildNeedsStyleRecalc();
@@ -1627,6 +1628,40 @@ void ContainerNode::CheckForSiblingStyleChanges(SiblingCheckType change_type,
       element_before_change, *changed_element, *element_after_change);
 }
 
+void ContainerNode::InvalidateAndDisableNodeListCachesInAncestors() {
+  if (NodeListsNodeData* lists = NodeLists()) {
+    if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this)) {
+      child_node_list->InvalidateAndDisableCache();
+    }
+  }
+
+  GetDocument().InvalidateAndDisableNodeListCaches();
+
+  for (ContainerNode* node = this; node; node = node->parentNode()) {
+    if (NodeListsNodeData* lists = node->NodeLists())
+      lists->InvalidateAndDisableCaches();
+  }
+
+  SetNodeListCachesInAncestorsAreDisabled(true);
+}
+
+void ContainerNode::EnableNodeListCachesInAncestors() {
+  if (NodeListsNodeData* lists = NodeLists()) {
+    if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this)) {
+      child_node_list->EnableCache();
+    }
+  }
+
+  GetDocument().EnableNodeListCaches();
+
+  for (ContainerNode* node = this; node; node = node->parentNode()) {
+    if (NodeListsNodeData* lists = node->NodeLists())
+      lists->EnableCaches();
+  }
+
+  SetNodeListCachesInAncestorsAreDisabled(false);
+}
+
 void ContainerNode::InvalidateNodeListCachesInAncestors(
     const QualifiedName* attr_name,
     Element* attribute_owner_element,
@@ -1656,6 +1691,21 @@ void ContainerNode::InvalidateNodeListCachesInAncestors(
   for (ContainerNode* node = this; node; node = node->parentNode()) {
     if (NodeListsNodeData* lists = node->NodeLists())
       lists->InvalidateCaches(attr_name);
+  }
+}
+
+void ContainerNode::InvalidateNodeListCachesInAncestors() {
+  if (NodeListsNodeData* lists = NodeLists()) {
+    if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this)) {
+      child_node_list->InvalidateCache();
+    }
+  }
+
+  GetDocument().InvalidateNodeListCaches(nullptr);
+
+  for (ContainerNode* node = this; node; node = node->parentNode()) {
+    if (NodeListsNodeData* lists = node->NodeLists())
+      lists->InvalidateCaches(nullptr);
   }
 }
 

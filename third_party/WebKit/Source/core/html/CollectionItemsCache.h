@@ -83,6 +83,10 @@ unsigned CollectionItemsCache<Collection, NodeType>::NodeCount(
   if (this->IsCachedNodeCountValid())
     return this->CachedNodeCount();
 
+  if (Base::IsDisabled()) {
+    return Base::NodeCount(collection);
+  }
+
   NodeType* current_node = collection.TraverseToFirst();
   unsigned current_index = 0;
   while (current_node) {
@@ -101,6 +105,7 @@ inline NodeType* CollectionItemsCache<Collection, NodeType>::NodeAt(
     const Collection& collection,
     unsigned index) {
   if (list_valid_) {
+    DCHECK(!Base::IsDisabled());
     DCHECK(this->IsCachedNodeCountValid());
     return index < this->CachedNodeCount() ? cached_list_[index] : nullptr;
   }

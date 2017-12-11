@@ -197,6 +197,15 @@ void HTMLCollection::InvalidateCache(Document* old_document) const {
   InvalidateIdNameCacheMaps(old_document);
 }
 
+void HTMLCollection::InvalidateAndDisableCache() const {
+  collection_items_cache_.InvalidateAndDisable();
+  InvalidateIdNameCacheMaps();
+}
+
+void HTMLCollection::EnableCache() const {
+  collection_items_cache_.Enable();
+}
+
 unsigned HTMLCollection::length() const {
   return collection_items_cache_.NodeCount(*this);
 }

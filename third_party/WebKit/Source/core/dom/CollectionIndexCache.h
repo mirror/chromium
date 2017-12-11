@@ -62,6 +62,9 @@ class CollectionIndexCache {
   NodeType* NodeAt(const Collection&, unsigned index);
 
   void Invalidate();
+  void InvalidateAndDisable();
+  void Enable() { is_disabled_ = false; }
+  bool IsDisabled() { return is_disabled_; }
 
   void NodeInserted();
   void NodeRemoved();
@@ -94,9 +97,10 @@ class CollectionIndexCache {
   NodeType* NodeAfterCachedNode(const Collection&, unsigned index);
 
   Member<NodeType> current_node_;
-  unsigned cached_node_count_;
+  unsigned cached_node_count_ : 31;
   unsigned cached_node_index_ : 31;
   unsigned is_length_cache_valid_ : 1;
+  unsigned is_disabled_ : 1;
 };
 
 template <typename Collection, typename NodeType>
@@ -104,12 +108,19 @@ CollectionIndexCache<Collection, NodeType>::CollectionIndexCache()
     : current_node_(nullptr),
       cached_node_count_(0),
       cached_node_index_(0),
-      is_length_cache_valid_(false) {}
+      is_length_cache_valid_(false),
+      is_disabled_(false) {}
 
 template <typename Collection, typename NodeType>
 void CollectionIndexCache<Collection, NodeType>::Invalidate() {
   current_node_ = nullptr;
   is_length_cache_valid_ = false;
+}
+
+template <typename Collection, typename NodeType>
+void CollectionIndexCache<Collection, NodeType>::InvalidateAndDisable() {
+  Invalidate();
+  is_disabled_ = true;
 }
 
 template <typename Collection, typename NodeType>
@@ -129,6 +140,13 @@ inline unsigned CollectionIndexCache<Collection, NodeType>::NodeCount(
     const Collection& collection) {
   if (IsCachedNodeCountValid())
     return CachedNodeCount();
+
+  if (is_disabled_) {
+    NodeType* node = collection.TraverseToFirst();
+    unsigned count = 0;
+    collection.TraverseForwardToOffset(UINT_MAX, *node, count);
+    return count;
+  }
 
   NodeAt(collection, UINT_MAX);
   DCHECK(IsCachedNodeCountValid());
@@ -155,9 +173,18 @@ inline NodeType* CollectionIndexCache<Collection, NodeType>::NodeAt(
   NodeType* first_node = collection.TraverseToFirst();
   if (!first_node) {
     // The collection is empty.
-    SetCachedNodeCount(0);
+    if (!is_disabled_)
+      SetCachedNodeCount(0);
     return nullptr;
   }
+
+  if (is_disabled_) {
+    unsigned current_index = 0;
+    return index ? collection.TraverseForwardToOffset(index, *first_node,
+                                                      current_index)
+                 : first_node;
+  }
+
   SetCachedNode(first_node, 0);
   return index ? NodeAfterCachedNode(collection, index) : first_node;
 }
