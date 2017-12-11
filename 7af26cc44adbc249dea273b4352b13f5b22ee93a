@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df1e5f01_80a3bc55",
+        "filename": "third_party/android_deps/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-11T21:08:25Z",
+      "side": 1,
+      "message": "generated file, here to have something to refer to as output. Will transfer to the dagger-specific CL in future patch set.",
+      "revId": "7af26cc44adbc249dea273b4352b13f5b22ee93a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6690b7b_e2bec1cd",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-11T21:08:25Z",
+      "side": 1,
+      "message": "need to add a mechanism to defer gathering the license files to other locations. Will be a separate CL.",
+      "range": {
+        "startLine": 4,
+        "startChar": 9,
+        "endLine": 4,
+        "endChar": 17
+      },
+      "revId": "7af26cc44adbc249dea273b4352b13f5b22ee93a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6960125_d99dec4b",
+        "filename": "third_party/android_deps/additional_license_paths.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-11T21:08:25Z",
+      "side": 1,
+      "message": "generated file, here to have something to refer to as output. Will transfer to the dagger-specific CL in future patch set.",
+      "revId": "7af26cc44adbc249dea273b4352b13f5b22ee93a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ae27c60_e258ef9f",
+        "filename": "third_party/android_deps/generate_gn.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-11T21:08:25Z",
+      "side": 1,
+      "message": "I started trying to do the work from the pom files with python, but I kept trying to include dependencies that gradle considered unnecessary, although they don\u0027t seem to be optional, test only, etc. So I went with implementing everything with gradle instead. Here now for future reference, will be removed when closer to the final review.",
+      "revId": "7af26cc44adbc249dea273b4352b13f5b22ee93a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
