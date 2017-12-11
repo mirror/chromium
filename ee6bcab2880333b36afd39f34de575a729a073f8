@@ -22,6 +22,30 @@
       "revId": "ee6bcab2880333b36afd39f34de575a729a073f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48cafb57_850d3017",
+        "filename": "chrome/test/data/pdf/material_elements_test.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-12-11T17:26:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9762edf6_34067866",
+      "range": {
+        "startLine": 12,
+        "startChar": 51,
+        "endLine": 12,
+        "endChar": 76
+      },
+      "revId": "ee6bcab2880333b36afd39f34de575a729a073f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
