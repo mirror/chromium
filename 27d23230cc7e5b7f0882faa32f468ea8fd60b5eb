@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a638932_ca6a411f",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-11T18:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc18f906_b595699e",
+      "range": {
+        "startLine": 410,
+        "startChar": 7,
+        "endLine": 410,
+        "endChar": 17
+      },
+      "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bda45084_0a7b6ad7",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71ee3a1_d09b668d",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-11T18:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda45084_0a7b6ad7",
+      "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8d948840_2dfc64aa",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-11T18:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdb111c8_f0a3a5aa",
+      "range": {
+        "startLine": 456,
+        "startChar": 2,
+        "endLine": 456,
+        "endChar": 9
+      },
+      "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb3ff331_f8e5d88e",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "572e0094_72e1e36e",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-11T18:22:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb3ff331_f8e5d88e",
+      "range": {
+        "startLine": 464,
+        "startChar": 2,
+        "endLine": 464,
+        "endChar": 22
+      },
+      "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d56d8de1_5692451e",
         "filename": "tools/code_coverage/coverage.py",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2017-12-11T01:58:30Z",
       "side": 1,
       "message": "Same here, can we rely on anything else besides the line number?",
+      "range": {
+        "startLine": 468,
+        "startChar": 27,
+        "endLine": 468,
+        "endChar": 52
+      },
+      "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86de569c_42adb525",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-12-11T18:22:11Z",
+      "side": 1,
+      "message": "we can try to look for \u0027-----\u0027, but I don\u0027t think it\u0027s better than line number, both of them are flaky.",
+      "parentUuid": "d56d8de1_5692451e",
       "range": {
         "startLine": 468,
         "startChar": 27,
