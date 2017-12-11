@@ -1,0 +1,50 @@
+description ="""\
+Simple Gradle project to show how we can use the description property of a
+project.
+
+------------------------------------------
+Gradle version: ${gradle.gradleVersion}
+------------------------------------------
+"""
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://maven.google.com'
+    }
+}
+
+configurations {
+    // Declaration of the 'chromium' configuration, the dependencies we want to download will be
+    // assigned to it.
+    // TODO(dgn): Define a plugin that will declare configurations and their purpose, instead of
+    // passing their names to the task.
+    chromium
+    chromiumAnnotationProcessor // TODO(dgn): make that define a proper annotation processor target.
+    chromiumCompile
+}
+
+dependencies {
+    // Insert here dependencies that will be added to the APKs.
+    chromiumCompile 'com.google.dagger:dagger:2.13'
+    chromiumCompile 'com.google.dagger:dagger-android:2.13'
+    // Uncomment the line below if needed. Not sure what requires it currently.
+    // chromiumCompile 'com.google.dagger:dagger-android-support:2.13'
+
+    // Insert here tooling-related dependencies, e.g. annotation processors or unit test libraries.
+    chromiumAnnotationProcessor 'com.google.dagger:dagger-compiler:2.13'
+    chromiumAnnotationProcessor 'com.google.dagger:dagger-android-processor:2.13'
+
+    chromium configurations.chromiumCompile
+    chromium configurations.chromiumAnnotationProcessor
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.3.1'
+}
+
+task setUpRepository(type: BuildConfigGenerator) {
+    configurationName 'chromium'
+    androidCompatibleConfigurationName 'chromiumCompile'
+    repositoryPath 'm2repository'
+}
