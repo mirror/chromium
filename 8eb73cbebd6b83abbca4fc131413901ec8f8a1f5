@@ -22,6 +22,30 @@
       "revId": "8eb73cbebd6b83abbca4fc131413901ec8f8a1f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08706b2e_30ece3c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-11T16:37:00Z",
+      "side": 1,
+      "message": "Yes, it certainly should, and we\u0027ll get that implemented.\n\nWhat prompted my change was simply that someone was making the tautological comparison warning smarter on Friday and uncovered this.\n\nIt would perhaps have been nicer if they\u0027d implemented a diagnostic for storing -1 into the enum first, but changes don\u0027t always happen in the optimal order.",
+      "parentUuid": "c29a8c45_a770bc1e",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "8eb73cbebd6b83abbca4fc131413901ec8f8a1f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
