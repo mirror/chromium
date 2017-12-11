@@ -131,6 +131,8 @@ gles2_implementation_source_files = [
   "program_info_manager.h",
   "query_tracker.cc",
   "query_tracker.h",
+  "raster_implementation_gles.cc",
+  "raster_implementation_gles.h",
   "share_group.cc",
   "share_group.h",
   "vertex_array_object_manager.cc",
@@ -143,10 +145,12 @@ gles2_implementation_source_files = [
 source_set("gles2_interface") {
   sources = [
     "gles2_interface.h",
+    "raster_interface.h",
   ]
   public_configs = [ "//third_party/khronos:khronos_headers" ]
   deps = [
     "//base",
+    "//components/viz/common:resource_format",
   ]
 }
 
@@ -170,6 +174,7 @@ component("gles2_implementation") {
   if (!is_nacl) {
     deps += [
       "//cc/paint",
+      "//components/viz/common:resource_format",
       "//ui/gfx:color_space",
       "//ui/gfx/ipc/color",
     ]
@@ -199,6 +204,7 @@ component("gles2_implementation_no_check") {
   if (!is_nacl) {
     deps += [
       "//cc/paint",
+      "//components/viz/common:resource_format",
       "//ui/gfx:color_space",
       "//ui/gfx/ipc/color",
     ]
