@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b81e3868_5dd675f1",
+        "filename": "third_party/WebKit/Source/modules/nfc/NFC.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-11T13:18:03Z",
+      "side": 1,
+      "message": "I\u0027m fine with this but another option would be to create nfc_message when creating the callback (instead of when OnWatch gets called).",
+      "revId": "3ba9cc60fa3e4f6e72de902f8a138099f4b5948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
