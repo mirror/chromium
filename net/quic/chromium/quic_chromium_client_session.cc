@@ -66,9 +66,6 @@ const size_t kTokenBindingSignatureMapSize = 10;
 // migrating sessions need to wait for a new network to connect.
 const size_t kWaitTimeForNewNetworkSecs = 10;
 
-// With exponential backoff, altogether we allow using non-default network
-// for up to 255 seconds before close the session.
-const int kMaxRetryCount = 7;
 const size_t kMinRetryTimeForDefaultNetworkSecs = 1;
 
 // Maximum RTT time for this session when set initial timeout for probing
@@ -661,6 +658,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     bool migrate_sessions_on_network_change,
     bool migrate_session_early_v2,
     bool migrate_sessions_on_network_change_v2,
+    int max_time_on_non_default_network_seconds,
     int yield_after_packets,
     QuicTime::Delta yield_after_duration,
     int cert_verify_flags,
@@ -682,6 +680,8 @@ QuicChromiumClientSession::QuicChromiumClientSession(
       migrate_session_early_v2_(migrate_session_early_v2),
       migrate_session_on_network_change_v2_(
           migrate_sessions_on_network_change_v2),
+      max_time_on_non_default_network_seconds_(
+          max_time_on_non_default_network_seconds),
       clock_(clock),
       yield_after_packets_(yield_after_packets),
       yield_after_duration_(yield_after_duration),
@@ -2135,13 +2135,16 @@ void QuicChromiumClientSession::TryMigrateBackToDefaultNetwork(
 }
 
 void QuicChromiumClientSession::MaybeRetryMigrateBackToDefaultNetwork() {
-  if (retry_migrate_back_count_ > kMaxRetryCount) {
+  int retry_migrate_back_timeout_seconds = UINT64_C(1)
+                                           << retry_migrate_back_count_;
+  if (retry_migrate_back_timeout_seconds >
+      max_time_on_non_default_network_seconds_) {
     // Mark session as going away to accept no more streams.
     stream_factory_->OnSessionGoingAway(this);
     return;
   }
   TryMigrateBackToDefaultNetwork(
-      base::TimeDelta::FromSeconds(UINT64_C(1) << retry_migrate_back_count_));
+      base::TimeDelta::FromSeconds(retry_migrate_back_timeout_seconds));
 }
 
 bool QuicChromiumClientSession::ShouldMigrateSession(
