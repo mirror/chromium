@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8580153_78ec2547",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-11T08:11:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff2ab365_3c631330",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bda3760f_f93ed4b3",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "883a0859_b9b2d669",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-11T08:11:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda3760f_f93ed4b3",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a57ccc9_bc566199",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-11T06:34:37Z",
       "side": 1,
       "message": "What is the case where layout_object is not a text? And why are we returning nullopt in that case?",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2dc8a3c_f9462f7f",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-11T08:11:44Z",
+      "side": 1,
+      "message": "Add comment.",
+      "parentUuid": "3a57ccc9_bc566199",
       "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "645e7008_901a3f8b",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-11T08:11:44Z",
+      "side": 1,
+      "message": "Add comment.",
+      "parentUuid": "695e91ae_c88d2651",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "616035b0_6356388b",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 3
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "d83ecc74_57572a03",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-11T08:11:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "616035b0_6356388b",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a5f41a8_593ca8ca",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-11T06:34:37Z",
       "side": 1,
       "message": "How about moving this function (or GetNGOffset) to SelectionPaintRange?",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68350503_bfa08b53",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-11T08:11:44Z",
+      "side": 1,
+      "message": "Do you mean static SelectionPaintRange::ComputeNewPaintRange()?\nI also feel there are many static functions to create SelectionPaintRange() and\nwe need some refactoring, but creating static SelectionPaintRange::XXX expose the function\nglobally though this is local function.",
+      "parentUuid": "1a5f41a8_593ca8ca",
       "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
