@@ -16,6 +16,8 @@ include_rules = [
   "+third_party/skia",
   "+ui/gfx/geometry",
   "+ui/gfx/range/range.h",
+  "+media/base/video_codecs.h",
+  "+media/video/video_encode_accelerator.h",
 ]
 
 specific_include_rules = {

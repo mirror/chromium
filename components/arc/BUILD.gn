@@ -36,6 +36,8 @@ static_library("arc") {
     "intent_helper/page_transition_util.h",
     "lock_screen/arc_lock_screen_bridge.cc",
     "lock_screen/arc_lock_screen_bridge.h",
+    "media/base/video_codecs.h",
+    "media/video/video_encode_accelerator.h",
     "metrics/arc_metrics_service.cc",
     "metrics/arc_metrics_service.h",
     "midis/arc_midis_bridge.cc",
