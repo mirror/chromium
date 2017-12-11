@@ -16,6 +16,24 @@
       "revId": "9428da1bd2cec8de6265bbd08a22264c9e6602f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8c51b3_9a5e2513",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-11T22:31:36Z",
+      "side": 1,
+      "message": "Yes, it\u0027s initialized to false, and isn\u0027t used on non-Windows platforms.",
+      "parentUuid": "55998ab4_d2ff5d79",
+      "revId": "9428da1bd2cec8de6265bbd08a22264c9e6602f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
