@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d59bd4c_c5de055b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/DownloadPreferences.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-11T19:33:43Z",
+      "side": 1,
+      "message": "We should figure out where error checking is going to happen.  Things like \"does the directory exist?\" or \"is the directory writeable?\"\n\nAlso, uncomment?  If we don\u0027t support this yet maybe comment out the native code instead so this whole bridge is fully implemented until we actually hit the pref service in native.",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 87
+      },
+      "revId": "ec42e8531dcda166d4ac9c42047e7f061e314c77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
