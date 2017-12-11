@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include "base/values.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/page_transition_types.h"
@@ -26,7 +27,6 @@ class HttpResponseHeaders;
 namespace content {
 
 class BrowserContext;
-class NavigationData;
 class NavigationHandle;
 class RenderFrameHost;
 
@@ -99,9 +99,8 @@ class WebContentsTester {
                                ui::PageTransition transition) = 0;
 
   // Sets NavgationData on |navigation_handle|.
-  virtual void SetNavigationData(
-      NavigationHandle* navigation_handle,
-      std::unique_ptr<NavigationData> navigation_data) = 0;
+  virtual void SetNavigationData(NavigationHandle* navigation_handle,
+                                 base::Value navigation_data) = 0;
 
   // Sets HttpResponseData on |navigation_handle|.
   virtual void SetHttpResponseHeaders(
