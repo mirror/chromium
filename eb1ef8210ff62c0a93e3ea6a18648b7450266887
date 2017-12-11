@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "10603a26_f859c8bc",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutCounter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-11T23:48:31Z",
+      "side": 1,
+      "message": "Moved to a static method on CounterNode; the name might be a bit awkward.",
+      "parentUuid": "cf995679_d8daf5cb",
+      "revId": "eb1ef8210ff62c0a93e3ea6a18648b7450266887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b43af2ba_ff852a07",
         "filename": "third_party/WebKit/Source/core/layout/LayoutCounter.cpp",
         "patchSetId": 7
@@ -51,6 +69,24 @@
       "revId": "eb1ef8210ff62c0a93e3ea6a18648b7450266887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f38694d_a01fe379",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutCounter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-11T23:48:31Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "14498568_2164a57b",
+      "revId": "eb1ef8210ff62c0a93e3ea6a18648b7450266887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
