@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79215bac_20ee06c7",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T21:17:15Z",
+      "side": 1,
+      "message": "I might be missing the intent of this function, but should this do:\n\nif (filteredAccounts.isEmpty()) return new AccountManagerResult\u003c\u003e(accounts);\nreturn new AccountManagerResult\u003c\u003e(filteredAccounts.toArray(new Account[0]));\n\nTo me, it looks like this would stop returning a list with \u003e1 non-child accounts, but maybe that is the intent.  If not, would be good to add a test for that case as well.",
+      "range": {
+        "startLine": 578,
+        "startChar": 27,
+        "endLine": 578,
+        "endChar": 47
+      },
+      "revId": "2283b0138c5d00dad7aedbbcaacdc5e662e1e51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
