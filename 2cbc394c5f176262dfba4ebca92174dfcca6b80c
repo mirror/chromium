@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3240694_0328d5bc",
+        "filename": "components/quirks/quirks_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T06:07:46Z",
+      "side": 1,
+      "message": "Quirks",
+      "range": {
+        "startLine": 164,
+        "startChar": 21,
+        "endLine": 164,
+        "endChar": 22
+      },
+      "revId": "2cbc394c5f176262dfba4ebca92174dfcca6b80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75cd6263_ada67d04",
+        "filename": "components/quirks/quirks_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T06:07:46Z",
+      "side": 1,
+      "message": ".",
+      "range": {
+        "startLine": 165,
+        "startChar": 66,
+        "endLine": 165,
+        "endChar": 67
+      },
+      "revId": "2cbc394c5f176262dfba4ebca92174dfcca6b80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2952bb0a_d280c8ec",
+        "filename": "components/quirks/quirks_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T06:07:46Z",
+      "side": 1,
+      "message": ".",
+      "range": {
+        "startLine": 169,
+        "startChar": 78,
+        "endLine": 169,
+        "endChar": 79
+      },
+      "revId": "2cbc394c5f176262dfba4ebca92174dfcca6b80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db59e1fe_c7754c28",
+        "filename": "components/quirks/quirks_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-11T06:07:46Z",
+      "side": 1,
+      "message": "false\n\nThis policy should specify how to disable the request.",
+      "range": {
+        "startLine": 176,
+        "startChar": 47,
+        "endLine": 176,
+        "endChar": 51
+      },
+      "revId": "2cbc394c5f176262dfba4ebca92174dfcca6b80c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
