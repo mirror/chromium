@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9c0d28c_d3c9d3dc",
+        "filename": "components/language/content/browser/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-11T01:25:21Z",
+      "side": 1,
+      "message": "move it in  https://chromium-review.googlesource.com/c/chromium/src/+/818596",
+      "parentUuid": "c1d2c8a7_8ca78d14",
+      "revId": "9081736714de02b11a0ec8ebebaaa94c06cce3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f748a2dd_7c7a147b",
         "filename": "components/language/content/browser/geo_language_provider.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9081736714de02b11a0ec8ebebaaa94c06cce3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea82df86_4e0a4d6f",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-11T01:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f748a2dd_7c7a147b",
+      "revId": "9081736714de02b11a0ec8ebebaaa94c06cce3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ee7cfbe3_34fe22a7",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-11T01:25:21Z",
+      "side": 1,
+      "message": "Hi Colin, I added additional check down below, but I wonder if  ip_geolocation_service_.encountered_error() happens, should be just call BindIpGeolocationService() or we need to first ip_geolocation_service_.reset() and call  ip_geolocation_service_.encountered_error()?\n\nthank you!",
+      "parentUuid": "c27eae3a_09772223",
+      "revId": "9081736714de02b11a0ec8ebebaaa94c06cce3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f8c5654_8d296e82",
         "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "9081736714de02b11a0ec8ebebaaa94c06cce3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1beb0c_f1477774",
+        "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-11T01:25:21Z",
+      "side": 1,
+      "message": "Thanks Colin for the pointing! I think our usage is slightly different, i.e. we don\u0027t need FakeGeolocationContext since we CreateGeolocation to bind the GeoLocation, also, since amoylan@ want to make sure device::mojom::Geolocation will not be called more than once every 24 hours so I added an additional check to test how often it\u0027s getting called.",
+      "parentUuid": "8f8c5654_8d296e82",
+      "revId": "9081736714de02b11a0ec8ebebaaa94c06cce3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
