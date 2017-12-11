@@ -4,7 +4,11 @@
 
 #include "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h"
 
+#include "chrome/browser/ui/overlay/overlay_surface_embedder.h"
 #include "chrome/browser/ui/overlay/overlay_window.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/local_surface_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "content/public/browser/web_contents.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(PictureInPictureWindowController);
@@ -30,6 +34,13 @@ PictureInPictureWindowController::PictureInPictureWindowController(
   DCHECK(initiator_);
 }
 
+void PictureInPictureWindowController::Init() {
+  if (!window_) {
+    window_ = OverlayWindow::Create();
+    window_->Init();
+  }
+}
+
 void PictureInPictureWindowController::Show() {
   if (window_ && window_->IsActive())
     return;
@@ -44,4 +55,24 @@ void PictureInPictureWindowController::Show() {
 void PictureInPictureWindowController::Close() {
   if (window_->IsActive())
     window_->Close();
+}
+
+void PictureInPictureWindowController::SetFrameSinkId(
+    viz::FrameSinkId frame_sink_id) {
+  frame_sink_id_ = frame_sink_id;
+}
+
+void PictureInPictureWindowController::EmbedSurface(viz::SurfaceId surface_id) {
+  LOG(ERROR) << "PictureInPictureWindowController::EmbedSurface: "
+             << surface_id;
+  DCHECK(window_);
+
+  embedder_.reset(new OverlaySurfaceEmbedder(window_.get()));
+
+  // Do we need to create a new LocalSurfaceId? or can we reuse it?
+  viz::LocalSurfaceId local_surface_id =
+      local_surface_id_allocator_.GenerateId();
+  viz::SurfaceId new_surface_id =
+      viz::SurfaceId(surface_id.frame_sink_id(), local_surface_id);
+  embedder_->SetPrimarySurfaceId(new_surface_id);
 }

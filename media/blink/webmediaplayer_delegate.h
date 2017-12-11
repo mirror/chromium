@@ -11,6 +11,10 @@ class WebMediaPlayer;
 namespace gfx {
 class Size;
 }
+namespace viz {
+class FrameSinkId;
+class SurfaceId;
+}  // namespace viz
 namespace media {
 
 enum class MediaContentType;
@@ -98,6 +102,10 @@ class WebMediaPlayerDelegate {
 
   // Notify that the muted status of the media player has changed.
   virtual void DidPlayerMutedStatusChange(int delegate_id, bool muted) = 0;
+
+  virtual void PictureInPicture(viz::FrameSinkId frame_sink_id) = 0;
+
+  virtual void PictureInPictureSurfaceIdUpdated(viz::SurfaceId surface_id) = 0;
 
   // Notify that playback is stopped. This will drop wake locks and remove any
   // external controls.
