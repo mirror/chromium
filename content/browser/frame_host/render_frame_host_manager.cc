@@ -710,6 +710,10 @@ void RenderFrameHostManager::DidCreateNavigationRequest(
 RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
     const NavigationRequest& request) {
   CHECK(IsBrowserSideNavigationEnabled());
+  DCHECK(!IsRendererDebugURL(request.common_params().url))
+      << "Don't call this method for debug URLs as those create a temporary "
+         "NavigationRequest and we don't want to reset an ongoing navigation's "
+         "speculative RFH.";
 
   // The appropriate RenderFrameHost to commit the navigation.
   RenderFrameHostImpl* navigation_rfh = nullptr;
