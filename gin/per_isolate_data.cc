@@ -8,7 +8,6 @@
 
 #include "base/logging.h"
 #include "base/single_thread_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "gin/public/gin_embedders.h"
 #include "gin/v8_foreground_task_runner.h"
 #include "gin/v8_foreground_task_runner_with_locker.h"
