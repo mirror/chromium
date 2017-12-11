@@ -56,6 +56,7 @@
 namespace {
 
 using ::payments::mojom::blink::CanMakePaymentQueryResult;
+using ::payments::mojom::blink::PaymentAddress;
 using ::payments::mojom::blink::PaymentAddressPtr;
 using ::payments::mojom::blink::PaymentCurrencyAmount;
 using ::payments::mojom::blink::PaymentCurrencyAmountPtr;
