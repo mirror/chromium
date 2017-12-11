@@ -16,6 +16,24 @@
       "revId": "cd4f477bd44c4a808bbbe43588f81cdbb342eba9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9542e8_fff3e55c",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1248360
+      },
+      "writtenOn": "2017-12-11T18:36:55Z",
+      "side": 1,
+      "message": "Moved code to lock_window.cc\n\nTest and removal will come in a follow up cl.\n\nI agree that blur code could/should be moved under control of lock screen. I discussed it with Colin as well. I would wait for the visual review (http://crbug.com/793171) and move if as a part of lock screen transition revamp (probably not M64).",
+      "parentUuid": "cc7e2bf6_b670bc29",
+      "revId": "cd4f477bd44c4a808bbbe43588f81cdbb342eba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
