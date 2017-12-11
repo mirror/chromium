@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ea1a0fe_f58a0cf5",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-11T22:21:21Z",
+      "side": 1,
+      "message": "This is actually what\u0027s called during the shutdown path, if you wanted to experiment with that:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chrome_browser_main.cc?rcl\u003dfafb058b45bdf6bafef297ac770ab21e06eb6bcb\u0026l\u003d1978\n\nHowever, I think it\u0027s also called in other contexts. So if we want to do this, we can probably make a Shutdown() method instead that does this.\n\nAnyway, if you do want to experiment with this, I think we should split that into a different change than the one that\u0027s removing the DeletePersistentLocation() logic.",
+      "range": {
+        "startLine": 282,
+        "startChar": 29,
+        "endLine": 282,
+        "endChar": 0
+      },
+      "revId": "f82c0e19ebc90fe837eb22e70c7a60d5462afe34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1111dc0a_c5fd7180",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-11T22:21:21Z",
+      "side": 1,
+      "message": "This isn\u0027t a final collect though. This is on background - on Android.\n\nI don\u0027t agree of changing logic such that we don\u0027t record histograms in this case, but still close a log. I don\u0027t think that behavior makes sense.\n\nAlso, I believe Android metrics reporting is reliant on this because they tag logs with CCT status - because switching activities between Chrome and another app with a ChromeCustomTab will close the log. So all metrics in that log are associated with the correct status.\n\nThis would break this.",
+      "range": {
+        "startLine": 414,
+        "startChar": 53,
+        "endLine": 414,
+        "endChar": 0
+      },
+      "revId": "f82c0e19ebc90fe837eb22e70c7a60d5462afe34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
