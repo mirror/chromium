@@ -100,6 +100,7 @@
 #include "ui/display/screen.h"
 #include "ui/events/blink/blink_event_util.h"
 #include "ui/events/blink/blink_features.h"
+#include "ui/events/blink/did_overscroll_params.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
@@ -207,6 +208,8 @@ class TestOverscrollDelegate : public OverscrollControllerDelegate {
         ->GetDisplayNearestView(view_->GetNativeView())
         .size();
   }
+
+  void OnDidOverscroll(const ui::DidOverscrollParams& params) override {}
 
   bool OnOverscrollUpdate(float delta_x, float delta_y) override {
     delta_x_ = delta_x;
