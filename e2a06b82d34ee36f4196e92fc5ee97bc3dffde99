@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a5b4383_c4516b71",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-11T21:58:53Z",
+      "side": 1,
+      "message": "\u003e With this change, there is no test coverage that RendererSampling will actually trigger a renderer to be profiled either in the unittest or the e2e scenario.\n\nThe current behavior is the same as the previous behavior, just with a rename.\n\nPreviously, we had a custom boolean flag that forced all renderers to be profiled. Now, we have a mode AllRenderers that forces all renderers to be profiled. \n\nThe only difference between these modes is the logic in ShouldProfileNewRenderer, which is tested in profiling_process_host_unittest.cc",
+      "parentUuid": "2156a40d_60c2cd05",
+      "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d03614ac_74d1e39f",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9a62f9_4b88ac23",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-11T21:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d03614ac_74d1e39f",
+      "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "a67ecd13_1899813e",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-11T21:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dda6d6c4_b1068f19",
+      "range": {
+        "startLine": 614,
+        "startChar": 4,
+        "endLine": 614,
+        "endChar": 11
+      },
+      "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97adef83_2a9449be",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 3
@@ -70,6 +130,30 @@
       "writtenOn": "2017-12-11T20:42:45Z",
       "side": 1,
       "message": "Can this be unittested w/o having to do a lot of insane infrastructure/setup?\n\nSpecifically, it\u0027d be nice to assert that StartProfiling() changes the mode.",
+      "range": {
+        "startLine": 615,
+        "startChar": 3,
+        "endLine": 615,
+        "endChar": 0
+      },
+      "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447cc22d_2e35c629",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-11T21:58:53Z",
+      "side": 1,
+      "message": "Hm. I can\u0027t think of a test that would catch regressions that wouldn\u0027t just be a change-detector test.",
+      "parentUuid": "97adef83_2a9449be",
       "range": {
         "startLine": 615,
         "startChar": 3,
@@ -102,6 +186,30 @@
       "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac674de_987b7025",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-12-11T21:58:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea2e2f3b_4c4c5e55",
+      "range": {
+        "startLine": 745,
+        "startChar": 35,
+        "endLine": 745,
+        "endChar": 44
+      },
+      "revId": "e2a06b82d34ee36f4196e92fc5ee97bc3dffde99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
