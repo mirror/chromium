@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2ab365_3c631330",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T06:34:37Z",
+      "side": 1,
+      "message": "Better not to name \"NGOffset\", consider when we switched over and it means nothing.\n\nWhat about \"TextContentOffset\", or at least \"NGTextContentOffset\"?",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda3760f_f93ed4b3",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T06:34:37Z",
+      "side": 1,
+      "message": "I think it\u0027s better to switch NG/legacy earlier, and make this function DCHECK NG.",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a57ccc9_bc566199",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T06:34:37Z",
+      "side": 1,
+      "message": "What is the case where layout_object is not a text? And why are we returning nullopt in that case?",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695e91ae_c88d2651",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T06:34:37Z",
+      "side": 1,
+      "message": "What does this comment mean? Is node_offset is nullptr if BR element? If that\u0027s the only case, better to add DCHECK.",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616035b0_6356388b",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T06:34:37Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5f41a8_593ca8ca",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T06:34:37Z",
+      "side": 1,
+      "message": "How about moving this function (or GetNGOffset) to SelectionPaintRange?",
+      "revId": "3bac98d6b0e1453ef5bcf49e67030ac74ec75a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
