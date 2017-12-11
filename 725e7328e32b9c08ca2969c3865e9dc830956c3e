@@ -16,6 +16,24 @@
       "revId": "725e7328e32b9c08ca2969c3865e9dc830956c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5af9a8f_ef20af59",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-11T18:25:31Z",
+      "side": 1,
+      "message": "Because we need to compute blacklist decisions before initialize GL bindings. Depending on blacklist decisions, we may initialize core profile GL or compatibility profile GL.",
+      "parentUuid": "d8a084a7_85e2427a",
+      "revId": "725e7328e32b9c08ca2969c3865e9dc830956c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
