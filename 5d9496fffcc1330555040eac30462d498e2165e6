@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63db5682_bc722510",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-11T12:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a562e11_1f27299f",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "5d9496fffcc1330555040eac30462d498e2165e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb3ce724_308a86c6",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "dc10de32_a805523d",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-11T12:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb3ce724_308a86c6",
+      "revId": "5d9496fffcc1330555040eac30462d498e2165e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6006cf3d_740e4021",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "5d9496fffcc1330555040eac30462d498e2165e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baec7128_2c068089",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/requestDevice/discovery-succeeds.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-11T12:45:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6006cf3d_740e4021",
+      "revId": "5d9496fffcc1330555040eac30462d498e2165e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
