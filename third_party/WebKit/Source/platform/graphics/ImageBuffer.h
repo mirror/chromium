@@ -146,6 +146,9 @@ class PLATFORM_EXPORT ImageBuffer {
   // TODO(xlai): This function is an intermediate step making canvas element
   // have reference to Canvas2DLayerBridge. See crbug.com/776806.
   void OnCanvasDisposed();
+  const CanvasColorParams& ColorParams() const {
+    return surface_->ColorParams();
+  }
 
   base::WeakPtrFactory<ImageBuffer> weak_ptr_factory_;
 
