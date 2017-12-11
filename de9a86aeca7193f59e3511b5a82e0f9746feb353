@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "910ea2e5_984228db",
+        "filename": "components/crash/core/common/crash_key.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-11T22:14:36Z",
+      "side": 1,
+      "message": "This is a bit of a lie for Breakpad\u0027s sake. +1 in Crashpad hurts nothing, but -1 in Breakpad could cause truncation.",
+      "range": {
+        "startLine": 40,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "de9a86aeca7193f59e3511b5a82e0f9746feb353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
