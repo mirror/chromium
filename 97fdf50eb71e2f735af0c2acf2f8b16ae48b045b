@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7d4370a_cd7f9f2b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-11T14:48:33Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure that pushing these tasks to front is what we want - it means that upon exiting nested message loop all non-nestable tasks get to run immediately.\n\nI believe that adding them to the end of the queue is more consistent with what we\u0027ve been doing.",
+      "range": {
+        "startLine": 882,
+        "startChar": 43,
+        "endLine": 882,
+        "endChar": 52
+      },
+      "revId": "97fdf50eb71e2f735af0c2acf2f8b16ae48b045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed96602e_cd936fdd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-11T14:48:33Z",
+      "side": 1,
+      "message": "It seems that \"nestable\" is the preferred spelling.",
+      "range": {
+        "startLine": 234,
+        "startChar": 22,
+        "endLine": 234,
+        "endChar": 30
+      },
+      "revId": "97fdf50eb71e2f735af0c2acf2f8b16ae48b045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d7dbf1_37d6da7d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-11T14:48:33Z",
+      "side": 1,
+      "message": "nit: non_nestable_task",
+      "range": {
+        "startLine": 196,
+        "startChar": 21,
+        "endLine": 196,
+        "endChar": 38
+      },
+      "revId": "97fdf50eb71e2f735af0c2acf2f8b16ae48b045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f18011_63c4568f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-11T14:48:33Z",
+      "side": 1,
+      "message": "Note that if you\u0027re doing PushFront here that means that the order of tasks gets reverted (the last one from non_nestable_task_queue becomes first after calling PushFront).\n\nCould we add a test checking that the order stays the same?",
+      "range": {
+        "startLine": 198,
+        "startChar": 34,
+        "endLine": 198,
+        "endChar": 61
+      },
+      "revId": "97fdf50eb71e2f735af0c2acf2f8b16ae48b045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dbea2bc_c596b760",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-11T14:48:33Z",
+      "side": 1,
+      "message": "Should this be kDelayed? Also nit: we could use the comparison directly in the deferred_task constructor instead saving it into temp variable.",
+      "range": {
+        "startLine": 491,
+        "startChar": 68,
+        "endLine": 491,
+        "endChar": 78
+      },
+      "revId": "97fdf50eb71e2f735af0c2acf2f8b16ae48b045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74081687_d863661d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-11T14:48:33Z",
+      "side": 1,
+      "message": "Is there any reason to stop using GetQueuePriority?",
+      "range": {
+        "startLine": 276,
+        "startChar": 35,
+        "endLine": 276,
+        "endChar": 49
+      },
+      "revId": "97fdf50eb71e2f735af0c2acf2f8b16ae48b045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
