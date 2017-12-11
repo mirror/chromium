@@ -22,6 +22,30 @@
       "revId": "611ceb8e39165dc1e3ed302d189958edb3935eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e0efb3_cf7f4964",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/PrefServiceBridge.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-11T21:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529a9acd_0e2e396a",
+      "range": {
+        "startLine": 1023,
+        "startChar": 38,
+        "endLine": 1023,
+        "endChar": 48
+      },
+      "revId": "611ceb8e39165dc1e3ed302d189958edb3935eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
