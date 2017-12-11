@@ -65,6 +65,8 @@
 @property(nonatomic, strong) UIImageView* shadowView;
 // The shadow below the expanded omnibox. Lazily instantiated.
 @property(nonatomic, strong) UIImageView* fullBleedShadowView;
+// The shadow below the contracted location bar.
+@property(nonatomic, strong) UIImageView* locationBarShadow;
 // Background view, used to display the incognito NTP background color on the
 // toolbar.
 @property(nonatomic, strong) UIView* backgroundView;
@@ -114,6 +116,7 @@
 @synthesize locationBarContainerStackView = _locationBarContainerStackView;
 @synthesize shadowView = _shadowView;
 @synthesize fullBleedShadowView = _fullBleedShadowView;
+@synthesize locationBarShadow = _locationBarShadow;
 @synthesize expandedToolbarConstraints = _expandedToolbarConstraints;
 @synthesize topSafeAnchor = _topSafeAnchor;
 @synthesize regularToolbarConstraints = _regularToolbarConstraints;
@@ -192,11 +195,11 @@
                                  completion:nil];
   }];
   [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
-    self.locationBarContainer.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
     CGFloat borderWidth = (finalPosition == UIViewAnimatingPositionEnd)
                               ? 0
                               : kLocationBarBorderWidth;
     self.locationBarContainer.layer.borderWidth = borderWidth;
+    self.locationBarShadow.alpha = 0;
   }];
 
   self.expanded = YES;
@@ -212,13 +215,12 @@
   [self setAllVisibleToolbarButtonsOpacity:0];
   [animator addAnimations:^{
     self.locationBarContainer.layer.borderWidth = kLocationBarBorderWidth;
-    self.locationBarContainer.layer.shadowOffset =
-        CGSizeMake(0.0f, kLocationBarShadowYOffset);
     [self.view layoutIfNeeded];
     self.contractButton.hidden = YES;
     self.contractButton.alpha = 0;
     self.shadowView.alpha = 1;
     self.fullBleedShadowView.alpha = 0;
+    self.locationBarShadow.alpha = 1;
   }];
   // Once the locationBarContainer has been contracted fade in ToolbarButtons.
   [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
@@ -394,6 +396,17 @@
         constraintEqualToAnchor:self.view.trailingAnchor],
     [self.fullBleedShadowView.heightAnchor
         constraintEqualToConstant:kToolbarFullBleedShadowHeight],
+    [self.locationBarShadow.heightAnchor
+        constraintEqualToConstant:kLocationBarShadowHeight],
+    [self.locationBarShadow.leadingAnchor
+        constraintEqualToAnchor:self.locationBarContainer.leadingAnchor
+                       constant:kLocationBarShadowInset],
+    [self.locationBarShadow.trailingAnchor
+        constraintEqualToAnchor:self.locationBarContainer.trailingAnchor
+                       constant:-kLocationBarShadowInset],
+    [self.locationBarShadow.topAnchor
+        constraintEqualToAnchor:self.locationBarContainer.bottomAnchor
+                       constant:-kLocationBarBorderWidth],
   ]];
 
   // Stack views constraints.
@@ -621,12 +634,16 @@
   locationBarContainer.backgroundColor =
       [self.buttonFactory.toolbarConfiguration omniboxBackgroundColor];
   locationBarContainer.layer.borderWidth = kLocationBarBorderWidth;
+  locationBarContainer.layer.cornerRadius = kLocationBarShadowHeight;
   locationBarContainer.layer.borderColor =
       [self.buttonFactory.toolbarConfiguration omniboxBorderColor].CGColor;
-  locationBarContainer.layer.shadowRadius = kLocationBarShadowRadius;
-  locationBarContainer.layer.shadowOpacity = kLocationBarShadowOpacity;
-  locationBarContainer.layer.shadowOffset =
-      CGSizeMake(0.0f, kLocationBarShadowYOffset);
+
+  self.locationBarShadow = [[UIImageView alloc] init];
+  self.locationBarShadow.translatesAutoresizingMaskIntoConstraints = NO;
+  self.locationBarShadow.userInteractionEnabled = NO;
+  self.locationBarShadow.image = NativeImage(IDR_IOS_TOOLBAR_SHADOW);
+
+  [locationBarContainer addSubview:self.locationBarShadow];
 
   [locationBarContainer
       setContentHuggingPriority:UILayoutPriorityDefaultLow
