@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "421cf826_d7a97a6b",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-11T18:39:01Z",
+      "side": 1,
+      "message": "Nit: Make this const std::string\u0026 to avoid a copy.",
+      "revId": "06b159cf54dd7b756fd003e38d04aeb1b20a4587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
