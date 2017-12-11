@@ -429,10 +429,23 @@ service_manifest("chrome_manifest") {
   source = "chrome_manifest.json"
 }
 
+# JAMES Why does this exist? I think it's for enable_mus for Linux Ozone.
 service_manifest("chrome_content_packaged_services_manifest_overlay_for_mash") {
   source =
       "//chrome/browser/chrome_content_packaged_services_manifest_overlay.json"
   packaged_services = chrome_packaged_services
+  if (enable_mus) {
+    packaged_services += [ "//mash/quick_launch:manifest" ]
+  }
+  if (is_chromeos) {
+    packaged_services += [
+      "//ash:ash_and_ui_manifest",
+      "//ash/autoclick/mus:manifest",
+      ###"//ash:manifest",
+      "//ash/touch_hud/mus:manifest",
+      "//components/font_service:manifest",
+    ]
+  }
 }
 
 service_manifest("chrome_content_packaged_services_manifest_overlay") {
@@ -490,6 +503,7 @@ group("chrome_content_manifest_overlays") {
     ":chrome_content_utility_manifest_overlay",
   ]
 
+  #JAMES should this be chromeos only?
   if (enable_mus) {
     deps += [ ":chrome_content_packaged_services_manifest_overlay_for_mash" ]
   }
@@ -554,6 +568,11 @@ if (use_aura) {
     if (enable_mus) {
       deps += [ ":chrome_content_packaged_services_manifest_for_mash" ]
     }
+
+    # JAMES I have no idea if this is right.
+    #if (is_chromeos) {
+    #  deps += [ "//ash:ash_and_ui_manifest" ]
+    #}
   }
 
   chrome_embedded_services = [

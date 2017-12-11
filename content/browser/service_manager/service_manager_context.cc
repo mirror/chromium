@@ -383,6 +383,7 @@ ServiceManagerContext::ServiceManagerContext() {
     } kManifests[] = {
         {mojom::kBrowserServiceName, IDR_MOJO_CONTENT_BROWSER_MANIFEST},
         {mojom::kGpuServiceName, IDR_MOJO_CONTENT_GPU_MANIFEST},
+        //JAMES need one with ui service and one without, based on flag.
         {mojom::kPackagedServicesServiceName,
          IDR_MOJO_CONTENT_PACKAGED_SERVICES_MANIFEST},
         {mojom::kPluginServiceName, IDR_MOJO_CONTENT_PLUGIN_MANIFEST},

@@ -18,6 +18,7 @@
 #include "ash/public/interfaces/constants.mojom.h"    // nogncheck
 #include "ash/touch_hud/mus/touch_hud_application.h"  // nogncheck
 #include "ash/window_manager_service.h"               // nogncheck
+#include "chrome/utility/ash_and_ui_service.h"
 #endif                                                // defined(OS_CHROMEOS)
 
 #if defined(OS_LINUX) && !defined(OS_ANDROID)
@@ -38,16 +39,20 @@ void RegisterMashService(
   services->emplace(name, service_info);
 }
 
-std::unique_ptr<service_manager::Service> CreateUiService() {
-  return std::make_unique<ui::Service>();
+#if defined(OS_CHROMEOS)
+
+// Chrome OS runs ash and ui services combined in one process.
+std::unique_ptr<service_manager::Service> CreateAshAndUiService() {
+  LOG(ERROR) << "JAMES CreateAshAndUiService";
+  return std::make_unique<AshAndUiService>();
 }
 
-#if defined(OS_CHROMEOS)
-std::unique_ptr<service_manager::Service> CreateAshService() {
-  const bool show_primary_host_on_connect = true;
-  return std::make_unique<ash::WindowManagerService>(
-      show_primary_host_on_connect);
-}
+//JAMES eliminate
+// std::unique_ptr<service_manager::Service> CreateAshService() {
+//   const bool show_primary_host_on_connect = true;
+//   return std::make_unique<ash::WindowManagerService>(
+//       show_primary_host_on_connect);
+// }
 
 std::unique_ptr<service_manager::Service> CreateAccessibilityAutoclick() {
   return std::make_unique<ash::autoclick::AutoclickApplication>();
@@ -60,7 +65,15 @@ std::unique_ptr<service_manager::Service> CreateQuickLaunch() {
 std::unique_ptr<service_manager::Service> CreateTouchHud() {
   return std::make_unique<ash::touch_hud::TouchHudApplication>();
 }
-#endif
+
+#else
+
+// Linux Ozone runs the ui service without ash.
+std::unique_ptr<service_manager::Service> CreateUiService() {
+  return std::make_unique<ui::Service>();
+}
+
+#endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_LINUX) && !defined(OS_ANDROID)
 std::unique_ptr<service_manager::Service> CreateFontService() {
@@ -73,14 +86,17 @@ std::unique_ptr<service_manager::Service> CreateFontService() {
 
 void RegisterMashServices(
     content::ContentUtilityClient::StaticServiceMap* services) {
-  RegisterMashService(services, ui::mojom::kServiceName, &CreateUiService);
+  LOG(ERROR) << "JAMES RegisterMashServices";
 #if defined(OS_CHROMEOS)
   RegisterMashService(services, mash::quick_launch::mojom::kServiceName,
                       &CreateQuickLaunch);
-  RegisterMashService(services, ash::mojom::kServiceName, &CreateAshService);
+  // RegisterMashService(services, ash::mojom::kServiceName, &CreateAshService);
+  RegisterMashService(services, "ash_and_ui_service", &CreateAshAndUiService);
   RegisterMashService(services, "accessibility_autoclick",
                       &CreateAccessibilityAutoclick);
   RegisterMashService(services, "touch_hud", &CreateTouchHud);
+#else
+  RegisterMashService(services, ui::mojom::kServiceName, &CreateUiService);
 #endif
 #if defined(OS_LINUX) && !defined(OS_ANDROID)
   RegisterMashService(services, font_service::mojom::kServiceName,

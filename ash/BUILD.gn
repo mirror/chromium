@@ -1931,6 +1931,25 @@ service_manifest("manifest") {
   source = "manifest.json"
 }
 
+#JAMES rename to mustash?
+# "Mustash" is mojo ui service + ash service in one process.
+service_manifest("ash_and_ui_manifest") {
+  name = "ash_and_ui"
+  source = "//ash/ash_and_ui_manifest.json"
+  packaged_services = [
+    ":manifest",
+    "//services/ui:manifest",
+  ]
+}
+
+# Needed?
+#catalog("mustash_catalog") {
+#  embedded_services = [
+#    ":manifest",
+#    "//services/ui:manifest",
+#  ]
+#}
+
 # TODO: Load locale-specific strings.
 # TODO: Avoid duplication between Mash and Chrome pak files: crbug.com/628715.
 repack("ash_service_resources") {

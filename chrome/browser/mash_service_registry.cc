@@ -28,8 +28,11 @@ struct Service {
 
 constexpr Service kServices[] = {
     {mash::quick_launch::mojom::kServiceName, "Quick Launch"},
+    //JAMES move into non-chromeos?
     {ui::mojom::kServiceName, "UI Service"},
 #if defined(OS_CHROMEOS)
+    //JAMES ash_and_ui here?
+    {"ash_and_ui", "Combined Ash and UI Services"},
     {ash::mojom::kServiceName, "Ash Window Manager and Shell"},
     {"accessibility_autoclick", "Ash Accessibility Autoclick"},
     {"touch_hud", "Ash Touch Hud"},
@@ -64,6 +67,7 @@ bool ShouldTerminateOnServiceQuit(const std::string& name) {
   if (name == ui::mojom::kServiceName)
     return true;
 #if defined(OS_CHROMEOS)
+  //JAMES ash_and_ui here?
   if (name == ash::mojom::kServiceName)
     return true;
 #endif

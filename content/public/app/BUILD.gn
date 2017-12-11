@@ -194,6 +194,7 @@ service_manifest("packaged_services_manifest") {
     "//services/viz:manifest",
   ]
 
+  # JAMES add a layering violation and depend on ash manifests?
   if (enable_mus) {
     packaged_services += [ "//services/ui:manifest" ]
   }

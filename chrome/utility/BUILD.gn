@@ -167,6 +167,10 @@ static_library("utility") {
   }
 
   if (is_chromeos) {
+    sources += [
+      "ash_and_ui_service.cc",
+      "ash_and_ui_service.h",
+    ]
     deps += [
       "//ash",
       "//ash/autoclick/mus:lib",
