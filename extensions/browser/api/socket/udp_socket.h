@@ -12,6 +12,7 @@
 
 #include "extensions/browser/api/socket/socket.h"
 #include "net/socket/udp_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace extensions {
 
