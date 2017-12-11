@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "1e0a24f7_86720c88",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3797,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T22:57:35Z",
+      "side": 1,
+      "message": "nit: remove extra blank line?",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc73ac1_5a00b6b0",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T22:57:35Z",
+      "side": 1,
+      "message": "nit: there\u0027s a blank line here too - might be worth dropping it so that there isn\u0027t a whitespace change in the git log for this file. (But fine if you want to keep it if adding it was intentional)",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39ed8c0_26714979",
+        "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T22:57:35Z",
+      "side": 1,
+      "message": "Perhaps add something like,\n\n // This allows GetParent() to walk up the aura::Window hierarchy when it spans multiple window tree hosts, each with their own HWND.",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54626ecc_f4d0dbfc",
+        "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T22:57:35Z",
+      "side": 1,
+      "message": "Would it be better to use wm::TransientWindowManager::GetIfExists here? We\u0027d need to check for null, but I don\u0027t think we should be creating any managers since we\u0027re not adding any new relationships.",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e98a7cb9_761ded07",
         "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
         "patchSetId": 3
@@ -31,6 +99,41 @@
       "side": 1,
       "message": "OK, I checked with sky@ and this is fine. The issue is that\nwith Aero Glass disabled, something like a bubble will be a\nNativeWidgetAura and not a DesktopNativeWidgetAura, so the\nonly way to get the parent window in that case is with\nTransientWindowManager.\n\nSo in this code we just check TransientWindowManager to see\nif it has a parent. If not, we call back on aura::Window::parent.\n\nThe main issue here is that for accessibility we need\nto be able to walk up to the window that has the HWND.",
       "parentUuid": "e98a7cb9_761ded07",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd5b0e9_a02aecb2",
+        "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T22:57:35Z",
+      "side": 1,
+      "message": "Thanks for checking! Yep - that makes sense.",
+      "parentUuid": "57b1be38_b8babd11",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d3c12d_faab7dc6",
+        "filename": "ui/views/accessibility/native_view_accessibility_win_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T22:57:35Z",
+      "side": 1,
+      "message": "testing::Bool() ?",
       "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
