@@ -18,6 +18,8 @@
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "mojo/edk/embedder/embedder.h"
+#include "mojo/public/cpp/bindings/message.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
 
 namespace content {
@@ -38,6 +40,31 @@ IconDefinition CreateIcon(std::string src,
   return icon;
 }
 
+class BadMessageObserver {
+ public:
+  BadMessageObserver()
+      : dummy_message_(0, 0, 0, 0, nullptr), context_(&dummy_message_) {
+    mojo::edk::SetDefaultProcessErrorCallback(base::BindRepeating(
+        &BadMessageObserver::ReportBadMessage, base::Unretained(this)));
+  }
+
+  ~BadMessageObserver() {
+    mojo::edk::SetDefaultProcessErrorCallback(
+        mojo::edk::ProcessErrorCallback());
+  }
+
+  const std::string& last_error() const { return last_error_; }
+
+  void ReportBadMessage(const std::string& error) { last_error_ = error; }
+
+ private:
+  mojo::Message dummy_message_;
+  mojo::internal::MessageDispatchContext context_;
+  std::string last_error_;
+
+  DISALLOW_COPY_AND_ASSIGN(BadMessageObserver);
+};
+
 class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
  public:
   BackgroundFetchServiceTest() = default;
@@ -56,8 +83,7 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
 
     base::RunLoop run_loop;
     service_->Fetch(
-        service_worker_registration_id, origin(), developer_id, requests,
-        options,
+        service_worker_registration_id, developer_id, requests, options,
         base::BindOnce(&BackgroundFetchServiceTest::DidGetRegistration,
                        base::Unretained(this), run_loop.QuitClosure(),
                        out_error, out_registration));
@@ -94,8 +120,7 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
     DCHECK(out_error);
 
     base::RunLoop run_loop;
-    service_->Abort(service_worker_registration_id, origin(), developer_id,
-                    unique_id,
+    service_->Abort(service_worker_registration_id, developer_id, unique_id,
                     base::BindOnce(&BackgroundFetchServiceTest::DidGetError,
                                    base::Unretained(this),
                                    run_loop.QuitClosure(), out_error));
@@ -113,7 +138,7 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
 
     base::RunLoop run_loop;
     service_->GetRegistration(
-        service_worker_registration_id, origin(), developer_id,
+        service_worker_registration_id, developer_id,
         base::BindOnce(&BackgroundFetchServiceTest::DidGetRegistration,
                        base::Unretained(this), run_loop.QuitClosure(),
                        out_error, out_registration));
@@ -123,7 +148,6 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
 
   // Synchronous wrapper for BackgroundFetchServiceImpl::GetDeveloperIds().
   void GetDeveloperIds(int64_t service_worker_registration_id,
-                       const url::Origin& origin,
                        blink::mojom::BackgroundFetchError* out_error,
                        std::vector<std::string>* out_developer_ids) {
     DCHECK(out_error);
@@ -131,7 +155,7 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
 
     base::RunLoop run_loop;
     service_->GetDeveloperIds(
-        service_worker_registration_id, origin,
+        service_worker_registration_id,
         base::BindOnce(&BackgroundFetchServiceTest::DidGetDeveloperIds,
                        base::Unretained(this), run_loop.QuitClosure(),
                        out_error, out_developer_ids));
@@ -147,8 +171,7 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
         browser_context(),
         base::WrapRefCounted(embedded_worker_test_helper()->context_wrapper()));
 
-    service_ = std::make_unique<BackgroundFetchServiceImpl>(
-        0 /* render_process_id */, context_);
+    CreateService(origin());
   }
 
   void TearDown() override {
@@ -160,6 +183,10 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
 
     // Give pending shutdown operations a chance to finish.
     base::RunLoop().RunUntilIdle();
+  }
+
+  void CreateService(const url::Origin& origin) {
+    service_ = std::make_unique<BackgroundFetchServiceImpl>(context_, origin);
   }
 
  private:
@@ -210,6 +237,7 @@ TEST_F(BackgroundFetchServiceTest, FetchInvalidArguments) {
 
   // The |developer_id| must be a non-empty string.
   {
+    BadMessageObserver bad_message_observer;
     std::vector<ServiceWorkerFetchRequest> requests;
     requests.emplace_back();  // empty, but valid
 
@@ -219,10 +247,13 @@ TEST_F(BackgroundFetchServiceTest, FetchInvalidArguments) {
     Fetch(42 /* service_worker_registration_id */, "" /* developer_id */,
           requests, options, &error, &registration);
     ASSERT_EQ(error, blink::mojom::BackgroundFetchError::INVALID_ARGUMENT);
+    EXPECT_EQ("Invalid developer_id", bad_message_observer.last_error());
   }
 
   // At least a single ServiceWorkerFetchRequest must be given.
   {
+    BadMessageObserver bad_message_observer;
+
     std::vector<ServiceWorkerFetchRequest> requests;
     // |requests| has deliberately been left empty.
 
@@ -232,6 +263,7 @@ TEST_F(BackgroundFetchServiceTest, FetchInvalidArguments) {
     Fetch(42 /* service_worker_registration_id */, kExampleDeveloperId,
           requests, options, &error, &registration);
     ASSERT_EQ(error, blink::mojom::BackgroundFetchError::INVALID_ARGUMENT);
+    EXPECT_EQ("Invalid requests", bad_message_observer.last_error());
   }
 }
 
@@ -598,10 +630,12 @@ TEST_F(BackgroundFetchServiceTest, AbortInvalidDeveloperIdArgument) {
   // return INVALID_ARGUMENT when an invalid |developer_id| is sent over the
   // Mojo channel.
 
+  BadMessageObserver bad_message_observer;
+
   blink::mojom::BackgroundFetchError error;
   Abort(42 /* service_worker_registration_id */, "" /* developer_id */,
         kExampleUniqueId, &error);
-  ASSERT_EQ(error, blink::mojom::BackgroundFetchError::INVALID_ARGUMENT);
+  EXPECT_EQ("Invalid developer_id", bad_message_observer.last_error());
 }
 
 TEST_F(BackgroundFetchServiceTest, AbortInvalidUniqueIdArgument) {
@@ -609,10 +643,13 @@ TEST_F(BackgroundFetchServiceTest, AbortInvalidUniqueIdArgument) {
   // return INVALID_ARGUMENT when an invalid |unique_id| is sent over the Mojo
   // channel.
 
+  BadMessageObserver bad_message_observer;
+
   blink::mojom::BackgroundFetchError error;
   Abort(42 /* service_worker_registration_id */, kExampleDeveloperId,
         "not a GUID" /* unique_id */, &error);
   ASSERT_EQ(error, blink::mojom::BackgroundFetchError::INVALID_ARGUMENT);
+  EXPECT_EQ("Invalid unique_id", bad_message_observer.last_error());
 }
 
 TEST_F(BackgroundFetchServiceTest, AbortUnknownUniqueId) {
@@ -805,8 +842,7 @@ TEST_F(BackgroundFetchServiceTest, GetDeveloperIds) {
     blink::mojom::BackgroundFetchError error;
     std::vector<std::string> developer_ids;
 
-    GetDeveloperIds(service_worker_registration_id, origin(), &error,
-                    &developer_ids);
+    GetDeveloperIds(service_worker_registration_id, &error, &developer_ids);
     ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
 
     ASSERT_EQ(developer_ids.size(), 0u);
@@ -827,8 +863,7 @@ TEST_F(BackgroundFetchServiceTest, GetDeveloperIds) {
     blink::mojom::BackgroundFetchError error;
     std::vector<std::string> developer_ids;
 
-    GetDeveloperIds(service_worker_registration_id, origin(), &error,
-                    &developer_ids);
+    GetDeveloperIds(service_worker_registration_id, &error, &developer_ids);
     ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
 
     ASSERT_EQ(developer_ids.size(), 1u);
@@ -850,8 +885,7 @@ TEST_F(BackgroundFetchServiceTest, GetDeveloperIds) {
     blink::mojom::BackgroundFetchError error;
     std::vector<std::string> developer_ids;
 
-    GetDeveloperIds(service_worker_registration_id, origin(), &error,
-                    &developer_ids);
+    GetDeveloperIds(service_worker_registration_id, &error, &developer_ids);
     ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
 
     ASSERT_EQ(developer_ids.size(), 2u);
@@ -863,20 +897,6 @@ TEST_F(BackgroundFetchServiceTest, GetDeveloperIds) {
                 developer_ids[1] == kAlternativeDeveloperId);
   }
 
-  // Verify that using the wrong origin does not return developer ids even if
-  // the service worker registration is correct.
-  {
-    blink::mojom::BackgroundFetchError error;
-    std::vector<std::string> developer_ids;
-
-    GetDeveloperIds(service_worker_registration_id,
-                    url::Origin::Create(GURL("https://www.bogus-origin.com")),
-                    &error, &developer_ids);
-    ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
-
-    ASSERT_EQ(developer_ids.size(), 0u);
-  }
-
   // Verify that using the wrong service worker id does not return developer ids
   // even if the origin is correct.
   {
@@ -886,12 +906,28 @@ TEST_F(BackgroundFetchServiceTest, GetDeveloperIds) {
     int64_t bogus_service_worker_registration_id =
         service_worker_registration_id + 1;
 
-    GetDeveloperIds(bogus_service_worker_registration_id, origin(), &error,
+    GetDeveloperIds(bogus_service_worker_registration_id, &error,
                     &developer_ids);
     ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
 
     ASSERT_EQ(developer_ids.size(), 0u);
   }
+
+  // Verify that using the wrong origin does not return developer ids even if
+  // the service worker registration is correct.
+  {
+    CreateService(url::Origin::Create(GURL("https://www.bogus-origin.com")));
+    blink::mojom::BackgroundFetchError error;
+    std::vector<std::string> developer_ids;
+
+    GetDeveloperIds(service_worker_registration_id, &error, &developer_ids);
+    ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+
+    ASSERT_EQ(developer_ids.size(), 0u);
+  }
+  // Note: The previous test case replaces the BackgroundFetchService under test
+  // with one with a different origin. Any further interaction with it will use
+  // that BackgroundFetchService.
 }
 
 }  // namespace
