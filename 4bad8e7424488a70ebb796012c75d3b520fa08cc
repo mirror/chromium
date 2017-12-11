@@ -142,6 +142,30 @@
       "revId": "4bad8e7424488a70ebb796012c75d3b520fa08cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179e0988_c43d9320",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:11:43Z",
+      "side": 1,
+      "message": "I\u0027m concerned that strictly following metrics preserving process here is creating more work for little gain. If we were to preserve the behavior, I\u0027ll add the \"either URL or virtual URL\" comparison, file a bug, and add a TODO to correct this metric. Then for someone to fix the bug, they need to add another metric so we can track both old and new behaviors, wait a release, and cut over to new metric. I suspect that work will not be prioritized and we\u0027ll end up with just a little bit more code and an extra bug.\n\nGiven that the CL that introduced the bug didn\u0027t trip up any metric monitoring from release to release, I question how important it really was to be able to compare this metric from release to release.\n\nThat said, I\u0027m not a Bling owner, so I\u0027ll acquiesce if you feel strongly about this.",
+      "parentUuid": "d5ed3a0d_677df2ff",
+      "range": {
+        "startLine": 373,
+        "startChar": 25,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "4bad8e7424488a70ebb796012c75d3b520fa08cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
