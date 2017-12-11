@@ -315,6 +315,24 @@
       "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20468a47_2540c7a1",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-11T22:53:54Z",
+      "side": 1,
+      "message": "It actually refers to if and else (not on ChromeOS and on ChromeOS) both.\n\nI guess the indentation remains 0 spaces then in this case, if I dont move it inside the ifdef? (I tried 2 spaces but git cl format reverted it to this).",
+      "parentUuid": "91cc9264_25e26e3c",
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
