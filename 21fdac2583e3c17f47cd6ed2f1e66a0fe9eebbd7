@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c91437_1d2f67ca",
+        "filename": "components/arc/arc_browser_context_keyed_service_factory_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-11T10:19:54Z",
+      "side": 1,
+      "message": "Could you add document that this will bypass the check if the given context is primary user or not.\nAlso, probably it\u0027s better to note that ArcServiceManager needs to instantiated in advance, as it is done in the production.",
+      "revId": "21fdac2583e3c17f47cd6ed2f1e66a0fe9eebbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
