@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a05ad4cf_b0403be5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-11T18:10:16Z",
+      "side": 1,
+      "message": "crbug.com/793857",
+      "parentUuid": "f2a61ef6_c13a9bb5",
+      "range": {
+        "startLine": 236,
+        "startChar": 16,
+        "endLine": 236,
+        "endChar": 55
+      },
+      "revId": "66fb102ec035e10aad7bbe1a51e5ac7f71e02af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb5939f2_1089b19a",
         "filename": "chrome/test/data/android/webvr_instrumentation/html/test_window_raf_stops_firing_while_presenting.html",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "66fb102ec035e10aad7bbe1a51e5ac7f71e02af7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74dd4041_c0b64372",
+        "filename": "chrome/test/data/android/webvr_instrumentation/html/test_window_raf_stops_firing_while_presenting.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-11T18:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb5939f2_1089b19a",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "66fb102ec035e10aad7bbe1a51e5ac7f71e02af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
