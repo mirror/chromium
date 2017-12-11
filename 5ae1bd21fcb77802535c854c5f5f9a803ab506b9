@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "829e075a_56508201",
+        "filename": "content/browser/media/capture/cursor_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-11T20:25:04Z",
+      "side": 1,
+      "message": "nit: if (mouse_move_behavior_ \u003d\u003d RECENTLY_MOVED_OR_CLICKED || mouse_move_behavior_ \u003d\u003d STARTING_TO_MOVE)\nor maybe the logic can depends on whether the timer has started, i.e.\nif (mouse_activity_ended_timer_.IsRunning()) {\n  mouse_activity_ended_timer_.Reset();\n} else {\n  mouse_activity_ended_timer_.Start(...);\n}",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 56
+      },
+      "revId": "5ae1bd21fcb77802535c854c5f5f9a803ab506b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e850f33_cfc389ff",
+        "filename": "content/browser/media/capture/cursor_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-11T20:25:04Z",
+      "side": 1,
+      "message": "Does the |mouse_activity_ended_timer_| need to be stopped when this is called?",
+      "range": {
+        "startLine": 263,
+        "startChar": 21,
+        "endLine": 263,
+        "endChar": 41
+      },
+      "revId": "5ae1bd21fcb77802535c854c5f5f9a803ab506b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33ebc44_7d3e6ca5",
+        "filename": "content/browser/media/capture/cursor_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-11T20:25:04Z",
+      "side": 1,
+      "message": "nit: Is this |frame|?",
+      "range": {
+        "startLine": 50,
+        "startChar": 23,
+        "endLine": 50,
+        "endChar": 31
+      },
+      "revId": "5ae1bd21fcb77802535c854c5f5f9a803ab506b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132ce3b9_796f42ed",
+        "filename": "content/browser/media/capture/cursor_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-11T20:25:04Z",
+      "side": 1,
+      "message": "Is the return value currently only used by unit tests?",
+      "range": {
+        "startLine": 51,
+        "startChar": 1,
+        "endLine": 51,
+        "endChar": 25
+      },
+      "revId": "5ae1bd21fcb77802535c854c5f5f9a803ab506b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d83985_bef1fb8f",
+        "filename": "content/browser/media/capture/cursor_renderer_aura.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-11T20:25:04Z",
+      "side": 1,
+      "message": "nit: CursorRenderer",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "5ae1bd21fcb77802535c854c5f5f9a803ab506b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa18c5e3_1401d689",
+        "filename": "content/browser/media/capture/cursor_renderer_aura_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-12-11T20:25:04Z",
+      "side": 1,
+      "message": "This might not be needed if it is done in the OnMouseHasGoneIdle().",
+      "range": {
+        "startLine": 108,
+        "startChar": 3,
+        "endLine": 108,
+        "endChar": 57
+      },
+      "revId": "5ae1bd21fcb77802535c854c5f5f9a803ab506b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
