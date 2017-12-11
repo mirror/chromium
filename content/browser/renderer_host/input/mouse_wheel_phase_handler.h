@@ -15,7 +15,16 @@ class RenderWidgetHostViewBase;
 
 // The duration after which a synthetic wheel with zero deltas and
 // phase = |kPhaseEnded| will be sent after the last wheel event.
-const int64_t kDefaultMouseWheelLatchingTransactionMs = 100;
+const int64_t kDefaultMouseWheelLatchingTransactionMs = 500;
+
+// Maximum time that the phase handler waits for arrival of a wheel event with
+// momentum_phase = kPhaseBegan before sending its previous wheel event with
+// phase = kPhaseEnded.
+const int64_t kMaximumTimeBetweenPhaseEndedAndMomentumPhaseBeganMs = 100;
+
+// Maximum possible difference between coordinates of two mouse wheels event in
+// a scroll sequence.
+const double kWheelLatchingSlopRegion = 10.0;
 
 // On ChromeOS wheel events don't have phase information; However, whenever the
 // user puts down or lifts their fingers a GFC or GFS is received.
@@ -51,13 +60,16 @@ class MouseWheelPhaseHandler {
  private:
   void SendSyntheticWheelEventWithPhaseEnded(
       bool should_route_event);
-  void ScheduleMouseWheelEndDispatching(bool should_route_event);
+  void ScheduleMouseWheelEndDispatching(bool should_route_event,
+                                        const int64_t timeout);
+  bool IsWithinSlopRegion(blink::WebMouseWheelEvent wheel_event);
 
   RenderWidgetHostImpl* const host_;
   RenderWidgetHostViewBase* const host_view_;
   base::OneShotTimer mouse_wheel_end_dispatch_timer_;
   blink::WebMouseWheelEvent last_mouse_wheel_event_;
   ScrollPhaseState scroll_phase_state_;
+  gfx::Vector2dF first_wheel_location_;
 
   DISALLOW_COPY_AND_ASSIGN(MouseWheelPhaseHandler);
 };

@@ -28,7 +28,9 @@ void MouseWheelPhaseHandler::AddPhaseIfNeededAndScheduleEndEvent(
     if (mouse_wheel_event.phase == blink::WebMouseWheelEvent::kPhaseEnded) {
       // Don't send the wheel end event immediately, start a timer instead to
       // see whether momentum phase of the scrolling starts or not.
-      ScheduleMouseWheelEndDispatching(should_route_event);
+      ScheduleMouseWheelEndDispatching(
+          should_route_event,
+          kMaximumTimeBetweenPhaseEndedAndMomentumPhaseBeganMs);
     } else if (mouse_wheel_event.phase ==
                blink::WebMouseWheelEvent::kPhaseBegan) {
       // A new scrolling sequence has started, send the pending wheel end
@@ -47,14 +49,30 @@ void MouseWheelPhaseHandler::AddPhaseIfNeededAndScheduleEndEvent(
         mouse_wheel_event.has_synthetic_phase = true;
         if (!mouse_wheel_end_dispatch_timer_.IsRunning()) {
           mouse_wheel_event.phase = blink::WebMouseWheelEvent::kPhaseBegan;
-          ScheduleMouseWheelEndDispatching(should_route_event);
-        } else {  // mouse_wheel_end_dispatch_timer_.IsRunning()
+          first_wheel_location_ =
+              gfx::Vector2dF(mouse_wheel_event.PositionInWidget().x,
+                             mouse_wheel_event.PositionInWidget().y);
+          ScheduleMouseWheelEndDispatching(
+              should_route_event, kDefaultMouseWheelLatchingTransactionMs);
+        } else if (IsWithinSlopRegion(mouse_wheel_event)) {
           bool non_zero_delta =
               mouse_wheel_event.delta_x || mouse_wheel_event.delta_y;
           mouse_wheel_event.phase =
               non_zero_delta ? blink::WebMouseWheelEvent::kPhaseChanged
                              : blink::WebMouseWheelEvent::kPhaseStationary;
           mouse_wheel_end_dispatch_timer_.Reset();
+        } else {
+          // Break the latching when the location difference between the current
+          // and the initial wheel event positions exceeds the maximum allowed
+          // threshold.
+          DispatchPendingWheelEndEvent();
+          DCHECK(!mouse_wheel_end_dispatch_timer_.IsRunning());
+          mouse_wheel_event.phase = blink::WebMouseWheelEvent::kPhaseBegan;
+          first_wheel_location_ =
+              gfx::Vector2dF(mouse_wheel_event.PositionInWidget().x,
+                             mouse_wheel_event.PositionInWidget().y);
+          ScheduleMouseWheelEndDispatching(
+              should_route_event, kDefaultMouseWheelLatchingTransactionMs);
         }
         break;
       }
@@ -129,13 +147,20 @@ void MouseWheelPhaseHandler::SendSyntheticWheelEventWithPhaseEnded(
 }
 
 void MouseWheelPhaseHandler::ScheduleMouseWheelEndDispatching(
-    bool should_route_event) {
+    bool should_route_event,
+    const int64_t timeout) {
   mouse_wheel_end_dispatch_timer_.Start(
-      FROM_HERE,
-      base::TimeDelta::FromMilliseconds(
-          kDefaultMouseWheelLatchingTransactionMs),
+      FROM_HERE, base::TimeDelta::FromMilliseconds(timeout),
       base::Bind(&MouseWheelPhaseHandler::SendSyntheticWheelEventWithPhaseEnded,
                  base::Unretained(this), should_route_event));
+}
+
+bool MouseWheelPhaseHandler::IsWithinSlopRegion(
+    blink::WebMouseWheelEvent wheel_event) {
+  gfx::Vector2dF current_wheel_location_(wheel_event.PositionInWidget().x,
+                                         wheel_event.PositionInWidget().y);
+  return (current_wheel_location_ - first_wheel_location_).LengthSquared() <
+         kWheelLatchingSlopRegion * kWheelLatchingSlopRegion;
 }
 
 }  // namespace content
