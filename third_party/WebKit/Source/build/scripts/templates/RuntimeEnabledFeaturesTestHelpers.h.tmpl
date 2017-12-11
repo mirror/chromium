@@ -15,8 +15,9 @@ template <bool (&getter)(), void (&setter)(bool)>
 class ScopedRuntimeEnabledFeatureForTest {
  public:
   ScopedRuntimeEnabledFeatureForTest(bool enabled)
-      : enabled_(enabled), original_(getter()) {
+      : original_(getter()) {
     setter(enabled);
+    enabled_ = getter();
   }
 
   ~ScopedRuntimeEnabledFeatureForTest() {
