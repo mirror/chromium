@@ -534,6 +534,10 @@ void CryptohomeAuthenticator::AuthenticateToLogin(
 
 void CryptohomeAuthenticator::CompleteLogin(content::BrowserContext* context,
                                             const UserContext& user_context) {
+  LOG(ERROR) << "CryptohomeAuthenticator::CompleteLogin";
+  LOG(ERROR) << "user_context: plain text password :"
+             << user_context.GetKey()->GetSecret()
+             << "user email: " << user_context.GetAccountId().GetUserEmail();
   DCHECK(user_context.GetUserType() == user_manager::USER_TYPE_REGULAR ||
          user_context.GetUserType() == user_manager::USER_TYPE_CHILD ||
          user_context.GetUserType() ==

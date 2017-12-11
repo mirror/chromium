@@ -135,6 +135,10 @@ void LoginPerformer::NotifyWhitelistCheckFailure() {
 
 void LoginPerformer::PerformLogin(const UserContext& user_context,
                                   AuthorizationMode auth_mode) {
+  LOG(ERROR) << "LoginPerformer::PerformLogin";
+  LOG(ERROR) << "user_context: plain text password :"
+             << user_context.GetKey()->GetSecret()
+             << "user email: " << user_context.GetAccountId().GetUserEmail();
   auth_mode_ = auth_mode;
   user_context_ = user_context;
 
@@ -149,6 +153,10 @@ void LoginPerformer::PerformLogin(const UserContext& user_context,
 
 void LoginPerformer::DoPerformLogin(const UserContext& user_context,
                                     AuthorizationMode auth_mode) {
+  LOG(ERROR) << "LoginPerformer::DoPerformLogin";
+  LOG(ERROR) << "user_context: plain text password :"
+             << user_context.GetKey()->GetSecret()
+             << "user email: " << user_context.GetAccountId().GetUserEmail();
   bool wildcard_match = false;
 
   const AccountId& account_id = user_context.GetAccountId();

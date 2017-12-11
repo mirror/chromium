@@ -24,7 +24,7 @@
 #include "components/password_manager/core/browser/password_syncable_service.h"
 #include "components/password_manager/core/browser/statistics_table.h"
 
-#if !defined(OS_ANDROID) && !defined(OS_IOS) && !defined(OS_CHROMEOS)
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
 #include "components/password_manager/core/browser/password_store_signin_notifier.h"
 #endif
 
@@ -274,7 +274,7 @@ void PasswordStore::ReportMetrics(const std::string& sync_username,
   }
 
 #if defined(OS_WIN) || (defined(OS_MACOSX) && !defined(OS_IOS)) || \
-    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+    defined(OS_LINUX) || defined(OS_CHROMEOS)
   if (!sync_username.empty())
     hash_password_manager_.ReportIsSyncPasswordHashSavedMetric();
 #endif

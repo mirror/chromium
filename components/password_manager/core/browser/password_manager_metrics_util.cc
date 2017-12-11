@@ -213,7 +213,7 @@ void LogSubmittedFormFrame(SubmittedFormFrame frame) {
 }
 
 #if defined(OS_WIN) || (defined(OS_MACOSX) && !defined(OS_IOS)) || \
-    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+    defined(OS_LINUX) || defined(OS_CHROMEOS)
 void LogSyncPasswordHashChange(SyncPasswordHashChange event) {
   UMA_HISTOGRAM_ENUMERATION(
       "PasswordManager.SyncPasswordHashChange", event,

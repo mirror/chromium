@@ -136,6 +136,9 @@
 #include "chrome/browser/profiles/profile_statistics_factory.h"
 #endif
 
+#include "components/password_manager/core/common/password_manager_pref_names.h"
+#include "components/prefs/pref_service.h"
+
 using base::UserMetricsAction;
 using content::BrowserThread;
 
@@ -539,6 +542,7 @@ void ProfileManager::CreateProfileAsync(
     const base::string16& name,
     const std::string& icon_url,
     const std::string& supervised_user_id) {
+  LOG(ERROR) << "ProfileManager::CreateProfileAsync";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   TRACE_EVENT1("browser,startup",
                "ProfileManager::CreateProfileAsync",
@@ -576,7 +580,7 @@ void ProfileManager::CreateProfileAsync(
 
     ProfileMetrics::UpdateReportedProfilesStatistics(this);
   }
-
+  LOG(ERROR) << "Profile name: " << info->profile.get()->GetDebugName();
   // Call or enqueue the callback.
   if (!callback.is_null()) {
     if (iter != profiles_info_.end() && info->created) {

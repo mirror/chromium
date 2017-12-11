@@ -228,7 +228,7 @@ enum class CredentialSourceType {
 };
 
 #if defined(OS_WIN) || (defined(OS_MACOSX) && !defined(OS_IOS)) || \
-    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+    defined(OS_LINUX) || defined(OS_CHROMEOS)
 enum class SyncPasswordHashChange {
   SAVED_ON_CHROME_SIGNIN,
   SAVED_IN_CONTENT_AREA,
@@ -362,7 +362,7 @@ void LogPasswordAcceptedSaveUpdateSubmissionIndicatorEvent(
 void LogSubmittedFormFrame(SubmittedFormFrame frame);
 
 #if defined(OS_WIN) || (defined(OS_MACOSX) && !defined(OS_IOS)) || \
-    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+    defined(OS_LINUX) || defined(OS_CHROMEOS)
 // Log a save sync password change event.
 void LogSyncPasswordHashChange(SyncPasswordHashChange event);
 

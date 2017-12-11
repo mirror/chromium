@@ -527,6 +527,7 @@ void ChromeUserManagerImpl::Observe(
       break;
     }
     case chrome::NOTIFICATION_PROFILE_CREATED: {
+      LOG(ERROR) << "NOTIFICATION_PROFILE_CREATED";
       Profile* profile = content::Source<Profile>(source).ptr();
       user_manager::User* user =
           ProfileHelper::Get()->GetUserByProfile(profile);
