@@ -214,6 +214,29 @@
     },
     {
       "key": {
+        "uuid": "bda456b0_9009d622",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-12-11T16:09:29Z",
+      "side": 1,
+      "message": "Note: in this case, it is also possible to generate a random string and store it in an attribute of the element.\nPros: faster\nCons: Modifying the DOM may have consequences.",
+      "range": {
+        "startLine": 516,
+        "startChar": 8,
+        "endLine": 516,
+        "endChar": 16
+      },
+      "revId": "733e06b6eb0fc8eb1e1715e4995f59d33c84adb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fa3ed56_7dda4290",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 9
