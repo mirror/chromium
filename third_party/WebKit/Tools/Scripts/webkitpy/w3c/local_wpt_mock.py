@@ -37,6 +37,10 @@ class MockLocalWPT(object):
     def is_commit_affecting_directory(self, _, __):
         return False
 
+    # This is a dummy stub intended to be replaced in tests.
+    def commits_in_range(self, _, __):
+        return []
+
     def commit_subject(self, _):
         return 'Fake subject'
 
