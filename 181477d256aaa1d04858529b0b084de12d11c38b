@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f61f1db5_3b8f0f2a",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3661,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-12-11T15:50:23Z",
+      "side": 1,
+      "message": "Are you planning to have an experiment with this name ?",
+      "range": {
+        "startLine": 3661,
+        "startChar": 29,
+        "endLine": 3661,
+        "endChar": 38
+      },
+      "revId": "181477d256aaa1d04858529b0b084de12d11c38b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
