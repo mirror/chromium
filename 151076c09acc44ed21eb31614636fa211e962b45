@@ -22,6 +22,29 @@
       "revId": "151076c09acc44ed21eb31614636fa211e962b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81af4d1_644e4bff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T21:09:24Z",
+      "side": 0,
+      "message": "I think the hasTab() check has existed since this class was first upstreamed:\nhttps://codereview.chromium.org/1141283003\n\nAlso, don\u0027t click on that link.  It will never load (to see the state of the file originally):\ngit show 7497635a7cfda -- chrome/android/java_staging/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java\n\nIt might not be needed anymore, but just to say that I don\u0027t think this was added as part of ChromeHome.",
+      "range": {
+        "startLine": 1128,
+        "startChar": 50,
+        "endLine": 1128,
+        "endChar": 79
+      },
+      "revId": "151076c09acc44ed21eb31614636fa211e962b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
