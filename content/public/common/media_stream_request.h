@@ -128,15 +128,13 @@ struct CONTENT_EXPORT MediaStreamDevice {
   // audio (i.e. IsAudioInputMediaType returns true).
 
   // Contains the device properties of the capture device.
-  media::AudioParameters input =
-      media::AudioParameters::UnavailableDeviceParams();
+  base::Optional<media::AudioParameters> input;
 
   // If the capture device has an associated output device (e.g. headphones),
   // this will contain the properties for the output device.  If no such device
   // exists (e.g. webcam w/mic), then the value of this member will be all
   // zeros.
-  media::AudioParameters matched_output =
-      media::AudioParameters::UnavailableDeviceParams();
+  base::Optional<media::AudioParameters> matched_output;
 
   // Id for this capture session. Unique for all sessions of the same type.
   int session_id = kNoId;

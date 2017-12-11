@@ -96,13 +96,14 @@ void AudioOutputAuthorizationHandler::RequestDeviceAuthorization(
     const MediaStreamDevice* device =
         media_stream_manager_->audio_input_device_manager()
             ->GetOpenedDeviceById(session_id);
-    if (device && !device->matched_output_device_id.empty()) {
+    if (device && device->matched_output &&
+        !device->matched_output_device_id.empty()) {
       media::AudioParameters params(
           media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
-          device->matched_output.channel_layout(),
-          device->matched_output.sample_rate(), 16,
-          device->matched_output.frames_per_buffer());
-      params.set_effects(device->matched_output.effects());
+          device->matched_output->channel_layout(),
+          device->matched_output->sample_rate(), 16,
+          device->matched_output->frames_per_buffer());
+      params.set_effects(device->matched_output->effects());
 
       // We don't need the origin for authorization in this case, but it's used
       // for hashing the device id before sending it back to the renderer.
@@ -223,14 +224,11 @@ void AudioOutputAuthorizationHandler::DeviceParametersReceived(
     AuthorizationCompletedCallback cb,
     const std::string& id_for_renderer,
     const std::string& raw_device_id,
-    const base::Optional<media::AudioParameters>& params) const {
+    const media::AudioParameters& params) const {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(!raw_device_id.empty());
-  DCHECK(!params || params->IsValid());
-  std::move(cb).Run(
-      media::OUTPUT_DEVICE_STATUS_OK,
-      params.value_or(media::AudioParameters::UnavailableDeviceParams()),
-      raw_device_id, id_for_renderer);
+  std::move(cb).Run(media::OUTPUT_DEVICE_STATUS_OK, params, raw_device_id,
+                    id_for_renderer);
 }
 
 }  // namespace content
