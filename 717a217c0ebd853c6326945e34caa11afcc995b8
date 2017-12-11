@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8047a939_727e1e92",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529020b6_6e6978b6",
+      "range": {
+        "startLine": 59,
+        "startChar": 27,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e6bd07c_9c461dcf",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94397161_8ed2b60b",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e6bd07c_9c461dcf",
+      "range": {
+        "startLine": 126,
+        "startChar": 10,
+        "endLine": 126,
+        "endChar": 34
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "16aba1d4_1a27a897",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "550ca137_d5b7f612",
+      "range": {
+        "startLine": 138,
+        "startChar": 6,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d3a135_dd6e2382",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d5221b_2460ebc4",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84d3a135_dd6e2382",
+      "range": {
+        "startLine": 187,
+        "startChar": 22,
+        "endLine": 187,
+        "endChar": 32
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3f558956_d0c94863",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "DetachElementForTicker requires the ticker being \"attached\". However, we do not need this condition check for RemoveTicker.",
+      "parentUuid": "88c1c726_4a5da153",
+      "range": {
+        "startLine": 190,
+        "startChar": 10,
+        "endLine": 190,
+        "endChar": 42
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2531b938_45691e0a",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 14
@@ -137,6 +257,30 @@
       "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2736efcf_e91f20ee",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "You\u0027re right. It\u0027s erased in RemoveTicker. In addition, to avoid modifying the iterator on the fly, it\u0027s better to keep a list of tickers to be removed and remove them afterwards.\nAdded a test for this.",
+      "parentUuid": "2531b938_45691e0a",
+      "range": {
+        "startLine": 195,
+        "startChar": 6,
+        "endLine": 195,
+        "endChar": 34
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "d588daaa_9d0cf825",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25b81029_251d750a",
+      "range": {
+        "startLine": 261,
+        "startChar": 21,
+        "endLine": 261,
+        "endChar": 30
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11cfd4e9_d9f6f788",
         "filename": "cc/animation/animation_player_unittest.cc",
         "patchSetId": 14
@@ -183,6 +351,30 @@
       "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee670a2_9fd43c65",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11cfd4e9_d9f6f788",
+      "range": {
+        "startLine": 140,
+        "startChar": 18,
+        "endLine": 140,
+        "endChar": 53
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "5a1b2fa2_98c9c8c0",
+        "filename": "cc/animation/element_animations_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a85d941_0f67aa95",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a0df818_aee55843",
         "filename": "cc/animation/single_animation_player.h",
         "patchSetId": 14
@@ -229,6 +445,30 @@
       "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f5d8aa_60d9115e",
+        "filename": "cc/animation/single_animation_player.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a0df818_aee55843",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "a5a119b8_1b1be6e4",
+        "filename": "cc/animation/single_animation_player.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75013305_15dd3b8e",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "892db48d_4cab2eb3",
         "filename": "cc/test/animation_timelines_test_common.cc",
         "patchSetId": 14
@@ -275,6 +539,30 @@
       "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83fe867_531441b6",
+        "filename": "cc/test/animation_timelines_test_common.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "892db48d_4cab2eb3",
+      "range": {
+        "startLine": 415,
+        "startChar": 6,
+        "endLine": 415,
+        "endChar": 30
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "ee0caf2f_bcd202cf",
+        "filename": "cc/test/layer_tree_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ecb665a_f2476939",
+      "range": {
+        "startLine": 347,
+        "startChar": 9,
+        "endLine": 349,
+        "endChar": 38
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9d7b6a0_edc31c19",
         "filename": "cc/test/layer_tree_test.cc",
         "patchSetId": 14
@@ -321,6 +633,30 @@
       "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635212e5_401bb35a",
+        "filename": "cc/test/layer_tree_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9d7b6a0_edc31c19",
+      "range": {
+        "startLine": 835,
+        "startChar": 4,
+        "endLine": 835,
+        "endChar": 19
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "6faa55b6_b8ee6dd3",
+        "filename": "cc/test/layer_tree_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca69d0b9_d747ed17",
+      "range": {
+        "startLine": 839,
+        "startChar": 6,
+        "endLine": 839,
+        "endChar": 31
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "650eda34_142b9d52",
         "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
         "patchSetId": 14
@@ -367,6 +727,30 @@
       "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4064d2d9_61655900",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-12-11T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "650eda34_142b9d52",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
