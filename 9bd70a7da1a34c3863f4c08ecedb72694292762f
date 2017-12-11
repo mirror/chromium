@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "680b2c45_952ac838",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-11T18:29:44Z",
+      "side": 1,
+      "message": "It\u0027s used by FakeAccountManagerDelegate, in addAccountHolderBlocking and removeAccountHolderBlocking.",
+      "parentUuid": "3233b678_fe047786",
+      "range": {
+        "startLine": 11,
+        "startChar": 45,
+        "endLine": 11,
+        "endChar": 66
+      },
+      "revId": "9bd70a7da1a34c3863f4c08ecedb72694292762f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51420e41_ce25040f",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "64b04806_64f18fb5",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-11T18:29:44Z",
+      "side": 1,
+      "message": "Good point. Resetting mPopulateAccountCacheTask is tricky because of multithreaded access, so I\u0027ve just reimplemented waiting for cache population using CountDownLatch. It\u0027s cleaner and doesn\u0027t create any issues with retaining the task instance.",
+      "parentUuid": "51420e41_ce25040f",
+      "range": {
+        "startLine": 65,
+        "startChar": 37,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "9bd70a7da1a34c3863f4c08ecedb72694292762f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "710e3e82_0d6d933d",
         "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-11T17:29:53Z",
       "side": 1,
       "message": "nit: The lint is related to the fact that the task might be going on in the background while the activity died, but it will block it from being GC\u0027ed. Make the task static and use a weak ref to the facade to avoid the warning instead?\n\nAlso, this gets triggered from a broadcast receiver but I couldn\u0027t see where the broadcast receiver gets unregistered. we don\u0027t do it?",
+      "range": {
+        "startLine": 553,
+        "startChar": 19,
+        "endLine": 553,
+        "endChar": 34
+      },
+      "revId": "9bd70a7da1a34c3863f4c08ecedb72694292762f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c759c606_324409d5",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-11T18:29:44Z",
+      "side": 1,
+      "message": "AccountManagerFacade is a singleton and this weak reference will never expire. I totally agree with you that this would be a proper way to resolve this Lint warning, but I think that in this specific case it will just increase complexity. I\u0027ve removed SuppressLint from this CL, because every second method in this class produces this warning anyway (by creating anonymous classes extending AsyncTask). We should probably tackle these warnings in a separate CL.\n\nWe don\u0027t unregister receiver, since it\u0027s lifetime is tied to the lifetime of a singleton.\n\nThis being said, I\u0027m really unhappy with the fact that singletons are so widespread in Chrome codebase. I\u0027d really appreciate ideas on how it can be done differently.",
+      "parentUuid": "710e3e82_0d6d933d",
       "range": {
         "startLine": 553,
         "startChar": 19,
@@ -91,6 +163,30 @@
       "revId": "9bd70a7da1a34c3863f4c08ecedb72694292762f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d850da_2353d90c",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-11T18:29:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d70c302_3ee13344",
+      "range": {
+        "startLine": 554,
+        "startChar": 12,
+        "endLine": 554,
+        "endChar": 17
+      },
+      "revId": "9bd70a7da1a34c3863f4c08ecedb72694292762f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
