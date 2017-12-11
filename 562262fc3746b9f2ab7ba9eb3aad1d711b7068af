@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25e9bf21_3c571f0e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-11T23:03:17Z",
+      "side": 1,
+      "message": "Presubmit checks do not understand vpython specifications and would complain loudly without disabling the two lints here.",
+      "revId": "562262fc3746b9f2ab7ba9eb3aad1d711b7068af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
