@@ -110,6 +110,30 @@
       "revId": "b8ba62d2701d983f461791fc1567d251d260c4c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bebc2798_6fdb199b",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-11T15:23:07Z",
+      "side": 1,
+      "message": "Turns out there\u0027s a publicly available version of this tip:\nhttps://testing.googleblog.com/2014/10/testing-on-toilet-writing-descriptive.html",
+      "parentUuid": "219afe32_1193585c",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 80
+      },
+      "revId": "b8ba62d2701d983f461791fc1567d251d260c4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
