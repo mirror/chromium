@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "892929b3_1cc130ae",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-11T21:16:14Z",
+      "side": 1,
+      "message": "Okay, this sounds fine as long as the histogram is emitted under *exactly* the same times and records exactly the same things.",
+      "parentUuid": "e2101fcf_8176cc50",
+      "revId": "af47a1c1d75f73d0bee9470ea176b1ed6f193ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2db81160_d7d5c2bc",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "similar to the comment above I think, we\u0027re deprecating the offline_page_model_impl and migrating to offline_page_model_taskified.\nI\u0027m making this metric obsolete because the name no longer makes sense (since it\u0027s no longer part of DeletePage) so I\u0027m making the change.",
       "parentUuid": "2db81160_d7d5c2bc",
+      "revId": "af47a1c1d75f73d0bee9470ea176b1ed6f193ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c640de7_7ec15ce6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 54043,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-11T21:16:14Z",
+      "side": 1,
+      "message": "I think when you actually change the code to stop emitting this old one (to stop using the old code path), in that changelist you should mark this as obsolete.  It\u0027s not obsolete until then.",
+      "parentUuid": "6fac39e4_b15a4c62",
       "revId": "af47a1c1d75f73d0bee9470ea176b1ed6f193ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
