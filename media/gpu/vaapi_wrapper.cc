@@ -37,6 +37,11 @@
 #include "ui/ozone/public/surface_factory_ozone.h"
 #endif  // USE_X11
 
+#undef DLOG
+#define DLOG LOG
+#undef DVLOG
+#define DVLOG VLOG
+
 using media_gpu_vaapi::kModuleVa;
 #if defined(USE_X11)
 using media_gpu_vaapi::kModuleVa_x11;
