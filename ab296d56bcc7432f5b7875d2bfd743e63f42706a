@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3056f17f_b0acbce9",
+        "filename": "third_party/binutils/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-11T21:33:45Z",
+      "side": 1,
+      "message": "Well, this list is up to date now.",
+      "revId": "ab296d56bcc7432f5b7875d2bfd743e63f42706a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
