@@ -20,6 +20,7 @@
 #include "net/quic/test_tools/quic_flow_controller_peer.h"
 #include "net/quic/test_tools/quic_session_peer.h"
 #include "net/quic/test_tools/quic_stream_peer.h"
+#include "net/quic/test_tools/quic_stream_sequencer_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
 #include "net/test/gtest_util.h"
 #include "testing/gmock_mutant.h"
@@ -263,6 +264,20 @@ TEST_F(QuicStreamTest, WriteOrBufferData) {
   stream_->OnCanWrite();
 }
 
+TEST_F(QuicStreamTest, WriteOrBufferDataReachStreamLimit) {
+  SetQuicReloadableFlag(quic_stream_too_long, true);
+  Initialize(kShouldProcessData);
+  string data("aaaaa");
+  QuicStreamPeer::SetStreamBytesWritten(kMaxStreamLength - data.length(),
+                                        stream_);
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Return(QuicConsumedData(data.length(), false)));
+  stream_->WriteOrBufferData(data, false, nullptr);
+  EXPECT_CALL(*connection_, CloseConnection(QUIC_STREAM_LENGTH_OVERFLOW, _, _));
+  EXPECT_DFATAL(stream_->WriteOrBufferData("a", false, nullptr),
+                "Write too many data via stream");
+}
+
 TEST_F(QuicStreamTest, ConnectionCloseAfterStreamClose) {
   Initialize(kShouldProcessData);
 
@@ -503,6 +518,49 @@ TEST_F(QuicStreamTest, FinalByteOffsetFromZeroLengthStreamFrame) {
   EXPECT_EQ(
       current_connection_flow_control_offset,
       QuicFlowControllerPeer::ReceiveWindowOffset(session_->flow_controller()));
+}
+
+TEST_F(QuicStreamTest, OnStreamResetOffsetOverflow) {
+  SetQuicReloadableFlag(quic_stream_too_long, true);
+  Initialize(kShouldProcessData);
+  QuicRstStreamFrame rst_frame(kInvalidControlFrameId, stream_->id(),
+                               QUIC_STREAM_CANCELLED, kMaxStreamLength + 1);
+  EXPECT_CALL(*connection_, CloseConnection(QUIC_STREAM_LENGTH_OVERFLOW, _, _));
+  stream_->OnStreamReset(rst_frame);
+}
+
+TEST_F(QuicStreamTest, OnStreamFrameUpperLimit) {
+  SetQuicReloadableFlag(quic_stream_too_long, true);
+  Initialize(kShouldProcessData);
+
+  // Modify receive window offset and sequencer buffer total_bytes_read_ to
+  // avoid flow control violation.
+  QuicFlowControllerPeer::SetReceiveWindowOffset(stream_->flow_controller(),
+                                                 kMaxStreamLength + 5u);
+  QuicFlowControllerPeer::SetReceiveWindowOffset(session_->flow_controller(),
+                                                 kMaxStreamLength + 5u);
+  QuicStreamSequencerPeer::SetFrameBufferTotalBytesRead(
+      QuicStreamPeer::sequencer(stream_), kMaxStreamLength - 10u);
+
+  EXPECT_CALL(*connection_, CloseConnection(QUIC_STREAM_LENGTH_OVERFLOW, _, _))
+      .Times(0);
+  QuicStreamFrame stream_frame(stream_->id(), false, kMaxStreamLength - 1,
+                               QuicStringPiece("."));
+  stream_->OnStreamFrame(stream_frame);
+  QuicStreamFrame stream_frame2(stream_->id(), true, kMaxStreamLength,
+                                QuicStringPiece(""));
+  stream_->OnStreamFrame(stream_frame2);
+}
+
+TEST_F(QuicStreamTest, StreamTooLong) {
+  SetQuicReloadableFlag(quic_stream_too_long, true);
+  Initialize(kShouldProcessData);
+  EXPECT_CALL(*connection_, CloseConnection(QUIC_STREAM_LENGTH_OVERFLOW, _, _))
+      .Times(1);
+  QuicStreamFrame stream_frame(stream_->id(), false, kMaxStreamLength,
+                               QuicStringPiece("."));
+  EXPECT_DFATAL(stream_->OnStreamFrame(stream_frame),
+                "Receive stream frame reaches max stream length");
 }
 
 TEST_F(QuicStreamTest, SetDrainingIncomingOutgoing) {
@@ -841,6 +899,23 @@ TEST_F(QuicStreamTest, WriteBufferedData) {
   EXPECT_FALSE(stream_->CanWriteNewData());
 }
 
+TEST_F(QuicStreamTest, WritevDataReachStreamLimit) {
+  SetQuicReloadableFlag(quic_stream_too_long, true);
+  Initialize(kShouldProcessData);
+  string data("aaaaa");
+  QuicStreamPeer::SetStreamBytesWritten(kMaxStreamLength - data.length(),
+                                        stream_);
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Return(QuicConsumedData(data.length(), false)));
+  struct iovec iov = {const_cast<char*>(data.data()), 5u};
+  QuicConsumedData consumed = stream_->WritevData(&iov, 1u, false);
+  EXPECT_EQ(data.length(), consumed.bytes_consumed);
+  struct iovec iov2 = {const_cast<char*>(data.data()), 1u};
+  EXPECT_CALL(*connection_, CloseConnection(QUIC_STREAM_LENGTH_OVERFLOW, _, _));
+  EXPECT_DFATAL(stream_->WritevData(&iov2, 1u, false),
+                "Write too many data via stream");
+}
+
 TEST_F(QuicStreamTest, WriteMemSlices) {
   // Set buffered data low water mark to be 100.
   SetQuicFlag(&FLAGS_quic_buffered_data_threshold, 100);
@@ -903,6 +978,33 @@ TEST_F(QuicStreamTest, WriteMemSlices) {
   EXPECT_CALL(*stream_, OnCanWriteNewData()).Times(0);
   EXPECT_FALSE(stream_->HasBufferedData());
   EXPECT_TRUE(stream_->write_side_closed());
+}
+
+TEST_F(QuicStreamTest, WriteMemSlicesReachStreamLimit) {
+  SetQuicReloadableFlag(quic_stream_too_long, true);
+  Initialize(kShouldProcessData);
+  if (!session_->can_use_slices()) {
+    return;
+  }
+  QuicStreamPeer::SetStreamBytesWritten(kMaxStreamLength - 5u, stream_);
+  char data[5];
+  std::vector<std::pair<char*, int>> buffers;
+  buffers.push_back(std::make_pair(data, arraysize(data)));
+  QuicTestMemSliceVector vector1(buffers);
+  QuicMemSliceSpan span1 = vector1.span();
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Return(QuicConsumedData(5u, false)));
+  // There is no buffered data before, all data should be consumed.
+  QuicConsumedData consumed = stream_->WriteMemSlices(span1, false);
+  EXPECT_EQ(5u, consumed.bytes_consumed);
+
+  std::vector<std::pair<char*, int>> buffers2;
+  buffers2.push_back(std::make_pair(data, 1u));
+  QuicTestMemSliceVector vector2(buffers);
+  QuicMemSliceSpan span2 = vector2.span();
+  EXPECT_CALL(*connection_, CloseConnection(QUIC_STREAM_LENGTH_OVERFLOW, _, _));
+  EXPECT_DFATAL(stream_->WriteMemSlices(span2, false),
+                "Write too many data via stream");
 }
 
 TEST_F(QuicStreamTest, StreamDataGetAckedMultipleTimes) {
