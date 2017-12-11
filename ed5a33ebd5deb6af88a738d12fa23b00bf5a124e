@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50cfe8b8_b596eeb1",
+        "filename": "base/observer_list.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-11T18:37:59Z",
+      "side": 1,
+      "message": "Would it make sense to just inherit std::iterator?",
+      "revId": "ed5a33ebd5deb6af88a738d12fa23b00bf5a124e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
