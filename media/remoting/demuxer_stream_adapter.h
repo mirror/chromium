@@ -30,6 +30,7 @@ class SingleThreadTaskRunner;
 namespace media {
 
 class DemuxerStream;
+class MojoDataPipeWriter;
 
 namespace remoting {
 
@@ -113,7 +114,10 @@ class DemuxerStreamAdapter {
   // Callback function when retrieving data from demuxer.
   void OnNewBuffer(DemuxerStream::Status status,
                    const scoped_refptr<DecoderBuffer>& input);
-  void TryWriteData(MojoResult result);
+  // Write the current frame into the mojo data pipe. OnFrameWritten() will be
+  // called when the writing finished.
+  void WriteFrame();
+  void OnFrameWritten(bool success);
   void ResetPendingFrame();
 
   // Callback function when a fatal runtime error occurs.
@@ -169,11 +173,7 @@ class DemuxerStreamAdapter {
   // Frame buffer and its information that is currently in process of writing to
   // Mojo data pipe.
   std::vector<uint8_t> pending_frame_;
-  uint32_t current_pending_frame_offset_;
   bool pending_frame_is_eos_;
-
-  // Monitor if data pipe is available to write data.
-  mojo::SimpleWatcher write_watcher_;
 
   // Keeps latest demuxer stream status and audio/video decoder config.
   DemuxerStream::Status media_status_;
@@ -181,7 +181,7 @@ class DemuxerStreamAdapter {
   VideoDecoderConfig video_config_;
 
   mojom::RemotingDataStreamSenderPtr stream_sender_;
-  mojo::ScopedDataPipeProducerHandle producer_handle_;
+  std::unique_ptr<MojoDataPipeWriter> data_pipe_writer_;
 
   // Tracks the number of bytes written to the pipe.
   int64_t bytes_written_to_pipe_;

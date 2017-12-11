@@ -60,6 +60,7 @@ source_set("remoting") {
   deps = [
     "//base",
     "//media",
+    "//media/mojo/common",
     "//media/mojo/interfaces:remoting",
     "//mojo/public/cpp/bindings",
     "//ui/gfx",
