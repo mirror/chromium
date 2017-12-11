@@ -194,7 +194,6 @@ void HostFrameSinkManager::AssignTemporaryReference(
 }
 
 void HostFrameSinkManager::DropTemporaryReference(const SurfaceId& surface_id) {
-  DCHECK(!assign_temporary_references_);
   frame_sink_manager_->DropTemporaryReference(surface_id);
 }
 

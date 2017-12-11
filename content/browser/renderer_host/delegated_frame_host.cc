@@ -570,6 +570,14 @@ void DelegatedFrameHost::OnFirstSurfaceActivation(
   if (!enable_surface_synchronization_) {
     client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
         surface_info.id(), frame_size_in_dip, GetSurfaceReferenceFactory());
+  } else {
+    if (!HasPrimarySurface()) {
+      ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
+      viz::HostFrameSinkManager* host_frame_sink_manager =
+          factory->GetContextFactoryPrivate()->GetHostFrameSinkManager();
+      host_frame_sink_manager->DropTemporaryReference(surface_info.id());
+      return;
+    }
   }
 
   client_->DelegatedFrameHostGetLayer()->SetFallbackSurfaceId(
