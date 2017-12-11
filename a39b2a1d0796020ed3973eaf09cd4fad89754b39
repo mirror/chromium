@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6d44565_7f9c4758",
+        "filename": "ash/manifest.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:34:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a115af_8b42d6d2",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3b7ce84_ba7ba5a3",
         "filename": "ash/metrics/time_to_first_present_recorder.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c20b77d4_f1592d4e",
+        "filename": "ash/metrics/time_to_first_present_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:34:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3b7ce84_ba7ba5a3",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db8a4eff_8ff35395",
         "filename": "ash/metrics/time_to_first_present_recorder.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-09T00:29:58Z",
       "side": 1,
       "message": "Is this because the WindowTreeHost can outlive Shell?",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789bc87d_2f3c17e6",
+        "filename": "ash/metrics/time_to_first_present_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:34:29Z",
+      "side": 1,
+      "message": "This made sense with earlier versions and I forgot to remove it. Removed.",
+      "parentUuid": "db8a4eff_8ff35395",
       "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d6f126c8_230a71d1",
+        "filename": "ash/mojo_test_interface_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:34:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "541f3bec_c66b6274",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bacbf985_05d59c44",
         "filename": "ash/public/interfaces/process_creation_time_recorder.mojom",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-09T00:29:58Z",
       "side": 1,
       "message": "I wonder if this should be called Metrics or ShellMetrics or ProcessMetrics. Any idea if we\u0027re going to add more metrics-y stuff in the future?\n\nAside, not for this CL: I wonder if we should have a generic \"Shell\" mojo interface. It could become a dumping ground, but that might be better than a bunch of tiny interfaces.",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cf6fc8d_f0ccd7f7",
+        "filename": "ash/public/interfaces/process_creation_time_recorder.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:34:29Z",
+      "side": 1,
+      "message": "I had considered these too, and given I wasn\u0027t quite sure where we wanted to go I didn\u0027t try to over design it. If we did want Shell we would likely want a Shell interface specifically that Chrome as API like this is really intended only for Chrome vs a Shell interface that any client might want to use.",
+      "parentUuid": "bacbf985_05d59c44",
       "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c6cbc899_8d15d74c",
+        "filename": "ash/shell.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:34:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd945c6e_6961500e",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83057187_0ec90ac2",
         "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.h",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8bb43a_2086e71f",
+        "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:34:29Z",
+      "side": 1,
+      "message": "Sorry, missed the class comment (it\u0027s so easy to miss them).",
+      "parentUuid": "83057187_0ec90ac2",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "1dad6775_19386fec",
+        "filename": "chrome/browser/ui/views/ash/time_to_first_present_recorder_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:34:29Z",
+      "side": 1,
+      "message": "Ugh! I actually went with checking for command line, which is much better anyway:)",
+      "parentUuid": "8a20befd_41647734",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1763381e_cb516155",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9684cc0_b9e2f978",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3164,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T22:34:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1763381e_cb516155",
+      "revId": "a39b2a1d0796020ed3973eaf09cd4fad89754b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
