@@ -2281,6 +2281,8 @@ void View::BoundsChanged(const gfx::Rect& previous_bounds) {
   }
 
   OnBoundsChanged(previous_bounds);
+  if (bounds_ != previous_bounds)
+    NotifyAccessibilityEvent(ui::AX_EVENT_LOCATION_CHANGED, false);
 
   if (needs_layout_ || previous_bounds.size() != size()) {
     needs_layout_ = false;

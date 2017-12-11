@@ -1095,8 +1095,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // cases where the view is a native control that's already sending a
   // native accessibility event and the duplicate event would cause
   // problems.
-  void NotifyAccessibilityEvent(ui::AXEvent event_type,
-                                bool send_native_event);
+  virtual void NotifyAccessibilityEvent(ui::AXEvent event_type,
+                                        bool send_native_event);
 
   // Scrolling -----------------------------------------------------------------
   // TODO(beng): Figure out if this can live somewhere other than View, i.e.
