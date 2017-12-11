@@ -52,6 +52,24 @@
       "revId": "fb414d53f2768ca944ad3a6545859f1bf938bef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b3112bc_93403a53",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/import_notifier_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-11T16:19:05Z",
+      "side": 1,
+      "message": "There\u0027s not a 1:1 relationship between tests and methods, and splitting up the tests helps document what exactly is being asserted.\n\nhttps://g3doc.corp.google.com/ccc/groups/rosters/g3doc/development/testing-best-practices.md?cl\u003dhead says:\n\n\"Remember, you should be testing a single behavior... In other words, have only one logical assertion per test.\"",
+      "parentUuid": "f40bf74b_175b71d7",
+      "revId": "fb414d53f2768ca944ad3a6545859f1bf938bef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
