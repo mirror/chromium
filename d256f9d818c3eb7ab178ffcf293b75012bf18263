@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "5965a3aa_3ada92c7",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-11T18:51:50Z",
+      "side": 1,
+      "message": "nit: ri? (I\u0027m not sure what rs stands for)",
+      "range": {
+        "startLine": 46,
+        "startChar": 32,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d59528_23883898",
+        "filename": "components/viz/common/resources/resource_format_utils.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-11T18:51:50Z",
+      "side": 1,
+      "message": "nit: I think these are more or less self documenting",
+      "range": {
+        "startLine": 190,
+        "startChar": 35,
+        "endLine": 190,
+        "endChar": 47
+      },
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3d1e232_457a6fa2",
         "filename": "gpu/command_buffer/client/raster_interface.h",
         "patchSetId": 26
@@ -13,6 +59,47 @@
       "writtenOn": "2017-12-11T16:21:33Z",
       "side": 1,
       "message": "Apologies for a drive-by comment: it would probably help team nooglers a lot if this top level interface has some more documentation? In a different CL?",
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb6e62a_54c1a1e9",
+        "filename": "gpu/command_buffer/client/raster_interface.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-11T18:51:50Z",
+      "side": 1,
+      "message": "+1 Is there a doc summarizing the top level goal?",
+      "parentUuid": "f3d1e232_457a6fa2",
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b88259_da6d6d0b",
+        "filename": "gpu/raster/raster_texture_format.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-11T18:51:50Z",
+      "side": 1,
+      "message": "Do these map directly viz::ResourceFormat? I\u0027m a little hesitant about adding another enum like this. Can we just use viz::ResourceFormat instead? AFAIK it\u0027s a separate subcomponent so it shouldn\u0027t cause any dependency problems",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 18
+      },
       "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
