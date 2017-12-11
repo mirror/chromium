@@ -192,7 +192,8 @@ TEST(URLRequestContextConfigTest, SetQuicConnectionMigrationV2Options) {
       // JSON encoded experimental options.
       "{\"QUIC\":{\"migrate_sessions_on_network_change_v2\":true,"
       "\"migrate_sessions_early_v2\":true,"
-      "\"max_time_on_non_default_network_seconds\":10}}",
+      "\"max_time_on_non_default_network_seconds\":10,"
+      "\"max_num_migrations_to_non_default_network_on_path_degrading\":4}}",
       // MockCertVerifier to use for testing purposes.
       std::unique_ptr<net::CertVerifier>(),
       // Enable network quality estimator.
@@ -216,6 +217,9 @@ TEST(URLRequestContextConfigTest, SetQuicConnectionMigrationV2Options) {
   EXPECT_TRUE(params->quic_migrate_sessions_on_network_change_v2);
   EXPECT_TRUE(params->quic_migrate_sessions_early_v2);
   EXPECT_EQ(10, params->quic_max_time_on_non_default_network_seconds);
+  EXPECT_EQ(
+      4,
+      params->quic_max_num_migrations_to_non_default_network_on_path_degrading);
 }
 
 TEST(URLRequestContextConfigTest, SetQuicHostWhitelist) {

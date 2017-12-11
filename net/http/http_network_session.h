@@ -178,6 +178,9 @@ class NET_EXPORT HttpNetworkSession : public base::MemoryCoordinatorClient {
     // Maximum time the session could be on non-default network before migrates
     // back to default network.
     int quic_max_time_on_non_default_network_seconds;
+    // Maximum number of migrations to non-default network on path degrading
+    // per network for each session.
+    int quic_max_num_migrations_to_non_default_network_on_path_degrading;
     // If true, allows migration of QUIC connections to a server-specified
     // alternate server address.
     bool quic_allow_server_migration;
