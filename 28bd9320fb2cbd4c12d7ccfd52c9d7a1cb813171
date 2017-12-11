@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22ef8168_4818af92",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-11T18:22:46Z",
+      "side": 1,
+      "message": "three now, right?",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 21,
+        "endChar": 15
+      },
+      "revId": "28bd9320fb2cbd4c12d7ccfd52c9d7a1cb813171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3c4bc5_970e5b19",
+        "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-11T18:22:46Z",
+      "side": 1,
+      "message": "we don\u0027t have any real kind of SLA for the update time, and it can depend on the review time for the new CRX, omaha servers, etc.  Maybe let\u0027s just rephrase this as \"will automatically update for users after the new version is published.\"",
+      "revId": "28bd9320fb2cbd4c12d7ccfd52c9d7a1cb813171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9812802e_595bac5c",
+        "filename": "chrome/common/extensions/docs/templates/articles/linux_hosting.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-11T18:22:46Z",
+      "side": 1,
+      "message": "file *from* a ?",
+      "range": {
+        "startLine": 7,
+        "startChar": 53,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "28bd9320fb2cbd4c12d7ccfd52c9d7a1cb813171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
