@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10974275_10ccfb03",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T18:57:05Z",
+      "side": 1,
+      "message": "Nit (throughout this file): Can we move the define() calls closer to the class that they correspond to? In this case it would be at line 105.\n\nThis would match closer what we do in cr_extensions_browsertest.js (and other WebUI pages).",
+      "range": {
+        "startLine": 155,
+        "startChar": 26,
+        "endLine": 155,
+        "endChar": 70
+      },
+      "revId": "078c5e6c335f6774e64237b58a71bf330e2ed41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c5ed34_bf4feb41",
+        "filename": "chrome/test/data/webui/extensions/a11y/extensions_a11y_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T18:57:05Z",
+      "side": 1,
+      "message": "Can we use a shorter selector as follows (here and elsewhere in this file)?\n\n\u0027* /deep/ extensions-keyboard-shortcuts\u0027",
+      "range": {
+        "startLine": 169,
+        "startChar": 10,
+        "endLine": 169,
+        "endChar": 70
+      },
+      "revId": "078c5e6c335f6774e64237b58a71bf330e2ed41a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
