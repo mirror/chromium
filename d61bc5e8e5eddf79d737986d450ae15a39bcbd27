@@ -16,6 +16,24 @@
       "revId": "d61bc5e8e5eddf79d737986d450ae15a39bcbd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e1587e_08b74f95",
+        "filename": "chromeos/dbus/fake_shill_profile_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-11T19:18:38Z",
+      "side": 1,
+      "message": "Good catch. Shill profiles \"stack\" so this behavior matches the Shill behavior which is what we want.",
+      "parentUuid": "0085b560_e92641ab",
+      "revId": "d61bc5e8e5eddf79d737986d450ae15a39bcbd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
