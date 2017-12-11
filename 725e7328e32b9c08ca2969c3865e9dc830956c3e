@@ -34,6 +34,24 @@
       "revId": "725e7328e32b9c08ca2969c3865e9dc830956c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0634a03e_77de46dd",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-11T21:34:54Z",
+      "side": 1,
+      "message": "Got it. These calls look reasonable too. Can you write something to that effect as a comment?",
+      "parentUuid": "e5af9a8f_ef20af59",
+      "revId": "725e7328e32b9c08ca2969c3865e9dc830956c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
