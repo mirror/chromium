@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd54633d_91c77b75",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T02:17:47Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bc0b88_2dd92b33",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T02:17:47Z",
+      "side": 1,
+      "message": "Now we actually don\u0027t need to use WebVector since this is in Blink, but also I don\u0027t think we need to change them at a time. If it\u0027s simple change, you can do it in this CL. \nWdyt?",
+      "range": {
+        "startLine": 35,
+        "startChar": 20,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c106307_94abe007",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T02:17:47Z",
+      "side": 1,
+      "message": "WTF::Vector",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 13
+      },
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df75b876_3347a92e",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T02:17:47Z",
+      "side": 1,
+      "message": "After onion soup, We no longer need to use you can use InstalledScriptsManager::ScriptData. (but this could be in another patch.)",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d3bd1c_0da3800d",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T02:17:47Z",
+      "side": 1,
+      "message": "Unit testing might be easier if the task runner is passed through the argument.",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406ef4bd_40e24498",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T02:17:47Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9e7c66_69d3993d",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T02:17:47Z",
+      "side": 1,
+      "message": "I prefer Broardcast() here. ThreadSafeScriptContainer actually isn\u0027t used for multiple readers, but if it has, OnAllDataAddedOnIOThread() needs to wake them up at a time otherwise other waiters will be sleeping forever.",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bf41b6_15ba76b3",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T02:17:47Z",
+      "side": 1,
+      "message": "Could you include WebVector.h instead of forward declaration for the template class?\nhttps://google.github.io/styleguide/cppguide.html#Forward_Declarations",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

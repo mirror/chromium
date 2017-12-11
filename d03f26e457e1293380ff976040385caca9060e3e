@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b20acb4_0e35463d",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T02:17:47Z",
+      "side": 1,
+      "message": "Sorry, it seems a bit confusing...\n|!data| means it\u0027s taken correctly, so !data \u0026\u0026 data-\u003eIsValid() is correct. Could you add one line comment as follows?\n// Return true if |data| has already been taken or is valid.",
+      "parentUuid": "560fdff5_f8c47b32",
+      "range": {
+        "startLine": 97,
+        "startChar": 15,
+        "endLine": 97,
+        "endChar": 17
+      },
+      "revId": "d03f26e457e1293380ff976040385caca9060e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03f990ef_735c5a75",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/WebEmbeddedWorkerImplTest.cpp",
         "patchSetId": 3
