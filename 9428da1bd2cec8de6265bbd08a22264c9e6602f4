@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55998ab4_d2ff5d79",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-12-11T22:20:51Z",
+      "side": 1,
+      "message": "I assume that it is okay that this code is now in a Windows-only block when it used to be in a portable block of code?",
+      "revId": "9428da1bd2cec8de6265bbd08a22264c9e6602f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
