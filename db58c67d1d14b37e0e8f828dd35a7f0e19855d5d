@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2d807311_dfbfa238",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-11T16:20:06Z",
+      "side": 1,
+      "message": "Not sure how restrictive about includes we want to be ... maybe a file-specific include rule instead?",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8db27945_5d35b7d6",
         "filename": "ash/display/mirror_window_controller.cc",
         "patchSetId": 6
@@ -13,6 +30,75 @@
       "writtenOn": "2017-12-11T15:24:42Z",
       "side": 1,
       "message": "aside: this will actually require the CLASSIC config in crrev.com/c/817761, otherwise it winds up using the (fake?) AcceleratedWidget values incrementing from 0/1...",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba7bf80_e1e4fc77",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-11T16:20:06Z",
+      "side": 1,
+      "message": "We don\u0027t set those fake accelerated-widgets on WindowTreeHostMus for non-viz mus anymore [1]. So you shouldn\u0027t need to check for CLASSIC here.\n\n[1] https://cs.chromium.org/chromium/src/ui/aura/mus/window_tree_host_mus.cc?l\u003d59",
+      "parentUuid": "8db27945_5d35b7d6",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d50a45_2bf14d96",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-11T16:20:06Z",
+      "side": 1,
+      "message": "!\u003d gfx::kNullAcceleratedWidget",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968e9dd7_bffb31a2",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-11T16:20:06Z",
+      "side": 1,
+      "message": "Is it necessary to do null-checks here?",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d98bab_6505c8d7",
+        "filename": "ash/window_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-11T16:20:06Z",
+      "side": 1,
+      "message": "Maybe there could be a AshWindowTreeHost::GetForDisplayId() that returns the right thing?",
       "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -60,6 +146,40 @@
         "endLine": 366,
         "endChar": 30
       },
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f07b5a_1af12cb6",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-11T16:20:06Z",
+      "side": 1,
+      "message": "Can there just be a ServerWindow::RemoveAllChildren() or something like that?",
+      "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e080de6b_7af456fa",
+        "filename": "ui/aura/window_tree_host_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-11T16:20:06Z",
+      "side": 1,
+      "message": "So ... I am not a huge fan of this. In most cases, the accelerated-widget is immediately available during the construction of a WindowTreeHost (see [1], [2], [3] etc.). So maybe call this OnAcceleratedWidgetOverridden() or something like that, and call from WindowTreeHostMus::OverrideAcceleratedWidget()?\n\n[1] https://cs.chromium.org/chromium/src/ui/aura/window_tree_host_x11.cc?l\u003d166\n[2] https://cs.chromium.org/chromium/src/ui/platform_window/stub/stub_window.cc?l\u003d18\n[3] https://cs.chromium.org/chromium/src/ui/aura/mus/window_tree_host_mus.cc?l\u003d70",
       "revId": "db58c67d1d14b37e0e8f828dd35a7f0e19855d5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
