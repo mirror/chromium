@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a6054e4_4b1e7fde",
+        "filename": "components/variations/service/safe_seed_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-11T15:17:19Z",
+      "side": 1,
+      "message": "Nit: If this param is just used for clean_exit_beacon.exited_cleanly(), suggest not having the dependency and just passing in the boolean.",
+      "revId": "4b617d4980fda0c10130d1d133f17f985e6220ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
