@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4d1fc10_aac68904",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-11T23:51:18Z",
+      "side": 1,
+      "message": "Nit: Maybe add a comment here as to why we retrieve the data again instead of storing the new WebContentsUserData we create on the line above?",
+      "revId": "82fb448a3eb33850490873a87c164109d50b1af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
