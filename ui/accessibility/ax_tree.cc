@@ -313,13 +313,19 @@ bool AXTree::Unserialize(const AXTreeUpdate& update) {
                                   update.node_id_to_clear);
       return false;
     }
-    if (node == root_) {
+
+    // Only destroy the root if the root actually changed and not if it's simply
+    // updated. To figure out if  the root was simply updated, we compare the ID
+    // of the new root with the existing root ID.
+    if (node == root_ && update.node_id_to_clear != old_root_id) {
       // Clear root_ before calling DestroySubtree so that root_ doesn't
       // ever point to an invalid node.
       AXNode* old_root = root_;
       root_ = nullptr;
       DestroySubtree(old_root, &update_state);
     } else {
+      // If the root has simply been updated, we treat it like an update to any
+      // other node.
       for (int i = 0; i < node->child_count(); ++i)
         DestroySubtree(node->ChildAtIndex(i), &update_state);
       std::vector<AXNode*> children;

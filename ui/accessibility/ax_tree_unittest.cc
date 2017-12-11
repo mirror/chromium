@@ -423,6 +423,46 @@ TEST(AXTreeTest, InvalidReparentingFails) {
   ASSERT_EQ("Node 3 reparented from 2 to 1", tree.error());
 }
 
+TEST(AXTreeTest, NoReparentingOfRootIfNoNewRoot) {
+  AXNodeData root;
+  root.id = 1;
+  AXNodeData child1;
+  child1.id = 2;
+  AXNodeData child2;
+  child2.id = 3;
+
+  root.child_ids = {child1.id};
+  child1.child_ids = {child2.id};
+
+  AXTreeUpdate initial_state;
+  initial_state.root_id = root.id;
+  initial_state.nodes = {root, child1, child2};
+
+  AXTree tree(initial_state);
+
+  // Update the root but don't change it.
+  AXTreeUpdate update;
+  update.root_id = root.id;
+  update.node_id_to_clear = root.id;
+
+  FakeAXTreeDelegate fake_delegate;
+  tree.SetDelegate(&fake_delegate);
+  ASSERT_TRUE(tree.Unserialize(update));
+
+  EXPECT_EQ(2U, fake_delegate.deleted_ids().size());
+  EXPECT_EQ(1U, fake_delegate.subtree_deleted_ids().size());
+
+  EXPECT_EQ(2U, fake_delegate.created_ids().size());
+
+  EXPECT_EQ(1U, fake_delegate.subtree_creation_finished_ids().size());
+
+  EXPECT_EQ(2U, fake_delegate.node_creation_finished_ids().size());
+
+  EXPECT_FALSE(fake_delegate.root_changed());
+
+  tree.SetDelegate(nullptr);
+}
+
 TEST(AXTreeTest, TreeDelegateIsCalled) {
   AXTreeUpdate initial_state;
   initial_state.root_id = 1;
