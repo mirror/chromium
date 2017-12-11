@@ -22,6 +22,7 @@
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/frame_host/navigator.h"
 #include "content/browser/frame_host/navigator_delegate.h"
+#include "content/browser/frame_host/typed_navigation_timing_throttle.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_navigation_handle.h"
@@ -1323,6 +1324,8 @@ void NavigationHandleImpl::RegisterNavigationThrottles() {
       MixedContentNavigationThrottle::CreateThrottleForNavigation(this));
 
   AddThrottle(RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(this));
+
+  AddThrottle(TypedNavigationTimingThrottle::MaybeCreateThrottleFor(this));
 
   // Insert all testing NavigationThrottles last.
   throttles_.insert(throttles_.end(),
