@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c710f2_13254ca7",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_task_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-11T15:17:41Z",
+      "side": 1,
+      "message": "nit: Let\u0027s kill all of the using statements in this CL.",
+      "revId": "a45ea130f88651d58a4ba9ec47b480e37ceb2189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
