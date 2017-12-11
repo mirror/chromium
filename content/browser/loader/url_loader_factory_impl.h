@@ -34,7 +34,7 @@ class URLLoaderFactoryImpl final : public mojom::URLLoaderFactory {
                                 traffic_annotation) override;
   void Clone(mojom::URLLoaderFactoryRequest request) override;
 
-  static void CreateLoaderAndStart(
+  CONTENT_EXPORT static void CreateLoaderAndStart(
       ResourceRequesterInfo* requester_info,
       mojom::URLLoaderRequest request,
       int32_t routing_id,
@@ -46,7 +46,7 @@ class URLLoaderFactoryImpl final : public mojom::URLLoaderFactory {
 
   // Creates a URLLoaderFactoryImpl instance. The instance is held by the
   // StrongBinding in it, so this function doesn't return the instance.
-  CONTENT_EXPORT static void Create(
+  static void Create(
       scoped_refptr<ResourceRequesterInfo> requester_info,
       mojom::URLLoaderFactoryRequest request,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_thread_runner);
