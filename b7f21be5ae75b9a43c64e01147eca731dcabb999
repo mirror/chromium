@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5461edb0_3573d9e2",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T17:43:01Z",
+      "side": 1,
+      "message": "Add a null check for the target please.",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 69
+      },
+      "revId": "b7f21be5ae75b9a43c64e01147eca731dcabb999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
