@@ -29,6 +29,7 @@ class BrowserContext;
 class NavigationData;
 class NavigationHandle;
 class RenderFrameHost;
+class RenderWidgetHostImpl;
 
 // This interface allows embedders of content/ to write tests that depend on a
 // test version of WebContents.  This interface can be retrieved from any
@@ -132,6 +133,11 @@ class WebContentsTester {
 
   // Override IsCurrentlyAudible for testing.
   virtual void SetIsCurrentlyAudible(bool audible) = 0;
+
+  // Simulates a direct user interaction.
+  // |render_widget_host| can be equal to nullptr.
+  virtual void TestOnUserInteraction(RenderWidgetHostImpl* render_widget_host,
+                                     const blink::WebInputEvent::Type type) = 0;
 };
 
 }  // namespace content
