@@ -77,6 +77,10 @@ void SlotAssignment::DidAddSlotInternal(HTMLSlotElement& slot) {
   DCHECK(new_active);
   DCHECK(new_active == slot || new_active == old_active);
 
+  // Early return for UA shadow which doesn't need slotchange events.
+  if (owner_->IsUserAgent())
+    return;
+
   if (new_active == slot) {
     // case 1 or 2
     if (FindHostChildBySlotName(slot_name)) {
@@ -121,6 +125,10 @@ void SlotAssignment::DidRemoveSlotInternal(
   // This also ensures that TreeOrderedMap has a cache for the first element.
   HTMLSlotElement* new_active = FindSlotByName(slot_name);
   DCHECK(!new_active || new_active != slot);
+
+  // Early return for UA shadow which doesn't need slotchange events.
+  if (owner_->IsUserAgent())
+    return;
 
   if (old_active == slot) {
     // case 1 or 2

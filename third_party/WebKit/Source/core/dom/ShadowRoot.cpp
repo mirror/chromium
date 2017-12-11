@@ -110,7 +110,7 @@ void ShadowRoot::DidAddSlot(HTMLSlotElement& slot) {
 
 void ShadowRoot::DidChangeHostChildSlotName(const AtomicString& old_value,
                                             const AtomicString& new_value) {
-  if (!slot_assignment_)
+  if (!slot_assignment_ || IsUserAgent())
     return;
   slot_assignment_->DidChangeHostChildSlotName(old_value, new_value);
 }
