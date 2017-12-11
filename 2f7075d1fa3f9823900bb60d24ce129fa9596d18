@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e52c70a_74e9e753",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-11T17:55:28Z",
+      "side": 1,
+      "message": "Max line length should be 72 characters.",
+      "revId": "2f7075d1fa3f9823900bb60d24ce129fa9596d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885138f2_7472f4ef",
+        "filename": "components/viz/service/display/display_scheduler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-11T17:55:28Z",
+      "side": 1,
+      "message": "This changes the logic a bit right? Before |client_| would always have SurfaceDiscarded() called and now it might not. Just wondering if this is correct?",
+      "revId": "2f7075d1fa3f9823900bb60d24ce129fa9596d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884d4212_8227238f",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-11T17:55:28Z",
+      "side": 1,
+      "message": "nit: I believe the style guide requires {} since there is more than one line of implementation for the for loop.",
+      "revId": "2f7075d1fa3f9823900bb60d24ce129fa9596d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88cf07c_31dfa369",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-11T17:55:28Z",
+      "side": 1,
+      "message": "You probably want to move this up higher and use it?",
+      "revId": "2f7075d1fa3f9823900bb60d24ce129fa9596d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
