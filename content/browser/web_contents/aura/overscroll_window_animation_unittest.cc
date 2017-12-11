@@ -239,4 +239,74 @@ TEST_F(OverscrollWindowAnimationTest, NewOverscrollCompletesPreviousGesture) {
   EXPECT_FALSE(overscroll_aborted());
 }
 
+TEST_F(OverscrollWindowAnimationTest, OverscrollBehaviorControlsOverscroll) {
+  EXPECT_FALSE(owa()->is_active());
+  EXPECT_FALSE(overscroll_started());
+  EXPECT_FALSE(overscroll_completing());
+  EXPECT_FALSE(overscroll_completed());
+  EXPECT_FALSE(overscroll_aborted());
+
+  ui::DidOverscrollParams params;
+  params.overscroll_behavior.x = cc::OverscrollBehavior::
+      OverscrollBehaviorType::kOverscrollBehaviorTypeAuto;
+  owa()->OnDidOverscroll(params);
+
+  // Start an OVERSCROLL_EAST gesture.
+  owa()->OnOverscrollModeChange(OVERSCROLL_NONE, OVERSCROLL_EAST,
+                                OverscrollSource::TOUCHPAD);
+  EXPECT_TRUE(owa()->is_active());
+  EXPECT_EQ(OverscrollSource::TOUCHPAD, owa()->overscroll_source());
+  EXPECT_TRUE(overscroll_started());
+  EXPECT_FALSE(overscroll_completing());
+  EXPECT_FALSE(overscroll_completed());
+  EXPECT_FALSE(overscroll_aborted());
+
+  // Complete the overscroll.
+  owa()->OnOverscrollComplete(OVERSCROLL_EAST);
+  ResetFlags();
+  EXPECT_FALSE(owa()->is_active());
+  EXPECT_FALSE(overscroll_started());
+  EXPECT_FALSE(overscroll_completing());
+  EXPECT_FALSE(overscroll_completed());
+  EXPECT_FALSE(overscroll_aborted());
+
+  params.overscroll_behavior.x = cc::OverscrollBehavior::
+      OverscrollBehaviorType::kOverscrollBehaviorTypeContain;
+  owa()->OnDidOverscroll(params);
+
+  // Start an OVERSCROLL_EAST gesture.
+  owa()->OnOverscrollModeChange(OVERSCROLL_NONE, OVERSCROLL_EAST,
+                                OverscrollSource::TOUCHPAD);
+  EXPECT_FALSE(owa()->is_active());
+  EXPECT_FALSE(overscroll_started());
+  EXPECT_FALSE(overscroll_completing());
+  EXPECT_FALSE(overscroll_completed());
+  EXPECT_FALSE(overscroll_aborted());
+
+  // Complete the overscroll.
+  owa()->OnOverscrollComplete(OVERSCROLL_EAST);
+  ResetFlags();
+  EXPECT_FALSE(owa()->is_active());
+  EXPECT_FALSE(overscroll_started());
+  EXPECT_FALSE(overscroll_completing());
+  EXPECT_FALSE(overscroll_completed());
+  EXPECT_FALSE(overscroll_aborted());
+
+  params.overscroll_behavior.x = cc::OverscrollBehavior::
+      OverscrollBehaviorType::kOverscrollBehaviorTypeNone;
+  owa()->OnDidOverscroll(params);
+
+  // Start an OVERSCROLL_EAST gesture.
+  owa()->OnOverscrollModeChange(OVERSCROLL_NONE, OVERSCROLL_EAST,
+                                OverscrollSource::TOUCHPAD);
+  EXPECT_FALSE(owa()->is_active());
+  EXPECT_FALSE(overscroll_started());
+  EXPECT_FALSE(overscroll_completing());
+  EXPECT_FALSE(overscroll_completed());
+  EXPECT_FALSE(overscroll_aborted());
+
+  // Complete the overscroll.
+  owa()->OnOverscrollComplete(OVERSCROLL_EAST);
+}
+
 }  // namespace content

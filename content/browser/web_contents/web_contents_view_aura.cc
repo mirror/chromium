@@ -1096,6 +1096,11 @@ gfx::Size WebContentsViewAura::GetDisplaySize() const {
       .size();
 }
 
+void WebContentsViewAura::OnDidOverscroll(
+    const ui::DidOverscrollParams& params) {
+  navigation_overlay_->relay_delegate()->OnDidOverscroll(params);
+}
+
 bool WebContentsViewAura::OnOverscrollUpdate(float delta_x, float delta_y) {
   if (current_overscroll_gesture_ != OVERSCROLL_EAST &&
       current_overscroll_gesture_ != OVERSCROLL_WEST) {

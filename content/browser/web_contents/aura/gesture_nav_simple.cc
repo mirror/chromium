@@ -548,6 +548,7 @@ gfx::Size GestureNavSimple::GetDisplaySize() const {
 bool GestureNavSimple::OnOverscrollUpdate(float delta_x, float delta_y) {
   if (!affordance_ || affordance_->IsFinishing())
     return false;
+
   float delta = std::abs(mode_ == OVERSCROLL_SOUTH ? delta_y : delta_x);
   DCHECK_LE(delta, max_delta_);
   affordance_->SetDragProgress(delta / completion_threshold_);
