@@ -69,6 +69,24 @@
       "revId": "5415ae79ed40d50b0e048024e9f15313b79eb001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99783d7a_65ab99e5",
+        "filename": "extensions/common/view_type.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-11T17:19:01Z",
+      "side": 0,
+      "message": "Ack - we can postpone landing of https://crrev.com/c/766469",
+      "parentUuid": "b5b6ed6f_d4fb883d",
+      "revId": "5415ae79ed40d50b0e048024e9f15313b79eb001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
