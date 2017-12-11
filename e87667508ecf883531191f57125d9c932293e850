@@ -52,6 +52,24 @@
       "revId": "e87667508ecf883531191f57125d9c932293e850",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38724a59_7f583ff3",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-12-11T23:27:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58fd510c_660d11c0",
+      "revId": "e87667508ecf883531191f57125d9c932293e850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
