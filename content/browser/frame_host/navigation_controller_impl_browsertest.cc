@@ -68,6 +68,9 @@ static const char kRemoveFrameScript[] =
     "var f = document.querySelector('iframe');"
     "f.parentNode.removeChild(f);";
 
+using testing::ElementsAre;
+using testing::IsEmpty;
+
 }  // namespace
 
 namespace content {
@@ -4015,6 +4018,370 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
       controller.GetLastCommittedEntry()->GetFrameEntry(foo_subframe);
   EXPECT_THAT(foo_subframe_entry->frame_unique_name(),
               testing::HasSubstr("dynamicFrame"));
+}
+
+// Verify that navigations caused by client-side redirects populates the entry's
+// replaced data.
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       ReplacedNavigationEntryData_ClientSideRedirect) {
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  const NavigationControllerImpl& controller =
+      static_cast<const NavigationControllerImpl&>(
+          shell()->web_contents()->GetController());
+  GURL url1(embedded_test_server()->GetURL(
+      "/navigation_controller/client_redirect.html"));
+  GURL url2(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_1.html"));
+
+  {
+    // Load the redirecting page.
+    FrameNavigateParamsCapturer capturer(root);
+    capturer.set_navigations_remaining(2);
+    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    capturer.Wait();
+
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_EQ(url2, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_LINK |
+                                  ui::PAGE_TRANSITION_CLIENT_REDIRECT)));
+
+    ASSERT_TRUE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+    EXPECT_EQ(url1, controller.GetEntryAtIndex(0)->GetReplacedEntryData()->url);
+    EXPECT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData()->transition_type,
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)))
+        << base::StringPrintf("%X", controller.GetEntryAtIndex(0)
+                                        ->GetReplacedEntryData()
+                                        ->transition_type);
+  }
+}
+
+// Verify that navigations caused by location.replace() populates the entry's
+// replaced data.
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       ReplacedNavigationEntryData_LocationReplace) {
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  const NavigationControllerImpl& controller =
+      static_cast<const NavigationControllerImpl&>(
+          shell()->web_contents()->GetController());
+  GURL url1(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_1.html"));
+  GURL url2(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_2.html"));
+
+  // Test fixture: start with typing a URL.
+  {
+    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_EQ(url1, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+    EXPECT_FALSE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+  }
+
+  const base::Time time1 = controller.GetEntryAtIndex(0)->GetTimestamp();
+
+  {
+    // location.replace().
+    FrameNavigateParamsCapturer capturer(root);
+    std::string script = "location.replace('" + url2.spec() + "')";
+    EXPECT_TRUE(ExecuteScript(root, script));
+    capturer.Wait();
+
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_EQ(url2, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_NE(time1, controller.GetEntryAtIndex(0)->GetTimestamp());
+
+    ASSERT_TRUE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+    EXPECT_EQ(url1, controller.GetEntryAtIndex(0)->GetReplacedEntryData()->url);
+    EXPECT_EQ(time1,
+              controller.GetEntryAtIndex(0)->GetReplacedEntryData()->timestamp);
+    EXPECT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData()->transition_type,
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+  }
+}
+
+// Verify that history.replaceState() populates the navigation entry's replaced
+// entry data.
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       ReplacedNavigationEntryData_ReplaceState) {
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  const NavigationControllerImpl& controller =
+      static_cast<const NavigationControllerImpl&>(
+          shell()->web_contents()->GetController());
+  GURL url1(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_1.html"));
+  GURL url2(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_2.html"));
+  GURL url3(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_3.html"));
+
+  // Test fixture: start with typing a URL.
+  {
+    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_EQ(url1, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+    EXPECT_FALSE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+  }
+
+  const base::Time time1 = controller.GetEntryAtIndex(0)->GetTimestamp();
+
+  {
+    // history.replaceState().
+    FrameNavigateParamsCapturer capturer(root);
+    std::string script =
+        "history.replaceState({}, 'page 2', 'simple_page_2.html')";
+    ASSERT_TRUE(ExecuteScript(root, script));
+    capturer.Wait();
+
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_EQ(url2, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_NE(time1, controller.GetEntryAtIndex(0)->GetTimestamp());
+
+    ASSERT_TRUE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+    EXPECT_EQ(url1, controller.GetEntryAtIndex(0)->GetReplacedEntryData()->url);
+    EXPECT_EQ(time1,
+              controller.GetEntryAtIndex(0)->GetReplacedEntryData()->timestamp);
+    EXPECT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData()->transition_type,
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+  }
+
+  {
+    // Reload from the renderer side and make sure the replaced entry data
+    // doesn't change.
+    FrameNavigateParamsCapturer capturer(root);
+    ASSERT_TRUE(ExecuteScript(root, "location.reload()"));
+    capturer.Wait();
+
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_EQ(url2, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_NE(time1, controller.GetEntryAtIndex(0)->GetTimestamp());
+
+    ASSERT_TRUE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+    EXPECT_EQ(url1, controller.GetEntryAtIndex(0)->GetReplacedEntryData()->url);
+    EXPECT_EQ(time1,
+              controller.GetEntryAtIndex(0)->GetReplacedEntryData()->timestamp);
+    EXPECT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData()->transition_type,
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+  }
+
+  {
+    // history.replaceState().
+    FrameNavigateParamsCapturer capturer(root);
+    std::string script =
+        "history.replaceState({}, 'page 3', 'simple_page_3.html')";
+    ASSERT_TRUE(ExecuteScript(root, script));
+    capturer.Wait();
+
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_EQ(url3, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_NE(time1, controller.GetEntryAtIndex(0)->GetTimestamp());
+
+    ASSERT_TRUE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+    EXPECT_EQ(url1, controller.GetEntryAtIndex(0)->GetReplacedEntryData()->url);
+    EXPECT_EQ(time1,
+              controller.GetEntryAtIndex(0)->GetReplacedEntryData()->timestamp);
+    EXPECT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData()->transition_type,
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+  }
+}
+
+// Verify that history.pushState() does not populate the navigation entry's
+// replaced entry data.
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       ReplacedNavigationEntryData_PushState) {
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  const NavigationControllerImpl& controller =
+      static_cast<const NavigationControllerImpl&>(
+          shell()->web_contents()->GetController());
+  GURL url1(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_1.html"));
+  GURL url2(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_2.html"));
+
+  // Test fixture: start with typing a URL.
+  {
+    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_EQ(url1, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+    EXPECT_FALSE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+  }
+
+  {
+    // history.pushState().
+    FrameNavigateParamsCapturer capturer(root);
+    std::string script =
+        "history.pushState({}, 'page 2', 'simple_page_2.html')";
+    ASSERT_TRUE(ExecuteScript(root, script));
+    capturer.Wait();
+
+    ASSERT_EQ(2, controller.GetEntryCount());
+    ASSERT_EQ(url1, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_EQ(url2, controller.GetEntryAtIndex(1)->GetURL());
+
+    EXPECT_FALSE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+    EXPECT_FALSE(
+        controller.GetEntryAtIndex(1)->GetReplacedEntryData().has_value());
+  }
+}
+
+// Verify that location.reload() does not populate the navigation entry's
+// replaced entry data.
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       ReplacedNavigationEntryData_LocationReload) {
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  const NavigationControllerImpl& controller =
+      static_cast<const NavigationControllerImpl&>(
+          shell()->web_contents()->GetController());
+  GURL url1(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_1.html"));
+
+  // Test fixture: start with typing a URL.
+  {
+    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_EQ(url1, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+    EXPECT_FALSE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+  }
+
+  const base::Time time1 = controller.GetEntryAtIndex(0)->GetTimestamp();
+
+  {
+    // Reload from the renderer side and make sure replaced entry data is not
+    // stored.
+    FrameNavigateParamsCapturer capturer(root);
+    ASSERT_TRUE(ExecuteScript(root, "location.reload()"));
+    capturer.Wait();
+
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_EQ(url1, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_NE(time1, controller.GetEntryAtIndex(0)->GetTimestamp());
+
+    // At least the timestamp has changed, so we need to keep a copy of the
+    // replaced data.
+    ASSERT_TRUE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+    EXPECT_EQ(url1, controller.GetEntryAtIndex(0)->GetReplacedEntryData()->url);
+    EXPECT_EQ(time1,
+              controller.GetEntryAtIndex(0)->GetReplacedEntryData()->timestamp);
+    EXPECT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData()->transition_type,
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+  }
+}
+
+// Verify that navigating back in history does not populate the navigation
+// entry's replaced entry data.
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       ReplacedNavigationEntryData_back) {
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  const NavigationControllerImpl& controller =
+      static_cast<const NavigationControllerImpl&>(
+          shell()->web_contents()->GetController());
+  GURL url1(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_1.html"));
+  GURL url2(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_2.html"));
+
+  // Test fixture: start with typing two URLs.
+  {
+    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_TRUE(NavigateToURL(shell(), url2));
+    ASSERT_EQ(2, controller.GetEntryCount());
+    ASSERT_EQ(url1, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_EQ(url2, controller.GetEntryAtIndex(1)->GetURL());
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(1)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+    EXPECT_FALSE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+    EXPECT_FALSE(
+        controller.GetEntryAtIndex(1)->GetReplacedEntryData().has_value());
+  }
+
+  const base::Time time1 = controller.GetEntryAtIndex(0)->GetTimestamp();
+
+  {
+    // Back.
+    FrameNavigateParamsCapturer capturer(root);
+    shell()->web_contents()->GetController().GoBack();
+    capturer.Wait();
+
+    // Assertions below document the current behavior.
+    ASSERT_EQ(url1, controller.GetEntryAtIndex(0)->GetURL());
+    ASSERT_NE(time1, controller.GetEntryAtIndex(0)->GetTimestamp());
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR |
+                                  ui::PAGE_TRANSITION_FORWARD_BACK)));
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(1)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+
+    // Ideally we'd like to keep a copy of the replaced data here too,
+    // because of the modified timestamp as well as the new qualifier,
+    // ui::PAGE_TRANSITION_FORWARD_BACK.
+    // TODO/DONOTSUBMIT: Clarify if this behavior should be changed.
+    EXPECT_FALSE(
+        controller.GetEntryAtIndex(0)->GetReplacedEntryData().has_value());
+    EXPECT_FALSE(
+        controller.GetEntryAtIndex(1)->GetReplacedEntryData().has_value());
+  }
 }
 
 // Ensure we don't crash when cloning a named window.  This happened in
