@@ -46,6 +46,30 @@
       "revId": "96afa0ebd28f69d3d01f03a745aad3738adeba8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e823713e_b71598b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-11T19:56:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6e995a40_915f8c66",
+      "range": {
+        "startLine": 1131,
+        "startChar": 20,
+        "endLine": 1131,
+        "endChar": 78
+      },
+      "revId": "96afa0ebd28f69d3d01f03a745aad3738adeba8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
