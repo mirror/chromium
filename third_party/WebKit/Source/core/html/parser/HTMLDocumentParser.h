@@ -70,7 +70,6 @@ class TokenizedChunkQueue;
 class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
                                        private HTMLParserScriptRunnerHost {
   USING_GARBAGE_COLLECTED_MIXIN(HTMLDocumentParser);
-  USING_PRE_FINALIZER(HTMLDocumentParser, Dispose);
 
  public:
   static HTMLDocumentParser* Create(
@@ -81,9 +80,6 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   ~HTMLDocumentParser() override;
   void Trace(blink::Visitor*) override;
   void TraceWrappers(const ScriptWrappableVisitor*) const override;
-
-  // TODO(alexclarke): Remove when background parser goes away.
-  void Dispose();
 
   // Exposed for HTMLParserScheduler
   void ResumeParsingAfterYield();
@@ -285,8 +281,6 @@ class CORE_EXPORT HTMLDocumentParser : public ScriptableDocumentParser,
   bool tried_loading_link_headers_;
   bool added_pending_stylesheet_in_body_;
   bool is_waiting_for_stylesheets_;
-
-  WebScopedVirtualTimePauser virtual_time_pauser_;
 };
 
 }  // namespace blink

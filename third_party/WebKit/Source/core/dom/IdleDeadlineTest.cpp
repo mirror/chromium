@@ -42,6 +42,14 @@ class MockIdleDeadlineScheduler final : public WebScheduler {
   void RemovePendingNavigation(
       scheduler::RendererScheduler::NavigatingFrameType) override {}
 
+  void MaybeDeferTaskForVirtualTimeDeterminism(
+      const WebTraceLocation& from_here,
+      WTF::Closure task) override {
+    std::move(task).Run();
+  }
+
+  bool IsVirtualTimeEnabled() override { return false; }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(MockIdleDeadlineScheduler);
 };

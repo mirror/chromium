@@ -1535,6 +1535,10 @@ base::TimeTicks RendererSchedulerImpl::EnableVirtualTime() {
   return main_thread_only().initial_virtual_time;
 }
 
+bool RendererSchedulerImpl::IsVirualTimeEnabled() const {
+  return main_thread_only().use_virtual_time;
+}
+
 void RendererSchedulerImpl::DisableVirtualTimeForTesting() {
   if (!main_thread_only().use_virtual_time)
     return;

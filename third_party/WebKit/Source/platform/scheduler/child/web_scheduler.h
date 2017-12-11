@@ -6,6 +6,7 @@
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_RENDERER_WEB_SCHEDULER_H_
 
 #include "platform/scheduler/renderer/web_view_scheduler.h"
+#include "platform/wtf/Time.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebThread.h"
 #include "public/platform/WebTraceLocation.h"
@@ -101,6 +102,23 @@ class PLATFORM_EXPORT WebScheduler {
   // Tells the scheduler that a navigation task is no longer pending.
   virtual void RemovePendingNavigation(
       scheduler::RendererScheduler::NavigatingFrameType) = 0;
+
+  // Returns true if virtual time is enabled, otherwise returns false.
+  virtual bool IsVirtualTimeEnabled() = 0;
+
+  // An artificial delay to be applied to resource loading responses to break
+  // potential infinite loops affecting virtual time when an on load handler
+  // triggers another resource load.
+  virtual WTF::TimeDelta GetVirtualTimeLoadingTaskDelay() {
+    return WTF::TimeDelta::FromMilliseconds(10);
+  }
+
+  // An artificial minimum delay applied to navigations to ensure DevTools
+  // frame loading events appear in the expected order when resource loading
+  // responses are delayed.
+  virtual WTF::TimeDelta GetVirtualTimeNavigationDelay() {
+    return WTF::TimeDelta::FromMilliseconds(11);
+  }
 
   // Test helpers.
 

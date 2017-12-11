@@ -52,6 +52,7 @@ class PLATFORM_EXPORT WebSchedulerImpl : public WebScheduler {
       scheduler::RendererScheduler::NavigatingFrameType type) override {}
   void RemovePendingNavigation(
       scheduler::RendererScheduler::NavigatingFrameType type) override {}
+  bool IsVirtualTimeEnabled() override;
 
  private:
   static void RunIdleTask(WebThread::IdleTask task, base::TimeTicks deadline);
