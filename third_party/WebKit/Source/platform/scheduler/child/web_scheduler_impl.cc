@@ -95,5 +95,9 @@ WebSchedulerImpl::PauseScheduler() {
   return nullptr;
 }
 
+bool WebSchedulerImpl::IsVirtualTimeEnabled() {
+  return false;
+}
+
 }  // namespace scheduler
 }  // namespace blink

@@ -542,6 +542,15 @@ void NavigationScheduler::StartTimer() {
   WebScheduler* scheduler = Platform::Current()->CurrentThread()->Scheduler();
   scheduler->AddPendingNavigation(frame_type_);
 
+  TimeDelta delay = TimeDelta::FromSecondsD(redirect_->Delay());
+  if (frame_->IsLoading() && scheduler->IsVirtualTimeEnabled()) {
+    // When virtual time is enabled there is an additional delay on response
+    // processing. To ensure a series of navigations result in the the expected
+    // DevTools frame loading events we add an extra delay here. If we didn't
+    // do this some of the frame navigation events would get lost.
+    delay = std::max(delay, scheduler->GetVirtualTimeNavigationDelay());
+  }
+
   // wrapWeakPersistent(this) is safe because a posted task is canceled when the
   // task handle is destroyed on the dtor of this NavigationScheduler.
   navigate_task_handle_ = frame_->FrameScheduler()
@@ -550,7 +559,7 @@ void NavigationScheduler::StartTimer() {
                                   BLINK_FROM_HERE,
                                   WTF::Bind(&NavigationScheduler::NavigateTask,
                                             WrapWeakPersistent(this)),
-                                  TimeDelta::FromSecondsD(redirect_->Delay()));
+                                  delay);
 
   probe::frameScheduledNavigation(frame_, redirect_.Get());
 }

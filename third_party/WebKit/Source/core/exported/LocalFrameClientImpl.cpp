@@ -351,6 +351,7 @@ void LocalFrameClientImpl::DispatchWillSendRequest(ResourceRequest& request) {
 
 void LocalFrameClientImpl::DispatchDidReceiveResponse(
     const ResourceResponse& response) {
+  virtual_time_pauser_.PauseVirtualTime(false);
   if (web_frame_->Client()) {
     WrappedResourceResponse webresp(response);
     web_frame_->Client()->DidReceiveResponse(webresp);

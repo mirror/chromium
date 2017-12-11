@@ -52,5 +52,9 @@ RendererScheduler* RendererWebSchedulerImpl::GetRendererSchedulerForTest() {
   return renderer_scheduler_;
 }
 
+bool RendererWebSchedulerImpl::IsVirtualTimeEnabled() {
+  return renderer_scheduler_->IsVirualTimeEnabled();
+}
+
 }  // namespace scheduler
 }  // namespace blink

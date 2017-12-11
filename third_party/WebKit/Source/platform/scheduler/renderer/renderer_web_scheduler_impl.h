@@ -25,8 +25,8 @@ class PLATFORM_EXPORT RendererWebSchedulerImpl : public WebSchedulerImpl {
   std::unique_ptr<WebViewScheduler> CreateWebViewScheduler(
       InterventionReporter* intervention_reporter,
       WebViewScheduler::WebViewSchedulerDelegate* delegate) override;
-
   RendererScheduler* GetRendererSchedulerForTest() override;
+  bool IsVirtualTimeEnabled() override;
 
  private:
   RendererSchedulerImpl* renderer_scheduler_;  // NOT OWNED
