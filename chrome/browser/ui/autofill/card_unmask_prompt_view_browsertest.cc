@@ -101,7 +101,7 @@ class TestCardUnmaskPromptController : public CardUnmaskPromptControllerImpl {
   base::TimeDelta GetSuccessMessageDuration() const override {
     // Change this to ~4000 if you're in --interactive mode and would like to
     // see the progress/success overlay.
-    return base::TimeDelta::FromMilliseconds(10);
+    return base::TimeDelta::FromMilliseconds(4000);
   }
 
   void set_expected_verification_failure(bool allow_retry) {
