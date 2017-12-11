@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3d1e232_457a6fa2",
+        "filename": "gpu/command_buffer/client/raster_interface.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-11T16:21:33Z",
+      "side": 1,
+      "message": "Apologies for a drive-by comment: it would probably help team nooglers a lot if this top level interface has some more documentation? In a different CL?",
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
