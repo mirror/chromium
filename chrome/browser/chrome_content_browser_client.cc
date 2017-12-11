@@ -63,6 +63,7 @@
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/permissions/permission_context_base.h"
+#include "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/plugins/pdf_iframe_navigation_throttle.h"
 #include "chrome/browser/prerender/prerender_final_status.h"
@@ -180,6 +181,7 @@
 #include "components/variations/variations_associated_data.h"
 #include "components/variations/variations_switches.h"
 #include "components/version_info/version_info.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/browser_main_parts.h"
 #include "content/public/browser/browser_ppapi_host.h"
@@ -835,6 +837,7 @@ GetSystemRequestContextOnUIThread() {
 
 ChromeContentBrowserClient::ChromeContentBrowserClient()
     : weak_factory_(this) {
+  LOG(ERROR) << "ChromeContentBrowserClient::ChromeContentBrowserClient";
 #if BUILDFLAG(ENABLE_PLUGINS)
   for (size_t i = 0; i < arraysize(kPredefinedAllowedDevChannelOrigins); ++i)
     allowed_dev_channel_origins_.insert(kPredefinedAllowedDevChannelOrigins[i]);
@@ -861,6 +864,7 @@ ChromeContentBrowserClient::ChromeContentBrowserClient()
 }
 
 ChromeContentBrowserClient::~ChromeContentBrowserClient() {
+  LOG(ERROR) << "ChromeContentBrowserClient::~ChromeContentBrowserClient";
   for (int i = static_cast<int>(extra_parts_.size()) - 1; i >= 0; --i)
     delete extra_parts_[i];
   extra_parts_.clear();
@@ -3859,4 +3863,25 @@ ChromeContentBrowserClient::GetSafeBrowsingUrlCheckerDelegate() {
   }
 
   return safe_browsing_url_checker_delegate_.get();
+}
+
+void ChromeContentBrowserClient::PictureInPicture(
+    content::RenderFrameHost* frame_host,
+    viz::FrameSinkId frame_sink_id) {  // <-- dont actually need this
+  // LOG(ERROR) << "ChromeContentBrowserClient::PictureInPicture";
+  WebContents* web_contents = WebContents::FromRenderFrameHost(frame_host);
+
+  pip_window_controller_.reset(
+      PictureInPictureWindowController::GetOrCreateForWebContents(
+          web_contents));
+  // pip_window_controller_->Init();
+  pip_window_controller_->SetFrameSinkId(frame_sink_id);
+  pip_window_controller_->Show();
+}
+
+void ChromeContentBrowserClient::UpdatePictureInPictureSurfaceId(
+    content::RenderFrameHost* frame_host,
+    viz::SurfaceId surface_id) {
+  LOG(ERROR) << "ChromeContentBrowserClient::UpdatePictureInPictureSurfaceId";
+  pip_window_controller_->EmbedSurface(surface_id);
 }

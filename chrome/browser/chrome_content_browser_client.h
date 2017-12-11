@@ -29,6 +29,7 @@
 
 class ChromeContentBrowserClientParts;
 class PrefRegistrySimple;
+class PictureInPictureWindowController;
 
 namespace base {
 class CommandLine;
@@ -61,6 +62,11 @@ enum class Channel;
 namespace url {
 class Origin;
 }
+
+namespace viz {
+class FrameSinkId;
+class SurfaceId;
+}  // namespace viz
 
 class ChromeContentBrowserClient : public content::ContentBrowserClient {
  public:
@@ -393,6 +399,11 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   bool ShouldForceDownloadResource(const GURL& url,
                                    const std::string& mime_type) override;
 
+  void PictureInPicture(content::RenderFrameHost* frame_host,
+                        viz::FrameSinkId frame_sink_id) override;
+  void UpdatePictureInPictureSurfaceId(content::RenderFrameHost* frame_host,
+                                       viz::SurfaceId surface_id) override;
+
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);
   static bool HandleWebUIReverse(GURL* url,
@@ -470,6 +481,8 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       service_manager::BinderRegistryWithArgs<content::RenderProcessHost*,
                                               const url::Origin&>>
       worker_interfaces_parameterized_;
+
+  std::unique_ptr<PictureInPictureWindowController> pip_window_controller_;
 
   base::WeakPtrFactory<ChromeContentBrowserClient> weak_factory_;
 

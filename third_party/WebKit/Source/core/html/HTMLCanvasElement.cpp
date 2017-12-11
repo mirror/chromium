@@ -1500,6 +1500,9 @@ void HTMLCanvasElement::UnregisterContentsLayer(WebLayer* web_layer) {
   GraphicsLayer::UnregisterContentsLayer(web_layer);
 }
 
+// void HTMLCanvasElement::OnSurfaceIdUpdated(viz::SurfaceId surface_id) {
+// }
+
 FontSelector* HTMLCanvasElement::GetFontSelector() {
   return GetDocument().GetStyleEngine().GetFontSelector();
 }

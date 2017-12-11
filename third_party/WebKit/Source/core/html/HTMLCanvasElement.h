@@ -201,6 +201,7 @@ class CORE_EXPORT HTMLCanvasElement final
   void OnWebLayerUpdated() override;
   void RegisterContentsLayer(WebLayer*) override;
   void UnregisterContentsLayer(WebLayer*) override;
+  // void OnSurfaceIdUpdated(viz::SurfaceId) override;
 
   // CanvasResourceHost implementation
   void NotifySurfaceInvalid() override;
