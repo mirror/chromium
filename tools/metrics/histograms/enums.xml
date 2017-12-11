@@ -24630,7 +24630,6 @@ from previous Chrome versions.
   <int value="-1867342522" label="MaterialDesignHistory:enabled"/>
   <int value="-1861814223" label="MidiManagerDynamicInstantiation:enabled"/>
   <int value="-1860481724" label="ChromeHomeExpandButton:enabled"/>
-  <int value="-1856902397" label="LoadingWithMojo:enabled"/>
   <int value="-1854372227" label="VrBrowsingExperimentalFeatures:enabled"/>
   <int value="-1849706663" label="enable-password-force-saving:disabled"/>
   <int value="-1847888049" label="AutofillSendBillingCustomerNumber:enabled"/>
@@ -24734,7 +24733,6 @@ from previous Chrome versions.
   <int value="-1572010356" label="enable-privet-v3"/>
   <int value="-1571841513" label="enable-devtools-experiments"/>
   <int value="-1559789642" label="RunAllFlashInAllowMode:enabled"/>
-  <int value="-1557527869" label="LoadingWithMojo:disabled"/>
   <int value="-1553477903" label="ash-disable-text-filtering-in-overview-mode"/>
   <int value="-1549871007" label="OneGoogleBarOnLocalNtp:disabled"/>
   <int value="-1546903171" label="enable-touch-drag-drop"/>
