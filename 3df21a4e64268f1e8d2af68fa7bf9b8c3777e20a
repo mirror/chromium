@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8052ff0_12a22c62",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/nosniff/stylesheet.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-11T08:44:39Z",
+      "side": 1,
+      "message": "Yup. I\u0027ll fix this up. Thanks!",
+      "parentUuid": "999261d4_dd25db0a",
+      "range": {
+        "startLine": 32,
+        "startChar": 38,
+        "endLine": 32,
+        "endChar": 50
+      },
+      "revId": "3df21a4e64268f1e8d2af68fa7bf9b8c3777e20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69f82832_d432c36c",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "35d5d587_aec05b87",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-11T08:44:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69f82832_d432c36c",
+      "range": {
+        "startLine": 510,
+        "startChar": 13,
+        "endLine": 510,
+        "endChar": 14
+      },
+      "revId": "3df21a4e64268f1e8d2af68fa7bf9b8c3777e20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe57da1a_d837be9a",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-07T17:51:53Z",
       "side": 1,
       "message": "[Btw, this is a question; not really a request for change. I\u0027m sure it works; I just want to know why it was written this way.]\n------------------------------\n\nI\u0027m a bit irritated about this, but unfortunately I don\u0027t understand the loading logic very well...\n\nIf this doesn\u0027t pass nosniff, then shouldn\u0027t the \u0027old\u0027 resource have its content deleted (as part of that HandleError call) and it wouldn\u0027t load anyways? Of course, if that were the case, you probably wouldn\u0027t have written this fix...\n\nOr is this specifically about requests where the original request doesn\u0027t \u0027nosniff\u0027, but the If-Modified-Since does?",
+      "range": {
+        "startLine": 512,
+        "startChar": 1,
+        "endLine": 517,
+        "endChar": 74
+      },
+      "revId": "3df21a4e64268f1e8d2af68fa7bf9b8c3777e20a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9008944_16d2eae9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-11T08:44:39Z",
+      "side": 1,
+      "message": "\u003e If this doesn\u0027t pass nosniff, then shouldn\u0027t the \u0027old\u0027 resource have its content deleted (as part of that HandleError call) and it wouldn\u0027t load anyways? Of course, if that were the case, you probably wouldn\u0027t have written this fix...\n\nThe bug this is fixing is a revalidation response that itself sends a `nosniff` header, but doesn\u0027t send a `Content-Type`. The old resource does indeed pass the `nosniff` checks, but because we passed in the 304 response here, we fail.",
+      "parentUuid": "fe57da1a_d837be9a",
       "range": {
         "startLine": 512,
         "startChar": 1,
