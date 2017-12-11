@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "a920acb3_55bb621d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1254135
+      },
+      "writtenOn": "2017-12-11T10:08:05Z",
+      "side": 1,
+      "message": "\u003e Then, this CL can link back to that bug entry via the BUG: link I mentioned earlier.\n\nI have created new bug https://bugs.chromium.org/p/chromium/issues/detail?id\u003d793749",
+      "parentUuid": "af04e877_153df84d",
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d79bcf91_f1d4b213",
         "filename": "ipc/ipc_listener.h",
         "patchSetId": 2
@@ -248,6 +266,24 @@
       "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca124e6_ebd4b750",
+        "filename": "ipc/ipc_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1254135
+      },
+      "writtenOn": "2017-12-11T10:08:05Z",
+      "side": 1,
+      "message": "\u003e I\u0027m suggesting reusing OnBadMessageReceived\n\nOk, I did it.",
+      "parentUuid": "312a234b_38d226b3",
+      "revId": "4fe5b4e6d825f25989f312a48a3fe9c10d546b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
