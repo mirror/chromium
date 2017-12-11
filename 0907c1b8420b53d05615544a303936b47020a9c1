@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22068a9e_3f244dc2",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-11T18:29:09Z",
+      "side": 1,
+      "message": "This method is called in both SpdySessionPool\u0027s destructor and HttpNetworkSession\u0027s destructor.\nShould we file a follow-up bug to do CloseAllSessions() only once?",
+      "revId": "0907c1b8420b53d05615544a303936b47020a9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

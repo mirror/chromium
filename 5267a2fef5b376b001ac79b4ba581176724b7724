@@ -70,6 +70,24 @@
       "revId": "5267a2fef5b376b001ac79b4ba581176724b7724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb07f5a5_852cb05c",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-11T18:29:09Z",
+      "side": 1,
+      "message": "I do not understand why CloseCurrentSessionHelper() needs to be called at least once.\n\nDo you know if we care about graceful shutdown in the destructor of SpdySessionPool? \n\nDestroying SpdySessionPool happens during browser shutdown, which means the higher layer won\u0027t care about any data that are yet to be drained. \nHaving graceful shutdown makes more sense for OnIPAddressChanged().",
+      "parentUuid": "8c61d6ea_8947d85b",
+      "revId": "5267a2fef5b376b001ac79b4ba581176724b7724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
