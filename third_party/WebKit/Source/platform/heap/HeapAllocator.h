@@ -508,6 +508,13 @@ struct VectorTraits<blink::Member<T>> : VectorTraitsBase<blink::Member<T>> {
   static const bool kCanInitializeWithMemset = true;
   static const bool kCanClearUnusedSlotsWithMemset = true;
   static const bool kCanMoveWithMemcpy = true;
+
+  template <typename... Args>
+  static blink::Member<T>* ConstructElement(void* location, Args&&... args) {
+    return new (NotNull, location) blink::Member<T>(
+        std::forward<Args>(args)...,
+        blink::WriteBarrierConfiguration::kRequiresWriteBarrier);
+  }
 };
 
 template <typename T>

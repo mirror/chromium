@@ -5,6 +5,7 @@
 #include "platform/heap/CallbackStack.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/heap/Heap.h"
+#include "platform/heap/HeapAllocator.h"
 #include "platform/heap/Member.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/heap/TraceTraits.h"
@@ -12,6 +13,74 @@
 
 namespace blink {
 namespace incremental_marking_test {
+
+class IncrementalMarkingScope {
+ public:
+  explicit IncrementalMarkingScope(ThreadState* thread_state)
+      : thread_state_(thread_state),
+        heap_(thread_state_->Heap()),
+        marking_stack_(heap_.MarkingStack()) {
+    EXPECT_TRUE(marking_stack_->IsEmpty());
+    marking_stack_->Commit();
+    heap_.EnableIncrementalMarkingBarrier();
+  }
+
+  ~IncrementalMarkingScope() {
+    EXPECT_TRUE(marking_stack_->IsEmpty());
+    heap_.DisableIncrementalMarkingBarrier();
+    marking_stack_->Decommit();
+  }
+
+  CallbackStack* marking_stack() const { return marking_stack_; }
+
+ protected:
+  ThreadState* const thread_state_;
+  ThreadHeap& heap_;
+  CallbackStack* const marking_stack_;
+};
+
+template <typename T>
+class ExpectWriteBarrierFires : public IncrementalMarkingScope {
+ public:
+  ExpectWriteBarrierFires(ThreadState* thread_state, T* object)
+      : IncrementalMarkingScope(thread_state),
+        object_(object),
+        header_(HeapObjectHeader::FromPayload(object_)) {
+    EXPECT_FALSE(header_->IsMarked());
+  }
+
+  ~ExpectWriteBarrierFires() {
+    EXPECT_FALSE(marking_stack_->IsEmpty());
+    EXPECT_TRUE(header_->IsMarked());
+    CallbackStack::Item* item = marking_stack_->Pop();
+    EXPECT_EQ(object_, item->Object());
+  }
+
+ private:
+  T* const object_;
+  HeapObjectHeader* const header_;
+};
+
+template <typename T>
+class ExpectNoWriteBarrierFires : public IncrementalMarkingScope {
+ public:
+  ExpectNoWriteBarrierFires(ThreadState* thread_state, T* object)
+      : IncrementalMarkingScope(thread_state),
+        object_(object),
+        header_(HeapObjectHeader::FromPayload(object_)) {
+    EXPECT_TRUE(marking_stack_->IsEmpty());
+    EXPECT_TRUE(header_->IsMarked());
+  }
+
+  ~ExpectNoWriteBarrierFires() {
+    EXPECT_TRUE(marking_stack_->IsEmpty());
+    EXPECT_TRUE(header_->IsMarked());
+  }
+
+ private:
+  T* const object_;
+  HeapObjectHeader* const header_;
+};
 
 class Dummy : public GarbageCollected<Dummy> {
  public:
@@ -32,31 +101,25 @@ TEST(IncrementalMarkingTest, EnableDisableBarrier) {
   BasePage* page = PageFromObject(dummy);
   ThreadHeap& heap = ThreadState::Current()->Heap();
   EXPECT_FALSE(page->IsIncrementalMarking());
+  EXPECT_FALSE(ThreadState::Current()->IsIncrementalMarking());
   heap.EnableIncrementalMarkingBarrier();
   EXPECT_TRUE(page->IsIncrementalMarking());
+  EXPECT_TRUE(ThreadState::Current()->IsIncrementalMarking());
   heap.DisableIncrementalMarkingBarrier();
   EXPECT_FALSE(page->IsIncrementalMarking());
+  EXPECT_FALSE(ThreadState::Current()->IsIncrementalMarking());
 }
 
 TEST(IncrementalMarkingTest, WriteBarrierOnUnmarkedObject) {
   Dummy* parent = Dummy::Create();
   Dummy* child = Dummy::Create();
   HeapObjectHeader* child_header = HeapObjectHeader::FromPayload(child);
-
-  ThreadHeap& heap = ThreadState::Current()->Heap();
-  CallbackStack* marking_stack = heap.MarkingStack();
-
-  EXPECT_TRUE(marking_stack->IsEmpty());
-  marking_stack->Commit();
-  heap.EnableIncrementalMarkingBarrier();
-  EXPECT_FALSE(child_header->IsMarked());
-  parent->set_next(child);
-  EXPECT_TRUE(child_header->IsMarked());
-  EXPECT_FALSE(marking_stack->IsEmpty());
-  CallbackStack::Item* item = marking_stack->Pop();
-  EXPECT_EQ(child, item->Object());
-  heap.DisableIncrementalMarkingBarrier();
-  marking_stack->Decommit();
+  {
+    ExpectWriteBarrierFires<Dummy> scope(ThreadState::Current(), child);
+    EXPECT_FALSE(child_header->IsMarked());
+    parent->set_next(child);
+    EXPECT_TRUE(child_header->IsMarked());
+  }
 }
 
 TEST(IncrementalMarkingTest, NoWriteBarrierOnMarkedObject) {
@@ -64,35 +127,21 @@ TEST(IncrementalMarkingTest, NoWriteBarrierOnMarkedObject) {
   Dummy* child = Dummy::Create();
   HeapObjectHeader* child_header = HeapObjectHeader::FromPayload(child);
   child_header->Mark();
-
-  ThreadHeap& heap = ThreadState::Current()->Heap();
-  CallbackStack* marking_stack = heap.MarkingStack();
-
-  EXPECT_TRUE(marking_stack->IsEmpty());
-  heap.EnableIncrementalMarkingBarrier();
-  EXPECT_TRUE(child_header->IsMarked());
-  parent->set_next(child);
-  EXPECT_TRUE(marking_stack->IsEmpty());
-  heap.DisableIncrementalMarkingBarrier();
+  {
+    ExpectNoWriteBarrierFires<Dummy> scope(ThreadState::Current(), child);
+    parent->set_next(child);
+  }
 }
 
 TEST(IncrementalMarkingTest, ManualWriteBarrierTriggersWhenMarkingIsOn) {
   Dummy* dummy = Dummy::Create();
   HeapObjectHeader* dummy_header = HeapObjectHeader::FromPayload(dummy);
-
-  ThreadHeap& heap = ThreadState::Current()->Heap();
-  CallbackStack* marking_stack = heap.MarkingStack();
-  EXPECT_TRUE(marking_stack->IsEmpty());
-  marking_stack->Commit();
-  heap.EnableIncrementalMarkingBarrier();
-  EXPECT_FALSE(dummy_header->IsMarked());
-  heap.WriteBarrier(dummy);
-  EXPECT_TRUE(dummy_header->IsMarked());
-  EXPECT_FALSE(marking_stack->IsEmpty());
-  CallbackStack::Item* item = marking_stack->Pop();
-  EXPECT_EQ(dummy, item->Object());
-  heap.DisableIncrementalMarkingBarrier();
-  marking_stack->Decommit();
+  {
+    ExpectWriteBarrierFires<Dummy> scope(ThreadState::Current(), dummy);
+    EXPECT_FALSE(dummy_header->IsMarked());
+    ThreadState::Current()->Heap().WriteBarrier(dummy);
+    EXPECT_TRUE(dummy_header->IsMarked());
+  }
 }
 
 TEST(IncrementalMarkingTest, ManualWriteBarrierBailoutWhenMarkingIsOff) {
@@ -168,24 +217,14 @@ TEST(IncrementalMarkingTest, WriteBarrierOnUnmarkedMixinApplication) {
   ParentWithMixinPointer* parent = ParentWithMixinPointer::Create();
   Child* child = Child::Create();
   HeapObjectHeader* child_header = HeapObjectHeader::FromPayload(child);
-
-  ThreadHeap& heap = ThreadState::Current()->Heap();
-  CallbackStack* marking_stack = heap.MarkingStack();
-
   Mixin* mixin = static_cast<Mixin*>(child);
   EXPECT_NE(static_cast<void*>(child), static_cast<void*>(mixin));
-
-  EXPECT_TRUE(marking_stack->IsEmpty());
-  marking_stack->Commit();
-  heap.EnableIncrementalMarkingBarrier();
-  EXPECT_FALSE(child_header->IsMarked());
-  parent->set_mixin(mixin);
-  EXPECT_TRUE(child_header->IsMarked());
-  EXPECT_FALSE(marking_stack->IsEmpty());
-  CallbackStack::Item* item = marking_stack->Pop();
-  EXPECT_EQ(child, item->Object());
-  heap.DisableIncrementalMarkingBarrier();
-  marking_stack->Decommit();
+  {
+    ExpectWriteBarrierFires<Child> scope(ThreadState::Current(), child);
+    EXPECT_FALSE(child_header->IsMarked());
+    parent->set_mixin(mixin);
+    EXPECT_TRUE(child_header->IsMarked());
+  }
 }
 
 TEST(IncrementalMarkingTest, NoWriteBarrierOnMarkedMixinApplication) {
@@ -193,19 +232,76 @@ TEST(IncrementalMarkingTest, NoWriteBarrierOnMarkedMixinApplication) {
   Child* child = Child::Create();
   HeapObjectHeader* child_header = HeapObjectHeader::FromPayload(child);
   child_header->Mark();
-
-  ThreadHeap& heap = ThreadState::Current()->Heap();
-  CallbackStack* marking_stack = heap.MarkingStack();
-
   Mixin* mixin = static_cast<Mixin*>(child);
   EXPECT_NE(static_cast<void*>(child), static_cast<void*>(mixin));
+  {
+    ExpectNoWriteBarrierFires<Child> scope(ThreadState::Current(), child);
+    EXPECT_TRUE(child_header->IsMarked());
+    parent->set_mixin(mixin);
+    EXPECT_TRUE(child_header->IsMarked());
+  }
+}
 
-  EXPECT_TRUE(marking_stack->IsEmpty());
-  heap.EnableIncrementalMarkingBarrier();
-  EXPECT_TRUE(child_header->IsMarked());
-  parent->set_mixin(mixin);
-  EXPECT_TRUE(marking_stack->IsEmpty());
-  heap.DisableIncrementalMarkingBarrier();
+TEST(IncrementalMarkingTest, HeapVectorOfMemberPushBack) {
+  Dummy* dummy = Dummy::Create();
+  HeapVector<Member<Dummy>> vec;
+  {
+    ExpectWriteBarrierFires<Dummy> scope(ThreadState::Current(), dummy);
+    vec.push_back(dummy);
+  }
+}
+
+TEST(IncrementalMarkingTest, HeapVectorOfMemberEmplaceBack) {
+  Dummy* dummy = Dummy::Create();
+  HeapVector<Member<Dummy>> vec;
+  {
+    ExpectWriteBarrierFires<Dummy> scope(ThreadState::Current(), dummy);
+    vec.emplace_back(dummy);
+  }
+}
+
+TEST(IncrementalMarkingTest, HeapVectorOfPairOfMemberPushBack) {
+  Dummy* dummy1 = Dummy::Create();
+  Dummy* dummy2 = Dummy::Create();
+  HeapObjectHeader* dummy1_header = HeapObjectHeader::FromPayload(dummy1);
+  HeapObjectHeader* dummy2_header = HeapObjectHeader::FromPayload(dummy2);
+  HeapVector<std::pair<Member<Dummy>, Member<Dummy>>> vec;
+  {
+    IncrementalMarkingScope scope(ThreadState::Current());
+    EXPECT_FALSE(dummy1_header->IsMarked());
+    EXPECT_FALSE(dummy2_header->IsMarked());
+    vec.push_back(std::make_pair(Member<Dummy>(dummy1), Member<Dummy>(dummy2)));
+    EXPECT_TRUE(dummy1_header->IsMarked());
+    EXPECT_TRUE(dummy2_header->IsMarked());
+    EXPECT_FALSE(scope.marking_stack()->IsEmpty());
+    CallbackStack::Item* item = scope.marking_stack()->Pop();
+    EXPECT_EQ(dummy2, item->Object());
+    EXPECT_FALSE(scope.marking_stack()->IsEmpty());
+    item = scope.marking_stack()->Pop();
+    EXPECT_EQ(dummy1, item->Object());
+  }
+}
+
+TEST(IncrementalMarkingTest, HeapVectorOfPairOfMemberEmplaceBack) {
+  Dummy* dummy1 = Dummy::Create();
+  Dummy* dummy2 = Dummy::Create();
+  HeapObjectHeader* dummy1_header = HeapObjectHeader::FromPayload(dummy1);
+  HeapObjectHeader* dummy2_header = HeapObjectHeader::FromPayload(dummy2);
+  HeapVector<std::pair<Member<Dummy>, Member<Dummy>>> vec;
+  {
+    IncrementalMarkingScope scope(ThreadState::Current());
+    EXPECT_FALSE(dummy1_header->IsMarked());
+    EXPECT_FALSE(dummy2_header->IsMarked());
+    vec.emplace_back(dummy1, dummy2);
+    EXPECT_TRUE(dummy1_header->IsMarked());
+    EXPECT_TRUE(dummy2_header->IsMarked());
+    EXPECT_FALSE(scope.marking_stack()->IsEmpty());
+    CallbackStack::Item* item = scope.marking_stack()->Pop();
+    EXPECT_EQ(dummy2, item->Object());
+    EXPECT_FALSE(scope.marking_stack()->IsEmpty());
+    item = scope.marking_stack()->Pop();
+    EXPECT_EQ(dummy1, item->Object());
+  }
 }
 
 }  // namespace incremental_marking_test

@@ -23,6 +23,8 @@ enum class TracenessMemberConfiguration {
   kUntraced,
 };
 
+enum class WriteBarrierConfiguration { kRequiresWriteBarrier };
+
 template <typename T,
           TracenessMemberConfiguration tracenessConfiguration =
               TracenessMemberConfiguration::kTraced>
@@ -196,6 +198,12 @@ class Member : public MemberBase<T, TracenessMemberConfiguration::kTraced> {
  public:
   Member() : Parent() {}
   Member(std::nullptr_t) : Parent(nullptr) {}
+  Member(T* raw, WriteBarrierConfiguration) : Parent(raw) {
+    WriteBarrier(this->raw_);
+  }
+  Member(T& raw, WriteBarrierConfiguration) : Parent(raw) {
+    WriteBarrier(this->raw_);
+  }
   Member(T* raw) : Parent(raw) {
     // No write barrier for initializing stores.
   }

@@ -25,6 +25,7 @@
 #include <type_traits>
 #include <utility>
 #include "base/memory/scoped_refptr.h"
+#include "platform/wtf/Allocator.h"
 #include "platform/wtf/TypeTraits.h"
 
 namespace WTF {
@@ -64,6 +65,11 @@ struct VectorTraitsBase {
   // We don't support weak handling in vectors.
   static const WeakHandlingFlag kWeakHandlingFlag =
       kNoWeakHandlingInCollections;
+
+  template <typename... Args>
+  static T* ConstructElement(void* location, Args&&... args) {
+    return new (NotNull, location) T(std::forward<Args>(args)...);
+  }
 };
 
 template <typename T>
@@ -139,6 +145,23 @@ struct VectorTraits<std::pair<First, Second>> {
   // We don't support weak handling in vectors.
   static const WeakHandlingFlag kWeakHandlingFlag =
       kNoWeakHandlingInCollections;
+
+  template <typename U, typename V>
+  static std::pair<First, Second>* ConstructElement(void* location,
+                                                    U&& val1,
+                                                    V&& val2) {
+    std::pair<First, Second>* pair =
+        new (NotNull, location) std::pair<First, Second>();
+    FirstTraits::ConstructElement(&pair->first, std::forward<U>(val1));
+    SecondTraits::ConstructElement(&pair->second, std::forward<V>(val2));
+    return pair;
+  }
+
+  template <typename U>
+  static std::pair<First, Second>* ConstructElement(void* location, U&& value) {
+    return new (NotNull, location)
+        std::pair<First, Second>(std::forward<U>(value));
+  }
 };
 
 }  // namespace WTF

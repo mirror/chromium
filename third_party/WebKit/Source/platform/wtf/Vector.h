@@ -152,7 +152,7 @@ struct VectorMover<false, T> {
   STATIC_ONLY(VectorMover);
   static void Move(T* src, T* src_end, T* dst) {
     while (src != src_end) {
-      new (NotNull, dst) T(std::move(*src));
+      VectorTraits<T>::ConstructElement(dst, std::move(*src));
       src->~T();
       ++dst;
       ++src;
@@ -166,7 +166,7 @@ struct VectorMover<false, T> {
       while (src != src_end) {
         --src_end;
         --dst_end;
-        new (NotNull, dst_end) T(std::move(*src_end));
+        VectorTraits<T>::ConstructElement(dst_end, std::move(*src_end));
         src_end->~T();
       }
     }
@@ -207,7 +207,7 @@ struct VectorCopier<false, T> {
   template <typename U>
   static void UninitializedCopy(const U* src, const U* src_end, T* dst) {
     while (src != src_end) {
-      new (NotNull, dst) T(*src);
+      VectorTraits<T>::ConstructElement(dst, *src);
       ++dst;
       ++src;
     }
@@ -237,7 +237,7 @@ struct VectorFiller<false, T> {
   STATIC_ONLY(VectorFiller);
   static void UninitializedFill(T* dst, T* dst_end, const T& val) {
     while (dst != dst_end) {
-      new (NotNull, dst) T(val);
+      VectorTraits<T>::ConstructElement(dst, T(val));
       ++dst;
     }
   }
@@ -1693,7 +1693,7 @@ ALWAYS_INLINE void Vector<T, inlineCapacity, Allocator>::push_back(U&& val) {
   DCHECK(Allocator::IsAllocationAllowed());
   if (LIKELY(size() != capacity())) {
     ANNOTATE_CHANGE_SIZE(begin(), capacity(), size_, size_ + 1);
-    new (NotNull, end()) T(std::forward<U>(val));
+    VectorTraits<T>::ConstructElement(end(), std::forward<U>(val));
     ++size_;
     return;
   }
@@ -1710,7 +1710,7 @@ ALWAYS_INLINE T& Vector<T, inlineCapacity, Allocator>::emplace_back(
     ExpandCapacity(size() + 1);
 
   ANNOTATE_CHANGE_SIZE(begin(), capacity(), size_, size_ + 1);
-  T* t = new (NotNull, end()) T(std::forward<Args>(args)...);
+  T* t = VectorTraits<T>::ConstructElement(end(), std::forward<Args>(args)...);
   ++size_;
   return *t;
 }
@@ -1744,7 +1744,7 @@ NEVER_INLINE void Vector<T, inlineCapacity, Allocator>::AppendSlowCase(
   DCHECK(begin());
 
   ANNOTATE_CHANGE_SIZE(begin(), capacity(), size_, size_ + 1);
-  new (NotNull, end()) T(std::forward<U>(*ptr));
+  VectorTraits<T>::ConstructElement(end(), std::forward<U>(*ptr));
   ++size_;
 }
 
@@ -1774,7 +1774,7 @@ ALWAYS_INLINE void Vector<T, inlineCapacity, Allocator>::UncheckedAppend(
   push_back(std::forward<U>(val));
 #else
   DCHECK_LT(size(), capacity());
-  new (NotNull, end()) T(std::forward<U>(val));
+  VectorTraits<T>::ConstructElement(end(), std::forward<U>(val));
   ++size_;
 #endif
 }
@@ -1793,7 +1793,7 @@ inline void Vector<T, inlineCapacity, Allocator>::insert(size_t position,
   ANNOTATE_CHANGE_SIZE(begin(), capacity(), size_, size_ + 1);
   T* spot = begin() + position;
   TypeOperations::MoveOverlapping(spot, end(), spot + 1);
-  new (NotNull, spot) T(std::forward<U>(*data));
+  VectorTraits<T>::ConstructElement(spot, std::forward<U>(*data));
   ++size_;
 }
 
