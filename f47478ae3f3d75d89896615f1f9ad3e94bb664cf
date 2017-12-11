@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60d64655_be8deba7",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-11T15:06:33Z",
+      "side": 1,
+      "message": "Added reference to the comment in Discard().",
+      "parentUuid": "d047df40_a7f53eb9",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23394509_21ff422d",
         "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d71dfa_29de046b",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-11T15:06:33Z",
+      "side": 1,
+      "message": "We only care about last audible time.",
+      "parentUuid": "23394509_21ff422d",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "946af1ac_1e442afd",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-11T15:06:33Z",
+      "side": 1,
+      "message": "Added TODO.\n\nWebContentsDelegate::NavigationStateChanged() (not WebContentsObserver) is notified when the audible, capturing or mirrored state of the tab changes.",
+      "parentUuid": "96d37595_d6996797",
+      "range": {
+        "startLine": 82,
+        "startChar": 23,
+        "endLine": 82,
+        "endChar": 38
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8104e4c_0e3ade65",
         "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba15aeb_397c3eba",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-11T15:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8104e4c_0e3ade65",
+      "range": {
+        "startLine": 158,
+        "startChar": 24,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c42e8bef_9bb17ca7",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-11T15:06:33Z",
+      "side": 1,
+      "message": "See lines 176-181. This exception does not apply to urgent discard on ChromeOS.",
+      "parentUuid": "4f1ac825_65e06a3f",
+      "range": {
+        "startLine": 187,
+        "startChar": 20,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99e4c804_1fe00088",
         "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
         "patchSetId": 5
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "94307e62_2bd18386",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-11T15:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99e4c804_1fe00088",
+      "range": {
+        "startLine": 31,
+        "startChar": 53,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fe05bd0_048fb5fd",
         "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
         "patchSetId": 5
@@ -160,6 +304,30 @@
       "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650faeac_65167539",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-11T15:06:33Z",
+      "side": 1,
+      "message": "I planned to use it externally to implement memory purge. I\u0027ll make it private for now, and move to public if/when I need it for memory purge.",
+      "parentUuid": "2fe05bd0_048fb5fd",
+      "range": {
+        "startLine": 75,
+        "startChar": 30,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
