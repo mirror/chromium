@@ -130,11 +130,8 @@ void FrameContentWatcher::NotifyBrowserOfChange() {
   for (const base::StringPiece& selector : transitive_selectors)
     selector_strings.push_back(selector.as_string());
 
-  // TODO(devlin): Frame-ify this message.
-  content::RenderView* view =
-      content::RenderView::FromWebView(top_frame->View());
-  view->Send(new ExtensionHostMsg_OnWatchedPageChange(view->GetRoutingID(),
-                                                      selector_strings));
+  render_frame()->Send(new ExtensionHostMsg_OnWatchedPageChange(
+      render_frame()->GetRoutingID(), selector_strings));
 }
 
 }  // namespace
