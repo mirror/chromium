@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b57724d5_6abb0105",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-11T23:43:37Z",
+      "side": 1,
+      "message": "I waffled on that.  Changed.\n\nI found there\u0027s already a similar-but-different class (WidgetClosingObserver) in widget_test.h (which this file #includes).  Did you intentionally differ from that class?",
+      "parentUuid": "23fa054a_eef84372",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "adc7b245_afc0f9b5",
         "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-06T06:26:21Z",
       "side": 1,
       "message": "yeah i think it\u0027s just the interactive case that needs this. But I\u0027m not sure WidgetCloser is the right place -- it sets a property on the process type to allow it to be activated, so only needs to be done once per process. But also there\u0027s not really an dramas I know of from doing it multiple times.",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee4ad3f_cea1d809",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-11T23:43:37Z",
+      "side": 1,
+      "message": "I don\u0027t think it should be run more times than the old code, so if something is broken, it should have been broken before.\n\nI moved it to the caller since if we only need it when interactive mode, that\u0027s clearer.\n\nThe function declaration gives no real clue as to what this is doing.  Why do we need to set that property?  And why does the function also activate the widget -- to ensure it\u0027s on top so users see it?",
+      "parentUuid": "adc7b245_afc0f9b5",
       "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0b138bae_15a1e2ce",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-11T23:43:37Z",
+      "side": 1,
+      "message": "Right, and they\u0027re both in the list.  I\u0027m not understanding what you\u0027re pointing out here.",
+      "parentUuid": "8ced8d76_6bde3a67",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afeb6a03_d1bc648b",
         "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3bbed430_f27c4b5e",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-11T23:43:37Z",
+      "side": 1,
+      "message": "Yeah, this was refactored without staring at it sufficiently to see what it was really doing.\n\nThese are the same features we use in UseMdOnly(), so I decided to reuse that, changing the existing ScopedFeatureList to a unique_ptr so we can test to see if it\u0027s been set before and avoid calling InitWithFeatures() on it twice (which the code will let you do, but will result in bad things).",
+      "parentUuid": "afeb6a03_d1bc648b",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "311aa425_bad819a4",
         "filename": "chrome/browser/ui/test/test_browser_dialog.h",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-06T06:26:21Z",
       "side": 1,
       "message": "There are a few examples using the mixin already. Extension tests in particular have a big provider of testing stuff extending from InProcessBrowserTest.\n\n  password_manager_browsertest.cc:    : public SupportsTestDialog\u003cPasswordManagerBrowserTestBase\u003e {\n  permission_request_manager_browsertest.cc:    : public SupportsTestDialog\u003cPermissionRequestManagerBrowserTest\u003e {\n  extension_installed_bubble_browsertest.cc:    : public SupportsTestDialog\u003cExtensionBrowserTest\u003e {\n  extension_message_bubble_view_browsertest.cc:    : public SupportsTestDialog\u003cExtensionMessageBubbleBrowserTest\u003e {\n  manage_passwords_bubble_view_browsertest.cc:    : public SupportsTestDialog\u003cManagePasswordsTest\u003e {\n  payment_request_browsertest.cc:    : public SupportsTestDialog\u003cPaymentRequestNoShippingTest\u003e {\n  profile_chooser_view_browsertest.cc:    : public SupportsTestDialog\u003cExtensionBrowserTest\u003e {\n  try_chrome_dialog_browsertest.cc:    : public SupportsTestDialog\u003cTryChromeDialogBrowserTestBase\u003e,",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe078fc_87d18ad9",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-11T23:43:37Z",
+      "side": 1,
+      "message": "I blame codesearch...  OK, restoring.",
+      "parentUuid": "311aa425_bad819a4",
       "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "0f3d6d61_e43ee6e4",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-11T23:43:37Z",
+      "side": 1,
+      "message": "Whoops, typo.",
+      "parentUuid": "1b6d23c7_4e282eda",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce3f896d_9044a92f",
         "filename": "chrome/browser/ui/test/test_browser_dialog.h",
         "patchSetId": 2
@@ -132,6 +240,24 @@
       "writtenOn": "2017-12-06T06:26:21Z",
       "side": 1,
       "message": "this might be a kind of layering bug - i.e. it would be nice not to expose widget.h in this header since not all tests using it are under c/b/ui/views (some are c/b/ui).",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea92837_5f428fcb",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-11T23:43:37Z",
+      "side": 1,
+      "message": "I agree with you that this is a layering bug.  I think we already have this layering bug today, it\u0027s just less visible since it\u0027s confined to the .cc file.  But it\u0027s still a bug.  Code in the .cc file here is in a non-views subdir but depends on views code, and non-views embedders could try to use this framework and get weird compile failures.\n\nI\u0027ll try and make it so non-TOOLKIT_VIEWS folks at least can compile.",
+      "parentUuid": "ce3f896d_9044a92f",
       "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
