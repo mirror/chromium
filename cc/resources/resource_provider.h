@@ -54,6 +54,9 @@ class GpuMemoryBufferManager;
 namespace gles {
 class GLES2Interface;
 }
+namespace raster {
+class RasterInterface;
+}
 }
 
 namespace viz {
@@ -164,11 +167,11 @@ class CC_EXPORT ResourceProvider
   // needed to read and write the resource contents. The user must ensure
   // that they only use GL locks on GL resources, etc, and this is enforced
   // by assertions.
-  class CC_EXPORT ScopedWriteLockGL {
+  class CC_EXPORT ScopedWriteLockGPU {
    public:
-    ScopedWriteLockGL(ResourceProvider* resource_provider,
-                      viz::ResourceId resource_id);
-    ~ScopedWriteLockGL();
+    ScopedWriteLockGPU(ResourceProvider* resource_provider,
+                       viz::ResourceId resource_id);
+    ~ScopedWriteLockGPU();
 
     GLenum target() const { return target_; }
     viz::ResourceFormat format() const { return format_; }
@@ -190,19 +193,11 @@ class CC_EXPORT ResourceProvider
 
     void set_generate_mipmap() { generate_mipmap_ = true; }
 
-    // Returns texture id on compositor context, allocating if necessary.
-    GLuint GetTexture();
-
-    // Creates mailbox that can be consumed on another context.
+    // Creates mailbox on compositor context that can be consumed on another
+    // context.
     void CreateMailbox();
 
-    // Creates a texture id, allocating if necessary, on the given context. The
-    // texture id must be deleted by the caller.
-    GLuint ConsumeTexture(gpu::gles2::GLES2Interface* gl);
-
-   private:
-    void LazyAllocate(gpu::gles2::GLES2Interface* gl, GLuint texture_id);
-
+   protected:
     ResourceProvider* const resource_provider_;
     const viz::ResourceId resource_id_;
 
@@ -223,7 +218,37 @@ class CC_EXPORT ResourceProvider
     bool synchronized_ = false;
     bool generate_mipmap_ = false;
 
+   private:
+    DISALLOW_COPY_AND_ASSIGN(ScopedWriteLockGPU);
+  };
+
+  class CC_EXPORT ScopedWriteLockGL : public ScopedWriteLockGPU {
+   public:
+    ScopedWriteLockGL(ResourceProvider* resource_provider,
+                      viz::ResourceId resource_id);
+    ~ScopedWriteLockGL();
+
+    // Returns texture id on compositor context, allocating if necessary.
+    GLuint GetTexture();
+
+   private:
+    void LazyAllocate(gpu::gles2::GLES2Interface* gl, GLuint texture_id);
+
     DISALLOW_COPY_AND_ASSIGN(ScopedWriteLockGL);
+  };
+
+  class CC_EXPORT ScopedWriteLockRaster : public ScopedWriteLockGPU {
+   public:
+    ScopedWriteLockRaster(ResourceProvider* resource_provider,
+                          viz::ResourceId resource_id);
+    ~ScopedWriteLockRaster();
+
+    GLuint ConsumeTexture(gpu::raster::RasterInterface* rs);
+
+   private:
+    void LazyAllocate(gpu::raster::RasterInterface* gl, GLuint texture_id);
+
+    DISALLOW_COPY_AND_ASSIGN(ScopedWriteLockRaster);
   };
 
   // TODO(sunnyps): Move to //components/viz/common/gl_helper.h ?
@@ -322,6 +347,8 @@ class CC_EXPORT ResourceProvider
   static GLint GetActiveTextureUnit(gpu::gles2::GLES2Interface* gl);
 
   static gpu::SyncToken GenerateSyncTokenHelper(gpu::gles2::GLES2Interface* gl);
+  static gpu::SyncToken GenerateSyncTokenHelper(
+      gpu::raster::RasterInterface* rs);
 
   GLenum GetImageTextureTarget(gfx::BufferUsage usage,
                                viz::ResourceFormat format) const;
