@@ -5,12 +5,48 @@
 #include "platform/scheduler/utility/webthread_impl_for_utility_thread.h"
 
 #include "base/threading/thread_task_runner_handle.h"
+#include "platform/WebTaskRunner.h"
 
 namespace blink {
 namespace scheduler {
 
+class WebThreadImplForUtilityThread::WebTaskRunnerImplForUtilityThread
+    : public blink::WebTaskRunner {
+ public:
+  WebTaskRunnerImplForUtilityThread(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+      : task_runner_(std::move(task_runner)) {}
+
+  double MonotonicallyIncreasingVirtualTimeSeconds() const override {
+    NOTIMPLEMENTED();
+    return 0;
+  }
+
+  bool RunsTasksInCurrentSequence() const override {
+    return task_runner_->RunsTasksInCurrentSequence();
+  }
+
+  bool PostNonNestableDelayedTask(const base::Location& location,
+                                  base::OnceClosure task,
+                                  base::TimeDelta delay) override {
+    return task_runner_->PostNonNestableDelayedTask(location, std::move(task),
+                                                    delay);
+  }
+
+  bool PostDelayedTask(const base::Location& location,
+                       base::OnceClosure task,
+                       base::TimeDelta delay) override {
+    return task_runner_->PostDelayedTask(location, std::move(task), delay);
+  }
+
+ private:
+  ~WebTaskRunnerImplForUtilityThread() override {}
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+};
+
 WebThreadImplForUtilityThread::WebThreadImplForUtilityThread()
     : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      web_task_runner_(new WebTaskRunnerImplForUtilityThread(task_runner_)),
       thread_id_(base::PlatformThread::CurrentId()) {}
 
 WebThreadImplForUtilityThread::~WebThreadImplForUtilityThread() {}
@@ -36,6 +72,10 @@ WebThreadImplForUtilityThread::GetIdleTaskRunner() const {
 }
 
 void WebThreadImplForUtilityThread::Init() {}
+
+WebTaskRunner* WebThreadImplForUtilityThread::GetWebTaskRunner() {
+  return web_task_runner_.get();
+}
 
 }  // namespace scheduler
 }  // namespace blink
