@@ -899,6 +899,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void DidSetFramePolicyHeaders(
       blink::WebSandboxFlags sandbox_flags,
       const blink::ParsedFeaturePolicy& parsed_header) override;
+  void DidCommitSameDocumentNavigation(
+      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+          validated_params) override;
 
   // Registers Mojo interfaces that this frame host makes available.
   void RegisterMojoInterfaces();
@@ -1022,11 +1025,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
                                  bool success,
                                  const base::string16& user_input);
 
-  // Returns ownership of the NavigationHandle associated with a navigation that
-  // just committed.
-  std::unique_ptr<NavigationHandleImpl> TakeNavigationHandleForCommit(
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params);
-
   // Called by |beforeunload_timeout_| when the beforeunload timeout fires.
   void BeforeUnloadTimeout();
 
@@ -1072,6 +1070,14 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // for this frame. May be overridden by friend subclasses for e.g. tests which
   // wish to intercept outgoing navigation control messages.
   virtual mojom::FrameNavigationControl* GetNavigationControl();
+
+  // Utility function used to validate potentially harmful parameters sent by
+  // the renderer during the commit notification.
+  // A return value of true means that the commit should proceed.
+  // TODO(ahemery): Such checks should be part of a StructTraits template
+  // once FrameHostMsg_DidCommitProvisionalLoad_Params is a mojo structure.
+  bool ValidateProvisionalCommitParams(
+      FrameHostMsg_DidCommitProvisionalLoad_Params* validated_params);
 
   // For now, RenderFrameHosts indirectly keep RenderViewHosts alive via a
   // refcount that calls Shutdown when it reaches zero.  This allows each
