@@ -14,6 +14,7 @@
 namespace blink {
 namespace mojom {
 class SerializedBlob;
+class SerializedArrayBufferContentsVector;
 }
 
 // This struct represents messages as they are posted over a broadcast channel.
@@ -38,6 +39,8 @@ struct BLINK_COMMON_EXPORT CloneableMessage {
 
   // Blob handles for any blobs being sent in this message.
   std::vector<mojo::StructPtr<mojom::SerializedBlob>> blobs;
+  mojo::StructPtr<mojom::SerializedArrayBufferContentsVector>
+      sharedArrayBufferContentsVector;
 };
 
 }  // namespace blink

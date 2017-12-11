@@ -27,6 +27,7 @@
 #include "platform/wtf/typed_arrays/ArrayBufferContents.h"
 #include "build/build_config.h"
 
+#include <stdio.h>
 #include <string.h>
 #if defined(OS_LINUX)
 #include "sandbox/linux/services/resource_limits.h"  // nogncheck
@@ -61,6 +62,7 @@ ArrayBufferContents::ArrayBufferContents(
     SharingType is_shared,
     ArrayBufferContents::InitializationPolicy policy)
     : holder_(base::AdoptRef(new DataHolder())) {
+  printf("creating new arrayBuffercontents A\n");
   // Do not allow 32-bit overflow of the total size.
   unsigned total_size = num_elements * element_byte_size;
   if (num_elements) {

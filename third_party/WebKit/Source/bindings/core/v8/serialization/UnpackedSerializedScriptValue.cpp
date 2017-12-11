@@ -30,6 +30,20 @@ UnpackedSerializedScriptValue::UnpackedSerializedScriptValue(
     array_buffer_contents.clear();
   }
 
+  auto& shared_array_buffers = value_->shared_array_buffer_contents_array_;
+
+  if (shared_array_buffers && !shared_array_buffers->IsEmpty()) {
+    shared_array_buffers_.Grow(shared_array_buffers->size());
+    std::transform(
+        shared_array_buffers->begin(), shared_array_buffers->end(),
+        shared_array_buffers_.begin(),
+        [](WTF::ArrayBufferContents& contents) -> DOMSharedArrayBuffer* {
+          return DOMSharedArrayBuffer::Create(contents);
+        });
+    shared_array_buffers->clear();
+  }
+  value_->ClearSharedArrayBuffers();
+
   auto& image_bitmap_contents = value_->image_bitmap_contents_array_;
   if (!image_bitmap_contents.IsEmpty()) {
     image_bitmaps_.Grow(image_bitmap_contents.size());
@@ -46,6 +60,7 @@ UnpackedSerializedScriptValue::~UnpackedSerializedScriptValue() {}
 
 void UnpackedSerializedScriptValue::Trace(blink::Visitor* visitor) {
   visitor->Trace(array_buffers_);
+  visitor->Trace(shared_array_buffers_);
   visitor->Trace(image_bitmaps_);
 }
 

@@ -12,6 +12,7 @@
 namespace blink {
 
 class DOMArrayBufferBase;
+class DOMSharedArrayBuffer;
 class ImageBitmap;
 class OffscreenCanvas;
 class MessagePort;
