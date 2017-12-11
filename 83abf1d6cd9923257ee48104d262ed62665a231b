@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01c4a529_f6aa6910",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T16:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4985122_da3e272c",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc494a8f_2cc321db",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ae6baa_94837983",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T16:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc494a8f_2cc321db",
+      "range": {
+        "startLine": 14,
+        "startChar": 14,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c4fecc47_2e0a569b",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T16:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fafa5bd_1519343d",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 33
+      },
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "187542a4_8573a6d9",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 10
@@ -85,6 +157,24 @@
       "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8fa253e_afc955fd",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T16:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187542a4_8573a6d9",
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "610be120_d9cbc925",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T16:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53174de3_df4035be",
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0244088e_17f93606",
         "filename": "components/exo/shell_surface_base.h",
         "patchSetId": 10
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "091bed2e_0f55835d",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T16:42:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0244088e_17f93606",
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a304789_e74d8c75",
         "filename": "components/exo/shell_surface_unittest.cc",
         "patchSetId": 10
@@ -133,6 +259,24 @@
       "writtenOn": "2017-12-08T22:18:06Z",
       "side": 1,
       "message": "do we still need this here? have client controlled tests not been moved now so this is no longer needed?",
+      "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62be0e1e_bb005929",
+        "filename": "components/exo/shell_surface_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T16:42:57Z",
+      "side": 1,
+      "message": "This was still used for scaling test, but I think we can move them.\nPlease let me know if you still want to keep that here, and I\u0027ll move them back.",
+      "parentUuid": "6a304789_e74d8c75",
       "revId": "83abf1d6cd9923257ee48104d262ed62665a231b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
