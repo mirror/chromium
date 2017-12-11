@@ -47,6 +47,8 @@ jlong JNI_AddToHomescreenManager_InitializeAndStart(
       content::WebContents::FromJavaWebContents(java_web_contents);
   AddToHomescreenManager* manager = new AddToHomescreenManager(env, obj);
   manager->Start(web_contents);
+  WebApkInstallService::Get(web_contents->GetBrowserContext())
+      ->TriggerFreeSpaceCheck();
   return reinterpret_cast<intptr_t>(manager);
 }
 
