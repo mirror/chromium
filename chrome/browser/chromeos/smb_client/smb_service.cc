@@ -35,7 +35,7 @@ SmbService* SmbService::Get(content::BrowserContext* context) {
 }
 
 void SmbService::Mount(const file_system_provider::MountOptions& options,
-                       const std::string& share_path,
+                       const base::FilePath& share_path,
                        MountResponse callback) {
   chromeos::DBusThreadManager::Get()->GetSmbProviderClient()->Mount(
       share_path, base::BindOnce(&SmbService::OnMountResponse,
