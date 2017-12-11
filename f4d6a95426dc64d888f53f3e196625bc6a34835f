@@ -34,6 +34,24 @@
       "revId": "f4d6a95426dc64d888f53f3e196625bc6a34835f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cddaf86f_2ee3406b",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-11T20:40:12Z",
+      "side": 1,
+      "message": "Looks reasonable to me, but not 100% sure. Let\u0027s add a core/css OWNER as a reviewer.",
+      "parentUuid": "c0178ee3_661fed41",
+      "revId": "f4d6a95426dc64d888f53f3e196625bc6a34835f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
