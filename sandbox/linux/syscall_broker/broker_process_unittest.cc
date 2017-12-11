@@ -666,11 +666,6 @@ TEST(BrokerProcess, CreateFile) {
   ASSERT_TRUE(open_broker.Init(base::BindRepeating(&NoOpCallback)));
 
   int fd = -1;
-
-  // Try without O_EXCL
-  fd = open_broker.Open(tempfile_name, O_RDWR | O_CREAT);
-  ASSERT_EQ(fd, -kFakeErrnoSentinel);
-
   const char kTestText[] = "TESTTESTTEST";
   // Create a file
   fd = open_broker.Open(tempfile_name, O_RDWR | O_CREAT | O_EXCL);
