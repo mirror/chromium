@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "8a6c5082_f9aee539",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-11T22:09:37Z",
+      "side": 1,
+      "message": "Ok. I think it would be good to document this in the header file.",
+      "parentUuid": "863c291b_5c7bc49f",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc666b10_6044244e",
         "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
         "patchSetId": 16
@@ -469,6 +487,24 @@
     },
     {
       "key": {
+        "uuid": "aa3c760f_5836b0d2",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-11T22:09:37Z",
+      "side": 1,
+      "message": "Yeah, I was mostly concerned about making sure offscreen tab / PresentationReceiverWindow started from an OTR profile gets cleaned up properly. Would be good to have a test covering this.",
+      "parentUuid": "5ab10201_1303cd92",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21c7e426_3874f921",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
         "patchSetId": 16
@@ -536,6 +572,24 @@
       "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "196d6676_8fe86fc8",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-11T22:09:37Z",
+      "side": 1,
+      "message": "OnceCallbacks reset their internal state on Run() so I don\u0027t think you need to do base::ResetAndReturn().",
+      "parentUuid": "5ce23c58_f2bbf97f",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

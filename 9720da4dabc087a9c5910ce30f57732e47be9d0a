@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51c48084_787d3ef0",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-11T22:09:37Z",
+      "side": 1,
+      "message": "Not a big deal, but I think the key type has to be Profile* const in order to avoid implicit copy construction of the entries.",
+      "range": {
+        "startLine": 107,
+        "startChar": 48,
+        "endLine": 107,
+        "endChar": 56
+      },
+      "revId": "9720da4dabc087a9c5910ce30f57732e47be9d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b1aa50_1e6f88fc",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-11T22:09:37Z",
+      "side": 1,
+      "message": "Can these 3 lines simply be an erase(profile), and be moved above the if-else?",
+      "revId": "9720da4dabc087a9c5910ce30f57732e47be9d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f7dbec_7266a56a",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-11T22:09:37Z",
+      "side": 1,
+      "message": "Is there a need for the static method, or can callers just use the ctor?",
+      "revId": "9720da4dabc087a9c5910ce30f57732e47be9d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
