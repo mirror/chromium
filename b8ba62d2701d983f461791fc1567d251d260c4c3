@@ -16,6 +16,52 @@
       "revId": "b8ba62d2701d983f461791fc1567d251d260c4c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33179d0c_7c0ef7e0",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-11T13:10:58Z",
+      "side": 1,
+      "message": "Replace with OnceClosure",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 20
+      },
+      "revId": "b8ba62d2701d983f461791fc1567d251d260c4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a860bb05_8bdebb74",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-11T13:10:58Z",
+      "side": 1,
+      "message": "nit: These names look too long.\nPerhaps you can shorten the names if you remove the expectations from the test names.\nFor example, this one can be renamed LocalLoggingEnabledWithoutPeerConnections and the next tests\nPeerConnectionAddedAndLocalLoggingEnabled and LocalLoggingEnabledAndPeerConnectionAdded.",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 271,
+        "endChar": 80
+      },
+      "revId": "b8ba62d2701d983f461791fc1567d251d260c4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
