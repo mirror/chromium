@@ -1,0 +1,6 @@
+m2repository
+.gradle
+.idea/
+buildSrc/.gradle/
+buildSrc/build/
+local.properties

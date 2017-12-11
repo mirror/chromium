@@ -1,0 +1,8 @@
+Name: Android Deps Repository
+Short Name: android_deps
+Version: 1
+License: DEFERRED=additional_license_paths.json
+Security Critical: no
+
+Description:
+A gradle-specified repository for Android and Java dependencies.
