@@ -38,13 +38,12 @@ using ::testing::_;
 using ::testing::Invoke;
 using ::testing::NiceMock;
 using ::testing::StrictMock;
-using PeerConnectionKey = WebRtcEventLogManager::PeerConnectionKey;
 
 namespace {
 
-class MockLocalLogsObserver : public WebRtcEventLogManager::LocalLogsObserver {
+class MockWebRtcLocalEventLogsObserver : public WebRtcLocalEventLogsObserver {
  public:
-  ~MockLocalLogsObserver() override = default;
+  ~MockWebRtcLocalEventLogsObserver() override = default;
   MOCK_METHOD2(OnLocalLogsStarted, void(PeerConnectionKey, base::FilePath));
   MOCK_METHOD1(OnLocalLogsStopped, void(PeerConnectionKey));
 };
@@ -149,8 +148,7 @@ class WebRtcEventLogManagerTest : public ::testing::Test {
     return result;
   }
 
-  void SetLocalLogsObserver(
-      WebRtcEventLogManager::LocalLogsObserver* observer) {
+  void SetLocalLogsObserver(WebRtcLocalEventLogsObserver* observer) {
     manager_->SetLocalLogsObserver(observer, VoidReplyClosure());
     WaitForReply();
   }
@@ -269,7 +267,7 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogsStartedNotCalledIfLocalLoggingEnabledWithoutPeerConnections) {
-  MockLocalLogsObserver observer;
+  MockWebRtcLocalEventLogsObserver observer;
   EXPECT_CALL(observer, OnLocalLogsStarted(_, _)).Times(0);
   EXPECT_CALL(observer, OnLocalLogsStopped(_)).Times(0);
   SetLocalLogsObserver(&observer);
@@ -278,7 +276,7 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogsStartedCalledForPeerConnectionAddedAndLocalLoggingEnabled) {
-  MockLocalLogsObserver observer;
+  MockWebRtcLocalEventLogsObserver observer;
   PeerConnectionKey peer_connection(kRenderProcessId, kPeerConnectionId);
   EXPECT_CALL(observer, OnLocalLogsStarted(peer_connection, _)).Times(1);
   SetLocalLogsObserver(&observer);
@@ -288,7 +286,7 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogsStartedCalledForLocalLoggingEnabledAndPeerConnectionAdded) {
-  MockLocalLogsObserver observer;
+  MockWebRtcLocalEventLogsObserver observer;
   PeerConnectionKey peer_connection(kRenderProcessId, kPeerConnectionId);
   EXPECT_CALL(observer, OnLocalLogsStarted(peer_connection, _)).Times(1);
   SetLocalLogsObserver(&observer);
@@ -298,7 +296,7 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogsStoppedCalledAfterLocalLoggingDisabled) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   PeerConnectionKey peer_connection(kRenderProcessId, kPeerConnectionId);
   EXPECT_CALL(observer, OnLocalLogsStopped(peer_connection)).Times(1);
   SetLocalLogsObserver(&observer);
@@ -309,7 +307,7 @@ TEST_F(WebRtcEventLogManagerTest,
 
 TEST_F(WebRtcEventLogManagerTest,
        OnLocalLogsStoppedCalledAfterPeerConnectionRemoved) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   PeerConnectionKey peer_connection(kRenderProcessId, kPeerConnectionId);
   EXPECT_CALL(observer, OnLocalLogsStopped(peer_connection)).Times(1);
   SetLocalLogsObserver(&observer);
@@ -319,7 +317,7 @@ TEST_F(WebRtcEventLogManagerTest,
 }
 
 TEST_F(WebRtcEventLogManagerTest, RemovedLocalLogsObserverReceivesNoCalls) {
-  StrictMock<MockLocalLogsObserver> observer;
+  StrictMock<MockWebRtcLocalEventLogsObserver> observer;
   EXPECT_CALL(observer, OnLocalLogsStarted(_, _)).Times(0);
   EXPECT_CALL(observer, OnLocalLogsStopped(_)).Times(0);
   SetLocalLogsObserver(&observer);
@@ -330,7 +328,7 @@ TEST_F(WebRtcEventLogManagerTest, RemovedLocalLogsObserverReceivesNoCalls) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogCreatesEmptyFileWhenStarted) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   base::Optional<PeerConnectionKey> key;
@@ -354,7 +352,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogCreatesEmptyFileWhenStarted) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogCreateAndWriteToFile) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   base::Optional<PeerConnectionKey> key;
@@ -381,7 +379,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogCreateAndWriteToFile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleWritesToSameFile) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   base::Optional<PeerConnectionKey> key;
@@ -415,7 +413,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleWritesToSameFile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogFileSizeLimitNotExceeded) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   base::Optional<PeerConnectionKey> key;
@@ -449,7 +447,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogFileSizeLimitNotExceeded) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogSanityOverUnlimitedFileSizes) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   base::Optional<PeerConnectionKey> key;
@@ -478,7 +476,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogSanityOverUnlimitedFileSizes) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogNoWriteAfterLogStopped) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   base::Optional<PeerConnectionKey> key;
@@ -510,7 +508,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogNoWriteAfterLogStopped) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogOnlyWritesTheLogsAfterStarted) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   // Calls to Write() before the log was started are ignored.
@@ -549,7 +547,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogOnlyWritesTheLogsAfterStarted) {
 // Note: This test also covers the scenario LocalLogExistingFilesNotOverwritten,
 // which is therefore not explicitly tested.
 TEST_F(WebRtcEventLogManagerTest, LocalLoggingRestartCreatesNewFile) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   const std::vector<std::string> logs = {"<setup>", "<punchline>", "<encore>"};
@@ -579,7 +577,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLoggingRestartCreatesNewFile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleActiveFiles) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   ASSERT_TRUE(EnableLocalLogging());
@@ -620,7 +618,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogMultipleActiveFiles) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogLimitActiveLocalLogFiles) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   ASSERT_TRUE(EnableLocalLogging());
@@ -641,7 +639,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogLimitActiveLocalLogFiles) {
 // When a log reaches its maximum size limit, it is closed, and no longer
 // counted towards the limit.
 TEST_F(WebRtcEventLogManagerTest, LocalLogFilledLogNotCountedTowardsFileLimit) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   const std::string log = "very_short_log";
@@ -673,7 +671,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogFilledLogNotCountedTowardsFileLimit) {
 
 TEST_F(WebRtcEventLogManagerTest,
        LocalLogForRemovedPeerConnectionFilledLogNotCountedTowardsFileLimit) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   ASSERT_TRUE(EnableLocalLogging());
@@ -713,7 +711,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogSanityDestructorWithActiveFile) {
 }
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogIllegalPath) {
-  StrictMock<MockLocalLogsObserver> observer;
+  StrictMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   // Since the log file won't be properly opened, these will not be called.
@@ -741,7 +739,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogLegalPathWithoutPermissionsSanity) {
   permissions &= ~write_permissions;
   ASSERT_TRUE(base::SetPosixFilePermissions(base_dir_, permissions));
 
-  StrictMock<MockLocalLogsObserver> observer;
+  StrictMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   // Since the log file won't be properly opened, these will not be called.
@@ -769,7 +767,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogLegalPathWithoutPermissionsSanity) {
 #endif
 
 TEST_F(WebRtcEventLogManagerTest, LocalLogEmptyStringHandledGracefully) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   // By writing a log after the empty string, we show that no odd behavior is
@@ -803,7 +801,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogEmptyStringHandledGracefully) {
 // The logs would typically be binary. However, the other tests only cover ASCII
 // characters, for readability. This test shows that this is not a problem.
 TEST_F(WebRtcEventLogManagerTest, LocalLogAllPossibleCharacters) {
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   base::Optional<PeerConnectionKey> key;
@@ -836,7 +834,7 @@ TEST_F(WebRtcEventLogManagerTest, LocalLogAllPossibleCharacters) {
 TEST_F(WebRtcEventLogManagerTest, LocalLogFilenameMatchesExpectedFormat) {
   using StringType = base::FilePath::StringType;
 
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   base::Optional<PeerConnectionKey> key;
@@ -884,7 +882,7 @@ TEST_F(WebRtcEventLogManagerTest,
        LocalLogFilenameMatchesExpectedFormatRepeatedFilename) {
   using StringType = base::FilePath::StringType;
 
-  NiceMock<MockLocalLogsObserver> observer;
+  NiceMock<MockWebRtcLocalEventLogsObserver> observer;
   SetLocalLogsObserver(&observer);
 
   base::Optional<PeerConnectionKey> key;
