@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93aff906_8b566888",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-11T18:09:11Z",
+      "side": 1,
+      "message": "slice -\u003e substring",
+      "range": {
+        "startLine": 84,
+        "startChar": 22,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "cdaac8d170924b821d3f076c03d5b5416bde8076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
