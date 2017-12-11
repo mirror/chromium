@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34bea19b_c97f4c9d",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-11T18:39:31Z",
+      "side": 1,
+      "message": "Presumably because it can dispatch events? Is it possible to write a test?",
+      "revId": "1121ac5a901bdea3a6e14f4169650d1a431cb7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
