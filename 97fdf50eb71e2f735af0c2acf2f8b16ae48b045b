@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "d5b62cff_8c7fc646",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-11T16:46:45Z",
+      "side": 1,
+      "message": "We could move QueueType to a separate header if you\u0027re keen :)",
+      "parentUuid": "9cf5f939_6d3005b6",
+      "range": {
+        "startLine": 491,
+        "startChar": 68,
+        "endLine": 491,
+        "endChar": 78
+      },
+      "revId": "97fdf50eb71e2f735af0c2acf2f8b16ae48b045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74081687_d863661d",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_selector.cc",
         "patchSetId": 2
