@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f886c38f_2ec63380",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T20:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df556f53_f9bd7a1d",
+      "range": {
+        "startLine": 1201,
+        "startChar": 1,
+        "endLine": 1203,
+        "endChar": 3
+      },
+      "revId": "f93110ed68565b6848d0c5b50312abf28d6a1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9c92b59_31a155e1",
         "filename": "net/disk_cache/simple/simple_entry_impl.cc",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "f93110ed68565b6848d0c5b50312abf28d6a1c0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdf95a9_a080765f",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1236,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T20:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9c92b59_31a155e1",
+      "range": {
+        "startLine": 1236,
+        "startChar": 9,
+        "endLine": 1236,
+        "endChar": 10
+      },
+      "revId": "f93110ed68565b6848d0c5b50312abf28d6a1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7cae750e_f0331d7e",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T20:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36fdb4e4_40e96e1f",
+      "range": {
+        "startLine": 1238,
+        "startChar": 34,
+        "endLine": 1239,
+        "endChar": 26
+      },
+      "revId": "f93110ed68565b6848d0c5b50312abf28d6a1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b9f63b4_fc7e20d2",
         "filename": "net/disk_cache/simple/simple_entry_impl.cc",
         "patchSetId": 17
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-11T19:54:19Z",
       "side": 1,
       "message": "This bit of the comment is unclear. What do you mean noone would own the base names in this case?",
+      "range": {
+        "startLine": 1239,
+        "startChar": 32,
+        "endLine": 1240,
+        "endChar": 51
+      },
+      "revId": "f93110ed68565b6848d0c5b50312abf28d6a1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73a11ac_a565d9a6",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T20:48:12Z",
+      "side": 1,
+      "message": "Rephrased, but probably will need another round of that. The DCHECK you suggest above is pretty helpful for understanding....",
+      "parentUuid": "2b9f63b4_fc7e20d2",
       "range": {
         "startLine": 1239,
         "startChar": 32,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fe302236_f6f137da",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T20:48:12Z",
+      "side": 1,
+      "message": "Went for \u0027file_with_same_hash\u0027...",
+      "parentUuid": "e9085192_3faea388",
+      "range": {
+        "startLine": 135,
+        "startChar": 27,
+        "endLine": 135,
+        "endChar": 31
+      },
+      "revId": "f93110ed68565b6848d0c5b50312abf28d6a1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4241268c_2b0ebb41",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 17
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "db4fc619_2a9157c3",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T20:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4241268c_2b0ebb41",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 68
+      },
+      "revId": "f93110ed68565b6848d0c5b50312abf28d6a1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "996db2cd_11c0b3cb",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 17
@@ -160,6 +304,30 @@
       "revId": "f93110ed68565b6848d0c5b50312abf28d6a1c0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576bbbbe_6c308aaf",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-11T20:48:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "996db2cd_11c0b3cb",
+      "range": {
+        "startLine": 84,
+        "startChar": 53,
+        "endLine": 85,
+        "endChar": 29
+      },
+      "revId": "f93110ed68565b6848d0c5b50312abf28d6a1c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
