@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1249bf40_39c6fbb7",
+        "filename": "components/user_manager/known_user.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-11T00:04:58Z",
+      "side": 1,
+      "message": "kPolicyRequired",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
