@@ -16,6 +16,24 @@
       "revId": "f6a704770791433dba02ae21cb2cc5e22d3ab7a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669682fa_911a2d3f",
+        "filename": "ios/chrome/browser/web/external_app_launcher_tab_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-11T19:02:17Z",
+      "side": 1,
+      "message": "I see your point. I have a followup CL which folds the ExternalAppLauncher into the TabHelper. I\u0027ll make the comment change there.",
+      "parentUuid": "16518034_2a77a8b7",
+      "revId": "f6a704770791433dba02ae21cb2cc5e22d3ab7a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
