@@ -160,13 +160,6 @@ HTMLDocumentParser::HTMLDocumentParser(Document& document,
 
 HTMLDocumentParser::~HTMLDocumentParser() {}
 
-void HTMLDocumentParser::Dispose() {
-  // In Oilpan, HTMLDocumentParser can die together with Document, and detach()
-  // is not called in this case.
-  if (have_background_parser_)
-    StopBackgroundParser();
-}
-
 void HTMLDocumentParser::Trace(blink::Visitor* visitor) {
   visitor->Trace(tree_builder_);
   visitor->Trace(parser_scheduler_);
@@ -797,15 +790,6 @@ void HTMLDocumentParser::StartBackgroundParser() {
   DCHECK(GetDocument());
   have_background_parser_ = true;
 
-  if (GetDocument()->GetFrame() &&
-      GetDocument()->GetFrame()->FrameScheduler()) {
-    virtual_time_pauser_ = GetDocument()
-                               ->GetFrame()
-                               ->FrameScheduler()
-                               ->CreateWebScopedVirtualTimePauser();
-    virtual_time_pauser_.PauseVirtualTime(true);
-  }
-
   // Make sure that a resolver is set up, so that the correct viewport
   // dimensions will be fed to the background parser and preload scanner.
   if (GetDocument()->Loader())
@@ -856,7 +840,6 @@ void HTMLDocumentParser::StopBackgroundParser() {
   DCHECK(ShouldUseThreading());
   DCHECK(have_background_parser_);
 
-  virtual_time_pauser_.PauseVirtualTime(false);
   have_background_parser_ = false;
 
   // Make this sync, as lsan triggers on some unittests if the task runner is
