@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5aa926c7_4be69919",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-11T22:46:55Z",
+      "side": 1,
+      "message": "1. Actually, they are effectively equivalent because the default value of the preference is false (not part of this CL), and not because of the policy code, per se.\n2. If I try to modify this to an early exit, |if (!value || value-\u003eGetBool())| then the tests in https://cs.chromium.org/chromium/src/chrome/browser/policy/policy_prefs_browsertest.cc?l\u003d526\u0026rcl\u003d0e666f25a131913c0eb17516f154994864c14569 start failing. Conversely, if I remove this check and always set a pref value, with a default of |false|, https://cs.chromium.org/chromium/src/chrome/browser/policy/policy_prefs_browsertest.cc?l\u003d520\u0026rcl\u003d0e666f25a131913c0eb17516f154994864c14569 starts failing. As far as I could understand, these tests guard against the behavior of a policy setting a pref despite being unset and conversely not setting a pref despite being present?",
+      "parentUuid": "56bc16fa_6deb8a13",
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6deb51de_20b2efc1",
         "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
         "patchSetId": 19
@@ -95,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "b7f9bb03_f15cba6d",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-11T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b56874c_adacdf76",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 33
+      },
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ea48460_24fb4d27",
         "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler_unittest.cc",
         "patchSetId": 19
@@ -109,6 +151,24 @@
       "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb509a82_8ad1ec17",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-11T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ea48460_24fb4d27",
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +218,54 @@
     },
     {
       "key": {
+        "uuid": "1aaf7f4e_e8a3bb40",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 19
+      },
+      "lineNbr": 4513,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-11T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0443f37e_35403451",
+      "range": {
+        "startLine": 4513,
+        "startChar": 0,
+        "endLine": 4513,
+        "endChar": 6
+      },
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "139b071c_edb41ed6",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 19
+      },
+      "lineNbr": 4513,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-11T22:46:55Z",
+      "side": 1,
+      "message": "Yes.\n\nThis policy only \u0027pins\u0027 an OS account 1:1 with the content area. An admin needs to stop personal Google account sign-in (Sign In Restrictions) on the OS level too, for this to effectively work.",
+      "parentUuid": "ce401024_f735814f",
+      "range": {
+        "startLine": 4513,
+        "startChar": 53,
+        "endLine": 4513,
+        "endChar": 77
+      },
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0be0fdcb_e58ed583",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 19
@@ -172,6 +280,24 @@
       "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5795c0_ba1747ca",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 19
+      },
+      "lineNbr": 4514,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-11T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0be0fdcb_e58ed583",
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
