@@ -44,15 +44,15 @@
 namespace {
 
 const CGFloat kFontSize = 16;
-const CGFloat kEditingRectX = 16;
+// const CGFloat kEditingRectX = 16;
 const CGFloat kEditingRectWidthInset = 10;
-const CGFloat kTextInset = 8;
+// const CGFloat kTextInset = 8;
 const CGFloat kTextInsetNoLeftView = 8;
 const CGFloat kClearButtonRightMarginIphone = 7;
 const CGFloat kClearButtonRightMarginIpad = 12;
 // Amount to shift the origin.x of the text areas so they're centered within the
 // omnibox border.
-const CGFloat kTextAreaLeadingOffset = -2;
+// const CGFloat kTextAreaLeadingOffset = -2;
 
 const CGFloat kStarButtonWidth = 36;
 const CGFloat kVoiceSearchButtonWidth = 36.0;
@@ -495,8 +495,7 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
   // Shift the text right and reduce the width to create empty space between the
   // left view and the omnibox text.
-  textRectLayout.position.leading += textInset + kTextAreaLeadingOffset;
-  textRectLayout.size.width -= textInset - kTextAreaLeadingOffset;
+  textRectLayout.size.width -= textInset;
 
   if (IsIPadIdiom() && !base::FeatureList::IsEnabled(kCleanToolbar)) {
     if (!IsCompactTablet()) {
@@ -522,9 +521,7 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
   LayoutRect editingRectLayout =
       LayoutRectForRectInBoundingRect(newBounds, bounds);
-  editingRectLayout.position.leading += kTextAreaLeadingOffset;
-  editingRectLayout.position.leading += kTextInset;
-  editingRectLayout.size.width -= kTextInset + kEditingRectWidthInset;
+  editingRectLayout.size.width -= kEditingRectWidthInset;
   if (IsIPadIdiom()) {
     if (!IsCompactTablet() && !self.rightView) {
       // Normally the clear button shrinks the edit box, but if the rightView
@@ -532,8 +529,7 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
       editingRectLayout.size.width -= kVoiceSearchButtonWidth;
     }
   } else {
-    CGFloat xDiff = editingRectLayout.position.leading - kEditingRectX;
-    editingRectLayout.position.leading = kEditingRectX;
+    CGFloat xDiff = editingRectLayout.position.leading;
     editingRectLayout.size.width += xDiff;
   }
   // Don't let the edit rect extend over the clear button.  The right view
