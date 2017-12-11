@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bd511fa_6e8c6a4f",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-12-11T18:48:14Z",
+      "side": 1,
+      "message": "Could you move this to a function in Charachter::, for example Character::IsInkSkipExemptedCJK() - that would codify the comment into a function name.",
+      "revId": "03239ad456443483f843c7ced3fb69042802fa6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817b839f_938c7db1",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-12-11T18:48:14Z",
+      "side": 1,
+      "message": "Optional: Are these blocks what WebKit is using? Could you add some characters from these more rare blogs to the test, if we have font coveragte?",
+      "revId": "03239ad456443483f843c7ced3fb69042802fa6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
