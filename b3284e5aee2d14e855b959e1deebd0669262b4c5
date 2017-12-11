@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d5f623e_99ba77b8",
+        "filename": "docs/webui_in_components.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-11T23:31:37Z",
+      "side": 1,
+      "message": "Here and below: no quotes when text is inside an element",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "b3284e5aee2d14e855b959e1deebd0669262b4c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
