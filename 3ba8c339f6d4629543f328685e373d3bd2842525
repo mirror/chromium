@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "102c078b_e9b41fd6",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-11T22:34:25Z",
+      "side": 0,
+      "message": "This logic moves to DataSourceForLoadFinish(). kFromMemoryCache isn\u0027t set there, because MaySetDataSource() should take care of it.",
+      "revId": "3ba8c339f6d4629543f328685e373d3bd2842525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd5c4e0e_ad45b80d",
+        "filename": "third_party/WebKit/Source/core/loader/resource/FontResourceTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-11T22:34:25Z",
+      "side": 1,
+      "message": "Route these tests through CSSFontFaceSrcValue::Fetch for 2 reasons:\n1. Give that function some unit-test coverage it wouldn\u0027t otherwise have.\n2. It avoids the need to manually emulate it\u0027s behavior of reusing a FontResource by a means other than cache hit.",
+      "revId": "f2497fe7aa85ab4df32aec3e451f1c75573ba192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
