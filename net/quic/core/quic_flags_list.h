@@ -181,3 +181,9 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_hq_deframer, false)
 // connection when a ack frame\'s first block length is 0, unless the ack is
 // completely empty.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_strict_ack_handling, false)
+
+// If true, fixes for the two bugs described in crbug.com/723604 will be
+// enabled.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_quic_2rtt_drop_client_cached_certs,
+          false)
