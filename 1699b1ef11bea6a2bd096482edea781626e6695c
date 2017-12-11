@@ -34,6 +34,24 @@
       "revId": "1699b1ef11bea6a2bd096482edea781626e6695c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1fe372_b1e0dc8a",
+        "filename": "content/browser/web_contents/web_contents_view_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T23:37:15Z",
+      "side": 1,
+      "message": "Mentioned to Bo, but I\u0027m thinking that WebContentsView could just access GestureListenerManager from WebContents user data, which would remove the need of set_gesture_listener_manager all together.  Ideally, the ownership on java and C++ would be the same (both UserData) or both in WebContentsView (and maybe EventForwarder in java?). I think both out of WebContentsUserData is ok though.",
+      "parentUuid": "65b4411a_0fa24b3f",
+      "revId": "1699b1ef11bea6a2bd096482edea781626e6695c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
