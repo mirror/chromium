@@ -115,6 +115,16 @@ void AshTestHelper::SetUp(bool start_session, bool provide_local_state) {
       ui::ScopedAnimationDurationScaleMode::ZERO_DURATION));
   ui::InitializeInputMethodForTesting();
 
+  {
+    ui::ContextFactory* context_factory = nullptr;
+    ui::ContextFactoryPrivate* context_factory_private = nullptr;
+    bool enable_pixel_output = false;
+    ui::InitializeContextFactoryForTests(enable_pixel_output, &context_factory,
+                                         &context_factory_private);
+    auto* env = aura::Env::GetInstance();
+    env->set_context_factory(context_factory);
+    env->set_context_factory_private(context_factory_private);
+  }
   // Creates Shell and hook with Desktop.
   if (!test_shell_delegate_)
     test_shell_delegate_ = new TestShellDelegate;
@@ -229,6 +239,8 @@ void AshTestHelper::TearDown() {
 
   test_views_delegate_.reset();
   wm_state_.reset();
+
+  ui::TerminateContextFactoryForTests();
 
   input_device_client_.reset();
 
