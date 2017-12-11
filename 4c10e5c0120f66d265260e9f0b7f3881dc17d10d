@@ -22,6 +22,30 @@
       "revId": "4c10e5c0120f66d265260e9f0b7f3881dc17d10d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a864b014_b3862eb9",
+        "filename": "extensions/browser/extension_event_histogram_value.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-11T20:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "158cbe02_487c8fd3",
+      "range": {
+        "startLine": 434,
+        "startChar": 67,
+        "endLine": 434,
+        "endChar": 0
+      },
+      "revId": "4c10e5c0120f66d265260e9f0b7f3881dc17d10d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
