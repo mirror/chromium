@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "242e8c05_7cb0c6fb",
+        "filename": "chromeos/dbus/fake_shill_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-11T13:49:12Z",
+      "side": 0,
+      "message": "Note: this is not a part of TestInterface, so moved above.",
+      "revId": "f7f5e61f680b1741b1a0804983bb78416e76253c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
