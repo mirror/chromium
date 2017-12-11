@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b8d2a87_ae44b67a",
+        "filename": "third_party/WebKit/LayoutTests/virtual/spv175/compositing/absolute-inside-out-of-view-fixed-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-11T17:10:38Z",
+      "side": 1,
+      "message": "All the new baselines contain additional layers \"Scrolling Layer\" and \"Scrolling Contents Layer\" for LayoutView than the original baselines.",
+      "revId": "b3f2ad6ce7a40352658e08aa24f8e23e2ada798e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
