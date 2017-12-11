@@ -56,6 +56,40 @@
       "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff374198_61a99878",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-11T19:55:13Z",
+      "side": 1,
+      "message": "This is a bit misleading since it doesn\u0027t really output anything. Reword this to say that it passes DirectoryEntryList to the supplied ReadDirectoryCallback.",
+      "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd5f2ba_c2b76457",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-11T19:55:13Z",
+      "side": 1,
+      "message": "As above re: passing to callback vs outputing.",
+      "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
