@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0bda9093_b4d1f3bb",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-11T19:10:11Z",
+      "side": 1,
+      "message": "Thanks for the explanation and the link to the previous discussion. Then ignore my comment.",
+      "parentUuid": "2173d64c_ef5b8ffd",
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b56874c_adacdf76",
         "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler_unittest.cc",
         "patchSetId": 19
