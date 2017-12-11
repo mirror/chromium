@@ -19,7 +19,7 @@ function runTest() {
     figCaption.appendChild(text);
     button.appendChild(figCaption);
     document.body.offsetTop;
-    document.documentElement.appendChild(document.createTextNode("If this test did not CRASH or show errors in valgrind, it has PASSED."));
+    document.documentElement.appendChild(document.createTextNode("If this test did not CRASH or show errors in ASAN, it has PASSED."));
 }
 window.onload = runTest;
 </script>

@@ -257,7 +257,7 @@ bool Benchmark::Run() const {
 }
 
 // A small class to automatically call Reset on the global command line to
-// avoid nasty valgrind complaints for the leak of the global command line.
+// avoid nasty LSAN complaints for the leak of the global command line.
 class CommandLineAutoReset {
  public:
   CommandLineAutoReset(int argc, char** argv) {
