@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7635cf1_0908b5b2",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-11T20:09:02Z",
+      "side": 1,
+      "message": "BlockUntilCompletion is it\u0027s only public method, and I don\u0027t see anything else in any other use of this observer, so pretty sure no.",
+      "parentUuid": "bfec075e_57365e19",
+      "range": {
+        "startLine": 37,
+        "startChar": 49,
+        "endLine": 37,
+        "endChar": 57
+      },
+      "revId": "9d0553c0455e87b4e2073fe4dfe97962c4e53171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a5018bd_32ba9534",
         "filename": "chrome/browser/metrics/ukm_browsertest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "9d0553c0455e87b4e2073fe4dfe97962c4e53171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e78ec8_7f52db1b",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-11T20:09:02Z",
+      "side": 1,
+      "message": "Un-copied this comment.",
+      "parentUuid": "3a5018bd_32ba9534",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "9d0553c0455e87b4e2073fe4dfe97962c4e53171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9a3b038a_5a0065af",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-11T20:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2803d1a9_421ea715",
+      "range": {
+        "startLine": 90,
+        "startChar": 26,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "9d0553c0455e87b4e2073fe4dfe97962c4e53171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7819e11f_e132d042",
         "filename": "chrome/browser/metrics/ukm_browsertest.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7b6e54d8_bd6c8cd5",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-11T20:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7819e11f_e132d042",
+      "range": {
+        "startLine": 304,
+        "startChar": 34,
+        "endLine": 304,
+        "endChar": 40
+      },
+      "revId": "9d0553c0455e87b4e2073fe4dfe97962c4e53171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8216a39b_fe184318",
         "filename": "chrome/browser/metrics/ukm_browsertest.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "9d0553c0455e87b4e2073fe4dfe97962c4e53171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7304bb05_63c941e0",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-11T20:09:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8216a39b_fe184318",
+      "range": {
+        "startLine": 325,
+        "startChar": 2,
+        "endLine": 325,
+        "endChar": 14
+      },
+      "revId": "9d0553c0455e87b4e2073fe4dfe97962c4e53171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
