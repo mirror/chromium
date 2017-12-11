@@ -145,6 +145,30 @@
       "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004ecb78_56de0c46",
+        "filename": "gpu/raster/raster_texture_format.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-11T19:23:02Z",
+      "side": 1,
+      "message": "Yeah we ran into similar dependency cycle before so we pulled the ResourceFormat into a separate component: https://cs.chromium.org/chromium/src/components/viz/common/BUILD.gn?dr\u0026l\u003d9\n\nSo in theory gpu could depend on //viz/common:resource_format \n\nSG about simplification after the fact",
+      "parentUuid": "0ea2ea1b_88510d27",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 18
+      },
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
