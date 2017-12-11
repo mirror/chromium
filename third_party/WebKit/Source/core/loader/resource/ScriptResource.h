@@ -61,13 +61,6 @@ class CORE_EXPORT ScriptResource final : public TextResource {
 
   ~ScriptResource() override;
 
-  void OnMemoryDump(WebMemoryDumpLevelOfDetail,
-                    WebProcessMemoryDump*) const override;
-
-  void DestroyDecodedDataForFailedRevalidation() override;
-
-  const String& SourceText();
-
   AccessControlStatus CalculateAccessControlStatus() const;
 
  private:
@@ -90,8 +83,6 @@ class CORE_EXPORT ScriptResource final : public TextResource {
                  const TextResourceDecoderOptions&);
 
   bool CanUseCacheValidator() const override;
-
-  AtomicString source_text_;
 };
 
 DEFINE_RESOURCE_TYPE_CASTS(Script);

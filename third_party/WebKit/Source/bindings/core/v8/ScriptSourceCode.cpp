@@ -65,7 +65,7 @@ ScriptSourceCode::ScriptSourceCode(
 
 ScriptSourceCode::ScriptSourceCode(ScriptStreamer* streamer,
                                    ScriptResource* resource)
-    : source_(TreatNullSourceAsEmpty(resource->SourceText())),
+    : source_(TreatNullSourceAsEmpty(resource->DecodedText())),
       cache_handler_(resource->CacheHandler()),
       streamer_(streamer),
       url_(StripFragmentIdentifier(resource->GetResponse().Url())),

@@ -29,9 +29,31 @@ WTF::TextEncoding TextResource::Encoding() const {
   return decoder_->Encoding();
 }
 
-String TextResource::DecodedText() const {
-  DCHECK(Data());
+void TextResource::NotifyFinished() {
+  if (Data()) {
+    decoded_text_ = AtomicString(DecodedText());
+    SetDecodedSize(decoded_text_.CharactersSizeInBytes());
+  }
 
+  Resource::NotifyFinished();
+
+  // Clear raw bytes as now we have the full decoded text.
+  // We wait for all NotifyFinished() calls to run (at least once)
+  // as SubresourceIntegrity checks require raw bytes.
+  ClearData();
+}
+
+void TextResource::DestroyDecodedDataForFailedRevalidation() {
+  DCHECK_EQ(DecodedSize(), decoded_text_.CharactersSizeInBytes());
+  decoded_text_ = AtomicString();
+  SetDecodedSize(0);
+}
+
+String TextResource::DecodedText() const {
+  if (!decoded_text_.IsNull())
+    return decoded_text_;
+  if (!Data() || Data()->IsEmpty())
+    return String();
   StringBuilder builder;
   const char* segment;
   size_t position = 0;
@@ -41,6 +63,16 @@ String TextResource::DecodedText() const {
   }
   builder.Append(decoder_->Flush());
   return builder.ToString();
+}
+
+void TextResource::OnMemoryDump(WebMemoryDumpLevelOfDetail level_of_detail,
+                                WebProcessMemoryDump* memory_dump) const {
+  Resource::OnMemoryDump(level_of_detail, memory_dump);
+  const String name = GetMemoryDumpName() + "/decoded_script";
+  auto* dump = memory_dump->CreateMemoryAllocatorDump(name);
+  dump->AddScalar("size", "bytes", DecodedText().CharactersSizeInBytes());
+  memory_dump->AddSuballocation(
+      dump->Guid(), String(WTF::Partitions::kAllocatedObjectPoolName));
 }
 
 }  // namespace blink
