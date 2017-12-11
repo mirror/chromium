@@ -33,11 +33,11 @@
 #include "core/loader/resource/CSSStyleSheetResource.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/ResourceClient.h"
+#include "platform/text/SegmentedString.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
-class SegmentedString;
 class HTMLResourcePreloader;
 
 class CSSPreloadScanner {

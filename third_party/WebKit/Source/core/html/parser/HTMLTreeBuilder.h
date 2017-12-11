@@ -30,6 +30,7 @@
 #include "base/macros.h"
 #include "base/memory/scoped_refptr.h"
 #include "core/html/parser/HTMLConstructionSite.h"
+#include "core/html/parser/HTMLDocumentParser.h"
 #include "core/html/parser/HTMLElementStack.h"
 #include "core/html/parser/HTMLParserOptions.h"
 #include "platform/heap/Handle.h"
@@ -43,7 +44,6 @@ class AtomicHTMLToken;
 class DocumentFragment;
 class Element;
 class HTMLDocument;
-class HTMLDocumentParser;
 
 class HTMLTreeBuilder final
     : public GarbageCollectedFinalized<HTMLTreeBuilder> {
