@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "417ec4df_e9c45862",
+        "filename": "content/browser/background_fetch/background_fetch_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-11T06:25:33Z",
+      "side": 1,
+      "message": "Should this use some form of ScopedService test helper?  Or I prefer having this in a separate test (e.g. BackgroundFetchServiceTest.GetDeveloperIdsWithBogusOrigin) so that it\u0027s clearer that all test cases within the test uses the service.",
+      "revId": "d75831eeb0df6f032fbb5128fa34d8fc79780027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
