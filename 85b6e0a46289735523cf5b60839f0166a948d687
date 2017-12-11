@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99c90387_6acd981a",
+        "filename": "services/resource_coordinator/observers/ipc_volume_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-12-11T22:36:22Z",
+      "side": 1,
+      "message": "Talked and Investigated offline. It would be easier to test with oneshot timer.",
+      "parentUuid": "4f9e6eb1_3f0ceed1",
+      "range": {
+        "startLine": 43,
+        "startChar": 18,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "85b6e0a46289735523cf5b60839f0166a948d687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c527b3fd_1b2adec2",
         "filename": "services/resource_coordinator/observers/ipc_volume_reporter_unittest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "85b6e0a46289735523cf5b60839f0166a948d687",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04fdbfa5_83f8de23",
+        "filename": "services/resource_coordinator/observers/ipc_volume_reporter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-12-11T22:36:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c527b3fd_1b2adec2",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 55
+      },
+      "revId": "85b6e0a46289735523cf5b60839f0166a948d687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
