@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f0bf55d_6804171c",
+        "filename": "chrome/browser/chromeos/net/network_throttling_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-11T19:00:56Z",
+      "side": 1,
+      "message": "return DBusThreadManager::Get()-\u003eGetShillManagerClient()-\u003eGetTestInterface()-\u003eGetNetworkThrottlingStatus();",
+      "revId": "c47caa0bd95f8e3b8f6c542bcd633778c0e21cb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
