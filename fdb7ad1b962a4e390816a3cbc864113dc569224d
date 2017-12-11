@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2b20cb1_a15baa2f",
+        "filename": "components/arc/common/DEPS",
+        "patchSetId": 42
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-11T13:25:57Z",
+      "side": 1,
+      "message": "if you include headers from media, the respective BUILD.gn target needs to depend on the target that includes those files",
+      "revId": "fdb7ad1b962a4e390816a3cbc864113dc569224d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
