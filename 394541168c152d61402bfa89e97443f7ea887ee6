@@ -16,6 +16,24 @@
       "revId": "394541168c152d61402bfa89e97443f7ea887ee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8531b984_f92293e7",
+        "filename": "chrome/browser/signin/dice_tab_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-11T10:10:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bb5e5c1_a9541538",
+      "revId": "394541168c152d61402bfa89e97443f7ea887ee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
