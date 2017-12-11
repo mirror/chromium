@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04019af3_964685c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T21:52:44Z",
+      "side": 1,
+      "message": "Since we have the mInOverviewMode, I\u0027d recommend tweaking this a bit.  Instead of having setAttributesFlag, I\u0027d rename this updateIncognitoState.  Then I would change hasIncognitoTab() to be \u0027isShowingIncognito()\u0027 that would internalize your other checks\n\nif (mInOverviewMode) return mTabModelSelector.getModel(true).getCount() !\u003d 0;\nreturn mTabModelSelector.getCurrentModel().isIncognito();\n\nThen all your calls would just say updateIncognitoState and it would call isShowingIncognito and could keep the logic isolated in those two places.",
+      "range": {
+        "startLine": 60,
+        "startChar": 17,
+        "endLine": 60,
+        "endChar": 34
+      },
+      "revId": "4dc449f3f0fc5e424df6ceab7e7df28aee98c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e26cdaa_0ddd946d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T21:52:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure how expensive this is, but I think we could do:\n\nboolean expectedSecureState \u003d isShowingIncognito();\nboolean currentSecureState \u003d (attributes.flags \u0026 FLAG_SECURE) \u003d\u003d FLAGS_SECURE;\nif (expectedSecureState \u003d\u003d currentSecureState) return;\nif (!expectedSecureState) {\n    clearFlags(...);\n} else {\n    attributes.flags |\u003d WindowManager.LayoutParams.FLAG_SECURE;\n}\n\nThen we\u0027d only be calling setAttributes if needed.",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 65,
+        "endChar": 29
+      },
+      "revId": "4dc449f3f0fc5e424df6ceab7e7df28aee98c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
