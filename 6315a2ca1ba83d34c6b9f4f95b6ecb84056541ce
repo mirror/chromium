@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53cbf4b3_cc0da4b0",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-11T02:07:07Z",
+      "side": 0,
+      "message": "Just call with |false| for narrowing the patch and remove redundant |select_inserted_text|\nlater.",
+      "revId": "6315a2ca1ba83d34c6b9f4f95b6ecb84056541ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
