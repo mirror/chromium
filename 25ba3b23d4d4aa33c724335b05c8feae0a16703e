@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ed1e44_b589d42f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24633,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-11T12:46:03Z",
+      "side": 0,
+      "message": "not sure whether it\u0027s common to remove enum values here - we\u0027ll still need this to interpret old metrics, no?",
+      "revId": "25ba3b23d4d4aa33c724335b05c8feae0a16703e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
