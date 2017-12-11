@@ -246,7 +246,7 @@ TEST_F(BookmarkBarFolderControllerTest, InitCreateAndDelete) {
 }
 
 // Make sure closing of the window releases the controller.
-// (e.g. valgrind shouldn't complain if we do this).
+// (e.g. LSAN shouldn't complain if we do this).
 TEST_F(BookmarkBarFolderControllerTest, ReleaseOnClose) {
   base::scoped_nsobject<BookmarkBarFolderController> bbfc;
   bbfc.reset(SimpleBookmarkBarFolderController());

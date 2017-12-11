@@ -80,8 +80,8 @@ class TestScenario {
   std::unique_ptr<AudioBus> bus_;
 };
 
-// Value printer for TestScenario.  Required to prevent Valgrind "access to
-// uninitialized memory" errors (http://crbug.com/263315).
+// Value printer for TestScenario.  Should avoid "access to uninitialized
+// memory" errors.
 ::std::ostream& operator<<(::std::ostream& os, const TestScenario& ts) {
   return os << "{" << ts.data().channels() << "-channel signal} --> {"
             << ts.expected_power() << " dBFS, "

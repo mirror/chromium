@@ -150,9 +150,9 @@ struct FilterTestParams {
   std::string path_;
 };
 
-// Make Valgrind happy. Without this function, a generic one will print the
-// raw bytes in FilterTestParams, which due to some likely padding will access
-// uninitialized memory.
+// Make ASAN happy. Without this function, a generic one will print the
+// raw bytes in FilterTestParams, which due to some likely padding could
+// access uninitialized memory.
 void PrintTo(const FilterTestParams& params, std::ostream* os) {
   *os << params.filter();
 }
