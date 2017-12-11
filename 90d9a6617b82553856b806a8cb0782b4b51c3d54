@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0287cb18_1fc114e5",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-11T22:56:40Z",
+      "side": 1,
+      "message": "added this null check to match the Views version which fixes the one content browser test on Android.\n\nThis is needed because GetFrameHostForNavigation has a side effect of creating the view in this code:\n\nif (!navigation_rfh-\u003eIsRenderFrameLive()) {\n  if (!ReinitializeRenderFrame(navigation_rfh))",
+      "revId": "90d9a6617b82553856b806a8cb0782b4b51c3d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
