@@ -16,6 +16,24 @@
       "revId": "3ba9cc60fa3e4f6e72de902f8a138099f4b5948b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f091c70_8eeee47e",
+        "filename": "third_party/WebKit/Source/modules/nfc/NFC.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-11T13:52:28Z",
+      "side": 1,
+      "message": "NFC::watch / NFC::OnWatch are asynchronous calls (request and response).  A NFCMessage as a response is not yet ready when NFC::watch is called i.e. when it\u0027s requested.  Plus, NFC::watch is a continuous monitoring, and the callback function will be invoked with many different NFCMessages.",
+      "parentUuid": "b81e3868_5dd675f1",
+      "revId": "3ba9cc60fa3e4f6e72de902f8a138099f4b5948b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
