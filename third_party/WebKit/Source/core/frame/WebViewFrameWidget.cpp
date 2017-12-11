@@ -74,6 +74,10 @@ void WebViewFrameWidget::UpdateAllLifecyclePhases() {
   return web_view_->UpdateAllLifecyclePhases();
 }
 
+void WebViewFrameWidget::UpdateLifecycleToLayoutClean() {
+  return web_view_->UpdateLifecycleToLayoutClean();
+}
+
 void WebViewFrameWidget::Paint(WebCanvas* canvas, const WebRect& view_port) {
   return web_view_->Paint(canvas, view_port);
 }

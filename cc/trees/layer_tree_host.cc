@@ -279,8 +279,9 @@ const LayerTreeDebugState& LayerTreeHost::GetDebugState() const {
   return debug_state_;
 }
 
-void LayerTreeHost::RequestMainFrameUpdate() {
-  client_->UpdateLayerTreeHost();
+void LayerTreeHost::RequestMainFrameUpdate(
+    MainFrameLifecyclePhase target_phase) {
+  client_->UpdateLayerTreeHost(target_phase);
 }
 
 // This function commits the LayerTreeHost to an impl tree. When modifying

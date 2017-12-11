@@ -2673,5 +2673,60 @@ TEST(SchedulerStateMachineTest, AllowSkippingActiveTreeFirstDraws) {
   EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::ACTIVATE_SYNC_TREE);
 }
 
+TEST(SchedulerStateMachineTest, TestSkipCompositorFrame) {
+  SchedulerSettings scheduler_settings;
+  StateMachine state(scheduler_settings);
+  SET_UP_STATE(state)
+
+  // Perform a commit, activation, and draw so that we have an active tree.
+  state.SetNeedsBeginMainFrame();
+  state.OnBeginImplFrame(0, 10, false /* skip_compositor_frame */);
+  EXPECT_ACTION_UPDATE_STATE(
+      SchedulerStateMachine::Action::SEND_BEGIN_MAIN_FRAME);
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::NONE);
+  state.NotifyBeginMainFrameStarted();
+  state.NotifyReadyToCommit();
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::COMMIT);
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::NONE);
+  state.NotifyReadyToActivate();
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::ACTIVATE_SYNC_TREE);
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::NONE);
+  state.OnBeginImplFrameDeadline();
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::DRAW_IF_POSSIBLE);
+  state.DidSubmitCompositorFrame();
+  state.DidReceiveCompositorFrameAck();
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::NONE);
+
+  // Redraws should not be performed for skip_compositor_frame BeginFrames.
+  state.SetNeedsRedraw(true);
+  state.OnBeginImplFrame(0, 11, true /* skip_compositor_frame */);
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::NONE);
+  state.OnBeginImplFrameDeadline();
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::NONE);
+
+  // Impl-side invalidations should not be performed for skip_compositor_frame
+  // BeginFrames.
+  state.SetNeedsImplSideInvalidation(true);
+  state.OnBeginImplFrame(0, 12, true /* skip_compositor_frame */);
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::NONE);
+  state.OnBeginImplFrameDeadline();
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::NONE);
+
+  // BeginMainFrame is performed for skip_compositor_frame BeginFrames (and
+  // aborted by the Proxy).
+  state.SetNeedsBeginMainFrame();
+  state.OnBeginImplFrame(0, 13, true /* skip_compositor_frame */);
+  EXPECT_ACTION_UPDATE_STATE(
+      SchedulerStateMachine::Action::SEND_BEGIN_MAIN_FRAME);
+  state.NotifyBeginMainFrameStarted();
+  state.BeginMainFrameAborted(CommitEarlyOutReason::ABORTED_DEFERRED_COMMIT);
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::NONE);
+  state.OnBeginImplFrameDeadline();
+  EXPECT_ACTION_UPDATE_STATE(SchedulerStateMachine::Action::NONE);
+
+  // Because the commit was deferred, another BeginMainFrame will be sent later.
+  EXPECT_TRUE(state.NeedsCommit());
+}
+
 }  // namespace
 }  // namespace cc

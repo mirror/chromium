@@ -280,6 +280,17 @@ void WebFrameWidgetImpl::UpdateAllLifecyclePhases() {
   UpdateLayerTreeBackgroundColor();
 }
 
+void WebFrameWidgetImpl::UpdateLifecycleToLayoutClean() {
+  TRACE_EVENT0("blink", "WebFrameWidgetImpl::UpdateLifecycleToLayoutClean");
+  if (!local_root_)
+    return;
+
+  DocumentLifecycle::AllowThrottlingScope throttling_scope(
+      local_root_->GetFrame()->GetDocument()->Lifecycle());
+  PageWidgetDelegate::UpdateLifecycleToLayoutClean(*GetPage(),
+                                                   *local_root_->GetFrame());
+}
+
 void WebFrameWidgetImpl::Paint(WebCanvas* canvas, const WebRect& rect) {
   // Out-of-process iframes require compositing.
   NOTREACHED();

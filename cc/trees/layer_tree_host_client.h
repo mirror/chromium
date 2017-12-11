@@ -62,7 +62,11 @@ class LayerTreeHostClient {
   // state. (The "compositing state" will result in a mutated layer tree on the
   // LayerTreeHost via additional interface indirections which lead back to
   // mutations on the LayerTreeHost.)
-  virtual void UpdateLayerTreeHost() = 0;
+  //
+  // If |target_phase| is kLayoutClean, the client should run layout phases and
+  // their side effects, but can skip painting and compositing phases.
+  enum class MainFrameLifecyclePhase { kLayoutClean, kAll };
+  virtual void UpdateLayerTreeHost(MainFrameLifecyclePhase target_phase) = 0;
 
   virtual void ApplyViewportDeltas(
       const gfx::Vector2dF& inner_delta,
