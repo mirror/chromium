@@ -106,13 +106,16 @@ ShelfController::ShelfController() {
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kAshDisableShelfModelSynchronization);
 
+  model_.SetShelfItemDelegate(ShelfID(kBackButtonId), nullptr);
+  DCHECK_EQ(0, model_.ItemIndexByID(ShelfID(kBackButtonId)));
+
   // Set the delegate and title string for the app list item.
   model_.SetShelfItemDelegate(ShelfID(kAppListId),
                               std::make_unique<AppListShelfItemDelegate>());
-  DCHECK_EQ(0, model_.ItemIndexByID(ShelfID(kAppListId)));
-  ShelfItem item = model_.items()[0];
+  DCHECK_EQ(1, model_.ItemIndexByID(ShelfID(kAppListId)));
+  ShelfItem item = model_.items()[1];
   item.title = l10n_util::GetStringUTF16(IDS_ASH_SHELF_APP_LIST_LAUNCHER_TITLE);
-  model_.Set(0, item);
+  model_.Set(1, item);
 
   model_.AddObserver(this);
   Shell::Get()->session_controller()->AddObserver(this);
