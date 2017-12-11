@@ -16,6 +16,24 @@
       "revId": "4b64d842872be49b74c94811807281fb18216f31",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a745529_c4a1afd2",
+        "filename": "content/browser/frame_host/frame_tree_node.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-11T23:14:10Z",
+      "side": 1,
+      "message": "That\u0027s correct, we only need it for this frame.",
+      "parentUuid": "8028e899_ec825b76",
+      "revId": "4b64d842872be49b74c94811807281fb18216f31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
