@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a9f7209_06515d98",
+        "filename": "tools/gn/args.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-12-11T21:58:11Z",
+      "side": 1,
+      "message": "These",
+      "range": {
+        "startLine": 49,
+        "startChar": 57,
+        "endLine": 49,
+        "endChar": 62
+      },
+      "revId": "235d0916a8e0307637f3cddad2906369604b75df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394937e8_8b12350f",
+        "filename": "tools/gn/args.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-12-11T21:58:11Z",
+      "side": 1,
+      "message": "Just remove this since it\u0027s unused?",
+      "revId": "235d0916a8e0307637f3cddad2906369604b75df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
