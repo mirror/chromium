@@ -876,6 +876,17 @@ void TaskQueueImpl::PushImmediateIncomingTaskForTest(
   immediate_incoming_queue().push_back(std::move(task));
 }
 
+void TaskQueueImpl::RequeueDeferredNonNestableTask(TaskQueueImpl::Task&& task,
+                                                   bool delayed) {
+  // Note this adds extra delay to |task| but since non nestable tasks can be
+  // arbitrarily delayed that's fine.
+  if (delayed) {
+    main_thread_only().delayed_work_queue->Push(std::move(task));
+  } else {
+    main_thread_only().immediate_work_queue->Push(std::move(task));
+  }
+}
+
 void TaskQueueImpl::SetOnNextWakeUpChangedCallback(
     TaskQueueImpl::OnNextWakeUpChangedCallback callback) {
 #if DCHECK_IS_ON()
