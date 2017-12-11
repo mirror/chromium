@@ -1,0 +1,34 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+static_library("browser") {
+  sources = [
+    "geo_language_provider.cc",
+    "geo_language_provider.h",
+  ]
+
+  deps = [
+    "//base",
+    "//components/language/content:language_code_locator",
+    "//net",
+    "//services/device/public/interfaces:interfaces",
+    "//services/service_manager/public/cpp",
+  ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "geo_language_provider_unittest.cc",
+  ]
+  deps = [
+    ":browser",
+    "//base",
+    "//base/test:test_support",
+    "//services/device/public/interfaces:interfaces",
+    "//services/service_manager/public/cpp",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+}
