@@ -22,6 +22,30 @@
       "revId": "f0d483329618a9baa8ebf42b9d399cf5fe71509e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3ce7f2_bcbb764a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-12-11T11:07:19Z",
+      "side": 1,
+      "message": "I was working on a change that instead disabled InfoBars, saving any that were present when disabled and any that were meant to be shown when disabled. Then when reenabled the InfoBars were all shown again. It ended up getting a bit complicated and I figured InfoBars were a \u0027best effort\u0027 type of thing - they\u0027re good to show the user but if some user triggered action dismisses them then no loss. If this isn\u0027t the case I can reimplement the more heavyweight solution.",
+      "parentUuid": "12010613_2c94306f",
+      "range": {
+        "startLine": 374,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 5
+      },
+      "revId": "f0d483329618a9baa8ebf42b9d399cf5fe71509e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
