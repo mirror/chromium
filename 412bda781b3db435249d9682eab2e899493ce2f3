@@ -16,6 +16,24 @@
       "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b1be38_b8babd11",
+        "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-11T18:22:47Z",
+      "side": 1,
+      "message": "OK, I checked with sky@ and this is fine. The issue is that\nwith Aero Glass disabled, something like a bubble will be a\nNativeWidgetAura and not a DesktopNativeWidgetAura, so the\nonly way to get the parent window in that case is with\nTransientWindowManager.\n\nSo in this code we just check TransientWindowManager to see\nif it has a parent. If not, we call back on aura::Window::parent.\n\nThe main issue here is that for accessibility we need\nto be able to walk up to the window that has the HWND.",
+      "parentUuid": "e98a7cb9_761ded07",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
