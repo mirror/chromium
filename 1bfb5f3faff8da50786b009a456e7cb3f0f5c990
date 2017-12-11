@@ -34,6 +34,24 @@
       "revId": "1bfb5f3faff8da50786b009a456e7cb3f0f5c990",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67cb0fb_48969e0a",
+        "filename": "third_party/WebKit/Source/core/css/cssom/InlineStylePropertyMap.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-11T21:13:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "29d1a4ab_269c7d9e",
+      "revId": "1bfb5f3faff8da50786b009a456e7cb3f0f5c990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
