@@ -195,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "c3379159_edd711dc",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-11T22:35:27Z",
+      "side": 1,
+      "message": "We should probably have two debugd call types, one to know whether these logs exist, and another to actually retrieve them. No need to retrieve them twice.\n\nActually, it could be even possible to check if those logs exist or not from within chrome without having to call into debugd. Take a look at command_line_log_source, we run a lot of scripts there: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/system_logs/command_line_log_source.cc?q\u003dcommand_line_log\u0026sq\u003dpackage:chromium\u0026l\u003d1\n\nMaybe you could do something similar.",
+      "parentUuid": "a8865404_0644e486",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 26
+      },
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d35a41e6_dd6180d2",
         "filename": "extensions/common/api/feedback_private.idl",
         "patchSetId": 5
