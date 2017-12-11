@@ -737,13 +737,28 @@ cursors.Range.prototype = {
 
     // Only allow selections within the same web tree.
     if (startNode.root && startNode.root.role == RoleType.ROOT_WEB_AREA &&
+        startNode.root != startNode && endNode.root != endNode &&
         startNode.root == endNode.root) {
       // We want to adjust to select the entire node for node offsets;
       // otherwise, use the plain character offset.
       var startIndex = this.start.selectionIndex_;
-      var endIndex = this.end.index_ == cursors.NODE_INDEX ?
-          this.end.selectionIndex_ + 1 :
-          this.end.selectionIndex_;
+      if (this.start.index_ == cursors.NODE_INDEX) {
+        startNode = startNode.parent;
+        startIndex = startNode.indexInParent || 0;
+      }
+
+      var endIndex = this.end.selectionIndex_;
+      if (this.end.index_ == cursors.NODE_INDEX) {
+        endNode = endNode.parent;
+
+        // In read only content, we surround the contents of the node. We can
+        // detect |eventFrom| to suppress announcements. However, in editable
+        // content (namely, Docs), we cannot rely upon this. When we set
+        // selection as a caret, Chrome sends back the range we are currently
+        // on, so no output occurs.
+        if (!endNode.state[chrome.automation.StateType.EDITABLE])
+          endIndex = endNode.indexInParent || 0 + 1;
+      }
 
       chrome.automation.setDocumentSelection({
         anchorObject: startNode,
