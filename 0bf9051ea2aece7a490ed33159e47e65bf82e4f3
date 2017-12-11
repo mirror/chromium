@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a33eef7b_42a83bf8",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-11T21:55:58Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t realize it was enforced by the compiler. In that case, you don\u0027t need a DCHECK/NOTREACHED at all.",
+      "parentUuid": "8044fca3_ab7588b7",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 8
+      },
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "785f142d_a8abe4fd",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
         "patchSetId": 1
@@ -269,6 +293,30 @@
       "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "021d699a_a92230fd",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-11T21:55:58Z",
+      "side": 1,
+      "message": "I would call this one \"ADVANCED_MENU_ITEM_CLICKED\" but otherwise lgtm",
+      "parentUuid": "b8619cf5_fc094295",
+      "range": {
+        "startLine": 370,
+        "startChar": 43,
+        "endLine": 370,
+        "endChar": 64
+      },
+      "revId": "0bf9051ea2aece7a490ed33159e47e65bf82e4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

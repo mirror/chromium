@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52165318_60197454",
+        "filename": "chrome/browser/ui/translate/translate_bubble_view_state_transition.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-11T21:55:58Z",
+      "side": 1,
+      "message": "nit: \"menu item\"",
+      "range": {
+        "startLine": 82,
+        "startChar": 35,
+        "endLine": 82,
+        "endChar": 46
+      },
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20930305_876a3a2d",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-11T21:55:58Z",
+      "side": 1,
+      "message": "nit: extra space here",
+      "range": {
+        "startLine": 314,
+        "startChar": 64,
+        "endLine": 314,
+        "endChar": 65
+      },
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e02a99_71824530",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-11T21:55:58Z",
+      "side": 1,
+      "message": "I think it would be okay if it expired at the end of the session (helps at least for a little bit). But it doesn\u0027t; it leaves a trace in non-incognito mode.\n\nAlso nit: delete \"non-obvious\"",
+      "range": {
+        "startLine": 316,
+        "startChar": 7,
+        "endLine": 316,
+        "endChar": 36
+      },
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
