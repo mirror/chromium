@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "7f05ecf6_d7622738",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-11T17:00:29Z",
+      "side": 1,
+      "message": "It\u0027s unclear if this will work with Microsoft\u0027s engine but I believe the language code \"mul-Latn\" will represent all languages that can be encoded in Latin 1.",
+      "parentUuid": "0d6789fe_0ae45471",
+      "range": {
+        "startLine": 42,
+        "startChar": 57,
+        "endLine": 42,
+        "endChar": 61
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61a2b414_a8998fb3",
         "filename": "services/shape_detection/text_detection_impl_win.cc",
         "patchSetId": 4
