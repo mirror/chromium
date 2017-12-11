@@ -16,6 +16,24 @@
       "revId": "f4d6a95426dc64d888f53f3e196625bc6a34835f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0178ee3_661fed41",
+        "filename": "third_party/WebKit/Source/core/css/StyleRuleImport.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-11T20:19:53Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve updated this code. There are 3 cases to consider.\n\nBefore:\n* Sync fail: Do nothing.\n* Async load: Call StartLoadingDynamicSheet\n* Sync cache hit: Call StartLoadingDynamicSheet, then add client and immediately call NotifyFinished().\n\nAfter:\n* Sync fail: Do nothing. (no change)\n* Async load: Call StartLoadingDynamicSheet (no change)\n* Sync cache hit: Don\u0027t call StartLoadingDynamicSheet(), just let NotifyFinished() do its work.\n\nI ran layout tests locally with this change, and with a NOTREACHED() for the sync cache hit case to ensure it was getting exercised by tests. A couple dozen tests crashed withe NOTREACHED() but pass with the CL as uploaded, so I think we can say that we have test coverage of this case and that it\u0027s safe?",
+      "parentUuid": "3d10ff6a_f4be6356",
+      "revId": "f4d6a95426dc64d888f53f3e196625bc6a34835f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
