@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9acd985d_05c2a544",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-11T20:00:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbc56cc5_3c2e7510",
+      "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "319d7bab_854f7b52",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c389af1f_27d44171",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-11T20:00:42Z",
+      "side": 1,
+      "message": "Yes you are right. This is a bug and baileyberro@ is currently doing a reformatting and will change this with a different CL.",
+      "parentUuid": "319d7bab_854f7b52",
+      "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "46668b4e_33cf075d",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-11T20:00:42Z",
+      "side": 1,
+      "message": "baileyberro@ will change this in his reformatting CL.",
+      "parentUuid": "61e22c52_bc76c9d6",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 46
+      },
+      "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff374198_61a99878",
         "filename": "chromeos/dbus/smb_provider_client.h",
         "patchSetId": 11
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "65c5b664_e8264287",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-11T20:00:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff374198_61a99878",
+      "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fd5f2ba_c2b76457",
         "filename": "chromeos/dbus/smb_provider_client.h",
         "patchSetId": 11
@@ -90,6 +168,24 @@
       "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d36ea6f_f6f5b725",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-11T20:00:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fd5f2ba_c2b76457",
+      "revId": "bcb43bac89aa6996998ed87d8670094a2ccb5ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
