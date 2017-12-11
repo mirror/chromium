@@ -34,6 +34,24 @@
       "revId": "70999fa3a0bfb9b6f5a15930ff3333a1f0455acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852a0ea6_a5f71f9f",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T22:18:23Z",
+      "side": 1,
+      "message": "Blur is expensive operation, especially when it can be blended with live content (and that\u0027s why it\u0027s disabled on certain boards), so please measure the performance impact if you want to enable across the boards.",
+      "parentUuid": "fcba5ec4_2ee04117",
+      "revId": "70999fa3a0bfb9b6f5a15930ff3333a1f0455acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
