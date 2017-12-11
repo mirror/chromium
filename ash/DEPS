@@ -102,9 +102,14 @@ specific_include_rules = {
   "shell_port_mus\.cc": [
     "+ash/host/ash_window_tree_host_init_params.h",
     "+ash/host/ash_window_tree_host_mus.h",
+    "+ash/host/ash_window_tree_host_mus_mirroring_unified.h",
+    "+ash/host/ash_window_tree_host_mus_unified.h",
   ],
   "touch_transformer_controller\.*": [
     "+ash/host"
+  ],
+  "window_manager.cc": [
+    "+ash/host/ash_window_tree_host.h"
   ],
   "window_manager_service.cc": [
     "+chromeos/cryptohome"
