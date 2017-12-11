@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "base/files/file.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
@@ -80,9 +81,8 @@ class NET_EXPORT_PRIVATE SimpleFileTracker {
     // around which have the same entry_hash but different key. In that case,
     // we doom all but the most recent one and this number will eventually be
     // used to name the files for the doomed ones.
-    // 0 here means the entry is the active one, and is the only value that's
-    // presently in use here.
-    uint32_t doom_generation;
+    // 0 here means the entry is the active one.
+    uint64_t doom_generation;
   };
 
   SimpleFileTracker();
@@ -113,6 +113,13 @@ class NET_EXPORT_PRIVATE SimpleFileTracker {
   // If Close() has been called and the handle to the file is no longer alive,
   // a new backing file can be established by calling Register() again.
   void Close(const SimpleSynchronousEntry* owner, SubFile file);
+
+  // Updates key->doom_generation to one not in use for the hash; it's the
+  // caller's responsibility to update file names accordingly, and to prevent
+  // others from stomping on things while this is going on. SimpleBackendImpl's
+  // entries_pending_doom_ is the mechanism for protecting this action from
+  // races.
+  void Doom(const SimpleSynchronousEntry* owner, EntryFileKey* key);
 
   // Returns true if there is no in-memory state around, e.g. everything got
   // cleaned up. This is a test-only method since this object is expected to be
