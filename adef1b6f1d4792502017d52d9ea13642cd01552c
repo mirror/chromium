@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9546ca6a_fd6d3065",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-12-11T21:59:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc4d8fc7_d8a9daf1",
+      "revId": "adef1b6f1d4792502017d52d9ea13642cd01552c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79be36b7_c7ca114e",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
         "patchSetId": 15
