@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eef5493f_4c01869c",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 43
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-11T21:29:32Z",
+      "side": 1,
+      "message": "Can you depend on //media/base and //media/video instead of depending on the sources? And can those dependencies be in components/arc/video_accelerator/BUILD.gn instead of here?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 45
+      },
+      "revId": "832f173fb4584a8abca2673e0410a2dca6e9a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc72b0b0_8509418b",
+        "filename": "components/arc/DEPS",
+        "patchSetId": 43
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-12-11T21:29:32Z",
+      "side": 1,
+      "message": "Please move these to specific_include_rules",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 44
+      },
+      "revId": "832f173fb4584a8abca2673e0410a2dca6e9a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
