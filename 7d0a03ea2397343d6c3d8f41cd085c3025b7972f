@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b99f65e1_edbf2fd8",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T19:40:41Z",
+      "side": 1,
+      "message": "set mwebcontents to null here as well",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2cee1a_314a97e7",
+        "filename": "content/browser/android/gesture_listener_manager_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T19:40:41Z",
+      "side": 1,
+      "message": "hmm, can\u0027t we just have WebContentsAndroid explicitly own this?",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c223cd5b_5d833c1d",
+        "filename": "content/browser/android/gesture_listener_manager_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T19:40:41Z",
+      "side": 1,
+      "message": "maybe later, but is this thing available in java yet? would save a lot of generated code if we could move this switch statement to java..",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 22
+      },
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28548b18_fccde8f2",
+        "filename": "content/browser/android/gesture_listener_manager_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T19:40:41Z",
+      "side": 1,
+      "message": "I think we can avoid this SetJavaRef dance. You can pass both the java obj and web_contents into the constructor. Constructor can pass web_contents into userdata parent class. Remember to DCHECK(!GestureListenerManagerAndroid::FromWebContents(web_contents));",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f3bab1_3ce36d53",
+        "filename": "content/browser/android/gesture_listener_manager_android.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T19:40:41Z",
+      "side": 1,
+      "message": "drop the android part, this is already under an android-only directory, and there is no chance of confusing this with something else",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f469914_65081e54",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T19:40:41Z",
+      "side": 1,
+      "message": "is this more verbose form because you want to reduce gc churn? which I guess is a worthy goal\n\nwish ObserverList supported this officially as a mode, ie always return the same instance of the rewinded iterator.. hmm, maybe too easy to mistakes",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381ae9a2_f228842c",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T19:40:41Z",
+      "side": 1,
+      "message": "remove if there is nothing to do..",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78b5776_54567c45",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T19:40:41Z",
+      "side": 1,
+      "message": "this one package as well",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7e47c4_bdd7d5ca",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-11T19:40:41Z",
+      "side": 1,
+      "message": "remove this",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
