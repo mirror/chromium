@@ -212,8 +212,6 @@ class UnloadTest : public InProcessBrowserTest {
 // Navigate to a page with an infinite unload handler.
 // Then two async crosssite requests to ensure
 // we don't get confused and think we're closing the tab.
-//
-// This test is flaky on the valgrind UI bots. http://crbug.com/39057
 IN_PROC_BROWSER_TEST_F(UnloadTest, CrossSiteInfiniteUnloadAsync) {
   // Tests makes no sense in single-process mode since the renderer is hung.
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -242,8 +240,6 @@ IN_PROC_BROWSER_TEST_F(UnloadTest, CrossSiteInfiniteUnloadSync) {
 // Navigate to a page with an infinite beforeunload handler.
 // Then two two async crosssite requests to ensure
 // we don't get confused and think we're closing the tab.
-// This test is flaky on the valgrind UI bots. http://crbug.com/39057 and
-// http://crbug.com/86469
 IN_PROC_BROWSER_TEST_F(UnloadTest, CrossSiteInfiniteBeforeUnloadAsync) {
   // Tests makes no sense in single-process mode since the renderer is hung.
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
