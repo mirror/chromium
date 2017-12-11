@@ -16,6 +16,24 @@
       "revId": "7fbd266a63a9285905faea965b98eb97a0cebd40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82695816_25b96a76",
+        "filename": "content/browser/renderer_interface_binders.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-12-11T17:10:51Z",
+      "side": 1,
+      "message": "I haven\u0027t added all the security checks in RenderFrameMessageFilter::{SetCookie,GetCookies} to RestrictedCookieManager yet, so this interface is currently more privileged. When that happens, I plan to remove the flag checks.\n\nIs this an acceptable plan?",
+      "parentUuid": "667fd9fd_9999fce6",
+      "revId": "7fbd266a63a9285905faea965b98eb97a0cebd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
