@@ -30,11 +30,9 @@ class MEDIA_EXPORT AudioSystem {
   // TODO(olka,tommi): fix all AudioManager implementations to always report
   // when a device is not found, instead of returning sub parameter values.
   using OnAudioParamsCallback =
-      base::OnceCallback<void(const base::Optional<AudioParameters>&)>;
-  using OnInputDeviceInfoCallback =
-      base::OnceCallback<void(const base::Optional<AudioParameters>&,
-                              const base::Optional<AudioParameters>&,
-                              const std::string&)>;
+      base::OnceCallback<void(const AudioParameters&)>;
+  using OnInputDeviceInfoCallback = base::OnceCallback<
+      void(const AudioParameters&, const AudioParameters&, const std::string&)>;
 
   using OnBoolCallback = base::OnceCallback<void(bool)>;
   using OnDeviceDescriptionsCallback =

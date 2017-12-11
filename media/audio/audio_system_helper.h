@@ -44,10 +44,8 @@ class MEDIA_EXPORT AudioSystemHelper {
       AudioSystem::OnInputDeviceInfoCallback on_input_device_info_cb);
 
  private:
-  base::Optional<AudioParameters> ComputeInputParameters(
-      const std::string& device_id);
-  base::Optional<AudioParameters> ComputeOutputParameters(
-      const std::string& device_id);
+  AudioParameters ComputeInputParameters(const std::string& device_id);
+  AudioParameters ComputeOutputParameters(const std::string& device_id);
 
   AudioManager* const audio_manager_;
 

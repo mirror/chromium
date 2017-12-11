@@ -10,27 +10,6 @@
 
 namespace media {
 
-namespace {
-
-base::Optional<AudioParameters> TryToFixChannels(
-    const AudioParameters& params) {
-  DCHECK(!params.IsValid());
-  AudioParameters params_copy(params);
-
-  // If the number of output channels is greater than the maximum, use the
-  // maximum allowed value. Hardware channels are ignored upstream, so it is
-  // better to report a valid value if this is the only problem.
-  if (params.channels() > limits::kMaxChannels) {
-    DCHECK(params.channel_layout() == CHANNEL_LAYOUT_DISCRETE);
-    params_copy.set_channels_for_discrete(limits::kMaxChannels);
-  }
-
-  return params_copy.IsValid() ? params_copy
-                               : base::Optional<AudioParameters>();
-}
-
-}  // namespace
-
 AudioSystemHelper::AudioSystemHelper(AudioManager* audio_manager)
     : audio_manager_(audio_manager) {
   DCHECK(audio_manager_);
@@ -94,12 +73,12 @@ void AudioSystemHelper::GetInputDeviceInfo(
   std::move(on_input_device_info_cb)
       .Run(ComputeInputParameters(input_device_id),
            associated_output_device_id.empty()
-               ? base::Optional<AudioParameters>()
+               ? AudioParameters()
                : ComputeOutputParameters(associated_output_device_id),
            associated_output_device_id);
 }
 
-base::Optional<AudioParameters> AudioSystemHelper::ComputeInputParameters(
+AudioParameters AudioSystemHelper::ComputeInputParameters(
     const std::string& device_id) {
   DCHECK(audio_manager_->GetTaskRunner()->BelongsToCurrentThread());
 
@@ -111,17 +90,16 @@ base::Optional<AudioParameters> AudioSystemHelper::ComputeInputParameters(
     // AudioManager::GetInputStreamParameters will check |device_id| and
     // query the correct device for audio parameters by itself.
     if (!audio_manager_->HasAudioOutputDevices())
-      return base::Optional<AudioParameters>();
+      return AudioParameters();
   } else {
     if (!audio_manager_->HasAudioInputDevices())
-      return base::Optional<AudioParameters>();
+      return AudioParameters();
   }
 
-  AudioParameters params = audio_manager_->GetInputStreamParameters(device_id);
-  return params.IsValid() ? params : TryToFixChannels(params);
+  return audio_manager_->GetInputStreamParameters(device_id);
 }
 
-base::Optional<AudioParameters> AudioSystemHelper::ComputeOutputParameters(
+AudioParameters AudioSystemHelper::ComputeOutputParameters(
     const std::string& device_id) {
   DCHECK(audio_manager_->GetTaskRunner()->BelongsToCurrentThread());
 
@@ -129,17 +107,11 @@ base::Optional<AudioParameters> AudioSystemHelper::ComputeOutputParameters(
   // AudioManager::Get[Default]OutputStreamParameters() returns invalid
   // parameters if the device is not found.
   if (!audio_manager_->HasAudioOutputDevices())
-    return base::Optional<AudioParameters>();
+    return AudioParameters();
 
-  AudioParameters params =
-      AudioDeviceDescription::IsDefaultDevice(device_id)
-          ? audio_manager_->GetDefaultOutputStreamParameters()
-          : audio_manager_->GetOutputStreamParameters(device_id);
-
-  if (params.IsValid())
-    return params;
-
-  return TryToFixChannels(params);
+  return AudioDeviceDescription::IsDefaultDevice(device_id)
+             ? audio_manager_->GetDefaultOutputStreamParameters()
+             : audio_manager_->GetOutputStreamParameters(device_id);
 }
 
 }  // namespace media
