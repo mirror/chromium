@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c650d08_b3e59fd1",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-12-11T15:35:50Z",
+      "side": 1,
+      "message": "Update this comment too.",
+      "range": {
+        "startLine": 156,
+        "startChar": 41,
+        "endLine": 156,
+        "endChar": 42
+      },
+      "revId": "814bfe69d8e98cb1cc57c37c9ecbebf709a659f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
