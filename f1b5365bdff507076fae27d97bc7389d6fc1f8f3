@@ -219,6 +219,30 @@
     },
     {
       "key": {
+        "uuid": "e3a6c1b5_2f6c31af",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-12-11T22:50:22Z",
+      "side": 1,
+      "message": "My current plan is to have debugd retrieve the log at GetBigFeedbackLogs() D-Bus call time, but it would only send it over during a later call. We\u0027re going to check if the logs exist every time we call GetBigFeedbackLogs anyway so it seems fine to me if we just announce the presence of these special logs at that time instead of waiting to make another D-Bus call.",
+      "parentUuid": "c3379159_edd711dc",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 26
+      },
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d35a41e6_dd6180d2",
         "filename": "extensions/common/api/feedback_private.idl",
         "patchSetId": 5
