@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf52d5b9_8f0c9007",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T09:27:56Z",
+      "side": 1,
+      "message": "That was my instinct as well. I left a clarifying comment why this doesn\u0027t work here, though.",
+      "parentUuid": "8eb0f368_94833bc8",
+      "range": {
+        "startLine": 328,
+        "startChar": 4,
+        "endLine": 328,
+        "endChar": 21
+      },
+      "revId": "b9ea42aa889bd52916b463e8cbd9bceade83cbeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "493b7e1f_c1e0feee",
         "filename": "device/u2f/u2f_ble_connection_unittest.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "b9ea42aa889bd52916b463e8cbd9bceade83cbeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44909a0f_99587aef",
+        "filename": "device/u2f/u2f_ble_connection_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T09:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "493b7e1f_c1e0feee",
+      "range": {
+        "startLine": 566,
+        "startChar": 5,
+        "endLine": 566,
+        "endChar": 19
+      },
+      "revId": "b9ea42aa889bd52916b463e8cbd9bceade83cbeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

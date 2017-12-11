@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "2bce32c8_d83f8664",
+        "filename": "device/u2f/u2f_ble_connection.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-12-11T09:27:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "655c0626_cec2c911",
+      "range": {
+        "startLine": 79,
+        "startChar": 15,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "61450068b130f6156d07924715ce5b67dbbcd37e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f0c7b67_9c581712",
         "filename": "device/u2f/u2f_ble_connection.cc",
         "patchSetId": 13
