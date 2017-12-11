@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea6d909e_6246acdb",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T05:39:59Z",
+      "side": 1,
+      "message": "Is this the same as \"const NotificationDispatchCompleteCallback*\"?\n\nconst* is rarely seen in Chromium codebase.",
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
