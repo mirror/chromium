@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "62891c13_46cdcfd8",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-12-11T00:44:54Z",
+      "side": 1,
+      "message": "Oops NVM; I got confused!",
+      "parentUuid": "86b33b47_b486c17a",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "285051ba68e486f64a763f59e4bc001097eba391",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73609ed8_2683ca53",
         "filename": "chrome/installer/zucchini/encoded_view.cc",
         "patchSetId": 21
