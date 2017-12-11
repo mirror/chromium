@@ -22,6 +22,30 @@
       "revId": "4ad394b04ba7f87d2c39b0cfcaa25637b121ca46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c074bc42_4a584541",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3681,
+      "author": {
+        "id": 1151699
+      },
+      "writtenOn": "2017-12-11T18:19:35Z",
+      "side": 1,
+      "message": "We provide a link besides this message which links to https://www.google.com/chromebook/older/\nI think the content of the webpage explains more about what eol means and some new chromebook users can consider getting.\n+josafat@, what do you think?",
+      "parentUuid": "45596c26_a46aa387",
+      "range": {
+        "startLine": 3681,
+        "startChar": 68,
+        "endLine": 3681,
+        "endChar": 94
+      },
+      "revId": "4ad394b04ba7f87d2c39b0cfcaa25637b121ca46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
