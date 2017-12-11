@@ -57,6 +57,39 @@ class MODULES_EXPORT AXObjectCacheImpl
  public:
   static AXObjectCache* Create(Document&);
 
+  enum AXNotification {
+    kAXActiveDescendantChanged,
+    kAXAriaAttributeChanged,
+    kAXAutocorrectionOccured,
+    kAXBlur,
+    kAXCheckedStateChanged,
+    kAXChildrenChanged,
+    kAXClicked,
+    kAXDocumentSelectionChanged,
+    kAXExpandedChanged,
+    kAXFocusedUIElementChanged,
+    kAXHide,
+    kAXHover,
+    kAXInvalidStatusChanged,
+    kAXLayoutComplete,
+    kAXLiveRegionChanged,
+    kAXLoadComplete,
+    kAXLocationChanged,
+    kAXMenuListItemSelected,
+    kAXMenuListItemUnselected,
+    kAXMenuListValueChanged,
+    kAXRowCollapsed,
+    kAXRowCountChanged,
+    kAXRowExpanded,
+    kAXScrollPositionChanged,
+    kAXScrolledToAnchor,
+    kAXSelectedChildrenChanged,
+    kAXSelectedTextChanged,
+    kAXShow,
+    kAXTextChanged,
+    kAXValueChanged
+  };
+
   explicit AXObjectCacheImpl(Document&);
   virtual ~AXObjectCacheImpl();
   virtual void Trace(blink::Visitor*);
