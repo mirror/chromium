@@ -46,9 +46,7 @@ const char kChromeContentSuggestionsReferrer[] =
 }  // namespace
 
 HistoryTabHelper::HistoryTabHelper(WebContents* web_contents)
-    : content::WebContentsObserver(web_contents),
-      received_page_title_(false) {
-}
+    : content::WebContentsObserver(web_contents) {}
 
 HistoryTabHelper::~HistoryTabHelper() {
 }
@@ -58,12 +56,6 @@ void HistoryTabHelper::UpdateHistoryForNavigation(
   history::HistoryService* hs = GetHistoryService();
   if (hs)
     GetHistoryService()->AddPage(add_page_args);
-}
-
-void HistoryTabHelper::UpdateHistoryPageTitle(const NavigationEntry& entry) {
-  history::HistoryService* hs = GetHistoryService();
-  if (hs)
-    hs->SetPageTitle(entry.GetVirtualURL(), entry.GetTitleForDisplay());
 }
 
 history::HistoryAddPageArgs
@@ -117,10 +109,8 @@ void HistoryTabHelper::DidFinishNavigation(
   if (!navigation_handle->HasCommitted())
     return;
 
-  if (navigation_handle->IsInMainFrame()) {
-    // Allow the new page to set the title again.
-    received_page_title_ = false;
-  } else if (!navigation_handle->HasSubframeNavigationEntryCommitted()) {
+  if (!navigation_handle->IsInMainFrame() &&
+      !navigation_handle->HasSubframeNavigationEntryCommitted()) {
     // Filter out unwanted URLs. We don't add auto-subframe URLs that don't
     // change which NavigationEntry is current. They are a large part of history
     // (think iframes for ads) and we never display them in history UI. We will
@@ -176,19 +166,12 @@ void HistoryTabHelper::DidFinishNavigation(
 }
 
 void HistoryTabHelper::TitleWasSet(NavigationEntry* entry) {
-  if (received_page_title_)
+  if (!entry)
     return;
 
-  if (entry) {
-    UpdateHistoryPageTitle(*entry);
-
-    // For file URLs without a title, the title is synthesized. In that case, we
-    // don't want the update to count toward the "one set per page of the title
-    // to history."
-    bool title_is_synthesized =
-        entry->GetURL().SchemeIsFile() && entry->GetTitle().empty();
-    received_page_title_ = !title_is_synthesized;
-  }
+  history::HistoryService* hs = GetHistoryService();
+  if (hs)
+    hs->SetPageTitle(entry->GetVirtualURL(), entry->GetTitleForDisplay());
 }
 
 history::HistoryService* HistoryTabHelper::GetHistoryService() {
