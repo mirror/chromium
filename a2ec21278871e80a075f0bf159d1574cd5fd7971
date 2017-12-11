@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6feafaa5_952a56bd",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-11T19:11:46Z",
+      "side": 1,
+      "message": "Given that the file path indicates it is for Android only, I feel like we should instead opt-in with something like if (is_android) {\n\n\nIf we want to use it on ChromeOS as well, we probably want to update the file path to be more clear and NOT do the opt-in I suggested.\n\nKeep in mind, we\u0027re adding support for Fuchsia. So we should use whichever system is more future-facing correct and not assume a static set of supported platforms.",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3f248d_68145cb5",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-11T19:11:46Z",
+      "side": 1,
+      "message": "Maybe this is only me, but as soon as I get to this part I wonder why we don\u0027t use crc32 on these platforms.\n\nIt might be a good idea to mention why we exclude these.",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 34
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4142c32_6dbd8bc1",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 2
@@ -18,6 +64,53 @@
         "startChar": 4,
         "endLine": 107,
         "endChar": 24
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8dc4e62_9dd5fd0c",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-11T19:11:46Z",
+      "side": 1,
+      "message": "ARM\u0027s crc32 instruction was initially only available on AArch64 but later was added to AArch32 as well.\n\nhttp://infocenter.arm.com/help/index.jsp?topic\u003d/com.arm.doc.dui0801g/awi1476352818103.html\n\"Note:\nID_ISAR5.CRC32 indicates whether this instruction is supported in the T32 and A32 instruction sets.\"\n\nSo this patch builds both paths (support and no support) and checks for crc32 support at runtime.",
+      "parentUuid": "d4142c32_6dbd8bc1",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 24
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "79449965_91aa9d4c",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-11T19:11:46Z",
+      "side": 1,
+      "message": "This section is from before we enclosed the static_library(\"zlib_arm_crc32\") in if (platforms) {\n\nThe problem at that time was we were building this library for platforms which wouldn\u0027t actually use it. We still had to build something though.\n\nHowever, I believe we can remove this section and only provide static_library(\"zlib_arm_crc32\") on platforms which we actually plan to build it on.\n\nSaid another way, we get to this section because we are building ARM + iOS or ARM + ChromeOS. But we could have just excluded iOS and ChromeOS in the outer-most if().",
+      "range": {
+        "startLine": 131,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 7
       },
       "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -42,6 +135,47 @@
     },
     {
       "key": {
+        "uuid": "969c55f2_e493398b",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-11T19:11:46Z",
+      "side": 1,
+      "message": "I agree.\n\nIn fact, I can imagine a world where future iOS devices do support crc32.\n\nI think the best option is to route everything as if we were going to do the crc32 feature detection on iOS, then add a TODO there and always return not-supported.\n\nThat would make iOS less of an exception, be fa bit more future-facing, and make it clear where the change needs to happen if/when we do later add crc32 support to iOS.",
+      "parentUuid": "ce2ba92b_30b8ad66",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6816885_f940513a",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-11T19:11:46Z",
+      "side": 1,
+      "message": "Elsewhere, I mentioned routing iOS here.\nIt would make sense to me to route all OSes here and have\n#else\n// Platform support not yet added\n#endif\n\nThis leaves capabilities as 0 and doesn\u0027t enable anything fancy until we actively add support for that platform (allowing us to test it before launching).",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 3
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "489c8c02_b6d8deb1",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
         "patchSetId": 2
@@ -59,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "06eaa3eb_3e5ffbfd",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-11T19:11:46Z",
+      "side": 1,
+      "message": "Is getauxval() available from within the sandbox Chrome\u0027s renderers are in?\nIIRC that is the reason we had to go the NDK route.",
+      "parentUuid": "489c8c02_b6d8deb1",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca2439f1_e48e80c1",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
         "patchSetId": 2
@@ -70,6 +222,29 @@
       "writtenOn": "2017-12-11T15:36:14Z",
       "side": 1,
       "message": "Unless this is a TODO, it\u0027s probably best for us to leave this out, either by including \u003cstdbool.h\u003e and using bool, or just using a builtin type like you are.\n\nIsn\u0027t it more conventional to use `int` to return booleans in pre-C99?",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97206937_85462816",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-11T19:11:46Z",
+      "side": 1,
+      "message": "We need to change this to the Chromium copyright notice.",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 39
+      },
       "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +336,24 @@
       "writtenOn": "2017-12-11T15:36:14Z",
       "side": 1,
       "message": "It doesn\u0027t seem necessary to both check for this outside calling arm_check_features() and inside it\n\n  void arm_check_features(void)\n  {\n  #ifdef USE_ARMV8_CRC32\n     pthread_once(\u0026cpu_check_inited_once, init_arm_features);\n  #endif\n  }\n\nOne of those must be redundant?",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f76e9aa_69f73529",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-11T19:11:46Z",
+      "side": 1,
+      "message": "Agreed. I like the idea of only checking inside arm_check_features()",
+      "parentUuid": "53d024cb_96e311c3",
       "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
