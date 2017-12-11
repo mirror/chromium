@@ -22,6 +22,30 @@
       "revId": "e6f680dda50f73b74e2bd403192096429092694f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a66b212_a0ea3d7c",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-11T22:19:55Z",
+      "side": 1,
+      "message": "Uh, yep, that\u0027s what I get for uploading the CL before the local compile finished.  Fixed, thanks.",
+      "parentUuid": "cdebc0d1_0e9c198d",
+      "range": {
+        "startLine": 231,
+        "startChar": 76,
+        "endLine": 231,
+        "endChar": 0
+      },
+      "revId": "e6f680dda50f73b74e2bd403192096429092694f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
