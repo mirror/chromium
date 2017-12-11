@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2cf26819_a3d5a348",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-11T16:49:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e530da_070f34de",
+      "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2302051_59c6fd7d",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11607edc_60b18eb8",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-11T16:49:21Z",
+      "side": 1,
+      "message": "The WebContents won\u0027t be closed immediately and the window may not be closed immediately either.  The if/else if/else just serves to order the events, and when each one completes it calls back to Terminate().",
+      "parentUuid": "a2302051_59c6fd7d",
+      "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "871aa9d7_6f7a348b",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-11T16:49:21Z",
+      "side": 1,
+      "message": "This simulates the user directly closing the window, so it\u0027s part of testing that WindowClosed() calls Terminate().",
+      "parentUuid": "e7baaa0e_f4d1c68c",
+      "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "998c772c_ee8cde5e",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
         "patchSetId": 17
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "342c5bb8_82fdace8",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-11T16:49:21Z",
+      "side": 1,
+      "message": "There is although not in fullscreen (which is how it is started).  I added that to the comment.",
+      "parentUuid": "998c772c_ee8cde5e",
+      "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5548e6a0_92436346",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
         "patchSetId": 17
@@ -84,6 +156,24 @@
       "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b607a9e_29f14275",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-11T16:49:21Z",
+      "side": 1,
+      "message": "Removed this part of the comment.",
+      "parentUuid": "5548e6a0_92436346",
+      "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
