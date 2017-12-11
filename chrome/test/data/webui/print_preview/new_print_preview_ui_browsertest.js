@@ -91,3 +91,32 @@ TEST_F('PrintPreviewSettingsSectionsTest', 'Scaling', function() {
 TEST_F('PrintPreviewSettingsSectionsTest', 'Other', function() {
   this.runMochaTest(settings_sections_tests.TestNames.Other);
 });
+
+PrintPreviewRestoreStateTest = class extends NewPrintPreviewTest {
+  /** @override */
+  get browsePreload() {
+    return 'chrome://print/new/app.html';
+  }
+
+  /** @override */
+  get extraLibraries() {
+    return super.extraLibraries.concat([
+      '../test_browser_proxy.js',
+      'native_layer_stub.js',
+      'restore_state_test.js',
+    ]);
+  }
+
+  /** @override */
+  get suiteName() {
+    return restore_state_test.suiteName;
+  }
+};
+
+TEST_F('PrintPreviewRestoreStateTest', 'Restore1', function() {
+  this.runMochaTest(restore_state_test.TestNames.Restore1);
+});
+
+TEST_F('PrintPreviewRestoreStateTest', 'Restore2', function() {
+  this.runMochaTest(restore_state_test.TestNames.Restore2);
+});
