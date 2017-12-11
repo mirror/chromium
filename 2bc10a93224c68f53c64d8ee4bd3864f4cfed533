@@ -16,6 +16,24 @@
       "revId": "2bc10a93224c68f53c64d8ee4bd3864f4cfed533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c2dca52_2dceafea",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T11:50:23Z",
+      "side": 1,
+      "message": "\u003e git cl format likes it this way...\n\nyeah I usually put the comment inside the first #if, if it still reads OK there. I think it does here. Up to you.",
+      "parentUuid": "f39908f0_28a56294",
+      "revId": "2bc10a93224c68f53c64d8ee4bd3864f4cfed533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
