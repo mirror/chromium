@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "ui/base/models/menu_model.h"
+#include "base/metrics/histogram_macros.h"
 
 namespace ui {
 
@@ -47,6 +48,18 @@ const gfx::FontList* MenuModel::GetLabelFontListAt(int index) const {
 // Default implementation ignores the event flags.
 void MenuModel::ActivatedAt(int index, int event_flags) {
   ActivatedAt(index);
+}
+
+void MenuModel::SetHistogramName(std::string histogram_name) {
+  if (!histogram_name_.empty())
+    return;
+  histogram_name_ = histogram_name;
+}
+
+void MenuModel::RecordHistogram(int command) {
+  if (histogram_name_.empty())
+    return;
+  UMA_HISTOGRAM_SPARSE_SLOWLY(histogram_name_, command);
 }
 
 }  // namespace ui

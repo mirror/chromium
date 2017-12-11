@@ -1861,6 +1861,13 @@ void ShelfView::OnMenuClosed(views::InkDrop* ink_drop) {
 
   closing_event_time_ = launcher_menu_runner_->closing_event_time();
 
+  if (shelf_button_context_menu_time_ != base::Time()) {
+    // If the context menu came from a ShelfButton.
+    UMA_HISTOGRAM_TIMES(kShelfContextMenuUserJourneyTimeShelfButton,
+                        base::Time::Now() - shelf_button_context_menu_time_);
+    shelf_button_context_menu_time_ = base::Time();
+  }
+
   if (ink_drop)
     ink_drop->AnimateToState(views::InkDropState::DEACTIVATED);
 

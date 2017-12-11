@@ -13,6 +13,7 @@
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
+#include "ash/shelf/shelf_constants.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/wallpaper/wallpaper_controller.h"
@@ -164,6 +165,8 @@ ShelfContextMenuModel::ShelfContextMenuModel(MenuItemList menu_items,
   // Append some menu items that are handled locally by Ash.
   AddLocalMenuItems(&menu_items_, display_id);
   AddItems(this, this, menu_items_, &submenus_);
+  SetHistogramName(delegate_ ? kAppContextMenuExecuteCommand
+                             : kNonAppContextMenuExecuteCommand);
 }
 
 ShelfContextMenuModel::~ShelfContextMenuModel() = default;

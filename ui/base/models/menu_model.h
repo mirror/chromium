@@ -134,6 +134,14 @@ class UI_BASE_EXPORT MenuModel {
   static bool GetModelAndIndexForCommandId(int command_id,
                                            MenuModel** model,
                                            int* index);
+
+  // Sets |histogram_name_|.
+  void SetHistogramName(std::string histogram_name);
+
+  // Records the command for UMA.
+  void RecordHistogram(int command);
+
+  std::string histogram_name_;
 };
 
 }  // namespace ui

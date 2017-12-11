@@ -151,6 +151,7 @@ void MenuModelAdapter::ExecuteCommand(int id, int mouse_event_flags) {
   ui::MenuModel* model = menu_model_;
   int index = 0;
   if (ui::MenuModel::GetModelAndIndexForCommandId(id, &model, &index)) {
+    model->RecordHistogram(index);
     model->ActivatedAt(index, mouse_event_flags);
     return;
   }
