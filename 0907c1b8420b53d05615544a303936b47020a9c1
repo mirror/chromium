@@ -16,6 +16,29 @@
       "revId": "0907c1b8420b53d05615544a303936b47020a9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acad5449_9c4a8af0",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-11T19:00:21Z",
+      "side": 1,
+      "message": "Hm this is not good enough.  Theoretically it is possible that in the course of closing sessions a new session is created and immediately made unavailable but not draining (that is, STATE_GOING_AWAY), in which case this would fail.  I\u0027m reverting to the previous patch set.",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 34
+      },
+      "revId": "0907c1b8420b53d05615544a303936b47020a9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

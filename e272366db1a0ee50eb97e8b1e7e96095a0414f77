@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c97a40d0_6169e634",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-11T19:00:21Z",
+      "side": 1,
+      "message": "SpdySession::CloseSessionOnError() is a no-op (apart from a DCHECK) if the session is already draining.",
+      "range": {
+        "startLine": 535,
+        "startChar": 0,
+        "endLine": 535,
+        "endChar": 30
+      },
+      "revId": "e272366db1a0ee50eb97e8b1e7e96095a0414f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20e72aad_ec75dcb9",
+        "filename": "net/spdy/chromium/spdy_session_pool.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-11T19:00:21Z",
+      "side": 1,
+      "message": "There is no guarantee that CloseSessionOnError() does not call back to SpdySessionPool::RemoveUnavailableSession() synchronously, this invalidating |session|.  It is not a problem for IsSessionAvailable(), because that just checks for the pointer (now nullptr) in a container.",
+      "range": {
+        "startLine": 541,
+        "startChar": 11,
+        "endLine": 541,
+        "endChar": 19
+      },
+      "revId": "e272366db1a0ee50eb97e8b1e7e96095a0414f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
