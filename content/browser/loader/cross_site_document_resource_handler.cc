@@ -12,6 +12,7 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_piece.h"
+#include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/loader/detachable_resource_handler.h"
@@ -19,7 +20,9 @@
 #include "content/browser/site_instance_impl.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/resource_context.h"
+#include "content/public/common/console_message_level.h"
 #include "content/public/common/content_client.h"
 #include "net/base/io_buffer.h"
 #include "net/base/mime_sniffer.h"
@@ -33,6 +36,19 @@ void LogCrossSiteDocumentAction(
     CrossSiteDocumentResourceHandler::Action action) {
   UMA_HISTOGRAM_ENUMERATION("SiteIsolation.XSD.Browser.Action", action,
                             CrossSiteDocumentResourceHandler::Action::kCount);
+}
+
+// Prints an informational message to console when a page's request is blocked.
+// TODO(creis, pfeldman): Plumb this with the response instead in
+// https://crbug.com/793937.
+void OutputConsoleMessageOnUI(int render_process_id,
+                              int render_frame_id,
+                              const std::string& message) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  RenderFrameHost* rfh =
+      RenderFrameHost::FromID(render_process_id, render_frame_id);
+  if (rfh)
+    rfh->AddMessageToConsole(CONSOLE_MESSAGE_LEVEL_ERROR, message);
 }
 
 }  // namespace
@@ -98,8 +114,10 @@ class CrossSiteDocumentResourceHandler::OnWillReadController
 
 CrossSiteDocumentResourceHandler::CrossSiteDocumentResourceHandler(
     std::unique_ptr<ResourceHandler> next_handler,
-    net::URLRequest* request)
-    : LayeredResourceHandler(request, std::move(next_handler)) {}
+    net::URLRequest* request,
+    bool is_nocors_plugin_request)
+    : LayeredResourceHandler(request, std::move(next_handler)),
+      is_nocors_plugin_request_(is_nocors_plugin_request) {}
 
 CrossSiteDocumentResourceHandler::~CrossSiteDocumentResourceHandler() {}
 
@@ -233,6 +251,18 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
       // Block the response and throw away the data.  Report zero bytes read.
       bytes_read = 0;
       blocked_read_completed_ = true;
+
+      // Show a console message for blocked script requests, since this is the
+      // case most likely to result in a behavior change.
+      const ResourceRequestInfoImpl* info = GetRequestInfo();
+      if (info && info->GetResourceType() == RESOURCE_TYPE_SCRIPT) {
+        DCHECK(!console_message_.empty());
+        BrowserThread::PostTask(
+            BrowserThread::UI, FROM_HERE,
+            base::BindOnce(&OutputConsoleMessageOnUI, info->GetChildID(),
+                           info->GetRenderFrameID(),
+                           std::move(console_message_)));
+      }
 
       // Log the blocking event.  Inline the Serialize call to avoid it when
       // tracing is disabled.
@@ -374,14 +404,9 @@ bool CrossSiteDocumentResourceHandler::ShouldBlockBasedOnHeaders(
 
   // Give embedder a chance to skip document blocking for this response.
   if (GetContentClient()->browser()->ShouldBypassDocumentBlocking(
-          initiator, url, GetRequestInfo()->GetResourceType())) {
+          initiator, url, info->GetResourceType())) {
     return false;
   }
-
-  // TODO(creis): Don't block plugin requests with universal access. This could
-  // be done by allowing resource_type_ == RESOURCE_TYPE_PLUGIN_RESOURCE unless
-  // it had an Origin request header and IsValidCorsHeaderSet returned false.
-  // (That would matter for plugins without universal access, which use CORS.)
 
   // Allow the response through if it has valid CORS headers.
   std::string cors_header;
@@ -389,6 +414,16 @@ bool CrossSiteDocumentResourceHandler::ShouldBlockBasedOnHeaders(
                                               &cors_header);
   if (CrossSiteDocumentClassifier::IsValidCorsHeaderSet(initiator, url,
                                                         cors_header)) {
+    return false;
+  }
+
+  // Don't block plugin requests with universal access (e.g., Flash).  Such
+  // requests are made without CORS, and thus dont have an Origin request
+  // header.  Other plugin requests (e.g., NaCl) are made using CORS and have an
+  // Origin request header.  If they fail the CORS check above, they should be
+  // blocked.
+  if (info->GetResourceType() == RESOURCE_TYPE_PLUGIN_RESOURCE &&
+      is_nocors_plugin_request_) {
     return false;
   }
 
@@ -406,6 +441,23 @@ bool CrossSiteDocumentResourceHandler::ShouldBlockBasedOnHeaders(
   response->head.headers->GetNormalizedHeader("content-range", &range_header);
   needs_sniffing_ = !base::LowerCaseEqualsASCII(nosniff_header, "nosniff") &&
                     range_header.empty();
+
+  // We will log a console message for script tags, which are the most likely
+  // case to observe a regression (e.g., when a script file otherwise looks like
+  // a document we block).  Other common cases like XHR show console messages
+  // already.  Generate the message now while we have the context available.
+  //
+  // TODO(creis, pfeldman): Plumb the console message with the response instead,
+  // making it more consistent and less likely to cause flaky layout test
+  // output due to posting the message to the UI thread first.  See
+  // https://crbug.com/793937.
+  if (info->GetResourceType() == RESOURCE_TYPE_SCRIPT) {
+    console_message_ = base::StringPrintf(
+        "Blocked origin '%s' from receiving cross-site document at %s with "
+        "MIME type %s.",
+        initiator.Serialize().c_str(), url.spec().c_str(),
+        response->head.mime_type.c_str());
+  }
 
   return true;
 }
