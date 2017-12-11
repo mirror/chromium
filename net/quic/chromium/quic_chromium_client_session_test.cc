@@ -136,7 +136,8 @@ class QuicChromiumClientSessionTest
         /*migrate_session_on_network_change*/ false,
         /*migrate_session_early_v2*/ false,
         /*migrate_session_on_network_change_v2*/ false,
-        kQuicYieldAfterPacketsRead,
+        /*max_time_on_non_default_network_seconds*/
+        kMaxTimeOnNonDefaultNetworkSecs, kQuicYieldAfterPacketsRead,
         QuicTime::Delta::FromMilliseconds(kQuicYieldAfterDurationMilliseconds),
         /*cert_verify_flags=*/0, DefaultQuicConfig(), &crypto_config_,
         "CONNECTION_UNKNOWN", base::TimeTicks::Now(), base::TimeTicks::Now(),

@@ -125,8 +125,10 @@ class HttpProxyClientSocketWrapperTest
         /*connect_using_default_network=*/true,
         migrate_sessions_on_network_change_, migrate_sessions_early_,
         migrate_sessions_on_network_change_v2_, migrate_sessions_early_v2_,
-        allow_server_migration_, race_cert_verification_, estimate_initial_rtt_,
-        connection_options_, client_connection_options_,
+        /*max_time_on_non_default_network_seconds*/
+        kMaxTimeOnNonDefaultNetworkSecs, allow_server_migration_,
+        race_cert_verification_, estimate_initial_rtt_, connection_options_,
+        client_connection_options_,
         /*enable_token_binding=*/false));
   }
 
