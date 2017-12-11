@@ -25,7 +25,7 @@
 #include "net/base/ip_address.h"
 #include "net/base/net_errors.h"
 #include "net/proxy/proxy_info.h"
-#include "net/proxy/proxy_resolver_script.h"
+#include "net/proxy/pac_js_library.h"
 #include "net/proxy/proxy_resolver_script_data.h"
 #include "url/gurl.h"
 #include "url/url_canon.h"
