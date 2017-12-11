@@ -52,6 +52,24 @@
       "revId": "49ccdedbf92370cb1352f4d4f6fa66a5fd430fc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7d047c_788d405d",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLDocumentParser.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-12-11T11:03:26Z",
+      "side": 0,
+      "message": "It seems to work with it gone, but lets remove this change from the patch.",
+      "parentUuid": "a3c4cc99_2072ddde",
+      "revId": "49ccdedbf92370cb1352f4d4f6fa66a5fd430fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
