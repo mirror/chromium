@@ -94,6 +94,54 @@
       "revId": "4bad8e7424488a70ebb796012c75d3b520fa08cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ed3a0d_677df2ff",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:09:15Z",
+      "side": 1,
+      "message": "I agree that it would be better not to ignore offline pages. But current code does ignore them. The important property of any metric is to be able to compare the results across the releases. \n\nFrom my understanding the purpose of this CL is to fix the DCHECK, not to make this metric correct. I agree with Sylvain in abstract (offline pages should not be ignored), but in this specific CL we should not change the metric behavior.",
+      "parentUuid": "33988a22_b4aa764f",
+      "range": {
+        "startLine": 373,
+        "startChar": 25,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "4bad8e7424488a70ebb796012c75d3b520fa08cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba11d2f_a94586d5",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T18:09:15Z",
+      "side": 1,
+      "message": "\u003e How about if either URL of virtual URL is chrome://?\nSorry, forgot to send the reply, which was \"SGTM\"",
+      "parentUuid": "9136eca3_04adbd81",
+      "range": {
+        "startLine": 373,
+        "startChar": 25,
+        "endLine": 373,
+        "endChar": 38
+      },
+      "revId": "4bad8e7424488a70ebb796012c75d3b520fa08cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
