@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "227f48e5_d7210cf6",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-11T19:28:15Z",
+      "side": 1,
+      "message": "Yup, thanks for using the new way! \"url-chunk\" and most of the other remaining keys are a bit tricky because in Breakpad they\u0027re split into multiple chunks and then reassembled on the server. So I need to make a change to the processor in order to convert those (working on that today).",
+      "parentUuid": "a0df39d6_c758ce1f",
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a276b233_18e84b91",
         "filename": "chrome/common/crash_keys.h",
         "patchSetId": 1
