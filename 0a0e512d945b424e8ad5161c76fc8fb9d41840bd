@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "776ee3eb_63b8bfc0",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-12-11T22:09:44Z",
+      "side": 1,
+      "message": "That makes sense to me.",
+      "parentUuid": "069dfe6e_a4c9eae2",
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b174a4a9_55c5e852",
         "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
         "patchSetId": 1
