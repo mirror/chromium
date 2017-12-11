@@ -91,6 +91,29 @@
       "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5eeab01_4377e196",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-11T22:35:01Z",
+      "side": 1,
+      "message": "this conditional looks a bit dubious for production code - is it ever going to be null there, and if yes should this stop presentation, throw an exception, or do some other kind of error reporting? If it\u0027s only supposed to be null for tests, I think it would be good to document that.",
+      "range": {
+        "startLine": 740,
+        "startChar": 4,
+        "endLine": 740,
+        "endChar": 28
+      },
+      "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
