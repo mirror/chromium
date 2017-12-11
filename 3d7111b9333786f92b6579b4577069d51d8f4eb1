@@ -16,6 +16,24 @@
       "revId": "3d7111b9333786f92b6579b4577069d51d8f4eb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca56383_fa4d759b",
+        "filename": "services/shape_detection/text_detection_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-11T16:53:08Z",
+      "side": 1,
+      "message": "This is the norm in Mojo. This function creates a new instance of TextDetectionImpl bound to the given pipe. The method would be called BindToRequest if it bound a pipe to an existing instance.",
+      "parentUuid": "738bd2a7_bb93860a",
+      "revId": "3d7111b9333786f92b6579b4577069d51d8f4eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
