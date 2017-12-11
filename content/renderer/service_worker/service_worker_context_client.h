@@ -61,10 +61,11 @@ namespace content {
 struct PlatformNotificationData;
 struct PushEventPayload;
 struct ServiceWorkerClientInfo;
+class EmbeddedWorkerInstanceClientImpl;
 class ServiceWorkerNetworkProvider;
 class ServiceWorkerProviderContext;
+class ServiceWorkerTimeoutTimer;
 class ThreadSafeSender;
-class EmbeddedWorkerInstanceClientImpl;
 class WebWorkerFetchContext;
 
 // ServiceWorkerContextClient is a "client" of a service worker execution
@@ -252,11 +253,31 @@ class CONTENT_EXPORT ServiceWorkerContextClient
   void Claim(std::unique_ptr<blink::WebServiceWorkerClientsClaimCallbacks>
                  callbacks) override;
 
+  // Dispatches the fetch event when the context client is running. If it's
+  // already requested termination to the browser, the event could be queued
+  // until the context client starts to run again (it's when the browser process
+  // dispatches events after the termination request).
+  // Events have to be queued only if the events come directly from the clients
+  // through ControllerServiceWorkerImpl.
+  void DispatchOrQueueFetchEvent(
+      const ResourceRequest& request,
+      mojom::FetchEventPreloadHandlePtr preload_handle,
+      mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
+      DispatchFetchEventCallback callback);
+
  private:
   struct WorkerContextData;
   class NavigationPreloadRequest;
   friend class ControllerServiceWorkerImpl;
   friend class ServiceWorkerContextClientTest;
+  FRIEND_TEST_ALL_PREFIXES(
+      ServiceWorkerContextClientTest,
+      DispatchOrQueueFetchEvent_RequestedTerminationAndDie);
+  FRIEND_TEST_ALL_PREFIXES(
+      ServiceWorkerContextClientTest,
+      DispatchOrQueueFetchEvent_RequestedTerminationAndWakeUp);
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerContextClientTest,
+                           DispatchOrQueueFetchEvent_NotRequestedTermination);
 
   // Get routing_id for sending message to the ServiceWorkerVersion
   // in the browser process.
@@ -380,12 +401,19 @@ class CONTENT_EXPORT ServiceWorkerContextClient
                               const GURL& url,
                               mojom::FetchEventPreloadHandlePtr preload_handle);
 
-  // Called when a certain time has passed since the last task finished.
-  void OnIdle();
+  // Called by ServiceWorkerTimeoutTimer when a certain time has passed since
+  // the last task finished.
+  void OnIdleTimeout();
+
+  // Returns true if the worker has to be terminated by the browser process. It
+  // does this due to idle timeout.
+  bool RequestedTermination() const;
 
   base::WeakPtr<ServiceWorkerContextClient> GetWeakPtr();
 
   static void ResetThreadSpecificInstanceForTesting();
+  void SetTimeoutTimerForTesting(
+      std::unique_ptr<ServiceWorkerTimeoutTimer> timeout_timer);
 
   const int embedded_worker_id_;
   const int64_t service_worker_version_id_;
