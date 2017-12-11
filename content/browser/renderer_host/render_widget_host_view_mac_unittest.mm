@@ -1509,8 +1509,7 @@ TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
   // event gets dispatched.
   base::RunLoop run_loop;
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, run_loop.QuitClosure(),
-      base::TimeDelta::FromMilliseconds(100));
+      FROM_HERE, run_loop.QuitClosure(), kDefaultMouseWheelLatchingTransaction);
   run_loop.Run();
 
   events = host->GetAndResetDispatchedMessages();
@@ -1576,7 +1575,7 @@ TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
   base::RunLoop run_loop;
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(),
-      base::TimeDelta::FromMilliseconds(100));
+      kMaximumTimeBetweenPhaseEndedAndMomentumPhaseBegan);
   run_loop.Run();
 }
 
