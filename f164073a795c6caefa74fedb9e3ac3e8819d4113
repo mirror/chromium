@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d917a548_b5ae5114",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-11T23:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1207c743_c3bcaa4e",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c8057e4_16565631",
         "filename": "ash/public/interfaces/wallpaper.mojom",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "54d26d6e_0314bc5a",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-11T23:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c8057e4_16565631",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5228d8eb_7d424b4e",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-11T22:12:38Z",
       "side": 1,
       "message": "any issue in just decoding and wait in unit test?",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a18365_94f9e95e",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-11T23:02:43Z",
+      "side": 1,
+      "message": "Unit tests can\u0027t decode wallpapers since the connector for the mojo service manager is null in tests. However I deleted the check here and directly checks |GetShellConnector()| in the decoding code. Since |command_line_for_testing_| is deleted according to the other comment.",
+      "parentUuid": "5228d8eb_7d424b4e",
       "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0b4d4a36_95b5846e",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-11T23:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fd67890_24d7c7c2",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd6a8185_ccc06717",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 9
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "26e00399_4a33f5a5",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-11T23:02:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bd6a8185_ccc06717",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be254f91_dd81ef72",
         "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-11T22:12:38Z",
       "side": 1,
       "message": "ash unittest uses ScopdCommandLine to reset the command line for each tests, so you should be able to just use the ForCurrnetProcess()",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e46edd_2975be45",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-11T23:02:43Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "be254f91_dd81ef72",
       "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ad2b99d1_071f9ac1",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-11T23:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dec40cfa_196a35e4",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f8e6250_b97b9f37",
         "filename": "chrome/browser/chromeos/customization/customization_wallpaper_downloader_browsertest.cc",
         "patchSetId": 9
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "49aecd37_30993d77",
+        "filename": "chrome/browser/chromeos/customization/customization_wallpaper_downloader_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-11T23:02:43Z",
+      "side": 1,
+      "message": "Done. It\u0027s removed.",
+      "parentUuid": "1f8e6250_b97b9f37",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98efca84_9f0be8be",
         "filename": "chrome/browser/ui/ash/test_wallpaper_controller.h",
         "patchSetId": 9
@@ -152,6 +296,24 @@
       "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cfdafe2_2dd5b257",
+        "filename": "chrome/browser/ui/ash/test_wallpaper_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-11T23:02:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98efca84_9f0be8be",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
