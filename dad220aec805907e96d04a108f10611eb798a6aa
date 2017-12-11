@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9a713bb_8df40d81",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-11T21:42:26Z",
+      "side": 1,
+      "message": "Nit: It is not immediately clear that you are accounting 20px for each line. Maybe mention that in the comment?",
+      "revId": "dad220aec805907e96d04a108f10611eb798a6aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
