@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "content/common/input/input_injector.mojom.h"
 #include "gin/wrappable.h"
+#include "third_party/skia/include/core/SkPicture.h"
 
 namespace gin {
 class Arguments;
@@ -40,7 +41,7 @@ class GpuBenchmarking : public gin::Wrappable<GpuBenchmarking> {
   // JavaScript handlers.
   void SetNeedsDisplayOnAllLayers();
   void SetRasterizeOnlyVisibleContent();
-  void PrintToSkPicture(v8::Isolate* isolate, const std::string& dirname);
+  sk_sp<SkPicture> PrintToSkPicture(v8::Isolate* isolate, const std::string& dirname);
   void PrintPagesToSkPictures(v8::Isolate* isolate,
                               const std::string& filename);
   void PrintPagesToXPS(v8::Isolate* isolate,

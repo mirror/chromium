@@ -637,15 +637,24 @@ void GpuBenchmarking::PrintPagesToXPS(v8::Isolate* isolate,
 #endif
 }
 
-void GpuBenchmarking::PrintToSkPicture(v8::Isolate* isolate,
+sk_sp<SkPicture> GpuBenchmarking::PrintToSkPicture(v8::Isolate* isolate,
                                        const std::string& dirname) {
   GpuBenchmarkingContext context;
   if (!context.Init(true))
-    return;
+    return nullptr;
 
   const cc::Layer* root_layer = context.compositor()->GetRootLayer();
   if (!root_layer)
-    return;
+    return nullptr;
+
+  // rmistry: experimenting
+  for (auto* layer : *root_layer->layer_tree_host()) {
+    sk_sp<SkPicture> picture = layer->GetPicture();
+    if (!picture)
+      continue;
+    return picture;
+  }
+  // rmistry: experimenting done.
 
   base::FilePath dirpath = base::FilePath::FromUTF8Unsafe(dirname);
   if (!base::CreateDirectory(dirpath) ||
@@ -654,11 +663,12 @@ void GpuBenchmarking::PrintToSkPicture(v8::Isolate* isolate,
     msg.append(dirpath.MaybeAsASCII());
     isolate->ThrowException(v8::Exception::Error(v8::String::NewFromUtf8(
         isolate, msg.c_str(), v8::String::kNormalString, msg.length())));
-    return;
+    return nullptr;
   }
 
   SkPictureSerializer serializer(dirpath);
   serializer.Serialize(root_layer);
+  return nullptr;
 }
 
 bool GpuBenchmarking::GestureSourceTypeSupported(int gesture_source_type) {
