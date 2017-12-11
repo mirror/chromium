@@ -19,13 +19,11 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "device/media_transfer_protocol/public/interfaces/mtp.mojom.h"
 
 #if !defined(OS_CHROMEOS)
 #error "Only used on ChromeOS"
 #endif
-
-class MtpFileEntry;
-class MtpStorageInfo;
 
 namespace dbus {
 class Bus;
@@ -49,7 +47,7 @@ class MediaTransferProtocolDaemonClient {
   // A callback to handle the result of GetStorageInfo.
   // The argument is the information about the specified storage.
   using GetStorageInfoCallback =
-      base::Callback<void(const MtpStorageInfo& storage_info)>;
+      base::Callback<void(mojom::MtpStorageInfoPtr storage_info)>;
 
   // A callback to handle the result of OpenStorage.
   // The argument is the returned handle.
@@ -69,7 +67,7 @@ class MediaTransferProtocolDaemonClient {
   // A callback to handle the result of GetFileInfo.
   // The argument is a vector of file entries.
   using GetFileInfoCallback =
-      base::Callback<void(const std::vector<MtpFileEntry>& file_entries)>;
+      base::Callback<void(std::vector<mojom::MtpFileEntryPtr> file_entries)>;
 
   // A callback to handle the result of ReadFileChunkById.
   // The argument is a string containing the file data.

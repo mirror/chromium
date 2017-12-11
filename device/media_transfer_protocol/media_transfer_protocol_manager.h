@@ -15,13 +15,11 @@
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
+#include "device/media_transfer_protocol/public/interfaces/mtp.mojom.h"
 
 #if !defined(OS_CHROMEOS)
 #error "Only used on ChromeOS"
 #endif
-
-class MtpFileEntry;
-class MtpStorageInfo;
 
 namespace device {
 
@@ -33,7 +31,7 @@ class MediaTransferProtocolManager {
   // The first argument is the returned storage info.
   // The second argument is true if there was an error.
   using GetStorageInfoFromDeviceCallback =
-      base::Callback<void(const MtpStorageInfo& storage_info,
+      base::Callback<void(mojom::MtpStorageInfoPtr storage_info,
                           const bool error)>;
 
   // A callback to handle the result of OpenStorage.
@@ -55,7 +53,7 @@ class MediaTransferProtocolManager {
   // The second argument is true if there are more file entries.
   // The third argument is true if there was an error.
   using ReadDirectoryCallback =
-      base::Callback<void(const std::vector<MtpFileEntry>& file_entries,
+      base::Callback<void(std::vector<mojom::MtpFileEntryPtr> file_entries,
                           bool has_more,
                           bool error)>;
 
@@ -69,7 +67,7 @@ class MediaTransferProtocolManager {
   // The first argument is a file entry.
   // The second argument is true if there was an error.
   using GetFileInfoCallback =
-      base::Callback<void(const MtpFileEntry& file_entry, bool error)>;
+      base::Callback<void(mojom::MtpFileEntryPtr file_entry, bool error)>;
 
   // A callback to handle the result of RenameObject.
   // The first argument is true if there was an error.
@@ -107,7 +105,7 @@ class MediaTransferProtocolManager {
 
   // On success, returns the metadata for |storage_name|.
   // Otherwise returns NULL.
-  virtual const MtpStorageInfo* GetStorageInfo(
+  virtual mojom::MtpStorageInfoPtr GetStorageInfo(
       const std::string& storage_name) const = 0;
 
   // Read the metadata of |storage_name| from device and runs |callback|.
