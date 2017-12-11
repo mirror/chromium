@@ -6,6 +6,7 @@ package org.chromium.components.signin;
 
 import android.accounts.Account;
 import android.accounts.AuthenticatorDescription;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.SystemClock;
@@ -61,10 +62,13 @@ public class AccountManagerFacade {
     private final ObserverList<AccountsChangeObserver> mObservers = new ObserverList<>();
     private final AtomicReference<AccountManagerResult<Account[]>> mMaybeAccounts =
             new AtomicReference<>();
-    private final AsyncTask<Void, Void, AccountManagerResult<Account[]>> mPopulateAccountCacheTask;
+    private final UpdateAccountsTask mPopulateAccountCacheTask;
     private final CachedMetrics.TimesHistogramSample mPopulateAccountCacheWaitingTimeHistogram =
             new CachedMetrics.TimesHistogramSample(
                     "Signin.AndroidPopulateAccountCacheWaitingTime", TimeUnit.MILLISECONDS);
+
+    private int mUpdateTasksCounter = 0;
+    private final ArrayList<Runnable> mCallbacksWaitingForPendingUpdates = new ArrayList<>();
 
     /**
      * A simple callback for getAuthToken.
@@ -531,25 +535,51 @@ public class AccountManagerFacade {
         return mDelegate.getProfileDataSource();
     }
 
-    private AsyncTask<Void, Void, AccountManagerResult<Account[]>> updateAccounts() {
+    /**
+     * Executes the callback after all pending account list updates finish. If there are no pending
+     * account list updates, executes the callback right away.
+     * @param callback the callback to be executed
+     */
+    @MainThread
+    public void waitForPendingUpdates(Runnable callback) {
         ThreadUtils.assertOnUiThread();
-        AsyncTask<Void, Void, AccountManagerResult<Account[]>> updateAccountsTask =
-                new AsyncTask<Void, Void, AccountManagerResult<Account[]>>() {
-                    @Override
-                    public AccountManagerResult<Account[]> doInBackground(Void... params) {
-                        try {
-                            return new AccountManagerResult<>(mDelegate.getAccountsSync());
-                        } catch (AccountManagerDelegateException ex) {
-                            return new AccountManagerResult<>(ex);
-                        }
-                    }
+        if (mUpdateTasksCounter == 0) {
+            callback.run();
+            return;
+        }
+        mCallbacksWaitingForPendingUpdates.add(callback);
+    }
 
-                    @Override
-                    public void onPostExecute(AccountManagerResult<Account[]> accounts) {
-                        mMaybeAccounts.set(accounts);
-                        fireOnAccountsChangedNotification();
-                    }
-                };
+    @SuppressLint("StaticFieldLeak")
+    private class UpdateAccountsTask
+            extends AsyncTask<Void, Void, AccountManagerResult<Account[]>> {
+        @Override
+        public AccountManagerResult<Account[]> doInBackground(Void... params) {
+            try {
+                return new AccountManagerResult<>(mDelegate.getAccountsSync());
+            } catch (AccountManagerDelegateException ex) {
+                return new AccountManagerResult<>(ex);
+            }
+        }
+
+        @Override
+        public void onPostExecute(AccountManagerResult<Account[]> accounts) {
+            mMaybeAccounts.set(accounts);
+            fireOnAccountsChangedNotification();
+
+            if (--mUpdateTasksCounter > 0) return;
+
+            for (Runnable callback : mCallbacksWaitingForPendingUpdates) {
+                callback.run();
+            }
+            mCallbacksWaitingForPendingUpdates.clear();
+        }
+    }
+
+    private UpdateAccountsTask updateAccounts() {
+        ThreadUtils.assertOnUiThread();
+        ++mUpdateTasksCounter;
+        UpdateAccountsTask updateAccountsTask = new UpdateAccountsTask();
         updateAccountsTask.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
         return updateAccountsTask;
     }
