@@ -7,9 +7,11 @@
 #include "base/files/file_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/task_scheduler/task_scheduler.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "gin/v8_initializer.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "third_party/WebKit/Source/platform/WebTaskRunner.h"
 #include "third_party/WebKit/public/platform/WebThread.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebV8ContextSnapshot.h"
@@ -17,11 +19,49 @@
 
 namespace {
 
+class SnapshotWebTaskRunner : public blink::WebTaskRunner {
+ public:
+  SnapshotWebTaskRunner() : task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
+
+  bool PostDelayedTask(const base::Location& location,
+                       base::OnceClosure task,
+                       base::TimeDelta delay) override {
+    return task_runner_->PostDelayedTask(location, std::move(task), delay);
+  }
+
+  double MonotonicallyIncreasingVirtualTimeSeconds() const override {
+    NOTREACHED();
+    return 0;
+  }
+
+  bool RunsTasksInCurrentSequence() const override {
+    return task_runner_->RunsTasksInCurrentSequence();
+  }
+
+  bool PostNonNestableDelayedTask(const base::Location& location,
+                                  base::OnceClosure task,
+                                  base::TimeDelta delay) override {
+    return task_runner_->PostNonNestableDelayedTask(location, std::move(task),
+                                                    delay);
+  }
+
+ private:
+  ~SnapshotWebTaskRunner() override {}
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+};
+
 class SnapshotThread : public blink::WebThread {
  public:
+  SnapshotThread() : task_runner_(new SnapshotWebTaskRunner()) {}
+  ~SnapshotThread() override {}
   bool IsCurrentThread() const override { return true; }
   blink::WebScheduler* Scheduler() const override { return nullptr; }
-  blink::WebTaskRunner* GetWebTaskRunner() override { return nullptr; }
+  blink::WebTaskRunner* GetWebTaskRunner() override {
+    return task_runner_.get();
+  }
+
+ private:
+  scoped_refptr<SnapshotWebTaskRunner> task_runner_;
 };
 
 class SnapshotPlatform final : public blink::Platform {
