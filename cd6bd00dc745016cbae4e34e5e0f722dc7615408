@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15216bcb_4bbc6675",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-11T07:20:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ebb1f9c_1a92785f",
+      "revId": "cd6bd00dc745016cbae4e34e5e0f722dc7615408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84ccde65_2522a312",
         "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "cd6bd00dc745016cbae4e34e5e0f722dc7615408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191563cb_0479b4e0",
+        "filename": "third_party/WebKit/Source/core/paint/ng/ng_text_fragment_painter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-11T07:20:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84ccde65_2522a312",
+      "revId": "cd6bd00dc745016cbae4e34e5e0f722dc7615408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
