@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aea9df3_4397c429",
+        "filename": "chrome/browser/autofill/validation_rules_storage_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-11T19:16:01Z",
+      "side": 1,
+      "message": "this is the only change from the previous CL, right?",
+      "range": {
+        "startLine": 22,
+        "startChar": 60,
+        "endLine": 22,
+        "endChar": 65
+      },
+      "revId": "f0631b5d6bdb8bcc37bd14374a26450342fdc015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6945623_f66bd7a7",
+        "filename": "components/autofill/core/browser/address_normalizer_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-11T19:16:01Z",
+      "side": 1,
+      "message": "Could this Wait could be added to the SetUp() method instead of repeated in each test case?\n\nI see the final couple of tests have this Wait mid-test. Is it possible that the init could be racy with the tests that expect it to finish later?",
+      "revId": "f0631b5d6bdb8bcc37bd14374a26450342fdc015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
