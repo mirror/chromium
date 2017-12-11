@@ -40,6 +40,15 @@ fi
 rm -rf binutils-$VERSION
 tar jxf binutils-$VERSION.tar.bz2
 
+# Patch the source
+(
+  cd binutils-$VERSION
+  echo "tls_ldm_fix.patch"
+  echo "=================================="
+  patch -p1 < ../tls_ldm_fix.patch
+  echo "----------------------------------"
+)
+
 for ARCH in i386 amd64; do
   CHROOT_DIR="xenial-chroot-$ARCH"
   if [ ! -d ${CHROOT_DIR} ]; then
