@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5014ff9_8319a90e",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-11T22:31:55Z",
+      "side": 1,
+      "message": "Consider rephrasing this comment? Currently it restates what the code does, but not why it does it. Maybe something like: Setting device_ to null bypasses VR_Shutdown code paths that would require real hardware.",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 79
+      },
+      "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c123ea_4eceded1",
+        "filename": "device/vr/openvr/test/fake_openvr_impl_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-11T22:31:55Z",
+      "side": 1,
+      "message": "Optional: have you considered using gmock to stub out this class? Not saying it\u0027s necessarily better (it has its own boilerplate issues), but it could make more complex tests possible, including overriding returned values on a per-test basis.",
+      "range": {
+        "startLine": 11,
+        "startChar": 21,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e41c024_3d74063a",
+        "filename": "device/vr/openvr/test/fake_openvr_impl_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-11T22:31:55Z",
+      "side": 1,
+      "message": "would NOTIMPLEMENTED be clearer here? That would make it more obvious what\u0027s wrong if a changed client starts calling these. To me, NOTREACHED correctness should be verifiably true from looking at the code in isolation, but here you\u0027re making assumptions about the caller.",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ac94cc_ef1a7800",
+        "filename": "device/vr/openvr/test/fake_openvr_impl_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-11T22:31:55Z",
+      "side": 1,
+      "message": "60cm is a rather large IPD. Should be 0.06f?",
+      "range": {
+        "startLine": 498,
+        "startChar": 13,
+        "endLine": 498,
+        "endChar": 17
+      },
+      "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
