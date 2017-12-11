@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76015e6a_d89038e6",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-11T23:45:08Z",
+      "side": 1,
+      "message": "This means that menuItem will now speak the index on enter,\nbut only if it\u0027s explicitly set, which seems odd and\nasymmetrical to me.\n\nAs discussed, consider modifying \u0027enter\u0027 for this and\nother roles.\n\nAlternatively I\u0027d also be happy with two different type of\nabstractItem roles - one for speak, and one for speak and enter.",
+      "revId": "9a3f92eee052ff1048d660262b5a5bc38c52f555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
