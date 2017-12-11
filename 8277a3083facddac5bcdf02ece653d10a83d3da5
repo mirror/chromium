@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "530f795d_06c78537",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-11T03:27:56Z",
+      "side": 1,
+      "message": "s/unloaded_component_extension_id/unloaded_component_extension_id_",
+      "range": {
+        "startLine": 163,
+        "startChar": 14,
+        "endLine": 163,
+        "endChar": 45
+      },
+      "revId": "8277a3083facddac5bcdf02ece653d10a83d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
