@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c9f3d73f_7319e64b",
+        "filename": "gpu/command_buffer/client/raster_interface.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-11T19:24:00Z",
+      "side": 1,
+      "message": "Oh didn\u0027t go to the bug, my bad. Thanks for linking it in the description as well!",
+      "parentUuid": "b92d820c_f3f21a27",
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37b88259_da6d6d0b",
         "filename": "gpu/raster/raster_texture_format.h",
         "patchSetId": 26
