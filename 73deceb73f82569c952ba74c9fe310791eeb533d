@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2173d64c_ef5b8ffd",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-12-11T17:37:55Z",
+      "side": 1,
+      "message": "Mirror is not (only) for supervised accounts, it was first an Android/iOS feature to mirror the OS\u0027s logged in accounts to the content area. Discussion about naming this pref: https://chromium-review.googlesource.com/c/chromium/src/+/741803/19/chrome/browser/supervised_user/child_accounts/child_account_service.cc#196",
+      "parentUuid": "6deb51de_20b2efc1",
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b56874c_adacdf76",
         "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler_unittest.cc",
         "patchSetId": 19
