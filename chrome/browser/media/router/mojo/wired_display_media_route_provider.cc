@@ -8,6 +8,17 @@
 #include <utility>
 #include <vector>
 
+#include <windows.h>
+#include <wrl/client.h>
+#include <objbase.h>
+#include <wbemidl.h>
+#include "base/win/com_init_util.h"
+#include "base/win/scoped_bstr.h"
+#include "base/win/scoped_com_initializer.h"
+#include "base/win/scoped_variant.h"
+#include "base/win/windows_version.h"
+#include "base/strings/sys_string_conversions.h"
+
 #include "base/i18n/number_formatting.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/media_router/media_source_helper.h"
@@ -52,6 +63,82 @@ bool CompareDisplayBounds(const Display& display1, const Display& display2) {
           display1.bounds().x() < display2.bounds().x());
 }
 
+void GetDisplayNames() {
+  Microsoft::WRL::ComPtr<IWbemLocator> wmi_locator;
+  HRESULT hr =
+      ::CoCreateInstance(CLSID_WbemLocator, nullptr, CLSCTX_INPROC_SERVER,
+                         IID_PPV_ARGS(&wmi_locator));
+  if (FAILED(hr))
+    return;
+
+  Microsoft::WRL::ComPtr<IWbemServices> wmi_services;
+  hr = wmi_locator->ConnectServer(
+      base::win::ScopedBstr(L"ROOT\\wmi"), nullptr, nullptr,
+      nullptr, 0, nullptr, nullptr, wmi_services.GetAddressOf());
+  if (FAILED(hr)) {
+    LOG(ERROR) << "can't connect";
+    return;
+  }
+
+  hr = ::CoSetProxyBlanket(wmi_services.Get(), RPC_C_AUTHN_WINNT,
+                           RPC_C_AUTHZ_NONE, nullptr, RPC_C_AUTHN_LEVEL_CALL,
+                           RPC_C_IMP_LEVEL_IMPERSONATE, nullptr, EOAC_NONE);
+  if (FAILED(hr)) {
+    LOG(ERROR) << "proxy not set";
+    return;
+  }
+
+  // This interface is available on Windows Vista and above, and is officially
+  // undocumented.
+  base::win::ScopedBstr query_language(L"WQL");
+  base::win::ScopedBstr query(L"SELECT * FROM WmiMonitorID");
+  Microsoft::WRL::ComPtr<IEnumWbemClassObject> enumerator;
+
+  hr = wmi_services->ExecQuery(
+      query_language, query,
+      WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY, nullptr,
+      enumerator.GetAddressOf());
+  if (FAILED(hr)) {
+    LOG(ERROR) << "query failed";
+    return;
+  }
+
+  // Iterate over the results of the WMI query. Each result will be an
+  // AntiVirusProduct instance.
+  while (true) {
+    Microsoft::WRL::ComPtr<IWbemClassObject> class_object;
+    ULONG items_returned = 0;
+    hr = enumerator->Next(WBEM_INFINITE, 1, class_object.GetAddressOf(),
+                          &items_returned);
+    if (FAILED(hr)) {
+      LOG(ERROR) << "cant iter";
+      return;
+    }
+
+    if (hr == WBEM_S_FALSE || items_returned == 0) {
+      LOG(ERROR) << "no items";
+      break;
+    }
+
+    base::win::ScopedVariant display_name;
+    hr = class_object->Get(L"UserFriendlyName", 0, display_name.Receive(), 0, 0);
+
+    if (FAILED(hr)) {
+      LOG(ERROR) << "failed to get name";
+    }
+    // else if (display_name.type() != VT_BSTR) {
+    //   LOG(ERROR) << display_name.type();
+    //   LOG(ERROR) << "wrong type";
+    // }
+
+    SAFEARRAY* array = V_ARRAY(display_name.ptr());
+    LONG elem;
+    long i = 0;
+    SafeArrayGetElement(array, &i, (void*)&elem);
+    LOG(ERROR) << "--- element: " << elem;
+  }
+}
+
 }  // namespace
 
 // static
@@ -69,6 +156,7 @@ WiredDisplayMediaRouteProvider::WiredDisplayMediaRouteProvider(
       media_router_(std::move(media_router)) {
   display::Screen::GetScreen()->AddObserver(this);
   ReportSinkAvailability(GetSinks());
+  GetDisplayNames();
 }
 
 WiredDisplayMediaRouteProvider::~WiredDisplayMediaRouteProvider() {
