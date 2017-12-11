@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "323a85a2_555cf7c7",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-11T14:51:41Z",
+      "side": 1,
+      "message": "I debated between sending 2 booleans or CookieStoreConfig::SessionCookieMode. I thought the former is clearer, so that\u0027s why I went with it. It does mean that this small conversion of the enum to 2 bools is duplicated here from content::CreateCookieStore. I didn\u0027t want to change the latter to use 2 booleans in this cl because it would end up touching more places, but happy to do it in a followup if you think it\u0027s worth it.",
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a54dbc_0777b9b7",
+        "filename": "content/utility/utility_main.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-11T14:51:41Z",
+      "side": 1,
+      "message": "Tom: FYI. If you have a quick fix, happy to patch it in this cl",
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
