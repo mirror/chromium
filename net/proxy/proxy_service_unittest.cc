@@ -2576,7 +2576,7 @@ TEST_F(ProxyServiceTest, BypassDoesntApplyToPac) {
 }
 
 // Delete the ProxyService while InitProxyResolver has an outstanding
-// request to the script fetcher. When run under valgrind, should not
+// request to the script fetcher. When run under TSAN/ASAN, should not
 // have any memory errors (used to be that the ProxyScriptFetcher was
 // being deleted prior to the InitProxyResolver).
 TEST_F(ProxyServiceTest, DeleteWhileInitProxyResolverHasOutstandingFetch) {
@@ -2613,7 +2613,7 @@ TEST_F(ProxyServiceTest, DeleteWhileInitProxyResolverHasOutstandingFetch) {
 }
 
 // Delete the ProxyService while InitProxyResolver has an outstanding
-// request to the proxy resolver. When run under valgrind, should not
+// request to the proxy resolver. When run under TSAN/ASAN, should not
 // have any memory errors (used to be that the ProxyResolver was
 // being deleted prior to the InitProxyResolver).
 TEST_F(ProxyServiceTest, DeleteWhileInitProxyResolverHasOutstandingSet) {

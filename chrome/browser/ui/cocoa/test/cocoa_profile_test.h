@@ -24,7 +24,7 @@ class TestingProfile;
 // are attached to the TestingProfile (and other objects) have traits that limit
 // their destruction to certain threads. For example, the net::URLRequestContext
 // can only be deleted on the IO thread; without this fake IO thread, the object
-// would never be deleted and would report as a leak under Valgrind. Note that
+// would never be deleted and might be reported as a leak by LSAN. Note that
 // these are fake threads and they all share the same MessageLoop.
 //
 // TODO(jrg): move up a level (chrome/browser/ui/cocoa -->

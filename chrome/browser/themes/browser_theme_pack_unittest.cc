@@ -554,7 +554,7 @@ TEST_F(BrowserThemePackTest, TestNonExistantImages) {
 }
 
 // TODO(erg): This test should actually test more of the built resources from
-// the extension data, but for now, exists so valgrind can test some of the
+// the extension data, but for now, exists so ASAN/LSAN can test some of the
 // tricky memory stuff that BrowserThemePack does.
 TEST_F(BrowserThemePackTest, CanBuildAndReadPack) {
   base::ScopedTempDir dir;

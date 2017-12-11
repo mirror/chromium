@@ -165,7 +165,7 @@ TEST_F(ImageLoaderTest, DeleteExtensionWhileWaitingForCache) {
       ->TriggerOnUnloaded(extension.get(), UnloadedExtensionReason::UNINSTALL);
 
   // Chuck the extension, that way if anyone tries to access it we should crash
-  // or get valgrind errors.
+  // or get LSAN errors.
   extension = NULL;
 
   WaitForImageLoad();
