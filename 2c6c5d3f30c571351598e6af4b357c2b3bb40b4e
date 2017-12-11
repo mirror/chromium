@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b5d55cb_80583a80",
+        "filename": "ios/web/public/download/download_task.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-12-11T19:38:26Z",
+      "side": 1,
+      "message": "Should we add that http code is -1 if the response is not HTTP?",
+      "revId": "2c6c5d3f30c571351598e6af4b357c2b3bb40b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
