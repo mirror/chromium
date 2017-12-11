@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f95d5ed_b5e08865",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T21:34:30Z",
+      "side": 1,
+      "message": "mentioned offline, but I think it would be better to have this cancelAllDialogs live outside of the presenter and have the presenter focused solely on a single dialog.\n\nPresenter manages one, Manager manages the queue, and some outside TabModalDialogLifetimeHandler (or some better name) would contain this logic for when to dismiss any tab modal dialogs.\n\nThe manager would pass a onDismiss callback when calling show on the presenter that would essentially popup another dialog off the queue.",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 41
+      },
+      "revId": "feeedefd95ab581fafc834a03eb0856e2aa58e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7419650e_86ef632d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalPresenter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T21:34:30Z",
+      "side": 1,
+      "message": "mentioned offline, but are we sure that getActivityTab() will remain the same across these methods?  I suspect we want to cache the tab in restricted and clear it out in !restricted.",
+      "range": {
+        "startLine": 252,
+        "startChar": 12,
+        "endLine": 252,
+        "endChar": 21
+      },
+      "revId": "feeedefd95ab581fafc834a03eb0856e2aa58e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ada9cd_579254b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialogView.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T21:34:30Z",
+      "side": 1,
+      "message": "I would actually recommend we start a new javascript (or jsdialog) package not in the modaldialog package.  I think we want the modaldialog package to remain very generic and have implementations live with their most closely related code.  I worry that this would become a fan out of modal dialogs underneath this package and would be hard to maintain.",
+      "range": {
+        "startLine": 5,
+        "startChar": 36,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "feeedefd95ab581fafc834a03eb0856e2aa58e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0ba8b8_7c8db55d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 3342,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T21:34:30Z",
+      "side": 1,
+      "message": "We might want a Hidden counterpart (or to take boolean) in case somewhere else in the code calls updateBrowserControlsState after this and clobbers our pending values.\n\nWe might then want to expose a isTabModalDialogShowing() that can be queried in TabStateBrowserControlsVisibilityDelegate#canAutoHideBrowserControls\n\nConceptually, we could also add isShowingDialog() to ModalDialogManager and then BrowserStateBrowserControlsVisibilityDelegate could listen to the manager instead of to a specific tab.  Granted, we need a way to force the positions to non-fullscreen.",
+      "range": {
+        "startLine": 3342,
+        "startChar": 16,
+        "endLine": 3342,
+        "endChar": 37
+      },
+      "revId": "feeedefd95ab581fafc834a03eb0856e2aa58e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

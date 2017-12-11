@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "d3d0b538_93d84254",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T21:34:30Z",
+      "side": 1,
+      "message": "I\u0027d put these two lines in an overridden: createModalDialogManager",
+      "range": {
+        "startLine": 1550,
+        "startChar": 32,
+        "endLine": 1550,
+        "endChar": 49
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19f1d99d_bdd99985",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 13
@@ -93,6 +116,29 @@
       "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65fdf22c_75252d3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-11T21:34:30Z",
+      "side": 1,
+      "message": "nit, but if the comment doesn\u0027t all fit on a single line, I think it is better to do:\n/**\n * Optional ...\n * custom view ...\n */",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 20
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
