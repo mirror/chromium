@@ -69,6 +69,24 @@
       "revId": "d43af2063467d1434c3a88a6bef0d352fec03437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bd54b1_683599e1",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 55
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-11T17:16:12Z",
+      "side": 1,
+      "message": "I added a task state check in the MetricsDelegate::OnStartNetRequest callback, and moved the call to that from canInitWithTask to startLoading.  That should hopefully deal with this.",
+      "parentUuid": "1a09753c_ab4f4571",
+      "revId": "d43af2063467d1434c3a88a6bef0d352fec03437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
