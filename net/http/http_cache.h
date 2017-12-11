@@ -115,9 +115,9 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   // This is also used to log metrics so should be consistent with the values in
   // enums.xml and should only be appended to.
   enum ParallelWritingPattern {
-    // Used as the default value till the transaction reaches the response body
-    // phase. Also used when a transaction is waiting for Writers to do a
-    // cleanup. This value is not logged in the histogram.
+    // Used as the default value till the transaction joins Writers or when the
+    // transaction does not need to join Writers (e.g. for reading from the
+    // cache).
     PARALLEL_WRITING_NONE,
     // The transaction creates a writers object. This is only logged for
     // transactions that did not fail to join existing writers earlier.
