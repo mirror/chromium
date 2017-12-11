@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8a172f2_1b78c9d8",
+        "filename": "chrome/browser/ui/views/payments/payment_request_data_url_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T17:33:37Z",
+      "side": 1,
+      "message": "Is the newline necessary?",
+      "range": {
+        "startLine": 32,
+        "startChar": 71,
+        "endLine": 32,
+        "endChar": 73
+      },
+      "revId": "5a6b0a624f1f8172db472dbb5ecdc0405cc376c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e4ff1a_51528da1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-insecure.http.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T17:33:37Z",
+      "side": 1,
+      "message": "I believe web-platform-test owners no longer want license headers in each file. See the discussion in:\n\nhttps://github.com/w3c/web-platform-tests/pull/8377#issuecomment-346173789",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 147
+      },
+      "revId": "5a6b0a624f1f8172db472dbb5ecdc0405cc376c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdebf25b_fda9d368",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-insecure.http.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T17:33:37Z",
+      "side": 1,
+      "message": "Please also check the rest of the [SecureContext] interfaces: PaymentAddress, PaymentResponse, and PaymentRequestUpdateEvent. Did I miss any?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "5a6b0a624f1f8172db472dbb5ecdc0405cc376c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100fbb98_732ddb9b",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentAddress.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T17:33:37Z",
+      "side": 1,
+      "message": "While you\u0027re here, please update the link.",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 70
+      },
+      "revId": "5a6b0a624f1f8172db472dbb5ecdc0405cc376c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028bee1f_31fba505",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentAddress.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T17:33:37Z",
+      "side": 1,
+      "message": "Please add this to PaymentRequestUpdateEvent.idl as well.",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "5a6b0a624f1f8172db472dbb5ecdc0405cc376c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5c2acb_24864a47",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequest.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T17:33:37Z",
+      "side": 1,
+      "message": "While you\u0027re here, please update this link.",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 70
+      },
+      "revId": "5a6b0a624f1f8172db472dbb5ecdc0405cc376c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144de828_fa3c9008",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentResponse.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T17:33:37Z",
+      "side": 1,
+      "message": "While you\u0027re here, please update this link.",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 71
+      },
+      "revId": "5a6b0a624f1f8172db472dbb5ecdc0405cc376c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

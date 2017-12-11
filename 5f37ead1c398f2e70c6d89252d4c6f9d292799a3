@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3a48c93_d02d23a0",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-11T17:33:37Z",
+      "side": 0,
+      "message": "Make this a DCHECK, please.",
+      "range": {
+        "startLine": 997,
+        "startChar": 2,
+        "endLine": 997,
+        "endChar": 50
+      },
+      "revId": "5f37ead1c398f2e70c6d89252d4c6f9d292799a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
