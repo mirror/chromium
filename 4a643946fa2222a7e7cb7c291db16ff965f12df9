@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c084c99_e805b611",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-11T19:58:59Z",
+      "side": 1,
+      "message": "Will you be converting the remaining usage of GetSinkById and removing it in a followup patch?",
+      "range": {
+        "startLine": 183,
+        "startChar": 26,
+        "endLine": 183,
+        "endChar": 37
+      },
+      "revId": "4a643946fa2222a7e7cb7c291db16ff965f12df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713815ca_4c8b49a6",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-11T19:58:59Z",
+      "side": 1,
+      "message": "Note you can avoid re-adding the static_cast by specifying the underlying type of the enum class, i.e.:\n\nenum class IconType : uint32_t {\n...\n}",
+      "revId": "4a643946fa2222a7e7cb7c291db16ff965f12df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
