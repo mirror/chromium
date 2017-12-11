@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bdd3de62_1afe6009",
+        "filename": "extensions/renderer/bindings/event_emitter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-11T17:47:26Z",
+      "side": 1,
+      "message": "In my audits of the code so far, the only place I\u0027ve seen the direct return result of dispatch being used is in the messaging events in order to signal that the extension is going to respond asynchronously to a one-time message.  In that case, if the context is torn down, returning any value is moot (at least, insofar as we don\u0027t care about some JS that tries to send a message after tear down, which I\u0027d like to avoid).\n\nSo from a return-value-use perspective, any kind of \"empty\" value is fine here (empty MaybeLocal\u003c\u003e, undefined, even null).\n\nMostly I\u0027m just curious if any of these made more sense from an API perspective to you.  e.g., an empty MaybeLocal makes sense in the \"something went wrong\" sense, but is weird because it didn\u0027t throw an exception, as you mentioned.\n\nFor now, I\u0027m fine with using undefined if you are.",
+      "parentUuid": "857c41c1_b3d0d090",
+      "revId": "085999c21632b5b9ade58191ac67ff86f01ae301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8347453_3a2da06a",
         "filename": "extensions/renderer/bindings/event_emitter_unittest.cc",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "085999c21632b5b9ade58191ac67ff86f01ae301",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe6200e_4c0cd2ee",
+        "filename": "extensions/renderer/bindings/event_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-11T17:47:26Z",
+      "side": 1,
+      "message": "Nope, no reason, and I have no preference.  So happy to oblige. :)  Done.",
+      "parentUuid": "e8347453_3a2da06a",
+      "revId": "085999c21632b5b9ade58191ac67ff86f01ae301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
