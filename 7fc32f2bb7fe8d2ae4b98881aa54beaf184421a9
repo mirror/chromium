@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "319114e6_056043c7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 21
+      },
+      "lineNbr": 1407,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-11T18:36:40Z",
+      "side": 1,
+      "message": "I know :(",
+      "parentUuid": "e3ea879e_2db41994",
+      "revId": "7fc32f2bb7fe8d2ae4b98881aa54beaf184421a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f69f1e3_56ebda30",
         "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/module.json",
         "patchSetId": 21
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-11T18:24:00Z",
       "side": 1,
       "message": "Drop dependency on main.",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 13
+      },
+      "revId": "7fc32f2bb7fe8d2ae4b98881aa54beaf184421a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51882c6a_7e1ed912",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/module.json",
+        "patchSetId": 21
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-11T18:36:40Z",
+      "side": 1,
+      "message": "Unfortunately, we need it for TestRunner.setupStartupTest(...) which calls Main.Main._instanceForTest._initializeTarget()",
+      "parentUuid": "5f69f1e3_56ebda30",
       "range": {
         "startLine": 7,
         "startChar": 9,
