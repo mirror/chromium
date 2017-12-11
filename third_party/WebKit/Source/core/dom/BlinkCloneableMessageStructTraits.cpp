@@ -24,6 +24,16 @@ Vector<blink::mojom::blink::SerializedBlobPtr> StructTraits<
   return result;
 }
 
+blink::mojom::blink::SerializedArrayBufferContentsVectorPtr
+StructTraits<blink::mojom::blink::CloneableMessage::DataView,
+             blink::BlinkCloneableMessage>::
+    sharedArrayBufferContentsVector(blink::BlinkCloneableMessage& input) {
+  WTF::Vector<WTF::ArrayBufferContents, 1>* sabs =
+      input.message->SharedArrayBuffers();
+  uint64_t loc = reinterpret_cast<uint64_t>(sabs);
+  return blink::mojom::blink::SerializedArrayBufferContentsVector::New(loc);
+}
+
 bool StructTraits<blink::mojom::blink::CloneableMessage::DataView,
                   blink::BlinkCloneableMessage>::
     Read(blink::mojom::blink::CloneableMessage::DataView data,
@@ -36,13 +46,19 @@ bool StructTraits<blink::mojom::blink::CloneableMessage::DataView,
   Vector<blink::mojom::blink::SerializedBlobPtr> blobs;
   if (!data.ReadBlobs(&blobs))
     return false;
-  for (auto& blob : blobs) {
-    out->message->BlobDataHandles().Set(
-        blob->uuid,
-        blink::BlobDataHandle::Create(blob->uuid, blob->content_type,
-                                      blob->size, blob->blob.PassInterface()));
+  blink::mojom::blink::SerializedArrayBufferContentsVectorPtr
+      sharedArrayBufferContentsVectorPtr;
+  if (!data.ReadSharedArrayBufferContentsVector(
+          &sharedArrayBufferContentsVectorPtr))
+    return false;
+  WTF::Vector<WTF::ArrayBufferContents, 1>* sharedArrayBufferContentsVector =
+      reinterpret_cast<WTF::Vector<WTF::ArrayBufferContents, 1>*>(
+          sharedArrayBufferContentsVectorPtr->location);
+  if (sharedArrayBufferContentsVector) {
+    for (auto& sharedArrayBufferContents : *sharedArrayBufferContentsVector) {
+      out->message->AddSharedArrayBufferContents(sharedArrayBufferContents);
+    }
   }
-
   return true;
 }
 
