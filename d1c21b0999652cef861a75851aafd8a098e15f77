@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e35c0a1e_79dc2c41",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-12-11T23:15:25Z",
+      "side": 1,
+      "message": "nit:\n\"ServiceWorker and TLS related\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 22
+      },
+      "revId": "d1c21b0999652cef861a75851aafd8a098e15f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
