@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96511266_03b319ec",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:49:03Z",
+      "side": 1,
+      "message": "it is only margin that does not accept percentage. So remove this.",
+      "range": {
+        "startLine": 7,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "0695d0618cca37a43fe684665bc034a66f80e5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
