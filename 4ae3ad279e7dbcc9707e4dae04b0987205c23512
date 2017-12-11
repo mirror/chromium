@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad54c6d7_1f01d710",
+        "filename": "content/browser/android/gesture_listener_manager_android.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T01:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "595d572d_8345ca71",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c3bff52_443b718a",
         "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0dc0b23_bf753d90",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T01:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c3bff52_443b718a",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3bf20460_aa00c80f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T01:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87acc578_ac9bfe12",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbbee2ab_4f28f138",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b265a83b_687f1238",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T01:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbbee2ab_4f28f138",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7c90c5ca_b5aae62e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsUserData.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T01:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4118c03b_214b12bf",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dffb3c96_8bcf3d31",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/GestureListenerManager.java",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6651a59_a99d806a",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/GestureListenerManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T01:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dffb3c96_8bcf3d31",
+      "revId": "4ae3ad279e7dbcc9707e4dae04b0987205c23512",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
