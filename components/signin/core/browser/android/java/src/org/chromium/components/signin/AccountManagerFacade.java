@@ -556,7 +556,16 @@ public class AccountManagerFacade {
         @Override
         public AccountManagerResult<Account[]> doInBackground(Void... params) {
             try {
-                return new AccountManagerResult<>(mDelegate.getAccountsSync());
+                Account[] accounts = mDelegate.getAccountsSync();
+                if (accounts.length <= 1) return new AccountManagerResult<>(accounts);
+
+                ArrayList<Account> filteredAccounts = new ArrayList<>();
+                for (Account account : accounts) {
+                    if (hasFeatures(account, new String[] {FEATURE_IS_CHILD_ACCOUNT_KEY})) {
+                        filteredAccounts.add(account);
+                    }
+                }
+                return new AccountManagerResult<>(filteredAccounts.toArray(new Account[0]));
             } catch (AccountManagerDelegateException ex) {
                 return new AccountManagerResult<>(ex);
             }
