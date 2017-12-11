@@ -446,6 +446,11 @@ class MESSAGE_CENTER_EXPORT Notification {
            SettingsButtonHandler::NONE;
   }
 
+  bool use_inline_settings() const {
+    return optional_fields_.settings_button_handler ==
+           SettingsButtonHandler::TRAY;
+  }
+
   FullscreenVisibility fullscreen_visibility() const {
     return optional_fields_.fullscreen_visibility;
   }
