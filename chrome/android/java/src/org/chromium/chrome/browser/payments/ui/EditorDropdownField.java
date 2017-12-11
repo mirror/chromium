@@ -117,12 +117,6 @@ class EditorDropdownField implements EditorFieldView {
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) requestFocusAndHideKeyboard();
 
-                // If the dropdown supports an hint and the hint is selected, select the first
-                // element instead.
-                if (mDropdown.getSelectedItemPosition() == count) {
-                    mDropdown.setSelection(0);
-                }
-
                 return false;
             }
         });
