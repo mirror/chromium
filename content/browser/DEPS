@@ -39,6 +39,8 @@ include_rules = [
   "+components/vector_icons",
   "+ui/webui",
 
+  "+wpkg",
+
   # In general, //content shouldn't depend on //device.
   # This is the an exception.
   "+device/udev_linux",  # For udev utility and wrapper library.
