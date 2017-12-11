@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c820003d_f51010bc",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T21:27:09Z",
+      "side": 1,
+      "message": "Oh, I meant to say that I was nervous about reducing the range for the non-integer types, but that limiting the length of strings, arrays, and maps, to only half of the address space instead of the whole address space, is probably actually fine. It\u0027s worth commenting that explicitly, though.\n\nTwo places this might cause trouble are with floating point (definitely) and tags (maybe). I don\u0027t mind fixing that when you come to it.",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 9
+      },
+      "revId": "0b981d2110af4a740633973b3ca56e432ff7941e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
