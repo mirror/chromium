@@ -2721,6 +2721,11 @@
           '--xvfb',
         ],
       },
+      'Linux Tests (dbg)(1)': {
+        'args': [
+          '--xvfb',
+        ],
+      },
       'Linux Tests SANDBOX': {
         'args': [
           '--xvfb',
@@ -2744,7 +2749,6 @@
       },
     },
     'remove_from': [
-      'Linux Tests (dbg)(1)',
       'Linux Tests (dbg)(1)(32)',
       'Mac10.9 Tests',
       'Mac10.9 Tests (dbg)',
