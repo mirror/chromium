@@ -52,6 +52,23 @@
       "revId": "5415ae79ed40d50b0e048024e9f15313b79eb001",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5b6ed6f_d4fb883d",
+        "filename": "extensions/common/view_type.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-11T17:16:15Z",
+      "side": 0,
+      "message": "(+Lukasz) FYI, this conflicts with https://chromium-review.googlesource.com/c/chromium/src/+/766469, which uses these in UMA.  Ideally, this would land first, so that we don\u0027t have to keep this value forever.",
+      "revId": "5415ae79ed40d50b0e048024e9f15313b79eb001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
