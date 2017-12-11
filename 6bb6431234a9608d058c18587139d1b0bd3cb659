@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b1a8144_69e8d0e4",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-11T20:08:40Z",
+      "side": 1,
+      "message": "Is it possible to skip the temp file at all and create a SystemLog directly from the dumped data?\n\nIf not, is it okay to leave a copy of policy on disk?",
+      "range": {
+        "startLine": 44,
+        "startChar": 45,
+        "endLine": 44,
+        "endChar": 54
+      },
+      "revId": "6bb6431234a9608d058c18587139d1b0bd3cb659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e85724_adf125a9",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-11T20:08:40Z",
+      "side": 1,
+      "message": "nit: constexpr char kPolicyDumpFileLocation[] \u003d ...; ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "6bb6431234a9608d058c18587139d1b0bd3cb659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe69a49_700a26d4",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-11T20:08:40Z",
+      "side": 1,
+      "message": "Can we use GetActiveUserProfile()?\n\nGetLastUserProfile() is unsafe to call if it is called during user profile loading (i.e. after login but before user profile is fully loaded). I added a LOG(FATAL) for such case. Otherwise, the user profile would be loaded without proper initialization and subject to policy exploit, see http://crbug.com/689206.",
+      "range": {
+        "startLine": 125,
+        "startChar": 55,
+        "endLine": 125,
+        "endChar": 73
+      },
+      "revId": "6bb6431234a9608d058c18587139d1b0bd3cb659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1606024b_0840c472",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-11T20:08:40Z",
+      "side": 1,
+      "message": "Why would this BLOCK_SHUTDOWN ?",
+      "range": {
+        "startLine": 129,
+        "startChar": 35,
+        "endLine": 129,
+        "endChar": 49
+      },
+      "revId": "6bb6431234a9608d058c18587139d1b0bd3cb659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3661b1c0_a5d95053",
+        "filename": "chrome/browser/policy/policy_conversions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-11T20:08:40Z",
+      "side": 1,
+      "message": "nit: no empty line here and in L18",
+      "revId": "6bb6431234a9608d058c18587139d1b0bd3cb659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5eb560_1356554c",
+        "filename": "chrome/browser/policy/policy_conversions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-11T20:08:40Z",
+      "side": 1,
+      "message": "nit: get rid of empty lines here and on L15. Prevailing style is not using empty lines around namespace in forward decl.",
+      "revId": "6bb6431234a9608d058c18587139d1b0bd3cb659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
