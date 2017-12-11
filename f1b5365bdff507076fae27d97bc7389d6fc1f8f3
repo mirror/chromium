@@ -171,6 +171,30 @@
     },
     {
       "key": {
+        "uuid": "a8865404_0644e486",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-12-11T22:28:39Z",
+      "side": 1,
+      "message": "I see. I\u0027ll have to drop back into the components utils for CrOS to make another D-Bus call there but that shouldn\u0027t be too weird.\n\nI\u0027d still have Chrome supply the display value here, since debugd has no provisions for localizing strings. The difference would be that the sys_info_entry.value here would just be \"\u003cpresent\u003e\" or something.",
+      "parentUuid": "db7d15aa_21fc6ec8",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 26
+      },
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d35a41e6_dd6180d2",
         "filename": "extensions/common/api/feedback_private.idl",
         "patchSetId": 5
