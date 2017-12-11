@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4adc3447_e4e51e5d",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-11T16:26:43Z",
+      "side": 1,
+      "message": "I didn\u0027t put a DumpWithoutcrashing as we already have reports from the crash, and I\u0027m worried we\u0027d get flooded with reports from the Dump. Let me know if you think otherwise.",
+      "revId": "09de588f22299e0b7b38425d26415d0c2d052f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
