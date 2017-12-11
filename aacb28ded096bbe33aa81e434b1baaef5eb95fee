@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d339ca15_a06f024a",
+        "filename": "components/offline_pages/core/client_id.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T20:59:59Z",
+      "side": 1,
+      "message": "This is becoming even less of s struct...\n\n2 questions:\n* Why not a static method, that would take ClientId as one of parameters?\n* Why is this inconsistent with your other patch, the one which converts a namespace to enum?\n\nWhat I\u0027d expect is a consistent approach that does not cause the me to ask the questions above.",
+      "revId": "aacb28ded096bbe33aa81e434b1baaef5eb95fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55cf8889_a1045fbe",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T20:59:59Z",
+      "side": 1,
+      "message": "s/SIZE/COUNT/\n\nThis is interesting. could you please add a comment regarding what the purpose of this is?",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "aacb28ded096bbe33aa81e434b1baaef5eb95fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72a34f1_d5591524",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T20:59:59Z",
+      "side": 1,
+      "message": "This does not look good.\nMake it consistent with your other patch under review. (function in utils.)\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/815937",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 30
+      },
+      "revId": "aacb28ded096bbe33aa81e434b1baaef5eb95fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf58316_463c01ba",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T20:59:59Z",
+      "side": 1,
+      "message": "Could this be inlined using emplace?\n\ninfo_wrappers.emplace(info_wrappers.push_back(info_wrapper););",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 202,
+        "endChar": 42
+      },
+      "revId": "aacb28ded096bbe33aa81e434b1baaef5eb95fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63b7771_35d041c2",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T20:59:59Z",
+      "side": 1,
+      "message": "use macro",
+      "range": {
+        "startLine": 368,
+        "startChar": 8,
+        "endLine": 368,
+        "endChar": 31
+      },
+      "revId": "aacb28ded096bbe33aa81e434b1baaef5eb95fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da12524_fd10d9ba",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 53560,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-11T20:59:59Z",
+      "side": 1,
+      "message": "Is this true?\nIf so, why are we renaming the UMA?",
+      "range": {
+        "startLine": 53559,
+        "startChar": 63,
+        "endLine": 53560,
+        "endChar": 38
+      },
+      "revId": "aacb28ded096bbe33aa81e434b1baaef5eb95fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
