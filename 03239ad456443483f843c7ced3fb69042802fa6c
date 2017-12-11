@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "285f858d_fcf5644f",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T19:27:04Z",
+      "side": 1,
+      "message": "Good idea, done!",
+      "parentUuid": "6bd511fa_6e8c6a4f",
+      "revId": "03239ad456443483f843c7ced3fb69042802fa6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "817b839f_938c7db1",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "03239ad456443483f843c7ced3fb69042802fa6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a64617_6fc01870",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResultBloberizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T19:27:04Z",
+      "side": 1,
+      "message": "Yes, in computeUnderlineType():\nhttps://trac.webkit.org/browser/webkit/trunk/Source/WebCore/platform/graphics/FontCascade.cpp#L1214\n\nAdded some more tests, for other blocks of Hangul and Bopomofo.",
+      "parentUuid": "817b839f_938c7db1",
+      "revId": "03239ad456443483f843c7ced3fb69042802fa6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
