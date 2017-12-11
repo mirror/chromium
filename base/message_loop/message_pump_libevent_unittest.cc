@@ -21,6 +21,7 @@
 #include "base/synchronization/waitable_event_watcher.h"
 #include "base/test/gtest_util.h"
 #include "base/third_party/libevent/event.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -248,7 +249,8 @@ TEST_F(MessagePumpLibeventTest, QuitWatcher) {
   QuitWatcher delegate(&controller, run_loop.QuitClosure());
   WaitableEvent event(WaitableEvent::ResetPolicy::AUTOMATIC,
                       WaitableEvent::InitialState::NOT_SIGNALED);
-  std::unique_ptr<WaitableEventWatcher> watcher(new WaitableEventWatcher);
+  std::unique_ptr<WaitableEventWatcher> watcher(
+      new WaitableEventWatcher(SequencedTaskRunnerHandle::Get()));
 
   // Tell the pump to watch the pipe.
   pump->WatchFileDescriptor(pipefds_[0], false, MessagePumpLibevent::WATCH_READ,
