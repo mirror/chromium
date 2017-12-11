@@ -16,6 +16,7 @@
 #include "chrome/browser/search_engines/template_url_service_factory_test_util.h"
 #include "chrome/browser/ui/omnibox/chrome_omnibox_client.h"
 #include "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.h"
+#include "chrome/test/base/testing_command_updater.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chrome/test/views/chrome_views_test_base.h"
 #include "components/omnibox/browser/omnibox_edit_model.h"
@@ -208,7 +209,7 @@ class OmniboxViewViewsTest : public ChromeViewsTestBase {
   content::TestBrowserThreadBundle thread_bundle_;
   TestingProfile profile_;
   TemplateURLServiceFactoryTestUtil util_;
-  CommandUpdater command_updater_;
+  TestingCommandUpdater testing_command_updater_;
   TestToolbarModel toolbar_model_;
   TestingOmniboxEditController omnibox_edit_controller_;
   std::unique_ptr<TestingOmniboxView> omnibox_view_;
@@ -219,8 +220,9 @@ class OmniboxViewViewsTest : public ChromeViewsTestBase {
 
 OmniboxViewViewsTest::OmniboxViewViewsTest()
     : util_(&profile_),
-      command_updater_(nullptr),
-      omnibox_edit_controller_(&command_updater_, &toolbar_model_) {}
+      testing_command_updater_(nullptr),
+      omnibox_edit_controller_(&testing_command_updater_,
+                               &toolbar_model_) {}
 
 void OmniboxViewViewsTest::SetAndEmphasizeText(const std::string& new_text,
                                                bool accept_input) {
@@ -247,7 +249,7 @@ void OmniboxViewViewsTest::SetUp() {
       &omnibox_edit_controller_,
       base::MakeUnique<ChromeOmniboxClient>(&omnibox_edit_controller_,
                                             &profile_),
-      &command_updater_);
+      &testing_command_updater_);
   test_api_ = base::MakeUnique<views::TextfieldTestApi>(omnibox_view_.get());
   omnibox_view_->Init();
 }
