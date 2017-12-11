@@ -274,11 +274,12 @@ WebApkInstaller::~WebApkInstaller() {
 }
 
 // static
-void WebApkInstaller::InstallAsync(content::BrowserContext* context,
-                                   const ShortcutInfo& shortcut_info,
-                                   const SkBitmap& primary_icon,
-                                   const SkBitmap& badge_icon,
-                                   const FinishCallback& finish_callback) {
+void WebApkInstaller::InstallAsyncStatic(
+    content::BrowserContext* context,
+    const ShortcutInfo& shortcut_info,
+    const SkBitmap& primary_icon,
+    const SkBitmap& badge_icon,
+    const FinishCallback& finish_callback) {
   // The installer will delete itself when it is done.
   WebApkInstaller* installer = new WebApkInstaller(context);
   installer->InstallAsync(shortcut_info, primary_icon, badge_icon,

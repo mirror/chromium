@@ -43,11 +43,11 @@ class WebApkInstaller : public net::URLFetcherDelegate {
   // Creates a self-owned WebApkInstaller instance and talks to the Chrome
   // WebAPK server to generate a WebAPK on the server and locally requests the
   // APK to be installed. Calls |callback| once the install completed or failed.
-  static void InstallAsync(content::BrowserContext* context,
-                           const ShortcutInfo& shortcut_info,
-                           const SkBitmap& primary_icon,
-                           const SkBitmap& badge_icon,
-                           const FinishCallback& finish_callback);
+  static void InstallAsyncStatic(content::BrowserContext* context,
+                                 const ShortcutInfo& shortcut_info,
+                                 const SkBitmap& primary_icon,
+                                 const SkBitmap& badge_icon,
+                                 const FinishCallback& finish_callback);
 
   // Creates a self-owned WebApkInstaller instance and talks to the Chrome
   // WebAPK server to update a WebAPK on the server and locally requests the
