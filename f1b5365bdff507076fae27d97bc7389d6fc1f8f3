@@ -147,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "db7d15aa_21fc6ec8",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-11T22:20:33Z",
+      "side": 1,
+      "message": "No worries. I just thought you\u0027d do it differently. For example, when the user clicks send, we end up in FeedbackPrivateSendFeedbackFunction::Run(). This is where we convert the sys_info logs we got from javascript (the feedback app) to their final format in the feedback_data before they get compressed: https://cs.chromium.org/chromium/src/extensions/browser/api/feedback_private/feedback_private_api.cc?q\u003dfeedback_private_api\u0026sq\u003dpackage:chromium\u0026l\u003d286\n\nI imagined that this is where we\u0027d get those data and add them to the report, without the need to send them to app and waste megabytes of data we won\u0027t show anyway.\n\nWDYT?",
+      "parentUuid": "1f418f52_2012e449",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 26
+      },
+      "revId": "f1b5365bdff507076fae27d97bc7389d6fc1f8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d35a41e6_dd6180d2",
         "filename": "extensions/common/api/feedback_private.idl",
         "patchSetId": 5
