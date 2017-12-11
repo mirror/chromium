@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2b69345_7e749a93",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-11T20:24:36Z",
+      "side": 1,
+      "message": "Unfortunately calculating the line number requires going through the entire source file as one large string and counting new-line characters, which has performance concerns of its own.\n\nAlso, using line-number would not help with the following case:\n1) highlight line #5000\n2) scroll to top with scroll bar\n3) highlight line #5001\nThen the code would mistakenly think it\u0027s only scrolling 1 line, when it\u0027s really scrolling from the top to line #5001.\n\nWe could work around that with other ways, but it might be more trouble than worth - I also checked the performance timeline, and it seems like if you do offsetTop and scrollTop in the same cycle, it only reflows once for offsetTop (and this would be unavoidable because we need to use offsetTop regardless).",
+      "parentUuid": "95924cf4_ecb41dd3",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 23
+      },
+      "revId": "0702065c1b06b6aa9d1be5a5801dba71d1c4cbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cde6e2c1_7a0e0882",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0702065c1b06b6aa9d1be5a5801dba71d1c4cbdf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d03d96a_2c15d04f",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-11T20:24:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cde6e2c1_7a0e0882",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "0702065c1b06b6aa9d1be5a5801dba71d1c4cbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
