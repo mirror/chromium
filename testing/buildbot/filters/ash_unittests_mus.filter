@@ -2,5 +2,19 @@
 -UnifiedMouseWarpControllerTest.WarpMouse
 -UnifiedMouseWarpControllerTest.BoundaryAndWarpSimpleTest
 
+# https://crbug.com/793924
+-HighlighterControllerTest.HighlighterGesturesRotated
+-PaletteTrayTestWithVoiceInteraction.MetalayerToolActivatesHighlighter
+-HighlighterControllerTest.HighlighterRenderer
+-HighlighterControllerTest.SelectionInsideScreen
+-HighlighterControllerTest.HighlighterPrediction
+-HighlighterControllerTest.HighlighterGestures
+-LaserPointerControllerTest.LaserPointerPrediction
+-HighlighterControllerTest.HighlighterGesturesScaled
+-PaletteTrayTestWithVoiceInteraction.StylusBarrelButtonActivatesHighlighter
+-LaserPointerControllerTest.LaserPointerRenderer
+-HighlighterControllerTest.DetachedClient
+-HighlighterControllerTest.InterruptedStroke
+
 # When adding new exclusions be sure to file bug with reason. Group with the
 # above if applicable.
