@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ecd2cc6_7170c54c",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-11T14:52:25Z",
+      "side": 1,
+      "message": "Good idea! Done.",
+      "parentUuid": "22c3f241_dccd655f",
+      "revId": "e20e446df936db4b1ac482824469bbc1ab1af2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faad33bb_0c47322a",
         "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e20e446df936db4b1ac482824469bbc1ab1af2bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db2b1753_168ff2b7",
+        "filename": "chrome/browser/ui/views/autofill/card_unmask_prompt_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-11T14:52:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faad33bb_0c47322a",
+      "revId": "e20e446df936db4b1ac482824469bbc1ab1af2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
