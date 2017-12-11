@@ -7,7 +7,6 @@
 #include <memory>
 
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "chromeos/components/tether/fake_active_host.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -52,7 +51,7 @@ class ActiveHostNetworkStateUpdaterTest : public NetworkStateTest {
     SetUpTetherNetwork();
     SetUpWifiNetwork();
 
-    fake_active_host_ = base::MakeUnique<FakeActiveHost>();
+    fake_active_host_ = std::make_unique<FakeActiveHost>();
 
     updater_ = base::WrapUnique(new ActiveHostNetworkStateUpdater(
         fake_active_host_.get(), network_state_handler()));
