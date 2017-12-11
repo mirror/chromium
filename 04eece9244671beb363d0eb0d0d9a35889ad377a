@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05acd532_5fdc36b4",
+        "filename": "ash/system/tray/system_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T21:19:29Z",
+      "side": 1,
+      "message": "maybe move this to SystemBubbleWrapper\u0027s ctor?",
+      "revId": "04eece9244671beb363d0eb0d0d9a35889ad377a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fe31ce_651fc4e7",
+        "filename": "ash/system/tray/system_tray.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T21:19:29Z",
+      "side": 1,
+      "message": "shouldn\u0027t we do this in side SystemBubble\u0027s dtor (looks like pecial case is already handled in SystemTray\u0027s dtor)?",
+      "revId": "04eece9244671beb363d0eb0d0d9a35889ad377a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
