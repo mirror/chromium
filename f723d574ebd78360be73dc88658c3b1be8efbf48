@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "7c0f26d5_72da30e2",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-11T03:57:33Z",
+      "side": 1,
+      "message": "micro-nit: add a(n apparently perma)link where this is \nmentioned:\nhttps://docs.microsoft.com/en-us/uwp/api/windows.media.ocr.ocrengine",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 73
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ff2957_f142e49e",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-11T03:57:33Z",
+      "side": 1,
+      "message": "Perhaps we should also compare or add a DCHECK someplace\naround here e.g. [1]\n\nDCHECK_GE(base::win::OSInfo::GetInstance()-\u003eversion_number().build, 10240)\n\n it\u0027s always better to document a contract in code \nthan in comments.\n\n\n[1] https://cs.chromium.org/chromium/src/base/win/windows_version.h?q\u003dbase::win::GetVersion()\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d100",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 59
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "302f8d1b_773a81b0",
         "filename": "services/shape_detection/text_detection_impl_win.cc",
         "patchSetId": 4
@@ -116,6 +162,52 @@
       "writtenOn": "2017-12-08T11:30:08Z",
       "side": 1,
       "message": "nit: blank line before this",
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d861230_d62a2695",
+        "filename": "services/shape_detection/text_detection_impl_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-11T03:57:33Z",
+      "side": 1,
+      "message": "After writing all these unit tests I have learned about\nMockCallback\u003cCallback\u003cvoid(...)\u003e which might or might not\nbe useful in this case, because of the |quit_closure| param.\nJust an idea to consider.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 78
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4211965a_98c160ce",
+        "filename": "services/shape_detection/text_detection_impl_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-11T03:57:33Z",
+      "side": 1,
+      "message": "s/num_text/num_text_chunks/ or similar?\nAlso in l.25, 27.",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 24
+      },
       "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
