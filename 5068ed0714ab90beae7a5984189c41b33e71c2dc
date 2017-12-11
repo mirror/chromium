@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c76ce3a3_ef84d15e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-11T14:04:26Z",
+      "side": 1,
+      "message": "nit: Could you expand this CL description a bit?",
+      "revId": "5068ed0714ab90beae7a5984189c41b33e71c2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

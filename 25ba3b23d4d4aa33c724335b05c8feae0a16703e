@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "497ee01f_9a4995c9",
+        "filename": "components/language/content/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-11T14:04:26Z",
+      "side": 0,
+      "message": "Apologies, to be specific this code should be in //components/language/content/browser.",
+      "revId": "25ba3b23d4d4aa33c724335b05c8feae0a16703e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
