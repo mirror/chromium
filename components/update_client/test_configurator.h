@@ -14,7 +14,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "components/update_client/configurator.h"
-#include "services/service_manager/public/cpp/test/test_connector_factory.h"
 #include "url/gurl.h"
 
 class PrefService;
@@ -25,8 +24,10 @@ class URLRequestContextGetter;
 }  // namespace net
 
 namespace service_manager {
+namespace mojom {
 class Connector;
 }
+}  // namespace service_manager
 
 namespace update_client {
 
@@ -121,7 +122,7 @@ class TestConfigurator : public Configurator {
   GURL update_check_url_;
   GURL ping_url_;
 
-  service_manager::TestConnectorFactory connector_factory_;
+  std::unique_ptr<service_manager::mojom::Connector> connector_mojo_;
   std::unique_ptr<service_manager::Connector> connector_;
   scoped_refptr<net::TestURLRequestContextGetter> context_;
 
