@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "649e09e7_9d30751e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-11T06:06:36Z",
+      "side": 1,
+      "message": "Well, I meant that using Blink-provided task runner is much more preferable to TTRH::Get in terms of scheduling flexibility and ease of investigation, and I didn\u0027t mean more than that. Your suggestion is more neutral and understandable. Done.",
+      "parentUuid": "c073e77b_9e3a3196",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "08633be1573ba993b9678c7fe77fcafea53bbdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ba7974f_e7a29b09",
         "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "08633be1573ba993b9678c7fe77fcafea53bbdf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ced1ed_e2d6c5b8",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-11T06:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ba7974f_e7a29b09",
+      "range": {
+        "startLine": 70,
+        "startChar": 52,
+        "endLine": 70,
+        "endChar": 70
+      },
+      "revId": "08633be1573ba993b9678c7fe77fcafea53bbdf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
