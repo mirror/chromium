@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc7e2bf6_b670bc29",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-11T17:33:09Z",
+      "side": 1,
+      "message": "This feels better suited to live in lock_window.cc, since it is dealing with ui/ash configuration. It is a bit of a hard-call, I\u0027m thinking the blur code should also be moved to lock_window.cc, or maybe we have a separate file for the random initialization that needs to happen.\n\nIf moved to lock_window.cc then the SetKeyboardOverscrollOverride calls in webui_screen_locker.cc can be removed, as webui lock screen uses LockWindow. Feel free to remove the calls and add the tests in a follow-up CL if you\u0027re concerned about patch size w.r.t. merging.",
+      "revId": "cd4f477bd44c4a808bbbe43588f81cdbb342eba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
