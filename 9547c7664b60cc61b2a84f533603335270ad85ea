@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc112c6a_cebd6dc1",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T04:01:01Z",
+      "side": 1,
+      "message": "\"in that case\"\n\nThe comment probably works better on line 120 though.",
+      "range": {
+        "startLine": 108,
+        "startChar": 8,
+        "endLine": 108,
+        "endChar": 11
+      },
+      "revId": "9547c7664b60cc61b2a84f533603335270ad85ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
