@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf1aeb9d_f043324a",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1196635
+      },
+      "writtenOn": "2017-12-11T03:50:58Z",
+      "side": 1,
+      "message": "I think the height should also be updated here.\n\nTest case: https://bug799725.bmoattachments.org/attachment.cgi?id\u003d8936202\n\nThe rendering of Opera 12.1 is expected.",
+      "revId": "eee88582b5300e34aa2ea56bc5da17457e67aa00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
