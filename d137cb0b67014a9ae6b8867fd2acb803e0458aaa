@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f124b60_e14240f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "I think you should mention that this patch reduces the accepted range for major type 0 (unsigned integers). Something like\n\n\u003e Added support for major type 1 for CBORValue, CBORReader, and\nCBORWriter, and reduced the accepted range of major type 0 to what fits in an int64_t. While the CBOR major types 0 and 1 together can represent integers in the range [-2^64, 2^64-1], to reduce the C++ interface complexity we now represent them both in an int64_t, with the range [-2^63, 2^63-1].",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d91377_9fb6ef38",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "To avoid undefined behavior on overflow when length is numeric_limits\u003cint64\u003e::max(), spell this `-length - 1`.\n\nProbably also CHECK_GE(length, 0) so it\u0027s really clear that you can\u0027t get numeric_limits\u003cint64\u003e::min() here, for which -length would be undefined.",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 40
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774a44fc_19b8f024",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "The meaning of this function seems to be captured by \"CheckMinimalEncoding\".",
+      "range": {
+        "startLine": 207,
+        "startChar": 17,
+        "endLine": 207,
+        "endChar": 43
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c56f3b_e77b75db",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "The meaning of this function seems to be captured by \"CheckInInt64Range\" or \"CheckRepresentableInInt64\".",
+      "range": {
+        "startLine": 217,
+        "startChar": 17,
+        "endLine": 217,
+        "endChar": 39
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af7b70fa_2af5b9f9",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "You\u0027re not using either of these parameters.",
+      "range": {
+        "startLine": 217,
+        "startChar": 40,
+        "endLine": 218,
+        "endChar": 64
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b48ef16_01297bc8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "Probably spell this as `!base::IsValueInRangeForNumericType\u003cint64_t\u003e(uint_data)`. I\u0027m not certain that\u0027s better, although if not, I\u0027d rather use std::numeric_limits\u003cint64_t\u003e::max() instead of 0x7FFFFFFFFFFFFFFF.",
+      "range": {
+        "startLine": 220,
+        "startChar": 6,
+        "endLine": 220,
+        "endChar": 36
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32156f41_eb783dfe",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "I think you can remove this now.",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 55
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d193c20_5d318ecd",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "To avoid bugs where someone passes a large uint64_t and gets a negative result, consider adding an `explicit CBORValue(uint64_t) \u003d delete;` overload. I think it\u0027s better to delete that overload than define it with a checked_cast, to make the calling code clearly look like it contains a range assertion.",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 44
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1123eec1_67eb0ed2",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "Now that all integers are represented as int64_t, I\u0027d like to change this interface to just `int64_t GetInteger() const;` or `GetIntegral()`. `GetInt()` is plausible, but I think it\u0027s too confusable with an `int` return type.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 30
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746db50a_622fa646",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "No need for the extra set of parentheses, and to avoid the undefined behavior on -INT64_MIN, spell this `-(value + 1)`. Here, also, it\u0027d be good to CHECK_LT(value, 0) to ensure you never hit INT64_MAX+1.",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9243f46e_de642206",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T19:06:32Z",
+      "side": 1,
+      "message": "Please also check `{std::numeric_limits\u003cint64_t\u003e::min(), ...}`.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 61
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
