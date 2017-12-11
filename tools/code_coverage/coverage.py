@@ -100,6 +100,36 @@ CLANG_COVERAGE_BUILD_ARG = 'use_clang_coverage'
 GTEST_TARGET_NAMES = None
 
 
+class _PerFileCoverageSummary(object):
+  """Excapsulates coverage calculations for files."""
+
+  def __init__(self):
+    """Initializes PerFileCoverageSummary object."""
+    self._coverage_summaries = {}
+
+  def AddFile(self, path, total_regions, executed_regions, total_functions,
+              executed_functions, total_lines, executed_lines):
+    """Adds a new file entry."""
+    summary = {
+        'total_regions': total_regions,
+        'executed_regions': executed_regions,
+        'total_functions': total_functions,
+        'executed_functions': executed_functions,
+        'total_lines': total_lines,
+        'executed_lines': executed_lines,
+    }
+    self._coverage_summaries[path] = summary
+
+  def GetCoverageForFile(self, path):
+    """Returns a dictionary representing the coverage summary for a file."""
+    if os.path.isabs(path):
+      return GetCoverageForFile(os.path.relpath(path, SRC_ROOT_PATH))
+
+    assert path in self._coverage_summaries, (
+        '"%s" is not in the file coverage report' % path)
+    return self._coverage_summaries[path]
+
+
 def _GetPlatform():
   """Returns current running platform."""
   if sys.platform == 'win32' or sys.platform == 'cygwin':
@@ -154,11 +184,10 @@ def DownloadCoverageToolsIfNeeded():
   coverage_revision, coverage_sub_revision = _GetRevisionFromStampFile(
       coverage_revision_stamp_file, platform)
 
-  has_coverage_tools = (os.path.exists(LLVM_COV_PATH) and
-                        os.path.exists(LLVM_PROFDATA_PATH))
+  has_coverage_tools = (
+      os.path.exists(LLVM_COV_PATH) and os.path.exists(LLVM_PROFDATA_PATH))
 
-  if (has_coverage_tools and
-      coverage_revision == clang_revision and
+  if (has_coverage_tools and coverage_revision == clang_revision and
       coverage_sub_revision == clang_sub_revision):
     # LLVM coverage tools are up to date, bail out.
     return clang_revision
@@ -375,6 +404,109 @@ def _CreateCoverageProfileDataFromProfRawData(profraw_file_paths):
   return profdata_file_path
 
 
+def _GeneratePerFileCoverageSummary(binary_paths, profdata_file_path, filters):
+  """Generates per file code coverage summary using "llvm-cov report" command.
+
+  TODO(crbug.com/792535): Change to a more robust code coverage summary export
+  solution.
+
+  The officially suggested command to export code coverage data is to use
+  "llvm-cov export", which returns comprehensive code coverage data in a json
+  object, however, due to the size and complexity of Chrome, "llvm-cov export"
+  takes too long to run. Therefore, this script gets code coverage data by
+  calling "llvm-cov report" instead, which is significantly faster and provides
+  the same data.
+
+  The raw code coverage report returned from "llvm-cov report" has the following
+  format:
+  Filename\tRegions\tMissed Regions\tCover\tFunctions\tMissed Functions\t
+  \tLines\tMissed Lines\tCover
+  ------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
+  base/at_exit.cc\t89\t85\t4.49%\t7\t6\t14.29%\t107\t99\t7.48%
+  url/pathurl.cc\t89\t85\t4.49%\t7\t6\t14.29%\t107\t99\t7.48%
+  \n
+  Files which contain no functions:
+  base/compiler_specific.h\t0\t0\t-\t0\t0\t-0\t0\t-
+  base/debug/leak_annotations.h\t0\t0\t-\t0\t0\t-0\t0\t-
+  ------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
+  TOTAL\t89\t85\t4.49%\t7\t6\t14.29%\t7\t6\t14.29%\t107\t99\t7.48%
+
+
+  Note that the 'Files which contain no functions' section is optional, and in
+  our use case, we only need the data that appears above the 'Files which
+  contain no functions' section.
+
+  Additionally, in the report, if all the paths to the files share a common
+  prefix, the prefix is omitted.
+  """
+  # llvm-cov report [options] -instr-profile PROFILE BIN [-object BIN,...]
+  # [[-object BIN]] [SOURCES].
+  # NOTE: For object files, the first one is specified as a positional argument,
+  # and the rest are specified as keyword argument.
+  subprocess_cmd = [
+      LLVM_COV_PATH, 'report', '-instr-profile=' + profdata_file_path,
+      binary_paths[0]
+  ]
+  subprocess_cmd.extend(
+      ['-object=' + binary_path for binary_path in binary_paths[1:]])
+  subprocess_cmd.extend(filters)
+
+  output = subprocess.check_output(subprocess_cmd)
+  output_by_lines = output.split('\n')
+
+  filters_common_prefix = os.path.commonprefix(filters)
+  per_file_coverage_summary = _PerFileCoverageSummary()
+
+  report_parsing_err_message = (
+      'Unexpected code coverage report format from llvm-cov at line: "%s".')
+
+  # The current line that is being parsed, it starts from 2 because the first
+  # two lines are unrelated.
+  assert output_by_lines[0].startswith('Filename'), (
+      report_parsing_err_message % output_by_lines[0])
+  assert output_by_lines[1].startswith('-----'), (
+      report_parsing_err_message % output_by_lines[1])
+  current_line_num = 2
+
+  # The loop terminates when it reaches the third to the last line because
+  # the last two lines are also unrelated.
+  assert output_by_lines[-1] == '', (
+      report_parsing_err_message % output_by_lines[-1])
+  assert output_by_lines[-2].startswith('TOTAL'), (
+      report_parsing_err_message % output_by_lines[-2])
+  assert output_by_lines[-3].startswith('-----'), (
+      report_parsing_err_message % output_by_lines[-3])
+
+  while current_line_num < len(output_by_lines) - 3:
+    current_line = output_by_lines[current_line_num]
+    if not current_line.strip():
+      # Exits the loop when it's about to reach to the 'Files which contain no
+      # functions' section
+      break
+
+    current_line_split = current_line.split()
+    if not filters_common_prefix:
+      file_absolute_path = os.path.abspath(current_line_split[0])
+    else:
+      file_absolute_path = os.path.join(filters_common_prefix,
+                                        current_line_split[0])
+
+    per_file_coverage_summary.AddFile(
+        path=file_absolute_path,
+        total_regions=int(current_line_split[1]),
+        executed_regions=int(current_line_split[2]),
+        total_functions=int(current_line_split[4]),
+        executed_functions=int(current_line_split[5]),
+        total_lines=int(current_line_split[7]),
+        executed_lines=int(current_line_split[8]))
+
+    current_line_num += 1
+
+  return per_file_coverage_summary
+
+
 def _GetBinaryPath(command):
   """Returns a relative path to the binary to be run by the command.
 
@@ -562,8 +694,10 @@ def Main():
 
   profdata_file_path = _CreateCoverageProfileDataForTargets(
       args.targets, args.command, args.jobs)
-
   binary_paths = [_GetBinaryPath(command) for command in args.command]
+
+  file_coverage_report = _GeneratePerFileCoverageSummary(
+      binary_paths, profdata_file_path, absolute_filter_paths)
   _GenerateLineByLineFileCoverageInHtml(binary_paths, profdata_file_path,
                                         absolute_filter_paths)
   html_index_file_path = 'file://' + os.path.abspath(
