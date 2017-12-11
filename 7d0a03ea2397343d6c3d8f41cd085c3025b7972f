@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9417ace_c33afce7",
+        "filename": "android_webview/java/src/org/chromium/android_webview/PopupTouchHandleDrawable.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T21:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b99f65e1_edbf2fd8",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b2cee1a_314a97e7",
         "filename": "content/browser/android/gesture_listener_manager_android.cc",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "75473058_0692d086",
+        "filename": "content/browser/android/gesture_listener_manager_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T21:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b2cee1a_314a97e7",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c223cd5b_5d833c1d",
         "filename": "content/browser/android/gesture_listener_manager_android.cc",
         "patchSetId": 13
@@ -47,6 +83,30 @@
       "writtenOn": "2017-12-11T19:40:41Z",
       "side": 1,
       "message": "maybe later, but is this thing available in java yet? would save a lot of generated code if we could move this switch statement to java..",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 22
+      },
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbf0c82_e2e16c83",
+        "filename": "content/browser/android/gesture_listener_manager_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T21:40:53Z",
+      "side": 1,
+      "message": "Left a todo.",
+      "parentUuid": "c223cd5b_5d833c1d",
       "range": {
         "startLine": 57,
         "startChar": 9,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "f8941163_22ced8ff",
+        "filename": "content/browser/android/gesture_listener_manager_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T21:40:53Z",
+      "side": 1,
+      "message": "Done. SupportsUserData::Data is a simpler holder without the need of constructor taking |web_contents|. I just repeated what GestureListeerManager::CreateForWebContents() should do here to create an instance.",
+      "parentUuid": "28548b18_fccde8f2",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2f3bab1_3ce36d53",
         "filename": "content/browser/android/gesture_listener_manager_android.h",
         "patchSetId": 13
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "fa400b45_81fa74ea",
+        "filename": "content/browser/android/gesture_listener_manager_android.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T21:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2f3bab1_3ce36d53",
+      "range": {
+        "startLine": 22,
+        "startChar": 28,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f469914_65081e54",
         "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
         "patchSetId": 13
@@ -110,6 +212,24 @@
       "writtenOn": "2017-12-11T19:40:41Z",
       "side": 1,
       "message": "is this more verbose form because you want to reduce gc churn? which I guess is a worthy goal\n\nwish ObserverList supported this officially as a mode, ie always return the same instance of the rewinded iterator.. hmm, maybe too easy to mistakes",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8885e07_18757ce0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T21:40:53Z",
+      "side": 1,
+      "message": "Sounds like I did something nice without intention :) I just migrated the code in CVC here..",
+      "parentUuid": "4f469914_65081e54",
       "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "e9dd5097_af145351",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T21:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381ae9a2_f228842c",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a78b5776_54567c45",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 13
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "60371918_900e7ab8",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T21:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a78b5776_54567c45",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d7e47c4_bdd7d5ca",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
         "patchSetId": 13
@@ -164,6 +320,24 @@
       "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8baca5b3_ff21df06",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContentsUserData.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-11T21:40:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d7e47c4_bdd7d5ca",
+      "revId": "7d0a03ea2397343d6c3d8f41cd085c3025b7972f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
