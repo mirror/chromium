@@ -366,9 +366,14 @@ ExtensionSystemImpl::~ExtensionSystemImpl() {
 void ExtensionSystemImpl::Shutdown() {
 }
 
-void ExtensionSystemImpl::InitForRegularProfile(bool extensions_enabled) {
-  TRACE_EVENT0("browser,startup", "ExtensionSystemImpl::InitForRegularProfile");
-  DCHECK(!profile_->IsOffTheRecord());
+void ExtensionSystemImpl::Init(bool incognito, bool extensions_enabled) {
+  TRACE_EVENT0("browser,startup", "ExtensionSystemImpl::Init");
+  cookie_notifier_ = std::make_unique<ExtensionCookieNotifier>(profile_);
+
+  // The rest of the initialization is only done for regular profiles.
+  if (incognito)
+    return;
+
   if (shared_user_script_master() || extension_service())
     return;  // Already initialized.
 

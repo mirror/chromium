@@ -1234,8 +1234,7 @@ void ProfileManager::DoFinalInitForServices(Profile* profile,
     extensions_enabled = true;
   }
 #endif
-  extensions::ExtensionSystem::Get(profile)->InitForRegularProfile(
-      extensions_enabled);
+  extensions::ExtensionSystem::Get(profile)->Init(false, extensions_enabled);
 
   // Set the block extensions bit on the ExtensionService. There likely are no
   // blockable extensions to block.

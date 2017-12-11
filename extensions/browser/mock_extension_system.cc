@@ -16,8 +16,7 @@ MockExtensionSystem::MockExtensionSystem(content::BrowserContext* context)
 MockExtensionSystem::~MockExtensionSystem() {
 }
 
-void MockExtensionSystem::InitForRegularProfile(bool extensions_enabled) {
-}
+void MockExtensionSystem::Init(bool incognito, bool extensions_enabled) {}
 
 ExtensionService* MockExtensionSystem::extension_service() {
   return nullptr;

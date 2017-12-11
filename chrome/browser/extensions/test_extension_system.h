@@ -50,7 +50,7 @@ class TestExtensionSystem : public ExtensionSystem {
 
   void CreateSocketManager();
 
-  void InitForRegularProfile(bool extensions_enabled) override {}
+  void Init(bool incognito, bool extensions_enabled) override {}
   void SetExtensionService(ExtensionService* service);
   ExtensionService* extension_service() override;
   RuntimeData* runtime_data() override;
