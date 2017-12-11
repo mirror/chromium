@@ -148,11 +148,6 @@ bool BrokerFilePermission::CheckOpen(const char* requested_filename,
     return false;
   }
 
-  // If O_CREAT is present, ensure O_EXCL
-  if ((flags & O_CREAT) && !(flags & O_EXCL)) {
-    return false;
-  }
-
   // If this file is to be temporary, ensure it's created.
   if (temporary_only_ && !(flags & O_CREAT)) {
     return false;
