@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f34b134_7de47c6e",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T17:16:16Z",
+      "side": 1,
+      "message": "Can you move all this into application_lifetime_chromeos?",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 31
+      },
+      "revId": "06b17c06b7220ad5eec956ebfca0ca04fb56dfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
