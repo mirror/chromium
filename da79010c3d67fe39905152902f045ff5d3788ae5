@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4e0442f_1aead277",
+        "filename": "chrome/browser/command_updater.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-11T23:09:45Z",
+      "side": 0,
+      "message": "Please keep this comment in the new file as well as adding a description about subclasses and why this exists (vs just CommandUpdaterImpl).",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 2
+      },
+      "revId": "da79010c3d67fe39905152902f045ff5d3788ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
