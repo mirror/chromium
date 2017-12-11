@@ -1154,7 +1154,23 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
       OnRequestFailed(false, net::ERR_ABORTED, base::nullopt);
       return;
     }
-    loader_->ProceedWithResponse();
+
+    // Call ProceedWithResponse()
+    // Note: There is no need to to call ProceedWithResponse() when the
+    // Network Service is enabled. See https://crbug.com/791049.
+    if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+      // If |url_loader_client_endpoints_| exists, the |loader_| is a
+      // NavigationURLLoaderNetworkService. Otherwise, it it either a
+      // NavigationURLLoader or a TestNavigationURLLoader.
+      if (url_loader_client_endpoints_) {
+        mojom::URLLoaderPtr url_loader(
+            std::move(url_loader_client_endpoints_->url_loader));
+        url_loader->ProceedWithResponse();
+        url_loader_client_endpoints_->url_loader = url_loader.PassInterface();
+      } else {
+        loader_->ProceedWithResponse();
+      }
+    }
   }
 
   // Abort the request if needed. This includes requests that were blocked by
