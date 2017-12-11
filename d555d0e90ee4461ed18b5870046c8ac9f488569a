@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78435c9d_30a1409c",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-11T14:01:06Z",
+      "side": 1,
+      "message": "nit: Let\u0027s call this |ip_geolocation_provider_|.",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "d555d0e90ee4461ed18b5870046c8ac9f488569a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

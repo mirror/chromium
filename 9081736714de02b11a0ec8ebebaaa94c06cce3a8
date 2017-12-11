@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1d3ce5e7_11b24b8f",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-11T14:01:06Z",
+      "side": 1,
+      "message": "Yes, you need to reset it. I would do:\n\nif (ip_geolocation_service_.encountered_error())\n  ip_geolocation_service_.reset();\nif (!ip_geolocation_service_.is_bound())\n  ...",
+      "parentUuid": "ee7cfbe3_34fe22a7",
+      "revId": "9081736714de02b11a0ec8ebebaaa94c06cce3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f8c5654_8d296e82",
         "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
         "patchSetId": 5
