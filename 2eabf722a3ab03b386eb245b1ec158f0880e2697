@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d04a953_ec508d5a",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-11T23:57:35Z",
+      "side": 1,
+      "message": "nit: Unneeded change?",
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e60af8f0_8b1a8012",
         "filename": "chrome/BUILD.gn",
         "patchSetId": 4
@@ -19,6 +36,40 @@
         "endLine": 888,
         "endChar": 46
       },
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70e917b_edc9d58c",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-11T23:57:35Z",
+      "side": 1,
+      "message": "As written here, do we need to change the chromite file listing?",
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7657cc8a_acfa29ed",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-11T23:57:35Z",
+      "side": 1,
+      "message": "Should there be a TODO or bug # here for eventual snapshot_blob.bin deprecation?",
       "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
