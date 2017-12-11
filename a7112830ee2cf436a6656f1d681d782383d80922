@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d387d8e_fcfd582e",
+        "filename": "media/gpu/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-12-11T18:13:44Z",
+      "side": 1,
+      "message": "I would create an OWNERS file in //media/gpu/vaapi and\nadd my name there. Since marcheu@ is busy doing a 100\nthings, let me quickly cook a CL for this.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 19
+      },
+      "revId": "a7112830ee2cf436a6656f1d681d782383d80922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
