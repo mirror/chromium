@@ -204,8 +204,7 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // method will always return the fallback surface because we cannot guarantee
   // the latest in flight surface from the fallback frame sink is older than the
   // primary surface.
-  Surface* GetLatestInFlightSurface(const FrameSinkId& parent,
-                                    const SurfaceId& primary_surface_id,
+  Surface* GetLatestInFlightSurface(const SurfaceId& primary_surface_id,
                                     const SurfaceId& fallback_surface_id);
 
   // Called by SurfaceAggregator notifying us that it will use |surface| in the
