@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "842c9a6e_7d5e20a6",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-11T21:45:34Z",
+      "side": 1,
+      "message": "It is possible that transition_type has no effect, in which case we probably should not even have this line. In any case can we add a comment (possibly later) explaining why transition type should be one or the other?",
+      "parentUuid": "bca9c457_a1caaf2f",
+      "range": {
+        "startLine": 385,
+        "startChar": 31,
+        "endLine": 385,
+        "endChar": 53
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00da893c_e90ece89",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
         "patchSetId": 3
