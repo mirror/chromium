@@ -7,7 +7,6 @@
 #include <string>
 
 #include "base/command_line.h"
-#include "base/feature_list.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/string_number_conversions.h"
@@ -20,6 +19,7 @@
 
 #if defined(OS_ANDROID)
 #include "base/debug/debugger.h"
+#include "base/feature_list.h"
 #endif
 
 #if defined(OS_POSIX) && !defined(OS_ANDROID)
@@ -34,22 +34,6 @@ static void SigUSR1Handler(int signal) {}
 namespace content {
 
 namespace {
-
-#if defined(OS_WIN)
-const base::Feature kUseZoomForDsfEnabledByDefault {
-  "use-zoom-for-dsf enabled by default", base::FEATURE_ENABLED_BY_DEFAULT
-};
-#endif
-
-bool IsUseZoomForDSFEnabledByDefault() {
-#if defined(OS_LINUX)
-  return true;
-#elif defined(OS_WIN)
-  return base::FeatureList::IsEnabled(kUseZoomForDsfEnabledByDefault);
-#else
-  return false;
-#endif
-}
 
 #if defined(ANDROID)
 const base::Feature kProgressBarCompletionResourcesBeforeDOMContentLoaded {
@@ -111,16 +95,7 @@ V8CacheOptions GetV8CacheOptions() {
 }
 
 bool IsUseZoomForDSFEnabled() {
-  static bool use_zoom_for_dsf_enabled_by_default =
-      IsUseZoomForDSFEnabledByDefault();
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  bool enabled =
-      (command_line->HasSwitch(switches::kEnableUseZoomForDSF) ||
-       use_zoom_for_dsf_enabled_by_default) &&
-      command_line->GetSwitchValueASCII(
-          switches::kEnableUseZoomForDSF) != "false";
-
-  return enabled;
+  return switches::UseZoomForDSFEnabled();
 }
 
 ProgressBarCompletion GetProgressBarCompletionPolicy() {
