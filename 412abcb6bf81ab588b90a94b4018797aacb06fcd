@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e5c4f614_36c41da9",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T11:39:13Z",
+      "side": 1,
+      "message": "yeah - that should cover it (except for the case of SaveCardBubbleControllerImpl accidentally not calling Hide()). I still want WebContentsMouseHandler to control it\u0027s lifetime better, but you can leave that with me.",
+      "parentUuid": "bed303bf_ea0158cb",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8e2bb02_721a6af3",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I\u0027d forgotten about this, good catch. I\u0027m clearing the controller_ and mouse_handler_ in WindowClosing as well, and there doesn\u0027t appear to be a case anymore where one side would retain a pointer inappropriately. Do you think this improves the situation?",
       "parentUuid": "f8e2bb02_721a6af3",
+      "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf95f88_096f4c13",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T11:39:13Z",
+      "side": 1,
+      "message": "Yeah - that\u0027s the theory. I\u0027m not sure what a regression test for it would look like though. You might get a nag on issue 624560, but IMO think the crash rate is too low to put much effort into fixing (one crash in m58, one crash in m62).",
+      "parentUuid": "a3545121_31814f54",
       "revId": "412abcb6bf81ab588b90a94b4018797aacb06fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
