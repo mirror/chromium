@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bca9c457_a1caaf2f",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "This was not an extremely well thought-out decision. I chose \"reload\" because restore_session.html is essentially a complex client-side redirect. I don\u0027t fully understand the implication of this choice and was hoping that edge cases will be uncovered by testing.\n\nI can imagine the alternative is to use the transition type of the target URL page being reloaded.",
+      "parentUuid": "7cf6638d_f3b6eb75",
+      "range": {
+        "startLine": 385,
+        "startChar": 31,
+        "endLine": 385,
+        "endChar": 53
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00da893c_e90ece89",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03033c47_93d817b4",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00da893c_e90ece89",
+      "range": {
+        "startLine": 590,
+        "startChar": 25,
+        "endLine": 590,
+        "endChar": 28
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0a95fe70_ab96c8c6",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfdc905a_5d31da3f",
+      "range": {
+        "startLine": 673,
+        "startChar": 68,
+        "endLine": 673,
+        "endChar": 77
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b3861c3_694eafb4",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9dba06c_74e6b9d4",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b3861c3_694eafb4",
+      "range": {
+        "startLine": 678,
+        "startChar": 2,
+        "endLine": 678,
+        "endChar": 11
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4e73e728_2f9afcd2",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5501d691_4e458a43",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 9
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc8479ff_c2f683cc",
         "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
         "patchSetId": 3
@@ -140,6 +260,54 @@
     },
     {
       "key": {
+        "uuid": "3de8ba8b_6f9f6548",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc8479ff_c2f683cc",
+      "range": {
+        "startLine": 15,
+        "startChar": 29,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8355d174_be4b3623",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc8479ff_c2f683cc",
+      "range": {
+        "startLine": 15,
+        "startChar": 29,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63cc9f46_140354d6",
         "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
         "patchSetId": 3
@@ -154,6 +322,24 @@
       "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3e5816_3e1a55e6",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63cc9f46_140354d6",
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +360,24 @@
     },
     {
       "key": {
+        "uuid": "169df81f_386e7004",
+        "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf7005d8_deb119be",
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b49388_58e30c95",
         "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
         "patchSetId": 3
@@ -188,6 +392,24 @@
       "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb33dfe2_c61eff24",
+        "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "Oops. Sorry forgot to remove after changing base::MakeUnique. Removed.",
+      "parentUuid": "78b49388_58e30c95",
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "92878b37_c3eb2961",
+        "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "I didn\u0027t expose this constant for rough the same mental calculus expressed below. But I feel less strong about this one because defining a constant doesn\u0027t make the code less readable here. So done.",
+      "parentUuid": "909288bd_f162ebff",
+      "range": {
+        "startLine": 37,
+        "startChar": 51,
+        "endLine": 37,
+        "endChar": 58
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee62dcf_fe6a62d8",
         "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
         "patchSetId": 3
@@ -225,6 +471,30 @@
       "writtenOn": "2017-12-11T18:22:52Z",
       "side": 1,
       "message": "Can we parse this JSON to a dictionary to avoid duplicating \"offset\", \"titles\" and other constants?",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "2d2f2232240df5a16eb700f23f0699c322bebd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f063c39_b6a1c23e",
+        "filename": "ios/web/navigation/wk_based_restore_session_util_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "I feel the benefit may not be worth the trouble: it\u0027s not sufficient to just parse the JSON to a dictionary because we\u0027d still use the constants to look up value from the dictionary. We\u0027d also have to create constant variables, which would only be used in this one test. It will also make the test longer, more complex (JSON parsing) and in my opinion less readable.\n\nUsually we use constants to avoid the number of places that need to be changed when the string value changes. I feel that risk is very low here since we\u0027re unlikely to change the constants ever, and these constants are not used outside of this model.",
+      "parentUuid": "4ee62dcf_fe6a62d8",
       "range": {
         "startLine": 39,
         "startChar": 17,

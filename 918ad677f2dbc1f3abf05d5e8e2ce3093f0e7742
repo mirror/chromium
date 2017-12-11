@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "ff83dd6e_14673caf",
+        "filename": "ios/web/navigation/wk_based_restore_session_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-11T20:03:07Z",
+      "side": 1,
+      "message": "I\u0027m aware of that best practice, but this is the cleanest option I could come up with. I needed to be able to construct a restore_session.html URL in test that will pass IsRestoreSessionUrl(). Options were:\n1) duplicate the logic in test \u003d\u003d\u003e obviously not desirable\n2) change IsRestoreSessionUrl to test only that the path ends in restore_session.html \u003d\u003d\u003e can be more easily abused if user loads their own restore_session.html instead of the one in the app bundle\n3) somehow mock out Framework Bundle\u0027s |-pathForResource:ofType| call \u003d\u003d\u003e adds more complexity for a relative minor best practice exception in my opinion\n4) move this declaration from here to _unittest.mm \u003d\u003d\u003e less idiomatic, still a backdoor.\n\nThe main issue is that the bundle resource path is unique per build.",
+      "parentUuid": "9510befe_42490ee9",
+      "range": {
+        "startLine": 19,
+        "startChar": 50,
+        "endLine": 19,
+        "endChar": 65
+      },
+      "revId": "918ad677f2dbc1f3abf05d5e8e2ce3093f0e7742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afbacc1c_e32a2b31",
         "filename": "ios/web/navigation/wk_based_restore_session_util.mm",
         "patchSetId": 2
