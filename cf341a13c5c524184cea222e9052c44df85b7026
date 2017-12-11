@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b1ff945_db867ec6",
+        "filename": "third_party/libovr/download_ovr_source.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-11T19:06:19Z",
+      "side": 1,
+      "message": "If I change this to false, it will only download if the sha1 doesn\u0027t match, so we don\u0027t redownload every time.",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 16
+      },
+      "revId": "cf341a13c5c524184cea222e9052c44df85b7026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
