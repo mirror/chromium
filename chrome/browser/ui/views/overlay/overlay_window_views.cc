@@ -11,6 +11,7 @@
 
 // static
 std::unique_ptr<OverlayWindow> OverlayWindow::Create() {
+  // LOG(ERROR) << "OverlayWindow::Create";
   return base::WrapUnique(new OverlayWindowViews());
 }
 
@@ -40,12 +41,14 @@ class OverlayWindowWidgetDelegate : public views::WidgetDelegate {
 };
 
 OverlayWindowViews::OverlayWindowViews() {
+  // LOG(ERROR) << "OverlayWindowViews::OverlayWindowViews";
   widget_.reset(new views::Widget());
 }
 
 OverlayWindowViews::~OverlayWindowViews() = default;
 
 void OverlayWindowViews::Init() {
+  // LOG(ERROR) << "OverlayWindowViews::Init";
   // TODO(apacible): Finalize the type of widget. http://crbug/726621
   views::Widget::InitParams params(views::Widget::InitParams::TYPE_WINDOW);
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
@@ -88,6 +91,7 @@ bool OverlayWindowViews::IsAlwaysOnTop() const {
 }
 
 ui::Layer* OverlayWindowViews::GetLayer() {
+  // LOG(ERROR) << "OverlayWindowViews::GetLayer";
   return widget_->GetLayer();
 }
 

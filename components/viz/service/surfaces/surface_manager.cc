@@ -559,6 +559,7 @@ bool SurfaceManager::SurfaceModified(const SurfaceId& surface_id,
 }
 
 void SurfaceManager::FirstSurfaceActivation(const SurfaceInfo& surface_info) {
+  LOG(ERROR) << "SurfaceManager::FirstSurfaceActivation";
   CHECK(thread_checker_.CalledOnValidThread());
 
   for (auto& observer : observer_list_)
@@ -566,6 +567,7 @@ void SurfaceManager::FirstSurfaceActivation(const SurfaceInfo& surface_info) {
 }
 
 void SurfaceManager::SurfaceActivated(Surface* surface) {
+  // LOG(ERROR) << "SurfaceManager::SurfaceActivated";
   // Trigger a display frame if necessary.
   const CompositorFrame& frame = surface->GetActiveFrame();
   if (!SurfaceModified(surface->surface_id(), frame.metadata.begin_frame_ack)) {

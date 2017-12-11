@@ -7,6 +7,7 @@
 #include <stdint.h>
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -40,6 +41,9 @@ LayerTreeFrameSink::~LayerTreeFrameSink() {
 }
 
 bool LayerTreeFrameSink::BindToClient(LayerTreeFrameSinkClient* client) {
+  LOG(ERROR)
+      << "LayerTreeFrameSink::BindToClient===============================";
+  base::debug::StackTrace().Print();
   DCHECK(client);
   DCHECK(!client_);
   client_ = client;
