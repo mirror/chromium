@@ -22,8 +22,14 @@ cr.define('extensions', function() {
      */
     onLinkTap_: function(e) {
       e.preventDefault();
-      extensions.navigation.navigateTo({page: e.target.dataset.path});
-    }
+      const page = e.target.dataset.path;
+      extensions.navigation.navigateTo({page: page});
+    },
+
+    /** @private */
+    onMoreExtensionsTap_: function() {
+      chrome.metricsPrivate.recordUserAction('Options_GetMoreExtensions');
+    },
   });
 
   return {Sidebar: Sidebar};
