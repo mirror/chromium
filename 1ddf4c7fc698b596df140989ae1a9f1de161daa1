@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14175c0a_55ce30d6",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-11T13:47:02Z",
+      "side": 1,
+      "message": "nit: s/They should/It should\nAlso s/|Fail| or |Commit|/|Commit|.\n\nIt\u0027s not used if the navigation fails.",
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
