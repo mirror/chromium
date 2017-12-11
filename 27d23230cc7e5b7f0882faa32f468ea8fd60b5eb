@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc18f906_b595699e",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-11T01:58:30Z",
+      "side": 1,
+      "message": "Do we have a bug for that?",
+      "range": {
+        "startLine": 410,
+        "startChar": 7,
+        "endLine": 410,
+        "endChar": 17
+      },
+      "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda45084_0a7b6ad7",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-11T01:58:30Z",
+      "side": 1,
+      "message": "I guess you meant \"export\" here?",
+      "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb111c8_f0a3a5aa",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-11T01:58:30Z",
+      "side": 1,
+      "message": "nit: maybe \"output\" and \"output_by_lines\" on the next line",
+      "range": {
+        "startLine": 456,
+        "startChar": 2,
+        "endLine": 456,
+        "endChar": 9
+      },
+      "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3ff331_f8e5d88e",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-11T01:58:30Z",
+      "side": 1,
+      "message": "I think we can be more careful here, e.g. try also assert that the line with index 1 starts with \"-----------\", i.e. it ends the table title row",
+      "range": {
+        "startLine": 464,
+        "startChar": 2,
+        "endLine": 464,
+        "endChar": 22
+      },
+      "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56d8de1_5692451e",
+        "filename": "tools/code_coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-11T01:58:30Z",
+      "side": 1,
+      "message": "Same here, can we rely on anything else besides the line number?",
+      "range": {
+        "startLine": 468,
+        "startChar": 27,
+        "endLine": 468,
+        "endChar": 52
+      },
+      "revId": "27d23230cc7e5b7f0882faa32f468ea8fd60b5eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
