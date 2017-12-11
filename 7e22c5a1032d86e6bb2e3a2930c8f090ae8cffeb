@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89b23d57_2c9f39d2",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-11T13:02:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5007fb18_caa942d1",
+      "range": {
+        "startLine": 228,
+        "startChar": 6,
+        "endLine": 228,
+        "endChar": 42
+      },
+      "revId": "7e22c5a1032d86e6bb2e3a2930c8f090ae8cffeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f727dd51_f7bd6576",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-11T09:44:42Z",
       "side": 1,
       "message": "Is there a test for this case?",
+      "range": {
+        "startLine": 229,
+        "startChar": 4,
+        "endLine": 230,
+        "endChar": 49
+      },
+      "revId": "7e22c5a1032d86e6bb2e3a2930c8f090ae8cffeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722f43ce_b8f09b9b",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-11T13:02:08Z",
+      "side": 1,
+      "message": "media/track/track-webvtt-tc006-cue-identifiers.html\nexternal/wpt/webvtt/parsing/file-parsing/tests/arrows.html\n\nabove two test cases checks this case",
+      "parentUuid": "f727dd51_f7bd6576",
       "range": {
         "startLine": 229,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e4523049_f9d85a33",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-11T13:02:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33dfbe07_aac3d381",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 249,
+        "endChar": 20
+      },
+      "revId": "7e22c5a1032d86e6bb2e3a2930c8f090ae8cffeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ca763fa_70b47495",
         "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
         "patchSetId": 17
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-11T09:44:42Z",
       "side": 1,
       "message": "I think it would be good to split this expression in to the two logical bits (checking for \"REGION\\s*\" and checking for \"--\u003e\" on the previous line.) Also, could the \"seen \u0027--\u003e\u0027\" be handled at the state machine level?",
+      "range": {
+        "startLine": 258,
+        "startChar": 6,
+        "endLine": 260,
+        "endChar": 47
+      },
+      "revId": "7e22c5a1032d86e6bb2e3a2930c8f090ae8cffeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae81152_78da2da3",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-11T13:02:08Z",
+      "side": 1,
+      "message": "divided if into two conditions\none for checking previous line and another if for handling the REGION specific check.\n\n\"seen\u0027--\u003e\u0027\" is valid, it handled using state machine. when it is kBadCue like invalid cue or inside comment, then updated state as kHeader. which calls CollectWebVTTBlock for next line validation.",
+      "parentUuid": "5ca763fa_70b47495",
       "range": {
         "startLine": 258,
         "startChar": 6,
@@ -114,6 +210,30 @@
       "revId": "7e22c5a1032d86e6bb2e3a2930c8f090ae8cffeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4082e1_1c4e27b5",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTParser.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1246259
+      },
+      "writtenOn": "2017-12-11T13:02:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4d604ea_bd00ddc8",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 273,
+        "endChar": 27
+      },
+      "revId": "7e22c5a1032d86e6bb2e3a2930c8f090ae8cffeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
