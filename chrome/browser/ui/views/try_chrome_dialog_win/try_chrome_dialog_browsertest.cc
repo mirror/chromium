@@ -78,7 +78,7 @@ IN_PROC_BROWSER_TEST_F(TryChromeDialogBrowserTest, ToastCrasher) {}
 // functionality.
 class TryChromeDialogBrowserTestBase : public InProcessBrowserTest {
  public:
-  // Breaks ShowDialog() out of its modal run loop.
+  // Breaks ShowDialogSync() out of its modal run loop.
   void QuitModalLoop() {
     if (quit_closure_)
       quit_closure_.Run();
@@ -283,25 +283,26 @@ IN_PROC_BROWSER_TEST_F(TryChromeDialogBrowserTestBase, EarlyRendezvous) {
 // Test harness to display the TryChromeDialog for testing. Template parameter 0
 // is the group number to be evaluated.
 class TryChromeDialogTest
-    : public SupportsTestDialog<TryChromeDialogBrowserTestBase>,
+    : public SupportsTestUI<TryChromeDialogBrowserTestBase, TestBrowserDialog>,
       public ::testing::WithParamInterface<int> {
  protected:
   TryChromeDialogTest()
-      : SupportsTestDialog<TryChromeDialogBrowserTestBase>(GetParam()) {}
+      : SupportsTestUI<TryChromeDialogBrowserTestBase, TestBrowserDialog>(
+            GetParam()) {}
 
-  // SupportsTestDialog:
+  // SupportsTestUI:
   void SetUp() override {
     UseMdOnly();
-    SupportsTestDialog::SetUp();
+    SupportsTestUI::SetUp();
   }
-  void ShowDialog(const std::string& name) override { ShowDialogSync(); }
+  void ShowUI(const std::string& name) override { ShowDialogSync(); }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TryChromeDialogTest);
 };
 
-IN_PROC_BROWSER_TEST_P(TryChromeDialogTest, InvokeDialog_default) {
-  RunDialog();
+IN_PROC_BROWSER_TEST_P(TryChromeDialogTest, InvokeUI_default) {
+  ShowAndVerifyUI();
 }
 
 INSTANTIATE_TEST_CASE_P(

@@ -20,7 +20,7 @@ class HungRendererDialogViewBrowserTest : public DialogBrowserTest {
   HungRendererDialogViewBrowserTest() {}
 
   // DialogBrowserTest:
-  void ShowDialog(const std::string& name) override {
+  void ShowUI(const std::string& name) override {
     auto* web_contents = browser()->tab_strip_model()->GetActiveWebContents();
     TabDialogs::FromWebContents(web_contents)
         ->ShowHungRendererDialog(content::WebContentsUnresponsiveState());
@@ -33,9 +33,9 @@ class HungRendererDialogViewBrowserTest : public DialogBrowserTest {
 // Invokes the hung renderer (aka page unresponsive) dialog. See
 // test_browser_dialog.h.
 // TODO(tapted): The framework sometimes doesn't pick up the spawned dialog and
-// the ASSERT_EQ in TestBrowserDialog::RunDialog() fails. This seems to only
-// happen on the bots. So the test is disabled for now.
+// the ASSERT_EQ in TestBrowserDialog::ShowAndVerifyUI() fails. This seems to
+// only happen on the bots. So the test is disabled for now.
 IN_PROC_BROWSER_TEST_F(HungRendererDialogViewBrowserTest,
-                       DISABLED_InvokeDialog_default) {
-  RunDialog();
+                       DISABLED_InvokeUI_default) {
+  ShowAndVerifyUI();
 }

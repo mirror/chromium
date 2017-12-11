@@ -25,7 +25,7 @@ class FirstRunDialog : public views::DialogDelegateView,
 
  private:
   explicit FirstRunDialog(Profile* profile);
-  ~FirstRunDialog() override;
+  ~FirstShowAndVerifyUI() override;
 
   // This terminates the nested message-loop.
   void Done();
