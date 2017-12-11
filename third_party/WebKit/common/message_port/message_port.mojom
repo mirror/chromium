@@ -18,6 +18,7 @@ struct CloneableMessage {
   array<uint8> encoded_message;
   // Blob handles for any blobs being sent in this message.
   array<SerializedBlob> blobs;
+  SerializedArrayBufferContentsVector sharedArrayBufferContentsVector;
 };
 
 // This struct combines the cloneable part of a message with the parts of the
@@ -39,4 +40,8 @@ struct SerializedBlob {
   string content_type;
   uint64 size;
   Blob blob;
+};
+
+struct SerializedArrayBufferContentsVector {
+  uint64 location;
 };
