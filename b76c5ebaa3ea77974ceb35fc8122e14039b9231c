@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32146cd0_ac2ce718",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-11T16:10:42Z",
+      "side": 1,
+      "message": "This can just be getActivity() since an Activity is a Context.",
+      "range": {
+        "startLine": 364,
+        "startChar": 16,
+        "endLine": 364,
+        "endChar": 52
+      },
+      "revId": "b76c5ebaa3ea77974ceb35fc8122e14039b9231c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
