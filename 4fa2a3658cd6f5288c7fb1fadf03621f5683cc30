@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "148262b0_3c202938",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-not-exposed.https.worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-12-11T18:42:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff81136b_75cd70fc",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 0
+      },
+      "revId": "4fa2a3658cd6f5288c7fb1fadf03621f5683cc30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d4f4adc_cae780bb",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-not-exposed.https.worker.js",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-11T17:36:01Z",
       "side": 1,
       "message": "Please check PaymentAddress, PaymentResponse, and PaymentRequestUpdateEvent as well.",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "4fa2a3658cd6f5288c7fb1fadf03621f5683cc30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e01c9d_33715688",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-not-exposed.https.worker.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-12-11T18:42:04Z",
+      "side": 1,
+      "message": "I added PaymentRequestUpdateEvent but PaymentResponse is impossible because it doesn\u0027t have a constructor. But I think it\u0027s enough. The PaymentResponse can only be created by PaymentRequest.show() and the PaymentRequest is already exposed to Window only.",
+      "parentUuid": "1d4f4adc_cae780bb",
       "range": {
         "startLine": 9,
         "startChar": 2,
