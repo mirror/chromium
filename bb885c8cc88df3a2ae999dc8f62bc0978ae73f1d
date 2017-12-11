@@ -16,6 +16,24 @@
       "revId": "bb885c8cc88df3a2ae999dc8f62bc0978ae73f1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5a2989_91ca53d2",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1268,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-12-11T05:40:32Z",
+      "side": 1,
+      "message": "Ahh, thanks, that\u0027s right.\n\nI think the intermediate state (Idle) could be encapsulated into the timeout timer and that it\u0027s simpler to let the \"idle\" identical to \"requested termination\". \nIsIdle() has been changed to RequestedTermination(), and the timeout timer\u0027s IsIdle() returns true only after the idle callback has been triggered. How about this?",
+      "parentUuid": "7ad0e512_f6f263be",
+      "revId": "bb885c8cc88df3a2ae999dc8f62bc0978ae73f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
