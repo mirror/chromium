@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "78625ba3_86046971",
+        "filename": "net/disk_cache/blockfile/file_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2017-12-11T06:30:27Z",
+      "side": 1,
+      "message": "LazyInstance\u003cscoped_refptr need to be initialized with some instance in first place. If you know better way, to do this than I did, I\u0027ll support that.",
+      "parentUuid": "8fafd5f1_8f3ec678",
+      "range": {
+        "startLine": 66,
+        "startChar": 68,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "a097b96458056a685b8aaaae7f2d014b499e41ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c35ba96_13acc594",
         "filename": "net/disk_cache/blockfile/file_win.cc",
         "patchSetId": 3
