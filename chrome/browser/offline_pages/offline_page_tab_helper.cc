@@ -173,17 +173,17 @@ void OfflinePageTabHelper::DidFinishNavigation(
     return;
   }
 
-  OfflinePageUtils::SelectPageForURL(
+  OfflinePageUtils::SelectPagesForURL(
       web_contents()->GetBrowserContext(), navigated_url,
       URLSearchMode::SEARCH_BY_ALL_URLS, tab_id,
-      base::Bind(&OfflinePageTabHelper::SelectPageForURLDone,
+      base::Bind(&OfflinePageTabHelper::SelectPagesForURLDone,
                  weak_ptr_factory_.GetWeakPtr()));
 }
 
-void OfflinePageTabHelper::SelectPageForURLDone(
-    const OfflinePageItem* offline_page) {
+void OfflinePageTabHelper::SelectPagesForURLDone(
+    const std::vector<OfflinePageItem>& offline_pages) {
   // Bails out if no offline page is found.
-  if (!offline_page) {
+  if (offline_pages.empty()) {
     OfflinePageRequestJob::ReportAggregatedRequestResult(
         OfflinePageRequestJob::AggregatedRequestResult::
             PAGE_NOT_FOUND_ON_FLAKY_NETWORK);
@@ -193,7 +193,8 @@ void OfflinePageTabHelper::SelectPageForURLDone(
   reloading_url_on_net_error_ = true;
 
   // Reloads the page with extra header set to force loading the offline page.
-  content::NavigationController::LoadURLParams load_params(offline_page->url);
+  content::NavigationController::LoadURLParams load_params(
+      offline_pages.front().url);
   load_params.transition_type = ui::PAGE_TRANSITION_RELOAD;
   OfflinePageHeader offline_header;
   offline_header.reason = OfflinePageHeader::Reason::NET_ERROR;
