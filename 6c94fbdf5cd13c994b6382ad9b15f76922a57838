@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6cc10d5a_8b3dd8d2",
+        "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerForDataPipeGetter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T05:21:49Z",
+      "side": 1,
+      "message": "OK that\u0027s easier than I thought. Done.",
+      "parentUuid": "6bff74cb_7b52a65f",
+      "revId": "6c94fbdf5cd13c994b6382ad9b15f76922a57838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3dd4e42_3192b64c",
         "filename": "third_party/WebKit/public/platform/WebHTTPBody.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-08T08:43:43Z",
       "side": 1,
       "message": "I\u0027m confused by the comment and the parameter type - which is correct?",
+      "revId": "6c94fbdf5cd13c994b6382ad9b15f76922a57838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c2b1b7_ee657b9a",
+        "filename": "third_party/WebKit/public/platform/WebHTTPBody.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-11T05:21:49Z",
+      "side": 1,
+      "message": "They are both correct... added more comments to clarify.",
+      "parentUuid": "e3dd4e42_3192b64c",
       "revId": "6c94fbdf5cd13c994b6382ad9b15f76922a57838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
