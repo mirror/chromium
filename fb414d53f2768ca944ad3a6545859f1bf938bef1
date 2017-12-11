@@ -16,6 +16,24 @@
       "revId": "fb414d53f2768ca944ad3a6545859f1bf938bef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40bf74b_175b71d7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/import_notifier_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-12-11T16:04:51Z",
+      "side": 1,
+      "message": "That\u0027s doable, but aren\u0027t you using a one-test-function-per-method approach so far? Having a test_empty_rebaselined_tests_and_test_expectations() sounds like a deviation that\u0027s testing a combination of functions that just happen to be called together at the moment.",
+      "parentUuid": "08006402_0affd7e1",
+      "revId": "fb414d53f2768ca944ad3a6545859f1bf938bef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
