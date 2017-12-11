@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1207c743_c3bcaa4e",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T22:12:38Z",
+      "side": 1,
+      "message": "user_info.account_id",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8057e4_16565631",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T22:12:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5228d8eb_7d424b4e",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T22:12:38Z",
+      "side": 1,
+      "message": "any issue in just decoding and wait in unit test?",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd67890_24d7c7c2",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T22:12:38Z",
+      "side": 1,
+      "message": "nit: /*compare_layouts\u003d*/\n\nhttps://google.github.io/styleguide/cppguide.html#Variable_Comments",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6a8185_ccc06717",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T22:12:38Z",
+      "side": 1,
+      "message": "fyi: this is optional for forward decl section. You may leave it as is.",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be254f91_dd81ef72",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T22:12:38Z",
+      "side": 1,
+      "message": "ash unittest uses ScopdCommandLine to reset the command line for each tests, so you should be able to just use the ForCurrnetProcess()",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec40cfa_196a35e4",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T22:12:38Z",
+      "side": 1,
+      "message": "nit: /*wallpaper_files_id\u003d*/\n\nsame for others.",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8e6250_b97b9f37",
+        "filename": "chrome/browser/chromeos/customization/customization_wallpaper_downloader_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T22:12:38Z",
+      "side": 1,
+      "message": "optional: you probably don\u0027t need this anymore as it will crash in the next line, unless you need to troubleshoot a crash in bots.",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98efca84_9f0be8be",
+        "filename": "chrome/browser/ui/ash/test_wallpaper_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T22:12:38Z",
+      "side": 1,
+      "message": "const methods?",
+      "revId": "f164073a795c6caefa74fedb9e3ac3e8819d4113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
