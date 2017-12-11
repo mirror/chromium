@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77672386_04ccc231",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-11T20:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c89eba1_728b015d",
+      "range": {
+        "startLine": 119,
+        "startChar": 50,
+        "endLine": 120,
+        "endChar": 12
+      },
+      "revId": "cff50eae0f97d07120612bf148cf9567d491725d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46fbee8c_6c646c9b",
         "filename": "net/http/http_cache.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "cff50eae0f97d07120612bf148cf9567d491725d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d60466d_78ae335b",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-11T20:14:36Z",
+      "side": 1,
+      "message": "There is not really an uninitialized state but an initial state which is recorded if the transaction is in the initial headers phase when it completes. Using PARALLEL_WRITING_NONE for that and added a new state PARALLEL_WRITING_NONE_CACHE_READ for those that start reading the cache as they don\u0027t need to create Writers and there is no existing Writers.",
+      "parentUuid": "46fbee8c_6c646c9b",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 25
+      },
+      "revId": "cff50eae0f97d07120612bf148cf9567d491725d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
