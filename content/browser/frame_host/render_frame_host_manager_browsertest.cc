@@ -21,6 +21,7 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "content/browser/child_process_security_policy_impl.h"
+#include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
@@ -3572,6 +3573,58 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
       &location_of_opened_window));
   EXPECT_EQ(url::kAboutBlankURL, location_of_opened_window);
   EXPECT_TRUE(new_contents_observer.GetWebContents());
+}
+
+namespace {
+
+class JavaScriptLoaderOnComplete : public WebContentsObserver {
+ public:
+  explicit JavaScriptLoaderOnComplete(WebContents* web_contents)
+      : WebContentsObserver(web_contents) {}
+
+  void ReadyToCommitNavigation(NavigationHandle* navigation_handle) override {
+    DCHECK_EQ(navigation_handle->GetURL().path(), "/title2.html");
+    static_cast<NavigationHandleImpl*>(navigation_handle)
+        ->set_complete_callback_for_testing(base::BindRepeating(
+            &JavaScriptLoaderOnComplete::SendingNavigationCommitted,
+            base::Unretained(this), navigation_handle));
+  }
+
+  void SendingNavigationCommitted(
+      NavigationHandle* navigation_handle,
+      NavigationThrottle::ThrottleCheckResult result) {
+    DCHECK_EQ(navigation_handle->GetURL().path(), "/title2.html");
+    RenderFrameHostImpl* speculative_rfh =
+        static_cast<WebContentsImpl*>(web_contents())
+            ->GetFrameTree()
+            ->root()
+            ->render_manager()
+            ->speculative_frame_host();
+    CHECK(speculative_rfh);
+    web_contents()->GetController().LoadURL(GURL("javascript:(0)"), Referrer(),
+                                            ui::PAGE_TRANSITION_TYPED,
+                                            std::string());
+  }
+};
+
+}  // namespace
+
+// Ensures that we don't reset a speculative RFH if a JavaScript URL is loaded
+// while there's an ongoing navigation. See https://crbug.com/793432.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
+                       JavaScriptLoadDoesntResetSpeculativeRFH) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+  EXPECT_TRUE(embedded_test_server()->Start());
+
+  GURL site1 = embedded_test_server()->GetURL("a.com", "/title1.html");
+  GURL site2 = embedded_test_server()->GetURL("b.com", "/title2.html");
+
+  NavigateToURL(shell(), site1);
+
+  JavaScriptLoaderOnComplete javascript_loader(shell()->web_contents());
+  NavigateToURL(shell(), site2);
+  // No crash means everything worked!
 }
 
 }  // namespace content
