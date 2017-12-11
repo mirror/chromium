@@ -886,6 +886,11 @@
     ]
   },
 
+  "SpellcheckLanguage": {
+    "os": ["win", "linux", "chromeos"],
+    "test_policy": { "SpellcheckLanguage": "fr" }
+  },
+
   "ExtensionInstallBlacklist": {
     "os": ["win", "linux", "mac", "chromeos"],
     "test_policy": { "ExtensionInstallBlacklist": ["*"] },

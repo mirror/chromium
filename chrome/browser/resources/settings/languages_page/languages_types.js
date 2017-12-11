@@ -14,6 +14,7 @@
  *   removable: boolean,
  *   spellCheckEnabled: boolean,
  *   translateEnabled: boolean,
+ *   isManaged: boolean,
  * }}
  */
 var LanguageState;
@@ -43,12 +44,15 @@ var InputMethodsModel;
  *     from the actually used language (navigator.language). Chrome OS and
  *     Windows only.
  * inputMethods: the InputMethodsModel (Chrome OS only).
+ * forcedSpellCheckLanguages: an array of spellcheck languages that are not in
+ *     |enabled|.
  * @typedef {{
  *   supported: !Array<!chrome.languageSettingsPrivate.Language>,
  *   enabled: !Array<!LanguageState>,
  *   translateTarget: string,
  *   prospectiveUILanguage: (string|undefined),
  *   inputMethods: (!InputMethodsModel|undefined),
+ *   forcedSpellCheckLanguages: !Array<!chrome.languageSettingsPrivate.Language>
  * }}
  */
 var LanguagesModel;
