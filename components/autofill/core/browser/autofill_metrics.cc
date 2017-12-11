@@ -77,15 +77,25 @@ std::string PreviousSaveCreditCardPromptUserDecisionToString(
   return previous_response;
 }
 
-ukm::SourceId NewUkmSourceWithUrl(ukm::UkmRecorder* ukm_recorder,
-                                  const GURL& url) {
-  ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
-  if (ukm_recorder)
-    ukm_recorder->UpdateSourceURL(source_id, url);
-  return source_id;
-}
-
 }  // namespace
+
+// Friend-Whitelisted accessor for UpdateSourceURL.
+class UkmHelper {
+ public:
+  static void UpdateSourceURL(ukm::UkmRecorder* ukm_recorder,
+                              ukm::SourceId source_id,
+                              const GURL& url) {
+    ukm_recorder->UpdateSourceURL(source_id, url);
+  }
+
+  static ukm::SourceId NewUkmSourceWithUrl(ukm::UkmRecorder* ukm_recorder,
+                                           const GURL& url) {
+    ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
+    if (ukm_recorder)
+      ukm_recorder->UpdateSourceURL(source_id, url);
+    return source_id;
+  }
+};
 
 // First, translates |field_type| to the corresponding logical |group| from
 // |FieldTypeGroupForMetrics|.  Then, interpolates this with the given |metric|,
@@ -1267,7 +1277,7 @@ void AutofillMetrics::LogCardUploadDecisionsUkm(ukm::UkmRecorder* ukm_recorder,
   DCHECK_LT(upload_decision_metrics, 1 << kNumCardUploadDecisionMetrics);
   if (!url.is_valid())
     return;
-  ukm::SourceId source_id = NewUkmSourceWithUrl(ukm_recorder, url);
+  ukm::SourceId source_id = UkmHelper::NewUkmSourceWithUrl(ukm_recorder, url);
   ukm::builders::Autofill_CardUploadDecision(source_id)
       .SetUploadDecision(upload_decision_metrics)
       .Record(ukm_recorder);
@@ -1283,7 +1293,7 @@ void AutofillMetrics::LogDeveloperEngagementUkm(
             1 << NUM_DEVELOPER_ENGAGEMENT_METRICS);
   if (!url.is_valid())
     return;
-  ukm::SourceId source_id = NewUkmSourceWithUrl(ukm_recorder, url);
+  ukm::SourceId source_id = UkmHelper::NewUkmSourceWithUrl(ukm_recorder, url);
   ukm::builders::Autofill_DeveloperEngagement(source_id)
       .SetDeveloperEngagement(developer_engagement_metrics)
       .Record(ukm_recorder);
@@ -1715,7 +1725,7 @@ void AutofillMetrics::FormInteractionsUkmLogger::UpdateSourceURL(
     const GURL& url) {
   url_ = url;
   if (CanLog())
-    ukm_recorder_->UpdateSourceURL(source_id_, url_);
+    UkmHelper::UpdateSourceURL(ukm_recorder_, source_id_, url_);
 }
 
 bool AutofillMetrics::FormInteractionsUkmLogger::CanLog() const {
@@ -1733,7 +1743,7 @@ int64_t AutofillMetrics::FormInteractionsUkmLogger::MillisecondsSinceFormParsed(
 
 void AutofillMetrics::FormInteractionsUkmLogger::GetNewSourceID() {
   source_id_ = ukm_recorder_->GetNewSourceID();
-  ukm_recorder_->UpdateSourceURL(source_id_, url_);
+  UkmHelper::UpdateSourceURL(ukm_recorder_, source_id_, url_);
 }
 
 AutofillMetrics::UkmTimestampPin::UkmTimestampPin(

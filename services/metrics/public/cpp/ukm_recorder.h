@@ -26,18 +26,34 @@ class SubresourceFilterMetricsObserver;
 class UkmPageLoadMetricsObserver;
 class UseCounterPageLoadMetricsObserver;
 class LocalNetworkRequestsPageLoadMetricsObserver;
+class MediaEngagementSession;
+
+namespace autofill {
+class UkmHelper;
+class FormStructure;
+}  // namespace autofill
 
 namespace blink {
 class AutoplayUmaHelper;
+class Document;
 }
 
 namespace cc {
 class UkmManager;
 }
 
+namespace content {
+class WebContentsImpl;
+class PluginUkmHelper;
+}  // namespace content
+
 namespace password_manager {
 class PasswordManagerMetricsRecorder;
 }  // namespace password_manager
+
+namespace payments {
+class JourneyLogger;
+}
 
 namespace previews {
 class PreviewsUKMObserver;
@@ -45,6 +61,15 @@ class PreviewsUKMObserver;
 
 namespace metrics {
 class UkmRecorderInterface;
+}
+
+namespace media {
+class VideoDecodePerfHistory;
+class WatchTimeRecorder;
+}  // namespace media
+
+namespace translate {
+class TranslateRankerImpl;
 }
 
 namespace ui {
@@ -59,6 +84,7 @@ class TestRecordingHelper;
 
 namespace internal {
 class UkmEntryBuilderBase;
+class SourceUrlRecorderWebContentsObserver;
 }
 
 // This feature controls whether UkmService should be created.
@@ -80,29 +106,36 @@ class METRICS_EXPORT UkmRecorder {
   // session.
   static SourceId GetNewSourceID();
 
-  // Update the URL on the source keyed to the given source ID. If the source
-  // does not exist, it will create a new UkmSource object.
-  virtual void UpdateSourceURL(SourceId source_id, const GURL& url) = 0;
-
  private:
   friend ContextualSearchRankerLoggerImpl;
   friend DelegatingUkmRecorder;
   friend DocumentWritePageLoadMetricsObserver;
   friend FromGWSPageLoadMetricsLogger;
   friend LocalNetworkRequestsPageLoadMetricsObserver;
+  friend MediaEngagementSession;
   friend PluginInfoHostImpl;
   friend ServiceWorkerPageLoadMetricsObserver;
   friend SubresourceFilterMetricsObserver;
   friend TestRecordingHelper;
   friend UkmPageLoadMetricsObserver;
   friend UseCounterPageLoadMetricsObserver;
+  friend autofill::FormStructure;
+  friend autofill::UkmHelper;
   friend blink::AutoplayUmaHelper;
+  friend blink::Document;
   friend cc::UkmManager;
+  friend content::PluginUkmHelper;
+  friend content::WebContentsImpl;
+  friend internal::SourceUrlRecorderWebContentsObserver;
   friend internal::UkmEntryBuilderBase;
+  friend media::VideoDecodePerfHistory;
+  friend media::WatchTimeRecorder;
   friend metrics::UkmRecorderInterface;
-  friend ui::LatencyTracker;
   friend password_manager::PasswordManagerMetricsRecorder;
+  friend payments::JourneyLogger;
   friend previews::PreviewsUKMObserver;
+  friend translate::TranslateRankerImpl;
+  friend ui::LatencyTracker;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,
@@ -110,6 +143,10 @@ class METRICS_EXPORT UkmRecorder {
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, MetricsProviderTest);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, PersistAndPurge);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, WhitelistEntryTest);
+
+  // Update the URL on the source keyed to the given source ID. If the source
+  // does not exist, it will create a new UkmSource object.
+  virtual void UpdateSourceURL(SourceId source_id, const GURL& url) = 0;
 
   // Get a new UkmEntryBuilder object for the specified source ID and event,
   // which can get metrics added to.
