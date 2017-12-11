@@ -16,6 +16,24 @@
       "revId": "1de5e074f4fa8e69a1969c09a0edc68aa9b10107",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70625ecc_7560ab18",
+        "filename": "chromeos/network/onc/onc_translation_tables.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1243287
+      },
+      "writtenOn": "2017-12-11T20:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81b02684_a6cf9614",
+      "revId": "1de5e074f4fa8e69a1969c09a0edc68aa9b10107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
