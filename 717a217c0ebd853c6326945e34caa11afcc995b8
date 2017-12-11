@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "529020b6_6e6978b6",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "nit: s/player/ticker/",
+      "range": {
+        "startLine": 59,
+        "startChar": 27,
+        "endLine": 59,
+        "endChar": 33
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6bd07c_9c461dcf",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "Instead of calling it 3 times we should call once and hold onto the result.",
+      "range": {
+        "startLine": 126,
+        "startChar": 10,
+        "endLine": 126,
+        "endChar": 34
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550ca137_d5b7f612",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "ditto. call once and hold onto the result.",
+      "range": {
+        "startLine": 138,
+        "startChar": 6,
+        "endLine": 138,
+        "endChar": 30
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d3a135_dd6e2382",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "nit: This is used 4 times. I think it helps to give it a name and type to improve readability.",
+      "range": {
+        "startLine": 187,
+        "startChar": 22,
+        "endLine": 187,
+        "endChar": 32
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c1c726_4a5da153",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "Do we actually need to care for this? Why don\u0027t we just call DetachElementFromTicker and RemoveTicker unconditionally.",
+      "range": {
+        "startLine": 190,
+        "startChar": 10,
+        "endLine": 190,
+        "endChar": 42
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2531b938_45691e0a",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "why is this needed? Doesn\u0027t the DetachElementForTicker remove the map entry?",
+      "range": {
+        "startLine": 195,
+        "startChar": 6,
+        "endLine": 195,
+        "endChar": 34
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b81029_251d750a",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "nit: this name is a bit confusing. I suggest perhaps renaming to |id_ticker_pair|\nto make it clear or just kv as you have used elsewhere.",
+      "range": {
+        "startLine": 261,
+        "startChar": 21,
+        "endLine": 261,
+        "endChar": 30
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cfd4e9_d9f6f788",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "nit: why not just use a constant value e.g., 1 and remove the dependency on \nAnimationIdProvider in tests.",
+      "range": {
+        "startLine": 140,
+        "startChar": 18,
+        "endLine": 140,
+        "endChar": 53
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a85d941_0f67aa95",
+        "filename": "cc/animation/element_animations_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "Is this true? We don\u0027t specifically test SingleAnimationPlayer there so I think the old\ncomment is more accurate.",
+      "range": {
+        "startLine": 59,
+        "startChar": 3,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0df818_aee55843",
+        "filename": "cc/animation/single_animation_player.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "I think the current wording is not clear what you mean by clients.\nMaybe rephrase as \"cc animations clients and cc\".",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75013305_15dd3b8e",
+        "filename": "cc/animation/single_animation_player.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "nit: s/support/supported/",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "892db48d_4cab2eb3",
+        "filename": "cc/test/animation_timelines_test_common.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "nit: I think this needs to be a static cast.",
+      "range": {
+        "startLine": 415,
+        "startChar": 6,
+        "endLine": 415,
+        "endChar": 30
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ecb665a_f2476939",
+        "filename": "cc/test/layer_tree_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "I think we should be able to replace this with checking \n\"TickingAnimationsCount\" and avoid the cast.",
+      "range": {
+        "startLine": 347,
+        "startChar": 9,
+        "endLine": 349,
+        "endChar": 38
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d7b6a0_edc31c19",
+        "filename": "cc/test/layer_tree_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "Should this instead take in SingleAnimationPlayer?",
+      "range": {
+        "startLine": 835,
+        "startChar": 4,
+        "endLine": 835,
+        "endChar": 19
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca69d0b9_d747ed17",
+        "filename": "cc/test/layer_tree_test.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 839,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "The cast here seems unnecessary.",
+      "range": {
+        "startLine": 839,
+        "startChar": 6,
+        "endLine": 839,
+        "endChar": 31
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650eda34_142b9d52",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-11T16:39:30Z",
+      "side": 1,
+      "message": "replace with c++ static_cast\u003cSingleAnimationPlayer*\u003e as it is preferred. here \nand elsewhere. See style guide [1]\n\n[1] https://google.github.io/styleguide/cppguide.html#Casting",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "717a217c0ebd853c6326945e34caa11afcc995b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
