@@ -66,6 +66,7 @@ void AnimateInPaperWithAnimationAndCompletion(UIView* view,
 // which the animation will take place.
 void AnimateNewBackgroundPageWithCompletion(CardView* currentPageCard,
                                             CGRect displayFrame,
+                                            CGRect imageFrame,
                                             BOOL isPortrait,
                                             void (^completion)(void));
 
