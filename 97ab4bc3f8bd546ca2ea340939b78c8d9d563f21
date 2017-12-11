@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62e530da_070f34de",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-11T06:19:24Z",
+      "side": 1,
+      "message": "There\u0027s a good chunk of this method duplicated here and in OffscreenTab().  Maybe it could be moved into CreateForWebContents()?",
+      "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2302051_59c6fd7d",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-11T06:19:24Z",
+      "side": 1,
+      "message": "It seems like this is an \"all of the above\" method, not an if/else if/else?\nWhat if web_contents_, window_, and termination_callback_ are all set?",
+      "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7baaa0e_f4d1c68c",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-11T06:19:24Z",
+      "side": 1,
+      "message": "Should this call Terminate()?  Or is that done in the WindowClosed() callback?",
+      "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998c772c_ee8cde5e",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-11T06:19:24Z",
+      "side": 1,
+      "message": "Is this comment accurate?  I thought there is a location bar.",
+      "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5548e6a0_92436346",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-11T06:19:24Z",
+      "side": 1,
+      "message": "This isn\u0027t required by the spec.  The page should assume there won\u0027t be any interaction but it\u0027s not prohibited.",
+      "revId": "97ab4bc3f8bd546ca2ea340939b78c8d9d563f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
