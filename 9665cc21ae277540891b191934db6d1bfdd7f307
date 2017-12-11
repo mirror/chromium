@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c125c2cc_d7650c43",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-11T18:26:05Z",
+      "side": 1,
+      "message": "What does this default to?",
+      "range": {
+        "startLine": 179,
+        "startChar": 31,
+        "endLine": 179,
+        "endChar": 0
+      },
+      "revId": "9665cc21ae277540891b191934db6d1bfdd7f307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcea276b_7dc4ecfd",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-11T18:26:05Z",
+      "side": 1,
+      "message": "nit: How base base::TimeDelta, then no need for _seconds",
+      "revId": "9665cc21ae277540891b191934db6d1bfdd7f307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02214500_99ee5526",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2141,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-11T18:26:05Z",
+      "side": 1,
+      "message": "I\u0027m not sure this check is right. Let\u0027s say max is 9 seconds. I *think* that we\u0027ll do\n1, 2, 4, and 8 seconds and then we\u0027ll goaway at the 16 second mark. Is that right?\n\nDo we have a test for this?",
+      "range": {
+        "startLine": 2141,
+        "startChar": 49,
+        "endLine": 2141,
+        "endChar": 0
+      },
+      "revId": "9665cc21ae277540891b191934db6d1bfdd7f307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40867c2d_1460463f",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-11T18:26:05Z",
+      "side": 1,
+      "message": "So this can continue to use data, right?",
+      "range": {
+        "startLine": 2143,
+        "startChar": 46,
+        "endLine": 2143,
+        "endChar": 0
+      },
+      "revId": "9665cc21ae277540891b191934db6d1bfdd7f307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
