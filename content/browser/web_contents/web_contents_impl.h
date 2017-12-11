@@ -463,6 +463,9 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   bool CompletedFirstVisuallyNonEmptyPaint() const override;
 #endif
 
+  void SetIsWPK(bool is_wpk) override;
+  bool IsWPK() const override;
+
   // Implementation of PageNavigator.
   WebContents* OpenURL(const OpenURLParams& params) override;
 
@@ -1673,6 +1676,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   bool has_persistent_video_ = false;
 
   bool was_ever_audible_ = false;
+
+  bool is_wpk_ = false;
 
   base::WeakPtrFactory<WebContentsImpl> loading_weak_factory_;
   base::WeakPtrFactory<WebContentsImpl> weak_factory_;

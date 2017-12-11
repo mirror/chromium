@@ -1067,6 +1067,7 @@ ServiceWorkerStorage::ServiceWorkerStorage(
       weak_factory_(this) {
   DCHECK(context_);
   database_.reset(new ServiceWorkerDatabase(GetDatabasePath()));
+  Disable();  // No registrations will be found!
 }
 
 base::FilePath ServiceWorkerStorage::GetDatabasePath() {
