@@ -187,6 +187,30 @@
       "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b74ef2_cfc15ede",
+        "filename": "gpu/raster/raster_texture_format.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-11T22:17:19Z",
+      "side": 1,
+      "message": "I\u0027m going to remove this and switch to viz::ResourceFormat.  I think that will work - I must have been holding it wrong the first time.",
+      "parentUuid": "004ecb78_56de0c46",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 18
+      },
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
