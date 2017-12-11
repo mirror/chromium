@@ -35,9 +35,9 @@ class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
     devtools_client_->GetPage()->GetExperimental()->AddObserver(this);
     devtools_client_->GetRuntime()->AddObserver(this);
 
-    devtools_client_->GetPage()->Enable(base::Bind(
+    devtools_client_->GetPage()->Enable(base::BindRepeating(
         &VirtualTimeBrowserTest::PageEnabled, base::Unretained(this)));
-    devtools_client_->GetRuntime()->Enable(base::Bind(
+    devtools_client_->GetRuntime()->Enable(base::BindRepeating(
         &VirtualTimeBrowserTest::RuntimeEnabled, base::Unretained(this)));
   }
 
@@ -60,8 +60,8 @@ class VirtualTimeBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
         emulation::SetVirtualTimePolicyParams::Builder()
             .SetPolicy(emulation::VirtualTimePolicy::PAUSE)
             .Build(),
-        base::Bind(&VirtualTimeBrowserTest::SetVirtualTimePolicyDone,
-                   base::Unretained(this)));
+        base::BindRepeating(&VirtualTimeBrowserTest::SetVirtualTimePolicyDone,
+                            base::Unretained(this)));
   }
 
   void SetVirtualTimePolicyDone(
@@ -249,10 +249,10 @@ class FrameDetatchWithPendingResourceLoadVirtualTimeTest
     if (url.spec() == "http://test.com/style.css") {
       // Detach the iframe but leave the css resource fetch hanging.
       browser()->BrowserMainThread()->PostTask(
-          FROM_HERE,
-          base::Bind(&FrameDetatchWithPendingResourceLoadVirtualTimeTest::
-                         DetatchIFrame,
-                     base::Unretained(this)));
+          FROM_HERE, base::BindRepeating(
+                         &FrameDetatchWithPendingResourceLoadVirtualTimeTest::
+                             DetatchIFrame,
+                         base::Unretained(this)));
     } else {
       complete_request.Run();
     }
@@ -569,8 +569,9 @@ class VirtualTimeAndHistoryNavigationTest : public VirtualTimeBrowserTest {
     if (step_ < test_commands_.size()) {
       devtools_client_->GetRuntime()->Evaluate(
           test_commands_[step_++],
-          base::Bind(&VirtualTimeAndHistoryNavigationTest::OnEvaluateResult,
-                     base::Unretained(this)));
+          base::BindRepeating(
+              &VirtualTimeAndHistoryNavigationTest::OnEvaluateResult,
+              base::Unretained(this)));
     } else {
       FinishAsynchronousTest();
     }
@@ -598,5 +599,96 @@ class VirtualTimeAndHistoryNavigationTest : public VirtualTimeBrowserTest {
 };
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(VirtualTimeAndHistoryNavigationTest);
+
+class HeadlessDevToolsNavigationControlWithEvalTest
+    : public HeadlessAsyncDevTooledBrowserTest,
+      network::ExperimentalObserver,
+      page::ExperimentalObserver,
+      emulation::ExperimentalObserver {
+ public:
+  void RunDevTooledTest() override {
+    EXPECT_TRUE(embedded_test_server()->Start());
+    base::RunLoop run_loop(base::RunLoop::Type::kNestableTasksAllowed);
+    devtools_client_->GetPage()->GetExperimental()->AddObserver(this);
+    devtools_client_->GetNetwork()->GetExperimental()->AddObserver(this);
+    devtools_client_->GetPage()->Enable(run_loop.QuitClosure());
+    run_loop.Run();
+    devtools_client_->GetNetwork()->Enable();
+    devtools_client_->GetEmulation()->GetExperimental()->AddObserver(this);
+
+    std::unique_ptr<headless::network::RequestPattern> match_all =
+        headless::network::RequestPattern::Builder().SetUrlPattern("*").Build();
+    std::vector<std::unique_ptr<headless::network::RequestPattern>> patterns;
+    patterns.push_back(std::move(match_all));
+    devtools_client_->GetNetwork()->GetExperimental()->SetRequestInterception(
+        network::SetRequestInterceptionParams::Builder()
+            .SetPatterns(std::move(patterns))
+            .Build());
+
+    devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
+        emulation::SetVirtualTimePolicyParams::Builder()
+            .SetPolicy(emulation::VirtualTimePolicy::PAUSE)
+            .Build(),
+        base::BindRepeating(&HeadlessDevToolsNavigationControlWithEvalTest::
+                                SetVirtualTimePolicyDone,
+                            base::Unretained(this)));
+  }
+
+  void SetVirtualTimePolicyDone(
+      std::unique_ptr<emulation::SetVirtualTimePolicyResult> result) {
+    devtools_client_->GetPage()->Navigate(
+        embedded_test_server()->GetURL("/dom_tree_test.html").spec());
+  }
+
+  void OnFrameStartedLoading(
+      const page::FrameStartedLoadingParams& params) override {
+    if (main_frame_loading_)
+      return;
+    main_frame_loading_ = true;
+    // The navigation is underway, so allow virtual time to advance while
+    // network fetches are not pending.
+    devtools_client_->GetEmulation()->GetExperimental()->SetVirtualTimePolicy(
+        emulation::SetVirtualTimePolicyParams::Builder()
+            .SetPolicy(
+                emulation::VirtualTimePolicy::PAUSE_IF_NETWORK_FETCHES_PENDING)
+            .SetBudget(4000)
+            .Build());
+  }
+
+  void OnRequestIntercepted(
+      const network::RequestInterceptedParams& params) override {
+    devtools_client_->GetRuntime()->Evaluate(
+        "1+1",
+        base::BindRepeating(
+            &HeadlessDevToolsNavigationControlWithEvalTest::OnEvaluateResult,
+            base::Unretained(this), params.GetInterceptionId()));
+  }
+
+  void OnEvaluateResult(std::string interception_id,
+                        std::unique_ptr<runtime::EvaluateResult> result) {
+    // Allow the request to proceed.
+    devtools_client_->GetNetwork()
+        ->GetExperimental()
+        ->ContinueInterceptedRequest(
+            network::ContinueInterceptedRequestParams::Builder()
+                .SetInterceptionId(interception_id)
+                .Build());
+
+    eval_done_ = true;
+  }
+
+  // emulation::Observer implementation:
+  void OnVirtualTimeBudgetExpired(
+      const emulation::VirtualTimeBudgetExpiredParams& params) override {
+    EXPECT_TRUE(eval_done_);
+    FinishAsynchronousTest();
+  }
+
+ private:
+  bool eval_done_ = false;
+  bool main_frame_loading_ = false;
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(HeadlessDevToolsNavigationControlWithEvalTest);
 
 }  // namespace headless
