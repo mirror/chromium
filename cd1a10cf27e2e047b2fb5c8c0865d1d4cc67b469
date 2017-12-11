@@ -16,6 +16,24 @@
       "revId": "cd1a10cf27e2e047b2fb5c8c0865d1d4cc67b469",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d935b3be_51342526",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-11T19:57:26Z",
+      "side": 1,
+      "message": "Sigh, thanks for noticing that. It\u0027s *supposed* to require both, and the lack of the comment is likely partly responsible for the fact that this got overlooked. I\u0027ve updated crbug.com/575690 with this finding.\n\nIt\u0027s checked as expected here: https://cs.chromium.org/chromium/src/chrome/browser/chrome_content_browser_client.cc?l\u003d2670\u0026rcl\u003da9e3445a05849125d9a68eb9ebc4db845a040df0\n\nThe second parameter is overlooked here:\nhttps://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_impl.cc?l\u003d3234\u0026rcl\u003da9e3445a05849125d9a68eb9ebc4db845a040df0\n\n...and here:\nhttps://cs.chromium.org/chromium/src/content/common/service_worker/service_worker_utils.cc?l\u003d129\u0026rcl\u003da9e3445a05849125d9a68eb9ebc4db845a040df0\n\n...and here:\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_view_host_impl.cc?l\u003d372\u0026rcl\u003da9e3445a05849125d9a68eb9ebc4db845a040df0",
+      "parentUuid": "17b91a48_7f689a6c",
+      "revId": "cd1a10cf27e2e047b2fb5c8c0865d1d4cc67b469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
