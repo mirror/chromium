@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2cb0b041_3c011247",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-12-11T08:01:32Z",
+      "side": 1,
+      "message": "It is strange that prohibiting to access FrameSelection but allowing to pass LocalFrame.\nSelectionModifier refers editor behavior through LocalFrame:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/editing/SelectionModifier.cpp?rcl\u003d86d902fb84107d677f8a4ebc5df8f705be9dae74\u0026l\u003d335\nI\u0027m thinking it is better to struct SelectionModiferOption for modulalization and testing. \nWDYK?",
+      "parentUuid": "b74eb21f_96d0bb47",
+      "range": {
+        "startLine": 814,
+        "startChar": 39,
+        "endLine": 814,
+        "endChar": 73
+      },
+      "revId": "f8c71fd4db65a94cf321bd8a7331c359fee0faea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5d9780f_c267bf9f",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 27
