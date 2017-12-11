@@ -2218,6 +2218,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebVrExperimentalRenderingName,
      flag_descriptions::kWebVrExperimentalRenderingDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kWebVrExperimentalRendering)},
+    {"enable-webvr-orientation-device",
+     flag_descriptions::kWebvrOrientationDeviceName,
+     flag_descriptions::kWebvrOrientationDeviceDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kWebVrOrientationDevice)},
 #if BUILDFLAG(ENABLE_VR)
     {"webvr-vsync-align", flag_descriptions::kWebVrVsyncAlignName,
      flag_descriptions::kWebVrVsyncAlignDescription, kOsAndroid,

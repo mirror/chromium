@@ -208,6 +208,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableWebVRExperimentalRendering(
       base::FeatureList::IsEnabled(features::kWebVrExperimentalRendering));
 
+  WebRuntimeFeatures::EnableWebVROrientationDevice(
+      base::FeatureList::IsEnabled(features::kWebVrOrientationDevice));
+
   if (command_line.HasSwitch(switches::kDisablePresentationAPI))
     WebRuntimeFeatures::EnablePresentationAPI(false);
 
