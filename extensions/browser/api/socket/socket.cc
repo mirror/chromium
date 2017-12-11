@@ -55,10 +55,9 @@ void Socket::WriteData() {
   DCHECK(request.byte_count >= request.bytes_written);
   io_buffer_write_ = new net::WrappedIOBuffer(request.io_buffer->data() +
                                               request.bytes_written);
-  int result =
-      WriteImpl(io_buffer_write_.get(),
-                request.byte_count - request.bytes_written,
-                base::Bind(&Socket::OnWriteComplete, base::Unretained(this)));
+  int result = WriteImpl(
+      io_buffer_write_.get(), request.byte_count - request.bytes_written,
+      base::Bind(&Socket::OnWriteComplete, base::Unretained(this)));
 
   if (result != net::ERR_IO_PENDING)
     OnWriteComplete(result);
@@ -139,5 +138,39 @@ Socket::WriteRequest::WriteRequest(scoped_refptr<net::IOBuffer> io_buffer,
 Socket::WriteRequest::WriteRequest(const WriteRequest& other) = default;
 
 Socket::WriteRequest::~WriteRequest() {}
+
+// static
+net::NetworkTrafficAnnotationTag Socket::GetNetworkTrafficAnnotationTag() {
+  return net::DefineNetworkTrafficAnnotation("socket_extension_api", R"(
+        semantics {
+          sender: "Extensions Socket API"
+          description:
+            "Chrome Extensions can use this API to send and receive data over "
+            "the network using TCP and UDP connections."
+          trigger: "A request from an Extension."
+          data: "Any data that the extension sends."
+          destination: OTHER
+          destination_other:
+            "Data can be sent to any destination included in the extension/app "
+            "manifest."
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "No settings control. Some of the Chrome components are "
+            "implemented as extensions and use this API (see https://cs."
+            "chromium.org/chromium/src/chrome/browser/extensions/"
+            "component_extensions_whitelist/whitelist.cc). Other than them, "
+            "this request will not be sent if users do not install any "
+            "extension that uses Socket API."
+          chrome_policy {
+            ExtensionInstallBlacklist {
+              ExtensionInstallBlacklist: {
+                entries: '*'
+              }
+            }
+          }
+        })");
+}
 
 }  // namespace extensions
