@@ -191,7 +191,7 @@ void FlagsDOMHandler::HandleEnableExperimentalFeatureMessage(
 }
 
 void FlagsDOMHandler::HandleRestartBrowser(const base::ListValue* args) {
-  NOTREACHED();
+  CHECK(false);
 }
 
 void FlagsDOMHandler::HandleResetAllFlags(const base::ListValue* args) {
