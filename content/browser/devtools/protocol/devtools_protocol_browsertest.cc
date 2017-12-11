@@ -1767,6 +1767,28 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, CertificateError) {
                           ->GetController()
                           .GetLastCommittedEntry()
                           ->GetURL());
+
+  // Test ignore-all.
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetString("mode", "ignore-all");
+  SendCommand("Security.setOverrideCertificateErrors",
+              std::move(command_params), true);
+
+  SendCommand("Network.clearBrowserCache", nullptr, true);
+  SendCommand("Network.clearBrowserCookies", nullptr, true);
+  TestNavigationObserver continue_observer2(shell()->web_contents(), 1);
+  shell()->LoadURL(test_url);
+  params = WaitForNotification("Security.certificateError", false);
+  EXPECT_TRUE(params->GetInteger("eventId", &eventId));
+  EXPECT_TRUE(params->GetBoolean("shouldHandleError", &shouldHandleError));
+  EXPECT_FALSE(shouldHandleError);
+  WaitForNotification("Network.loadingFinished", true);
+  continue_observer2.Wait();
+  EXPECT_EQ(test_url, shell()
+                          ->web_contents()
+                          ->GetController()
+                          .GetLastCommittedEntry()
+                          ->GetURL());
 }
 
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, CertificateErrorBrowserTarget) {

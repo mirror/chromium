@@ -4908,6 +4908,15 @@ domain Security
       continue
       cancel
 
+  # How certificate errors should be overridden. In "handle-events" mode, the client can continue
+  # or deny individual certificate error events. In "ignore-all" mode, all certificate errors will
+  # be ignored, i.e. all certificates will be accepted. "disabled" disables the override.
+  type CertificateErrorOverrideMode extends string
+    enum
+      disabled
+      handle-events
+      ignore-all
+
   # Disables tracking security state changes.
   command disable
 
@@ -4922,16 +4931,19 @@ domain Security
       # The action to take on the certificate error.
       CertificateErrorAction action
 
-  # Enable/disable overriding certificate errors. If enabled, all certificate error events need to
-  # be handled by the DevTools client and should be answered with handleCertificateError commands.
+  # Enable/disable overriding certificate errors. In mode "handle-events", all certificate error
+  # events need to be handled by the DevTools client and should be answered with
+  # handleCertificateError commands.
   command setOverrideCertificateErrors
     parameters
-      # If true, certificate errors will be overridden.
-      boolean override
+      # If true, certificate errors will be overridden in mode "handle-events".
+      deprecated optional boolean override
+      # Whether and how certificate error handling should be overridden.
+      optional CertificateErrorOverrideMode mode
 
-  # There is a certificate error. If overriding certificate errors is enabled, then it should be
-  # handled with the handleCertificateError command. Note: this event does not fire if the
-  # certificate error has been allowed internally.
+  # There is a certificate error. If overriding certificate errors is enabled in mode
+  # "handle-events", then it should be handled with the handleCertificateError command.
+  # Note: this event does not fire if the certificate error has been allowed internally.
   event certificateError
     parameters
       # The ID of the event.

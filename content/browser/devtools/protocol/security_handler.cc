@@ -190,8 +190,10 @@ void SecurityHandler::DidChangeVisibleSecurityState() {
 }
 
 void SecurityHandler::DidFinishNavigation(NavigationHandle* navigation_handle) {
-  if (certificate_errors_overriden_)
+  if (certificate_errors_override_mode_ ==
+      Security::CertificateErrorOverrideModeEnum::HandleEvents) {
     FlushPendingCertificateErrorNotifications();
+  }
 }
 
 void SecurityHandler::FlushPendingCertificateErrorNotifications() {
@@ -205,13 +207,30 @@ bool SecurityHandler::NotifyCertificateError(int cert_error,
                                              CertErrorCallback handler) {
   if (!enabled_)
     return false;
-  bool should_handle_error = handler && certificate_errors_overriden_;
+
+  bool handle_error =
+      handler && certificate_errors_override_mode_ !=
+                     Security::CertificateErrorOverrideModeEnum::Disabled;
+  bool frontend_should_handle_error =
+      handle_error &&
+      certificate_errors_override_mode_ ==
+          Security::CertificateErrorOverrideModeEnum::HandleEvents;
+
   frontend_->CertificateError(++last_cert_error_id_,
                               net::ErrorToShortString(cert_error),
-                              request_url.spec(), should_handle_error);
-  if (!should_handle_error)
+                              request_url.spec(), frontend_should_handle_error);
+
+  if (!handle_error)
     return false;
-  cert_error_callbacks_[last_cert_error_id_] = handler;
+
+  if (frontend_should_handle_error) {
+    cert_error_callbacks_[last_cert_error_id_] = handler;
+    return true;
+  }
+
+  DCHECK_EQ(Security::CertificateErrorOverrideModeEnum::IgnoreAll,
+            certificate_errors_override_mode_);
+  handler.Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_CONTINUE);
   return true;
 }
 
@@ -225,7 +244,7 @@ Response SecurityHandler::Enable() {
 
 Response SecurityHandler::Disable() {
   enabled_ = false;
-  certificate_errors_overriden_ = false;
+  certificate_errors_override_mode_ = false;
   WebContentsObserver::Observe(nullptr);
   FlushPendingCertificateErrorNotifications();
   return Response::OK();
@@ -253,11 +272,21 @@ Response SecurityHandler::HandleCertificateError(int event_id,
   return response;
 }
 
-Response SecurityHandler::SetOverrideCertificateErrors(bool override) {
-  if (override && !enabled_)
+Response SecurityHandler::SetOverrideCertificateErrors(
+    Maybe<bool> override,
+    Maybe<Security::CertificateErrorOverrideMode> mode) {
+  // Disabled by default and |mode| takes precedence, |override| is deprecated.
+  Security::CertificateErrorOverrideMode chosen_mode = mode.fromMaybe(
+      override.fromMaybe(false)
+          ? Security::CertificateErrorOverrideModeEnum::HandleEvents
+          : Security::CertificateErrorOverrideModeEnum::Disabled);
+
+  bool override_active =
+      chosen_mode != Security::CertificateErrorOverrideModeEnum::Disabled;
+  if (override_active && !enabled_)
     return Response::Error("Security domain not enabled");
-  certificate_errors_overriden_ = override;
-  if (!override)
+  certificate_errors_override_mode_ = chosen_mode;
+  if (chosen_mode != Security::CertificateErrorOverrideModeEnum::HandleEvents)
     FlushPendingCertificateErrorNotifications();
   return Response::OK();
 }
