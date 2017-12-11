@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "83d5bee1_dcfbc2bc",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 43
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-11T23:01:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eef5493f_4c01869c",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 45
+      },
+      "revId": "832f173fb4584a8abca2673e0410a2dca6e9a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc72b0b0_8509418b",
         "filename": "components/arc/DEPS",
         "patchSetId": 43
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-11T21:29:32Z",
       "side": 1,
       "message": "Please move these to specific_include_rules",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 44
+      },
+      "revId": "832f173fb4584a8abca2673e0410a2dca6e9a5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1f30fd_6f506b6a",
+        "filename": "components/arc/DEPS",
+        "patchSetId": 43
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-11T23:01:05Z",
+      "side": 1,
+      "message": "Hmm, somehow I moved them to specific_include_rules. presubmit checker complained like below.\nYou added one or more #includes that violate checkdeps rules.\n components/arc/common/video_accelerator_struct_traits.h\n     Illegal include: \"media/base/video_codecs.h\"\n   Because of no rule applying.",
+      "parentUuid": "cc72b0b0_8509418b",
       "range": {
         "startLine": 19,
         "startChar": 0,

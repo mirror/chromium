@@ -16,6 +16,24 @@
       "revId": "fdb7ad1b962a4e390816a3cbc864113dc569224d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bf795f_931c3ae2",
+        "filename": "components/arc/common/DEPS",
+        "patchSetId": 42
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-12-11T23:01:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2b20cb1_a15baa2f",
+      "revId": "fdb7ad1b962a4e390816a3cbc864113dc569224d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
