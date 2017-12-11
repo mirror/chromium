@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "995ab0ee_ee0a141a",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-11T23:45:13Z",
+      "side": 1,
+      "message": "The animator will always run, this will run any completion blocks on the locationBarView,etc. so no need to worry about that right now.\n\nUsing one animator will be the easiest for now, and the easiest to convert once we start using group animators. If we start using various animators we would need one that always run for the locationBarView, another one with a different curve/start time for the ToolbarButtons, and another one for the Toolbar Expansion (that might or might not run). I think this is definitely something we don\u0027t want.",
+      "range": {
+        "startLine": 579,
+        "startChar": 3,
+        "endLine": 579,
+        "endChar": 11
+      },
+      "revId": "70f9c1306b45d763d652ac1f2be1cf10ba2cab52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784b979c_5092d8b2",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-11T23:45:13Z",
+      "side": 1,
+      "message": "We just have to make sure that any completion tasks or final Toolbar state is added here. Right now it looks good!",
+      "revId": "70f9c1306b45d763d652ac1f2be1cf10ba2cab52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
