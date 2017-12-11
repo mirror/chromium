@@ -3,7 +3,10 @@
 // found in the LICENSE file.
 
 #include "components/assist_ranker/ranker_example_util.h"
+#include "base/format_macros.h"
 #include "base/logging.h"
+#include "base/metrics/metrics_hashes.h"
+#include "base/strings/stringprintf.h"
 
 namespace assist_ranker {
 
@@ -42,6 +45,28 @@ bool GetFeatureValueAsFloat(const std::string& key,
   return true;
 }
 
+bool FeatureToInt(const Feature& feature, int* int_value) {
+  switch (feature.feature_type_case()) {
+    case Feature::kBoolValue:
+      *int_value = static_cast<int>(feature.bool_value());
+      break;
+    case Feature::kInt32Value:
+      *int_value = feature.int32_value();
+      break;
+    case Feature::kFloatValue:
+      // TODO(chrome-ranker-team): Implement this.
+      return false;
+      break;
+    case Feature::kStringValue:
+      // TODO(chrome-ranker-team): Implement this.
+      return false;
+      break;
+    default:
+      return false;
+  }
+  return true;
+}
+
 bool GetOneHotValue(const std::string& key,
                     const RankerExample& example,
                     std::string* value) {
@@ -58,6 +83,22 @@ bool GetOneHotValue(const std::string& key,
   }
   *value = feature.string_value();
   return true;
+}
+
+// Converts string to a hex hash string.
+std::string HashFeatureName(const std::string& feature_name) {
+  uint64_t feature_key = base::HashMetricName(feature_name);
+  return base::StringPrintf("%016" PRIx64, feature_key);
+}
+
+RankerExample HashExampleFeatureNames(const RankerExample& example) {
+  RankerExample hashed_example;
+  auto& output_features = *hashed_example.mutable_features();
+  for (const auto& feature : example.features()) {
+    output_features[HashFeatureName(feature.first)] = feature.second;
+  }
+  *hashed_example.mutable_target() = example.target();
+  return hashed_example;
 }
 
 }  // namespace assist_ranker
