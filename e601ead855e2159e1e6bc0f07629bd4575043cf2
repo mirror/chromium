@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14383ae7_94ca4b53",
+        "filename": "content/browser/renderer_host/render_widget_host_view_event_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-12-11T17:30:22Z",
+      "side": 1,
+      "message": "Can we create a method that is MoveCursorToCenter  and  it sets the bool, calls MoveCursorTo and has the ifdef in the same method so we don\u0027t need to duplicate the ifdef twice?",
+      "revId": "e601ead855e2159e1e6bc0f07629bd4575043cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
