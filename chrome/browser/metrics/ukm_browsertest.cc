@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/run_loop.h"
+#include "base/threading/platform_thread.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/metrics/chrome_metrics_services_manager_client.h"
@@ -13,6 +14,7 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/metrics_services_manager/metrics_services_manager.h"
+#include "components/sync/driver/sync_service.h"
 #include "components/sync/test/fake_server/fake_server_network_resources.h"
 #include "components/ukm/ukm_service.h"
 #include "content/public/common/content_switches.h"
@@ -209,7 +211,7 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, MetricsConsentCheck) {
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
 }
 
-// Make sure that UKM is disabled while an non-sync window is open.
+// Make sure that UKM is disabled when an open sync window disables it.
 IN_PROC_BROWSER_TEST_F(UkmBrowserTest, DisableSyncCheck) {
   // Enable metrics recording and update MetricsServicesManager.
   bool metrics_enabled = true;
@@ -232,6 +234,61 @@ IN_PROC_BROWSER_TEST_F(UkmBrowserTest, DisableSyncCheck) {
   EXPECT_TRUE(ukm_enabled());
   // Client ID should be reset.
   EXPECT_NE(original_client_id, client_id());
+
+  harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
+  CloseBrowserSynchronously(sync_browser);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+}
+
+// Make sure that UKM is disabled when an secondary passphrase is set.
+IN_PROC_BROWSER_TEST_F(UkmBrowserTest, SecondaryPassphraseCheck) {
+  // Enable metrics recording and update MetricsServicesManager.
+  bool metrics_enabled = true;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      &metrics_enabled);
+  g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(true);
+
+  Profile* profile = ProfileManager::GetActiveUserProfile();
+  std::unique_ptr<ProfileSyncServiceHarness> harness =
+      EnableSyncForProfile(profile);
+
+  Browser* sync_browser = CreateBrowser(profile);
+  EXPECT_TRUE(ukm_enabled());
+  uint64_t original_client_id = client_id();
+
+  // Setting an encryption passphrase is done on the "sync" thread meaning the
+  // method only posts a task and returns. That task, when executed, will
+  // set the passphrase and notify observers (which disables UKM).
+  harness->service()->SetEncryptionPassphrase("foo",
+                                              syncer::SyncService::EXPLICIT);
+  harness->RunSyncThreadTasks();
+  EXPECT_FALSE(ukm_enabled());
+
+  // Client ID should be reset.
+  EXPECT_NE(original_client_id, client_id());
+
+  harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
+  CloseBrowserSynchronously(sync_browser);
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(nullptr);
+}
+
+// Make sure that UKM is disabled when user signs out of Sync.
+IN_PROC_BROWSER_TEST_F(UkmBrowserTest, SyncSignoutCheck) {
+  // Enable metrics recording and update MetricsServicesManager.
+  bool metrics_enabled = true;
+  ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
+      &metrics_enabled);
+  g_browser_process->GetMetricsServicesManager()->UpdateUploadPermissions(true);
+
+  Profile* profile = ProfileManager::GetActiveUserProfile();
+  std::unique_ptr<ProfileSyncServiceHarness> harness =
+      EnableSyncForProfile(profile);
+
+  Browser* sync_browser = CreateBrowser(profile);
+  EXPECT_TRUE(ukm_enabled());
+
+  harness->SignoutSyncService();
+  EXPECT_FALSE(ukm_enabled());
 
   harness->service()->RequestStop(browser_sync::ProfileSyncService::CLEAR_DATA);
   CloseBrowserSynchronously(sync_browser);
