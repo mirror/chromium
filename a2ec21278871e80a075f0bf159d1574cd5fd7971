@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4142c32_6dbd8bc1",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T15:36:14Z",
+      "side": 1,
+      "message": "Isn\u0027t all this only compatible with current_cpu \u003d\u003d \"arm64\"?",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 24
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2ba92b_30b8ad66",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T15:36:14Z",
+      "side": 1,
+      "message": "Can we encapsulate this logic inside :zlib_arm_crc32?  Seems like it\u0027s already checking for iOS, and it\u0027s nice to check only once instead of twice.",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489c8c02_b6d8deb1",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T15:36:14Z",
+      "side": 1,
+      "message": "I think you can probably use this Linux path for both Android and non-Android Linux.  getauxval(AT_HWCAP) has been in the NDK since v18, and should work with all ARMv8 devices, which require at least v21.\n\n(This would also mean you get feature detection if built as part of the Android OS, which doesn\u0027t use the NDK per se and doesn\u0027t have access to the cpu-features library.)",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2439f1_e48e80c1",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T15:36:14Z",
+      "side": 1,
+      "message": "Unless this is a TODO, it\u0027s probably best for us to leave this out, either by including \u003cstdbool.h\u003e and using bool, or just using a builtin type like you are.\n\nIsn\u0027t it more conventional to use `int` to return booleans in pre-C99?",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d225bcb_ed15042f",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T15:36:14Z",
+      "side": 1,
+      "message": "What\u0027s the deal with the double cast?  Can\u0027t you just write\n\n    buf4 \u003d (const uint32_t*)buf;\n\n?",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ad967c_bbbdc7e6",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T15:36:14Z",
+      "side": 1,
+      "message": "Can we not use __crc32d() at stride?  That would handle 8 bytes with each crc32x instruction, right?  Or is that the wrong endianness?",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a8e4d8_d5583321",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T15:36:14Z",
+      "side": 1,
+      "message": "Are you actually finding this to be true in practice?\n\nsize_t should be defined in \u003cstddef.h\u003e.",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70010dee_dd931139",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T15:36:14Z",
+      "side": 1,
+      "message": "It might be nice to reduce the mentions of USE_ARMV8_CRC32 to the minimum, so that where it is used really stands out as \"this is the important part\".\n\nFor instance, this header can be included whether or not it\u0027s defined, right?  There\u0027s nothing declared in there that\u0027s particularly CPU-specific.",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d024cb_96e311c3",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-11T15:36:14Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem necessary to both check for this outside calling arm_check_features() and inside it\n\n  void arm_check_features(void)\n  {\n  #ifdef USE_ARMV8_CRC32\n     pthread_once(\u0026cpu_check_inited_once, init_arm_features);\n  #endif\n  }\n\nOne of those must be redundant?",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
