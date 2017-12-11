@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e09d473e_4a919788",
+        "filename": "tools/perf/expectations.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-11T22:43:27Z",
+      "side": 1,
+      "message": "Hmhh, this benchmark is supposed to be running on perf FYI waterfall only",
+      "revId": "e87667508ecf883531191f57125d9c932293e850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
