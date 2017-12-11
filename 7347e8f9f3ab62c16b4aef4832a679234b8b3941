@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e73b3d72_e814596d",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-11T01:29:01Z",
+      "side": 1,
+      "message": "I still think this should be moved to line 646.",
+      "range": {
+        "startLine": 649,
+        "startChar": 4,
+        "endLine": 649,
+        "endChar": 43
+      },
+      "revId": "7347e8f9f3ab62c16b4aef4832a679234b8b3941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "732b9c9d_2fca46a1",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-12-11T01:29:01Z",
+      "side": 1,
+      "message": "// Empties the content url so that the next engine-\u003eEnable() can refresh the input view page correctly.",
+      "range": {
+        "startLine": 679,
+        "startChar": 6,
+        "endLine": 680,
+        "endChar": 42
+      },
+      "revId": "7347e8f9f3ab62c16b4aef4832a679234b8b3941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
