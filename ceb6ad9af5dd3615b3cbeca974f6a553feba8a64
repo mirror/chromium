@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0414189c_46e17000",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T18:32:53Z",
+      "side": 1,
+      "message": "\"maps\"",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 14
+      },
+      "revId": "ceb6ad9af5dd3615b3cbeca974f6a553feba8a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4768c0e8_68c71167",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-11T18:32:53Z",
+      "side": 1,
+      "message": "const std::string\u0026, to avoid allocating.",
+      "range": {
+        "startLine": 56,
+        "startChar": 10,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "ceb6ad9af5dd3615b3cbeca974f6a553feba8a64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
