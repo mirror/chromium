@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d23e8c40_317100bc",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-11T16:24:46Z",
+      "side": 1,
+      "message": "My vote is to have this as four separate (but very similar unit tests), treating the following behaviors as \"different behaviors\":\n\n1) Escaping start bytes (by sending a control message with BATTOR_CONTROL_BYTE_START in the payload and verifying it\u0027s escaped)\n2) Escaping end bytes (by sending a control message with BATTOR_CONTROL_BYTE_END in the payload and verifying it\u0027s escaped)\n3) Escaping escape bytes (by sending a control message with BATTOR_CONTROL_BYTE_ESCAPE in the \npayload and verifying it\u0027s escaped)\n3) Escaping start, end, and escape bytes when they\u0027re in the payload but shifted a byte to the left (by sending a control message with (BATTOR_CONTROL_BYTE_START \u003c\u003c 8) | 0x03 in the payload and verifying it\u0027s escaped). This one probably needs a comment next to where we do this explaining what the heck is going on, because most Chrome folks probably aren\u0027t as comfortable with bitshifting as you are :-)\n\nJust writing one and copy/pasting with the fixes is fine - the goal of unit tests isn\u0027t to save code, but rather to clearly document each behavior of the class under test",
+      "range": {
+        "startLine": 323,
+        "startChar": 0,
+        "endLine": 329,
+        "endChar": 30
+      },
+      "revId": "b16b59697301d25aadb94f6a011390ac6d8bcb43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
