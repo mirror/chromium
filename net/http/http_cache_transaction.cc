@@ -559,12 +559,12 @@ void HttpCache::Transaction::PopulateNetErrorDetails(
 
 void HttpCache::Transaction::SetPriority(RequestPriority priority) {
   priority_ = priority;
-  if (network_trans_) {
-    DCHECK(!InWriters());
+
+  if (network_trans_)
     network_trans_->SetPriority(priority_);
-  } else if (InWriters()) {
+
+  if (InWriters())
     entry_->writers->UpdatePriority();
-  }
 }
 
 void HttpCache::Transaction::SetWebSocketHandshakeStreamCreateHelper(
