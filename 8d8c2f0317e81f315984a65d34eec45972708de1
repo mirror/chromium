@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca3e5f76_7afcfe61",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-11T18:30:20Z",
+      "side": 1,
+      "message": "nit: let\u0027s follow the normal commit message format.",
+      "revId": "8d8c2f0317e81f315984a65d34eec45972708de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
