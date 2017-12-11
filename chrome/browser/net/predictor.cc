@@ -282,25 +282,6 @@ void Predictor::AnticipateOmniboxUrl(const GURL& url, bool preconnectable) {
                      CanonicalizeUrl(url), motivation));
 }
 
-void Predictor::PreconnectUrlAndSubresources(const GURL& url,
-                                             const GURL& site_for_cookies) {
-  DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI) ||
-         BrowserThread::CurrentlyOn(BrowserThread::IO));
-  if (!PredictorEnabled())
-    return;
-  if (!CanPreresolveAndPreconnect())
-    return;
-  const GURL canonicalized_url = CanonicalizeUrl(url);
-  if (!canonicalized_url.is_valid() || !canonicalized_url.has_host())
-    return;
-  UrlInfo::ResolutionMotivation motivation(UrlInfo::EARLY_LOAD_MOTIVATED);
-  const int kConnectionsNeeded = 1;
-  PreconnectUrl(canonicalized_url, site_for_cookies, motivation,
-                kAllowCredentialsOnPreconnectByDefault, kConnectionsNeeded);
-  PredictFrameSubresources(canonicalized_url.GetWithEmptyPath(),
-                           site_for_cookies);
-}
-
 std::vector<GURL> Predictor::GetPredictedUrlListAtStartup(
     PrefService* user_prefs) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
