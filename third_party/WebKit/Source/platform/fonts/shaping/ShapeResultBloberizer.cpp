@@ -169,9 +169,32 @@ inline bool IsSkipInkException(const ShapeResultBloberizer& bloberizer,
                                unsigned character_index) {
   // We want to skip descenders in general, but it is undesirable renderings for
   // CJK characters.
-  return bloberizer.GetType() == ShapeResultBloberizer::Type::kTextIntercepts &&
-         !text.Is8Bit() &&
-         Character::IsCJKIdeographOrSymbol(text.CodepointAt(character_index));
+  if (bloberizer.GetType() != ShapeResultBloberizer::Type::kTextIntercepts ||
+      text.Is8Bit())
+    return false;
+
+  UChar32 codepoint = text.CodepointAt(character_index);
+  if (Character::IsCJKIdeographOrSymbol(codepoint))
+    return true;
+
+  UBlockCode block = ublock_getCode(codepoint);
+  switch (block) {
+    // These blocks contain CJK characters we don't want to skip ink, but are
+    // not ideograph that IsCJKIdeographOrSymbol() does not cover.
+    case UBLOCK_BOPOMOFO:
+    case UBLOCK_BOPOMOFO_EXTENDED:
+    case UBLOCK_HANGUL_JAMO:
+    case UBLOCK_HANGUL_COMPATIBILITY_JAMO:
+    case UBLOCK_HANGUL_SYLLABLES:
+    case UBLOCK_HANGUL_JAMO_EXTENDED_A:
+    case UBLOCK_HANGUL_JAMO_EXTENDED_B:
+    case UBLOCK_LINEAR_B_IDEOGRAMS:
+    case UBLOCK_TANGUT:
+    case UBLOCK_TANGUT_COMPONENTS:
+      return true;
+    default:
+      return false;
+  }
 }
 
 template <typename TextContainerType>
