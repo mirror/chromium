@@ -11,6 +11,7 @@
 #include "chrome/browser/vr/databinding/binding.h"
 #include "chrome/browser/vr/databinding/vector_binding.h"
 #include "chrome/browser/vr/elements/audio_permission_prompt.h"
+#include "chrome/browser/vr/elements/background.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/content_element.h"
 #include "chrome/browser/vr/elements/controller.h"
@@ -653,6 +654,7 @@ void UiSceneCreator::CreateUnderDevelopmentNotice() {
 }
 
 void UiSceneCreator::CreateBackground() {
+#if 0
   // Background solid-color panels.
   struct Panel {
     UiElementName name;
@@ -716,8 +718,20 @@ void UiSceneCreator::CreateBackground() {
   BindColor(model_, ceiling.get(), &ColorScheme::world_background,
             &Rect::SetEdgeColor);
   scene_->AddUiElement(k2dBrowsingBackground, std::move(ceiling));
+#endif
 
-  scene_->set_first_foreground_draw_phase(kPhaseForeground);
+  auto background = base::MakeUnique<Background>();
+  background->SetName(kCeiling);
+  background->SetDrawPhase(kPhaseBackground);
+  background->SetTransitionedProperties({OPACITY});
+  background->AddBinding(base::MakeUnique<Binding<float>>(
+      base::BindRepeating(
+          [](Model* m) { return m->color_scheme().background_brightness; },
+          base::Unretained(model_)),
+      base::BindRepeating(
+          [](Background* b, const float& f) { b->SetOpacity(f); },
+          base::Unretained(background.get()))));
+  scene_->AddUiElement(k2dBrowsingBackground, std::move(background));
 }
 
 void UiSceneCreator::CreateViewportAwareRoot() {
@@ -1020,9 +1034,6 @@ void UiSceneCreator::CreateKeyboard() {
   keyboard->SetKeyboardDelegate(keyboard_delegate_);
   keyboard->SetDrawPhase(kPhaseForeground);
   keyboard->SetTranslate(0.0, kKeyboardVerticalOffsetDMM, 0.0);
-  // We add a custom rotation, as opposed to atan(kKeyboardVerticalOffsetDMM),
-  // because the keyboard renderer itself adds some rotation.
-  keyboard->SetRotate(1, 0, 0, kKeyboardRotationRadians);
   keyboard->AddBinding(VR_BIND_FUNC(bool, Model, model_, editing_input,
                                     UiElement, keyboard.get(), SetVisible));
   scene_->AddUiElement(kKeyboardDmmRoot, std::move(keyboard));
@@ -1225,6 +1236,9 @@ void UiSceneCreator::CreateOmnibox() {
 
   scene_->AddUiElement(kOmniboxContainer, std::move(suggestions_layout));
 
+  // TODO(vollick): make constants.
+  scaler = base::MakeUnique<ScaledDepthAdjuster>(-.25f);
+
   auto close_button = Create<Button>(
       kOmniboxCloseButton, kPhaseForeground,
       base::BindRepeating([](Model* m) { m->omnibox_input_active = false; },
@@ -1237,7 +1251,9 @@ void UiSceneCreator::CreateOmnibox() {
   close_button->set_hover_offset(kButtonZOffsetHoverDMM);
   BindButtonColors(model_, close_button.get(), &ColorScheme::button_colors,
                    &Button::SetButtonColors);
-  scene_->AddUiElement(kOmniboxRoot, std::move(close_button));
+
+  scaler->AddChild(std::move(close_button));
+  scene_->AddUiElement(kOmniboxRoot, std::move(scaler));
 }
 
 void UiSceneCreator::CreateWebVrUrlToast() {
@@ -1406,9 +1422,7 @@ void UiSceneCreator::CreateAudioPermissionPrompt() {
       UiElement, backplane.get(), SetVisible));
 
   std::unique_ptr<Shadow> shadow = base::MakeUnique<Shadow>();
-  shadow->SetDrawPhase(kPhaseForeground);
   shadow->SetName(kAudioPermissionPromptShadow);
-  shadow->set_corner_radius(kContentCornerRadius);
 
   std::unique_ptr<AudioPermissionPrompt> prompt =
       base::MakeUnique<AudioPermissionPrompt>(
