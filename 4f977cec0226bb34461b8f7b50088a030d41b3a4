@@ -16,6 +16,24 @@
       "revId": "4f977cec0226bb34461b8f7b50088a030d41b3a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b634350_82a452d9",
+        "filename": "content/browser/loader/cross_site_document_blocking_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-11T22:41:36Z",
+      "side": 1,
+      "message": "\u003e nit: std::make_unique and #include \u003cmemory\u003e\n\nOld habits die hard (especially when copy/pasting uses of ConsoleObserverDelegate.)  :)\n\nDone.",
+      "parentUuid": "a6c52eea_ffd57d18",
+      "revId": "4f977cec0226bb34461b8f7b50088a030d41b3a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
