@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "671cf9d3_de59a207",
+        "filename": "google_apis/gaia/oauth2_token_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-11T10:23:10Z",
+      "side": 1,
+      "message": "Nit: Remove |OAuth2TokenService::| on line 551 (I think it is not needed on line 551 as this is already defined in class OAuth2TokenService).",
+      "range": {
+        "startLine": 551,
+        "startChar": 10,
+        "endLine": 551,
+        "endChar": 28
+      },
+      "revId": "2cd0af1710258f892c1bff6b4b780806e6512fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd562589_6860b797",
+        "filename": "google_apis/gaia/oauth2_token_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-11T10:23:10Z",
+      "side": 1,
+      "message": "DCHECK(cache_entry \u0026\u0026 cache_entry-\u003eaccess_token.length());",
+      "range": {
+        "startLine": 551,
+        "startChar": 28,
+        "endLine": 551,
+        "endChar": 29
+      },
+      "revId": "2cd0af1710258f892c1bff6b4b780806e6512fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
