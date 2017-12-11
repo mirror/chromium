@@ -66,6 +66,7 @@ import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewStatics;
 import org.chromium.content.browser.SmartClipProvider;
 import org.chromium.content_public.browser.ChildProcessImportance;
+import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.JavaScriptCallback;
@@ -858,8 +859,7 @@ public class AwContents implements SmartClipProvider {
 
     private void initializeContentViewCore(ContentViewCore contentViewCore, Context context,
             ViewAndroidDelegate viewDelegate, InternalAccessDelegate internalDispatcher,
-            WebContents webContents, GestureStateListener gestureStateListener,
-            WindowAndroid windowAndroid) {
+            WebContents webContents, WindowAndroid windowAndroid) {
         contentViewCore.initialize(viewDelegate, internalDispatcher, webContents, windowAndroid);
         contentViewCore.setActionModeCallback(
                 new AwActionModeCallback(mContext, this,
@@ -869,7 +869,6 @@ public class AwContents implements SmartClipProvider {
                     new AutofillActionModeCallback(context, mAutofillProvider));
         }
         contentViewCore.setSelectionClient(SelectionClient.createSmartSelectionClient(webContents));
-        contentViewCore.addGestureStateListener(gestureStateListener);
 
         // Listen for dpad events from IMEs (e.g. Samsung Cursor Control) so we know to enable
         // spatial navigation mode to allow these events to move focus out of the WebView.
@@ -1139,12 +1138,13 @@ public class AwContents implements SmartClipProvider {
         mViewAndroidDelegate =
                 new AwViewAndroidDelegate(mContainerView, mContentsClient, mScrollOffsetManager);
         initializeContentViewCore(mContentViewCore, mContext, mViewAndroidDelegate,
-                mInternalAccessAdapter, webContents, new AwGestureStateListener(),
-                mWindowAndroid.getWindowAndroid());
+                mInternalAccessAdapter, webContents, mWindowAndroid.getWindowAndroid());
         nativeSetJavaPeers(mNativeAwContents, this, mWebContentsDelegate, mContentsClientBridge,
                 mIoThreadClient, mInterceptNavigationDelegate, mAutofillProvider);
         mWebContents = mContentViewCore.getWebContents();
         mWebContents.setInternalsHolder(new WebContentsInternalsHolder(this));
+        GestureListenerManager.fromWebContents(mWebContents)
+                .addListener(new AwGestureStateListener());
 
         mNavigationController = mWebContents.getNavigationController();
         installWebContentsObserver();
