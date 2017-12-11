@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "271f8b3c_7f166506",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-12-11T09:33:23Z",
+      "side": 1,
+      "message": "nit: Maybe make the line stand out on its own with ```",
+      "revId": "58344ec5f1e53d118b73795a2e3ddcf906dda2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b614a6_952a421f",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-12-11T09:33:23Z",
+      "side": 1,
+      "message": "nit: I know it was like this before, but when reading, trying to remember what each of foo, bar and baz was (benchmark? story? platform?) gets pretty confusing pretty quickly. Can we use some fake(-ish) examples where the types are easier to guess? e.g. memory.mobile, android, google_story",
+      "revId": "58344ec5f1e53d118b73795a2e3ddcf906dda2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0217eb_7d815578",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-12-11T09:33:23Z",
+      "side": 1,
+      "message": "nit: ... as logical _and_ so it must ...\n\n(helps recognize _and_ is a noun here, and not a conjunction)",
+      "revId": "58344ec5f1e53d118b73795a2e3ddcf906dda2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0832d22f_cad95236",
+        "filename": "docs/speed/perf_bot_sheriffing.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-12-11T09:33:23Z",
+      "side": 1,
+      "message": "nit: also make this stand out on it\u0027s own line",
+      "revId": "58344ec5f1e53d118b73795a2e3ddcf906dda2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
