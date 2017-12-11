@@ -180,6 +180,33 @@ ScopedPlatformHandle PlatformSharedBuffer::DuplicatePlatformHandle() {
   return SharedMemoryToPlatformHandle(handle);
 }
 
+ScopedPlatformHandle PlatformSharedBuffer::GetPlatformHandleForIPC() {
+  DCHECK(shared_memory_);
+  base::SharedMemoryHandle handle;
+  {
+    base::AutoLock locker(lock_);
+    handle = base::SharedMemory::DuplicateHandle(shared_memory_->handle());
+  }
+  if (!handle.IsValid())
+    return ScopedPlatformHandle();
+
+#if defined(OS_ANDROID)
+  if (handle.IsReadOnly()) {
+    // Trying to send a descriptor with the |read_only| property set
+    // while the region has not been sealed read-only yet is a programmer
+    // error. Catch this with a DCHECK() for debugging, otherwise just seal
+    // the region.
+    DCHECK(handle.IsRegionReadOnly())
+        << "Read-only descriptor should match a read-only region!";
+    if (!handle.IsRegionReadOnly()) {
+      LOG(ERROR) << "Sending unsealed read-only region through IPC";
+      handle.SetRegionReadOnly();
+    }
+  }
+#endif
+  return SharedMemoryToPlatformHandle(handle);
+}
+
 ScopedPlatformHandle PlatformSharedBuffer::PassPlatformHandle() {
   DCHECK(HasOneRef());
 
