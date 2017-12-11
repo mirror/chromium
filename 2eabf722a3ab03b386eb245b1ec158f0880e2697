@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e60af8f0_8b1a8012",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-12-11T17:17:09Z",
+      "side": 1,
+      "message": "Should this be behind use_v8_context_snapshot (and ship snapshot_blob.bin instead if not) ?",
+      "range": {
+        "startLine": 888,
+        "startChar": 9,
+        "endLine": 888,
+        "endChar": 46
+      },
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0019361b_7263ceda",
+        "filename": "content/shell/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-12-11T17:17:09Z",
+      "side": 1,
+      "message": "Any reason we don\u0027t need snapshot_context_blob.bin (or snapshot_blob.bin if use_v8_context_snapshot is false) here?",
+      "range": {
+        "startLine": 665,
+        "startChar": 6,
+        "endLine": 665,
+        "endChar": 13
+      },
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3f7f47_95e4114b",
+        "filename": "extensions/shell/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-12-11T17:17:09Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 377,
+        "startChar": 10,
+        "endLine": 377,
+        "endChar": 22
+      },
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
