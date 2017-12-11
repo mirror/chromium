@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b48d0d4_2e77ec96",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-11T23:24:15Z",
+      "side": 1,
+      "message": "I\u0027d like to explicitly track |armed_| so that we can DCHECK it wherever possible. I feel this will actually make the code more readable since readers can understand exactly what to expect.",
+      "parentUuid": "450bacfe_d6a89759",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 12
+      },
+      "revId": "29c74b657ec1dbc92ffb0456339a12b744178b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81cee3d4_9a911328",
         "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-09T01:30:52Z",
       "side": 1,
       "message": "nit: Ln183-194 might be a little bit simpler by the following:\nif (buffer-\u003eend_of_stream() || !buffer-\u003edata_size()) {\n  CompleteCurrentRead();\n  continue;\n}\nuint32_t buffer_size \u003d base::checked_cast\u003cuint32_t\u003e(buffer-\u003edata_size());",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 5
+      },
+      "revId": "29c74b657ec1dbc92ffb0456339a12b744178b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe6804f_ec0f275a",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-11T23:24:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81cee3d4_9a911328",
       "range": {
         "startLine": 194,
         "startChar": 4,
