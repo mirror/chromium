@@ -68,6 +68,86 @@
       "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d439bb31_24d108ff",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-11T22:25:00Z",
+      "side": 1,
+      "message": "Please do add braces around this too - especially with the following \"if(!Use2016Q2UI)\" this is a tiny bit confusing. (I know the style guideline allows both, and I\u0027m sorry for being super-picky here. If you feel very strongly about no braces, I won\u0027t hold up the CL on it. But adding them *would* make life easier for me reading it :)",
+      "range": {
+        "startLine": 319,
+        "startChar": 8,
+        "endLine": 319,
+        "endChar": 26
+      },
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a03cc253_fb7afebd",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-11T22:25:00Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest reporting UI actions either before or after the entire block of side effects they cause, instead of in between - just for clarity\u0027s sake. (Personal preference is reporting them first, because side effects happen after the UI action)",
+      "range": {
+        "startLine": 354,
+        "startChar": 21,
+        "endLine": 354,
+        "endChar": 58
+      },
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86513474_a4512379",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-11T22:25:00Z",
+      "side": 1,
+      "message": "Can GetWidget() ever be nullptr here? If not, I\u0027d suggest just a DCHECK, or even no check at all. We usually prefer crashing over gracefully handling \"impossible\" conditions.",
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3d2bf7_d5fd6d21",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-11T22:25:00Z",
+      "side": 1,
+      "message": "Unrelated sidebar: Are we ever going to turn this on by default? 2016Q2 has come and gone a while ago :)",
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
