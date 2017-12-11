@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30b15902_05f5d798",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-11T14:39:00Z",
+      "side": 1,
+      "message": "nit: Make this if (enable_surface_synchronization) and switch the order.",
+      "revId": "31899c534586aff738f59bcc99c2703ad1405629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541ba8ad_7299ece4",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-11T14:39:00Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why drop the temporary reference in this case?",
+      "revId": "31899c534586aff738f59bcc99c2703ad1405629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabae00d_8c9fb7cf",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-11T14:39:00Z",
+      "side": 1,
+      "message": "There is a comment on HostFrameSinkManager saying that DropTemporaryReference() should only be used by WindowServer code (along with a couple other functions). That isn\u0027t true anymore though, can you fix it?",
+      "range": {
+        "startLine": 578,
+        "startChar": 31,
+        "endLine": 578,
+        "endChar": 53
+      },
+      "revId": "31899c534586aff738f59bcc99c2703ad1405629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4060485c_3819a96f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3116,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-11T14:39:00Z",
+      "side": 1,
+      "message": "What happened to the comment here?",
+      "revId": "31899c534586aff738f59bcc99c2703ad1405629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfe584a_1ce14ac5",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3136,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-11T14:39:00Z",
+      "side": 1,
+      "message": "I think some of these ASSERT_FALSE should be EXPECT_FALSE?\n\nhttps://testing.googleblog.com/2008/07/tott-expect-vs-assert.html",
+      "revId": "31899c534586aff738f59bcc99c2703ad1405629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
