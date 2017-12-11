@@ -1616,6 +1616,11 @@ const char kWebVrExperimentalRenderingName[] =
 const char kWebVrExperimentalRenderingDescription[] =
     "Experimental rendering path optimizations for WebVR.";
 
+const char kWebvrOrientationDeviceName[] = "WebVR orientation device";
+const char kWebvrOrientationDeviceDescription[] =
+    "Enables the backup VR magic window mode for devices without Google VR "
+    "services.";
+
 const char kWifiCredentialSyncName[] = "WiFi credential sync";
 const char kWifiCredentialSyncDescription[] =
     "Enables synchronizing WiFi network settings across devices. When enabled, "

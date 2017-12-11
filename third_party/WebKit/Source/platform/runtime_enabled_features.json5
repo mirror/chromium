@@ -1156,6 +1156,11 @@
       status: "test",
     },
     {
+      name: "WebVROrientationDevice",
+      depends_on: ["WebVR"],
+      status: "test",
+    },
+    {
       name: "WebVTTRegions",
       status: "experimental",
     },
