@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc290723_9fcd3541",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-11T17:58:26Z",
+      "side": 1,
+      "message": "shouldn\u0027t we change IsMessageCenterVisible() ?",
+      "revId": "6443f9a77cb6131e591974c9ed103520371bef6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
