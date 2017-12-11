@@ -46,6 +46,30 @@
       "revId": "f0d483329618a9baa8ebf42b9d399cf5fe71509e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da79d129_38ce821d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-11T17:42:18Z",
+      "side": 1,
+      "message": "Could we just do the same thing we do for interstitial pages (set visibility to false) or detach the container from the window? The infobar container has a method \"setIsObscuredByOtherView\" that does the former. It might be worth recycling this concept for this case.\n\nThe reason I\u0027m against \"removeAllInfoBars\" is that it exposes an extremely powerful method publicly. Further, \u0027remove\u0027 only appears to remove the visible part of the infobar, the native side would still be around (at least until navigation or the tab closes).",
+      "parentUuid": "8d3ce7f2_bcbb764a",
+      "range": {
+        "startLine": 374,
+        "startChar": 0,
+        "endLine": 378,
+        "endChar": 5
+      },
+      "revId": "f0d483329618a9baa8ebf42b9d399cf5fe71509e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
