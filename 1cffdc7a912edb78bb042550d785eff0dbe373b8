@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4125453_d3ff17bc",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-11T09:46:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b1d2da2_b9c2e48e",
+      "range": {
+        "startLine": 1138,
+        "startChar": 5,
+        "endLine": 1139,
+        "endChar": 57
+      },
+      "revId": "1cffdc7a912edb78bb042550d785eff0dbe373b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e20a33b4_93d1719a",
         "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "1cffdc7a912edb78bb042550d785eff0dbe373b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9225a043_83a8b57a",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-11T09:46:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e20a33b4_93d1719a",
+      "range": {
+        "startLine": 1184,
+        "startChar": 0,
+        "endLine": 1185,
+        "endChar": 57
+      },
+      "revId": "1cffdc7a912edb78bb042550d785eff0dbe373b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5aec1c39_2f3b5188",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-11T09:46:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bd7ec83_389dd2b8",
+      "range": {
+        "startLine": 1214,
+        "startChar": 1,
+        "endLine": 1215,
+        "endChar": 61
+      },
+      "revId": "1cffdc7a912edb78bb042550d785eff0dbe373b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6fcbeb5_2fe580db",
         "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "77fc64b9_b8e998a6",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1257,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-11T09:46:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6fcbeb5_2fe580db",
+      "range": {
+        "startLine": 1256,
+        "startChar": 1,
+        "endLine": 1257,
+        "endChar": 61
+      },
+      "revId": "1cffdc7a912edb78bb042550d785eff0dbe373b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ba26e05_fc3246bb",
         "filename": "third_party/WebKit/Source/core/editing/Editor.h",
         "patchSetId": 1
@@ -105,6 +201,24 @@
       "writtenOn": "2017-12-06T18:55:01Z",
       "side": 1,
       "message": "Could you group the four DispatchXXX() functions, and add the following comment to clarify the return value:\n\n// Returns whether caller should continue with \"the default processing\", which\n// is the same as the event handler NOT setting the return value to false\n\n(Comment copied from DispatchCPPEvent() in Editor.cpp)",
+      "revId": "1cffdc7a912edb78bb042550d785eff0dbe373b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749f731f_0f99dfd3",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-11T09:46:58Z",
+      "side": 1,
+      "message": "Done. I added the first part of the sentence, I think that is enough.",
+      "parentUuid": "4ba26e05_fc3246bb",
       "revId": "1cffdc7a912edb78bb042550d785eff0dbe373b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

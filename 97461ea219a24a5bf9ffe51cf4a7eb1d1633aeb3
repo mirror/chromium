@@ -22,6 +22,30 @@
       "revId": "97461ea219a24a5bf9ffe51cf4a7eb1d1633aeb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4330a480_280bc75b",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-11T09:46:58Z",
+      "side": 0,
+      "message": "The patch has no logical change :) I thought less parameters \u003d\u003e Simpler API. I struck me that there is only one pasteboard in Blink and that is the Pasteboard::GeneralPasteboard (\u003dno need to to pass Pasteboard* since it is always the same). We can simplify this later, if we need to tough...",
+      "parentUuid": "7d110b49_7666a4b1",
+      "range": {
+        "startLine": 347,
+        "startChar": 38,
+        "endLine": 347,
+        "endChar": 49
+      },
+      "revId": "97461ea219a24a5bf9ffe51cf4a7eb1d1633aeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
