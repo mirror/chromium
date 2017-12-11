@@ -16,6 +16,24 @@
       "revId": "88c4ad701cf0fb77a1f573f12583d04657174ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb88ead_c7388b74",
+        "filename": "chrome/browser/extensions/extension_storage_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-11T17:11:17Z",
+      "side": 0,
+      "message": "done (added in ctor above notification observation)",
+      "parentUuid": "9d98c54c_4c596716",
+      "revId": "88c4ad701cf0fb77a1f573f12583d04657174ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
