@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "842c2de6_b333d76d",
+        "filename": "chrome/common/chrome_content_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-11T19:45:00Z",
+      "side": 1,
+      "message": "The issue is that the server takes url-chunk-0..N and puts it in a new field called \"url\". With Crashpad, the key is not going to be chunked (ever) and so the -N tag at the end never exists. For new keys, the server isn\u0027t processing them specially, so that\u0027s not an issue. But yes 64 is small enough to not be chunked on Breakpad clients.",
+      "parentUuid": "e5c9a7e6_34d08ff4",
+      "revId": "e779066db57dc346bef09819ec5b506d3a3928aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a276b233_18e84b91",
         "filename": "chrome/common/crash_keys.h",
         "patchSetId": 1
