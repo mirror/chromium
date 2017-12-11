@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfdfaf60_42422886",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-12-11T08:16:16Z",
+      "side": 1,
+      "message": "Is this rebase or something wrong?",
+      "revId": "c356a2669f25e37b6f0bfa2c2db9416aac150e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0b28ea_e409f734",
+        "filename": "media/gpu/vaapi_video_encode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-12-11T08:16:16Z",
+      "side": 1,
+      "message": "remove these",
+      "revId": "c356a2669f25e37b6f0bfa2c2db9416aac150e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c012ed7a_7e679888",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-12-11T08:16:16Z",
+      "side": 1,
+      "message": "remove these",
+      "revId": "c356a2669f25e37b6f0bfa2c2db9416aac150e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
