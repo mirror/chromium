@@ -16,6 +16,24 @@
       "revId": "416951d45d056073af977c7bf3e9f71a00d98bbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7bd662_36bf6c73",
+        "filename": "base/base_switches.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-12-11T22:33:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e98e2505_15727576",
+      "revId": "416951d45d056073af977c7bf3e9f71a00d98bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
