@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e98a7cb9_761ded07",
+        "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-11T11:59:38Z",
+      "side": 1,
+      "message": "my aura expertise isn\u0027t to the level of sky and sadrul yet. I\u0027m not 100% sure if you\u0027re guaranteed a transient parent, or if that\u0027s the right parent to use. You might simply be after aura::Window::parent(), rather than the transient parent.\n\nOr perhaps either will work, but the direct aura::Window::parent() will make for simpler code.\n\nMaybe try that out? (or describe why transient works but parent() does not). But I\u0027ll defer to sky or sadrul - feel free to loop one of them in now if you\u0027ve already investigated.",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
