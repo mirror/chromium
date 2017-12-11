@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "95fd00e6_fff772a8",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-11T18:30:33Z",
+      "side": 0,
+      "message": "It is same to remove this block of code.  There is additional check of kSafeBrowsingEnabled when each tab is created. \nhttps://cs.chromium.org/chromium/src/chrome/browser/safe_browsing/safe_browsing_tab_observer.cc?rcl\u003d1a86a6f74d489731eb72a52c0e4e152a3fcf186b\u0026l\u003d50",
+      "parentUuid": "fb077f7b_9044aed3",
+      "revId": "14b6c500d363d53b78cf102e316bc1377dd02a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15ef1bf7_dddfdfdc",
         "filename": "chrome/browser/safe_browsing/local_database_manager.cc",
         "patchSetId": 2
