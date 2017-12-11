@@ -51,6 +51,12 @@ class AnnotationInstance : public InstanceBase {
                             int start_line,
                             int end_line) override;
 
+  // Returns the proto field numbers of TrafficSemantics.
+  void GetSemanticsFieldNumbers(std::set<int>* field_numbers) const;
+
+  // Returns the proto field numbers of TrafficPolicy.
+  void GetPolicyFieldNumbers(std::set<int>* field_numbers) const;
+
   // Checks if an annotation has all required fields.
   AuditorResult IsComplete() const;
 
@@ -92,6 +98,9 @@ class AnnotationInstance : public InstanceBase {
   int second_id_hash_code;
 
   std::string comments;
+
+  // This annotation is generated from merging two other incomplete annotations.
+  bool is_merged;
 };
 
 // Holds an instance of calling a function that might have a network traffic
