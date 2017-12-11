@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf995679_d8daf5cb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutCounter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T04:55:05Z",
+      "side": 1,
+      "message": "How about moving the code inside this \"if\" to CounterNode? The logic here doesn\u0027t seem to use any LayouterCounter, does it?",
+      "revId": "eb1ef8210ff62c0a93e3ea6a18648b7450266887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b43af2ba_ff852a07",
         "filename": "third_party/WebKit/Source/core/layout/LayoutCounter.cpp",
         "patchSetId": 7
@@ -13,6 +30,24 @@
       "writtenOn": "2017-12-07T01:46:47Z",
       "side": 1,
       "message": "Here, I assumed that a reset node can never have a non-reset node as its next sibling, but I\u0027m not sure if it\u0027s guaranteed to hold in practice.",
+      "revId": "eb1ef8210ff62c0a93e3ea6a18648b7450266887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14498568_2164a57b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutCounter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-11T04:55:05Z",
+      "side": 1,
+      "message": "I\u0027m not sure either, sorry, but if neither of us are sure, what about making it DCHECK so that we can catch when such case happens in future layout tests? That might help someone to fix it if that happens, if he can read the comment and this wasn\u0027t done with confidence.\n\ni.e.,\n  if (!node_to_move-\u003eActsAsReset()) {\n    // put your comments why we do this, explains we\u0027re not very confident.\n    NOTREACHED();\n    break;\n  }",
+      "parentUuid": "b43af2ba_ff852a07",
       "revId": "eb1ef8210ff62c0a93e3ea6a18648b7450266887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
