@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07fff974_ed69ef81",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/modernMediaControls.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-11T15:50:57Z",
+      "side": 1,
+      "message": "I\u0027m not a huge fan of the three value versions of these CSS properties. I would suggest to explicitly set the 4 values instead but that\u0027s just my opinion.",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 23
+      },
+      "revId": "9a8ca04e157be5a4fea1f986f5348752f5957db3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
