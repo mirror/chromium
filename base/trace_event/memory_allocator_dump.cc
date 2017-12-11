@@ -103,6 +103,19 @@ uint64_t MemoryAllocatorDump::GetSizeInternal() const {
   return 0;
 };
 
+uint64_t MemoryAllocatorDump::GetObjectCountInternal() const {
+  if (cached_object_count_.has_value())
+    return *cached_object_count_;
+  for (const auto& entry : entries_) {
+    if (entry.entry_type == Entry::kUint64 && entry.units == kUnitsObjects &&
+        strcmp(entry.name.c_str(), kNameObjectCount) == 0) {
+      cached_object_count_ = entry.value_uint64;
+      return entry.value_uint64;
+    }
+  }
+  return 0;
+};
+
 MemoryAllocatorDump::Entry::Entry() : entry_type(kString), value_uint64() {}
 MemoryAllocatorDump::Entry::Entry(MemoryAllocatorDump::Entry&&) noexcept =
     default;

@@ -160,6 +160,10 @@ void EmitRendererMemoryMetrics(
   builder.SetPrivateSwapFootprint(pmd->os_dump->private_footprint_swap_kb /
                                   1024);
 #endif
+  builder.SetNumberOfDocuments(pmd->chrome_dump->number_of_documents);
+  builder.SetNumberOfFrames(pmd->chrome_dump->number_of_frames);
+  builder.SetNumberOfLayoutObjects(pmd->chrome_dump->number_of_layout_objects);
+  builder.SetNumberOfNodes(pmd->chrome_dump->number_of_nodes);
 
   if (!page_info.is_null()) {
     builder.SetIsVisible(page_info->is_visible);
