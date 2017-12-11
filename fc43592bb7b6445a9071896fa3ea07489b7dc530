@@ -51,6 +51,24 @@
       "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d7d64f_25315792",
+        "filename": "content/utility/utility_main.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-11T17:43:45Z",
+      "side": 1,
+      "message": "The existing tests work without my patch, but a lot of tests (all?) now fail with this patch.\n\nI\u0027m not sure how to trace down the syscall? The crashes don\u0027t have much helpful info.\n\nIf you have time, can you patch it to see what\u0027s failing?",
+      "parentUuid": "162997d1_359fe813",
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
