@@ -324,8 +324,11 @@ const StringTranslationEntry kVPNTypeTable[] = {
 const StringTranslationEntry kWiFiSecurityTable[] = {
     {::onc::wifi::kSecurityNone, shill::kSecurityNone},
     {::onc::wifi::kWEP_PSK, shill::kSecurityWep},
+    // For ONC to shill translation, the first entry will always be used.
     {::onc::wifi::kWPA_PSK, shill::kSecurityPsk},
+    {::onc::wifi::kWPA_PSK, shill::kSecurityFtPsk},
     {::onc::wifi::kWPA_EAP, shill::kSecurity8021x},
+    {::onc::wifi::kWPA_EAP, shill::kSecurityFt8021x},
     {::onc::wifi::kWEP_8021X, shill::kSecurityWep},
     {NULL}};
 
