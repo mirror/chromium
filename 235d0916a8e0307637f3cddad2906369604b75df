@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2a420fa4_56efb225",
+        "filename": "tools/gn/args.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-11T22:06:43Z",
+      "side": 1,
+      "message": "I\u0027d delete both blank lines you added, for 2-3 line functions they don\u0027t seem helpful.",
+      "revId": "235d0916a8e0307637f3cddad2906369604b75df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62be0a2e_6e1f6460",
+        "filename": "tools/gn/args.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-11T22:06:43Z",
+      "side": 1,
+      "message": "To match file style, no {} for single line blocks.",
+      "revId": "235d0916a8e0307637f3cddad2906369604b75df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a9f7209_06515d98",
         "filename": "tools/gn/args.h",
         "patchSetId": 3
