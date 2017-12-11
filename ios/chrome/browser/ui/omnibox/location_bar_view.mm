@@ -96,8 +96,8 @@ const CGFloat kLeadingButtonEdgeOffset = 9;
                                                   tintColor:tintColor];
     [self addSubview:_textField];
 
-    _leadingTextfieldConstraint =
-        [_textField.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+    _leadingTextfieldConstraint = [_textField.leadingAnchor
+        constraintEqualToAnchor:self.layoutMarginsGuide.leadingAnchor];
 
     [NSLayoutConstraint activateConstraints:@[
       [_textField.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
@@ -105,6 +105,9 @@ const CGFloat kLeadingButtonEdgeOffset = 9;
       [_textField.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
       _leadingTextfieldConstraint,
     ]];
+
+    CGFloat ass = IsIPadIdiom() ? 8 : 16;
+    self.layoutMargins = UIEdgeInsetsMakeDirected(0, ass, 0, 0);
 
     _textField.translatesAutoresizingMaskIntoConstraints = NO;
   }
@@ -122,14 +125,15 @@ const CGFloat kLeadingButtonEdgeOffset = 9;
   } else {
     [self addSubview:_leadingButton];
     self.leadingTextfieldConstraint.active = NO;
-    self.leadingButtonLeadingConstraint = [self.leadingAnchor
+    self.leadingButtonLeadingConstraint = [self.layoutMarginsGuide.leadingAnchor
         constraintEqualToAnchor:self.leadingButton.leadingAnchor
-                       constant:-kLeadingButtonEdgeOffset];
+                       constant:0];
     [NSLayoutConstraint activateConstraints:@[
       [_leadingButton.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
       self.leadingButtonLeadingConstraint,
       [self.leadingButton.trailingAnchor
-          constraintEqualToAnchor:self.textField.leadingAnchor],
+          constraintEqualToAnchor:self.textField.leadingAnchor
+                         constant:-kLeadingButtonEdgeOffset],
     ]];
   }
 }

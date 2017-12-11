@@ -495,7 +495,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
   // Shift the text right and reduce the width to create empty space between the
   // left view and the omnibox text.
-  textRectLayout.position.leading += textInset + kTextAreaLeadingOffset;
   textRectLayout.size.width -= textInset - kTextAreaLeadingOffset;
 
   if (IsIPadIdiom() && !base::FeatureList::IsEnabled(kCleanToolbar)) {
@@ -522,8 +521,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
   LayoutRect editingRectLayout =
       LayoutRectForRectInBoundingRect(newBounds, bounds);
-  editingRectLayout.position.leading += kTextAreaLeadingOffset;
-  editingRectLayout.position.leading += kTextInset;
   editingRectLayout.size.width -= kTextInset + kEditingRectWidthInset;
   if (IsIPadIdiom()) {
     if (!IsCompactTablet() && !self.rightView) {
@@ -533,7 +530,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
     }
   } else {
     CGFloat xDiff = editingRectLayout.position.leading - kEditingRectX;
-    editingRectLayout.position.leading = kEditingRectX;
     editingRectLayout.size.width += xDiff;
   }
   // Don't let the edit rect extend over the clear button.  The right view
