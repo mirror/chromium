@@ -22,6 +22,30 @@
       "revId": "8170b77ad99d4065a6bea969b4db3df7ad1822cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d0f248_32a8a85e",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-12-11T18:29:02Z",
+      "side": 1,
+      "message": "Ah, that\u0027s right. This value will be logged for all transactions that either are still in the headers phase when ended or became readers since what they need is already in the cache. Will create a patch to fix this comment and the histogram value description. Thanks!",
+      "parentUuid": "7ef4fbf4_24391910",
+      "range": {
+        "startLine": 120,
+        "startChar": 16,
+        "endLine": 120,
+        "endChar": 57
+      },
+      "revId": "8170b77ad99d4065a6bea969b4db3df7ad1822cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
