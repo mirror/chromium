@@ -4078,7 +4078,7 @@ void AXPlatformNodeWin::ComputeHypertextRemovedAndInserted(int* start,
   *new_len = 0;
 
   const base::string16& old_text = old_hypertext_.hypertext;
-  const base::string16& new_text = GetText();
+  const base::string16& new_text = hypertext_.hypertext;
 
   size_t common_prefix = 0;
   while (common_prefix < old_text.size() && common_prefix < new_text.size() &&
