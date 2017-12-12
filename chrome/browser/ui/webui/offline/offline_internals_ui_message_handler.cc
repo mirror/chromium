@@ -323,8 +323,19 @@ void OfflineInternalsUIMessageHandler::HandleGeneratePageBundle(
 
   prefetch_service_->GetPrefetchDispatcher()->AddCandidatePrefetchURLs(
       offline_pages::kSuggestedArticlesNamespace, prefetch_urls);
-  ResolveJavascriptCallback(base::Value(callback_id),
-                            base::Value("Added candidate URLs."));
+  std::string message("Added candidate URLs.\n");
+  message += "[\n";
+  bool first = true;
+  for (const auto& prefetch_url : prefetch_urls) {
+    if (first)
+      first = false;
+    else
+      message += ",\n";
+    message += base::StringPrintf("  { url: \"%s\" }",
+                                  prefetch_url.url.spec().c_str());
+  }
+  message += "\n]";
+  ResolveJavascriptCallback(base::Value(callback_id), base::Value(message));
 }
 
 void OfflineInternalsUIMessageHandler::HandleGetOperation(
