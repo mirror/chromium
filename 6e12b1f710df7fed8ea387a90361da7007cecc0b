@@ -22,6 +22,30 @@
       "revId": "6e12b1f710df7fed8ea387a90361da7007cecc0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8ab669_ef8e055d",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-12T23:53:56Z",
+      "side": 1,
+      "message": "\u003e I wonder if we could move this declaration to RendererScheduler in public/platform/scheduler —- this will make this definition available both to blink scheduler and content layer.\n\nbrowser code shouldn\u0027t (and probably can\u0027t) include renderer code.\n\nis there an equivalent of content/common in blink that makes sense?",
+      "parentUuid": "f5b9d87b_fe2611aa",
+      "range": {
+        "startLine": 282,
+        "startChar": 15,
+        "endLine": 282,
+        "endChar": 46
+      },
+      "revId": "6e12b1f710df7fed8ea387a90361da7007cecc0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
