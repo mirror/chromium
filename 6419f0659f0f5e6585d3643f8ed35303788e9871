@@ -73,6 +73,52 @@
       "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0abcf9_00ddfb39",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-12T08:49:22Z",
+      "side": 1,
+      "message": "I think you need to write a few \"pref\" tests here since you are mapping your policy to prefs and also you can write indicator tests to verify the UI is properly influenced by the policy being set.",
+      "range": {
+        "startLine": 891,
+        "startChar": 4,
+        "endLine": 891,
+        "endChar": 49
+      },
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a5d928_07ed171e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 10811,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-12T08:49:22Z",
+      "side": 1,
+      "message": "Is there a web source you can point to that will reveal the current list? I am afraid this list here will never be updated and if it changes we will only know if some admin ever complains.",
+      "range": {
+        "startLine": 10811,
+        "startChar": 6,
+        "endLine": 10811,
+        "endChar": 270
+      },
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
