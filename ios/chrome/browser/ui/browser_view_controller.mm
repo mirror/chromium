@@ -179,6 +179,7 @@
 #import "ios/chrome/browser/ui/reading_list/reading_list_menu_notifier.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/sad_tab/sad_tab_legacy_coordinator.h"
+#import "ios/chrome/browser/ui/settings/settings_navigation_controller_delegate.h"
 #import "ios/chrome/browser/ui/settings/sync_utils/sync_util.h"
 #import "ios/chrome/browser/ui/side_swipe/side_swipe_controller.h"
 #import "ios/chrome/browser/ui/signin_interaction/public/signin_presenter.h"
@@ -418,6 +419,8 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     PreloadControllerDelegate,
                                     QRScannerPresenting,
                                     RepostFormTabHelperDelegate,
+                                    SettingsBrowserStateProvider,
+                                    SettingsNavigationControllerDelegate,
                                     SideSwipeControllerDelegate,
                                     SKStoreProductViewControllerDelegate,
                                     SnapshotOverlayProvider,
@@ -4088,6 +4091,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
       keyCommandsForConsumer:self
           baseViewController:self
                   dispatcher:self.dispatcher
+            settingsDelegate:self
                  editingText:![self isFirstResponder]];
 }
 
@@ -4440,6 +4444,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
     [self.incognitoTabTipBubblePresenter setTriggerFollowUpAction:NO];
   }
 
+  configuration.settingsDelegate = self;
+
   return configuration;
 }
 
@@ -4461,6 +4467,18 @@ bubblePresenterForFeature:(const base::Feature&)feature
 - (BOOL)isTabLoadingForToolsMenuCoordinator:(ToolsMenuCoordinator*)coordinator {
   return ([_model currentTab] && !IsIPadIdiom()) ? _toolbarModelIOS->IsLoading()
                                                  : NO;
+}
+
+#pragma mark - SettingsNavigationControllerDelegate
+
+- (id<ApplicationCommands, BrowserCommands>)dispatcherForSettings {
+  return self.dispatcher;
+}
+
+#pragma mark - SettingsBrowserStateProvider
+
+- (ios::ChromeBrowserState*)browserStateForSettings {
+  return self.browserState;
 }
 
 #pragma mark - BrowserCommands
@@ -4797,9 +4815,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (void)clearPresentedStateWithCompletion:(ProceduralBlock)completion
-                           dismissOmnibox:(BOOL)dismissOmnibox {
+                           dismissOmnibox:(BOOL)dismissOmnibox
+                                 animated:(BOOL)animated {
   [_activityServiceCoordinator cancelShare];
-  [_bookmarkInteractionController dismissBookmarkModalControllerAnimated:NO];
+  [_bookmarkInteractionController
+      dismissBookmarkModalControllerAnimated:animated];
   [_bookmarkInteractionController dismissSnackbar];
   if (dismissOmnibox) {
     [_toolbarCoordinator cancelOmniboxEdit];
@@ -4823,7 +4843,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 
   [_paymentRequestManager cancelRequest];
-  [_printController dismissAnimated:YES];
+  [_printController dismissAnimated:animated];
   _printController = nil;
   [self.dispatcher dismissToolsMenu];
   [_contextMenuCoordinator stop];
@@ -4844,7 +4864,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     // To ensure the completion is called, nil is passed to the call to dismiss,
     // and the completion is called explicitly below.
     if (!TabSwitcherPresentsBVCEnabled() || !self.dismissingModal) {
-      [self dismissViewControllerAnimated:NO completion:nil];
+      [self dismissViewControllerAnimated:animated completion:nil];
     }
     // Dismissed controllers will be so after a delay. Queue the completion
     // callback after that.
@@ -4860,6 +4880,13 @@ bubblePresenterForFeature:(const base::Feature&)feature
     // the completion block directly.
     dispatch_async(dispatch_get_main_queue(), completion);
   }
+}
+
+- (void)clearPresentedStateWithCompletion:(ProceduralBlock)completion
+                           dismissOmnibox:(BOOL)dismissOmnibox {
+  [self clearPresentedStateWithCompletion:completion
+                           dismissOmnibox:dismissOmnibox
+                                 animated:NO];
 }
 
 #pragma mark - Find Bar

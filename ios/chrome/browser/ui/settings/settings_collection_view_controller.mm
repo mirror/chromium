@@ -324,6 +324,11 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   [self updateSearchCell];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  [self settingsWillBeDismissed];
+}
+
 #pragma mark SettingsRootCollectionViewController
 
 - (void)loadModel {
@@ -1087,12 +1092,13 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 #pragma mark SettingsControllerProtocol
 
 - (void)settingsWillBeDismissed {
-  DCHECK(!_settingsHasBeenDismissed);
-  _settingsHasBeenDismissed = YES;
-  [self.signinInteractionCoordinator cancel];
-  [_signinPromoViewMediator signinPromoViewRemoved];
-  _signinPromoViewMediator = nil;
-  [self stopBrowserStateServiceObservers];
+  if (!_settingsHasBeenDismissed) {
+    _settingsHasBeenDismissed = YES;
+    [self.signinInteractionCoordinator cancel];
+    [_signinPromoViewMediator signinPromoViewRemoved];
+    _signinPromoViewMediator = nil;
+    [self stopBrowserStateServiceObservers];
+  }
 }
 
 #pragma mark SyncObserverModelBridge

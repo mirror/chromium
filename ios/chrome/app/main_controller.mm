@@ -166,9 +166,6 @@ namespace {
 // Preference key used to store which profile is current.
 NSString* kIncognitoCurrentKey = @"IncognitoActive";
 
-// Constants for deferred initialization of preferences observer.
-NSString* const kPrefObserverInit = @"PrefObserverInit";
-
 // Constants for deferring notifying the AuthenticationService of a new cold
 // start.
 NSString* const kAuthenticationServiceNotification =
@@ -2043,20 +2040,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                  completion:nil];
 }
 
-- (void)showSettingsFromViewController:(UIViewController*)baseViewController {
-  if (_settingsNavigationController)
-    return;
-  [[DeferredInitializationRunner sharedInstance]
-      runBlockIfNecessary:kPrefObserverInit];
-  DCHECK(_localStatePrefObserverBridge);
-  _settingsNavigationController = [SettingsNavigationController
-      newSettingsMainControllerWithBrowserState:_mainBrowserState
-                                       delegate:self];
-  [baseViewController presentViewController:_settingsNavigationController
-                                   animated:YES
-                                 completion:nil];
-}
-
 - (void)dismissSigninInteractionCoordinator {
   // The SigninInteractionCoordinator must not be destroyed at this point, as
   // it may dismiss the sign in UI in a future callback.
@@ -2065,17 +2048,26 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
 - (void)closeSettingsAnimated:(BOOL)animated
                    completion:(ProceduralBlock)completion {
-  DCHECK(_settingsNavigationController);
-  [_settingsNavigationController settingsWillBeDismissed];
-  UIViewController* presentingViewController =
-      [_settingsNavigationController presentingViewController];
-  DCHECK(presentingViewController);
-  [presentingViewController dismissViewControllerAnimated:animated
-                                               completion:^{
-                                                 if (completion)
-                                                   completion();
-                                               }];
-  _settingsNavigationController = nil;
+  // If MainController is presenting the settings view controller it can be
+  // explicitly dismissed. The Settings main menu is directly
+  // presented from the view controller hierarchy, and in this case there will
+  // be no _settingsNavigationController here in MainController. The
+  // completion block will take care of dismissing the settings UI via the
+  // view controller hierarchy.
+  if (_settingsNavigationController) {
+    [_settingsNavigationController settingsWillBeDismissed];
+    UIViewController* presentingViewController =
+        [_settingsNavigationController presentingViewController];
+    DCHECK(presentingViewController);
+    [presentingViewController dismissViewControllerAnimated:animated
+                                                 completion:^{
+                                                   if (completion)
+                                                     completion();
+                                                 }];
+    _settingsNavigationController = nil;
+  } else if (completion) {
+    completion();
+  }
 }
 
 #pragma mark - TabModelObserver
@@ -2265,7 +2257,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   ProceduralBlock completionWithBVC = ^{
     // This will dismiss the SSO view controller.
     [self.currentBVC clearPresentedStateWithCompletion:completion
-                                        dismissOmnibox:dismissOmnibox];
+                                        dismissOmnibox:dismissOmnibox
+                                              animated:YES];
   };
   ProceduralBlock completionWithoutBVC = ^{
     // This will dismiss the SSO view controller.
