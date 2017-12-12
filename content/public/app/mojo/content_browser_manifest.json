@@ -9,8 +9,10 @@
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "memory_instrumentation::mojom::Coordinator"
         ],
+        "field_trials": [
+          "content::mojom::FieldTrialRecorder"
+        ],
         "gpu": [
-          "content::mojom::FieldTrialRecorder",
           "media::mojom::AndroidOverlayProvider"
         ],
         "plugin": [
@@ -30,7 +32,6 @@
           "blink::mojom::WebDatabaseHost",
           "content::mojom::AppCacheBackend",
           "content::mojom::ClipboardHost",
-          "content::mojom::FieldTrialRecorder",
           "content::mojom::FileUtilitiesHost",
           "content::mojom::FrameSinkProvider",
           "content::mojom::MediaStreamDispatcherHost",
