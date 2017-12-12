@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "671854c5_b93cb5c3",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-12-12T22:15:40Z",
+      "side": 0,
+      "message": "This test was disabled in webview shell because \"Webview shell doesn\u0027t support Alerts\", unrelated to bug 2164. It needs to continue disabled here.",
+      "range": {
+        "startLine": 251,
+        "startChar": 8,
+        "endLine": 251,
+        "endChar": 47
+      },
+      "revId": "48084f7d1192bd7f691112b88a384a207390be31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
