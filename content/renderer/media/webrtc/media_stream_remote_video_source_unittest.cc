@@ -52,7 +52,7 @@ class MediaStreamRemoteVideoSourceTest
 
   void SetUp() override {
     scoped_refptr<base::SingleThreadTaskRunner> main_thread =
-        base::ThreadTaskRunnerHandle::Get();
+        base::ThreadTaskRunnerHandle::GetForTesting();
 
     base::WaitableEvent waitable_event(
         base::WaitableEvent::ResetPolicy::MANUAL,

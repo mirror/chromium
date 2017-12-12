@@ -208,8 +208,8 @@ class SharedMemoryDataConsumerHandleTest
 
 void RunPostedTasks() {
   base::RunLoop run_loop;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                run_loop.QuitClosure());
+  base::ThreadTaskRunnerHandle::GetForTesting()->PostTask(
+      FROM_HERE, run_loop.QuitClosure());
   run_loop.Run();
 }
 

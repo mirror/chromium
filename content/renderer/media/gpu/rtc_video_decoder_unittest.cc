@@ -99,7 +99,7 @@ class RTCVideoDecoderTest
 
   int32_t Decoded(webrtc::VideoFrame& decoded_image) override {
     DVLOG(2) << "Decoded";
-    EXPECT_EQ(vda_task_runner_, base::ThreadTaskRunnerHandle::Get());
+    EXPECT_EQ(vda_task_runner_, base::ThreadTaskRunnerHandle::GetForTesting());
     return WEBRTC_VIDEO_CODEC_OK;
   }
 

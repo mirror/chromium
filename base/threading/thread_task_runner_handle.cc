@@ -33,6 +33,11 @@ scoped_refptr<SingleThreadTaskRunner> ThreadTaskRunnerHandle::Get() {
 }
 
 // static
+scoped_refptr<SingleThreadTaskRunner> ThreadTaskRunnerHandle::GetForTesting() {
+  return Get();
+}
+
+// static
 bool ThreadTaskRunnerHandle::IsSet() {
   return !!thread_task_runner_tls.Pointer()->Get();
 }

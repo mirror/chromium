@@ -125,7 +125,7 @@ class WebIDBCursorImplTest : public testing::Test {
     mock_cursor_ = std::make_unique<MockCursorImpl>(
         mojo::MakeRequestAssociatedWithDedicatedPipe(&ptr));
     cursor_ = std::make_unique<WebIDBCursorImpl>(
-        ptr.PassInterface(), 1, base::ThreadTaskRunnerHandle::Get());
+        ptr.PassInterface(), 1, base::ThreadTaskRunnerHandle::GetForTesting());
   }
 
  protected:

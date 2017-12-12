@@ -23,6 +23,9 @@ class BASE_EXPORT ThreadTaskRunnerHandle {
   // Gets the SingleThreadTaskRunner for the current thread.
   static scoped_refptr<SingleThreadTaskRunner> Get();
 
+  // Gets the SingleThreadTaskRunner for the current thread for testing.
+  static scoped_refptr<SingleThreadTaskRunner> GetForTesting();
+
   // Returns true if the SingleThreadTaskRunner is already created for
   // the current thread.
   static bool IsSet();

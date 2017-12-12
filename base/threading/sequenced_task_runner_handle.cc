@@ -56,6 +56,11 @@ scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::Get() {
 }
 
 // static
+scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::GetForTesting() {
+  return Get();
+}
+
+// static
 bool SequencedTaskRunnerHandle::IsSet() {
   return sequenced_task_runner_tls.Pointer()->Get() ||
          SequencedWorkerPool::GetSequenceTokenForCurrentThread().IsValid() ||

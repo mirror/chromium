@@ -20,6 +20,8 @@ class BASE_EXPORT SequencedTaskRunnerHandle {
   // the requirements).
   static scoped_refptr<SequencedTaskRunner> Get();
 
+  static scoped_refptr<SequencedTaskRunner> GetForTesting();
+
   // Returns true if one of the following conditions is fulfilled:
   // a) A SequencedTaskRunner has been assigned to the current thread by
   //    instantiating a SequencedTaskRunnerHandle.

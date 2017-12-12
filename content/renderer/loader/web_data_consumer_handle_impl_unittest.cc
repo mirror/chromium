@@ -50,7 +50,7 @@ class ClientImpl final : public WebDataConsumerHandle::Client {
       : operation_(operation) {}
 
   void DidGetReadable() override {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::GetForTesting()->PostTask(
         FROM_HERE, base::BindOnce(&ReadDataOperationBase::ReadMore,
                                   base::Unretained(operation_)));
   }

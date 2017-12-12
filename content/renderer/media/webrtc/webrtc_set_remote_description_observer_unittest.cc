@@ -64,7 +64,7 @@ class WebRtcSetRemoteDescriptionObserverHandlerTest : public ::testing::Test {
         std::unique_ptr<cricket::MediaEngineInterface>(
             new cricket::FakeMediaEngine())));
     dependency_factory_.reset(new MockPeerConnectionDependencyFactory());
-    main_thread_ = base::ThreadTaskRunnerHandle::Get();
+    main_thread_ = base::ThreadTaskRunnerHandle::GetForTesting();
     scoped_refptr<WebRtcMediaStreamAdapterMap> map =
         new WebRtcMediaStreamAdapterMap(
             dependency_factory_.get(),

@@ -309,8 +309,8 @@ TEST_F(MediaStreamAudioProcessorTest, MAYBE_TestAllSampleRates) {
 // filter will be created.
 TEST_F(MediaStreamAudioProcessorTest, GetAecDumpMessageFilter) {
   scoped_refptr<AecDumpMessageFilter> aec_dump_message_filter_(
-      new AecDumpMessageFilter(base::ThreadTaskRunnerHandle::Get(),
-                               base::ThreadTaskRunnerHandle::Get()));
+      new AecDumpMessageFilter(base::ThreadTaskRunnerHandle::GetForTesting(),
+                               base::ThreadTaskRunnerHandle::GetForTesting()));
 
   scoped_refptr<WebRtcAudioDeviceImpl> webrtc_audio_device(
       new rtc::RefCountedObject<WebRtcAudioDeviceImpl>());

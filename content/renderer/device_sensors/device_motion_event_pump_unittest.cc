@@ -350,7 +350,7 @@ TEST_F(DeviceMotionEventPumpTest, PumpThrottlesEventRate) {
   motion_pump()->set_stop_on_fire_event(false);
   motion_pump()->StartFireEvent();
 
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+  base::ThreadTaskRunnerHandle::GetForTesting()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       base::TimeDelta::FromMilliseconds(100));
   base::RunLoop().Run();

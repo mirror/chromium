@@ -454,7 +454,7 @@ TEST_F(ServiceWorkerProviderContextTest,
   // the refcounts.
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration =
       provider_context->TakeRegistrationForServiceWorkerGlobalScope(
-          base::ThreadTaskRunnerHandle::Get());
+          base::ThreadTaskRunnerHandle::GetForTesting());
   EXPECT_TRUE(registration);
   EXPECT_EQ(registration_id, registration->RegistrationId());
   EXPECT_EQ(1, remote_registration_object_host().GetBindingCount());
