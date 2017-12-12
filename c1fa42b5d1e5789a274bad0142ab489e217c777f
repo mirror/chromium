@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c5437d_e8f20ef7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1806,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-12T17:41:53Z",
+      "side": 1,
+      "message": "topTab.webState-\u003eGetView().bounds is preferable, because webController should not be used in ios/chrome.",
+      "range": {
+        "startLine": 1806,
+        "startChar": 38,
+        "endLine": 1806,
+        "endChar": 51
+      },
+      "revId": "c1fa42b5d1e5789a274bad0142ab489e217c777f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
