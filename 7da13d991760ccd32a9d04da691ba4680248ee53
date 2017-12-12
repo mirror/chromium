@@ -16,6 +16,24 @@
       "revId": "7da13d991760ccd32a9d04da691ba4680248ee53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d90a77_97227fd4",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1148594
+      },
+      "writtenOn": "2017-12-12T06:03:47Z",
+      "side": 1,
+      "message": "It\u0027s only a temporary override for backward compatibility. Once the old surface hierarchy is deprecated, the override becomes equivalent to the base version, so we can inline the code at that point.",
+      "parentUuid": "31e5bcbb_980950fc",
+      "revId": "7da13d991760ccd32a9d04da691ba4680248ee53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
