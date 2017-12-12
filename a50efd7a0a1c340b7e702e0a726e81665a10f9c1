@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dfd630b9_2ef90b32",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-12T11:07:06Z",
+      "side": 1,
+      "message": "Yes, I just merged.",
+      "parentUuid": "b6f1985d_ddef3f58",
+      "range": {
+        "startLine": 1003,
+        "startChar": 33,
+        "endLine": 1003,
+        "endChar": 57
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08c74c9d_50dc6336",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 9
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "b25f3528_006af0ec",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-12T11:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08c74c9d_50dc6336",
+      "range": {
+        "startLine": 1005,
+        "startChar": 25,
+        "endLine": 1005,
+        "endChar": 48
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef3c472b_0310d29f",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-12T11:07:06Z",
+      "side": 1,
+      "message": "Still TODO",
+      "parentUuid": "07ce0cab_a1b079bf",
+      "range": {
+        "startLine": 1005,
+        "startChar": 2,
+        "endLine": 1005,
+        "endChar": 23
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f018716_9246e95c",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a28e6dda_e97263dc",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-12T11:07:06Z",
+      "side": 1,
+      "message": "Unfortunately not. |promo_button_view| holds at least two views, the promo text and the button to click (+ an additional button to sync to another account in the case there is a gaia account available).",
+      "parentUuid": "8f018716_9246e95c",
+      "range": {
+        "startLine": 1031,
+        "startChar": 17,
+        "endLine": 1031,
+        "endChar": 26
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7614f41d_670bfbbc",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f75782d_fc50d0e2",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-12T11:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7614f41d_670bfbbc",
+      "range": {
+        "startLine": 1041,
+        "startChar": 20,
+        "endLine": 1041,
+        "endChar": 31
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "8260d8ce_a414a7c7",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-12T11:07:06Z",
+      "side": 1,
+      "message": "Should I open a new bug or refer to the DICE UI implementation bug?",
+      "parentUuid": "4287b808_3d73bcbb",
+      "range": {
+        "startLine": 1064,
+        "startChar": 68,
+        "endLine": 1064,
+        "endChar": 69
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e325975_0cd4da6e",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-12T11:07:06Z",
+      "side": 1,
+      "message": "I already changed that. |profiles::GetPlaceholderAvatarIconResourceID()| holds the default user avatar image. avatar_item.icon, which I used before, holds the profile icon.",
+      "parentUuid": "3d43ca67_6dbc606c",
+      "range": {
+        "startLine": 1064,
+        "startChar": 20,
+        "endLine": 1064,
+        "endChar": 56
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f5bbb7e_fa04d3a2",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 9
@@ -174,6 +342,30 @@
       "writtenOn": "2017-12-11T09:48:25Z",
       "side": 1,
       "message": "The full name of the account may be empty:\n* we fetch the account full name after adding a refresh token to the token service.\n* the user may not have set a full name on the account. \n\nI think in that case we should probably default to the email.",
+      "range": {
+        "startLine": 1070,
+        "startChar": 51,
+        "endLine": 1070,
+        "endChar": 72
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c10fa9_7341f196",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-12T11:07:06Z",
+      "side": 1,
+      "message": "What do you mean by default to the email?\nJust leave the name blank?\n\nAlso, I just thought about this. Is it actually possible to have an empty name? Isn\u0027t the name a mandatory field?",
+      "parentUuid": "4f5bbb7e_fa04d3a2",
       "range": {
         "startLine": 1070,
         "startChar": 51,
@@ -206,6 +398,30 @@
       "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1b69f5_e630e79e",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-12T11:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8ca6005_e471f4e3",
+      "range": {
+        "startLine": 1076,
+        "startChar": 59,
+        "endLine": 1076,
+        "endChar": 60
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
