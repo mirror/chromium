@@ -1473,6 +1473,8 @@ TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
 // generated from this type of devices.
 TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
        TimerBasedPhaseInfo) {
+  view->set_mouse_wheel_wheel_phase_handler_timer_timeout(
+      base::TimeDelta::FromMilliseconds(100));
   // Initialize the view associated with a MockRenderWidgetHostImpl, rather than
   // the MockRenderProcessHost that is set up by the test harness which mocks
   // out |OnMessageReceived()|.
@@ -1576,7 +1578,7 @@ TEST_F(RenderWidgetHostViewMacWithWheelScrollLatchingEnabledTest,
   base::RunLoop run_loop;
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, run_loop.QuitClosure(),
-      base::TimeDelta::FromMilliseconds(100));
+      kMaximumTimeBetweenPhaseEndedAndMomentumPhaseBegan);
   run_loop.Run();
 }
 
