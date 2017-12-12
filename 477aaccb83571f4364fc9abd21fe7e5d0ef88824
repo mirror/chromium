@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc7aff78_a91a03f1",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T01:21:45Z",
+      "side": 1,
+      "message": "Chrome uses a Finch config to control if Upstream is enabled at all and in which countries, so this won\u0027t affect that.",
+      "parentUuid": "2dd4bafc_2d065031",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 5
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "978b3753_945b774c",
         "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17636d87_df78358e",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T01:21:45Z",
+      "side": 1,
+      "message": "It might be worth breaking all pieces of this function into self-contained functions, but I\u0027m not sure if that\u0027s yet the case, and I don\u0027t want to do just one piece of it in this CL if I can help it.  I\u0027d want to move the experiment-setting part with the others below, gated on should_cvc_be_requested_ probably, and at that point all the function would be is a single if statement.",
+      "parentUuid": "978b3753_945b774c",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 26
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5c1f587b_9a189feb",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T01:21:45Z",
+      "side": 1,
+      "message": "It ends up being both.  See LogCardUploadDecisions().",
+      "parentUuid": "d202ae88_ea0ed256",
+      "range": {
+        "startLine": 156,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afce1750_4effe261",
         "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-12T00:19:51Z",
       "side": 1,
       "message": "Your call : try to move \"detected_values \u0026\u0026 ..\" a method.",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 8
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7920cee2_43ae2096",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T01:21:45Z",
+      "side": 1,
+      "message": "Depends on Chrome style I guess, Mathieu would have to comment on that.  I wasn\u0027t fond of this 5-line if statement either, but by moving it into its own method you make the code harder to read because you have to find the condition somewhere else in this file to know what it\u0027s doing, and it\u0027s not reused anywhere so breaking it out for reusability doesn\u0027t work.",
+      "parentUuid": "afce1750_4effe261",
       "range": {
         "startLine": 279,
         "startChar": 7,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "74d12dca_335a4fb6",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T01:21:45Z",
+      "side": 1,
+      "message": "Hmm, I think \"detected problems\" is accurate.  If everything\u0027s great then upload_decision_metrics_ is untouched.",
+      "parentUuid": "b6f32059_5ccc1912",
+      "range": {
+        "startLine": 315,
+        "startChar": 4,
+        "endLine": 315,
+        "endChar": 5
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0cd6f67_f943ab1b",
         "filename": "components/autofill/core/browser/credit_card_save_manager.h",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31bd3334_7dea845b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T01:21:45Z",
+      "side": 1,
+      "message": "I do not plan to link to the Payments enum because Chrome (and this code review, even) are open-source.\n\nI do plan to link from the Payments enum from this one once it lands, though.",
+      "parentUuid": "d0cd6f67_f943ab1b",
+      "range": {
+        "startLine": 33,
+        "startChar": 1,
+        "endLine": 33,
+        "endChar": 2
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "66310e24_100d6507",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T01:21:45Z",
+      "side": 1,
+      "message": "This enum just captures existence of 1+ address lines; we don\u0027t need knowledge of more than that to make decisions about whether to save (in fact, postal code is the main deciding factor anyway).",
+      "parentUuid": "297c5225_f3f0b98e",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db5c6508_835c7c1a",
         "filename": "components/autofill/core/browser/credit_card_save_manager.h",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd34a3a_6aaab93b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T01:21:45Z",
+      "side": 1,
+      "message": "In the US, LOCALITY is city and ADMINISTRATIVE_AREA (level 1) is state.  These are standard across countries where applicable:\nhttps://developers.google.com/maps/documentation/geocoding/intro#Types",
+      "parentUuid": "db5c6508_835c7c1a",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 12
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "dc28910d_be7e510d",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2770,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T01:21:45Z",
+      "side": 1,
+      "message": "https://uma.googleplex.com/p/chrome/timeline_v2/?sid\u003d826e55673bd50097c7bbfefd27fda42b\n\nNote that that graph can log multiple things in one request (for instance, the CVC fix flow can trigger CVC_FIELD_NOT_FOUND and UPLOAD_OFFERED together).  The graph was supposed to be replaced by UKM.",
+      "parentUuid": "c61654d6_8501bae6",
+      "range": {
+        "startLine": 2770,
+        "startChar": 4,
+        "endLine": 2770,
+        "endChar": 5
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "274f334c_3c4d6fc5",
         "filename": "components/autofill/core/browser/payments/payments_client.cc",
         "patchSetId": 2
@@ -229,6 +445,30 @@
       "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccb090d_9a5fa336",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T01:21:45Z",
+      "side": 1,
+      "message": "Chromium is open-source so I\u0027m not sure Google C++ standards apply.  (I don\u0027t disagree though!  Chrome does this in most other places.)",
+      "parentUuid": "274f334c_3c4d6fc5",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 302,
+        "endChar": 5
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
