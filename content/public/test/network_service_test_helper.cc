@@ -12,6 +12,7 @@
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/process/process.h"
+#include "build/build_config.h"
 #include "content/public/common/content_features.h"
 #include "content/public/test/test_host_resolver.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -19,6 +20,11 @@
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "services/network/public/interfaces/network_change_manager.mojom.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
+
+#if defined(OS_ANDROID)
+#include "base/test/android/url_utils.h"
+#include "base/test/test_support_android.h"
+#endif
 
 namespace content {
 
@@ -85,6 +91,9 @@ void NetworkServiceTestHelper::RegisterNetworkBinders(
       sandbox_type == service_manager::SANDBOX_TYPE_NETWORK) {
     // Register the EmbeddedTestServer's certs, so that any SSL connections to
     // it succeed. Only do this when file I/O is allowed in the current process.
+#if defined(OS_ANDROID)
+    base::InitAndroidTestPaths(base::android::GetIsolatedTestRoot());
+#endif
     net::EmbeddedTestServer::RegisterTestCerts();
   }
 }
