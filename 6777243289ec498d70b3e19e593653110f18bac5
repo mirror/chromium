@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81bfff0a_6170c190",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-12T20:22:38Z",
+      "side": 1,
+      "message": "nit: I think we can remove max/min-width if we\u0027re using a pixel value for width.",
+      "revId": "6777243289ec498d70b3e19e593653110f18bac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
