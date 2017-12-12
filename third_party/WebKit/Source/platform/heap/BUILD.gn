@@ -2,13 +2,27 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/buildflag_header.gni")
 import("//build/config/jumbo.gni")
 import("//testing/test.gni")
+
+declare_args() {
+  # Enables incremental marking in Oilpan.
+  enable_blink_heap_incremental_marking = false
+}
+
+buildflag_header("blink_heap_incremental_marking") {
+  header = "IncrementalMarking.h"
+
+  header_dir = "blink/platform/heap"
+
+  flags = [ "BLINK_HEAP_INCREMENTAL_MARKING=$enable_blink_heap_incremental_marking" ]
+}
 
 jumbo_source_set("heap") {
   # This target is a logical part of the platform and only the platform target
   # should depend on it.
-  visibility = [ "//third_party/WebKit/Source/platform" ]
+  visibility = [ "//third_party/WebKit/Source/platform:*" ]
 
   sources = [
     "BlinkGC.h",
@@ -65,6 +79,10 @@ jumbo_source_set("heap") {
     "//build/config/compiler:no_size_t_to_int_warning",
   ]
 
+  public_deps = [
+    ":blink_heap_incremental_marking",
+  ]
+
   deps = [
     "//base",
     "//third_party/WebKit/Source/platform:make_platform_generated",
@@ -106,6 +124,10 @@ jumbo_source_set("blink_heap_unittests_sources") {
     "//third_party/WebKit/Source/platform/wtf:wtf_config",
     "//third_party/WebKit/Source:config",
     "//third_party/WebKit/Source:inside_blink",
+  ]
+
+  public_deps = [
+    ":blink_heap_incremental_marking",
   ]
 
   deps = [
