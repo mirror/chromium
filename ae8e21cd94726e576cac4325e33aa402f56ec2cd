@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61f5197f_c481670e",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T00:26:18Z",
+      "side": 1,
+      "message": "insecure?",
+      "range": {
+        "startLine": 3,
+        "startChar": 10,
+        "endLine": 3,
+        "endChar": 18
+      },
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29a9028_81660528",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T00:26:18Z",
+      "side": 1,
+      "message": "I think we should add a bit more detail about why this is bad.  In particular:\n- An exploited extension can reach *all* the extension\u0027s users\n- Extensions have heightened privileges, so an exploit is more severe",
+      "range": {
+        "startLine": 4,
+        "startChar": 6,
+        "endLine": 4,
+        "endChar": 23
+      },
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25873a9a_b84460d9",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T00:26:18Z",
+      "side": 1,
+      "message": "Hmm... I\u0027m not sure I like this section - it sounds too much like we\u0027re letting them off the hook :)  I wonder if we could instead just say something like: \"Please try to follow the below steps to keep your users safe!\" (feel free to wordsmith)",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 78
+      },
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa4f697_5f6b56ec",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T00:26:18Z",
+      "side": 1,
+      "message": "This section reads a bit funny to me.  Maybe we could split this up a bit?  Something like:\n\nOnly register for the runtime.onMessageExternal event if you are expecting an external website or extension to communicate with your extension.  Always validate the sender matches a trusted source.\n\n\u003ccode snippet\u003e\n\nEven validate the MessageSender when it comes from your own extension in the runtime.onMessage event, since this could be from a compromised content script.\n\n\u003ccode snippet\u003e\n\nAlways validate inputs from any message source, including your own extension and user input. Avoid using eval().\n\n\u003ccode snippet\u003e",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 29
+      },
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb68632c_56f51056",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T00:26:18Z",
+      "side": 1,
+      "message": "Should this be *.google.com? (instead of *google.com)",
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a323a44_3da93cb6",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T00:26:18Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 85,
+        "startChar": 48,
+        "endLine": 85,
+        "endChar": 58
+      },
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ceff9d_00a654ff",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T00:26:18Z",
+      "side": 1,
+      "message": "nitty nit: were",
+      "range": {
+        "startLine": 88,
+        "startChar": 19,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855c03c9_dd4384f2",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T00:26:18Z",
+      "side": 1,
+      "message": "*a* potential attacker?",
+      "range": {
+        "startLine": 204,
+        "startChar": 19,
+        "endLine": 204,
+        "endChar": 22
+      },
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72032afe_a2b6b37d",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T00:26:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure I agree with this section.  Why does this make it more secure?",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 4
+      },
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
