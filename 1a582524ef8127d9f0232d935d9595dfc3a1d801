@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9308471a_e179c7a2",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-12-12T17:24:16Z",
+      "side": 1,
+      "message": "Added a per-file overhead symbol instead, since deleting a file does get this back, whereas compression overhead is more or less constant even if we reduce the number of files.",
+      "parentUuid": "2561df08_413681ac",
+      "revId": "1a582524ef8127d9f0232d935d9595dfc3a1d801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b4a0a24_ee175c2e",
         "filename": "tools/binary_size/libsupersize/archive.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "1a582524ef8127d9f0232d935d9595dfc3a1d801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443fa616_37ba5938",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-12-12T17:24:16Z",
+      "side": 1,
+      "message": "I\u0027d like round too, but it can cause raw_total to be lower than its rounded value. I think it would add more complexity than necessary for not much gain (Leftover is only a little over 700 bytes).\n\nWill add comment.",
+      "parentUuid": "6b4a0a24_ee175c2e",
+      "revId": "1a582524ef8127d9f0232d935d9595dfc3a1d801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
