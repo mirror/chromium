@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "d8e0e18a_b468f4d2",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T13:53:34Z",
+      "side": 1,
+      "message": "I am wondering if this is not a bug (maybe it is not though, it is hard to say what the user expectation is here). If the user closes the sign-in tab, but still has a tab opened in that browser, it may make sense to present the sync confirmation dialog on top of that browser once we have the LST. WDYT?",
+      "parentUuid": "1af96272_bd9992d1",
+      "range": {
+        "startLine": 70,
+        "startChar": 36,
+        "endLine": 70,
+        "endChar": 46
+      },
+      "revId": "d961fd0fec8186a2d99354f18fad782c4ae48153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18e84258_8185f448",
         "filename": "chrome/browser/signin/process_dice_header_delegate_impl.h",
         "patchSetId": 3
