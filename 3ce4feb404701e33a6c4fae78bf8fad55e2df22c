@@ -442,6 +442,24 @@
     },
     {
       "key": {
+        "uuid": "465759ef_216b3f01",
+        "filename": "chrome_elf/whitelist/whitelist_file_format.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-12-12T06:01:38Z",
+      "side": 1,
+      "message": "I think this is super overkill... but sure.\n\nIt\u0027s called whitelist_packed_format.",
+      "parentUuid": "935a1366_77cfeecf",
+      "revId": "3ce4feb404701e33a6c4fae78bf8fad55e2df22c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c07efc31_db8a2d9e",
         "filename": "chrome_elf/whitelist/whitelist_file_format.h",
         "patchSetId": 3
