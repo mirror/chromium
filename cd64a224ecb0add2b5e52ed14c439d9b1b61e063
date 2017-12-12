@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae2cdb7f_26b92c5a",
+        "filename": "ui/views/controls/menu/menu_model_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T17:58:44Z",
+      "side": 1,
+      "message": "My suggestion was actually that MenuRunner should likely take care of this. I say that as it\u0027s possible to use MenuRunner without a MenuModel. That said, I\u0027m ok with this approach as it can be made to work on Mac as well.\n\nThe adapter shouldn\u0027t have to know about the histogram. The model should entirely handle it. I see two options here depending upon the code:\n1. Put the logging into SimpleMenuModel::ActivatedAt().\n2. (1) won\u0027t work for cases that don\u0027t use SimpleMenuModel. If we only have SimpleMenuModel uses, then go with (1). If there are other MenuModel implementations you want histograms for, then move the logic into MenuModel. I have a slight distaste for this approach as it results in making MenuModel have a member, better to keep it mostly pure virtual. If you do go this route, then ActivatedAt() should not be virtual. It should handle the logging and then call a pure virtual (protected) function for the execution. This will no doubt require more changes.",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 34
+      },
+      "revId": "cd64a224ecb0add2b5e52ed14c439d9b1b61e063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
