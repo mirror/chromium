@@ -26,6 +26,9 @@ class GPU_EXPORT ClientDiscardableTextureManager {
   void FreeTexture(uint32_t texture_id);
   bool TextureIsValid(uint32_t texture_id) const;
 
+  // Tracing only functions.
+  bool TextureIsDeletedForTracing(uint32_t texture_id) const;
+
   // Test only functions.
   ClientDiscardableManager* DiscardableManagerForTesting() {
     return &discardable_manager_;
