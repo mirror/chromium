@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "eaf12e7c_efd523c3",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-12T18:53:54Z",
+      "side": 1,
+      "message": "Hidehiko: just to be fair, what the guide says is \"avoid it *if you can\u0027t signal an error*\" and in this case, StartArcInstance itself returns void and can signal an error via the callback for sure. So I don\u0027t think this violates the guide. The guide basically just says \"don\u0027t create a semi-constructed object\" and this code doesn\u0027t seem to have the concern. Yes, we do avoid long ctor because in most cases such code will have a semi-constructed object problem, but this particular code seems okay to me.\n\nAlso, re your 4th point, the benefit of this is one reduced state (NOT_STARTED is gone), which I guess Chris long wanted to do :) So this is not all cons. I personally don\u0027t care if the session_manager_client call is in ctor or not, as long as L255-265 is factored out to a separate non-virtual function like Start(), maybe. This doesn\u0027t seem like a big deal to me (and I\u0027d defer to you.)\n\nThe ease of testing is a good point and it might force us to revert back to the original idea (in the email thread) though.",
+      "parentUuid": "c7b8fff9_91f27891",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ff67a02_a7a089d2",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3
