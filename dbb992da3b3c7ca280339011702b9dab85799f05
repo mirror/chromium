@@ -52,6 +52,24 @@
       "revId": "dbb992da3b3c7ca280339011702b9dab85799f05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe7a5c7_988afff5",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-12T16:10:03Z",
+      "side": 1,
+      "message": "I went with the static function in the cc file as I felt it is more future-proof.",
+      "parentUuid": "b5a77bc4_ef9fb141",
+      "revId": "dbb992da3b3c7ca280339011702b9dab85799f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
