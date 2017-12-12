@@ -99,6 +99,29 @@
     },
     {
       "key": {
+        "uuid": "ccb3f0b8_815568c2",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-12T18:57:11Z",
+      "side": 1,
+      "message": "Are we sure that prefs are synced at this moment?\nPlease pay attention to \nif (!pref_service_syncable-\u003eIsSyncing()) { check in this file.\n\nPrefs may not be synced at this moment and prefs-\u003eHasPrefPath(prefs::kPinnedLauncherApps) may wrongly return false.",
+      "range": {
+        "startLine": 250,
+        "startChar": 40,
+        "endLine": 250,
+        "endChar": 51
+      },
+      "revId": "9d205f43411345c78fc25f6667a4e63c9aff0bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a141c259_d33403ba",
         "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
         "patchSetId": 4
