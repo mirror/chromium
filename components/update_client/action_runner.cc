@@ -30,24 +30,27 @@ ActionRunner::~ActionRunner() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 }
 
-void ActionRunner::Run(Callback run_complete) {
+void ActionRunner::Run(Callback run_complete,
+                       std::unique_ptr<service_manager::Connector> connector) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   run_complete_ = std::move(run_complete);
 
   base::CreateSequencedTaskRunnerWithTraits(kTaskTraits)
       ->PostTask(FROM_HERE,
-                 base::BindOnce(&ActionRunner::Unpack, base::Unretained(this)));
+                 base::BindOnce(&ActionRunner::Unpack, base::Unretained(this),
+                                std::move(connector)));
 }
 
-void ActionRunner::Unpack() {
+void ActionRunner::Unpack(
+    std::unique_ptr<service_manager::Connector> connector) {
   const auto& installer = component_.crx_component().installer;
 
   base::FilePath file_path;
   installer->GetInstalledFile(component_.action_run(), &file_path);
 
-  auto unpacker = base::MakeRefCounted<ComponentUnpacker>(key_hash_, file_path,
-                                                          installer, nullptr);
+  auto unpacker = base::MakeRefCounted<ComponentUnpacker>(
+      key_hash_, file_path, installer, std::move(connector));
   unpacker->Unpack(
       base::BindOnce(&ActionRunner::UnpackComplete, base::Unretained(this)));
 }
