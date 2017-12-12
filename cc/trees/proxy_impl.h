@@ -124,6 +124,7 @@ class CC_EXPORT ProxyImpl : public LayerTreeHostImplClient,
   size_t CompositedAnimationsCount() const override;
   size_t MainThreadAnimationsCount() const override;
   size_t MainThreadCompositableAnimationsCount() const override;
+  bool CurrentFrameHasRAF() const override;
 
   DrawResult DrawInternal(bool forced_draw);
 
