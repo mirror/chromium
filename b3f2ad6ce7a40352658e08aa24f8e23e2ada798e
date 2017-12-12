@@ -52,6 +52,24 @@
       "revId": "b3f2ad6ce7a40352658e08aa24f8e23e2ada798e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86133e9_d73142dd",
+        "filename": "third_party/WebKit/LayoutTests/virtual/spv175/compositing/absolute-inside-out-of-view-fixed-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-12T05:13:37Z",
+      "side": 1,
+      "message": "Yes, but there is this file for example:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/flag-specific/root-layer-scrolls/compositing/absolute-inside-out-of-view-fixed-expected.txt?q\u003dcompositing/absolute-inside-out-of-view-fixed-expected.txt\u0026sq\u003dpackage:chromium\u0026dr\n\nIt appears to be identical to the file you are adding here (which is good).\nI\u0027m wondering whether it is true for all of the other files you are adding in this CL.",
+      "parentUuid": "255a8d5f_6a3c1a03",
+      "revId": "b3f2ad6ce7a40352658e08aa24f8e23e2ada798e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
