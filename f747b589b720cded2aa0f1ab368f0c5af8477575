@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "dbd1e63b_3b1f16ae",
+        "filename": "net/disk_cache/simple/simple_backend_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-12T17:48:19Z",
+      "side": 1,
+      "message": "spacing",
+      "range": {
+        "startLine": 326,
+        "startChar": 5,
+        "endLine": 326,
+        "endChar": 10
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7adbd21_c61c4f98",
         "filename": "net/disk_cache/simple/simple_entry_impl.cc",
         "patchSetId": 18
@@ -42,6 +65,76 @@
         "startChar": 7,
         "endLine": 1240,
         "endChar": 77
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc6435c_359113e6",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-12T17:48:19Z",
+      "side": 1,
+      "message": "Fair enough, though I think the docs should explicitly state that after calling Close() the entry shouldn\u0027t be used again.",
+      "parentUuid": "482c1d84_69ecbcee",
+      "range": {
+        "startLine": 1240,
+        "startChar": 7,
+        "endLine": 1240,
+        "endChar": 77
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04054ea2_7fd71b9d",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-12T17:48:19Z",
+      "side": 1,
+      "message": "This condition needs braces.",
+      "range": {
+        "startLine": 1137,
+        "startChar": 0,
+        "endLine": 1140,
+        "endChar": 17
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b54df3_ad1502b5",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-12T17:48:19Z",
+      "side": 1,
+      "message": "Also add that the renamed file will be deleted once the entry is closed.",
+      "range": {
+        "startLine": 181,
+        "startChar": 40,
+        "endLine": 181,
+        "endChar": 0
       },
       "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
