@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "267f4c1d_9a268978",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-12T22:54:15Z",
+      "side": 1,
+      "message": "As per hidehiko\u0027s suggestion, I changed it to just \"Upgrade\".",
+      "parentUuid": "676ba25b_21f5e87b",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5429aa01_52fed383",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3
@@ -78,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "488732ad_5847de90",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-12T22:54:15Z",
+      "side": 1,
+      "message": "As Yusuke mentioned, there isn\u0027t a chance of failure here, so we can\u0027t have a partially constructed object. No matter what the result of the constructor, the object will be valid. We have no way of a \"Create\" function returning None since we can\u0027t know if the dbus call fails synchronously. Even if the dbus call does fail, it doesn\u0027t make ArcSessionImpl inconsistent, it\u0027s meant to handle that. Due to this, I don\u0027t see there being an effective difference between putting it in a factory or a constructor (mostly because the factory can\u0027t return a None), so I opted for the choice with less functions and code.\n\nAs for the testing, I don\u0027t see this being an issue, because we already use a FakeArcSession for unit tests anyways.\nThe call to StartArcInstance being async is pretty baked into the design. If it wasn\u0027t async, you likely wouldn\u0027t need observers and would just directly handle the result of the call from the call site. We can always change it if ever we need it to be async, but I think a lot more than that would change. I wouldn\u0027t design the code now for a change so major and that we don\u0027t have a reason to think we\u0027ll need. As they say: you ain\u0027t gonna need it.",
+      "parentUuid": "eaf12e7c_efd523c3",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ff67a02_a7a089d2",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3
@@ -101,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8105bd19_d8502388",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-12T22:54:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ff67a02_a7a089d2",
+      "range": {
+        "startLine": 277,
+        "startChar": 28,
+        "endLine": 277,
+        "endChar": 34
+      },
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f07877c8_1c9279a1",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3
@@ -112,6 +178,24 @@
       "writtenOn": "2017-12-12T07:47:50Z",
       "side": 1,
       "message": "GetSessionManagerClient() ?",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a1b77b_2fc02324",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-12T22:54:15Z",
+      "side": 1,
+      "message": "I don\u0027t understand your question. I moved this code from a function that no longer exists.",
+      "parentUuid": "f07877c8_1c9279a1",
       "revId": "556da616e58c21a934d6bc1a17e989648276527d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -135,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "4fb994af_6b924b40",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-12T22:54:15Z",
+      "side": 1,
+      "message": "Can you clarify the question here? I\u0027m not familiar with the pattern. There isn\u0027t really a change to the previous code besides it being a boolean now and some name changes.",
+      "parentUuid": "b6f4ca67_e7c4037b",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6203ce3_f9be6418",
         "filename": "components/arc/arc_session_impl.h",
         "patchSetId": 3
@@ -149,6 +251,24 @@
       "revId": "556da616e58c21a934d6bc1a17e989648276527d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f0de16_f670ae6d",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-12T22:54:15Z",
+      "side": 1,
+      "message": "I\u0027m going to change all this stuff in a later commit where we change things from \"INSTANCE\" to \"CONTAINER\", I\u0027ll do this change then. Don\u0027t want to make this commit bigger than it already is.",
+      "parentUuid": "a6203ce3_f9be6418",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
