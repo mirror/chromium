@@ -44,8 +44,7 @@ PublicURLManager::PublicURLManager(ExecutionContext* context)
     : ContextLifecycleObserver(context), is_stopped_(false) {}
 
 String PublicURLManager::RegisterURL(ExecutionContext* context,
-                                     URLRegistrable* registrable,
-                                     const String& uuid) {
+                                     URLRegistrable* registrable) {
   SecurityOrigin* origin = context->GetMutableSecurityOrigin();
   const KURL& url = BlobURL::CreatePublicURL(origin);
   DCHECK(!url.IsEmpty());
@@ -53,10 +52,10 @@ String PublicURLManager::RegisterURL(ExecutionContext* context,
 
   if (!is_stopped_) {
     RegistryURLMap::ValueType* found =
-        registry_to_url_.insert(&registrable->Registry(), URLMap())
+        registry_to_url_.insert(&registrable->Registry(), URLSet())
             .stored_value;
     found->key->RegisterURL(origin, url, registrable);
-    found->value.insert(url_string, uuid);
+    found->value.insert(url_string);
   }
 
   return url_string;
@@ -72,26 +71,6 @@ void PublicURLManager::Revoke(const KURL& url) {
   }
 }
 
-void PublicURLManager::Revoke(const String& uuid) {
-  // A linear scan; revoking by UUID is assumed rare.
-  Vector<String> urls_to_remove;
-  for (auto& registry_url : registry_to_url_) {
-    URLRegistry* registry = registry_url.key;
-    URLMap& registered_urls = registry_url.value;
-    for (auto& registered_url : registered_urls) {
-      if (uuid == registered_url.value) {
-        KURL url(registered_url.key);
-        GetExecutionContext()->RemoveURLFromMemoryCache(url);
-        registry->UnregisterURL(url);
-        urls_to_remove.push_back(registered_url.key);
-      }
-    }
-    for (const auto& url : urls_to_remove)
-      registered_urls.erase(url);
-    urls_to_remove.clear();
-  }
-}
-
 void PublicURLManager::ContextDestroyed(ExecutionContext*) {
   if (is_stopped_)
     return;
@@ -99,7 +78,7 @@ void PublicURLManager::ContextDestroyed(ExecutionContext*) {
   is_stopped_ = true;
   for (auto& registry_url : registry_to_url_) {
     for (auto& url : registry_url.value)
-      registry_url.key->UnregisterURL(KURL(url.key));
+      registry_url.key->UnregisterURL(KURL(url));
   }
 
   registry_to_url_.clear();
