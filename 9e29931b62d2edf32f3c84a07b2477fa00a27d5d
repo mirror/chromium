@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50b36a07_967dcd21",
+        "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-12T23:37:38Z",
+      "side": 1,
+      "message": "This needs to get the StoragePartition from the RenderProcessHost on the UI thread.",
+      "parentUuid": "18bdb6c6_5d6b3fe5",
+      "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca0a62c9_b70bb554",
         "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
         "patchSetId": 11
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Seeing code like this makes me wonder if we should make it so GetInterfaceProvider() always returns *something*. It seems to complicate callers a lot to have to consider whether or not the context is still attached before trying to get the interface provider.",
       "parentUuid": "61be6996_6654cd09",
+      "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41650193_ccb392a9",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchBridge.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-12T23:37:38Z",
+      "side": 1,
+      "message": "Maybe, but the any callers expecting a response would still be wrong, since the callbacks would never run and promises would never be resolved.",
+      "parentUuid": "5e80cedf_19d2fbf0",
       "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
