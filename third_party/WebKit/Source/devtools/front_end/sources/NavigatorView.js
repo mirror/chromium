@@ -725,7 +725,8 @@ Sources.NavigatorView = class extends UI.VBox {
     contextMenu.defaultSection().appendItem(
         Common.UIString('New file'), this._handleContextMenuCreate.bind(this, project, path));
 
-    if (!(node instanceof Sources.NavigatorGroupTreeNode)) {
+    if (!(node instanceof Sources.NavigatorGroupTreeNode) &&
+        Persistence.FileSystemWorkspaceBinding.fileSystemType(project) !== 'overrides') {
       contextMenu.defaultSection().appendItem(
           Common.UIString('Exclude folder'), this._handleContextMenuExclude.bind(this, project, path));
     }
