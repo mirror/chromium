@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc3c8245_945f43ce",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-12T12:16:12Z",
+      "side": 1,
+      "message": "nit: this comment seems unnecessary.",
+      "revId": "5d3dfd66065d6c2ba8d8d423701ab3bc8996b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bc8f15_41455cf2",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-12T12:16:12Z",
+      "side": 1,
+      "message": "since this is //chrome-specific, the addition in the manifest should go to chrome_content_browser_manifest_overlay.json.",
+      "revId": "5d3dfd66065d6c2ba8d8d423701ab3bc8996b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
