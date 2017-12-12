@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49ccdf63_ee0328d9",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-12T00:24:54Z",
+      "side": 1,
+      "message": "I\u0027m imagining this instead: popup_view_-\u003enative_view_accessibility()-\u003eGetId();",
+      "revId": "4b445e3f28b87302f8649d67239e1fa66e1dde42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbb2075_fb13a0af",
+        "filename": "ui/views/view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-12T00:24:54Z",
+      "side": 1,
+      "message": "How about instead of adding a new interface to View, just\nmake a simple accessor for NativeViewAccessibility:\n\nNativeViewAccessibility* native_view_accessibility();\n\nThen add a GetId() to that.",
+      "revId": "4b445e3f28b87302f8649d67239e1fa66e1dde42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
