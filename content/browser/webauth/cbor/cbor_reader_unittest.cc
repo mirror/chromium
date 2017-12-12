@@ -267,6 +267,43 @@ TEST(CBORReaderTest, TestReadNestedMap) {
   EXPECT_EQ(nested_map.GetMap().find("d")->second.GetUnsigned(), 3u);
 }
 
+TEST(CBORReaderTest, TestReadSimpleValue) {
+  struct SimpleValueTestCase {
+    const CBORValue::SimpleValue value;
+    const std::vector<uint8_t> cbor_data;
+  };
+
+  static const SimpleValueTestCase kSimpleValueTestCases[] = {
+      {CBORValue::SimpleValue::FALSE_VALUE, {0xf4}},
+      {CBORValue::SimpleValue::TRUE_VALUE, {0xf5}},
+      {CBORValue::SimpleValue::NULL_VALUE, {0xf6}},
+      {CBORValue::SimpleValue::UNDEFINED, {0xf7}},
+  };
+
+  int test_element_index = 0;
+  for (const SimpleValueTestCase& test_case : kSimpleValueTestCases) {
+    SCOPED_TRACE(testing::Message()
+                 << "testing simple value at index : " << test_element_index++);
+
+    base::Optional<CBORValue> cbor = CBORReader::Read(test_case.cbor_data);
+    ASSERT_TRUE(cbor.has_value());
+    ASSERT_EQ(cbor.value().type(), CBORValue::Type::SIMPLE_VALUE);
+    EXPECT_EQ(cbor.value().GetSimpleValue(), test_case.value);
+  }
+}
+
+TEST(CBORReaderTest, TestUnsupportedMajorType) {
+  // Corresponds to floating point 1.1
+  static const std::vector<uint8_t> floating_point_cbor = {
+      0xfb, 0x3f, 0xf1, 0x99, 0x99, 0x99, 0x99, 0x99, 0x9a};
+
+  CBORReader::DecoderError error_code;
+  base::Optional<CBORValue> cbor =
+      CBORReader::Read(floating_point_cbor, &error_code);
+  EXPECT_FALSE(cbor.has_value());
+  EXPECT_EQ(error_code, CBORReader::DecoderError::UNSUPPORTED_SIMPLE_VALUE);
+}
+
 TEST(CBORReaderTest, TestIncompleteCBORDataError) {
   static const std::vector<std::vector<uint8_t>> incomplete_cbor_list = {
       // Additional info byte corresponds to unsigned int that corresponds
@@ -524,6 +561,38 @@ TEST(CBORReaderTest, TestExtraneousCBORDataError) {
         CBORReader::Read(extraneous_cbor_data, &error_code);
     EXPECT_FALSE(cbor.has_value());
     EXPECT_EQ(error_code, CBORReader::DecoderError::EXTRANEOUS_DATA);
+  }
+}
+
+TEST(CBORReaderTest, TestUnsupportedSimplevalue) {
+  static const std::vector<std::vector<uint8_t>> zero_padded_cbor_list = {
+      // Simple value (0)
+      {0xE0},
+      // Simple value (19)
+      {0xF3},
+      // Simple value (28)
+      {0xF8, 0x1C},
+      // Simple value (29)
+      {0xF8, 0x1D},
+      // Simple value (30)
+      {0xF8, 0x1E},
+      // Simple value (32)
+      {0xF8, 0x20},
+      // Simple value (255)
+      {0xF8, 0xFF},
+  };
+
+  int test_element_index = 0;
+  for (auto extraneous_cbor_data : zero_padded_cbor_list) {
+    SCOPED_TRACE(testing::Message()
+                 << "testing unsupported cbor simple value  : "
+                 << test_element_index++);
+
+    CBORReader::DecoderError error_code;
+    base::Optional<CBORValue> cbor =
+        CBORReader::Read(extraneous_cbor_data, &error_code);
+    EXPECT_FALSE(cbor.has_value());
+    EXPECT_EQ(error_code, CBORReader::DecoderError::UNSUPPORTED_SIMPLE_VALUE);
   }
 }
 
