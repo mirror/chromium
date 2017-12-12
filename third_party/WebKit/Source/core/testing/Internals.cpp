@@ -268,10 +268,11 @@ void Internals::ResetToConsistentState(Page* page) {
   OverrideUserPreferredLanguagesForTesting(Vector<AtomicString>());
   if (!page->DeprecatedLocalMainFrame()
            ->GetSpellChecker()
-           .IsSpellCheckingEnabled())
+           .IsSpellCheckingEnabled()) {
     page->DeprecatedLocalMainFrame()
         ->GetSpellChecker()
-        .ToggleSpellCheckingEnabled();
+        .ToggleSpellCheckingEnabledForTesting();
+  }
   if (page->DeprecatedLocalMainFrame()->GetEditor().IsOverwriteModeEnabled())
     page->DeprecatedLocalMainFrame()->GetEditor().ToggleOverwriteModeEnabled();
 
@@ -2163,7 +2164,7 @@ void Internals::setSpellCheckingEnabled(bool enabled,
   }
 
   if (enabled != GetFrame()->GetSpellChecker().IsSpellCheckingEnabled())
-    GetFrame()->GetSpellChecker().ToggleSpellCheckingEnabled();
+    GetFrame()->GetSpellChecker().ToggleSpellCheckingEnabledForTesting();
 }
 
 void Internals::replaceMisspelled(Document* document,
