@@ -46,6 +46,30 @@
       "revId": "2470c11654cb8b62c4a9ac31f0434327d13fee3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe091602_27a7a438",
+        "filename": "chrome/test/base/ui_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T18:18:46Z",
+      "side": 1,
+      "message": "It looks like the WebContentsDelegate is notified when the favicon changes, but there isn\u0027t really an easy way for a test to swap out the delegate for just one function. It looks like you can also use FaviconDriverObserver.\n\nI understand you are moving existing code around. As you are encouraging more use of this functionality we should ensure it runs as best as possible.",
+      "parentUuid": "df6b713d_2e83171e",
+      "range": {
+        "startLine": 652,
+        "startChar": 2,
+        "endLine": 656,
+        "endChar": 39
+      },
+      "revId": "2470c11654cb8b62c4a9ac31f0434327d13fee3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
