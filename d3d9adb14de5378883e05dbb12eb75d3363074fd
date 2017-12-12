@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "893727ec_d00ecfd5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-12T17:48:00Z",
+      "side": 1,
+      "message": "nit: I think this belongs to discussion, but not the commit message :)",
+      "revId": "d3d9adb14de5378883e05dbb12eb75d3363074fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d289263_e53518f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-12T17:48:00Z",
+      "side": 1,
+      "message": "To answer the confusion - this code is in transition state currently. Hopefully, it will end soon, as any transition in Chromium codebase :)",
+      "revId": "d3d9adb14de5378883e05dbb12eb75d3363074fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
