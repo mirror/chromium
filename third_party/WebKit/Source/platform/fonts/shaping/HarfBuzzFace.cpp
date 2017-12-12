@@ -419,7 +419,9 @@ hb_font_t* HarfBuzzFace::GetScaledFont(
   int scale =
       SkiaTextMetrics::SkiaScalarToHarfBuzzPosition(platform_data_->size());
   hb_font_set_scale(unscaled_font_, scale, scale);
+#if HB_VERSION_ATLEAST(1, 6, 0)
   hb_font_set_ptem(unscaled_font_, platform_data_->size() / kCssPixelsPerPoint);
+#endif
 
   SkTypeface* typeface = harf_buzz_font_data_->paint_.getTypeface();
   int axis_count = typeface->getVariationDesignPosition(nullptr, 0);

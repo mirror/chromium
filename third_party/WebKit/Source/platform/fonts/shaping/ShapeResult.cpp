@@ -515,10 +515,14 @@ bool IsSafeToBreakBefore(const hb_glyph_info_t* glyph_infos,
   if (glyph_infos[i].cluster == glyph_infos[i + 1].cluster)
     return false;
 
+#if HB_VERSION_ATLEAST(1, 5, 0)
   // The HB_GLYPH_FLAG_UNSAFE_TO_BREAK flag is set for all glyphs in a
   // given cluster so we only need to check the last one.
   hb_glyph_flags_t flags = hb_glyph_info_get_glyph_flags(glyph_infos + i);
   return (flags & HB_GLYPH_FLAG_UNSAFE_TO_BREAK) == 0;
+#else
+  return false;
+#endif
 }
 
 }  // anonymous namespace
