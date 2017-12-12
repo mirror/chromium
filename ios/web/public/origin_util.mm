@@ -8,6 +8,7 @@
 
 #include "base/numerics/safe_conversions.h"
 #include "base/stl_util.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/sys_string_conversions.h"
 #include "net/base/url_util.h"
 #include "url/gurl.h"
@@ -42,10 +43,14 @@ GURL GURLOriginWithWKSecurityOrigin(WKSecurityOrigin* origin) {
   if (!origin)
     return GURL();
 
-  url::SchemeHostPort origin_tuple(base::SysNSStringToUTF8(origin.protocol),
-                                   base::SysNSStringToUTF8(origin.host),
-                                   base::checked_cast<uint16_t>(origin.port));
-  return origin_tuple.GetURL();
+  GURL::Replacements rep;
+  rep.SetSchemeStr(base::SysNSStringToUTF8(origin.protocol));
+ // rep.SetHostStr(base::SysNSStringToUTF8(origin.host));
+  if (origin.port) {
+    uint16_t port = base::checked_cast<uint16_t>(origin.port);
+    rep.SetPortStr(base::UintToString(port));
+  }
+  return GURL(base::SysNSStringToUTF8(origin.host)).ReplaceComponents(rep);
 }
 
 }  // namespace web
