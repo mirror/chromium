@@ -305,7 +305,7 @@ TEST_F(JobSchedulerTest, GetChangeList) {
   error = google_apis::DRIVE_OTHER_ERROR;
   std::unique_ptr<google_apis::ChangeList> change_list;
   scheduler_->GetChangeList(
-      old_largest_change_id + 1,
+      std::string(), old_largest_change_id + 1,
       google_apis::test_util::CreateCopyResultCallback(&error, &change_list));
   base::RunLoop().RunUntilIdle();
 
@@ -321,7 +321,7 @@ TEST_F(JobSchedulerTest, GetRemainingChangeList) {
   std::unique_ptr<google_apis::ChangeList> change_list;
 
   scheduler_->GetChangeList(
-      0,
+      std::string(), 0,
       google_apis::test_util::CreateCopyResultCallback(&error, &change_list));
   base::RunLoop().RunUntilIdle();
 

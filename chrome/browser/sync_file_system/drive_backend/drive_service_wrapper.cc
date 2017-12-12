@@ -64,7 +64,7 @@ void DriveServiceWrapper::GetChangeList(
     int64_t start_changestamp,
     const google_apis::ChangeListCallback& callback) {
   DCHECK(sequece_checker_.CalledOnValidSequence());
-  drive_service_->GetChangeList(start_changestamp, callback);
+  drive_service_->GetChangeList(std::string(), start_changestamp, callback);
 }
 
 void DriveServiceWrapper::GetRemainingChangeList(

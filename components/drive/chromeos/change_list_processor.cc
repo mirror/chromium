@@ -167,13 +167,14 @@ FileError ChangeListProcessor::ApplyUserChangeList(
   }
 
   ChangeListToEntryMapUMAStats uma_stats;
-  error = ApplyChangeListInternal(std::move(change_lists), largest_changestamp,
-                                  &root, &uma_stats);
+  error = ApplyChangeListInternal(std::string(), std::move(change_lists),
+                                  largest_changestamp, &root, &uma_stats);
   if (error != FILE_ERROR_OK)
     return error;
 
   // Update changestamp in the metadata header.
-  error = resource_metadata_->SetLargestChangestamp(largest_changestamp);
+  error = resource_metadata_->SetLargestChangestamp(std::string(),
+                                                    largest_changestamp);
   if (error != FILE_ERROR_OK) {
     DLOG(ERROR) << "SetLargestChangeStamp failed: " << FileErrorToString(error);
     return error;
@@ -218,19 +219,20 @@ FileError ChangeListProcessor::ApplyTeamDriveChangeList(
   }
 
   ChangeListToEntryMapUMAStats uma_stats;
-  error = ApplyChangeListInternal(std::move(change_lists), largest_changestamp,
-                                  &root, &uma_stats);
+  error = ApplyChangeListInternal(team_drive_id, std::move(change_lists),
+                                  largest_changestamp, &root, &uma_stats);
   return error;
 }
 
 FileError ChangeListProcessor::ApplyChangeListInternal(
+    const std::string& team_drive_id,
     std::vector<std::unique_ptr<ChangeList>> change_lists,
     int64_t largest_changestamp,
     ResourceEntry* root,
     ChangeListToEntryMapUMAStats* uma_stats) {
-  ConvertChangeListsToMap(std::move(change_lists), largest_changestamp,
-                          uma_stats);
-  FileError error = ApplyEntryMap(root->resource_id());
+  ConvertChangeListsToMap(team_drive_id, std::move(change_lists),
+                          largest_changestamp, uma_stats);
+  FileError error = ApplyEntryMap(root->resource_id(), largest_changestamp);
   if (error != FILE_ERROR_OK) {
     DLOG(ERROR) << "ApplyEntryMap failed: " << FileErrorToString(error);
     return error;
@@ -244,6 +246,7 @@ FileError ChangeListProcessor::ApplyChangeListInternal(
 }
 
 void ChangeListProcessor::ConvertChangeListsToMap(
+    const std::string& team_drive_id,
     std::vector<std::unique_ptr<ChangeList>> change_lists,
     int64_t largest_changestamp,
     ChangeListToEntryMapUMAStats* uma_stats) {
@@ -275,10 +278,33 @@ void ChangeListProcessor::ConvertChangeListsToMap(
           largest_changestamp);
     }
   }
+
+  FileError error = ApplyEntryMap(team_drive_id, largest_changestamp);
+  if (error != FILE_ERROR_OK) {
+    DLOG(ERROR) << "ApplyEntryMap failed: " << FileErrorToString(error);
+    return;
+    // return error;
+  }
+
+  // Update changestamp.
+  error = resource_metadata_->SetLargestChangestamp(team_drive_id,
+                                                    largest_changestamp);
+  if (error != FILE_ERROR_OK) {
+    DLOG(ERROR) << "SetLargestChangeStamp failed: " << FileErrorToString(error);
+    return;
+    // return error;
+  }
+
+  // // Shouldn't record histograms when processing delta update.
+  // if (!is_delta_update)
+  //   uma_stats.UpdateFileCountUmaHistograms();
+
+  // return FILE_ERROR_OK;
 }
 
 FileError ChangeListProcessor::ApplyEntryMap(
-    const std::string& root_resource_id) {
+    const std::string& root_resource_id,
+    int64_t largest_changestamp) {
   // Gather the set of changes in the old path.
   // Note that we want to notify the change in both old and new paths (suppose
   // /a/b/c is moved to /x/y/c. We want to notify both "/a/b" and "/x/y".)

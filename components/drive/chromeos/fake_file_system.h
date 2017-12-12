@@ -46,7 +46,7 @@ class FakeFileSystem : public FileSystemInterface {
   // FileSystemInterface Overrides.
   void AddObserver(FileSystemObserver* observer) override;
   void RemoveObserver(FileSystemObserver* observer) override;
-  void CheckForUpdates() override;
+  void CheckForUpdates(const std::string& team_drive_id) override;
   void TransferFileFromLocalToRemote(
       const base::FilePath& local_src_file_path,
       const base::FilePath& remote_dest_file_path,

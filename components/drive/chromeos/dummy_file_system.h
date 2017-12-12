@@ -17,7 +17,7 @@ class DummyFileSystem : public FileSystemInterface {
   ~DummyFileSystem() override {}
   void AddObserver(FileSystemObserver* observer) override {}
   void RemoveObserver(FileSystemObserver* observer) override {}
-  void CheckForUpdates() override {}
+  void CheckForUpdates(const std::string& team_drive_id) override {}
   void TransferFileFromLocalToRemote(
       const base::FilePath& local_src_file_path,
       const base::FilePath& remote_dest_file_path,

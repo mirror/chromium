@@ -451,12 +451,12 @@ CancelCallback FakeDriveService::GetAllFileList(
     return CancelCallback();
   }
 
-  GetChangeListInternal(0,  // start changestamp
+  GetChangeListInternal(std::string(),
+                        0,              // start changestamp
                         std::string(),  // empty search query
                         std::string(),  // no directory resource id,
-                        0,  // start offset
-                        default_max_results_,
-                        &file_list_load_count_,
+                        0,              // start offset
+                        default_max_results_, &file_list_load_count_,
                         base::Bind(&FileListCallbackAdapter, callback));
   return CancelCallback();
 }
@@ -468,12 +468,12 @@ CancelCallback FakeDriveService::GetFileListInDirectory(
   DCHECK(!directory_resource_id.empty());
   DCHECK(!callback.is_null());
 
-  GetChangeListInternal(0,  // start changestamp
+  GetChangeListInternal(std::string(),  // team_drive_id
+                        0,              // start changestamp
                         std::string(),  // empty search query
                         directory_resource_id,
                         0,  // start offset
-                        default_max_results_,
-                        &directory_load_count_,
+                        default_max_results_, &directory_load_count_,
                         base::Bind(&FileListCallbackAdapter, callback));
   return CancelCallback();
 }
@@ -485,7 +485,8 @@ CancelCallback FakeDriveService::Search(
   DCHECK(!search_query.empty());
   DCHECK(!callback.is_null());
 
-  GetChangeListInternal(0,  // start changestamp
+  GetChangeListInternal(std::string(),  // no Team Drive ID
+                        0,              // start changestamp
                         search_query,
                         std::string(),  // no directory resource id,
                         0,              // start offset
@@ -504,7 +505,8 @@ CancelCallback FakeDriveService::SearchByTitle(
 
   // Note: the search implementation here doesn't support quotation unescape,
   // so don't escape here.
-  GetChangeListInternal(0,  // start changestamp
+  GetChangeListInternal(std::string(),  // no Team Drive ID
+                        0,              // start changestamp
                         base::StringPrintf("title:'%s'", title.c_str()),
                         directory_resource_id,
                         0,  // start offset
@@ -514,17 +516,17 @@ CancelCallback FakeDriveService::SearchByTitle(
 }
 
 CancelCallback FakeDriveService::GetChangeList(
+    const std::string& team_drive_id,
     int64_t start_changestamp,
     const ChangeListCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!callback.is_null());
 
-  GetChangeListInternal(start_changestamp,
+  GetChangeListInternal(team_drive_id, start_changestamp,
                         std::string(),  // empty search query
                         std::string(),  // no directory resource id,
-                        0,  // start offset
-                        default_max_results_,
-                        &change_list_load_count_,
+                        0,              // start offset
+                        default_max_results_, &change_list_load_count_,
                         callback);
   return CancelCallback();
 }
@@ -544,6 +546,7 @@ CancelCallback FakeDriveService::GetRemainingChangeList(
   DCHECK_EQ(next_link.host(), "localhost");
   DCHECK_EQ(next_link.path(), "/");
 
+  std::string team_drive_id;
   int64_t start_changestamp = 0;
   std::string search_query;
   std::string directory_resource_id;
@@ -553,7 +556,12 @@ CancelCallback FakeDriveService::GetRemainingChangeList(
   if (base::SplitStringIntoKeyValuePairs(
           next_link.query(), '=', '&', &parameters)) {
     for (size_t i = 0; i < parameters.size(); ++i) {
-      if (parameters[i].first == "changestamp") {
+      if (parameters[i].first == "team_drive_id") {
+        team_drive_id = net::UnescapeURLComponent(
+            parameters[i].second,
+            net::UnescapeRule::PATH_SEPARATORS |
+                net::UnescapeRule::URL_SPECIAL_CHARS_EXCEPT_PATH_SEPARATORS);
+      } else if (parameters[i].first == "changestamp") {
         base::StringToInt64(parameters[i].second, &start_changestamp);
       } else if (parameters[i].first == "q") {
         search_query = net::UnescapeURLComponent(
@@ -573,8 +581,9 @@ CancelCallback FakeDriveService::GetRemainingChangeList(
     }
   }
 
-  GetChangeListInternal(start_changestamp, search_query, directory_resource_id,
-                        start_offset, max_results, nullptr, callback);
+  GetChangeListInternal(team_drive_id, start_changestamp, search_query,
+                        directory_resource_id, start_offset, max_results,
+                        nullptr, callback);
   return CancelCallback();
 }
 
@@ -1731,6 +1740,7 @@ const FakeDriveService::EntryInfo* FakeDriveService::AddNewEntry(
 }
 
 void FakeDriveService::GetChangeListInternal(
+    const std::string& team_drive_id,
     int64_t start_changestamp,
     const std::string& search_query,
     const std::string& directory_resource_id,

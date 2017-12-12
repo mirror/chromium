@@ -402,10 +402,11 @@ void DriveIntegrationService::RemoveObserver(
   observers_.RemoveObserver(observer);
 }
 
-void DriveIntegrationService::OnNotificationReceived() {
+void DriveIntegrationService::OnNotificationReceived(
+    const std::string& team_drive_id) {
   logger_->Log(logging::LOG_INFO,
                "Received Drive update notification. Will check for update.");
-  file_system_->CheckForUpdates();
+  file_system_->CheckForUpdates(team_drive_id);
   drive_app_registry_->Update();
 }
 

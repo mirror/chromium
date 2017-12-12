@@ -56,11 +56,15 @@ class ResourceMetadata {
   // Resets this object.
   FileError Reset();
 
-  // Returns the largest changestamp.
-  FileError GetLargestChangestamp(int64_t* out_value);
+  // Returns the largest changestamp of a Team Drive specified by
+  // |team_drive_id|, or that of the user's changelist if |team_drive_id| is
+  // empty.
+  FileError GetLargestChangestamp(const std::string& team_drive_id,
+                                  int64_t* out_value);
 
   // Sets the largest changestamp.
-  FileError SetLargestChangestamp(int64_t value);
+  FileError SetLargestChangestamp(const std::string& team_drive_id,
+                                  int64_t value);
 
   // Adds |entry| to the metadata tree based on its parent_local_id.
   FileError AddEntry(const ResourceEntry& entry, std::string* out_id);
@@ -75,6 +79,10 @@ class ResourceMetadata {
   // Synchronous version of GetResourceEntryByPathOnUIThread().
   FileError GetResourceEntryByPath(const base::FilePath& file_path,
                                    ResourceEntry* out_entry);
+
+  // Finds an entry (a file or a directory) by the resource ID in Google Drive.
+  FileError GetResourceEntryByDriveId(const std::string& drive_id,
+                                      ResourceEntry* out_entry);
 
   // Finds and reads a directory by |file_path|.
   FileError ReadDirectoryByPath(const base::FilePath& file_path,

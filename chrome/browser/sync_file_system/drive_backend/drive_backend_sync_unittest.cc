@@ -328,7 +328,7 @@ class DriveBackendSyncTest : public testing::Test,
   }
 
   void FetchRemoteChanges() {
-    remote_sync_service_->OnNotificationReceived();
+    remote_sync_service_->OnNotificationReceived(std::string());
     WaitForIdleWorker();
   }
 

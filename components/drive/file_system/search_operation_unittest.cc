@@ -89,7 +89,7 @@ TEST_F(SearchOperationTest, ContentSearchWithNewEntry) {
   }
 
   // Load the change from FakeDriveService.
-  ASSERT_EQ(FILE_ERROR_OK, CheckForUpdates());
+  ASSERT_EQ(FILE_ERROR_OK, CheckForUpdates(std::string()));
 
   // Now the new entry must be reported to be in the right directory.
   expected_results.clear();

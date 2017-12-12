@@ -115,7 +115,7 @@ class OperationTestBase : public testing::Test {
 
   // Synchronously updates |metadata_| by fetching the change feed from the
   // |fake_service_|.
-  FileError CheckForUpdates();
+  FileError CheckForUpdates(const std::string& team_drive_id);
 
   // Accessors for the components.
   FakeDriveService* fake_service() {

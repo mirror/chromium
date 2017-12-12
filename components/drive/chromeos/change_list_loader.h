@@ -156,11 +156,13 @@ class ChangeListLoader {
   void AddObserver(ChangeListLoaderObserver* observer);
   void RemoveObserver(ChangeListLoaderObserver* observer);
 
-  // Checks for updates on the server. Does nothing if the change list is now
-  // being loaded or refreshed. |callback| must not be null.
-  // Note: |callback| will be called if the check for updates actually
+  // Checks for updates on the server. |team_drive_id| specifies the Team Drive,
+  // or the default corpora if empty. Does nothing if the change list of
+  // |team_drive_id| is now being loaded or refreshed. |callback| must not be
+  // null. Note: |callback| will be called if the check for updates actually
   // runs, i.e. it may NOT be called if the checking is ignored.
-  void CheckForUpdates(const FileOperationCallback& callback);
+  void CheckForUpdates(const std::string& team_drive_id,
+                       const FileOperationCallback& callback);
 
   // Starts the change list loading if needed. If the locally stored metadata is
   // available, runs |callback| immediately and starts checking server for
@@ -173,11 +175,14 @@ class ChangeListLoader {
 
  private:
   // Starts the resource metadata loading and calls |callback| when it's done.
-  void Load(const FileOperationCallback& callback);
-  void LoadAfterGetLargestChangestamp(bool is_initial_load,
+  void Load(const std::string& team_drive_id,
+            const FileOperationCallback& callback);
+  void LoadAfterGetLargestChangestamp(const std::string& team_drive_id,
+                                      bool is_initial_load,
                                       const int64_t* local_changestamp,
                                       FileError error);
   void LoadAfterGetAboutResource(
+      const std::string& team_drive_id,
       int64_t local_changestamp,
       google_apis::DriveApiErrorCode status,
       std::unique_ptr<google_apis::AboutResource> about_resource);
@@ -185,11 +190,13 @@ class ChangeListLoader {
   // Part of Load().
   // This function should be called when the change list load is complete.
   // Flushes the callbacks for change list loading and all directory loading.
-  void OnChangeListLoadComplete(FileError error);
+  void OnChangeListLoadComplete(const std::string& team_drive_id,
+                                FileError error);
 
   // Called when the loading about_resource_loader_->UpdateAboutResource is
   // completed.
   void OnAboutResourceUpdated(
+      const std::string& team_drive_id,
       google_apis::DriveApiErrorCode error,
       std::unique_ptr<google_apis::AboutResource> resource);
 
@@ -198,11 +205,13 @@ class ChangeListLoader {
   // Part of LoadFromServerIfNeeded().
   // Starts loading the change list since |start_changestamp|, or the full
   // resource list if |start_changestamp| is zero.
-  void LoadChangeListFromServer(int64_t start_changestamp);
+  void LoadChangeListFromServer(const std::string& team_drive_id,
+                                int64_t start_changestamp);
 
   // Part of LoadChangeListFromServer().
   // Called when the entire change list is loaded.
   void LoadChangeListFromServerAfterLoadChangeList(
+      const std::string& team_drive_id,
       std::unique_ptr<google_apis::AboutResource> about_resource,
       bool is_delta_update,
       FileError error,
@@ -211,6 +220,7 @@ class ChangeListLoader {
   // Part of LoadChangeListFromServer().
   // Called when the resource metadata is updated.
   void LoadChangeListFromServerAfterUpdate(
+      const std::string& team_drive_id,
       ChangeListProcessor* change_list_processor,
       bool should_notify_changed_directories,
       const base::Time& start_time,
