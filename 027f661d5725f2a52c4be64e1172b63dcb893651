@@ -22,6 +22,30 @@
       "revId": "027f661d5725f2a52c4be64e1172b63dcb893651",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad834d94_63595fab",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T22:28:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78737c9c_eb7de5da",
+      "range": {
+        "startLine": 574,
+        "startChar": 6,
+        "endLine": 574,
+        "endChar": 18
+      },
+      "revId": "027f661d5725f2a52c4be64e1172b63dcb893651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
