@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "afb48517_8b4eed05",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-12-12T19:58:15Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4be358b2_cdd0951c",
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537bf016_ea169a39",
         "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d356cecf_a3ea42da",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-12-12T19:58:15Z",
+      "side": 1,
+      "message": "That\u0027s what I thought as well, but the UI does not update without this. The array returned by this.getSpellCheckLanguages_() contains references to the items from this.languages.enabled (not copies), so my guess is that it doesn\u0027t see changes to those.",
+      "parentUuid": "537bf016_ea169a39",
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4266c4fc_9ba77b7d",
         "filename": "chrome/browser/spellchecker/spellcheck_language_policy_handler.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380a2e8b_515de70f",
+        "filename": "chrome/browser/spellchecker/spellcheck_language_policy_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-12-12T19:58:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4266c4fc_9ba77b7d",
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a1a14f_368886e3",
+        "filename": "chrome/browser/spellchecker/spellcheck_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-12-12T19:58:15Z",
+      "side": 1,
+      "message": "I need to call GetString() on every base::Value* in the ListStorage I get from GetList() though, so that would complicate things. Leaving as-is. :)",
+      "parentUuid": "1517668e_1ae0e0ff",
+      "range": {
+        "startLine": 232,
+        "startChar": 19,
+        "endLine": 232,
+        "endChar": 35
+      },
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +188,30 @@
       "writtenOn": "2017-12-12T08:49:22Z",
       "side": 1,
       "message": "Is there a web source you can point to that will reveal the current list? I am afraid this list here will never be updated and if it changes we will only know if some admin ever complains.",
+      "range": {
+        "startLine": 10811,
+        "startChar": 6,
+        "endLine": 10811,
+        "endChar": 270
+      },
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9b1d4d_b42ca567",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 10811,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-12-12T19:58:15Z",
+      "side": 1,
+      "message": "I could point to https://cs.chromium.org/chromium/src/components/spellcheck/common/spellcheck_common.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d32-79, but I\u0027m not sure that\u0027s much better. :)\n\nI was planning on filing a bug to generate a webpage automatically to avoid keeping the list here.",
+      "parentUuid": "b9a5d928_07ed171e",
       "range": {
         "startLine": 10811,
         "startChar": 6,
