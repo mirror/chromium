@@ -1,0 +1,6 @@
+# m2repository -- To be added back after initial review pass
+.gradle
+.idea/
+buildSrc/.gradle/
+buildSrc/build/
+local.properties

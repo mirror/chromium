@@ -1,0 +1,28 @@
+apply plugin: ChromiumPlugin
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://maven.google.com'
+    }
+}
+
+dependencies {
+    // Insert here dependencies that will be added to the APKs.
+    compile 'com.google.dagger:dagger:2.13'
+    compile 'com.google.dagger:dagger-android:2.13'
+    // Uncomment the line below if needed. Not sure what requires it currently.
+    // chromiumCompile 'com.google.dagger:dagger-android-support:2.13'
+
+    // Insert here tooling-related dependencies, e.g. annotation processors or unit test libraries.
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.13'
+}
+
+task setUpRepository(type: BuildConfigGenerator) {
+    repositoryPath 'm2repository'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.3.1'
+}
