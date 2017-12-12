@@ -137,6 +137,16 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
     DISALLOW_COPY_AND_ASSIGN(ScopedListUpdate);
   };
 
+  struct ExternalUninstall {
+    // Note: deliberately pass-by-value to allow moving.
+    ExternalUninstall(ExtensionId id, GURL url);
+
+    ExternalUninstall(ExternalUninstall&& other);
+
+    ExtensionId id;
+    GURL update_url;
+  };
+
   // Creates an ExtensionPrefs object.
   // Does not take ownership of |prefs| or |extension_pref_value_map|.
   // If |extensions_disabled| is true, extension controlled preferences and
@@ -211,9 +221,10 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
   }
 
   // Called when an extension is uninstalled, so that prefs get cleaned up.
-  void OnExtensionUninstalled(const std::string& extension_id,
-                              const Manifest::Location& location,
-                              bool external_uninstall);
+  void OnExtensionUninstalled(
+      const ExtensionId& id,
+      Manifest::Location location,
+      bool external_uninstall);
 
   // Sets the extension's state to enabled and clears disable reasons.
   void SetExtensionEnabled(const std::string& extension_id);
@@ -427,7 +438,7 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
 
   // Same as above, but only includes external extensions the user has
   // explicitly uninstalled.
-  std::unique_ptr<ExtensionsInfo> GetUninstalledExtensionsInfo() const;
+  std::vector<ExternalUninstall> GetExternalUninstalls() const;
 
   // Returns the ExtensionInfo from the prefs for the given extension. If the
   // extension is not present, NULL is returned.
@@ -699,6 +710,12 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
       bool needs_sort_ordinal,
       const syncer::StringOrdinal& suggested_page_ordinal,
       prefs::DictionaryValueUpdate* extension_dict);
+
+  void RecordUninstalledExternalExtension(
+      const ExtensionId& id,
+      const base::Value& extension_pref);
+
+  void MigrateExternalUninstalls();
 
   content::BrowserContext* browser_context_;
 

@@ -103,6 +103,10 @@ constexpr const char kActiveBit[] = "active_bit";
 constexpr const char kExtensionsBlacklistUpdate[] =
     "extensions.blacklistupdate";
 
+const char kUninstalledExternalExtensions[] = "extensions.uninstalled_external";
+
+constexpr char kExternalUninstallUpdateUrlKey[] = "update_url";
+
 // Path for the delayed install info dictionary preference. The actual string
 // value is a legacy artifact for when delayed installs only pertained to
 // updates that were waiting for idle.
@@ -319,6 +323,14 @@ base::ListValue* ExtensionPrefs::ScopedListUpdate::Create() {
   (*update_)->Set(key_, std::move(list_value));
   return key_value;
 }
+
+ExtensionPrefs::ExternalUninstall::ExternalUninstall(
+    ExtensionId id,
+    GURL update_url)
+    : id(std::move(id)), update_url(std::move(update_url)) {}
+
+ExtensionPrefs::ExternalUninstall::ExternalUninstall(
+    ExternalUninstall&& other) = default;
 
 //
 // ExtensionPrefs
@@ -1054,7 +1066,10 @@ bool ExtensionPrefs::DoesExtensionHaveState(
 
 bool ExtensionPrefs::IsExternalExtensionUninstalled(
     const std::string& id) const {
-  return DoesExtensionHaveState(id, Extension::EXTERNAL_EXTENSION_UNINSTALLED);
+  const base::DictionaryValue* uninstalled_extensions =
+      prefs_->GetDictionary(kUninstalledExternalExtensions);
+  return uninstalled_extensions &&
+         uninstalled_extensions->FindKeyOfType(id, base::Value::Type::DICTIONARY);
 }
 
 bool ExtensionPrefs::IsExtensionDisabled(const std::string& id) const {
@@ -1091,7 +1106,7 @@ void ExtensionPrefs::OnExtensionInstalled(
 }
 
 void ExtensionPrefs::OnExtensionUninstalled(const std::string& extension_id,
-                                            const Manifest::Location& location,
+                                            Manifest::Location location,
                                             bool external_uninstall) {
   app_sorting()->ClearOrdinals(extension_id);
 
@@ -1100,15 +1115,12 @@ void ExtensionPrefs::OnExtensionUninstalled(const std::string& extension_id,
   // true, which signifies that the registry key was deleted or the pref file
   // no longer lists the extension).
   if (!external_uninstall && Manifest::IsExternalLocation(location)) {
-    UpdateExtensionPref(extension_id, kPrefState,
-                        std::make_unique<base::Value>(
-                            Extension::EXTERNAL_EXTENSION_UNINSTALLED));
-    extension_pref_value_map_->SetExtensionState(extension_id, false);
-    for (auto& observer : observer_list_)
-      observer.OnExtensionStateChanged(extension_id, false);
-  } else {
-    DeleteExtensionPrefs(extension_id);
+    const base::DictionaryValue* extension_pref =
+        GetExtensionPref(extension_id);
+    DCHECK(extension_pref);
+    RecordUninstalledExternalExtension(extension_id, *extension_pref);
   }
+  DeleteExtensionPrefs(extension_id);
 }
 
 void ExtensionPrefs::SetExtensionEnabled(const std::string& extension_id) {
@@ -1122,11 +1134,9 @@ void ExtensionPrefs::SetExtensionEnabled(const std::string& extension_id) {
 
 void ExtensionPrefs::SetExtensionDisabled(const std::string& extension_id,
                                           int disable_reasons) {
-  if (!IsExternalExtensionUninstalled(extension_id)) {
-    UpdateExtensionPref(extension_id, kPrefState,
-                        std::make_unique<base::Value>(Extension::DISABLED));
-    extension_pref_value_map_->SetExtensionState(extension_id, false);
-  }
+  UpdateExtensionPref(extension_id, kPrefState,
+                      std::make_unique<base::Value>(Extension::DISABLED));
+  extension_pref_value_map_->SetExtensionState(extension_id, false);
   UpdateExtensionPref(extension_id, kPrefDisableReasons,
                       std::make_unique<base::Value>(disable_reasons));
   for (auto& observer : observer_list_)
@@ -1262,27 +1272,39 @@ ExtensionPrefs::GetInstalledExtensionsInfo() const {
   return extensions_info;
 }
 
-std::unique_ptr<ExtensionPrefs::ExtensionsInfo>
-ExtensionPrefs::GetUninstalledExtensionsInfo() const {
-  std::unique_ptr<ExtensionsInfo> extensions_info(new ExtensionsInfo);
+std::vector<ExtensionPrefs::ExternalUninstall>
+ExtensionPrefs::GetExternalUninstalls() const {
+  std::vector<ExternalUninstall> result;
 
-  const base::DictionaryValue* extensions =
-      prefs_->GetDictionary(pref_names::kExtensions);
-  for (base::DictionaryValue::Iterator extension_id(*extensions);
-       !extension_id.IsAtEnd(); extension_id.Advance()) {
-    const base::DictionaryValue* ext = NULL;
-    if (!crx_file::id_util::IdIsValid(extension_id.key()) ||
-        !IsExternalExtensionUninstalled(extension_id.key()) ||
-        !extension_id.value().GetAsDictionary(&ext))
+  const base::DictionaryValue* external_uninstalls =
+      prefs_->GetDictionary(kUninstalledExternalExtensions);
+  if (!external_uninstalls)
+    return result;
+
+  for (const auto& entry : external_uninstalls->DictItems()) {
+    const base::Value& value = entry.second;
+    if (!value.is_dict()) {
+      NOTREACHED();
       continue;
+    }
+    const base::Value* update_url_str =
+        value.FindKeyOfType(kExternalUninstallUpdateUrlKey,
+                             base::Value::Type::STRING);
+    if (!update_url_str) {
+      NOTREACHED();
+      continue;
+    }
+    ExtensionId id = entry.first;
+    GURL update_url(update_url_str->GetString());
+    if (!crx_file::id_util::IdIsValid(id)) {
+      NOTREACHED();
+      continue;
+    }
 
-    std::unique_ptr<ExtensionInfo> info =
-        GetInstalledInfoHelper(extension_id.key(), ext);
-    if (info)
-      extensions_info->push_back(std::move(info));
+    result.emplace_back(id, update_url);
   }
 
-  return extensions_info;
+  return result;
 }
 
 void ExtensionPrefs::SetDelayedInstallInfo(
@@ -1965,6 +1987,58 @@ void ExtensionPrefs::FinishExtensionInfoPrefs(
 
   for (auto& observer : observer_list_)
     observer.OnExtensionRegistered(extension_id, install_time, is_enabled);
+}
+
+void ExtensionPrefs::MigrateExternalUninstalls() {
+  const base::DictionaryValue* installed_extensions =
+      prefs_->GetDictionary(pref_names::kExtensions);
+  std::set<std::string> remove_ids;
+  for (const auto& entry : installed_extensions->DictItems()) {
+    if (!entry.second.is_dict()) {
+      NOTREACHED();  // Pref corruption.
+      continue;
+    }
+    const base::Value* state_value =
+        entry.second.FindKeyOfType(kPrefState, base::Value::Type::INTEGER);
+    if (!state_value ||
+        state_value->GetInt()
+            != Extension::EXTERNAL_EXTENSION_UNINSTALLED) {
+      continue;
+    }
+
+    remove_ids.insert(entry.first);
+    RecordUninstalledExternalExtension(entry.first, entry.second);
+  }
+
+  prefs::ScopedDictionaryPrefUpdate update(prefs_, pref_names::kExtensions);
+  for (const std::string& id : remove_ids) {
+    update->Remove(id, nullptr);
+  }
+}
+
+void ExtensionPrefs::RecordUninstalledExternalExtension(
+    const ExtensionId& id,
+    const base::Value& extension_pref) {
+  DCHECK(extension_pref.is_dict());
+  const base::Value* manifest =
+      extension_pref.FindKeyOfType("manifest", base::Value::Type::DICTIONARY);
+  if (!manifest) {
+    NOTREACHED();  // Pref corruption.
+    return;
+  }
+  std::string update_url;
+  const base::Value* url_value =
+      manifest->FindKeyOfType("update_url", base::Value::Type::STRING);
+  if (url_value)
+    update_url = url_value->GetString();
+
+  prefs::ScopedDictionaryPrefUpdate update(
+      prefs_, kUninstalledExternalExtensions);
+  std::unique_ptr<prefs::DictionaryValueUpdate> dict = update.Get();
+  base::Value entry(base::Value::Type::DICTIONARY);
+  entry.SetKey(kExternalUninstallUpdateUrlKey,
+               base::Value(update_url));
+  dict->SetKey(id, std::move(entry));
 }
 
 }  // namespace extensions
