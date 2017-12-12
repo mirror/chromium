@@ -383,8 +383,9 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
 
   // Sets the window's |bounds| and transition to the new bounds with
   // a cross fade animation.
+public:
   void SetBoundsDirectCrossFade(const gfx::Rect& bounds);
-
+private:
   // aura::WindowObserver:
   void OnWindowPropertyChanged(aura::Window* window,
                                const void* key,

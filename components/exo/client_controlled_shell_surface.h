@@ -167,6 +167,9 @@ class ClientControlledShellSurface
 
   ash::wm::ClientControlledState* client_controlled_state_ = nullptr;
 
+  ui::WindowShowState pending_show_state_ = ui::SHOW_STATE_NORMAL;
+  bool enable_crossfade_ = false;
+
   std::unique_ptr<ui::CompositorLock> orientation_compositor_lock_;
 
   DISALLOW_COPY_AND_ASSIGN(ClientControlledShellSurface);
