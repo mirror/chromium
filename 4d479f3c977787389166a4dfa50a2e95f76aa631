@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c4a634b6_3cab4521",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-1.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1119597
+      },
+      "writtenOn": "2017-12-12T12:01:15Z",
+      "side": 1,
+      "message": "Hiroshige\u0027s comment sounds like it\u0027s fundamentally hard to implement the specified behavior in blink. Is that right?\n\nIndependent of that, I\u0027m trying to understand if the identity of some of these errors is something we explicitly desired or is rather a consequence of how things are set up. One of the key conclusions from our module summit was \"don\u0027t record instantiation errors\", and I didn\u0027t realize until recently that we are in fact recording instantiation errors in HTML.",
+      "parentUuid": "ab552510_6ae7e2ed",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72eff9c6_5a5a8a9c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-5.html",
         "patchSetId": 20
