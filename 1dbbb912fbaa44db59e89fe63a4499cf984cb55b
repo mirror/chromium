@@ -22,6 +22,30 @@
       "revId": "1dbbb912fbaa44db59e89fe63a4499cf984cb55b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a99dbfd_65f6413f",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-12T18:45:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ba97686_0cc4657e",
+      "range": {
+        "startLine": 127,
+        "startChar": 41,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "1dbbb912fbaa44db59e89fe63a4499cf984cb55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
