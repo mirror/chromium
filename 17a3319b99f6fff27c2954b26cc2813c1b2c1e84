@@ -16,6 +16,24 @@
       "revId": "17a3319b99f6fff27c2954b26cc2813c1b2c1e84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9945fa_83f7022d",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-12T05:01:10Z",
+      "side": 0,
+      "message": "This is moved to the end of this function to make this function and InvalidateSelection() be in the same structure, and to avoid layer/client invalidation when the mapped rectangle is empty. The \"reason \u003d\u003d kNone\" condition is unnecessary because incremental invalidation is not applicable in ObjectPaintInvalidator.",
+      "parentUuid": "344db3af_95b19046",
+      "revId": "17a3319b99f6fff27c2954b26cc2813c1b2c1e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
