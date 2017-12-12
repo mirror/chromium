@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0b9be927_357477d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-12-12T05:15:15Z",
+      "side": 1,
+      "message": "Actually I have tested it locally no crash when using chrome://tracing.",
+      "parentUuid": "dc537913_917c0d52",
+      "revId": "14eedf3552d9e64813e250afde120261530a40c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a6d369f_10023bec",
         "filename": "base/message_loop/message_pump_win.cc",
         "patchSetId": 5
