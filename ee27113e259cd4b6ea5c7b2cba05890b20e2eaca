@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4d20f4d_786fd124",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/SensorsView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-12T00:43:10Z",
+      "side": 1,
+      "message": "You can use \\u2318 for ⌘ if you want to be fancy.",
+      "revId": "ee27113e259cd4b6ea5c7b2cba05890b20e2eaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f622a61a_53967bc8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-12T00:43:10Z",
+      "side": 1,
+      "message": "We might want to use the same technique for alpha values if we have a good way to detect them.",
+      "revId": "ee27113e259cd4b6ea5c7b2cba05890b20e2eaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

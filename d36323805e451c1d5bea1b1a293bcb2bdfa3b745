@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc71bb9b_a58d045c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-12T00:43:10Z",
+      "side": 0,
+      "message": "Why did this move?",
+      "revId": "d36323805e451c1d5bea1b1a293bcb2bdfa3b745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
