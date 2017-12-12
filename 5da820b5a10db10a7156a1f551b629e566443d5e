@@ -16,6 +16,24 @@
       "revId": "5da820b5a10db10a7156a1f551b629e566443d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a383075_e17392f1",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-12-12T20:31:54Z",
+      "side": 1,
+      "message": "Done, thanks for the tip. Haven\u0027t done much JS in Chrome. :)",
+      "parentUuid": "dde1d72b_476f5617",
+      "revId": "5da820b5a10db10a7156a1f551b629e566443d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
