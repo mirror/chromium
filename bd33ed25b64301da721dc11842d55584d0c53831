@@ -110,6 +110,24 @@
     },
     {
       "key": {
+        "uuid": "4913fc0d_a0d54613",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-12T18:05:39Z",
+      "side": 1,
+      "message": "I believe UTF-8 can encode U+0000, and U+0000\u0027s encoding is \u0027\\0\u0027. Neither UTF-8 nor CBOR explicitly allow U+0000, but https://tools.ietf.org/html/rfc3629#section-1 says \"Character numbers from U+0000 … correspond to octets 00 …\", and https://tools.ietf.org/html/rfc7049#section-4.1 talks about needing to escape it on conversion to JSON.",
+      "parentUuid": "a022d66f_d8dd0f6c",
+      "revId": "bd33ed25b64301da721dc11842d55584d0c53831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc87e148_f378d790",
         "filename": "content/browser/webauth/cbor/cbor_values.cc",
         "patchSetId": 3
@@ -121,6 +139,24 @@
       "writtenOn": "2017-12-12T09:58:52Z",
       "side": 1,
       "message": "This should not be required anymore, right?\n\nAlso, I think it would be a bit unexpected to successfully construct a CBOR value that would not pass this DCHECK, |string_value_| would still have the original length and thus contain the 0 in the middle.",
+      "revId": "bd33ed25b64301da721dc11842d55584d0c53831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f44910_72a719ef",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-12T18:05:39Z",
+      "side": 1,
+      "message": "It\u0027s definitely possible for some Chromium code to call CBORValue(\"not utf-8\"), which this DCHECK would catch.\n\nI agree that it\u0027s a bad idea to call .data(), which strips any non-utf-8 values after the first \u0027\\0\u0027.",
+      "parentUuid": "bc87e148_f378d790",
       "revId": "bd33ed25b64301da721dc11842d55584d0c53831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
