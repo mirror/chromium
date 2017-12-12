@@ -44,10 +44,13 @@
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chromeos/chromeos_switches.h"
+#include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_prefs.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_util.h"
+#include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/arc/test/fake_app_instance.h"
+#include "components/arc/test/fake_intent_helper_instance.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_utils.h"
@@ -208,6 +211,14 @@ class ArcAppModelBuilderTest : public extensions::ExtensionServiceTestBase,
   }
 
   void TearDown() override {
+    if (intent_helper_instance_) {
+      arc::ArcServiceManager::Get()
+          ->arc_bridge_service()
+          ->intent_helper()
+          ->CloseInstance(intent_helper_instance_.get());
+      intent_helper_instance_.reset();
+      intent_helper_bridge_.reset();
+    }
     arc_test_.TearDown();
     ResetBuilder();
   }
@@ -435,6 +446,17 @@ class ArcAppModelBuilderTest : public extensions::ExtensionServiceTestBase,
     app_instance()->SendPackageUninstalled(package.package_name);
   }
 
+  void CreateIntentHelperInstance() {
+    arc::ArcBridgeService* arc_bridge_service =
+        arc::ArcServiceManager::Get()->arc_bridge_service();
+    intent_helper_bridge_ = base::MakeUnique<arc::ArcIntentHelperBridge>(
+        profile(), arc_bridge_service);
+    intent_helper_instance_ = base::MakeUnique<arc::FakeIntentHelperInstance>();
+    arc_bridge_service->intent_helper()->SetInstance(
+        intent_helper_instance_.get());
+    base::RunLoop().RunUntilIdle();
+  }
+
   AppListControllerDelegate* controller() { return controller_.get(); }
 
   TestingProfile* profile() { return profile_.get(); }
@@ -466,6 +488,8 @@ class ArcAppModelBuilderTest : public extensions::ExtensionServiceTestBase,
   std::unique_ptr<app_list::FakeAppListModelUpdater> model_updater_;
   std::unique_ptr<test::TestAppListControllerDelegate> controller_;
   std::unique_ptr<ArcAppModelBuilder> builder_;
+  std::unique_ptr<arc::FakeIntentHelperInstance> intent_helper_instance_;
+  std::unique_ptr<arc::ArcIntentHelperBridge> intent_helper_bridge_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcAppModelBuilderTest);
 };
@@ -1769,6 +1793,10 @@ TEST_P(ArcAppModelBuilderTest, AppLauncher) {
       app2.package_name, app2.activity, std::vector<std::string>());
   ArcAppLauncher launcher2(profile(), id2, launch_intent2, false,
                            display::kInvalidDisplayId);
+  // No Intent Helper is ready.
+  EXPECT_FALSE(launcher2.app_launched());
+
+  CreateIntentHelperInstance();
   EXPECT_TRUE(launcher2.app_launched());
   EXPECT_FALSE(prefs->HasObserver(&launcher2));
   EXPECT_EQ(1u, app_instance()->launch_requests().size());
