@@ -16,6 +16,24 @@
       "revId": "86485e35a587d21157d98c53302f984130433c2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb55c593_98bd2443",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-12T02:52:07Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "dda42388_cf51cbd7",
+      "revId": "86485e35a587d21157d98c53302f984130433c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
