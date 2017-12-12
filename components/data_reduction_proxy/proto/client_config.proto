@@ -117,6 +117,13 @@ message ProxyServer {
 
 // Request object to create a client configuration object.
 message CreateClientConfigRequest {
+  // An enum representing the type of user regarding whether they are dogfooding
+  // Chrome.
+  enum DogFoodGroup {
+    DOGFOOD = 0;
+    NONDOGFOOD = 1;
+  }
+
   // A previous per-session key that was assigned by the service.
   optional string session_key = 1;
 
@@ -127,6 +134,9 @@ message CreateClientConfigRequest {
   // the two numbers concatenated. E.g., "310260" for T-Mobile. Empty string if
   // the user is not on android or if the user is on WiFi.
   optional string telephony_network_operator = 3;
+
+  // The DogFoodGroup of the user.
+  optional DogFoodGroup dog_food_group = 4;
 }
 
 // Build version information.
