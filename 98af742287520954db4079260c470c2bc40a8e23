@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff49e72_094fb824",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-12T18:25:40Z",
+      "side": 1,
+      "message": "not specific to Google VR services.  Maybe something like:\n\nEnables a fallback VR mode that uses the device\u0027s orientation sensors.",
+      "range": {
+        "startLine": 1622,
+        "startChar": 5,
+        "endLine": 1623,
+        "endChar": 14
+      },
+      "revId": "98af742287520954db4079260c470c2bc40a8e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
