@@ -71,6 +71,16 @@ bool ConsumeBackgroundPosition(CSSParserTokenRange&,
                                CSSValue*& result_x,
                                CSSValue*& result_y);
 CSSValue* ConsumePrefixedBackgroundBox(CSSParserTokenRange&, AllowTextValue);
+CSSValue* ParseBackgroundBox(CSSParserTokenRange&,
+                             const CSSParserLocalContext&);
+CSSValue* ParseBackgroundOrMaskSize(CSSParserTokenRange&,
+                                    const CSSParserContext&,
+                                    const CSSParserLocalContext&);
+bool ParseBackgroundOrMask(bool,
+                           CSSParserTokenRange&,
+                           const CSSParserContext&,
+                           const CSSParserLocalContext&,
+                           HeapVector<CSSPropertyValue, 256>&);
 
 bool ConsumeRepeatStyleComponent(CSSParserTokenRange&,
                                  CSSValue*& value1,
@@ -95,6 +105,12 @@ CSSValue* ConsumeBorderImageRepeat(CSSParserTokenRange&);
 CSSValue* ConsumeBorderImageSlice(CSSParserTokenRange&, DefaultFill);
 CSSValue* ConsumeBorderImageWidth(CSSParserTokenRange&);
 CSSValue* ConsumeBorderImageOutset(CSSParserTokenRange&);
+
+CSSValue* ParseBorderRadiusCorner(CSSParserTokenRange&,
+                                  const CSSParserContext&);
+CSSValue* ParseBorderWidthSide(CSSParserTokenRange&,
+                               const CSSParserContext&,
+                               const CSSParserLocalContext&);
 
 CSSValue* ConsumeShadow(CSSParserTokenRange&,
                         CSSParserMode,
@@ -201,6 +217,8 @@ CSSValue* ConsumeBorderColorSide(CSSParserTokenRange&,
 CSSValue* ConsumeBorderWidth(CSSParserTokenRange&,
                              CSSParserMode,
                              CSSPropertyParserHelpers::UnitlessQuirk);
+CSSValue* ParsePaintStroke(CSSParserTokenRange&, const CSSParserContext&);
+CSSValue* ParseSpacing(CSSParserTokenRange&, const CSSParserContext&);
 
 template <CSSValueID start, CSSValueID end>
 CSSValue* ConsumePositionLonghand(CSSParserTokenRange& range,
