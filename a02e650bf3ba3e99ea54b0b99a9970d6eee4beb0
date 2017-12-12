@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70371eed_8c4f8b40",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-12T23:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67bae228_abe4e545",
+      "range": {
+        "startLine": 100,
+        "startChar": 63,
+        "endLine": 100,
+        "endChar": 64
+      },
+      "revId": "a02e650bf3ba3e99ea54b0b99a9970d6eee4beb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cb963b7_1349fd98",
         "filename": "content/common/site_isolation_policy.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e2d0a20a_0c2893f4",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-12T23:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb963b7_1349fd98",
+      "range": {
+        "startLine": 101,
+        "startChar": 34,
+        "endLine": 101,
+        "endChar": 35
+      },
+      "revId": "a02e650bf3ba3e99ea54b0b99a9970d6eee4beb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab8096f2_99b14220",
         "filename": "content/common/site_isolation_policy.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-12T23:22:06Z",
       "side": 1,
       "message": "I see that we will never log this histogram with a |false| value.  Is this okay?\n\nWould it be possibly better to just say:\n\nUMA_HISTOGRAM_BOOLEAN(\n    \"SiteIsolation.Flags.IsolateOriginsEnabled\",\n    base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(switches::kIsolateOrigins));",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "a02e650bf3ba3e99ea54b0b99a9970d6eee4beb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d551a437_e8ff54c2",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-12T23:38:58Z",
+      "side": 1,
+      "message": "That was what I did in my first draft, but that just records it for everyone starting Chrome up and will result in roughly a billion \"false\" counts, along with a handful of \"true\" counts.  Maybe that\u0027s ok? But it seemed we only cared about the count of the \"true\" value, so I decided to not record/slow down browser startup for the \"false\" value.  This is also how the other enum\u003d\"BooleanHit\" histograms seem to be used (only recorded when true).\n\nI\u0027d definitely be interested in hearing what someone from the metrics team has to say about best practices for something like this.",
+      "parentUuid": "ab8096f2_99b14220",
       "range": {
         "startLine": 104,
         "startChar": 4,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c220477e_03123cf5",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-12T23:38:58Z",
+      "side": 1,
+      "message": "Removed now per below comment. :)",
+      "parentUuid": "ae8bdad3_0005d3ce",
+      "range": {
+        "startLine": 111,
+        "startChar": 43,
+        "endLine": 111,
+        "endChar": 48
+      },
+      "revId": "a02e650bf3ba3e99ea54b0b99a9970d6eee4beb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41389f70_7c25948a",
         "filename": "content/common/site_isolation_policy.cc",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-12T23:22:06Z",
       "side": 1,
       "message": "Having this UMA doesn\u0027t hurt, but do we really need it?  Maybe it is okay to omit it for now (and focus on the 2 modes that will be talked about in January / that are exposed through enterprise policy).",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 3
+      },
+      "revId": "a02e650bf3ba3e99ea54b0b99a9970d6eee4beb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ffe045_e3d519a4",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-12T23:38:58Z",
+      "side": 1,
+      "message": "Sure -- I added it for completeness to measure all three of our modes, but we can also add that separately, and it doesn\u0027t need to be merged.  Removed for this CL.",
+      "parentUuid": "41389f70_7c25948a",
       "range": {
         "startLine": 113,
         "startChar": 0,
