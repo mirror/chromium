@@ -316,8 +316,12 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
       WebRuntimeFeatures::EnableGenericSensorExtraClasses(true);
   }
 
-  if (base::FeatureList::IsEnabled(features::kNotificationsWithMojo))
+  if (base::FeatureList::IsEnabled(features::kNotificationsWithMojo)) {
+    LOG(WARNING) << "ANITA: " << __FUNCTION__ << " Enabling n10ns with mojo";
     WebRuntimeFeatures::EnableNotificationsWithMojo(true);
+  } else {
+    LOG(WARNING) << "ANITA: " << __FUNCTION__ << " NOT enabling n10ns with mojo";
+  }
 
   if (base::FeatureList::IsEnabled(features::kOutOfBlinkCORS))
     WebRuntimeFeatures::EnableOutOfBlinkCORS(true);

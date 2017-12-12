@@ -197,9 +197,11 @@ void Notification::DidLoadResources(NotificationResourcesLoader* loader) {
   if (RuntimeEnabledFeatures::NotificationsWithMojoEnabled()) {
     NotificationManager::From(execution_context)
         ->DisplayNonPersistentNotification(data_.title);
+    LOG(WARNING) << "ANITA: " << __FUNCTION__ << " mojo enabled";
   } else {
     GetWebNotificationManager()->Show(WebSecurityOrigin(origin), data_,
                                       loader->GetResources(), this);
+    LOG(WARNING) << "ANITA: " << __FUNCTION__ << " mojo disabled";
   }
   loader_.Clear();
 
