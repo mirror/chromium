@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0093cddc_a4aaf338",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-allowed-by-feature-policy.https.sub.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-12T16:28:19Z",
+      "side": 1,
+      "message": "This should probably be \"Feature-Policy header: autoplay *\" to match the actual header.",
+      "revId": "12583217c5d1c54fb82f6e19a42a91069767510d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063fed13_6680d28a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-disabled-by-feature-policy.https.sub.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-12-12T16:28:19Z",
+      "side": 1,
+      "message": "This should probably be \"Feature-Policy header: autoplay \u0027none\u0027\" to match the actual header.",
+      "revId": "12583217c5d1c54fb82f6e19a42a91069767510d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
