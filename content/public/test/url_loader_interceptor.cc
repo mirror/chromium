@@ -4,6 +4,7 @@
 
 #include "content/public/test/url_loader_interceptor.h"
 
+#include "base/strings/string_number_conversions.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/loader/url_loader_factory_impl.h"
@@ -12,6 +13,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/url_loader.mojom.h"
+#include "net/base/url_util.h"
 #include "net/http/http_util.h"
 
 namespace content {
@@ -49,6 +51,11 @@ class URLLoaderInterceptor::Interceptor : public mojom::URLLoaderFactory {
     params.url_request = std::move(url_request);
     params.client = std::move(client);
     params.traffic_annotation = traffic_annotation;
+    if (url_request.url.host() == "mock.failed.request" &&
+        HandleFailedRequest(&params)) {
+      return;
+    }
+
     // We don't intercept the blob URL for plznavigate requests.
     if (url_request.resource_body_stream_url.is_empty() &&
         parent_->callback_.Run(&params))
@@ -61,6 +68,25 @@ class URLLoaderInterceptor::Interceptor : public mojom::URLLoaderFactory {
   }
 
   void Clone(mojom::URLLoaderFactoryRequest request) override { NOTREACHED(); }
+
+  bool HandleFailedRequest(RequestParams* params) {
+    // For now we only need to handle /error?start=ERR_CODE URLs.
+    DCHECK_EQ(params->url_request.url.path(), "/error");
+    std::string phase_error_string;
+    if (!net::GetValueForKeyInQuery(params->url_request.url, "start",
+                                    &phase_error_string)) {
+      return false;
+    }
+
+    int net_error = net::OK;
+    if (!base::StringToInt(phase_error_string, &net_error))
+      return false;
+
+    network::URLLoaderCompletionStatus status;
+    status.error_code = net_error;
+    params->client->OnComplete(status);
+    return true;
+  }
 
   URLLoaderInterceptor* parent_;
   ProcessIdGetter process_id_getter_;
