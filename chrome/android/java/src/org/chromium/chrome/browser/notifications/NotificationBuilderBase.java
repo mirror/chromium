@@ -376,14 +376,25 @@ public abstract class NotificationBuilderBase {
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected Notification createPublicNotification(Context context) {
-        // Use a non-compat builder because we want the default small icon behaviour.
-        ChromeNotificationBuilder builder =
-                NotificationBuilderFactory
-                        .createChromeNotificationBuilder(false /* preferCompat */, mChannelId)
-                        .setContentText(context.getString(
-                                org.chromium.chrome.R.string.notification_hidden_text))
-                        .setSmallIcon(org.chromium.chrome.R.drawable.ic_chrome);
+        return createPublicNotification(context, context, org.chromium.chrome.R.drawable.ic_chrome);
+    }
 
+    /**
+     * Creates a public version of the notification to be displayed in sensitive contexts, such as
+     * on the lockscreen, displaying just the site origin and badge or generated icon.
+     * @param context The context of Chrome.
+     * @param builderContext The context to create the Notification.Builder. It should be the
+     *                       context of the app whose name is shown on the public notification.
+     * @param smallIconId The resource id for the small icon.
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public Notification createPublicNotification(
+            Context context, Context builderContext, int smallIconId) {
+        // Use a non-compat builder because we want the default small icon behaviour.
+        NotificationBuilder builder = new NotificationBuilder(builderContext);
+        builder.setContentText(
+                context.getString(org.chromium.chrome.R.string.notification_hidden_text));
+        builder.setSmallIcon(smallIconId);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             // On N, 'subtext' displays at the top of the notification and this looks better.
             builder.setSubText(mOrigin);
