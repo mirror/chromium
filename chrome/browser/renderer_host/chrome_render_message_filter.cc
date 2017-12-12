@@ -29,9 +29,11 @@
 #include "components/network_hints/common/network_hints_messages.h"
 #include "components/web_cache/browser/web_cache_manager.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "extensions/features/features.h"
 #include "ppapi/features/features.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/browser/guest_view/web_view/web_view_permission_helper.h"
@@ -78,8 +80,6 @@ bool ChromeRenderMessageFilter::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER_DELAY_REPLY(
         ChromeViewHostMsg_RequestFileSystemAccessSync,
         OnRequestFileSystemAccessSync)
-    IPC_MESSAGE_HANDLER(ChromeViewHostMsg_RequestFileSystemAccessAsync,
-                        OnRequestFileSystemAccessAsync)
     IPC_MESSAGE_HANDLER(ChromeViewHostMsg_AllowIndexedDB, OnAllowIndexedDB)
 #if BUILDFLAG(ENABLE_PLUGINS)
     IPC_MESSAGE_HANDLER(ChromeViewHostMsg_IsCrashReportingEnabled,
@@ -189,7 +189,7 @@ void ChromeRenderMessageFilter::OnRequestFileSystemAccessSyncResponse(
   Send(reply_msg);
 }
 
-void ChromeRenderMessageFilter::OnRequestFileSystemAccessAsync(
+void ChromeRenderMessageFilter::RequestFileSystemAccessAsync(
     int render_frame_id,
     int request_id,
     const GURL& origin_url,
@@ -208,8 +208,16 @@ void ChromeRenderMessageFilter::OnRequestFileSystemAccessAsyncResponse(
     int render_frame_id,
     int request_id,
     bool allowed) {
-  Send(new ChromeViewMsg_RequestFileSystemAccessAsyncResponse(
-      render_frame_id, request_id, allowed));
+  content::RenderFrameHost* rfh =
+      content::RenderFrameHost::FromID(render_process_id_, render_frame_id);
+
+  if (rfh) {
+    chrome::mojom::FileSystemAccessAsyncResponseProviderPtr
+        file_system_access_response;
+    rfh->GetRemoteInterfaces()->GetInterface(&file_system_access_response);
+    file_system_access_response->RequestFileSystemAccessAsyncResponse(
+        request_id, allowed);
+  }
 }
 
 void ChromeRenderMessageFilter::OnRequestFileSystemAccess(
@@ -307,3 +315,9 @@ void ChromeRenderMessageFilter::OnIsCrashReportingEnabled(bool* enabled) {
   *enabled = ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled();
 }
 #endif
+
+void ChromeRenderMessageFilter::
+    BindFileSystemAccessAsyncResponseProviderRequest(
+        chrome::mojom::FileSystemAccessAsyncResponseProviderRequest request) {
+  file_access_async_bindings_.AddBinding(this, std::move(request));
+}

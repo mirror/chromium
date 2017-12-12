@@ -660,6 +660,7 @@ mojom("mojo_bindings") {
     "cache_stats_recorder.mojom",
     "chrome_render_frame.mojom",
     "constants.mojom",
+    "file_system_access_provider.mojom",
     "insecure_content_renderer.mojom",
     "navigation_corrector.mojom",
     "net_benchmarking.mojom",

@@ -11,8 +11,10 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/sequenced_task_runner_helpers.h"
+#include "chrome/common/file_system_access_provider.mojom.h"
 #include "content/public/browser/browser_message_filter.h"
 #include "extensions/features/features.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
 #include "ppapi/features/features.h"
 
 class GURL;
@@ -36,7 +38,9 @@ struct LookupRequest;
 
 // This class filters out incoming Chrome-specific IPC messages for the renderer
 // process on the IPC thread.
-class ChromeRenderMessageFilter : public content::BrowserMessageFilter {
+class ChromeRenderMessageFilter
+    : public content::BrowserMessageFilter,
+      public chrome::mojom::FileSystemAccessAsyncResponseProvider {
  public:
   ChromeRenderMessageFilter(int render_process_id, Profile* profile);
 
@@ -44,6 +48,8 @@ class ChromeRenderMessageFilter : public content::BrowserMessageFilter {
   bool OnMessageReceived(const IPC::Message& message) override;
   void OverrideThreadForMessage(const IPC::Message& message,
                                 content::BrowserThread::ID* thread) override;
+  void BindFileSystemAccessAsyncResponseProviderRequest(
+      chrome::mojom::FileSystemAccessAsyncResponseProviderRequest request);
 
  private:
   friend class content::BrowserThread;
@@ -69,10 +75,11 @@ class ChromeRenderMessageFilter : public content::BrowserMessageFilter {
                                      const GURL& origin_url,
                                      const GURL& top_origin_url,
                                      IPC::Message* message);
-  void OnRequestFileSystemAccessAsync(int render_frame_id,
-                                      int request_id,
-                                      const GURL& origin_url,
-                                      const GURL& top_origin_url);
+  // mojom::FileSystemAccessAsyncResponseProvider methods
+  void RequestFileSystemAccessAsync(int render_frame_id,
+                                    int request_id,
+                                    const GURL& origin_url,
+                                    const GURL& top_origin_url) override;
   void OnRequestFileSystemAccessSyncResponse(IPC::Message* reply_msg,
                                              bool allowed);
   void OnRequestFileSystemAccessAsyncResponse(int render_frame_id,
@@ -117,6 +124,9 @@ class ChromeRenderMessageFilter : public content::BrowserMessageFilter {
 
   // Used to look up permissions at database creation time.
   scoped_refptr<content_settings::CookieSettings> cookie_settings_;
+
+  mojo::BindingSet<chrome::mojom::FileSystemAccessAsyncResponseProvider>
+      file_access_async_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeRenderMessageFilter);
 };

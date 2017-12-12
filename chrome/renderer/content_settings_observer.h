@@ -12,6 +12,7 @@
 #include "base/containers/flat_set.h"
 #include "base/gtest_prod_util.h"
 #include "base/time/time.h"
+#include "chrome/common/file_system_access_provider.mojom.h"
 #include "chrome/common/insecure_content_renderer.mojom.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
@@ -40,6 +41,7 @@ class ContentSettingsObserver
     : public content::RenderFrameObserver,
       public content::RenderFrameObserverTracker<ContentSettingsObserver>,
       public blink::WebContentSettingsClient,
+      public chrome::mojom::FileSystemAccessAsyncResponseProvider,
       public chrome::mojom::InsecureContentRenderer {
  public:
   // Set |should_whitelist| to true if |render_frame()| contains content that
@@ -121,10 +123,16 @@ class ContentSettingsObserver
   void OnInsecureContentRendererRequest(
       chrome::mojom::InsecureContentRendererRequest request);
 
+  // chrome::mojom::FileSystemAccessAsyncResponseProvider:
+  void RequestFileSystemAccessAsyncResponse(int request_id,
+                                            bool allowed) override;
+
+  void OnFileSystemAccessAsyncResponseProviderRequest(
+      chrome::mojom::FileSystemAccessAsyncResponseProviderRequest request);
+
   // Message handlers.
   void OnLoadBlockedPlugins(const std::string& identifier);
   void OnSetAsInterstitial();
-  void OnRequestFileSystemAccessAsyncResponse(int request_id, bool allowed);
 
   // Resets the |content_blocked_| array.
   void ClearBlockedContentSettings();
@@ -184,6 +192,9 @@ class ContentSettingsObserver
 
   mojo::BindingSet<chrome::mojom::InsecureContentRenderer>
       insecure_content_renderer_bindings_;
+
+  mojo::BindingSet<chrome::mojom::FileSystemAccessAsyncResponseProvider>
+      file_system_access_async_response_provider_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSettingsObserver);
 };

@@ -72,11 +72,6 @@ IPC_STRUCT_TRAITS_END()
 IPC_MESSAGE_ROUTED1(ChromeViewMsg_LoadBlockedPlugins,
                     std::string /* identifier */)
 
-// Tells the renderer whether or not a file system access has been allowed.
-IPC_MESSAGE_ROUTED2(ChromeViewMsg_RequestFileSystemAccessAsyncResponse,
-                    int  /* request_id */,
-                    bool /* allowed */)
-
 // Notifies the renderer whether hiding/showing the browser controls is enabled,
 // what the current state should be, and whether or not to animate to the
 // proper state.
@@ -146,14 +141,6 @@ IPC_SYNC_MESSAGE_CONTROL3_1(ChromeViewHostMsg_RequestFileSystemAccessSync,
                             GURL /* origin_url */,
                             GURL /* top origin url */,
                             bool /* allowed */)
-
-// Sent by the renderer process to check whether access to FileSystem is
-// granted by content settings.
-IPC_MESSAGE_CONTROL4(ChromeViewHostMsg_RequestFileSystemAccessAsync,
-                    int /* render_frame_id */,
-                    int /* request_id */,
-                    GURL /* origin_url */,
-                    GURL /* top origin url */)
 
 // Sent by the renderer process to check whether access to Indexed DBis
 // granted by content settings.

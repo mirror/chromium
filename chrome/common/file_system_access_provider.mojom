@@ -1,0 +1,18 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module chrome.mojom;
+
+import "url/mojo/url.mojom";
+
+// Interface to check whether or not a file system access has been allowed.
+interface FileSystemAccessAsyncResponseProvider {
+  // Message sent by the renderer process to check whether access to FileSystem is
+  // granted by content settings.
+  RequestFileSystemAccessAsync(int32 render_frame_id, int32 request_id, 
+                               url.mojom.Url origin_url, url.mojom.Url top_origin_url);
+  // Message sent from the browser to render to update the renderer
+  // with file system sccess permission.
+  RequestFileSystemAccessAsyncResponse(int32 request_id, bool allowed);
+};

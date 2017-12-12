@@ -130,6 +130,10 @@ ContentSettingsObserver::ContentSettingsObserver(
       base::Bind(&ContentSettingsObserver::OnInsecureContentRendererRequest,
                  base::Unretained(this)));
 
+  registry->AddInterface(base::Bind(
+      &ContentSettingsObserver::OnFileSystemAccessAsyncResponseProviderRequest,
+      base::Unretained(this)));
+
   content::RenderFrame* main_frame =
       render_frame->GetRenderView()->GetMainRenderFrame();
   // TODO(nasko): The main frame is not guaranteed to be in the same process
@@ -183,8 +187,6 @@ bool ContentSettingsObserver::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(ContentSettingsObserver, message)
     IPC_MESSAGE_HANDLER(ChromeViewMsg_SetAsInterstitial, OnSetAsInterstitial)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_RequestFileSystemAccessAsyncResponse,
-                        OnRequestFileSystemAccessAsyncResponse)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   if (handled)
@@ -272,10 +274,14 @@ void ContentSettingsObserver::RequestFileSystemAccessAsync(
   // Verify there are no duplicate insertions.
   DCHECK(inserted);
 
-  Send(new ChromeViewHostMsg_RequestFileSystemAccessAsync(
+  chrome::mojom::FileSystemAccessAsyncResponseProviderPtr
+      file_system_access_response;
+  render_frame()->GetRemoteInterfaces()->GetInterface(
+      &file_system_access_response);
+  file_system_access_response->RequestFileSystemAccessAsync(
       routing_id(), current_request_id_,
       url::Origin(frame->GetSecurityOrigin()).GetURL(),
-      url::Origin(frame->Top()->GetSecurityOrigin()).GetURL()));
+      url::Origin(frame->Top()->GetSecurityOrigin()).GetURL());
 }
 
 bool ContentSettingsObserver::AllowImage(bool enabled_per_settings,
@@ -527,7 +533,13 @@ void ContentSettingsObserver::OnSetAsInterstitial() {
   is_interstitial_page_ = true;
 }
 
-void ContentSettingsObserver::OnRequestFileSystemAccessAsyncResponse(
+void ContentSettingsObserver::OnFileSystemAccessAsyncResponseProviderRequest(
+    chrome::mojom::FileSystemAccessAsyncResponseProviderRequest request) {
+  file_system_access_async_response_provider_bindings_.AddBinding(
+      this, std::move(request));
+}
+
+void ContentSettingsObserver::RequestFileSystemAccessAsyncResponse(
     int request_id,
     bool allowed) {
   auto it = permission_requests_.find(request_id);

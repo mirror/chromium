@@ -14,6 +14,7 @@
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/features.h"
+#include "chrome/common/file_system_access_provider.mojom.h"
 #include "chrome/common/render_messages.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "content/public/browser/render_frame_host.h"
@@ -22,6 +23,7 @@
 #include "extensions/browser/guest_view/web_view/web_view_constants.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "ppapi/features/features.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace extensions {
 
@@ -275,8 +277,11 @@ void ChromeWebViewPermissionHelperDelegate::FileSystemAccessedAsyncResponse(
   content::RenderFrameHost* rfh =
       content::RenderFrameHost::FromID(render_process_id, render_frame_id);
   if (rfh) {
-    rfh->Send(new ChromeViewMsg_RequestFileSystemAccessAsyncResponse(
-        render_frame_id, request_id, allowed));
+    chrome::mojom::FileSystemAccessAsyncResponseProviderPtr
+        file_system_access_response;
+    rfh->GetRemoteInterfaces()->GetInterface(&file_system_access_response);
+    file_system_access_response->RequestFileSystemAccessAsyncResponse(
+        request_id, allowed);
   }
 }
 
