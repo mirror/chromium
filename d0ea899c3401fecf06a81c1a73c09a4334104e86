@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21b5f521_c259f086",
+        "filename": "cc/test/render_pass_test_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-12T00:16:47Z",
+      "side": 1,
+      "message": "nit: maybe a DCHECK(resource_map.find(resource) !\u003d resource_map.end())?",
+      "revId": "d0ea899c3401fecf06a81c1a73c09a4334104e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288ef565_ccf8d27c",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-12T00:16:47Z",
+      "side": 1,
+      "message": "Why not reuse the output surface context provider? I believe we customize the context provider for some tests so we\u0027d want the same behavior in child and parent.",
+      "revId": "d0ea899c3401fecf06a81c1a73c09a4334104e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
