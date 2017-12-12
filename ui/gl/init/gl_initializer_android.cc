@@ -4,6 +4,10 @@
 
 #include "ui/gl/init/gl_initializer.h"
 
+#if defined(USE_STATIC_ANGLE)
+#include <EGL/egl.h>
+#endif
+
 #include "base/base_paths.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
@@ -22,6 +26,12 @@ namespace init {
 namespace {
 
 bool InitializeStaticEGLInternal() {
+#if defined(USE_STATIC_ANGLE)
+#pragma push_macro("eglGetProcAddress")
+#undef eglGetProcAddress
+  SetGLGetProcAddressProc(&eglGetProcAddress);
+#pragma pop_macro("eglGetProcAddress")
+#else
   base::NativeLibrary gles_library = LoadLibraryAndPrintError("libGLESv2.so");
   if (!gles_library)
     return false;
@@ -45,6 +55,7 @@ bool InitializeStaticEGLInternal() {
   SetGLGetProcAddressProc(get_proc_address);
   AddGLNativeLibrary(egl_library);
   AddGLNativeLibrary(gles_library);
+#endif
   SetGLImplementation(kGLImplementationEGLGLES2);
 
   InitializeStaticGLBindingsGL();
