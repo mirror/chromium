@@ -748,10 +748,11 @@ MULTIPROCESS_TEST_MAIN(ProcessUtilsVerifyHandle) {
   size_t bytes_written = 0;
   zx_status_t result = zx_socket_write(handle, 0, &kPipeValue,
                                        sizeof(kPipeValue), &bytes_written);
-  CHECK_EQ(ZX_OK, result);
+  CHECK_EQ(ZX_OK, result) << zx_status_get_string(result);
   CHECK_EQ(1u, bytes_written);
 
-  CHECK_EQ(ZX_OK, zx_handle_close(handle));
+  result = zx_handle_close(handle);
+  CHECK_EQ(ZX_OK, result) << zx_status_get_string(handle);
   return 0;
 }
 
@@ -773,17 +774,17 @@ TEST_F(ProcessUtilTest, LaunchWithHandleTransfer) {
   zx_signals_t signals = 0;
   result = zx_object_wait_one(handles[1], ZX_SOCKET_READABLE,
                               zx_deadline_after(ZX_SEC(5)), &signals);
-  EXPECT_EQ(ZX_OK, result);
-  EXPECT_TRUE(signals & ZX_SOCKET_READABLE);
+  ASSERT_EQ(ZX_OK, result);
+  ASSERT_TRUE(signals & ZX_SOCKET_READABLE);
 
   size_t bytes_read = 0;
   char buf[16] = {0};
   result = zx_socket_read(handles[1], 0, buf, sizeof(buf), &bytes_read);
-  EXPECT_EQ(ZX_OK, result);
-  EXPECT_EQ(1u, bytes_read);
+  ASSERT_EQ(ZX_OK, result);
+  ASSERT_EQ(1u, bytes_read);
   EXPECT_EQ(kPipeValue, buf[0]);
 
-  CHECK_EQ(ZX_OK, zx_handle_close(handles[1]));
+  ASSERT_EQ(ZX_OK, zx_handle_close(handles[1]));
 
   int exit_code;
   ASSERT_TRUE(
