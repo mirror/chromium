@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d824c73a_0351e184",
+        "filename": "cc/paint/transfer_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-12T01:46:29Z",
+      "side": 1,
+      "message": "nit: please remove this as well.",
+      "revId": "48e744e340269667cc67179aa491fca620776b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
