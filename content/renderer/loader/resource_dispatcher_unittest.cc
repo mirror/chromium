@@ -234,8 +234,7 @@ class ResourceDispatcherTest : public testing::Test, public IPC::Sender {
         new TestRequestPeer(dispatcher(), peer_context));
     int request_id = dispatcher()->StartAsync(
         std::move(request), 0, nullptr, url::Origin(),
-        TRAFFIC_ANNOTATION_FOR_TESTS, false, std::move(peer),
-        blink::WebURLRequest::LoadingIPCType::kChromeIPC, nullptr,
+        TRAFFIC_ANNOTATION_FOR_TESTS, false, std::move(peer), nullptr,
         std::vector<std::unique_ptr<URLLoaderThrottle>>(),
         mojom::URLLoaderClientEndpointsPtr());
     peer_context->request_id = request_id;

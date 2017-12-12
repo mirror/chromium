@@ -137,8 +137,7 @@ class URLResponseBodyConsumerTest : public ::testing::Test,
         std::move(request), 0, nullptr, url::Origin(),
         TRAFFIC_ANNOTATION_FOR_TESTS, false,
         std::make_unique<TestRequestPeer>(context, message_loop_.task_runner()),
-        blink::WebURLRequest::LoadingIPCType::kChromeIPC, nullptr,
-        std::vector<std::unique_ptr<URLLoaderThrottle>>(),
+        nullptr, std::vector<std::unique_ptr<URLLoaderThrottle>>(),
         mojom::URLLoaderClientEndpointsPtr());
   }
 
