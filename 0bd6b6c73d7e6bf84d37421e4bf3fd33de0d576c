@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ccd670eb_18a72e86",
+        "filename": "ui/native_theme/common_theme.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T22:58:40Z",
+      "side": 1,
+      "message": "I think I\u0027m wrong. NativeThemeWin won\u0027t call into this function for many of the colors you have here. NativeThemeAura will, which we may use on windows too. But NativeThemeAura doesn\u0027t try to use system colors, so changing what is here should be fine. So, I think going back to the patchset I commented on is likely fine, including keeping the switches you are adding. While the switches won\u0027t impact NativeThemeWin, they do effect NativeThemeAura, so it seems fine to keep (even though it\u0027s mildly confusing as it doesn\u0027t impact NativeThemeWin).",
+      "parentUuid": "e557623c_1cb96f32",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 3
+      },
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c683964_0f8dc89b",
         "filename": "ui/native_theme/native_theme_mac.mm",
         "patchSetId": 2
