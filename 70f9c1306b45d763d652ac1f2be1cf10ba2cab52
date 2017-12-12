@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf81913f_90b8d2c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-12T08:33:24Z",
+      "side": 1,
+      "message": "Once we have agreed on a path forward, can you expand the description?\nAlso, I wasn\u0027t able to reproduce the bug. Tapping the fake omnibox works fine for me.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 58
+      },
+      "revId": "70f9c1306b45d763d652ac1f2be1cf10ba2cab52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "995ab0ee_ee0a141a",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
         "patchSetId": 4
@@ -25,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "be3ddaec_b18910b8",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-12T08:33:24Z",
+      "side": 1,
+      "message": "You are running the animator, but if we need the completion block of the location bar (e.g. for the \"clear\" button), you will need to stop the animator here.\n\nAlso from my understanding of how we want to have the animations occurring is:\n1. The coordinator creates a animator and chooses the curve and duration\n2. The animator is passed to all the ViewController, probably using the coordinator chain\n3. The ViewControllers add their animations\n4. The coordinator starts the animator (which might even happen later)\n\nSo creating and launching an animator in a VC as part of 2 sounds like something we shouldn\u0027t do. I think it is fine for now as we don\u0027t have the possibility to start different animations on the animators and it didn\u0027t seem harmful (this is the current behavior).\n\nBut changing 2. to \"add animations or just apply your changes and animates some parts\" sounds against what we are trying to do.\n\nUnless I am mistaken, what we are trying to do for the animation is:\n- Have animations to expand the omnibox with two timing/curve. One for the buttons and one for the expansion.\n- Have animations at the end of the completion of this animation for the contract and clear buttons. For now they are started separately and they have different timing, which creates a weird visual effect (I just realized where this effect comes from by reading the code). If the timing is changed, it means changing for both.\n\nIn my opinion the coordinator should create and pass 3 animators:\n- Long timing animator (for the expansion)\n- Short timing animator (for the fading out buttons)\n- Completion animator (for the clear/contract buttons). This animator would be run in the completion block of longTimingAnimator. The coordinator is adding [completionAnimator startAnimation] in the completion block.\n\nThe |animated| property should not be trickled down to the VC. In particular, as we are trying to do reusable views, some coordinators might want to only run some of the animators, different ones for each coordinators. I don\u0027t think the VC should have booleans for all possible situations.",
+      "parentUuid": "995ab0ee_ee0a141a",
+      "range": {
+        "startLine": 579,
+        "startChar": 3,
+        "endLine": 579,
+        "endChar": 11
+      },
+      "revId": "70f9c1306b45d763d652ac1f2be1cf10ba2cab52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "784b979c_5092d8b2",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 4
@@ -36,6 +83,47 @@
       "writtenOn": "2017-12-11T23:45:13Z",
       "side": 1,
       "message": "We just have to make sure that any completion tasks or final Toolbar state is added here. Right now it looks good!",
+      "revId": "70f9c1306b45d763d652ac1f2be1cf10ba2cab52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f0e6d51_64be05b0",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-12T08:33:24Z",
+      "side": 1,
+      "message": "You have code duplication between the completion block of the animator and this.\nAlso you are breaking the contract of this method which should be \"add animation to the animator\". You are not using the animator at all here.\n\nIf we go this way I think it would be better to have two methods, the current one and the one to animate only the contract button.",
+      "parentUuid": "784b979c_5092d8b2",
+      "revId": "70f9c1306b45d763d652ac1f2be1cf10ba2cab52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3b1d28_0bdb9a7d",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-12T08:33:24Z",
+      "side": 1,
+      "message": "Nit, I changed this to self.locationBarShadow.alpha \u003d 0;",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 74
+      },
       "revId": "70f9c1306b45d763d652ac1f2be1cf10ba2cab52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
