@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d50da123_27c325b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "This could be a bit more detailed. This is for ozone/wayland etc.",
+      "revId": "000866e4d05f6bb0cc9a20f837809acb268579e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1e3fc3_002a8380",
         "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
         "patchSetId": 5

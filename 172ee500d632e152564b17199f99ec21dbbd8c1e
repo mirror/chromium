@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05a35bd2_5b7f36cb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "can you expand with a little more detail here.",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a139fe04_05ceba88",
+        "filename": "ui/ozone/platform/wayland/fake_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "this blank line doesn\u0027t seem like Chrome style. Remove this one?",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece35ae7_6c4fba43",
+        "filename": "ui/ozone/platform/wayland/wayland_connection.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "subsurfaces?",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d2eefb3_56b47d40",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "Add a complete email address?",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccfa071_f39f0194",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "TouchPoints are small. Just pass by value yes?",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cff3e7a_c949ea02",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "Given the size of TouchPoint, perhaps a flat_map of TouchPoint?\n\nnit: does the key behave as per TouchPoints on iOS? If so, why not an array?",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ef4930_933786d4",
+        "filename": "ui/ozone/platform/wayland/wayland_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "can you change this to a switch statement",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f48d09_b403ea0d",
+        "filename": "ui/ozone/platform/wayland/wayland_window.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "you need to rebase?",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

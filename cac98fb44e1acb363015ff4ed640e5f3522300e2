@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "48c38035_735b8eaf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "It would be typical in Chrome (ideally) to have a bit longer explanation.",
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bd3c9f_2d2c66c3",
+        "filename": "ui/ozone/platform/wayland/wayland_connection.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:52:17Z",
+      "side": 1,
+      "message": "How does the keyboard component know about which window has the focus? Could you use that mechanism?",
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e8bf7ec_583da98f",
         "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
         "patchSetId": 1
