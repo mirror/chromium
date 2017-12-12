@@ -363,7 +363,7 @@ class UserMediaProcessorUnderTest : public UserMediaProcessor {
 
     if (!create_source_that_fails_) {
       // RunUntilIdle is required for this task to complete.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::GetForTesting()->PostTask(
           FROM_HERE,
           base::BindOnce(&UserMediaProcessorUnderTest::SignalSourceReady,
                          source_ready, source));

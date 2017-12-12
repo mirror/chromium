@@ -182,7 +182,7 @@ class RenderWidgetLayerTreeFrameSink : public RenderWidgetCompositor {
     } else {
       // Post the synchronous composite task so that it is not called
       // reentrantly as a part of RequestNewLayerTreeFrameSink.
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      base::ThreadTaskRunnerHandle::GetForTesting()->PostTask(
           FROM_HERE,
           base::BindOnce(&RenderWidgetLayerTreeFrameSink::SynchronousComposite,
                          base::Unretained(this)));
@@ -273,7 +273,7 @@ class RenderWidgetLayerTreeFrameSinkTest : public testing::Test {
     render_widget_compositor_.SetUp(expected_successes, kTries, failure_mode,
                                     &run_loop);
     render_widget_compositor_.SetVisible(true);
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
+    base::ThreadTaskRunnerHandle::GetForTesting()->PostTask(
         FROM_HERE,
         base::BindOnce(&RenderWidgetLayerTreeFrameSink::SynchronousComposite,
                        base::Unretained(&render_widget_compositor_)));

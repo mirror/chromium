@@ -211,7 +211,8 @@ class MockRTCStatsReportCallback : public blink::WebRTCStatsReportCallback {
  public:
   explicit MockRTCStatsReportCallback(
       std::unique_ptr<blink::WebRTCStatsReport>* result)
-      : main_thread_(base::ThreadTaskRunnerHandle::Get()), result_(result) {
+      : main_thread_(base::ThreadTaskRunnerHandle::GetForTesting()),
+        result_(result) {
     DCHECK(result_);
   }
 
@@ -245,9 +246,10 @@ class RTCPeerConnectionHandlerUnderTest : public RTCPeerConnectionHandler {
   RTCPeerConnectionHandlerUnderTest(
       WebRTCPeerConnectionHandlerClient* client,
       PeerConnectionDependencyFactory* dependency_factory)
-      : RTCPeerConnectionHandler(client,
-                                 dependency_factory,
-                                 base::ThreadTaskRunnerHandle::Get()) {}
+      : RTCPeerConnectionHandler(
+            client,
+            dependency_factory,
+            base::ThreadTaskRunnerHandle::GetForTesting()) {}
 
   MockPeerConnectionImpl* native_peer_connection() {
     return static_cast<MockPeerConnectionImpl*>(

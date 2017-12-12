@@ -46,9 +46,10 @@ bool MockSendTargetThread::OnMessageReceived(const IPC::Message& msg) {
 class MockPeerConnectionHandler : public RTCPeerConnectionHandler {
  public:
   MockPeerConnectionHandler()
-      : RTCPeerConnectionHandler(&client_,
-                                 &dependency_factory_,
-                                 base::ThreadTaskRunnerHandle::Get()) {}
+      : RTCPeerConnectionHandler(
+            &client_,
+            &dependency_factory_,
+            base::ThreadTaskRunnerHandle::GetForTesting()) {}
   MOCK_METHOD0(CloseClientPeerConnection, void());
 
  private:

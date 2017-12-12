@@ -135,12 +135,13 @@ class RemoteWebRtcMediaStreamAdapterTest : public WebRtcMediaStreamAdapterTest {
     std::unique_ptr<WebRtcMediaStreamAdapter> adapter;
     dependency_factory_->GetWebRtcSignalingThread()->PostTask(
         FROM_HERE,
-        base::BindOnce(
-            &RemoteWebRtcMediaStreamAdapterTest::
-                CreateRemoteStreamAdapterOnSignalingThread,
-            base::Unretained(this),
-            base::Unretained(base::ThreadTaskRunnerHandle::Get().get()),
-            base::Unretained(webrtc_stream), base::Unretained(&adapter)));
+        base::BindOnce(&RemoteWebRtcMediaStreamAdapterTest::
+                           CreateRemoteStreamAdapterOnSignalingThread,
+                       base::Unretained(this),
+                       base::Unretained(
+                           base::ThreadTaskRunnerHandle::GetForTesting().get()),
+                       base::Unretained(webrtc_stream),
+                       base::Unretained(&adapter)));
     RunMessageLoopsUntilIdle();
     DCHECK(adapter);
     return adapter;

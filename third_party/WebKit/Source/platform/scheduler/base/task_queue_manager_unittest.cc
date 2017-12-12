@@ -125,7 +125,7 @@ class TaskQueueManagerTest : public ::testing::Test {
     now_src_.Advance(base::TimeDelta::FromMicroseconds(1000));
     manager_ = std::make_unique<TaskQueueManagerForTest>(
         std::make_unique<ThreadControllerForTest>(
-            message_loop_.get(), base::ThreadTaskRunnerHandle::Get(),
+            message_loop_.get(), base::ThreadTaskRunnerHandle::GetForTesting(),
             &now_src_));
 
     for (size_t i = 0; i < num_queues; i++)
@@ -225,7 +225,7 @@ TEST_F(TaskQueueManagerTest,
 
   manager_ = std::make_unique<TaskQueueManagerForTest>(
       std::make_unique<ThreadControllerForTest>(
-          nullptr, base::ThreadTaskRunnerHandle::Get(),
+          nullptr, base::ThreadTaskRunnerHandle::GetForTesting(),
           &test_count_uses_time_source));
   manager_->SetWorkBatchSize(6);
   manager_->AddTaskTimeObserver(&test_task_time_observer_);

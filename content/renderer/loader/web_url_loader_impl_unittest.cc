@@ -160,9 +160,10 @@ class FakeURLLoaderFactory final : public mojom::URLLoaderFactory {
 class TestWebURLLoaderClient : public blink::WebURLLoaderClient {
  public:
   TestWebURLLoaderClient(ResourceDispatcher* dispatcher)
-      : loader_(new WebURLLoaderImpl(dispatcher,
-                                     base::ThreadTaskRunnerHandle::Get(),
-                                     &fake_url_loader_factory_)),
+      : loader_(
+            new WebURLLoaderImpl(dispatcher,
+                                 base::ThreadTaskRunnerHandle::GetForTesting(),
+                                 &fake_url_loader_factory_)),
         delete_on_receive_redirect_(false),
         delete_on_receive_response_(false),
         delete_on_receive_data_(false),

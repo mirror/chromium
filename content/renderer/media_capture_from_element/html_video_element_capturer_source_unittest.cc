@@ -92,7 +92,7 @@ class HTMLVideoElementCapturerSourceTest : public testing::Test {
         web_media_player_(new MockWebMediaPlayer()),
         html_video_capturer_(new HtmlVideoElementCapturerSource(
             web_media_player_->AsWeakPtr(),
-            base::ThreadTaskRunnerHandle::Get())) {}
+            base::ThreadTaskRunnerHandle::GetForTesting())) {}
 
   // Necessary callbacks and MOCK_METHODS for them.
   MOCK_METHOD2(DoOnDeliverFrame,

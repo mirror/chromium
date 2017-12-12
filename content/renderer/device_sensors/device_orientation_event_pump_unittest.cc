@@ -376,7 +376,7 @@ TEST_F(DeviceOrientationEventPumpTest, UpdateRespectsOrientationThreshold) {
       2 /* beta */, 3 /* gamma */);
   listener()->set_did_change_device_orientation(false);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::GetForTesting()->PostTask(
       FROM_HERE,
       base::BindOnce(&DeviceOrientationEventPumpForTesting::StartFireEvent,
                      base::Unretained(orientation_pump())));
@@ -403,7 +403,7 @@ TEST_F(DeviceOrientationEventPumpTest, UpdateRespectsOrientationThreshold) {
       2 /* beta */, 3 /* gamma */);
   listener()->set_did_change_device_orientation(false);
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::GetForTesting()->PostTask(
       FROM_HERE,
       base::BindOnce(&DeviceOrientationEventPumpForTesting::StartFireEvent,
                      base::Unretained(orientation_pump())));
