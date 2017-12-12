@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e96ca720_3ee43c07",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-12T20:58:12Z",
+      "side": 0,
+      "message": "I think this might be needed for some unit tests (that don\u0027t go through GpuMain). Maybe we could leave it here and make it idempotent, or move to the callsites (looking for gl::init::InitializeGLOneOff or gl::init::InitializeGLNoExtensionsOneOff)?",
+      "revId": "c7356ebea488b13caaf2df57f93bf4b9cf9842f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
