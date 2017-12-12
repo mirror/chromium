@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d42ec47_d7f69d29",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-12-12T22:41:58Z",
+      "side": 1,
+      "message": "Instead of checking ukm_enabled() after Wait you can check return value of Wait, it\u0027s going to ge true if exit condition is satisfied or false if wait timed out.\n---\nEXPECT_TRUE(UkmEnabledChecker(this, harness-\u003eservice(), false).Wait());",
+      "revId": "154f63e6022ff81f288fc2b8bcd282ec2c34b9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
