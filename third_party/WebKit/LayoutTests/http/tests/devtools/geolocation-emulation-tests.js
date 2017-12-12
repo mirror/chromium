@@ -112,5 +112,11 @@
       consoleSniffAndDump(next);
       TestRunner.evaluateInPage('overridenTimestampGeolocation()');
     },
+
+    function testNoOverride(next) {
+      TestRunner.EmulationAgent.clearGeolocationOverride();
+      consoleSniffAndDump(next);
+      TestRunner.evaluateInPage('overrideGeolocation()');
+    }
   ]);
 })();

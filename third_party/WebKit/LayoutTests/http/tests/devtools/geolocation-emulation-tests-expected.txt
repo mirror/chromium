@@ -19,3 +19,6 @@ geolocation-emulation-tests.js:41 Latitude: 50 Longitude: 100
 Running: testTimestampOfOverridenPosition
 geolocation-emulation-tests.js:59 PASSED
 
+Running: testNoOverride
+geolocation-emulation-tests.js:41 Latitude: 0 Longitude: 0
+
