@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a84b02fd_7f7279e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-12-12T17:24:10Z",
+      "side": 1,
+      "message": "Not now. But I\u0027ll add a check for that as well. (They are actually always the same size now).",
+      "parentUuid": "fbbea194_726b697f",
+      "range": {
+        "startLine": 346,
+        "startChar": 52,
+        "endLine": 346,
+        "endChar": 73
+      },
+      "revId": "ae7aa615b35c2c0a3d44013439e39fb6e6a098c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "355c34af_a604b7c4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/AddressDropDownAdapter.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "ae7aa615b35c2c0a3d44013439e39fb6e6a098c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d1a525_502ffda4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/AddressDropDownAdapter.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-12-12T17:24:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "355c34af_a604b7c4",
+      "range": {
+        "startLine": 70,
+        "startChar": 45,
+        "endLine": 70,
+        "endChar": 93
+      },
+      "revId": "ae7aa615b35c2c0a3d44013439e39fb6e6a098c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

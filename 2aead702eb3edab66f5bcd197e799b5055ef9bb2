@@ -22,6 +22,30 @@
       "revId": "2aead702eb3edab66f5bcd197e799b5055ef9bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c58f65_140c7a43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-12-12T17:24:10Z",
+      "side": 0,
+      "message": "It shows the hint now, anyway I don\u0027t think it\u0027s a good fix for that! Otherwise, why would we have a hint? I guess the fix for this bug should be either removing the hint for billing addresses or making changes so that when the action is move, it focuses on the first one (and not select it).",
+      "parentUuid": "14ddd669_f82a043c",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 17
+      },
+      "revId": "2aead702eb3edab66f5bcd197e799b5055ef9bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

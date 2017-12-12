@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "514e5cd8_30839308",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-12-12T17:24:10Z",
+      "side": 1,
+      "message": "When there is a timeout, they are null.",
+      "parentUuid": "b85d9c16_8fc51eb2",
+      "range": {
+        "startLine": 344,
+        "startChar": 17,
+        "endLine": 344,
+        "endChar": 31
+      },
+      "revId": "7169872bf7540a6a94a3caf0308658c7af5133eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4049e45_932fa639",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2f675c43_7ea0e5ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-12-12T17:24:10Z",
+      "side": 1,
+      "message": "This is what the PM suggested, this is how the dropdown standard design is. For country, we have access to the language, and that\u0027s how we pick the default value. It\u0027s trickier for state/province.",
+      "parentUuid": "b4049e45_932fa639",
+      "range": {
+        "startLine": 349,
+        "startChar": 62,
+        "endLine": 349,
+        "endChar": 68
+      },
+      "revId": "7169872bf7540a6a94a3caf0308658c7af5133eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b716771_a552d689",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/AddressDropDownAdapter.java",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "7169872bf7540a6a94a3caf0308658c7af5133eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e681b5a4_a8298ec7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/AddressDropDownAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-12-12T17:24:10Z",
+      "side": 1,
+      "message": "The \u0027+\u0027 icon is not the hint, it\u0027s what the Card Editor billing address list uses, and the code is imposed on all the dropdowns in PR/autofill that has a dropdown list with a hint. So, what I did was to distinguish between the Billing Address and the other ones by the last element which is the \u0027Add ..\u0027.",
+      "parentUuid": "8b716771_a552d689",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 78
+      },
+      "revId": "7169872bf7540a6a94a3caf0308658c7af5133eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
