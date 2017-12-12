@@ -160,6 +160,10 @@ bool SandboxBPF::StartSandbox(SeccompLevel seccomp_level) {
     }
   }
 
+  // Allocate crash keys set by Seccomp signal handlers before the policy
+  // is started.
+  AllocateCrashKeys();
+
   // We no longer need access to any files in /proc. We want to do this
   // before installing the filters, just in case that our policy denies
   // close().
