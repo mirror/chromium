@@ -1283,7 +1283,6 @@ void PrintRenderFrameHelper::OnFramePreparedForPreviewDocument() {
 bool PrintRenderFrameHelper::CreatePreviewDocument() {
   if (!print_pages_params_ || CheckForCancel())
     return false;
-
   UMA_HISTOGRAM_ENUMERATION("PrintPreview.PreviewEvent",
                             PREVIEW_EVENT_CREATE_DOCUMENT, PREVIEW_EVENT_MAX);
 
@@ -1489,7 +1488,68 @@ void PrintRenderFrameHelper::OnClosePrintPreviewDialog() {
 
 void PrintRenderFrameHelper::OnPrintFrameContent(const gfx::Rect& rect,
                                                  uint32_t uid) {
-  // TODO(weili): Implement this function.
+  if (ipc_nesting_level_ > 1)
+    return;
+
+  auto weak_this = weak_ptr_factory_.GetWeakPtr();
+  blink::WebLocalFrame* frame = render_frame()->GetWebFrame();
+  frame->DispatchBeforePrintEvent();
+  if (!weak_this) {
+    DLOG(ERROR) << "Weak ptr should not be nullptr";
+    return;
+  }
+
+  // If the last request is not finished yet, do not proceed.
+  if (prep_frame_view_) {
+    DLOG(ERROR) << "Previous request is still ongoing";
+    return;
+  }
+
+  // If we are printing a PDF extension frame, find the plugin node and print
+  // that instead.
+  auto plugin = delegate_->GetPdfElement(frame);
+
+  PdfMetafileSkia metafile(SkiaDocumentType::MSKP);
+  // TODO(weili): Check which parameters we need to pass in.
+  PrintMsg_Print_Params print_params;
+  print_params.page_size = gfx::Size(rect.width(), rect.height());
+  print_params.content_size = print_params.page_size;
+  print_params.printable_area = rect;
+  print_params.margin_top = 0;
+  print_params.margin_left = 0;
+  print_params.dpi = 300;
+  print_params.scale_factor = 1.0f;
+  print_params.display_header_footer = false;
+  print_params.print_scaling_option = blink::kWebPrintScalingOptionSourceSize;
+  print_params.printed_doc_type = SkiaDocumentType::MSKP;
+  // Use default values for all other fields.
+
+  prep_frame_view_ = base::MakeUnique<PrepareFrameAndViewForPrint>(
+      print_params, frame, plugin, false /* ignore_css_margins_ */);
+  prep_frame_view_->StartPrinting();
+
+#if defined(OS_MACOSX)
+  RenderPage(print_params, 0, 1, frame, false, &metafile, nullptr, nullptr);
+#else
+  PrintPageInternal(print_params, 0, 1, frame, &metafile, nullptr, nullptr);
+#endif
+
+  FinishFramePrinting();
+
+  metafile.FinishFrameContent();
+
+  // Send the print result back.
+  PrintHostMsg_DidPrintContent_Params printed_frame_params;
+  if (!CopyMetafileDataToSharedMem(metafile, &printed_frame_params)) {
+    LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
+    return;
+  }
+  printed_frame_params.subframe_uids = metafile.GetSubframeContentIDs();
+  Send(new PrintHostMsg_DidPrintFrameContent(routing_id(),
+                                             printed_frame_params));
+
+  if (weak_this)
+    frame->DispatchAfterPrintEvent();
 }
 
 bool PrintRenderFrameHelper::IsPrintingEnabled() const {
@@ -2060,7 +2120,7 @@ bool PrintRenderFrameHelper::CopyMetafileDataToSharedMem(
   params->metafile_data_handle =
       base::SharedMemory::DuplicateHandle(shared_buf->handle());
   params->data_size = metafile.GetDataSize();
-  params->subframe_uids = std::vector<uint32_t>();
+  params->subframe_uids = metafile.GetSubframeContentIDs();
   return true;
 }
 
