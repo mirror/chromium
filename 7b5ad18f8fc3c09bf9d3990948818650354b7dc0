@@ -16,6 +16,24 @@
       "revId": "7b5ad18f8fc3c09bf9d3990948818650354b7dc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7913d02_3cfa9bce",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-12T22:01:36Z",
+      "side": 0,
+      "message": "I don\u0027t believe it is. ARC will start as a mini-container even when arc-start-mode is set to those values.",
+      "parentUuid": "b5ef0dd2_85046b3e",
+      "revId": "7b5ad18f8fc3c09bf9d3990948818650354b7dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
