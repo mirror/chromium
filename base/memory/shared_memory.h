@@ -88,6 +88,14 @@ class BASE_EXPORT SharedMemory {
   // that |read_only| matches the permissions of the handle.
   SharedMemory(const SharedMemoryHandle& handle, bool read_only);
 
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
+  // Creates a SharedMemory memory object from two existing handles. |handle|
+  // and |read_only_handle| must correspond to the same open shared memory file,
+  // but the latter should only be mappable to read-only memory regions.
+  void SharedMemory(const SharedMemoryHandle& handle,
+                    const SharedMemoryHandle& read_only_handle);
+#endif
+
   // Closes any open files.
   ~SharedMemory();
 

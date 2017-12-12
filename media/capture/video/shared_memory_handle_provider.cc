@@ -4,6 +4,8 @@
 
 #include "media/capture/video/shared_memory_handle_provider.h"
 
+#include "build/build_config.h"
+
 namespace media {
 
 SharedMemoryHandleProvider::SharedMemoryHandleProvider() {
@@ -35,13 +37,12 @@ bool SharedMemoryHandleProvider::InitForSize(size_t size) {
   DCHECK_EQ(map_ref_count_, 0);
 #endif
   DCHECK(!shared_memory_);
-  shared_memory_.emplace();
-  if (shared_memory_->CreateAnonymous(size)) {
-    mapped_size_ = size;
-    read_only_flag_ = false;
-    return true;
-  }
-  return false;
+
+  mojo::ScopedSharedBufferHandle buffer =
+      mojo::SharedBufferHandle::Create(size);
+  if (!buffer.is_valid())
+    return false;
+  return InitFromMojoHandle(std::move(buffer));
 }
 
 bool SharedMemoryHandleProvider::InitFromMojoHandle(
@@ -51,13 +52,45 @@ bool SharedMemoryHandleProvider::InitFromMojoHandle(
 #endif
   DCHECK(!shared_memory_);
 
-  base::SharedMemoryHandle memory_handle;
-  const MojoResult result =
-      mojo::UnwrapSharedMemoryHandle(std::move(buffer_handle), &memory_handle,
-                                     &mapped_size_, &read_only_flag_);
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA) && !defined(OS_MACOSX)
+  // NOTE: On Linux etc, base::SharedMemory maintains a separate internal FD for
+  // read-only sharing. We attempt to extract a read-only clone of the input
+  // handle before unwrapping it.
+  ScopedSharedBufferHandle read_only_handle =
+      buffer_handle->Clone(SharedBufferHandle::AccessMode::READ_ONLY);
+#endif
+
+  base::SharedMemoryHandle shm_handle;
+  UnwrappedSharedMemoryHandleProtection protection;
+  MojoResult result = UnwrapSharedMemoryHandle(std::move(buffer_handle),
+                                               &shm_handle, size, &protection);
   if (result != MOJO_RESULT_OK)
     return false;
-  shared_memory_.emplace(memory_handle, read_only_flag_);
+
+  if (protection == UnwrappedSharedMemoryHandleProtection::kReadOnly) {
+    // The input handle was already read-only, so we have everything we can use.
+    shared_memory_.emplace(shm_handle, true /* read_only */);
+    return true;
+  }
+
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA) && !defined(OS_MACOSX)
+  // Iff read-only handle extraction succeeded above, we also attempt to unwrap
+  // that handle here. Upon success we'll initialize a base::SharedMemory
+  // object which supports both writable and read-only mappings.
+  base::SharedMemoryHandle read_only_shm_handle;
+  if (read_only_handle.is_valid()) {
+    result = UnwrapSharedMemoryHandle(std::move(read_only_handle),
+                                      &read_only_shm_handle, nullptr, nullptr);
+    if (result == MOJO_RESULT_OK) {
+      shared_memory_.emplace(hm_handle, read_only_shm_handle);
+      return true;
+    }
+  }
+#endif
+
+  // This base::SharedMemory object supports writable mapping, but does not
+  // support vending read-only handles on some platforms.
+  shared_memory_.emplace(shm_handle, false /* read_only */);
   return true;
 }
 
@@ -68,9 +101,15 @@ SharedMemoryHandleProvider::GetHandleForInterProcessTransit(bool read_only) {
     NOTREACHED();
     return mojo::ScopedSharedBufferHandle();
   }
-  return mojo::WrapSharedMemoryHandle(
-      base::SharedMemory::DuplicateHandle(shared_memory_->handle()),
-      mapped_size_, read_only);
+  if (read_only) {
+    return mojo::WrapSharedMemoryHandle(
+        shared_memory_->GetReadOnlyHandle(), mapped_size_,
+        mojo::UnwrappedSharedMemoryHandleProtection::kReadOnly);
+  } else {
+    return mojo::WrapSharedMemoryHandle(
+        base::SharedMemory::DuplicateHandle(shared_memory_->handle()),
+        mapped_size_, mojo::UnwrappedSharedMemoryHandleProtection::kReadWrite);
+  }
 }
 
 base::SharedMemoryHandle

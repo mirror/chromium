@@ -43,6 +43,13 @@ SharedMemory::SharedMemory() = default;
 SharedMemory::SharedMemory(const SharedMemoryHandle& handle, bool read_only)
     : shm_(handle), read_only_(read_only) {}
 
+void SharedMemory::SharedMemory(const SharedMemoryHandle& handle,
+                                const SharedMemoryHandle& read_only_handle)
+    : shm_(handle), read_only_(read_only_handle) {
+  DCHECK(shm_.IsValid());
+  DCHECK(!readonly_shm_.IsValid() || readonly_shm_.GetGUID() == shm_.GetGUID());
+}
+
 SharedMemory::~SharedMemory() {
   Unmap();
   Close();

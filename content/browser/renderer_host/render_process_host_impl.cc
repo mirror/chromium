@@ -3643,7 +3643,8 @@ void RenderProcessHostImpl::CreateSharedRendererHistogramAllocator() {
   HistogramController::GetInstance()->SetHistogramMemory<RenderProcessHost>(
       this, mojo::WrapSharedMemoryHandle(
                 metrics_allocator_->shared_memory()->handle().Duplicate(),
-                metrics_allocator_->shared_memory()->mapped_size(), false));
+                metrics_allocator_->shared_memory()->mapped_size(),
+                mojo::UnwrappedSharedMemoryHandleProtection::kReadWrite));
 }
 
 void RenderProcessHostImpl::ProcessDied(bool already_dead,
