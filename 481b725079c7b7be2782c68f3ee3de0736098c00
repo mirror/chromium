@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9421f71e_8f057b79",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-12T22:01:35Z",
+      "side": 0,
+      "message": "oops thank you for catching this. Btw, which device is this? most of FHD should use 1.25f (line 59).",
+      "revId": "481b725079c7b7be2782c68f3ee3de0736098c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
