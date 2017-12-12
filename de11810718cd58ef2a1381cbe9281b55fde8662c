@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c395fc3_01a6f426",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-12T16:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fcc51dc_d2a5a847",
+      "revId": "de11810718cd58ef2a1381cbe9281b55fde8662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66c02b80_08d5a707",
         "filename": "components/viz/service/surfaces/surface.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "92e03f7d_57e41843",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-12T16:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66c02b80_08d5a707",
+      "revId": "de11810718cd58ef2a1381cbe9281b55fde8662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09ba94af_25aad3b8",
         "filename": "components/viz/service/surfaces/surface_manager.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "de11810718cd58ef2a1381cbe9281b55fde8662c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b980b60f_9e0eb9a4",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-12T16:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09ba94af_25aad3b8",
+      "revId": "de11810718cd58ef2a1381cbe9281b55fde8662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "de11810718cd58ef2a1381cbe9281b55fde8662c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b03ba3_c3e2caac",
+        "filename": "components/viz/service/surfaces/surface_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-12T16:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba307124_96125af8",
+      "range": {
+        "startLine": 202,
+        "startChar": 46,
+        "endLine": 202,
+        "endChar": 52
+      },
+      "revId": "de11810718cd58ef2a1381cbe9281b55fde8662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
