@@ -110,11 +110,7 @@ bool Character::IsUprightInMixedVertical(UChar32 character) {
   RETURN_HAS_PROPERTY(character, kIsUprightInMixedVertical)
 }
 
-bool Character::IsCJKIdeographOrSymbol(UChar32 c) {
-  // Likely common case
-  if (c < 0x2C7)
-    return false;
-
+bool Character::IsCJKIdeographOrSymbolSlow(UChar32 c) {
   RETURN_HAS_PROPERTY(c, kIsCJKIdeographOrSymbol)
 }
 
