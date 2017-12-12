@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8562a648_04e2fa1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkDisclosureNotificationManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-12T18:28:23Z",
+      "side": 1,
+      "message": "note that this will show even if the TWA isn\u0027t valid (and you end up with a CustomTabs toolbar) but I think that\u0027s ok because it should be an edge case and I think it makes sense for this notification to be consistent. Yusuf/Dominick: scream loudly if you disagree",
+      "range": {
+        "startLine": 45,
+        "startChar": 16,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "82ae814bc1bb1dd770c430c32796c36563e2c4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
