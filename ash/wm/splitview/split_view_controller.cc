@@ -327,10 +327,21 @@ void SplitViewController::EndResize(const gfx::Point& location_in_screen) {
   // Check if one of the snapped windows needs to be closed.
   if (ShouldEndSplitViewAfterResizing()) {
     aura::Window* active_window = GetActiveWindowAfterResizingUponExit();
+
+    // Track the current active window. This window needs to be put back into
+    // the overview list if we remain in overview mode.
+    aura::Window* current_active_window = nullptr;
+    if (state() == LEFT_SNAPPED)
+      current_active_window = left_window();
+    else if (state() == RIGHT_SNAPPED)
+      current_active_window = right_window();
     EndSplitView();
     if (active_window) {
       EndOverview();
       wm::ActivateWindow(active_window);
+    } else if (current_active_window) {
+      Shell::Get()->window_selector_controller()->window_selector()->AddItem(
+          current_active_window);
     }
   }
 }
