@@ -46,6 +46,30 @@
       "revId": "eb82be2d4619038a34f5b2906be62115e2baaaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8d3b90_06e6a968",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/TtsPlatformImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-12T17:15:21Z",
+      "side": 1,
+      "message": "Ya, I guess that would handle other options. Catching the Exceptoin (with same comment) sgtm",
+      "parentUuid": "881e4def_83fef74a",
+      "range": {
+        "startLine": 284,
+        "startChar": 22,
+        "endLine": 284,
+        "endChar": 27
+      },
+      "revId": "eb82be2d4619038a34f5b2906be62115e2baaaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
