@@ -278,9 +278,9 @@ void EPKPChallengeKeyBase::AskForUserConsentCallback(
 
 void EPKPChallengeKeyBase::GetCertificateCallback(
     const base::Callback<void(PrepareKeyResult)>& callback,
-    bool success,
+    const chromeos::attestation::PrivacyCAOperationStatus status,
     const std::string& pem_certificate_chain) {
-  if (!success) {
+  if (status != chromeos::attestation::SUCCESS) {
     callback.Run(PREPARE_KEY_GET_CERTIFICATE_FAILED);
     return;
   }

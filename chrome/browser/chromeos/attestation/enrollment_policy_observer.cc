@@ -1,4 +1,4 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2018 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -35,25 +35,20 @@ namespace {
 const int kRetryDelay = 5;  // Seconds.
 const int kRetryLimit = 100;
 
-// A dbus callback which handles a string result.
-//
-// Parameters
-//   on_success - Called when status=success and result=true.
-//   status - The dbus operation status.
-//   result - The result returned by the dbus operation.
-//   data - The data returned by the dbus operation.
-void DBusStringCallback(
+void DBusPrivacyCACallback(
     const base::Callback<void(const std::string&)> on_success,
-    const base::Closure& on_failure,
+    const base::Callback<void(
+        const chromeos::attestation::PrivacyCAOperationStatus)> on_failure,
     const base::Location& from_here,
-    const chromeos::CryptohomeClient::TpmAttestationDataResult& result) {
-  if (!result.success) {
-    LOG(ERROR) << "Cryptohome DBus method failed: " << from_here.ToString();
-    if (!on_failure.is_null())
-      on_failure.Run();
+    chromeos::attestation::PrivacyCAOperationStatus status,
+    const std::string& data) {
+  if (status == chromeos::attestation::SUCCESS) {
+    on_success.Run(data);
     return;
   }
-  on_success.Run(result.data);
+  LOG(ERROR) << "Cryptohome DBus method failed: " << from_here.ToString();
+  if (!on_failure.is_null())
+    on_failure.Run(status);
 }
 
 }  // namespace
@@ -144,15 +139,16 @@ void EnrollmentPolicyObserver::GetEnrollmentCertificate() {
       false,             // Not used.
       base::Bind(
           [](const base::Callback<void(const std::string&)> on_success,
-             const base::Closure& on_failure, const base::Location& from_here,
-             bool success, const std::string& data) {
-            DBusStringCallback(on_success, on_failure, from_here,
-                               CryptohomeClient::TpmAttestationDataResult{
-                                   success, std::move(data)});
+             const base::Callback<void(
+                 const chromeos::attestation::PrivacyCAOperationStatus)>
+             on_failure, const base::Location& from_here,
+             const PrivacyCAOperationStatus status, const std::string& data) {
+            DBusPrivacyCACallback(on_success, on_failure, from_here,
+                               status, std::move(data));
           },
           base::Bind(&EnrollmentPolicyObserver::UploadCertificate,
                      weak_factory_.GetWeakPtr()),
-          base::Bind(&EnrollmentPolicyObserver::Reschedule,
+          base::Bind(&EnrollmentPolicyObserver::RescheduleIfNeeded,
                      weak_factory_.GetWeakPtr()),
           FROM_HERE));
 }
@@ -172,8 +168,12 @@ void EnrollmentPolicyObserver::OnUploadComplete(bool status) {
   cros_settings_->SetBoolean(kDeviceEnrollmentIdNeeded, false);
 }
 
-void EnrollmentPolicyObserver::Reschedule() {
-  if (++num_retries_ < kRetryLimit) {
+void EnrollmentPolicyObserver::RescheduleIfNeeded(
+    const PrivacyCAOperationStatus status) {
+  if (status == PRIVACY_CA_BAD_REQUEST) {
+    // We cannot get an enrollment cert (no EID) so upload an empty one.
+    UploadCertificate("");
+  } else if (++num_retries_ < kRetryLimit) {
     content::BrowserThread::PostDelayedTask(
         content::BrowserThread::UI, FROM_HERE,
         base::BindOnce(&EnrollmentPolicyObserver::Start,

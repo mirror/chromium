@@ -90,7 +90,8 @@ void CertCallbackSuccess(
     const chromeos::attestation::AttestationFlow::CertificateCallback&
         callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(callback, true, "fake_cert"));
+      FROM_HERE, base::BindOnce(callback, chromeos::attestation::SUCCESS,
+                                "fake_cert"));
 }
 
 class TestingDeviceCloudPolicyManagerChromeOS
