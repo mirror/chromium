@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29319dfb_e3c88ae2",
+        "filename": "device/vr/openvr/openvr_device_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-12T00:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5014ff9_8319a90e",
+      "range": {
+        "startLine": 19,
+        "startChar": 25,
+        "endLine": 19,
+        "endChar": 79
+      },
+      "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3c123ea_4eceded1",
         "filename": "device/vr/openvr/test/fake_openvr_impl_api.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a230b1d_efee0331",
+        "filename": "device/vr/openvr/test/fake_openvr_impl_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-12T00:30:36Z",
+      "side": 1,
+      "message": "This seems like something we can do as we make the tests richer - perhaps not making everything a mock method, but just the functions we want to override behavior of.\n\nIt will require some work to make the dynamically loaded dll mockable - perhaps exporting a method to set the VRSystem/VRCompositor/etc pointers, and tests will have to do some setup to pre-load the dll and set the mock before calling any OpenVR APIs.\n\nIn any case, I\u0027ll keep this as the \"real\" implementation, and use the \"delegate-to-real\" technique treating this as the \"real\" object so tests don\u0027t need to implement everything.",
+      "parentUuid": "e3c123ea_4eceded1",
+      "range": {
+        "startLine": 11,
+        "startChar": 21,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "86dbe0e9_2102b40b",
+        "filename": "device/vr/openvr/test/fake_openvr_impl_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-12T00:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e41c024_3d74063a",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 14
+      },
+      "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83ac94cc_ef1a7800",
         "filename": "device/vr/openvr/test/fake_openvr_impl_api.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5a70b047_a69a939b",
+        "filename": "device/vr/openvr/test/fake_openvr_impl_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-12T00:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83ac94cc_ef1a7800",
+      "range": {
+        "startLine": 498,
+        "startChar": 13,
+        "endLine": 498,
+        "endChar": 17
+      },
+      "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5eeab01_4377e196",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aac6562_75cd1d79",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-12T00:30:36Z",
+      "side": 1,
+      "message": "It could be null if we fail to allocate a GpuMemoryBuffer, which could occur in out-of-memory situations, or if the GPU support isn\u0027t at the level we require.\n\nI\u0027ll add a comment, and a todo to determine whether we should stop presentation or just drop a frame.",
+      "parentUuid": "d5eeab01_4377e196",
+      "range": {
+        "startLine": 740,
+        "startChar": 4,
+        "endLine": 740,
+        "endChar": 28
+      },
+      "revId": "719dc77245f6d9eae7501d571884198a7828d25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
