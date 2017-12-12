@@ -168,6 +168,24 @@
       "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40df98ed_85f67abf",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-12T21:31:17Z",
+      "side": 1,
+      "message": "I\u0027m slightly concerned CSS may make it possible to break this assumption. I\u0027ll got fiddle around with some test webpages.\n\nWith the non-Mac PrintPageInternal(), we don\u0027t even need these arguments. The data is in |print_params|. But we are stuck with them because this function is shared with Mac. With Mac PrintPageInternal(), it\u0027s calculated differently and requires the page number. I\u0027m not even sure why the two versions of PrintPageInternal() are different. o_O",
+      "parentUuid": "6926f4e3_73e6d0ca",
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
