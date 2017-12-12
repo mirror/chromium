@@ -9,6 +9,8 @@
 
 #include "cc/paint/transfer_cache_entry.h"
 
+#include "base/atomic_sequence_num.h"
+
 namespace cc {
 
 // Client/ServiceRawMemoryTransferCacheEntry implement a transfer cache entry
@@ -26,6 +28,7 @@ class CC_PAINT_EXPORT ClientRawMemoryTransferCacheEntry
  private:
   uint32_t id_;
   std::vector<uint8_t> data_;
+  static base::AtomicSequenceNumber next_id_;
 };
 
 class CC_PAINT_EXPORT ServiceRawMemoryTransferCacheEntry
