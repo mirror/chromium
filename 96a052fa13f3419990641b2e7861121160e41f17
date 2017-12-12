@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abb21562_2c63a876",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1890,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-12T09:38:44Z",
+      "side": 1,
+      "message": "Here you\u0027re using mojo pipes to communicate between //content/rebderer/ and WebKit/Source/modules/manifest/.\n\n- Is this a common usage of Mojo pipes?\n- Or are you planning to remove this once you move installedapp into Blink?",
+      "revId": "96a052fa13f3419990641b2e7861121160e41f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8108762_588f54ff",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-12T09:38:44Z",
+      "side": 1,
+      "message": "Nit: Do these functions need to be Repeating?",
+      "revId": "96a052fa13f3419990641b2e7861121160e41f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
