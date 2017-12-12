@@ -33,6 +33,7 @@
 #include "modules/gamepad/GamepadDispatcher.h"
 #include "modules/gamepad/GamepadEvent.h"
 #include "modules/gamepad/GamepadList.h"
+#include "public/platform/TaskType.h"
 
 namespace {
 
@@ -184,7 +185,8 @@ NavigatorGamepad::NavigatorGamepad(Navigator& navigator)
           navigator.GetFrame() ? navigator.GetFrame()->GetDocument() : nullptr),
       dispatch_one_event_runner_(AsyncMethodRunner<NavigatorGamepad>::Create(
           this,
-          &NavigatorGamepad::DispatchOneEvent)) {
+          &NavigatorGamepad::DispatchOneEvent,
+          navigator.GetFrame()->GetTaskRunner(TaskType::kMiscPlatformAPI))) {
   if (navigator.DomWindow())
     navigator.DomWindow()->RegisterEventListenerObserver(this);
 }

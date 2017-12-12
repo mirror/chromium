@@ -20,6 +20,7 @@
 #include "modules/mediastream/UserMediaRequest.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/wtf/Functional.h"
+#include "public/platform/TaskType.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 using blink::mojom::blink::MediaDeviceType;
@@ -71,7 +72,8 @@ MediaDevices::MediaDevices(ExecutionContext* context)
       stopped_(false),
       dispatch_scheduled_event_runner_(AsyncMethodRunner<MediaDevices>::Create(
           this,
-          &MediaDevices::DispatchScheduledEvent)) {}
+          &MediaDevices::DispatchScheduledEvent,
+          context->GetTaskRunner(TaskType::kMediaElementEvent))) {}
 
 MediaDevices::~MediaDevices() {}
 
