@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac767850_ad4b7dd0",
+        "filename": "components/viz/common/surfaces/frame_sink_id.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-12T21:58:57Z",
+      "side": 1,
+      "message": "super-nit:  If I wanted to be insanely picky, client_id_ is a uint32_t but the %u specifier expects a \"unsigned int\", which isn\u0027t guaranteed to be the same thing (but in reality always is the case for the platforms we care about).  You might have to static_cast to unsigned int or use PRIu32 as in https://cs.chromium.org/chromium/src/ui/gfx/range/range.cc?rcl\u003d1beaf80f9d9ef6d4d3ea3394944c24b0cfe9d5c2\u0026l\u003d27\n\nor just leave it.",
+      "range": {
+        "startLine": 12,
+        "startChar": 41,
+        "endLine": 12,
+        "endChar": 47
+      },
+      "revId": "76b8055e6819dd7d5015b1af03c02fdf4f8826fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
