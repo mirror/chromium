@@ -16,6 +16,24 @@
       "revId": "2a35f27cc2fe641628221fd8ce129e18f305bfed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b779868_3afc2a77",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-12T04:44:55Z",
+      "side": 1,
+      "message": "I did think about this and started implemented but it actually becomes quite a bit more complicated. We need to store separate values for notifications and geolocation and we need to handle cases where the notifications DSE flag is on/off before the policy was set and after it was set. \n\nMy thought is just that this is a really rare edge case. I\u0027d even be ok leaving it reverting to ALLOW but I was just trying to be very conservative with privacy. What do you think?",
+      "parentUuid": "5f421173_3277b370",
+      "revId": "2a35f27cc2fe641628221fd8ce129e18f305bfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
