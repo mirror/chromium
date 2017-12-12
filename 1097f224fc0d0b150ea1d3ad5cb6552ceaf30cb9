@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c534625b_9806cd30",
+        "filename": "cc/paint/image_transfer_cache_entry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-12T01:33:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8174d217_37b1245c",
+      "range": {
+        "startLine": 15,
+        "startChar": 27,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad89179d_9561036a",
         "filename": "cc/paint/transfer_cache_deserialize_helper.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "77d7d566_71dae750",
+        "filename": "cc/paint/transfer_cache_deserialize_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-12T01:33:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad89179d_9561036a",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c2f4930_8ea1749e",
         "filename": "cc/paint/transfer_cache_unittest.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-12T00:09:16Z",
       "side": 1,
       "message": "We have a direct link to the client transfer cache, so the ForTesting function *could* go here  if we wanted (not on context support), and we could just return that (or have a helper fn), but up to you.",
+      "range": {
+        "startLine": 71,
+        "startChar": 10,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74235ff5_c16d00cc",
+        "filename": "cc/paint/transfer_cache_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-12T01:33:30Z",
+      "side": 1,
+      "message": "Removed this as it\u0027s no longer used.",
+      "parentUuid": "5c2f4930_8ea1749e",
       "range": {
         "startLine": 71,
         "startChar": 10,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5fe95ecf_c3f1d711",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-12T01:33:30Z",
+      "side": 1,
+      "message": "I kept the check, but I removed the optional. I think we might as well check here, rather than relying on discardable error handling.",
+      "parentUuid": "68836e68_0fc69e60",
+      "range": {
+        "startLine": 43,
+        "startChar": 31,
+        "endLine": 43,
+        "endChar": 54
+      },
+      "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c919120d_815eba05",
         "filename": "gpu/command_buffer/client/client_transfer_cache.cc",
         "patchSetId": 3
@@ -108,6 +204,24 @@
       "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598cd419_ffa7d6d5",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-12T01:33:30Z",
+      "side": 1,
+      "message": "Done. We might as well DCHECK valid client usage.",
+      "parentUuid": "c919120d_815eba05",
+      "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +245,30 @@
       "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfff305_731840b7",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-12T01:33:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7da54618_9d538146",
+      "range": {
+        "startLine": 55,
+        "startChar": 28,
+        "endLine": 55,
+        "endChar": 56
+      },
+      "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +316,54 @@
       "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab6eb47_f1abfd62",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-12T01:33:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05dc0363_dda4ec17",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf826640_cd7efb9b",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-12T01:33:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdf92bb5_85cc5fc3",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
