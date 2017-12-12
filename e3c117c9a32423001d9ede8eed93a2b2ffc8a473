@@ -186,6 +186,24 @@
       "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89c2790_f820d69b",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-12T23:10:07Z",
+      "side": 1,
+      "message": "Windows looks fine with mixed CSS page sizes, which makes sense because content area and page size are both the same on Windows, and use the physical page size which cannot change between pages. However, not sure about Mac.",
+      "parentUuid": "40df98ed_85f67abf",
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
