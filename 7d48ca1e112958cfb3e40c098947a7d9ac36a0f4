@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ef85ad3_d96a0c81",
+        "filename": "ui/webui/resources/webui_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T23:23:59Z",
+      "side": 1,
+      "message": "Why do we need this file? IIRC web_ui_listener_behavior.html is supposed to be used by any Polymer components that need to track listeners.",
+      "range": {
+        "startLine": 389,
+        "startChar": 23,
+        "endLine": 389,
+        "endChar": 55
+      },
+      "revId": "7d48ca1e112958cfb3e40c098947a7d9ac36a0f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
