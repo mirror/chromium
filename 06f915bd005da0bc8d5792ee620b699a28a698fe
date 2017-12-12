@@ -16,6 +16,24 @@
       "revId": "06f915bd005da0bc8d5792ee620b699a28a698fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a1401e_79a68c4a",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-12T17:39:56Z",
+      "side": 1,
+      "message": "You\u0027re right, this is not necessary and should be removed. This will never get called on any other task runner.\n\nEven if it were possible, this (silently dropping the request) would most likely not be an appropriate way to handle that case.",
+      "parentUuid": "bfc3e102_59e218bd",
+      "revId": "06f915bd005da0bc8d5792ee620b699a28a698fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
