@@ -63,8 +63,7 @@ const base::FilePath::CharType kDummyIntermediatePath[] =
     FILE_PATH_LITERAL("/testpathx");
 
 namespace content {
-
-namespace {
+namespace download_item_impl_unittest {
 
 template <typename T>
 base::HistogramBase::Sample ToHistogramSample(T t) {
@@ -257,8 +256,6 @@ const uint8_t kHashOfTestData1[] = {
     0xd2, 0xfc, 0x16, 0xa1, 0xf5, 0x1a, 0x65, 0x3a, 0xa0, 0x19, 0x64,
     0xef, 0x9c, 0x92, 0x33, 0x36, 0xe1, 0x06, 0x53, 0xfe, 0xc1, 0x95,
     0xf4, 0x93, 0x45, 0x8b, 0x3b, 0x21, 0x89, 0x0e, 0x1b, 0x97};
-
-}  // namespace
 
 class DownloadItemTest : public testing::Test {
  public:
@@ -2433,4 +2430,5 @@ TEST(MockDownloadItem, Compiles) {
   MockDownloadItem mock_item;
 }
 
+}  // namespace download_item_impl_unittest
 }  // namespace content

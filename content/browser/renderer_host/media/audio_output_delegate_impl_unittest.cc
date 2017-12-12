@@ -32,18 +32,17 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+namespace content {
+namespace audio_output_delegate_impl_unittest {
+
 using ::testing::_;
 using ::testing::InSequence;
 using ::testing::NotNull;
 using ::testing::StrictMock;
 
-namespace content {
-
 media::AudioParameters Params() {
   return media::AudioParameters::UnavailableDeviceParams();
 }
-
-namespace {
 
 const int kRenderProcessId = 1;
 const int kRenderFrameId = 5;
@@ -115,8 +114,6 @@ class MockAudioOutputStreamObserver
   MOCK_METHOD0(DidStopPlaying, void());
   MOCK_METHOD1(DidChangeAudibleState, void(bool));
 };
-
-}  // namespace
 
 class AudioOutputDelegateTest : public testing::Test {
  public:
@@ -708,4 +705,5 @@ TEST_F(AudioOutputDelegateTest, ErrorAndDestroy) {
   l.Run();
 }
 
+}  // namespace audio_output_delegate_impl_unittest
 }  // namespace content

@@ -26,6 +26,12 @@ class SingleThreadTaskRunner;
 
 namespace content {
 
+namespace audio_message_filter_unittest {
+class AudioMessageFilterTest;
+FORWARD_DECLARE_TEST(AudioMessageFilterTest, Basic);
+FORWARD_DECLARE_TEST(AudioMessageFilterTest, Delegates);
+}  // namespace audio_message_filter_unittest
+
 // MessageFilter that handles audio messages and delegates them to audio
 // renderers. Created on render thread, AudioMessageFilter is operated on
 // IO thread (secondary thread of render process) it intercepts audio messages
@@ -55,8 +61,12 @@ class CONTENT_EXPORT AudioMessageFilter : public IPC::MessageFilter {
   ~AudioMessageFilter() override;
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(AudioMessageFilterTest, Basic);
-  FRIEND_TEST_ALL_PREFIXES(AudioMessageFilterTest, Delegates);
+  FRIEND_TEST_ALL_PREFIXES(
+      audio_message_filter_unittest::AudioMessageFilterTest,
+      Basic);
+  FRIEND_TEST_ALL_PREFIXES(
+      audio_message_filter_unittest::AudioMessageFilterTest,
+      Delegates);
 
   // Implementation of media::AudioOutputIPC which augments IPC calls with
   // stream_id and the source render_frame_id.
