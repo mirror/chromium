@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddd889f4_6ef5e7dc",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-12T22:36:36Z",
+      "side": 1,
+      "message": "This should probably also be in public_deps, which would explain why the dependency on :platform isn\u0027t enough to fix :instrumentation (which depends on platform, but needs to have it re-exported from platform).",
+      "revId": "ff76c78838f2bae2c30ca74d25565015a61dcd1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
