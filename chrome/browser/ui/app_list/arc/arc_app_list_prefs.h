@@ -475,6 +475,9 @@ class ArcAppListPrefs : public KeyedService,
   int last_shown_batch_installation_revision_ = -1;
   int current_batch_installation_revision_ = 0;
 
+  // TODO (b/70566216): Remove this once fixed.
+  base::OnceClosure app_list_refreshed_callback_;
+
   base::WeakPtrFactory<ArcAppListPrefs> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcAppListPrefs);
