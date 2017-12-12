@@ -121,7 +121,9 @@ std::string VrAssetsComponentInstallerTraits::GetName() const {
 
 update_client::InstallerAttributes
 VrAssetsComponentInstallerTraits::GetInstallerAttributes() const {
-  return update_client::InstallerAttributes();
+  update_client::InstallerAttributes attrs;
+  attrs["_major_assets_version"] = "1.0";
+  return attrs;
 }
 
 std::vector<std::string> VrAssetsComponentInstallerTraits::GetMimeTypes()
