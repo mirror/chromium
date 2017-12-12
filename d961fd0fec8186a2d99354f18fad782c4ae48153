@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "9bbfc84d_7151e218",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-12T13:56:45Z",
+      "side": 1,
+      "message": "I think you are right, we should show the dialog in another tab in that case.\nI implemented that.",
+      "parentUuid": "d8e0e18a_b468f4d2",
+      "range": {
+        "startLine": 70,
+        "startChar": 36,
+        "endLine": 70,
+        "endChar": 46
+      },
+      "revId": "d961fd0fec8186a2d99354f18fad782c4ae48153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18e84258_8185f448",
         "filename": "chrome/browser/signin/process_dice_header_delegate_impl.h",
         "patchSetId": 3
