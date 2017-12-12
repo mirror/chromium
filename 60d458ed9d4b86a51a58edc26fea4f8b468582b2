@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "822052f3_698442ec",
+        "filename": "ash/shell_port_mus.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T23:10:47Z",
+      "side": 1,
+      "message": "Should you keep the old code and run it if switches::IsMusHostingViz is true?",
+      "range": {
+        "startLine": 265,
+        "startChar": 2,
+        "endLine": 268,
+        "endChar": 54
+      },
+      "revId": "60d458ed9d4b86a51a58edc26fea4f8b468582b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
