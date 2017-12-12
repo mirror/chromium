@@ -79,6 +79,7 @@
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_observer.h"
+#include "ui/aura/window_occlusion_tracker.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/clipboard/scoped_clipboard_writer.h"
 #include "ui/base/hit_test.h"
@@ -687,8 +688,12 @@ bool RenderWidgetHostViewAura::IsSurfaceAvailableForCopy() const {
   return delegated_frame_host_->CanCopyFromCompositingSurface();
 }
 
-bool RenderWidgetHostViewAura::IsShowing() {
-  return window_->IsVisible();
+Visibility RenderWidgetHostViewAura::GetVisibility() const {
+  if (!window_->IsVisible() || !window_->GetRootWindow())
+    return Visibility::HIDDEN;
+  if (window_->occlusion_state() == aura::Window::OcclusionState::OCCLUDED)
+    return Visibility::OCCLUDED;
+  return Visibility::VISIBLE;
 }
 
 void RenderWidgetHostViewAura::WasUnOccluded() {
@@ -1956,6 +1961,8 @@ void RenderWidgetHostViewAura::CreateAuraWindow(aura::client::WindowType type) {
   window_->SetType(type);
   window_->Init(ui::LAYER_SOLID_COLOR);
   window_->layer()->SetColor(background_color_);
+
+  aura::WindowOcclusionTracker::Track(window_);
 
   if (!IsUsingMus())
     return;
