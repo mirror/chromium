@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0aee3c91_9565abdf",
+        "filename": "chrome/test/data/webui/settings/android_apps_page_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T17:56:34Z",
+      "side": 1,
+      "message": "I didn\u0027t realize that a promise was gauranteed to run on the next microtask, although I guess that makes sense. I think the intent this way is a little more clear and the extra async doesn\u0027t hurt. I don\u0027t think setTimeout is required here, but I didn\u0027t know about flushTasks, I\u0027ll keep it in mind if we seem more flakiness.",
+      "parentUuid": "cc8d4f13_3dd061c3",
+      "revId": "0ceae9ae7427942648595a64f7ec6a5a804fac2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1aaff7c_281b28c3",
         "filename": "chrome/test/data/webui/settings/cr_settings_browsertest.js",
         "patchSetId": 1
