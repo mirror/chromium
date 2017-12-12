@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9165297_a67cf322",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-12T21:41:31Z",
+      "side": 1,
+      "message": "If I understand correctly, this can be called any time before the overlay content actually loads. As long as this is set before \"DidClearWindowObject\" on the renderer side has run, this should work. Since this is the case, I\u0027d call this method immediately after we know what the URL in the overlay is going to be (and even before we trigger loading of the overlay) to avoid a race condition running the opposite direction.",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 1
+      },
+      "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931ad270_5f898ce6",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-12T21:41:31Z",
+      "side": 1,
+      "message": "I would also note that this will not work if the page this is being applied to has already loaded.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56aea10e_727017db",
+        "filename": "components/contextual_search/renderer/overlay_js_render_frame_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-12T21:41:31Z",
+      "side": 1,
+      "message": "This is non-blocking correct?",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 54
+      },
+      "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337438af_68660bf3",
+        "filename": "components/contextual_search/renderer/overlay_js_render_frame_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-12T21:41:31Z",
+      "side": 1,
+      "message": "nit: Can this be in the form or an early return?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 22
+      },
+      "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
