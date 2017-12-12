@@ -16,6 +16,7 @@
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wallpaper/test_wallpaper_delegate.h"
+#include "ash/wallpaper/wallpaper_controller_observer.h"
 #include "ash/wallpaper/wallpaper_view.h"
 #include "ash/wallpaper/wallpaper_widget_controller.h"
 #include "base/command_line.h"
@@ -50,12 +51,35 @@ const int kWallpaperId = ash::kShellWindowId_WallpaperContainer;
 const int kLockScreenWallpaperId =
     ash::kShellWindowId_LockScreenWallpaperContainer;
 
-const std::string default_small_wallpaper_name = "small.jpg";
-const std::string default_large_wallpaper_name = "large.jpg";
-const std::string guest_small_wallpaper_name = "guest_small.jpg";
-const std::string guest_large_wallpaper_name = "guest_large.jpg";
-const std::string child_small_wallpaper_name = "child_small.jpg";
-const std::string child_large_wallpaper_name = "child_large.jpg";
+constexpr int kLargeWallpaperWidth = 256;
+const int kLargeWallpaperHeight = WallpaperController::kLargeWallpaperMaxHeight;
+constexpr int kSmallWallpaperWidth = 256;
+const int kSmallWallpaperHeight = WallpaperController::kSmallWallpaperMaxHeight;
+
+constexpr char default_small_wallpaper_name[] = "small.jpg";
+constexpr char default_large_wallpaper_name[] = "large.jpg";
+constexpr char guest_small_wallpaper_name[] = "guest_small.jpg";
+constexpr char guest_large_wallpaper_name[] = "guest_large.jpg";
+constexpr char child_small_wallpaper_name[] = "child_small.jpg";
+constexpr char child_large_wallpaper_name[] = "child_large.jpg";
+
+// Colors used to distinguish between wallpapers with large and small
+// resolution.
+const SkColor kLargeCustomWallpaperColor = SK_ColorDKGRAY;
+const SkColor kSmallCustomWallpaperColor = SK_ColorLTGRAY;
+
+// A color that can be passed to |CreateImage|. Specifically chosen to not
+// conflict with any of the custom wallpaper colors.
+const SkColor kWallpaperColor = SK_ColorMAGENTA;
+
+// Creates an image of size |size|.
+gfx::ImageSkia CreateImage(int width, int height, SkColor color) {
+  SkBitmap bitmap;
+  bitmap.allocN32Pixels(width, height);
+  bitmap.eraseColor(color);
+  gfx::ImageSkia image = gfx::ImageSkia::CreateFrom1xBitmap(bitmap);
+  return image;
+}
 
 // Returns number of child windows in a shell window container.
 int ChildCountForContainer(int container_id) {
@@ -83,13 +107,36 @@ void RunAnimationForWidget(views::Widget* widget) {
   }
 }
 
+// Returns custom wallpaper path. Create the directory if it doesn't exist.
+base::FilePath GetCustomWallpaperPath(const char* sub_dir,
+                                      const std::string& wallpaper_files_id,
+                                      const std::string& file_name) {
+  base::ScopedAllowBlockingForTesting allow_blocking;
+  base::FilePath wallpaper_path = WallpaperController::GetCustomWallpaperPath(
+      sub_dir, wallpaper_files_id, file_name);
+  if (!base::DirectoryExists(wallpaper_path.DirName()))
+    base::CreateDirectory(wallpaper_path.DirName());
+
+  return wallpaper_path;
+}
+
+std::string GetDummyFileId(const AccountId& account_id) {
+  return account_id.GetUserEmail() + "-hash";
+  ;
+}
+
+std::string GetDummyFileName(const AccountId& account_id) {
+  return account_id.GetUserEmail() + "-file";
+  ;
+}
+
 // Monitors if any task is processed by the message loop.
 class TaskObserver : public base::MessageLoop::TaskObserver {
  public:
   TaskObserver() : processed_(false) {}
   ~TaskObserver() override = default;
 
-  // MessageLoop::TaskObserver overrides.
+  // MessageLoop::TaskObserver:
   void WillProcessTask(const base::PendingTask& pending_task) override {}
   void DidProcessTask(const base::PendingTask& pending_task) override {
     processed_ = true;
@@ -148,7 +195,8 @@ class TestWallpaperObserver : public mojom::WallpaperObserver {
 
 }  // namespace
 
-class WallpaperControllerTest : public AshTestBase {
+class WallpaperControllerTest : public AshTestBase,
+                                public WallpaperControllerObserver {
  public:
   WallpaperControllerTest()
       : controller_(nullptr), wallpaper_delegate_(nullptr) {}
@@ -167,6 +215,7 @@ class WallpaperControllerTest : public AshTestBase {
         static_cast<TestWallpaperDelegate*>(Shell::Get()->wallpaper_delegate());
     controller_->set_wallpaper_reload_delay_for_test(0);
     controller_->InitializePathsForTesting();
+    controller_->AddObserver(this);
   }
 
   WallpaperView* wallpaper_view() {
@@ -180,20 +229,12 @@ class WallpaperControllerTest : public AshTestBase {
         controller->widget()->GetContentsView()->child_at(0));
   }
 
- protected:
-  // A color that can be passed to CreateImage(). Specifically chosen to not
-  // conflict with any of the default wallpaper colors.
-  static const SkColor kWallpaperColor = SK_ColorMAGENTA;
-
-  // Creates an image of size |size|.
-  gfx::ImageSkia CreateImage(int width, int height, SkColor color) {
-    SkBitmap bitmap;
-    bitmap.allocN32Pixels(width, height);
-    bitmap.eraseColor(color);
-    gfx::ImageSkia image = gfx::ImageSkia::CreateFrom1xBitmap(bitmap);
-    return image;
+  // WallpaperControllerObserver:
+  void OnPendingListEmptyForTesting() override {
+      run_loop_.QuitWhenIdle();
   }
 
+ protected:
   // Helper function that tests the wallpaper is always fitted to the native
   // display resolution when the layout is WALLPAPER_LAYOUT_CENTER.
   void WallpaperFitToNativeResolution(WallpaperView* view,
@@ -257,9 +298,8 @@ class WallpaperControllerTest : public AshTestBase {
   }
 
   // Helper function to create a new |mojom::WallpaperUserInfoPtr| instance with
-  // default values. In addition, remove the previous wallpaper info (if any)
-  // and clear the wallpaper count. May be called multiple times for the
-  // same |account_id|.
+  // default values. In addition, clear the wallpaper count and the decoding
+  // request list. May be called multiple times for the same |account_id|.
   mojom::WallpaperUserInfoPtr InitializeUser(const AccountId& account_id) {
     mojom::WallpaperUserInfoPtr wallpaper_user_info =
         mojom::WallpaperUserInfo::New();
@@ -268,12 +308,43 @@ class WallpaperControllerTest : public AshTestBase {
     wallpaper_user_info->is_ephemeral = false;
     wallpaper_user_info->has_gaia_account = true;
 
-    controller_->RemoveUserWallpaperInfo(account_id,
-                                         !wallpaper_user_info->is_ephemeral);
+    controller_->decode_requests_for_testing_.clear();
     controller_->current_user_wallpaper_info_ = wallpaper::WallpaperInfo();
     controller_->wallpaper_count_for_testing_ = 0;
 
     return wallpaper_user_info;
+  }
+
+  // Saves images with different resolution to corresponding paths and saves
+  // wallpaper info to local state, so that subsequent calls of |ShowWallpaper|
+  // can retrieve the images and info.
+  void CreateAndSaveWallpapers(const AccountId& account_id) {
+    std::string wallpaper_files_id = GetDummyFileId(account_id);
+    std::string file_name = GetDummyFileName(account_id);
+    base::FilePath small_wallpaper_path =
+        GetCustomWallpaperPath(WallpaperController::kSmallWallpaperSubDir,
+                               wallpaper_files_id, file_name);
+    base::FilePath large_wallpaper_path =
+        GetCustomWallpaperPath(WallpaperController::kLargeWallpaperSubDir,
+                               wallpaper_files_id, file_name);
+
+    // Saves the small/large resolution wallpapers to small/large custom
+    // wallpaper paths.
+    ASSERT_TRUE(WallpaperController::WriteJPEGFileForTesting(
+        small_wallpaper_path, kSmallWallpaperWidth, kSmallWallpaperHeight,
+        kSmallCustomWallpaperColor));
+    ASSERT_TRUE(WallpaperController::WriteJPEGFileForTesting(
+        large_wallpaper_path, kLargeWallpaperWidth, kLargeWallpaperHeight,
+        kLargeCustomWallpaperColor));
+
+    std::string relative_path =
+        base::FilePath(wallpaper_files_id).Append(file_name).value();
+    // Saves wallpaper info to local state for user.
+    wallpaper::WallpaperInfo info = {
+        relative_path, WALLPAPER_LAYOUT_CENTER_CROPPED, wallpaper::CUSTOMIZED,
+        base::Time::Now().LocalMidnight()};
+    controller_->SetUserWallpaperInfo(account_id, info,
+                                      true /*is_persistent=*/);
   }
 
   // Simulates setting a custom wallpaper by directly setting the wallpaper
@@ -340,13 +411,25 @@ class WallpaperControllerTest : public AshTestBase {
         child_large_file, kWallpaperSize, kWallpaperSize, kWallpaperColor));
   }
 
-  // Wrapper for private ShouldCalculateColors()
+  void WaitForPendingListEmpty() {
+    while (controller_->pending_list_.size() != 0)
+      run_loop_.Run();
+  }
+
+  // Wrapper for private ShouldCalculateColors().
   bool ShouldCalculateColors() { return controller_->ShouldCalculateColors(); }
 
   int GetWallpaperCount() { return controller_->wallpaper_count_for_testing_; }
 
-  base::FilePath GetWallpaperFilePath() {
-    return controller_->wallpaper_file_path_for_testing_;
+  bool CompareDecodeFilePaths(const std::vector<base::FilePath> expected) {
+    if (controller_->decode_requests_for_testing_.size() != expected.size())
+      return false;
+
+    for (size_t i = 0; i < expected.size(); ++i) {
+      if (controller_->decode_requests_for_testing_[i] != expected[i])
+        return false;
+    }
+    return true;
   }
 
   WallpaperController* controller_;  // Not owned.
@@ -356,6 +439,8 @@ class WallpaperControllerTest : public AshTestBase {
   // Directory created by |CreateDefaultWallpapers| to store default wallpaper
   // images.
   std::unique_ptr<base::ScopedTempDir> wallpaper_dir_;
+
+  base::RunLoop run_loop_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WallpaperControllerTest);
@@ -695,10 +780,10 @@ TEST_F(WallpaperControllerTest, MojoWallpaperObserverTest) {
 
 TEST_F(WallpaperControllerTest, SetCustomWallpaper) {
   gfx::ImageSkia image = CreateImage(640, 480, kWallpaperColor);
-  const std::string file_name = "dummy_file_name";
-  const std::string wallpaper_files_id = "dummy_file_id";
   const std::string user_email = "user@test.com";
   const AccountId account_id = AccountId::FromUserEmail(user_email);
+  const std::string wallpaper_files_id = GetDummyFileId(account_id);
+  const std::string file_name = GetDummyFileName(account_id);
   WallpaperLayout layout = WALLPAPER_LAYOUT_CENTER;
   wallpaper::WallpaperType type = wallpaper::CUSTOMIZED;
 
@@ -754,13 +839,16 @@ TEST_F(WallpaperControllerTest, SetOnlineWallpaper) {
       url, layout, wallpaper::ONLINE, base::Time::Now().LocalMidnight());
   EXPECT_EQ(wallpaper_info, expected_wallpaper_info);
 
+  const std::string user_email2 = "user2@test.com";
+  const AccountId account_id2 = AccountId::FromUserEmail(user_email2);
+  SimulateUserLogin(user_email2);
   // Verify that the wallpaper is not set when |show_wallpaper| is false, but
   // wallpaper info is updated properly.
-  controller_->SetOnlineWallpaper(InitializeUser(account_id), *image.bitmap(),
+  controller_->SetOnlineWallpaper(InitializeUser(account_id2), *image.bitmap(),
                                   url, layout, false /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(0, GetWallpaperCount());
-  EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id, &wallpaper_info,
+  EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id2, &wallpaper_info,
                                                 true /*is_persistent=*/));
   EXPECT_EQ(wallpaper_info, expected_wallpaper_info);
 }
@@ -770,6 +858,7 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForRegularAccount) {
 
   const std::string user_email = "user@test.com";
   const AccountId account_id = AccountId::FromUserEmail(user_email);
+  const std::string wallpaper_files_id = GetDummyFileId(account_id);
   SimulateUserLogin(user_email);
 
   // First, simulate setting a user custom wallpaper.
@@ -786,13 +875,12 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForRegularAccount) {
   // info, and the large default wallpaper is set successfully with the correct
   // file path.
   UpdateDisplay("1600x1200");
-  controller_->SetDefaultWallpaper(InitializeUser(account_id),
-                                   std::string() /*wallpaper_files_id=*/,
-                                   true /*show_wallpaper=*/);
+  controller_->SetDefaultWallpaper(
+      InitializeUser(account_id), wallpaper_files_id, true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
-  EXPECT_EQ(wallpaper_dir_->GetPath().Append(default_large_wallpaper_name),
-            GetWallpaperFilePath());
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {wallpaper_dir_->GetPath().Append(default_large_wallpaper_name)}));
 
   EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id, &wallpaper_info,
                                                 true /*is_persistent=*/));
@@ -804,13 +892,12 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForRegularAccount) {
   // info, and the small default wallpaper is set successfully with the correct
   // file path.
   UpdateDisplay("800x600");
-  controller_->SetDefaultWallpaper(InitializeUser(account_id),
-                                   std::string() /*wallpaper_files_id=*/,
-                                   true /*show_wallpaper=*/);
+  controller_->SetDefaultWallpaper(
+      InitializeUser(account_id), wallpaper_files_id, true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
-  EXPECT_EQ(wallpaper_dir_->GetPath().Append(default_small_wallpaper_name),
-            GetWallpaperFilePath());
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {wallpaper_dir_->GetPath().Append(default_small_wallpaper_name)}));
 
   EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id, &wallpaper_info,
                                                 true /*is_persistent=*/));
@@ -822,13 +909,12 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForRegularAccount) {
   // previously set custom wallpaper info, and the large default wallpaper is
   // set successfully with the correct file path.
   UpdateDisplay("1200x800/r");
-  controller_->SetDefaultWallpaper(InitializeUser(account_id),
-                                   std::string() /*wallpaper_files_id=*/,
-                                   true /*show_wallpaper=*/);
+  controller_->SetDefaultWallpaper(
+      InitializeUser(account_id), wallpaper_files_id, true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
-  EXPECT_EQ(wallpaper_dir_->GetPath().Append(default_large_wallpaper_name),
-            GetWallpaperFilePath());
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {wallpaper_dir_->GetPath().Append(default_large_wallpaper_name)}));
 
   EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id, &wallpaper_info,
                                                 true /*is_persistent=*/));
@@ -853,8 +939,8 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForChildAccount) {
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
-  EXPECT_EQ(wallpaper_dir_->GetPath().Append(child_large_wallpaper_name),
-            GetWallpaperFilePath());
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {wallpaper_dir_->GetPath().Append(child_large_wallpaper_name)}));
 
   // Verify the small child wallpaper is set successfully with the correct file
   // path.
@@ -866,8 +952,8 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForChildAccount) {
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
-  EXPECT_EQ(wallpaper_dir_->GetPath().Append(child_small_wallpaper_name),
-            GetWallpaperFilePath());
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {wallpaper_dir_->GetPath().Append(child_small_wallpaper_name)}));
 }
 
 TEST_F(WallpaperControllerTest, SetDefaultWallpaperForGuestSession) {
@@ -877,6 +963,8 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForGuestSession) {
   const std::string user_email = "user@test.com";
   const AccountId regular_user_account_id =
       AccountId::FromUserEmail("user@test.com");
+  const std::string wallpaper_files_id = GetDummyFileId(regular_user_account_id);
+
   SimulateUserLogin(user_email);
   SimulateSettingCustomWallpaper(regular_user_account_id);
   wallpaper::WallpaperInfo wallpaper_info;
@@ -899,30 +987,31 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForGuestSession) {
   // instead of the regular default wallpaper.
   UpdateDisplay("1600x1200");
   controller_->SetDefaultWallpaper(InitializeUser(regular_user_account_id),
-                                   std::string() /*wallpaper_files_id=*/,
+                                   wallpaper_files_id,
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
   EXPECT_TRUE(controller_->GetUserWallpaperInfo(
       regular_user_account_id, &wallpaper_info, true /* is_persistent */));
   EXPECT_EQ(wallpaper_info, default_wallpaper_info);
-  EXPECT_EQ(wallpaper_dir_->GetPath().Append(guest_large_wallpaper_name),
-            GetWallpaperFilePath());
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {wallpaper_dir_->GetPath().Append(guest_large_wallpaper_name)}));
 
   UpdateDisplay("800x600");
   controller_->SetDefaultWallpaper(InitializeUser(regular_user_account_id),
-                                   std::string() /*wallpaper_files_id=*/,
+                                   wallpaper_files_id,
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
-  EXPECT_EQ(wallpaper_dir_->GetPath().Append(guest_small_wallpaper_name),
-            GetWallpaperFilePath());
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {wallpaper_dir_->GetPath().Append(guest_small_wallpaper_name)}));
 }
 
 TEST_F(WallpaperControllerTest, IgnoreWallpaperRequestInKioskMode) {
   gfx::ImageSkia image = CreateImage(640, 480, kWallpaperColor);
   const std::string kiosk_app = "kiosk";
   const AccountId account_id = AccountId::FromUserEmail("user@test.com");
+  const std::string wallpaper_files_id = GetDummyFileId(account_id);
 
   // Simulate kiosk login.
   TestSessionControllerClient* session = GetSessionControllerClient();
@@ -933,9 +1022,9 @@ TEST_F(WallpaperControllerTest, IgnoreWallpaperRequestInKioskMode) {
   // Verify that |SetCustomWallpaper| doesn't set wallpaper in kiosk mode, and
   // |account_id|'s wallpaper info is not updated.
   controller_->SetCustomWallpaper(
-      InitializeUser(account_id), std::string() /* wallpaper_files_id */,
-      "dummy_file_name", WALLPAPER_LAYOUT_CENTER, wallpaper::CUSTOMIZED,
-      *image.bitmap(), true /* show_wallpaper */);
+      InitializeUser(account_id), wallpaper_files_id, "dummy_file_name",
+      WALLPAPER_LAYOUT_CENTER, wallpaper::CUSTOMIZED, *image.bitmap(),
+      true /* show_wallpaper */);
   RunAllTasksUntilIdle();
   EXPECT_EQ(0, GetWallpaperCount());
   wallpaper::WallpaperInfo wallpaper_info;
@@ -954,9 +1043,8 @@ TEST_F(WallpaperControllerTest, IgnoreWallpaperRequestInKioskMode) {
 
   // Verify that |SetDefaultWallpaper| doesn't set wallpaper in kiosk mode, but
   // the wallpaper info has been reset to the default value.
-  controller_->SetDefaultWallpaper(InitializeUser(account_id),
-                                   std::string() /*wallpaper_files_id=*/,
-                                   true /*show_wallpaper=*/);
+  controller_->SetDefaultWallpaper(
+      InitializeUser(account_id), wallpaper_files_id, true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(0, GetWallpaperCount());
   EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id, &wallpaper_info,
@@ -969,9 +1057,9 @@ TEST_F(WallpaperControllerTest, IgnoreWallpaperRequestInKioskMode) {
 
 TEST_F(WallpaperControllerTest, VerifyWallpaperCache) {
   gfx::ImageSkia image = CreateImage(640, 480, kWallpaperColor);
-  const std::string wallpaper_files_id = "dummy_file_id";
   const std::string user1 = "user1@test.com";
   const AccountId account_id1 = AccountId::FromUserEmail(user1);
+  const std::string wallpaper_files_id = GetDummyFileId(account_id1);
 
   SimulateUserLogin(user1);
 
@@ -1023,6 +1111,56 @@ TEST_F(WallpaperControllerTest, VerifyWallpaperCache) {
   EXPECT_FALSE(
       controller_->GetWallpaperFromCache(account_id1, &cached_wallpaper));
   EXPECT_FALSE(controller_->GetPathFromCache(account_id1, &path));
+}
+
+// Tests that the appropriate custom wallpaper (large vs. small) is shown
+// depending on the desktop resolution.
+TEST_F(WallpaperControllerTest, ShowCustomWallpaperWithCorrectResolution) {
+  const AccountId account_id = AccountId::FromUserEmail("user1@test.com");
+  const std::string wallpaper_files_id = GetDummyFileId(account_id);
+  const std::string file_name = GetDummyFileName(account_id);
+  base::FilePath small_wallpaper_path =
+      GetCustomWallpaperPath(WallpaperController::kSmallWallpaperSubDir,
+                             wallpaper_files_id, file_name);
+
+  CreateAndSaveWallpapers(account_id);
+
+  controller_->ShowUserWallpaper(InitializeUser(account_id));
+  WaitForPendingListEmpty();
+  RunAllTasksUntilIdle();
+  EXPECT_EQ(1, GetWallpaperCount());
+
+  // Display is initialized to 800x600. The small resolution custom wallpaper is
+  // expected.
+  EXPECT_TRUE(CompareDecodeFilePaths({small_wallpaper_path, base::FilePath()}));
+
+  // Remove the custom wallpaper directory that may be created.
+  controller_->RemoveUserWallpaper(InitializeUser(account_id),
+                                   wallpaper_files_id);
+
+  // TODO(crbug.com/776464): Add tests for large resolution custom wallpapers
+  // after |UpdateWallpaper| is migrated.
+}
+
+// If clients call |ShowUserWallpaper| twice with the same account id, the
+// latter request should be prevented (See crbug.com/158383).
+TEST_F(WallpaperControllerTest, PreventReloadingSameWallpaper) {
+  const AccountId account_id = AccountId::FromUserEmail("user1@test.com");
+  CreateAndSaveWallpapers(account_id);
+
+  controller_->ShowUserWallpaper(InitializeUser(account_id));
+  WaitForPendingListEmpty();
+  RunAllTasksUntilIdle();
+  EXPECT_EQ(1, GetWallpaperCount());
+
+//   controller_->ShowUserWallpaper(InitializeUser(account_id));
+//   WaitForPendingListEmpty();
+//   RunAllTasksUntilIdle();
+//   EXPECT_EQ(0, GetWallpaperCount());
+
+  // Remove the custom wallpaper directory that may be created.
+  controller_->RemoveUserWallpaper(InitializeUser(account_id),
+                                   GetDummyFileId(account_id));
 }
 
 }  // namespace ash

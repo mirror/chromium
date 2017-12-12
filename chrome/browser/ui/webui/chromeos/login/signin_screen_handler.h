@@ -283,7 +283,6 @@ class SigninScreenHandler
   void OnScreenInitialized(OobeScreen screen) override{};
 
   // ash::WallpaperControllerObserver implementation:
-  void OnWallpaperDataChanged() override;
   void OnWallpaperColorsChanged() override;
   void OnWallpaperBlurChanged() override;
 
