@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "017a9596_f4e1396f",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-12-12T20:13:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03d24401_871e0510",
+      "revId": "6c1a42ab8c22e42f9902d7426d9732630acbc765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9baecff5_f833d8f7",
         "filename": "content/public/common/content_features.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "6c1a42ab8c22e42f9902d7426d9732630acbc765",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feba5803_fc1cec80",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-12-12T20:13:50Z",
+      "side": 1,
+      "message": "This is from git cl format, which corrects to current formatting.",
+      "parentUuid": "9baecff5_f833d8f7",
+      "revId": "6c1a42ab8c22e42f9902d7426d9732630acbc765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
