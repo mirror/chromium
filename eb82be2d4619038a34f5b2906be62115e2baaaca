@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51c737b2_46c07e55",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/TtsPlatformImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-12T17:07:23Z",
+      "side": 1,
+      "message": "would be nice if we have a general solution instead of hardcoding a language (like is theere something we can query?) but I get that we\u0027re trying to call isLanguageAvailable and it crashes so seems like a decent bandaid",
+      "range": {
+        "startLine": 284,
+        "startChar": 22,
+        "endLine": 284,
+        "endChar": 27
+      },
+      "revId": "eb82be2d4619038a34f5b2906be62115e2baaaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
