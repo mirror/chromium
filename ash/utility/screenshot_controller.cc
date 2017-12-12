@@ -29,7 +29,7 @@ namespace ash {
 
 namespace {
 
-const int kCursorSize = 12;
+const int kCursorSize = 14;
 
 // This will prevent the user from taking a screenshot across multiple
 // monitors. it will stop the mouse at the any edge of the screen. must
@@ -152,14 +152,21 @@ class ScreenshotController::ScreenshotLayer : public ui::LayerOwner,
       pseudo_cursor_point.Offset(0, -1);
 
     cc::PaintFlags flags;
-    flags.setAntiAlias(false);
-    flags.setStrokeWidth(1);
-    flags.setColor(SK_ColorWHITE);
     flags.setBlendMode(SkBlendMode::kSrc);
+
+    // Circle fill.
+    flags.setStyle(cc::PaintFlags::kFill_Style);
+    flags.setColor(SK_ColorGRAY);
+    flags.setAntiAlias(true);
+    canvas->DrawCircle(pseudo_cursor_point, (kCursorSize / 2) - 3, flags);
+
+    flags.setStrokeWidth(1);
+    flags.setAntiAlias(false);
+    flags.setColor(SK_ColorWHITE);
     gfx::Vector2d width(kCursorSize / 2, 0);
     gfx::Vector2d height(0, kCursorSize / 2);
-    gfx::Vector2d white_x_offset(1, -1);
-    gfx::Vector2d white_y_offset(1, -1);
+    gfx::Vector2d white_x_offset(0, -1);
+    gfx::Vector2d white_y_offset(1, 0);
     // Horizontal
     canvas->DrawLine(pseudo_cursor_point - width + white_x_offset,
                      pseudo_cursor_point + width + white_x_offset, flags);
@@ -175,6 +182,13 @@ class ScreenshotController::ScreenshotLayer : public ui::LayerOwner,
     // Vertical
     canvas->DrawLine(pseudo_cursor_point - height, pseudo_cursor_point + height,
                      flags);
+
+    // Circle stroke.
+    flags.setStrokeWidth(1);
+    flags.setColor(SK_ColorDKGRAY);
+    flags.setStyle(cc::PaintFlags::kStroke_Style);
+    flags.setAntiAlias(true);
+    canvas->DrawCircle(pseudo_cursor_point, (kCursorSize / 2) - 3, flags);
   }
 
   bool draw_inactive_overlay_;
