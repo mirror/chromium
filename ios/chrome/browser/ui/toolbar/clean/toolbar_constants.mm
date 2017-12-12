@@ -15,6 +15,7 @@ const CGFloat kLocationBarVerticalMargin = 7.0f;
 const CGFloat kExpandedLocationBarVerticalMargin = 2.0f;
 const CGFloat kButtonVerticalMargin = 4.0f;
 const CGFloat kLeadingMarginIPad = 4.0f;
+const CGFloat kLeadingMarginIncognitoExpanded = 15.0f;
 const CGFloat kHorizontalMargin = 1.0f;
 const CGFloat kStackViewSpacing = -2.0f;
 
