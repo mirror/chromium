@@ -96,6 +96,8 @@ void AddDataToPageloadMetrics(const DataReductionProxyData& request_data,
           request_data.effective_connection_type()));
   request->set_compressed_page_size_bytes(timing.network_bytes);
   request->set_original_page_size_bytes(timing.original_network_bytes);
+  request.set_total_device_memory_kb(base::SysInfo::AmountOfPhysicalMemory() /
+                                     1024);
 
   if (request_data.page_id()) {
     request->set_page_id(request_data.page_id().value());

@@ -381,6 +381,8 @@ void DataReductionProxyConfigServiceClient::RetrieveRemoteConfig() {
   request.set_telephony_network_operator(
       net::android::GetTelephonyNetworkOperator());
 #endif
+  request.set_total_device_memory_kb(base::SysInfo::AmountOfPhysicalMemory() /
+                                     1024);
   const std::string& session_key = request_options_->GetSecureSession();
   if (!session_key.empty())
     request.set_session_key(request_options_->GetSecureSession());
