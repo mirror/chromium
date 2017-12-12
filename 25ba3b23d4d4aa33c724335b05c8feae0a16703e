@@ -16,6 +16,24 @@
       "revId": "25ba3b23d4d4aa33c724335b05c8feae0a16703e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9765a6f3_952c3cdf",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24633,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:36:02Z",
+      "side": 0,
+      "message": "According to [1], \"Don\u0027t remove entries when removing a flag; they are still used to decode data from previous Chrome versions.\" I reverted this change.\n\n1: https://chromium.googlesource.com/chromium/src/+/410c6df8cf32d741d21a3ca00d43028ff4ba6563/tools/metrics/histograms/README.md#Flag-Histograms",
+      "parentUuid": "92ed1e44_b589d42f",
+      "revId": "25ba3b23d4d4aa33c724335b05c8feae0a16703e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
