@@ -64,7 +64,7 @@ class MODULES_EXPORT IDBValue final : public RefCounted<IDBValue> {
 
   // Keep this private to prevent new refs because we manually bookkeep the
   // memory to V8.
-  const scoped_refptr<SharedBuffer> data_;
+  const scoped_refptr<SharedBuffer> data_ = nullptr;
   const std::unique_ptr<Vector<scoped_refptr<BlobDataHandle>>> blob_data_;
   const std::unique_ptr<Vector<WebBlobInfo>> blob_info_;
   const Persistent<const IDBKey> primary_key_;
