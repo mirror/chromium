@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd0f9997_3ca8917b",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1697,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-12T07:35:02Z",
+      "side": 1,
+      "message": "Where\u0027s the code to handle this IPC?  Is there a larger draft CL that shows how this will fit together with other work?",
+      "revId": "dbc8cd4dcf151494c86dafbce7d9758a590fc5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bddef084_0f412208",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-12T07:35:02Z",
+      "side": 1,
+      "message": "I\u0027m curious if you\u0027ve chatted with kenrb@ about how OOPIF painting works, and whether a similar browser-coordinated approach would be useful for printing rather than having each frame tell its remote children to paint (possibly ping-ponging).\n\nIIRC, we at least don\u0027t send a child\u0027s printed images to its parent-- they go straight to the utility process, right?",
+      "revId": "dbc8cd4dcf151494c86dafbce7d9758a590fc5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66c24f6_7f7ef77f",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-12T07:35:02Z",
+      "side": 1,
+      "message": "Can you document what the parameters mean?  I\u0027m curious about |uid|, and whether it\u0027s used in a safe way in the browser (e.g., dealing with potential collisions or malicious values from the renderer).",
+      "revId": "dbc8cd4dcf151494c86dafbce7d9758a590fc5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
