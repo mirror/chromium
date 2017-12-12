@@ -34,6 +34,24 @@
       "revId": "06f915bd005da0bc8d5792ee620b699a28a698fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f42f00_a57dd1ff",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-12T23:27:09Z",
+      "side": 1,
+      "message": "removed the unnecessary check, thanks for the suggestion!",
+      "parentUuid": "c7a1401e_79a68c4a",
+      "revId": "06f915bd005da0bc8d5792ee620b699a28a698fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
