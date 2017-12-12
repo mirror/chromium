@@ -269,6 +269,80 @@ TEST_P(GzipSourceStreamTest, CorruptGzipHeader) {
   EXPECT_EQ("GZIP", stream()->Description());
 }
 
+namespace {
+static unsigned char kGzipData[] = {
+    // From:
+    //   echo -n 'Hello, World!' | gzip | xxd -i | sed -e 's/^/  /'
+    // The footer is the last 8 bytes.
+    0x1f, 0x8b, 0x08, 0x00, 0x2b, 0x02, 0x84, 0x55, 0x00, 0x03, 0xf3,
+    0x48, 0xcd, 0xc9, 0xc9, 0xd7, 0x51, 0x08, 0xcf, 0x2f, 0xca, 0x49,
+    0x51, 0x04, 0x00, 0xd0, 0xc3, 0x4a, 0xec, 0x0d, 0x00, 0x00, 0x00};
+
+struct TestDataStruct {
+  int counter = 0;
+
+  net::CompletionCallback callback;
+  net::IOBuffer* dest_buffer = nullptr;
+  int buffer_size = 0;
+};
+
+class TestSourceStream : public SourceStream {
+ public:
+  TestSourceStream(TestDataStruct* data)
+      : SourceStream(SourceStream::TYPE_NONE), data_(data) {}
+
+  ~TestSourceStream() override {}
+
+  int Read(net::IOBuffer* dest_buffer,
+           int buffer_size,
+           const net::CompletionCallback& callback) override {
+    LOG(ERROR) << "Read  buffer_size " << buffer_size;
+    data_->counter++;
+    if (data_->counter == 1) {
+      memcpy(dest_buffer->data(), kGzipData, 1);
+      LOG(ERROR) << " return 1";
+      return 1;
+    } else if (data_->counter == 2) {
+      LOG(ERROR) << " return ERR_IO_PENDING";
+      data_->callback = callback;
+      data_->dest_buffer = dest_buffer;
+      data_->buffer_size = buffer_size;
+      return ERR_IO_PENDING;
+    }
+    LOG(ERROR) << " return 0";
+    return 0;
+  }
+  std::string Description() const override { return "data pipe"; }
+
+ private:
+  TestDataStruct* data_;
+};
+
+void TestCallback(int rv) {
+  LOG(ERROR) << "TestCallback " << rv;
+}
+
+}  // namespace
+TEST(GZipTest, SmallData) {
+  TestDataStruct data;
+  std::unique_ptr<net::SourceStream> source_stream =
+      std::make_unique<TestSourceStream>(&data);
+  source_stream = net::GzipSourceStream::Create(std::move(source_stream),
+                                                SourceStream::TYPE_GZIP);
+
+  const int output_buffer_size = 1000;
+  scoped_refptr<IOBuffer> output_buffer = new IOBuffer(output_buffer_size);
+
+  int rv = source_stream->Read(output_buffer.get(), output_buffer_size,
+                               base::Bind(&TestCallback));
+  LOG(ERROR) << "rv " << rv;
+
+  memcpy(data.dest_buffer->data(), kGzipData + 1, 2);
+  LOG(ERROR) << "data.callback(2);";
+  data.callback.Run(2);
+  LOG(ERROR) << "data.callback(2) fin;";
+}
+
 // This test checks that the gzip stream source works correctly on 'golden' data
 // as produced by gzip(1).
 TEST_P(GzipSourceStreamTest, GzipCorrectness) {
