@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3218c932_2865616c",
+        "filename": "base/i18n/message_formatter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T08:26:33Z",
+      "side": 1,
+      "message": "Should this be \u003d delete as well? What are the heuristics it\u0027s using to decide?",
+      "revId": "7cdd97b7ac8476c689b22b67d1fba6ffd1bb21a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43bcee9_3a210ec2",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T08:26:33Z",
+      "side": 1,
+      "message": "scoped_refptr should always be default constructible. If that means we can\u0027t mark it \"\u003d default\", then I think we should leave it alone.",
+      "revId": "7cdd97b7ac8476c689b22b67d1fba6ffd1bb21a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
