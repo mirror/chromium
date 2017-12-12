@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "c25f6c2a_f10dc88a",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-12T07:34:40Z",
+      "side": 1,
+      "message": "\u003e |win_bitmap| is a COM object being passed to a COM method. Does DetectFacesAsync() not take a reference to its argument?\n\nYes, it only takes raw pointer.\n\nvirtual HRESULT STDMETHODCALLTYPE DetectFacesAsync( \n         ABI::Windows::Graphics::Imaging::ISoftwareBitmap *image,\n         CDetectedFace **returnValue) \u003d 0;",
+      "parentUuid": "f185b317_1d67f2cc",
+      "revId": "75a94529da5e1694d8e1f7fbc2e60e95644e57cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0baf6547_7a2ec887",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 10
