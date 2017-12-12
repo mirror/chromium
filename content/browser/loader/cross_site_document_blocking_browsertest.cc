@@ -277,6 +277,22 @@ IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, RangeRequest) {
                       false /* should_be_sniffed */, "cors.json",
                       RESOURCE_TYPE_XHR);
   }
+
+  // Multipart
+  {
+    // Try to bypass blocking via multipart range requests, which change the
+    // MIME type.  It should still be blocked based on sniffing.
+    base::HistogramTester histograms;
+    bool was_blocked;
+    ASSERT_TRUE(ExecuteScriptAndExtractBool(
+        shell(), "sendRequest('multipart-range.html', 'bytes=1-5,10-20');",
+        &was_blocked));
+    EXPECT_TRUE(was_blocked);
+    InspectHistograms(histograms, true /* should_be_blocked */,
+                      true /* should_be_sniffed */, "multipart-range.html",
+                      RESOURCE_TYPE_XHR);
+  }
+  // TODO(creis): Add one that is allowed through.
 }
 
 IN_PROC_BROWSER_TEST_F(CrossSiteDocumentBlockingTest, BlockForVariousTargets) {

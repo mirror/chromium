@@ -127,6 +127,12 @@ class CONTENT_EXPORT CrossSiteDocumentResourceHandler
   // before OnWillRead and OnReadCompleted.
   bool has_response_started_ = false;
 
+  // Whether the MIME type is multipart/byteranges, in which case we should
+  // block only if the first inner content type is a blockable type.  This is a
+  // best effort protection which may fail due to sniffing; best practice would
+  // be not to support multipart range requests on sensitive data.
+  bool is_multipart_byterange_ = false;
+
   // Whether this response is a cross-site document that should be blocked,
   // pending the outcome of sniffing the content.  Set in OnResponseStarted and
   // should only be read afterwards.

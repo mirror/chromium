@@ -228,6 +228,33 @@ void CrossSiteDocumentResourceHandler::OnReadCompleted(
         confirmed_blockable = CrossSiteDocumentClassifier::SniffForHTML(data) ||
                               CrossSiteDocumentClassifier::SniffForXML(data) ||
                               CrossSiteDocumentClassifier::SniffForJSON(data);
+      } else {
+        // We should only get here for multipart range requests.  Other types do
+        // not get blocked.
+        // TODO(creis): Clean up, move to classifier file, and add unit tests.
+        DCHECK(is_multipart_byterange_);
+        DCHECK(canonical_mime_type_ == CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS);
+
+        // Look for the first inner MIME type inside the response body.
+        base::StringPiece mime_prefix = "Content-Type: ";
+        size_t mime_prefix_pos = data.find(mime_prefix);
+        if (mime_prefix_pos != base::StringPiece::npos) {
+          size_t mime_prefix_end = mime_prefix_pos + mime_prefix.size();
+          size_t separator_pos = data.find(";", mime_prefix_end);
+          if (separator_pos != base::StringPiece::npos) {
+            // Update the canonical MIME type to be the first inner type.
+            base::StringPiece mime_type =
+                data.substr(mime_prefix_end, separator_pos - mime_prefix_end);
+            canonical_mime_type_ =
+                CrossSiteDocumentClassifier::GetCanonicalMimeType(
+                    mime_type.as_string());
+
+            // If the first inner MIME type is a blockable type, block this
+            // response, without attempting to sniff it.
+            if (canonical_mime_type_ != CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS)
+              confirmed_blockable = true;
+          }
+        }
       }
     }
 
@@ -346,8 +373,12 @@ bool CrossSiteDocumentResourceHandler::ShouldBlockBasedOnHeaders(
   // XML, JSON, or plain text), don't block it.
   canonical_mime_type_ = CrossSiteDocumentClassifier::GetCanonicalMimeType(
       response->head.mime_type);
-  if (canonical_mime_type_ == CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS)
+  is_multipart_byterange_ = response->head.mime_type.find(
+                                "multipart/byteranges") != std::string::npos;
+  if (canonical_mime_type_ == CROSS_SITE_DOCUMENT_MIME_TYPE_OTHERS &&
+      !is_multipart_byterange_) {
     return false;
+  }
 
   // Treat a missing initiator as an empty origin to be safe, though we don't
   // expect this to happen.  Unfortunately, this requires a copy.
