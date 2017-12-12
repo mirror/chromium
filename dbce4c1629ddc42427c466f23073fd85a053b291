@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fa91f5b_959238a6",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4954,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-12T02:57:39Z",
+      "side": 0,
+      "message": "Any indication as to why this was failing? The stack trace at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d231806#c3 looks unrelated.",
+      "range": {
+        "startLine": 4954,
+        "startChar": 29,
+        "endLine": 4954,
+        "endChar": 40
+      },
+      "revId": "dbce4c1629ddc42427c466f23073fd85a053b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
