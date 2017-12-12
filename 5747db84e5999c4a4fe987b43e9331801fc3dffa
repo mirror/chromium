@@ -16,6 +16,29 @@
       "revId": "5747db84e5999c4a4fe987b43e9331801fc3dffa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012318d9_11d881a2",
+        "filename": "third_party/WebKit/Source/platform/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T09:54:08Z",
+      "side": 1,
+      "message": "Any reason not to just use the shared header?",
+      "range": {
+        "startLine": 50,
+        "startChar": 74,
+        "endLine": 50,
+        "endChar": 79
+      },
+      "revId": "5747db84e5999c4a4fe987b43e9331801fc3dffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
