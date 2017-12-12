@@ -45,6 +45,30 @@
       "revId": "0bb7826014a0d8bd68315ed47b14243189c7b8a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c74563_3d3276c9",
+        "filename": "net/proxy/pac_js_library.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-12T20:29:37Z",
+      "side": 1,
+      "message": "SGTM!",
+      "parentUuid": "b687d18b_15111133",
+      "range": {
+        "startLine": 276,
+        "startChar": 8,
+        "endLine": 276,
+        "endChar": 32
+      },
+      "revId": "0bb7826014a0d8bd68315ed47b14243189c7b8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
