@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7c65c56a_5cf5819f",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1249643
+      },
+      "writtenOn": "2017-12-12T10:01:43Z",
+      "side": 0,
+      "message": "But the code lines which you link is executed only when SafeBrowsing is enabled, not disabled. I think that problem situation is when user set SafeBrowsing disable.",
+      "parentUuid": "95fd00e6_fff772a8",
+      "revId": "14b6c500d363d53b78cf102e316bc1377dd02a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15ef1bf7_dddfdfdc",
         "filename": "chrome/browser/safe_browsing/local_database_manager.cc",
         "patchSetId": 2
