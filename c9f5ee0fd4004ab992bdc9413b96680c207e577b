@@ -16,6 +16,24 @@
       "revId": "c9f5ee0fd4004ab992bdc9413b96680c207e577b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93ea8740_4a85e9ac",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-12-12T13:57:40Z",
+      "side": 1,
+      "message": "jmadill: ping? the absence of this comment is confusing people (e.g. crbug.com/793543)",
+      "parentUuid": "b87b34df_33ec712c",
+      "revId": "c9f5ee0fd4004ab992bdc9413b96680c207e577b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
