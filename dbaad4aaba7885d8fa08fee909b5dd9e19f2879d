@@ -52,6 +52,24 @@
       "revId": "dbaad4aaba7885d8fa08fee909b5dd9e19f2879d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114b80f3_8677b595",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-12-12T17:21:12Z",
+      "side": 0,
+      "message": "Ah, that\u0027s a good point. Not sure about it either.",
+      "parentUuid": "4b9ef86f_d8412424",
+      "revId": "dbaad4aaba7885d8fa08fee909b5dd9e19f2879d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
