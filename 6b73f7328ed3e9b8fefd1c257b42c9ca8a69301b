@@ -16,6 +16,24 @@
       "revId": "6b73f7328ed3e9b8fefd1c257b42c9ca8a69301b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b472555_0ab3d339",
+        "filename": "gin/array_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-12-12T00:57:16Z",
+      "side": 1,
+      "message": "Yes, it should. Done.",
+      "parentUuid": "f4b90108_7686facf",
+      "revId": "6b73f7328ed3e9b8fefd1c257b42c9ca8a69301b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
