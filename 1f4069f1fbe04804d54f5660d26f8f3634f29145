@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "af1aff25_a324ade3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-12T18:03:16Z",
+      "side": 1,
+      "message": "*characteristics",
+      "parentUuid": "bd337c96_ffd0ae3a",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d9f7e96_a5d0a320",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-from-2-characteristics.html",
         "patchSetId": 10
