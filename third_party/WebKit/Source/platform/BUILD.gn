@@ -1716,6 +1716,7 @@ jumbo_static_library("test_support") {
 test("blink_platform_unittests") {
   deps = [
     ":blink_platform_unittests_sources",
+    "//third_party/WebKit/Source/platform/heap",
   ]
 }
 
