@@ -21,11 +21,13 @@ namespace views {
 class Label;
 class LabelButton;
 class ProgressBar;
+class RadioButton;
 }
 
 namespace message_center {
 
 class BoundedLabel;
+class MessageCenter;
 class NotificationHeaderView;
 class ProportionalImageView;
 
@@ -197,6 +199,7 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   NotificationControlButtonsView* GetControlButtonsView() const override;
   bool IsExpanded() const override;
   void SetExpanded(bool expanded) override;
+  void OnSettingsButtonPressed() override;
 
   // Overridden from NotificationInputDelegate:
   void OnNotificationInputSubmit(size_t index,
@@ -215,6 +218,7 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, ExpandLongMessage);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, TestAccentColor);
   FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, UseImageAsIcon);
+  FRIEND_TEST_ALL_PREFIXES(NotificationViewMDTest, InlineSettings);
 
   friend class NotificationViewMDTest;
 
@@ -238,6 +242,12 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   bool IsExpandable();
   void ToggleExpanded();
   void UpdateViewForExpandedState(bool expanded);
+  void ToggleInlineSettings();
+
+  MessageCenter* message_center();
+  void set_message_center_for_test(MessageCenter* message_center) {
+    message_center_for_test_ = message_center;
+  }
 
   // View containing close and settings buttons
   std::unique_ptr<NotificationControlButtonsView> control_buttons_view_;
@@ -254,10 +264,17 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   // Describes whether the view should display a hand pointer or not.
   bool clickable_;
 
+  // Show inline settings when the settings button on the top right is clicked.
+  bool use_inline_settings_ = false;
+
+  // Whether inline settings is currently shown or not.
+  bool inline_settings_visible_ = false;
+
   // Container views directly attached to this view.
   NotificationHeaderView* header_row_ = nullptr;
   views::View* content_row_ = nullptr;
   views::View* actions_row_ = nullptr;
+  views::View* settings_row_ = nullptr;
 
   // Containers for left and right side on |content_row_|
   views::View* left_content_ = nullptr;
@@ -275,6 +292,12 @@ class MESSAGE_CENTER_EXPORT NotificationViewMD
   CompactTitleMessageView* compact_title_message_view_ = nullptr;
   views::View* action_buttons_row_ = nullptr;
   NotificationInputMD* inline_reply_ = nullptr;
+
+  views::RadioButton* block_all_button_ = nullptr;
+  views::RadioButton* dont_block_button_ = nullptr;
+  views::LabelButton* settings_done_button_ = nullptr;
+
+  MessageCenter* message_center_for_test_ = nullptr;
 
   std::unique_ptr<ui::EventHandler> click_activator_;
 
