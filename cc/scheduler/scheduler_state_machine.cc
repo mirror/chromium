@@ -233,6 +233,7 @@ void SchedulerStateMachine::AsValueInto(
                     current_pending_tree_is_impl_side_);
   state->SetBoolean("previous_pending_tree_was_impl_side",
                     previous_pending_tree_was_impl_side_);
+  state->SetBoolean("skip_compositor_frame", skip_compositor_frame_);
   state->EndDictionary();
 }
 
@@ -347,6 +348,11 @@ bool SchedulerStateMachine::ShouldDraw() const {
   // Browser compositor commit steals any resources submitted in draw. Therefore
   // drawing while a commit is pending is wasteful.
   if (settings_.commit_to_active_tree && CommitPending())
+    return false;
+
+  // Don't draw if we should not produce a new CompositorFrame for the current
+  // BeginFrame.
+  if (skip_compositor_frame_)
     return false;
 
   // Only handle forced redraws due to timeouts on the regular deadline.
@@ -620,6 +626,11 @@ bool SchedulerStateMachine::ShouldPerformImplSideInvalidation() const {
       (active_tree_needs_first_draw_ || IsDrawThrottled())) {
     return false;
   }
+
+  // There's no need to perform an impl-side invalidation for this BeginFrame if
+  // we should not produce a new CompositorFrame and thus won't draw.
+  if (skip_compositor_frame_)
+    return false;
 
   return true;
 }
@@ -1006,9 +1017,11 @@ bool SchedulerStateMachine::ProactiveBeginFrameWanted() const {
 }
 
 void SchedulerStateMachine::OnBeginImplFrame(uint64_t source_id,
-                                             uint64_t sequence_number) {
+                                             uint64_t sequence_number,
+                                             bool skip_compositor_frame) {
   begin_impl_frame_state_ = BeginImplFrameState::INSIDE_BEGIN_FRAME;
   current_frame_number_++;
+  skip_compositor_frame_ = skip_compositor_frame;
 
   // Cache the values from the previous impl frame before reseting them for this
   // frame.
@@ -1154,6 +1167,10 @@ bool SchedulerStateMachine::ShouldBlockDeadlineIndefinitely() const {
   // Wait for remaining tiles and draw.
   if (!active_tree_is_ready_to_draw_)
     return true;
+
+  // TODO(eseckler): Full-pipe mode should wait for impl-side invalidations and
+  // image decodes to complete before drawing (only applies when composited
+  // image animations and/or checker-imaging is enabled).
 
   return false;
 }
