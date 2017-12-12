@@ -4,12 +4,9 @@
 
 package org.chromium.chrome.browser.webapps;
 
-import static org.chromium.webapk.lib.common.WebApkConstants.WEBAPK_PACKAGE_PREFIX;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.text.TextUtils;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApplicationStatus;
@@ -49,12 +46,11 @@ public class WebApkDisclosureNotificationManager {
      */
     static void maybeShowDisclosure(WebappActivity activity, WebappDataStorage storage) {
         String packageName = activity.getNativeClientPackageName();
-        boolean isUnboundAPK = activity.isVerified() && !TextUtils.isEmpty(packageName)
-                && !packageName.startsWith(WEBAPK_PACKAGE_PREFIX);
+        boolean isTWA = (activity.getActivityType() == WebappActivity.ACTIVITY_TYPE_TWA);
         boolean isNotificationAllowed = !storage.hasDismissedDisclosure()
                 && !sVisibleNotifications.contains(packageName)
                 && !WebappActionsNotificationManager.isEnabled();
-        if (!isUnboundAPK || !isNotificationAllowed) return;
+        if (!isTWA || !isNotificationAllowed) return;
 
         int activityState = ApplicationStatus.getStateForActivity(activity);
         if (activityState == ActivityState.STARTED || activityState == ActivityState.RESUMED
