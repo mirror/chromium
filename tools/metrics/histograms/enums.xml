@@ -9196,6 +9196,23 @@ Called by update_net_error_codes.py.-->
   <int value="3" label="Touch"/>
 </enum>
 
+<enum name="Download.Home.List.View.Actions">
+  <int value="0" label="OPEN"/>
+  <int value="1" label="RESUME"/>
+  <int value="2" label="PAUSE"/>
+  <int value="3" label="CANCEL"/>
+  <int value="4" label="MENU_SHARE"/>
+  <int value="5" label="MENU_DELETE"/>
+</enum>
+
+<enum name="Download.Home.Menu.Actions">
+  <int value="0" label="CLOSE"/>
+  <int value="1" label="MULTI_DELETE"/>
+  <int value="2" label="MULTI_SHARE"/>
+  <int value="3" label="INFO"/>
+  <int value="4" label="SEARCH"/>
+</enum>
+
 <enum name="Download.Service.BatteryRequirements">
   <int value="0" label="BATTERY_INSENSITIVE"/>
   <int value="1" label="BATTERY_SENSITIVE"/>

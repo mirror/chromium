@@ -17266,6 +17266,31 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Download.Home.List.View.Action"
+    enum="Download.Home.List.View.Actions">
+  <owner>dtrainor@chromium.org</owner>
+  <summary>The count of Download Home list entry actions taken.</summary>
+</histogram>
+
+<histogram name="Download.Home.Menu.Action" enum="Download.Home.Menu.Actions">
+  <owner>dtrainor@chromium.org</owner>
+  <summary>The count of Download Home top level menu actions taken.</summary>
+</histogram>
+
+<histogram name="Download.Home.Menu.Delete.SelectedCount">
+  <owner>dtrainor@chromium.org</owner>
+  <summary>
+    The number of items selected when performing a multi-delete action.
+  </summary>
+</histogram>
+
+<histogram name="Download.Home.Menu.Share.SelectedCount">
+  <owner>dtrainor@chromium.org</owner>
+  <summary>
+    The number of items selected when performing a multi-share action.
+  </summary>
+</histogram>
+
 <histogram name="Download.HttpResponseCode" enum="HttpResponseCode">
   <owner>xingliu@chromium.org</owner>
   <summary>The count of HTTP Response codes for download requests.</summary>
