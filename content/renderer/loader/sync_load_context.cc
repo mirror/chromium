@@ -32,7 +32,6 @@ void SyncLoadContext::StartAsyncWithWaitableEvent(
   context->request_id_ = context->resource_dispatcher_->StartAsync(
       std::move(request), routing_id, nullptr, frame_origin, traffic_annotation,
       true /* is_sync */, base::WrapUnique(context),
-      blink::WebURLRequest::LoadingIPCType::kMojo,
       context->url_loader_factory_.get(), std::move(throttles),
       mojom::URLLoaderClientEndpointsPtr());
 }

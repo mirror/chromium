@@ -592,12 +592,10 @@ void ResourceDispatcher::StartSync(
     const url::Origin& frame_origin,
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     SyncLoadResponse* response,
-    blink::WebURLRequest::LoadingIPCType ipc_type,
     mojom::URLLoaderFactory* url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles) {
   CheckSchemeForReferrerPolicy(*request);
 
-  if (ipc_type == blink::WebURLRequest::LoadingIPCType::kMojo) {
     mojom::URLLoaderFactoryPtrInfo url_loader_factory_copy;
     url_loader_factory->Clone(mojo::MakeRequest(&url_loader_factory_copy));
     base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
@@ -620,32 +618,6 @@ void ResourceDispatcher::StartSync(
                        base::Unretained(&event)));
 
     event.Wait();
-  } else {
-    SyncLoadResult result;
-    IPC::SyncMessage* msg = new ResourceHostMsg_SyncLoad(
-        routing_id, MakeRequestID(), *request, &result);
-
-    // NOTE: This may pump events (see RenderThread::Send).
-    if (!message_sender_->Send(msg)) {
-      response->error_code = net::ERR_FAILED;
-      return;
-    }
-
-    response->error_code = result.error_code;
-    response->url = result.final_url;
-    response->headers = result.headers;
-    response->mime_type = result.mime_type;
-    response->charset = result.charset;
-    response->request_time = result.request_time;
-    response->response_time = result.response_time;
-    response->load_timing = result.load_timing;
-    response->devtools_info = result.devtools_info;
-    response->data.swap(result.data);
-    response->download_file_path = result.download_file_path;
-    response->socket_address = result.socket_address;
-    response->encoded_data_length = result.encoded_data_length;
-    response->encoded_body_length = result.encoded_body_length;
-  }
 }
 
 int ResourceDispatcher::StartAsync(
@@ -656,7 +628,6 @@ int ResourceDispatcher::StartAsync(
     const net::NetworkTrafficAnnotationTag& traffic_annotation,
     bool is_sync,
     std::unique_ptr<RequestPeer> peer,
-    blink::WebURLRequest::LoadingIPCType ipc_type,
     mojom::URLLoaderFactory* url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
     mojom::URLLoaderClientEndpointsPtr url_loader_client_endpoints) {
@@ -689,9 +660,6 @@ int ResourceDispatcher::StartAsync(
     return request_id;
   }
 
-  if (ipc_type == blink::WebURLRequest::LoadingIPCType::kMojo) {
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner =
-        loading_task_runner ? loading_task_runner : thread_task_runner_;
     std::unique_ptr<URLLoaderClientImpl> client(
         new URLLoaderClientImpl(request_id, this, task_runner));
 
@@ -713,11 +681,6 @@ int ResourceDispatcher::StartAsync(
             std::move(task_runner));
     pending_requests_[request_id]->url_loader = std::move(url_loader);
     pending_requests_[request_id]->url_loader_client = std::move(client);
-  } else {
-    message_sender_->Send(new ResourceHostMsg_RequestResource(
-        routing_id, request_id, *request,
-        net::MutableNetworkTrafficAnnotationTag(traffic_annotation)));
-  }
 
   return request_id;
 }
