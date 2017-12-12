@@ -34,6 +34,24 @@
       "revId": "b3d70943ac2d586707257c5c32b80c3a6575e7b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e746e8e_c10f9507",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-12T16:07:43Z",
+      "side": 1,
+      "message": "Instead of relying on #isLocationBarShownInNtp, we could try overriding computeVisualState() in BottomToolbarPhone to return NEW_TAB_NORMAL when a normal NTP is showing. Bottom/ToolbarPhone.java should be notified when a new tab is created/hidden via #onTabOrModelChanged() which already makes a call to updateVisualsForToolbarState().\n\nDoes the toolbar background need to get set back to white when the sheet is scrolled/dragged? What happens if we leave it transparent? BottomSheet sets a background color on the entire container while the sheet is open so that may be sufficient to ensuring the toolbar appears to have a white background.\n\nIf we need to know when the sheet is dragged, BottomToolbarPhone has a BottomSheetObserver method that can be used to determine when the sheet offset changes if there\u0027s some edge case we need to handle there.\n\nI definitely think we should keep ToolbarPhone.VisualState private. If BottomToolbarPhone needs additional methods to notify it of sheet/content movement so that it can correctly compute state (or BottomSheet needs to expose new methods), that\u0027d be preferable to directly exposing #updateToolbarBackground.",
+      "parentUuid": "60d3c3e8_350533aa",
+      "revId": "b3d70943ac2d586707257c5c32b80c3a6575e7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
