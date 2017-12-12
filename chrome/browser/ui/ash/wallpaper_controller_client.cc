@@ -86,7 +86,8 @@ wallpaper::WallpaperFilesId HashWallpaperFilesIdStr(
 
 }  // namespace
 
-WallpaperControllerClient::WallpaperControllerClient() : binding_(this) {
+WallpaperControllerClient::WallpaperControllerClient()
+    : policy_handler_(this), binding_(this) {
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -218,6 +219,20 @@ void WallpaperControllerClient::OpenWallpaperPicker() {
   chromeos::WallpaperManager::Get()->OpenWallpaperPicker();
 }
 
+void WallpaperControllerClient::OnDeviceWallpaperChanged() {
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(true /*enforced=*/);
+}
+
+void WallpaperControllerClient::OnDeviceWallpaperPolicyCleared() {
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(false /*enforced=*/);
+}
+
+void WallpaperControllerClient::GetDeviceWallpaperFilePath(
+    ash::mojom::WallpaperController::GetDevicePolicyWallpaperFilePathCallback
+        callback) {
+  wallpaper_controller_->GetDevicePolicyWallpaperFilePath(std::move(callback));
+}
+
 void WallpaperControllerClient::FlushForTesting() {
   wallpaper_controller_.FlushForTesting();
 }
@@ -239,4 +254,6 @@ void WallpaperControllerClient::BindAndSetClient() {
   wallpaper_controller_->SetClientAndPaths(std::move(client), user_data_path,
                                            chromeos_wallpapers_path,
                                            chromeos_custom_wallpapers_path);
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(
+      policy_handler_.IsDeviceWallpaperPolicyEnforced());
 }

@@ -182,6 +182,10 @@ const char WallpaperController::kLargeWallpaperSubDir[] = "large";
 const char WallpaperController::kOriginalWallpaperSubDir[] = "original";
 const char WallpaperController::kThumbnailWallpaperSubDir[] = "thumb";
 
+const char WallpaperController::kDeviceWallpaperDir[] = "device_wallpaper";
+const char WallpaperController::kDeviceWallpaperFile[] =
+    "device_wallpaper_image.jpg";
+
 WallpaperController::WallpaperController()
     : locked_(false),
       wallpaper_mode_(WALLPAPER_NONE),
@@ -591,6 +595,15 @@ void WallpaperController::SetCustomizedDefaultWallpaper(
   NOTIMPLEMENTED();
 }
 
+void WallpaperController::SetDeviceWallpaperPolicyEnforced(bool enforced) {
+  is_device_wallpaper_policy_enforced_ = enforced;
+
+  if (is_device_wallpaper_policy_enforced_)
+    SetDevicePolicyWallpaperIfApplicable();
+  else
+    ClearDevicePolicyWallpaperIfApplicable();
+}
+
 void WallpaperController::ShowUserWallpaper(
     mojom::WallpaperUserInfoPtr user_info) {
   NOTIMPLEMENTED();
@@ -625,6 +638,11 @@ void WallpaperController::AddObserver(
 void WallpaperController::GetWallpaperColors(
     GetWallpaperColorsCallback callback) {
   std::move(callback).Run(prominent_colors_);
+}
+
+void WallpaperController::GetDevicePolicyWallpaperFilePath(
+    GetDevicePolicyWallpaperFilePathCallback callback) {
+  std::move(callback).Run(GetDevicePolicyWallpaperFilePath());
 }
 
 void WallpaperController::OnWallpaperResized() {
@@ -866,6 +884,84 @@ bool WallpaperController::IsDevicePolicyWallpaper() const {
     return current_wallpaper_->wallpaper_info().type ==
            wallpaper::WallpaperType::DEVICE;
   return false;
+}
+
+base::FilePath WallpaperController::GetDevicePolicyWallpaperFilePath() const {
+  DCHECK(!dir_chrome_os_wallpapers_path_.empty());
+  return dir_chrome_os_wallpapers_path_.Append(kDeviceWallpaperDir)
+      .Append(kDeviceWallpaperFile);
+}
+
+bool WallpaperController::ShouldSetDevicePolicyWallpaper() const {
+  // Only allow the device wallpaper for enterprise managed devices.
+  if (!is_device_wallpaper_policy_enforced_)
+    return false;
+
+  // Only set the device wallpaper if we're at the login screen.
+  session_manager::SessionState state =
+      Shell::Get()->session_controller()->GetSessionState();
+  if (state != session_manager::SessionState::LOGIN_PRIMARY &&
+      state != session_manager::SessionState::LOGIN_SECONDARY) {
+    return false;
+  }
+
+  // If the file doesn't exist, it might because the device wallpaper file
+  // download is still in progress. SetDeviceWallpaperPolicyEnforced() will be
+  // called later when the file is downloaded successfully.
+  return base::PathExists(GetDevicePolicyWallpaperFilePath());
+}
+
+void WallpaperController::SetDevicePolicyWallpaperIfApplicable() {
+  base::PostTaskAndReplyWithResult(
+      sequenced_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&WallpaperController::ShouldSetDevicePolicyWallpaper,
+                     weak_factory_.GetWeakPtr()),
+      base::BindOnce(&WallpaperController::SetDevicePolicyWallpaperImpl,
+                     weak_factory_.GetWeakPtr()));
+}
+
+void WallpaperController::SetDevicePolicyWallpaperImpl(
+    bool should_set_device_policy_wallpaper) {
+  if (!should_set_device_policy_wallpaper)
+    return;
+
+  // Use the new ReadAndDecodeWallpaper() function
+  ReadAndDecodeWallpaper(
+      base::BindOnce(&WallpaperController::OnDevicePolicyWallpaperDecoded,
+                     weak_factory_.GetWeakPtr()),
+      sequenced_task_runner_.get(), GetDevicePolicyWallpaperFilePath());
+}
+
+void WallpaperController::OnDevicePolicyWallpaperDecoded(
+    std::unique_ptr<user_manager::UserImage> device_wallpaper_image) {
+  // It might be possible that the device policy controlled wallpaper finishes
+  // decoding after the user logs in. In this case do nothing.
+  session_manager::SessionState state =
+      Shell::Get()->session_controller()->GetSessionState();
+  if (state != session_manager::SessionState::LOGIN_PRIMARY &&
+      state != session_manager::SessionState::LOGIN_SECONDARY) {
+    return;
+  }
+
+  // If device policy wallpaper failed decoding, fall back to the default
+  // wallpaper.
+  if (device_wallpaper_image->image().isNull()) {
+    // TODO(xdai): Fall back to default wallpaper.
+  } else {
+    WallpaperInfo info(GetDevicePolicyWallpaperFilePath(),
+                       wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED, ,
+                       wallpaper::DEVICE, base::Time::Now().LocalMidnight());
+    SetWallpaperImage(device_wallpaper_image->image(), info);
+  }
+}
+
+void WallpaperController::ClearDevicePolicyWallpaperIfApplicable() {
+  session_manager::SessionState state =
+      Shell::Get()->session_controller()->GetSessionState();
+  if (state == session_manager::SessionState::LOGIN_PRIMARY ||
+      state == session_manager::SessionState::LOGIN_SECONDARY) {
+    ShowSigninWallpaper();
+  }
 }
 
 void WallpaperController::GetInternalDisplayCompositorLock() {
