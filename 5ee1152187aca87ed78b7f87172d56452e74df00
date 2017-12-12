@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71a1c94f_fc1d623a",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-12-12T01:57:12Z",
+      "side": 1,
+      "message": "Sure, let\u0027s name it properly.\n\nAs I understand (and I don\u0027t know much) mojo bindings have two sides - the calling side, and the implementation side? How about we use (Impl) for the implementation side, instead of (Service)? I see \u0027impl\u0027 is already used in the Dispatch::Accept code.",
+      "parentUuid": "011ecdb8_78115e63",
+      "revId": "5ee1152187aca87ed78b7f87172d56452e74df00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da3bbcc_407f56e7",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl",
         "patchSetId": 4
