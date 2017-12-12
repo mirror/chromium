@@ -7,8 +7,13 @@
 
 #include <string>
 
+#include "base/memory/scoped_refptr.h"
 #include "base/run_loop.h"
 #include "base/time/time.h"
+
+namespace base {
+class SingleThreadTaskRunner;
+};
 
 // Interface for a helper class that can pump the message loop while waiting
 // for a certain state transition to take place.
@@ -52,6 +57,10 @@ class StatusChangeChecker {
   // Checks IsExitConditionSatisfied() and calls StopWaiting() if it returns
   // true.
   void CheckExitCondition();
+
+  // A task runner for posting tasks to be executed on THIS thread while
+  // waiting. This is only valid during Wait().
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
  private:
   // Helper function to start running the nested run loop (run_loop_).
