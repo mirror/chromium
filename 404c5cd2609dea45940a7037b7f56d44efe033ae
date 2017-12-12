@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bb97330_243f003b",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T00:27:30Z",
+      "side": 1,
+      "message": "nit: depends, window",
+      "revId": "404c5cd2609dea45940a7037b7f56d44efe033ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9ffe9d_f2202a97",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T00:27:30Z",
+      "side": 1,
+      "message": "optional: !\u003d 0.f ... I always find casting float to bool to be a little odd. :-)",
+      "revId": "404c5cd2609dea45940a7037b7f56d44efe033ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faaae454_89439497",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T00:27:30Z",
+      "side": 1,
+      "message": "nit: Class comment. Why/when is the color animated?",
+      "revId": "404c5cd2609dea45940a7037b7f56d44efe033ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee0fb92_1cc71671",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T00:27:30Z",
+      "side": 1,
+      "message": "\u003d default if you can",
+      "revId": "404c5cd2609dea45940a7037b7f56d44efe033ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8aa2f1_3d3349e2",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T00:27:30Z",
+      "side": 1,
+      "message": "Q: Should this set current_temperature_ \u003d target_temperature_ since they could be off by epsilon? Or apply to compositors?",
+      "revId": "404c5cd2609dea45940a7037b7f56d44efe033ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2e703e_6d715883",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T00:27:30Z",
+      "side": 1,
+      "message": "nit: 1.0f or 1.f",
+      "revId": "404c5cd2609dea45940a7037b7f56d44efe033ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8e9732_0cd568bf",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T00:27:30Z",
+      "side": 1,
+      "message": "Nice comment.",
+      "revId": "404c5cd2609dea45940a7037b7f56d44efe033ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfa8876_bfc6adf2",
+        "filename": "ash/system/night_light/night_light_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T00:27:30Z",
+      "side": 1,
+      "message": "optional: I prefer naming conversion functions FooFromBar() instead of BarToFoo(). I like how they read:\n\nFoo foo \u003d FooFromBar(bar);\n\nIt puts all the foos on the left and the bars on the right.",
+      "revId": "404c5cd2609dea45940a7037b7f56d44efe033ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
