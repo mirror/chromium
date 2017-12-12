@@ -17,6 +17,7 @@
 #include "base/containers/queue.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "components/update_client/component.h"
@@ -69,6 +70,11 @@ class UpdateEngine {
   using UpdateContexts = std::set<std::unique_ptr<UpdateContext>>;
   using UpdateContextIterator = UpdateContexts::iterator;
 
+  void DoUpdate(bool is_foreground,
+                const std::vector<std::string>& ids,
+                UpdateClient::CrxDataCallback crx_data_callback,
+                Callback update_callback);
+
   void UpdateComplete(UpdateContextIterator it, Error error);
 
   void ComponentCheckingForUpdatesStart(UpdateContextIterator it,
@@ -87,6 +93,8 @@ class UpdateEngine {
   // Returns true if the update engine rejects this update call because it
   // occurs too soon.
   bool IsThrottled(bool is_foreground) const;
+
+  void ReadIsMachine();
 
   // base::TimeDelta GetNextUpdateDelay(const Component& component) const;
 
@@ -113,6 +121,8 @@ class UpdateEngine {
   // a certain time, which is negotiated with the server as part of the
   // update protocol. See the comments for X-Retry-After header.
   base::TimeTicks throttle_updates_until_;
+
+  static base::Optional<bool> is_machine_;
 
   DISALLOW_COPY_AND_ASSIGN(UpdateEngine);
 };

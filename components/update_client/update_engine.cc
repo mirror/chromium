@@ -13,12 +13,14 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/prefs/pref_service.h"
 #include "components/update_client/component.h"
 #include "components/update_client/configurator.h"
 #include "components/update_client/crx_update_item.h"
 #include "components/update_client/persisted_data.h"
+#include "components/update_client/task_traits.h"
 #include "components/update_client/update_checker.h"
 #include "components/update_client/update_client_errors.h"
 #include "components/update_client/utils.h"
@@ -47,6 +49,8 @@ UpdateContext::UpdateContext(
 }
 
 UpdateContext::~UpdateContext() {}
+
+base::Optional<bool> UpdateEngine::is_machine_;
 
 UpdateEngine::UpdateEngine(
     const scoped_refptr<Configurator>& config,
@@ -79,6 +83,30 @@ void UpdateEngine::Update(bool is_foreground,
     return;
   }
 
+  if (!is_machine_.has_value()) {
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE, kTaskTraits,
+        base::BindOnce(&UpdateEngine::ReadIsMachine, base::Unretained(this)),
+        base::BindOnce(&UpdateEngine::DoUpdate, base::Unretained(this),
+                       is_foreground, base::ConstRef(ids),
+                       std::move(crx_data_callback), std::move(callback)));
+    return;
+  }
+
+  DoUpdate(is_foreground, ids, std::move(crx_data_callback),
+           std::move(callback));
+}
+
+// This function runs on the blocking pool task runner.
+void UpdateEngine::ReadIsMachine() {
+  is_machine_ = !config_->IsPerUserInstall();
+}
+
+void UpdateEngine::DoUpdate(bool is_foreground,
+                            const std::vector<std::string>& ids,
+                            UpdateClient::CrxDataCallback crx_data_callback,
+                            Callback callback) {
+  DCHECK(is_machine_.has_value());
   const auto result = update_contexts_.insert(base::MakeUnique<UpdateContext>(
       config_, is_foreground, ids, std::move(crx_data_callback),
       notify_observers_callback_, std::move(callback),
