@@ -286,12 +286,13 @@ id<GREYMatcher> ButtonWithIdentity(ChromeIdentity* identity) {
       performAction:grey_tap()];
 }
 
-- (void)testMDMError {
-  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
+// Checks if the sync cell is correctly configured with the expected detail text
+// label and an image.
+- (void)checkSyncCellWithIdentity:(ChromeIdentity*)identity
+          expectedDetailTextLabel:(NSString*)expectedDetailTextLabel {
   ios::FakeChromeIdentityService* fakeChromeIdentityService =
       ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
   fakeChromeIdentityService->AddIdentity(identity);
-  fakeChromeIdentityService->SetFakeMDMError(true);
 
   [ChromeEarlGreyUI openSettingsMenu];
   [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
@@ -301,19 +302,43 @@ id<GREYMatcher> ButtonWithIdentity(ChromeIdentity* identity) {
   [SigninEarlGreyUtils assertSignedInWithIdentity:identity];
   [ChromeEarlGreyUI tapSettingsMenuButton:SettingsAccountButton()];
 
-  // Check that account sync button display the sync error.
+  // Check that account sync button displays the expected detail text label and
+  // an image.
   GREYPerformBlock block = ^(id element, NSError* __strong* errorOrNil) {
     GREYAssertTrue([element isKindOfClass:[AccountControlCell class]],
                    @"Should be AccountControlCell type");
     AccountControlCell* cell = static_cast<AccountControlCell*>(element);
-    NSString* expectedString =
-        l10n_util::GetNSString(IDS_IOS_OPTIONS_ACCOUNTS_SYNC_ERROR);
-    return [cell.detailTextLabel.text isEqualToString:expectedString];
+    return
+        [cell.detailTextLabel.text isEqualToString:expectedDetailTextLabel] &&
+        cell.imageView.image != nil;
   };
   [[EarlGrey selectElementWithMatcher:AccountsSyncButton()]
       performAction:[GREYActionBlock
                         actionWithName:@"Invoke clearStateForTest selector"
                           performBlock:block]];
+}
+
+// Tests the sync cell is correctly configured when having a MDM error.
+- (void)testMDMError {
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
+  ios::FakeChromeIdentityService* fakeChromeIdentityService =
+      ios::FakeChromeIdentityService::GetInstanceFromChromeProvider();
+  fakeChromeIdentityService->SetFakeMDMError(true);
+
+  NSString* expectedString =
+      l10n_util::GetNSString(IDS_IOS_OPTIONS_ACCOUNTS_SYNC_ERROR);
+  [self checkSyncCellWithIdentity:identity
+          expectedDetailTextLabel:expectedString];
+}
+
+// Tests the sync cell is correctly configured when no error.
+- (void)testSyncItemWithSyncingMessage {
+  ChromeIdentity* identity = [SigninEarlGreyUtils fakeIdentity1];
+  NSString* expectedString =
+      l10n_util::GetNSStringF(IDS_IOS_SIGN_IN_TO_CHROME_SETTING_SYNCING,
+                              base::SysNSStringToUTF16([identity userEmail]));
+  [self checkSyncCellWithIdentity:identity
+          expectedDetailTextLabel:expectedString];
 }
 
 @end
