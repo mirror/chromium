@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3989195e_9cb5eccf",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-12T19:38:52Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "b034e29ce977c94632e8bff850ad9a7a6ab18125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23064461_ca993e70",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-12T19:38:52Z",
+      "side": 1,
+      "message": "DCHECK you\u0027re on UI thread here.",
+      "range": {
+        "startLine": 61,
+        "startChar": 41,
+        "endLine": 61,
+        "endChar": 42
+      },
+      "revId": "b034e29ce977c94632e8bff850ad9a7a6ab18125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7abf6e33_b41c0d18",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-12T19:38:52Z",
+      "side": 1,
+      "message": "DCHECK you\u0027re on UI thread here.",
+      "range": {
+        "startLine": 63,
+        "startChar": 64,
+        "endLine": 63,
+        "endChar": 65
+      },
+      "revId": "b034e29ce977c94632e8bff850ad9a7a6ab18125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dea624_79656853",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-12T19:38:52Z",
+      "side": 1,
+      "message": "DCHECK you\u0027re on UI thread here.",
+      "range": {
+        "startLine": 68,
+        "startChar": 38,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "b034e29ce977c94632e8bff850ad9a7a6ab18125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ed7623_754f6d83",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-12T19:38:52Z",
+      "side": 1,
+      "message": "DCHECK you\u0027re on UI thread here.",
+      "range": {
+        "startLine": 70,
+        "startChar": 52,
+        "endLine": 70,
+        "endChar": 53
+      },
+      "revId": "b034e29ce977c94632e8bff850ad9a7a6ab18125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3774d38d_ca7fd32b",
+        "filename": "content/browser/payments/payment_app_info_fetcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-12T19:38:52Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 3
+      },
+      "revId": "b034e29ce977c94632e8bff850ad9a7a6ab18125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4cf38e_29fb7c2d",
+        "filename": "content/browser/payments/payment_app_info_fetcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-12T19:38:52Z",
+      "side": 1,
+      "message": "No one inherits from FetcherImpl, so the destructor should not be virtual.",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 11
+      },
+      "revId": "b034e29ce977c94632e8bff850ad9a7a6ab18125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
