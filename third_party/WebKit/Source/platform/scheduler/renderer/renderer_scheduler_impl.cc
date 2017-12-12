@@ -239,10 +239,19 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
                             renderer_scheduler_impl,
                             RAILModeToString),
       renderer_hidden(false),
+// Initial renderer_backgrounded state should match RenderProcessHostImpl
+// initial priority values.
+#if defined(OS_ANDROID)
+      renderer_backgrounded(true,
+                            "RendererScheduler.Backgrounded",
+                            renderer_scheduler_impl,
+                            BackgroundStateToString),
+#else
       renderer_backgrounded(false,
                             "RendererScheduler.Backgrounded",
                             renderer_scheduler_impl,
                             BackgroundStateToString),
+#endif
       stopping_when_backgrounded_enabled(false),
       stopped_when_backgrounded(false),
       was_shutdown(false),
@@ -251,11 +260,10 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
           "RendererScheduler.LoadingTaskEstimatedCostMs",
           renderer_scheduler_impl,
           TimeDeltaToMilliseconds),
-      timer_task_estimated_cost(
-          base::TimeDelta(),
-          "RendererScheduler.TimerTaskEstimatedCostMs",
-          renderer_scheduler_impl,
-          TimeDeltaToMilliseconds),
+      timer_task_estimated_cost(base::TimeDelta(),
+                                "RendererScheduler.TimerTaskEstimatedCostMs",
+                                renderer_scheduler_impl,
+                                TimeDeltaToMilliseconds),
       loading_tasks_seem_expensive(
           false,
           "RendererScheduler.LoadingTasksSeemExpensive",
@@ -292,7 +300,8 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
       virtual_time_pause_count(0),
       max_virtual_time_task_starvation_count(0),
       virtual_time_stopped(false),
-      nested_runloop(false) {}
+      nested_runloop(false) {
+}
 
 RendererSchedulerImpl::MainThreadOnly::~MainThreadOnly() {}
 

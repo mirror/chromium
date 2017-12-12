@@ -275,6 +275,8 @@ namespace {
 const RenderProcessHostFactory* g_render_process_host_factory_ = nullptr;
 const char kSiteProcessMapKeyName[] = "content_site_process_map";
 
+// kLaunchingProcessIsBackgrounded has to match renderer_backgrounded in
+// RendererSchedulerImpl.
 #if defined(OS_ANDROID)
 // This matches Android's ChildProcessConnection state before OnProcessLaunched.
 constexpr bool kLaunchingProcessIsBackgrounded = true;
