@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6cc1dbf6_c7e121ac",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/793087.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T20:56:46Z",
+      "side": 1,
+      "message": "Can we use a unit test in ApplyBlockElementCommandTest instead?\n\nWe prefer unit test for ClusterFuzz bugs since layout tests are often too heavy for crash bugs.",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26871f62_74a610e3",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 1
@@ -13,6 +30,41 @@
       "writtenOn": "2017-12-12T15:46:36Z",
       "side": 1,
       "message": "Similar checks already exist, but not for all constructions sites of PositionIteratorAlgorithm.",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de980d04_e082d640",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T20:56:46Z",
+      "side": 1,
+      "message": "Can we move the null position check to the problematic caller, and put a DCHECK here instead?",
+      "parentUuid": "26871f62_74a610e3",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f4fb24_c03eecb8",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T20:56:46Z",
+      "side": 1,
+      "message": "Ditto.",
       "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "fbf47c68_7d368dd2",
+        "filename": "third_party/WebKit/Source/core/editing/PositionIterator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T20:56:46Z",
+      "side": 1,
+      "message": "I haven\u0027t seen the reason of doing so, since the new function doesn\u0027t perform any extra handling. DCHECK is not handling; It\u0027s just a reminder for us of what shouldn\u0027t happen.\n\nIt seems better to put it constructor body, since it crashes anyways.\n\nOnce example is TextIterator\u0027s ctor.",
+      "parentUuid": "9e5ae6f1_1db068d0",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095a2020_b297ff60",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 1
@@ -47,6 +117,64 @@
       "writtenOn": "2017-12-12T15:46:36Z",
       "side": 1,
       "message": "Should we do something if |position| is disconnected here?",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc721446_628ae138",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T20:56:46Z",
+      "side": 1,
+      "message": "Does the test case reach here with disconnected |position|? We should if so.\n\nBtw, in many cases, it\u0027s better to check Position::IsValidFor(document) than IsConnected(). With IsValidFor(), we can handle the case where a position is unexpectedly moved to another document.",
+      "parentUuid": "095a2020_b297ff60",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8f1ca1_bba4e469",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T20:56:46Z",
+      "side": 1,
+      "message": "Can we move the null position check to the problematic caller, and put a DCHECK here instead?",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051917fa_5560d60c",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T20:56:46Z",
+      "side": 1,
+      "message": "Does this part change anything?",
+      "range": {
+        "startLine": 1058,
+        "startChar": 0,
+        "endLine": 1069,
+        "endChar": 66
+      },
       "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
