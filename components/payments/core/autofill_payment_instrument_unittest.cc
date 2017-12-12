@@ -111,8 +111,6 @@ class FakePaymentRequestDelegate
 
   autofill::RegionDataLoader* GetRegionDataLoader() override { return nullptr; }
 
-  ukm::UkmRecorder* GetUkmRecorder() override { return nullptr; }
-
  private:
   std::string locale_;
   const GURL last_committed_url_;

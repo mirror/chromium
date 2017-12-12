@@ -22,10 +22,6 @@ class RegionDataLoader;
 
 class PrefService;
 
-namespace ukm {
-class UkmRecorder;
-}  // namespace ukm
-
 namespace payments {
 
 class PaymentRequest;
@@ -62,9 +58,6 @@ class PaymentRequestBaseDelegate {
 
   // Creates a new region data loader that will self delete, or a test mock.
   virtual autofill::RegionDataLoader* GetRegionDataLoader() = 0;
-
-  // Returns a pointer to the UKM service.
-  virtual ukm::UkmRecorder* GetUkmRecorder() = 0;
 
   // Returns the user's signed-in email address, or empty string if not signed
   // in.
