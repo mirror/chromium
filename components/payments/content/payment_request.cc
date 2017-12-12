@@ -14,6 +14,7 @@
 #include "components/payments/content/content_payment_request_delegate.h"
 #include "components/payments/content/origin_security_checker.h"
 #include "components/payments/content/payment_request_converter.h"
+#include "components/payments/content/payment_request_display_manager.h"
 #include "components/payments/content/payment_request_web_contents_manager.h"
 #include "components/payments/core/can_make_payment_query.h"
 #include "components/payments/core/payment_details.h"
@@ -33,11 +34,13 @@ PaymentRequest::PaymentRequest(
     content::WebContents* web_contents,
     std::unique_ptr<ContentPaymentRequestDelegate> delegate,
     PaymentRequestWebContentsManager* manager,
+    PaymentRequestDisplayManager* display_manager,
     mojo::InterfaceRequest<mojom::PaymentRequest> request,
     ObserverForTest* observer_for_testing)
     : web_contents_(web_contents),
       delegate_(std::move(delegate)),
       manager_(manager),
+      display_manager_(display_manager),
       binding_(this, std::move(request)),
       top_level_origin_(url_formatter::FormatUrlForSecurityDisplay(
           web_contents_->GetLastCommittedURL())),
@@ -155,7 +158,7 @@ void PaymentRequest::Show() {
   }
 
   // A tab can display only one PaymentRequest UI at a time.
-  if (!manager_->CanShow(this)) {
+  if (!display_manager_->CanShow()) {
     LOG(ERROR) << "A PaymentRequest UI is already showing";
     journey_logger_.SetNotShown(
         JourneyLogger::NOT_SHOWN_REASON_CONCURRENT_REQUESTS);
@@ -184,7 +187,7 @@ void PaymentRequest::AreRequestedMethodsSupportedCallback(
   if (methods_supported) {
     journey_logger_.SetEventOccurred(JourneyLogger::EVENT_SHOWN);
 
-    delegate_->ShowDialog(this);
+    display_manager_->Show(delegate_.get(), this);
   } else {
     journey_logger_.SetNotShown(
         JourneyLogger::NOT_SHOWN_REASON_NO_SUPPORTED_PAYMENT_METHOD);
