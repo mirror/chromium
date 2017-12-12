@@ -22,6 +22,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "components/autofill/content/common/submission_source_util.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
 #include "components/autofill/content/renderer/form_tracker.h"
 #include "components/autofill/content/renderer/password_autofill_agent.h"
@@ -282,19 +283,23 @@ void AutofillAgent::OnDestruct() {
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
 }
 
-void AutofillAgent::FireHostSubmitEvents(const WebFormElement& form,
-                                         bool known_success) {
+void AutofillAgent::FireHostSubmitEvents(
+    const WebFormElement& form,
+    bool known_success,
+    mojom::AutofillDriver::SubmissionSource source) {
   FormData form_data;
   if (!form_util::ExtractFormData(form, &form_data))
     return;
 
-  FireHostSubmitEvents(form_data, known_success);
+  FireHostSubmitEvents(form_data, known_success, source);
 }
 
-void AutofillAgent::FireHostSubmitEvents(const FormData& form_data,
-                                         bool /*known_success*/) {
-  GetAutofillDriver()->WillSubmitForm(form_data, base::TimeTicks::Now());
-  GetAutofillDriver()->FormSubmitted(form_data);
+void AutofillAgent::FireHostSubmitEvents(
+    const FormData& form_data,
+    bool known_success,
+    mojom::AutofillDriver::SubmissionSource source) {
+  GetAutofillDriver()->FormSubmitted(form_data, known_success, source,
+                                     base::TimeTicks::Now());
 }
 
 void AutofillAgent::Shutdown() {
@@ -788,6 +793,7 @@ void AutofillAgent::OnProvisionallySaveForm(const WebFormElement& form,
                                             const WebInputElement& element,
                                             ElementChangeSource source) {
   // Remember the last form the user interacted with.
+  change_source_ = source;
   if (source == ElementChangeSource::WILL_SEND_SUBMIT_EVENT) {
     last_interacted_form_ = form;
   } else if (source == ElementChangeSource::TEXTFIELD_CHANGED) {
@@ -816,17 +822,29 @@ void AutofillAgent::OnProvisionallySaveForm(const WebFormElement& form,
 }
 
 void AutofillAgent::OnProbablyFormSubmitted() {
-  // Uncomment below code once we check whether form submission
-  // is successful in browser side.
-  // FormData form_data;
-  // if (GetSubmittedForm(&form_data)) {
-  //   FireHostSubmitEvents(form_data, /*known_success=*/false);
-  // }
+  FormData form_data;
+  if (GetSubmittedForm(&form_data)) {
+    FireHostSubmitEvents(
+        form_data, /*known_success=*/false,
+        mojom::AutofillDriver::SubmissionSource::PROBABLY_FORM_SUBMITTED);
+  }
   ResetLastInteractedElements();
 }
 
 void AutofillAgent::OnFormSubmitted(const WebFormElement& form) {
-  FireHostSubmitEvents(form, /*known_success=*/false);
+  // We should always use last_interfacted_form_ if possible because it
+  // is form after user click the submit button but before Javascript
+  // could change the form.
+  if (!last_interacted_form_.IsNull() &&
+      change_source_ == ElementChangeSource::WILL_SEND_SUBMIT_EVENT) {
+    FireHostSubmitEvents(
+        last_interacted_form_, /*known_success=*/false,
+        mojom::AutofillDriver::SubmissionSource::FORM_SUBMISSION);
+  } else {
+    FireHostSubmitEvents(
+        form, /*known_success=*/false,
+        mojom::AutofillDriver::SubmissionSource::FORM_SUBMISSION);
+  }
   ResetLastInteractedElements();
 }
 
@@ -845,14 +863,17 @@ void AutofillAgent::OnInferredFormSubmission(SubmissionSource source) {
     // |constructed_form_| or |last_interacted_form_| depending on whether the
     // form is formless or not.
     if (!last_interacted_form_.IsNull()) {
-      FireHostSubmitEvents(last_interacted_form_, /*known_success=*/true);
+      FireHostSubmitEvents(last_interacted_form_, /*known_success=*/true,
+                           ToMojomSubmissionSource(source));
     } else if (constructed_form_) {
-      FireHostSubmitEvents(*constructed_form_, /*known_success=*/true);
+      FireHostSubmitEvents(*constructed_form_, /*known_success=*/true,
+                           ToMojomSubmissionSource(source));
     }
   } else {
     FormData form_data;
     if (GetSubmittedForm(&form_data)) {
-      FireHostSubmitEvents(form_data, /*known_success=*/true);
+      FireHostSubmitEvents(form_data, /*known_success=*/true,
+                           ToMojomSubmissionSource(source));
     }
   }
   ResetLastInteractedElements();
