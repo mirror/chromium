@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa77fbbf_c6eee387",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "nit: may be better to use a for range loop here instead of for_each.",
+      "range": {
+        "startLine": 161,
+        "startChar": 8,
+        "endLine": 161,
+        "endChar": 77
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206f6de0_745c5ec7",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "nit: since we are looping between being() and end(), I don\u0027t really see an advantage on \nusing lambda and for_each. IMHO a normal for range loop is simpler, and more readable\nin this case.\n\nfor (auto\u0026 ticker_id : tickers_to_remove)\n   player_impl-\u003eRemoveTicker(ticker_id);\n\n\nVS.\n\nfor_each(tickers_to_remove.begin(), tickers_to_remove.end(),\n           [\u0026](auto\u0026 ticker_id) { player_impl-\u003eRemoveTicker(ticker_id); });",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 33
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad3db2c_a9f2ca13",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "nit: may be better to use a for range loop here instead of for_each + lambda.",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 33
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390875ec_2cb6bdc8",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "nit: same concern on using a simple for range loop.",
+      "range": {
+        "startLine": 263,
+        "startChar": 1,
+        "endLine": 264,
+        "endChar": 38
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6050e20e_2098f3af",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "range": {
+        "startLine": 343,
+        "startChar": 0,
+        "endLine": 344,
+        "endChar": 33
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e4617f_83e49b52",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "nit: we should avoid doing this lookup twice. e.g.,\n\nauto it \u003d id_to_ticker_map_.find(ticker_id);\nreturn it !\u003d id_to_ticker_map_.end() ? it-\u003esecond.get() : nullptr;",
+      "range": {
+        "startLine": 388,
+        "startChar": 9,
+        "endLine": 388,
+        "endChar": 42
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b0a88c_8898dcfc",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "nit:s/TickerTimeline/TickerAndTimeline/",
+      "range": {
+        "startLine": 137,
+        "startChar": 12,
+        "endLine": 137,
+        "endChar": 26
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0babc60c_bb18e574",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "no need to DCHECK in unit tests.",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 20
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7135276_6b6bf8c6",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "nit: why not just use EXPECT_EQ(ticker-\u003eneeds_push_properties(), needs_push_properties)?",
+      "range": {
+        "startLine": 146,
+        "startChar": 6,
+        "endLine": 147,
+        "endChar": 45
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06033820_9d8c818b",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "nit: No need to return anything. Any failure that result in this being false \nalready results in a test failure.",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49c9431_2cd27db8",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T16:56:56Z",
+      "side": 1,
+      "message": "nit: See my comment above. No need to DCHECK here.",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 13
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
