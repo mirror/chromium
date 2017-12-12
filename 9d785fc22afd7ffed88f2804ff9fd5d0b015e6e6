@@ -52,6 +52,24 @@
       "revId": "9d785fc22afd7ffed88f2804ff9fd5d0b015e6e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd71ef95_cf436138",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T20:29:18Z",
+      "side": 1,
+      "message": "Moved the call to GpuMain(). We already call this for GLX always (the default) and we\u0027ll always have to call it for viz (which will become the default soon) anyways.",
+      "parentUuid": "bfac4062_9de90b4c",
+      "revId": "9d785fc22afd7ffed88f2804ff9fd5d0b015e6e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
