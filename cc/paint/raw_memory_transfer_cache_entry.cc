@@ -6,16 +6,11 @@
 
 #include <string.h>
 
-#include "base/atomic_sequence_num.h"
-
 namespace cc {
-namespace {
-base::AtomicSequenceNumber g_next_id;
-}
 
 ClientRawMemoryTransferCacheEntry::ClientRawMemoryTransferCacheEntry(
     std::vector<uint8_t> data)
-    : id_(g_next_id.GetNext()), data_(std::move(data)) {}
+    : id_(next_id_.GetNext()), data_(std::move(data)) {}
 ClientRawMemoryTransferCacheEntry::~ClientRawMemoryTransferCacheEntry() =
     default;
 
