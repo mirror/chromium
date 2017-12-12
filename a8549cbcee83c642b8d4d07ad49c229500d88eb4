@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e41fdec_403fe36b",
+        "filename": "chrome/browser/sessions/tab_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T23:23:45Z",
+      "side": 1,
+      "message": "Please include the comment here. It isn\u0027t obvious that doing this effectively deletes TabLoader, which is the key thing you are trying to do.\n\nAlso, don\u0027t you need to null check shared_tab_loader_?",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 40
+      },
+      "revId": "a8549cbcee83c642b8d4d07ad49c229500d88eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
