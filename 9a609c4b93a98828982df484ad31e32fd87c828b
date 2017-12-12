@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ec65722_73192864",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-12T23:30:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef97b341_7468b585",
+      "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "915fc788_884abbdb",
         "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
         "patchSetId": 10
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8977947f_5e2b07a1",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-12T23:30:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7bbb63b3_25ca397c",
+      "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a41bbff_3c33fa8e",
         "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
         "patchSetId": 10
@@ -68,6 +104,24 @@
       "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0a081c_21bfa4a0",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-12T23:30:35Z",
+      "side": 1,
+      "message": "I think this is easier to maintain the current logic. I will look at changing WebDragData to be a mojom next and then we can let the receiver do what they want with the data.",
+      "parentUuid": "5a41bbff_3c33fa8e",
+      "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +175,24 @@
       "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9942e16f_809059ff",
+        "filename": "third_party/WebKit/common/clipboard/clipboard.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-12-12T23:30:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8a0e9664_bfd033dc",
+      "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
