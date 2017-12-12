@@ -34,6 +34,24 @@
       "revId": "3318692ad21c48211794eee725ad130e7455e798",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2640360_4fc41019",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-12T19:55:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I understand your question. The bug doesn\u0027t apply for SPv1 which doesn\u0027t adjust paint_dirty_rect based on PaintOffsetTranslation().",
+      "parentUuid": "9b8cd4bc_3170c0fa",
+      "revId": "3318692ad21c48211794eee725ad130e7455e798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
