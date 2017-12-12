@@ -137,9 +137,15 @@ void FontFaceCache::IncrementVersion() {
   version_ = ++g_version;
 }
 
+static long long fontFaceCacheGetCount = 0;
+
+
 CSSSegmentedFontFace* FontFaceCache::Get(
     const FontDescription& font_description,
     const AtomicString& family) {
+
+  VLOG(4) << "Calls to FontFaceCache::Get() " << ++fontFaceCacheGetCount;
+
   SegmentedFacesByFamily::iterator segmented_faces_for_family =
       segmented_faces_.find(family);
   if (segmented_faces_for_family == segmented_faces_.end() ||

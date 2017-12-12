@@ -30,6 +30,7 @@
 #include "base/memory/scoped_refptr.h"
 #include "platform/LayoutLocale.h"
 #include "platform/font_family_names.h"
+#include "platform/fonts/FontObjectsCount.h"
 #include "platform/fonts/FontCacheKey.h"
 #include "platform/fonts/FontFamily.h"
 #include "platform/fonts/FontOrientation.h"
@@ -51,7 +52,7 @@ namespace blink {
 const float kFontSizeAdjustNone = -1;
 typedef struct { uint32_t parts[2]; } FieldsAsUnsignedType;
 
-class PLATFORM_EXPORT FontDescription {
+class PLATFORM_EXPORT FontDescription  {
   USING_FAST_MALLOC(FontDescription);
 
  public:
@@ -89,7 +90,7 @@ class PLATFORM_EXPORT FontDescription {
   static String ToString(FontVariantCaps);
 
   FontDescription();
-  FontDescription(const FontDescription&);
+  FontDescription(const FontDescription&) = default;
 
   FontDescription& operator=(const FontDescription&);
 
@@ -416,6 +417,7 @@ class PLATFORM_EXPORT FontDescription {
   static TypesettingFeatures default_typesetting_features_;
 
   static bool use_subpixel_text_positioning_;
+  CountedFontObj<FontDescription> obj_counter_;
 };
 
 }  // namespace blink

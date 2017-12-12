@@ -93,6 +93,8 @@ FontPlatformData* FontCache::SystemFontPlatformData(
 }
 #endif
 
+static long long getFontPlatformDataCount = 0;
+
 FontPlatformData* FontCache::GetFontPlatformData(
     const FontDescription& font_description,
     const FontFaceCreationParams& creation_params,
@@ -101,6 +103,10 @@ FontPlatformData* FontCache::GetFontPlatformData(
     platform_init_ = true;
     PlatformInit();
   }
+
+  VLOG(4) << "Calls to GetFontPlatformData() " << ++getFontPlatformDataCount;
+
+  LOG(INFO) << "Num FontCache entries: " << NumEntries();
 
 #if !defined(OS_MACOSX)
   if (creation_params.CreationType() == kCreateFontByFamily &&

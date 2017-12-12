@@ -50,8 +50,8 @@ struct SameSizeAsFontDescription {
   FieldsAsUnsignedType bitfields;
 };
 
-static_assert(sizeof(FontDescription) == sizeof(SameSizeAsFontDescription),
-              "FontDescription should stay small");
+// static_assert(sizeof(FontDescription) == sizeof(SameSizeAsFontDescription),
+//               "FontDescription should stay small");
 
 TypesettingFeatures FontDescription::default_typesetting_features_ = 0;
 
@@ -89,8 +89,6 @@ FontDescription::FontDescription()
   fields_.variant_numeric_ = FontVariantNumeric().fields_as_unsigned_;
   fields_.subpixel_ascent_descent_ = false;
 }
-
-FontDescription::FontDescription(const FontDescription&) = default;
 
 FontDescription& FontDescription::operator=(const FontDescription&) = default;
 
