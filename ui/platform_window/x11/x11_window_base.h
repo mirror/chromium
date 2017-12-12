@@ -73,8 +73,6 @@ class X11_WINDOW_EXPORT X11WindowBase : public PlatformWindow {
   // The bounds of |xwindow_|.
   gfx::Rect bounds_;
 
-  bool window_mapped_ = false;
-
   DISALLOW_COPY_AND_ASSIGN(X11WindowBase);
 };
 

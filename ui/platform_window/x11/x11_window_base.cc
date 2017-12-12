@@ -139,26 +139,14 @@ void X11WindowBase::Create() {
 }
 
 void X11WindowBase::Show() {
-  if (window_mapped_)
-    return;
   if (xwindow_ == x11::None)
     Create();
 
   XMapWindow(xdisplay_, xwindow_);
-
-  // We now block until our window is mapped. Some X11 APIs will crash and
-  // burn if passed |xwindow_| before the window is mapped, and XMapWindow is
-  // asynchronous.
-  if (X11EventSource::GetInstance())
-    X11EventSource::GetInstance()->BlockUntilWindowMapped(xwindow_);
-  window_mapped_ = true;
 }
 
 void X11WindowBase::Hide() {
-  if (!window_mapped_)
-    return;
   XWithdrawWindow(xdisplay_, xwindow_, 0);
-  window_mapped_ = false;
 }
 
 void X11WindowBase::Close() {
