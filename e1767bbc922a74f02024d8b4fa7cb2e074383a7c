@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92bbb85c_23eb85bc",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-12T18:21:15Z",
+      "side": 1,
+      "message": "nit: remove this for now and simply always PostTaskWithTraitsAndReply for now. we can optimize that later if needed.",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 25
+      },
+      "revId": "e1767bbc922a74f02024d8b4fa7cb2e074383a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75de3ccb_4c0f4fff",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-12T18:21:15Z",
+      "side": 1,
+      "message": "nit: you can remove this temporary variable if you like and just pass callback directly to PostTask",
+      "range": {
+        "startLine": 154,
+        "startChar": 22,
+        "endLine": 154,
+        "endChar": 37
+      },
+      "revId": "e1767bbc922a74f02024d8b4fa7cb2e074383a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
