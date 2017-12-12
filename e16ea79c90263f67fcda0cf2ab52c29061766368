@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1920cb83_5535c867",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T23:56:57Z",
+      "side": 1,
+      "message": "rlanday@: Could you share some ideas about how to fix this test?",
+      "revId": "e16ea79c90263f67fcda0cf2ab52c29061766368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
