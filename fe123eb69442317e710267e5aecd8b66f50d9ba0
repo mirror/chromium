@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "307548f2_af4380cf",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe152d56_c3967426",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adb1096c_fb2848cd",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 10
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8f32aa47_38c5d25f",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99d59451_db214a80",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c76f3925_a339a290",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 10
@@ -68,6 +104,24 @@
       "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64768e92_b63af27c",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c76f3925_a339a290",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "f83b11b8_022b7368",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69358885_ac7b2398",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0128a52c_6d761eee",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 10
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "745a56c5_4f906a6f",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Yes, fileinput.input moved the file to a backup file, and standard output writes to the input file. I felt this way is shorter than open a temporary file and copy contents in, and move temp file back to original one. Found the usage at https://stackoverflow.com/a/290494\n\nSearched more and found this https://stackoverflow.com/a/21443873. Seems like it could be unsafe to be as a re-opened instance, I will change it into a temp file way.",
+      "parentUuid": "0128a52c_6d761eee",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc1ed51b_4a77e3fb",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 10
@@ -116,6 +206,24 @@
       "writtenOn": "2017-12-11T18:48:24Z",
       "side": 1,
       "message": "I\u0027m wondering about this -- what happens if the package contents changes in a way that\u0027d require a .yaml file update? Should the script update it (or at least detect it)?",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cb1e51_8443f214",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "I think these .yaml files data has dir name, and don\u0027t contain version information, so I am not sure what kinds of changes would require a .yaml file update?",
+      "parentUuid": "cc1ed51b_4a77e3fb",
       "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -192,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "72231a93_e2ab366a",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "By looking into the tools/lib files history, maybe could check \u0027common*.jar\u0027 as it is consistently existing as a \u0027common\u0027 jar.",
+      "parentUuid": "a0d23afc_0b6403ee",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d268fb3_a6ff2e74",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 10
@@ -206,6 +332,24 @@
       "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d2fa6b_a8a4e679",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d268fb3_a6ff2e74",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "6c171ed0_082170f6",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Yes arguments.package is a list, as the arg \u0027--package\u0027 is set with \u0027nargs\u003d1\u0027 which puts it into a list.",
+      "parentUuid": "6ea3b553_4d7ed703",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cf57065_5b83fe19",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 10
@@ -237,6 +399,24 @@
       "writtenOn": "2017-12-11T18:48:24Z",
       "side": 1,
       "message": "One thing that\u0027d be nice to have here (perhaps in a separate CL) is a dry run option s.t. a user can see what packages will be created \u0026 what will be uploaded without actually doing either.",
+      "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581906a4_8fdf9954",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Good idea!",
+      "parentUuid": "2cf57065_5b83fe19",
       "revId": "fe123eb69442317e710267e5aecd8b66f50d9ba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

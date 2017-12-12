@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "186780d6_ab219bcf",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Instead of using fileinput.input which could be unsafe as a re-opened instance, change it to use the temporary file.",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8c3fea_acd1edaf",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Last patch you mentioned if we could detect/update .yaml file, if the package contents changes in a way that requires a .yaml file update. I think these .yaml files data has dir name, and don\u0027t contain version information, so I am not sure what kinds of changes would require a .yaml file update?",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84cc27a3_b99ce76b",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "By looking into the tools/lib files history, maybe could check \u0027common*.jar\u0027 as it is consistently existing as a \u0027common\u0027 jar. Found that the name could have 3 possible options:\n  1) \u0027common.jar\u0027,\n  2) \u0027common-\u003cversion\u003e-dev.jar\u0027 and\n  3) \u0027common-\u003cversion\u003e.jar\u0027.\n\nBack to our logic here, probably we can use -\u003cthe version in \u0027sdkmanager\u0027\u003e when 1), and use \u0027-\u003cversion\u003e-dev\u0027 when 2), and use -\u003cversion\u003e when 3)",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8a5588_3c548286",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "Check if the new version is the same as old version in file first, if it remains the same, skip dry run or replace version.",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30661aba_17ffe379",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-12T20:15:00Z",
+      "side": 1,
+      "message": "I suppose the dry run option could:\n1) be triggered by calling an argument with \u0027package\u0027 command like \u0027-d\u0027/\u0027--dry-run\u0027\n2) print out what packages instances would be created and uploaded to CIPD, also show the version\n3) remind there will be an update of package version in config.gni if applicable (later adding ensure file update notice)",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
