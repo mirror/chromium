@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89325a91_d0933ba8",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-12T20:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fd20184_ee53b86e",
+      "revId": "8f3eb7501c16b32dd98580eacc0f1e1c302b1cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "487498b5_7b0a2f32",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "20082eab_db8fab3a",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-12T20:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "487498b5_7b0a2f32",
+      "revId": "8f3eb7501c16b32dd98580eacc0f1e1c302b1cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c620054_3316033f",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "8f3eb7501c16b32dd98580eacc0f1e1c302b1cfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a300e17d_8b155056",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-12T20:15:46Z",
+      "side": 1,
+      "message": "I ran some benchmark code, and it seems like concat is significantly faster when dealing with multiple variables.",
+      "parentUuid": "3c620054_3316033f",
+      "revId": "8f3eb7501c16b32dd98580eacc0f1e1c302b1cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "8f3eb7501c16b32dd98580eacc0f1e1c302b1cfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ad1d0b_596148bb",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-12T20:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9709b1dd_884103f5",
+      "range": {
+        "startLine": 91,
+        "startChar": 12,
+        "endLine": 91,
+        "endChar": 15
+      },
+      "revId": "8f3eb7501c16b32dd98580eacc0f1e1c302b1cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
