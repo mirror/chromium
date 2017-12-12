@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85db6a14_e1f23c23",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:20:59Z",
+      "side": 1,
+      "message": "Can this check be done before decoding (in SetWallpaper)?",
+      "revId": "718cc83e32ba25b3b1f5faf1d01312d0deac1d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17abb3b1_ffb95a0c",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:20:59Z",
+      "side": 1,
+      "message": "Clarification: in this case (i.e. if account.is_active is false),\nSetCustomWallpaper() won\u0027t success? If so, is it possible to check 1) in SetWallpaper similar to CanSetCustomWallpaper() just above if is_active value will be constant during its lifetime, or 2) at least just before calling SetCustomWallpaper(), e.g.;\nif (!account.is_active) {\n  NotifyWallpaperChangedAndReset(android_id_);\n} else {\n  id_pairs_.push_back(pair);  // ... (1)\n  SetCustomWallpaper(...);\n}\n\nNote (1): Now IIUC it is better to call it before SetCustomWallpaper(), just in case SetCustomWallpaper() runs the observer method synchronously.",
+      "revId": "718cc83e32ba25b3b1f5faf1d01312d0deac1d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa40cd8_82399819",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:20:59Z",
+      "side": 1,
+      "message": "You can now move this to around L276, so that can remove should_notify.",
+      "revId": "718cc83e32ba25b3b1f5faf1d01312d0deac1d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
