@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6f62dc9a_40659570",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-12T19:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "546d90a7_b0723de4",
+      "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "740b9196_2e916796",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 2
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "\u003e The redirect was to let OpenPageInfoBubble() complete \n\nOther tests in here use it synchronously so I\u0027m assuming we don\u0027t need to wait for it to be open?\n\n\u003e Ah, I tried this, but it doesn\u0027t actually work:\n\nHmm, I\u0027m not quite sure what you mean. NavigateToURL() should complete synchronously and at that point the iframe should be ready to be navigated. It\u0027s true that the page within the iframe is not guaranteed to be loaded at that point but that shouldn\u0027t matter because we\u0027re navigating the iframe manually with NavigateIframeToURL.\n\nIt would be good to dig into the problem a bit because I\u0027ve seen this pattern a bunch and used it myself so I\u0027m curious as to what the problem is. Does it help to remove the src attribute from the \u003ciframe\u003e in subframe.html?",
       "parentUuid": "c2d47530_a3e69e1b",
+      "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30d1c8ec_dbb86953",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-12T19:23:04Z",
+      "side": 1,
+      "message": "Hmmmm. Well, let\u0027s see :) I can\u0027t reproduce the failure locally even with my system under load, but it does seem to show up pretty reliably on the bots, so I\u0027ll try without the iframe src attribute a few times and see what happens. I don\u0027t understand exactly what\u0027s wrong, though, or how to debug it without a local repro.",
+      "parentUuid": "cc62017b_0b48fbee",
       "revId": "4596680e50dfda99fca7ca1efccc665648b3362e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

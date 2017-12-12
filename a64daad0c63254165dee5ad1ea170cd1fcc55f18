@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70834b6b_6d8308d6",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-12T19:23:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c34c05b0_6a2d1e27",
+      "revId": "a64daad0c63254165dee5ad1ea170cd1fcc55f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "945ed14b_16211f51",
         "filename": "chrome/browser/ui/views/page_info/testdata/subframe.html",
         "patchSetId": 4
