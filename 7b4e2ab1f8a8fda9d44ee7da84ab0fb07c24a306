@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "587a3da4_561241b1",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-12T12:48:25Z",
+      "side": 1,
+      "message": "AdaptedCallbackForRepeating seems reasonable. Something like:\n\nusing RepeatingStatusCallback \u003d\n    base::RepeatingCallback\u003cvoid(ServiceWorkerStatusCode)\u003e;\n\nvoid OnStatusCallback(const RepeatingStatusCallback\u0026 callback,\n                      ServiceWorkerStatusCode status) {\n  callback.Run(status);\n}\n\n// and then in DispatchSyncEvent...\n\nRepeatingStatusCallback repeating_callback \u003d\n    base::AdaptCallbackForRepeating(std::move(callback));\n\nactive_version-\u003eRunAfterStartWorker(\n    ServiceWorkerMetrics::EventType::SYNC,\n    base::BindOnce(\u0026BackgroundSyncManager::DispatchSyncEvent,\n                   weak_ptr_factory_.GetWeakPtr(),\n                   tag,\n                   active_version,\n                   last_chance,\n                   base::BindOnce(\u0026OnStatusCallback,\n                                  repeating_callback)),\n    base::BindOnce(\u0026OnStatusCallback, repeating_callback));",
+      "parentUuid": "18f779ce_cd6b30fa",
+      "range": {
+        "startLine": 779,
+        "startChar": 57,
+        "endLine": 779,
+        "endChar": 66
+      },
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6d909e_6246acdb",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 4
