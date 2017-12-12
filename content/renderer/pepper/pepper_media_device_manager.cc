@@ -235,8 +235,13 @@ void PepperMediaDeviceManager::OnDeviceOpened(int request_id,
     return;
   }
 
-  if (success)
-    GetMediaStreamDeviceObserver()->AddStream(label, device);
+  if (success) {
+    MediaStreamDevice overridden_device = device;
+    if (!overridden_device.input)
+      overridden_device.input =
+          media::AudioParameters::UnavailableDeviceParams();
+    GetMediaStreamDeviceObserver()->AddStream(label, overridden_device);
+  }
 
   OpenDeviceCallback callback = iter->second;
   open_callbacks_.erase(iter);
