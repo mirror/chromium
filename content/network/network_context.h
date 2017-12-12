@@ -16,6 +16,7 @@
 #include "base/timer/timer.h"
 #include "content/common/content_export.h"
 #include "content/network/cookie_manager.h"
+#include "content/network/host_resolver.h"
 #include "content/public/common/network_service.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -103,6 +104,8 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   void SetNetworkConditions(const std::string& profile_id,
                             mojom::NetworkConditionsPtr conditions) override;
 
+  void GetHostResolver(mojom::HostResolverRequest request) override;
+
  private:
   NetworkContext();
 
@@ -143,6 +146,9 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
   mojo::Binding<mojom::NetworkContext> binding_;
 
   std::unique_ptr<CookieManager> cookie_manager_;
+
+  // TODO (billy.jayan): Figure out if we need a unique pointer
+  std::unique_ptr<HostResolver> host_resolver_;
 
   // Temporary class to help diagnose the impact of https://crbug.com/711579.
   // Every 24-hours, measures the size of the network cache and emits an UMA

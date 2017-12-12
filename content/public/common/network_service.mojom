@@ -13,6 +13,7 @@ import "url/mojo/url.mojom";
 import "services/network/public/interfaces/cookie_manager.mojom";
 import "services/network/public/interfaces/network_change_manager.mojom";
 import "services/network/public/interfaces/restricted_cookie_manager.mojom";
+import "host_resolver.mojom";
 
 [Native]
 struct SSLInfo;
@@ -116,6 +117,8 @@ interface NetworkContext {
   // Passing null NetworkConditions disables the throttling.
   // TODO(caseq): get rid of header, make profile_id part of ResourceRequest.
   SetNetworkConditions(string profile_id, NetworkConditions? conditions);
+
+  GetHostResolver(content.mojom.HostResolver& host_resolver);
 };
 
 // Network service interface to the browser.

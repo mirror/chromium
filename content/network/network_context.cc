@@ -56,6 +56,8 @@ NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
   url_request_context_ = owned_url_request_context_.get();
   cookie_manager_ =
       std::make_unique<CookieManager>(url_request_context_->cookie_store());
+  host_resolver_ =
+      std::make_unique<HostResolver>(url_request_context_->host_resolver());
   network_service_->RegisterNetworkContext(this);
   binding_.set_connection_error_handler(base::BindOnce(
       &NetworkContext::OnConnectionError, base::Unretained(this)));
@@ -83,6 +85,8 @@ NetworkContext::NetworkContext(
   url_request_context_ = owned_url_request_context_.get();
   cookie_manager_ =
       std::make_unique<CookieManager>(url_request_context_->cookie_store());
+  host_resolver_ =
+      std::make_unique<HostResolver>(url_request_context_->host_resolver());
 }
 
 NetworkContext::NetworkContext(mojom::NetworkContextRequest request,
@@ -92,6 +96,10 @@ NetworkContext::NetworkContext(mojom::NetworkContextRequest request,
       cookie_manager_(std::make_unique<CookieManager>(
           url_request_context->cookie_store())) {
   url_request_context_ = url_request_context;
+  // TODO (billy.jayan): Figure out why we need to have two different init in
+  // constructor one in body one outside
+  host_resolver_ =
+      std::make_unique<HostResolver>(url_request_context_->host_resolver());
 }
 
 NetworkContext::~NetworkContext() {
@@ -347,6 +355,10 @@ void NetworkContext::SetNetworkConditions(
   }
   ThrottlingController::SetConditions(profile_id,
                                       std::move(network_conditions));
+}
+
+void NetworkContext::GetHostResolver(mojom::HostResolverRequest request) {
+  host_resolver_->AddRequest(std::move(request));
 }
 
 }  // namespace content
