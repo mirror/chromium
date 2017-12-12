@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "bb5205cf_12350393",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-12T15:05:36Z",
+      "side": 1,
+      "message": "How about doing here:\n\nSpaceStatus computed_space_status \u003d space_status_;\nspace_status_ \u003d SpaceStatus::UNDETERMINED\n\nYou can check |computed_space_status| in the if/else statements",
+      "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f602b19_c8e206df",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 10
@@ -65,6 +82,23 @@
         "endLine": 96,
         "endChar": 7
       },
+      "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eeff66b_88189fb8",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-12T15:05:36Z",
+      "side": 1,
+      "message": "Nits:\n- \"finished on a slow device\" -\u003e \"finished yet on a slow device\"\n- \"no enough space\" -\u003e \"not enough space\" (in two places)\n- \"but the free space checking was slower than the installation request.\" -\u003e \"but WebApkInstallService::InstallAsync() was called prior to the free space checking completing.\"\n(It is unclear what you mean by \"installation request\". Do you mean WebApkInstaller::InstallAsync())",
       "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
