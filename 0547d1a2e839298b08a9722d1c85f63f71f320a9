@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e6904202_db3f6f81",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/793087.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T21:22:54Z",
+      "side": 1,
+      "message": "Please try. Good news is that there are examples in ApplyBlockElementCommandTest to follow.",
+      "parentUuid": "807dbb7d_62621c20",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26871f62_74a610e3",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 1
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "80c02299_4a067088",
+        "filename": "third_party/WebKit/Source/core/editing/PositionIterator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T21:22:54Z",
+      "side": 1,
+      "message": "In that case, a nullptr deref already acts as a CHECK :)",
+      "parentUuid": "6327bb0b_f0909d22",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095a2020_b297ff60",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 1
@@ -189,6 +225,24 @@
       "side": 1,
       "message": "So in case of |position.IsValidFor() \u003d\u003d false| and also for null |adjust_position| we can just return early, am I right?",
       "parentUuid": "dc721446_628ae138",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff2e323_13f018fc",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T21:22:54Z",
+      "side": 1,
+      "message": "I prefer a DCHECK here. Handling of invalid positions should be done by the callers.",
+      "parentUuid": "465441ee_9b911280",
       "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -248,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "73fb7ea2_77cffcfb",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T21:22:54Z",
+      "side": 1,
+      "message": "It\u0027s good enough to check the problematic callers until there\u0027s no crash in the test case.",
+      "parentUuid": "a9fa90ce_51344ad5",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "051917fa_5560d60c",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 1
@@ -283,6 +355,30 @@
       "side": 1,
       "message": "Oh, I missed a check for |last_position.IsNull()|, my bad.\nThanks!",
       "parentUuid": "051917fa_5560d60c",
+      "range": {
+        "startLine": 1058,
+        "startChar": 0,
+        "endLine": 1069,
+        "endChar": 66
+      },
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb252432_0da423ac",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T21:22:54Z",
+      "side": 1,
+      "message": "All right. Again, check in the caller(s), please :)",
+      "parentUuid": "d62358f7_bdbe1d82",
       "range": {
         "startLine": 1058,
         "startChar": 0,
