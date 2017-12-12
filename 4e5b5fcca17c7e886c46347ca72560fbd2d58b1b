@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbb8a127_0057d4b4",
+        "filename": "chrome/browser/autofill/autofill_provider_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-12-12T23:34:11Z",
+      "side": 1,
+      "message": "Note, const is removed in my patch to combine submit notification methods, this workaround will be removed finally.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 100
+      },
+      "revId": "4e5b5fcca17c7e886c46347ca72560fbd2d58b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
