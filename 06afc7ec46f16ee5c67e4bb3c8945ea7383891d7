@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e9bbb77_3086b709",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-12T19:38:25Z",
+      "side": 1,
+      "message": "Do we want or need a way to not send the password at all if we know the customer doesn\u0027t have any policy that uses it? Not sure if we already discussed this with David. But that can be for future anyway.",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6dd6d5_6d7af7fa",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-12T19:38:25Z",
+      "side": 1,
+      "message": "What\u0027s the reason to duplicate this? Are there cases where Key is not the password?\n\nie. Why can\u0027t we use reuse wherever SetKey stores the password?",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d369a91_53e81d7d",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-12T19:38:25Z",
+      "side": 1,
+      "message": "const size_t",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e91ba1e_78271bde",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-12T19:38:25Z",
+      "side": 1,
+      "message": "const char*",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5f2822_d18b5c7c",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-12T19:38:25Z",
+      "side": 1,
+      "message": "I think you need to check the fd here against whatever the default value is return in the error case.",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4debc9d8_4e9e5a5c",
+        "filename": "chromeos/login/auth/user_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-12T19:38:25Z",
+      "side": 1,
+      "message": "As above - when is this ever different to key_?",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
