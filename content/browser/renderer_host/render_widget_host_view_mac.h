@@ -341,6 +341,8 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
   gfx::Point AccessibilityOriginInScreen(const gfx::Rect& bounds) override;
   gfx::AcceleratedWidget AccessibilityGetAcceleratedWidget() override;
 
+  void SetFrozenForRepaint(bool frozen) override;
+  bool HasPendingFrameOfSize(const gfx::Size& desired_size) const override;
   bool HasAcceleratedSurface(const gfx::Size& desired_size) override;
   gfx::Rect GetBoundsInRootWindow() override;
 
@@ -623,6 +625,12 @@ class CONTENT_EXPORT RenderWidgetHostViewMac
 
   // The size associated with the current LocalSurfaceId if any.
   gfx::Size last_size_;
+
+  // Is the screen currently frozen pending a swap?
+  bool frozen_for_repaint_ = false;
+
+  // The last frame size submitted to the compositor.
+  gfx::Size last_frame_size_;
 
   // The last device scale factor associated with the current
   // LocalSurfaceId if any.
