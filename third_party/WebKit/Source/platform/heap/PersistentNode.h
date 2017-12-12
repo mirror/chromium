@@ -25,6 +25,7 @@ class PersistentNode final {
 
 #if DCHECK_IS_ON()
   ~PersistentNode() {
+    //LOG(ERROR) << "PersistentNode::~PersistentNode " << this;
     // If you hit this assert, it means that the thread finished
     // without clearing persistent handles that the thread created.
     // We don't enable the assert for the main thread because the
@@ -47,16 +48,26 @@ class PersistentNode final {
   void TracePersistentNode(Visitor* visitor) {
     DCHECK(!IsUnused());
     DCHECK(trace_);
-    trace_(visitor, self_);
+    trace_(visitor, this);
+  }
+
+  template <typename T>
+  void TracePersistent(Visitor* visitor) {
+    if (IsUnused() || !trace_)
+      return;
+    //LOG(ERROR) << "PersistentNode::TracePersistent this(pn) " << this << " self_(pb) " << self_;
+    static_cast<T*>(self_)->TracePersistent(visitor);
   }
 
   void Initialize(void* self, TraceCallback trace) {
+    //LOG(ERROR) << "PersistentNode::Initialize this(pn) " << this << " self_(pb) " << self_;
     DCHECK(IsUnused());
     self_ = self;
     trace_ = trace;
   }
 
   void SetFreeListNext(PersistentNode* node) {
+    //LOG(ERROR) << "PersistentNode::SetFreeListNext this(pn) " << this << " node(pb) " << node;
     DCHECK(!node || node->IsUnused());
     self_ = node;
     trace_ = nullptr;
@@ -124,12 +135,14 @@ class PLATFORM_EXPORT PersistentRegion final {
     DCHECK(free_list_head_);
     PersistentNode* node = free_list_head_;
     free_list_head_ = free_list_head_->FreeListNext();
+    //LOG(ERROR) << "AllocatePersistentNode node " << node << " self(pb) " << self;
     node->Initialize(self, trace);
     DCHECK(!node->IsUnused());
     return node;
   }
 
   void FreePersistentNode(PersistentNode* persistent_node) {
+    //LOG(ERROR) << "FreePersistentNode persistent_node " << persistent_node;
 #if DCHECK_IS_ON()
     DCHECK_GT(persistent_count_, 0);
 #endif

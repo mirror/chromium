@@ -60,6 +60,7 @@ void PersistentRegion::ReleasePersistentNode(
   DCHECK(!persistent_node->IsUnused());
   // 'self' is in use, containing the persistent wrapper object.
   void* self = persistent_node->Self();
+  //LOG(ERROR) << "PersistentRegion::ReleasePersistentNode persistent_node " << persistent_node << " self " << self;
   if (callback) {
     (*callback)(self);
     DCHECK(persistent_node->IsUnused());
@@ -90,6 +91,7 @@ void PersistentRegion::TracePersistentNodes(Visitor* visitor,
     int free_count = 0;
     for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
       PersistentNode* node = &slots->slot_[i];
+      //LOG(ERROR) << "PersistentRegion::TracePersistentNodes node " << node;
       if (node->IsUnused()) {
         if (!free_list_next)
           free_list_last = node;
