@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb2b1f67_7e2ac64e",
+        "filename": "chrome/test/data/webui/settings/android_apps_page_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T17:05:34Z",
+      "side": 1,
+      "message": "Polymer.async runs on the next microtask. This effectively waits for all pending data binding methods to be called before resolving the promise.",
+      "parentUuid": "89b01a41_a671eba2",
+      "revId": "0ceae9ae7427942648595a64f7ec6a5a804fac2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1aaff7c_281b28c3",
         "filename": "chrome/test/data/webui/settings/cr_settings_browsertest.js",
         "patchSetId": 1
