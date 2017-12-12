@@ -94,4 +94,22 @@ std::vector<url::Origin> SiteIsolationPolicy::ParseIsolatedOrigins(
   return origins;
 }
 
+// static
+void SiteIsolationPolicy::RecordSiteIsolationFlagUsage() {
+  // For --site-per-process and --isolate-origins, include flags specified on
+  // command-line, in chrome://flags, and via enterprise policy (i.e., include
+  // switches::kSitePerProcess and switches::kIsolateOrigins).  Exclude these
+  // modes being set through Finch (i.e., exclude features::kSitePerProcess and
+  // features::IsolateOrigins).
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kIsolateOrigins)) {
+    UMA_HISTOGRAM_BOOLEAN("SiteIsolation.Flags.IsolateOriginsEnabled", true);
+  }
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kSitePerProcess)) {
+    UMA_HISTOGRAM_BOOLEAN("SiteIsolation.Flags.SitePerProcessEnabled", true);
+  }
+}
+
 }  // namespace content
