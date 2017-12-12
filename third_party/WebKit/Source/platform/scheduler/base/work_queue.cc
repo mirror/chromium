@@ -78,6 +78,37 @@ void WorkQueue::Push(TaskQueueImpl::Task task) {
     work_queue_sets_->OnTaskPushedToEmptyQueue(this);
 }
 
+void WorkQueue::PushFront(TaskQueueImpl::Task task) {
+  bool was_empty = work_queue_.empty();
+#ifndef NDEBUG
+  DCHECK(task.enqueue_order_set());
+#endif
+
+  if (!was_empty) {
+    // Quick sanity check.
+    DCHECK_LE(task.enqueue_order(),
+              work_queue_.front().enqueue_order())
+        << task_queue_->GetName() << " : " << work_queue_sets_->GetName()
+        << " : " << name_;
+  }
+
+  // Amoritized O(1).
+  work_queue_.push_front(std::move(task));
+
+  if (!work_queue_sets_)
+    return;
+
+  // Pretend  to WorkQueueSets that nothing has changed if we're blocked.
+  if (BlockedByFence())
+    return;
+
+  if (was_empty) {
+    work_queue_sets_->OnTaskPushedToEmptyQueue(this);
+  } else {
+    work_queue_sets_->OnFrontTaskChanged(this);
+  }
+}
+
 void WorkQueue::ReloadEmptyImmediateQueue() {
   DCHECK(work_queue_.empty());
 

@@ -414,11 +414,20 @@ class PLATFORM_EXPORT TaskQueueManager
     return any_thread_;
   }
 
+  // TODO(scheduler-dev): Review if we really need non-nestable tasks at all.
+  struct NonNestableTask {
+    internal::TaskQueueImpl::Task task;
+    internal::TaskQueueImpl* task_queue;
+    bool delayed;
+  };
+  using NonNestableTaskDeque = WTF::Deque<NonNestableTask, 8>;
+
   // TODO(alexclarke): Move more things into MainThreadOnly
   struct MainThreadOnly {
     MainThreadOnly();
 
     int nesting_depth;
+    NonNestableTaskDeque non_nestable_task_queue;
   };
 
   base::ThreadChecker main_thread_checker_;
