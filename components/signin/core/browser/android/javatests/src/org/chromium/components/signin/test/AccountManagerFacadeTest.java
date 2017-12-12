@@ -66,6 +66,22 @@ public class AccountManagerFacadeTest {
 
     @Test
     @SmallTest
+    public void testChildAccountFiltering() {
+        addTestAccount("test@gmail.com");
+        Assert.assertTrue(mFacade.hasAccountForName("test@gmail.com"));
+
+        addChildTestAccount("child@gmail.com");
+        Assert.assertTrue(mFacade.hasAccountForName("child@gmail.com"));
+        Assert.assertFalse(mFacade.hasAccountForName("test@gmail.com"));
+
+        addTestAccount("test2@gmail.com");
+        Assert.assertTrue(mFacade.hasAccountForName("child@gmail.com"));
+        Assert.assertFalse(mFacade.hasAccountForName("test@gmail.com"));
+        Assert.assertFalse(mFacade.hasAccountForName("test2@gmail.com"));
+    }
+
+    @Test
+    @SmallTest
     public void testProfileDataSource() throws Throwable {
         String accountName = "test@gmail.com";
         addTestAccount(accountName);
@@ -89,6 +105,17 @@ public class AccountManagerFacadeTest {
     private Account addTestAccount(String accountName) {
         Account account = AccountManagerFacade.createAccountFromName(accountName);
         AccountHolder holder = AccountHolder.builder(account).alwaysAccept(true).build();
+        mDelegate.addAccountHolderBlocking(holder);
+        return account;
+    }
+
+    private Account addChildTestAccount(String accountName) {
+        Account account = AccountManagerFacade.createAccountFromName(accountName);
+        AccountHolder holder =
+                AccountHolder.builder(account)
+                        .alwaysAccept(true)
+                        .addFeature(AccountManagerFacade.FEATURE_IS_CHILD_ACCOUNT_KEY)
+                        .build();
         mDelegate.addAccountHolderBlocking(holder);
         return account;
     }
