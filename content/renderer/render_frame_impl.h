@@ -72,6 +72,7 @@
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
+#include "third_party/WebKit/public/platform/fullscreen_video_element.mojom.h"
 #include "third_party/WebKit/public/platform/media_engagement.mojom.h"
 #include "third_party/WebKit/public/platform/modules/manifest/manifest_manager.mojom.h"
 #include "third_party/WebKit/public/platform/site_engagement.mojom.h"
@@ -176,6 +177,7 @@ struct StreamOverrideParameters;
 class CONTENT_EXPORT RenderFrameImpl
     : public RenderFrame,
       blink::mojom::EngagementClient,
+      blink::mojom::FullscreenVideoElementHandler,
       blink::mojom::MediaEngagementClient,
       mojom::Frame,
       mojom::FrameNavigationControl,
@@ -499,6 +501,9 @@ class CONTENT_EXPORT RenderFrameImpl
   // RenderThreadImpl::current() returns nullptr (e.g. in some tests).
   ChildURLLoaderFactoryGetter* GetDefaultURLLoaderFactoryGetter() override;
 
+  // blink::mojom::FullscreenVideoElementHandler implementation:
+  void RequestFullscreenVideoElement() override;
+
   // blink::mojom::EngagementClient implementation:
   void SetEngagementLevel(const url::Origin& origin,
                           blink::mojom::EngagementLevel level) override;
@@ -746,6 +751,10 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Binds to the site engagement service in the browser.
   void BindEngagement(blink::mojom::EngagementClientAssociatedRequest request);
+
+  // Binds to the fullscreen service in the browser.
+  void BindFullscreen(
+      blink::mojom::FullscreenVideoElementHandlerAssociatedRequest request);
 
   // Binds to the media engagement service in the browser.
   void BindMediaEngagement(
@@ -1510,6 +1519,8 @@ class CONTENT_EXPORT RenderFrameImpl
   url::Origin high_media_engagement_origin_;
 
   mojo::AssociatedBinding<blink::mojom::EngagementClient> engagement_binding_;
+  mojo::AssociatedBinding<blink::mojom::FullscreenVideoElementHandler>
+      fullscreen_binding_;
   mojo::AssociatedBinding<blink::mojom::MediaEngagementClient>
       media_engagement_binding_;
   mojo::Binding<mojom::Frame> frame_binding_;
