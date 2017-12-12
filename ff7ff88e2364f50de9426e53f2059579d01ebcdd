@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf4af8e4_a90c93b5",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T17:28:22Z",
+      "side": 1,
+      "message": "This and \"browser_list.h\" should stay in !defined(OS_ANDROID) because they seems not include for Android build (in the else branch of is_android test).\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/BUILD.gn?rcl\u003d2407ed2ba75414d7766ce83b226b6102f830afe0\u0026l\u003d2419\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/BUILD.gn?rcl\u003d2407ed2ba75414d7766ce83b226b6102f830afe0\u0026l\u003d728",
+      "revId": "ff7ff88e2364f50de9426e53f2059579d01ebcdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5efdc097_28e7284e",
+        "filename": "chrome/browser/lifetime/application_lifetime.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T17:28:22Z",
+      "side": 1,
+      "message": "nit: Can we drop ChroemOS suffix since it is already in chromeos namespace?",
+      "range": {
+        "startLine": 148,
+        "startChar": 27,
+        "endLine": 148,
+        "endChar": 35
+      },
+      "revId": "ff7ff88e2364f50de9426e53f2059579d01ebcdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05aeee54_77ce1471",
+        "filename": "chrome/browser/lifetime/application_lifetime_chromeos.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T17:28:22Z",
+      "side": 1,
+      "message": "nit: Drop \"ChromeOS\" since we are in chromeos namespace here.",
+      "range": {
+        "startLine": 81,
+        "startChar": 20,
+        "endLine": 81,
+        "endChar": 28
+      },
+      "revId": "ff7ff88e2364f50de9426e53f2059579d01ebcdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5824d7_e702f0e8",
+        "filename": "chrome/browser/lifetime/application_lifetime_chromeos.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T17:28:22Z",
+      "side": 1,
+      "message": "nit: FlushUserPrefs -\u003e NotifyAndTerminate ?\n\nFlushUserPrefs is a bit confusing since this is after the user prefs flush.",
+      "range": {
+        "startLine": 82,
+        "startChar": 28,
+        "endLine": 82,
+        "endChar": 42
+      },
+      "revId": "ff7ff88e2364f50de9426e53f2059579d01ebcdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ec3a78_5fbfeb20",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2795,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T17:28:22Z",
+      "side": 1,
+      "message": "nit: We can get rid of |terminate_observer| name and use it anonymously.\ni.e.\n  content::WindowedNotificationObserver(\n      chrome::NOTIFICATION_APP_TERMINATING,\n      content::NotificationService::AllSources()).Wait();",
+      "range": {
+        "startLine": 2792,
+        "startChar": 2,
+        "endLine": 2795,
+        "endChar": 27
+      },
+      "revId": "ff7ff88e2364f50de9426e53f2059579d01ebcdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
