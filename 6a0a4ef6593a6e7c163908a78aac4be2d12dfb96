@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8afbb4ee_25c7989b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-12T03:40:34Z",
+      "side": 1,
+      "message": "Accessing ArcIntentHelperBridge::GetForBrowserContext() does not work and requires extra refactoring. Even when done, it is hard to get everything released in right order.\nSo I used direct creation similar to other unittests where it is used.",
+      "range": {
+        "startLine": 452,
+        "startChar": 50,
+        "endLine": 452,
+        "endChar": 71
+      },
+      "revId": "6a0a4ef6593a6e7c163908a78aac4be2d12dfb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
