@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "86eb6689_575ae203",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-12T18:28:35Z",
+      "side": 1,
+      "message": "Nit: since we\u0027re not explicitly \"running\" the reporter here anymore, maybe change this to \"link reporter invocations together\".",
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5d07b3_655cedc4",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-12T18:28:35Z",
+      "side": 1,
+      "message": "Nit: \"create\" a single invocation or \"add\" a single invocation?",
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a79e3b_ceccbedc",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-12T18:28:35Z",
+      "side": 1,
+      "message": "Nit: while we\u0027re changing this, this should use \"\u003d default;\" instead of \"{}\"",
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b455f347_b33b6ea7",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-12T18:28:35Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this anymore, since we\u0027re not explicitly running the reporter here. It\u0027s checked inside OnSwReporterReady.\n\n+sorin: You said on the other bug there were \"reentrancy and concurrency issues\". I\u0027m not sure how that can be if this is always running on the browser thread?",
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42f14a03_77fe9230",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
         "patchSetId": 1
@@ -49,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "0c9e85a6_b7f81200",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-12T18:28:35Z",
+      "side": 1,
+      "message": "+1 to using PostTask here. Then instead of checking that we\u0027re already on BrowserThread::UI above, we can call \"content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)-\u003ePostTask\" which is resilient in case the component updater ever moves off the UI thread and is easy to find and update when we change SwReporterRunner to no longer be bound to the UI thread.",
+      "parentUuid": "0fc9e9c6_c86ee791",
+      "range": {
+        "startLine": 386,
+        "startChar": 61,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa11961b_897b4d68",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 1
@@ -84,6 +176,30 @@
       "side": 1,
       "message": "gab\u0027s OOO for now. ++fdoray",
       "parentUuid": "fa11961b_897b4d68",
+      "range": {
+        "startLine": 1111,
+        "startChar": 26,
+        "endLine": 1111,
+        "endChar": 46
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e185350f_a16fb403",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-12T18:28:35Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a task scheduler construct that knows about the browser startup sequence.",
+      "parentUuid": "34bad6d0_be1283bb",
       "range": {
         "startLine": 1111,
         "startChar": 26,
