@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e61150e_09f6eae0",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-12T19:46:20Z",
+      "side": 1,
+      "message": "Using lambdas and BindRepeating feels wrong to me - better approaches welcome.",
+      "range": {
+        "startLine": 134,
+        "startChar": 33,
+        "endLine": 134,
+        "endChar": 42
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3de5b34_fa4605f3",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-12T19:46:20Z",
+      "side": 1,
+      "message": "Using RunLoop seems like the go-to way for blocking on some asynchronous code to run, but I don\u0027t know if that can really be applied here since that waits until the code completes, not until some condition is met.",
+      "range": {
+        "startLine": 191,
+        "startChar": 20,
+        "endLine": 191,
+        "endChar": 36
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc16f6f8_0823d845",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-12T19:46:20Z",
+      "side": 1,
+      "message": "Since we can\u0027t run these tests on all hardware configurations (need a DirectX 11.1-compatible GPU and some minimum amount of Windows support), we can either:\n\n1. Disable the tests by default and only specifically run them on valid configurations (current solution).\n2. Create a separate vr_browser_tests target that is only compiled and run on valid configurations. The browser_tests build target definition is ~1500 lines long, though, and I don\u0027t know how much of that is necessary to actually build and run a subset of tests.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e113ff3_e1f93963",
+        "filename": "chrome/browser/vr/test/vr_transition_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-12T19:46:20Z",
+      "side": 1,
+      "message": "ExecuteScript runs with a user gesture (there\u0027s ExecuteScriptWithoutUserGesture if you don\u0027t want that), so we can just directly call requestPresent instead of having to do the hacky workaround the instrumentation tests use of actually sending a click event to the canvas.",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
