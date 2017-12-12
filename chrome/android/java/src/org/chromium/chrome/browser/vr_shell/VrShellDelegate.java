@@ -128,7 +128,6 @@ public class VrShellDelegate
     private VrDaydreamApi mVrDaydreamApi;
     private Boolean mIsDaydreamCurrentViewer;
     private VrCoreVersionChecker mVrCoreVersionChecker;
-    private TabModelSelector mTabModelSelector;
 
     private boolean mProbablyInDon;
     private boolean mInVr;
@@ -1651,11 +1650,12 @@ public class VrShellDelegate
         assert mVrShell == null;
         if (mVrClassesWrapper == null) return false;
         if (mActivity.getCompositorViewHolder() == null) return false;
-        mTabModelSelector = mActivity.getCompositorViewHolder().detachForVr();
-        if (mTabModelSelector == null) return false;
+        TabModelSelector tabModelSelector = mActivity.getTabModelSelector();
+        if (tabModelSelector == null) return false;
+        mActivity.getCompositorViewHolder().detachForVr();
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
         try {
-            mVrShell = mVrClassesWrapper.createVrShell(mActivity, this, mTabModelSelector);
+            mVrShell = mVrClassesWrapper.createVrShell(mActivity, this, tabModelSelector);
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
@@ -1669,13 +1669,14 @@ public class VrShellDelegate
                 ViewGroup.LayoutParams.MATCH_PARENT);
         decor.addView(mVrShell.getContainer(), params);
         mActivity.onEnterVr();
+        mActivity.getToolbarManager().setProgressBarEnabled(false);
     }
 
     private void removeVrViews() {
-        mVrShell.onBeforeWindowDetached();
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
         decor.removeView(mVrShell.getContainer());
+        mActivity.getToolbarManager().setProgressBarEnabled(true);
     }
 
     /**
@@ -1687,9 +1688,8 @@ public class VrShellDelegate
             mVrShell.teardown();
             mVrShell = null;
             if (mActivity.getCompositorViewHolder() != null) {
-                mActivity.getCompositorViewHolder().onExitVr(mTabModelSelector);
+                mActivity.getCompositorViewHolder().onExitVr();
             }
-            mTabModelSelector = null;
         }
     }
 
