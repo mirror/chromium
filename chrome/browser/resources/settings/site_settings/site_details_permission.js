@@ -129,9 +129,11 @@ Polymer({
    * @private
    */
   hasPermissionInfoString_: function(source, category, setting) {
-    return (
-        source != settings.SiteSettingSource.DEFAULT &&
-        source != settings.SiteSettingSource.PREFERENCE);
+    // This method assumes that an empty string will be returned for categories
+    // that have no permission info string.
+    return this.permissionInfoString_(
+               source, category, setting
+               /* Leave permission info string arguments undefined. */) != '';
   },
 
   /**
@@ -159,11 +161,12 @@ Polymer({
    * @private
    */
   isPermissionUserControlled_: function(source, category, setting) {
-    // Users are able override embargo and ads blacklisting.
-    return !this.hasPermissionInfoString_(source, category, setting) ||
-        source == settings.SiteSettingSource.EMBARGO ||
-        source == settings.SiteSettingSource.ADS_FILTER_BLACKLIST ||
-        source == settings.SiteSettingSource.ADS_BLOCKED;
+    return !(
+        source == settings.SiteSettingSource.DRM_DISABLED ||
+        source == settings.SiteSettingSource.POLICY ||
+        source == settings.SiteSettingSource.EXTENSION ||
+        source == settings.SiteSettingSource.KILL_SWITCH ||
+        source == settings.SiteSettingSource.INSECURE_ORIGIN);
   },
 
   /**
@@ -184,16 +187,6 @@ Polymer({
             source == settings.SiteSettingSource.POLICY,
         'Only extensions or enterprise policy can change the setting to ASK.');
     return true;
-  },
-
-  /**
-   * Returns true if this permission is the Ads permission.
-   * @param {!settings.ContentSettingsTypes} category The permission type.
-   * @return {boolean}
-   * @private
-   */
-  isAdsCategory_: function(category) {
-    return category == settings.ContentSettingsTypes.ADS;
   },
 
   /**
@@ -240,13 +233,9 @@ Polymer({
           settings.ContentSettingsTypes.ADS == category,
           'The ads filter blacklist only applies to Ads.');
       return adsBlacklistString;
-    } else if (source == settings.SiteSettingSource.ADS_BLOCKED) {
-      assert(
-          settings.ContentSettingsTypes.ADS == category,
-          'The Ads user-blocked source only applies to Ads.');
-      assert(
-          settings.ContentSetting.ALLOW != setting,
-          'The Ads setting must be blocked for this source.');
+    } else if (
+        category == settings.ContentSettingsTypes.ADS &&
+        setting == settings.ContentSetting.BLOCK) {
       return adsBlockString;
     } else if (source == settings.SiteSettingSource.DRM_DISABLED) {
       assert(
