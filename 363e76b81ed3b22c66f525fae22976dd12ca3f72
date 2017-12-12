@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44d4a1df_7f50f12a",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-12T12:42:12Z",
+      "side": 1,
+      "message": "Is there a reason this needs to override the geolocation values? It looks like the one test that uses this just verifies that the URL of which the request is being made is as expected.",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900146c6_fb08e082",
+        "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-12T12:42:12Z",
+      "side": 1,
+      "message": "nit: we don\u0027t even need this ivar anymore, do we? we could just make the call directly at line 225 below.",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a4855c_2530b12d",
+        "filename": "device/geolocation/public/cpp/fake_geolocation.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-12T12:42:12Z",
+      "side": 1,
+      "message": "nit: This should probably have a variant that takes in a Geoposition for consistency, even if nothing uses it at this point.",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab2d6a5_15c32f5e",
+        "filename": "device/geolocation/public/cpp/fake_geolocation.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-12T12:42:12Z",
+      "side": 1,
+      "message": "I would note here that clients will almost certainly want to use ScopedGeolocationOverrider rather than using these classes directly.",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd133c0_1ef63a74",
+        "filename": "device/geolocation/public/cpp/fake_geolocation.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-12T12:42:12Z",
+      "side": 1,
+      "message": "I would say: The override of the geolocation implementation will be in effect for the duration of this object\u0027s lifetime.",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
