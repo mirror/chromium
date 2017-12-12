@@ -88,6 +88,24 @@
       "revId": "dbaad4aaba7885d8fa08fee909b5dd9e19f2879d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c8354b_54e6d243",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-12T17:43:51Z",
+      "side": 0,
+      "message": "While I definitely agree with this comment, I don\u0027t think I can remove this just yet.  It\u0027s used by the Android infobar:\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/autofill_save_card_infobar_delegate_mobile.cc?l\u003d86\u0026rcl\u003d9ede1cb83532b5bb6a5bafdc44af302e5bca6c8a\n\n(I *assume* it\u0027s also used by the Mac Cocoa implementation too, so if MacViews slips somehow it\u0027ll be a big issue, but I couldn\u0027t find that usage in the code base as easily.)",
+      "parentUuid": "825dead2_02aa51b7",
+      "revId": "dbaad4aaba7885d8fa08fee909b5dd9e19f2879d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
