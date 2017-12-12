@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2561df08_413681ac",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-12T16:12:28Z",
+      "side": 1,
+      "message": "It\u0027s not super helpful to attribute these bytes to the symbols, because deleting a symbol does not get the size back. Maybe put it the \"overhead\" symbol?",
+      "revId": "1a582524ef8127d9f0232d935d9595dfc3a1d801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4a0a24_ee175c2e",
+        "filename": "tools/binary_size/libsupersize/archive.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-12T16:12:28Z",
+      "side": 1,
+      "message": "should this round() instead?",
+      "revId": "1a582524ef8127d9f0232d935d9595dfc3a1d801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
