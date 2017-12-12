@@ -164,6 +164,7 @@ class ChangeListProcessor {
   // Common logic between ApplyTeamDriveChangeList and ApplyUserChangeList.
   // Applies the |change_lists| to |resource_metadta_|.
   FileError ApplyChangeListInternal(
+      const std::string& team_drive_id,
       std::vector<std::unique_ptr<ChangeList>> change_lists,
       int64_t largest_changestamp,
       ResourceEntry* root,
@@ -172,13 +173,15 @@ class ChangeListProcessor {
   // Converts the |change_lists| to |entry_map_| and |parent_resource_id_map_|,
   // to be applied by ApplyEntryMap() later.
   void ConvertChangeListsToMap(
+      const std::string& team_drive_id,
       std::vector<std::unique_ptr<ChangeList>> change_lists,
       int64_t largest_changestamp,
       ChangeListToEntryMapUMAStats* uma_stats);
 
   // Applies the pre-processed metadata from entry_map_ onto the resource
   // metadata.
-  FileError ApplyEntryMap(const std::string& root_resource_id);
+  FileError ApplyEntryMap(const std::string& root_resource_id,
+                          int64_t largest_changestamp);
 
   // Apply |entry| to resource_metadata_.
   FileError ApplyEntry(const ResourceEntry& entry);

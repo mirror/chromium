@@ -11,6 +11,7 @@
 #include "base/timer/timer.h"
 #include "components/drive/drive_notification_observer.h"
 #include "components/invalidation/public/invalidation_handler.h"
+#include "components/invalidation/public/invalidation_util.h"
 #include "components/keyed_service/core/keyed_service.h"
 
 namespace invalidation {
@@ -63,10 +64,16 @@ class DriveNotificationManager : public KeyedService,
 
   // Notifies the observers that it's time to check for updates.
   // |source| indicates where the notification comes from.
-  void NotifyObserversToUpdate(NotificationSource source);
+  // |team_drive_id| indicates which Team Drive changed, or an empty string if
+  // it's the user's subscribed changelog.
+  void NotifyObserversToUpdate(NotificationSource source,
+                               const std::string& team_drive_id);
 
   // Registers for Google Drive invalidation notifications through XMPP.
-  void RegisterDriveNotifications();
+  // If |team_drive_id| is non-empty, registers for a Team Drive's changelog.
+  // If |team_drive_id| is empty, registers for the user's subscribed changelog.
+  // This function can be called multiple times to register for multiple ids.
+  void RegisterDriveNotifications(const std::string& team_drive_id);
 
   // Returns a string representation of NotificationSource.
   static std::string NotificationSourceToString(NotificationSource source);
@@ -84,6 +91,8 @@ class DriveNotificationManager : public KeyedService,
   // The timer is used for polling based notification. XMPP should usually be
   // used but notification is done per polling when XMPP is not working.
   base::Timer polling_timer_;
+
+  syncer::ObjectIdSet registered_object_ids_;
 
   // Note: This should remain the last member so it'll be destroyed and
   // invalidate its weak pointers before any other members are destroyed.

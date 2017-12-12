@@ -75,6 +75,7 @@ CancelCallback DummyDriveService::SearchByTitle(
     const FileListCallback& callback) { return CancelCallback(); }
 
 CancelCallback DummyDriveService::GetChangeList(
+    const std::string& team_drive_id,
     int64_t start_changestamp,
     const ChangeListCallback& callback) {
   return CancelCallback();

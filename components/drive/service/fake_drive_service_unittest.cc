@@ -382,7 +382,7 @@ TEST_F(FakeDriveServiceTest, GetChangeList_NoNewEntries) {
   DriveApiErrorCode error = DRIVE_OTHER_ERROR;
   std::unique_ptr<ChangeList> change_list;
   fake_service_.GetChangeList(
-      fake_service_.about_resource().largest_change_id() + 1,
+      std::string(), fake_service_.about_resource().largest_change_id() + 1,
       test_util::CreateCopyResultCallback(&error, &change_list));
   base::RunLoop().RunUntilIdle();
 
@@ -410,7 +410,7 @@ TEST_F(FakeDriveServiceTest, GetChangeList_WithNewEntry) {
   DriveApiErrorCode error = DRIVE_OTHER_ERROR;
   std::unique_ptr<ChangeList> change_list;
   fake_service_.GetChangeList(
-      old_largest_change_id + 1,
+      std::string(), old_largest_change_id + 1,
       test_util::CreateCopyResultCallback(&error, &change_list));
   base::RunLoop().RunUntilIdle();
 
@@ -432,7 +432,8 @@ TEST_F(FakeDriveServiceTest, GetChangeList_Offline) {
   DriveApiErrorCode error = DRIVE_OTHER_ERROR;
   std::unique_ptr<ChangeList> change_list;
   fake_service_.GetChangeList(
-      654321,  // start_changestamp
+      std::string(),  // team_drive_id
+      654321,         // start_changestamp
       test_util::CreateCopyResultCallback(&error, &change_list));
   base::RunLoop().RunUntilIdle();
 
@@ -458,6 +459,7 @@ TEST_F(FakeDriveServiceTest, GetChangeList_DeletedEntry) {
   error = DRIVE_OTHER_ERROR;
   std::unique_ptr<ChangeList> change_list;
   fake_service_.GetChangeList(
+      std::string(),  // team_drive_id
       old_largest_change_id + 1,
       test_util::CreateCopyResultCallback(&error, &change_list));
   base::RunLoop().RunUntilIdle();
@@ -492,6 +494,7 @@ TEST_F(FakeDriveServiceTest, GetChangeList_TrashedEntry) {
   error = DRIVE_OTHER_ERROR;
   std::unique_ptr<ChangeList> change_list;
   fake_service_.GetChangeList(
+      std::string(),  // team_drive_id
       old_largest_change_id + 1,
       test_util::CreateCopyResultCallback(&error, &change_list));
   base::RunLoop().RunUntilIdle();
@@ -703,6 +706,7 @@ TEST_F(FakeDriveServiceTest, GetRemainingChangeList_GetChangeList) {
   DriveApiErrorCode error = DRIVE_OTHER_ERROR;
   std::unique_ptr<ChangeList> change_list;
   fake_service_.GetChangeList(
+      std::string(),              // team_drive_id
       old_largest_change_id + 1,  // start_changestamp
       test_util::CreateCopyResultCallback(&error, &change_list));
   base::RunLoop().RunUntilIdle();

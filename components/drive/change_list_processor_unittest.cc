@@ -238,7 +238,8 @@ TEST_F(ChangeListProcessorTest, ApplyFullResourceList) {
   }
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(kBaseResourceListChangestamp, changestamp);
 }
 
@@ -270,7 +271,8 @@ TEST_F(ChangeListProcessorTest, DeltaFileAddedInNewDirectory) {
             ApplyUserChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16730, changestamp);
   EXPECT_TRUE(GetResourceEntry("drive/root/New Directory"));
   EXPECT_TRUE(GetResourceEntry(
@@ -350,7 +352,8 @@ TEST_F(ChangeListProcessorTest, DeltaFileAddedInNewDirectoryByTeamDriveChange) {
   // user's change list, should also be kept unchanged. Otherwise loading Team
   // Drive's change list would break the syncing of the user's change.
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(kBaseResourceListChangestamp, changestamp);
 
   EXPECT_TRUE(
@@ -387,7 +390,8 @@ TEST_F(ChangeListProcessorTest, DeltaDirMovedFromRootToDirectory) {
             ApplyUserChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16809, changestamp);
   EXPECT_FALSE(GetResourceEntry("drive/root/Directory 1"));
   EXPECT_TRUE(GetResourceEntry(
@@ -423,7 +427,8 @@ TEST_F(ChangeListProcessorTest, DeltaFileMovedFromDirectoryToRoot) {
             ApplyUserChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16815, changestamp);
   EXPECT_FALSE(GetResourceEntry(
       "drive/root/Directory 1/SubDirectory File 1.txt"));
@@ -461,7 +466,8 @@ TEST_F(ChangeListProcessorTest, DeltaFileRenamedInDirectory) {
       "drive/root/Directory 1/New SubDirectory File 1.txt")));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16767, changestamp);
   EXPECT_FALSE(GetResourceEntry(
       "drive/root/Directory 1/SubDirectory File 1.txt"));
@@ -495,7 +501,8 @@ TEST_F(ChangeListProcessorTest, DeltaAddAndDeleteFileInRoot) {
             ApplyUserChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16683, changestamp);
   EXPECT_TRUE(GetResourceEntry("drive/root/Added file.txt"));
   EXPECT_EQ(1U, changed_files.size());
@@ -514,7 +521,8 @@ TEST_F(ChangeListProcessorTest, DeltaAddAndDeleteFileInRoot) {
   // Apply.
   EXPECT_EQ(FILE_ERROR_OK,
             ApplyUserChangeList(std::move(change_lists), &changed_files));
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16687, changestamp);
   EXPECT_FALSE(GetResourceEntry("drive/root/Added file.txt"));
   EXPECT_EQ(1U, changed_files.size());
@@ -543,7 +551,8 @@ TEST_F(ChangeListProcessorTest, DeltaAddAndDeleteFileFromExistingDirectory) {
   EXPECT_EQ(FILE_ERROR_OK,
             ApplyUserChangeList(std::move(change_lists), &changed_files));
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16730, changestamp);
   EXPECT_TRUE(GetResourceEntry("drive/root/Directory 1/Added file.txt"));
 
@@ -564,7 +573,8 @@ TEST_F(ChangeListProcessorTest, DeltaAddAndDeleteFileFromExistingDirectory) {
   // Apply.
   EXPECT_EQ(FILE_ERROR_OK,
             ApplyUserChangeList(std::move(change_lists), &changed_files));
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16770, changestamp);
   EXPECT_FALSE(GetResourceEntry("drive/root/Directory 1/Added file.txt"));
 
@@ -606,7 +616,8 @@ TEST_F(ChangeListProcessorTest, DeltaAddFileToNewButDeletedDirectory) {
             ApplyUserChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(16730, changestamp);
   EXPECT_FALSE(GetResourceEntry("drive/root/New Directory/new_pdf_file.pdf"));
 
@@ -785,7 +796,8 @@ TEST_F(ChangeListProcessorTest, DeltaTeamDriveChange) {
             ApplyUserChangeList(std::move(change_lists), &changed_files));
 
   int64_t changestamp = 0;
-  EXPECT_EQ(FILE_ERROR_OK, metadata_->GetLargestChangestamp(&changestamp));
+  EXPECT_EQ(FILE_ERROR_OK,
+            metadata_->GetLargestChangestamp(std::string(), &changestamp));
   EXPECT_EQ(kBaseResourceListChangestamp + 1, changestamp);
 
   ResourceEntry entry;
