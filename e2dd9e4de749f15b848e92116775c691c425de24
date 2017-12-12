@@ -22,6 +22,30 @@
       "revId": "e2dd9e4de749f15b848e92116775c691c425de24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11e3d3e_1dc12689",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-12T20:47:09Z",
+      "side": 1,
+      "message": "The \"delay a requested vsync until after submitFrame\" logic only makes sense while presenting, this was delaying the RequestVSync call in magic window mode for no good reason. I\u0027ve added a matching !is_presenting_ check in requestAnimationFrame where it was doing the deferring.",
+      "parentUuid": "93354e93_559bf885",
+      "range": {
+        "startLine": 990,
+        "startChar": 34,
+        "endLine": 990,
+        "endChar": 48
+      },
+      "revId": "e2dd9e4de749f15b848e92116775c691c425de24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
