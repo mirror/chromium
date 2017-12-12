@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5655789c_81bf6bee",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T05:58:47Z",
+      "side": 1,
+      "message": "\"destructed\" \u003d\u003e \"destroyed\" is slightly more natural\n\n\"a parameter\" \u003d\u003e \"parameters\"\n\"a pending task\" \u003d\u003e \"pending tasks\"\n\"pushed\" \u003d\u003e \"added\"",
+      "revId": "246f699a3e68d2c894c65052b530ec912d1a5de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e794c2ca_18b4c354",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1856,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T05:58:47Z",
+      "side": 1,
+      "message": "\"Y has been requested to X\" to mean \"requested X to do Y\" sounds a bit wrong. Let\u0027s just say \"It means termination has been requested.\"",
+      "range": {
+        "startLine": 1856,
+        "startChar": 25,
+        "endLine": 1856,
+        "endChar": 58
+      },
+      "revId": "246f699a3e68d2c894c65052b530ec912d1a5de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b165ebf_c1d710c8",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T05:58:47Z",
+      "side": 1,
+      "message": "Make this a bit tighter:\n\nDispatches the fetch event if the worker is running normally, and queues it instead if the worker has already requested to be terminated by the browser. If queued, the event will be dispatched once the worker resumes normal operation (if the browser decides not to terminate it, and instead starts another event), or else is dropped if the worker is terminated.",
+      "revId": "246f699a3e68d2c894c65052b530ec912d1a5de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a67f50b_76cc920d",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T05:58:47Z",
+      "side": 1,
+      "message": "use an empty line to separate paragraphs",
+      "revId": "246f699a3e68d2c894c65052b530ec912d1a5de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca86464_b24f40bf",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T05:58:47Z",
+      "side": 1,
+      "message": "sorry my typo: \"has requested to be\"",
+      "revId": "246f699a3e68d2c894c65052b530ec912d1a5de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a6240e_0be37ab8",
+        "filename": "content/renderer/service_worker/service_worker_context_client_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T05:58:47Z",
+      "side": 1,
+      "message": "Don\u0027t need this comment now that we have the EXPECT",
+      "revId": "246f699a3e68d2c894c65052b530ec912d1a5de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e721743_2ab6197a",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T05:58:47Z",
+      "side": 1,
+      "message": "\"run in order synchronously in StartEvent()\"",
+      "revId": "246f699a3e68d2c894c65052b530ec912d1a5de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d04a3e_710422f9",
+        "filename": "content/renderer/service_worker/service_worker_timeout_timer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T05:58:47Z",
+      "side": 1,
+      "message": "\"if the idle timeout occurred\"",
+      "range": {
+        "startLine": 61,
+        "startChar": 40,
+        "endLine": 61,
+        "endChar": 56
+      },
+      "revId": "246f699a3e68d2c894c65052b530ec912d1a5de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
