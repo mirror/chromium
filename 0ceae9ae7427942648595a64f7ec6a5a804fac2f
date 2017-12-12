@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cc8d4f13_3dd061c3",
+        "filename": "chrome/test/data/webui/settings/android_apps_page_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-12T17:52:32Z",
+      "side": 1,
+      "message": "the promise itself runs on the next microtask -- is the .async necessary?\n\nwe also have PolymerTest.flushTasks which uses a setTimeout for when task-level timing is required.",
+      "parentUuid": "bb2b1f67_7e2ac64e",
+      "revId": "0ceae9ae7427942648595a64f7ec6a5a804fac2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1aaff7c_281b28c3",
         "filename": "chrome/test/data/webui/settings/cr_settings_browsertest.js",
         "patchSetId": 1
