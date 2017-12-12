@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "85401c18_de0fc6ad",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T12:18:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ef3c472b_0310d29f",
+      "range": {
+        "startLine": 1005,
+        "startChar": 2,
+        "endLine": 1005,
+        "endChar": 23
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f018716_9246e95c",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 9
@@ -331,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "8cb2327a_7dca58bd",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T12:18:22Z",
+      "side": 1,
+      "message": "Opening a new bug is better. That way maybe David or I could pick up that work.",
+      "parentUuid": "8260d8ce_a414a7c7",
+      "range": {
+        "startLine": 1064,
+        "startChar": 68,
+        "endLine": 1064,
+        "endChar": 69
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f5bbb7e_fa04d3a2",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 9
@@ -366,6 +414,30 @@
       "side": 1,
       "message": "What do you mean by default to the email?\nJust leave the name blank?\n\nAlso, I just thought about this. Is it actually possible to have an empty name? Isn\u0027t the name a mandatory field?",
       "parentUuid": "4f5bbb7e_fa04d3a2",
+      "range": {
+        "startLine": 1070,
+        "startChar": 51,
+        "endLine": 1070,
+        "endChar": 72
+      },
+      "revId": "a50efd7a0a1c340b7e702e0a726e81665a10f9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd094d4_a0601750",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1070,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T12:18:22Z",
+      "side": 1,
+      "message": "I meant \"default to the email\" (not \"use the default email\").\n\nEmail is a mandatory field, the full name of the user is not. Based on the comments in the Gallery mocks, we should use the following:\n* If the account info has a name, then keep the exiting strings.\n* if the account info does not have a name, then use \"Sync to your account\" as the title of the button.",
+      "parentUuid": "f4c10fa9_7341f196",
       "range": {
         "startLine": 1070,
         "startChar": 51,

@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e22aeae3_9bfb61a9",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T12:18:22Z",
+      "side": 1,
+      "message": "This function will be fairly complex once we add the logic to list the accounts from the GaiaCookieManagerService. I think we should add a unit test for it (or maybe we can add some DICE-specific integration tests in profile_chooser_view_browsertest.cc).",
+      "range": {
+        "startLine": 184,
+        "startChar": 25,
+        "endLine": 184,
+        "endChar": 46
+      },
+      "revId": "1cb86f3161c3f01639a6ae67a1931c1174fce19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb41341_9b838980",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T12:18:22Z",
+      "side": 1,
+      "message": "This is the comment about what this function does. Move it before the declaration.\n\nAlso take a look at https://google.github.io/styleguide/cppguide.html#Function_Comments about the style we use for function comments.\n\nIn this case, the comment should read something like:\n// Returns the list of all accounts that have a valid token. The default account in the Gaia\n// cookies will the the first account in the list.",
+      "range": {
+        "startLine": 185,
+        "startChar": 15,
+        "endLine": 185,
+        "endChar": 16
+      },
+      "revId": "1cb86f3161c3f01639a6ae67a1931c1174fce19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40783ec0_d1b235ca",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T12:18:22Z",
+      "side": 1,
+      "message": "As suggested in a previous comment, let\u0027s use  |GaiaCookieManagerService::ListAccounts| to get the list of accounts in the Gaia cookies. If non-empty and if there is a token for the first account in the cookie, then let\u0027s put that account at the top of the list of good_accounts.",
+      "range": {
+        "startLine": 193,
+        "startChar": 19,
+        "endLine": 193,
+        "endChar": 25
+      },
+      "revId": "1cb86f3161c3f01639a6ae67a1931c1174fce19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175d045a_cf49b1ae",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T12:18:22Z",
+      "side": 1,
+      "message": "In general we use the term valid instead of good:\ns/good_accounts/valid_accounts;",
+      "range": {
+        "startLine": 194,
+        "startChar": 27,
+        "endLine": 194,
+        "endChar": 40
+      },
+      "revId": "1cb86f3161c3f01639a6ae67a1931c1174fce19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9347e077_ed3483ea",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T12:18:22Z",
+      "side": 1,
+      "message": "s/HoverButton::SetBorder()/|HoverButton::SetBorder|",
+      "range": {
+        "startLine": 1059,
+        "startChar": 5,
+        "endLine": 1059,
+        "endChar": 29
+      },
+      "revId": "1cb86f3161c3f01639a6ae67a1931c1174fce19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a4553d_e3bc89c6",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T12:18:22Z",
+      "side": 1,
+      "message": "See the style guide about the TODO: https://google.github.io/styleguide/cppguide.html#TODO_Comments\n\nSo this needs to be:\n1. TODO(tangltom): ... or\n2. TODO(http://crbug.com/\u003cbug_id\u003e): ..., where the bug ID is a real bug. You\u0027ll need to file the bug and the put its ID in this TODO (you may use http://go/new-chrome-signin-bug ).\n\nMy preference:\n* I prefer in general the TODO(http://crbug.com/\u003cbug_id\u003e), as this makes sure we get a bug that is assigned and that will need to be fixed. The bug will also be filed when you start working on fixing it. Also, the bug can also be assigned to other folks if needed.\n* If you think you\u0027ll fix the TODO quickly (start working on it in the next 2-3 weeks), then you may use TODO(tangltom) to avoid the burden on creating a new bug.",
+      "range": {
+        "startLine": 1079,
+        "startChar": 22,
+        "endLine": 1079,
+        "endChar": 23
+      },
+      "revId": "1cb86f3161c3f01639a6ae67a1931c1174fce19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ba59ac_ccd98909",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T12:18:22Z",
+      "side": 1,
+      "message": "Maybe: s/because/when?",
+      "range": {
+        "startLine": 1094,
+        "startChar": 26,
+        "endLine": 1094,
+        "endChar": 33
+      },
+      "revId": "1cb86f3161c3f01639a6ae67a1931c1174fce19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
