@@ -180,6 +180,30 @@
     },
     {
       "key": {
+        "uuid": "c9c2868d_efb8940f",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-12-12T14:27:37Z",
+      "side": 1,
+      "message": "Maybe I\u0027m wrong, but AFAIK RepeatingCallbacks can be passed to functions taking OnceCallbacks, but OnceCallbacks cannot be passed as RepeatingCallbacks.",
+      "parentUuid": "8c91f48d_dce0e0fa",
+      "range": {
+        "startLine": 779,
+        "startChar": 57,
+        "endLine": 779,
+        "endChar": 66
+      },
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6d909e_6246acdb",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 4
