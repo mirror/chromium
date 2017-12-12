@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "43bc8a1c_35066f4d",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-12T16:18:33Z",
+      "side": 1,
+      "message": "ISoftwareBitmap implements IUnknown which means that DetectFacesAsync could easily take a reference to the parameter by calling AddRef(). It\u0027s unclear from the documentation whether it does but I can\u0027t see why it wouldn\u0027t. I am not familiar enough with COM conventions to be sure. Maybe Greg has an opinion. Have you tried this code without maintaining |win_bitmap|\u0027s lifetime?",
+      "parentUuid": "c25f6c2a_f10dc88a",
+      "revId": "75a94529da5e1694d8e1f7fbc2e60e95644e57cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0baf6547_7a2ec887",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 10
