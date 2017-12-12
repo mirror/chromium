@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2a15fa37_75190181",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-12T22:40:19Z",
+      "side": 1,
+      "message": "I finally reverted this as getting it to compile on all platforms required a static cast for the \"0\".",
+      "parentUuid": "929c9b2c_8978bb92",
+      "range": {
+        "startLine": 149,
+        "startChar": 47,
+        "endLine": 149,
+        "endChar": 55
+      },
+      "revId": "1466cb10fdae9547aafab39b22c247cbf23f3990",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a799e451_df788cb5",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 2
