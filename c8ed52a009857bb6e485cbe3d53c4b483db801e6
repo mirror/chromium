@@ -22,6 +22,29 @@
       "revId": "c8ed52a009857bb6e485cbe3d53c4b483db801e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4211547f_0c647ab6",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-12T11:22:42Z",
+      "side": 1,
+      "message": "One problem with this approach in general is that it couples the the lifetime of this coordinator to the disabler. If this coordinator were changed to be long-lived, then fullscreen would just stop working and wouldn\u0027t be at all obvious why.\n\nAt the very least I think the disabler should be set to nil in -disconnect (or -stop). \n\nLonger-term I think I\u0027d prefer a mechanism where the content view controller disables fullscreen when anything is presented from it, but I suspect that\u0027s difficult right now.",
+      "range": {
+        "startLine": 35,
+        "startChar": 44,
+        "endLine": 35,
+        "endChar": 63
+      },
+      "revId": "c8ed52a009857bb6e485cbe3d53c4b483db801e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
