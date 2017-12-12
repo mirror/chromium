@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "166a5d3c_5bdfb0b3",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T20:11:55Z",
+      "side": 1,
+      "message": "Hmm, that\u0027s odd. Changing the array should cause the dom-repeat to rebuild. getSpellCheckLanguages_ is returning a new Array. But templates inside of templates (i.e. the dom-repeat) can be funny.\n\nI relaly don\u0027t like having \"magic\" like this in the code when we don\u0027t fully understand why this is needed; if it turns out to not be robust we get flaky behavior or tests that is difficult to debug.\n\nCould you try replacing the dom-if\u0027s inside the dom-repeat with \u0027hidden\u0027 and see if that makes this unnecessary?",
+      "parentUuid": "d356cecf_a3ea42da",
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4266c4fc_9ba77b7d",
         "filename": "chrome/browser/spellchecker/spellcheck_language_policy_handler.cc",
         "patchSetId": 4

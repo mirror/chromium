@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dde1d72b_476f5617",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T20:11:55Z",
+      "side": 1,
+      "message": "The cast shouldn\u0027t be necessary if the object conforms to the definition.",
+      "revId": "5da820b5a10db10a7156a1f551b629e566443d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
