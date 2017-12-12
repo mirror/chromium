@@ -218,6 +218,20 @@ void WallpaperControllerClient::OpenWallpaperPicker() {
   chromeos::WallpaperManager::Get()->OpenWallpaperPicker();
 }
 
+void WallpaperControllerClient::OnDeviceWallpaperChanged() {
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(true /*enforced=*/);
+}
+
+void WallpaperControllerClient::OnDeviceWallpaperPolicyCleared() {
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(false /*enforced=*/);
+}
+
+void WallpaperControllerClient::GetDeviceWallpaperFilePath(
+    ash::mojom::WallpaperController::GetDevicePolicyWallpaperFilePathCallback
+        callback) {
+  wallpaper_controller_->GetDevicePolicyWallpaperFilePath(std::move(callback));
+}
+
 void WallpaperControllerClient::FlushForTesting() {
   wallpaper_controller_.FlushForTesting();
 }
