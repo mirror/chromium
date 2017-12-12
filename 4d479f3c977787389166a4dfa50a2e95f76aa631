@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "62bc4936_671b3953",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-1.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-12-12T17:14:54Z",
+      "side": 1,
+      "message": "My takeaway was more \"don\u0027t preserve instantiation error identity\", not \"ensure every instantiation error has a unique identity\".\n\nThat said, if it is easier to implement re-generating a unique instantiation error every time, we can try to update the spec to match. I\u0027m a little worried though about this Blink/spec mismatch on sync/async though; there might be a deeper problem there. I guess I did not intend \"async\" to necessarily mean \"event loop async\", so a sync implementation should be fine. I\u0027ve filed https://github.com/whatwg/infra/issues/181 to try to clarify this at the spec level.\n\nPerhaps the right path is to move toward \"ensure every instantiation error has a unique identity\" since that allows more flexible implementation strategies?",
+      "parentUuid": "c4a634b6_3cab4521",
+      "revId": "4d479f3c977787389166a4dfa50a2e95f76aa631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72eff9c6_5a5a8a9c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-5.html",
         "patchSetId": 20
