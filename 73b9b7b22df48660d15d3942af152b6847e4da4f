@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd24bbf1_3327e3de",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-12T09:00:14Z",
+      "side": 1,
+      "message": "Can\u0027t you move this to the factory? Also we could have the factory returning it as a view with the image in the center with a transparent background around it? Then we could constraint the width of the view and we wouldn\u0027t have to modify the constant of locationBarContainerStackViewLeadingConstraint (we can remove the property completely).",
+      "range": {
+        "startLine": 1006,
+        "startChar": 0,
+        "endLine": 1006,
+        "endChar": 31
+      },
+      "revId": "73b9b7b22df48660d15d3942af152b6847e4da4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
