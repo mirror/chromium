@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99eaa603_dad43656",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "+1.  I think it\u0027s a better idea for these interfaces to be owned by some NetworkService object so they\u0027re automatically shut down when the network service shuts down.",
+      "parentUuid": "531a6279_b2e5a249",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9500050d_299d10bc",
         "filename": "net/interfaces/address_family.mojom",
         "patchSetId": 23
@@ -47,6 +65,52 @@
       "writtenOn": "2017-12-11T20:01:26Z",
       "side": 1,
       "message": "Please use the exact same name as the file name.",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d728e97f_35136b7a",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "Connect() is also optional, correct?  The caller will usually only do one of these two?  Or can they do both?",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 12
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5454d06d_cfb1bfe0",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "I\u0027m inclined to think we shouldn\u0027t have Connect() as an interface--if the consumer always needs to use SendTo() (and thus specify a remote address) what\u0027s the point of specifying a remote address to send to?",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 20
+      },
       "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +157,29 @@
     },
     {
       "key": {
+        "uuid": "274aa2e6_245566ee",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "*blink*  Really?  My imagination would be that, for a datagram oriented interface, this would be a pretty bad API; i.e. that consumers would generally be relying on datagrams being transmitted or dropped as a unit.  Do you have a consumer that wants this behavior?  \n\nI don\u0027t have the expertise to be confident in pushing back, but I\u0027d like to get positive acknowledgement from someone familiar with using UDP from the consumer side (by default, Jana) that this interface doesn\u0027t have some pretty uncomfortable sharp edges.",
+      "range": {
+        "startLine": 119,
+        "startChar": 27,
+        "endLine": 119,
+        "endChar": 31
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6515e64_25c72cae",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 23
@@ -104,6 +191,52 @@
       "writtenOn": "2017-12-11T20:01:26Z",
       "side": 1,
       "message": "I thought UDP always send/receive the entire datagram (or not send/receive at all)?",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0075dadb_e01c9ebd",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "nit: missing \u0027|\u0027",
+      "range": {
+        "startLine": 120,
+        "startChar": 33,
+        "endLine": 120,
+        "endChar": 37
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3caaea5b_a22d26bc",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "nit, suggestion: I\u0027d suggest having a different name for either this or UDPSocketImpl::socket_, just to make text searching within this file easier for developers.",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 24
+      },
       "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +260,98 @@
     },
     {
       "key": {
+        "uuid": "608e9148_dd3d9fbc",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "Under what circumstances will this be null?  I would think this would be DCHECKable throughout this code.  Unless Mojo pipes show up as being closed by returning null?  I\u0027d be surprised if that was the semantic?",
+      "range": {
+        "startLine": 151,
+        "startChar": 7,
+        "endLine": 151,
+        "endChar": 16
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a978f3_74a75f27",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "nitty nit: Doesn\u0027t this have implied reliance on the relationship of the size_t and uint32_t types?  I\u0027d naively think just using uint32_t throughout would be the right idea.",
+      "range": {
+        "startLine": 155,
+        "startChar": 32,
+        "endLine": 155,
+        "endChar": 33
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c123ae3e_165a2a55",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "What does std::move() do when applied to a const\u0026?  I would have thought that the meaning of const\u0026 was \"no need to copy this, just pass a reference/pointer to the thing and I promise you I won\u0027t mess with it\".  What am I missing?",
+      "range": {
+        "startLine": 186,
+        "startChar": 16,
+        "endLine": 186,
+        "endChar": 20
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce66668_0765706c",
+        "filename": "services/network/udp_socket_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "For both DoRecvFrom() and DoSendTo() you have a 1-at-a-time piping; you don\u0027t provide the next buffer to the underlying socket until the previous one has been returned.  For DoSendTo() that makes sense to me; that will mean that OS calls can\u0027t be overlapped, but presumably there won\u0027t be a major latency hit because of not pipelining across the OS boundary.  But I at least wanted to raise the issue as to whether the lack of pipelining on the RecvFrom() side might hurt, specifically as to whether it might result in some packets being dropped.  It\u0027s probably absolutely fine (if I understand the interface, it\u0027s what SetReceiveBufferSize() is *for*) but I wanted to at least raise the possibility of just doing a set of RecvFrom calls on the underlying socket to allow it to toss buffers back at you as the packets come in.  Up to you.",
+      "range": {
+        "startLine": 191,
+        "startChar": 5,
+        "endLine": 191,
+        "endChar": 18
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2064de6_5fdd8fc3",
         "filename": "services/network/udp_socket_impl.cc",
         "patchSetId": 23
@@ -138,6 +363,98 @@
       "writtenOn": "2017-12-11T20:01:26Z",
       "side": 1,
       "message": "Should this be done before line 213?",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d9c5be_dd46d3dc",
+        "filename": "services/network/udp_socket_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "I\u0027m not personally a fan, so don\u0027t take this as a request, but I *think* the style adopted for servicification is to have the implementation classes have the same name as the Mojom interfaces, just be in a different namespace.  So content::NetworkContext, content::CookieManager.  AFAIC, up to you, but others might have other opinions.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ef2739_83da60f6",
+        "filename": "services/network/udp_socket_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "Is this intended to for usage by test code?  Or are there use cases you\u0027re thinking about targeting in the future for which this ABC would be used?  If it\u0027s intended purely for test code I think I\u0027d like that in a comment, just to discourage other uses.  Otherwise, no need to update comments, but it\u0027s info I think would be useful for me in reviewing the implementation.",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb22a870_a85cc28b",
+        "filename": "services/network/udp_socket_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "Why is this needed?  Looking at the code, it doesn\u0027t look like it\u0027s used for anything but a DCHECK() to make sure that we don\u0027t call DoSendTo() when there\u0027s a pending SendTo(), which the callback seems like it could be used for.",
+      "range": {
+        "startLine": 108,
+        "startChar": 21,
+        "endLine": 108,
+        "endChar": 29
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1ff21d_646757ac",
+        "filename": "services/network/udp_socket_impl.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T22:33:53Z",
+      "side": 1,
+      "message": "IIUC, this isn\u0027t quite accurate; it\u0027s the address of the sender of a received packet (which may be what you meant, but it confused me, at least).  Could you clarify the comment?\n\nAlso, in what cases will this value not be filling in by the underlying sockets RecvFrom() call?",
+      "range": {
+        "startLine": 112,
+        "startChar": 24,
+        "endLine": 112,
+        "endChar": 31
+      },
       "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
