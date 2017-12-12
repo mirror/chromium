@@ -783,4 +783,27 @@ IN_PROC_BROWSER_TEST_F(NavigationMojoResponseBrowserTest, FailedNavigation) {
   }
 }
 
+// Data URLs can have a reference fragment like any other URLs. This test make
+// sure it is taken into account.
+IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
+                       DataURLWithReferenceFragment) {
+  GURL url("data:text/html,body#foo");
+  EXPECT_TRUE(NavigateToURL(shell(), url));
+
+  std::string body;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      shell(),
+      "window.domAutomationController.send(document.body.textContent);",
+      &body));
+  // TODO(arthursonzogni): This is wrong. See https://crbug.com/123004.
+  EXPECT_EQ("body#foo", body);
+  // EXPECT_EQ("body", body);
+
+  std::string reference_fragment;
+  EXPECT_TRUE(ExecuteScriptAndExtractString(
+      shell(), "window.domAutomationController.send(location.hash);",
+      &reference_fragment));
+  EXPECT_EQ("#foo", reference_fragment);
+}
+
 }  // namespace content
