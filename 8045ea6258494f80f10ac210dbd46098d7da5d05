@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "03574d42_797ccbad",
+        "filename": "chrome/browser/usb/web_usb_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-12T23:54:53Z",
+      "side": 1,
+      "message": "(To be clear, I mostly had a cursory look and get it\u0027s still iterating.)\n\nAs mentioned, I think that balancing out (a) and (b) would be the right way to go. Most notifications *usage* is bound to profiles and we\u0027ve had so many issues in the past there that we definitely want to optimise for that. Using GetLastUsedProfileAllowedByPolicy() seems fine for the other cases, and realistically I would expect that to be loaded pretty much all the time when we\u0027re considering showing notifications. UMA could provide a definite answer to that.",
+      "parentUuid": "3837da18_ec003e4e",
+      "revId": "8045ea6258494f80f10ac210dbd46098d7da5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfcb273c_b1c35930",
         "filename": "chrome/browser/usb/web_usb_detector_unittest.cc",
         "patchSetId": 3
