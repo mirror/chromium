@@ -5,8 +5,6 @@
 package org.chromium.chrome.browser.bookmarks;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -22,8 +20,8 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.BasicNativePage;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkModelObserver;
+import org.chromium.chrome.browser.favicon.FaviconCache;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
-import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.selection.SelectableBottomSheetContent.SelectableBottomSheetContentManager;
@@ -65,7 +63,8 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate,
     private BookmarkActionBar mToolbar;
     private SelectionDelegate<BookmarkId> mSelectionDelegate;
     private final Stack<BookmarkUIState> mStateStack = new Stack<>();
-    private LargeIconBridge mLargeIconBridge;
+    private FaviconCache mFaviconCache;
+    private boolean mFaviconsNeedRefresh;
     private String mInitialUrl;
     private boolean mIsDialogUi;
     private boolean mIsDestroyed;
@@ -103,6 +102,11 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate,
                 setState(mStateStack.peek());
             }
             mSelectionDelegate.clearSelection();
+            if (mFaviconsNeedRefresh) {
+                mFaviconCache.clear();
+                mSelectableListLayout.invalidate();
+                mFaviconsNeedRefresh = false;
+            }
         }
     };
 
@@ -166,13 +170,13 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate,
             mBookmarkModel.finishLoadingBookmarkModel(modelLoadedRunnable);
         }
 
-        mLargeIconBridge = new LargeIconBridge(Profile.getLastUsedProfile().getOriginalProfile());
-        ActivityManager activityManager = ((ActivityManager) ContextUtils
-                .getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE));
-        int maxSize = Math.min(activityManager.getMemoryClass() / 4 * 1024 * 1024,
-                FAVICON_MAX_CACHE_SIZE_BYTES);
-        mLargeIconBridge.createCache(maxSize);
-
+        mFaviconCache = FaviconCache.Manager.create(FAVICON_MAX_CACHE_SIZE_BYTES);
+        mFaviconCache.addObserver(new FaviconCache.Observer() {
+            @Override
+            public void onUpdateFavicon(String url) {
+                mFaviconsNeedRefresh = true;
+            }
+        });
         RecordUserAction.record("MobileBookmarkManagerOpen");
         if (!isDialogUi) {
             RecordUserAction.record("MobileBookmarkManagerPageOpen");
@@ -204,8 +208,7 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate,
         mBookmarkModel.removeObserver(mBookmarkModelObserver);
         mBookmarkModel.destroy();
         mBookmarkModel = null;
-        mLargeIconBridge.destroy();
-        mLargeIconBridge = null;
+        mFaviconCache.destroy();
     }
 
     /**
@@ -444,7 +447,7 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate,
 
     @Override
     public LargeIconBridge getLargeIconBridge() {
-        return mLargeIconBridge;
+        return mFaviconCache.getLargeIconBridge();
     }
 
     // SearchDelegate overrides

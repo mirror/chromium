@@ -98,6 +98,8 @@ class PartnerBookmarksShim : public base::SupportsUserData::Data {
   // the shim has now been loaded.
   void SetPartnerBookmarksRoot(
       std::unique_ptr<bookmarks::BookmarkNode> root_node);
+  // Notifies observers that a change has been made to shim.
+  void NotifyShimChanged();
 
   // Used as a "unique" identifier of the partner bookmark node for the purposes
   // of node deletion and title editing. Two bookmarks with the same URLs and

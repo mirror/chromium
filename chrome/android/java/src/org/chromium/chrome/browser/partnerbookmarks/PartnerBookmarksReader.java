@@ -13,6 +13,7 @@ import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.AppHooks;
+import org.chromium.chrome.browser.favicon.FaviconCache;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -50,9 +51,11 @@ public class PartnerBookmarksReader {
     // don't end up shutting the bookmark reader down prematurely.
     private final Object mProgressLock = new Object();
     @GuardedBy("mProgressLock")
-    private int mNumFaviconsInProgress = 0;
+    private int mNumFaviconsInProgress;
     @GuardedBy("mProgressLock")
     private boolean mShutDown = false;
+    @GuardedBy("mProgressLock")
+    private boolean mFaviconsFetchedFromServer;
     private boolean mFinishedReading;
 
     /**
@@ -107,6 +110,12 @@ public class PartnerBookmarksReader {
                         "PartnerBookmark.FaviconThrottleFetchResult", result,
                         FaviconFetchResult.UMA_BOUNDARY);
                 synchronized (mProgressLock) {
+                    if (result == FaviconFetchResult.SUCCESS_FROM_SERVER) {
+                        // If we've fetched a new favicon from a server, store a flag to indicate
+                        // this so we can refresh bookmarks when all favicons are fetched.
+                        mFaviconsFetchedFromServer = true;
+                        FaviconCache.Manager.updateFavicon(url);
+                    }
                     mFaviconThrottle.onFaviconFetched(url, result);
                     --mNumFaviconsInProgress;
                     if (mNumFaviconsInProgress == 0 && mFinishedReading) {
@@ -132,6 +141,7 @@ public class PartnerBookmarksReader {
      * down the bookmark reader.
      */
     protected void onBookmarksRead() {
+        nativePartnerBookmarksCreationComplete(mNativePartnerBookmarksReader);
         mFinishedReading = true;
         synchronized (mProgressLock) {
             if (mNumFaviconsInProgress == 0) {
@@ -140,17 +150,24 @@ public class PartnerBookmarksReader {
         }
     }
 
-    /** Notifies the reader is complete and partner bookmarks should be submitted to the shim. */
+    /**
+     * Notifies the reader is complete, refreshes the partner bookmarks if necessary, and kills the
+     * native object
+     */
     protected void shutDown() {
         synchronized (mProgressLock) {
             if (mShutDown) return;
 
-            nativePartnerBookmarksCreationComplete(mNativePartnerBookmarksReader);
-            nativeDestroy(mNativePartnerBookmarksReader);
-            mNativePartnerBookmarksReader = 0;
             if (mFaviconThrottle != null) {
                 mFaviconThrottle.commit();
             }
+            // Make sure we refresh the bookmarks if we were fetching favicons from server, now that
+            // we have them all.
+            if (mFaviconsFetchedFromServer) {
+                nativeFaviconServerFetchingComplete(mNativePartnerBookmarksReader);
+            }
+            nativeDestroy(mNativePartnerBookmarksReader);
+            mNativePartnerBookmarksReader = 0;
             mShutDown = true;
         }
     }
@@ -335,5 +352,6 @@ public class PartnerBookmarksReader {
             String title, boolean isFolder, long parentId, byte[] favicon, byte[] touchicon,
             boolean fetchUncachedFaviconsFromServer, FetchFaviconCallback callback);
     private native void nativePartnerBookmarksCreationComplete(long nativePartnerBookmarksReader);
+    private native void nativeFaviconServerFetchingComplete(long nativePartnerBookmarksReader);
     private static native void nativeDisablePartnerBookmarksEditing();
 }
