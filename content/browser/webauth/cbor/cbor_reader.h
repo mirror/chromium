@@ -32,6 +32,7 @@
 // Known limitations and interpretations of the RFC:
 //  - Does not support negative integers, floating point numbers, indefinite
 //    data streams and tagging.
+//  - Does not support string with null terminating characters.
 //  - Non-character codepoint are not supported for Major type 3.
 //  - Incomplete CBOR data items are treated as syntax errors.
 //  - Trailing data bytes are treated as errors.
@@ -54,6 +55,7 @@ class CONTENT_EXPORT CBORReader {
     INCORRECT_MAP_KEY_TYPE,
     TOO_MUCH_NESTING,
     INVALID_UTF8,
+    UNSUPPORTED_STRING_FORMAT,
     EXTRANEOUS_DATA,
     DUPLICATE_KEY,
     OUT_OF_ORDER_KEY,
