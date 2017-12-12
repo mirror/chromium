@@ -70,6 +70,24 @@
       "revId": "b3f2ad6ce7a40352658e08aa24f8e23e2ada798e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906e921e_eddaa9d6",
+        "filename": "third_party/WebKit/LayoutTests/virtual/spv175/compositing/absolute-inside-out-of-view-fixed-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-12T05:34:13Z",
+      "side": 1,
+      "message": "Oh, yes, most of the new baselines for spv175+rls is the same as rls, but there are still some spv175 differences. For now these rebaselines are needed to distinguish real failures from good but different results. The identical ones of spv175+rls and rls will be removed when we enable rls for layout tests.",
+      "parentUuid": "d86133e9_d73142dd",
+      "revId": "b3f2ad6ce7a40352658e08aa24f8e23e2ada798e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
