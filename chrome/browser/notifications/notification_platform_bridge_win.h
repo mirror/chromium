@@ -35,7 +35,8 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
       const std::string& profile_id,
       bool incognito,
       const GetDisplayedNotificationsCallback& callback) const override;
-  void SetReadyCallback(NotificationBridgeReadyCallback callback) override;
+  void SetReadyClosure(base::OnceClosure closure) override;
+  bool IsReady() const override;
 
  private:
   friend class NotificationPlatformBridgeWinImpl;
@@ -71,6 +72,9 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
   scoped_refptr<NotificationPlatformBridgeWinImpl> impl_;
 
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
+  // Indicates whether the platform bridge has been initialized.
+  bool is_ready_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeWin);
 };

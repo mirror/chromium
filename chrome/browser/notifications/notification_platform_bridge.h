@@ -25,9 +25,6 @@ class Notification;
 // TODO(miguelg): Add support for click and close events.
 class NotificationPlatformBridge {
  public:
-  using NotificationBridgeReadyCallback =
-      base::OnceCallback<void(bool /* success */)>;
-
   static NotificationPlatformBridge* Create();
 
   // Returns whether a native bridge can handle a notification of the given
@@ -57,10 +54,12 @@ class NotificationPlatformBridge {
       bool incognito,
       const GetDisplayedNotificationsCallback& callback) const = 0;
 
-  // Calls |callback| once |this| is initialized. The argument is
-  // true if |this| is ready to be used and false if initialization
-  // failed. |callback| may be called directly or from a posted task.
-  virtual void SetReadyCallback(NotificationBridgeReadyCallback callback) = 0;
+  // Invokes the |closure| once the bridge has finished initializing. The ready
+  // state can be observed by calling IsReady().
+  virtual void SetReadyClosure(base::OnceClosure closure) = 0;
+
+  // Returns whether the bridge has been initialized and is ready for operation.
+  virtual bool IsReady() const = 0;
 
  protected:
   NotificationPlatformBridge() = default;

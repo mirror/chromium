@@ -70,8 +70,8 @@ class NotificationDisplayServiceImpl : public NotificationDisplayService {
   void GetDisplayed(const DisplayedNotificationsCallback& callback) override;
 
  private:
-  // Called when the NotificationPlatformBridge may have been initialized.
-  void OnNotificationPlatformBridgeReady(bool success);
+  // Called when the NotificationPlatformBridge has finished initializing.
+  void OnNotificationPlatformBridgeReady();
 
   Profile* profile_;
 
@@ -82,9 +82,6 @@ class NotificationDisplayServiceImpl : public NotificationDisplayService {
 
   // Tasks that need to be run once the display bridge has been initialized.
   base::queue<base::OnceClosure> actions_;
-
-  // Boolean tracking whether the |bridge_| has been initialized for use.
-  bool bridge_initialized_ = false;
 
   // Map containing the notification handlers responsible for processing events.
   std::map<NotificationHandler::Type, std::unique_ptr<NotificationHandler>>

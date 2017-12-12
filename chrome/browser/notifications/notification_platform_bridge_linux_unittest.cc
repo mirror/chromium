@@ -268,22 +268,22 @@ class NotificationPlatformBridgeLinuxTest : public testing::Test {
           .WillOnce(RegisterSignalCallback(&notification_closed_callback_));
     }
 
-    EXPECT_CALL(*this, MockableNotificationBridgeReadyCallback(_))
-        .WillOnce(OnNotificationBridgeReady(expect_init_success));
+    EXPECT_CALL(*this, MockableNotificationBridgeReadyClosure());
 
     if (expect_shutdown)
       EXPECT_CALL(*mock_bus_.get(), ShutdownAndBlock());
 
     notification_bridge_linux_ =
         base::WrapUnique(new NotificationPlatformBridgeLinux(mock_bus_));
-    notification_bridge_linux_->SetReadyCallback(
+    notification_bridge_linux_->SetReadyClosure(
         base::BindOnce(&NotificationPlatformBridgeLinuxTest::
-                           MockableNotificationBridgeReadyCallback,
+                           MockableNotificationBridgeReadyClosure,
                        base::Unretained(this)));
     content::RunAllTasksUntilIdle();
+    EXPECT_EQ(notification_bridge_linux_->IsReady(), expect_init_success);
   }
 
-  MOCK_METHOD1(MockableNotificationBridgeReadyCallback, void(bool));
+  MOCK_METHOD0(MockableNotificationBridgeReadyClosure, void());
 
   content::TestBrowserThreadBundle thread_bundle_;
 

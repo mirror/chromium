@@ -319,13 +319,18 @@ class NotificationPlatformBridgeLinuxImpl
         profile_id, incognito, callback));
   }
 
-  void SetReadyCallback(NotificationBridgeReadyCallback callback) override {
+  void SetReadyClosure(base::OnceClosure closure) override {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
     if (connected_.has_value()) {
-      std::move(callback).Run(connected_.value());
+      std::move(closure).Run();
     } else {
-      on_connected_callbacks_.push_back(std::move(callback));
+      on_connected_closures_.push_back(std::move(closure));
     }
+  }
+
+  bool IsReady() const override {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+    return connected_.has_value() && connected_.value();
   }
 
   void CleanUp() {
@@ -822,9 +827,9 @@ class NotificationPlatformBridgeLinuxImpl
   void OnConnectionInitializationFinishedOnUiThread(bool success) {
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
     connected_ = success;
-    for (auto& callback : on_connected_callbacks_)
-      std::move(callback).Run(success);
-    on_connected_callbacks_.clear();
+    for (auto& closure : on_connected_closures_)
+      std::move(closure).Run();
+    on_connected_closures_.clear();
     if (!success)
       CleanUp();
   }
@@ -924,7 +929,7 @@ class NotificationPlatformBridgeLinuxImpl
   // State necessary for OnConnectionInitializationFinished() and
   // SetReadyCallback().
   base::Optional<bool> connected_;
-  std::vector<NotificationBridgeReadyCallback> on_connected_callbacks_;
+  std::vector<base::OnceClosure> on_connected_closures_;
 
   // Notification servers very rarely have the 'body-images'
   // capability, so try to avoid an image copy if possible.
@@ -992,9 +997,13 @@ void NotificationPlatformBridgeLinux::GetDisplayed(
   impl_->GetDisplayed(profile_id, incognito, callback);
 }
 
-void NotificationPlatformBridgeLinux::SetReadyCallback(
-    NotificationBridgeReadyCallback callback) {
-  impl_->SetReadyCallback(std::move(callback));
+void NotificationPlatformBridgeLinux::SetReadyClosure(
+    base::OnceClosure closure) {
+  impl_->SetReadyClosure(std::move(closure));
+}
+
+bool NotificationPlatformBridgeLinux::IsReady() const {
+  return impl_->IsReady();
 }
 
 void NotificationPlatformBridgeLinux::CleanUp() {

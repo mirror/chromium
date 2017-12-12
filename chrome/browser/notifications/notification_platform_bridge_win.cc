@@ -124,6 +124,9 @@ class NotificationPlatformBridgeWinImpl
             std::make_unique<NotificationImageRetainer>(task_runner)),
         task_runner_(std::move(task_runner)) {
     DCHECK(task_runner_);
+
+    // Be sure to update NotificationPlatformBridgeWin::IsReady() and
+    // SetReadyClosure() if initialization becomes asynchronous.
     com_functions_initialized_ =
         base::win::ResolveCoreWinRTDelayload() &&
         ScopedHString::ResolveCoreWinRTStringDelayload();
@@ -296,11 +299,7 @@ class NotificationPlatformBridgeWinImpl
                    false /* supports_synchronization */));
   }
 
-  void SetReadyCallback(
-      NotificationPlatformBridge::NotificationBridgeReadyCallback callback) {
-    DCHECK(task_runner_->RunsTasksInCurrentSequence());
-    std::move(callback).Run(com_functions_initialized_);
-  }
+  bool IsReady() const { return com_functions_initialized_; }
 
  private:
   friend class base::RefCountedThreadSafe<NotificationPlatformBridgeWinImpl>;
@@ -466,11 +465,13 @@ class NotificationPlatformBridgeWinImpl
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeWinImpl);
 };
 
-NotificationPlatformBridgeWin::NotificationPlatformBridgeWin() {
-  task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
-      {base::MayBlock(), base::TaskPriority::USER_BLOCKING});
-  impl_ = base::MakeRefCounted<NotificationPlatformBridgeWinImpl>(task_runner_);
-}
+NotificationPlatformBridgeWin::NotificationPlatformBridgeWin()
+    : impl_(base::MakeRefCounted<NotificationPlatformBridgeWinImpl>(
+          task_runner_)),
+      task_runner_(base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_BLOCKING})),
+      is_ready_(impl_->IsReady()),
+      weak_factory_(this) {}
 
 NotificationPlatformBridgeWin::~NotificationPlatformBridgeWin() = default;
 
@@ -511,12 +512,13 @@ void NotificationPlatformBridgeWin::GetDisplayed(
                      profile_id, incognito, callback));
 }
 
-void NotificationPlatformBridgeWin::SetReadyCallback(
-    NotificationBridgeReadyCallback callback) {
+void NotificationPlatformBridgeWin::SetReadyClosure(base::OnceClosure closure) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  PostTaskToTaskRunnerThread(
-      base::BindOnce(&NotificationPlatformBridgeWinImpl::SetReadyCallback,
-                     impl_, base::Passed(&callback)));
+  std::move(closure).Run();
+}
+
+bool NotificationPlatformBridgeWin::IsReady() const {
+  return is_ready_;
 }
 
 // static

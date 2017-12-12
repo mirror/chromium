@@ -137,11 +137,11 @@ NotificationDisplayServiceImpl::NotificationDisplayServiceImpl(Profile* profile)
   // Initialize the bridge if native notifications are available, otherwise
   // signal that the bridge could not be initialized.
   if (bridge_) {
-    bridge_->SetReadyCallback(base::BindOnce(
+    bridge_->SetReadyClosure(base::BindOnce(
         &NotificationDisplayServiceImpl::OnNotificationPlatformBridgeReady,
         weak_factory_.GetWeakPtr()));
   } else {
-    OnNotificationPlatformBridgeReady(false /* success */);
+    OnNotificationPlatformBridgeReady();
   }
 }
 
@@ -218,7 +218,7 @@ void NotificationDisplayServiceImpl::Display(
   if (notification_type == NotificationHandler::Type::TRANSIENT)
     DCHECK(notification.delegate());
 
-  if (!bridge_initialized_) {
+  if (!bridge_->IsReady()) {
     actions_.push(base::BindOnce(&NotificationDisplayServiceImpl::Display,
                                  weak_factory_.GetWeakPtr(), notification_type,
                                  notification, std::move(metadata)));
@@ -243,7 +243,7 @@ void NotificationDisplayServiceImpl::Display(
 void NotificationDisplayServiceImpl::Close(
     NotificationHandler::Type notification_type,
     const std::string& notification_id) {
-  if (!bridge_initialized_) {
+  if (!bridge_->IsReady()) {
     actions_.push(base::BindOnce(&NotificationDisplayServiceImpl::Close,
                                  weak_factory_.GetWeakPtr(), notification_type,
                                  notification_id));
@@ -261,7 +261,7 @@ void NotificationDisplayServiceImpl::Close(
 
 void NotificationDisplayServiceImpl::GetDisplayed(
     const DisplayedNotificationsCallback& callback) {
-  if (!bridge_initialized_) {
+  if (!bridge_->IsReady()) {
     actions_.push(base::BindOnce(&NotificationDisplayServiceImpl::GetDisplayed,
                                  weak_factory_.GetWeakPtr(), callback));
     return;
@@ -271,8 +271,8 @@ void NotificationDisplayServiceImpl::GetDisplayed(
                         callback);
 }
 
-void NotificationDisplayServiceImpl::OnNotificationPlatformBridgeReady(
-    bool success) {
+void NotificationDisplayServiceImpl::OnNotificationPlatformBridgeReady() {
+  const bool success = bridge_->IsReady();
   if (base::FeatureList::IsEnabled(features::kNativeNotifications)) {
     UMA_HISTOGRAM_BOOLEAN("Notifications.UsingNativeNotificationCenter",
                           success);
@@ -282,10 +282,9 @@ void NotificationDisplayServiceImpl::OnNotificationPlatformBridgeReady(
     // Fall back to the message center if initialization failed. Initialization
     // must always succeed on platforms where the message center is unavailable.
     DCHECK(message_center_bridge_);
+    DCHECK(message_center_bridge_->IsReady());
     bridge_ = message_center_bridge_.get();
   }
-
-  bridge_initialized_ = true;
 
   // Flush any pending actions that have yet to execute.
   while (!actions_.empty()) {

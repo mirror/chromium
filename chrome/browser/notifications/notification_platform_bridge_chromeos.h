@@ -56,7 +56,8 @@ class NotificationPlatformBridgeChromeOs
       const std::string& profile_id,
       bool incognito,
       const GetDisplayedNotificationsCallback& callback) const override;
-  void SetReadyCallback(NotificationBridgeReadyCallback callback) override;
+  void SetReadyClosure(base::OnceClosure closure) override;
+  bool IsReady() const override;
 
   // NotificationPlatformBridgeDelegate:
   void HandleNotificationClosed(const std::string& id, bool by_user) override;

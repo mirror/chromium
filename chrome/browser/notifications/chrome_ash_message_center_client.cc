@@ -110,9 +110,13 @@ void ChromeAshMessageCenterClient::GetDisplayed(
   NOTIMPLEMENTED();
 }
 
-void ChromeAshMessageCenterClient::SetReadyCallback(
-    NotificationBridgeReadyCallback callback) {
-  std::move(callback).Run(true);
+void ChromeAshMessageCenterClient::SetReadyClosure(base::OnceClosure closure) {
+  std::move(closure).Run();
+}
+
+bool ChromeAshMessageCenterClient::IsReady() const {
+  // The message center is always available.
+  return true;
 }
 
 void ChromeAshMessageCenterClient::HandleNotificationClosed(

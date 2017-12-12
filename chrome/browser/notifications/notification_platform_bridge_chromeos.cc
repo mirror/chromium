@@ -85,9 +85,13 @@ void NotificationPlatformBridgeChromeOs::GetDisplayed(
   impl_->GetDisplayed(profile_id, incognito, callback);
 }
 
-void NotificationPlatformBridgeChromeOs::SetReadyCallback(
-    NotificationBridgeReadyCallback callback) {
-  impl_->SetReadyCallback(std::move(callback));
+void NotificationPlatformBridgeChromeOs::SetReadyClosure(
+    base::OnceClosure closure) {
+  impl_->SetReadyClosure(std::move(closure));
+}
+
+bool NotificationPlatformBridgeChromeOs::IsReady() const {
+  return impl_->IsReady();
 }
 
 void NotificationPlatformBridgeChromeOs::HandleNotificationClosed(
