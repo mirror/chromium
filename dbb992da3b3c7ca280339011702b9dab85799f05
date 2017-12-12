@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da113523_545f61d7",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-12T15:20:01Z",
+      "side": 1,
+      "message": "Why still have this version? Unless I\u0027m missing something, the only call sites outside the tests were the two places that you changed to use the new version of the method above.",
+      "revId": "dbb992da3b3c7ca280339011702b9dab85799f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
