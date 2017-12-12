@@ -71,7 +71,8 @@ class ServerWindow : public viz::HostFrameSinkClient {
       gfx::AcceleratedWidget widget,
       viz::mojom::CompositorFrameSinkAssociatedRequest sink_request,
       viz::mojom::CompositorFrameSinkClientPtr client,
-      viz::mojom::DisplayPrivateAssociatedRequest display_request);
+      viz::mojom::DisplayPrivateAssociatedRequest display_request,
+      viz::mojom::DisplayPrivateClientPtr display_private_client);
 
   void CreateCompositorFrameSink(
       viz::mojom::CompositorFrameSinkRequest request,
