@@ -117,6 +117,7 @@ source_set("shell") {
     ":shell_bundle_data",
     ":shell_interfaces",
     "//base",
+    "//components/unzip_service:lib",
     "//ios/net",
     "//ios/web",
     "//ios/web/public",

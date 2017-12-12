@@ -760,7 +760,8 @@ void Component::StateRun::DoHandle() {
       component, component.update_context_.config->GetRunActionKeyHash());
 
   action_runner_->Run(
-      base::BindOnce(&StateRun::ActionRunComplete, base::Unretained(this)));
+      base::BindOnce(&StateRun::ActionRunComplete, base::Unretained(this)),
+      component.update_context_.config->CreateServiceManagerConnector());
 }
 
 void Component::StateRun::ActionRunComplete(bool succeeded,
