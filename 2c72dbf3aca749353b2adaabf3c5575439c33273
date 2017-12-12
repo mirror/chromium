@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b457364_7074e9a3",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-12T21:27:23Z",
+      "side": 1,
+      "message": "\"struct StringTestCase\" again. :)",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 17
+      },
+      "revId": "2c72dbf3aca749353b2adaabf3c5575439c33273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7d5c61_603e74db",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-12T21:27:23Z",
+      "side": 1,
+      "message": "You can just `EXPECT_EQ(cbor.value().GetString(), test_case.value)`. std::string and base::StringPiece equality includes nulls.",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 17
+      },
+      "revId": "2c72dbf3aca749353b2adaabf3c5575439c33273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
