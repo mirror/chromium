@@ -50,6 +50,7 @@
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/boot_times_recorder.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/lifetime/application_lifetime_chromeos.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_policy_controller.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
@@ -117,6 +118,43 @@ bool SetLocaleForNextStart(PrefService* local_state) {
 // Whether chrome should send stop request to a session manager.
 bool g_send_stop_request_to_session_manager = false;
 #endif
+
+#if defined(OS_CHROMEOS)
+// If Chrome OS exit flow started flushing user data.
+bool g_attempt_user_exit_chromeos_started = false;
+
+void AttemptUserExitChromeOSAfterFlush() {
+  TRACE_EVENT0("shutdown", "FlushUserPrefs");
+  g_send_stop_request_to_session_manager = true;
+  // On ChromeOS, always terminate the browser, regardless of the result of
+  // AreAllBrowsersCloseable(). See crbug.com/123107.
+  browser_shutdown::NotifyAndTerminate(true /* fast_path */);
+}
+
+void AttemptUserExitChromeOS() {
+  DCHECK(!g_attempt_user_exit_chromeos_started);
+  if (g_attempt_user_exit_chromeos_started)
+    return;
+
+  g_attempt_user_exit_chromeos_started = true;
+  VLOG(1) << "AttemptUserExit";
+  browser_shutdown::StartShutdownTracing();
+  chromeos::BootTimesRecorder::Get()->AddLogoutTimeMarker("LogoutStarted",
+                                                          false);
+
+  PrefService* state = g_browser_process->local_state();
+  if (state) {
+    chromeos::BootTimesRecorder::Get()->OnLogoutStarted(state);
+
+    if (SetLocaleForNextStart(state)) {
+      TRACE_EVENT0("shutdown", "CommitPendingWrite");
+      state->CommitPendingWrite();
+    }
+  }
+  chromeos::StartUserPrefsCommitPendingWrite(
+      base::BindOnce(&AttemptUserExitChromeOSAfterFlush));
+}
+#endif  // defined(OS_CHROMEOS)
 
 }  // namespace
 
@@ -190,24 +228,7 @@ void CloseAllBrowsers() {
 
 void AttemptUserExit() {
 #if defined(OS_CHROMEOS)
-  VLOG(1) << "AttemptUserExit";
-  browser_shutdown::StartShutdownTracing();
-  chromeos::BootTimesRecorder::Get()->AddLogoutTimeMarker("LogoutStarted",
-                                                          false);
-
-  PrefService* state = g_browser_process->local_state();
-  if (state) {
-    chromeos::BootTimesRecorder::Get()->OnLogoutStarted(state);
-
-    if (SetLocaleForNextStart(state)) {
-      TRACE_EVENT0("shutdown", "CommitPendingWrite");
-      state->CommitPendingWrite();
-    }
-  }
-  g_send_stop_request_to_session_manager = true;
-  // On ChromeOS, always terminate the browser, regardless of the result of
-  // AreAllBrowsersCloseable(). See crbug.com/123107.
-  browser_shutdown::NotifyAndTerminate(true /* fast_path */);
+  AttemptUserExitChromeOS();
 #else
   // Reset the restart bit that might have been set in cancelled restart
   // request.
