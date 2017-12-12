@@ -22,6 +22,30 @@
       "revId": "2283b0138c5d00dad7aedbbcaacdc5e662e1e51f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4661d8_f46fc24e",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerFacade.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-12T18:27:20Z",
+      "side": 1,
+      "message": "Oops, looks like I\u0027ve lost a part of my patch while splitting it into two CLs. Sorry for that. Thanks a lot for the catch! I\u0027ve added missing part and added appropriate test.",
+      "parentUuid": "79215bac_20ee06c7",
+      "range": {
+        "startLine": 578,
+        "startChar": 27,
+        "endLine": 578,
+        "endChar": 47
+      },
+      "revId": "2283b0138c5d00dad7aedbbcaacdc5e662e1e51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
