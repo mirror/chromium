@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6d86473_34975b16",
+        "filename": "content/common/resource_messages.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "Do you need this blank line?",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d428d7_450b896b",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "Can we use StringBindingSet?",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1948734_0b0aeb5f",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "Can we have unittests for this class?",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159025f8_f8baf94f",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "\"|*buffer| will be set to null and |*available| will be set to 0 if not readable\", so you need to set the values here.",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b060aebc_3a50fd2a",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "You need to return null when a read operation has already been performed.",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15de88c8_9f62502b",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "DCHECK_EQ?",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad48957_0323ac8c",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "It may be better to call ClearClient before resetting consumers.",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b831917e_367cc3cf",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97055349_cb1c6ceb",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "If you don\u0027t need to distinguish readable / waiting you can store PublicState directly.",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272a5f47_8b0aa52d",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPBody.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "base::MakeRefCounted?",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db68c3f_03581578",
+        "filename": "third_party/WebKit/Source/platform/network/EncodedFormData.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T04:33:38Z",
+      "side": 1,
+      "message": "base::MakeRefCounted?",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
