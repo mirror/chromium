@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "342bb691_32fd813a",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-12T22:04:17Z",
+      "side": 1,
+      "message": "This code can probably just be merged into PageInfoBubbleViewBrowserTest for simplicity.",
+      "revId": "1186e9512a40edf903757624c0663e758a449ba3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
