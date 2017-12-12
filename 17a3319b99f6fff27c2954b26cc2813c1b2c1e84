@@ -52,6 +52,24 @@
       "revId": "17a3319b99f6fff27c2954b26cc2813c1b2c1e84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a155b9_f2082f63",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-12T05:47:16Z",
+      "side": 0,
+      "message": "The lines are correct. They were placed here for conveinence of the SPv2 early return which existed before SPv2 supported partial rasterization invalidation. Now they are moved to the end of this method to let InvalidateSelection and InvalidatePartialRect look more similar which may help readibility.",
+      "parentUuid": "0fccc71f_048b1bc0",
+      "revId": "17a3319b99f6fff27c2954b26cc2813c1b2c1e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
