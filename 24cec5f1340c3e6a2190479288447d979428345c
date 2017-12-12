@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d05c185_f9cf5050",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-12T23:24:56Z",
+      "side": 1,
+      "message": "Let\u0027s make this android only as well.",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 21
+      },
+      "revId": "24cec5f1340c3e6a2190479288447d979428345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
