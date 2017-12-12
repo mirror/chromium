@@ -1,0 +1,183 @@
+<h1>Reach Peak Performance</h1>
+<p>
+  Extensions exist to enhance or customize a user's browsing experience.
+  If an extension slows down
+  or impares the Chrome browser it is no good to the user.
+  Developers should follow these practices to ensure their extension
+  is running at peak performance.
+</p>
+<h2 id="background_pages">Support Sleepy Background Scripts</h2>
+<p>
+  An efficent <a href="/background_pages">background scrip</a>
+  is registered for events that are important to their extension.
+  They lie dormant until their listener is trigger,
+  delegate accordingly,
+  then return to a dormant state.
+  It is a drain on system resources
+  to keep an uneeded script running.
+</p>
+<p>
+  Background scripts are registered in the manifest
+  with their persistence set to false:
+</p>
+<pre data-filename="manifest.json">
+  {
+   "name": "High Performance Extension",
+   "description" : "Sleepy Background Script",
+   "version": "1.0",
+   ...
+   <b>  "background": {
+       "scripts": ["background.js"],
+       "persistent": false
+     },</b>
+   ...
+ }
+</pre>
+<p>
+ The only occassion to keep a background script persistent is if the extension
+ uses <a href="/webRequest"><code>chrome.webRequest</code></a>
+ as a blocker.
+ It uses more system resources to open and close a background page
+ each time it evalutes if a webRequest should be blocked than it does to
+ stay active.
+</p>
+<pre data-filename="manifest.json">
+  {
+   "name": "High Performance Extension",
+   "description" : "Persistent Background Script",
+   "version": "1.0",
+   ...
+  "background": {
+       "scripts": ["background.js"],
+        <b>"persistent": true</b>
+     },
+     <b>"permissions": [
+          "webRequest",
+          "webRequestBlocking"
+        ]</b>,
+   ...
+ }
+</pre>
+<pre data-filename="background.js">
+  chrome.webRequest.onBeforeRequest.addListener(
+    function(details) {
+      return {redirectUrl: "https://developer.chrome.com/"};
+    },
+    {urls: ["https://social.media.distraction.com/*"]},
+    ["blocking"]
+  );
+</pre>
+<h2 id="content_script">Content Scripts</h2>
+<p>
+  <a href="/content_scripts">Content scripts</a>
+  should work as the secret agents of an extension,
+  subtly reading from or modifying the webpage
+  while relying on the extension core to work heavier logic.
+  They should have clear targets to avoid invasive activity on irrelevant pages.
+  Ideally, content scripts should go unnoticed in the browsing experience
+  aside from purposeful behavior.
+</p>
+<h3 id="tiny_scripts">Declare Targets</h3>
+<p>
+  An extension running content scripts in unnecessary locations
+  or inapprorpiate times can cause the browser to slow down
+  and potentially create functionality errors.
+  Avoid this by providing <a href="/match_patterns">match patterns</a>
+  in the manifest and running the script at <code>document_idle</code>
+  instead of <code>document_start</code>.
+</p>
+<pre data-filename="manifest.json">
+   {
+    "name": "High Performance Extension",
+    "description" : "Superfly Superlight Content Scripts",
+    "version": "1.0",
+    ...
+    <b>"content_scripts": [
+      {
+        "js": ["content_script.js"],
+        "matches": ["https://developer.chrome.com/*"],
+        "run_at": "document_idle"
+      }
+    ]</b>
+    ...
+  }
+</pre>
+<p>
+  If an extension will only need to access a webpage with the user's action,
+  have it <a href="/content_scripts#pi">injected programtically</a>.
+  A programmatic injection will only run when a user invokes it.
+</p>
+<pre data-filename="background.js">
+  chrome.browserAction.onClicked.addListener(function(tab) {
+    chrome.tabs.executeScript({
+      code: 'document.body.style.fontSize="100px"'
+    });
+  });
+</pre>
+
+<h3 id="low_content">Minimal Logic</h3>
+<p>
+  Extensions should rely on content scripts to interact with
+  or relay information about the DOM of the webpage.
+  Large jobs, such as activating the <a href="/pageAction">page action</a>,
+  should be delegated to the core of the extension.
+  It would be inefficient to ask a content script to send a message when
+  the browser navigates to a page matching
+  <code>https://developer.chrome.com/</code> asking the background script to
+  activate the page action:
+</p>
+<pre data-filename="content_script.js">
+  // Avoid doing this.
+  chrome.runtime.sendMessage({page: "active"})
+</pre>
+<pre data-filename="background.js">
+  // It is wildly inefficient.
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.page == "active")
+    chrome.tabs.getSelected(null, function(tab) {
+      chrome.pageAction.show(tab.id);
+    });
+  });
+</pre>
+<p>
+  Instead, declare rules in the <a href="/background_pages">background scrip</a>
+  under the
+  <a href="/runtime#event-onInstalled"><code>runtime.onInstalled</code></a>
+  listener event.
+</p>
+<pre data-filename="background.js">
+  chrome.runtime.onInstalled.addListener(function() {
+    chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+      chrome.declarativeContent.onPageChanged.addRules([
+        {
+          conditions: [
+            new chrome.declarativeContent.PageStateMatcher({
+              pageUrl: { hostEquals: 'developer.chrome.com' },
+            })
+          ],
+          actions: [ new chrome.declarativeContent.ShowPageAction() ]
+        }
+      ]);
+    });
+  });
+</pre>
+<h2 id="code">Evaluate Code Efficiency</h2>
+<p>
+  The same general practices for website performance
+  can be applied to extensions:
+  <ul>
+    <li>Implement techniques of asynchronous programming.</li>
+    <li>Keep code minmal and compact.</li>
+    <li>Avoid loops within loops.</li>
+    <li>Test operations against a variety of inputs.</li>
+  </ul>
+</p>
+<p>
+Use tools, such as
+<a href="https://developers.google.com/web/tools/lighthouse">
+  Lighthouse</a>,
+  to evaluate an extensions performance and target areas that could improve.
+</p>
+<img src="{{static}}/images/best_practices/lighthouse.gif"
+     height="400px"
+     alt="A gif of a lighthouse test on sample extension options">
