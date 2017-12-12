@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74bd3900_6146ea9a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-12-12T15:42:36Z",
+      "side": 1,
+      "message": "DCHECK that |task| is non-nestable?",
+      "range": {
+        "startLine": 881,
+        "startChar": 4,
+        "endLine": 881,
+        "endChar": 5
+      },
+      "revId": "847e0a106bfa0317f7520d127ae3941b2962da2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f260a3ff_018dbeb0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-12-12T15:42:36Z",
+      "side": 1,
+      "message": "IIRC there\u0027s a field in |task| that defines this too?",
+      "range": {
+        "startLine": 885,
+        "startChar": 6,
+        "endLine": 885,
+        "endChar": 13
+      },
+      "revId": "847e0a106bfa0317f7520d127ae3941b2962da2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e874c7ea_f29e759d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-12-12T15:42:36Z",
+      "side": 1,
+      "message": "\"end\" is a little ambiguous here? Can we say front here?",
+      "range": {
+        "startLine": 232,
+        "startChar": 28,
+        "endLine": 232,
+        "endChar": 33
+      },
+      "revId": "847e0a106bfa0317f7520d127ae3941b2962da2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8371a1b8_a197c197",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-12-12T15:42:36Z",
+      "side": 1,
+      "message": "Similarly here this might be redundant with some data in |task| -- unless we drop that at some point?",
+      "range": {
+        "startLine": 421,
+        "startChar": 9,
+        "endLine": 421,
+        "endChar": 16
+      },
+      "revId": "847e0a106bfa0317f7520d127ae3941b2962da2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40371be_86a5d280",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/work_queue.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-12-12T15:42:36Z",
+      "side": 1,
+      "message": "Mind adding a unit test for this?",
+      "range": {
+        "startLine": 81,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 25
+      },
+      "revId": "847e0a106bfa0317f7520d127ae3941b2962da2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
