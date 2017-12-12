@@ -31,16 +31,30 @@ function loadChromiumResources() {
   ]);
 }
 
+// TODO(crbug.com/569709): Remove once setBluetoothFakeAdapter is no longer
+// used.
+function performChromiumSetup() {
+  // Call setBluetoothFakeAdapter() to clean up any fake adapters left over
+  // by legacy tests.
+  // Legacy tests that use setBluetoothFakeAdapter() sometimes fail to clean
+  // their fake adapter. This is not a problem for these tests because the
+  // next setBluetoothFakeAdapter() will clean it up anyway but it is a
+  // problem for the new tests that do not use setBluetoothFakeAdapter().
+  if (setBluetoothFakeAdapter) setBluetoothFakeAdapter('');
+}
+
+
 // These tests rely on the User Agent providing an implementation of the
 // Web Bluetooth Testing API.
 // https://docs.google.com/document/d/1Nhv_oVDCodd1pEH_jj9k8gF4rPGb_84VYaZ9IG8M_WY/edit?ts=59b6d823#heading=h.7nki9mck5t64
 function bluetooth_test(func, name, properties) {
   Promise.resolve()
-    .then(() => {
-      // Load Chromium specific resources when Mojo bindings are detected.
-      if (Mojo) return loadChromiumResources();
-    })
-    .then(() => promise_test(func, name, properties));
+    // Load Chromium-specific resources when Mojo bindings are detected.
+    .then(() => Mojo ? loadChromiumResources() : undefined)
+    .then(() => promise_test(() => Promise.resolve()
+      // Trigger Chromium-specific setup when Mojo bindings are detected.
+      .then(() => Mojo ? performChromiumSetup() : undefined)
+      .then(func), name, properties));
 }
 
 // HCI Error Codes. Used for simulateGATT[Dis]ConnectionResponse.
