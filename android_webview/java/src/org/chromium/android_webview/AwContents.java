@@ -2966,14 +2966,15 @@ public class AwContents implements SmartClipProvider {
     }
 
     @CalledByNative
-    private void onWebLayoutContentsSizeChanged(int widthCss, int heightCss) {
+    private void onWebLayoutContentsSizeChanged(int width, int height) {
         // This change notification comes from the renderer thread, not from the cc/ impl thread.
-        mLayoutSizer.onContentSizeChanged(widthCss, heightCss);
+        mLayoutSizer.onContentSizeChanged(width, height);
     }
 
     @CalledByNative
-    private void scrollContainerViewTo(int x, int y) {
-        mScrollOffsetManager.scrollContainerViewTo(x, y);
+    private void scrollContainerViewTo(int xPx, int yPx) {
+        // Both xPx and yPx are in physical pixel scale.
+        mScrollOffsetManager.scrollContainerViewTo(xPx, yPx);
     }
 
     @CalledByNative

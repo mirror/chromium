@@ -75,6 +75,7 @@
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/mhtml_generation_params.h"
 #include "content/public/common/renderer_preferences.h"
 #include "gpu/config/gpu_info.h"
@@ -1088,7 +1089,16 @@ void AwContents::ScrollContainerViewTo(const gfx::Vector2d& new_value) {
   ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
   if (obj.is_null())
     return;
-  Java_AwContents_scrollContainerViewTo(env, obj, new_value.x(), new_value.y());
+
+  // Set x and y as DIP scale
+  float dip_scale = browser_view_renderer_.dip_scale();
+  float x_px = new_value.x();
+  float y_px = new_value.y();
+  if (switches::UseZoomForDSFEnabled()) {
+    x_px /= dip_scale;
+    y_px /= dip_scale;
+  }
+  Java_AwContents_scrollContainerViewTo(env, obj, x_px, y_px);
 }
 
 void AwContents::UpdateScrollState(const gfx::Vector2d& max_scroll_offset,
