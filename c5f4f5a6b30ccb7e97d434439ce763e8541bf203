@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a92b93d9_e5055081",
+        "filename": "chrome/browser/app_controller_mac.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45bf8b3d_b32f4308",
+      "range": {
+        "startLine": 1252,
+        "startChar": 13,
+        "endLine": 1252,
+        "endChar": 18
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "424de0b1_9bb3c763",
         "filename": "chrome/browser/chromeos/login/ui/simple_web_view_dialog.cc",
         "patchSetId": 27
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-11T23:09:45Z",
       "side": 1,
       "message": "Why do you need SimpleWebViewDialog to be a CommandUpdater? Doesn\u0027t the old code work (well, you\u0027ll need the change on line 135).",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 368,
+        "endChar": 1
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b69e4c37_a3050e33",
+        "filename": "chrome/browser/chromeos/login/ui/simple_web_view_dialog.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "If I want to prevent exposing the command_updater_ to the outside (eg. line 195 up). But maybe I took it too far, maybe I just need to unexpose it from BrowserCommandController, and not this one.",
+      "parentUuid": "424de0b1_9bb3c763",
       "range": {
         "startLine": 334,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "99dab91f_517374b7",
+        "filename": "chrome/browser/command_updater.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "678df0b7_7c637380",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2f22cd7_4b86eb0a",
         "filename": "chrome/browser/command_updater_delegate.h",
         "patchSetId": 27
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-11T23:09:45Z",
       "side": 1,
       "message": "Is there a reason to change this name? Please keep it as it was.",
+      "range": {
+        "startLine": 16,
+        "startChar": 44,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdd4fc8_6b581c0a",
+        "filename": "chrome/browser/command_updater_delegate.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "BrowserCommandController implements both CommandUpdaterDelegate and CommandUpdater interfaces, and they both declare a function ExecuteCommandWithDisposition, so I have to rename one of them otherwise I get a name clash. Or maybe I\u0027m missing something, maybe there\u0027s a way around it.\n\nBtw this is the error I\u0027m getting from the compiler:\nerror: functions that differ only in their return type cannot be overloaded\n\n// CommandUpdaterDelegate\nvirtual void ExecuteCommandWithDisposition(int id, WindowOpenDisposition disposition) \u003d 0;\n\n// CommandUpdater\nvirtual bool ExecuteCommandWithDisposition(int id, WindowOpenDisposition disposition) \u003d 0;",
+      "parentUuid": "c2f22cd7_4b86eb0a",
       "range": {
         "startLine": 16,
         "startChar": 44,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "070ede1f_2927fa02",
+        "filename": "chrome/browser/command_updater_impl.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99f3879f_f48e380a",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2748cd6a_1257bce1",
         "filename": "chrome/browser/command_updater_impl.h",
         "patchSetId": 27
@@ -137,6 +257,30 @@
       "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a863d7f1_90c4d6ff",
+        "filename": "chrome/browser/command_updater_impl.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2748cd6a_1257bce1",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ad82e5f2_b459a1c0",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f084c30b_3cb82d28",
+      "range": {
+        "startLine": 308,
+        "startChar": 2,
+        "endLine": 308,
+        "endChar": 14
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0991f63d_139591fa",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 27
@@ -174,6 +342,30 @@
       "writtenOn": "2017-12-11T23:09:45Z",
       "side": 1,
       "message": "Where do you continue ensuring the enabled state for these is kept updated?",
+      "range": {
+        "startLine": 1203,
+        "startChar": 4,
+        "endLine": 1206,
+        "endChar": 35
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60491ee_b4087b38",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Sorry not following your comment.",
+      "parentUuid": "0991f63d_139591fa",
       "range": {
         "startLine": 1203,
         "startChar": 4,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "a9846661_b0c47e99",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Not following this comment either.",
+      "parentUuid": "ff5258ec_2d4dda03",
+      "range": {
+        "startLine": 1219,
+        "startChar": 6,
+        "endLine": 1220,
+        "endChar": 56
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8bb9734_8adffdd3",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 27
@@ -220,6 +436,30 @@
       "writtenOn": "2017-12-11T23:09:45Z",
       "side": 1,
       "message": "As you call InitCommandState, is this code really needed?",
+      "range": {
+        "startLine": 1222,
+        "startChar": 6,
+        "endLine": 1224,
+        "endChar": 57
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8d5006_4b6395db",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "There\u0027s the possibility that Init doesn\u0027t disable all of the commands I enabled. The other option is calling DisableAllCommands here.",
+      "parentUuid": "b8bb9734_8adffdd3",
       "range": {
         "startLine": 1222,
         "startChar": 6,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "1fa96fdc_4519d181",
+        "filename": "chrome/browser/ui/browser_command_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7735cfd7_3c175033",
+      "range": {
+        "startLine": 31,
+        "startChar": 40,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "051705c4_0fa83e15",
         "filename": "chrome/browser/ui/browser_command_controller.h",
         "patchSetId": 27
@@ -275,6 +539,30 @@
       "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239cf02d_be7c9516",
+        "filename": "chrome/browser/ui/browser_command_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "I\u0027ve actually removed it completely, I don\u0027t think the tests need access to command_updater_ as the BCC itself exposes an interface to it.",
+      "parentUuid": "051705c4_0fa83e15",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 75
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "4bde2caf_d104f438",
+        "filename": "chrome/browser/ui/browser_command_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bed528b5_94ce4503",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 35
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67668c0f_13ef6973",
         "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
         "patchSetId": 27
@@ -321,6 +633,30 @@
       "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8269673c_6e8d9a1c",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "67668c0f_13ef6973",
+      "range": {
+        "startLine": 633,
+        "startChar": 4,
+        "endLine": 633,
+        "endChar": 9
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "a1ebe28c_8c21f6c4",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "624bc21e_d6afd5a5",
+      "range": {
+        "startLine": 781,
+        "startChar": 4,
+        "endLine": 781,
+        "endChar": 50
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "211d2455_755629c4",
         "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views_unittest.cc",
         "patchSetId": 27
@@ -358,6 +718,30 @@
       "writtenOn": "2017-12-11T23:09:45Z",
       "side": 1,
       "message": "Remove this?",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3bb657_cdd5e007",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 1,
+      "message": "There are 3 places in this file where a CommandUpdater* is used. So I\u0027m unsure of what the rule here is - do I have to have command_updater.h included for those, or is command_updater_impl.h enough (since it includes c_u.h)?",
+      "parentUuid": "211d2455_755629c4",
       "range": {
         "startLine": 15,
         "startChar": 2,

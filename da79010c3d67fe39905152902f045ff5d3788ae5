@@ -22,6 +22,30 @@
       "revId": "da79010c3d67fe39905152902f045ff5d3788ae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db61727b_f2a8bce1",
+        "filename": "chrome/browser/command_updater.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-12T17:58:26Z",
+      "side": 0,
+      "message": "Added some notes, hope that\u0027s good enough.",
+      "parentUuid": "c4e0442f_1aead277",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 2
+      },
+      "revId": "da79010c3d67fe39905152902f045ff5d3788ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
