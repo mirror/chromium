@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e50a7f01_74232b8b",
+        "filename": "ui/base/layout.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T04:01:45Z",
+      "side": 1,
+      "message": "This is the wrong layer to mention ScreenWinDisplay. Perhaps\n\n  // It is possible that |display| instance is not valid. E.g. This happens when\n  // GetDisplayNearestView() returns a default-constructed and uninitialized\n  // Display when disconnecting monitors. See https://crbug.com/776095.",
+      "revId": "50f6c74de052f6efd3c8c3f227244d657803354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
