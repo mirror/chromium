@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d7922e8e_8d92672e",
+        "filename": "net/quic/core/crypto/quic_decrypter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1250605
+      },
+      "writtenOn": "2017-12-12T00:55:43Z",
+      "side": 1,
+      "message": "Yes I have this in mind, however when I was taking a look at the usage this goes really deep down the structure of tls_handshaker and I think that it deserves a patch of its own. However if you consider that this can be done on this patch I will add it as soon as possible",
+      "parentUuid": "780f3309_4d458bf2",
+      "revId": "ad9784c0487da7b2ee95aad3545d4948e8755739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18f2a7db_6a78b9df",
         "filename": "net/quic/core/crypto/quic_encrypter.h",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-12-12T00:41:44Z",
       "side": 1,
       "message": "This would also be a good candidate for conversion",
+      "revId": "ad9784c0487da7b2ee95aad3545d4948e8755739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1292d54b_d68e0383",
+        "filename": "net/quic/core/crypto/quic_encrypter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1250605
+      },
+      "writtenOn": "2017-12-12T00:55:43Z",
+      "side": 1,
+      "message": "PTAL to my reply on the other comment",
+      "parentUuid": "18f2a7db_6a78b9df",
       "revId": "ad9784c0487da7b2ee95aad3545d4948e8755739",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
