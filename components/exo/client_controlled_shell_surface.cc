@@ -188,62 +188,24 @@ ClientControlledShellSurface::~ClientControlledShellSurface() {
 
 void ClientControlledShellSurface::SetMaximized() {
   TRACE_EVENT0("exo", "ClientControlledShellSurface::SetMaximized");
-
-  if (!widget_)
-    CreateShellSurfaceWidget(ui::SHOW_STATE_MAXIMIZED);
-
-  ash::wm::WindowState* window_state = GetWindowState();
-  if (IsPinned(window_state)) {
-    LOG(WARNING) << "Client changed the state to maximized while it's pinned";
-    return;
-  }
-
-  client_controlled_state_->EnterNextState(
-      window_state, ash::mojom::WindowStateType::MAXIMIZED);
+  pending_show_state_ = ui::SHOW_STATE_MAXIMIZED;
 }
 
 void ClientControlledShellSurface::SetMinimized() {
   TRACE_EVENT0("exo", "ClientControlledShellSurface::SetMinimized");
-
-  if (!widget_)
-    CreateShellSurfaceWidget(ui::SHOW_STATE_MINIMIZED);
-
-  ash::wm::WindowState* window_state = GetWindowState();
-  if (IsPinned(window_state)) {
-    LOG(WARNING) << "Client changed the state to minimized while it's pinned";
-    return;
-  }
-  client_controlled_state_->EnterNextState(
-      window_state, ash::mojom::WindowStateType::MINIMIZED);
+  pending_show_state_ = ui::SHOW_STATE_MINIMIZED;
 }
 
 void ClientControlledShellSurface::SetRestored() {
   TRACE_EVENT0("exo", "ClientControlledShellSurface::SetRestored");
-  if (!widget_)
-    return;
-
-  ash::wm::WindowState* window_state = GetWindowState();
-  client_controlled_state_->EnterNextState(window_state,
-                                           ash::mojom::WindowStateType::NORMAL);
+  pending_show_state_ = ui::SHOW_STATE_NORMAL;
 }
 
 void ClientControlledShellSurface::SetFullscreen(bool fullscreen) {
   TRACE_EVENT1("exo", "ClientControlledShellSurface::SetFullscreen",
                "fullscreen", fullscreen);
-
-  if (!widget_) {
-    CreateShellSurfaceWidget(fullscreen ? ui::SHOW_STATE_FULLSCREEN
-                                        : ui::SHOW_STATE_NORMAL);
-  }
-
-  ash::wm::WindowState* window_state = GetWindowState();
-  if (IsPinned(window_state)) {
-    LOG(WARNING) << "Client changed the fullscreen state while it's pinned";
-    return;
-  }
-  client_controlled_state_->EnterNextState(
-      window_state, fullscreen ? ash::mojom::WindowStateType::FULLSCREEN
-                               : ash::mojom::WindowStateType::NORMAL);
+  pending_show_state_ =
+      fullscreen ? ui::SHOW_STATE_FULLSCREEN : ui::SHOW_STATE_NORMAL;
 }
 
 void ClientControlledShellSurface::SetPinned(ash::mojom::WindowPinType type) {
@@ -327,8 +289,47 @@ void ClientControlledShellSurface::OnWindowStateChangeEvent(
 // SurfaceDelegate overrides:
 
 void ClientControlledShellSurface::OnSurfaceCommit() {
+  if (!widget_)
+    CreateShellSurfaceWidget(pending_show_state_);
+
+  if (widget_->GetNativeWindow()->GetProperty(aura::client::kShowStateKey) !=
+      pending_show_state_) {
+    ash::wm::WindowState* window_state = GetWindowState();
+    LOG(ERROR) << "OnSurfaceCommit state change";
+    if (!IsPinned(window_state)) {
+      ash::mojom::WindowStateType next_window_state =
+          ash::mojom::WindowStateType::NORMAL;
+      switch (pending_show_state_) {
+        case ui::SHOW_STATE_NORMAL:
+          if (widget_->IsMaximized() || widget_->IsFullscreen())
+            enable_crossfade_ = true;
+          break;
+        case ui::SHOW_STATE_MINIMIZED:
+          next_window_state = ash::mojom::WindowStateType::MINIMIZED;
+          break;
+        case ui::SHOW_STATE_MAXIMIZED:
+          enable_crossfade_ = true;
+          next_window_state = ash::mojom::WindowStateType::MAXIMIZED;
+          break;
+        case ui::SHOW_STATE_FULLSCREEN:
+          enable_crossfade_ = true;
+          next_window_state = ash::mojom::WindowStateType::FULLSCREEN;
+          break;
+        default:
+          break;
+      }
+      client_controlled_state_->EnterNextState(window_state, next_window_state);
+    } else {
+      LOG(WARNING) << "State change was requested while it is pinned";
+    }
+  }
+
   ShellSurfaceBase::OnSurfaceCommit();
+
+  enable_crossfade_ = false;
+
   if (widget_) {
+    UpdateBackdrop();
     // Apply new top inset height.
     if (pending_top_inset_height_ != top_inset_height_) {
       widget_->GetNativeWindow()->SetProperty(aura::client::kTopViewInset,
@@ -466,11 +467,19 @@ void ClientControlledShellSurface::CompositorLockTimedOut() {
 void ClientControlledShellSurface::SetWidgetBounds(const gfx::Rect& bounds) {
   if (!resizer_) {
     client_controlled_state_->set_bounds_locally(true);
-    widget_->SetBounds(bounds);
+    if (enable_crossfade_) {
+      LOG(ERROR) << "Corss Fade To:" << bounds.ToString();
+      // TODO: Convert coordinates
+      GetWindowState()->SetBoundsDirectCrossFade(bounds);
+    } else {
+      LOG(ERROR) << "Without Animation To:" << bounds.ToString();
+      widget_->SetBounds(bounds);
+    }
     client_controlled_state_->set_bounds_locally(false);
     UpdateSurfaceBounds();
     return;
   }
+  LOG(ERROR) << "With Resizer:" << bounds.ToString();
 
   // TODO(domlaskowski): Synchronize window state transitions with the client,
   // and abort client-side dragging on transition to fullscreen.
@@ -499,13 +508,6 @@ void ClientControlledShellSurface::InitializeWindowState(
   window_state->set_allow_set_bounds_direct(true);
   widget_->set_movement_disabled(true);
   window_state->set_ignore_keyboard_bounds_change(true);
-}
-
-void ClientControlledShellSurface::UpdateBackdrop() {
-  aura::Window* window = widget_->GetNativeWindow();
-  bool enable_backdrop = widget_->IsFullscreen() || widget_->IsMaximized();
-  if (window->GetProperty(aura::client::kHasBackdrop) != enable_backdrop)
-    window->SetProperty(aura::client::kHasBackdrop, enable_backdrop);
 }
 
 float ClientControlledShellSurface::GetScale() const {
@@ -557,6 +559,19 @@ gfx::Point ClientControlledShellSurface::GetSurfaceOrigin() const {
 
 ////////////////////////////////////////////////////////////////////////////////
 // ClientControlledShellSurface, private:
+
+void ClientControlledShellSurface::UpdateBackdrop() {
+  aura::Window* window = widget_->GetNativeWindow();
+  const display::Display display =
+      display::Screen::GetScreen()->GetDisplayNearestWindow(window);
+  // TODO(oshima): We may want to use following condition:
+  // 1) the widget doesn't fill the screen/workspace and
+  // 2) the background opacity isn't 1.0f.
+  bool enable_backdrop = widget_->IsFullscreen() || widget_->IsMaximized();
+
+  if (window->GetProperty(aura::client::kHasBackdrop) != enable_backdrop)
+    window->SetProperty(aura::client::kHasBackdrop, enable_backdrop);
+}
 
 void ClientControlledShellSurface::
     EnsureCompositorIsLockedForOrientationChange() {

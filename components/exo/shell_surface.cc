@@ -17,6 +17,13 @@
 #include "ui/wm/core/window_util.h"
 
 namespace exo {
+namespace {
+
+// Maximum amount of time to wait for contents after a change to maximize,
+// fullscreen or pinned state.
+constexpr int kMaximizedOrFullscreenOrPinnedLockTimeoutMs = 100;
+
+}  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
 // ShellSurface, public:
@@ -36,6 +43,8 @@ ShellSurface::ShellSurface(Surface* surface)
                        ash::kShellWindowId_DefaultContainer) {}
 
 ShellSurface::~ShellSurface() {
+  if (widget_)
+    ash::wm::GetWindowState(widget_->GetNativeWindow())->RemoveObserver(this);
 }
 
 void ShellSurface::SetParent(ShellSurface* parent) {
@@ -110,9 +119,50 @@ void ShellSurface::Resize(int component) {
 }
 
 void ShellSurface::InitializeWindowState(ash::wm::WindowState* window_state) {
+  window_state->AddObserver(this);
   window_state->set_allow_set_bounds_direct(false);
   widget_->set_movement_disabled(movement_disabled_);
   window_state->set_ignore_keyboard_bounds_change(movement_disabled_);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// ash::wm::WindowStateObserver overrides:
+
+void ShellSurface::OnPreWindowStateTypeChange(
+    ash::wm::WindowState* window_state,
+    ash::mojom::WindowStateType old_type) {
+  ash::mojom::WindowStateType new_type = window_state->GetStateType();
+  if (old_type == ash::mojom::WindowStateType::MINIMIZED ||
+      new_type == ash::mojom::WindowStateType::MINIMIZED) {
+    return;
+  }
+
+  if (ash::IsMaximizedOrFullscreenOrPinnedWindowStateType(old_type) ||
+      ash::IsMaximizedOrFullscreenOrPinnedWindowStateType(new_type)) {
+    if (!widget_)
+      return;
+    // Give client a chance to produce a frame that takes state change into
+    // account by acquiring a compositor lock.
+    ui::Compositor* compositor =
+        widget_->GetNativeWindow()->layer()->GetCompositor();
+    configure_compositor_lock_ = compositor->GetCompositorLock(
+        nullptr, base::TimeDelta::FromMilliseconds(
+                     kMaximizedOrFullscreenOrPinnedLockTimeoutMs));
+  }
+}
+
+void ShellSurface::OnPostWindowStateTypeChange(
+    ash::wm::WindowState* window_state,
+    ash::mojom::WindowStateType old_type) {
+  ash::mojom::WindowStateType new_type = window_state->GetStateType();
+  if (ash::IsMaximizedOrFullscreenOrPinnedWindowStateType(new_type)) {
+    Configure();
+  }
+
+  if (widget_) {
+    UpdateWidgetBounds();
+    UpdateShadow();
+  }
 }
 
 }  // namespace exo
