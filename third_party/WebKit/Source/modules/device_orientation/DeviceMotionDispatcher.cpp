@@ -66,8 +66,8 @@ void DeviceMotionDispatcher::DidChangeDeviceMotion(
   NotifyControllers();
 }
 
-DeviceMotionData* DeviceMotionDispatcher::LatestDeviceMotionData() {
-  return last_device_motion_data_.Get();
+const DeviceMotionData* DeviceMotionDispatcher::LatestDeviceMotionData() {
+  return static_cast<const DeviceMotionData*>(last_device_motion_data_.Get());
 }
 
 }  // namespace blink
