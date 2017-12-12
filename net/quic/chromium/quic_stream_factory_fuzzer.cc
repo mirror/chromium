@@ -140,10 +140,11 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
           store_server_configs_in_properties, close_sessions_on_ip_change,
           mark_quic_broken_when_network_blackholes,
           kIdleConnectionTimeoutSeconds, kPingTimeoutSecs,
-          kMaxTimeForCryptoHandshakeSecs, kInitialIdleTimeoutSecs,
-          connect_using_default_network, migrate_sessions_on_network_change,
-          migrate_sessions_early, migrate_sessions_on_network_change_v2,
-          migrate_sessions_early_v2, allow_server_migration,
+          base::TimeDelata::FromSeconds(kMaxTimeForCryptoHandshakeSecs),
+          kInitialIdleTimeoutSecs, connect_using_default_network,
+          migrate_sessions_on_network_change, migrate_sessions_early,
+          migrate_sessions_on_network_change_v2, migrate_sessions_early_v2,
+          kMaxTimeOnNonDefaultNetworkSecs, allow_server_migration,
           race_cert_verification, estimate_initial_rtt, env->connection_options,
           env->client_connection_options, enable_token_binding);
 
