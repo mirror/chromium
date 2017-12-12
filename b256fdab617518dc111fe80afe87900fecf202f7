@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "750dd4d8_0e68cfde",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-12T16:34:36Z",
+      "side": 1,
+      "message": "WDYT about changing the name of the target to \"root\" or \"gn_root\" or something like that? I think that might help its purpose be a bit clearer and be slightly less confused with \"all\"?",
+      "revId": "b256fdab617518dc111fe80afe87900fecf202f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306403d6_770358e4",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-12T16:34:36Z",
+      "side": 1,
+      "message": "Can you delete lines 59-61 as well?",
+      "revId": "b256fdab617518dc111fe80afe87900fecf202f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
