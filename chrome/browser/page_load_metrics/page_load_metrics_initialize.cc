@@ -71,8 +71,6 @@ class PageLoadMetricsEmbedder
   std::unique_ptr<base::Timer> CreateTimer() override;
 
  private:
-  bool IsPrerendering() const;
-
   content::WebContents* const web_contents_;
 
   DISALLOW_COPY_AND_ASSIGN(PageLoadMetricsEmbedder);
@@ -86,7 +84,10 @@ PageLoadMetricsEmbedder::~PageLoadMetricsEmbedder() {}
 
 void PageLoadMetricsEmbedder::RegisterObservers(
     page_load_metrics::PageLoadTracker* tracker) {
-  if (!IsPrerendering()) {
+  prerender::PrerenderContents* prerender_contents =
+      prerender::PrerenderContents::FromWebContents(web_contents_);
+  bool is_prerendering = !!prerender_contents;
+  if (!is_prerendering) {
     tracker->AddObserver(base::MakeUnique<AbortsPageLoadMetricsObserver>());
     tracker->AddObserver(base::MakeUnique<AMPPageLoadMetricsObserver>());
     tracker->AddObserver(base::MakeUnique<CorePageLoadMetricsObserver>());
@@ -132,7 +133,7 @@ void PageLoadMetricsEmbedder::RegisterObservers(
     std::unique_ptr<page_load_metrics::PageLoadMetricsObserver>
         no_state_prefetch_observer =
             NoStatePrefetchPageLoadMetricsObserver::CreateIfNeeded(
-                web_contents_);
+                web_contents_, prerender_contents->prerender_manager());
     if (no_state_prefetch_observer)
       tracker->AddObserver(std::move(no_state_prefetch_observer));
 #if defined(OS_ANDROID)
@@ -152,21 +153,17 @@ void PageLoadMetricsEmbedder::RegisterObservers(
     tracker->AddObserver(
         base::MakeUnique<LocalNetworkRequestsPageLoadMetricsObserver>());
   } else {
+    UMA_HISTOGRAM_BOOLEAN("PageLoad.Internal.Prerender", true);
     std::unique_ptr<page_load_metrics::PageLoadMetricsObserver>
-        prerender_observer =
-            PrerenderPageLoadMetricsObserver::CreateIfNeeded(web_contents_);
+        prerender_observer = PrerenderPageLoadMetricsObserver::CreateIfNeeded(
+            web_contents_, prerender_contents->prerender_manager());
     if (prerender_observer)
       tracker->AddObserver(std::move(prerender_observer));
   }
   tracker->AddObserver(
-      base::MakeUnique<OmniboxSuggestionUsedMetricsObserver>(IsPrerendering()));
+      base::MakeUnique<OmniboxSuggestionUsedMetricsObserver>(is_prerendering));
   tracker->AddObserver(
       base::MakeUnique<DelayNavigationPageLoadMetricsObserver>());
-}
-
-bool PageLoadMetricsEmbedder::IsPrerendering() const {
-  return prerender::PrerenderContents::FromWebContents(web_contents_) !=
-         nullptr;
 }
 
 std::unique_ptr<base::Timer> PageLoadMetricsEmbedder::CreateTimer() {
