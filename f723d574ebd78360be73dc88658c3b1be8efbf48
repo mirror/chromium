@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "dc971e86_9caf9dba",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-12T07:22:40Z",
+      "side": 1,
+      "message": "Well, \u0027Latn\u0027 is a script code and has little to do with a legacy character set (ISO-8859-1 or Windows-1252). Nonethless, it might be the last resort *IF* what Greg suggested cannot be done for some unknown reason. \n\nI\u0027m out of context to make a meaningful comment, but I agree in spirit with Greg. Unconditionally specifying \u0027en\u0027 does not seem right.",
+      "parentUuid": "7f05ecf6_d7622738",
+      "range": {
+        "startLine": 42,
+        "startChar": 57,
+        "endLine": 42,
+        "endChar": 61
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61a2b414_a8998fb3",
         "filename": "services/shape_detection/text_detection_impl_win.cc",
         "patchSetId": 4
