@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/logging.h"
+#include "base/debug/stack_trace.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
@@ -87,6 +88,9 @@ void FrameSinkManagerImpl::SetLocalClient(
 
 void FrameSinkManagerImpl::RegisterFrameSinkId(
     const FrameSinkId& frame_sink_id) {
+  LOG(ERROR) << "FrameSinkManagerImpl::RegisterFrameSinkId: " << frame_sink_id;
+  // base::debug::StackTrace().Print();
+
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   surface_manager_.RegisterFrameSinkId(frame_sink_id);
   if (video_detector_)
@@ -350,6 +354,10 @@ bool FrameSinkManagerImpl::ChildContains(
 
 void FrameSinkManagerImpl::OnFirstSurfaceActivation(
     const SurfaceInfo& surface_info) {
+  LOG(ERROR) << "FrameSinkManagerImpl::OnFirstSurfaceActivation";
+  LOG(ERROR) << "______________________________________________start";
+  LOG(ERROR) << surface_manager_.SurfaceReferencesToString();
+  LOG(ERROR) << "______________________________________________end";
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_GT(surface_info.device_scale_factor(), 0.0f);
 
@@ -358,8 +366,16 @@ void FrameSinkManagerImpl::OnFirstSurfaceActivation(
   // be necessary, because a surface reference might already exist and no
   // temporary reference was created. It could be useful to let |client_| know
   // if it should find an owner.
-  if (client_)
+  //
+  //
+  // blink::mojom::blink::OffscreenCanvasSurfaceClient
+  if (client_) {// This is the (Web)SurfaceLayerBridge.
+    LOG(ERROR) << "client";
     client_->OnFirstSurfaceActivation(surface_info);
+  } else {
+    LOG(ERROR) << "no client";
+  }
+    
 }
 
 void FrameSinkManagerImpl::OnSurfaceActivated(const SurfaceId& surface_id) {}

@@ -70,6 +70,7 @@ VideoFrameCompositor::~VideoFrameCompositor() {
 }
 
 void VideoFrameCompositor::EnableSubmission(const viz::FrameSinkId& id) {
+  LOG(ERROR) << "VideoFrameCompositor::EnableSubmission: " << id;
   DCHECK(task_runner_->BelongsToCurrentThread());
   submitter_->StartSubmitting(id);
 }
