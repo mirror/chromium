@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14ddd669_f82a043c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-12T16:29:33Z",
+      "side": 0,
+      "message": "is this change regressed this issue https://bugs.chromium.org/p/chromium/issues/detail?id\u003d708678?",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 17
+      },
+      "revId": "2aead702eb3edab66f5bcd197e799b5055ef9bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
