@@ -665,6 +665,9 @@ public class NotificationPlatformBridge {
             notificationBuilder.addSettingsAction(
                     settingsIconId, settingsTitle, pendingSettingsIntent);
 
+            notificationBuilder.setPublicVersion(
+                    notificationBuilder.createPublicNotification(context));
+
             mNotificationManager.notify(platformTag, PLATFORM_ID, notificationBuilder.build());
             NotificationUmaTracker.getInstance().onNotificationShown(
                     NotificationUmaTracker.SITES, notificationBuilder.mChannelId);

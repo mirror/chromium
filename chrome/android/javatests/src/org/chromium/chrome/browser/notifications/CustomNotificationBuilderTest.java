@@ -77,25 +77,27 @@ public class CustomNotificationBuilderTest {
                 new int[] {Color.WHITE}, 1 /* width */, 1 /* height */, Bitmap.Config.ARGB_8888);
         actionIcon = actionIcon.copy(Bitmap.Config.ARGB_8888, true /* isMutable */);
 
-        Notification notification = new CustomNotificationBuilder(context)
-                                            .setSmallIcon(R.drawable.ic_chrome)
-                                            .setLargeIcon(largeIcon)
-                                            .setTitle("title")
-                                            .setBody("body")
-                                            .setOrigin("origin")
-                                            .setChannelId(ChannelDefinitions.CHANNEL_ID_SITES)
-                                            .setTicker("ticker")
-                                            .setDefaults(Notification.DEFAULT_ALL)
-                                            .setVibrate(new long[] {100L})
-                                            .setContentIntent(contentIntent)
-                                            .setDeleteIntent(deleteIntent)
-                                            .addButtonAction(actionIcon, "button",
-                                                    createIntent(context, "ActionButtonOne"))
-                                            .addButtonAction(actionIcon, "button",
-                                                    createIntent(context, "ActionButtonTwo"))
-                                            .addSettingsAction(0 /* iconId */, "settings",
-                                                    createIntent(context, "SettingsButton"))
-                                            .build();
+        CustomNotificationBuilder builder = new CustomNotificationBuilder(context);
+        Notification notification =
+                builder.setSmallIcon(R.drawable.ic_chrome)
+                        .setLargeIcon(largeIcon)
+                        .setTitle("title")
+                        .setBody("body")
+                        .setOrigin("origin")
+                        .setChannelId(ChannelDefinitions.CHANNEL_ID_SITES)
+                        .setTicker("ticker")
+                        .setDefaults(Notification.DEFAULT_ALL)
+                        .setVibrate(new long[] {100L})
+                        .setContentIntent(contentIntent)
+                        .setDeleteIntent(deleteIntent)
+                        .setPublicVersion(builder.createPublicNotification(context))
+                        .addButtonAction(
+                                actionIcon, "button", createIntent(context, "ActionButtonOne"))
+                        .addButtonAction(
+                                actionIcon, "button", createIntent(context, "ActionButtonTwo"))
+                        .addSettingsAction(
+                                0 /* iconId */, "settings", createIntent(context, "SettingsButton"))
+                        .build();
 
         assertSmallNotificationIconAsExpected(context, notification, smallIcon);
         assertLargeNotificationIconAsExpected(context, notification, largeIcon);

@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.chromium.webapk.lib.common.WebApkConstants;
+import org.chromium.webapk.lib.common.WebApkHelper;
 import org.chromium.webapk.lib.common.WebApkMetaDataKeys;
 
 import java.io.File;
@@ -70,14 +71,8 @@ public class WebApkUtils {
      * @return The remote context. Returns null on an error.
      */
     public static Context getHostBrowserContext(Context context) {
-        try {
-            String hostPackage = getHostBrowserPackageName(context);
-            return context.getApplicationContext().createPackageContext(
-                    hostPackage, Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE);
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return WebApkHelper.getRemoteContext(context, getHostBrowserPackageName(context),
+                Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE);
     }
 
     /**
