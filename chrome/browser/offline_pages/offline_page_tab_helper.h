@@ -35,6 +35,8 @@ class OfflinePageTabHelper :
                       const OfflinePageHeader& offline_header,
                       bool is_offline_preview);
 
+  void ClearOfflinePage();
+
   const OfflinePageItem* offline_page() {
     return offline_info_.offline_page.get();
   }
@@ -92,7 +94,7 @@ class OfflinePageTabHelper :
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
 
-  void SelectPageForURLDone(const OfflinePageItem* offline_page);
+  void SelectPagesForURLDone(const std::vector<OfflinePageItem>& offline_pages);
 
   void DuplicateCheckDoneForScheduleDownload(
       content::WebContents* web_contents,
