@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4d81f7c_7319f888",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-12T01:28:13Z",
+      "side": 1,
+      "message": "memo.pushAll(timing.map(entry \u003d\u003e ...",
+      "revId": "3edb824ca666ce681360f4186f37bb2eceaecfee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d2dca3_ed2400ce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-12T01:28:13Z",
+      "side": 1,
+      "message": "let\u0027s rather pass a regexp and so something like valueString.replace(re, \u0027\u0027)",
+      "revId": "3edb824ca666ce681360f4186f37bb2eceaecfee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f335294_89b8d65a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-12T01:28:13Z",
+      "side": 1,
+      "message": "Let\u0027s represent this as /^[0-9a-zA-Z!...]/ instead.",
+      "revId": "3edb824ca666ce681360f4186f37bb2eceaecfee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87dd601_3013d09a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-12T01:28:13Z",
+      "side": 1,
+      "message": "one expression within while (), please, this is difficult to read.",
+      "revId": "3edb824ca666ce681360f4186f37bb2eceaecfee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fdf9df_13659723",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-12T01:28:13Z",
+      "side": 1,
+      "message": "var paramName \u003d {}\nif (!consumeToken(paramName))\n  continue;\n\nAlso, consider moving skipWhitespace() into consumeToken().",
+      "revId": "3edb824ca666ce681360f4186f37bb2eceaecfee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b7876e_72bb3b8d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-12T01:28:13Z",
+      "side": 1,
+      "message": "should we indicate error otherwise?",
+      "revId": "3edb824ca666ce681360f4186f37bb2eceaecfee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
