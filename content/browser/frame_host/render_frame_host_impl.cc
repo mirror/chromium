@@ -1366,6 +1366,7 @@ void RenderFrameHostImpl::DidNavigate(
   // The URL is set regardless of whether it's for a net error or not.
   frame_tree_node_->SetCurrentURL(params.url);
   SetLastCommittedOrigin(params.origin);
+  last_committed_base_url_ = params.base_url;
 
   // Separately, update the frame's last successful URL except for net error
   // pages, since those do not end up in the correct process after transfers

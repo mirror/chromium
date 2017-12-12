@@ -353,6 +353,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // renderer process.
   bool is_local_root() const { return !!render_widget_host_; }
 
+  // Returns the last committed base URL for this frame. Empty if the same as
+  // the last committed URL.
+  const GURL& last_committed_base_url() const {
+    return last_committed_base_url_;
+  }
+
   // Returns the RenderWidgetHostImpl attached to this frame or the nearest
   // ancestor frame, which could potentially be the root. For most input
   // and rendering related purposes, GetView() should be preferred and
@@ -1113,6 +1119,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Track this frame's last committed URL.
   GURL last_committed_url_;
+
+  // Track this frame's last committed base URL. If empty, it is the same as
+  // |last_committed_url_|.
+  GURL last_committed_base_url_;
 
   // Track this frame's last committed origin.
   url::Origin last_committed_origin_;
