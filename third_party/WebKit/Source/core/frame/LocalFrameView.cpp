@@ -36,7 +36,9 @@
 #include "core/editing/DragCaret.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/LayoutSelection.h"
 #include "core/editing/RenderedPosition.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/markers/DocumentMarkerController.h"
@@ -2100,14 +2102,18 @@ bool LocalFrameView::ComputeCompositedSelection(
   if (!frame.View() || frame.View()->ShouldThrottleRendering())
     return false;
 
-  const VisibleSelection& visible_selection =
-      frame.Selection().ComputeVisibleSelectionInDOMTree();
   if (!frame.Selection().IsHandleVisible() || frame.Selection().IsHidden())
     return false;
 
+  const VisibleSelection& visible_selection =
+      frame.Selection().ComputeVisibleSelectionInDOMTree();
   // Non-editable caret selections lack any kind of UI affordance, and
   // needn't be tracked by the client.
-  if (visible_selection.IsCaret() && !visible_selection.IsContentEditable())
+  const SelectionInDOMTree& selection_in_dom =
+      frame.Selection().GetSelectionInDOMTree();
+  const SelectionPaintRange& paint_range =
+      ComputeSelectionPaintRange(selection_in_dom, *frame.GetDocument());
+  if (paint_range.IsCaret() && !visible_selection.IsContentEditable())
     return false;
 
   VisiblePosition visible_start(visible_selection.VisibleStart());

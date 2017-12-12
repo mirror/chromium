@@ -29,6 +29,7 @@
 
 namespace blink {
 
+class Document;
 class IntRect;
 class LayoutObject;
 class FrameSelection;
@@ -80,6 +81,8 @@ class SelectionPaintRange {
   WTF::Optional<unsigned> EndOffset() const;
 
   bool IsNull() const { return !start_layout_object_; }
+  bool IsCaret() const;
+  bool IsRange() const;
 
  private:
   LayoutObject* start_layout_object_ = nullptr;
@@ -116,6 +119,9 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
 
   SelectionPaintRange paint_range_;
 };
+
+SelectionPaintRange ComputeSelectionPaintRange(const SelectionInDOMTree&,
+                                               const Document&);
 
 void CORE_EXPORT PrintLayoutObjectForSelection(std::ostream&, LayoutObject*);
 #ifndef NDEBUG

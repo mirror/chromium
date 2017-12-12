@@ -96,6 +96,19 @@ SelectionPaintRange::Iterator& SelectionPaintRange::Iterator::operator++() {
   return *this;
 }
 
+bool SelectionPaintRange::IsCaret() const {
+  if (IsNull())
+    return false;
+  return StartLayoutObject() == EndLayoutObject() &&
+         StartOffset() == EndOffset();
+}
+
+bool SelectionPaintRange::IsRange() const {
+  if (IsNull())
+    return false;
+  return !IsCaret();
+}
+
 LayoutSelection::LayoutSelection(FrameSelection& frame_selection)
     : frame_selection_(&frame_selection),
       has_pending_selection_(false),
@@ -121,6 +134,20 @@ static SelectionMode ComputeSelectionMode(
   return SelectionMode::kBlockCursor;
 }
 
+static EphemeralRangeInFlatTree ToEphemeralRangeInFlatTree(
+    const SelectionInDOMTree& selection_in_dom,
+    const Document& document) {
+  const PositionInFlatTree& base =
+      ToPositionInFlatTree(selection_in_dom.Base());
+  const PositionInFlatTree& extent =
+      ToPositionInFlatTree(selection_in_dom.Extent());
+  if (base.IsNull() || extent.IsNull() || base == extent ||
+      !base.IsValidFor(document) || !extent.IsValidFor(document))
+    return {};
+  return base <= extent ? EphemeralRangeInFlatTree(base, extent)
+                        : EphemeralRangeInFlatTree(extent, base);
+}
+
 static EphemeralRangeInFlatTree CalcSelectionInFlatTree(
     const FrameSelection& frame_selection) {
   const SelectionInDOMTree& selection_in_dom =
@@ -129,16 +156,8 @@ static EphemeralRangeInFlatTree CalcSelectionInFlatTree(
     case SelectionMode::kNone:
       return {};
     case SelectionMode::kRange: {
-      const PositionInFlatTree& base =
-          ToPositionInFlatTree(selection_in_dom.Base());
-      const PositionInFlatTree& extent =
-          ToPositionInFlatTree(selection_in_dom.Extent());
-      if (base.IsNull() || extent.IsNull() || base == extent ||
-          !base.IsValidFor(frame_selection.GetDocument()) ||
-          !extent.IsValidFor(frame_selection.GetDocument()))
-        return {};
-      return base <= extent ? EphemeralRangeInFlatTree(base, extent)
-                            : EphemeralRangeInFlatTree(extent, base);
+      return ToEphemeralRangeInFlatTree(selection_in_dom,
+                                        frame_selection.GetDocument());
     }
     case SelectionMode::kBlockCursor: {
       const PositionInFlatTree& base =
@@ -434,15 +453,15 @@ static LayoutTextFragment* FirstLetterPartFor(LayoutObject* layout_object) {
       AssociatedLayoutObjectOf(*layout_object->GetNode(), 0)));
 }
 
-static void MarkSelected(SelectedLayoutObjects* selected_objects,
+static void MarkSelected(SelectedLayoutObjects& selected_objects,
                          LayoutObject* layout_object,
                          SelectionState state) {
   DCHECK(layout_object->CanBeSelectionLeaf());
   SetSelectionStateIfNeeded(layout_object, state);
-  selected_objects->insert(layout_object);
+  selected_objects.insert(layout_object);
 }
 
-static void MarkSelectedInside(SelectedLayoutObjects* selected_objects,
+static void MarkSelectedInside(SelectedLayoutObjects& selected_objects,
                                LayoutObject* layout_object) {
   MarkSelected(selected_objects, layout_object, SelectionState::kInside);
   LayoutTextFragment* const first_letter_part =
@@ -453,17 +472,20 @@ static void MarkSelectedInside(SelectedLayoutObjects* selected_objects,
 }
 
 static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInOneNode(
-    SelectedLayoutObjects selected_objects,
+    SelectedLayoutObjects* selected_objects,
     LayoutObject* layout_object,
     WTF::Optional<unsigned> start_offset,
     WTF::Optional<unsigned> end_offset) {
   if (!layout_object->GetNode()->IsTextNode()) {
     DCHECK(!start_offset.has_value());
     DCHECK(!end_offset.has_value());
-    MarkSelected(&selected_objects, layout_object,
-                 SelectionState::kStartAndEnd);
+    if (selected_objects) {
+      MarkSelected(*selected_objects, layout_object,
+                   SelectionState::kStartAndEnd);
+    }
     return {{layout_object, WTF::nullopt, layout_object, WTF::nullopt},
-            std::move(selected_objects)};
+            selected_objects ? std::move(*selected_objects)
+                             : SelectedLayoutObjects()};
   }
 
   DCHECK(start_offset.has_value());
@@ -474,10 +496,13 @@ static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInOneNode(
   LayoutTextFragment* const first_letter_part =
       FirstLetterPartFor(layout_object);
   if (!first_letter_part) {
-    MarkSelected(&selected_objects, layout_object,
-                 SelectionState::kStartAndEnd);
+    if (selected_objects) {
+      MarkSelected(*selected_objects, layout_object,
+                   SelectionState::kStartAndEnd);
+    }
     return {{layout_object, start_offset, layout_object, end_offset},
-            std::move(selected_objects)};
+            selected_objects ? std::move(*selected_objects)
+                             : SelectedLayoutObjects()};
   }
   const unsigned unsigned_start = start_offset.value();
   const unsigned unsigned_end = end_offset.value();
@@ -486,27 +511,36 @@ static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInOneNode(
   if (unsigned_start >= remaining_part->Start()) {
     // Case 1: The selection starts and ends in remaining part.
     DCHECK_GT(unsigned_end, remaining_part->Start());
-    MarkSelected(&selected_objects, remaining_part,
-                 SelectionState::kStartAndEnd);
+    if (selected_objects) {
+      MarkSelected(*selected_objects, remaining_part,
+                   SelectionState::kStartAndEnd);
+    }
     return {{remaining_part, unsigned_start - remaining_part->Start(),
              remaining_part, unsigned_end - remaining_part->Start()},
-            std::move(selected_objects)};
+            selected_objects ? std::move(*selected_objects)
+                             : SelectedLayoutObjects()};
   }
   if (unsigned_end <= remaining_part->Start()) {
     // Case 2: The selection starts and ends in first letter part.
-    MarkSelected(&selected_objects, first_letter_part,
-                 SelectionState::kStartAndEnd);
+    if (selected_objects) {
+      MarkSelected(*selected_objects, first_letter_part,
+                   SelectionState::kStartAndEnd);
+    }
     return {{first_letter_part, start_offset, first_letter_part, end_offset},
-            std::move(selected_objects)};
+            selected_objects ? std::move(*selected_objects)
+                             : SelectedLayoutObjects()};
   }
   // Case 3: The selection starts in first-letter part and ends in remaining
   // part.
   DCHECK_GT(unsigned_end, remaining_part->Start());
-  MarkSelected(&selected_objects, first_letter_part, SelectionState::kStart);
-  MarkSelected(&selected_objects, remaining_part, SelectionState::kEnd);
+  if (selected_objects) {
+    MarkSelected(*selected_objects, first_letter_part, SelectionState::kStart);
+    MarkSelected(*selected_objects, remaining_part, SelectionState::kEnd);
+  }
   return {{first_letter_part, start_offset, remaining_part,
            unsigned_end - remaining_part->Start()},
-          std::move(selected_objects)};
+          selected_objects ? std::move(*selected_objects)
+                           : SelectedLayoutObjects()};
 }
 
 // LayoutObjectAndOffset represents start or end of SelectionPaintRange.
@@ -531,7 +565,10 @@ LayoutObjectAndOffset MarkStart(SelectedLayoutObjects* selected_objects,
                                 WTF::Optional<unsigned> start_offset) {
   if (!start_layout_object->GetNode()->IsTextNode()) {
     DCHECK(!start_offset.has_value());
-    MarkSelected(selected_objects, start_layout_object, SelectionState::kStart);
+    if (selected_objects) {
+      MarkSelected(*selected_objects, start_layout_object,
+                   SelectionState::kStart);
+    }
     return LayoutObjectAndOffset(start_layout_object);
   }
 
@@ -541,7 +578,10 @@ LayoutObjectAndOffset MarkStart(SelectedLayoutObjects* selected_objects,
   if (unsigned_offset >= start_layout_text->TextStartOffset()) {
     // |start_offset| is within |start_layout_object| whether it has first
     // letter part or not.
-    MarkSelected(selected_objects, start_layout_object, SelectionState::kStart);
+    if (selected_objects) {
+      MarkSelected(*selected_objects, start_layout_object,
+                   SelectionState::kStart);
+    }
     return {start_layout_text,
             unsigned_offset - start_layout_text->TextStartOffset()};
   }
@@ -551,8 +591,10 @@ LayoutObjectAndOffset MarkStart(SelectedLayoutObjects* selected_objects,
   LayoutTextFragment* const first_letter_part =
       FirstLetterPartFor(start_layout_object);
   DCHECK(first_letter_part);
-  MarkSelected(selected_objects, first_letter_part, SelectionState::kStart);
-  MarkSelected(selected_objects, start_layout_text, SelectionState::kInside);
+  if (selected_objects) {
+    MarkSelected(*selected_objects, first_letter_part, SelectionState::kStart);
+    MarkSelected(*selected_objects, start_layout_text, SelectionState::kInside);
+  }
   return {first_letter_part, start_offset.value()};
 }
 
@@ -561,7 +603,8 @@ LayoutObjectAndOffset MarkEnd(SelectedLayoutObjects* selected_objects,
                               WTF::Optional<unsigned> end_offset) {
   if (!end_layout_object->GetNode()->IsTextNode()) {
     DCHECK(!end_offset.has_value());
-    MarkSelected(selected_objects, end_layout_object, SelectionState::kEnd);
+    if (selected_objects)
+      MarkSelected(*selected_objects, end_layout_object, SelectionState::kEnd);
     return LayoutObjectAndOffset(end_layout_object);
   }
 
@@ -571,11 +614,15 @@ LayoutObjectAndOffset MarkEnd(SelectedLayoutObjects* selected_objects,
   if (unsigned_offset >= end_layout_text->TextStartOffset()) {
     // |end_offset| is within |end_layout_object| whether it has first
     // letter part or not.
-    MarkSelected(selected_objects, end_layout_object, SelectionState::kEnd);
+    if (selected_objects) {
+      MarkSelected(*selected_objects, end_layout_object, SelectionState::kEnd);
+    }
     if (LayoutTextFragment* const first_letter_part =
             FirstLetterPartFor(end_layout_object)) {
-      MarkSelected(selected_objects, first_letter_part,
-                   SelectionState::kInside);
+      if (selected_objects) {
+        MarkSelected(*selected_objects, first_letter_part,
+                     SelectionState::kInside);
+      }
     }
     return {end_layout_text,
             unsigned_offset - end_layout_text->TextStartOffset()};
@@ -586,41 +633,42 @@ LayoutObjectAndOffset MarkEnd(SelectedLayoutObjects* selected_objects,
   LayoutTextFragment* const first_letter_part =
       FirstLetterPartFor(end_layout_object);
   DCHECK(first_letter_part);
-  MarkSelected(selected_objects, first_letter_part, SelectionState::kEnd);
+  if (selected_objects)
+    MarkSelected(*selected_objects, first_letter_part, SelectionState::kEnd);
   return {first_letter_part, end_offset.value()};
 }
 
 static NewPaintRangeAndSelectedLayoutObjects MarkStartAndEndInTwoNodes(
-    SelectedLayoutObjects selected_objects,
+    SelectedLayoutObjects* selected_objects,
     LayoutObject* start_layout_object,
     WTF::Optional<unsigned> start_offset,
     LayoutObject* end_layout_object,
     WTF::Optional<unsigned> end_offset) {
   const LayoutObjectAndOffset& start =
-      MarkStart(&selected_objects, start_layout_object, start_offset);
+      MarkStart(selected_objects, start_layout_object, start_offset);
   const LayoutObjectAndOffset& end =
-      MarkEnd(&selected_objects, end_layout_object, end_offset);
+      MarkEnd(selected_objects, end_layout_object, end_offset);
   return {{start.layout_object, start.offset, end.layout_object, end.offset},
-          std::move(selected_objects)};
+          selected_objects ? std::move(*selected_objects)
+                           : SelectedLayoutObjects()};
 }
 
-static NewPaintRangeAndSelectedLayoutObjects
-CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
-  const SelectionInDOMTree& selection_in_dom =
-      frame_selection.GetSelectionInDOMTree();
-  if (selection_in_dom.IsNone())
-    return {};
-
-  const EphemeralRangeInFlatTree& selection =
-      CalcSelectionInFlatTree(frame_selection);
-  if (selection.IsCollapsed() || frame_selection.IsHidden())
-    return {};
-
+enum class ComputeSelectionPaintRangeOption {
+  kMarkSelectionState,
+  kNotMarkSelectionState,
+};
+static NewPaintRangeAndSelectedLayoutObjects ComputeSelectionPaintRangeInternal(
+    const EphemeralRangeInFlatTree& selection,
+    ComputeSelectionPaintRangeOption option) {
   // Find first/last visible LayoutObject while
   // marking SelectionState and collecting invalidation candidate LayoutObjects.
   LayoutObject* start_layout_object = nullptr;
   LayoutObject* end_layout_object = nullptr;
   SelectedLayoutObjects selected_objects;
+  SelectedLayoutObjects* const selected_objects_builder =
+      option == ComputeSelectionPaintRangeOption::kMarkSelectionState
+          ? &selected_objects
+          : nullptr;
   for (const Node& node : selection.Nodes()) {
     LayoutObject* const layout_object = node.GetLayoutObject();
     if (!layout_object || !layout_object->CanBeSelectionLeaf())
@@ -635,8 +683,8 @@ CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
     // In this loop, |end_layout_object| is pointing current last candidate
     // LayoutObject and if it is not start and we find next, we mark the
     // current one as kInside.
-    if (end_layout_object != start_layout_object)
-      MarkSelectedInside(&selected_objects, end_layout_object);
+    if (selected_objects_builder && end_layout_object != start_layout_object)
+      MarkSelectedInside(*selected_objects_builder, end_layout_object);
     end_layout_object = layout_object;
   }
 
@@ -651,15 +699,30 @@ CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
       *start_layout_object, selection.StartPosition().ToOffsetInAnchor());
   const WTF::Optional<unsigned> end_offset = ComputeEndOffset(
       *end_layout_object, selection.EndPosition().ToOffsetInAnchor());
-
   if (start_layout_object == end_layout_object) {
-    return MarkStartAndEndInOneNode(std::move(selected_objects),
+    return MarkStartAndEndInOneNode(selected_objects_builder,
                                     start_layout_object, start_offset,
                                     end_offset);
   }
-  return MarkStartAndEndInTwoNodes(std::move(selected_objects),
+  return MarkStartAndEndInTwoNodes(selected_objects_builder,
                                    start_layout_object, start_offset,
                                    end_layout_object, end_offset);
+}
+
+static NewPaintRangeAndSelectedLayoutObjects
+CalcSelectionRangeAndSetSelectionState(const FrameSelection& frame_selection) {
+  const SelectionInDOMTree& selection_in_dom =
+      frame_selection.GetSelectionInDOMTree();
+  if (selection_in_dom.IsNone())
+    return {};
+
+  const EphemeralRangeInFlatTree& selection =
+      CalcSelectionInFlatTree(frame_selection);
+  if (selection.IsCollapsed() || frame_selection.IsHidden())
+    return {};
+
+  return ComputeSelectionPaintRangeInternal(
+      selection, ComputeSelectionPaintRangeOption::kMarkSelectionState);
 }
 
 void LayoutSelection::SetHasPendingSelection() {
@@ -768,6 +831,18 @@ void LayoutSelection::InvalidatePaintForSelection() {
 
     runner->SetShouldInvalidateSelection();
   }
+}
+
+SelectionPaintRange ComputeSelectionPaintRange(
+    const SelectionInDOMTree& selection,
+    const Document& document) {
+  const EphemeralRangeInFlatTree& range_in_flat =
+      ToEphemeralRangeInFlatTree(selection, document);
+  const NewPaintRangeAndSelectedLayoutObjects& new_range =
+      ComputeSelectionPaintRangeInternal(
+          range_in_flat,
+          ComputeSelectionPaintRangeOption::kNotMarkSelectionState);
+  return new_range.PaintRange();
 }
 
 void LayoutSelection::Trace(blink::Visitor* visitor) {
