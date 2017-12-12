@@ -340,7 +340,8 @@ class SimpleSynchronousEntry {
                        SimpleFileEOF* eof_record);
 
   // Reads either from |file_0_prefetch| or |file|.
-  // Range-checks all the in-memory reads.
+  // Range-checks all the in-memory reads. If dest is null, only range checks,
+  // doesn't copy.
   bool ReadFromFileOrPrefetched(base::File* file,
                                 base::StringPiece file_0_prefetch,
                                 int file_index,
@@ -357,7 +358,7 @@ class SimpleSynchronousEntry {
   // and |*out_crc32| will get the checksum, which will be verified against
   // |eof_record|.
   int PreReadStreamPayload(base::File* file,
-                           base::StringPiece file_0_prefetch,
+                           net::GrowableIOBuffer* file_0_prefetch,
                            int stream_index,
                            int extra_size,
                            const SimpleEntryStat& entry_stat,

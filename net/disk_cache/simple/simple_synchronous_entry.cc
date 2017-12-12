@@ -127,9 +127,13 @@ const base::Feature kSimpleCachePrefetchExperiment = {
     "SimpleCachePrefetchExperiment", base::FEATURE_DISABLED_BY_DEFAULT};
 const char kSimplePrefetchBytesParam[] = "Bytes";
 
-int GetSimpleCachePrefetchSize() {
-  return base::GetFieldTrialParamByFeatureAsInt(kSimpleCachePrefetchExperiment,
-                                                kSimplePrefetchBytesParam, 0);
+int GetSimpleCachePrefetchSize(net::CacheType cache_type) {
+/*  if (cache_type == net::DISK_CACHE || cache_type == net::MEDIA_CACHE) {
+    return base::GetFieldTrialParamByFeatureAsInt(
+        kSimpleCachePrefetchExperiment, kSimplePrefetchBytesParam, 0);
+  } else {*/
+    return 32768;
+  //}
 }
 
 SimpleEntryStat::SimpleEntryStat(base::Time last_used,
@@ -739,25 +743,32 @@ int SimpleSynchronousEntry::CheckEOFRecord(base::File* file,
 
 int SimpleSynchronousEntry::PreReadStreamPayload(
     base::File* file,
-    base::StringPiece file_0_prefetch,
+    net::GrowableIOBuffer* file_0_prefetch,
     int stream_index,
     int extra_size,
     const SimpleEntryStat& entry_stat,
     const SimpleFileEOF& eof_record,
     SimpleStreamPrefetchData* out) {
   DCHECK(stream_index == 0 || stream_index == 1);
+  base::StringPiece file_0_prefetch_sp;
+  if (file_0_prefetch)
+    file_0_prefetch_sp.set(file_0_prefetch->data(), file_0_prefetch->capacity());
 
   int stream_size = entry_stat.data_size(stream_index);
   int read_size = stream_size + extra_size;
-  out->data = new net::GrowableIOBuffer();
-  out->data->SetCapacity(read_size);
+
+  if (stream_index == 0) {
+    out->data = new net::GrowableIOBuffer();
+    out->data->SetCapacity(read_size);
+  }
   int file_offset = entry_stat.GetOffsetInFile(key_.size(), 0, stream_index);
-  if (!ReadFromFileOrPrefetched(file, file_0_prefetch, 0, file_offset,
-                                read_size, out->data->data()))
+  if (!ReadFromFileOrPrefetched(file, file_0_prefetch_sp, 0, file_offset,
+                                read_size, stream_index == 0 ? out->data->data() : nullptr))
     return net::ERR_FAILED;
 
   // Check the CRC32.
-  uint32_t expected_crc32 = simple_util::Crc32(out->data->data(), stream_size);
+  const char* data_ptr = stream_index == 0 ? out->data->data() : file_0_prefetch->data() + file_offset;
+  uint32_t expected_crc32 = simple_util::Crc32(data_ptr, stream_size);
   if ((eof_record.flags & SimpleFileEOF::FLAG_HAS_CRC32) &&
       eof_record.data_crc32 != expected_crc32) {
     DVLOG(1) << "EOF record had bad crc.";
@@ -766,6 +777,12 @@ int SimpleSynchronousEntry::PreReadStreamPayload(
   }
   out->stream_crc32 = expected_crc32;
   RecordCheckEOFResult(cache_type_, CHECK_EOF_RESULT_SUCCESS);
+
+  if (stream_index == 1) {
+    out->data = file_0_prefetch;
+    out->data->set_offset(file_offset);
+  }
+
   return net::OK;
 }
 
@@ -1305,17 +1322,20 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
   // If the file is sufficiently small, we will prefetch everything --
   // in which case |prefetch_buf| will be non-null, and we should look at it
   // rather than call ::Read for the bits.
-  std::unique_ptr<char[]> prefetch_buf;
+  scoped_refptr<net::GrowableIOBuffer>(prefetch_buf);
+
   base::StringPiece file_0_prefetch;
 
-  if (file_size > GetSimpleCachePrefetchSize()) {
+  if (file_size > GetSimpleCachePrefetchSize(cache_type_)) {
     RecordWhetherOpenDidPrefetch(cache_type_, false);
   } else {
+    LOG(ERROR) << "file_size:" << file_size;
     RecordWhetherOpenDidPrefetch(cache_type_, true);
-    prefetch_buf = std::make_unique<char[]>(file_size);
-    if (file->Read(0, prefetch_buf.get(), file_size) != file_size)
+    prefetch_buf = new net::GrowableIOBuffer();
+    prefetch_buf->SetCapacity(file_size);
+    if (file->Read(0, prefetch_buf->data(), file_size) != file_size)
       return net::ERR_FAILED;
-    file_0_prefetch.set(prefetch_buf.get(), file_size);
+    file_0_prefetch.set(prefetch_buf->data(), file_size);
   }
 
   // Read stream 0 footer first --- it has size/feature info required to figure
@@ -1350,30 +1370,11 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
   out_entry_stat->set_data_size(1, stream1_size);
 
   // Put stream 0 data in memory --- plus maybe the sha256(key) footer.
-  rv = PreReadStreamPayload(file.get(), file_0_prefetch, /* stream_index = */ 0,
+  rv = PreReadStreamPayload(file.get(), prefetch_buf.get(), /* stream_index = */ 0,
                             extra_post_stream_0_read, *out_entry_stat,
                             stream_0_eof, &stream_prefetch_data[0]);
   if (rv != net::OK)
     return rv;
-
-  // If prefetch buffer is available, and we have sha256(key) (so we don't need
-  // to look at the header), extract out stream 1 info as well.
-  if (prefetch_buf && has_key_sha256) {
-    SimpleFileEOF stream_1_eof;
-    rv = GetEOFRecordData(
-        file.get(), file_0_prefetch, /* file_index = */ 0,
-        out_entry_stat->GetEOFOffsetInFile(key_.size(), /* stream_index = */ 1),
-        &stream_1_eof);
-    if (rv != net::OK)
-      return rv;
-
-    rv = PreReadStreamPayload(file.get(), file_0_prefetch,
-                              /* stream_index = */ 1,
-                              /* extra_size = */ 0, *out_entry_stat,
-                              stream_1_eof, &stream_prefetch_data[1]);
-    if (rv != net::OK)
-      return rv;
-  }
 
   // If present, check the key SHA256.
   if (has_key_sha256) {
@@ -1390,6 +1391,25 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
     // Elide header check if we verified sha256(key) via footer.
     header_and_key_check_needed_[0] = false;
     RecordKeySHA256Result(cache_type_, KeySHA256Result::MATCHED);
+
+    // If prefetch buffer is available, and we have sha256(key) (so we don't
+    // need to look at the header), extract out stream 1 info as well.
+    if (!file_0_prefetch.empty()) {
+      SimpleFileEOF stream_1_eof;
+      rv = GetEOFRecordData(
+          file.get(), file_0_prefetch, /* file_index = */ 0,
+          out_entry_stat->GetEOFOffsetInFile(key_.size(), /* stream_index = */ 1),
+          &stream_1_eof);
+      if (rv != net::OK)
+        return rv;
+
+      rv = PreReadStreamPayload(file.get(), prefetch_buf.get(),
+                                /* stream_index = */ 1,
+                                /* extra_size = */ 0, *out_entry_stat,
+                                stream_1_eof, &stream_prefetch_data[1]);
+      if (rv != net::OK)
+        return rv;
+    }
   } else {
     RecordKeySHA256Result(cache_type_, KeySHA256Result::NOT_PRESENT);
   }
@@ -1428,7 +1448,8 @@ bool SimpleSynchronousEntry::ReadFromFileOrPrefetched(
         end_numeric >= file_0_prefetch.size())
       return false;
 
-    memcpy(dest, file_0_prefetch.data() + offset, size);
+    if (dest)
+      memcpy(dest, file_0_prefetch.data() + offset, size);
     return true;
   }
 }
