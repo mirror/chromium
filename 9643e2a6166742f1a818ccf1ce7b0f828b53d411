@@ -46,6 +46,30 @@
       "revId": "9643e2a6166742f1a818ccf1ce7b0f828b53d411",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c0aeb8_50dfe74c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-12T21:29:32Z",
+      "side": 1,
+      "message": "Okay. I have some apprehension around applying an override configuration to all devices instead of just tablets.. but I can\u0027t think of any reason why it\u0027s a bad idea or find any emails/notes from the original implementation. I suspect the tablet restriction is because only tablets needed to be restricted.\n\nDoes this override mean that when switching to/from DeX we retain whatever layout we started with (phone or tablet)?\n\nAnother interesting test would be launching Chrome in multi-window mode and changing the display size in Android settings in the other window. I think it\u0027s probably \"easiest\" if we restart Chrome\u0027s process when a density/display change causes the isTablet threshold to be crossed.. but as long as we don\u0027t crash I think we\u0027re fine since it\u0027s not a typical use case.",
+      "parentUuid": "f2decb6b_8f1a7b04",
+      "range": {
+        "startLine": 113,
+        "startChar": 51,
+        "endLine": 113,
+        "endChar": 67
+      },
+      "revId": "9643e2a6166742f1a818ccf1ce7b0f828b53d411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
