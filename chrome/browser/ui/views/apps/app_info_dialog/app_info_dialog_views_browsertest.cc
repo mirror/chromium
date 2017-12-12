@@ -23,7 +23,7 @@ class AppInfoDialogBrowserTest : public DialogBrowserTest {
   AppInfoDialogBrowserTest() {}
 
   // DialogBrowserTest:
-  void ShowDialog(const std::string& name) override {
+  void ShowUI(const std::string& name) override {
     extension_environment_ =
         base::MakeUnique<extensions::TestExtensionEnvironment>(nullptr);
     constexpr char kTestExtensionId[] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
@@ -54,6 +54,6 @@ class AppInfoDialogBrowserTest : public DialogBrowserTest {
 
 // Invokes a dialog that shows details of an installed extension. See
 // test_browser_dialog.h.
-IN_PROC_BROWSER_TEST_F(AppInfoDialogBrowserTest, InvokeDialog_default) {
-  RunDialog();
+IN_PROC_BROWSER_TEST_F(AppInfoDialogBrowserTest, InvokeUI_default) {
+  ShowAndVerifyUI();
 }
