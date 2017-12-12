@@ -365,7 +365,10 @@ static_library("test_support") {
 source_set("unit_tests") {
   testonly = true
   sources = [
-    "alive_checker_unittest.cc",
+    # TODO(crbug.com/789804): Re-enable AliveCheckerTests once they have been
+    # fixed not to be flaky, e.g. by using a mocked clock.
+    #"alive_checker_unittest.cc",
+
     "audio_debug_file_writer_unittest.cc",
     "audio_debug_recording_helper_unittest.cc",
     "audio_debug_recording_manager_unittest.cc",
