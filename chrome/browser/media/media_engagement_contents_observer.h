@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_MEDIA_MEDIA_ENGAGEMENT_CONTENTS_OBSERVER_H_
 
 #include "content/public/browser/web_contents_observer.h"
+#include "services/metrics/public/cpp/ukm_source_id.h"
 
 namespace base {
 class Clock;
@@ -211,7 +212,8 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   // be used. Will return nullptr if no session should be used.
   scoped_refptr<MediaEngagementSession> GetOrCreateSession(
       const url::Origin& origin,
-      content::WebContents* opener) const;
+      content::WebContents* opener,
+      ukm::SourceId source_id) const;
 
   // Stores the ids of the players that were audible. The boolean will be true
   // if the player was significant.
