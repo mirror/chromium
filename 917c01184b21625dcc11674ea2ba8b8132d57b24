@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fc14eb6_33236917",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/clip/clip-with-transform-resize.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-12T19:54:14Z",
+      "side": 1,
+      "message": "Do you need all these properties on all of the objects? (z-index in particular.)",
+      "revId": "917c01184b21625dcc11674ea2ba8b8132d57b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
