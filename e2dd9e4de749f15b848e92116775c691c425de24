@@ -46,6 +46,30 @@
       "revId": "e2dd9e4de749f15b848e92116775c691c425de24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4e26bf91_a17b9cfc",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-12T21:11:41Z",
+      "side": 1,
+      "message": "I\u0027m not convinced this is correct.  is_presenting_ could change during ServiceScriptedAnimations, because we have the wait loops when we submit.\n\nPerhaps we need a RequestVSync on presentation changed?",
+      "parentUuid": "c11e3d3e_1dc12689",
+      "range": {
+        "startLine": 990,
+        "startChar": 34,
+        "endLine": 990,
+        "endChar": 48
+      },
+      "revId": "e2dd9e4de749f15b848e92116775c691c425de24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
