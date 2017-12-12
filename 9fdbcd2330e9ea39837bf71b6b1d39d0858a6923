@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6757d2f_433eab34",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T05:29:37Z",
+      "side": 1,
+      "message": "Added error code |UNSUPPORTED_SIMPLE_VALUE|. Currently simple value byte representations that are not one of 4 (TRUE, FALSE, NULL, UNDEFINED) are considered as errors.",
+      "parentUuid": "771f60bc_400f4234",
+      "range": {
+        "startLine": 149,
+        "startChar": 16,
+        "endLine": 149,
+        "endChar": 38
+      },
+      "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2170d575_00875c63",
         "filename": "content/browser/webauth/cbor/cbor_reader.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf23cb4_3042bf78",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T05:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2170d575_00875c63",
+      "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f35fe371_3ec96ea0",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T05:29:37Z",
+      "side": 1,
+      "message": "Added separate test (line 567).",
+      "parentUuid": "6b97995b_dcf21d9f",
+      "range": {
+        "startLine": 295,
+        "startChar": 21,
+        "endLine": 295,
+        "endChar": 45
+      },
+      "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c03ea8e9_f41c3f66",
         "filename": "content/browser/webauth/cbor/cbor_values.cc",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2017-12-08T17:58:07Z",
       "side": 1,
       "message": "This needs to make sure that the simple value is in range. So, definitely reject values in [25, 31], inclusive, or above 255, and possibly reject any that aren\u0027t among the defined 4.",
+      "range": {
+        "startLine": 87,
+        "startChar": 47,
+        "endLine": 87,
+        "endChar": 56
+      },
+      "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749fadc2_2199220b",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T05:29:37Z",
+      "side": 1,
+      "message": "Since SimpleValue enum are scoped, it would prevent implicit conversion from integers. Are you referring to the case where caller of CBORValue constructors use static_cast to convert int to SimpleValue enumeration type?",
+      "parentUuid": "c03ea8e9_f41c3f66",
       "range": {
         "startLine": 87,
         "startChar": 47,
