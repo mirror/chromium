@@ -34,6 +34,24 @@
       "revId": "dbaad4aaba7885d8fa08fee909b5dd9e19f2879d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9ef86f_d8412424",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-12T16:49:38Z",
+      "side": 0,
+      "message": "Thought about this, but not sure how this plays with translations? Will translators think that the V2 string is now \u003d\u003d to the V1 string thus no translation is needed? I don\u0027t have enough background on how the translation release process works to be confident.",
+      "parentUuid": "1725273f_2f1d0450",
+      "revId": "dbaad4aaba7885d8fa08fee909b5dd9e19f2879d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
