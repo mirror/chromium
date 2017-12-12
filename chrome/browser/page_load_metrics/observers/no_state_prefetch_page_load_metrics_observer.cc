@@ -4,7 +4,6 @@
 
 #include "chrome/browser/page_load_metrics/observers/no_state_prefetch_page_load_metrics_observer.h"
 
-#include "base/memory/ptr_util.h"
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "content/public/browser/navigation_handle.h"
@@ -14,13 +13,11 @@
 // static
 std::unique_ptr<NoStatePrefetchPageLoadMetricsObserver>
 NoStatePrefetchPageLoadMetricsObserver::CreateIfNeeded(
-    content::WebContents* web_contents) {
-  prerender::PrerenderManager* manager =
-      prerender::PrerenderManagerFactory::GetForBrowserContext(
-          web_contents->GetBrowserContext());
+    content::WebContents* web_contents,
+    prerender::PrerenderManager* manager) {
   if (!manager)
     return nullptr;
-  return base::MakeUnique<NoStatePrefetchPageLoadMetricsObserver>(manager);
+  return std::make_unique<NoStatePrefetchPageLoadMetricsObserver>(manager);
 }
 
 NoStatePrefetchPageLoadMetricsObserver::NoStatePrefetchPageLoadMetricsObserver(
