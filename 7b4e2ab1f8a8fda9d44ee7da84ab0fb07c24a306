@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8de6225_c452af97",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-12-12T01:37:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c46df79c_e145ebd9",
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcca00a6_abce65bc",
         "filename": "content/browser/background_sync/background_sync_manager.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-11T18:11:08Z",
       "side": 1,
       "message": "RunAfterStartWorker is async. What\u0027s keeping callback alive? Same question with \u0026callback instances below.",
+      "range": {
+        "startLine": 779,
+        "startChar": 57,
+        "endLine": 779,
+        "endChar": 66
+      },
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30083f8b_2ab31c76",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-12-12T01:37:59Z",
+      "side": 1,
+      "message": "Thanks for catching this!\nWe would need to have a shared container for callback which can be passed to OnStatusCallback to prevent the callback from going out of scope.\nI think we can use base::AdaptCallbackForRepeating here because everything else will most likely result in something similar to it​.",
+      "parentUuid": "dcca00a6_abce65bc",
       "range": {
         "startLine": 779,
         "startChar": 57,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "3400f408_90ef2a54",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-12-12T01:37:59Z",
+      "side": 1,
+      "message": "It\u0027s both a non-const pointer to a const callback, ​so yes, they are the same.\nBut let\u0027s leave this as \"const NotificationDispatchCompleteCallback\u0026\" for now because of what jkarlin@ brought up and deal with it when/if we migrate NotificationDispatchCompleteCallback.",
+      "parentUuid": "ea6d909e_6246acdb",
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65c5fb63_4a71c766",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ab12bc_83fdf004",
+        "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-12-12T01:37:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "65c5fb63_4a71c766",
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
