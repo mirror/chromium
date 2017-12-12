@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eaa4175_adc17319",
+        "filename": "components/viz/service/surfaces/surface.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T16:44:47Z",
+      "side": 1,
+      "message": "Why public? I don\u0027t see usage outside the class.",
+      "revId": "2e8023c6c0fb9c5f8e86afba3ee880e9f2653770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81d7b1c_780cd6fb",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T16:44:47Z",
+      "side": 1,
+      "message": "nit: Maybe |fallback_parents| would be better? It\u0027s kind of confusing later on what set of parents they are.",
+      "range": {
+        "startLine": 492,
+        "startChar": 35,
+        "endLine": 492,
+        "endChar": 42
+      },
+      "revId": "2e8023c6c0fb9c5f8e86afba3ee880e9f2653770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577118dd_f8c12157",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T16:44:47Z",
+      "side": 1,
+      "message": "nit: doesn\u0027t exist.",
+      "range": {
+        "startLine": 503,
+        "startChar": 8,
+        "endLine": 503,
+        "endChar": 14
+      },
+      "revId": "2e8023c6c0fb9c5f8e86afba3ee880e9f2653770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facf66ea_0fa63749",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T16:44:47Z",
+      "side": 1,
+      "message": "nit: This seems like it would be clearer if it was an actual (maybe anonymous) function, which could of course be implemented however you want, so you have:\n\nSurfaceId surface_id(fallback_surface_id.frame_sink_id(), local_surface_id);\nbase::Optional\u003cFrameSinkId\u003e owner \u003d temporary_references_[surface_id].owner;\nif (!SomeDesriptiveNameAboutCheckingOwner(fallback_parents, owner))\n  continue;\n\nFeel free to change or not with whatever you think is best.",
+      "revId": "2e8023c6c0fb9c5f8e86afba3ee880e9f2653770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
