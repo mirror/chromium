@@ -149,6 +149,8 @@ class Simulator {
   // Initialize X11. Returns true if successful. This method creates the
   // X11 window. Further initialization is done in X11VideoRenderer.
   bool InitX11() {
+    XInitThreads();
+
     display_ = XOpenDisplay(nullptr);
     if (!display_) {
       LOG(FATAL) << "Cannot open display";

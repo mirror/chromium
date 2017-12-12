@@ -23,7 +23,6 @@
 #include "build/build_config.h"
 #include "ui/events/platform/platform_event_source.h"
 #include "ui/gfx/x/x11.h"
-#include "ui/gfx/x/x11_connection.h"
 #include "ui/gfx/x/x11_types.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_implementation.h"
@@ -399,10 +398,6 @@ bool GLSurfaceGLX::InitializeOneOff() {
 
   // http://crbug.com/245466
   setenv("force_s3tc_enable", "true", 1);
-
-  // SGIVideoSyncProviderShim (if instantiated) will issue X commands on
-  // it's own thread.
-  gfx::InitializeThreadedX11();
 
   g_display = gfx::GetXDisplay();
   if (!g_display) {

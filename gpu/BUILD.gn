@@ -438,6 +438,10 @@ test("gpu_perftests") {
     "//ui/gl/init",
   ]
 
+  if (use_x11) {
+    deps += [ "//ui/gfx/x" ]
+  }
+
   data = [
     # Needed for isolate script to execute.
     "//testing/scripts/common.py",
@@ -467,6 +471,10 @@ test("command_buffer_perftests") {
     "//ui/gl",
     "//ui/gl/init",
   ]
+
+  if (use_x11) {
+    deps += [ "//ui/gfx/x" ]
+  }
 
   data = [
     # Needed for isolate script to execute.

@@ -11,7 +11,15 @@
 #include "build/build_config.h"
 #include "ui/gl/init/gl_factory.h"
 
+#if defined(USE_X11)
+#include "ui/gfx/x/x11_connection.h"  // nogncheck
+#endif
+
 static int RunHelper(base::TestSuite* test_suite) {
+#if defined(USE_X11)
+  gfx::InitializeThreadedX11();
+#endif
+
 #if defined(USE_OZONE)
   base::MessageLoopForUI main_loop;
 #else
