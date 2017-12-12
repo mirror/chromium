@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9663bb0d_521ccf56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-12-12T19:57:00Z",
+      "side": 1,
+      "message": "maybe worthwhile to log both key \u0026 value here, otherwise you can probably just do \n\nString.join(\",\", extras.keySet())",
+      "range": {
+        "startLine": 462,
+        "startChar": 35,
+        "endLine": 462,
+        "endChar": 41
+      },
+      "revId": "e13b4e4207dbca71593b666d32e9663ef940361f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
