@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0bb4ea21_e0ab1120",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-12T20:48:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "514e5cd8_30839308",
+      "range": {
+        "startLine": 344,
+        "startChar": 17,
+        "endLine": 344,
+        "endChar": 31
+      },
+      "revId": "7169872bf7540a6a94a3caf0308658c7af5133eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4049e45_932fa639",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
         "patchSetId": 10
@@ -96,6 +120,99 @@
     },
     {
       "key": {
+        "uuid": "df84666b_e86c8535",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AddressEditor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-12T20:48:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2f675c43_7ea0e5ae",
+      "range": {
+        "startLine": 349,
+        "startChar": 62,
+        "endLine": 349,
+        "endChar": 68
+      },
+      "revId": "7169872bf7540a6a94a3caf0308658c7af5133eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c75a9b0_1428d820",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/AddressDropDownAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-12T20:48:54Z",
+      "side": 1,
+      "message": "be specific of what cases?",
+      "range": {
+        "startLine": 22,
+        "startChar": 75,
+        "endLine": 22,
+        "endChar": 88
+      },
+      "revId": "7169872bf7540a6a94a3caf0308658c7af5133eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3102c30a_c7139566",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/AddressDropDownAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-12T20:48:54Z",
+      "side": 1,
+      "message": "HintedDropdownFieldAdapter?",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 35
+      },
+      "revId": "7169872bf7540a6a94a3caf0308658c7af5133eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b55a28_9403d8af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/AddressDropDownAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-12T20:48:54Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 52,
+        "startChar": 75,
+        "endLine": 52,
+        "endChar": 88
+      },
+      "revId": "7169872bf7540a6a94a3caf0308658c7af5133eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b716771_a552d689",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/AddressDropDownAdapter.java",
         "patchSetId": 10
@@ -131,6 +248,30 @@
       "side": 1,
       "message": "The \u0027+\u0027 icon is not the hint, it\u0027s what the Card Editor billing address list uses, and the code is imposed on all the dropdowns in PR/autofill that has a dropdown list with a hint. So, what I did was to distinguish between the Billing Address and the other ones by the last element which is the \u0027Add ..\u0027.",
       "parentUuid": "8b716771_a552d689",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 78
+      },
+      "revId": "7169872bf7540a6a94a3caf0308658c7af5133eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e80092a_8e8848dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/AddressDropDownAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-12T20:48:54Z",
+      "side": 1,
+      "message": "Get what you are trying to do, it just looks not good to determine how to present it by its text content. The extreme case is that a state (dropdown option) is named \u0027Add Address\u0027.\n\nI would suggest:\n\nSolution 1:\nRename AddressDropDownAdapter to HintedDropdownFieldAdapter to be consistent with DropdownFieldAdapter.\n\nThen pass a flag or some type information to HintedDropdownFieldAdapter to distinguish billing address adapter from the others. This flag or type info could come from EditorFieldModel.\n\nSolution 2:\nRename AddressDropDownAdapter to HintedDropdownFieldAdapter to be consistent with DropdownFieldAdapter.\n\nModify BillingAddressAdapter to extend HintedDropdownFieldAdapter. Override getDropDownView to add \u0027+\u0027 icon for hint.",
+      "parentUuid": "e681b5a4_a8298ec7",
       "range": {
         "startLine": 67,
         "startChar": 0,

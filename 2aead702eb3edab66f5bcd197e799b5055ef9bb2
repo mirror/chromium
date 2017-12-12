@@ -46,6 +46,30 @@
       "revId": "2aead702eb3edab66f5bcd197e799b5055ef9bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c31570c_b6d9d25b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorDropdownField.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-12-12T20:48:54Z",
+      "side": 0,
+      "message": "It is better to post a video of the behavior after this change. That will make it easier to understand the intended behavior for reviewer and others working on these codes in the future.",
+      "parentUuid": "46c58f65_140c7a43",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 17
+      },
+      "revId": "2aead702eb3edab66f5bcd197e799b5055ef9bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
