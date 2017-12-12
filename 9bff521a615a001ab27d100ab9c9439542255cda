@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf9e7992_1589d20e",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-12T01:20:39Z",
+      "side": 1,
+      "message": "nit: to be isolated from the current process.\n\n(Document blocking is just one part of it.)",
+      "range": {
+        "startLine": 1281,
+        "startChar": 61,
+        "endLine": 1282,
+        "endChar": 26
+      },
+      "revId": "9bff521a615a001ab27d100ab9c9439542255cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4b3777_a81487b1",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-12T01:20:39Z",
+      "side": 1,
+      "message": "nit: |policy| is declared above.",
+      "range": {
+        "startLine": 1286,
+        "startChar": 10,
+        "endLine": 1286,
+        "endChar": 55
+      },
+      "revId": "9bff521a615a001ab27d100ab9c9439542255cda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
