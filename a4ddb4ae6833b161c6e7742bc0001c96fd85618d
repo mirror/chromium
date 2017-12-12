@@ -16,6 +16,24 @@
       "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29818c03_19240eef",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-12T16:45:47Z",
+      "side": 1,
+      "message": "Are you talking about just app_shell_unittests or all of the *_unittest targests (incl. `unit_tests`)?\n\nAt any rate, all I did was copy the targets over from the FYI bot. You tell me what we should be running :).",
+      "parentUuid": "125a9a84_6873a0c7",
+      "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
