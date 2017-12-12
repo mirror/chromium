@@ -11,6 +11,7 @@
 #include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/readback_types.h"
+#include "content/public/browser/visibility.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "third_party/skia/include/core/SkImageInfo.h"
@@ -117,8 +118,12 @@ class CONTENT_EXPORT RenderWidgetHostView {
   virtual void Show() = 0;
   virtual void Hide() = 0;
 
-  // Whether the view is showing.
+  // DEPRECATED. Use GetVisibility() instead.
+  // TODO(fdoray): Remove this. https://crbug.com/668690
   virtual bool IsShowing() = 0;
+
+  // Returns the visibility of the view.
+  virtual Visibility GetVisibility() const = 0;
 
   // Indicates if the view is currently occluded (e.g, not visible because it's
   // covered up by other windows), and as a result the view's renderer may be
