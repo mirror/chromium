@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67bae228_abe4e545",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-12T23:22:06Z",
+      "side": 1,
+      "message": "nit: expand: \".\" -\u003e \" (i.e. include switches::kSitePerProcess and switches::kIsolateOrigins).\"",
+      "range": {
+        "startLine": 100,
+        "startChar": 63,
+        "endLine": 100,
+        "endChar": 64
+      },
+      "revId": "a02e650bf3ba3e99ea54b0b99a9970d6eee4beb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb963b7_1349fd98",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-12T23:22:06Z",
+      "side": 1,
+      "message": "nit: expand: \".\" -\u003e \" (i.e. exclude features::kSitePerProcess and features::IsolateOrigins).",
+      "range": {
+        "startLine": 101,
+        "startChar": 34,
+        "endLine": 101,
+        "endChar": 35
+      },
+      "revId": "a02e650bf3ba3e99ea54b0b99a9970d6eee4beb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8096f2_99b14220",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-12T23:22:06Z",
+      "side": 1,
+      "message": "I see that we will never log this histogram with a |false| value.  Is this okay?\n\nWould it be possibly better to just say:\n\nUMA_HISTOGRAM_BOOLEAN(\n    \"SiteIsolation.Flags.IsolateOriginsEnabled\",\n    base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(switches::kIsolateOrigins));",
+      "range": {
+        "startLine": 104,
+        "startChar": 4,
+        "endLine": 104,
+        "endChar": 25
+      },
+      "revId": "a02e650bf3ba3e99ea54b0b99a9970d6eee4beb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8bdad3_0005d3ce",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-12T23:22:06Z",
+      "side": 1,
+      "message": "Saying \"Finch\" is not quite accurate, because 1) chrome://flags affects ::features::kTopDocumentIsolation [1] and 2) --enable-features can be specified manually on the cmdline.\n\nI am not sure OTOH how to reword the comment / what we want to say here...",
+      "range": {
+        "startLine": 111,
+        "startChar": 43,
+        "endLine": 111,
+        "endChar": 48
+      },
+      "revId": "a02e650bf3ba3e99ea54b0b99a9970d6eee4beb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41389f70_7c25948a",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-12T23:22:06Z",
+      "side": 1,
+      "message": "Having this UMA doesn\u0027t hurt, but do we really need it?  Maybe it is okay to omit it for now (and focus on the 2 modes that will be talked about in January / that are exposed through enterprise policy).",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 3
+      },
+      "revId": "a02e650bf3ba3e99ea54b0b99a9970d6eee4beb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
