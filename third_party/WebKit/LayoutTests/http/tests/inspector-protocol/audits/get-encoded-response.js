@@ -16,6 +16,7 @@
     const requestId = (await dp.Network.onceResponseReceived()).params.requestId;
     const result = (await dp.Audits.getEncodedResponse({requestId, encoding, quality, sizeOnly})).result;
 
+    if (!result) return testRunner.log('failed to determine');
     const length = result.body && result.body.length;
     const encodedSize = result.encodedSize;
     testRunner.log(`body=${typeof result.body} body.length~${approximate(length, 100)}`);
@@ -30,6 +31,7 @@
 
   await logResponse("/resources/square20.bmp", "jpeg", .8, true);
   await logResponse("/resources/square20.bmp", "png");
+  await logResponse("/resources/500.php?mime_type=image%2Fpng", "png");
 
   testRunner.completeTest();
 })
