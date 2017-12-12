@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eb66686_e82d6c6a",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T17:01:22Z",
+      "side": 1,
+      "message": "Can we avoid this? I see it written in full below anyways.",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0823f8a7_1b5c64a7",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T17:01:22Z",
+      "side": 1,
+      "message": "nit: Gpu not GPU",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1a6ffd_138c8ae6",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T17:01:22Z",
+      "side": 1,
+      "message": "Comment explaining what this is? There was one that got lost",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4ca4c8_51d648b3",
+        "filename": "cc/test/test_context_provider.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T17:01:22Z",
+      "side": 1,
+      "message": "Was the type RasterContext before, and the names here just didn\u0027t change when the type did? RasterContext sounds like a GL context, maybe this could be RasterInterface to be more clear?",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da403fc3_d6c348c5",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T17:01:22Z",
+      "side": 1,
+      "message": "Can this be null in impls? If so, when? Can you document this? (Sorry for the lack of docs on the sibling methods)",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c1d393_0db44a7a",
+        "filename": "components/viz/common/gpu/in_process_context_provider.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T17:01:22Z",
+      "side": 1,
+      "message": "What if context_-\u003eInitialize failed? Might this crash?",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
