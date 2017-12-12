@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94c436a8_7466a18d",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-12T23:19:10Z",
+      "side": 1,
+      "message": "Renaming to something more obviously not-for-general-use SGTM. That said, the aim is to create the minimum dependencies to get GN\u0027s implicit \"all\" target to work, so \"gn_all\" isn\u0027t the dumbest name in the world. Perhaps something like \"gn_all_helper\" or \"all_helper\" or \"all_dependencies\" or \"gn_dependencies\", though?\n\nAlso, note that \"gn_all\" gets a mention in various BUILD.gn and README comments under //ios, though it seems those comments are on group(\"all\") targets - I\u0027m not actually sure what the GN semantics are for \"all\" when a BUILD.gn already has an explicit \"all\" target. Should we update the comments? I couldn\u0027t find a JSON for those bots - the chromium.mac.json seems to be just Mac desktop?\n\nWe also have an explicit \"gn_all\" target in //v8, which the root BUILD.gn depends on; it in turn depends on d8, fuzzers, parser shell, and test \u0026 tools gn_all targets.",
+      "parentUuid": "750dd4d8_0e68cfde",
+      "revId": "b256fdab617518dc111fe80afe87900fecf202f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "306403d6_770358e4",
         "filename": "BUILD.gn",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b256fdab617518dc111fe80afe87900fecf202f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fa3dc3_2ffd0f62",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-12-12T23:19:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "306403d6_770358e4",
+      "revId": "b256fdab617518dc111fe80afe87900fecf202f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
