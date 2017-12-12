@@ -1363,11 +1363,17 @@ TEST_F(FileUtilTest, DeleteDirRecursiveWithOpenFile) {
   // The POSIX code is verifiable on Linux by creating an "immutable" file but
   // this is best-effort because it's not supported by all file systems. Both
   // files will have the same flags so no need to get them individually.
-  int flags;
-  CHECK_EQ(0, ioctl(file1.GetPlatformFile(), FS_IOC_GETFLAGS, &flags));
-  flags |= FS_IMMUTABLE_FL;
-  ioctl(file1.GetPlatformFile(), FS_IOC_SETFLAGS, &flags);
-  ioctl(file3.GetPlatformFile(), FS_IOC_SETFLAGS, &flags);
+  int flags = 0;
+  FileSystemType dir_type;
+  CHECK(GetFileSystemType(temp_dir_.GetPath(), &dir_type));
+
+  // tmpfs doesn't support file attributes
+  if (dir_type != FILE_SYSTEM_MEMORY) {
+    CHECK_EQ(0, ioctl(file1.GetPlatformFile(), FS_IOC_GETFLAGS, &flags));
+    flags |= FS_IMMUTABLE_FL;
+    ioctl(file1.GetPlatformFile(), FS_IOC_SETFLAGS, &flags);
+    ioctl(file3.GetPlatformFile(), FS_IOC_SETFLAGS, &flags);
+  }
 #endif
 
   // Delete recursively and check that at least the second file got deleted.
@@ -1377,9 +1383,11 @@ TEST_F(FileUtilTest, DeleteDirRecursiveWithOpenFile) {
 
 #if defined(OS_LINUX)
   // Make sure that the test can clean up after itself.
-  flags &= ~FS_IMMUTABLE_FL;
-  ioctl(file1.GetPlatformFile(), FS_IOC_SETFLAGS, &flags);
-  ioctl(file3.GetPlatformFile(), FS_IOC_SETFLAGS, &flags);
+  if (dir_type != FILE_SYSTEM_MEMORY) {
+    flags &= ~FS_IMMUTABLE_FL;
+    ioctl(file1.GetPlatformFile(), FS_IOC_SETFLAGS, &flags);
+    ioctl(file3.GetPlatformFile(), FS_IOC_SETFLAGS, &flags);
+  }
 #endif
 }
 
