@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "faaa8cb6_81d44dfc",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-12-12T13:38:57Z",
+      "side": 1,
+      "message": "It feels like this could be exactly what kinuko meant with things getting convoluted.\nWe can avoid adding OnStatusCallback if we do something like:\n\nauto repeating_callback \u003d base::AdaptCallbackForRepeating(std::move(callback));\n\nactive_version-\u003eRunAfterStartWorker(\n    ServiceWorkerMetrics::EventType::SYNC,\n    base::BindOnce(\u0026BackgroundSyncManager::DispatchSyncEvent,\n                   weak_ptr_factory_.GetWeakPtr(),\n                   tag,\n                   active_version,\n                   last_chance,\n                   repeating_callback),\n    repeating_callback);\n...\n\nThe other solution would be adding a shared container for the callback and pass that to OnStatusCallback, but if you take a look at how AdaptCallbackForRepeating is implemented, it feels like we would implement a specialized version of it:\n\nstruct StatusCallbackContainer {\n  ServiceWorkerVersion::StatusCallback callback;\n\n  StatusCallbackContainer(\n      ServiceWorkerVersion::StatusCallback callback)\n          : callback(std::move(callback)) {}\n  ~StatusCallbackContainer() {}\n}\n\nvoid OnStatusCallback(\n    std::shared_ptr\u003cStatusCallbackContainer\u003e container,\n    ServiceWorkerStatusCode status) {\n  DCHECK(container-\u003ecallback);\n  std::move(container-\u003ecallback).Run(status);\n}\n\n// and then in DispatchSyncEvent...\n\nauto callback_container \u003d\n    std::make_shared\u003cStatusCallbackContainer\u003e(std::move(callback));\n\nactive_version-\u003eRunAfterStartWorker(\n    ServiceWorkerMetrics::EventType::SYNC,\n    base::BindOnce(\u0026BackgroundSyncManager::DispatchSyncEvent,\n                   weak_ptr_factory_.GetWeakPtr(),\n                   tag,\n                   active_version,\n                   last_chance,\n                   base::BindOnce(\u0026OnStatusCallback,\n                                  callback_container)),\n    base::BindOnce(\u0026OnStatusCallback, callback_container));",
+      "parentUuid": "587a3da4_561241b1",
+      "range": {
+        "startLine": 779,
+        "startChar": 57,
+        "endLine": 779,
+        "endChar": 66
+      },
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6d909e_6246acdb",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 4
