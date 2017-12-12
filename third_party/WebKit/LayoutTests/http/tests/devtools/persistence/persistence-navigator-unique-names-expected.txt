@@ -1,0 +1,7 @@
+Verify that navigator view removes mapped UISourceCodes.
+
+[largeicon-navigator-folder] bad-project/public [dimmed]
+  [largeicon-navigator-file] bar.js
+[largeicon-navigator-folder] good-project/public [dimmed]
+  [largeicon-navigator-file] foo.js
+
