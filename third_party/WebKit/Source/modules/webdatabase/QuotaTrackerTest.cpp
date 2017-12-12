@@ -38,9 +38,6 @@ TEST(QuotaTrackerTest, LocalAccessBlocked) {
   const unsigned long long kDatabaseSize = 1234ULL;
   tracker.UpdateDatabaseSize(origin.get(), database_name, kDatabaseSize);
 
-  // QuotaTracker should not care about policy, just identity.
-  origin->BlockLocalAccessFromLocalOrigin();
-
   unsigned long long used = 0;
   unsigned long long available = 0;
   tracker.GetDatabaseSizeAndSpaceAvailableToOrigin(origin.get(), database_name,
