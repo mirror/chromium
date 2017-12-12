@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e3dc99e_ce8321e8",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T22:32:25Z",
+      "side": 1,
+      "message": "Can this use one of the scaling functions in ui/gfx/geometry/point.h?",
+      "revId": "97c816eab60d4752a740e20611bcaa3dbd3e9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe494bcc_a7a819a2",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T22:32:25Z",
+      "side": 1,
+      "message": "Nit: just use base::BindLambdaForTesting() here: that will eliminate the need to have a helper class.",
+      "revId": "97c816eab60d4752a740e20611bcaa3dbd3e9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6463e96c_982e0631",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T22:32:25Z",
+      "side": 1,
+      "message": "Nit: don\u0027t use unique_ptr for this, it\u0027s never reinitialized anyway.",
+      "revId": "97c816eab60d4752a740e20611bcaa3dbd3e9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb0a637_59a43bd5",
+        "filename": "services/viz/public/interfaces/hit_test/input_target_client.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T22:32:25Z",
+      "side": 1,
+      "message": "Just to clarify, this isn\u0027t simply on content::mojom::Frame, because viz is going to use this directly, right? Also, this should probably mention something about scaling?",
+      "revId": "97c816eab60d4752a740e20611bcaa3dbd3e9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
