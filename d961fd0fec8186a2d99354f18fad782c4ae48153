@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f406de9_d184a97d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T10:09:14Z",
+      "side": 1,
+      "message": "I think we should be more explicit in the CL description about the bug this is fixing. Also, if this leads to a crash, then we should probably file a bug, attach this CL to that bug and have it merged to M64.",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "d961fd0fec8186a2d99354f18fad782c4ae48153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9755e7_bcd4d4ac",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T10:09:14Z",
+      "side": 1,
+      "message": "\u003d default?",
+      "range": {
+        "startLine": 47,
+        "startChar": 61,
+        "endLine": 47,
+        "endChar": 62
+      },
+      "revId": "d961fd0fec8186a2d99354f18fad782c4ae48153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec317e4_f7a8948a",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T10:09:14Z",
+      "side": 1,
+      "message": "I am wondering if the web contents may be killed by the time we call EnableSync. For example, if the user closes the Chrome sign-in tab by the time Chrome successfully fetches the LST (if fetching the LST is slow).\nIt may be worth adding a bug for this.",
+      "range": {
+        "startLine": 70,
+        "startChar": 36,
+        "endLine": 70,
+        "endChar": 46
+      },
+      "revId": "d961fd0fec8186a2d99354f18fad782c4ae48153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e84258_8185f448",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T10:09:14Z",
+      "side": 1,
+      "message": "s/start_sync_callback_/enable_sync_callback_",
+      "range": {
+        "startLine": 60,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "d961fd0fec8186a2d99354f18fad782c4ae48153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad00ff8_e2b26163",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-12T10:09:14Z",
+      "side": 1,
+      "message": "I find reading these lines very hard. I this they are testing too many things. Could we separate them in 2 tests with different parameters - one for start sync and one for error?\n\nI would prefer something like:\n// clang-format off\n  // | Method           | Signed In | Sign-in Tab| Enable Sync|\n  { kDiceFixAuthErrors,   false,      false,       false },\n  { kDiceFixAuthErrors,   false,      false,       false },\n.. Test\n// clang-format on\n\n// clang-format off\n  // | Method           | Signed In | Sign-in Tab| Show Error| Show NTP\n  { kDiceFixAuthErrors,   false,      false,       false,      false },\n  { kDiceFixAuthErrors,   false,      false,       false,      false },\n.. Test\n// clang-format on",
+      "range": {
+        "startLine": 150,
+        "startChar": 39,
+        "endLine": 150,
+        "endChar": 57
+      },
+      "revId": "d961fd0fec8186a2d99354f18fad782c4ae48153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
