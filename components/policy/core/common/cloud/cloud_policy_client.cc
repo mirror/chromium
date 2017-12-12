@@ -345,8 +345,25 @@ void CloudPolicyClient::Unregister() {
                  weak_ptr_factory_.GetWeakPtr()));
 }
 
+void CloudPolicyClient::UploadEnterpriseMachineCertificate(
+    const std::string& certificate_data,
+    const CloudPolicyClient::StatusCallback& callback) {
+  UploadCertificate(certificate_data,
+                    em::DeviceCertUploadRequest::ENTERPRISE_MACHINE_CERTIFICATE,
+                    callback);
+}
+
+void CloudPolicyClient::UploadEnterpriseEnrollmentCertificate(
+    const std::string& certificate_data,
+    const CloudPolicyClient::StatusCallback& callback) {
+  UploadCertificate(
+      certificate_data,
+      em::DeviceCertUploadRequest::ENTERPRISE_ENROLLMENT_CERTIFICATE, callback);
+}
+
 void CloudPolicyClient::UploadCertificate(
     const std::string& certificate_data,
+    em::DeviceCertUploadRequest::CertificateType certificate_type,
     const CloudPolicyClient::StatusCallback& callback) {
   CHECK(is_registered());
   std::unique_ptr<DeviceManagementRequestJob> request_job(
@@ -356,8 +373,10 @@ void CloudPolicyClient::UploadCertificate(
   request_job->SetClientID(client_id_);
 
   em::DeviceManagementRequest* request = request_job->GetRequest();
-  request->mutable_cert_upload_request()->set_device_certificate(
-      certificate_data);
+  em::DeviceCertUploadRequest* upload_request =
+      request->mutable_cert_upload_request();
+  upload_request->set_device_certificate(certificate_data);
+  upload_request->set_certificate_type(certificate_type);
 
   const DeviceManagementRequestJob::Callback job_callback =
       base::Bind(&CloudPolicyClient::OnCertificateUploadCompleted,
