@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff25175_6a0b7f8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T22:17:14Z",
+      "side": 1,
+      "message": "nit: you mean VizHostProxy?",
+      "revId": "1d6e4b55ec1c037c1b3ccb074e3a16ae0a764629",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
