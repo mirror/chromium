@@ -93,6 +93,14 @@ const char* YesNoStateToString(bool is_yes) {
   }
 }
 
+double TimeDeltaToMilliseconds(const base::TimeDelta& value) {
+  return value.InMillisecondsF();
+}
+
+bool StopLoadingInBackgroundEnabled() {
+  return RuntimeEnabledFeatures::StopLoadingInBackgroundEnabled();
+}
+
 }  // namespace
 
 RendererSchedulerImpl::RendererSchedulerImpl(
@@ -446,7 +454,7 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
   return NewTaskQueue(
       MainThreadTaskQueue::QueueCreationParams(queue_type)
           .SetCanBePaused(true)
-          .SetCanBeStopped(true)
+          .SetCanBeStopped(StopLoadingInBackgroundEnabled())
           .SetCanBeDeferred(true)
           .SetUsedForControlTasks(
               queue_type ==
@@ -1261,7 +1269,7 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
 
   if (main_thread_only().stopped_when_backgrounded) {
     new_policy.timer_queue_policy().is_stopped = true;
-    if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled())
+    if (StopLoadingInBackgroundEnabled())
       new_policy.loading_queue_policy().is_stopped = true;
   }
   if (main_thread_only().renderer_pause_count) {
