@@ -477,7 +477,7 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
       work_queue->TakeTaskFromWorkQueue();
 
   // It's possible the task was canceled, if so bail out.
-  if (pending_task.task.IsCancelled())
+  if (!pending_task.task || pending_task.task.IsCancelled())
     return ProcessTaskResult::kExecuted;
 
   internal::TaskQueueImpl* queue = work_queue->task_queue();
