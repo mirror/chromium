@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "193ae377_b2b9996f",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:57:32Z",
+      "side": 1,
+      "message": "Can/should we skip observing this if launch_intent.has_value() \u003d\u003d false?",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f389347_3a355e96",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:57:32Z",
+      "side": 1,
+      "message": "Because removing observer twice is no op so, how about call RemoveObservers always?\n\n~ArcAppLauncher() {\n  VLOG_IF(2, !app_launched_) \u003c\u003c ... log message ...;\n  RemoveObservers();\n}",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4c9c66_02d801c3",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:57:32Z",
+      "side": 1,
+      "message": "Clarification: what we should do if, connection is already established, but then closed before launching an app?",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a41a02_499e72ed",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:57:32Z",
+      "side": 1,
+      "message": "Now, the condition is getting complicated.\nCould you comment your intention for each condition for future readers?",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e20046_ea6e498b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:57:32Z",
+      "side": 1,
+      "message": "nit: this condition looks closer to L65. Could you move to there?",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3467e906_06271350",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:57:32Z",
+      "side": 1,
+      "message": "Could you comment in which case prefs and ArcServiceManager become null?",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcdcdd1_54c02881",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:57:32Z",
+      "side": 1,
+      "message": "std::make_unique. Ditto for below.",
+      "range": {
+        "startLine": 452,
+        "startChar": 28,
+        "endLine": 452,
+        "endChar": 44
+      },
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291cfcfa_1149965b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T15:57:32Z",
+      "side": 1,
+      "message": "Off topic. This test file looks gigantic now.\nHow about extracting ArcAppLauncher tests into a arc_app_launcher_unittest.cc?\nI\u0027m ok to do it in another CL, if you\u0027d like.",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
