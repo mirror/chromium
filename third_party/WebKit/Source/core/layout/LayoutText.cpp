@@ -2222,9 +2222,33 @@ scoped_refptr<AbstractInlineTextBox> LayoutText::FirstAbstractInlineTextBox() {
                                             first_text_box_);
 }
 
+static const NGPaintFragment* FindNGPaintFragment(
+    const NGPaintFragment* paint,
+    const LayoutObject* layout_object) {
+  if (!paint)
+    return nullptr;
+  if (paint->GetLayoutObject() == layout_object)
+    return paint;
+  for (const auto& child : paint->Children()) {
+    if (const NGPaintFragment* child_fragment =
+            FindNGPaintFragment(child.get(), layout_object))
+      return child_fragment;
+  }
+  return nullptr;
+}
+
 void LayoutText::InvalidateDisplayItemClients(
     PaintInvalidationReason invalidation_reason) const {
   ObjectPaintInvalidator paint_invalidator(*this);
+  if (LayoutBlockFlow* block_flow = EnclosingNGBlockFlow()) {
+    const NGPaintFragment* paint_fragment = FindNGPaintFragment(
+        ToLayoutNGBlockFlow(block_flow)->PaintFragment(), this);
+    if (paint_fragment) {
+      paint_invalidator.InvalidateDisplayItemClient(*paint_fragment,
+                                                    invalidation_reason);
+    }
+    return;
+  }
   paint_invalidator.InvalidateDisplayItemClient(*this, invalidation_reason);
 
   for (InlineTextBox* box : InlineTextBoxesOf(*this)) {

@@ -854,4 +854,58 @@ TEST_F(NGLayoutSelectionTest, MixedBlockFlowsDecendant) {
   EXPECT_EQ(2u, Selection().LayoutSelectionEnd().value());
 }
 
+TEST_F(NGLayoutSelectionTest, Invalidation) {
+  GetDocument().View()->SetParentVisible(true);
+  GetDocument().View()->SetSelfVisible(true);
+  GetDocument().View()->UpdateAllLifecyclePhases();
+  const SelectionInDOMTree& selection =
+      SetSelectionTextToBody("<span>foo</span><span>b^a|r</span>");
+  Selection().SetSelection(selection);
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("foo", kNone, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("bar", kStartAndEnd, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  LayoutObject* const bar = GetDocument()
+                                .body()
+                                ->firstChild()
+                                ->nextSibling()
+                                ->firstChild()
+                                ->GetLayoutObject();
+  EXPECT_EQ(std::make_pair(4u, 5u), Selection().LayoutSelectionStartEndForNG(
+                                        GetNGPhysicalTextFragment(bar)));
+  UpdateAllLifecyclePhases();
+
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("foo", kNone, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("bar", kStartAndEnd, NotInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+
+  Node* const foo = GetDocument().body()->firstChild()->firstChild();
+  Selection().SetSelection(SelectionInDOMTree::Builder()
+                               .SetBaseAndExtent({foo, 1}, {foo, 2})
+                               .Build());
+  Selection().CommitAppearanceIfNeeded();
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("foo", kStartAndEnd, ShouldInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("bar", kNone, ShouldInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+  EXPECT_EQ(std::make_pair(0u, 0u), Selection().LayoutSelectionStartEndForNG(
+                                        GetNGPhysicalTextFragment(bar)));
+  UpdateAllLifecyclePhases();
+
+  TEST_NEXT(IsLayoutNGBlockFlow, kContain, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("foo", kStartAndEnd, NotInvalidate);
+  TEST_NEXT(IsLayoutInline, kNone, NotInvalidate);
+  TEST_NEXT("bar", kNone, NotInvalidate);
+  TEST_NO_NEXT_LAYOUT_OBJECT();
+}
+
 }  // namespace blink
