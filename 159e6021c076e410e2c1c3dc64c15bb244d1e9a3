@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53ff24df_973d7ce4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/BaseMediaRouteProvider.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-12T19:20:28Z",
+      "side": 1,
+      "message": "Nit: If the appId already has a callback, routeSelector will be created for no reason.   Since we are already checking that the sourceId corresponds to a cast: URL (thus should generate a route selector) it might make sense to swap this check with the one below.",
+      "revId": "159e6021c076e410e2c1c3dc64c15bb244d1e9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
