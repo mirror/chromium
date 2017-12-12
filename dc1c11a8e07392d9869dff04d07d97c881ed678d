@@ -16,6 +16,24 @@
       "revId": "dc1c11a8e07392d9869dff04d07d97c881ed678d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333df3b6_708f14f8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-12T15:42:36Z",
+      "side": 1,
+      "message": "The thing I\u0027m most worried about breaking is IsUseZoomForDSFEnabled(), as I don\u0027t really understand how it works. If I turn on UseZoomForDSF, and intentionally set the wrong dip scale, everything appears to work correctly anyways, so I don\u0027t know what\u0027s going on there.\n\nIn order to handle the density mismatch, I could send up the ratio and the size in dips. Does that sound reasonable? Otherwise I\u0027d have to make the fullscreen manager aware of both the java UI dip scale and web content dip scale.",
+      "parentUuid": "6f1d409c_1e761aaa",
+      "revId": "dc1c11a8e07392d9869dff04d07d97c881ed678d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
