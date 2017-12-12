@@ -1615,23 +1615,29 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
         100);
   }
 
-  // Attempts to commit certain off-limits URL should be caught more strictly
-  // than our FilterURL checks below.  If a renderer violates this policy, it
-  // should be killed.
-  if (!CanCommitURL(validated_params->url)) {
-    VLOG(1) << "Blocked URL " << validated_params->url.spec();
-    // Kills the process.
-    bad_message::ReceivedBadMessage(process,
-                                    bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
-    return;
-  }
+  // Blocked navigations are expected to commit in the old renderer
+  // (and therefore such navigations do not go through CanCommitURL and
+  // CanCommitOrigin checks below).
+  bool is_blocked_navigation =
+      navigation_handle_ &&
+      navigation_handle_->GetNetErrorCode() == net::ERR_BLOCKED_BY_CLIENT;
+  if (!is_blocked_navigation) {
+    // Attempts to commit certain off-limits URL should be caught more strictly
+    // than our FilterURL checks below.  If a renderer violates this policy, it
+    // should be killed.
+    if (!CanCommitURL(validated_params->url)) {
+      bad_message::ReceivedBadMessage(process,
+                                      bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
+      return;
+    }
 
-  // Verify that the origin passed from the renderer process is valid and can
-  // be allowed to commit in this RenderFrameHost.
-  if (!CanCommitOrigin(validated_params->origin, validated_params->url)) {
-    bad_message::ReceivedBadMessage(GetProcess(),
-                                    bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
-    return;
+    // Verify that the origin passed from the renderer process is valid and can
+    // be allowed to commit in this RenderFrameHost.
+    if (!CanCommitOrigin(validated_params->origin, validated_params->url)) {
+      bad_message::ReceivedBadMessage(
+          GetProcess(), bad_message::RFH_INVALID_ORIGIN_ON_COMMIT);
+      return;
+    }
   }
 
   // Without this check, an evil renderer can trick the browser into creating
@@ -3255,6 +3261,48 @@ bool RenderFrameHostImpl::CanCommitOrigin(
   // A non-unique origin must be a valid URL, which allows us to safely do a
   // conversion to GURL.
   GURL origin_url = origin.GetPhysicalOrigin().GetURL();
+
+  // WebView guests can commit any origin.
+  // This is safe, because:
+  // 1) WebView guests are in a different StoragePartition, essentially outside
+  //    the browser.
+  // 2) The user has to trust the app that's providing the webview (e.g.
+  //    WebViews don't have reliable address bars so the user has to trust that
+  //    the WebView won't contain any malicious or phishing sites).
+  // This is difficult to change, because:
+  // 1) WebView guests cannot contain OOPIFs today.
+  // 2) extensions::ProcessMap doesn't track webview accessible resources
+  //    (see WebViewTest.ReloadWebviewAccessibleResource).
+  //
+  // TODO(lukasza): https://crbug.com/614463: Removes this exception once
+  // WebView guests support OOPIFs.
+  if (GetSiteInstance()->GetSiteURL().SchemeIs(kGuestScheme))
+    return true;
+
+  // Check the origin against the (potential) origin lock of the current
+  // process.
+  // TODO(lukasza): https://crbug.com/770239: Expand the check to cover other
+  // verifications from RenderProcessHostImpl::IsSuitableHost (e.g. WebUI
+  // bindings, extension process privilege level, etc.).
+  BrowserContext* browser_context = GetSiteInstance()->GetBrowserContext();
+  GURL site_url = SiteInstance::GetSiteForURL(browser_context, origin_url);
+  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+  switch (policy->CheckOriginLock(GetProcess()->GetID(), site_url)) {
+    case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::HAS_EQUAL_LOCK:
+      break;
+    case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::HAS_WRONG_LOCK:
+      // If the process is locked to an origin, disallow reusing this process
+      // for a different origin.
+      return false;
+    case ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK:
+      // TODO(lukasza): https://crbug.com/794315: Return false if
+      // ShouldLockToOrigin(site_url), similarily to how this is done by
+      // RenderProcessHostImpl::IsSuitableHost.  We don't do this here, because
+      // this breaks hosted apps (which can return
+      // !ShouldLockToOrigin(full_url_with_path, but here they would return
+      // ShouldLockToOrigin(origin_only_part_of_url)).
+      break;
+  }
 
   // Verify that the origin is allowed to commit in this process.
   // Note: This also handles non-standard cases for |url|, such as
