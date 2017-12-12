@@ -42,7 +42,7 @@ class URLRequestMockHTTPJob : public URLRequestFileJob {
   bool IsRedirectResponse(GURL* location, int* http_status_code) override;
 
   // URLRequestFileJob overridess.
-  void OnReadComplete(net::IOBuffer* buffer, int result) override;
+  int OnReadComplete(net::IOBuffer* buffer, int result) override;
 
   // Adds the testing URLs to the URLRequestFilter, both under HTTP and HTTPS.
   static void AddUrlHandlers(const base::FilePath& base_path);

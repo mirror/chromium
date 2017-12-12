@@ -181,7 +181,8 @@ void URLRequestFileJob::OnOpenComplete(int result) {}
 
 void URLRequestFileJob::OnSeekComplete(int64_t result) {}
 
-void URLRequestFileJob::OnReadComplete(IOBuffer* buf, int result) {
+int URLRequestFileJob::OnReadComplete(IOBuffer* buf, int result) {
+  return result;
 }
 
 URLRequestFileJob::~URLRequestFileJob() = default;
@@ -301,7 +302,7 @@ void URLRequestFileJob::DidRead(scoped_refptr<IOBuffer> buf, int result) {
     DCHECK_GE(remaining_bytes_, 0);
   }
 
-  OnReadComplete(buf.get(), result);
+  result = OnReadComplete(buf.get(), result);
   buf = NULL;
 
   ReadRawDataComplete(result);

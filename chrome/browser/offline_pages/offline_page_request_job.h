@@ -18,6 +18,10 @@ namespace base {
 class FilePath;
 }
 
+namespace crypto {
+class SecureHash;
+}
+
 namespace previews {
 class PreviewsDecider;
 }
@@ -35,7 +39,7 @@ class OfflinePageRequestJob : public net::URLRequestFileJob {
   // NOTE: because this is used for UMA reporting, these values should not be
   // changed or reused; new values should be ended immediately before the MAX
   // value. Make sure to update the histogram enum
-  // (OfflinePagesAggregatedRequestResult in histograms.xml) accordingly.
+  // (OfflinePagesAggregatedRequestResult in enums.xml) accordingly.
   // Public for testing.
   enum class AggregatedRequestResult {
     SHOW_OFFLINE_ON_DISCONNECTED_NETWORK,
@@ -54,6 +58,10 @@ class OfflinePageRequestJob : public net::URLRequestFileJob {
     REDIRECTED_ON_FLAKY_NETWORK,
     REDIRECTED_ON_PROHIBITIVELY_SLOW_NETWORK,
     REDIRECTED_ON_CONNECTED_NETWORK,
+    DIGEST_MISMATCH_ON_DISCONNECTED_NETWORK,
+    DIGEST_MISMATCH_ON_FLAKY_NETWORK,
+    DIGEST_MISMATCH_ON_PROHIBITIVELY_SLOW_NETWORK,
+    DIGEST_MISMATCH_ON_CONNECTED_NETWORK,
     AGGREGATED_REQUEST_RESULT_MAX
   };
 
@@ -93,6 +101,8 @@ class OfflinePageRequestJob : public net::URLRequestFileJob {
     GetWebContentsGetter(net::URLRequest* request) const = 0;
 
     virtual TabIdGetter GetTabIdGetter() const = 0;
+
+    virtual bool SkipFileValidationBeforeReading() const = 0;
   };
 
   // Reports the aggregated result combining both request result and network
@@ -120,10 +130,11 @@ class OfflinePageRequestJob : public net::URLRequestFileJob {
   // net::URLRequestFileJob overrides:
   void OnOpenComplete(int result) override;
   void OnSeekComplete(int64_t result) override;
-  void OnReadComplete(net::IOBuffer* buf, int result) override;
+  int OnReadComplete(net::IOBuffer* buf, int result) override;
 
   void OnOfflineFilePathAvailable(const std::string& name_space,
-                                  const base::FilePath& offline_file_path);
+                                  const base::FilePath& offline_file_path,
+                                  const std::string& expected_digest);
   void OnOfflineRedirectAvailabe(const GURL& redirected_url);
 
   void SetDelegateForTesting(std::unique_ptr<Delegate> delegate);
@@ -142,6 +153,8 @@ class OfflinePageRequestJob : public net::URLRequestFileJob {
   // Restarts the request job in order to fall back to the default handling.
   void FallbackToDefault();
 
+  void SetOfflinePageNavigationUIData(bool is_offline_page);
+
   AccessEntryPoint GetAccessEntryPoint() const;
 
   std::unique_ptr<Delegate> delegate_;
@@ -153,6 +166,9 @@ class OfflinePageRequestJob : public net::URLRequestFileJob {
 
   // Used to determine if an URLRequest is eligible for offline previews.
   previews::PreviewsDecider* previews_decider_;
+
+  std::string expected_digest_;
+  std::unique_ptr<crypto::SecureHash> actual_secure_hash_;
 
   base::WeakPtrFactory<OfflinePageRequestJob> weak_ptr_factory_;
 
