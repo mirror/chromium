@@ -58,7 +58,7 @@ class CHROMEOS_EXPORT ServerProxy {
 // This class is not thread safe.
 class CHROMEOS_EXPORT AttestationFlow {
  public:
-  typedef base::Callback<void(bool success,
+  typedef base::Callback<void(PrivacyCAOperationStatus status,
                               const std::string& pem_certificate_chain)>
       CertificateCallback;
 
