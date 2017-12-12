@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ade52442_802715d5",
+        "filename": "content/browser/appcache/appcache_dispatcher_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-12T00:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "246b954a_6b87ef92",
+      "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e938bcbf_8e3d8362",
         "filename": "content/browser/appcache/appcache_frontend_proxy.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d244fb21_38d6c183",
+        "filename": "content/browser/appcache/appcache_frontend_proxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-12T00:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e938bcbf_8e3d8362",
+      "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "76ee4090_02d23f0e",
+        "filename": "content/common/appcache.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-12T00:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "120e6476_cb2f80e8",
+      "range": {
+        "startLine": 107,
+        "startChar": 10,
+        "endLine": 107,
+        "endChar": 26
+      },
+      "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a7fa701_c272baf6",
         "filename": "content/renderer/appcache/appcache_dispatcher.h",
         "patchSetId": 9
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-11T22:22:03Z",
       "side": 1,
       "message": "Can AppCacheFrontend just implement mojom::AppCacheRenderer (possibly renamed, as Sam suggests), and cut out this thin wrapper? You should be able to delete appcache_interfaces.h, which appears to be redundant at this point.",
+      "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c033408_e92a5991",
+        "filename": "content/renderer/appcache/appcache_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-12T00:11:59Z",
+      "side": 1,
+      "message": "I\u0027d like to do the simplifications in the next CL (or reassign them to an owner of appcache!). We\u0027re trying to avoid too much scope creep in our mojo conversion CLs.",
+      "parentUuid": "6a7fa701_c272baf6",
       "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -96,6 +174,30 @@
       "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635ebcc6_3d00c4a6",
+        "filename": "content/renderer/appcache/appcache_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-12T00:11:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f285b5f5_1dc07727",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "6c6bc226f39bc71a9fc98dfe57ae3ab990d77515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
