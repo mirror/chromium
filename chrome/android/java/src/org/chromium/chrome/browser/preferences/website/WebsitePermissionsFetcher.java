@@ -35,7 +35,7 @@ public class WebsitePermissionsFetcher {
      * performance and causes Site Settings/All Sites to lag significantly on opening. See
      * crbug.com/732907.
      */
-    private static class OriginAndEmbedder extends Pair<WebsiteAddress, WebsiteAddress> {
+    public static class OriginAndEmbedder extends Pair<WebsiteAddress, WebsiteAddress> {
         public OriginAndEmbedder(WebsiteAddress origin, WebsiteAddress embedder) {
             super(origin, embedder);
         }
