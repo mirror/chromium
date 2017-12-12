@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff04aa3_609dc0df",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/StubbedProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-12T18:28:15Z",
+      "side": 1,
+      "message": "mHandler.postTask(() -\u003e callback.onResult(items));",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 37
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e2bdd4_0506ad44",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/StubbedProvider.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-12T18:28:15Z",
+      "side": 1,
+      "message": "mHandler.postTask(() -\u003e callback.onResult(null));  Should we pull the item from items?",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 36
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10adf8f1_eac535c7",
+        "filename": "components/offline_items_collection/core/android/offline_content_aggregator_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-12T18:28:15Z",
+      "side": 1,
+      "message": "make this take a const OfflineItem\u0026 instead and just do the : nullptr outside the function call?  e.g.:\n\nRunCallbackAndroid(j_callback, item.has_value() ? OfflineItemBridge::CreateOfflineItem(item.value()) : nullptr));?",
+      "range": {
+        "startLine": 59,
+        "startChar": 40,
+        "endLine": 59,
+        "endChar": 57
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d32a9c_845ed98f",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-12T18:28:15Z",
+      "side": 1,
+      "message": "base::nullopt?  Try it out.  Not sure if that works with const\u0026?",
+      "range": {
+        "startLine": 129,
+        "startChar": 44,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ceaf73_6f1d5160",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-12T18:28:15Z",
+      "side": 1,
+      "message": "Nice catch on these!  Add a unit test for this and the GetItemById if empty (if they\u0027re already there ignore :)).",
+      "range": {
+        "startLine": 164,
+        "startChar": 6,
+        "endLine": 164,
+        "endChar": 32
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcc0837_4a11987e",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-12T18:28:15Z",
+      "side": 1,
+      "message": "I think it defaults to nullopt.  Just don\u0027t set anything unless valid?",
+      "range": {
+        "startLine": 268,
+        "startChar": 4,
+        "endLine": 268,
+        "endChar": 33
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12b14f1_5ea29a6e",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-12T18:28:15Z",
+      "side": 1,
+      "message": "I still think we need a PumpLoop at the end of all of these methods right?",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 1
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
