@@ -69,6 +69,24 @@
       "revId": "4b445e3f28b87302f8649d67239e1fa66e1dde42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5bf226_940fdf09",
+        "filename": "ui/views/view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-12T18:01:31Z",
+      "side": 1,
+      "message": "I want to avoid adding extra interfaces to View. We had more\nin the past and the Views folks asked us to refactor it into fewer.\n\nWe pretty much always have a NativeViewAccessibility for a View,\nso having a GetNativeViewAccessibility() that always returns a\nvalid one would make sense. We could also add a helper function\nlike this to cut down on the null checks and to cut down on the\namount of boilerplate code to add a relation.\n\n    int GetViewAccessibilityId(View* view);",
+      "parentUuid": "6c1da32d_20b7d01c",
+      "revId": "4b445e3f28b87302f8649d67239e1fa66e1dde42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
