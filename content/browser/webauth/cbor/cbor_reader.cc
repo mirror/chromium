@@ -41,6 +41,8 @@ const char kMapKeyOutOfOrder[] =
     "order.";
 const char kNonMinimalCBOREncoding[] =
     "Unsigned integers must be encoded with minimum number of bytes.";
+const char kUnsupportedTagFormat[] =
+    "Consecutive tags are not allowed.";
 
 }  // namespace
 
@@ -65,7 +67,7 @@ base::Optional<CBORValue> CBORReader::Read(const Bytes& data,
   return decoded_cbor;
 }
 
-base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
+base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level, uint64_t tag ) {
   if (max_nesting_level < 0 || max_nesting_level > kCBORMaxDepth) {
     error_code_ = DecoderError::TOO_MUCH_NESTING;
     return base::nullopt;
@@ -86,15 +88,22 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
 
   switch (major_type) {
     case CBORValue::Type::UNSIGNED:
-      return CBORValue(length);
+      return CBORValue(length, tag);
     case CBORValue::Type::BYTE_STRING:
-      return ReadBytes(length);
+      return ReadBytes(length, tag);
     case CBORValue::Type::STRING:
-      return ReadString(length);
+      return ReadString(length, tag);
     case CBORValue::Type::ARRAY:
-      return ReadCBORArray(length, max_nesting_level);
+      return ReadCBORArray(length, max_nesting_level, tag);
     case CBORValue::Type::MAP:
-      return ReadCBORMap(length, max_nesting_level);
+      return ReadCBORMap(length, max_nesting_level, tag);
+    case CBORValue::Type::TAG: {
+      if (tag != UINT64_MAX) {
+        error_code_ = DecoderError::UNSUPPORTED_TAG_FORMAT;
+        return base::nullopt;
+      }
+      return DecodeCBOR(max_nesting_level, length);
+    }
     case CBORValue::Type::NONE:
       break;
   }
@@ -136,7 +145,7 @@ bool CBORReader::ReadUnsignedInt(int additional_info, uint64_t* length) {
   return CheckUintEncodedByteLength(additional_bytes, int_data);
 }
 
-base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes) {
+base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes, uint64_t tag ) {
   if (!CanConsume(num_bytes)) {
     error_code_ = DecoderError::INCOMPLETE_CBOR_DATA;
     return base::nullopt;
@@ -146,11 +155,11 @@ base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes) {
   it_ += num_bytes;
 
   return HasValidUTF8Format(cbor_string)
-             ? base::make_optional<CBORValue>(CBORValue(std::move(cbor_string)))
+             ? base::make_optional<CBORValue>(CBORValue(std::move(cbor_string), tag))
              : base::nullopt;
 }
 
-base::Optional<CBORValue> CBORReader::ReadBytes(uint64_t num_bytes) {
+base::Optional<CBORValue> CBORReader::ReadBytes(uint64_t num_bytes, uint64_t tag) {
   if (!CanConsume(num_bytes)) {
     error_code_ = DecoderError::INCOMPLETE_CBOR_DATA;
     return base::nullopt;
@@ -159,11 +168,11 @@ base::Optional<CBORValue> CBORReader::ReadBytes(uint64_t num_bytes) {
   Bytes cbor_byte_string(it_, it_ + num_bytes);
   it_ += num_bytes;
 
-  return CBORValue(std::move(cbor_byte_string));
+  return CBORValue(std::move(cbor_byte_string), tag);
 }
 
 base::Optional<CBORValue> CBORReader::ReadCBORArray(uint64_t length,
-                                                    int max_nesting_level) {
+                                                    int max_nesting_level, uint64_t tag) {
   CBORValue::ArrayValue cbor_array;
   while (length-- > 0) {
     base::Optional<CBORValue> cbor_element = DecodeCBOR(max_nesting_level - 1);
@@ -171,14 +180,15 @@ base::Optional<CBORValue> CBORReader::ReadCBORArray(uint64_t length,
       return base::nullopt;
     cbor_array.push_back(std::move(cbor_element.value()));
   }
-  return CBORValue(std::move(cbor_array));
+  return CBORValue(std::move(cbor_array), tag);
 }
 
 base::Optional<CBORValue> CBORReader::ReadCBORMap(uint64_t length,
-                                                  int max_nesting_level) {
+                                                  int max_nesting_level,
+                                                  uint64_t tag) {
   CBORValue::MapValue cbor_map;
   while (length-- > 0) {
-    base::Optional<CBORValue> key = DecodeCBOR(max_nesting_level - 1);
+    base::Optional<CBORValue> key = DecodeCBOR(max_nesting_level - 1, 0);
     base::Optional<CBORValue> value = DecodeCBOR(max_nesting_level - 1);
     if (!key.has_value() || !value.has_value())
       return base::nullopt;
@@ -195,7 +205,7 @@ base::Optional<CBORValue> CBORReader::ReadCBORMap(uint64_t length,
     cbor_map.insert_or_assign(key.value().GetString(),
                               std::move(value.value()));
   }
-  return CBORValue(std::move(cbor_map));
+  return CBORValue(std::move(cbor_map), tag);
 }
 
 bool CBORReader::CanConsume(uint64_t bytes) {
@@ -277,6 +287,8 @@ const char* CBORReader::ErrorCodeToString(DecoderError error) {
       return kMapKeyOutOfOrder;
     case DecoderError::NON_MINIMAL_CBOR_ENCODING:
       return kNonMinimalCBOREncoding;
+    case DecoderError::UNSUPPORTED_TAG_FORMAT:
+      return kUnsupportedTagFormat;
     default:
       NOTREACHED();
       return "Unknown error code.";

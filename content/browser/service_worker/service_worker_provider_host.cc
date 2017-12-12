@@ -1106,8 +1106,9 @@ void ServiceWorkerProviderHost::GetControllerServiceWorker(
   // TODO(kinuko): Call version_->StartWorker() here if the service
   // is stopped. Currently it should be starting or running at this point.
   DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
-  DCHECK(controller_->running_status() == EmbeddedWorkerStatus::STARTING ||
-         controller_->running_status() == EmbeddedWorkerStatus::RUNNING);
+  if (controller_->running_status() != EmbeddedWorkerStatus::STARTING &&
+       controller_->running_status() != EmbeddedWorkerStatus::RUNNING)
+    return;  // XXX: just to avoid crash for now.
   controller_->controller()->Clone(std::move(controller_request));
 }
 

@@ -257,19 +257,19 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
 
     @Override
     public int getSecurityLevel() {
-        return getSecurityLevel(getTab(), isOfflinePage());
+        return getSecurityLevel(getTab(), isOfflinePage(), isWPK());
     }
 
     @Override
     public int getSecurityIconResource() {
         return getSecurityIconResource(
-                getSecurityLevel(), !DeviceFormFactor.isTablet(), isOfflinePage());
+                getSecurityLevel(), !DeviceFormFactor.isTablet(), isOfflinePage(), isWPK());
     }
 
     @VisibleForTesting
     @ConnectionSecurityLevel
-    static int getSecurityLevel(Tab tab, boolean isOfflinePage) {
-        if (tab == null || isOfflinePage) {
+    static int getSecurityLevel(Tab tab, boolean isOfflinePage, boolean isWPK) {
+        if (tab == null || isOfflinePage || isWPK) {
             return ConnectionSecurityLevel.NONE;
         }
         return tab.getSecurityLevel();
@@ -278,9 +278,12 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     @VisibleForTesting
     @DrawableRes
     static int getSecurityIconResource(
-            int securityLevel, boolean isSmallDevice, boolean isOfflinePage) {
+            int securityLevel, boolean isSmallDevice, boolean isOfflinePage, boolean isWPK) {
         if (isOfflinePage) {
             return R.drawable.offline_pin_round;
+        }
+        if (isWPK) {
+            return R.drawable.offline_bolt;
         }
 
         switch (securityLevel) {
@@ -305,5 +308,9 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
                 && mBottomSheet.getTargetSheetState() != BottomSheet.SHEET_STATE_PEEK
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_CLEAR_URL_ON_OPEN);
+    }
+
+    private boolean isWPK() {
+        return hasTab() && OfflinePageUtils.isWPK(mTab);
     }
 }

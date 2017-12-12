@@ -74,6 +74,9 @@ class CONTENT_EXPORT CBORWriter {
   // |encoded_cbor_| will contain the CBOR.
   bool EncodeCBOR(const CBORValue& node, int max_nesting_level);
 
+  // Encodes CBOR value tag if it is set.
+  void EncodeTag(const CBORValue& node);
+
   // Encodes the type and size of the data being added.
   void StartItem(CBORValue::Type type, uint64_t size);
 
