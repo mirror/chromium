@@ -34,6 +34,24 @@
       "revId": "dbb992da3b3c7ca280339011702b9dab85799f05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a77bc4_ef9fb141",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-12-12T15:51:35Z",
+      "side": 1,
+      "message": "Given that there are only 2 return sites and this method only makes a single call to GetStringFUTF16 (albeit kind of a complicated call) I\u0027d be tempted to just inline that. But a static function in the cc file sounds reasonable, too.",
+      "parentUuid": "75a38c09_54351fe3",
+      "revId": "dbb992da3b3c7ca280339011702b9dab85799f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
