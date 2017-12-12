@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.webapps;
 
+import android.app.Notification;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -18,6 +20,7 @@ import org.chromium.base.Log;
 import org.chromium.chrome.browser.metrics.WebApkUma;
 import org.chromium.chrome.browser.notifications.NotificationBuilderBase;
 import org.chromium.webapk.lib.client.WebApkServiceConnectionManager;
+import org.chromium.webapk.lib.common.WebApkHelper;
 import org.chromium.webapk.lib.runtime_library.IWebApkApi;
 
 /**
@@ -106,6 +109,11 @@ public class WebApkServiceClient {
                         channelName = ContextUtils.getApplicationContext().getString(
                                 org.chromium.chrome.R.string.webapk_notification_channel_name);
                     }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        notificationBuilder.setPublicVersion(buildPublicNotification(
+                                notificationBuilder, webApkPackage, smallIconId));
+                    }
                     api.notifyNotificationWithChannel(
                             platformTag, platformID, notificationBuilder.build(), channelName);
                 }
@@ -160,5 +168,23 @@ public class WebApkServiceClient {
         }
 
         return false;
+    }
+
+    /**
+     * Creates a public version of WebAPK's notification to be displayed in sensitive contexts, such
+     * as on the lockscreen.
+     */
+    public static Notification buildPublicNotification(
+            NotificationBuilderBase notificationBuilder, String webApkPackage, int smallIconId) {
+        // The public version notification shows the application name of the given context.
+        // Therefore, we need to recreate the notification by using a WebAPK's context.
+        Context webApkContext =
+                WebApkHelper.getRemoteContext(ContextUtils.getApplicationContext(), webApkPackage);
+        if (webApkContext == null) return null;
+
+        return notificationBuilder.createPublicNotification(webApkContext,
+                ContextUtils.getApplicationContext().getString(
+                        org.chromium.chrome.R.string.notification_hidden_text),
+                smallIconId);
     }
 }

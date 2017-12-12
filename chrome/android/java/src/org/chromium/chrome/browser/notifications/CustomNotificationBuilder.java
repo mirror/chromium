@@ -170,7 +170,7 @@ public class CustomNotificationBuilder extends NotificationBuilderBase {
         setGroupOnBuilder(builder, mOrigin);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Public versions only supported since L, and createPublicNotification requires L+.
-            builder.setPublicVersion(createPublicNotification(mContext));
+            builder.setPublicVersion(mPublicVersion);
         }
 
         return builder.buildWithBigContentView(bigView);

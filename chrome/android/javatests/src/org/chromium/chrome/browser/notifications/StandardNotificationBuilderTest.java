@@ -79,8 +79,8 @@ public class StandardNotificationBuilderTest {
                 new int[] {Color.GRAY}, 1 /* width */, 1 /* height */, Bitmap.Config.ARGB_8888);
         actionIcon = actionIcon.copy(Bitmap.Config.ARGB_8888, true /* isMutable */);
 
-        return new StandardNotificationBuilder(context)
-                .setTitle("title")
+        StandardNotificationBuilder builder = new StandardNotificationBuilder(context);
+        builder.setTitle("title")
                 .setBody("body")
                 .setOrigin("origin")
                 .setChannelId(ChannelDefinitions.CHANNEL_ID_SITES)
@@ -92,9 +92,11 @@ public class StandardNotificationBuilderTest {
                 .setVibrate(new long[] {100L})
                 .setContentIntent(outContentAndDeleteIntents[0])
                 .setDeleteIntent(outContentAndDeleteIntents[1])
+                .setPublicVersion(builder.createPublicNotification(context))
                 .addButtonAction(actionIcon, "button 1", null /* intent */)
                 .addButtonAction(actionIcon, "button 2", null /* intent */)
                 .addSettingsAction(0 /* iconId */, "settings", null /* intent */);
+        return builder;
     }
 
     @Test

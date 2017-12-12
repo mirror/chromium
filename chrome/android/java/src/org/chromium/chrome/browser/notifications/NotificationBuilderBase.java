@@ -125,6 +125,7 @@ public abstract class NotificationBuilderBase {
     protected boolean mRenotify;
     protected int mPriority;
     private Bitmap mLargeIcon;
+    protected Notification mPublicVersion;
 
     public NotificationBuilderBase(Resources resources) {
         mLargeIconWidthPx =
@@ -239,6 +240,15 @@ public abstract class NotificationBuilderBase {
      */
     public NotificationBuilderBase setChannelId(String channelId) {
         mChannelId = channelId;
+        return this;
+    }
+
+    /**
+     * Sets the public version of the notification to be displayed in sensitive contexts, such as
+     * on the lockscreen, displaying just the site origin and badge or generated icon.
+     */
+    public NotificationBuilderBase setPublicVersion(Notification publicVersion) {
+        mPublicVersion = publicVersion;
         return this;
     }
 
@@ -375,15 +385,27 @@ public abstract class NotificationBuilderBase {
      * on the lockscreen, displaying just the site origin and badge or generated icon.
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    protected Notification createPublicNotification(Context context) {
-        // Use a non-compat builder because we want the default small icon behaviour.
-        ChromeNotificationBuilder builder =
-                NotificationBuilderFactory
-                        .createChromeNotificationBuilder(false /* preferCompat */, mChannelId)
-                        .setContentText(context.getString(
-                                org.chromium.chrome.R.string.notification_hidden_text))
-                        .setSmallIcon(org.chromium.chrome.R.drawable.ic_chrome);
+    Notification createPublicNotification(Context context) {
+        return createPublicNotification(context,
+                context.getString(org.chromium.chrome.R.string.notification_hidden_text),
+                org.chromium.chrome.R.drawable.ic_chrome);
+    }
 
+    /**
+     * Creates a public version of the notification to be displayed in sensitive contexts, such as
+     * on the lockscreen, displaying just the site origin and badge or generated icon.
+     * @param builderContext The context to create the Notification.Builder. It should be the
+     *                       context of the app whose name is shown on the public notification.
+     * @param contentText The content text shown on the notification.
+     * @param smallIconId The resource id for the small icon.
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public Notification createPublicNotification(
+            Context builderContext, String contentText, int smallIconId) {
+        // Use a non-compat builder because we want the default small icon behaviour.
+        NotificationBuilder builder = new NotificationBuilder(builderContext);
+        builder.setContentText(contentText);
+        builder.setSmallIcon(smallIconId);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             // On N, 'subtext' displays at the top of the notification and this looks better.
             builder.setSubText(mOrigin);
