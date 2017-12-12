@@ -2282,8 +2282,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (BOOL)respondToWKScriptMessage:(WKScriptMessage*)scriptMessage {
-  if (!scriptMessage.frameInfo.mainFrame) {
-    // Messages from iframes are not currently supported.
+  GURL main_frame_url = net::GURLWithNSURL([_webView URL]);
+  GURL message_frame_origin = web::GURLOriginWithWKSecurityOrigin(
+      scriptMessage.frameInfo.securityOrigin);
+  if (main_frame_url.GetOrigin() != message_frame_origin) {
+    // Messages from cross-origin iframes are not currently supported.
     return NO;
   }
 
