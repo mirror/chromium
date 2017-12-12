@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec6757c7_a51b2197",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T22:14:03Z",
+      "side": 1,
+      "message": "Nit: s/get/compute (for consistency with other computed properties).",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "32ee5a7e40195533a1547fae6036602dd50328a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b01689_09bbad43",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T22:14:03Z",
+      "side": 1,
+      "message": "How is this possible?",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 18
+      },
+      "revId": "32ee5a7e40195533a1547fae6036602dd50328a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
