@@ -22,6 +22,23 @@
       "revId": "6aaad830b8f83e0efd434a9374f2705c78eb5b44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634547fa_fecab887",
+        "filename": "base/trace_event/trace_log.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-12-12T18:57:28Z",
+      "side": 1,
+      "message": "Why not keep the current and more accurate approach on desktop platforms?",
+      "revId": "6aaad830b8f83e0efd434a9374f2705c78eb5b44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
