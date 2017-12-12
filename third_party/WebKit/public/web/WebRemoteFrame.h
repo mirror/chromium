@@ -103,8 +103,6 @@ class WebRemoteFrame : public WebFrame {
   // owner.
   virtual void WillEnterFullscreen() = 0;
 
-  virtual void SetHasReceivedUserGesture() = 0;
-
   // Scrolls the given rectangle into view. This kicks off the recursive scroll
   // into visible starting from the frame's owner element. The coordinates of
   // the rect are absolute (transforms removed) with respect to the frame in

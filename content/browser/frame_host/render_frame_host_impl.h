@@ -706,6 +706,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return active_sandbox_flags_;
   }
 
+  // Notifies the render frame that a user gesture was received.
+  void SetHasReceivedUserGesture();
+
  protected:
   friend class RenderFrameHostFactory;
 
