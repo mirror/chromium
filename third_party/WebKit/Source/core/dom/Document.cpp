@@ -659,7 +659,9 @@ Document::Document(const DocumentInit& initializer,
       password_count_(0),
       logged_field_edit_(false),
       engagement_level_(mojom::blink::EngagementLevel::NONE),
-      secure_context_state_(SecureContextState::kUnknown) {
+      secure_context_state_(SecureContextState::kUnknown),
+      current_frame_had_raf_(false),
+      next_frame_has_pending_raf_(false) {
   if (frame_) {
     DCHECK(frame_->GetPage());
     ProvideContextFeaturesToDocumentFrom(*this, *frame_->GetPage());
@@ -6557,8 +6559,12 @@ void Document::ServiceScriptedAnimations(
     double monotonic_animation_start_time) {
   if (!scripted_animation_controller_)
     return;
+  current_frame_had_raf_ =
+      scripted_animation_controller_->HasRegisteredCallbacks();
   scripted_animation_controller_->ServiceScriptedAnimations(
       monotonic_animation_start_time);
+  next_frame_has_pending_raf_ =
+      scripted_animation_controller_->HasRegisteredCallbacks();
 }
 
 ScriptedIdleTaskController& Document::EnsureScriptedIdleTaskController() {
