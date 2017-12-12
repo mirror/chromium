@@ -1012,6 +1012,8 @@ void RenderWidgetHostImpl::WaitForSurface() {
         view_size = current_size_;
       if (view_->HasAcceleratedSurface(view_size))
         break;
+      if (view_->HasPendingFrameOfSize(view_size))
+        view_->SetFrozenForRepaint(true);
     }
     time_left = timeout_time - TimeTicks::Now();
     if (time_left <= TimeDelta::FromSeconds(0)) {
@@ -1019,6 +1021,7 @@ void RenderWidgetHostImpl::WaitForSurface() {
       break;
     }
   }
+  view_->SetFrozenForRepaint(false);
 }
 #endif
 

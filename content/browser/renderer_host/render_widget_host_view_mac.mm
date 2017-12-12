@@ -1403,6 +1403,21 @@ bool RenderWidgetHostViewMac::GetCachedFirstRectForCharacterRange(
   return true;
 }
 
+void RenderWidgetHostViewMac::SetFrozenForRepaint(bool frozen) {
+  if (frozen_for_repaint_ == frozen)
+    return;
+  if (frozen)
+    NSDisableScreenUpdates();
+  else
+    NSEnableScreenUpdates();
+  frozen_for_repaint_ = frozen;
+}
+
+bool RenderWidgetHostViewMac::HasPendingFrameOfSize(
+    const gfx::Size& desired_size) const {
+  return last_frame_size_ == desired_size;
+}
+
 bool RenderWidgetHostViewMac::HasAcceleratedSurface(
       const gfx::Size& desired_size) {
   return browser_compositor_->HasFrameOfSize(desired_size);
@@ -1435,6 +1450,8 @@ void RenderWidgetHostViewMac::SubmitCompositorFrame(
     viz::mojom::HitTestRegionListPtr hit_test_region_list) {
   TRACE_EVENT0("browser", "RenderWidgetHostViewMac::OnSwapCompositorFrame");
 
+  last_frame_size_ = gfx::ConvertSizeToDIP(frame.metadata.device_scale_factor,
+                                           frame.size_in_pixels());
   last_frame_root_background_color_ = frame.metadata.root_background_color;
   last_scroll_offset_ = frame.metadata.root_scroll_offset;
 
