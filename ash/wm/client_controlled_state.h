@@ -51,6 +51,17 @@ class ASH_EXPORT ClientControlledState : public BaseState {
   // apply the bounds change to the window.
   void set_bounds_locally(bool set) { set_bounds_locally_ = set; }
 
+  // Type of animation applied when changing bounds locally.
+  // TODO(oshima): Use transform animation for snapping.
+  enum BoundsChangeAnimationType {
+    kAnimationNone,
+    kAnimationCrossFade,
+  };
+
+  void set_bounds_change_animation_type(BoundsChangeAnimationType type) {
+    bounds_change_animation_type_ = type;
+  }
+
   // WindowState::State:
   void AttachState(WindowState* window_state,
                    WindowState::State* previous_state) override;
@@ -76,6 +87,8 @@ class ASH_EXPORT ClientControlledState : public BaseState {
   std::unique_ptr<Delegate> delegate_;
 
   bool set_bounds_locally_ = false;
+
+  BoundsChangeAnimationType bounds_change_animation_type_ = kAnimationNone;
 
   DISALLOW_COPY_AND_ASSIGN(ClientControlledState);
 };
