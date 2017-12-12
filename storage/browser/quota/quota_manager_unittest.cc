@@ -33,18 +33,18 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
-using storage::kQuotaErrorAbort;
-using storage::kQuotaErrorInvalidModification;
-using storage::kQuotaErrorNotSupported;
-using storage::kQuotaStatusOk;
-using storage::kQuotaStatusUnknown;
+using blink::kQuotaErrorAbort;
+using blink::kQuotaErrorInvalidModification;
+using blink::kQuotaErrorNotSupported;
+using blink::kQuotaStatusOk;
+using blink::kQuotaStatusUnknown;
 using storage::kStorageTypePersistent;
 using storage::kStorageTypeSyncable;
 using storage::kStorageTypeTemporary;
 using storage::kStorageTypeUnknown;
 using storage::QuotaClient;
 using storage::QuotaManager;
-using storage::QuotaStatusCode;
+using blink::QuotaStatusCode;
 using storage::StorageType;
 using storage::UsageInfo;
 using storage::UsageInfoEntries;

@@ -90,8 +90,8 @@ class BrowsingDataQuotaHelperTest : public testing::Test {
                    weak_factory_.GetWeakPtr()));
   }
 
-  void GotPersistentHostQuota(storage::QuotaStatusCode status, int64_t quota) {
-    EXPECT_EQ(storage::kQuotaStatusOk, status);
+  void GotPersistentHostQuota(blink::QuotaStatusCode status, int64_t quota) {
+    EXPECT_EQ(blink::kQuotaStatusOk, status);
     quota_ = quota;
   }
 

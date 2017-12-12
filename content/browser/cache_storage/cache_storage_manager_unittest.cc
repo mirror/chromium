@@ -52,6 +52,7 @@
 #include "storage/browser/test/mock_special_storage_policy.h"
 #include "storage/common/blob_storage/blob_handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/quota/quota_status_code.h"
 #include "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom.h"
 
 using blink::mojom::CacheStorageError;
@@ -557,7 +558,7 @@ class CacheStorageManagerTest : public testing::Test {
                               QuotaStatusCode status_code,
                               int64_t usage,
                               int64_t quota) {
-    if (status_code == storage::kQuotaStatusOk)
+    if (status_code == blink::kQuotaStatusOk)
       *out_usage = usage;
     run_loop->Quit();
   }
@@ -1672,7 +1673,7 @@ class CacheStorageQuotaClientTest : public CacheStorageManagerTest {
   }
 
   void DeleteOriginCallback(base::RunLoop* run_loop,
-                            storage::QuotaStatusCode status) {
+                            blink::QuotaStatusCode status) {
     callback_status_ = status;
     run_loop->Quit();
   }
@@ -1714,7 +1715,7 @@ class CacheStorageQuotaClientTest : public CacheStorageManagerTest {
         base::Bind(&CacheStorageQuotaClientTest::DeleteOriginCallback,
                    base::Unretained(this), base::Unretained(&loop)));
     loop.Run();
-    return callback_status_ == storage::kQuotaStatusOk;
+    return callback_status_ == blink::kQuotaStatusOk;
   }
 
   bool QuotaDoesSupport(storage::StorageType type) {
@@ -1723,7 +1724,7 @@ class CacheStorageQuotaClientTest : public CacheStorageManagerTest {
 
   std::unique_ptr<CacheStorageQuotaClient> quota_client_;
 
-  storage::QuotaStatusCode callback_status_;
+  blink::QuotaStatusCode callback_status_;
   int64_t callback_quota_usage_ = 0;
   std::set<GURL> callback_origins_;
 

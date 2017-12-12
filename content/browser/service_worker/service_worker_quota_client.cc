@@ -27,8 +27,7 @@ void ReportOrigins(const QuotaClient::GetOriginsCallback& callback,
 
 void ReportToQuotaStatus(const QuotaClient::DeletionCallback& callback,
                          bool status) {
-  callback.Run(status ? storage::QuotaStatusCode::kQuotaStatusOk
-                      : storage::QuotaStatusCode::kQuotaStatusUnknown);
+  callback.Run(status ? blink::kQuotaStatusOk : blink::kQuotaStatusUnknown);
 }
 
 void FindUsageForOrigin(const QuotaClient::GetUsageCallback& callback,
@@ -98,7 +97,7 @@ void ServiceWorkerQuotaClient::DeleteOriginData(
     storage::StorageType type,
     const DeletionCallback& callback) {
   if (type != storage::StorageType::kStorageTypeTemporary) {
-    callback.Run(storage::QuotaStatusCode::kQuotaStatusOk);
+    callback.Run(blink::kQuotaStatusOk);
     return;
   }
   context_->DeleteForOrigin(origin, base::Bind(&ReportToQuotaStatus, callback));

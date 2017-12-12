@@ -21,13 +21,11 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using storage::HostStorageObservers;
-using storage::kQuotaErrorNotSupported;
-using storage::kQuotaStatusOk;
+using blink::kQuotaErrorNotSupported;
 using storage::kStorageTypePersistent;
 using storage::kStorageTypeTemporary;
 using storage::QuotaClient;
 using storage::QuotaManager;
-using storage::QuotaStatusCode;
 using storage::SpecialStoragePolicy;
 using storage::StorageMonitor;
 using storage::StorageObserver;
@@ -73,10 +71,12 @@ class UsageMockQuotaManager : public QuotaManager {
                      storage::GetQuotaSettingsFunc()),
         callback_usage_(0),
         callback_quota_(0),
-        callback_status_(kQuotaStatusOk),
+        callback_status_(blink::kQuotaStatusOk),
         initialized_(false) {}
 
-  void SetCallbackParams(int64_t usage, int64_t quota, QuotaStatusCode status) {
+  void SetCallbackParams(int64_t usage,
+                         int64_t quota,
+                         blink::QuotaStatusCode status) {
     initialized_ = true;
     callback_quota_ = quota;
     callback_usage_ = usage;
@@ -103,7 +103,7 @@ class UsageMockQuotaManager : public QuotaManager {
  private:
   int64_t callback_usage_;
   int64_t callback_quota_;
-  QuotaStatusCode callback_status_;
+  blink::QuotaStatusCode callback_status_;
   bool initialized_;
   UsageAndQuotaCallback delayed_callback_;
 };

@@ -16,7 +16,7 @@
 #include "storage/browser/test/mock_special_storage_policy.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using storage::kQuotaStatusOk;
+using blink::kQuotaStatusOk;
 using storage::kStorageTypeTemporary;
 using storage::QuotaClient;
 using storage::QuotaClientList;

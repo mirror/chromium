@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "third_party/WebKit/common/quota/quota_status_code.h"
 #include "base/logging.h"
-#include "storage/common/quota/quota_status_code.h"
 
-namespace storage {
+namespace blink {
 
 const char* QuotaStatusCodeToString(QuotaStatusCode status) {
   switch (status) {
@@ -26,4 +26,4 @@ const char* QuotaStatusCodeToString(QuotaStatusCode status) {
   return "Unknown error.";
 }
 
-}  // namespace storage
+}  // namespace blink
