@@ -3672,3 +3672,8 @@ crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/dou
 crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-jump-forwards-too-short.html [ Skip ]
 crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-on-play-button.html [ Skip ]
 crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-toggle-fullscreen.html [ Skip ]
+
+# These tests require Unified Autoplay.
+crbug.com/779087 external/wpt/feature-policy/autoplay-allowed-by-feature-policy-attribute-redirect-on-load.https.sub.html [ Skip ]
+crbug.com/779087 external/wpt/feature-policy/autoplay-default-feature-policy.https.sub.html [ Skip ]
+crbug.com/779087 external/wpt/feature-policy/autoplay-disabled-by-feature-policy.https.sub.html [ Skip ]
