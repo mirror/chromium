@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8ec79cf_c496bdde",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T19:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cbd3e1c_2614dcd2",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd337c96_ffd0ae3a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 10
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "91b82ffb_fbf9b7ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T19:18:06Z",
+      "side": 1,
+      "message": "I split up the tests into the following CLs:\n* Same object tests: https://chromium-review.googlesource.com/c/chromium/src/+/823072\n* Remove characteristics tests: https://chromium-review.googlesource.com/c/chromium/src/+/822522\n* Write to characteristics tests: https://chromium-review.googlesource.com/c/chromium/src/+/814596",
+      "parentUuid": "af1aff25_a324ade3",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d9f7e96_a5d0a320",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-from-2-characteristics.html",
         "patchSetId": 10
@@ -68,6 +104,24 @@
       "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a9b61b_0f1f5d7a",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-from-2-characteristics.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T19:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d9f7e96_a5d0a320",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "1886d899_469352a9",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T19:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "335bf3e5_9d2db300",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ced53ecd_b3496aa9",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/writeValue/value-too-long.html",
         "patchSetId": 10
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "a58c41e6_e0d4d4b9",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/writeValue/value-too-long.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T19:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ced53ecd_b3496aa9",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17375914_8c896747",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/writeValue/write-updates-value.html",
         "patchSetId": 10
@@ -119,6 +209,24 @@
       "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6950f75_d3c168e1",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/writeValue/write-updates-value.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T19:18:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17375914_8c896747",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
