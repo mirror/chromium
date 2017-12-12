@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12f68578_c89db927",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T21:40:07Z",
+      "side": 0,
+      "message": "Please follow the discussion in crbug.com/690135 if you are interested.",
+      "parentUuid": "116d4923_668cd25b",
+      "range": {
+        "startLine": 320,
+        "startChar": 43,
+        "endLine": 320,
+        "endChar": 52
+      },
+      "revId": "97461ea219a24a5bf9ffe51cf4a7eb1d1633aeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "085f574a_bb93e6b8",
         "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
         "patchSetId": 2
