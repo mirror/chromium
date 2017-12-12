@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea66f479_24bd4d22",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-12T18:05:02Z",
+      "side": 1,
+      "message": "delete debugging?",
+      "revId": "9d205f43411345c78fc25f6667a4e63c9aff0bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a5d33b2_ca45c5ce",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-12T18:05:02Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "9d205f43411345c78fc25f6667a4e63c9aff0bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4752b8_ca062cde",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-12T18:05:02Z",
+      "side": 1,
+      "message": "nit: exist?",
+      "range": {
+        "startLine": 247,
+        "startChar": 71,
+        "endLine": 247,
+        "endChar": 76
+      },
+      "revId": "9d205f43411345c78fc25f6667a4e63c9aff0bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab916758_49d415d1",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-12T18:05:02Z",
+      "side": 1,
+      "message": "nit: s/Apps/apps/",
+      "range": {
+        "startLine": 247,
+        "startChar": 49,
+        "endLine": 247,
+        "endChar": 53
+      },
+      "revId": "9d205f43411345c78fc25f6667a4e63c9aff0bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a141c259_d33403ba",
+        "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-12T18:05:02Z",
+      "side": 1,
+      "message": "nit: delete blank line?",
+      "revId": "9d205f43411345c78fc25f6667a4e63c9aff0bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
