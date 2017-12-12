@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "764bd223_c05fb1e5",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "nit: could grab it from contents_texture_it here, and drop that intermediate variable",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d385d9a4_746465cd",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "the current_framebuffer_colorspace_ would be the colorspace we\u0027re drawing into, not the colorspace of what we\u0027re reading?",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54b07a8_c68f317d",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "the current_framebuffer_colorspace_ would be the colorspace we\u0027re drawing into, not the colorspace of what we\u0027re reading?",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314281ea_44cd0eec",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "same here?",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e6ec8f_d97f72dd",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 2914,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "Can you move this down just above where we set current_framebuffer_texture_, rather than above the DCHECKs?",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75998f4_b2fe6e0b",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "I think we could skip this variable",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4498b5d8_00127dcf",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 2919,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "We don\u0027t need to do this nullptr step anymore",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802ebe7c_2cd56146",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3307,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "I think we could skip this variable also",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e0a671_698ca6fd",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3599,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "\"be deleted\"",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358c1f42_698ce2ab",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3604,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "Can we keep checking for wrong size/hint here also and erase them here in this method, so we do all the erasing in one place? It is harder to follow when it gets split.",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f046ac99_3bc3236f",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3653,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "This isn\u0027t the framebuffer\u0027s colorspace. The framebuffer is what we\u0027re drawing to, but this is the colorspace of the renderpass we\u0027re drawing from. Should we maybe just set the params\u0027 colorspace when we set the contents texture/bypass texture originally?",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5c0d3e_c805ac8b",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3662,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T21:47:43Z",
+      "side": 1,
+      "message": "Can we only make the texture in the map when we allocate it? Do we need to have 0 ids in the map?",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
