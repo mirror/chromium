@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c739693e_8477d5ca",
+        "filename": "chrome/browser/media/webrtc/webrtc_log_list.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-12T22:25:34Z",
+      "side": 1,
+      "message": "Done. (clang-format adds this when there\u0027s more than one line inside the namespace, but doesn\u0027t seem to care one way or the other when there\u0027s only one line)",
+      "parentUuid": "9596c83d_c5ebbf71",
+      "range": {
+        "startLine": 14,
+        "startChar": 1,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "343f72c7fe9bca283b857b8e5d29f5750f7b5907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71a65898_d00388f8",
         "filename": "chrome/browser/media/webrtc/webrtc_logging_handler_host.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "343f72c7fe9bca283b857b8e5d29f5750f7b5907",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab0dae8_4c0ad1a1",
+        "filename": "chrome/browser/media/webrtc/webrtc_logging_handler_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-12T22:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71a65898_d00388f8",
+      "range": {
+        "startLine": 30,
+        "startChar": 1,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "343f72c7fe9bca283b857b8e5d29f5750f7b5907",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
