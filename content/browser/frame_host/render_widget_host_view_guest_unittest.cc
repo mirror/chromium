@@ -21,6 +21,7 @@
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/browser/renderer_host/render_widget_host_view_base_unittest.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_plugin_guest_delegate.h"
 #include "content/public/browser/render_widget_host_view.h"
@@ -96,13 +97,12 @@ class RenderWidgetHostViewGuestTest : public testing::Test {
 
 }  // namespace
 
-TEST_F(RenderWidgetHostViewGuestTest, VisibilityTest) {
-  view_->Show();
-  ASSERT_TRUE(view_->IsShowing());
-
-  view_->Hide();
-  ASSERT_FALSE(view_->IsShowing());
+TEST_F(RenderWidgetHostViewGuestTest, ShowHide) {
+  RenderWidgetHostViewBase_TestShowHide(view_);
 }
+
+// No occlusion test because RenderWidgetHostViewGuest doesn't track its
+// occlusion.
 
 class TestBrowserPluginGuest : public BrowserPluginGuest {
  public:
