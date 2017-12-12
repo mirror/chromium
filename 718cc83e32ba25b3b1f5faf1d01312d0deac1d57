@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fe0fc93d_8ecd3eae",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-12T21:11:01Z",
+      "side": 1,
+      "message": "Yes, but I think |is_active| is not constant (and though the primary account shouldn\u0027t change, it\u0027s outside the control of this class.. ). It seems to me that the original code just wants to use whatever account id and |is_active| status at this point? So the check remains here. Otherwise, I think we should construct the DecodeRequest object with the account id and active status to be safe.",
+      "parentUuid": "85db6a14_e1f23c23",
+      "revId": "718cc83e32ba25b3b1f5faf1d01312d0deac1d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17abb3b1_ffb95a0c",
         "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T15:20:59Z",
       "side": 1,
       "message": "Clarification: in this case (i.e. if account.is_active is false),\nSetCustomWallpaper() won\u0027t success? If so, is it possible to check 1) in SetWallpaper similar to CanSetCustomWallpaper() just above if is_active value will be constant during its lifetime, or 2) at least just before calling SetCustomWallpaper(), e.g.;\nif (!account.is_active) {\n  NotifyWallpaperChangedAndReset(android_id_);\n} else {\n  id_pairs_.push_back(pair);  // ... (1)\n  SetCustomWallpaper(...);\n}\n\nNote (1): Now IIUC it is better to call it before SetCustomWallpaper(), just in case SetCustomWallpaper() runs the observer method synchronously.",
+      "revId": "718cc83e32ba25b3b1f5faf1d01312d0deac1d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d2f7b4_c0457428",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-12T21:11:01Z",
+      "side": 1,
+      "message": "Done. However the current behavior is slightly different from the original code, when \u0027account.is_active \u003d\u003d false\u0027, |SetCustomWallpaper| is not really a no-op: it still \u0027sets\u0027 wallpaper for this account, but it won\u0027t actually show the wallpaper immediately because the parameter \u0027show_wallpaper\u0027 is false. After this change, when account.is_active \u003d\u003d false, |SetCustomWallpaper| won\u0027t be called. In addition, |SetCustomWallpaper| will notify observers synchronously after this CL, so if we still want to support setting wallpaper for inactive account, we need to do something different.. \n\nThe ongoing wallpaper refactoring removes some old code path, so I think it\u0027s better if we can understand what the exact expected behavior is here, so that I will re-implement it with the new wallpaper controller. +hirono for more context here? Thanks.",
+      "parentUuid": "17abb3b1_ffb95a0c",
       "revId": "718cc83e32ba25b3b1f5faf1d01312d0deac1d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "718cc83e32ba25b3b1f5faf1d01312d0deac1d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f70f46_52fa3847",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-12T21:11:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aa40cd8_82399819",
+      "revId": "718cc83e32ba25b3b1f5faf1d01312d0deac1d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
