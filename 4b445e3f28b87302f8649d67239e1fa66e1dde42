@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60e84b42_66c109c0",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-12T13:13:21Z",
+      "side": 1,
+      "message": "Afaict, it would have to be popup_view_-\u003enative_view_accessibility() ? popup_view-\u003enative_view_accessibility()-\u003eGetId() : -1;\nI think this is a little nicer.",
+      "parentUuid": "49ccdf63_ee0328d9",
+      "revId": "4b445e3f28b87302f8649d67239e1fa66e1dde42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bbb2075_fb13a0af",
         "filename": "ui/views/view.h",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T00:24:54Z",
       "side": 1,
       "message": "How about instead of adding a new interface to View, just\nmake a simple accessor for NativeViewAccessibility:\n\nNativeViewAccessibility* native_view_accessibility();\n\nThen add a GetId() to that.",
+      "revId": "4b445e3f28b87302f8649d67239e1fa66e1dde42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1da32d_20b7d01c",
+        "filename": "ui/views/view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-12T13:13:21Z",
+      "side": 1,
+      "message": "I did it this way because we may eventually have multiple call sites and I wanted to avoid an extra null check on the results of native_view_accessibility() at each call site.\nIf native_view_accessibility() can\u0027t be null then we can remove the if here:\nhttps://cs.chromium.org/chromium/src/ui/views/view.cc?type\u003dcs\u0026q\u003dview.cc\u0026sq\u003dpackage:chromium\u0026l\u003d1450",
+      "parentUuid": "4bbb2075_fb13a0af",
       "revId": "4b445e3f28b87302f8649d67239e1fa66e1dde42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
