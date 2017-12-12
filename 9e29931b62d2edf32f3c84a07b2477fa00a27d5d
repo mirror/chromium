@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "32eee2bf_634f7062",
+        "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T23:53:43Z",
+      "side": 1,
+      "message": "Can\u0027t we bind the storage partition to use into the creation callback itself?",
+      "parentUuid": "50b36a07_967dcd21",
+      "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca0a62c9_b70bb554",
         "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
         "patchSetId": 11
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "Maybe, but the any callers expecting a response would still be wrong, since the callbacks would never run and promises would never be resolved.",
       "parentUuid": "5e80cedf_19d2fbf0",
+      "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8689482b_acddaa3d",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchBridge.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T23:53:43Z",
+      "side": 1,
+      "message": "Meh... everything comes back to ScopedCallbackRunner doesn\u0027t it...",
+      "parentUuid": "41650193_ccb392a9",
       "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
