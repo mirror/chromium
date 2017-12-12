@@ -16,7 +16,7 @@ class LoFi(IntegrationTest):
   def testLoFi(self):
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
-      test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
+      test_driver.AddChromeArg('--data-saver-server-previews=lofi-preview')
       # Disable server experiments such as tamper detection.
       test_driver.AddChromeArg('--data-reduction-proxy-server-experiments-'
                                'disabled')
@@ -126,7 +126,7 @@ class LoFi(IntegrationTest):
       # --profile-type=default command line for the same user profile and cache
       # to be used across the two page loads.
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
-      test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
+      test_driver.AddChromeArg('--data-saver-server-previews=lofi-preview')
       test_driver.AddChromeArg('--profile-type=default')
       test_driver.AddChromeArg('--data-reduction-proxy-server-experiments-'
                                'disabled')
@@ -166,8 +166,8 @@ class LoFi(IntegrationTest):
       # Third page load with the chrome proxy on and Lo-Fi off.
       test_driver._StopDriver()
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
-      test_driver.RemoveChromeArg('--data-reduction-proxy-lo-fi=always-on')
-      test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=disabled')
+      test_driver.RemoveChromeArg('--data-saver-server-previews=lofi-preview')
+      test_driver.AddChromeArg('--data-saver-server-previews=disabled')
       test_driver.LoadURL('http://check.googlezip.net/cacheable/test.html')
 
       responses = 0
@@ -185,7 +185,7 @@ class LoFi(IntegrationTest):
 
   # Checks that LoFi images are served and the force empty image experiment
   # directive is provided when LoFi is always-on without Lite Pages enabled.
-  @ChromeVersionEqualOrAfterM(61)
+  @ChromeVersionEqualOrAfterM(65)
   def testLoFiForcedExperiment(self):
     # If it was attempted to run with another experiment, skip this test.
     if common.ParseFlags().browser_args and ('--data-reduction-proxy-experiment'
@@ -193,7 +193,7 @@ class LoFi(IntegrationTest):
       self.skipTest('This test cannot be run with other experiments.')
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
-      test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
+      test_driver.AddChromeArg('--data-saver-server-previews=lofi-preview')
       test_driver.AddChromeArg('--enable-features='
                                'DataReductionProxyDecidesTransform')
 

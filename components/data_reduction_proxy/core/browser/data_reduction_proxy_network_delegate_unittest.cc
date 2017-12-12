@@ -950,8 +950,8 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
   for (size_t i = 0; i < arraysize(tests); ++i) {
     if (tests[i].lofi_switch_enabled) {
       base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-          switches::kDataReductionProxyLoFi,
-          switches::kDataReductionProxyLoFiValueAlwaysOn);
+          switches::kDataReductionProxyServerPreviews,
+          switches::kDataReductionProxyServerPreviewsLoFi);
     }
     base::FieldTrialList field_trial_list(nullptr);
     if (tests[i].auto_lofi_enabled) {

@@ -116,6 +116,10 @@ const char* page_policies_directive();
 // for requests that accept lite pages.
 const char* chrome_proxy_experiment_force_lite_page();
 
+// Gets the Chrome-Proxy experiment ("exp") value to prefer a lite page preview
+// for requests that accept lite pages.
+const char* chrome_proxy_experiment_prefer_lite_page();
+
 // Gets the Chrome-Proxy experiment ("exp") value to force an empty image
 // preview for requests that enable server provided previews.
 const char* chrome_proxy_experiment_force_empty_image();
