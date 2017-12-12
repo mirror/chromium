@@ -16,6 +16,24 @@
       "revId": "e4852da53bf38855df9c8b618eddf70d3719d566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7711d3ab_12b3570a",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-12-12T23:08:04Z",
+      "side": 1,
+      "message": "I wanted to maintain existing behavior for the time being. I can change if you prefer, though.",
+      "parentUuid": "d26df7fd_5c9bc9b0",
+      "revId": "e4852da53bf38855df9c8b618eddf70d3719d566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
