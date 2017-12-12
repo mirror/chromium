@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "247a0477_f23cd143",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SearchEngineAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-12T22:56:54Z",
+      "side": 1,
+      "message": "You\u0027re right, thanks.",
+      "parentUuid": "05029afc_9e0c4f6b",
+      "range": {
+        "startLine": 394,
+        "startChar": 17,
+        "endLine": 394,
+        "endChar": 38
+      },
+      "revId": "44c324ef72b8708798ffe42c02e604bf78525aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76868d13_f39ba882",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SearchEngineAdapter.java",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-12T19:32:45Z",
       "side": 1,
       "message": "I would annotate the function with @StringRes.  I also think you could switch from Integer to int.  If you return 0, that is the equivalent of unset.\n\nWe also had weird conditions where the URL was null due to mismatches, so we might want to return null/0 if the url passed in is null.",
+      "revId": "44c324ef72b8708798ffe42c02e604bf78525aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0953f2_10342337",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SearchEngineAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-12T22:56:54Z",
+      "side": 1,
+      "message": "Thanks! Originally I wasn\u0027t completely sure that 0 was unset which is why I didn\u0027t take the approach originally. Thanks for clarifying.",
+      "parentUuid": "76868d13_f39ba882",
       "revId": "44c324ef72b8708798ffe42c02e604bf78525aac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "2f505db3_590e8b14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SearchEngineAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-12T22:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3e5bd15_8ecb2f2a",
+      "revId": "44c324ef72b8708798ffe42c02e604bf78525aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7260cc48_ae5f78b4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
         "patchSetId": 4
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-12T19:32:45Z",
       "side": 1,
       "message": "this looks overly indented, but I i\u0027ll defer to git cl format",
+      "revId": "44c324ef72b8708798ffe42c02e604bf78525aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a65dd59_6f458aea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-12T22:56:54Z",
+      "side": 1,
+      "message": "This was git cl format :(",
+      "parentUuid": "7260cc48_ae5f78b4",
       "revId": "44c324ef72b8708798ffe42c02e604bf78525aac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
