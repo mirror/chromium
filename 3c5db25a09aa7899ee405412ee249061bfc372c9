@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ca1b408_e1da647c",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-12T07:58:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd07adab_a92b23f4",
+      "revId": "3c5db25a09aa7899ee405412ee249061bfc372c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7edc8bce_96266247",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T06:07:35Z",
       "side": 1,
       "message": "I guess we can\u0027t \"close the binding\" via binding_.ReportBadMessage() because it\u0027s an AssociatedBinding?",
+      "revId": "3c5db25a09aa7899ee405412ee249061bfc372c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcee52af_a47f1322",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-12T07:58:28Z",
+      "side": 1,
+      "message": "Yeah, I think so, AssociatedBinding use InterfaceEndpointClient, which will  check if the callback is run.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/616740/4/content/browser/service_worker/service_worker_provider_host.cc#946",
+      "parentUuid": "7edc8bce_96266247",
       "revId": "3c5db25a09aa7899ee405412ee249061bfc372c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
