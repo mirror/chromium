@@ -22,6 +22,30 @@
       "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482c1d84_69ecbcee",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-12T16:44:46Z",
+      "side": 1,
+      "message": "Not supposed to use a pointer to an entry after calling close on it, since it\u0027s a potentially-deleting op. And I think aliases don\u0027t matter since Close doesn\u0027t actually do anything until you\u0027re closing the last one.",
+      "parentUuid": "e7adbd21_c61c4f98",
+      "range": {
+        "startLine": 1240,
+        "startChar": 7,
+        "endLine": 1240,
+        "endChar": 77
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
