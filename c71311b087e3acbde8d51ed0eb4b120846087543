@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8723a66_85e0e749",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-12T22:33:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ff9d99d_e8a10cc4",
+      "range": {
+        "startLine": 257,
+        "startChar": 43,
+        "endLine": 257,
+        "endChar": 52
+      },
+      "revId": "c71311b087e3acbde8d51ed0eb4b120846087543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab9ae493_584a0e2b",
         "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c71311b087e3acbde8d51ed0eb4b120846087543",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a090b0cc_7b7a956b",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-12T22:33:33Z",
+      "side": 1,
+      "message": "Done since this CL is rebased on our discussions.",
+      "parentUuid": "ab9ae493_584a0e2b",
+      "range": {
+        "startLine": 66,
+        "startChar": 45,
+        "endLine": 70,
+        "endChar": 4
+      },
+      "revId": "c71311b087e3acbde8d51ed0eb4b120846087543",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
