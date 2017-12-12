@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd182fe9_484864d7",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1240228
+      },
+      "writtenOn": "2017-12-12T08:53:34Z",
+      "side": 1,
+      "message": "The ordering requirement for CALayerParams is that it be called after SwapBuffers completes (the only thing that this actually guarantees).\n\nAnything that needs to be synced with CompositorFrameSinkClient will need to go all the way through CompositorFrameSinkClient back to the ui::Compositor.\n\n(of note is that the \"suspend for recycle\" problem is left unsolved here for the moment)",
+      "parentUuid": "019c3f9c_a090daf5",
+      "revId": "647c85f70b9add19f74db7321380835abc83f404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23024df2_493a0328",
         "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "15de41b2_c3effd29",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1240228
+      },
+      "writtenOn": "2017-12-12T08:53:34Z",
+      "side": 1,
+      "message": "Yes -- this ensures that the CALayerParams are handled in only one place (InProcessDisplayPrivateClient) on both viz and non-viz.",
+      "parentUuid": "23024df2_493a0328",
+      "revId": "647c85f70b9add19f74db7321380835abc83f404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c8b0b21_5370819b",
         "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-12T04:15:32Z",
       "side": 1,
       "message": "The \"private\" in DisplayPrivate made sense before we decided we should have privileged directories. I now feel like this should just be called Display and DisplayClient. I mention this now because I\u0027m not sure we want to keep around this private suffix for too long or else other teams may follow this.",
+      "revId": "647c85f70b9add19f74db7321380835abc83f404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22e5591_a69b5380",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1240228
+      },
+      "writtenOn": "2017-12-12T08:53:34Z",
+      "side": 1,
+      "message": "Ack.\n\nI\u0027ve updated the patch to call this DisplayClient instead of DisplayPrivateClient.",
+      "parentUuid": "0c8b0b21_5370819b",
       "revId": "647c85f70b9add19f74db7321380835abc83f404",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
