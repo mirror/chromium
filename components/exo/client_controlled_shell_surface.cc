@@ -188,7 +188,8 @@ ClientControlledShellSurface::~ClientControlledShellSurface() {
 
 void ClientControlledShellSurface::SetMaximized() {
   TRACE_EVENT0("exo", "ClientControlledShellSurface::SetMaximized");
-
+  pending_show_state_ = ui::SHOW_STATE_MAXIMIZED;
+  /*
   if (!widget_)
     CreateShellSurfaceWidget(ui::SHOW_STATE_MAXIMIZED);
 
@@ -200,10 +201,13 @@ void ClientControlledShellSurface::SetMaximized() {
 
   client_controlled_state_->EnterNextState(
       window_state, ash::mojom::WindowStateType::MAXIMIZED);
+  */
 }
 
 void ClientControlledShellSurface::SetMinimized() {
   TRACE_EVENT0("exo", "ClientControlledShellSurface::SetMinimized");
+  pending_show_state_ = ui::SHOW_STATE_MINIMIZED;
+  /*
 
   if (!widget_)
     CreateShellSurfaceWidget(ui::SHOW_STATE_MINIMIZED);
@@ -215,22 +219,28 @@ void ClientControlledShellSurface::SetMinimized() {
   }
   client_controlled_state_->EnterNextState(
       window_state, ash::mojom::WindowStateType::MINIMIZED);
+  */
 }
 
 void ClientControlledShellSurface::SetRestored() {
   TRACE_EVENT0("exo", "ClientControlledShellSurface::SetRestored");
+  pending_show_state_ = ui::SHOW_STATE_NORMAL;
+  /*
   if (!widget_)
     return;
 
   ash::wm::WindowState* window_state = GetWindowState();
   client_controlled_state_->EnterNextState(window_state,
                                            ash::mojom::WindowStateType::NORMAL);
+  */
 }
 
 void ClientControlledShellSurface::SetFullscreen(bool fullscreen) {
   TRACE_EVENT1("exo", "ClientControlledShellSurface::SetFullscreen",
                "fullscreen", fullscreen);
-
+  pending_show_state_ = fullscreen ? ui::SHOW_STATE_FULLSCREEN
+      : ui::SHOW_STATE_NORMAL;
+  /*
   if (!widget_) {
     CreateShellSurfaceWidget(fullscreen ? ui::SHOW_STATE_FULLSCREEN
                                         : ui::SHOW_STATE_NORMAL);
@@ -244,6 +254,7 @@ void ClientControlledShellSurface::SetFullscreen(bool fullscreen) {
   client_controlled_state_->EnterNextState(
       window_state, fullscreen ? ash::mojom::WindowStateType::FULLSCREEN
                                : ash::mojom::WindowStateType::NORMAL);
+  */
 }
 
 void ClientControlledShellSurface::SetPinned(ash::mojom::WindowPinType type) {
@@ -327,7 +338,44 @@ void ClientControlledShellSurface::OnWindowStateChangeEvent(
 // SurfaceDelegate overrides:
 
 void ClientControlledShellSurface::OnSurfaceCommit() {
+  if (!widget_)
+    CreateShellSurfaceWidget(pending_show_state_);
+
+  if (widget_->GetNativeWindow()->GetProperty(aura::client::kShowStateKey)
+      != pending_show_state_) {
+    ash::wm::WindowState* window_state = GetWindowState();
+    LOG(ERROR) << "OnSurfaceCommit state change";
+    if (!IsPinned(window_state)) {
+      ash::mojom::WindowStateType next_window_state =
+          ash::mojom::WindowStateType::NORMAL;
+      switch (pending_show_state_) {
+        case ui::SHOW_STATE_NORMAL:
+          if (widget_->IsMaximized() || widget_->IsFullscreen())
+            enable_crossfade_ = true;
+          break;
+        case ui::SHOW_STATE_MINIMIZED:
+          next_window_state = ash::mojom::WindowStateType::MINIMIZED;
+          break;
+        case ui::SHOW_STATE_MAXIMIZED:
+          enable_crossfade_ = true;
+          next_window_state = ash::mojom::WindowStateType::MAXIMIZED;
+          break;
+        case ui::SHOW_STATE_FULLSCREEN:
+          enable_crossfade_ = true;
+          next_window_state = ash::mojom::WindowStateType::FULLSCREEN;
+          break;
+        default:
+          break;
+      }
+      client_controlled_state_->EnterNextState(
+          window_state, next_window_state);
+    }
+  }
+
   ShellSurfaceBase::OnSurfaceCommit();
+
+  enable_crossfade_ = false;
+
   if (widget_) {
     // Apply new top inset height.
     if (pending_top_inset_height_ != top_inset_height_) {
@@ -351,6 +399,7 @@ void ClientControlledShellSurface::OnSurfaceCommit() {
   } else {
     orientation_compositor_lock_.reset();
   }
+  LOG(ERROR) << "OnSurfaceCommit: Done";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -466,7 +515,12 @@ void ClientControlledShellSurface::CompositorLockTimedOut() {
 void ClientControlledShellSurface::SetWidgetBounds(const gfx::Rect& bounds) {
   if (!resizer_) {
     client_controlled_state_->set_bounds_locally(true);
-    widget_->SetBounds(bounds);
+    if (enable_crossfade_) {
+      // TODO: Convert coordinates
+      GetWindowState()->SetBoundsDirectCrossFade(bounds);
+    } else {
+      widget_->SetBounds(bounds);
+    }
     client_controlled_state_->set_bounds_locally(false);
     UpdateSurfaceBounds();
     return;
