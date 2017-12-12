@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "223dfffc_2a0b46bd",
+        "filename": "chrome/browser/android/vr_shell/vr_gl_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-12T22:52:37Z",
+      "side": 1,
+      "message": "Please add a TODO to create a new interface for UI talking to VrShellGl. Ideally we wouldn\u0027t have logic like this in VrGLThread, but for merging back to 64 this is fine.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 32
+      },
+      "revId": "4267159486a680024dfad713f9d44b06b15d8e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
