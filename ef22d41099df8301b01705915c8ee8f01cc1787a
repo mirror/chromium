@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "255b1eee_bbab4243",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:04:53Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "ef22d41099df8301b01705915c8ee8f01cc1787a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18655db7_d8d4286a",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:04:53Z",
+      "side": 1,
+      "message": "Is there a benefit of initializing this to the empty array?",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 8
+      },
+      "revId": "ef22d41099df8301b01705915c8ee8f01cc1787a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ef8916_cf13ac3f",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:04:53Z",
+      "side": 1,
+      "message": "Is this still the happening, now that itemsToShow is not initialized to the empty array inside properties: {}?\n\nIf this is worth doing anyway, maybe modify the comment, because it makes it sound that it is not necessary anymore.",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 37
+      },
+      "revId": "ef22d41099df8301b01705915c8ee8f01cc1787a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566827cd_2afb609a",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:04:53Z",
+      "side": 1,
+      "message": "This method no longer exists. I am wondering if the JS type checker caught this.",
+      "range": {
+        "startLine": 139,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 40
+      },
+      "revId": "ef22d41099df8301b01705915c8ee8f01cc1787a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a442f7_fbda25ea",
+        "filename": "chrome/browser/resources/settings/settings_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:04:53Z",
+      "side": 1,
+      "message": "Does this file have any \u003cif expr\u003e\u003c/if\u003e statements? If not, why preprocess it?",
+      "range": {
+        "startLine": 324,
+        "startChar": 19,
+        "endLine": 324,
+        "endChar": 36
+      },
+      "revId": "ef22d41099df8301b01705915c8ee8f01cc1787a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6be303_67f2e5d9",
+        "filename": "chrome/browser/resources/settings/settings_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:04:53Z",
+      "side": 1,
+      "message": "Same question here.",
+      "range": {
+        "startLine": 328,
+        "startChar": 19,
+        "endLine": 328,
+        "endChar": 37
+      },
+      "revId": "ef22d41099df8301b01705915c8ee8f01cc1787a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c19a7d_d3b11b12",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:04:53Z",
+      "side": 1,
+      "message": "(here and elsewhere in this file) Per JS styleguide such documentation comments should be formatted as follows:\n\nfalse /* foo explantion here */, otherArgHere)\n\nSee https://google.github.io/styleguide/jsguide.html#formatting-block-comment-style, specifically the part that says:\n\n“Parameter name” comments should appear after values whenever the value and method name do not sufficiently convey the meaning.",
+      "range": {
+        "startLine": 265,
+        "startChar": 8,
+        "endLine": 265,
+        "endChar": 46
+      },
+      "revId": "ef22d41099df8301b01705915c8ee8f01cc1787a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
