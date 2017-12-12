@@ -261,6 +261,8 @@ IN_PROC_BROWSER_TEST_P(EncryptedMediaTest,
 // https://crbug.com/788748
 #if defined(OS_ANDROID) && defined(ADDRESS_SANITIZER)
 #define MAYBE_FrameSizeChangeVideo DISABLED_FrameSizeChangeVideo
+#elif defined(OS_LINUX) && defined(ADDRESS_SANITIZER)
+#define MAYBE_FrameSizeChangeVideo DISABLED_FrameSizeChangeVideo
 #else
 #define MAYBE_FrameSizeChangeVideo FrameSizeChangeVideo
 #endif
