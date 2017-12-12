@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5eebbd4_e12c0a9e",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-12T00:19:29Z",
+      "side": 1,
+      "message": "How do all of these URLs relate back to main frame URLs or synced history?",
+      "range": {
+        "startLine": 422,
+        "startChar": 40,
+        "endLine": 422,
+        "endChar": 43
+      },
+      "revId": "f3488ce17d261330273754d46739f88951e1a2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e431d58_319d9dd2",
+        "filename": "content/browser/download/download_ukm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-12T00:19:29Z",
+      "side": 1,
+      "message": "Maybe\n    ukm::builders::Download_Interrupted builder(source_id_)\n        .SetDownloadId(download_id_)\n        .SetReason(reason)\n        .SetResultingFileSize(CalcExponentialBucket(resulting_file_size))\n        .SetTimeSinceStart(time_since_start.InMilliseconds())\n    if (change_in_file_size.has_value())\n        builder.SetChangeInFileSize(CalcExponentialBucket(change_in_file_size.value()))\n    builder.Record(ukm::UkmRecorder::Get());",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 3
+      },
+      "revId": "f3488ce17d261330273754d46739f88951e1a2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
