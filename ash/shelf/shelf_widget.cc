@@ -20,6 +20,7 @@
 #include "ash/shell.h"
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -146,6 +147,12 @@ views::View* ShelfWidget::DelegateView::GetDefaultFocusableChild() {
   if (IsUsingMdLoginShelf())
     return FindFirstOrLastFocusableChild(shelf_widget_->login_shelf_view_,
                                          default_last_focusable_child_);
+
+  if (!Shell::Get()
+           ->tablet_mode_controller()
+           ->IsTabletModeWindowManagerEnabled())
+    return shelf_widget_->GetAppListButton();
+
   return GetFirstFocusableChild();
 }
 
