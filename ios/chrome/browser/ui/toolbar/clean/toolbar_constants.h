@@ -23,6 +23,7 @@ extern const CGFloat kLocationBarVerticalMargin;
 extern const CGFloat kExpandedLocationBarVerticalMargin;
 extern const CGFloat kButtonVerticalMargin;
 extern const CGFloat kLeadingMarginIPad;
+extern const CGFloat kLeadingMarginIncognitoExpanded;
 extern const CGFloat kHorizontalMargin;
 extern const CGFloat kStackViewSpacing;
 
