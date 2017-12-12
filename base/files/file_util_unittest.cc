@@ -1339,8 +1339,17 @@ TEST_F(FileUtilTest, DeleteDirRecursive) {
 
 // Tests recursive Delete() for a directory.
 TEST_F(FileUtilTest, DeleteDirRecursiveWithOpenFile) {
+  // If /tmp is mounted on tmpfs then custom attributes don't work via ioctl
+  // FS_IOC_GETFLAGS/FS_IOC_SETFLAGS. So we create a new temp directory in the
+  // current one.
+  ScopedTempDir temp_dir;
+  const FilePath path(FPL("temp_directory"));
+  ASSERT_TRUE(temp_dir.CreateUniqueTempDirUnderPath(path));
+  ScopedClosureRunner file_deleter(Bind(IgnoreResult(&DeleteFile), path, true));
+
   // Create a subdirectory and put a file and two directories inside.
-  FilePath test_subdir = temp_dir_.GetPath().Append(FPL("DeleteWithOpenFile"));
+  const FilePath test_subdir =
+      temp_dir.GetPath().Append(FPL("DeleteWithOpenFile"));
   CreateDirectory(test_subdir);
   ASSERT_TRUE(PathExists(test_subdir));
 
