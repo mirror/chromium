@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e557623c_1cb96f32",
+        "filename": "ui/native_theme/common_theme.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-12T19:13:47Z",
+      "side": 1,
+      "message": "They might, but I don\u0027t know what to do about that. On Mac, we do need these colors. Maybe on Windows we shouldn\u0027t use them at all? But if we do that, probably the right way to implement it is for UsesHighContrastColors() to return false on Windows, and in that case we can\u0027t merge it with the former NativeThemeWin::IsUsingHighContrastTheme(), right?\n\nWhat do you think is the right way forward here?",
+      "parentUuid": "ae174074_d54a8603",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 3
+      },
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c683964_0f8dc89b",
         "filename": "ui/native_theme/native_theme_mac.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2db5f10_8e53ae0b",
+        "filename": "ui/native_theme/native_theme_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-12T19:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c683964_0f8dc89b",
+      "range": {
+        "startLine": 300,
+        "startChar": 2,
+        "endLine": 300,
+        "endChar": 50
+      },
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "61ca1f16_ef182191",
+        "filename": "ui/native_theme/native_theme_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-12T19:13:47Z",
+      "side": 1,
+      "message": "Hm, okay. But in that case, what would we have this return on Windows? Just false always, and reinstate the IsUsingHighContrastTheme() accessor for external use?",
+      "parentUuid": "2764d3b2_aa76a1a1",
+      "range": {
+        "startLine": 626,
+        "startChar": 2,
+        "endLine": 627,
+        "endChar": 36
+      },
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b87b9ae0_574f2bca",
         "filename": "ui/native_theme/native_theme_win.h",
         "patchSetId": 2
@@ -85,6 +157,24 @@
       "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f80ef2b_575257ce",
+        "filename": "ui/native_theme/native_theme_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-12T19:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b87b9ae0_574f2bca",
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
