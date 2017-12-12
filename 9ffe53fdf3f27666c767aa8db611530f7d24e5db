@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "188b33e7_4b00abf1",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-12T00:30:01Z",
+      "side": 1,
+      "message": "allenvic@ - Yep lets submit a patch after this one that changes the daemon to start with mount_id 0, update tests, and change this (and maybe if there are other?) DCHECKS to reflect that.",
+      "parentUuid": "47828267_c1053d87",
+      "revId": "9ffe53fdf3f27666c767aa8db611530f7d24e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3b20e22_57fae0d9",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
         "patchSetId": 1
