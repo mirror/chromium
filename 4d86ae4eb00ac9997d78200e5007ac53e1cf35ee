@@ -16,6 +16,24 @@
       "revId": "4d86ae4eb00ac9997d78200e5007ac53e1cf35ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a3e5e5_140c8924",
+        "filename": "chrome/test/data/webui/menu_button_test.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-12-12T01:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5242b34f_7f2ce41b",
+      "revId": "4d86ae4eb00ac9997d78200e5007ac53e1cf35ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
