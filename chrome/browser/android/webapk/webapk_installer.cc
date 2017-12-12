@@ -281,8 +281,8 @@ void WebApkInstaller::InstallAsync(content::BrowserContext* context,
                                    const FinishCallback& finish_callback) {
   // The installer will delete itself when it is done.
   WebApkInstaller* installer = new WebApkInstaller(context);
-  installer->InstallAsync(shortcut_info, primary_icon, badge_icon,
-                          finish_callback);
+  installer->InstallAsyncImpl(shortcut_info, primary_icon, badge_icon,
+                              finish_callback);
 }
 
 // static
@@ -300,7 +300,8 @@ void WebApkInstaller::InstallAsyncForTesting(WebApkInstaller* installer,
                                              const SkBitmap& primary_icon,
                                              const SkBitmap& badge_icon,
                                              const FinishCallback& callback) {
-  installer->InstallAsync(shortcut_info, primary_icon, badge_icon, callback);
+  installer->InstallAsyncImpl(shortcut_info, primary_icon, badge_icon,
+                              callback);
 }
 
 // static
@@ -420,10 +421,10 @@ void WebApkInstaller::CreateJavaRef() {
       Java_WebApkInstaller_create(env, reinterpret_cast<intptr_t>(this)));
 }
 
-void WebApkInstaller::InstallAsync(const ShortcutInfo& shortcut_info,
-                                   const SkBitmap& primary_icon,
-                                   const SkBitmap& badge_icon,
-                                   const FinishCallback& finish_callback) {
+void WebApkInstaller::InstallAsyncImpl(const ShortcutInfo& shortcut_info,
+                                       const SkBitmap& primary_icon,
+                                       const SkBitmap& badge_icon,
+                                       const FinishCallback& finish_callback) {
   install_duration_timer_.reset(new base::ElapsedTimer());
 
   install_shortcut_info_.reset(new ShortcutInfo(shortcut_info));
