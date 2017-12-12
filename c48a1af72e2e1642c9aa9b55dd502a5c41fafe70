@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16909a0f_8a37fd4b",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T19:06:28Z",
+      "side": 1,
+      "message": "I thought that a user can install a crx packed extensions via drag-n-drop. Is that not the case?",
+      "range": {
+        "startLine": 1004,
+        "startChar": 12,
+        "endLine": 1004,
+        "endChar": 27
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227bc607_a899ad62",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T19:06:28Z",
+      "side": 1,
+      "message": "@private {boolean}",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e44a48e_99a1e34c",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T19:06:28Z",
+      "side": 1,
+      "message": "Why are we re-declaring those on the prototype? Aren\u0027t they already populated within the constructor?",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d11603_02925cfd",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T19:06:28Z",
+      "side": 1,
+      "message": "Nit (optional): Parentheses not needed here.",
+      "range": {
+        "startLine": 51,
+        "startChar": 60,
+        "endLine": 51,
+        "endChar": 66
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1606a584_f9f2005b",
+        "filename": "chrome/browser/resources/md_extensions/drop_overlay.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T19:06:28Z",
+      "side": 1,
+      "message": "Nit: Blank line after each property",
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82289b8d_20a49744",
+        "filename": "chrome/browser/resources/md_extensions/drop_overlay.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T19:06:28Z",
+      "side": 1,
+      "message": "@override",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3166d16f_af7abb13",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T19:06:28Z",
+      "side": 1,
+      "message": "on-load-error appears now 3 times in this file. Should we just add a single listener on |this| in JS, instead of adding individual listeners?\n\nlisteners: {\n  \u0027load-error\u0027: \u0027onLoadError_\u0027,\n}",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 42
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc0bef0e_75ad55b3",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T19:06:28Z",
+      "side": 1,
+      "message": "Extra spaces?\n\nAlso can you explicitly mention when does this callback get invoked? Like \"after dropping\".",
+      "range": {
+        "startLine": 677,
+        "startChar": 29,
+        "endLine": 677,
+        "endChar": 34
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8508a0f_a1618d13",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T19:06:28Z",
+      "side": 1,
+      "message": "Do we need to notify the browser, in cases where drag was cancelled? Like dragging a file over the extensions page, then dragging back outside (without ever releasing the mouse on top of the extensions page).",
+      "range": {
+        "startLine": 680,
+        "startChar": 24,
+        "endLine": 680,
+        "endChar": 51
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
