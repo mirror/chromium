@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "3f9858cb_427c72e1",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-12T21:13:24Z",
+      "side": 1,
+      "message": "You mean hear?\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/app_list/arc/arc_app_utils.cc?sq\u003dpackage:chromium\u0026l\u003d117\n\nYes, this is race condition. I traced the calls and this instance is set during the call. However I don\u0027t see any protection. Probably it is good to add protection but this looks outside of this CL. I think this is more general problem. We don\u0027t check if InstanceHelper is set during the various calls.\nWDYT?",
+      "parentUuid": "b4679a74_8ac8e0e2",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 13
+      },
+      "revId": "0abd07cdcb08abaa30597bdaee63296b68716e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2c46be8_ae1d103b",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
         "patchSetId": 3
