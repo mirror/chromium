@@ -102,6 +102,12 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
 
     @Override
     @CallSuper
+    public void onNativeLibraryReady() {
+        onStateChange();
+    }
+
+    @Override
+    @CallSuper
     public void onActivityStateChange(Activity activity, @ActivityState int newState) {
         if (newState == ActivityState.DESTROYED) {
             onDestroy();
@@ -148,7 +154,7 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
         boolean hasMeaningfulStateChange = BottomSheet.isStateStable(newContentState)
                 && (mCurrentContentState != newContentState || mCurrentVisibility != newVisibility);
 
-        if (newVisibility != mCurrentVisibility) {
+        if (newVisibility != mCurrentVisibility && mBottomSheet.isNativeLibraryReady()) {
             if (newVisibility) {
                 onContentShown(!mWasShownSinceLastOpen);
                 mWasShownSinceLastOpen = true;

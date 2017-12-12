@@ -40,6 +40,9 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
     /** Whether the sheet is currently open. */
     private boolean mIsSheetOpen;
 
+    /** Whether native library is ready */
+    private boolean mNativeInitialized;
+
     /** The last {@link BottomSheetContent} that was displayed. */
     private BottomSheetContent mLastContent;
 
@@ -59,6 +62,7 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
     @Override
     public void onSheetOpened(int reason) {
         mIsSheetOpen = true;
+        if (!mNativeInitialized) return;
 
         boolean isFirstOpen = mLastOpenTime == 0;
         mLastOpenTime = System.currentTimeMillis();
@@ -78,6 +82,8 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
     @Override
     public void onSheetClosed(@StateChangeReason int reason) {
         mIsSheetOpen = false;
+        if (!mNativeInitialized) return;
+
         recordSheetCloseReason(reason);
 
         mLastCloseTime = System.currentTimeMillis();
@@ -87,6 +93,8 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
 
     @Override
     public void onSheetStateChanged(int newState) {
+        if (!mNativeInitialized) return;
+
         if (newState == BottomSheet.SHEET_STATE_HALF) {
             RecordUserAction.record("Android.ChromeHome.HalfState");
         } else if (newState == BottomSheet.SHEET_STATE_FULL) {
@@ -96,6 +104,8 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
 
     @Override
     public void onSheetContentChanged(BottomSheetContent newContent) {
+        if (!mNativeInitialized) return;
+
         // Return early if the sheet content is being set during initialization (previous content
         // is null) or while the sheet is closed (sheet content being reset), so that we only
         // record actions when the user explicitly takes an action.
