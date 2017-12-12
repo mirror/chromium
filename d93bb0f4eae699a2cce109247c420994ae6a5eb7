@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "7be914af_40608c30",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4991,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-12T14:42:29Z",
+      "side": 1,
+      "message": "engedy@ confimed by mail that this pattern is broken after https://chromium-review.googlesource.com/c/chromium/src/+/735686, and he\u0027ll write a LazyDocumentScopedInterfacePtr that can be used instead. I guess this CL can wait until that time.",
+      "parentUuid": "e1752686_a8a9301f",
+      "revId": "d93bb0f4eae699a2cce109247c420994ae6a5eb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bc22e6b_402dba5b",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 8
