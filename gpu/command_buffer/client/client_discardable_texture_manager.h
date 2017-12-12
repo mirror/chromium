@@ -7,6 +7,7 @@
 
 #include <map>
 
+#include "base/synchronization/lock.h"
 #include "gpu/command_buffer/client/client_discardable_manager.h"
 #include "gpu/gpu_export.h"
 
@@ -33,6 +34,8 @@ class GPU_EXPORT ClientDiscardableTextureManager {
   ClientDiscardableHandle GetHandleForTesting(uint32_t texture_id);
 
  private:
+  // Access to other members must always be done with |lock_| held.
+  mutable base::Lock lock_;
   std::map<uint32_t, ClientDiscardableHandle::Id> texture_id_to_handle_id_;
   ClientDiscardableManager discardable_manager_;
 
