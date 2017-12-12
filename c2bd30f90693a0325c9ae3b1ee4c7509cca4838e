@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b4fc88d_b7056309",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-from-2-characteristics.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T21:40:57Z",
+      "side": 1,
+      "message": "Thanks, I think I figured out the convention for these parenthesis now. They\u0027ve been a bit awkward for me to figure out how to place for some reason.",
+      "parentUuid": "e003df25_df58aa2d",
+      "revId": "c2bd30f90693a0325c9ae3b1ee4c7509cca4838e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "459b0643_022b1f88",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c2bd30f90693a0325c9ae3b1ee4c7509cca4838e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41fd0430_7b2e46d4",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T21:40:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "459b0643_022b1f88",
+      "revId": "c2bd30f90693a0325c9ae3b1ee4c7509cca4838e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
