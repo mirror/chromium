@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d6adbe9_50492236",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-12T09:59:13Z",
+      "side": 1,
+      "message": "Sweet, last I tried to fix this bug this hook didn\u0027t exist, and people didn\u0027t want to add it because it was possible to measure a microperformance regression if added. Glad that somehow was worked out :)",
+      "range": {
+        "startLine": 339,
+        "startChar": 7,
+        "endLine": 339,
+        "endChar": 29
+      },
+      "revId": "591cd9548ed50a2e55ac4861d7c3f6bbc4b07d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
