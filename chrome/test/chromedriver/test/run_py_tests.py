@@ -877,6 +877,7 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
                       self._driver.ExecuteScript('return window.confirmed'))
 
   def testSendTextToAlert(self):
+    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
     self._driver.ExecuteScript('prompt = window.prompt()')
     self.assertTrue(self._driver.IsAlertOpen())
     self._driver.HandleAlert(True, 'TextToPrompt')
