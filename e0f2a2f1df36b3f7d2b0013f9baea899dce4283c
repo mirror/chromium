@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aaff525_e8c9f452",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5521,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-12T22:15:08Z",
+      "side": 1,
+      "message": "Prior to the code change, there was no merge done. Buffered ranges here were: \"{ [0,20) [40,70) [1000,1020) }\"",
+      "range": {
+        "startLine": 5521,
+        "startChar": 2,
+        "endLine": 5521,
+        "endChar": 32
+      },
+      "revId": "e0f2a2f1df36b3f7d2b0013f9baea899dce4283c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3654267_5355feb8",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5525,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-12T22:15:08Z",
+      "side": 1,
+      "message": "Prior to code change, DCHECK(IsRangeListSorted()) failed during that append in l.5525. Buffered ranges causing that failure were: \"{ [0,55) [40,50) [60,70) [1000,1020) }\"",
+      "revId": "e0f2a2f1df36b3f7d2b0013f9baea899dce4283c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
