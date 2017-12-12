@@ -58,9 +58,9 @@ class UpdateSpellcheckEnabled : public content::RenderFrameVisitor {
 };
 
 bool UpdateSpellcheckEnabled::Visit(content::RenderFrame* render_frame) {
-  SpellCheckProvider* provider = SpellCheckProvider::Get(render_frame);
-  DCHECK(provider);
-  provider->EnableSpellcheck(enabled_);
+  if (!enabled_) {
+    // TODO(xiaochengh): Remove spellcheck markers when disabling.
+  }
   return true;
 }
 
