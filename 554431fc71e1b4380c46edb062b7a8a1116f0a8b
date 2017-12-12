@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b5a3219_0313f679",
+        "filename": "content/browser/payments/payment_app_info_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-12-12T20:08:51Z",
+      "side": 1,
+      "message": "No one overrides PaymentAppInfoFetcher, so no need for the destructor to be virtual.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 9
+      },
+      "revId": "554431fc71e1b4380c46edb062b7a8a1116f0a8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
