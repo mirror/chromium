@@ -3700,22 +3700,20 @@
     "ThrottleDelayable": [
         {
             "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
+                "android"
             ],
             "experiments": [
                 {
                     "name": "Enabled",
                     "params": {
-                        "MaxBDPKbits1": "10",
-                        "MaxBDPKbits2": "5000",
-                        "MaxDelayableRequests1": "10",
-                        "MaxDelayableRequests2": "6",
-                        "MaxEffectiveConnectionType": "3G",
-                        "NonDelayableWeight": "2.0"
+                        "MaxDelayableRequests1": "8",
+                        "MaxDelayableRequests2": "14",
+                        "MaxEffectiveConnectionType1": "2G",
+                        "MaxEffectiveConnectionType2": "3G",
+                        "MinEffectiveConnectionType1": "Slow-2G",
+                        "MinEffectiveConnectionType2": "3G",
+                        "NonDelayableWeight1": "2.0",
+                        "NonDelayableWeight2": "2.0"
                     },
                     "enable_features": [
                         "ThrottleDelayable"
