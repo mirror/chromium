@@ -228,6 +228,30 @@
     },
     {
       "key": {
+        "uuid": "02ee4dd8_1241f8a7",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-12T20:18:45Z",
+      "side": 1,
+      "message": "Drive by without context: If a function takes a OnceCallback you can safely pass a RepeatingCallback by value, i.e. you\u0027re making a copy of the RepeatingCallback, and only the copy is invalidated.\n\nSo this is safe:\n\nRepeatingCallback r \u003d ...;\nDoSomethingOnce(r); // gets a copy of f, which is then once-ified\nr.Run(); // still valid\n\nI\u0027d tossed some related notes in https://docs.google.com/document/d/1puS9pklOsPyk2CCRaCW3ZlEr8z30ruazAIJXHFHdB1s/edit\n\n(I didn\u0027t parse the whole thread, sorry if this is not helpful)",
+      "parentUuid": "d688ef5b_591aa7a0",
+      "range": {
+        "startLine": 779,
+        "startChar": 57,
+        "endLine": 779,
+        "endChar": 66
+      },
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6d909e_6246acdb",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 4
