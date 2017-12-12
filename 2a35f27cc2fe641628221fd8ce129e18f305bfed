@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "29fc2058_0109e30c",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-12T23:09:43Z",
+      "side": 1,
+      "message": "Thanks :)",
+      "parentUuid": "392822f5_323cf49d",
+      "revId": "2a35f27cc2fe641628221fd8ce129e18f305bfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "364b1776_b5f59654",
         "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
         "patchSetId": 4
@@ -69,6 +87,24 @@
       "revId": "2a35f27cc2fe641628221fd8ce129e18f305bfed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b7d99b_7f81bbf6",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-12T23:09:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "364b1776_b5f59654",
+      "revId": "2a35f27cc2fe641628221fd8ce129e18f305bfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
