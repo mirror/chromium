@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.webapps;
 
+import android.app.Notification;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -106,8 +108,17 @@ public class WebApkServiceClient {
                         channelName = ContextUtils.getApplicationContext().getString(
                                 org.chromium.chrome.R.string.webapk_notification_channel_name);
                     }
+
+                    Notification notification = notificationBuilder.build();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        Notification publicVersion = buildPublicVersionNotification(
+                                notificationBuilder, webApkPackage, smallIconId);
+                        if (publicVersion != null) {
+                            notification.publicVersion = publicVersion;
+                        }
+                    }
                     api.notifyNotificationWithChannel(
-                            platformTag, platformID, notificationBuilder.build(), channelName);
+                            platformTag, platformID, notification, channelName);
                 }
                 WebApkUma.recordNotificationPermissionStatus(notificationPermissionEnabled);
             }
@@ -160,5 +171,31 @@ public class WebApkServiceClient {
         }
 
         return false;
+    }
+
+    /**
+     * Creates a public version of WebAPK's notification to be displayed in sensitive contexts, such
+     * as on the lockscreen.
+     */
+    private static Notification buildPublicVersionNotification(
+            NotificationBuilderBase notificationBuilder, String webApkPackage, int smallIconId) {
+        // The public version notification shows the application name of the given context.
+        // Therefore, we need to recreate the notification by using a WebAPK's context.
+        Context webApkContext =
+                getRemoteContext(ContextUtils.getApplicationContext(), webApkPackage);
+        if (webApkContext == null) return null;
+
+        return notificationBuilder.createPublicNotification(
+                ContextUtils.getApplicationContext(), webApkContext, smallIconId);
+    }
+
+    private static Context getRemoteContext(Context context, String webApkPackage) {
+        try {
+            return context.getApplicationContext().createPackageContext(
+                    webApkPackage, Context.CONTEXT_IGNORE_SECURITY | Context.CONTEXT_INCLUDE_CODE);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
