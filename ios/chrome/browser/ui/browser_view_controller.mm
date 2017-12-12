@@ -1803,7 +1803,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     // the correct size here.
     CGRect imageFrame = self.isToolbarOnScreen
                             ? [topTab snapshotContentArea]
-                            : [topTab.webController.view bounds];
+                            : topTab.webState->GetView().bounds;
 
     // Add three layers in order on top of the contentArea for the animation:
     // 1. The black "background" screen.
