@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b44e2fa7_c0eb8fc4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-12-12T17:54:41Z",
+      "side": 1,
+      "message": "I was thinking that since all we really need to do in this file is differentiate images and videos, we could add a separate private bool method here that just checks that specifically. WDYT?",
+      "parentUuid": "0b2bd83b_e38e68f3",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 62
+      },
+      "revId": "00629298c6cb148f50b88150a4fafa51951b0b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cc3b683_91dcd00e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUtils.java",
         "patchSetId": 1
