@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2486a81_5e3bfda9",
+        "filename": "ui/base/layout.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-12T21:22:22Z",
+      "side": 1,
+      "message": "Just remove the DCHECK() instead of commenting it out.",
+      "revId": "6af6870dc445f526b20e983fa6d4a7bf45f5d2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
