@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "35864df7_f12210e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f124b60_e14240f8",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 14
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9d91377_9fb6ef38",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937c991b_dd0a3f00",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9d91377_9fb6ef38",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 40
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0a3048e9_eaf110c2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "774a44fc_19b8f024",
+      "range": {
+        "startLine": 207,
+        "startChar": 17,
+        "endLine": 207,
+        "endChar": 43
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90c56f3b_e77b75db",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7576a355_6f30bcd6",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90c56f3b_e77b75db",
+      "range": {
+        "startLine": 217,
+        "startChar": 17,
+        "endLine": 217,
+        "endChar": 39
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "42c2b73b_ff5f6650",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af7b70fa_2af5b9f9",
+      "range": {
+        "startLine": 217,
+        "startChar": 40,
+        "endLine": 218,
+        "endChar": 64
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b48ef16_01297bc8",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 13
@@ -137,6 +257,30 @@
       "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1a7239_ac05b314",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b48ef16_01297bc8",
+      "range": {
+        "startLine": 220,
+        "startChar": 6,
+        "endLine": 220,
+        "endChar": 36
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "82352721_20d64d41",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32156f41_eb783dfe",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 55
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d193c20_5d318ecd",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 13
@@ -174,6 +342,30 @@
       "writtenOn": "2017-12-11T19:06:32Z",
       "side": 1,
       "message": "To avoid bugs where someone passes a large uint64_t and gets a negative result, consider adding an `explicit CBORValue(uint64_t) \u003d delete;` overload. I think it\u0027s better to delete that overload than define it with a checked_cast, to make the calling code clearly look like it contains a range assertion.",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 44
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f66893f_770072c4",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Explicitly deleted overload with uint64_t as parameter, but added constructor with int parameter with base::checked_cast to avoid specifying parameter as int64 at every CBOR integer value initialization. \n\nPlease let me know if this is conflicting with the intent of this comment!",
+      "parentUuid": "0d193c20_5d318ecd",
       "range": {
         "startLine": 78,
         "startChar": 2,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "4e1c3f8c_09c218b7",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1123eec1_67eb0ed2",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 30
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "746db50a_622fa646",
         "filename": "content/browser/webauth/cbor/cbor_writer.cc",
         "patchSetId": 13
@@ -220,6 +436,30 @@
       "writtenOn": "2017-12-11T19:06:32Z",
       "side": 1,
       "message": "No need for the extra set of parentheses, and to avoid the undefined behavior on -INT64_MIN, spell this `-(value + 1)`. Here, also, it\u0027d be good to CHECK_LT(value, 0) to ensure you never hit INT64_MAX+1.",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d8a208_938a83c6",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Could you specify the extra set of parenthesis?",
+      "parentUuid": "746db50a_622fa646",
       "range": {
         "startLine": 51,
         "startChar": 45,
@@ -252,6 +492,30 @@
       "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0963612e_addcb2a7",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9243f46e_de642206",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 61
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

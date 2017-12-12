@@ -22,6 +22,30 @@
       "revId": "0b981d2110af4a740633973b3ca56e432ff7941e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a37a5d6_7e2268c6",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-12T02:33:16Z",
+      "side": 1,
+      "message": "For tags, all tag item values above  55800 are not assigned, so it would not be a huge problem as well. :)",
+      "parentUuid": "c820003d_f51010bc",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 9
+      },
+      "revId": "0b981d2110af4a740633973b3ca56e432ff7941e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
