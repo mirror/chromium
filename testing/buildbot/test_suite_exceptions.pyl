@@ -3342,6 +3342,15 @@
       },
     },
   },
+  'site_per_process_app_shell_unittests': {
+    'remove_from': [
+      # chromium.linux
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+      # chromium.sandbox
+      'Linux Tests SANDBOX',
+    ],
+  },
   'site_per_process_browser_tests': {
     'remove_from': [
       # chromium.fyi
@@ -3363,8 +3372,25 @@
       },
     },
   },
+  'site_per_process_components_browsertests': {
+    'remove_from': [
+      # chromium.linux
+      'Linux Tests (dbg)(1)(32)',
+      # chromium.sandbox
+      'Linux Tests SANDBOX',
+    ],
+  },
+  'site_per_process_components_unittests': {
+    'remove_from': [
+      # chromium.linux
+      'Linux Tests (dbg)(1)(32)',
+      # chromium.sandbox
+      'Linux Tests SANDBOX',
+    ],
+  },
   'site_per_process_content_browsertests': {
     'remove_from': [
+      # chromium.linux
       'Linux Tests (dbg)(1)(32)',
     ],
     'modifications': {
@@ -3378,7 +3404,48 @@
   },
   'site_per_process_content_unittests': {
     'remove_from': [
+      # chromium.linux
       'Linux Tests (dbg)(1)(32)',
+    ],
+  },
+  'site_per_process_extensions_browsertests': {
+    'remove_from': [
+      # chromium.linux
+      'Linux Tests (dbg)(1)(32)',
+      # chromium.sandbox
+      'Linux Tests SANDBOX',
+    ],
+  },
+  'site_per_process_extensions_unittests': {
+    'remove_from': [
+      # chromium.linux
+      'Linux Tests (dbg)(1)(32)',
+      # chromium.sandbox
+      'Linux Tests SANDBOX',
+    ],
+  },
+  'site_per_process_interactive_ui_tests': {
+    'remove_from': [
+      # chromium.linux
+      'Linux Tests (dbg)(1)(32)',
+      # chromium.sandbox
+      'Linux Tests SANDBOX',
+    ],
+  },
+  'site_per_process_nacl_loader_unittests': {
+    'remove_from': [
+      # chromium.linux
+      'Linux Tests (dbg)(1)(32)',
+      # chromium.sandbox
+      'Linux Tests SANDBOX',
+    ],
+  },
+  'site_per_process_sync_integration_tests': {
+    'remove_from': [
+      # chromium.linux
+      'Linux Tests (dbg)(1)(32)',
+      # chromium.sandbox
+      'Linux Tests SANDBOX',
     ],
   },
   'site_per_process_unit_tests': {
@@ -3401,6 +3468,16 @@
         ],
       },
     },
+  },
+  'site_per_process_webkit_layout_tests': {
+    'remove_from': [
+      # chromium.linux
+      # TODO(dpranke): Should we be running this step on Linux Tests (dbg)(1)?
+      'Linux Tests (dbg)(1)',
+      'Linux Tests (dbg)(1)(32)',
+      # chromium.sandbox
+      'Linux Tests SANDBOX',
+    ],
   },
   'sizes': {
     'remove_from': [

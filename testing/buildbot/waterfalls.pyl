@@ -1205,10 +1205,12 @@
         },
       },
       'Site Isolation Linux': {
-        'test_suites': {
-          'gtest_tests': 'site_isolation_linux_fyi_gtests',
-          'isolated_scripts': 'site_isolation_linux_fyi_isolated_scripts',
-        },
+        # TODO(dpranke): Remove this builder once the tests are running on
+        # the main 'Linux Tests' bot; base_unittests is a placeholder
+        # to keep the builder from building "all".
+        'additional_compile_targets': [
+          'base_unittests',
+        ],
       },
       'Site Isolation Win': {
         'test_suites': {
