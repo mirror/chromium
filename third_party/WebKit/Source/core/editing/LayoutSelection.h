@@ -24,6 +24,7 @@
 
 #include "core/CoreExport.h"
 #include "core/editing/Forward.h"
+#include "core/editing/SelectionTemplate.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Optional.h"
 
@@ -47,25 +48,6 @@ class SelectionPaintRange {
   DISALLOW_NEW();
 
  public:
-  class Iterator
-      : public std::iterator<std::input_iterator_tag, LayoutObject*> {
-   public:
-    explicit Iterator(const SelectionPaintRange*);
-    Iterator(const Iterator&) = default;
-    bool operator==(const Iterator& other) const {
-      return current_ == other.current_;
-    }
-    bool operator!=(const Iterator& other) const { return !operator==(other); }
-    Iterator& operator++();
-    LayoutObject* operator*() const;
-
-   private:
-    LayoutObject* current_;
-    const LayoutObject* stop_;
-  };
-  Iterator begin() const { return Iterator(this); };
-  Iterator end() const { return Iterator(nullptr); };
-
   SelectionPaintRange() = default;
   SelectionPaintRange(LayoutObject* start_layout_object,
                       WTF::Optional<unsigned> start_offset,
@@ -114,7 +96,9 @@ class LayoutSelection final : public GarbageCollected<LayoutSelection> {
   Member<FrameSelection> frame_selection_;
   bool has_pending_selection_ : 1;
 
-  SelectionPaintRange paint_range_;
+  SelectionInFlatTree paint_range_;
+  WTF::Optional<unsigned> start_offset_ = WTF::nullopt;
+  WTF::Optional<unsigned> end_offset_ = WTF::nullopt;
 };
 
 void CORE_EXPORT PrintLayoutObjectForSelection(std::ostream&, LayoutObject*);
