@@ -34,6 +34,24 @@
       "revId": "c9f5ee0fd4004ab992bdc9413b96680c207e577b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ae5045_c7e11713",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1105324
+      },
+      "writtenOn": "2017-12-12T15:59:49Z",
+      "side": 1,
+      "message": "I left a comment that exceptions are disallowed in Chrome. If it\u0027s not to your liking, please fix it yourself.",
+      "parentUuid": "93ea8740_4a85e9ac",
+      "revId": "c9f5ee0fd4004ab992bdc9413b96680c207e577b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
