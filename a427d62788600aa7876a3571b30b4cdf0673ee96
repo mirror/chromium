@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "a2cf3ab9_e8e5d85c",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-12T18:34:41Z",
+      "side": 1,
+      "message": "nit: You can skip this part of the comment, it just makes it very long. Maybe RFHM:: as prefix?",
+      "range": {
+        "startLine": 1160,
+        "startChar": 18,
+        "endLine": 1160,
+        "endChar": 53
+      },
+      "revId": "a427d62788600aa7876a3571b30b4cdf0673ee96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f75bcb_44aad5af",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1272,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-12T18:34:41Z",
+      "side": 1,
+      "message": "nit: TODO must have (...) attached.",
+      "revId": "a427d62788600aa7876a3571b30b4cdf0673ee96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429016f9_6877b6e1",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-12T18:34:41Z",
+      "side": 1,
+      "message": "ditto on (..)",
+      "range": {
+        "startLine": 1286,
+        "startChar": 5,
+        "endLine": 1286,
+        "endChar": 9
+      },
+      "revId": "a427d62788600aa7876a3571b30b4cdf0673ee96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c29511a3_99f20844",
         "filename": "content/browser/frame_host/render_frame_host_manager.h",
         "patchSetId": 1
@@ -31,6 +94,23 @@
       "side": 1,
       "message": "Unless we know of a bug that this would solve, I\u0027m inclined to do the least amount of changes to get the known bugs fixed; to reduce risk when merging this.",
       "parentUuid": "c29511a3_99f20844",
+      "revId": "a427d62788600aa7876a3571b30b4cdf0673ee96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e492294_251609e8",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-12T18:34:41Z",
+      "side": 1,
+      "message": "As chatted offline, we are keeping this check since each usage of rwhv in this file is checked for nullptr, so keeping things consistent.",
       "revId": "a427d62788600aa7876a3571b30b4cdf0673ee96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
