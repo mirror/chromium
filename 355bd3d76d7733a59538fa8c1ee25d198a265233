@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "45bcd14b_40777255",
+        "filename": "base/synchronization/waitable_event_watcher_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T20:29:57Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this pass ownership? It made a copy for the function argument, why do we want to keep ownership in that argument?",
+      "parentUuid": "b9e09383_b1f33d83",
+      "revId": "355bd3d76d7733a59538fa8c1ee25d198a265233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b301568_5515dbee",
         "filename": "base/synchronization/waitable_event_watcher_mac.cc",
         "patchSetId": 4
