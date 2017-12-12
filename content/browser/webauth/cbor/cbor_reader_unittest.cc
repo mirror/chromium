@@ -527,4 +527,18 @@ TEST(CBORReaderTest, TestExtraneousCBORDataError) {
   }
 }
 
+TEST(CBORReaderTest, TestUnsupportedStringError) {
+  static const std::vector<uint8_t> custom_test = {
+      // clang format-off
+      // CBOR string : "\0 \0 i"
+      0x63, 0x00, 0x00, 0xa1
+      // clang format-on
+  };
+
+  CBORReader::DecoderError error_code;
+  base::Optional<CBORValue> cbor = CBORReader::Read(custom_test, &error_code);
+  EXPECT_FALSE(cbor.has_value());
+  EXPECT_EQ(error_code, CBORReader::DecoderError::UNSUPPORTED_STRING_FORMAT);
+}
+
 }  // namespace content

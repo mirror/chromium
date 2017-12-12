@@ -55,7 +55,7 @@ CBORValue::CBORValue(const char* in_string)
 
 CBORValue::CBORValue(std::string&& in_string) noexcept
     : type_(Type::STRING), string_value_(std::move(in_string)) {
-  DCHECK(base::IsStringUTF8(string_value_));
+  DCHECK(base::IsStringUTF8(string_value_.data()));
 }
 
 CBORValue::CBORValue(base::StringPiece in_string)

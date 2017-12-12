@@ -41,6 +41,8 @@ const char kMapKeyOutOfOrder[] =
     "order.";
 const char kNonMinimalCBOREncoding[] =
     "Unsigned integers must be encoded with minimum number of bytes.";
+const char kUnsupportedStringFormat[] =
+    "String must not contain null terminating characters.";
 
 }  // namespace
 
@@ -143,6 +145,10 @@ base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes) {
   }
 
   std::string cbor_string(it_, it_ + num_bytes);
+  if (strlen(cbor_string.data()) != num_bytes) {
+    error_code_ = DecoderError::UNSUPPORTED_STRING_FORMAT;
+    return base::nullopt;
+  }
   it_ += num_bytes;
 
   return HasValidUTF8Format(cbor_string)
@@ -158,7 +164,6 @@ base::Optional<CBORValue> CBORReader::ReadBytes(uint64_t num_bytes) {
 
   Bytes cbor_byte_string(it_, it_ + num_bytes);
   it_ += num_bytes;
-
   return CBORValue(std::move(cbor_byte_string));
 }
 
@@ -277,6 +282,8 @@ const char* CBORReader::ErrorCodeToString(DecoderError error) {
       return kMapKeyOutOfOrder;
     case DecoderError::NON_MINIMAL_CBOR_ENCODING:
       return kNonMinimalCBOREncoding;
+    case DecoderError::UNSUPPORTED_STRING_FORMAT:
+      return kUnsupportedStringFormat;
     default:
       NOTREACHED();
       return "Unknown error code.";
