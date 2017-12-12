@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ef15f84_63e1d7c2",
+        "filename": "ash/system/night_light/night_light_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-12T18:15:34Z",
+      "side": 1,
+      "message": "i think we\u0027ve settled on using chromeos::PowerManagerClient::Observer to watch for suspend/resume pretty much everywhere, so i\u0027d recommend using that here as well. iirc, base/power_monitor is super gross since //base is unable to depend on //chromeos (the place where chrome actually hears about these events).",
+      "revId": "f25fdaacf0d68581de35ce7cb6672c81c1225910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
