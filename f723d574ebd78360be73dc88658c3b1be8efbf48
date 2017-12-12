@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "7ea154d4_c84ebde8",
+        "filename": "services/shape_detection/text_detection_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-12T08:44:14Z",
+      "side": 1,
+      "message": "\"mul-Latn\" and \"und-Latn\"[1] aren\u0027t useful. I will confirm it later, so i file a issue[2] to track it.\n\n[1] https://msdn.microsoft.com/en-us/library/windows/apps/jj673578.aspx\n[2] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d794097",
+      "parentUuid": "dc971e86_9caf9dba",
+      "range": {
+        "startLine": 42,
+        "startChar": 57,
+        "endLine": 42,
+        "endChar": 61
+      },
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61a2b414_a8998fb3",
         "filename": "services/shape_detection/text_detection_impl_win.cc",
         "patchSetId": 4
@@ -397,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "3036e03d_69f92ac9",
+        "filename": "services/shape_detection/text_detection_impl_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-12T08:44:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52dfc79a_06da58f5",
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc93a5f0_734dfbbb",
         "filename": "services/shape_detection/text_detection_impl_win_unittest.cc",
         "patchSetId": 4
@@ -444,6 +486,24 @@
       "side": 1,
       "message": "ping",
       "parentUuid": "fa8acfe2_db4ce211",
+      "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26435296_462bcc60",
+        "filename": "services/shape_detection/text_detection_impl_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-12-12T08:44:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70f09bce_acb17d1d",
       "revId": "f723d574ebd78360be73dc88658c3b1be8efbf48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
