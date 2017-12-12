@@ -32,6 +32,16 @@ cr.define('extensions', function() {
       'onHighlightChanged_(code.highlight)',
     ],
 
+    get lineCount() {
+      if (!this.code)
+        return 0;
+
+      const lines = [
+        this.code.beforeHighlight, this.code.highlight, this.code.afterHighlight
+      ].join('').match(/\n/g);
+      return lines ? lines.length : 0;
+    },
+
     /**
      * Returns true if no code could be displayed (e.g. because the file could
      * not be loaded).
@@ -41,6 +51,10 @@ cr.define('extensions', function() {
       return !this.code ||
           (!this.code.beforeHighlight && !this.code.highlight &&
            !this.code.afterHighlight);
+    },
+
+    toggleCode: function() {
+      this.$.main.hidden = !this.$.main.hidden;
     },
 
     /**
@@ -53,10 +67,8 @@ cr.define('extensions', function() {
       if (!this.code)
         return '';
 
-      const lines = [
-        this.code.beforeHighlight, this.code.highlight, this.code.afterHighlight
-      ].join('').match(/\n/g);
-      const lineCount = lines ? lines.length : 0;
+      const lineCount = this.lineCount;
+
       let textContent = '';
       for (let i = 1; i <= lineCount; ++i)
         textContent += i + '\n';
