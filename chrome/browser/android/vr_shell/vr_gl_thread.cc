@@ -118,6 +118,7 @@ void VrGLThread::ExitPresent() {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
       FROM_HERE, base::Bind(&VrShell::ExitPresent, weak_vr_shell_));
+  vr_shell_gl_->OnExitPresent();
 }
 
 void VrGLThread::ExitFullscreen() {
