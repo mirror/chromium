@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6633432b_c2b315c2",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-12T20:45:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95c306e5_0a82bbaf",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 65
+      },
+      "revId": "1310779011578311a7b05c6c0c87b0362696a98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59d126fc_4dd726b5",
         "filename": "chrome/browser/resource_coordinator/tab_manager_features.h",
         "patchSetId": 1
@@ -105,6 +129,30 @@
       "writtenOn": "2017-11-27T22:19:11Z",
       "side": 1,
       "message": "The way I understand it:\n\nControls how many \"recent\" and \"old\" tabs can live on the machine:\nmax_loaded_tabs_per_gb_ram  -\u003e max_old_loaded_tabs_per_gb\nmin_loaded_tab_count -\u003e max_old_loaded_tabs\nmax_loaded_tab_count -\u003e max_loaded_tabs  (old or recent)\n\nControl when a tab can be discarded and when it becomes \"old\":\nmin_occluded_timeout -\u003e tab_can_be_discarded_occlusion_timeout\nmax_occluded_timeout -\u003e tab_is_old_occlusion_timeout",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 2
+      },
+      "revId": "1310779011578311a7b05c6c0c87b0362696a98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90982795_d0a5e29e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-12T20:45:37Z",
+      "side": 1,
+      "message": "I tried to rephrase the logic description. I was imagining a system with 4 modes based on tab count:\n\n- low tab count: no proactive discarding (infinite timeout).\n- moderate tab count: proactive discarding, after a longish timeout\n- high tab count: proactive discarding, after a shorter timeout\n- excessive tab count: proactive discarding immediately (no timeout)\n\nAll of this is subject to visibility/occlusion. Urgent discarding can work around those limits if really needed.",
+      "parentUuid": "7aa68168_aa95b8bf",
       "range": {
         "startLine": 102,
         "startChar": 0,
