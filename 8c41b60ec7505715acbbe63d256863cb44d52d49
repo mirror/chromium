@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "c2640193_51583ed9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-12T20:08:18Z",
+      "side": 1,
+      "message": "I think we should probably check isInMainFrame",
+      "range": {
+        "startLine": 151,
+        "startChar": 29,
+        "endLine": 151,
+        "endChar": 43
+      },
+      "revId": "8c41b60ec7505715acbbe63d256863cb44d52d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "408094af_94f64712",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
         "patchSetId": 7
@@ -36,6 +59,30 @@
       "writtenOn": "2017-12-12T20:02:25Z",
       "side": 1,
       "message": "probably should only be recorded in the |default| case.",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 17
+      },
+      "revId": "8c41b60ec7505715acbbe63d256863cb44d52d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fab3454_08dce4f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-12T20:08:18Z",
+      "side": 1,
+      "message": "you can ignore per offline discussion. getting relative numbers to NET_OK sgtm",
+      "parentUuid": "408094af_94f64712",
       "range": {
         "startLine": 168,
         "startChar": 8,
