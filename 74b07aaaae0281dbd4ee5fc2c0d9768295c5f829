@@ -46,6 +46,30 @@
       "revId": "74b07aaaae0281dbd4ee5fc2c0d9768295c5f829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efaa917_a0b6652a",
+        "filename": "extensions/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T23:07:49Z",
+      "side": 1,
+      "message": "If no one is working on removing the includes, then it doesn\u0027t seem like it\u0027ll ever change. You know this code better than I. If there are no places I would just update the comment, no bug, and move on.",
+      "parentUuid": "19cf47e4_57ce9b36",
+      "range": {
+        "startLine": 45,
+        "startChar": 37,
+        "endLine": 45,
+        "endChar": 60
+      },
+      "revId": "74b07aaaae0281dbd4ee5fc2c0d9768295c5f829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
