@@ -22,6 +22,30 @@
       "revId": "96676ed9490f2a32dc6f3c686274ed0a75063c70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9473d01_4e79f33d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/GestureListenerManagerImpl.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-12T04:15:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6e1cf15_d6f7042e",
+      "range": {
+        "startLine": 73,
+        "startChar": 32,
+        "endLine": 73,
+        "endChar": 33
+      },
+      "revId": "96676ed9490f2a32dc6f3c686274ed0a75063c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
