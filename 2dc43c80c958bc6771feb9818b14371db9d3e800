@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f151f212_a2d3b318",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3753,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T18:26:58Z",
+      "side": 1,
+      "message": "Update comment as no longer a macro?",
+      "range": {
+        "startLine": 3753,
+        "startChar": 24,
+        "endLine": 3753,
+        "endChar": 30
+      },
+      "revId": "2dc43c80c958bc6771feb9818b14371db9d3e800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0f0292_a6c1013c",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3768,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T18:26:58Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 3768,
+        "startChar": 24,
+        "endLine": 3768,
+        "endChar": 30
+      },
+      "revId": "2dc43c80c958bc6771feb9818b14371db9d3e800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2102e318_30d9266b",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T18:26:58Z",
+      "side": 1,
+      "message": "Move down with other includes.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 45
+      },
+      "revId": "2dc43c80c958bc6771feb9818b14371db9d3e800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
