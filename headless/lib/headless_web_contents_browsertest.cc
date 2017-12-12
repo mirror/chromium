@@ -1351,8 +1351,8 @@ class HeadlessWebContentsBeginFrameControlViewportTest
   bool sent_screenshot_request_ = false;
 };
 
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(
-    HeadlessWebContentsBeginFrameControlViewportTest);
+// HEADLESS_ASYNC_DEVTOOLED_TEST_F(
+//    HeadlessWebContentsBeginFrameControlViewportTest);
 
 #endif  // !defined(OS_MACOSX)
 

@@ -835,7 +835,7 @@ void SitePerProcessInteractiveBrowserTest::FullscreenElementInABA(
 }
 
 IN_PROC_BROWSER_TEST_F(SitePerProcessInteractiveBrowserTest,
-                       FullscreenElementInABAAndExitViaEscapeKey) {
+                       DISABLED_FullscreenElementInABAAndExitViaEscapeKey) {
   FullscreenElementInABA(FullscreenExitMethod::ESC_PRESS);
 }
 

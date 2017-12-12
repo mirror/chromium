@@ -83,28 +83,6 @@ TEST_F('DownloadsManagerTest', 'All', function() {
  * @constructor
  * @extends {DownloadsTest}
  */
-function DownloadsToolbarTest() {}
-
-DownloadsToolbarTest.prototype = {
-  __proto__: DownloadsTest.prototype,
-
-  /** @override */
-  browsePreload: 'chrome://downloads/toolbar.html',
-
-  /** @override */
-  extraLibraries: DownloadsTest.prototype.extraLibraries.concat([
-    'toolbar_tests.js',
-  ]),
-};
-
-TEST_F('DownloadsToolbarTest', 'All', function() {
-  mocha.run();
-});
-
-/**
- * @constructor
- * @extends {DownloadsTest}
- */
 function DownloadsUrlTest() {}
 
 DownloadsUrlTest.prototype = {
