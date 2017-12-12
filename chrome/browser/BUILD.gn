@@ -842,6 +842,8 @@ split_static_library("browser") {
     "notifications/persistent_notification_handler.h",
     "notifications/platform_notification_service_impl.cc",
     "notifications/platform_notification_service_impl.h",
+    "notifications/transient_notification_handler.cc",
+    "notifications/transient_notification_handler.h",
     "ntp_snippets/bookmark_last_visit_updater.cc",
     "ntp_snippets/bookmark_last_visit_updater.h",
     "ntp_snippets/content_suggestions_notifier_service_factory.cc",

@@ -18,6 +18,9 @@ class Profile;
 // Interface that enables the different kind of notifications to process
 // operations coming from the user or decisions made by the underlying
 // notification type.
+//
+// TODO(peter): Remove the |profile| arguments from all these methods. They can
+// be passed in to the handler's constructor instead.
 class NotificationHandler {
  public:
   // Type of notifications that a handler can be responsible for.
@@ -37,14 +40,6 @@ class NotificationHandler {
   // Called after a notification has been displayed.
   virtual void OnShow(Profile* profile, const std::string& notification_id);
 
-  // Process notification close events. The |completed_closure| must be invoked
-  // on the UI thread once processing of the close event has been finished.
-  virtual void OnClose(Profile* profile,
-                       const GURL& origin,
-                       const std::string& notification_id,
-                       bool by_user,
-                       base::OnceClosure completed_closure);
-
   // Process clicks on a notification or its buttons, depending on
   // |action_index|. The |completed_closure| must be invoked on the UI thread
   // once processing of the click event has been finished.
@@ -55,11 +50,22 @@ class NotificationHandler {
                        const base::Optional<base::string16>& reply,
                        base::OnceClosure completed_closure);
 
+  // Process notification close events. The |completed_closure| must be invoked
+  // on the UI thread once processing of the close event has been finished.
+  virtual void OnClose(Profile* profile,
+                       const GURL& origin,
+                       const std::string& notification_id,
+                       bool by_user,
+                       base::OnceClosure completed_closure);
+
   // Called when notifications of the given origin have to be disabled.
   virtual void DisableNotifications(Profile* profile, const GURL& origin);
 
   // Called when the settings page for the given origin has to be opened.
   virtual void OpenSettings(Profile* profile, const GURL& origin);
+
+  // Called when the notification system is shutting down.
+  virtual void Shutdown();
 };
 
 #endif  // CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_HANDLER_H_

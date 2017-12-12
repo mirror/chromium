@@ -82,9 +82,14 @@ void StubNotificationDisplayService::SimulateClick(
     return;
 
   NotificationHandler* handler = GetNotificationHandler(notification_type);
-  if (notification_type == NotificationHandler::Type::TRANSIENT) {
-    DCHECK(!handler);
+  {
+    base::RunLoop run_loop;
+    handler->OnClick(profile_, iter->notification.origin_url(), notification_id,
+                     action_index, reply, run_loop.QuitClosure());
+    run_loop.Run();
+  }
 
+  if (notification_type == NotificationHandler::Type::TRANSIENT) {
     auto* delegate = iter->notification.delegate();
     if (reply.has_value()) {
       DCHECK(action_index.has_value());
@@ -94,12 +99,6 @@ void StubNotificationDisplayService::SimulateClick(
     } else {
       delegate->Click();
     }
-  } else {
-    DCHECK(handler);
-    base::RunLoop run_loop;
-    handler->OnClick(profile_, iter->notification.origin_url(), notification_id,
-                     action_index, reply, run_loop.QuitClosure());
-    run_loop.Run();
   }
 }
 
@@ -111,13 +110,10 @@ void StubNotificationDisplayService::SimulateSettingsClick(
     return;
 
   NotificationHandler* handler = GetNotificationHandler(notification_type);
-  if (notification_type == NotificationHandler::Type::TRANSIENT) {
-    DCHECK(!handler);
+  handler->OpenSettings(profile_, iter->notification.origin_url());
+
+  if (notification_type == NotificationHandler::Type::TRANSIENT)
     iter->notification.delegate()->SettingsClick();
-  } else {
-    DCHECK(handler);
-    handler->OpenSettings(profile_, iter->notification.origin_url());
-  }
 }
 
 void StubNotificationDisplayService::RemoveNotification(
@@ -131,15 +127,15 @@ void StubNotificationDisplayService::RemoveNotification(
 
   if (!silent) {
     NotificationHandler* handler = GetNotificationHandler(notification_type);
-    if (notification_type == NotificationHandler::Type::TRANSIENT) {
-      DCHECK(!handler);
-      iter->notification.delegate()->Close(by_user);
-    } else {
+    {
       base::RunLoop run_loop;
       handler->OnClose(profile_, iter->notification.origin_url(),
                        notification_id, by_user, run_loop.QuitClosure());
       run_loop.Run();
     }
+
+    if (notification_type == NotificationHandler::Type::TRANSIENT)
+      iter->notification.delegate()->Close(by_user);
   }
 
   notifications_.erase(iter);
@@ -149,23 +145,22 @@ void StubNotificationDisplayService::RemoveAllNotifications(
     NotificationHandler::Type notification_type,
     bool by_user) {
   NotificationHandler* handler = GetNotificationHandler(notification_type);
-  DCHECK_NE(!!handler,
-            notification_type == NotificationHandler::Type::TRANSIENT);
+
   for (auto iter = notifications_.begin(); iter != notifications_.end();) {
-    if (iter->type == notification_type) {
-      if (handler) {
-        base::RunLoop run_loop;
-        handler->OnClose(profile_, iter->notification.origin_url(),
-                         iter->notification.id(), by_user,
-                         run_loop.QuitClosure());
-        run_loop.Run();
-      } else {
-        iter->notification.delegate()->Close(by_user);
-      }
-      iter = notifications_.erase(iter);
-    } else {
+    if (iter->type != notification_type) {
       iter++;
+      continue;
     }
+
+    base::RunLoop run_loop;
+    handler->OnClose(profile_, iter->notification.origin_url(),
+                     iter->notification.id(), by_user, run_loop.QuitClosure());
+    run_loop.Run();
+
+    if (notification_type == NotificationHandler::Type::TRANSIENT)
+      iter->notification.delegate()->Close(by_user);
+
+    iter = notifications_.erase(iter);
   }
 }
 
@@ -178,10 +173,7 @@ void StubNotificationDisplayService::Display(
   Close(notification_type, notification.id());
 
   NotificationHandler* handler = GetNotificationHandler(notification_type);
-  if (notification_type == NotificationHandler::Type::TRANSIENT)
-    DCHECK(!handler);
-  else
-    handler->OnShow(profile_, notification.id());
+  handler->OnShow(profile_, notification.id());
 
   notifications_.emplace_back(notification_type, notification,
                               std::move(metadata));

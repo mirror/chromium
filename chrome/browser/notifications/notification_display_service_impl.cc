@@ -13,19 +13,13 @@
 #include "build/build_config.h"
 #include "build/buildflag.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/notifications/non_persistent_notification_handler.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
-#include "chrome/browser/notifications/persistent_notification_handler.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_features.h"
 #include "content/public/browser/browser_thread.h"
 #include "ui/base/ui_features.h"
 #include "ui/message_center/notification.h"
-
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-#include "chrome/browser/extensions/api/notifications/extension_notification_handler.h"
-#endif
 
 #if BUILDFLAG(ENABLE_MESSAGE_CENTER)
 #include "chrome/browser/notifications/notification_platform_bridge_message_center.h"
@@ -123,17 +117,6 @@ NotificationDisplayServiceImpl::NotificationDisplayServiceImpl(Profile* profile)
       message_center_bridge_(CreateMessageCenterBridge(profile)),
       bridge_(GetNativeNotificationPlatformBridge()),
       weak_factory_(this) {
-  // TODO(peter): Move these to the NotificationDisplayServiceFactory.
-  AddNotificationHandler(NotificationHandler::Type::WEB_NON_PERSISTENT,
-                         std::make_unique<NonPersistentNotificationHandler>());
-  AddNotificationHandler(NotificationHandler::Type::WEB_PERSISTENT,
-                         std::make_unique<PersistentNotificationHandler>());
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-  AddNotificationHandler(
-      NotificationHandler::Type::EXTENSION,
-      std::make_unique<extensions::ExtensionNotificationHandler>());
-#endif
-
   // Initialize the bridge if native notifications are available, otherwise
   // signal that the bridge could not be initialized.
   if (bridge_) {
@@ -156,12 +139,6 @@ void NotificationDisplayServiceImpl::ProcessNotificationOperation(
     const base::Optional<base::string16>& reply,
     const base::Optional<bool>& by_user) {
   NotificationHandler* handler = GetNotificationHandler(notification_type);
-  DCHECK(handler);
-  if (!handler) {
-    LOG(ERROR) << "Unable to find a handler for "
-               << static_cast<int>(notification_type);
-    return;
-  }
 
   // TODO(crbug.com/766854): Plumb this through from the notification platform
   // bridges so they can report completion of the operation as needed.
@@ -196,10 +173,9 @@ void NotificationDisplayServiceImpl::AddNotificationHandler(
 
 NotificationHandler* NotificationDisplayServiceImpl::GetNotificationHandler(
     NotificationHandler::Type notification_type) {
-  auto found = notification_handlers_.find(notification_type);
-  if (found != notification_handlers_.end())
-    return found->second.get();
-  return nullptr;
+  auto iter = notification_handlers_.find(notification_type);
+  DCHECK(iter != notification_handlers_.end());
+  return iter->second.get();
 }
 
 void NotificationDisplayServiceImpl::RemoveNotificationHandler(
@@ -236,8 +212,7 @@ void NotificationDisplayServiceImpl::Display(
                   std::move(metadata));
 
   NotificationHandler* handler = GetNotificationHandler(notification_type);
-  if (handler)
-    handler->OnShow(profile_, notification.id());
+  handler->OnShow(profile_, notification.id());
 }
 
 void NotificationDisplayServiceImpl::Close(
@@ -269,6 +244,11 @@ void NotificationDisplayServiceImpl::GetDisplayed(
 
   bridge_->GetDisplayed(GetProfileId(profile_), profile_->IsOffTheRecord(),
                         callback);
+}
+
+void NotificationDisplayServiceImpl::Shutdown() {
+  for (const auto& pair : notification_handlers_)
+    pair.second->Shutdown();
 }
 
 void NotificationDisplayServiceImpl::OnNotificationPlatformBridgeReady(

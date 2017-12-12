@@ -9,12 +9,19 @@
 #include "base/win/windows_version.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/notifications/non_persistent_notification_handler.h"
 #include "chrome/browser/notifications/notification_display_service_impl.h"
+#include "chrome/browser/notifications/persistent_notification_handler.h"
+#include "chrome/browser/notifications/transient_notification_handler.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/features.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "chrome/browser/extensions/api/notifications/extension_notification_handler.h"
+#endif
 
 // static
 NotificationDisplayService* NotificationDisplayServiceFactory::GetForProfile(
@@ -36,9 +43,26 @@ NotificationDisplayServiceFactory::NotificationDisplayServiceFactory()
 
 KeyedService* NotificationDisplayServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  // TODO(peter): Register the notification handlers here.
-  return new NotificationDisplayServiceImpl(
-      Profile::FromBrowserContext(context));
+  std::unique_ptr<NotificationDisplayServiceImpl> service =
+      std::make_unique<NotificationDisplayServiceImpl>(
+          Profile::FromBrowserContext(context));
+
+  service->AddNotificationHandler(
+      NotificationHandler::Type::WEB_NON_PERSISTENT,
+      std::make_unique<NonPersistentNotificationHandler>());
+  service->AddNotificationHandler(
+      NotificationHandler::Type::WEB_PERSISTENT,
+      std::make_unique<PersistentNotificationHandler>());
+  service->AddNotificationHandler(
+      NotificationHandler::Type::TRANSIENT,
+      std::make_unique<TransientNotificationHandler>(service.get()));
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  service->AddNotificationHandler(
+      NotificationHandler::Type::EXTENSION,
+      std::make_unique<extensions::ExtensionNotificationHandler>());
+#endif
+
+  return service.release();
 }
 
 content::BrowserContext*
