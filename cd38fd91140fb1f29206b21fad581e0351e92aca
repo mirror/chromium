@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a95bb1e_d3265592",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T06:14:10Z",
+      "side": 1,
+      "message": "Minor formatting nit: Put this comment on the line above so the code can be a single line.\n\n\"// CacheClearer manages its own lifetime and deletes itself when finished.\"",
+      "range": {
+        "startLine": 34,
+        "startChar": 36,
+        "endLine": 34,
+        "endChar": 67
+      },
+      "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e8e07a_ef0a42eb",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T06:14:10Z",
+      "side": 1,
+      "message": "Nit: put this in the constructor as well.",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 59
+      },
+      "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f602b19_c8e206df",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T06:14:10Z",
+      "side": 1,
+      "message": "Nit: space_status_ \u003d UNDETERMINED; here before the return.",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 7
+      },
+      "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
