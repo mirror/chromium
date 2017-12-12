@@ -163,6 +163,10 @@ class VIZ_SERVICE_EXPORT Surface final : public SurfaceDeadlineClient {
     return active_frame_data_ ? active_frame_data_->frame_index : 0;
   }
 
+  // Called to prevent additional CompositorFrames from being accepted into this
+  // surface. Once a Surface is closed, it cannot accept CompositorFrames again.
+  void Close();
+
   void TakeLatencyInfo(std::vector<ui::LatencyInfo>* latency_info);
   bool TakePresentedCallback(PresentedCallback* callback);
   void RunDrawCallback();
@@ -230,10 +234,6 @@ class VIZ_SERVICE_EXPORT Surface final : public SurfaceDeadlineClient {
   // CompositorFrame as fallbacks. This saves some CPU cycles to allow
   // children to catch up to the parent.
   void RejectCompositorFramesToFallbackSurfaces();
-
-  // Called to prevent additional CompositorFrames from being accepted into this
-  // surface. Once a Surface is closed, it cannot accept CompositorFrames again.
-  void Close();
 
   void ActivatePendingFrame();
   // Called when all of the surface's dependencies have been resolved.
