@@ -34,6 +34,24 @@
       "revId": "17a3319b99f6fff27c2954b26cc2813c1b2c1e84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fccc71f_048b1bc0",
+        "filename": "third_party/WebKit/Source/core/paint/ObjectPaintInvalidator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-12T05:21:04Z",
+      "side": 0,
+      "message": "The code was added back in September in this CL: https://chromium-review.googlesource.com/c/chromium/src/+/664821\n\nWas that CL just wrong? Not sure why the lines were added.",
+      "parentUuid": "2c9945fa_83f7022d",
+      "revId": "17a3319b99f6fff27c2954b26cc2813c1b2c1e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
