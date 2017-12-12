@@ -306,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "f1de36b5_41e29a60",
+        "filename": "services/audio/public/cpp/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-12T08:28:42Z",
+      "side": 1,
+      "message": "Stuff that is under the public/ subdirectory is supposed to be usable outside of the service, unless I misunderstand? In that case, we\u0027d need something like AUDIO_EXPORT for this class (to expose the symbols when doing a component build).",
+      "parentUuid": "cae4ed4a_d68fff17",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cb4eac1_1266051a",
         "filename": "services/audio/public/cpp/OWNERS",
         "patchSetId": 10
