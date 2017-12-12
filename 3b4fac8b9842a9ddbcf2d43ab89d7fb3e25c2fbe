@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f3d9e49_da09ab74",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-12T20:39:12Z",
+      "side": 1,
+      "message": "Done. Using a ECT value instead of range now.\nHowever, still not using a map. I think the vector is small enough that map is not required. Further, the vector is preferable because it is more general.",
+      "parentUuid": "327be083_1a2e204e",
+      "range": {
+        "startLine": 84,
+        "startChar": 22,
+        "endLine": 84,
+        "endChar": 50
+      },
+      "revId": "3b4fac8b9842a9ddbcf2d43ab89d7fb3e25c2fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74d3175c_c0645e2f",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "3b4fac8b9842a9ddbcf2d43ab89d7fb3e25c2fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b347b2da_9c315e30",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-12T20:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74d3175c_c0645e2f",
+      "revId": "3b4fac8b9842a9ddbcf2d43ab89d7fb3e25c2fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
