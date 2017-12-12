@@ -34,6 +34,23 @@
       "revId": "a5418786187f6af3327c9342845db1a32adfbbaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b42238_cb86efe1",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-12T21:09:31Z",
+      "side": 1,
+      "message": "Please get such changes reviewed by module-specific owners. It unfortunately completely neutered this regression test, and we now got similar crashes again (crbug.com/794278).",
+      "revId": "a5418786187f6af3327c9342845db1a32adfbbaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
