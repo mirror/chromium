@@ -54,6 +54,10 @@ def FullLibraryPath(library_name):
 
 
 def IsSystemLibrary(library_name):
+  # libGLESv2.so is a system library, but we may have a copy in our build
+  # directory as a result of building ANGLE.
+  if library_name == 'libGLESv2.so':
+    return True
   # If the library doesn't exist in the libraries directory, assume that it is
   # an Android system library.
   return not os.path.exists(FullLibraryPath(library_name))
