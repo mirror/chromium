@@ -83,10 +83,11 @@ class MockCastMediaSinkServiceImpl : public CastMediaSinkServiceImpl {
 
 class TestCastMediaSinkService : public CastMediaSinkService {
  public:
-  TestCastMediaSinkService(content::BrowserContext* browser_context,
-                           cast_channel::CastSocketService* cast_socket_service,
-                           DiscoveryNetworkMonitor* network_monitor)
-      : CastMediaSinkService(browser_context),
+  TestCastMediaSinkService(
+      const scoped_refptr<net::URLRequestContextGetter>& request_context,
+      cast_channel::CastSocketService* cast_socket_service,
+      DiscoveryNetworkMonitor* network_monitor)
+      : CastMediaSinkService(request_context),
         cast_socket_service_(cast_socket_service),
         network_monitor_(network_monitor) {}
   ~TestCastMediaSinkService() override = default;
@@ -118,7 +119,7 @@ class CastMediaSinkServiceTest : public ::testing::Test {
         mock_cast_socket_service_(
             new cast_channel::MockCastSocketService(task_runner_)),
         media_sink_service_(new TestCastMediaSinkService(
-            &profile_,
+            profile_.GetRequestContext(),
             mock_cast_socket_service_.get(),
             DiscoveryNetworkMonitor::GetInstance())),
         test_dns_sd_registry_(media_sink_service_.get()) {}

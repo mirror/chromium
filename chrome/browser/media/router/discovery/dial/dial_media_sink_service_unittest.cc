@@ -66,9 +66,9 @@ class MockDialMediaSinkServiceImpl : public DialMediaSinkServiceImpl {
 class TestDialMediaSinkService : public DialMediaSinkService {
  public:
   explicit TestDialMediaSinkService(
-      content::BrowserContext* context,
+      const scoped_refptr<net::URLRequestContextGetter>& request_context,
       const scoped_refptr<base::TestSimpleTaskRunner>& task_runner)
-      : DialMediaSinkService(context), task_runner_(task_runner) {}
+      : DialMediaSinkService(request_context), task_runner_(task_runner) {}
   ~TestDialMediaSinkService() override = default;
 
   std::unique_ptr<DialMediaSinkServiceImpl, base::OnTaskRunnerDeleter>
@@ -97,15 +97,15 @@ class DialMediaSinkServiceTest : public ::testing::Test {
  public:
   DialMediaSinkServiceTest()
       : task_runner_(new base::TestSimpleTaskRunner()),
-        service_(new TestDialMediaSinkService(&profile_, task_runner_)) {}
+        service_(new TestDialMediaSinkService(profile_.GetRequestContext(),
+                                              task_runner_)) {}
 
   void SetUp() override {
     service_->Start(
         base::BindRepeating(&DialMediaSinkServiceTest::OnSinksDiscovered,
                             base::Unretained(this)),
         base::BindRepeating(&DialMediaSinkServiceTest::OnDialSinkAdded,
-                            base::Unretained(this)),
-        base::SequencedTaskRunnerHandle::Get());
+                            base::Unretained(this)));
     mock_impl_ = service_->mock_impl();
     ASSERT_TRUE(mock_impl_);
     EXPECT_CALL(*mock_impl_, Start()).WillOnce(InvokeWithoutArgs([this]() {
@@ -159,15 +159,9 @@ TEST_F(DialMediaSinkServiceTest, OnDialSinkAddedCallback) {
   // Runs the callback on |task_runner_| and expects it to post task back to
   // UI thread.
   MediaSinkInternal sink = CreateTestDialSink();
-  task_runner_->PostTask(
-      FROM_HERE, base::BindOnce(mock_impl_->dial_sink_added_cb(), sink));
-  task_runner_->RunUntilIdle();
 
-  EXPECT_CALL(*this, OnDialSinkAdded(sink)).WillOnce(InvokeWithoutArgs([]() {
-    EXPECT_TRUE(
-        content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
-  }));
-  base::RunLoop().RunUntilIdle();
+  EXPECT_CALL(*this, OnDialSinkAdded(sink));
+  mock_impl_->dial_sink_added_cb().Run(sink);
 }
 
 }  // namespace media_router
