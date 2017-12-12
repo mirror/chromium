@@ -130,8 +130,8 @@ void TestRenderWidgetHostView::Hide() {
   is_showing_ = false;
 }
 
-bool TestRenderWidgetHostView::IsShowing() {
-  return is_showing_;
+Visibility TestRenderWidgetHostView::GetVisibility() const {
+  return is_showing_ ? Visibility::VISIBLE : Visibility::HIDDEN;
 }
 
 void TestRenderWidgetHostView::WasUnOccluded() {
