@@ -76,22 +76,12 @@ TEST_F(SecurityOriginTest, ValidPortsCreateNonUniqueOrigins) {
 }
 
 TEST_F(SecurityOriginTest, LocalAccess) {
+  // |file1| should now be same-origin with itself, but shouldn't have access to
+  // |file2|.
   scoped_refptr<SecurityOrigin> file1 =
       SecurityOrigin::CreateFromString("file:///etc/passwd");
-  scoped_refptr<const SecurityOrigin> file2 =
+  scoped_refptr<SecurityOrigin> file2 =
       SecurityOrigin::CreateFromString("file:///etc/shadow");
-
-  EXPECT_TRUE(file1->IsSameSchemeHostPort(file1.get()));
-  EXPECT_TRUE(file1->IsSameSchemeHostPort(file2.get()));
-  EXPECT_TRUE(file2->IsSameSchemeHostPort(file1.get()));
-
-  EXPECT_TRUE(file1->CanAccess(file1.get()));
-  EXPECT_TRUE(file1->CanAccess(file2.get()));
-  EXPECT_TRUE(file2->CanAccess(file1.get()));
-
-  // Block |file1|'s access to local origins. It should now be same-origin
-  // with itself, but shouldn't have access to |file2|.
-  file1->BlockLocalAccessFromLocalOrigin();
   EXPECT_TRUE(file1->IsSameSchemeHostPort(file1.get()));
   EXPECT_FALSE(file1->IsSameSchemeHostPort(file2.get()));
   EXPECT_FALSE(file2->IsSameSchemeHostPort(file1.get()));
@@ -99,6 +89,27 @@ TEST_F(SecurityOriginTest, LocalAccess) {
   EXPECT_TRUE(file1->CanAccess(file1.get()));
   EXPECT_FALSE(file1->CanAccess(file2.get()));
   EXPECT_FALSE(file2->CanAccess(file1.get()));
+
+  // If only |file1| is granted access, nothing should change:
+  file1->GrantLocalAccessFromLocalOrigin();
+  EXPECT_TRUE(file1->IsSameSchemeHostPort(file1.get()));
+  EXPECT_FALSE(file1->IsSameSchemeHostPort(file2.get()));
+  EXPECT_FALSE(file2->IsSameSchemeHostPort(file1.get()));
+
+  EXPECT_TRUE(file1->CanAccess(file1.get()));
+  EXPECT_FALSE(file1->CanAccess(file2.get()));
+  EXPECT_FALSE(file2->CanAccess(file1.get()));
+
+  // If |file2| is also granted access, then both origins can poke at each
+  // other:
+  file2->GrantLocalAccessFromLocalOrigin();
+  EXPECT_TRUE(file1->IsSameSchemeHostPort(file1.get()));
+  EXPECT_TRUE(file1->IsSameSchemeHostPort(file2.get()));
+  EXPECT_TRUE(file2->IsSameSchemeHostPort(file1.get()));
+
+  EXPECT_TRUE(file1->CanAccess(file1.get()));
+  EXPECT_TRUE(file1->CanAccess(file2.get()));
+  EXPECT_TRUE(file2->CanAccess(file1.get()));
 }
 
 TEST_F(SecurityOriginTest, IsPotentiallyTrustworthy) {
@@ -443,14 +454,30 @@ TEST_F(SecurityOriginTest, CreateFromTuple) {
       {"http", "example.com", 81, "http://example.com:81"},
       {"https", "example.com", 443, "https://example.com"},
       {"https", "example.com", 444, "https://example.com:444"},
-      {"file", "", 0, "file://"},
-      {"file", "example.com", 0, "file://"},
   };
 
   for (const auto& test : cases) {
     scoped_refptr<const SecurityOrigin> origin =
         SecurityOrigin::Create(test.scheme, test.host, test.port);
     EXPECT_EQ(test.origin, origin->ToString()) << test.origin;
+  }
+}
+
+TEST_F(SecurityOriginTest, CreateFileFromTuple) {
+  struct TestCase {
+    const char* scheme;
+    const char* host;
+    unsigned short port;
+  } cases[] = {
+      {"file", "", 0}, {"file", "example.com", 0},
+  };
+
+  for (const auto& test : cases) {
+    scoped_refptr<SecurityOrigin> origin =
+        SecurityOrigin::Create(test.scheme, test.host, test.port);
+    EXPECT_EQ("null", origin->ToString());
+    origin->GrantLocalAccessFromLocalOrigin();
+    EXPECT_EQ("file://", origin->ToString());
   }
 }
 
@@ -466,21 +493,40 @@ TEST_F(SecurityOriginTest, CreateFromTupleWithSuborigin) {
       {"http", "example.com", 81, "", "http://example.com:81"},
       {"https", "example.com", 443, "", "https://example.com"},
       {"https", "example.com", 444, "", "https://example.com:444"},
-      {"file", "", 0, "", "file://"},
-      {"file", "example.com", 0, "", "file://"},
       {"http", "example.com", 80, "foobar", "http-so://foobar.example.com"},
       {"http", "example.com", 81, "foobar", "http-so://foobar.example.com:81"},
       {"https", "example.com", 443, "foobar", "https-so://foobar.example.com"},
       {"https", "example.com", 444, "foobar",
        "https-so://foobar.example.com:444"},
-      {"file", "", 0, "foobar", "file://"},
-      {"file", "example.com", 0, "foobar", "file://"},
   };
 
   for (const auto& test : cases) {
     scoped_refptr<const SecurityOrigin> origin = SecurityOrigin::Create(
         test.scheme, test.host, test.port, test.suborigin);
     EXPECT_EQ(test.origin, origin->ToString()) << test.origin;
+  }
+}
+
+TEST_F(SecurityOriginTest, CreateFileFromTupleWithSuborigin) {
+  struct TestCase {
+    const char* scheme;
+    const char* host;
+    unsigned short port;
+    const char* suborigin;
+    const char* origin;
+  } cases[] = {
+      {"file", "", 0, ""},
+      {"file", "example.com", 0, ""},
+      {"file", "", 0, "foobar"},
+      {"file", "example.com", 0, "foobar"},
+  };
+
+  for (const auto& test : cases) {
+    scoped_refptr<SecurityOrigin> origin = SecurityOrigin::Create(
+        test.scheme, test.host, test.port, test.suborigin);
+    EXPECT_EQ("null", origin->ToString());
+    origin->GrantLocalAccessFromLocalOrigin();
+    EXPECT_EQ("file://", origin->ToString());
   }
 }
 
@@ -493,12 +539,9 @@ TEST_F(SecurityOriginTest, UniquenessPropagatesToBlobUrls) {
       {"", true, "null"},
       {"null", true, "null"},
       {"data:text/plain,hello_world", true, "null"},
-      {"file:///path", false, "file://"},
       {"filesystem:http://host/filesystem-path", false, "http://host"},
-      {"filesystem:file:///filesystem-path", false, "file://"},
       {"filesystem:null/filesystem-path", true, "null"},
       {"blob:http://host/blob-id", false, "http://host"},
-      {"blob:file:///blob-id", false, "file://"},
       {"blob:null/blob-id", true, "null"},
   };
 
@@ -511,6 +554,44 @@ TEST_F(SecurityOriginTest, UniquenessPropagatesToBlobUrls) {
     KURL blob_url = BlobURL::CreatePublicURL(origin.get());
     scoped_refptr<const SecurityOrigin> blob_url_origin =
         SecurityOrigin::Create(blob_url);
+    EXPECT_EQ(blob_url_origin->IsUnique(), origin->IsUnique());
+    EXPECT_EQ(blob_url_origin->ToString(), origin->ToString());
+    EXPECT_EQ(blob_url_origin->ToRawString(), origin->ToRawString());
+  }
+}
+
+TEST_F(SecurityOriginTest, UniquenessPropagatesToBlobFileUrls) {
+  struct TestCase {
+    const char* url;
+    bool expected_uniqueness;
+  } cases[]{
+      {"file:///path", false},
+      {"filesystem:file:///filesystem-path", false},
+      {"blob:file:///blob-id", false},
+  };
+
+  for (const TestCase& test : cases) {
+    scoped_refptr<SecurityOrigin> origin =
+        SecurityOrigin::CreateFromString(test.url);
+    EXPECT_EQ(test.expected_uniqueness, origin->IsUnique());
+
+    // Without local access from local origins:
+    EXPECT_EQ("null", origin->ToString());
+
+    KURL blob_url = BlobURL::CreatePublicURL(origin.get());
+    scoped_refptr<SecurityOrigin> blob_url_origin =
+        SecurityOrigin::Create(blob_url);
+    EXPECT_TRUE(blob_url_origin->IsUnique());
+    EXPECT_EQ("null", blob_url_origin->ToString());
+    EXPECT_EQ("://", blob_url_origin->ToRawString()) << test.url;
+
+    // With local access from local origins:
+    origin->GrantLocalAccessFromLocalOrigin();
+    EXPECT_EQ("file://", origin->ToString());
+
+    blob_url = BlobURL::CreatePublicURL(origin.get());
+    blob_url_origin = SecurityOrigin::Create(blob_url);
+    blob_url_origin->GrantLocalAccessFromLocalOrigin();
     EXPECT_EQ(blob_url_origin->IsUnique(), origin->IsUnique());
     EXPECT_EQ(blob_url_origin->ToString(), origin->ToString());
     EXPECT_EQ(blob_url_origin->ToRawString(), origin->ToRawString());
@@ -589,10 +670,6 @@ TEST_F(SecurityOriginTest, UrlOriginConversions) {
       {"ws://example.com/", "ws", "example.com", 80},
       {"wss://example.com/", "wss", "example.com", 443},
 
-      // file: URLs
-      {"file:///etc/passwd", "file", "", 0},
-      {"file://example.com/etc/passwd", "file", "example.com", 0},
-
       // Filesystem:
       {"filesystem:http://example.com/type/", "http", "example.com", 80},
       {"filesystem:http://example.com:123/type/", "http", "example.com", 123},
@@ -621,6 +698,49 @@ TEST_F(SecurityOriginTest, UrlOriginConversions) {
     url::Origin url_origin2 = security_origin->ToUrlOrigin();
     EXPECT_TRUE(url_origin1.IsSameOriginWith(url_origin2))
         << test_case.url << " : " << url_origin2.Serialize();
+  }
+}
+
+TEST_F(SecurityOriginTest, UrlOriginConversionsFile) {
+  struct TestCases {
+    const char* const url;
+    const char* const scheme;
+    const char* const host;
+    unsigned short port;
+  } cases[] = {
+      // file: URLs
+      {"file:///etc/passwd", "file", "", 0},
+      {"file://example.com/etc/passwd", "file", "example.com", 0},
+  };
+
+  for (const auto& test_case : cases) {
+    url::Origin url_origin = url::Origin::Create(GURL(test_case.url));
+
+    // Test CreateFromUrlOrigin
+    scoped_refptr<SecurityOrigin> from_url_origin =
+        SecurityOrigin::CreateFromUrlOrigin(url_origin);
+    scoped_refptr<SecurityOrigin> from_scheme_host_port =
+        SecurityOrigin::Create(test_case.scheme, test_case.host,
+                               test_case.port);
+    EXPECT_FALSE(
+        from_url_origin->IsSameSchemeHostPort(from_scheme_host_port.get()));
+
+    from_url_origin->GrantLocalAccessFromLocalOrigin();
+    EXPECT_FALSE(
+        from_url_origin->IsSameSchemeHostPort(from_scheme_host_port.get()));
+
+    from_scheme_host_port->GrantLocalAccessFromLocalOrigin();
+    EXPECT_TRUE(
+        from_url_origin->IsSameSchemeHostPort(from_scheme_host_port.get()));
+
+    // Test ToUrlOrigin
+    from_url_origin = SecurityOrigin::CreateFromUrlOrigin(url_origin);
+    EXPECT_TRUE(url_origin.IsSameOriginWith(from_url_origin->ToUrlOrigin()))
+        << test_case.url << " : " << url_origin.Serialize();
+
+    from_url_origin->GrantLocalAccessFromLocalOrigin();
+    EXPECT_TRUE(url_origin.IsSameOriginWith(from_url_origin->ToUrlOrigin()))
+        << test_case.url << " : " << url_origin.Serialize();
   }
 }
 
