@@ -112,11 +112,9 @@ public class TextSuggestionMenuTest {
         });
 
         // Add a spelling marker on "hello".
-        // Note: we disable spell checking first to avoid the spell checker immediately clearing
-        // the added marker.
+        // TODO(xiaochengh): Ensure that this change has no side effect.
         JavaScriptUtils.executeJavaScriptAndWaitForResult(webContents,
-                "internals.setSpellCheckingEnabled(false);"
-                        + "const div = document.getElementById('div');"
+                "const div = document.getElementById('div');"
                         + "const text = div.firstChild;"
                         + "const range = document.createRange();"
                         + "range.setStart(text, 0);"
