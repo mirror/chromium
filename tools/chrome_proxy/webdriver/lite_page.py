@@ -6,6 +6,7 @@ import common
 from common import ParseFlags
 from common import TestDriver
 from common import IntegrationTest
+from decorators import AndroidOnly
 from decorators import ChromeVersionBeforeM
 from decorators import ChromeVersionEqualOrAfterM
 
@@ -74,6 +75,8 @@ class LitePage(IntegrationTest):
         in common.ParseFlags().browser_args):
       self.skipTest('This test cannot be run with other experiments.')
     with TestDriver() as test_driver:
+      test_driver.AddChromeArg('--enable-features='
+                               'DataReductionProxyDecidesTransform')
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
       test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
       test_driver.AddChromeArg('--enable-data-reduction-proxy-lite-page')
@@ -149,6 +152,8 @@ class LitePage(IntegrationTest):
       # Need to force lite page so target page doesn't fallback to Lo-Fi
       test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
       test_driver.AddChromeArg('--enable-data-reduction-proxy-lite-page')
+      test_driver.AddChromeArg('--enable-features='
+                               'DataReductionProxyDecidesTransform')
 
       # This page is long and has many media resources.
       test_driver.LoadURL('http://check.googlezip.net/metrics/index.html')
@@ -186,6 +191,7 @@ class LitePage(IntegrationTest):
 
   # Checks that a Nano Lite Page does not have an error when scrolling to the
   # bottom of the page and is able to load all resources.
+  @AndroidOnly
   @ChromeVersionEqualOrAfterM(65)
   def testLitePageBTFNano(self):
     # If it was attempted to run with another experiment, skip this test.
@@ -193,6 +199,8 @@ class LitePage(IntegrationTest):
         in common.ParseFlags().browser_args):
       self.skipTest('This test cannot be run with other experiments.')
     with TestDriver() as test_driver:
+      test_driver.AddChromeArg('--enable-features='
+                               'DataReductionProxyDecidesTransform')
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
       # Need to force 2G speed to get lite-page response.
       test_driver.AddChromeArg('--force-effective-connection-type=2G')
@@ -397,6 +405,8 @@ class LitePage(IntegrationTest):
   def testPreviewProvidedForHeavyPage(self):
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
+      test_driver.AddChromeArg('--enable-features='
+                               'DataReductionProxyDecidesTransform')
       test_driver.AddChromeArg(
           '--force-fieldtrial-params=NetworkQualityEstimator.Enabled:'
           'force_effective_connection_type/3G,'
