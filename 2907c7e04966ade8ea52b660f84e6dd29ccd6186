@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "f6112bf2_5ab34bd0",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 17
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T14:35:00Z",
+      "side": 1,
+      "message": "You should add your new test to ozone_x11_unittests now instead (and this change isn\u0027t necessary anymore).",
+      "parentUuid": "90b98950_fd40adef",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20c1ea32_1eb93ceb",
         "filename": "ui/events/BUILD.gn",
         "patchSetId": 17
@@ -120,6 +138,24 @@
       "writtenOn": "2017-12-05T16:42:03Z",
       "side": 1,
       "message": "that we need a ozone_platform_x11 test here demonstrates some kind of platform layering violation. We need a bug to resolve that someday.\n\n(But fixing the layering issue is not in scope for this CL.)",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdb0d94_c2214786",
+        "filename": "ui/events/BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T14:35:00Z",
+      "side": 1,
+      "message": "What makes this necessary? This really shouldn\u0027t be in public_deps for USE_OZONE build.",
+      "parentUuid": "20c1ea32_1eb93ceb",
       "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +226,104 @@
       "writtenOn": "2017-12-05T16:42:03Z",
       "side": 1,
       "message": "Why is this necessary?",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b4e6e4_420cf786",
+        "filename": "ui/platform_window/x11/x11_window_ozone.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T14:35:00Z",
+      "side": 1,
+      "message": "OnLostCapture() should be public and remove this.",
+      "parentUuid": "3800abc5_927a6dac",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff61d756_727559b3",
+        "filename": "ui/platform_window/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T14:35:00Z",
+      "side": 1,
+      "message": "Use |event_source_| here and delete the lines above.",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e55140_407ce615",
+        "filename": "ui/platform_window/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T14:35:00Z",
+      "side": 1,
+      "message": "No ui:: inside namespace ui if possible (there are other instances of this too).",
+      "range": {
+        "startLine": 117,
+        "startChar": 52,
+        "endLine": 117,
+        "endChar": 56
+      },
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0c33e2_126d40b2",
+        "filename": "ui/platform_window/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T14:35:00Z",
+      "side": 1,
+      "message": "Is this necessary? |event| isn\u0027t null before you called this, so I think the event was dispatched already?",
+      "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badd1770_85eb38f0",
+        "filename": "ui/platform_window/x11/x11_window_ozone_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T14:35:00Z",
+      "side": 1,
+      "message": "You should be able to reuse |event| since you reset it? The WillOnce() has already executed so you don\u0027t need to worry about that happening again, although you might want to insert this above after the first DispatchXEvent:\n\ntesting::Mock::VerifyAndClearExpectations(delegate);",
+      "range": {
+        "startLine": 141,
+        "startChar": 65,
+        "endLine": 141,
+        "endChar": 72
+      },
       "revId": "2907c7e04966ade8ea52b660f84e6dd29ccd6186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
