@@ -8,6 +8,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "jni/EventForwarder_jni.h"
 #include "ui/android/view_android.h"
+#include "ui/android/window_android.h"
 #include "ui/base/ui_base_switches_util.h"
 #include "ui/events/android/drag_event_android.h"
 #include "ui/events/android/gesture_event_android.h"
@@ -35,7 +36,8 @@ ScopedJavaLocalRef<jobject> EventForwarder::GetJavaObject() {
     JNIEnv* env = base::android::AttachCurrentThread();
     java_obj_.Reset(
         Java_EventForwarder_create(env, reinterpret_cast<intptr_t>(this),
-                                   switches::IsTouchDragDropEnabled()));
+                                   switches::IsTouchDragDropEnabled(),
+                                   view_->GetWindowAndroid()->GetJavaObject()));
   }
   return ScopedJavaLocalRef<jobject>(java_obj_);
 }
@@ -68,7 +70,8 @@ jboolean EventForwarder::OnTouchEvent(JNIEnv* env,
                                       jint android_tool_type_1,
                                       jint android_button_state,
                                       jint android_meta_state,
-                                      jboolean for_touch_handle) {
+                                      jboolean for_touch_handle,
+                                      jfloat dip_scale) {
   ui::MotionEventAndroid::Pointer pointer0(
       pointer_id_0, pos_x_0, pos_y_0, touch_major_0, touch_minor_0,
       orientation_0, tilt_0, android_tool_type_0);
@@ -76,8 +79,8 @@ jboolean EventForwarder::OnTouchEvent(JNIEnv* env,
       pointer_id_1, pos_x_1, pos_y_1, touch_major_1, touch_minor_1,
       orientation_1, tilt_1, android_tool_type_1);
   ui::MotionEventAndroid event(
-      env, motion_event.obj(), 1.f / view_->GetDipScale(), 0.f, 0.f, 0.f,
-      time_ms, android_action, pointer_count, history_size, action_index,
+      env, motion_event.obj(), 1.f / dip_scale, 0.f, 0.f, 0.f, time_ms,
+      android_action, pointer_count, history_size, action_index,
       0 /* action_button */, android_button_state, android_meta_state,
       raw_pos_x - pos_x_0, raw_pos_y - pos_y_0, for_touch_handle, &pointer0,
       &pointer1);
@@ -97,7 +100,8 @@ void EventForwarder::OnMouseEvent(JNIEnv* env,
                                   jint android_action_button,
                                   jint android_button_state,
                                   jint android_meta_state,
-                                  jint android_tool_type) {
+                                  jint android_tool_type,
+                                  jfloat dip_scale) {
   // Construct a motion_event object minimally, only to convert the raw
   // parameters to ui::MotionEvent values. Since we used only the cached values
   // at index=0, it is okay to even pass a null event to the constructor.
@@ -105,8 +109,8 @@ void EventForwarder::OnMouseEvent(JNIEnv* env,
       pointer_id, x, y, 0.0f /* touch_major */, 0.0f /* touch_minor */,
       orientation, tilt, android_tool_type);
   ui::MotionEventAndroid event(
-      env, nullptr /* event */, 1.f / view_->GetDipScale(), 0.f, 0.f, 0.f,
-      time_ms, android_action, 1 /* pointer_count */, 0 /* history_size */,
+      env, nullptr /* event */, 1.f / dip_scale, 0.f, 0.f, 0.f, time_ms,
+      android_action, 1 /* pointer_count */, 0 /* history_size */,
       0 /* action_index */, android_action_button, android_button_state,
       android_meta_state, 0 /* raw_offset_x_pixels */,
       0 /* raw_offset_y_pixels */, false /* for_touch_handle */, &pointer,
@@ -121,7 +125,8 @@ void EventForwarder::OnMouseWheelEvent(JNIEnv* env,
                                        jfloat y,
                                        jfloat ticks_x,
                                        jfloat ticks_y,
-                                       jfloat pixels_per_tick) {
+                                       jfloat pixels_per_tick,
+                                       jfloat dip_scale) {
   if (!ticks_x && !ticks_y)
     return;
 
@@ -135,11 +140,11 @@ void EventForwarder::OnMouseWheelEvent(JNIEnv* env,
   ui::MotionEventAndroid::Pointer pointer(
       0, x, y, 0.0f /* touch_major */, 0.0f /* touch_minor */, 0.0f, 0.0f, 0);
   ui::MotionEventAndroid event(
-      env, nullptr, 1.f / view_->GetDipScale(), ticks_x, ticks_y,
-      pixels_per_tick, time_ms, 0 /* action */, 1 /* pointer_count */,
-      0 /* history_size */, 0 /* action_index */, 0, 0, 0,
-      0 /* raw_offset_x_pixels */, 0 /* raw_offset_y_pixels */,
-      false /* for_touch_handle */, &pointer, nullptr);
+      env, nullptr, 1.f / dip_scale, ticks_x, ticks_y, pixels_per_tick, time_ms,
+      0 /* action */, 1 /* pointer_count */, 0 /* history_size */,
+      0 /* action_index */, 0, 0, 0, 0 /* raw_offset_x_pixels */,
+      0 /* raw_offset_y_pixels */, false /* for_touch_handle */, &pointer,
+      nullptr);
 
   view_->OnMouseWheelEvent(event);
 }
@@ -152,8 +157,8 @@ void EventForwarder::OnDragEvent(JNIEnv* env,
                                  jint screen_x,
                                  jint screen_y,
                                  const JavaParamRef<jobjectArray>& j_mimeTypes,
-                                 const JavaParamRef<jstring>& j_content) {
-  float dip_scale = view_->GetDipScale();
+                                 const JavaParamRef<jstring>& j_content,
+                                 jfloat dip_scale) {
   gfx::PointF location(x / dip_scale, y / dip_scale);
   gfx::PointF root_location(screen_x / dip_scale, screen_y / dip_scale);
   std::vector<base::string16> mime_types;
@@ -168,8 +173,8 @@ bool EventForwarder::OnGestureEvent(JNIEnv* env,
                                     const JavaParamRef<jobject>& jobj,
                                     jint type,
                                     jlong time_ms,
-                                    jfloat delta) {
-  float dip_scale = view_->GetDipScale();
+                                    jfloat delta,
+                                    jfloat dip_scale) {
   auto size = view_->GetSize();
   float x = size.width() / 2;
   float y = size.height() / 2;
