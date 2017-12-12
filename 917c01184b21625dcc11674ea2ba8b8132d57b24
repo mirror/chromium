@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f73065b0_86401027",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/clip/clip-with-transform-resize.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-12T22:01:11Z",
+      "side": 1,
+      "message": "Optional change to isolation: isolate, to make it clear it\u0027s just for stacking context.\nUp to you, not a big deal.",
+      "parentUuid": "dda1bdf1_320e3240",
+      "revId": "917c01184b21625dcc11674ea2ba8b8132d57b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98bc9a84_4d5e7b97",
         "filename": "third_party/WebKit/LayoutTests/paint/invalidation/clip/clip-with-transform-resize.html",
         "patchSetId": 2
