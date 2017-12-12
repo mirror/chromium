@@ -374,6 +374,9 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
       break;
     case ClientViewError:
       [self showError];
+      if (self.navigationController.topViewController != self) {
+        [self.navigationController popToViewController:self animated:YES];
+      }
       break;
   }
 }

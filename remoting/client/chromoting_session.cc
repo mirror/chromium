@@ -133,7 +133,9 @@ void ChromotingSession::Disconnect() {
     connected_ = false;
   }
 
-  ReleaseResources();
+  if (client_) {
+    ReleaseResources();
+  }
 }
 
 void ChromotingSession::FetchThirdPartyToken(
@@ -335,6 +337,11 @@ void ChromotingSession::OnConnectionState(
   runtime_->ui_task_runner()->PostTask(
       FROM_HERE, base::Bind(&ChromotingSession::Delegate::OnConnectionState,
                             delegate_, state, error));
+
+  if (state == protocol::ConnectionToHost::CLOSED ||
+      state == protocol::ConnectionToHost::FAILED) {
+    ReleaseResources();
+  }
 }
 
 void ChromotingSession::OnConnectionReady(bool ready) {
