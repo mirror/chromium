@@ -1,0 +1,323 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "206eb165_2552ca33",
+        "filename": "chrome/browser/first_run/first_run_dialog.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "This is a different \"RunDialog\" :). (the First-Run Dialog)\n\n first_run_internal_posix.cc should be reset too.",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921518ca_876aec75",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "infobar -\u003e info_bar? (same for data member)",
+      "range": {
+        "startLine": 105,
+        "startChar": 72,
+        "endLine": 105,
+        "endChar": 79
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26c3005_caca5475",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "info_bars_?",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf87087a_b95e4230",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "dead code (remove?)",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305139f5_7529ac6a",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "perhaps UpdateInfoBars() ?",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b55a850_85c31eac",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3526,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "would it be worth making TestBrowserDialog a default template param?\n\nOr use a template-using declaration\n\n template \u003cclass BASE\u003e\n using SupportsTestDialog\u003cBASE\u003e \u003d SupportsTestUI\u003cBASE, TestBrowserDialog\u003e;\n\n(I\u0027m pretty sure that, or something like it, is valid syntax now)",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b175e33e_02a36e90",
+        "filename": "chrome/browser/ui/collected_cookies_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "--gtest_filter\u003dBrowserDialogTest.Invoke -\u003e --gtest_filter\u003dBrowserUITest.Invoke\n\nAlthough to avoid the boilerplate, newer tests are just saying \"See test_browser_dialog.h.\" Or similar. Edit: Actually, that would now be \"See test_browser_ui.h.\"",
+      "range": {
+        "startLine": 66,
+        "startChar": 17,
+        "endLine": 66,
+        "endChar": 56
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55990a5b_81ebbc87",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "A call to OnWidgetClosing isn\u0027t isn\u0027t guaranteed when the close is triggered by the OS (e.g. during logoff xkill etc.). I think it\u0027s kind of a honeypot for lifetime bugs. It\u0027s possible that WidgetClosingObserver could observe destruction instead and the tests using it work the same, but it\u0027s probably not worth trying to combine them now.",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6044ba88_d3c39a0d",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "WaitForDestroy?",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a186dfd2_56dc0731",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "syncronously - synchronously",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9473f4_62f06c1e",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "UpdateWidgets()?",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dde1de9_4272f2a2",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "It can be confusing to troubleshoot when the prior ASSERT_EQ would fail, so I\u0027d placed this comment to be adjacent to the failing ASSERT_EQ, hoping it would help people understand why that line is in the log output. Perhaps move this comment to the ASSERT_TRUE(VerifyUI()); in test_browser_ui.cc with some nomenclature tweaks.",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e9feb7_1efcea48",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "Layering aside - I\u0027m a bit worried about these rotting if there\u0027s no bot coverage. I think it would be fine to omit them in the .cc, perhaps at the top,\n\n #if !defined(TOOLKIT_VIEWS)\n #error Platform doesn\u0027t support TestBrowserDialog\n #endif\n\n\nAnd then just omit this file in the .gn",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7099617_e8142d50",
+        "filename": "chrome/browser/ui/test/test_browser_ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "`  // namespace test` for consistency (or omit the one below -- I think clang-format was adding these at some point, but I never liked them for forward declares..)",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92960fef_2c3f63b7",
+        "filename": "chrome/browser/ui/test/test_browser_ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "This is a bit orthogonal, but I\u0027ve been wanting to start a bikeshed about the naming of these. The collocation \"BrowserTest\" is so stuck in our brains that it\u0027s hard to insert \"UI\" into the string. I.e. is it \"UIBrowserTest\" or \"BrowserUITest\". At the time of writing, and still, I think BrowserUITest / BrowserDialogTest is more correct, but that doesn\u0027t stop my muscle memory (and others\u0027) always wanting to type \"DialogBrowserTest\".\n\nIt does mean that browser_ui_browsertest.cc would become ui_browser_test_browsertest.cc but in_process_browser_test_browsertest.cc has already set a precedent for that.\n\nAnyway, just a stray thought - probably not worth trying to overhaul things in this CL unless it\u0027s started irritating you as well.",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b4c2dd_a72ba661",
+        "filename": "chrome/browser/ui/update_chrome_dialog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "`--dialog` --\u003e `--ui`. Or \"See browser_ui_test.h\". There might be more like this. Just leaving it off is probably fine too now that this is becoming more familiar for dialog maintainers.",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38bd8bcb_87f01964",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_editor_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "BrowserDialogTest.Invoke -\u003e BrowserUITest.Invoke or omit",
+      "range": {
+        "startLine": 27,
+        "startChar": 51,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6c387b6e_f865cf0d",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "\u003e I waffled on that.  Changed.\n\u003e \n\u003e I found there\u0027s already a similar-but-different class (WidgetClosingObserver) in widget_test.h (which this file #includes).  Did you intentionally differ from that class?\n\nWell.. it looked a lot more different when using the \"DialogAction\" enum :p. I\u0027m fine with simplifying to `bool`, with only slight reservations about `async \u003d\u003d false` being technically a double-negative, and a general preference for `enum { FOO, BAR }` over a plain bool when it might improve readability :)",
+      "parentUuid": "b57724d5_6abb0105",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "adc7b245_afc0f9b5",
         "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I don\u0027t think it should be run more times than the old code, so if something is broken, it should have been broken before.\n\nI moved it to the caller since if we only need it when interactive mode, that\u0027s clearer.\n\nThe function declaration gives no real clue as to what this is doing.  Why do we need to set that property?  And why does the function also activate the widget -- to ensure it\u0027s on top so users see it?",
       "parentUuid": "adc7b245_afc0f9b5",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8e3682_45508039",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think it should be run more times than the old code, so if something is broken, it should have been broken before.\n\u003e \n\u003e I moved it to the caller since if we only need it when interactive mode, that\u0027s clearer.\n\u003e \n\u003e The function declaration gives no real clue as to what this is doing.  Why do we need to set that property?  And why does the function also activate the widget -- to ensure it\u0027s on top so users see it?\n\nOn Mac, the `browser_tests` binary isn\u0027t build as a .app bundle. So Mac makes it \"non-activatable\". That\u0027s actually a useful default since it helps spot flakes that depend on reliable window-focus on the bots. This call hacks the process type so that it\u0027s activatable (and since a prior activation may have failed, activates it again).",
+      "parentUuid": "8ee4ad3f_cea1d809",
       "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "c8cb3740_adc6386b",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "\u003e Right, and they\u0027re both in the list.  I\u0027m not understanding what you\u0027re pointing out here.\n\nWhoops - right you are, my brain thought the array was being initialized vertically only.",
+      "parentUuid": "0b138bae_15a1e2ce",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afeb6a03_d1bc648b",
         "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
         "patchSetId": 2
@@ -139,6 +193,42 @@
       "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae719ef_d359d4c0",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "Ack - I think removing this is fine. It\u0027s possible some tests will change their behavior/appearance on mac when --secondary-ui-md is not on by default  (e.g. the ChromeViewsDelegate would be initialized already -- this was just to ensure the codepaths picking which dialog to show would pick \"toolkit-views\" on mac always.). But that\u0027s probably less robust, and will hopefully be gone soon.",
+      "parentUuid": "3bbed430_f27c4b5e",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f353c11_be6f5ea8",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-12T03:29:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3bbed430_f27c4b5e",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
