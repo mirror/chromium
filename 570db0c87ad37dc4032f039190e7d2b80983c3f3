@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "c2801e77_4a91a086",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-12T23:21:49Z",
+      "side": 1,
+      "message": "I believe that 00 is a valid byte in CBOR text strings, because https://tools.ietf.org/html/rfc7049#section-2.1 defines their content as UTF-8 (RFC3629), and https://tools.ietf.org/html/rfc3629 says that U+0000 is a real character encoded as 00.\n\nMy intuition says that disagreement within a system about whether 00 is allowed could be a security bug, but I haven\u0027t been able to actually write down the exploit to file a bug at https://github.com/cbor-wg/CBORbis/issues/new.",
+      "parentUuid": "68a7ee98_eaa69cac",
+      "revId": "570db0c87ad37dc4032f039190e7d2b80983c3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4255107_c933ac5d",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 11
