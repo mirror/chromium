@@ -22,6 +22,30 @@
       "revId": "dbce4c1629ddc42427c466f23073fd85a053b291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d055a0_78742524",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4954,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T14:35:55Z",
+      "side": 0,
+      "message": "It\u0027s difficult to say for sure, given this was disabled 4+ years ago.  The trace there actually looks like it *could* be related.  Doing a bit of random-guessing...\n\n [0x000003b89a2c] quota::QuotaTask::Start()\n [0x000003b8175b] quota::QuotaManager::DeleteOriginData()\n [0x0000036b33d7] content::(anonymous namespace)::ClearQuotaManagedOriginsOnIOThread()\n [0x0000036b462a] content::(anonymous namespace)::ClearOriginOnIOThread()\n [0x0000036b29da] base::internal::Invoker\u003c\u003e::Run()\n [0x000004178183] base::MessageLoop::RunTask()\n [0x00000417d20b] base::MessageLoop::DeferOrRunPendingTask()\n [0x00000417d813] base::MessageLoop::DoWork()\n [0x000004148b6a] base::MessagePumpLibevent::Run()\n [0x00000417bff1] base::MessageLoop::RunInternal()\n [0x000004196e28] base::RunLoop::Run()\n [0x000004177784] base::MessageLoop::RunUntilIdle()\n [0x000000a3e2b2] ExtensionServiceTest_LoadExtension_Test::TestBody()\n\nThe trace at least definitely *is* from this test (ExtensionServiceTest_LoadExtension_Test::TestBody()).  ClearOriginOnIOThread() is called as part of deleting extension-related data, which is in turn done from uninstall.  So if I had to take a guess, I\u0027d say there\u0027s a chance the old version wasn\u0027t properly waiting for extension uninstallation (the version that was disabled only ran one loop, vs all), which caused the test to fail?  Or maybe all the bits weren\u0027t properly set up?\n\nBut really, that\u0027s all speculation.  I don\u0027t think we\u0027ll know for sure unless we get new failures (in which case, we can hopefully figure out more accurately what caused it).",
+      "parentUuid": "7fa91f5b_959238a6",
+      "range": {
+        "startLine": 4954,
+        "startChar": 29,
+        "endLine": 4954,
+        "endChar": 40
+      },
+      "revId": "dbce4c1629ddc42427c466f23073fd85a053b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
