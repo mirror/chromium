@@ -102,7 +102,12 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapterAndroid final
       int32_t rssi,
       const base::android::JavaParamRef<jobjectArray>&
           advertised_uuids,  // Java Type: String[]
-      int32_t tx_power);
+      int32_t tx_power,
+      const base::android::JavaParamRef<jobjectArray>&
+          service_data,  // Java Type: Pair<String, byte[]>[]
+      const base::android::JavaParamRef<jobjectArray>&
+          manufacturer_data  // Java Type: Pair<short, byte[]>[]
+      );
 
  protected:
   BluetoothAdapterAndroid();
