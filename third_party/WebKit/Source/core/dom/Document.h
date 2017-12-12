@@ -794,6 +794,8 @@ class CORE_EXPORT Document : public ContainerNode,
   bool ShouldInvalidateNodeListCaches(
       const QualifiedName* attr_name = nullptr) const;
   void InvalidateNodeListCaches(const QualifiedName* attr_name);
+  void InvalidateAndDisableNodeListCaches();
+  void EnableNodeListCaches();
 
   void AttachNodeIterator(NodeIterator*);
   void DetachNodeIterator(NodeIterator*);

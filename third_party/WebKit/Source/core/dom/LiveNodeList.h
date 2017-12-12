@@ -51,6 +51,8 @@ class CORE_EXPORT LiveNodeList : public NodeList, public LiveNodeListBase {
     // tracing and potentially calls virtual methods which is not allowed in a
     // base class constructor.
     GetDocument().RegisterNodeList(this);
+    if (owner_node.NodeListCachesInAncestorsAreDisabled())
+      collection_items_cache_.Disable();
   }
 
   unsigned length() const final;
@@ -59,6 +61,8 @@ class CORE_EXPORT LiveNodeList : public NodeList, public LiveNodeListBase {
 
   void InvalidateCache(Document* old_document = nullptr) const final;
   void InvalidateCacheForAttribute(const QualifiedName*) const;
+  void InvalidateAndDisableCache() const;
+  void EnableCache() const;
 
   // Collection IndexCache API.
   bool CanTraverseBackward() const { return true; }

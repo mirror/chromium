@@ -842,6 +842,14 @@ class CORE_EXPORT Node : public EventTarget {
 
   virtual void TraceWrappers(const ScriptWrappableVisitor*) const;
 
+  bool NodeListCachesInAncestorsAreDisabled() {
+    return GetFlag(kNodeListCachesInAncestorsAreDisabled);
+  }
+
+  void SetNodeListCachesInAncestorsAreDisabled(bool value) {
+    SetFlag(value, kNodeListCachesInAncestorsAreDisabled);
+  }
+
  private:
   enum NodeFlags {
     kHasRareDataFlag = 1,
@@ -892,11 +900,13 @@ class CORE_EXPORT Node : public EventTarget {
 
     kHasDuplicateAttributes = 1 << 28,
 
+    kNodeListCachesInAncestorsAreDisabled = 1 << 29,
+
     kDefaultNodeFlags =
         kIsFinishedParsingChildrenFlag | kNeedsReattachStyleChange
   };
 
-  // 4 bits remaining.
+  // 3 bits remaining.
 
   bool GetFlag(NodeFlags mask) const { return node_flags_ & mask; }
   void SetFlag(bool f, NodeFlags mask) {
