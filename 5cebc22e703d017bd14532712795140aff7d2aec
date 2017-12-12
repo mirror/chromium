@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7c26535_01a50a96",
+        "filename": "services/audio/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-12T20:52:44Z",
+      "side": 1,
+      "message": "My understanding is \"audio\" should be the one which has ServiceMain implementation to run the service out of process (see [1] and [2] which are not a part of this CL). I did no include ServiceMain implementation here because it\u0027s an in-process only version.\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/679496/12/services/audio/BUILD.gn\n[2] https://chromium-review.googlesource.com/c/chromium/src/+/679496/12/services/audio/service_main.cc",
+      "parentUuid": "894b509c_ebe7a418",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7e89aaa_1f12dfb0",
         "filename": "services/audio/BUILD.gn",
         "patchSetId": 16
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "dfcdedef_4398b59e",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-12T20:52:44Z",
+      "side": 1,
+      "message": "Hmmm could you reformulate it as actionable?",
+      "parentUuid": "45b24d09_9f7d3f61",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6adcb71_99f7d89d",
         "filename": "services/audio/service.h",
         "patchSetId": 16
@@ -98,6 +134,24 @@
       "writtenOn": "2017-12-12T18:11:51Z",
       "side": 1,
       "message": "Does this add a new unittests target? Or is it rolled up as part of existing component_unittests? If it\u0027s a new unittest you\u0027ll need to update bot configurations to run it I think.",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b556c08_fa2e1e08",
+        "filename": "services/audio/test/service_unittest_manifest.json",
+        "patchSetId": 16
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-12T20:52:44Z",
+      "side": 1,
+      "message": "Good to know!\nIt is conveniently rolled up as a part of services_unittests.",
+      "parentUuid": "fdb130bd_49bb1ba0",
       "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
