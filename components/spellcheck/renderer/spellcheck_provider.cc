@@ -128,6 +128,10 @@ void SpellCheckProvider::FocusedNodeChanged(const blink::WebNode& unused) {
 #endif  // USE_BROWSER_SPELLCHECKER
 }
 
+bool SpellCheckProvider::IsSpellCheckingEnabled() const {
+  return spellcheck_->IsSpellcheckEnabled();
+}
+
 void SpellCheckProvider::CheckSpelling(
     const WebString& text,
     int& offset,
@@ -245,13 +249,6 @@ void SpellCheckProvider::OnRespondTextCheck(
   last_results_.Swap(textcheck_results);
 }
 #endif
-
-void SpellCheckProvider::EnableSpellcheck(bool enable) {
-  WebLocalFrame* frame = render_frame()->GetWebFrame();
-  frame->EnableSpellChecking(enable);
-  if (!enable)
-    frame->RemoveSpellingMarkers();
-}
 
 bool SpellCheckProvider::SatisfyRequestFromCache(
     const base::string16& text,
