@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec76a469_74caad20",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-12T21:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df7b8d31_de61211b",
+      "revId": "6bd54cafbd8251c662f7722bd06720661c0539a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064c9ad8_8b90e98a",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "6bd54cafbd8251c662f7722bd06720661c0539a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28cd5098_44c16aa4",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-12T21:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "064c9ad8_8b90e98a",
+      "revId": "6bd54cafbd8251c662f7722bd06720661c0539a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "65f66cab_568a65b1",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-12T21:50:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ecb498e0_1113bdc5",
+      "revId": "6bd54cafbd8251c662f7722bd06720661c0539a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "864614a4_7704f5ae",
         "filename": "chrome/android/chrome_public_apk_tmpl.gni",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "6bd54cafbd8251c662f7722bd06720661c0539a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f58565_16e16dec",
+        "filename": "chrome/android/chrome_public_apk_tmpl.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-12T21:50:49Z",
+      "side": 1,
+      "message": "Good point. This actually helps since if is is included in monochrome_public_apk itself then I can do the actual whitelisting for upstream without affecting downstream at all.",
+      "parentUuid": "864614a4_7704f5ae",
+      "revId": "6bd54cafbd8251c662f7722bd06720661c0539a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
