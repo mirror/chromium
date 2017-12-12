@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d569e74e_81c8bff4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-12T22:26:19Z",
+      "side": 1,
+      "message": "(see comment below)\n\nif (renderWidgetHostView_-\u003eis_paused_for_resize_) {\n  NSDisableScreenUpdates();\n  renderWidgetHostView_-\u003edisabled_screen_updates_in_resize_ \u003d true;\n}",
+      "revId": "afc776529b0de167b6cd62897ef321ae512f7141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00a520d_79964550",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 2909,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-12T22:26:19Z",
+      "side": 1,
+      "message": "I think we can isolate the code to just RWHVMac if we do the following here:\n\nrenderWidgetHostView_-\u003eis_paused_for_resize_ \u003d true;\nrenderWidgetHostView_-\u003ePauseForPendingResizeOrRepaintsAndDraw();\nif (renderWidgetHostView_-\u003edisabled_screen_updates_in_resize_) {\n  NSEnableScreenUpdates();\n  renderWidgetHostView_-\u003edisabled_screen_updates_in_resize_ \u003d false;\n}\nrenderWidgetHostView_-\u003eis_paused_for_resize_ \u003d true;",
+      "revId": "afc776529b0de167b6cd62897ef321ae512f7141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
