@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "495141f7_5acdaef2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-12T00:28:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1abf0e76_86b27059",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 329,
+        "endChar": 42
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5164c44_29d01f77",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de5ad51_be3b4866",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-12T00:28:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b5164c44_29d01f77",
+      "range": {
+        "startLine": 390,
+        "startChar": 4,
+        "endLine": 391,
+        "endChar": 20
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dd39122e_334280c2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-12T00:28:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f32c5e37_c2a4526a",
+      "range": {
+        "startLine": 395,
+        "startChar": 4,
+        "endLine": 396,
+        "endChar": 26
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3242e5d9_2ff48007",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/objectValue.css",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f20c7de9_1764d0c7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/objectValue.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-12T00:28:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3242e5d9_2ff48007",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 35
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aac80df_198fa520",
         "filename": "third_party/WebKit/Source/devtools/front_end/text_editor/cmdevtools.css",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-08T22:58:16Z",
       "side": 1,
       "message": "If we do the change on objectValue.css L94, we need this to preserve current behavior: https://imgur.com/a/W4CH5",
+      "range": {
+        "startLine": 437,
+        "startChar": 4,
+        "endLine": 437,
+        "endChar": 24
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a34cc61_9d64b4bf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_editor/cmdevtools.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-12T00:28:56Z",
+      "side": 1,
+      "message": "This seems like it should go with other object-properties-preview styles.",
+      "parentUuid": "5aac80df_198fa520",
       "range": {
         "startLine": 437,
         "startChar": 4,
