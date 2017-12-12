@@ -16,8 +16,35 @@ NotificationDisplayService* NotificationDisplayService::GetForProfile(
 // static
 NotificationDisplayService*
 NotificationDisplayService::GetForSystemNotifications() {
-  return nullptr;
+  if (!g_browser_process->profile_manager()->GetProfile(
+          ProfileManager::GetSystemProfilePath()))
+    return nullptr;
+
+  return NotificationDisplayService::GetForProfile(
+      g_browser_process->profile_manager()->GetProfile(
+          ProfileManager::GetSystemProfilePath()));
 }
 #endif
+
+// static
+void NotificationDisplayService::DisplayForSystemNotification(
+    const Notification& notification) {
+  NotificationDisplayService* service = GetForSystemNotifications();
+  if (service) {
+    service->Display(NotificationHandler::Type::TRANSIENT, notification);
+    return;
+  }
+
+  g_browser_process->profile_manager()->CreateProfileAsync(
+      ProfileManager::GetSystemProfilePath(),
+      base::Bind(
+          [](Notification notification, Profile* profile,
+             Profile::CreateStatus status) {
+            NotificationDisplayService::GetForProfile(profile)->Display(
+                notification);
+          },
+          notification),
+      base::string16(), std::string(), std::string());
+}
 
 NotificationDisplayService::~NotificationDisplayService() = default;

@@ -45,9 +45,13 @@ class NotificationDisplayService : public KeyedService {
   static NotificationDisplayService* GetForProfile(Profile* profile);
 
   // Returns the NDS for system notifications which aren't tied to a particular
-  // user. Currently only implemented on Chrome OS. TODO(estade): implement
-  // elsewhere as needed.
+  // user. May return null if the profile hasn't been loaded yet.
   static NotificationDisplayService* GetForSystemNotifications();
+
+  // Displays a system notification on the appropriate
+  // NotificationDisplayService. If the system profile is not yet loaded, it
+  // will load and display the notification asynchronously.
+  static void DisplayForSystemNotifications(const Notification& notification);
 
   // Displays the |notification| of type |notification_type|. The |metadata|
   // may be provided for certain notification types that require additional

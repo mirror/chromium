@@ -26,7 +26,6 @@ class WebUsbDetector : public device::UsbService::Observer {
  private:
   // device::UsbService::observer:
   void OnDeviceAdded(scoped_refptr<device::UsbDevice> device) override;
-  void OnDeviceRemoved(scoped_refptr<device::UsbDevice> device) override;
 
   ScopedObserver<device::UsbService, device::UsbService::Observer> observer_;
 
