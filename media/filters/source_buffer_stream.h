@@ -285,8 +285,9 @@ class MEDIA_EXPORT SourceBufferStream {
 
   // Measures the distances between buffer decode timestamps and tracks the max.
   // This enables a reasonable approximation of adjacency fudge room, even for
-  // out-of-order PTS vs DTS sequences.
-  void UpdateMaxInterbufferDtsDistance(const BufferQueue& buffers);
+  // out-of-order PTS vs DTS sequences. Returns true if
+  // |max_interbuffer_distance_| was changed.
+  bool UpdateMaxInterbufferDtsDistance(const BufferQueue& buffers);
 
   // Sets the config ID for each buffer to |append_config_index_|.
   void SetConfigIds(const BufferQueue& buffers);

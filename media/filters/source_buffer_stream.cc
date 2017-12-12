@@ -329,7 +329,14 @@ bool SourceBufferStream<RangeClass>::Append(const BufferQueue& buffers) {
     return false;
   }
 
-  UpdateMaxInterbufferDtsDistance(buffers);
+  if (UpdateMaxInterbufferDtsDistance(buffers)) {
+    // Coalesce |ranges_| using the new fudge room. This helps keep |ranges_|
+    // sorted in complex scenarios.  See https://crbug.com/793247.
+    // BIG TODO continue here: compress ranges (coalesce) if this next call
+    // returns true.  Remember to preserve semantic of |range_for_next_append_|
+    // here.
+  }
+
   SetConfigIds(buffers);
 
   // Save a snapshot of stream state before range modifications are made.
@@ -760,9 +767,10 @@ bool SourceBufferStream<RangeClass>::OnlySelectedRangeIsSeeked() const {
 }
 
 template <typename RangeClass>
-void SourceBufferStream<RangeClass>::UpdateMaxInterbufferDtsDistance(
+bool SourceBufferStream<RangeClass>::UpdateMaxInterbufferDtsDistance(
     const BufferQueue& buffers) {
   DCHECK(!buffers.empty());
+  base::TimeDelta old_distance = max_interbuffer_distance_;
   DecodeTimestamp prev_timestamp = last_appended_buffer_decode_timestamp_;
   for (BufferQueue::const_iterator itr = buffers.begin();
        itr != buffers.end(); ++itr) {
@@ -783,6 +791,7 @@ void SourceBufferStream<RangeClass>::UpdateMaxInterbufferDtsDistance(
         std::max(max_interbuffer_distance_, interbuffer_distance);
     prev_timestamp = current_timestamp;
   }
+  return max_interbuffer_distance_ != old_distance;
 }
 
 template <typename RangeClass>
