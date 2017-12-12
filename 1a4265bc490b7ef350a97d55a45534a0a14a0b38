@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32573f27_3fe3e1ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 32
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-12T03:30:52Z",
+      "side": 1,
+      "message": "It shouldn\u0027t incur a runtime cost in non-debug builds. DEFINE_TYPE_CASTS adds a SECURITY_DCHECK (only enabled in debug), and a static_cast\u003cT\u003e, which is a compile-time operation.",
+      "revId": "1a4265bc490b7ef350a97d55a45534a0a14a0b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f17fe7_32dfcad4",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.cpp.tmpl",
+        "patchSetId": 32
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-12T03:30:52Z",
+      "side": 1,
+      "message": "This may have already existed, but shouldn\u0027t the Longhand class itself just not be included in longhand_property_classnames?",
+      "revId": "1a4265bc490b7ef350a97d55a45534a0a14a0b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9613b031_7fd59d6a",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.h.tmpl",
+        "patchSetId": 32
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-12T03:30:52Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m not sure we want to remove subclasses of this :p\n\nPerhaps the comment should be \"audit and redesign how aliases are handled\"?",
+      "revId": "1a4265bc490b7ef350a97d55a45534a0a14a0b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d15117fd_dcd8f75a",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.h.tmpl",
+        "patchSetId": 32
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-12T03:30:52Z",
+      "side": 1,
+      "message": "Nit: line too long.",
+      "revId": "1a4265bc490b7ef350a97d55a45534a0a14a0b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272a2b02_ba95f4e6",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.h.tmpl",
+        "patchSetId": 32
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-12T03:30:52Z",
+      "side": 1,
+      "message": "nit: too many newlines.",
+      "revId": "1a4265bc490b7ef350a97d55a45534a0a14a0b38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
