@@ -7,6 +7,7 @@
 
 #include <map>
 
+#include "base/synchronization/lock.h"
 #include "cc/paint/transfer_cache_entry.h"
 #include "gpu/command_buffer/client/client_discardable_manager.h"
 #include "gpu/command_buffer/client/gles2_impl_export.h"
@@ -58,6 +59,8 @@ class GLES2_IMPL_EXPORT ClientTransferCache {
   std::map<uint32_t, ClientDiscardableHandle::Id>& DiscardableHandleIdMap(
       cc::TransferCacheEntryType entry_type);
 
+  // Access to other members must always be done with |lock_| held.
+  base::Lock lock_;
   ClientDiscardableManager discardable_manager_;
   std::map<uint32_t, ClientDiscardableHandle::Id> discardable_handle_id_map_
       [static_cast<uint32_t>(cc::TransferCacheEntryType::kLast) + 1];
