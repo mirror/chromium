@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afe46732_d7af073e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-12T23:59:55Z",
+      "side": 1,
+      "message": "Optional: The expected output is repated a few times here, perhaps it could be extracted to a variable.",
+      "range": {
+        "startLine": 120,
+        "startChar": 90,
+        "endLine": 120,
+        "endChar": 118
+      },
+      "revId": "e6a2a8634ce2b408dc7d12c5d1ff10b74cdade34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
