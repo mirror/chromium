@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8516d6c_76f0896b",
+        "filename": "cc/test/render_pass_test_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-12T00:53:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "21b5f521_c259f086",
+      "revId": "d0ea899c3401fecf06a81c1a73c09a4334104e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "288ef565_ccf8d27c",
         "filename": "components/viz/service/display/gl_renderer_unittest.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T00:16:47Z",
       "side": 1,
       "message": "Why not reuse the output surface context provider? I believe we customize the context provider for some tests so we\u0027d want the same behavior in child and parent.",
+      "revId": "d0ea899c3401fecf06a81c1a73c09a4334104e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37425064_7ce57da3",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-12T00:53:08Z",
+      "side": 1,
+      "message": "In chromium\u0027s renderer-browser, renderer owns LayerTreeResourceProvider, browser( SurfaceService) owns DisplayResourceProvider. The renderer and browser have separate context.\nSo here create a child_context_provider_ to mimic the renderer-browser behavior.",
+      "parentUuid": "288ef565_ccf8d27c",
       "revId": "d0ea899c3401fecf06a81c1a73c09a4334104e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
