@@ -22,6 +22,30 @@
       "revId": "be5fb7eb21526dbdae8df0a334d725c6a8039d51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c60e50_f0c0f2a6",
+        "filename": "ios/web/web_state/js/form_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-12T21:59:25Z",
+      "side": 1,
+      "message": "Yes ExecuteJavaScript executes syncronously https://cs.chromium.org/chromium/src/ios/web/test/web_int_test.h?q\u003dExecuteJavaScript\u0026sq\u003dpackage:chromium\u0026l\u003d44 (comment to this function).\n\nHaving it as part of LoadHtml would be more verbose:\n\u003cscript\u003e\nfunction addIFrame() \n{\n// current script\n}\n\u003c/script\u003e\n\u003cbody onload\u003d\"addIFrame()\"\u003e\u003ciframe id\u003d\u0027frame1\u0027\u003e\u003c/iframe\u003e \u003c/body\u003e\n\nSo it looks that the current implementation is not worse at least.",
+      "parentUuid": "93d43ea3_ac6b8f73",
+      "range": {
+        "startLine": 66,
+        "startChar": 57,
+        "endLine": 66,
+        "endChar": 58
+      },
+      "revId": "be5fb7eb21526dbdae8df0a334d725c6a8039d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
