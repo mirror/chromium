@@ -1,0 +1,441 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ef88974_ecfd94b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Minor nit: Javadoc-format:\n\n/**\n * @return Size of the cache directory\n */",
+      "range": {
+        "startLine": 330,
+        "startChar": 8,
+        "endLine": 330,
+        "endChar": 43
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90106dc_6d5f1c26",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstallService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Minor nit: availableSpaceInBytes",
+      "range": {
+        "startLine": 97,
+        "startChar": 21,
+        "endLine": 97,
+        "endChar": 41
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd14a9a_cc01d05f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstallService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Minor nit: cacheSizeInBytes",
+      "range": {
+        "startLine": 101,
+        "startChar": 21,
+        "endLine": 101,
+        "endChar": 36
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752180a9_ab139f82",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e for std::move",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4327b1_e3463fb8",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Nit: this feels like a variable that should be in the constructor.",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b470863_4f151e7f",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Nit: move this to the destructor so it\u0027s always run no matter how this object is destroyed.",
+      "range": {
+        "startLine": 45,
+        "startChar": 3,
+        "endLine": 45,
+        "endChar": 35
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f08a8fc_33b736e8",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Nit: add a comment:\n\n// Matches the new in \u003cmethod name\u003e, which should be the static method you\u0027ll add (see below comment on using the static pattern here)",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25dc592c_66a27f50",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "TriggerFreeSpaceCheck() may not have finished yet on a slower device. That means we could end up in a failure situation because the free space checking was slower than the installation request, and when we would have cleared cache, we didn\u0027t because we didn\u0027t know we had to.\n\nI don\u0027t think this is going to happen often, but it\u0027s hard to be sure. Perhaps for now we can add a metric to log the space_status_ at this point, and see how often it\u0027s UNDETERMINED. That way we can see how often we hit this race condition. This metric can be in a follow up, but you should note the race in a comment here.",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 5
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae4c32b_afb0455d",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "I actually much prefer this being inlined into the FreeCacheAsync method (i.e. remove the variable) below so that we only create the callback if it\u0027s needed. Otherwise, directly run WebApkInstaller::InstallAsync(). Callbacks are expensive to create, and having to trace through to identify a callback and its arguments is frustrating. It\u0027s much clearer to have the explicit method call.",
+      "range": {
+        "startLine": 101,
+        "startChar": 1,
+        "endLine": 103,
+        "endChar": 79
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe44fb4_6547dcc8",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "We can make this new/delete call safer with the static pattern that WebApkInstaller uses:\n\n- have a private constructor\n- have a static FreeCacheAsync method on CacheClearer which does:\n\nstatic void FreeCacheAsync(...) {\n  auto* cache_clearer \u003d new CacheClearer(); // deletes itself when finished\n  cache_clearer-\u003eFreeCacheAsync(...);\n}\n\nThat way, the new and delete calls are within the CacheClearer class, rather than one being here and one in that class. It also stops anyone from creating a CacheClearer: they have to use the static method, which does the lifetime management.",
+      "range": {
+        "startLine": 106,
+        "startChar": 25,
+        "endLine": 106,
+        "endChar": 44
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d35eab2_65770e9c",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Should the space_status_ be reset to UNDETERMINED at this point?",
+      "range": {
+        "startLine": 113,
+        "startChar": 3,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd84ec86_bac5314b",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "static_cast\u003cSpaceStatus\u003e(status) to turn this into a enum class value.",
+      "range": {
+        "startLine": 141,
+        "startChar": 28,
+        "endLine": 141,
+        "endChar": 34
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19539078_862f079b",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Nit: ideally this should be an enum class since it\u0027s in the global namespace",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 4
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5917dadd_5ad1acf9",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Nit: \"UNDETERMINED\"",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4c867e_9aeac86e",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Nit: \"a WebAPK\"",
+      "range": {
+        "startLine": 92,
+        "startChar": 46,
+        "endLine": 92,
+        "endChar": 47
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c01851_7e0a3a86",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Strongly type this: SpaceStatus status",
+      "range": {
+        "startLine": 125,
+        "startChar": 24,
+        "endLine": 125,
+        "endChar": 27
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda671ba_41cdec39",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Nit: This comment is redundant (the type is BrowserContext), so you can remove it.",
+      "range": {
+        "startLine": 127,
+        "startChar": 13,
+        "endLine": 127,
+        "endChar": 20
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2271275b_2dbd7723",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "Nit: \"a WebAPK\"",
+      "range": {
+        "startLine": 133,
+        "startChar": 50,
+        "endLine": 133,
+        "endChar": 56
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e563735_2f44687b",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T03:35:59Z",
+      "side": 1,
+      "message": "SpaceStatus",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 5
+      },
+      "revId": "3e28b299370f6f12b7bff0ea68a2ddf438778ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
