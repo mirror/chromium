@@ -210,7 +210,9 @@ IN_PROC_BROWSER_TEST_P(EncryptedMediaTest, Playback_VideoOnly_WebM_Subsample) {
                      kWebMVP9VideoOnly);
 }
 
-IN_PROC_BROWSER_TEST_P(EncryptedMediaTest, Playback_VideoClearAudio_WebM) {
+// TODO(crbug.com/794102) address flakiness
+IN_PROC_BROWSER_TEST_P(EncryptedMediaTest,
+                       DISABLED_Playback_VideoClearAudio_WebM) {
   TestSimplePlayback("bear-320x240-av_enc-v.webm", kWebMVorbisAudioVP8Video);
 }
 
@@ -258,8 +260,8 @@ IN_PROC_BROWSER_TEST_P(EncryptedMediaTest,
   TestConfigChange(ConfigChangeType::ENCRYPTED_TO_ENCRYPTED);
 }
 
-// https://crbug.com/788748
-#if defined(OS_ANDROID) && defined(ADDRESS_SANITIZER)
+// https://crbug.com/788748 https://crbug.com/794080
+#if (defined(OS_ANDROID) || defined(OS_LINUX)) && defined(ADDRESS_SANITIZER)
 #define MAYBE_FrameSizeChangeVideo DISABLED_FrameSizeChangeVideo
 #else
 #define MAYBE_FrameSizeChangeVideo FrameSizeChangeVideo
