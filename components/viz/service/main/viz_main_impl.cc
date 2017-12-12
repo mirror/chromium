@@ -13,6 +13,7 @@
 #include "build/build_config.h"
 #include "components/viz/service/display_embedder/compositing_mode_reporter_impl.h"
 #include "components/viz/service/display_embedder/gpu_display_provider.h"
+#include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/gl/gpu_service_impl.h"
 #include "gpu/command_buffer/common/activity_flags.h"
@@ -269,9 +270,11 @@ void VizMainImpl::CreateFrameSinkManagerOnCompositorThread(
         std::move(host_mode_watcher));
   }
 
+  server_shared_bitmap_manager_ = std::make_unique<ServerSharedBitmapManager>();
   display_provider_ = std::make_unique<GpuDisplayProvider>(
       params->restart_id, gpu_command_service_,
-      gpu_service_->gpu_channel_manager(), compositing_mode_reporter_.get());
+      gpu_service_->gpu_channel_manager(), server_shared_bitmap_manager_.get(),
+      compositing_mode_reporter_.get());
 
   mojom::FrameSinkManagerClientPtr client(
       std::move(params->frame_sink_manager_client));
