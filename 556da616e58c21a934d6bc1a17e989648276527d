@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5429aa01_52fed383",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T07:47:50Z",
+      "side": 1,
+      "message": "Hmm, I would still prefer avoiding doing some complex work in ctor. Because;\n- Start() looks to have clear semantics to me, and running complicated code like this in ctor often makes maintenance difficult.\n- I prefer to keep the symmetric what\u0027s done in ctor and dtor, if possible.\n- This change could make testing difficult. There is no guarantee that StartArcInstance is async (though it is recommended, and real implementation does so currently), so OnMiniInstanceStarted() could be called synchronously. In case of failing, there is no chance to register observers.\n- In this specific case, it is difficult for me to find a benefit to remove the Start() here, TBH.\n\nTo me, StartArcInstance() is still fail-able method, so I prefer following https://google.github.io/styleguide/cppguide.html#Doing_Work_in_Constructors and avoiding this to done in the ctor.",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff67a02_a7a089d2",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T07:47:50Z",
+      "side": 1,
+      "message": "nit: Upgrade() sounds enough for our case?",
+      "range": {
+        "startLine": 277,
+        "startChar": 28,
+        "endLine": 277,
+        "endChar": 34
+      },
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07877c8_1c9279a1",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T07:47:50Z",
+      "side": 1,
+      "message": "GetSessionManagerClient() ?",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f4ca67_e7c4037b",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T07:47:50Z",
+      "side": 1,
+      "message": "This looks \"setting a field value before calling method to change its behavior\" pattern,\nwhich is better to avoid.\n\nHow about extracting the code for sending D-Bus method and call it from each?",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6203ce3_f9be6418",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-12T07:47:50Z",
+      "side": 1,
+      "message": "Maybe: rename to\nSTARTING_MINI_INSTANCE -\u003e STARTING\nSTARTING_FULL_INSTANCE -\u003e UPGRADING",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
