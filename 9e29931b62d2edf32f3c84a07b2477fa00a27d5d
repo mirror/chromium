@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "18bdb6c6_5d6b3fe5",
+        "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T21:48:15Z",
+      "side": 1,
+      "message": "Is there a reason to PostTask rather than just specifying a TaskRunner when calling AddInterface()?",
+      "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca0a62c9_b70bb554",
         "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
         "patchSetId": 11
@@ -101,6 +118,24 @@
       "side": 1,
       "message": "mojo::MakeRequest() always initialises the InterfacePtr; if this fails, any requests made using the InterfacePtr will be dropped on the floor, but the BackgroundFetchService* will never be null.\n\nOn the other hand, dropping requests on the floor will result in BackgroundFetchManager\u0027s ScriptPromiseResolvers DCHECKing when they are destructed without being resolved, but this is already a problem if the connection breaks.",
       "parentUuid": "3ebe04e9_e8098ad7",
+      "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e80cedf_19d2fbf0",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchBridge.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T21:48:15Z",
+      "side": 1,
+      "message": "Seeing code like this makes me wonder if we should make it so GetInterfaceProvider() always returns *something*. It seems to complicate callers a lot to have to consider whether or not the context is still attached before trying to get the interface provider.",
+      "parentUuid": "61be6996_6654cd09",
       "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
