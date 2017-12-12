@@ -911,6 +911,7 @@
     [_locationBarView
         setContentHuggingPriority:UILayoutPriorityDefaultLow
                           forAxis:UILayoutConstraintAxisHorizontal];
+    _locationBarView.clipsToBounds = YES;
   }
   return _locationBarView;
 }
