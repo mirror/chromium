@@ -403,6 +403,8 @@ void PasswordProtectionService::MaybeStartProtectedPasswordEntryRequest(
     bool matches_sync_password,
     const std::vector<std::string>& matching_domains,
     bool password_field_exists) {
+  LOG(ERROR)
+      << "PasswordProtectionService::MaybeStartProtectedPasswordEntryRequest";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (CanSendPing(LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
                   main_frame_url, matches_sync_password)) {
