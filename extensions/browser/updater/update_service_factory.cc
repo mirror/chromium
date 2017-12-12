@@ -36,8 +36,11 @@ UpdateServiceFactory::~UpdateServiceFactory() {
 
 KeyedService* UpdateServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
+  ExtensionsBrowserClient* extensions_browser_client =
+      ExtensionsBrowserClient::Get();
   return new UpdateService(
-      context, ExtensionsBrowserClient::Get()->CreateUpdateClient(context));
+      context, extensions_browser_client->GetExtensionCache(),
+      extensions_browser_client->CreateUpdateClient(context));
 }
 
 }  // namespace extensions
