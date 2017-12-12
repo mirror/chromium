@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f47fcd35_2775a69e",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-12T02:08:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we want to require task to specify additional dimensions here.\nIn medium-term horizon where we have soft affinity, we\u0027d want dimensions \nShort-term horizon they are not useful and potentially cause of extra bugs, but upside is that we get ready for medium term.\nSo, i\u0027m leaning towards requiring them.\n\nNodir, WDYT?",
+      "range": {
+        "startLine": 460,
+        "startChar": 4,
+        "endLine": 477,
+        "endChar": 0
+      },
+      "revId": "2b29812e1577e74015822520ce9249e9d25f158f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
