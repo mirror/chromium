@@ -34,6 +34,24 @@
       "revId": "b531336e62fa18100c963e5eee2327dad614aa09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16684fb5_c4e35c6e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-12T06:25:40Z",
+      "side": 1,
+      "message": "No, don\u0027t worry about it too much.",
+      "parentUuid": "562c8d8f_98109896",
+      "revId": "b531336e62fa18100c963e5eee2327dad614aa09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
