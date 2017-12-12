@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8149b6da_8c6dc905",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-12-12T00:06:07Z",
+      "side": 1,
+      "message": "Is this true or was this just copied from my edit?",
+      "revId": "14eedf3552d9e64813e250afde120261530a40c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a6d369f_10023bec",
         "filename": "base/message_loop/message_pump_win.cc",
         "patchSetId": 5
@@ -13,6 +30,41 @@
       "writtenOn": "2017-12-08T15:41:32Z",
       "side": 1,
       "message": "I \rhave tried move WaitForWork call to here then I can receive DM_POINTERHITTEST but chrome will hang. Bruce, do you know what message cause this?",
+      "revId": "14eedf3552d9e64813e250afde120261530a40c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d5aa3f_c93873e2",
+        "filename": "base/message_loop/message_pump_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-12-12T00:06:07Z",
+      "side": 1,
+      "message": "I don\u0027t know. To clarify, you are saying that if you move the WaitForWork() call from line 198 to here then you can receive DM_POINTERHITTEST but Chrome subsequently hangs? You would have to debug the hang and figure out why it is happening. That may require adding some Chrome instrumentation so that when Chrome hangs you can forcibly unhang it and then see what message was coming in the Chrome needed that didn\u0027t show up in the MsgWaitForMultipleObjectsEx call.\n\nChanging the message pump is tricky and subtle. We may need to discuss this more off-bug.",
+      "parentUuid": "9a6d369f_10023bec",
+      "revId": "14eedf3552d9e64813e250afde120261530a40c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f181849d_97da3e5b",
+        "filename": "base/message_loop/message_pump_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-12-12T00:06:07Z",
+      "side": 1,
+      "message": "It *looks* like the loop shouldn\u0027t be necessary, but how sure are you?",
       "revId": "14eedf3552d9e64813e250afde120261530a40c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
