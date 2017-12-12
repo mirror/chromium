@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "606eaf17_dc2900a5",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-12T17:15:41Z",
+      "side": 1,
+      "message": "x64 is the default, so you don\u0027t need to specify it (just use `asan_fuzzer_v8_heap_release_bot`).",
+      "revId": "6e4ad2715e1ac2c648b9e1fdad6a8bc28e0d9364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
