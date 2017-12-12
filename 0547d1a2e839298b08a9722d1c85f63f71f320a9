@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26871f62_74a610e3",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-12T15:46:36Z",
+      "side": 1,
+      "message": "Similar checks already exist, but not for all constructions sites of PositionIteratorAlgorithm.",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5ae6f1_1db068d0",
+        "filename": "third_party/WebKit/Source/core/editing/PositionIterator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-12T15:46:36Z",
+      "side": 1,
+      "message": "I had to make this check via function, because I need to do it before any code in constructor is executed.",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095a2020_b297ff60",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-12T15:46:36Z",
+      "side": 1,
+      "message": "Should we do something if |position| is disconnected here?",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
