@@ -141,15 +141,19 @@ void UiInputManager::HandleInput(base::TimeTicks current_time,
   if (in_scroll_) {
     return;
   }
+  // TODO(vollick): why do we call this twice in this function??
   SendHoverLeave(target_element);
   if (!SendHoverEnter(target_element, reticle_model->target_local_point)) {
     SendHoverMove(reticle_model->target_local_point);
   }
   SendButtonDown(target_element, reticle_model->target_local_point,
                  controller_model.touchpad_button_state);
-  if (SendButtonUp(target_element, reticle_model->target_local_point,
+  // TODO(vollick): need to convert reticle_model->target_local_point into the
+  // space of the input-locked element before calling SendButtonUp.
+  if (SendButtonUp(reticle_model->target_local_point,
                    controller_model.touchpad_button_state)) {
     target_element = scene_->GetUiElementById(reticle_model->target_element_id);
+    // TODO(vollick): we should not pass a parameter here. Analogous to focus,
     SendHoverLeave(target_element);
     SendHoverEnter(target_element, reticle_model->target_local_point);
   }
@@ -323,19 +327,12 @@ void UiInputManager::SendButtonDown(UiElement* target,
   if (target) {
     target->OnButtonDown(target_point);
     input_locked_element_id_ = target->id();
-    // Clicking outside of the focused element causes it to lose focus.
-    // TODO(ymalik): We will lose focus if we hit an element inside the focused
-    // element, which is incorrect behavior.
-    if (target->id() != focused_element_id_ && target->focusable()) {
-      UnfocusFocusedElement();
-    }
   } else {
     input_locked_element_id_ = 0;
   }
 }
 
-bool UiInputManager::SendButtonUp(UiElement* target,
-                                  const gfx::PointF& target_point,
+bool UiInputManager::SendButtonUp(const gfx::PointF& target_point,
                                   ButtonState button_state) {
   if (!in_click_) {
     return false;
@@ -351,7 +348,13 @@ bool UiInputManager::SendButtonUp(UiElement* target,
   }
   UiElement* element = scene_->GetUiElementById(input_locked_element_id_);
   if (element) {
-    target->OnButtonUp(target_point);
+    element->OnButtonUp(target_point);
+    // Clicking outside of the focused element causes it to lose focus.
+    // TODO(ymalik): We will lose focus if we hit an element inside the focused
+    // element, which is incorrect behavior.
+    if (element->id() != focused_element_id_ && element->focusable()) {
+      UnfocusFocusedElement();
+    }
   }
   input_locked_element_id_ = 0;
   return true;

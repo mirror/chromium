@@ -16,6 +16,8 @@ class Transform;
 
 namespace vr {
 
+struct CornerRadii;
+
 class GradientQuadRenderer : public BaseRenderer {
  public:
   GradientQuadRenderer();
@@ -26,7 +28,7 @@ class GradientQuadRenderer : public BaseRenderer {
             SkColor center_color,
             float opacity,
             const gfx::SizeF& element_size,
-            float corner_radius);
+            const CornerRadii& radii);
 
  private:
   GLuint model_view_proj_matrix_handle_;
