@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31e5bcbb_980950fc",
+        "filename": "components/exo/shell_surface_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-12T02:43:36Z",
+      "side": 1,
+      "message": "can we avoid adding more of these virtual functions that I\u0027d like us to remove? remote shell api is the only place we use shadow bounds. can we instead have a member variable that is empty by default and set by client controlled surface when needed?",
+      "revId": "7da13d991760ccd32a9d04da691ba4680248ee53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
