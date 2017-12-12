@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "067946ee_311dc32c",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-12T10:18:22Z",
+      "side": 1,
+      "message": "Delete this line too?",
+      "revId": "2d3eb9f9b9af1c41ef4d31e9d839ac256f1bba44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb14cf01_1993716a",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-12T10:18:22Z",
+      "side": 1,
+      "message": "nit: kURLLoadOptionNone ?",
+      "revId": "2d3eb9f9b9af1c41ef4d31e9d839ac256f1bba44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f9a16f3_e62e81de",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-12T10:18:22Z",
+      "side": 1,
+      "message": "Would we be able to use mojo::common::BlockingCopyToString() here?",
+      "revId": "2d3eb9f9b9af1c41ef4d31e9d839ac256f1bba44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
