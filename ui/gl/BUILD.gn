@@ -162,6 +162,8 @@ component("gl") {
 
     # ANGLE includes are used cross-platform.
     "//third_party/angle:includes",
+
+    ":gl_features",
   ]
   public_deps = [
     "//base",
