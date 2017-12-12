@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab3b8f0a_56069dc9",
+        "filename": "chrome/browser/extensions/extension_messages_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-12T20:17:01Z",
+      "side": 1,
+      "message": "Not sure what this means. Change to a TODO(crbug.com/..) since this code is being moved.",
+      "range": {
+        "startLine": 560,
+        "startChar": 3,
+        "endLine": 560,
+        "endChar": 6
+      },
+      "revId": "c7703d3171997e6959484733251ed32257c2da0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
