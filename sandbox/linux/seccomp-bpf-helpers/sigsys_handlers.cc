@@ -35,6 +35,8 @@
 
 namespace {
 
+base::CrashKeyString* seccomp_crash_key = nullptr;
+
 inline bool IsArchitectureX86_64() {
 #if defined(__x86_64__)
   return true;
@@ -185,7 +187,7 @@ void SetSeccompCrashKey(const struct sandbox::arch_seccomp_data& args) {
     }
   }
 
-  base::debug::SetCrashKeyValue("seccomp-sigsys", crash_key);
+  base::debug::SetCrashKeyString(seccomp_crash_key, crash_key);
 #endif
 }
 
@@ -360,6 +362,12 @@ bpf_dsl::ResultExpr CrashSIGSYSFutex() {
 
 bpf_dsl::ResultExpr RewriteSchedSIGSYS() {
   return bpf_dsl::Trap(SIGSYSSchedHandler, NULL);
+}
+
+void AllocateCrashKeys() {
+  DCHECK(!seccomp_crash_key);
+  seccomp_crash_key = base::debug::AllocateCrashKeyString(
+      "seccomp-sigsys", base::debug::CrashKeySize::Size256);
 }
 
 const char* GetErrorMessageContentForTests() {
