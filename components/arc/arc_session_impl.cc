@@ -251,42 +251,81 @@ ArcSessionImpl::ArcSessionImpl(std::unique_ptr<Delegate> delegate)
   if (client == nullptr)
     return;
   client->AddObserver(this);
+
+  VLOG(2) << "Starting ARC mini instance";
+  chromeos::SessionManagerClient* session_manager_client =
+      chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
+  const bool native_bridge_experiment =
+      base::FeatureList::IsEnabled(arc::kNativeBridgeExperimentFeature);
+  session_manager_client->StartArcInstance(
+      chromeos::SessionManagerClient::ArcStartupMode::LOGIN_SCREEN,
+      // All variables below except the last will be ignored.
+      cryptohome::Identification(), false, false, native_bridge_experiment,
+      base::BindOnce(&ArcSessionImpl::OnMiniInstanceStarted,
+                     weak_factory_.GetWeakPtr()));
 }
 
 ArcSessionImpl::~ArcSessionImpl() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DCHECK(state_ == State::NOT_STARTED || state_ == State::STOPPED);
+  DCHECK(state_ == State::STOPPED);
   chromeos::SessionManagerClient* client = GetSessionManagerClient();
   if (client == nullptr)
     return;
   client->RemoveObserver(this);
 }
 
-void ArcSessionImpl::Start(ArcInstanceMode request_mode) {
+void ArcSessionImpl::UpgradeToFull() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
-  target_mode_ = request_mode;
-  switch (request_mode) {
-    case ArcInstanceMode::MINI_INSTANCE:
-      StartMiniInstance();
-      return;
-    case ArcInstanceMode::FULL_INSTANCE:
-      StartFullInstance();
-      return;
+  full_container_requested_ = true;
+
+  switch (state_) {
+    case State::STARTING_MINI_INSTANCE:
+      VLOG(2) << "Requested to upgrade a starting ARC mini instance";
+      // OnMiniInstanceStarted() will restart a full instance.
+      break;
+    case State::RUNNING_MINI_INSTANCE:
+    {
+      VLOG(2) << "Upgrading an existing ARC mini instance";
+      state_ = State::STARTING_FULL_INSTANCE;
+
+      chromeos::SessionManagerClient* session_manager_client =
+          chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
+      const bool native_bridge_experiment =
+          base::FeatureList::IsEnabled(arc::kNativeBridgeExperimentFeature);
+
+      user_manager::UserManager* user_manager =
+          user_manager::UserManager::Get();
+      DCHECK(user_manager->GetPrimaryUser());
+      const cryptohome::Identification cryptohome_id(
+          user_manager->GetPrimaryUser()->GetAccountId());
+
+      const bool skip_boot_completed_broadcast =
+          !base::FeatureList::IsEnabled(arc::kBootCompletedBroadcastFeature);
+
+      // We only enable /vendor/priv-app when voice interaction is enabled
+      // because voice interaction service apk would be bundled in this
+      // location.
+      const bool scan_vendor_priv_app =
+          chromeos::switches::IsVoiceInteractionEnabled();
+
+      session_manager_client->StartArcInstance(
+          chromeos::SessionManagerClient::ArcStartupMode::FULL, cryptohome_id,
+          skip_boot_completed_broadcast, scan_vendor_priv_app,
+          native_bridge_experiment,
+          base::BindOnce(&ArcSessionImpl::OnFullInstanceStarted,
+                         weak_factory_.GetWeakPtr()));
+      break;
+    }
+    case State::STARTING_FULL_INSTANCE:
+    case State::CONNECTING_MOJO:
+    case State::RUNNING_FULL_INSTANCE:
+    case State::STOPPED:
+      // These mean UpgradeToFull() is called twice or called after
+      // stopped, which are invalid operations.
+      NOTREACHED();
+      break;
   }
-
-  NOTREACHED();
-}
-
-void ArcSessionImpl::StartMiniInstance() {
-  DCHECK_EQ(State::NOT_STARTED, state_);
-
-  VLOG(2) << "Starting ARC mini instance";
-  state_ = State::STARTING_MINI_INSTANCE;
-  SendStartArcInstanceDBusMessage(
-      target_mode_.value(),
-      base::BindOnce(&ArcSessionImpl::OnMiniInstanceStarted,
-                     weak_factory_.GetWeakPtr()));
 }
 
 void ArcSessionImpl::OnMiniInstanceStarted(
@@ -315,47 +354,9 @@ void ArcSessionImpl::OnMiniInstanceStarted(
 
   state_ = State::RUNNING_MINI_INSTANCE;
 
-  if (target_mode_ == ArcInstanceMode::FULL_INSTANCE) {
-    // Start(FULL_INSTANCE) has been called during the D-Bus call.
-    StartFullInstance();
-  }
-}
-
-void ArcSessionImpl::StartFullInstance() {
-  // StartFullInstance() can be called either for starting ARC from scratch or
-  // for upgrading to an existing one. StartFullInstance() must be able to
-  // start a fully functional instance from all of |state_| up to and including
-  // RUNNING_MINI_INSTANCE.
-  switch (state_) {
-    case State::NOT_STARTED:
-      // A mini instance does not exist. Start a new one from scratch.
-      VLOG(2) << "Starting ARC session";
-      state_ = State::STARTING_FULL_INSTANCE;
-      SendStartArcInstanceDBusMessage(
-          target_mode_.value(),
-          base::BindOnce(&ArcSessionImpl::OnFullInstanceStarted,
-                         weak_factory_.GetWeakPtr()));
-      break;
-    case State::STARTING_MINI_INSTANCE:
-      VLOG(2) << "Requested to upgrade a starting ARC mini instance";
-      // OnMiniInstanceStarted() will restart a full instance.
-      break;
-    case State::RUNNING_MINI_INSTANCE:
-      VLOG(2) << "Upgrading an existing ARC mini instance";
-      state_ = State::STARTING_FULL_INSTANCE;
-      SendStartArcInstanceDBusMessage(
-          target_mode_.value(),
-          base::BindOnce(&ArcSessionImpl::OnFullInstanceStarted,
-                         weak_factory_.GetWeakPtr()));
-      break;
-    case State::STARTING_FULL_INSTANCE:
-    case State::CONNECTING_MOJO:
-    case State::RUNNING_FULL_INSTANCE:
-    case State::STOPPED:
-      // These mean Start(FULL_INSTANCE) is called twice or called after
-      // stopped, which are invalid operations.
-      NOTREACHED();
-      break;
+  if (full_container_requested_) {
+    // UpgradeToFull() has been called during the D-Bus call.
+    UpgradeToFull();
   }
 }
 
@@ -401,43 +402,6 @@ void ArcSessionImpl::OnFullInstanceStarted(
   }
 }
 
-// static
-void ArcSessionImpl::SendStartArcInstanceDBusMessage(
-    ArcInstanceMode target_mode,
-    chromeos::SessionManagerClient::StartArcInstanceCallback callback) {
-  chromeos::SessionManagerClient* session_manager_client =
-      chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
-  const bool native_bridge_experiment =
-      base::FeatureList::IsEnabled(arc::kNativeBridgeExperimentFeature);
-  if (target_mode == ArcInstanceMode::MINI_INSTANCE) {
-    session_manager_client->StartArcInstance(
-        chromeos::SessionManagerClient::ArcStartupMode::LOGIN_SCREEN,
-        // All variables below except |callback| will be ignored.
-        cryptohome::Identification(), false, false, native_bridge_experiment,
-        std::move(callback));
-    return;
-  }
-  DCHECK_EQ(ArcInstanceMode::FULL_INSTANCE, target_mode);
-
-  user_manager::UserManager* user_manager = user_manager::UserManager::Get();
-  DCHECK(user_manager->GetPrimaryUser());
-  const cryptohome::Identification cryptohome_id(
-      user_manager->GetPrimaryUser()->GetAccountId());
-
-  const bool skip_boot_completed_broadcast =
-      !base::FeatureList::IsEnabled(arc::kBootCompletedBroadcastFeature);
-
-  // We only enable /vendor/priv-app when voice interaction is enabled because
-  // voice interaction service apk would be bundled in this location.
-  const bool scan_vendor_priv_app =
-      chromeos::switches::IsVoiceInteractionEnabled();
-
-  session_manager_client->StartArcInstance(
-      chromeos::SessionManagerClient::ArcStartupMode::FULL, cryptohome_id,
-      skip_boot_completed_broadcast, scan_vendor_priv_app,
-      native_bridge_experiment, std::move(callback));
-}
-
 void ArcSessionImpl::OnMojoConnected(
     std::unique_ptr<mojom::ArcBridgeHost> arc_bridge_host) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -472,10 +436,6 @@ void ArcSessionImpl::Stop() {
   stop_requested_ = true;
   arc_bridge_host_.reset();
   switch (state_) {
-    case State::NOT_STARTED:
-      OnStopped(ArcStopReason::SHUTDOWN);
-      return;
-
     case State::STARTING_MINI_INSTANCE:
     case State::STARTING_FULL_INSTANCE:
       // Before starting the ARC instance, we do nothing here.
@@ -564,10 +524,6 @@ void ArcSessionImpl::ArcInstanceStopped(
   OnStopped(reason);
 }
 
-base::Optional<ArcInstanceMode> ArcSessionImpl::GetTargetMode() {
-  return target_mode_;
-}
-
 bool ArcSessionImpl::IsStopRequested() {
   return stop_requested_;
 }
@@ -618,7 +574,6 @@ std::ostream& operator<<(std::ostream& os, ArcSessionImpl::State state) {
     return os << #name
 
   switch (state) {
-    MAP_STATE(NOT_STARTED);
     MAP_STATE(STARTING_MINI_INSTANCE);
     MAP_STATE(RUNNING_MINI_INSTANCE);
     MAP_STATE(STARTING_FULL_INSTANCE);

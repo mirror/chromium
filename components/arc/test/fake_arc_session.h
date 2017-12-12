@@ -8,8 +8,6 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/optional.h"
-#include "components/arc/arc_instance_mode.h"
 #include "components/arc/arc_session.h"
 #include "components/arc/arc_stop_reason.h"
 
@@ -22,9 +20,8 @@ class FakeArcSession : public ArcSession {
   ~FakeArcSession() override;
 
   // ArcSession overrides:
-  void Start(ArcInstanceMode request_mode) override;
+  void UpgradeToFull() override;
   void Stop() override;
-  base::Optional<ArcInstanceMode> GetTargetMode() override;
   bool IsStopRequested() override;
   void OnShutdown() override;
 
@@ -52,7 +49,7 @@ class FakeArcSession : public ArcSession {
   ArcStopReason boot_failure_reason_;
 
   bool boot_suspended_ = false;
-  base::Optional<ArcInstanceMode> target_mode_;
+  bool full_container_requested_ = false;
   bool running_ = false;
   bool stop_requested_ = false;
 
