@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "25a3f309_af5466c8",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-12T19:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eb66686_e82d6c6a",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0823f8a7_1b5c64a7",
         "filename": "cc/resources/resource_provider.h",
         "patchSetId": 34
@@ -33,6 +51,24 @@
       "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5e02db_820d35b3",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-12T19:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0823f8a7_1b5c64a7",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "87a33cdd_89411161",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-12T19:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e1a6ffd_138c8ae6",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df4ca4c8_51d648b3",
         "filename": "cc/test/test_context_provider.h",
         "patchSetId": 34
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-12T17:01:22Z",
       "side": 1,
       "message": "Was the type RasterContext before, and the names here just didn\u0027t change when the type did? RasterContext sounds like a GL context, maybe this could be RasterInterface to be more clear?",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c58782_fd045eed",
+        "filename": "cc/test/test_context_provider.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-12T19:10:40Z",
+      "side": 1,
+      "message": "It\u0027s matching the convention of ContextGL \u0026 GrContext, and is intended to become a Raster context, replacing GL context usage.  Unless you feel strongly, I\u0027d prefer to leave this as is for now.",
+      "parentUuid": "df4ca4c8_51d648b3",
       "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6b0eb1b2_02796c4d",
+        "filename": "components/viz/common/gpu/context_provider.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-12T19:10:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da403fc3_d6c348c5",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c1d393_0db44a7a",
         "filename": "components/viz/common/gpu/in_process_context_provider.cc",
         "patchSetId": 34
@@ -101,6 +191,24 @@
       "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac7c895_6b73e465",
+        "filename": "components/viz/common/gpu/in_process_context_provider.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-12T19:10:40Z",
+      "side": 1,
+      "message": "Removed this.",
+      "parentUuid": "93c1d393_0db44a7a",
+      "revId": "227119acf8180c6f70a981435d5160b7a96645fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
