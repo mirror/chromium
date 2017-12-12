@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a63d30c_9310f790",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-12T01:16:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "644a68a5_8d700cb0",
+      "revId": "c009406aee9816b94b85dd0eeb46069810ce74a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a1dac33_5d08619d",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5c34b11d_1146d129",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-12T01:16:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a1dac33_5d08619d",
+      "revId": "c009406aee9816b94b85dd0eeb46069810ce74a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86d7d490_f7dd9920",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-11T06:17:51Z",
       "side": 1,
       "message": "service_worker_host is ref-counted and in my understanding the internal interface is destructed on the IO thread, did we check how the callbacks are owned internally?",
+      "revId": "c009406aee9816b94b85dd0eeb46069810ce74a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c301089f_b99fcbc7",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-12-12T01:16:14Z",
+      "side": 1,
+      "message": "service_worker_host is scoped_refptr, but |this| is the only owner. And based on the implementation of ThreadSafeInterfacePtr, async calls are posted to the sequence that the InterfacePtr is bound to, and the responses are posted back, when the InterfacePtr encounters error or destroyes, it destroy the response callbacks directly on the binding thread and destroy them also on the caller thread, so I think it\u0027s safe to use base::Unretained(this). Does that make sense?",
+      "parentUuid": "86d7d490_f7dd9920",
       "revId": "c009406aee9816b94b85dd0eeb46069810ce74a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
