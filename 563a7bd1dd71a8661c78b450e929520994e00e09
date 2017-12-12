@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1009fcd2_97a69022",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-12T11:15:24Z",
+      "side": 1,
+      "message": "Thanks, I think we should just skip all this here as well for layout-only mode.",
+      "parentUuid": "a4799892_3e3f9113",
+      "revId": "563a7bd1dd71a8661c78b450e929520994e00e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b93b4f6_476b584f",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "34607cf8_fe3a89e8",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-12T11:15:24Z",
+      "side": 1,
+      "message": "Not sure if it makes sense to expose any further phases. Refactored the enum, now: enum VisualStateUpdate {kLayout, kAll} instead of MainFrameLifecyclePhase. wdyt?",
+      "parentUuid": "3b93b4f6_476b584f",
+      "revId": "563a7bd1dd71a8661c78b450e929520994e00e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9fee9e9_d3a7be57",
         "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "563a7bd1dd71a8661c78b450e929520994e00e09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67b1d28_14cb5580",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameWidgetImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-12T11:15:24Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m skipping it since it doesn\u0027t seem necessary for layout-only. Refactored to use an enum here as well.",
+      "parentUuid": "c9fee9e9_d3a7be57",
+      "revId": "563a7bd1dd71a8661c78b450e929520994e00e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
