@@ -31,8 +31,6 @@ size_t RegisterWebViewCrashKeys() {
   base::debug::CrashKey fixed_keys[] = {
       {"AW_WHITELISTED_DEBUG_KEY", kSmallSize},
       {"AW_NONWHITELISTED_DEBUG_KEY", kSmallSize},
-      {kClientId, kSmallSize},
-      {kChannel, kSmallSize},
       {kActiveURL, kLargeSize},
       {kNumVariations, kSmallSize},
       {kVariations, kHugeSize},
@@ -62,8 +60,6 @@ size_t RegisterWebViewCrashKeys() {
   // a collection of data, like command line switches or extension IDs.
   std::vector<base::debug::CrashKey> keys(fixed_keys,
                                           fixed_keys + arraysize(fixed_keys));
-
-  GetCrashKeysForCommandLineSwitches(&keys);
 
   return base::debug::InitCrashKeys(&keys.at(0), keys.size(), kChunkMaxLength);
 }
