@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fcc26e3_3eccd741",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T23:49:30Z",
+      "side": 1,
+      "message": "Super nit: \u0027a\u0027 sounds more precise to me than \u0027some\u0027",
+      "range": {
+        "startLine": 163,
+        "startChar": 21,
+        "endLine": 163,
+        "endChar": 25
+      },
+      "revId": "98a6cf95b7cd7bafae99c5f22e27f8ef7efcf6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebde1906_3919a51d",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T23:49:30Z",
+      "side": 1,
+      "message": "Rather than requiring a conversion from std::string to base::Optional\u003cstd::string\u003e, how about just passing a pointer?\n\n(And the nullopt path could just pass along nullptr)",
+      "range": {
+        "startLine": 455,
+        "startChar": 57,
+        "endLine": 455,
+        "endChar": 71
+      },
+      "revId": "98a6cf95b7cd7bafae99c5f22e27f8ef7efcf6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de16218_012fe733",
+        "filename": "services/service_manager/tests/connect/connect_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T23:49:30Z",
+      "side": 1,
+      "message": "Just curious, but could this be EXPECT_DEATH_IF_SUPPORTED(loop.Run()); or does that run into other issues? I\u0027m guessing you tried stuff along these lines using EXPECT_DCHECK_DEATH based on the fact that gtest_util.h is included but (possibly) no longer used",
+      "revId": "98a6cf95b7cd7bafae99c5f22e27f8ef7efcf6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
