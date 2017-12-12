@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4d965c4_f2bb9921",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-12T14:15:44Z",
+      "side": 1,
+      "message": "start_block-\u003eparentNode() gets null after PositionAvoidingSpecialElementBoundary as \nPositionAvoidingSpecialElementBoundary  creates style element.",
+      "revId": "357fde7786b9003b9e0435089d5a272e366b7e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eab0696_bd9c67fa",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-12T14:15:44Z",
+      "side": 1,
+      "message": "I tried to minimise the test case by including the output of below two lines to the body content and then executing the inserttext command, but the crash was not happening.\nIn this case the parentNode was coming as HTML.\n\nGetDocument().execCommand(\"InsertOrderedList\", false, \" \",                   ASSERT_NO_EXCEPTION);\nGetDocument().execCommand(\"Outdent\", false, \" \", ASSERT_NO_EXCEPTION);",
+      "revId": "357fde7786b9003b9e0435089d5a272e366b7e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
