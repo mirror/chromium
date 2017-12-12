@@ -433,6 +433,24 @@
     },
     {
       "key": {
+        "uuid": "383afa5e_f937e011",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-12T00:45:35Z",
+      "side": 1,
+      "message": "I tried using getauxval() for Android but I keep getting this:\n../../third_party/zlib/contrib/optimizations/arm/arm_features.c:38:20: error: implicit declaration of function \u0027getauxval\u0027 is invalid in C99 [-Werror,-Wimplicit-function-declaration]\n    capabilities \u003d getauxval(AT_HWCAP);\n\nConcerning the sandbox: at least for Android, using android_getCpuFeatures() in the Renderer process seems to work fine.",
+      "parentUuid": "fe094bb9_df1a38fd",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca2439f1_e48e80c1",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
         "patchSetId": 2
@@ -447,6 +465,24 @@
       "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5561c0ac_d099ca95",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-12T00:45:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca2439f1_e48e80c1",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -496,6 +532,30 @@
     },
     {
       "key": {
+        "uuid": "9e7f629d_4d94fd3e",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-12T00:45:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1d225bcb_ed15042f",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08ad967c_bbbdc7e6",
         "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
         "patchSetId": 2
@@ -507,6 +567,24 @@
       "writtenOn": "2017-12-11T15:36:14Z",
       "side": 1,
       "message": "Can we not use __crc32d() at stride?  That would handle 8 bytes with each crc32x instruction, right?  Or is that the wrong endianness?",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d64ee3c5_7c76c6bf",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-12T00:45:35Z",
+      "side": 1,
+      "message": "I will experiment with it and report back.",
+      "parentUuid": "08ad967c_bbbdc7e6",
       "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -530,6 +608,24 @@
     },
     {
       "key": {
+        "uuid": "3c4cdb02_861cf3ca",
+        "filename": "third_party/zlib/contrib/optimizations/arm/armv8_crc32.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-12T00:45:35Z",
+      "side": 1,
+      "message": "Yes, in a few linaro gcc flavors while running on ARM.",
+      "parentUuid": "91a8e4d8_d5583321",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70010dee_dd931139",
         "filename": "third_party/zlib/contrib/optimizations/inflate.c",
         "patchSetId": 2
@@ -544,6 +640,24 @@
       "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c9f4471_7569abc6",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-12T00:45:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "70010dee_dd931139",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -576,6 +690,24 @@
       "side": 1,
       "message": "Agreed. I like the idea of only checking inside arm_check_features()",
       "parentUuid": "53d024cb_96e311c3",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93f2be7_86d4584f",
+        "filename": "third_party/zlib/contrib/optimizations/inflate.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-12T00:45:35Z",
+      "side": 1,
+      "message": "Now we also have a check for Intel features, I considered to have something like:\n#if defined(USE_ARMV8_CRC32)\n    arm_check_features();\n#else\n    x86_check_features();\n#endif",
+      "parentUuid": "0f76e9aa_69f73529",
       "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
