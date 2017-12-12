@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7898e45c_12ce8a88",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-12T17:46:52Z",
+      "side": 1,
+      "message": "Seems like a pattern similar to what the HISTOGRAM_MACROS elide, might be worth considering one that does similar here if we have to use statics.\n\nInstead of allocating this as a static can we hold it within this object? WMPI instances are 1:1 with \u003cvideo\u003e or \u003caudio\u003e elements, so as more are created we\u0027ll overwrite this value. Meaning any eventual crash may be tagged with the wrong key.",
+      "revId": "0f30d44ca3272ae7c62248ad726f5d9f5f46c0c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
