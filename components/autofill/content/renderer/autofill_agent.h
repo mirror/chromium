@@ -85,6 +85,7 @@ class AutofillAgent : public content::RenderFrameObserver,
   void SetUserGestureRequired(bool required) override;
   void SetSecureContextRequired(bool required) override;
   void SetFocusRequiresScroll(bool require) override;
+  void SetQueryPasswordSuggestion(bool required) override;
 
   void ShowNotSecureWarning(const blink::WebInputElement& element);
 
@@ -300,6 +301,9 @@ class AutofillAgent : public content::RenderFrameObserver,
   // Whether or not the secure context is required to query autofill suggestion.
   // Default to false.
   bool is_secure_context_required_;
+
+  // Whether or not query password autofill suggestion.
+  bool query_password_suggestion_ = false;
 
   bool focused_node_was_last_clicked_ = false;
   bool was_focused_before_now_ = false;
