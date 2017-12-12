@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc537913_917c0d52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-12-12T03:31:41Z",
+      "side": 1,
+      "message": "Just copied. Maybe change it to \n\"The updated version of Chrome need to monitor to make sure that the hangs\nthat were occasionally seen when using chrome://tracing are still gone.\"",
+      "parentUuid": "8149b6da_8c6dc905",
+      "revId": "14eedf3552d9e64813e250afde120261530a40c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a6d369f_10023bec",
         "filename": "base/message_loop/message_pump_win.cc",
         "patchSetId": 5
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2a3ccb3f_d989d228",
+        "filename": "base/message_loop/message_pump_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-12-12T03:31:41Z",
+      "side": 1,
+      "message": "I found a new way to debug DM_POINTERHITTEST so just ignore this one.",
+      "parentUuid": "42d5aa3f_c93873e2",
+      "revId": "14eedf3552d9e64813e250afde120261530a40c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f181849d_97da3e5b",
         "filename": "base/message_loop/message_pump_win.cc",
         "patchSetId": 5
@@ -65,6 +101,24 @@
       "writtenOn": "2017-12-12T00:06:07Z",
       "side": 1,
       "message": "It *looks* like the loop shouldn\u0027t be necessary, but how sure are you?",
+      "revId": "14eedf3552d9e64813e250afde120261530a40c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30438557_591a9a38",
+        "filename": "base/message_loop/message_pump_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-12-12T03:31:41Z",
+      "side": 1,
+      "message": "I am not sure, it works locally. Maybe monitor it?",
+      "parentUuid": "f181849d_97da3e5b",
       "revId": "14eedf3552d9e64813e250afde120261530a40c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
