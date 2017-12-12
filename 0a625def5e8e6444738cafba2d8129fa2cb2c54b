@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d215109_1ab4c7cb",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-12T00:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2e35a34_6bdfdf28",
+      "range": {
+        "startLine": 565,
+        "startChar": 4,
+        "endLine": 565,
+        "endChar": 9
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a92c472_95b72f32",
         "filename": "ui/aura/mus/window_port_mus.cc",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50dde78c_f7a2ab73",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-12T00:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a92c472_95b72f32",
+      "range": {
+        "startLine": 571,
+        "startChar": 2,
+        "endLine": 571,
+        "endChar": 10
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e8e84255_60414ee6",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-12T00:21:23Z",
+      "side": 1,
+      "message": "aura::Window() could be destroyed. But the frame_sink is still alive, because user want to keep it alive for receiving resources which will be released later.",
+      "parentUuid": "1b9799a0_aff6ccf6",
+      "range": {
+        "startLine": 579,
+        "startChar": 4,
+        "endLine": 579,
+        "endChar": 14
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "281d17f0_6cff4c46",
         "filename": "ui/aura/mus/window_port_mus.cc",
         "patchSetId": 17
@@ -91,6 +163,30 @@
       "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc21ce1_a688571d",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-12T00:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "281d17f0_6cff4c46",
+      "range": {
+        "startLine": 581,
+        "startChar": 8,
+        "endLine": 581,
+        "endChar": 32
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "201342a7_41df7a30",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-12T00:21:23Z",
+      "side": 1,
+      "message": "I think WindowPortMus::OnWindowAddedToRootWindow() and OnWillRemovFromRootWindow() will be called when the root window is changing. They handle the change.",
+      "parentUuid": "a99cb6bb_a9909223",
+      "range": {
+        "startLine": 583,
+        "startChar": 6,
+        "endLine": 583,
+        "endChar": 44
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ee7ddbd_6f96827c",
         "filename": "ui/aura/mus/window_port_mus.cc",
         "patchSetId": 17
@@ -137,6 +257,30 @@
       "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff1ae34_e210fcd4",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-12-12T00:21:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ee7ddbd_6f96827c",
+      "range": {
+        "startLine": 586,
+        "startChar": 4,
+        "endLine": 591,
+        "endChar": 33
+      },
+      "revId": "0a625def5e8e6444738cafba2d8129fa2cb2c54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
