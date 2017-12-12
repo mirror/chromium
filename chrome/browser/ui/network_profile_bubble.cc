@@ -27,7 +27,7 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
 
-namespace {
+namespace br_list_observer {
 
 // The duration of the silent period before we start nagging the user again.
 const int kSilenceDurationDays = 100;
@@ -36,13 +36,13 @@ const int kSilenceDurationDays = 100;
 // silent period starts.
 const int kMaxWarnings = 2;
 
-// Implementation of chrome::BrowserListObserver used to wait for a browser
+// Implementation of ::BrowserListObserver used to wait for a browser
 // window.
-class BrowserListObserver : public chrome::BrowserListObserver {
+class BrowserListObserver : public ::BrowserListObserver {
  private:
   ~BrowserListObserver() override;
 
-  // Overridden from chrome::BrowserListObserver:
+  // Overridden from ::BrowserListObserver:
   void OnBrowserAdded(Browser* browser) override;
   void OnBrowserRemoved(Browser* browser) override;
   void OnBrowserSetLastActive(Browser* browser) override;
@@ -80,8 +80,9 @@ bool NetworkProfileBubble::ShouldCheckNetworkProfile(Profile* profile) {
   int64_t last_check = prefs->GetInt64(prefs::kNetworkProfileLastWarningTime);
   base::TimeDelta time_since_last_check =
       base::Time::Now() - base::Time::FromTimeT(last_check);
-  if (time_since_last_check.InDays() > kSilenceDurationDays) {
-    prefs->SetInteger(prefs::kNetworkProfileWarningsLeft, kMaxWarnings);
+  if (time_since_last_check.InDays() > br_list_observer::kSilenceDurationDays) {
+    prefs->SetInteger(prefs::kNetworkProfileWarningsLeft,
+                      br_list_observer::kMaxWarnings);
     return !notification_shown_;
   }
   return false;
@@ -158,15 +159,14 @@ void NetworkProfileBubble::SetNotificationShown(bool shown) {
 void NetworkProfileBubble::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
   registry->RegisterIntegerPref(prefs::kNetworkProfileWarningsLeft,
-                                kMaxWarnings);
+                                br_list_observer::kMaxWarnings);
   registry->RegisterInt64Pref(prefs::kNetworkProfileLastWarningTime, 0);
 }
 
 // static
 void NetworkProfileBubble::RecordUmaEvent(MetricNetworkedProfileCheck event) {
-  UMA_HISTOGRAM_ENUMERATION(kMetricNetworkedProfileCheck,
-                            event,
-                            METRIC_NETWORKED_PROFILE_CHECK_SIZE);
+  UMA_HISTOGRAM_ENUMERATION(br_list_observer::kMetricNetworkedProfileCheck,
+                            event, METRIC_NETWORKED_PROFILE_CHECK_SIZE);
 }
 
 // static
@@ -176,5 +176,5 @@ void NetworkProfileBubble::NotifyNetworkProfileDetected() {
   if (browser)
     ShowNotification(browser);
   else
-    BrowserList::AddObserver(new BrowserListObserver());
+    BrowserList::AddObserver(new br_list_observer::BrowserListObserver());
 }
