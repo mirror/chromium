@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0038ab44_123cebc3",
+        "filename": "chrome_elf/whitelist/whitelist_file.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-12T09:22:11Z",
+      "side": 1,
+      "message": "\u003cgroan\u003e",
+      "parentUuid": "b8ab31bf_ed6cbcd6",
+      "range": {
+        "startLine": 123,
+        "startChar": 14,
+        "endLine": 123,
+        "endChar": 15
+      },
+      "revId": "e84381a1c80a86b8bdd464af01a6fd7e2b7d56cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88ca9dea_a15180df",
         "filename": "chrome_elf/whitelist/whitelist_file.cc",
         "patchSetId": 5
@@ -207,6 +231,24 @@
       "side": 1,
       "message": "Absolutely fine.  They\u0027re not being used or transferred yet.  The plan is for them to be used in UMA/histogram - by passing them through to main chrome.dll - in a later CL.",
       "parentUuid": "9f9e0394_76df8006",
+      "revId": "e84381a1c80a86b8bdd464af01a6fd7e2b7d56cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1ce4259_18df12bf",
+        "filename": "chrome_elf/whitelist/whitelist_file.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-12-12T09:22:11Z",
+      "side": 1,
+      "message": "great, thanks for confirming.",
+      "parentUuid": "0f44c92b_59067552",
       "revId": "e84381a1c80a86b8bdd464af01a6fd7e2b7d56cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
