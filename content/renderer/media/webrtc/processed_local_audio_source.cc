@@ -82,36 +82,49 @@ bool ProcessedLocalAudioSource::EnsureSourceIsStarted() {
     return false;
   }
 
+  media::ChannelLayout channel_layout = media::CHANNEL_LAYOUT_NONE;
+  int input_sample_rate = 0, input_frames_per_buffer = 0,
+      input_effects = media::AudioParameters::NO_EFFECTS;
+  if (device().input) {
+    channel_layout = device().input->channel_layout(),
+    input_sample_rate = device().input->sample_rate(),
+    input_frames_per_buffer = device().input->frames_per_buffer(),
+    input_effects = device().input->effects();
+  }
+
   WebRtcLogMessage(base::StringPrintf(
       "ProcessedLocalAudioSource::EnsureSourceIsStarted. render_frame_id=%d"
       ", channel_layout=%d, sample_rate=%d, buffer_size=%d"
       ", session_id=%d, paired_output_sample_rate=%d"
       ", paired_output_frames_per_buffer=%d, effects=%d. ",
-      consumer_render_frame_id_, device().input.channel_layout(),
-      device().input.sample_rate(), device().input.frames_per_buffer(),
-      device().session_id, device().matched_output.sample_rate(),
-      device().matched_output.frames_per_buffer(), device().input.effects()));
+      consumer_render_frame_id_, channel_layout, input_sample_rate,
+      input_frames_per_buffer, device().session_id,
+      device().matched_output.sample_rate(),
+      device().matched_output.frames_per_buffer(), input_effects));
 
   MediaStreamDevice modified_device(device());
   bool device_is_modified = false;
 
-  // Disable HW echo cancellation if constraints explicitly specified no
-  // echo cancellation.
-  if (audio_processing_properties_.disable_hw_echo_cancellation &&
-      (device().input.effects() & media::AudioParameters::ECHO_CANCELLER)) {
-    modified_device.input.set_effects(modified_device.input.effects() &
-                                      ~media::AudioParameters::ECHO_CANCELLER);
-    device_is_modified = true;
-  }
+  if (modified_device.input) {
+    // Disable HW echo cancellation if constraints explicitly specified no
+    // echo cancellation.
+    if (audio_processing_properties_.disable_hw_echo_cancellation &&
+        (input_effects & media::AudioParameters::ECHO_CANCELLER)) {
+      modified_device.input->set_effects(
+          modified_device.input->effects() &
+          ~media::AudioParameters::ECHO_CANCELLER);
+      device_is_modified = true;
+    }
 
-  // Disable noise suppression on the device if the properties explicitly
-  // specify to do so.
-  if (audio_processing_properties_.disable_hw_noise_suppression &&
-      (device().input.effects() & media::AudioParameters::NOISE_SUPPRESSION)) {
-    modified_device.input.set_effects(
-        modified_device.input.effects() &
-        ~media::AudioParameters::NOISE_SUPPRESSION);
-    device_is_modified = true;
+    // Disable noise suppression on the device if the properties explicitly
+    // specify to do so.
+    if (audio_processing_properties_.disable_hw_noise_suppression &&
+        (input_effects & media::AudioParameters::NOISE_SUPPRESSION)) {
+      modified_device.input->set_effects(
+          modified_device.input->effects() &
+          ~media::AudioParameters::NOISE_SUPPRESSION);
+      device_is_modified = true;
+    }
   }
 
   if (device_is_modified)
@@ -131,8 +144,7 @@ bool ProcessedLocalAudioSource::EnsureSourceIsStarted() {
 
   // If KEYBOARD_MIC effect is set, change the layout to the corresponding
   // layout that includes the keyboard mic.
-  media::ChannelLayout channel_layout = device().input.channel_layout();
-  if ((device().input.effects() & media::AudioParameters::KEYBOARD_MIC) &&
+  if ((input_effects & media::AudioParameters::KEYBOARD_MIC) &&
       audio_processing_properties_.goog_experimental_noise_suppression) {
     if (channel_layout == media::CHANNEL_LAYOUT_STEREO) {
       channel_layout = media::CHANNEL_LAYOUT_STEREO_AND_KEYBOARD_MIC;
@@ -159,25 +171,23 @@ bool ProcessedLocalAudioSource::EnsureSourceIsStarted() {
     return false;
   }
 
-  DVLOG(1) << "Audio input hardware sample rate: "
-           << device().input.sample_rate();
+  DVLOG(1) << "Audio input hardware sample rate: " << input_sample_rate;
   media::AudioSampleRate asr;
-  if (media::ToAudioSampleRate(device().input.sample_rate(), &asr)) {
+  if (media::ToAudioSampleRate(input_sample_rate, &asr)) {
     UMA_HISTOGRAM_ENUMERATION(
         "WebRTC.AudioInputSampleRate", asr, media::kAudioSampleRateMax + 1);
   } else {
     UMA_HISTOGRAM_COUNTS("WebRTC.AudioInputSampleRateUnexpected",
-                         device().input.sample_rate());
+                         input_sample_rate);
   }
 
   // Determine the audio format required of the AudioCapturerSource. Then, pass
   // that to the |audio_processor_| and set the output format of this
   // ProcessedLocalAudioSource to the processor's output format.
   media::AudioParameters params(media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
-                                channel_layout, device().input.sample_rate(),
-                                16,
-                                GetBufferSize(device().input.sample_rate()));
-  params.set_effects(device().input.effects());
+                                channel_layout, input_sample_rate, 16,
+                                GetBufferSize(input_sample_rate));
+  params.set_effects(input_effects);
   DCHECK(params.IsValid());
   audio_processor_->OnCaptureFormatChanged(params);
   SetFormat(audio_processor_->OutputFormat());
@@ -366,7 +376,8 @@ int ProcessedLocalAudioSource::GetBufferSize(int sample_rate) const {
   // If audio processing is off and the native hardware buffer size was
   // provided, use it. It can be harmful, in terms of CPU/power consumption, to
   // use smaller buffer sizes than the native size (http://crbug.com/362261).
-  if (int hardware_buffer_size = device().input.frames_per_buffer())
+  if (int hardware_buffer_size =
+          device().input ? device().input->frames_per_buffer() : 0)
     return hardware_buffer_size;
 
   // If the buffer size is missing from the MediaStreamDevice, provide 10ms as a

@@ -99,7 +99,7 @@ class CONTENT_EXPORT AudioInputDeviceManager : public MediaStreamProvider {
       int session_id,
       const MediaStreamDevice& device,
       base::TimeTicks start_time,
-      const base::Optional<media::AudioParameters>& input_params,
+      const media::AudioParameters& input_params,
       const base::Optional<media::AudioParameters>& matched_output_params,
       const std::string& matched_output_device_id);
 
