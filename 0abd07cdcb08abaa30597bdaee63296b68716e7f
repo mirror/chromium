@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24c03ec9_bc8b814e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:00:45Z",
+      "side": 1,
+      "message": "IntentHeperInstance -\u003e IntentHelperInstance",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "0abd07cdcb08abaa30597bdaee63296b68716e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8536e80d_605321da",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:00:45Z",
+      "side": 1,
+      "message": "This looks identical to the \"if\" on L71. Do we need to check it twice?",
+      "revId": "0abd07cdcb08abaa30597bdaee63296b68716e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c46be8_ae1d103b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:00:45Z",
+      "side": 1,
+      "message": "nit: std::make_unique\u003c...\u003e",
+      "range": {
+        "startLine": 454,
+        "startChar": 28,
+        "endLine": 454,
+        "endChar": 44
+      },
+      "revId": "0abd07cdcb08abaa30597bdaee63296b68716e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
