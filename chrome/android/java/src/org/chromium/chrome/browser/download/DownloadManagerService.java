@@ -33,6 +33,7 @@ import org.chromium.chrome.browser.download.ui.BackendProvider;
 import org.chromium.chrome.browser.download.ui.DownloadHistoryAdapter;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationDelegateImpl;
 import org.chromium.chrome.browser.feature_engagement.TrackerFactory;
+import org.chromium.chrome.browser.media.MediaUtils;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.Tracker;
@@ -768,7 +769,7 @@ public class DownloadManagerService
             // the real file path to the user instead of a content:// download ID.
             Uri fileUri = contentUri;
             if (filePath != null) fileUri = Uri.fromFile(new File(filePath));
-            return DownloadUtils.getMediaViewerIntentForDownloadItem(fileUri, contentUri, mimeType);
+            return MediaUtils.getMediaViewerIntent(fileUri, contentUri, mimeType);
         }
         return DownloadUtils.createViewIntentForDownloadItem(
                 contentUri, mimeType, originalUrl, referrer);
