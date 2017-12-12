@@ -55,7 +55,7 @@ class CustomLauncherPageContents : public content::WebContentsDelegate {
   content::ColorChooser* OpenColorChooser(
       content::WebContents* web_contents,
       SkColor color,
-      const std::vector<content::mojom::ColorSuggestionPtr>& suggestions)
+      const std::vector<blink::mojom::ColorSuggestionPtr>& suggestions)
       override;
   void RunFileChooser(content::RenderFrameHost* render_frame_host,
                       const content::FileChooserParams& params) override;
