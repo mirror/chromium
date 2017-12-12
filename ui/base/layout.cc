@@ -111,7 +111,10 @@ float GetScaleFactorForNativeView(gfx::NativeView view) {
     return 1.0f;
   display::Display display =
       display::Screen::GetScreen()->GetDisplayNearestView(view);
-  DCHECK(display.is_valid());
+  // It is possible that |display| instance is not valid. E.g. This happens when
+  // GetDisplayNearestView() returns a default-constructed and uninitialized
+  // Display when disconnecting monitors. See https://crbug.com/776095.
+  // DCHECK(display.is_valid());
   return display.device_scale_factor();
 }
 #endif  // !defined(OS_MACOSX)
