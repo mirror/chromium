@@ -4,6 +4,7 @@
 
 #include "content/browser/renderer_interface_binders.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/bind.h"
@@ -21,6 +22,8 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/browser/web_interface_broker.h"
+#include "content/public/browser/web_interface_filter.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/device/public/interfaces/vibration_manager.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
@@ -39,16 +42,21 @@ namespace {
 // exposed to web workers.
 class RendererInterfaceBinders {
  public:
-  RendererInterfaceBinders() { InitializeParameterizedBinderRegistry(); }
+  RendererInterfaceBinders() : interface_broker_(WebInterfaceBroker::Create()) {
+    InitializeParameterizedBinderRegistry();
+  }
 
   // Bind an interface request |interface_pipe| for |interface_name| received
   // from a web worker with origin |origin| hosted in the renderer |host|.
   void BindInterface(const std::string& interface_name,
                      mojo::ScopedMessagePipeHandle interface_pipe,
                      RenderProcessHost* host,
-                     const url::Origin& origin) {
-    if (parameterized_binder_registry_.TryBindInterface(
-            interface_name, &interface_pipe, host, origin)) {
+                     const url::Origin& origin,
+                     WebContextType context_type,
+                     mojo::ReportBadMessageCallback bad_message_callback) {
+    if (interface_broker_->TryBindInterface(context_type, interface_name,
+                                            &interface_pipe, host, origin,
+                                            &bad_message_callback)) {
       return;
     }
 
@@ -61,29 +69,16 @@ class RendererInterfaceBinders {
   bool TryBindInterface(const std::string& interface_name,
                         mojo::ScopedMessagePipeHandle* interface_pipe,
                         RenderFrameHost* frame) {
-    return parameterized_binder_registry_.TryBindInterface(
-        interface_name, interface_pipe, frame->GetProcess(),
-        frame->GetLastCommittedOrigin());
+    auto bad_message_callback = mojo::GetBadMessageCallback();
+    return interface_broker_->TryBindInterface(interface_name, interface_pipe,
+                                               frame, &bad_message_callback);
   }
 
  private:
   void InitializeParameterizedBinderRegistry();
 
-  service_manager::BinderRegistryWithArgs<RenderProcessHost*,
-                                          const url::Origin&>
-      parameterized_binder_registry_;
+  std::unique_ptr<WebInterfaceBroker> interface_broker_;
 };
-
-// Forwards service requests to Service Manager since the renderer cannot launch
-// out-of-process services on is own.
-template <typename Interface>
-void ForwardServiceRequest(const char* service_name,
-                           mojo::InterfaceRequest<Interface> request,
-                           RenderProcessHost* host,
-                           const url::Origin& origin) {
-  auto* connector = BrowserContext::GetConnectorFor(host->GetBrowserContext());
-  connector->BindInterface(service_name, std::move(request));
-}
 
 // Register renderer-exposed interfaces. Each registered interface binder is
 // exposed to all renderer-hosted execution context types (document/frame,
@@ -92,54 +87,65 @@ void ForwardServiceRequest(const char* service_name,
 // interface requests from frames, binders registered on the frame itself
 // override binders registered here.
 void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
-  parameterized_binder_registry_.AddInterface(base::Bind(
-      &ForwardServiceRequest<shape_detection::mojom::BarcodeDetection>,
-      shape_detection::mojom::kServiceName));
-  parameterized_binder_registry_.AddInterface(base::Bind(
-      &ForwardServiceRequest<shape_detection::mojom::FaceDetectionProvider>,
-      shape_detection::mojom::kServiceName));
-  parameterized_binder_registry_.AddInterface(
-      base::Bind(&ForwardServiceRequest<shape_detection::mojom::TextDetection>,
-                 shape_detection::mojom::kServiceName));
-  parameterized_binder_registry_.AddInterface(
-      base::Bind(&ForwardServiceRequest<device::mojom::VibrationManager>,
-                 device::mojom::kServiceName));
-  parameterized_binder_registry_.AddInterface(
+  interface_broker_->AddInterface<shape_detection::mojom::BarcodeDetection>(
+      shape_detection::mojom::kServiceName, {});
+  interface_broker_
+      ->AddInterface<shape_detection::mojom::FaceDetectionProvider>(
+          shape_detection::mojom::kServiceName, {});
+  interface_broker_->AddInterface<shape_detection::mojom::TextDetection>(
+      shape_detection::mojom::kServiceName, {});
+  interface_broker_->AddInterface<device::mojom::VibrationManager>(
+      device::mojom::kServiceName, {});
+  interface_broker_->AddInterface(
+      base::Bind(
+          [](blink::mojom::WebSocketRequest request, RenderFrameHost* host) {
+            WebSocketManager::CreateWebSocket(host->GetProcess()->GetID(),
+                                              host->GetRoutingID(),
+                                              std::move(request));
+          }),
       base::Bind([](blink::mojom::WebSocketRequest request,
                     RenderProcessHost* host, const url::Origin& origin) {
         WebSocketManager::CreateWebSocket(host->GetID(), MSG_ROUTING_NONE,
                                           std::move(request));
-      }));
-  parameterized_binder_registry_.AddInterface(
+      }),
+      {});
+  interface_broker_->AddInterface(
       base::Bind([](payments::mojom::PaymentManagerRequest request,
                     RenderProcessHost* host, const url::Origin& origin) {
         static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
             ->GetPaymentAppContext()
             ->CreatePaymentManager(std::move(request));
-      }));
-  parameterized_binder_registry_.AddInterface(
+      }),
+      CreateContextTypeInterfaceFilter(
+          {WebContextType::kFrame, WebContextType::kServiceWorker}));
+  interface_broker_->AddInterface(
       base::Bind([](blink::mojom::PermissionServiceRequest request,
                     RenderProcessHost* host, const url::Origin& origin) {
         static_cast<RenderProcessHostImpl*>(host)
             ->permission_service_context()
             .CreateServiceForWorker(std::move(request), origin);
-      }));
-  parameterized_binder_registry_.AddInterface(base::BindRepeating(
-      [](blink::mojom::LockManagerRequest request, RenderProcessHost* host,
-         const url::Origin& origin) {
+      }),
+      {});
+  interface_broker_->AddInterface(
+      base::BindRepeating([](blink::mojom::LockManagerRequest request,
+                             RenderProcessHost* host,
+                             const url::Origin& origin) {
         static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
             ->GetLockManager()
             ->CreateService(std::move(request));
-      }));
-  parameterized_binder_registry_.AddInterface(
-      base::Bind(&CreateDedicatedWorkerHostFactory));
-  parameterized_binder_registry_.AddInterface(
+      }),
+      {});
+  interface_broker_->AddInterface(
+      base::Bind(&CreateDedicatedWorkerHostFactory),
+      CreateContextTypeInterfaceFilter({WebContextType::kFrame}));
+  interface_broker_->AddInterface(
       base::Bind([](blink::mojom::NotificationServiceRequest request,
                     RenderProcessHost* host, const url::Origin& origin) {
         static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
             ->GetPlatformNotificationContext()
             ->CreateService(host->GetID(), origin, std::move(request));
-      }));
+      }),
+      {});
 }
 
 RendererInterfaceBinders& GetRendererInterfaceBinders() {
@@ -152,11 +158,14 @@ RendererInterfaceBinders& GetRendererInterfaceBinders() {
 void BindWorkerInterface(const std::string& interface_name,
                          mojo::ScopedMessagePipeHandle interface_pipe,
                          RenderProcessHost* host,
-                         const url::Origin& origin) {
+                         const url::Origin& origin,
+                         WebContextType context_type,
+                         mojo::ReportBadMessageCallback bad_message_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   GetRendererInterfaceBinders().BindInterface(
-      interface_name, std::move(interface_pipe), host, origin);
+      interface_name, std::move(interface_pipe), host, origin, context_type,
+      std::move(bad_message_callback));
 }
 
 bool TryBindFrameInterface(const std::string& interface_name,
