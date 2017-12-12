@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "adfe5da7_a9ffb675",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T22:02:24Z",
+      "side": 1,
+      "message": "It is, but we don\u0027t handle that here (we handle it through chrome.send in the drag_and_drop_handler.js file).  We can\u0027t show meaningful errors or retries for packed extensions, since it\u0027s not (easily) modifiable by the user, and the paths are temporary.  We should only need to show the retry error for an unpacked extensions; failing a packed extension will just show a modal dialog.",
+      "parentUuid": "16909a0f_8a37fd4b",
+      "range": {
+        "startLine": 1004,
+        "startChar": 12,
+        "endLine": 1004,
+        "endChar": 27
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "227bc607_a899ad62",
         "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666ed447_a58d69bd",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T22:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "227bc607_a899ad62",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cf8a1759_6bfb5d7f",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T22:02:24Z",
+      "side": 1,
+      "message": "Yep. Not sure why we were, so I just matched it.  Removed these.",
+      "parentUuid": "9e44a48e_99a1e34c",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d11603_02925cfd",
         "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "799b5349_ef7a0bbb",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T22:02:24Z",
+      "side": 1,
+      "message": "Done (since I have no preference).\n\nDo we have official style recommendations for this, for the future?",
+      "parentUuid": "98d11603_02925cfd",
+      "range": {
+        "startLine": 51,
+        "startChar": 60,
+        "endLine": 51,
+        "endChar": 66
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1606a584_f9f2005b",
         "filename": "chrome/browser/resources/md_extensions/drop_overlay.js",
         "patchSetId": 10
@@ -108,6 +204,24 @@
       "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb02e27_b0dfafa0",
+        "filename": "chrome/browser/resources/md_extensions/drop_overlay.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T22:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1606a584_f9f2005b",
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "5ae126d1_bbe7f00f",
+        "filename": "chrome/browser/resources/md_extensions/drop_overlay.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T22:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82289b8d_20a49744",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3166d16f_af7abb13",
         "filename": "chrome/browser/resources/md_extensions/manager.html",
         "patchSetId": 10
@@ -154,6 +292,30 @@
       "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d780248_7ea88d81",
+        "filename": "chrome/browser/resources/md_extensions/manager.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T22:02:24Z",
+      "side": 1,
+      "message": "sgtm!  Done.",
+      "parentUuid": "3166d16f_af7abb13",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 42
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "2442531b_d74a21a3",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T22:02:24Z",
+      "side": 1,
+      "message": "This file is generated.  The extra spaces are because our code printing logic isn\u0027t (anywhere near) perfect.\n\nI\u0027ve updated the comment (in the IDL, which feeds to this).",
+      "parentUuid": "dc0bef0e_75ad55b3",
+      "range": {
+        "startLine": 677,
+        "startChar": 29,
+        "endLine": 677,
+        "endChar": 34
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8508a0f_a1618d13",
         "filename": "third_party/closure_compiler/externs/developer_private.js",
         "patchSetId": 10
@@ -200,6 +386,30 @@
       "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d631b2_bee5d99c",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T22:02:24Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s necessary.  We clean up the GUIDs/paths associated with the web contents when the web contents is destroyed, so they only grow boundlessly while the user remains at chrome://extensions.  If anyone\u0027s dragging-and-dropping enough distinct extensions for that to be a problem, then, well, I think there are other problems :P\n\nI\u0027ve added a comment in developer_private_api.cc noting this.",
+      "parentUuid": "e8508a0f_a1618d13",
+      "range": {
+        "startLine": 680,
+        "startChar": 24,
+        "endLine": 680,
+        "endChar": 51
+      },
+      "revId": "c48a1af72e2e1642c9aa9b55dd502a5c41fafe70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
