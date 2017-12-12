@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "15f4d8f8_78e20444",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-12-12T11:20:56Z",
+      "side": 1,
+      "message": "Turns out it isn\u0027t safe to push them on the back, because that breaks breaks the strict monotonically increasing enqueue order within the WorkQueue.\nAttempts to fix that by assigning a new enqueue order fail due to fences with bad side-effects e.g. the IdleHelper stops working.",
+      "parentUuid": "1a07225b_fc137149",
+      "range": {
+        "startLine": 882,
+        "startChar": 43,
+        "endLine": 882,
+        "endChar": 52
+      },
+      "revId": "97fdf50eb71e2f735af0c2acf2f8b16ae48b045b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed96602e_cd936fdd",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.h",
         "patchSetId": 2
