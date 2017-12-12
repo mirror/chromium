@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8de4d334_0dd6c96b",
+        "filename": "extensions/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T18:01:59Z",
+      "side": 1,
+      "message": "Are you sure this is the right bug? It\u0027s closed and I doubt James is actively working on this.",
+      "range": {
+        "startLine": 45,
+        "startChar": 37,
+        "endLine": 45,
+        "endChar": 60
+      },
+      "revId": "74b07aaaae0281dbd4ee5fc2c0d9768295c5f829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
