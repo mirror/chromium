@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94361cba_5f0c69c1",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-12T19:52:55Z",
+      "side": 1,
+      "message": "I don\u0027t plan on getting rid of GetSinkById(). Although as we\u0027ve discussed before we should make the method more efficient, possibly by having something analogous to MediaRouterBase\u0027s internal MediaRoutesObserver.\n\n(If you meant getting rid of GetProviderIdForSink(), then I don\u0027t plan to do that either, since in the remaining usage we don\u0027t need the sink object.)",
+      "parentUuid": "3c084c99_e805b611",
+      "range": {
+        "startLine": 183,
+        "startChar": 26,
+        "endLine": 183,
+        "endChar": 37
+      },
+      "revId": "4a643946fa2222a7e7cb7c291db16ff965f12df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "713815ca_4c8b49a6",
         "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-11T19:58:59Z",
       "side": 1,
       "message": "Note you can avoid re-adding the static_cast by specifying the underlying type of the enum class, i.e.:\n\nenum class IconType : uint32_t {\n...\n}",
+      "revId": "4a643946fa2222a7e7cb7c291db16ff965f12df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a401cb4_500918d8",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_webui_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-12T19:52:55Z",
+      "side": 1,
+      "message": "Hmm it seems like an implicit conversion to the underlying type is possible with enum but not enum class, unless I\u0027m mistaking something.\n\nhttps://stackoverflow.com/questions/14589417/can-an-enum-class-be-converted-to-the-underlying-type",
+      "parentUuid": "713815ca_4c8b49a6",
       "revId": "4a643946fa2222a7e7cb7c291db16ff965f12df9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
