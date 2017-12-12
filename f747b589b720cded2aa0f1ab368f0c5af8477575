@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18cda483_f96e8630",
+        "filename": "net/disk_cache/simple/simple_backend_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-12T18:22:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbd1e63b_3b1f16ae",
+      "range": {
+        "startLine": 326,
+        "startChar": 5,
+        "endLine": 326,
+        "endChar": 10
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7adbd21_c61c4f98",
         "filename": "net/disk_cache/simple/simple_entry_impl.cc",
         "patchSetId": 18
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "4d6931a8_0f8d1dd7",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-12T18:22:38Z",
+      "side": 1,
+      "message": "Hmm. I\u0027ve checked what they actually say, and I need to rethink it: they mention that callbacks can be invoked after close; and probably it would be OK for such a callback to call Doom, won\u0027t it? Need to gives this another round of thinking...",
+      "parentUuid": "bbc6435c_359113e6",
+      "range": {
+        "startLine": 1240,
+        "startChar": 7,
+        "endLine": 1240,
+        "endChar": 77
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04054ea2_7fd71b9d",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
         "patchSetId": 18
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "87f1bdfd_3ec6dc17",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1140,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-12T18:22:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04054ea2_7fd71b9d",
+      "range": {
+        "startLine": 1137,
+        "startChar": 0,
+        "endLine": 1140,
+        "endChar": 17
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32b54df3_ad1502b5",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
         "patchSetId": 18
@@ -139,6 +211,30 @@
       "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd1a2fb_e697ed81",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-12T18:22:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32b54df3_ad1502b5",
+      "range": {
+        "startLine": 181,
+        "startChar": 40,
+        "endLine": 181,
+        "endChar": 0
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
