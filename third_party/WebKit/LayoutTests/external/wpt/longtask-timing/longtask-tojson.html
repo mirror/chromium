@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+  async_test(function (t) {
+    const observer = new PerformanceObserver(
+      t.step_func(function (entryList) {
+        const entries = entryList.getEntries();
+        assert_greater_than_equal(entries.length, 1);
+        const entry = entries[0];
+        assert_equals(typeof(entry.toJSON), 'function');
+        const json = entry.toJSON();
+        assert_equals(typeof(json), 'object');
+        // Check attributes inheritted from PerformanceEntry.
+        const performanceEntryKeys = ['name', 'entryType', 'startTime', 'duration'];
+        for (const key of performanceEntryKeys) {
+            assert_equals(json[key], entry[key],
+                `entry.toJSON().${key} should match entry.${key}`);
+        }
+
+        // Check PerformanceLongTaskTiming specific entries.
+        assert_equals(typeof(json.attribution), 'object');
+        const jsonAttribution = json.attribution[0];
+        assert_equals(typeof(jsonAttribution), 'object');
+        assert_equals(json.attribution.length, entry.attribution.length);
+
+        // Check TaskAttributionTiming toJSON.
+        const attribution = entry.attribution[0];
+        assert_equals(typeof(attribution.toJSON), 'function');
+        const json2 = attribution.toJSON();
+        assert_equals(typeof(json2), 'object');
+        // Check TaskAttributionTiming attributes, from both:
+        // 1) |jsonAttribution| from  PerformanceLongTaskTiming.
+        // 2) |json2| from TaskAttributionTiming.
+        const taskAttributionTimingKeys = ['name', 'entryType', 'startTime',
+            'duration', 'containerType', 'containerSrc', 'containerId',
+            'containerName'];
+        for (const key of taskAttributionTimingKeys) {
+            assert_equals(json2[key], attribution[key],
+                `attribution.toJSON().${key} should match attribution.${key}`);
+            assert_equals(jsonAttribution[key], attribution[key],
+                `entry.toJSON().attribution[0].${key} should match attribution.${key}`);
+        }
+        t.done();
+      })
+    );
+    observer.observe({entryTypes: ['longtask']});
+
+    // Trigger a long task.
+    const begin = window.performance.now();
+    while (window.performance.now() < begin + 51);
+  }, 'Test toJSON() in PerformanceLongTaskTiming and TaskAttributionTiming');
+</script>
+</body>
+</html>

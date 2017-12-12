@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+
+test(() => {
+  // Check Performance attributes.
+  assert_equals(typeof(performance.toJSON), 'function');
+  const json = performance.toJSON();
+  assert_equals(typeof(json), 'object');
+  assert_equals(json.timeOrigin, performance.timeOrigin,
+    'performance.toJSON().timeOrigin should match performance.timeOrigin');
+
+  // Check PerformanceTiming toJSON.
+  const jsonTiming = json.timing;
+  const timing = performance.timing;
+  assert_equals(typeof(timing.toJSON), 'function');
+  const json2 = timing.toJSON();
+  assert_equals(typeof(json2), 'object');
+  // Check PerformanceTiming attributes, from both:
+  // 1) |jsonTiming| from  Performance.
+  // 2) |json2| from PerformanceTiming.
+  const performanceTimingKeys = ['navigationStart', 'unloadEventStart',
+    'unloadEventEnd', 'redirectStart', 'redirectEnd', 'fetchStart',
+    'domainLookupStart', 'domainLookupEnd', 'connectStart', 'connectEnd',
+    'secureConnectionStart',  'requestStart', 'responseStart', 'responseEnd',
+    'domLoading', 'domInteractive', 'domContentLoadedEventStart',
+    'domContentLoadedEventEnd', 'domComplete', 'loadEventStart', 'loadEventEnd'];
+  for (const key of performanceTimingKeys) {
+    assert_equals(jsonTiming[key], timing[key],
+      `performance.toJSON().timing.${key} should match performance.timing.${key}`);
+    assert_equals(json2[key], timing[key],
+      `performance.timing.toJSON().${key} should match performance.timing.${key}`);
+  }
+
+  // Check PerformanceNavigation toJSON.
+  const jsonNavigation = json.navigation;
+  const navigation = performance.navigation;
+  assert_equals(typeof(navigation.toJSON), 'function');
+  const json3 = navigation.toJSON();
+  assert_equals(typeof(json3), 'object');
+  // Check PerformanceNavigation attributes, from both:
+  // 1) |jsonNavigation| from  Performance.
+  // 2) |json3| from PerformanceNavigation.
+  let performanceNavigationKeys = ['type', 'redirectCount'];
+  for (const key of performanceNavigationKeys) {
+    assert_equals(jsonNavigation[key], navigation[key],
+      `performance.toJSON().navigation.${key} should match performance.navigation.${key}`);
+    assert_equals(json3[key], navigation[key],
+      `performance.navigation.toJSON().${key} should match performance.navigation.${key}`);
+  }
+}, 'Test performance.toJSON()');
+</script>
+</body>
+</html>
