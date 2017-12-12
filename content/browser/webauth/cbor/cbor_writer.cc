@@ -39,8 +39,17 @@ bool CBORWriter::EncodeCBOR(const CBORValue& node, int max_nesting_level) {
 
     // Represents unsigned integers.
     case CBORValue::Type::UNSIGNED: {
-      uint64_t value = node.GetUnsigned();
-      StartItem(CBORValue::Type::UNSIGNED, value);
+      int64_t value = node.GetInteger();
+      StartItem(CBORValue::Type::UNSIGNED, base::checked_cast<uint64_t>(value));
+      return true;
+    }
+
+    // Represents negative integers.
+    case CBORValue::Type::NEGATIVE: {
+      int64_t value = node.GetInteger();
+      CHECK_LT(value, 0);
+      StartItem(CBORValue::Type::NEGATIVE,
+                base::checked_cast<uint64_t>(-(value + 1)));
       return true;
     }
 

@@ -4,9 +4,7 @@
 
 #include "content/browser/webauth/cbor/cbor_values.h"
 
-#include <new>
-#include <utility>
-
+#include "base/numerics/safe_conversions.h"
 #include "base/strings/string_util.h"
 
 namespace content {
@@ -21,7 +19,8 @@ CBORValue::CBORValue(Type type) : type_(type) {
   // Initialize with the default value.
   switch (type_) {
     case Type::UNSIGNED:
-      unsigned_value_ = 0;
+    case Type::NEGATIVE:
+      integer_value_ = 0;
       return;
     case Type::BYTE_STRING:
       new (&bytestring_value_) BinaryValue();
@@ -41,8 +40,12 @@ CBORValue::CBORValue(Type type) : type_(type) {
   NOTREACHED();
 }
 
-CBORValue::CBORValue(uint64_t in_unsigned)
-    : type_(Type::UNSIGNED), unsigned_value_(in_unsigned) {}
+CBORValue::CBORValue(int integer_value)
+    : CBORValue(base::checked_cast<int64_t>(integer_value)) {}
+
+CBORValue::CBORValue(int64_t integer_value) : integer_value_(integer_value) {
+  type_ = integer_value >= 0 ? Type::UNSIGNED : Type::NEGATIVE;
+}
 
 CBORValue::CBORValue(const BinaryValue& in_bytes)
     : type_(Type::BYTE_STRING), bytestring_value_(in_bytes) {}
@@ -96,7 +99,8 @@ CBORValue CBORValue::Clone() const {
     case Type::NONE:
       return CBORValue();
     case Type::UNSIGNED:
-      return CBORValue(unsigned_value_);
+    case Type::NEGATIVE:
+      return CBORValue(integer_value_);
     case Type::BYTE_STRING:
       return CBORValue(bytestring_value_);
     case Type::STRING:
@@ -111,9 +115,9 @@ CBORValue CBORValue::Clone() const {
   return CBORValue();
 }
 
-uint64_t CBORValue::GetUnsigned() const {
-  CHECK(is_unsigned());
-  return unsigned_value_;
+int64_t CBORValue::GetInteger() const {
+  CHECK(is_unsigned() || is_negative());
+  return integer_value_;
 }
 
 const std::string& CBORValue::GetString() const {
@@ -141,7 +145,8 @@ void CBORValue::InternalMoveConstructFrom(CBORValue&& that) {
 
   switch (type_) {
     case Type::UNSIGNED:
-      unsigned_value_ = that.unsigned_value_;
+    case Type::NEGATIVE:
+      integer_value_ = that.integer_value_;
       return;
     case Type::BYTE_STRING:
       new (&bytestring_value_) BinaryValue(std::move(that.bytestring_value_));
@@ -177,6 +182,7 @@ void CBORValue::InternalCleanup() {
       break;
     case Type::NONE:
     case Type::UNSIGNED:
+    case Type::NEGATIVE:
       break;
   }
   type_ = Type::NONE;
