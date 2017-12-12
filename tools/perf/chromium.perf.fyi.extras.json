@@ -243,6 +243,8 @@
         ],
         "merge": {
           "args": [
+            "--configuration-name", "buildbot-test",
+            "--results-url", "https://chromeperf.appspot.com"
           ],
           "script": "//tools/perf/upload_perf_results.py"
         },
@@ -276,6 +278,8 @@
         ],
         "merge": {
           "args": [
+            "--configuration-name", "buildbot-test",
+            "--results-url", "https://chromeperf.appspot.com"
           ],
           "script": "//tools/perf/upload_perf_results.py"
         },
