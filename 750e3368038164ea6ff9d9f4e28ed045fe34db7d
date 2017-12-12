@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fe7ac60_ad90d815",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-12T17:52:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10dd018a_9bc1c585",
+      "range": {
+        "startLine": 37,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 31
+      },
+      "revId": "750e3368038164ea6ff9d9f4e28ed045fe34db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f679cba_7e29b774",
         "filename": "ui/message_center/views/notification_view_md_unittest.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b6e82a4b_3e365d3e",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-12T17:52:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f679cba_7e29b774",
+      "range": {
+        "startLine": 68,
+        "startChar": 39,
+        "endLine": 68,
+        "endChar": 41
+      },
+      "revId": "750e3368038164ea6ff9d9f4e28ed045fe34db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e3e12c5_68cd3d44",
         "filename": "ui/message_center/views/notification_view_md_unittest.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-12T02:40:30Z",
       "side": 1,
       "message": "I think this is unnecessary since NotificationDelegate is refcounted.",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 53
+      },
+      "revId": "750e3368038164ea6ff9d9f4e28ed045fe34db7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499f2413_0e83f852",
+        "filename": "ui/message_center/views/notification_view_md_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-12T17:52:43Z",
+      "side": 1,
+      "message": "that may be, but it seems safer to always use it than to try to remember when it need not be applied. Other NotificationDelegate implementors that I see do use this macro.",
+      "parentUuid": "9e3e12c5_68cd3d44",
       "range": {
         "startLine": 75,
         "startChar": 2,
