@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "4bf08a1d_2f7d3120",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-12T09:30:08Z",
+      "side": 1,
+      "message": "I have to create a GeolocationBrowserTestWithoutOverrider to keep the test. And the ui_test_utils::OverrideGeolocation() has to be kept too.\nI\u0027ll remove them in the followup CL of \"Host them in DeviceService\" as you suggested above.\nDone.",
+      "parentUuid": "6b4cc9b3_50d258f8",
+      "revId": "71a009b070ae5110d04f8221c303883f7cf6f837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d203f65_2a258b80",
         "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
         "patchSetId": 12
@@ -184,6 +202,30 @@
       "side": 1,
       "message": "Thanks!\n\nSorry, what I mean is: Could we not just do the standard constructor of ScopedGeolocationOverrider (that only takes in the lat, long pair) and then pass content::ServiceManagerConnection::GetForProcess()::GetConnector() to the production code? Then we wouldn\u0027t need a separate constructor for ScopedGeolocationOverrider at all.",
       "parentUuid": "090984c5_4615626e",
+      "range": {
+        "startLine": 96,
+        "startChar": 17,
+        "endLine": 96,
+        "endChar": 32
+      },
+      "revId": "71a009b070ae5110d04f8221c303883f7cf6f837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776ddba9_af1a03f7",
+        "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-12T09:30:08Z",
+      "side": 1,
+      "message": "Finally I understand the right way to go, sorry for the slow.\nBut as this test wants to pass more than lat and long, I just keep another constructor, which should be fine I guess. And the \"service_manager::Connector::TestApi\" is not needed and has been deleted here and in fake_geolocation.\nDone.",
+      "parentUuid": "5f86e7f2_86866aca",
       "range": {
         "startLine": 96,
         "startChar": 17,
