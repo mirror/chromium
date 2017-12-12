@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecd9479d_0dc213d9",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-12T00:36:07Z",
+      "side": 1,
+      "message": "Ack! Leftover text that I missed when cleaning up.",
+      "parentUuid": "d7091563_7bda349b",
+      "revId": "953f8d1c31c2f484ea28c60ad56e4bddcdcf5307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1efa0bdd_729a41ef",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cc621664_33e4e333",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-12T00:36:07Z",
+      "side": 1,
+      "message": "With remote access, if we wait until focus, then there\u0027s a much larger risk of a race condition if the user attempts to use the clipboard data immediately.\n\nE.g, if they click on a remote paste button. This will give focus locally and send the click to the remote machine with the same user action. In that case, the data on the remote clipboard is likely to be stale.",
+      "parentUuid": "1efa0bdd_729a41ef",
+      "revId": "953f8d1c31c2f484ea28c60ad56e4bddcdcf5307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33432b38_62fbbb75",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-11T06:35:19Z",
       "side": 1,
       "message": "This seems more complicated than where I thought we landed. My understanding was that we basically got rid of the notion of \"full\" access. Could we solely rely on the focus requirement for clipboard write?",
+      "revId": "953f8d1c31c2f484ea28c60ad56e4bddcdcf5307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9f9169_69e8c6d3",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002421
+      },
+      "writtenOn": "2017-12-12T00:36:07Z",
+      "side": 1,
+      "message": "In the privacy bug (comment #27), clipboard sync (without requiring focus) was listed as a valid use case that would be OK as long as full access had been granted.",
+      "parentUuid": "33432b38_62fbbb75",
       "revId": "953f8d1c31c2f484ea28c60ad56e4bddcdcf5307",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
