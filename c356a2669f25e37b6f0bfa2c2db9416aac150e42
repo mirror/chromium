@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b29f466_e44da58a",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-12-12T02:35:22Z",
+      "side": 1,
+      "message": "It seems there are some other commits in the branch. Not sure how it happens.",
+      "parentUuid": "bfdfaf60_42422886",
+      "revId": "c356a2669f25e37b6f0bfa2c2db9416aac150e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac0b28ea_e409f734",
         "filename": "media/gpu/vaapi_video_encode_accelerator.cc",
         "patchSetId": 3
