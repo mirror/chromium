@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f12f1454_e2552c8e",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-12T16:01:37Z",
+      "side": 1,
+      "message": "I agree that\u0027s a cleaner API for profile. I started with that but then noticed that it would end up duplicating the logic in reverse, which was a bit harder to compare the dupes than before. So I just updated the few callers to CreateCookieStore while I\u0027m at it.",
+      "parentUuid": "37fb811b_11fecae6",
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a61d70e6_47155399",
         "filename": "chrome/browser/profiles/profile.h",
         "patchSetId": 12
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "9d5d82e7_692ea64b",
+        "filename": "chrome/browser/profiles/profile.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-12T16:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a61d70e6_47155399",
+      "range": {
+        "startLine": 294,
+        "startChar": 14,
+        "endLine": 294,
+        "endChar": 0
+      },
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e79b5853_1134e9c3",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 12
@@ -71,6 +113,30 @@
       "writtenOn": "2017-12-11T18:33:47Z",
       "side": 1,
       "message": "Can we just have ProfileIOData grab these when it needs them, like ProfileNetworkContextService does?  That will make it so only the legacy ProfileIOData class depends on the legacy content/ API.",
+      "range": {
+        "startLine": 627,
+        "startChar": 39,
+        "endLine": 627,
+        "endChar": 59
+      },
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748ada27_91e88442",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-12T16:01:37Z",
+      "side": 1,
+      "message": "Now that CreateCookieStore takes the booleans, it uses the same path as ProfileNetworkContextService (i.e. not passing these in)",
+      "parentUuid": "e79b5853_1134e9c3",
       "range": {
         "startLine": 627,
         "startChar": 39,
@@ -106,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "416be460_6268d29f",
+        "filename": "chrome/browser/profiles/profile_impl_io_data.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-12T16:01:37Z",
+      "side": 1,
+      "message": "This is needed when the network service is used, as we get here in that path with a null main_network_context_params (from the bottom of ProfileNetworkContextService::SetUpProfileIODataMainContext). I\u0027ve added a comment to make it clearer",
+      "parentUuid": "d69eff76_3117d532",
+      "range": {
+        "startLine": 417,
+        "startChar": 22,
+        "endLine": 417,
+        "endChar": 49
+      },
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88176be5_a3acda7e",
         "filename": "chrome/browser/sessions/better_session_restore_browsertest.cc",
         "patchSetId": 12
@@ -117,6 +207,30 @@
       "writtenOn": "2017-12-11T18:33:47Z",
       "side": 1,
       "message": "Any reason we can\u0027t just use the embedded test server instead?  That way, we\u0027re using the same code.  content/public/test/test_download_http_response.h may make mixing data from the IO and UI threads a bit simpler, and it avoids the notification (Since notifications are deprecated, last I heard).",
+      "range": {
+        "startLine": 231,
+        "startChar": 4,
+        "endLine": 231,
+        "endChar": 28
+      },
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107fafa6_51f00014",
+        "filename": "chrome/browser/sessions/better_session_restore_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-12T16:01:37Z",
+      "side": 1,
+      "message": "\u003e Any reason we can\u0027t just use the embedded test server instead?  That way, we\u0027re using the same code.  content/public/test/test_download_http_response.h may make mixing data from the IO and UI threads a bit simpler, and it avoids the notification (Since notifications are deprecated, last I heard).\n\nYep generally we use the test server if we can. In this case, we need the URL to match (including port) across process restarts (more info in comment on line 70 above).",
+      "parentUuid": "88176be5_a3acda7e",
       "range": {
         "startLine": 231,
         "startChar": 4,
@@ -152,6 +266,30 @@
     },
     {
       "key": {
+        "uuid": "1d0e561d_11e8ea5f",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-12T16:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bed6bef5_57900a36",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 28
+      },
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0349198_602d10b2",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 12
@@ -163,6 +301,30 @@
       "writtenOn": "2017-12-11T18:33:47Z",
       "side": 1,
       "message": "Mention these are ignore when using an in-memory cookie store?  (Could DCHECK on them and say they must be false instead, but not sure how much we get from that)",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 30
+      },
+      "revId": "fc43592bb7b6445a9071896fa3ea07489b7dc530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de19a2ad_eb3ef886",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-12T16:01:37Z",
+      "side": 1,
+      "message": "\u003e Mention these are ignore when using an in-memory cookie store? \n\nThis is what I was trying to allude to with \"If the cookie file is given\".\n\n\u003e (Could DCHECK on them and say they must be false instead, but not sure how much we get from that)\n\nDone",
+      "parentUuid": "b0349198_602d10b2",
       "range": {
         "startLine": 47,
         "startChar": 7,
