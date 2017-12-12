@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fa8eff9_ae93d33a",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T23:01:42Z",
+      "side": 1,
+      "message": "Let\u0027s add a TODO to delete that codepath once old Extensions is gone.",
+      "range": {
+        "startLine": 15,
+        "startChar": 43,
+        "endLine": 15,
+        "endChar": 57
+      },
+      "revId": "bd54abd76a34ed75c7324c07fc8d6bdde3fce71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55864372_852b5fd5",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T23:01:42Z",
+      "side": 1,
+      "message": "Can we declare all member variables in the constructor? FYI, this would cause a JS Compiler error if we were using @struct, or if/when we migrate this class to ES6 class syntax.",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "bd54abd76a34ed75c7324c07fc8d6bdde3fce71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f1cfc9_5a44a407",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T23:01:42Z",
+      "side": 1,
+      "message": "Both for doDrop and doDragEnter, can we make it easier for future reader to distinguish between the MD only code and the non-MD? I am having a bit of a hard time understanding if this affects the old code or not. How about the following?\n\ndoDrop: function(e) {\n  if (this.isMdExtensions_)\n    this.doDropMd_(e);\n  else\n    this.doDropNonMd_(e);\n}\n\nDo the two codepaths share enough code to keep them entangled?",
+      "revId": "bd54abd76a34ed75c7324c07fc8d6bdde3fce71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
