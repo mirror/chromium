@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d04bc59e_52f37a99",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/audits/get-encoded-response.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-12T22:01:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd771667_df212978",
+      "revId": "8ed75fd2beba778290a123a99481cdf6b08bc82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb828a9e_53d7306c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/audits/get-encoded-response.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8ed75fd2beba778290a123a99481cdf6b08bc82b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfee97d_d7f3cacf",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/audits/get-encoded-response.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-12T22:01:32Z",
+      "side": 1,
+      "message": "Not strictly necessary, but the documented and reasonable case where this happened in the wild is headers are still set for the expected content type but a server error HTML page is rendered instead.\n\nI can switch to reuse the load-and-stall script instead if we\u0027d prefer not to clutter.",
+      "parentUuid": "fb828a9e_53d7306c",
+      "revId": "8ed75fd2beba778290a123a99481cdf6b08bc82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
