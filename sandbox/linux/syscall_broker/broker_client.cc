@@ -173,7 +173,7 @@ int BrokerClient::Stat(const char* pathname, struct stat* sb) const {
 }
 
 int BrokerClient::Stat64(const char* pathname, struct stat64* sb) const {
-  if (!pathname || !sb)
+  if (!pathname)
     return -EFAULT;
 
   if (fast_check_in_client_ &&
