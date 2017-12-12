@@ -70,6 +70,24 @@
       "revId": "dbaad4aaba7885d8fa08fee909b5dd9e19f2879d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825dead2_02aa51b7",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-12T17:29:11Z",
+      "side": 0,
+      "message": "Whenever a string changes in English it\u0027s flagged for re-translation. I think this means if you rename _V2 (i.e. delete _V2 and change the contents of non-V2) the translators will re-translate which creates extra work for them and has the potential to be translated differently. The translation console is smart enough to de-dupe strings but I don\u0027t know if it\u0027s smart enough to de-dupe in a case like this, where the duplicate will have been removed.",
+      "parentUuid": "114b80f3_8677b595",
+      "revId": "dbaad4aaba7885d8fa08fee909b5dd9e19f2879d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
