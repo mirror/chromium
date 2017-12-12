@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4607f9f5_4fda8a7f",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T22:48:05Z",
+      "side": 1,
+      "message": "Nit: we can use std::make_unique now. :)",
+      "range": {
+        "startLine": 245,
+        "startChar": 17,
+        "endLine": 245,
+        "endChar": 27
+      },
+      "revId": "4e996e27813179486ed2ec10fdca30ceb0b4eacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4839e5d3_9386d380",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T22:48:05Z",
+      "side": 1,
+      "message": "Can you add a test with the kill switch on to ensure it works? All it really needs to do is set the feature on with a ScopedFeatureList and run with a WebAPK compatible manifest and ensure we get back that it\u0027s not WebAPK-able.",
+      "range": {
+        "startLine": 604,
+        "startChar": 1,
+        "endLine": 604,
+        "endChar": 0
+      },
+      "revId": "4e996e27813179486ed2ec10fdca30ceb0b4eacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

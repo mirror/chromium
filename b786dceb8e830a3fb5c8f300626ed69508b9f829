@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c59f2e9_a7f1c797",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-12T22:48:05Z",
+      "side": 0,
+      "message": "This is the only public caller of IsContentSecure. Let\u0027s move that method into the anonymous namespace of InstallableManager now.\n\nFYI crrev.com/c/823152 has a small refactor of the method which you\u0027ll need to watch out for.",
+      "range": {
+        "startLine": 99,
+        "startChar": 5,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "b786dceb8e830a3fb5c8f300626ed69508b9f829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
