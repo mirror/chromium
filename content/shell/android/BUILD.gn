@@ -151,6 +151,17 @@ android_assets("content_shell_assets") {
   ]
 }
 
+dist_jar("content_shell_aar") {
+  testonly = true
+  create_aar = true
+  deps = [
+    ":content_shell_apk_java",
+    ":content_shell_assets",
+    ":content_shell_java",
+  ]
+  output = "$root_build_dir/ContentShell.aar"
+}
+
 android_apk("content_shell_apk") {
   testonly = true
   deps = [

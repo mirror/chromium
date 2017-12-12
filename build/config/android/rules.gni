@@ -1291,6 +1291,7 @@ if (enable_java_templates) {
   #     "apk".
   #   use_interface_jars: Use all dependent interface .jars rather than
   #     implementation .jars.
+  #   use_unprocessed_jars: Use unprocessed / undesugared .jars.
   #   direct_deps_only: Do not recurse on deps.
   #   data, deps, testonly, visibility: Usual meaning.
   #   proguard_enabled: Whether to run ProGuard on resulting jar.
@@ -1298,30 +1299,61 @@ if (enable_java_templates) {
   #   proguard_jar_path: The path to proguard.jar you wish to use. If undefined,
   #     the proguard used will be the checked in one in //third_party/proguard.
   #   alternative_android_sdk_jar: System jar to use when proguard is enabled.
+  #   create_aar: Creates an .aar file (implies use_unprocessed_jars).
+  #       Currently supports:
+  #         * classes.jar
+  #         * res/
+  #         * R.txt
+  #         * proguard.txt
+  #       Does not yet support:
+  #         * AndroidManifest.xml
+  #         * assets/
+  #         * jni/
+  #       See: https://developer.android.com/studio/projects/android-library.html#aar-contents
   #
   # Example
   #   dist_jar("lib_fatjar") {
   #     deps = [ ":my_java_lib" ]
   #     output = "$root_build_dir/MyLibrary.jar"
   #   }
+  #   dist_jar("my_aar") {
+  #     create_aar = true
+  #     deps = [ ":my_java_lib" ]
+  #     output = "$root_build_dir/MyLibrary.aar"
+  #   }
+  #   dist_jar("sideloaded_dex") {
+  #     deps = [ ":my_java_lib" ]
+  #     output = "$root_build_dir/MyLibrary.jar"
+  #     dex_path = "$root_build_dir/MyLibrary.dex"
+  #   }
   template("dist_jar") {
     forward_variables_from(invoker, [ "testonly" ])
-    _supports_android =
-        !defined(invoker.supports_android) || invoker.supports_android
-    _requires_android =
-        defined(invoker.requires_android) && invoker.requires_android
+    _create_aar = defined(invoker.create_aar) && invoker.create_aar
+    _supports_android = _create_aar || !defined(invoker.supports_android) ||
+                        invoker.supports_android
+    _requires_android = _create_aar || (defined(invoker.requires_android) &&
+                                        invoker.requires_android)
     _proguard_enabled =
         defined(invoker.proguard_enabled) && invoker.proguard_enabled
     _use_interface_jars =
         defined(invoker.use_interface_jars) && invoker.use_interface_jars
+    _use_unprocessed_jars = (defined(invoker.use_unprocessed_jars) &&
+                             invoker.use_unprocessed_jars) || _create_aar
     _direct_deps_only =
         defined(invoker.direct_deps_only) && invoker.direct_deps_only
-    assert(
-        !(_proguard_enabled && _use_interface_jars),
-        "Cannot set both proguard_enabled and use_interface_jars (target=$target_name)")
-    assert(
-        !(_proguard_enabled && _direct_deps_only),
-        "Cannot set both proguard_enabled and direct_deps_only (target=$target_name)")
+    assert(!(_proguard_enabled && _use_interface_jars),
+           "Cannot set both proguard_enabled and use_interface_jars")
+    assert(!(_proguard_enabled && _direct_deps_only),
+           "Cannot set both proguard_enabled and direct_deps_only")
+    assert(!(_use_unprocessed_jars && _use_interface_jars),
+           "Cannot set both use_interface_jars and use_unprocessed_jars")
+    if (_create_aar) {
+      assert(!_proguard_enabled, "Cannot set proguard_enabled with create_aar")
+      assert(!_use_interface_jars,
+             "Cannot set use_interface_jars with create_aar")
+      assert(!_direct_deps_only, "Cannot set direct_deps_only with create_aar")
+      assert(!defined(invoker.dex_path), "Cannot set dex_path with create_aar")
+    }
 
     _jar_target_name = target_name
     if (defined(invoker.dex_path)) {
@@ -1337,7 +1369,7 @@ if (enable_java_templates) {
       _deps = invoker.deps
     }
     _enable_build_hooks =
-        _supports_android &&
+        !_create_aar && _supports_android &&
         (!defined(invoker.no_build_hooks) || !invoker.no_build_hooks)
     if (_enable_build_hooks && _requires_android) {
       _deps += [ "//build/android/buildhooks:build_hooks_android_impl_java" ]
@@ -1350,8 +1382,16 @@ if (enable_java_templates) {
       _build_config_target_name = "${target_name}__build_config"
 
       write_build_config(_build_config_target_name) {
-        type = "dist_jar"
-        forward_variables_from(invoker, [ "proguard_enabled" ])
+        if (_create_aar) {
+          type = "dist_aar"
+        } else {
+          type = "dist_jar"
+        }
+        forward_variables_from(invoker,
+                               [
+                                 "proguard_enabled",
+                                 "proguard_configs",
+                               ])
         supports_android = _supports_android
         requires_android = _requires_android
         possible_config_deps = _deps
@@ -1365,7 +1405,6 @@ if (enable_java_templates) {
     }
 
     _rebased_build_config = rebase_path(_build_config, root_build_dir)
-
     if (_proguard_enabled) {
       proguard(_jar_target_name) {
         forward_variables_from(invoker,
@@ -1385,11 +1424,6 @@ if (enable_java_templates) {
           "--input-paths=@FileArg($_rebased_build_config:deps_info:java_runtime_classpath)",
           "--classpath=@FileArg($_rebased_build_config:proguard:lib_paths)",
         ]
-        if (defined(invoker.proguard_configs)) {
-          _rebased_proguard_configs =
-              rebase_path(invoker.proguard_configs, root_build_dir)
-          args += [ "--proguard-configs=$_rebased_proguard_configs" ]
-        }
         if (defined(invoker.proguard_config_exclusions)) {
           _rebased_proguard_config_exclusions =
               rebase_path(invoker.proguard_config_exclusions, root_build_dir)
@@ -1401,9 +1435,14 @@ if (enable_java_templates) {
     } else {
       action(_jar_target_name) {
         forward_variables_from(invoker, [ "data" ])
-        script = "//build/android/gyp/create_dist_jar.py"
         depfile = "$target_gen_dir/$target_name.d"
         deps = _deps
+
+        if (_create_aar) {
+          script = "//build/android/gyp/dist_aar.py"
+        } else {
+          script = "//build/android/gyp/create_dist_jar.py"
+        }
 
         inputs = [
           _build_config,
@@ -1422,17 +1461,30 @@ if (enable_java_templates) {
 
         if (_direct_deps_only) {
           if (_use_interface_jars) {
-            args += [ "--inputs=@FileArg($_rebased_build_config:javac:interface_classpath)" ]
-          } else {
+            args += [ "--jars=@FileArg($_rebased_build_config:javac:interface_classpath)" ]
+          } else if (_use_unprocessed_jars) {
             args +=
-                [ "--inputs=@FileArg($_rebased_build_config:javac:classpath)" ]
+                [ "--jars=@FileArg($_rebased_build_config:javac:classpath)" ]
+          } else {
+            assert(
+                false,
+                "direct_deps_only does not work without use_interface_jars or use_unprocessed_jars")
           }
         } else {
           if (_use_interface_jars) {
-            args += [ "--inputs=@FileArg($_rebased_build_config:dist_jar:all_interface_jars)" ]
+            args += [ "--jars=@FileArg($_rebased_build_config:dist_jar:all_interface_jars)" ]
+          } else if (_use_unprocessed_jars) {
+            args += [ "--jars=@FileArg($_rebased_build_config:deps_info:javac_full_classpath)" ]
           } else {
-            args += [ "--inputs=@FileArg($_rebased_build_config:deps_info:java_runtime_classpath)" ]
+            args += [ "--jars=@FileArg($_rebased_build_config:deps_info:java_runtime_classpath)" ]
           }
+        }
+        if (_create_aar) {
+          args += [
+            "--dependencies-res-zips=@FileArg($_rebased_build_config:resources:dependency_zips)",
+            "--r-text-files=@FileArg($_rebased_build_config:resources:extra_r_text_files)",
+            "--proguard-configs=@FileArg($_rebased_build_config:proguard:lib_configs)",
+          ]
         }
       }
     }
@@ -1507,26 +1559,6 @@ if (enable_java_templates) {
         "*/Manifest\$*.class",
       ]
     }
-  }
-
-  # Declare a target that packages a set of Java dependencies into a standalone
-  # .dex.jar.
-  #
-  # Variables
-  #   deps: specifies the dependencies of this target. Android libraries in deps
-  #     will be packaged into the resulting .dex.jar file.
-  #   dex_path: location at which the output file will be put
-  template("android_standalone_library") {
-    deps_dex(target_name) {
-      forward_variables_from(invoker,
-                             [
-                               "deps",
-                               "dex_path",
-                               "excluded_jars",
-                             ])
-    }
-    supports_android = true
-    requires_android = true
   }
 
   # Declare an Android library target for a prebuilt jar

@@ -35,7 +35,7 @@ import xml.dom.minidom
 from util import build_utils
 
 # Types that should never be used as a dependency of another build config.
-_ROOT_TYPES = ('android_apk', 'deps_dex', 'java_binary',
+_ROOT_TYPES = ('android_apk', 'java_binary',
                'java_annotation_processor', 'junit_binary', 'resource_rewriter')
 # Types that should not allow code deps to pass through.
 _RESOURCE_TYPES = ('android_assets', 'android_resources')
@@ -366,8 +366,8 @@ def main(argv):
       'android_assets': ['build_config'],
       'android_resources': ['build_config', 'resources_zip'],
       'android_apk': ['build_config','dex_path'] + jar_path_options,
-      'deps_dex': ['build_config', 'dex_path'],
       'dist_jar': ['build_config'],
+      'dist_aar': ['build_config'],
       'resource_rewriter': ['build_config'],
       'group': ['build_config'],
   }
@@ -390,7 +390,7 @@ def main(argv):
 
   is_java_target = options.type in (
       'java_binary', 'junit_binary', 'java_annotation_processor',
-      'java_library', 'android_apk', 'dist_jar')
+      'java_library', 'android_apk', 'dist_aar', 'dist_jar')
 
   deps = _DepsFromPaths(
       build_utils.ParseGnList(options.deps_configs), options.type)
@@ -587,7 +587,8 @@ def main(argv):
     deps_info['owned_resources_zips'] = sorted(owned_resource_zips)
 
   if options.type in (
-      'android_resources', 'android_apk', 'junit_binary', 'resource_rewriter'):
+      'android_resources', 'android_apk', 'junit_binary', 'resource_rewriter',
+      'dist_aar'):
     config['resources'] = {}
     config['resources']['dependency_zips'] = [
         c['resources_zip'] for c in all_resources_deps]
@@ -602,7 +603,7 @@ def main(argv):
     config['resources']['extra_package_names'] = extra_package_names
     config['resources']['extra_r_text_files'] = extra_r_text_files
 
-  if options.type in ['android_apk', 'deps_dex']:
+  if options.type == 'android_apk':
     deps_dex_files = [c['dex_path'] for c in all_library_deps]
 
   if is_java_target:
@@ -691,7 +692,7 @@ def main(argv):
     deps_info['proguard_configs'] = (
         build_utils.ParseGnList(options.proguard_configs))
 
-  if options.type in ('android_apk', 'dist_jar'):
+  if options.type in ('android_apk', 'dist_aar', 'dist_jar'):
     deps_info['proguard_enabled'] = options.proguard_enabled
     deps_info['proguard_info'] = options.proguard_info
     config['proguard'] = {}
@@ -707,7 +708,7 @@ def main(argv):
     proguard_config['lib_configs'] = lib_configs
 
   # Dependencies for the final dex file of an apk or a 'deps_dex'.
-  if options.type in ['android_apk', 'deps_dex']:
+  if options.type == 'android_apk':
     config['final_dex'] = {}
     dex_config = config['final_dex']
     dex_config['dependency_dex_files'] = deps_dex_files
