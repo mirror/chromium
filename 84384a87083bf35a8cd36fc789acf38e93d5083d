@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e76896e_0c2a014b",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T17:17:17Z",
+      "side": 1,
+      "message": "Is this event called with a null or undefined state? I wouldn\u0027t expect it to be; maybe just add assert(state) here?",
+      "revId": "84384a87083bf35a8cd36fc789acf38e93d5083d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e869df4_c72c370b",
+        "filename": "chrome/browser/resources/chromeos/network_ui/network_ui.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T17:17:17Z",
+      "side": 1,
+      "message": "state should never be null or undefined here either. (I don\u0027t think it can be empty either).",
+      "revId": "84384a87083bf35a8cd36fc789acf38e93d5083d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d202b7a8_eb05f9c2",
+        "filename": "ui/webui/resources/cr_elements/chromeos/network/cr_network_select.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T17:17:17Z",
+      "side": 1,
+      "message": "if ((!defaultState \u0026\u0026 this.defaultStateGuid_) || ...",
+      "revId": "84384a87083bf35a8cd36fc789acf38e93d5083d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
