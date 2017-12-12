@@ -76,8 +76,8 @@ class WTF_EXPORT String {
   // which will sometimes return a null string when vector.data() is null
   // which can only occur for vectors without inline capacity.
   // See: https://bugs.webkit.org/show_bug.cgi?id=109792
-  template <size_t inlineCapacity>
-  explicit String(const Vector<UChar, inlineCapacity>&);
+  template <typename CharType, size_t inlineCapacity>
+  explicit String(const Vector<CharType, inlineCapacity>&);
 
   // Construct a string with UTF-16 data, from a null-terminated source.
   String(const UChar*);
@@ -537,8 +537,8 @@ inline bool EqualIgnoringNullity(const String& a, const String& b) {
   return EqualIgnoringNullity(a.Impl(), b.Impl());
 }
 
-template <size_t inlineCapacity>
-inline bool EqualIgnoringNullity(const Vector<UChar, inlineCapacity>& a,
+template <typename CharType, size_t inlineCapacity>
+inline bool EqualIgnoringNullity(const Vector<CharType, inlineCapacity>& a,
                                  const String& b) {
   return EqualIgnoringNullity(a, b.Impl());
 }
@@ -549,8 +549,8 @@ inline void swap(String& a, String& b) {
 
 // Definitions of string operations
 
-template <size_t inlineCapacity>
-String::String(const Vector<UChar, inlineCapacity>& vector)
+template <typename CharType, size_t inlineCapacity>
+String::String(const Vector<CharType, inlineCapacity>& vector)
     : impl_(vector.size() ? StringImpl::Create(vector.data(), vector.size())
                           : StringImpl::empty_) {}
 
