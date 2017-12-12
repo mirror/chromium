@@ -52,6 +52,24 @@
       "revId": "5ec13d9999f3617f537591088e651e628c03a6dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9301aec_99d6593c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/search/resources/sourcemap-page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-12T01:15:51Z",
+      "side": 1,
+      "message": "Ah, sorry. By \"tests\" I actually meant \"test groups\". I tried doing resources-per-test, but it turned out to be an overkill. Usually tests in the same domain are written similarly; so it\u0027s convenient to share resources between them.",
+      "parentUuid": "ae513116_39f9a7a0",
+      "revId": "5ec13d9999f3617f537591088e651e628c03a6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
