@@ -279,6 +279,11 @@ class TtsPlatformImpl {
         mVoices = new ArrayList<TtsVoice>();
         for (int i = 0; i < locales.length; ++i) {
             if (!locales[i].getVariant().isEmpty()) continue;
+
+            // Workaround for crash in Google TTS
+            // http://crbug.com/792856
+            if (locales[i].getLanguage().equals("bn")) continue;
+
             try {
                 if (mTextToSpeech.isLanguageAvailable(locales[i]) > 0) {
                     String name = locales[i].getDisplayLanguage();
