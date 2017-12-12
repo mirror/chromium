@@ -22,6 +22,30 @@
       "revId": "9c7d80dc9682ad4cb7358f548c212ab1bb801b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f62403_74552740",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-12-12T10:04:02Z",
+      "side": 1,
+      "message": "Oh dear. Yes the API does allow deep nesting.  I\u0027m not sure that\u0027s used in practice but we do need to keep a count.",
+      "parentUuid": "2e142a30_66aceb96",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 37
+      },
+      "revId": "9c7d80dc9682ad4cb7358f548c212ab1bb801b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
