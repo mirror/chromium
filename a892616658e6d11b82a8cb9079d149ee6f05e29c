@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c64dde0e_ddd92c7b",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/notifications/characteristic-is-removed.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T21:48:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90241d76_2e4b58d6",
+      "revId": "a892616658e6d11b82a8cb9079d149ee6f05e29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c54bb6d_43b28c5f",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/readValue/characteristic-is-removed.html",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d5f5f883_290332fc",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/readValue/characteristic-is-removed.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T21:48:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c54bb6d_43b28c5f",
+      "revId": "a892616658e6d11b82a8cb9079d149ee6f05e29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c6eb9b4_3ee1d44a",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/writeValue/characteristic-is-removed.html",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "a892616658e6d11b82a8cb9079d149ee6f05e29c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebf851a_aa9835e3",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/writeValue/characteristic-is-removed.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1252033
+      },
+      "writtenOn": "2017-12-12T21:48:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c6eb9b4_3ee1d44a",
+      "revId": "a892616658e6d11b82a8cb9079d149ee6f05e29c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
