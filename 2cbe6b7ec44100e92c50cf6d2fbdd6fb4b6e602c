@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df4b2e22_5b17f5cd",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1371,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T08:49:58Z",
+      "side": 1,
+      "message": "It feels like it\u0027d be more robust to just check if the ioctl succeeded rather than trying to determine the filesystem type and making assumptions based on that?\n\n(Especially given the comments above)",
+      "revId": "2cbe6b7ec44100e92c50cf6d2fbdd6fb4b6e602c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
