@@ -127,9 +127,13 @@ const base::Feature kSimpleCachePrefetchExperiment = {
     "SimpleCachePrefetchExperiment", base::FEATURE_DISABLED_BY_DEFAULT};
 const char kSimplePrefetchBytesParam[] = "Bytes";
 
-int GetSimpleCachePrefetchSize() {
-  return base::GetFieldTrialParamByFeatureAsInt(kSimpleCachePrefetchExperiment,
-                                                kSimplePrefetchBytesParam, 0);
+int GetSimpleCachePrefetchSize(net::CacheType cache_type) {
+/*  if (cache_type == net::DISK_CACHE || cache_type == net::MEDIA_CACHE) {
+    return base::GetFieldTrialParamByFeatureAsInt(
+        kSimpleCachePrefetchExperiment, kSimplePrefetchBytesParam, 0);
+  } else {*/
+    return 32768;
+  //}
 }
 
 SimpleEntryStat::SimpleEntryStat(base::Time last_used,
@@ -1305,17 +1309,20 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
   // If the file is sufficiently small, we will prefetch everything --
   // in which case |prefetch_buf| will be non-null, and we should look at it
   // rather than call ::Read for the bits.
-  std::unique_ptr<char[]> prefetch_buf;
+  //std::unique_ptr<char[]> prefetch_buf;
+  char stack_buf[32768];
+
   base::StringPiece file_0_prefetch;
 
-  if (file_size > GetSimpleCachePrefetchSize()) {
+  if (file_size > GetSimpleCachePrefetchSize(cache_type_)) {
     RecordWhetherOpenDidPrefetch(cache_type_, false);
   } else {
+    LOG(ERROR) << "file_size:" << file_size;
     RecordWhetherOpenDidPrefetch(cache_type_, true);
-    prefetch_buf = std::make_unique<char[]>(file_size);
-    if (file->Read(0, prefetch_buf.get(), file_size) != file_size)
+    //prefetch_buf = std::make_unique<char[]>(file_size);
+    if (file->Read(0, stack_buf, file_size) != file_size)
       return net::ERR_FAILED;
-    file_0_prefetch.set(prefetch_buf.get(), file_size);
+    file_0_prefetch.set(stack_buf, file_size);
   }
 
   // Read stream 0 footer first --- it has size/feature info required to figure
@@ -1358,7 +1365,7 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
 
   // If prefetch buffer is available, and we have sha256(key) (so we don't need
   // to look at the header), extract out stream 1 info as well.
-  if (prefetch_buf && has_key_sha256) {
+  if (!file_0_prefetch.empty() && has_key_sha256) {
     SimpleFileEOF stream_1_eof;
     rv = GetEOFRecordData(
         file.get(), file_0_prefetch, /* file_index = */ 0,
