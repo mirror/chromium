@@ -70,7 +70,6 @@
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
-#include "content/browser/renderer_host/text_input_manager.h"
 #include "content/browser/screen_orientation/screen_orientation_provider.h"
 #include "content/browser/site_instance_impl.h"
 #include "content/browser/web_contents/web_contents_view_child_frame.h"
@@ -1838,6 +1837,8 @@ void WebContentsImpl::Init(const WebContents::CreateParams& params) {
       GetRenderManager()->InitRenderView(GetRenderViewHost(), nullptr);
     }
   }
+
+  GetTextInputManager()->AddObserver(this);
 
   // Ensure that observers are notified of the creation of this WebContents's
   // main RenderFrameHost. It must be done here for main frames, since the
@@ -4547,6 +4548,13 @@ void WebContentsImpl::NotifyNavigationListPruned(
     observer.NavigationListPruned(pruned_details);
 }
 
+void WebContentsImpl::OnTextSelectionChanged(
+    TextInputManager* text_input_manager,
+    RenderWidgetHostViewBase* updated_view) {
+  for (auto& observer : observers_)
+    observer.OnTextSelectionChanged();
+}
+
 void WebContentsImpl::OnAssociatedInterfaceRequest(
     RenderFrameHost* render_frame_host,
     const std::string& interface_name,
@@ -5679,6 +5687,10 @@ bool WebContentsImpl::GetAllowOtherViews() {
 
 bool WebContentsImpl::CompletedFirstVisuallyNonEmptyPaint() const {
   return did_first_visually_non_empty_paint_;
+}
+
+std::string WebContentsImpl::GetTextForSuggestions() {
+  return GetTextInputManager()->GetTextInputState()->text_for_suggestions;
 }
 
 #endif
