@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ae6fc7f_69e5fcd0",
+        "filename": "chrome/browser/ui/network_profile_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-12T13:42:25Z",
+      "side": 1,
+      "message": "This change is done to avoid build errors to differentiate between local class and global class",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "46a84649ef852a10442b4adb9e6b3c031a85624c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
