@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6dd48e3c_299a9ca0",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-12T23:42:48Z",
+      "side": 1,
+      "message": "So it looks like the following:\n\n- for all resumptions/parallel downloads/etc. the url will be empty (info.site_url and info.tab_url should not be set).\n- for \"save page as\" (this case) the url will match the page url (NavigationController-\u003eGetVisibleEntry()-\u003eGetURL()).\n- for downloads associated with a renderer (navigation, context menu, etc.) we currently pull the site url (RenderFrameHost-\u003eGetSiteInstance-\u003eGetSiteURL()).\n\nI actually think we want to pull the NavigationController-\u003eGetVisibleEntry()-\u003eGetURL() instead.  SiteURL() only has the scheme and domain (no subdomain).\n\nJoy - can you confirm with dahlke@?  We probably also want some extra checks in our browser tests to make sure we\u0027re using the right URL here.",
+      "parentUuid": "d5eebbd4_e12c0a9e",
+      "range": {
+        "startLine": 422,
+        "startChar": 40,
+        "endLine": 422,
+        "endChar": 43
+      },
+      "revId": "f3488ce17d261330273754d46739f88951e1a2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e431d58_319d9dd2",
         "filename": "content/browser/download/download_ukm.cc",
         "patchSetId": 13
