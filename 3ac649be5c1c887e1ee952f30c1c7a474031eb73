@@ -22,6 +22,30 @@
       "revId": "3ac649be5c1c887e1ee952f30c1c7a474031eb73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b5471f_48ee88d7",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-12T03:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aef8a959_5a41f4bb",
+      "range": {
+        "startLine": 575,
+        "startChar": 31,
+        "endLine": 575,
+        "endChar": 36
+      },
+      "revId": "3ac649be5c1c887e1ee952f30c1c7a474031eb73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
