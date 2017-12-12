@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "d91865e6_cdd27c35",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-12-12T19:10:22Z",
+      "side": 1,
+      "message": "Thanks for the extra test cases :-)",
+      "parentUuid": "ffb9e810_47d5bfec",
+      "range": {
+        "startLine": 169,
+        "startChar": 54,
+        "endLine": 169,
+        "endChar": 60
+      },
+      "revId": "1f361f258b5c4f30eaf53ea31f674f9616f1d0e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a76b1601_b6b4e620",
         "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
         "patchSetId": 6
