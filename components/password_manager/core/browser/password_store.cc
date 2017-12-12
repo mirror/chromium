@@ -24,7 +24,7 @@
 #include "components/password_manager/core/browser/password_syncable_service.h"
 #include "components/password_manager/core/browser/statistics_table.h"
 
-#if !defined(OS_ANDROID) && !defined(OS_IOS) && !defined(OS_CHROMEOS)
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
 #include "components/password_manager/core/browser/password_store_signin_notifier.h"
 #endif
 
@@ -273,8 +273,7 @@ void PasswordStore::ReportMetrics(const std::string& sync_username,
                                              base::TimeDelta::FromSeconds(30));
   }
 
-#if defined(OS_WIN) || (defined(OS_MACOSX) && !defined(OS_IOS)) || \
-    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+#if defined(SYNC_PASSWORD_REUSE_DETECTION_ENABLED)
   if (!sync_username.empty())
     hash_password_manager_.ReportIsSyncPasswordHashSavedMetric();
 #endif
@@ -353,6 +352,14 @@ void PasswordStore::SaveSyncPasswordHash(const base::string16& password) {
       hash_password_manager_.RetrievePasswordHash();
   ScheduleTask(base::Bind(&PasswordStore::SaveSyncPasswordHashImpl, this,
                           std::move(sync_password_data)));
+}
+
+void PasswordStore::SaveSyncPasswordHash(
+    const SyncPasswordData& sync_password_data) {
+  LOG(ERROR) << "PasswordStore::SaveSyncPasswordHash(sync_pd)";
+  hash_password_manager_.SavePasswordHash(sync_password_data);
+  ScheduleTask(base::BindRepeating(&PasswordStore::SaveSyncPasswordHashImpl,
+                                   this, sync_password_data));
 }
 
 void PasswordStore::ClearSyncPasswordHash() {
