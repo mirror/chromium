@@ -123,6 +123,51 @@ TEST(CBORReaderTest, TestReadString) {
   }
 }
 
+TEST(CBORReaderTest, TestReadStringWithNULL) {
+  struct StringTestCase {
+    const std::string value;
+    const std::vector<uint8_t> cbor_data;
+  };
+
+  static const StringTestCase kStringTestCases[] = {
+      {std::string("string_without_null"),
+       {0x73, 0x73, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x5F, 0x77, 0x69,
+        0x74, 0x68, 0x6F, 0x75, 0x74, 0x5F, 0x6E, 0x75, 0x6C, 0x6C}},
+      {std::string("null_terminated_string\0", 23),
+       {0x77, 0x6E, 0x75, 0x6C, 0x6C, 0x5F, 0x74, 0x65,
+        0x72, 0x6D, 0x69, 0x6E, 0x61, 0x74, 0x65, 0x64,
+        0x5F, 0x73, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00}},
+      {std::string("embedded\0null", 13),
+       {0x6D, 0x65, 0x6D, 0x62, 0x65, 0x64, 0x64, 0x65, 0x64, 0x00, 0x6E, 0x75,
+        0x6C, 0x6C}},
+      {std::string("trailing_nulls\0\0", 16),
+       {0x70, 0x74, 0x72, 0x61, 0x69, 0x6C, 0x69, 0x6E, 0x67, 0x5F, 0x6E, 0x75,
+        0x6C, 0x6C, 0x73, 0x00, 0x00}},
+  };
+
+  for (const StringTestCase& test_case : kStringTestCases) {
+    SCOPED_TRACE(testing::Message()
+                 << "testing string with null bytes :"
+                 << base::StringPrintf("%s", test_case.value.data()));
+
+    base::Optional<CBORValue> cbor = CBORReader::Read(test_case.cbor_data);
+    ASSERT_TRUE(cbor.has_value());
+    ASSERT_EQ(cbor.value().type(), CBORValue::Type::STRING);
+    EXPECT_EQ(cbor.value().GetString(), test_case.value);
+  }
+}
+
+TEST(CBORReaderTest, TestReadStringWithInvalidNullBytes) {
+  // Invalid UTF8 after null byte
+  static const std::vector<uint8_t> string_with_invalid_null_byte = {
+      0x63, 0x00, 0x00, 0xA6};
+  CBORReader::DecoderError error_code;
+  base::Optional<CBORValue> cbor =
+      CBORReader::Read(string_with_invalid_null_byte, &error_code);
+  EXPECT_FALSE(cbor.has_value());
+  EXPECT_EQ(error_code, CBORReader::DecoderError::INVALID_UTF8);
+}
+
 TEST(CBORReaderTest, TestReadArray) {
   static const std::vector<uint8_t> kArrayTestCaseCbor = {
       // clang-format off
