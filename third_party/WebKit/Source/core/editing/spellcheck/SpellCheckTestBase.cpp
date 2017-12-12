@@ -9,10 +9,8 @@
 namespace blink {
 
 void SpellCheckTestBase::SetUp() {
-  Page::PageClients page_clients;
-  FillWithEmptyClients(page_clients);
-  SetupPageWithClients(&page_clients);
-  GetPage().SetSpellCheckStatus(Page::SpellCheckStatus::kForcedOn);
+  EditingTestBase::SetUp();
+  // TODO(xiaochengh): Enable spellcheck in unit tests.
 }
 
 SpellChecker& SpellCheckTestBase::GetSpellChecker() const {
