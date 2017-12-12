@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cbd3e1c_2614dcd2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-12T18:02:46Z",
+      "side": 1,
+      "message": "You can just say:\n\nThis change updates some bluetooth characteristics tests to use the new test API.  (then you can specify anything more specific that unites those tests)",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd337c96_ffd0ae3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-12T18:02:46Z",
+      "side": 1,
+      "message": "I wouldn\u0027t list these in the commit message.  Also, it would be nice to break this up into three changes.\n\n- Same object changes\n- Changes that remove characters\n- Changes that test writes (other than the characteristic removed one)",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9f7e96_a5d0a320",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-from-2-characteristics.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-12T18:02:46Z",
+      "side": 1,
+      "message": "curlies not needed here.",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335bf3e5_9d2db300",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-12T18:02:46Z",
+      "side": 1,
+      "message": "curlies not needed",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced53ecd_b3496aa9",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/writeValue/value-too-long.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-12T18:02:46Z",
+      "side": 1,
+      "message": "pull this up to the previous line",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17375914_8c896747",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/writeValue/write-updates-value.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-12T18:02:46Z",
+      "side": 1,
+      "message": "Suggestion:\n\nconst new_value \u003d new TextEncoder().encode(\u0027foo\u0027);",
+      "revId": "1f4069f1fbe04804d54f5660d26f8f3634f29145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
