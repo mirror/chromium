@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b7179f6_220a75bc",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-12-12T00:21:13Z",
+      "side": 1,
+      "message": "Right. Renamed to CONTENT_CONSUMING (to be more consistent with OVERSCROLLING).",
+      "parentUuid": "7381a16e_dea90125",
+      "range": {
+        "startLine": 162,
+        "startChar": 22,
+        "endLine": 162,
+        "endChar": 52
+      },
+      "revId": "b3976215157dc4be6ae8e0e954983718ae9f99bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03eefb6f_d5c9913a",
         "filename": "content/browser/renderer_host/overscroll_controller.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-24T19:39:33Z",
       "side": 1,
       "message": "If we return here when does the state change from content_scrolling to none?\n\nThe user first scrolls a page and the state goes to content_scrolling. Then he does the second scroll in the opposite direction to do a history navigation or pull to refresh. If no mousemove or keyboard event happens in between the state will still be content_scrolling, right?\n\nI think we need to reset the state on GSB or GSE even when it is equal to CONTENT_SCROLLING",
+      "range": {
+        "startLine": 278,
+        "startChar": 2,
+        "endLine": 279,
+        "endChar": 17
+      },
+      "revId": "b3976215157dc4be6ae8e0e954983718ae9f99bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21209d74_7f83d3c3",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-12-12T00:21:13Z",
+      "side": 1,
+      "message": "Rigth. I have overlooked those cases that would reset state from CONTENT_SCROLLING. Moved the early return to ProcessOverscroll() function.",
+      "parentUuid": "03eefb6f_d5c9913a",
       "range": {
         "startLine": 278,
         "startChar": 2,
