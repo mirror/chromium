@@ -28,8 +28,8 @@
 #include "core/dom/Text.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/UseCounter.h"
-#include "core/html/HTMLContentElement.h"
 #include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/HTMLSummaryElement.h"
 #include "core/html/shadow/DetailsMarkerControl.h"
 #include "core/html/shadow/ShadowElementNames.h"
@@ -42,36 +42,35 @@ namespace blink {
 
 using namespace HTMLNames;
 
-class FirstSummarySelectFilter final : public HTMLContentSelectFilter {
+class FirstSummaryFilter final : public AssignmentFilter {
  public:
-  virtual ~FirstSummarySelectFilter() {}
+  virtual ~FirstSummaryFilter() {}
 
-  static FirstSummarySelectFilter* Create() {
-    return new FirstSummarySelectFilter();
-  }
+  static FirstSummaryFilter* Create() { return new FirstSummaryFilter(); }
 
-  bool CanSelectNode(const HeapVector<Member<Node>, 32>& siblings,
-                     int nth) const override {
-    if (!siblings[nth]->HasTagName(HTMLNames::summaryTag))
+  bool CanAssign(const Node& node) const override {
+    if (!IsHTMLSummaryElement(node))
       return false;
-    for (int i = nth - 1; i >= 0; --i) {
-      if (siblings[i]->HasTagName(HTMLNames::summaryTag))
+    const Element* element = &ToElement(node);
+    while (element) {
+      element = ElementTraversal::PreviousSibling(*element);
+      if (IsHTMLSummaryElement(element))
         return false;
     }
     return true;
   }
 
   virtual void Trace(blink::Visitor* visitor) {
-    HTMLContentSelectFilter::Trace(visitor);
+    AssignmentFilter::Trace(visitor);
   }
 
  private:
-  FirstSummarySelectFilter() {}
+  FirstSummaryFilter() {}
 };
 
 HTMLDetailsElement* HTMLDetailsElement::Create(Document& document) {
   HTMLDetailsElement* details = new HTMLDetailsElement(document);
-  details->EnsureLegacyUserAgentShadowRootV0();
+  details->EnsureUserAgentShadowRootV1();
   return details;
 }
 
@@ -97,15 +96,17 @@ void HTMLDetailsElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
       Text::Create(GetDocument(),
                    GetLocale().QueryString(WebLocalizedString::kDetailsLabel)));
 
-  HTMLContentElement* summary = HTMLContentElement::Create(
-      GetDocument(), FirstSummarySelectFilter::Create());
-  summary->SetIdAttribute(ShadowElementNames::DetailsSummary());
-  summary->AppendChild(default_summary);
-  root.AppendChild(summary);
+  HTMLSlotElement* summary_slot =
+      HTMLSlotElement::CreateFilteredSlotForUserAgent(
+          GetDocument(), FirstSummaryFilter::Create());
+  summary_slot->SetIdAttribute(ShadowElementNames::DetailsSummary());
+  summary_slot->AppendChild(default_summary);
+  root.AppendChild(summary_slot);
 
   HTMLDivElement* content = HTMLDivElement::Create(GetDocument());
   content->SetIdAttribute(ShadowElementNames::DetailsContent());
-  content->AppendChild(HTMLContentElement::Create(GetDocument()));
+  content->AppendChild(
+      HTMLSlotElement::CreateFallbackSlotForUserAgent(GetDocument()));
   content->SetInlineStyleProperty(CSSPropertyDisplay, CSSValueNone);
   root.AppendChild(content);
 }
@@ -115,11 +116,11 @@ Element* HTMLDetailsElement::FindMainSummary() const {
           Traversal<HTMLSummaryElement>::FirstChild(*this))
     return summary;
 
-  HTMLContentElement* content =
-      ToHTMLContentElementOrDie(UserAgentShadowRoot()->firstChild());
-  DCHECK(content->firstChild());
-  CHECK(IsHTMLSummaryElement(*content->firstChild()));
-  return ToElement(content->firstChild());
+  HTMLSlotElement* slot =
+      ToHTMLSlotElementOrDie(UserAgentShadowRoot()->firstChild());
+  DCHECK(slot->firstChild());
+  CHECK(IsHTMLSummaryElement(*slot->firstChild()));
+  return ToElement(slot->firstChild());
 }
 
 void HTMLDetailsElement::ParseAttribute(
@@ -139,7 +140,7 @@ void HTMLDetailsElement::ParseAttribute(
                 WTF::Bind(&HTMLDetailsElement::DispatchPendingEvent,
                           WrapPersistent(this)));
 
-    Element* content = EnsureLegacyUserAgentShadowRootV0().getElementById(
+    Element* content = EnsureUserAgentShadowRootV1().getElementById(
         ShadowElementNames::DetailsContent());
     DCHECK(content);
     if (is_open_)
