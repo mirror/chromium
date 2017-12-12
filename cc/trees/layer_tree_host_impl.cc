@@ -3889,8 +3889,10 @@ void LayerTreeHostImpl::PinchGestureEnd(const gfx::Point& anchor,
     pinch_gesture_end_should_clear_scrolling_node_ = false;
     ClearCurrentlyScrollingNode();
   }
-  viewport()->PinchEnd(anchor, snap_to_min);
   browser_controls_offset_manager_->PinchEnd();
+  if (!InnerViewportScrollLayer())
+    return;
+  viewport()->PinchEnd(anchor, snap_to_min);
   client_->SetNeedsCommitOnImplThread();
   // When a pinch ends, we may be displaying content cached at incorrect scales,
   // so updating draw properties and drawing will ensure we are using the right
