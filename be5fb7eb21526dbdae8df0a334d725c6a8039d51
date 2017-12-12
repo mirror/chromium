@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93d43ea3_ac6b8f73",
+        "filename": "ios/web/web_state/js/form_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-12T21:14:23Z",
+      "side": 1,
+      "message": "Does this script synchronously adds an iframe? Would it be better to have this script as a part of the html passed to LoadHtml?",
+      "range": {
+        "startLine": 66,
+        "startChar": 57,
+        "endLine": 66,
+        "endChar": 58
+      },
+      "revId": "be5fb7eb21526dbdae8df0a334d725c6a8039d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
