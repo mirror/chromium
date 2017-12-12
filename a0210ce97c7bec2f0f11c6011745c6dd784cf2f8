@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a03ba9a_be44999c",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-12T19:31:37Z",
+      "side": 1,
+      "message": "Where is id\u003d\"clear-all\" used? (If it is used consider doing id\u003d\"clearAll\").",
+      "revId": "a0210ce97c7bec2f0f11c6011745c6dd784cf2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813e4942_eb60507d",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-12-12T19:31:37Z",
+      "side": 1,
+      "message": "How does this look in rtl? (Do the items reverse order properly)",
+      "revId": "a0210ce97c7bec2f0f11c6011745c6dd784cf2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
