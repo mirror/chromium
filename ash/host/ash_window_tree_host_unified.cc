@@ -46,7 +46,7 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
 
       return nullptr;
     } else {
-      NOTREACHED() << "event type:" << event->type();
+      NOTIMPLEMENTED() << "event type:" << event->type();
       return aura::WindowTargeter::FindTargetForEvent(root, event);
     }
   }

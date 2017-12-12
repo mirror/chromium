@@ -90,7 +90,11 @@ std::unique_ptr<MouseWarpController> CreateMouseWarpController(
 
 gfx::Rect GetNativeEdgeBounds(AshWindowTreeHost* ash_host,
                               const gfx::Rect& bounds_in_screen) {
+  // LOG(ERROR) << "MSW A"; 
+  if (!ash_host)
+    return gfx::Rect(); 
   aura::WindowTreeHost* host = ash_host->AsWindowTreeHost();
+  // LOG(ERROR) << "MSW B"; 
   gfx::Rect native_bounds = host->GetBoundsInPixels();
   native_bounds.Inset(ash_host->GetHostInsets());
   gfx::Point start_in_native = bounds_in_screen.origin();
