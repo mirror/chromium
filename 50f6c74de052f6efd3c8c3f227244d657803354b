@@ -16,6 +16,24 @@
       "revId": "50f6c74de052f6efd3c8c3f227244d657803354b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25281648_98fd8b96",
+        "filename": "ui/base/layout.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-12T04:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e50a7f01_74232b8b",
+      "revId": "50f6c74de052f6efd3c8c3f227244d657803354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
