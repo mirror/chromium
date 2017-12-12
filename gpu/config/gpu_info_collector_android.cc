@@ -7,6 +7,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#if defined(USE_STATIC_ANGLE)
+#include <EGL/egl.h>
+#endif
+
 #include "base/android/build_info.h"
 #include "base/android/jni_android.h"
 #include "base/command_line.h"
@@ -68,6 +72,12 @@ std::string GetDriverVersionFromString(const std::string& version_string) {
 }
 
 gpu::CollectInfoResult CollectDriverInfo(gpu::GPUInfo* gpu_info) {
+#if defined(USE_STATIC_ANGLE)
+#pragma push_macro("eglGetProcAddress")
+#undef eglGetProcAddress
+#define LOOKUP_FUNC(x) \
+  auto x##Fn = reinterpret_cast<gl::x##Proc>(eglGetProcAddress(#x))
+#else
   // Go through the process of loading GL libs and initializing an EGL
   // context so that we can get GL vendor/version/renderer strings.
   base::NativeLibrary gles_library, egl_library;
@@ -112,6 +122,7 @@ gpu::CollectInfoResult CollectDriverInfo(gpu::GPUInfo* gpu_info) {
   };
 
 #define LOOKUP_FUNC(x) auto x##Fn = reinterpret_cast<gl::x##Proc>(get_func(#x))
+#endif
 
   LOOKUP_FUNC(eglGetError);
   LOOKUP_FUNC(eglQueryString);
@@ -131,6 +142,9 @@ gpu::CollectInfoResult CollectDriverInfo(gpu::GPUInfo* gpu_info) {
   LOOKUP_FUNC(glGetIntegerv);
 
 #undef LOOKUP_FUNC
+#if defined(USE_STATIC_ANGLE)
+#pragma pop_macro("eglGetProcAddress")
+#endif
 
   EGLDisplay curr_display = eglGetCurrentDisplayFn();
   EGLContext curr_context = eglGetCurrentContextFn();

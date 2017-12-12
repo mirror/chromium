@@ -196,6 +196,11 @@ component("gl") {
         "gl_image_ahardwarebuffer.cc",
         "gl_image_ahardwarebuffer.h",
       ]
+
+      if (use_static_angle) {
+        deps += [ "//third_party/angle:libEGL_static" ]
+        defines += [ "USE_STATIC_ANGLE" ]
+      }
     }
 
     if (is_posix) {

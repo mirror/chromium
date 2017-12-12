@@ -36,6 +36,9 @@ component("init") {
       "gl_factory_android.cc",
       "gl_initializer_android.cc",
     ]
+    if (use_static_angle) {
+      defines += [ "USE_STATIC_ANGLE" ]
+    }
   } else if (is_win) {
     sources += [
       "gl_factory_win.cc",

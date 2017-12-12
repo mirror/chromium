@@ -31,6 +31,9 @@ declare_args() {
 
   # Whether we should use glib, a low level C utility library.
   use_glib = is_linux
+
+  # Whether ANGLE should be linked statically
+  use_static_angle = false
 }
 
 declare_args() {
