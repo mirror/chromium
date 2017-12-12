@@ -12,14 +12,23 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
+#include "components/arc/common/intent_helper.mojom.h"
+#include "components/arc/connection_observer.h"
 
 namespace content {
 class BrowserContext;
 }
 
 // Helper class for deferred ARC app launching in case app is not ready on the
-// moment of request.
-class ArcAppLauncher : public ArcAppListPrefs::Observer {
+// moment of request. ArcAppLauncher may indirectly use two channels to launch
+// the app. One channel is using App interface in case we don't need to pass
+// extra intent as a parameter and second channel is using IntentHelper
+// interface. In last case there is race condition when IntentHelper may not be
+// available at the moment requested app gets ready and we have to additionally
+// wait for such interface is conneceted.
+class ArcAppLauncher
+    : public ArcAppListPrefs::Observer,
+      public arc::ConnectionObserver<arc::mojom::IntentHelperInstance> {
  public:
   ArcAppLauncher(content::BrowserContext* context,
                  const std::string& app_id,
@@ -35,8 +44,12 @@ class ArcAppLauncher : public ArcAppListPrefs::Observer {
                        const ArcAppListPrefs::AppInfo& app_info) override;
   void OnAppReadyChanged(const std::string& app_id, bool ready) override;
 
+  // ConnectionObserver<mojom::IntentHelperInstance>
+  void OnConnectionReady() override;
+
  private:
-  void LaunchApp();
+  bool MaybeLaunchApp();
+  void RemoveObservers();
 
   // Unowned pointer.
   content::BrowserContext* context_;
