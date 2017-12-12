@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a57be329_467d5a15",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 14
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-12T11:53:33Z",
+      "side": 1,
+      "message": "This test still fails, not because \u003cdetails\u003e or \u003csummary\u003e uses V0 shadow, but with\nthe incremental shadow dom flag on, dump results of the flat tree within UA shadows\nare different from expected, due to the difference with the flag on in FlatTreeTraversal.\nIt will be addressed in a different CL.",
+      "revId": "63c7a6f07a3a3aa5eae3c9f36880220e463db77d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

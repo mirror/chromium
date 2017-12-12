@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c00c7f7_86dc0209",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/shadow/details-summary-distributed.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-12T11:53:33Z",
+      "side": 0,
+      "message": "This test expects the #summary is distributed to this \u003ccontent\u003e, and the\n\"Distributed summary\" is rendered at the summary position, without toggling\ntriangle.\n\nWith this \u003ccontent\u003e swapped with \u003cslot\u003e, \u003csummary\u003e is slotted to it, but as\nthe content is not the immediate child of \u003cdetails\u003e, the default summary\nis rendered.\n\nI think this test is for V0 UA shadow and it does not make much sense to adapt\nit for V1 UA shadow. What do you think?",
+      "revId": "9d520be7a692f02584fe8cff123f56dd91e7dad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
