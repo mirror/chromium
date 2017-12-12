@@ -160,6 +160,24 @@
       "revId": "bd33ed25b64301da721dc11842d55584d0c53831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15cd3cf9_31855584",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-12T18:29:20Z",
+      "side": 1,
+      "message": "Yes, sorry, I meant \"changing this would not be needed anymore\". The DCHECK should remain.",
+      "parentUuid": "61f44910_72a719ef",
+      "revId": "bd33ed25b64301da721dc11842d55584d0c53831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
