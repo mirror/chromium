@@ -22,6 +22,30 @@
       "revId": "2470c11654cb8b62c4a9ac31f0434327d13fee3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6b713d_2e83171e",
+        "filename": "chrome/test/base/ui_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1187549
+      },
+      "writtenOn": "2017-12-12T06:18:22Z",
+      "side": 1,
+      "message": "FaviconHandler downloads a favicon after DidStopLoading that is the last function to be called  in WebContentsObserver during page loading. So we cannot recheck when WebContentsObserver functions are called.\nI guess it is possible to add something like an observer class for Favicon Handler, but it would be quite tricky. Is that realy necessary for tests?\n\nBTW, I just moved this class from another place. I didn\u0027t touch its implementation.",
+      "parentUuid": "a991fb24_08f11a5e",
+      "range": {
+        "startLine": 652,
+        "startChar": 2,
+        "endLine": 656,
+        "endChar": 39
+      },
+      "revId": "2470c11654cb8b62c4a9ac31f0434327d13fee3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
