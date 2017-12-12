@@ -1278,6 +1278,15 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
       report_raw_headers = false;
     }
 
+    // Do not report raw headers if the request's site needs to have its
+    // documents protected.
+    if (report_raw_headers &&
+        (SiteIsolationPolicy::UseDedicatedProcessesForAllSites() ||
+         ChildProcessSecurityPolicyImpl::GetInstance()->IsIsolatedOrigin(
+             url::Origin::Create(request_data.url)))) {
+      report_raw_headers = false;
+    }
+
     if (request_data.resource_type == RESOURCE_TYPE_PREFETCH ||
         request_data.resource_type == RESOURCE_TYPE_FAVICON) {
       do_not_prompt_for_login = true;
