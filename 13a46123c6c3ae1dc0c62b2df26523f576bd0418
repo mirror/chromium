@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0fc9e9c6_c86ee791",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-12T16:04:39Z",
+      "side": 1,
+      "message": "on_component_ready_callback_ will not try to request a component update.\n\nI don\u0027t think I understand the last paragraph. Are you asking to change this to a non-blocking PostTask?",
+      "parentUuid": "42f14a03_77fe9230",
+      "range": {
+        "startLine": 386,
+        "startChar": 61,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa11961b_897b4d68",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-08T23:34:10Z",
       "side": 1,
       "message": "Maybe ask gab@ if a task scheduler task could be posted instead of using a browser thread api.",
+      "range": {
+        "startLine": 1111,
+        "startChar": 26,
+        "endLine": 1111,
+        "endChar": 46
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bad6d0_be1283bb",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-12T16:04:39Z",
+      "side": 1,
+      "message": "gab\u0027s OOO for now. ++fdoray",
+      "parentUuid": "fa11961b_897b4d68",
       "range": {
         "startLine": 1111,
         "startChar": 26,
@@ -68,6 +116,30 @@
       "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd0957e_639246d3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-12T16:04:39Z",
+      "side": 1,
+      "message": "Done\n(patchset might be a little late coming in, making an official build in another branch at the moment)",
+      "parentUuid": "2f5baf59_16ed2914",
+      "range": {
+        "startLine": 188,
+        "startChar": 19,
+        "endLine": 188,
+        "endChar": 26
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
