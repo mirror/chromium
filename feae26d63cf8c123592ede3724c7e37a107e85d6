@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "284a1c28_8a28b4e4",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1898,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-12T00:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72361e5e_eaffc6d5",
+      "revId": "feae26d63cf8c123592ede3724c7e37a107e85d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd152d6e_3f8aef53",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "feae26d63cf8c123592ede3724c7e37a107e85d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8febe6af_b3f330f4",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1899,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-12T00:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd152d6e_3f8aef53",
+      "revId": "feae26d63cf8c123592ede3724c7e37a107e85d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "38627e5a_327d555c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2015,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-12T00:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "603ceeed_d530fd26",
+      "range": {
+        "startLine": 2015,
+        "startChar": 53,
+        "endLine": 2015,
+        "endChar": 61
+      },
+      "revId": "feae26d63cf8c123592ede3724c7e37a107e85d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4005a92d_807dcd8e",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "feae26d63cf8c123592ede3724c7e37a107e85d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e80a761_02ead7e0",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2027,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-12T00:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4005a92d_807dcd8e",
+      "revId": "feae26d63cf8c123592ede3724c7e37a107e85d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "aa21e45f_7773df10",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-12T00:07:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4ff5045_0d6e3afe",
+      "range": {
+        "startLine": 507,
+        "startChar": 12,
+        "endLine": 507,
+        "endChar": 29
+      },
+      "revId": "feae26d63cf8c123592ede3724c7e37a107e85d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2e922a2_515bd284",
         "filename": "content/common/frame.mojom",
         "patchSetId": 5
@@ -119,6 +221,30 @@
       "revId": "feae26d63cf8c123592ede3724c7e37a107e85d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5434e9_2e8d9b2b",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-12T00:07:02Z",
+      "side": 1,
+      "message": "Actually, it isn\u0027t even needed on this mojo method. o.O FrameHost can manage the id itself using BindOnce on the callback.\n\nSo I removed.",
+      "parentUuid": "b2e922a2_515bd284",
+      "range": {
+        "startLine": 33,
+        "startChar": 23,
+        "endLine": 33,
+        "endChar": 31
+      },
+      "revId": "feae26d63cf8c123592ede3724c7e37a107e85d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
