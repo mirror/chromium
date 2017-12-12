@@ -5,20 +5,17 @@
 #ifndef CONTENT_BROWSER_WEBRTC_WEBRTC_RTC_EVENT_LOG_MANAGER_H_
 #define CONTENT_BROWSER_WEBRTC_WEBRTC_RTC_EVENT_LOG_MANAGER_H_
 
-#include <map>
-#include <set>
-#include <string>
-#include <tuple>
-
 #include "base/callback.h"
-#include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/lazy_instance.h"
 #include "base/memory/scoped_refptr.h"
 #include "base/sequenced_task_runner.h"
 #include "base/time/clock.h"
-#include "build/build_config.h"
+#include "content/browser/webrtc/webrtc_event_log_manager_common.h"
+#include "content/browser/webrtc/webrtc_event_log_manager_local_logs_handler.h"
 #include "content/common/content_export.h"
+
+// TODO: !!! Many of the names can now be shortened.
 
 namespace content {
 
@@ -32,46 +29,6 @@ namespace content {
 // https://crbug.com/775415
 class CONTENT_EXPORT WebRtcEventLogManager {
  public:
-  // For a given Chrome session, this is a unique key for PeerConnections.
-  // It's not, however, unique between sessions (after Chrome is restarted).
-  struct PeerConnectionKey {
-    constexpr PeerConnectionKey(int render_process_id, int lid)
-        : render_process_id(render_process_id), lid(lid) {}
-
-    bool operator==(const PeerConnectionKey& other) const {
-      return std::tie(render_process_id, lid) ==
-             std::tie(other.render_process_id, other.lid);
-    }
-
-    bool operator<(const PeerConnectionKey& other) const {
-      return std::tie(render_process_id, lid) <
-             std::tie(other.render_process_id, other.lid);
-    }
-
-    int render_process_id;
-    int lid;  // Renderer-local PeerConnection ID.
-  };
-
-  // Allow an observer to be registered for notifications of local log files
-  // being started/stopped, and the paths which will be used for these logs.
-  class LocalLogsObserver {
-   public:
-    virtual ~LocalLogsObserver() = default;
-    virtual void OnLocalLogsStarted(PeerConnectionKey peer_connection,
-                                    base::FilePath file_path) = 0;
-    virtual void OnLocalLogsStopped(PeerConnectionKey peer_connection) = 0;
-  };
-
-  static constexpr size_t kUnlimitedFileSize = 0;
-
-#if defined(OS_ANDROID)
-  static const size_t kMaxNumberLocalWebRtcEventLogFiles = 3;
-  static const size_t kDefaultMaxLocalLogFileSizeBytes = 10000000;
-#else
-  static const size_t kMaxNumberLocalWebRtcEventLogFiles = 5;
-  static const size_t kDefaultMaxLocalLogFileSizeBytes = 60000000;
-#endif
-
   static WebRtcEventLogManager* GetInstance();
 
   // Currently, we only support manual logs initiated by the user
@@ -146,24 +103,13 @@ class CONTENT_EXPORT WebRtcEventLogManager {
   // the observer post them there.
   // If a reply callback is given, it will be posted back to BrowserThread::UI
   // after the observer has been set.
-  void SetLocalLogsObserver(LocalLogsObserver* observer,
+  void SetLocalLogsObserver(WebRtcLocalEventLogsObserver* observer,
                             base::OnceClosure reply = base::OnceClosure());
 
  protected:
-  friend class WebRtcEventLogManagerTest;  // unit tests inject a frozen clock.
+  // TODO: !!!
+  friend class WebRtcEventLogManagerTest;  // Unit tests inject a frozen clock.
   friend struct base::LazyInstanceTraitsBase<WebRtcEventLogManager>;
-
-  struct LogFile {
-    LogFile(base::File file, size_t max_file_size_bytes)
-        : file(std::move(file)),
-          max_file_size_bytes(max_file_size_bytes),
-          file_size_bytes(0) {}
-    base::File file;
-    const size_t max_file_size_bytes;
-    size_t file_size_bytes;
-  };
-
-  typedef std::map<PeerConnectionKey, LogFile> LocalLogFilesMap;
 
   WebRtcEventLogManager();
   virtual ~WebRtcEventLogManager();
@@ -182,17 +128,14 @@ class CONTENT_EXPORT WebRtcEventLogManager {
 
   void DisableLocalLoggingInternal(base::OnceCallback<void(bool)> reply);
 
-  void SetLocalLogsObserverInternal(LocalLogsObserver* observer,
-                                    base::OnceClosure reply);
+  void OnWebRtcEventLogWriteInternal(
+      int render_process_id,
+      int lid,  // Renderer-local PeerConnection ID.
+      const std::string& output,
+      base::OnceCallback<void(bool)> reply);
 
-  // Local log file handling.
-  void StartLocalLogFile(int render_process_id, int lid);
-  void StopLocalLogFile(int render_process_id, int lid);
-  void WriteToLocalLogFile(int render_process_id,
-                           int lid,
-                           const std::string& output,
-                           base::OnceCallback<void(bool)> reply);
-  LocalLogFilesMap::iterator CloseLocalLogFile(LocalLogFilesMap::iterator it);
+  void SetLocalLogsObserverInternal(WebRtcLocalEventLogsObserver* observer,
+                                    base::OnceClosure reply);
 
   // Determine whether WebRTC state needs to be updated for the given peer
   // connection, and if so, sends a message back to the UI process to do so.
@@ -204,48 +147,15 @@ class CONTENT_EXPORT WebRtcEventLogManager {
                                      int lid,
                                      bool enabled);
 
-  // Derives the name of a local log file. The format is:
-  // [user_defined]_[date]_[time]_[pid]_[lid].log
-  base::FilePath GetLocalFilePath(const base::FilePath& base_path,
-                                  int render_process_id,
-                                  int lid);
-
-  // Only used for testing, so we have no threading concenrs here; it should
-  // always be called before anything that might post to the internal TQ.
   void InjectClockForTesting(base::Clock* clock);
 
-  // For unit tests only, and specifically for unit tests that verify the
-  // filename format (derived from the current time as well as the renderer PID
-  // and PeerConnection local ID), we want to make sure that the time and date
-  // cannot change between the time the clock is read by the unit under test
-  // (namely WebRtcEventLogManager) and the time it's read by the test.
-  base::Clock* clock_for_testing_;
+  // TODO: !!! Documentation
+  // TODO: !!! WebRtcLocalEventLogsManager
+  WebRtcEventLogManagerLocalLogsHandler local_logs_handler_;
 
-  // Currently active peer connections. PeerConnections which have been closed
-  // are not considered active, regardless of whether they have been torn down.
-  std::set<PeerConnectionKey> active_peer_connections_;
-
-  // Local log files, stored at the behest of the user (via WebRTCInternals).
-  // TODO(eladalon): Add an additional container with logs that will be uploaded
-  // to the server. https://crbug.com/775415
-  LocalLogFilesMap local_logs_;
-
-  // Observer which will be informed whenever a local log file is started or
-  // stopped. Its callbacks are called synchronously from |file_task_runner_|,
-  // so the observer needs to be able to either run from any (sequenced) runner.
-  LocalLogsObserver* local_logs_observer_;
-
-  // If FilePath is empty, local logging is disabled.
-  // If nonempty, local logging is enabled, and all local logs will be saved
-  // to this directory.
-  base::FilePath local_logs_base_path_;
-
-  // The maximum size for local logs, in bytes. Note that kUnlimitedFileSize is
-  // a sentinel value (with a self-explanatory name).
-  size_t max_local_log_file_size_bytes_;
-
-  // File operations will run sequentially on this runner.
-  scoped_refptr<base::SequencedTaskRunner> file_task_runner_;
+  // The main logic will run sequentially on this runner, on which blocking
+  // tasks are allowed.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebRtcEventLogManager);
