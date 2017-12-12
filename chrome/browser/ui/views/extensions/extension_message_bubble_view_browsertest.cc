@@ -42,7 +42,8 @@ void CheckBubbleAgainstReferenceBounds(views::BubbleDialogDelegateView* bubble,
 }  // namespace
 
 class ExtensionMessageBubbleViewBrowserTest
-    : public SupportsTestDialog<ExtensionMessageBubbleBrowserTest> {
+    : public SupportsTestUI<ExtensionMessageBubbleBrowserTest,
+                            TestBrowserDialog> {
  protected:
   ExtensionMessageBubbleViewBrowserTest() {}
   ~ExtensionMessageBubbleViewBrowserTest() override {}
@@ -51,7 +52,7 @@ class ExtensionMessageBubbleViewBrowserTest
   void SetUp() override;
 
   // TestBrowserDialog:
-  void ShowDialog(const std::string& name) override;
+  void ShowUI(const std::string& name) override;
 
  private:
   // ExtensionMessageBubbleBrowserTest:
@@ -75,11 +76,10 @@ void ExtensionMessageBubbleViewBrowserTest::SetUp() {
   // not affect the behavior of the bubble (just the appearance), so enable for
   // all platforms.
   UseMdOnly();
-  SupportsTestDialog::SetUp();
+  SupportsTestUI::SetUp();
 }
 
-void ExtensionMessageBubbleViewBrowserTest::ShowDialog(
-    const std::string& name) {
+void ExtensionMessageBubbleViewBrowserTest::ShowUI(const std::string& name) {
   // When invoked this way, the dialog test harness must close the bubble.
   base::AutoReset<bool> guard(&block_close_, true);
 
@@ -222,8 +222,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
 // BrowserDialogTest for the warning bubble that appears when opening a new tab
 // and an extension is controlling it. Only shown on Windows.
 IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
-                       InvokeDialog_ntp_override) {
-  RunDialog();
+                       InvokeUI_ntp_override) {
+  ShowAndVerifyUI();
 }
 
 #endif  // defined(OS_WIN)
@@ -252,8 +252,8 @@ IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
 // are extensions installed in developer mode. Can be invoked interactively with
 // --gtest_filter=BrowserDialogTest.Invoke.
 IN_PROC_BROWSER_TEST_F(ExtensionMessageBubbleViewBrowserTest,
-                       InvokeDialog_devmode_warning) {
-  RunDialog();
+                       InvokeUI_devmode_warning) {
+  ShowAndVerifyUI();
 }
 
 class NtpExtensionBubbleViewBrowserTest

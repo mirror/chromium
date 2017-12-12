@@ -14,7 +14,7 @@ class UninstallViewBrowserTest : public DialogBrowserTest {
   UninstallViewBrowserTest() {}
 
   // DialogBrowserTest:
-  void ShowDialog(const std::string& name) override {
+  void ShowUI(const std::string& name) override {
     // UninstallView may need to know whether Chrome is the default browser,
     // which requires IO. Since this is a test, we'll just allow that.
     base::ThreadRestrictions::SetIOAllowed(true);
@@ -35,8 +35,7 @@ class UninstallViewBrowserTest : public DialogBrowserTest {
 // test_browser_dialog.h.
 // Disabled because the build bots don't click to dismiss the dialog, they just
 // wait for it to time out. Unfortunately because we have to explicitly exit
-// (see ShowDialog above) this approach doesn't work.
-IN_PROC_BROWSER_TEST_F(UninstallViewBrowserTest,
-                       DISABLED_InvokeDialog_default) {
-  RunDialog();
+// (see ShowUI above) this approach doesn't work.
+IN_PROC_BROWSER_TEST_F(UninstallViewBrowserTest, DISABLED_InvokeUI_default) {
+  ShowAndVerifyUI();
 }
