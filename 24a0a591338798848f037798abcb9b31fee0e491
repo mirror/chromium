@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "056961e6_e83d7c92",
+        "filename": "content/common/resource_messages.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Done, that was a bad rebase.",
+      "parentUuid": "b6d86473_34975b16",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44d428d7_450b896b",
         "filename": "content/renderer/loader/web_url_request_util.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T04:33:38Z",
       "side": 1,
       "message": "Can we use StringBindingSet?",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a542cf9_93b9bf6d",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Apparently StrongBindingSet doesn\u0027t really work the way we think. Anything added to it is a StrongBinding, so when the binding is destroyed its implementation is also destroyed. Whereas we want something more like a refcounting where we don\u0027t delete until it goes to 0.",
+      "parentUuid": "44d428d7_450b896b",
       "revId": "24a0a591338798848f037798abcb9b31fee0e491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "66aa01c9_476598f1",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1948734_0b0aeb5f",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "159025f8_f8baf94f",
         "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8d5431b6_32914885",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "159025f8_f8baf94f",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b060aebc_3a50fd2a",
         "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
         "patchSetId": 11
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-12T04:33:38Z",
       "side": 1,
       "message": "You need to return null when a read operation has already been performed.",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a727f17_4356c125",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Done. Hum, we never set state_ to kReadable. I will always DCHECK(!kReadable).",
+      "parentUuid": "b060aebc_3a50fd2a",
       "revId": "24a0a591338798848f037798abcb9b31fee0e491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "bf0babc5_6c51057a",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15de88c8_9f62502b",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ad48957_0323ac8c",
         "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
         "patchSetId": 11
@@ -118,6 +226,24 @@
       "revId": "24a0a591338798848f037798abcb9b31fee0e491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0543154_66ba7e00",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ad48957_0323ac8c",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "4af8509e_ddde0c4d",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b831917e_367cc3cf",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97055349_cb1c6ceb",
         "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
         "patchSetId": 11
@@ -149,6 +293,24 @@
       "writtenOn": "2017-12-12T04:33:38Z",
       "side": 1,
       "message": "If you don\u0027t need to distinguish readable / waiting you can store PublicState directly.",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3edbd7_e093fb84",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Ah good point. Done.",
+      "parentUuid": "97055349_cb1c6ceb",
       "revId": "24a0a591338798848f037798abcb9b31fee0e491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "1381b519_848ca7a5",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPBody.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Done. A lot of Blink seems to use AdoptRef instead, not sure why.",
+      "parentUuid": "272a5f47_8b0aa52d",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2db68c3f_03581578",
         "filename": "third_party/WebKit/Source/platform/network/EncodedFormData.cpp",
         "patchSetId": 11
@@ -186,6 +366,24 @@
       "revId": "24a0a591338798848f037798abcb9b31fee0e491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2973f94b_4c9273dd",
+        "filename": "third_party/WebKit/Source/platform/network/EncodedFormData.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T08:12:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2db68c3f_03581578",
+      "revId": "24a0a591338798848f037798abcb9b31fee0e491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
