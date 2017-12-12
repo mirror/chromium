@@ -34,6 +34,24 @@
       "revId": "1e94da5a524d097b070e1d8de882273008114724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d2bd92_df91e3c4",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T17:42:31Z",
+      "side": 1,
+      "message": "Is there a reason we can\u0027t use \u0027--foo\u0027 in the name? Including the arguments as to how to run the test in the name make it obvious how to reproduce problems.",
+      "parentUuid": "beb41a8f_ba5f5a65",
+      "revId": "1e94da5a524d097b070e1d8de882273008114724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
