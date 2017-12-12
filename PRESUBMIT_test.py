@@ -1031,6 +1031,22 @@ class GoogleAnswerUrlFormatTest(unittest.TestCase):
       input_api, MockOutputApi())
     self.assertEqual(0, len(warnings))
 
+class CrbugUrlFormatTest(unittest.TestCase):
+
+  def testLinkifyCrbug(self):
+    input_api = MockInputApi()
+    input_api.files = [
+      MockFile('somewhere/file.cc',
+               ['// TODO(developer): crbug.com should be linkified',
+                '// TODO(developer): (crbug.com) should be linkified',
+                '// TODO(developer): crbug/123 should be well formed',
+                '// TODO(developer): http://crbug.com it\'s OK',
+                '// TODO(developer): https://crbug.com is just great']),
+    ]
+
+    warnings = PRESUBMIT._CheckCrbugLinkified(input_api, MockOutputApi())
+    self.assertEqual(1, len(warnings))
+
 class HardcodedGoogleHostsTest(unittest.TestCase):
 
   def testWarnOnAssignedLiterals(self):

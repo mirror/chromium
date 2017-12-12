@@ -2759,6 +2759,24 @@ def _CheckSyslogUseWarning(input_api, output_api, source_file_filter=None,
   return []
 
 
+def _CheckCrbugLinkified(input_api, output_api):
+  """Checks that crbug links are correctly prefixed by http[s]://"""
+  pattern = input_api.re.compile(r'//.*(?<!:\/\/)crbug[.com]*')
+  problems = []
+  for f in input_api.AffectedFiles():
+    if not f.LocalPath().endswith(('h', 'cc', 'mm', 'cpp')):
+      continue;
+    for line_num, line in f.ChangedContents():
+      if pattern.search(line):
+        problems.append('    %s:%d %s' % (f.LocalPath(), line_num, line))
+
+  if problems:
+    return [output_api.PresubmitPromptWarning(
+      'Found unprefixed crbug.com URL(s), consider prepending https://\n'+
+      '\n'.join(problems))]
+  return []
+
+
 def CheckChangeOnUpload(input_api, output_api):
   results = []
   results.extend(_CommonChecks(input_api, output_api))
@@ -2769,6 +2787,7 @@ def CheckChangeOnUpload(input_api, output_api):
   results.extend(_AndroidSpecificOnUploadChecks(input_api, output_api))
   results.extend(_CheckSyslogUseWarning(input_api, output_api))
   results.extend(_CheckGoogleSupportAnswerUrl(input_api, output_api))
+  results.extend(_CheckCrbugLinkified(input_api, output_api))
   return results
 
 
