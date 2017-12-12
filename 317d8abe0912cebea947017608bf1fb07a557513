@@ -16,6 +16,24 @@
       "revId": "317d8abe0912cebea947017608bf1fb07a557513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41df9928_e5b4f7cd",
+        "filename": "content/browser/appcache/appcache_frontend_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-12-12T02:00:06Z",
+      "side": 1,
+      "message": "Would be nice. But the mojom forces us to pass a StructPtr, and .Clone() is the official way to make one.",
+      "parentUuid": "d76ea828_05453842",
+      "revId": "317d8abe0912cebea947017608bf1fb07a557513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
