@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bde6a07c_b12d69f9",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T23:04:18Z",
+      "side": 1,
+      "message": "Nit: NULL is a void*; NUL is the char you mean. :)",
+      "revId": "570db0c87ad37dc4032f039190e7d2b80983c3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20cbf7b_335ab2d0",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T23:04:18Z",
+      "side": 1,
+      "message": "Nit: could do `const auto\u0026` here.",
+      "revId": "570db0c87ad37dc4032f039190e7d2b80983c3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a7ee98_eaa69cac",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T23:04:18Z",
+      "side": 1,
+      "message": "So this seems to be asserting that we read and accept data beyond the terminating NUL? Is that what the CBOR specification calls for? A quick skim didn\u0027t immediately clarify that for me.",
+      "revId": "570db0c87ad37dc4032f039190e7d2b80983c3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4255107_c933ac5d",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T23:04:18Z",
+      "side": 1,
+      "message": "Nit: The comment and the identifier name don\u0027t seem to agree: the reader might be confused as to whether one of the NUL bytes is invalid, or if the 0xA6 after the last NUL is the invalid byte. A few more test cases might (or might not) help, too.",
+      "revId": "570db0c87ad37dc4032f039190e7d2b80983c3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
