@@ -234,6 +234,30 @@
       "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14374b0_81777f02",
+        "filename": "third_party/WebKit/Source/devtools/front_end/text_editor/cmdevtools.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-12T02:55:04Z",
+      "side": 1,
+      "message": "That\u0027s a good point.  I\u0027ve removed this rule, and found an alternate way to make sure the inline editor decorations do not wrap.\n\nEditor styles already tell .text-editor-value-decoration\u0027s to nowrap.  The only thing making it wrap is the \u0027.source-code\u0027 class added onto all previews by RemoteObjectPreviewFormatter (ROPF).\n\nWe can safely remove the \u0027source-code\u0027 class from previews because:\n- it has pre-wrap, which we do not want\n- it also sets the font-size to 11px and family to monospace, but ROPF only has 3 clients:\n  - ObjectPropertiesSection: it already adds source-code explicitly on a parent\n  - Console objects: taken care of because all previews are inside of ObjectPropertiesSections\n  - JSSourceFrame\u0027s inline decorations: are always under an ancestor with the \u0027CodeMirror\u0027 class, which gets \u0027source-code\u0027 class added explicitly",
+      "parentUuid": "7a34cc61_9d64b4bf",
+      "range": {
+        "startLine": 437,
+        "startChar": 4,
+        "endLine": 437,
+        "endChar": 24
+      },
+      "revId": "e91fe35d5530f24c4fd686c89509a16eb2c50a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
