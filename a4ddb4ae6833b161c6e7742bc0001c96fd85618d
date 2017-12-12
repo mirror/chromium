@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "bc8d3d2a_5557811d",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-12T18:27:20Z",
+      "side": 1,
+      "message": "We didn\u0027t have this --site-per-process coverage on dbg bots before.  Hoping that this won\u0027t turn up any new issues, but we should keep a close eye on it.",
+      "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c56f8de_cbc57afe",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3467,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-12T18:27:20Z",
+      "side": 1,
+      "message": "What is this for? :)  And can we change it to --site-per-process now?",
+      "range": {
+        "startLine": 3465,
+        "startChar": 0,
+        "endLine": 3467,
+        "endChar": 31
+      },
+      "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "125a9a84_6873a0c7",
         "filename": "testing/buildbot/test_suites.pyl",
         "patchSetId": 2
@@ -49,6 +89,24 @@
       "side": 1,
       "message": "I meant all the unittests.\n\nAlex: do we really need to run unit tests with site isolation?",
       "parentUuid": "29818c03_19240eef",
+      "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6905098e_3711a94a",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-12T18:27:20Z",
+      "side": 1,
+      "message": "We definitely need content_unittests, which exercises lots of navigational paths that work differently in --site-per-process. (In many cases these tests check for --site-per-process and have separate paths for it.)  Similarly, I believe unit_tests revealed several issues when we started running it with --site-per-process.\n\nSo, I think we should definitely run these two.  I think extensions_unittests and components_unittests would be good to have as well, and I can see skipping the rest.  The list of unittests here was based on who was linking in content, so in theory any of them could be affected by --site-per-process, but in practice we\u0027ve never had a breakage in app_shell_unittests or nacl_loader_unittests.",
+      "parentUuid": "58aa8223_430904ef",
       "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

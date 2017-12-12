@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92b0c89c_8036dd5a",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 6087,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-12T18:27:20Z",
+      "side": 0,
+      "message": "Yup, decommissioning both the linux_site_isolation trybot and our Linux FYI bot (which both share this config) seems ok now that we\u0027ll have this coverage in linux_chromium_rel_ng.",
+      "range": {
+        "startLine": 6087,
+        "startChar": 1,
+        "endLine": 6087,
+        "endChar": 20
+      },
+      "revId": "7b9fe37fc214c456257f79ff6e9c76d37657100d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
