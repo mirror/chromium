@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aec9383e_d64c2330",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-12T03:38:47Z",
+      "side": 1,
+      "message": "nit: the explicit keyword doesn\u0027t do anything on constructors that don\u0027t take arguments.",
+      "revId": "4dcccaf6300ecfeb379d981d2f55520660e0484f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
