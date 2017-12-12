@@ -38,6 +38,22 @@ class CryptotokenPrivateCanOriginAssertAppIdFunction
     ChromeExtensionFunctionDetails chrome_details_;
 };
 
+class CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction
+    : public UIThreadExtensionFunction {
+ public:
+  CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction();
+  DECLARE_EXTENSION_FUNCTION(
+      "cryptotokenPrivate.isAppIdHashInEnterpriseContext",
+      CRYPTOTOKENPRIVATE_ISAPPIDHASHINENTERPRISECONTEXT)
+
+ protected:
+  ~CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction() override {}
+  ResponseAction Run() override;
+
+ private:
+  ChromeExtensionFunctionDetails chrome_details_;
+};
+
 }  // namespace api
 }  // namespace extensions
 
