@@ -35,13 +35,14 @@
 
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "public/platform/WebCommon.h"
+#include "public/platform/WebVector.h"
 
 namespace blink {
 
 class WebContentSettingsClient;
 class WebServiceWorkerContextClient;
-class WebServiceWorkerInstalledScriptsManager;
 class WebString;
+class WebURL;
 struct WebConsoleMessage;
 struct WebEmbeddedWorkerStartData;
 
@@ -53,11 +54,20 @@ class BLINK_EXPORT WebEmbeddedWorker {
   // The given WebWorkerContextClient and WebContentSettingsClient are going to
   // be passed on to the worker thread and is held by a newly created
   // WorkerGlobalScope.
+  // As we're on the border line between non-Blink and Blink variants, we need
+  // to use mojo::ScopedMessagePipeHandle to pass Mojo types.
   static std::unique_ptr<WebEmbeddedWorker> Create(
       std::unique_ptr<WebServiceWorkerContextClient>,
-      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
-      mojo::ScopedMessagePipeHandle content_settings_handle,
-      mojo::ScopedMessagePipeHandle interface_provider);
+      WebVector<WebURL> /* installed_scripts_urls */,
+      mojo::ScopedMessagePipeHandle,
+      /* mojom::blink::ServiceWorkerInstalledScriptsManagerRequest */
+      mojo::ScopedMessagePipeHandle,
+      /* mojom::blink::ServiceWorkerInstalledScriptsManagerHostPtr */
+      mojo::ScopedMessagePipeHandle,
+      /* mojom::blink::WorkerContentSettingsProxyPtrInfo */
+      mojo::ScopedMessagePipeHandle
+      /* service_manager::mojom::blink::InterfaceProviderPtrInfo */
+      );
 
   virtual ~WebEmbeddedWorker() {}
 

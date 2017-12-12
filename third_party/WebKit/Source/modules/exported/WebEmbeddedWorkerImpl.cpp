@@ -60,6 +60,7 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebWorkerFetchContext.h"
@@ -69,17 +70,22 @@
 #include "public/web/WebDevToolsAgent.h"
 #include "public/web/WebSettings.h"
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
+#include "third_party/WebKit/common/service_worker/service_worker_installed_scripts_manager.mojom-blink.h"
 
 namespace blink {
 
+// static
 std::unique_ptr<WebEmbeddedWorker> WebEmbeddedWorker::Create(
     std::unique_ptr<WebServiceWorkerContextClient> client,
-    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
-        installed_scripts_manager,
+    WebVector<WebURL> installed_scripts_urls,
+    mojo::ScopedMessagePipeHandle installed_scripts_manager_request,
+    mojo::ScopedMessagePipeHandle installed_scripts_manager_host_ptr,
     mojo::ScopedMessagePipeHandle content_settings_handle,
     mojo::ScopedMessagePipeHandle interface_provider) {
   return std::make_unique<WebEmbeddedWorkerImpl>(
-      std::move(client), std::move(installed_scripts_manager),
+      std::move(client), std::move(installed_scripts_urls),
+      std::move(installed_scripts_manager_request),
+      std::move(installed_scripts_manager_host_ptr),
       std::make_unique<ServiceWorkerContentSettingsProxy>(
           // Chrome doesn't use interface versioning.
           mojom::blink::WorkerContentSettingsProxyPtrInfo(
@@ -89,10 +95,35 @@ std::unique_ptr<WebEmbeddedWorker> WebEmbeddedWorker::Create(
           service_manager::mojom::blink::InterfaceProvider::Version_));
 }
 
+// static
+std::unique_ptr<WebEmbeddedWorkerImpl> WebEmbeddedWorkerImpl::CreateForTesting(
+    std::unique_ptr<WebServiceWorkerContextClient> client,
+    std::unique_ptr<ServiceWorkerInstalledScriptsManager>
+        installed_scripts_manager,
+    mojo::ScopedMessagePipeHandle content_settings_handle,
+    mojo::ScopedMessagePipeHandle interface_provider) {
+  auto worker_impl = std::make_unique<WebEmbeddedWorkerImpl>(
+      std::move(client), WebVector<WebURL>() /* installed_scripts_urls */,
+      mojo::ScopedMessagePipeHandle() /* installed_scripts_manager_request */,
+      mojo::ScopedMessagePipeHandle() /* installed_scripts_manager_host_ptr */,
+      std::make_unique<ServiceWorkerContentSettingsProxy>(
+          // Chrome doesn't use interface versioning.
+          mojom::blink::WorkerContentSettingsProxyPtrInfo(
+              std::move(content_settings_handle), 0u)),
+      service_manager::mojom::blink::InterfaceProviderPtrInfo(
+          std::move(interface_provider),
+          service_manager::mojom::blink::InterfaceProvider::Version_));
+  // Overrides the ServiceWorkerInstalledScriptsManager instance for testing.
+  worker_impl->installed_scripts_manager_ =
+      std::move(installed_scripts_manager);
+  return worker_impl;
+}
+
 WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
     std::unique_ptr<WebServiceWorkerContextClient> client,
-    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
-        installed_scripts_manager,
+    WebVector<WebURL> installed_scripts_urls,
+    mojo::ScopedMessagePipeHandle installed_scripts_manager_request,
+    mojo::ScopedMessagePipeHandle installed_scripts_manager_host_ptr,
     std::unique_ptr<ServiceWorkerContentSettingsProxy> content_settings_client,
     service_manager::mojom::blink::InterfaceProviderPtrInfo
         interface_provider_info)
@@ -103,10 +134,17 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
       waiting_for_debugger_state_(kNotWaitingForDebugger),
       interface_provider_info_(std::move(interface_provider_info)) {
   if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
-      installed_scripts_manager) {
-    installed_scripts_manager_ =
-        std::make_unique<ServiceWorkerInstalledScriptsManager>(
-            std::move(installed_scripts_manager));
+      installed_scripts_manager_request.is_valid()) {
+    DCHECK(installed_scripts_manager_host_ptr.is_valid());
+    installed_scripts_manager_ = std::make_unique<
+        ServiceWorkerInstalledScriptsManager>(
+        std::move(installed_scripts_urls),
+        mojom::blink::ServiceWorkerInstalledScriptsManagerRequest(
+            std::move(installed_scripts_manager_request)),
+        mojom::blink::ServiceWorkerInstalledScriptsManagerHostPtrInfo(
+            std::move(installed_scripts_manager_host_ptr),
+            mojom::blink::ServiceWorkerInstalledScriptsManagerHost::Version_),
+        Platform::Current()->GetIOTaskRunner());
   }
 }
 
