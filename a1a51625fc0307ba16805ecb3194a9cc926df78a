@@ -16,6 +16,24 @@
       "revId": "a1a51625fc0307ba16805ecb3194a9cc926df78a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac125a38_7a9c5ba2",
+        "filename": "chrome/android/webapk/libs/common/src/org/chromium/webapk/lib/common/WebApkHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-12-12T20:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8fa2bfd_a4afda96",
+      "revId": "a1a51625fc0307ba16805ecb3194a9cc926df78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
