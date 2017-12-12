@@ -46,6 +46,30 @@
       "revId": "be5fb7eb21526dbdae8df0a334d725c6a8039d51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8813d37_6ac27851",
+        "filename": "ios/web/web_state/js/form_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-12T22:11:46Z",
+      "side": 1,
+      "message": "ExecuteJavaScript executes synchronously. But does assigning value to innerHTML execute synchronously?",
+      "parentUuid": "77c60e50_f0c0f2a6",
+      "range": {
+        "startLine": 66,
+        "startChar": 57,
+        "endLine": 66,
+        "endChar": 58
+      },
+      "revId": "be5fb7eb21526dbdae8df0a334d725c6a8039d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
