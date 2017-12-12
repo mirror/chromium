@@ -22,6 +22,30 @@
       "revId": "4cd947afab49fadebd69d6093aa5810a2fd2992f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e02eb9_b0ee1fe3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/payment-request-not-exposed.https.worker.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-12-12T09:28:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd796ed_021da184",
+      "range": {
+        "startLine": 7,
+        "startChar": 2,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "4cd947afab49fadebd69d6093aa5810a2fd2992f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
