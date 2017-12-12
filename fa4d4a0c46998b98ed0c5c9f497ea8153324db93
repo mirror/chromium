@@ -108,6 +108,30 @@
       "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d474612_663a0019",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-12T17:45:08Z",
+      "side": 1,
+      "message": "Actually to expand on this, might want to leave the padding there (as if there was an arrow) and just not draw the arrow.  That way there\u0027s some spacing between the anchor rect and the bubble (might look weird if it was right up against it without an arrow).",
+      "parentUuid": "e4375635_b5e05bde",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 21
+      },
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
