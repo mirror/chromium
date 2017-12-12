@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fcc51dc_d2a5a847",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T15:38:28Z",
+      "side": 1,
+      "message": "Is this supposed to be an empty implementation now?",
+      "revId": "de11810718cd58ef2a1381cbe9281b55fde8662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c02b80_08d5a707",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T15:38:28Z",
+      "side": 1,
+      "message": "Building a flat_map by inserting elements one at time can be inefficient.\n\nhttps://chromium.googlesource.com/chromium/src/+/ff34ceb7d9e0dee8caaafefbe94517c524e1a292/base/containers/README.md\n\nAlthough why not just std::find_if on GetPendingFrame().metadata.activation_dependencies? A linear search of a couple elements is going to be faster than building a new data structure.",
+      "revId": "de11810718cd58ef2a1381cbe9281b55fde8662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ba94af_25aad3b8",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T15:38:28Z",
+      "side": 1,
+      "message": "Ditto about linear search vs building new data structure.",
+      "revId": "de11810718cd58ef2a1381cbe9281b55fde8662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba307124_96125af8",
+        "filename": "components/viz/service/surfaces/surface_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-12T15:38:28Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 202,
+        "startChar": 46,
+        "endLine": 202,
+        "endChar": 52
+      },
+      "revId": "de11810718cd58ef2a1381cbe9281b55fde8662c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
