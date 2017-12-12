@@ -64,6 +64,8 @@ class ShellPortMash : public ShellPortMus {
   void ToggleIgnoreExternalKeyboard() override;
   void CreatePointerWatcherAdapter() override;
   std::unique_ptr<AcceleratorController> CreateAcceleratorController() override;
+  void AddVideoDetectorObserver(
+      viz::mojom::VideoDetectorObserverPtr observer) override;
 
  private:
   views::PointerWatcherEventRouter* pointer_watcher_event_router_ = nullptr;
