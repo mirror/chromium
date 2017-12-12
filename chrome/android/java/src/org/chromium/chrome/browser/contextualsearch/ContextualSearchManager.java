@@ -225,7 +225,7 @@ public class ContextualSearchManager
         mTabModelObserver = new EmptyTabModelObserver() {
             @Override
             public void didSelectTab(Tab tab, TabSelectionType type, int lastId) {
-                if (!mIsPromotingToTab && tab.getId() != lastId
+                if ((!mIsPromotingToTab && tab.getId() != lastId)
                         || mActivity.getTabModelSelector().isIncognitoSelected()) {
                     hideContextualSearch(StateChangeReason.UNKNOWN);
                     mSelectionController.onTabSelected();
@@ -953,6 +953,8 @@ public class ContextualSearchManager
 
             if (isExternalUrl) {
                 onExternalNavigation(url);
+            } else {
+                nativeEnableContextualSearchJsApiForUrl(mNativeContextualSearchManagerPtr, url);
             }
         }
 
@@ -1759,6 +1761,8 @@ public class ContextualSearchManager
             ContextualSearchContext contextualSearchContext, WebContents baseWebContents);
     private native void nativeEnableContextualSearchJsApiForOverlay(
             long nativeContextualSearchManager, WebContents overlayWebContents);
+    private native void nativeEnableContextualSearchJsApiForUrl(
+            long nativeContextualSearchManager, String url);
     // Don't call these directly, instead call the private methods that cache the results.
     private native String nativeGetTargetLanguage(long nativeContextualSearchManager);
     private native String nativeGetAcceptLanguages(long nativeContextualSearchManager);
