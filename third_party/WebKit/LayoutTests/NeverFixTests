@@ -1811,13 +1811,13 @@ external/wpt/css/css-color/rgba-008.html [ WontFix ]
 
 # Failures on the initial import of css-color. Test suite had many other bugs,
 # so these may also be incorrect tests, but probably some real issues too.
-external/wpt/css/css-color/t32-opacity-offscreen-multiple-boxes-1-c.xht [ WontFix ]
-external/wpt/css/css-color/t32-opacity-offscreen-multiple-boxes-2-c.xht [ WontFix ]
+# external/wpt/css/css-color/t32-opacity-offscreen-multiple-boxes-1-c.xht [ WontFix ]
+# external/wpt/css/css-color/t32-opacity-offscreen-multiple-boxes-2-c.xht [ WontFix ]
 external/wpt/css/css-color/t422-rgba-onscreen-b.xht [ WontFix ]
-external/wpt/css/css-color/t422-rgba-onscreen-multiple-boxes-c.xht [ WontFix ]
+# external/wpt/css/css-color/t422-rgba-onscreen-multiple-boxes-c.xht [ WontFix ]
 external/wpt/css/css-color/t424-hsl-basic-a.xht [ WontFix ]
 external/wpt/css/css-color/t424-hsl-parsing-f.xht [ WontFix ]
-external/wpt/css/css-color/t425-hsla-onscreen-multiple-boxes-c.xht [ WontFix ]
+# external/wpt/css/css-color/t425-hsla-onscreen-multiple-boxes-c.xht [ WontFix ]
 external/wpt/css/css-color/t425-hsla-parsing-f.xht [ WontFix ]
 
 # https://github.com/w3c/web-platform-tests/issues/8547
