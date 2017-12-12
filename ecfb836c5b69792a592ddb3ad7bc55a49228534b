@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa503d33_a3fbd4f1",
+        "filename": "third_party/WebKit/Source/core/layout/CounterNode.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-12T02:11:37Z",
+      "side": 1,
+      "message": "Can you make them scoped_refptr instead of raw ptr? And |next| too?\n\nI\u0027m not confident it\u0027s needed, but since we do |RemoveChild| below, there maybe a risk where ref count being 0 and destructed.",
+      "revId": "ecfb836c5b69792a592ddb3ad7bc55a49228534b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
