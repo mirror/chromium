@@ -1212,12 +1212,14 @@ bool MediaStreamManager::FindExistingRequestedDevice(
       for (const MediaStreamDevice& device : request->devices) {
         if (device.id == source_id && device.type == new_device.type) {
           *existing_device = device;
-          // Make sure that the audio |effects| reflect what the request
-          // is set to and not what the capabilities are.
-          int effects = existing_device->input.effects();
-          FilterAudioEffects(request->controls, &effects);
-          EnableHotwordEffect(request->controls, &effects);
-          existing_device->input.set_effects(effects);
+          if (existing_device->input) {
+            // Make sure that the audio |effects| reflect what the request
+            // is set to and not what the capabilities are.
+            int effects = existing_device->input->effects();
+            FilterAudioEffects(request->controls, &effects);
+            EnableHotwordEffect(request->controls, &effects);
+            existing_device->input->set_effects(effects);
+          }
           *existing_request_state = request->state(device.type);
           return true;
         }
@@ -1367,16 +1369,18 @@ void MediaStreamManager::Opened(MediaStreamType stream_type,
             const MediaStreamDevice* opened_device =
                 audio_input_device_manager_->GetOpenedDeviceById(
                     device.session_id);
-            device.input = opened_device->input;
+            if (opened_device->input) {
+              device.input = *opened_device->input;
 
-            // Since the audio input device manager will set the input
-            // parameters to the default settings (including supported effects),
-            // we need to adjust those settings here according to what the
-            // request asks for.
-            int effects = device.input.effects();
-            FilterAudioEffects(request->controls, &effects);
-            EnableHotwordEffect(request->controls, &effects);
-            device.input.set_effects(effects);
+              // Since the audio input device manager will set the input
+              // parameters to the default settings (including supported
+              // effects), we need to adjust those settings here according to
+              // what the request asks for.
+              int effects = device.input->effects();
+              FilterAudioEffects(request->controls, &effects);
+              EnableHotwordEffect(request->controls, &effects);
+              device.input->set_effects(effects);
+            }
 
             device.matched_output = opened_device->matched_output;
           }
@@ -1542,8 +1546,8 @@ void MediaStreamManager::HandleAccessRequestResponse(
     // Initialize the sample_rate and channel_layout here since for audio
     // mirroring, we don't go through EnumerateDevices where these are usually
     // initialized.
-    if (device.type == MEDIA_TAB_AUDIO_CAPTURE ||
-        device.type == MEDIA_DESKTOP_AUDIO_CAPTURE) {
+    if (device.input && (device.type == MEDIA_TAB_AUDIO_CAPTURE ||
+                         device.type == MEDIA_DESKTOP_AUDIO_CAPTURE)) {
       int sample_rate = output_parameters.sample_rate();
       // If we weren't able to get the native sampling rate or the sample_rate
       // is outside the valid range for input devices set reasonable defaults.
@@ -1551,10 +1555,10 @@ void MediaStreamManager::HandleAccessRequestResponse(
         sample_rate = 44100;
 
       media::AudioParameters params(
-          device.input.format(), media::CHANNEL_LAYOUT_STEREO, sample_rate,
-          device.input.bits_per_sample(), device.input.frames_per_buffer());
-      params.set_effects(device.input.effects());
-      params.set_mic_positions(device.input.mic_positions());
+          device.input->format(), media::CHANNEL_LAYOUT_STEREO, sample_rate,
+          device.input->bits_per_sample(), device.input->frames_per_buffer());
+      params.set_effects(device.input->effects());
+      params.set_mic_positions(device.input->mic_positions());
       DCHECK(params.IsValid());
       device.input = params;
     }
