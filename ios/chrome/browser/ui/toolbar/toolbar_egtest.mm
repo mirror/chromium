@@ -277,7 +277,8 @@ void SelectNewTabPagePanel(ntp_home::PanelIdentifier panel_type) {
   }];
 
   std::map<GURL, std::string> responses;
-  const GURL URL = web::test::HttpServer::MakeUrl("http://testPage");
+  // The URL needs to be long enough so the tap to the omnibox selects it.
+  const GURL URL = web::test::HttpServer::MakeUrl("http://veryLongURLTestPage");
   const GURL secondURL = web::test::HttpServer::MakeUrl("http://pastePage");
 
   [ChromeEarlGrey loadURL:URL];
