@@ -273,7 +273,8 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestPaymentAppTest, PayWithBasicCard) {
         "/payment_request_bobpay_and_basic_card_with_modifiers_test.html");
     InvokePaymentRequestUI();
 
-    ResetEventWaiter(DialogEvent::DIALOG_CLOSED);
+    ResetEventWaiterForSequence(
+        {DialogEvent::PROCESSING_SPINNER_SHOWN, DialogEvent::DIALOG_CLOSED});
     ClickOnDialogViewAndWait(DialogViewID::PAY_BUTTON, dialog_view());
     ExpectBodyContains({"basic-card"});
   }
@@ -286,7 +287,8 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestPaymentAppTest, PayWithBasicCard) {
         "/payment_request_bobpay_and_basic_card_with_modifiers_test.html");
     InvokePaymentRequestUI();
 
-    ResetEventWaiter(DialogEvent::DIALOG_CLOSED);
+    ResetEventWaiterForSequence(
+        {DialogEvent::PROCESSING_SPINNER_SHOWN, DialogEvent::DIALOG_CLOSED});
     ClickOnDialogViewAndWait(DialogViewID::PAY_BUTTON, dialog_view());
     ExpectBodyContains({"basic-card"});
   }
