@@ -20,10 +20,13 @@
 
 namespace update_client {
 
-ActionRunner::ActionRunner(const Component& component,
-                           const std::vector<uint8_t>& key_hash)
+ActionRunner::ActionRunner(
+    const Component& component,
+    const std::vector<uint8_t>& key_hash,
+    std::unique_ptr<service_manager::Connector> connector)
     : component_(component),
       key_hash_(key_hash),
+      connector_(std::move(connector)),
       main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
 
 ActionRunner::~ActionRunner() {
@@ -46,8 +49,8 @@ void ActionRunner::Unpack() {
   base::FilePath file_path;
   installer->GetInstalledFile(component_.action_run(), &file_path);
 
-  auto unpacker = base::MakeRefCounted<ComponentUnpacker>(key_hash_, file_path,
-                                                          installer, nullptr);
+  auto unpacker = base::MakeRefCounted<ComponentUnpacker>(
+      key_hash_, file_path, installer, connector_);
   unpacker->Unpack(
       base::BindOnce(&ActionRunner::UnpackComplete, base::Unretained(this)));
 }
