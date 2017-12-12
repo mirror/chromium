@@ -143,6 +143,46 @@
     },
     {
       "key": {
+        "uuid": "88cb807a_f370901a",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-12T16:07:12Z",
+      "side": 1,
+      "message": "nit: this wording makes it seem like you\u0027re about to have branching code, but you do not. If you mean to describe what\u0027s going to happen in GetUploadDetails, perhaps that can be somewhere else.",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 57
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a28c9bd_35ed7cf2",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-12T16:07:12Z",
+      "side": 1,
+      "message": "You\u0027re the expert here, but I\u0027m a little confused about this logic. I thought we could be in this block if Payments refused upload for any reason, including that it doesn\u0027t feel like accepting upload for a given country, or that it didn\u0027t like the postal code.\n\nIn this case we are therefore being much more restrictive about triggering local save when the experiment is on, aren\u0027t we?",
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afce1750_4effe261",
         "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
         "patchSetId": 2
@@ -178,6 +218,30 @@
       "side": 1,
       "message": "Depends on Chrome style I guess, Mathieu would have to comment on that.  I wasn\u0027t fond of this 5-line if statement either, but by moving it into its own method you make the code harder to read because you have to find the condition somewhere else in this file to know what it\u0027s doing, and it\u0027s not reused anywhere so breaking it out for reusability doesn\u0027t work.",
       "parentUuid": "afce1750_4effe261",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 8
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8e02e7_f2f628ec",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-12T16:07:12Z",
+      "side": 1,
+      "message": "how about pulling this into a separate bool that has its own comment: \n\n((detected_values \u0026 DetectedValue::CARDHOLDER_NAME ||\n  detected_values \u0026 DetectedValue::ADDRESS_NAME) \u0026\u0026\n         detected_values \u0026 DetectedValue::CVC \u0026\u0026\n         detected_values \u0026 DetectedValue::POSTAL_CODE)",
+      "parentUuid": "7920cee2_43ae2096",
       "range": {
         "startLine": 279,
         "startChar": 7,
@@ -469,6 +533,47 @@
       "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6085f40_57809a89",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-12T16:07:12Z",
+      "side": 1,
+      "message": "I haven\u0027t checked the Chromium guide, but if they\u0027re only used once and readability is better, I think it\u0027s fine to inline.",
+      "parentUuid": "5ccb090d_9a5fa336",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 302,
+        "endChar": 5
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2f75716_5860a787",
+        "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-12T16:07:12Z",
+      "side": 1,
+      "message": "consider expressing 511 as an OR of the different expected bitfield values.",
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
