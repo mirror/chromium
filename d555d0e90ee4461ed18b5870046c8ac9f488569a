@@ -22,6 +22,30 @@
       "revId": "d555d0e90ee4461ed18b5870046c8ac9f488569a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df51834_6a974011",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-12T00:34:42Z",
+      "side": 1,
+      "message": "changed to geolocation_provider since ip_geolocation_provider is used to create geolocation :)",
+      "parentUuid": "78435c9d_30a1409c",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "d555d0e90ee4461ed18b5870046c8ac9f488569a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "f61ee95d_1d06f1c3",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-12T00:34:42Z",
+      "side": 1,
+      "message": "thanks for the suggestion!",
+      "parentUuid": "1d3ce5e7_11b24b8f",
+      "revId": "9081736714de02b11a0ec8ebebaaa94c06cce3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f8c5654_8d296e82",
         "filename": "components/language/content/browser/geo_language_provider_unittest.cc",
         "patchSetId": 5
