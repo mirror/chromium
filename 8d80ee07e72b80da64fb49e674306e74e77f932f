@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f8f1b9e5_90fa85a2",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-12T21:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20a5a6a9_6e899ec4",
+      "range": {
+        "startLine": 140,
+        "startChar": 16,
+        "endLine": 140,
+        "endChar": 22
+      },
+      "revId": "8d80ee07e72b80da64fb49e674306e74e77f932f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "625685fd_049fe7a5",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 22
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "96abfa18_1e5d8ee0",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-12T21:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "625685fd_049fe7a5",
+      "range": {
+        "startLine": 141,
+        "startChar": 17,
+        "endLine": 141,
+        "endChar": 21
+      },
+      "revId": "8d80ee07e72b80da64fb49e674306e74e77f932f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4afefe3_42f9c119",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.cc",
         "patchSetId": 22
@@ -68,6 +116,30 @@
       "revId": "8d80ee07e72b80da64fb49e674306e74e77f932f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36bec167_27d88478",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_delegate_view_base.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-12T21:47:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4afefe3_42f9c119",
+      "range": {
+        "startLine": 102,
+        "startChar": 33,
+        "endLine": 102,
+        "endChar": 35
+      },
+      "revId": "8d80ee07e72b80da64fb49e674306e74e77f932f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
