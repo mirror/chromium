@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5265b208_fefb0609",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3590,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-12T22:59:35Z",
+      "side": 1,
+      "message": "EXPECT_TRUE",
+      "revId": "76d3e880d8918f620355a7e02ece3b38045733e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af98988_7d5598b7",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3607,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-12T22:59:35Z",
+      "side": 1,
+      "message": "Should the test wait for the navigation to complete?",
+      "revId": "76d3e880d8918f620355a7e02ece3b38045733e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
