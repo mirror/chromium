@@ -22,6 +22,122 @@
       "revId": "24cec5f1340c3e6a2190479288447d979428345c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6566b2d2_d8143b01",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-12T23:43:51Z",
+      "side": 1,
+      "message": "Why? If works on linux, better to have the coverage there",
+      "parentUuid": "6d05c185_f9cf5050",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 21
+      },
+      "revId": "24cec5f1340c3e6a2190479288447d979428345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5836e95_33c69e7c",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-12T23:43:51Z",
+      "side": 1,
+      "message": "see comment in other file for consistent ordering of adding this arg",
+      "range": {
+        "startLine": 156,
+        "startChar": 32,
+        "endLine": 156,
+        "endChar": 66
+      },
+      "revId": "24cec5f1340c3e6a2190479288447d979428345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9e89d7_5705a6cb",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-12T23:43:51Z",
+      "side": 1,
+      "message": "Why only on Android? Does the server check OS? Consider add note to comment as to why only for android.",
+      "range": {
+        "startLine": 194,
+        "startChar": 3,
+        "endLine": 194,
+        "endChar": 14
+      },
+      "revId": "24cec5f1340c3e6a2190479288447d979428345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5136c5_8b9589cc",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-12T23:43:51Z",
+      "side": 1,
+      "message": "Since this is a central flag, I think it would be better to always be the 2nd AddChromeArg if used (ie, just below the first one for spdy-proxy).",
+      "range": {
+        "startLine": 24,
+        "startChar": 32,
+        "endLine": 24,
+        "endChar": 66
+      },
+      "revId": "24cec5f1340c3e6a2190479288447d979428345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886667dd_9dcc8390",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-12T23:43:51Z",
+      "side": 1,
+      "message": "eg, here too",
+      "range": {
+        "startLine": 51,
+        "startChar": 32,
+        "endLine": 51,
+        "endChar": 66
+      },
+      "revId": "24cec5f1340c3e6a2190479288447d979428345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
