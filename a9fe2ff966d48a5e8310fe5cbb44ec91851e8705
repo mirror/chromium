@@ -34,6 +34,24 @@
       "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c8f2139_79312339",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-12-12T17:55:21Z",
+      "side": 1,
+      "message": "Currently we do not transition from Active to Hidden, hence I added the DCHECK for now.",
+      "parentUuid": "6e357e2b_4081d3ad",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
