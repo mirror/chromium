@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee929b8a_c282285f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-12-12T18:20:10Z",
+      "side": 1,
+      "message": "Ok, cut away that part.",
+      "parentUuid": "893727ec_d00ecfd5",
+      "revId": "d3d9adb14de5378883e05dbb12eb75d3363074fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d289263_e53518f9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "d3d9adb14de5378883e05dbb12eb75d3363074fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e606e933_9899d0ba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-12-12T18:20:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2d289263_e53518f9",
+      "revId": "d3d9adb14de5378883e05dbb12eb75d3363074fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
