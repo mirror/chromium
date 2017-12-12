@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "807dbb7d_62621c20",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/793087.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-12T21:13:31Z",
+      "side": 1,
+      "message": "I can try, but not sure about time estimation \u003d(",
+      "parentUuid": "6cc1dbf6_c7e121ac",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26871f62_74a610e3",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 1
@@ -106,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6327bb0b_f0909d22",
+        "filename": "third_party/WebKit/Source/core/editing/PositionIterator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-12T21:13:31Z",
+      "side": 1,
+      "message": "Agree, but DCHECK in constructor will be useless, IMO.\nBecause dereference will occur in initializer list and code will crash either in Debug or Release configuration, isn\u0027t it?",
+      "parentUuid": "fbf47c68_7d368dd2",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095a2020_b297ff60",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 1
@@ -141,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "465441ee_9b911280",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 942,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-12T21:13:31Z",
+      "side": 1,
+      "message": "So in case of |position.IsValidFor() \u003d\u003d false| and also for null |adjust_position| we can just return early, am I right?",
+      "parentUuid": "dc721446_628ae138",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf8f1ca1_bba4e469",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 1
@@ -158,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "a9fa90ce_51344ad5",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-12T21:13:31Z",
+      "side": 1,
+      "message": "One thing that confuses me is that I can miss some call site and that can lead to another crash.\nIf I do the check right before constructing PositionIteratorAlgorithm, I can be sure that it will not crash.\nMostBackwardCaretPosition looks like a widely used function. Should we check all these call sites?\n\n$ git grep -n MostBackwardCaretPosition -- third_party/WebKit/Source/ | wc -l\n      66",
+      "parentUuid": "cf8f1ca1_bba4e469",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "051917fa_5560d60c",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 1
@@ -169,6 +241,30 @@
       "writtenOn": "2017-12-12T20:56:46Z",
       "side": 1,
       "message": "Does this part change anything?",
+      "range": {
+        "startLine": 1058,
+        "startChar": 0,
+        "endLine": 1069,
+        "endChar": 66
+      },
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62358f7_bdbe1d82",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-12T21:13:31Z",
+      "side": 1,
+      "message": "Oh, I missed a check for |last_position.IsNull()|, my bad.\nThanks!",
+      "parentUuid": "051917fa_5560d60c",
       "range": {
         "startLine": 1058,
         "startChar": 0,
