@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "chrome/browser/command_updater.h"
 #include "chrome/browser/command_updater_delegate.h"
 #include "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
@@ -18,7 +19,7 @@
 #include "ui/views/widget/widget_delegate.h"
 #include "url/gurl.h"
 
-class CommandUpdater;
+class CommandUpdaterImpl;
 class Profile;
 class ReloadButton;
 class ToolbarModel;
@@ -41,6 +42,7 @@ class SimpleWebViewDialog : public views::ButtonListener,
                             public views::WidgetDelegateView,
                             public LocationBarView::Delegate,
                             public ChromeToolbarModelDelegate,
+                            public CommandUpdater,
                             public CommandUpdaterDelegate,
                             public content::PageNavigator,
                             public content::WebContentsDelegate {
@@ -83,7 +85,19 @@ class SimpleWebViewDialog : public views::ButtonListener,
   content::WebContents* GetActiveWebContents() const override;
 
   // Implements CommandUpdaterDelegate:
-  void ExecuteCommandWithDisposition(int id, WindowOpenDisposition) override;
+  void ExecuteCommandWithDispositionImpl(int id, WindowOpenDisposition)
+      override;
+
+  // Implements CommandUpdater:
+  bool SupportsCommand(int id) const override;
+  bool IsCommandEnabled(int id) const override;
+  bool ExecuteCommand(int id) override;
+  bool ExecuteCommandWithDisposition(int id, WindowOpenDisposition disposition)
+      override;
+  void AddCommandObserver(int id, CommandObserver* observer) override;
+  void RemoveCommandObserver(int id, CommandObserver* observer) override;
+  void RemoveCommandObserver(CommandObserver* observer) override;
+  bool UpdateCommandEnabled(int id, bool state) override;
 
  private:
   friend class SimpleWebViewDialogTest;
@@ -94,7 +108,7 @@ class SimpleWebViewDialog : public views::ButtonListener,
 
   Profile* profile_;
   std::unique_ptr<ToolbarModel> toolbar_model_;
-  std::unique_ptr<CommandUpdater> command_updater_;
+  std::unique_ptr<CommandUpdaterImpl> command_updater_;
 
   // Controls
   views::ImageButton* back_;
