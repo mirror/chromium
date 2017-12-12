@@ -34,18 +34,38 @@ class NotificationDisplayServiceImpl : public NotificationDisplayService {
   // the individual notification operations.
   static NotificationDisplayServiceImpl* GetForProfile(Profile* profile);
 
-  // Used to propagate back events originate from the user. The events are
-  // received and dispatched to the right consumer depending on the type of
-  // notification. Consumers include, service workers, pages, extensions...
+  // ---------------------------------------------------------------------------
+  // Interaction processors
   //
-  // TODO(peter): Remove this in favor of multiple targetted methods.
-  void ProcessNotificationOperation(NotificationCommon::Operation operation,
-                                    NotificationHandler::Type notification_type,
-                                    const GURL& origin,
-                                    const std::string& notification_id,
-                                    const base::Optional<int>& action_index,
-                                    const base::Optional<base::string16>& reply,
-                                    const base::Optional<bool>& by_user);
+  // These methods are meant to be called by the notification platform bridges
+  // when interaction with a notification occurs. The events will be forwarded
+  // to the associated NotificationHandler instance. The profile will be loaded
+  // if necessary. All must be called on the UI thread.
+
+  static void ProcessClick(const std::string& profile_id,
+                           bool is_incognito,
+                           NotificationHandler::Type notification_type,
+                           const GURL& origin,
+                           const std::string& notification_id,
+                           const base::Optional<int>& action_index,
+                           const base::Optional<base::string16>& reply,
+                           base::OnceClosure completed_closure);
+
+  static void ProcessSettingsClick(const std::string& profile_id,
+                                   bool is_incognito,
+                                   NotificationHandler::Type notification_type,
+                                   const GURL& origin,
+                                   const std::string& notification_id);
+
+  static void ProcessClose(const std::string& profile_id,
+                           bool is_incognito,
+                           NotificationHandler::Type notification_type,
+                           const GURL& origin,
+                           const std::string& notification_id,
+                           bool by_user,
+                           base::OnceClosure completed_closure);
+
+  // ---------------------------------------------------------------------------
 
   // Registers an implementation object to handle notification operations
   // for |notification_type|.

@@ -168,43 +168,6 @@ gfx::Image ResizeImageToFdoMaxSize(const gfx::Image& image) {
           height)));
 }
 
-// Runs once the profile has been loaded in order to perform a given
-// |operation| on a notification.
-void ProfileLoadedCallback(NotificationCommon::Operation operation,
-                           NotificationHandler::Type notification_type,
-                           const GURL& origin,
-                           const std::string& notification_id,
-                           const base::Optional<int>& action_index,
-                           const base::Optional<base::string16>& reply,
-                           const base::Optional<bool>& by_user,
-                           Profile* profile) {
-  if (!profile)
-    return;
-
-  NotificationDisplayServiceImpl* display_service =
-      NotificationDisplayServiceImpl::GetForProfile(profile);
-  display_service->ProcessNotificationOperation(operation, notification_type,
-                                                origin, notification_id,
-                                                action_index, reply, by_user);
-}
-
-void ForwardNotificationOperationOnUiThread(
-    NotificationCommon::Operation operation,
-    NotificationHandler::Type notification_type,
-    const GURL& origin,
-    const std::string& notification_id,
-    const base::Optional<int>& action_index,
-    const base::Optional<bool>& by_user,
-    const std::string& profile_id,
-    bool is_incognito) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  g_browser_process->profile_manager()->LoadProfile(
-      profile_id, is_incognito,
-      base::Bind(&ProfileLoadedCallback, operation, notification_type, origin,
-                 notification_id, action_index, base::nullopt /* reply */,
-                 by_user));
-}
-
 class ResourceFile {
  public:
   explicit ResourceFile(const base::FilePath& file_path)
@@ -753,17 +716,6 @@ class NotificationPlatformBridgeLinuxImpl
     return nullptr;
   }
 
-  void ForwardNotificationOperation(NotificationData* data,
-                                    NotificationCommon::Operation operation,
-                                    const base::Optional<int>& action_index,
-                                    const base::Optional<bool>& by_user) {
-    DCHECK(task_runner_->RunsTasksInCurrentSequence());
-    PostTaskToUiThread(base::BindOnce(
-        ForwardNotificationOperationOnUiThread, operation,
-        data->notification_type, data->origin_url, data->notification_id,
-        action_index, by_user, data->profile_id, data->is_incognito));
-  }
-
   void OnActionInvoked(dbus::Signal* signal) {
     DCHECK(task_runner_->RunsTasksInCurrentSequence());
     dbus::MessageReader reader(signal);
@@ -779,13 +731,16 @@ class NotificationPlatformBridgeLinuxImpl
       return;
 
     if (action == kDefaultButtonId) {
-      ForwardNotificationOperation(data, NotificationCommon::CLICK,
-                                   base::nullopt /* action_index */,
-                                   base::nullopt /* by_user */);
+      PostTaskToUiThread(base::BindOnce(
+          &NotificationDisplayServiceImpl::ProcessClick, data->profile_id,
+          data->is_incognito, data->notification_type, data->origin_url,
+          data->notification_id, base::nullopt /* action_index */,
+          base::nullopt /* reply */, base::OnceClosure()));
     } else if (action == kSettingsButtonId) {
-      ForwardNotificationOperation(data, NotificationCommon::SETTINGS,
-                                   base::nullopt /* action_index */,
-                                   base::nullopt /* by_user */);
+      PostTaskToUiThread(base::BindOnce(
+          &NotificationDisplayServiceImpl::ProcessSettingsClick,
+          data->profile_id, data->is_incognito, data->notification_type,
+          data->origin_url, data->notification_id));
     } else {
       size_t id;
       if (!base::StringToSizeT(action, &id))
@@ -794,8 +749,11 @@ class NotificationPlatformBridgeLinuxImpl
       size_t id_zero_based = id - data->action_start;
       if (id_zero_based >= n_buttons)
         return;
-      ForwardNotificationOperation(data, NotificationCommon::CLICK,
-                                   id_zero_based, base::nullopt /* by_user */);
+      PostTaskToUiThread(base::BindOnce(
+          &NotificationDisplayServiceImpl::ProcessClick, data->profile_id,
+          data->is_incognito, data->notification_type, data->origin_url,
+          data->notification_id, id_zero_based /* action_index */,
+          base::nullopt /* reply */, base::OnceClosure()));
     }
   }
 
@@ -811,9 +769,11 @@ class NotificationPlatformBridgeLinuxImpl
       return;
 
     // TODO(peter): Can we support |by_user| appropriately here?
-    ForwardNotificationOperation(data, NotificationCommon::CLOSE,
-                                 base::nullopt /* action_index */,
-                                 true /* by_user */);
+    PostTaskToUiThread(base::BindOnce(
+        &NotificationDisplayServiceImpl::ProcessClose, data->profile_id,
+        data->is_incognito, data->notification_type, data->origin_url,
+        data->notification_id, true /* by_user */, base::OnceClosure()));
+
     notifications_.erase(data);
   }
 
