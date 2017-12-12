@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ccebcbb3_247fb315",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-12T23:07:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "038737b3_9cf4be9a",
+      "range": {
+        "startLine": 181,
+        "startChar": 39,
+        "endLine": 181,
+        "endChar": 42
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32c2fef2_afdb2303",
         "filename": "net/http/http_network_session.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db128c55_0311df89",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-12T23:07:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32c2fef2_afdb2303",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 72
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "fe10b3ca_6f05cfcd",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-12T23:07:36Z",
+      "side": 1,
+      "message": "We only start to probe the network in two cases: MigrateBackToDefaultNetwork, or OnPathDegrading. \n\nAnd we want to count the number of migrations when get off the default network on path degrading. \n\nWhen probe is successful, we can check if we are on the default network, if not, then we should count. Otherwise, it\u0027s either MigrateBackToDefaultNetwork or OnPahtDegrading issued on the non-default network which eventually brings us back to the default (and we are not concerned).",
+      "parentUuid": "4597bb35_fd480a04",
+      "range": {
+        "startLine": 1664,
+        "startChar": 71,
+        "endLine": 1664,
+        "endChar": 0
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fc8a42e_0c8d036b",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "be5ba06e_a6339685",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1666,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-12T23:07:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fc8a42e_0c8d036b",
+      "range": {
+        "startLine": 1666,
+        "startChar": 9,
+        "endLine": 1666,
+        "endChar": 11
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d37206b4_91862b5c",
         "filename": "net/quic/chromium/quic_chromium_client_session.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-11T18:31:21Z",
       "side": 1,
       "message": "Do we have a test for this?",
+      "range": {
+        "startLine": 1863,
+        "startChar": 75,
+        "endLine": 1863,
+        "endChar": 0
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "445e155d_a054330e",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-12T23:07:36Z",
+      "side": 1,
+      "message": "We don\u0027t for the time being. It is extremely hard to us to cook up a CL to test this as the migrate back logic retries and the send probing logic retries.",
+      "parentUuid": "d37206b4_91862b5c",
       "range": {
         "startLine": 1863,
         "startChar": 75,
@@ -137,6 +257,30 @@
       "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe28b95_20b367db",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-12T23:07:36Z",
+      "side": 1,
+      "message": "Done. I also realized that we only want to do migration when we encounter path degrading on the default network. For path degrading on the non-default, we should already have a migrate back to default timer working to bring us back to the default network if the default network is promising. \n\nIf we don\u0027t have migrate back to default timer running, that indicates got on the non-default network due to irrevertable reason, e.g., write error, network being disconnected or some similar.",
+      "parentUuid": "ec498dcb_1e5d557c",
+      "range": {
+        "startLine": 1873,
+        "startChar": 33,
+        "endLine": 1873,
+        "endChar": 58
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
