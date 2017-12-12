@@ -147,6 +147,8 @@ blink_core_sources("paint") {
     "PaintTiming.h",
     "PrePaintTreeWalk.cpp",
     "PrePaintTreeWalk.h",
+    "RemoteFramePainter.cpp",
+    "RemoteFramePainter.h",
     "ReplacedPainter.cpp",
     "ReplacedPainter.h",
     "RootInlineBoxPainter.cpp",
