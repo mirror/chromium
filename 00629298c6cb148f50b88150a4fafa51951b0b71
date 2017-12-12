@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d532327d_a1ae12e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-12T10:57:32Z",
+      "side": 1,
+      "message": "It\u0027s a bit odd to depend on the DownloadUtils. Could we avoid this?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 58
+      },
+      "revId": "00629298c6cb148f50b88150a4fafa51951b0b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779e1018_6946f918",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-12T10:57:32Z",
+      "side": 1,
+      "message": "Same here, can this be part of this class?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 62
+      },
+      "revId": "00629298c6cb148f50b88150a4fafa51951b0b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc3b683_91dcd00e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-12T10:57:32Z",
+      "side": 1,
+      "message": "It\u0027s a bit of a generic name while the content is fairly specific. Could this be `MediaViewerUtils`? or do you expect to add non-media viewer stuff?",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "00629298c6cb148f50b88150a4fafa51951b0b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79e9cc1_16d4ee1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-12T10:57:32Z",
+      "side": 1,
+      "message": "dfalcantara@ no longer works on Chrome so can you do one of the following:\n- take over the TODO\n- give the TODO to dtrainor@\n- replace the TODO owner with a bug number (\u003c- my preferred solution so we don\u0027t have to re-assign)",
+      "range": {
+        "startLine": 56,
+        "startChar": 16,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "00629298c6cb148f50b88150a4fafa51951b0b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
