@@ -41,26 +41,6 @@
 
 namespace {
 
-// TODO(crbug.com/776464): Remove this after |SetCustomWallpaper| is migrated
-// to |WallpaperController|.
-void InitializeWallpaperPaths() {
-  base::FilePath user_data_path;
-  CHECK(PathService::Get(chrome::DIR_USER_DATA, &user_data_path));
-  ash::WallpaperController::dir_user_data_path_ = user_data_path;
-
-  base::FilePath chromeos_wallpapers_path;
-  CHECK(PathService::Get(chrome::DIR_CHROMEOS_WALLPAPERS,
-                         &chromeos_wallpapers_path));
-  ash::WallpaperController::dir_chrome_os_wallpapers_path_ =
-      chromeos_wallpapers_path;
-
-  base::FilePath chromeos_custom_wallpapers_path;
-  CHECK(PathService::Get(chrome::DIR_CHROMEOS_CUSTOM_WALLPAPERS,
-                         &chromeos_custom_wallpapers_path));
-  ash::WallpaperController::dir_chrome_os_custom_wallpapers_path_ =
-      chromeos_custom_wallpapers_path;
-}
-
 class SuccessDecodeRequestSender
     : public arc::ArcWallpaperService::DecodeRequestSender {
  public:
@@ -167,22 +147,19 @@ TEST_F(ArcWallpaperServiceTest, SetDefaultWallpaper) {
   EXPECT_EQ(1, test_wallpaper_controller_.set_default_wallpaper_count());
 }
 
-TEST_F(ArcWallpaperServiceTest, SetAndGetWallpaper) {
-  // TODO(crbug.com/776464): This test is supposed to call the mock method, but
-  // currently it's still calling the real method which relies on the paths.
-  InitializeWallpaperPaths();
-
+TEST_F(ArcWallpaperServiceTest, SetWallpaper) {
+  test_wallpaper_controller_.ClearCounts();
   service_->SetDecodeRequestSenderForTesting(
       std::make_unique<SuccessDecodeRequestSender>());
-  std::vector<uint8_t> bytes;
-  service_->SetWallpaper(bytes, 10 /* ID */);
-  content::RunAllTasksUntilIdle();
-  // Wait until wallpaper loading is done.
-  chromeos::wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
-  ASSERT_EQ(1u, wallpaper_instance_->changed_ids().size());
-  EXPECT_EQ(10, wallpaper_instance_->changed_ids()[0]);
+  service_->SetWallpaper(std::vector<uint8_t>(), 10 /* ID */);
+  wallpaper_controller_client_->FlushForTesting();
+  EXPECT_EQ(1, test_wallpaper_controller_.set_custom_wallpaper_count());
+}
 
-  base::RunLoop run_loop;
+TEST_F(ArcWallpaperServiceTest, GetWallpaper) {
+  // Set a default wallpaper to be fetched by |GetWallpaper|.
+  ash::Shell::Get()->wallpaper_controller()->ShowDefaultWallpaperForTesting();
+  std::vector<uint8_t> bytes;
   service_->GetWallpaper(
       base::BindOnce([](std::vector<uint8_t>* out,
                         const std::vector<uint8_t>& bytes) { *out = bytes; },
