@@ -16,6 +16,24 @@
       "revId": "48e744e340269667cc67179aa491fca620776b89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a506f3_4b23420a",
+        "filename": "cc/paint/transfer_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-12T17:55:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d824c73a_0351e184",
+      "revId": "48e744e340269667cc67179aa491fca620776b89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
