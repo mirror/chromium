@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f831d2a4_d8bc5830",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T02:10:41Z",
+      "side": 1,
+      "message": "Update commit message to include any network.",
+      "revId": "f206174b6e47a358bcef55a6ad51ca783af2e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
