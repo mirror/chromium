@@ -23,7 +23,12 @@ cr.define('extensions', function() {
     onLinkTap_: function(e) {
       e.preventDefault();
       extensions.navigation.navigateTo({page: e.target.dataset.path});
-    }
+    },
+
+    /** @private */
+    onMoreExtensionsTap_: function() {
+      chrome.metricsPrivate.recordUserAction('Options_GetMoreExtensions');
+    },
   });
 
   return {Sidebar: Sidebar};
