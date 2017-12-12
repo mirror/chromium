@@ -725,4 +725,10 @@ void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
 }
 #endif
 
+void RenderFrameProxy::Print(const blink::WebRect& rect, uint32_t content_id) {
+  Send(new FrameHostMsg_PrintRemoteFrame(
+      routing_id_, gfx::Rect(rect.x, rect.y, rect.width, rect.height),
+      content_id));
+}
+
 }  // namespace
