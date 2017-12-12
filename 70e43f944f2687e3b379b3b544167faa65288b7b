@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "882e3a6f_97c1e061",
+        "filename": "gpu/command_buffer/client/BUILD.gn",
+        "patchSetId": 32
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-12T01:02:26Z",
+      "side": 1,
+      "message": "nit: no need for this one any more (since this target doesn\u0027t include raster_implementation_gles.*)",
+      "revId": "70e43f944f2687e3b379b3b544167faa65288b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
