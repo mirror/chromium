@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ee42ba0_cd04267c",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-12T00:12:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d7b250e_47a9dde8",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8967d601_02b68ca7",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "33c4b67d_78771f12",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-12T00:12:50Z",
+      "side": 1,
+      "message": "Done (killing renderer with ReceivedBadMessage)",
+      "parentUuid": "3ac00716_819c8285",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37cab089_9466feb9",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 2
@@ -74,6 +110,30 @@
       "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4dca016_c64922b1",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-12T00:12:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37cab089_9466feb9",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 13
+      },
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "92bf2a03_8ac0306c",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-12T00:12:50Z",
+      "side": 1,
+      "message": "Mike: Done\n\nBalazs: per jyasskin -\n\"I expected the \"is a registrable domain suffix of\" algorithm to match document.domain, which does allow foo.bar.google.com to set a document.domain of bar.google.com. You\u0027re right that despite discussing the term forever, we still managed to pick one that seems to require exactly a Public Suffix + 1 subdomain.\"\n\nIn this case, the GetDomainAndRegistry comparison still seems to work.",
+      "parentUuid": "b0e5a6bb_047e2186",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "756b0a0a_45066ab0",
         "filename": "content/browser/webauth/authenticator_impl.cc",
         "patchSetId": 2
@@ -141,6 +219,24 @@
       "side": 1,
       "message": "At any rate, we should probably do steps 6--8 and 9 in two parts:\n\nstd::string GetValidEffectiveDomain(RenderFrameHost);\n -\u003e Check that rfh-\u003eGetLastCommittedURL() is not (empty, about:, data:)\n -\u003e Check that rfh-\u003eGetLastCommittedOrigin() is not (empty, unique) and its host has HostHasRegistryControlledDomain.\n\nstd::string GetValidatedRelyingPartyID(effective_domain, Optional\u003cpossibly_invalid_relying_party_id\u003e)\n -\u003e You can calculate registerable_domain \u003d GetDomainAndRegistry(effective_domain)\n\nAnd as Mike mentions, it probably makes sense to only expose any WebAuthN functionality to browsing contexts where GetValidEffectiveDomain() returns a valid domain -- i.e., do that for all CM and WebAuthN API calls.\n\nOrthogonally, we can do each of the two checks:\na) only in the browser process, and return SecurityErrors if those checks fail.\nb) first in the renderer process, which return SecurityErrors on failure. Then do the check again on the browser side, and kill the renderer if the check fails.\n\nWe should also make sure to have unittests covering the pathological cases listed in:\nhttps://html.spec.whatwg.org/multipage/origin.html#is-a-registrable-domain-suffix-of-or-is-equal-to",
       "parentUuid": "756b0a0a_45066ab0",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6d2d11_776884b9",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-12T00:12:50Z",
+      "side": 1,
+      "message": "I think I\u0027m following... I split into two methods, as suggested. I also went with option b (doing the checks in both processes). Can you verify that the renderer-side checks are correct? And in this case, where did you want the CanAccessDataForOrigin check?",
+      "parentUuid": "f38a46ae_a223e954",
       "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +274,24 @@
       "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2896f3_679827e5",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-12T00:12:50Z",
+      "side": 1,
+      "message": "Poked it. Well, these should actually crash the renderer now, but I\u0027m still returning SecurityErrors for the unittests.",
+      "parentUuid": "96700ab8_15d07533",
+      "revId": "c4d2f8c80227cec35be092164e0e6185d291a151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
