@@ -204,8 +204,9 @@ function createTableRowWrapper(key, value) {
 function createTable(systemInfo) {
   for (var key in systemInfo) {
     var item = systemInfo[key];
+    // If we have a display value, show that instead.
     tableCreationClosuresQueue.push(
-        createTableRowWrapper(item['key'], item['value']));
+        createTableRowWrapper(item['key'], item['displayValue'] || item['value']));
   }
 
   tableCreationClosuresQueue.push(finishPageLoading);

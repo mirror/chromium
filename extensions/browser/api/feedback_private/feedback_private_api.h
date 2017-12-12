@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "components/feedback/feedback_data.h"
 #include "components/feedback/system_logs/system_logs_source.h"
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "extensions/browser/extension_function.h"
@@ -132,6 +133,11 @@ class FeedbackPrivateSendFeedbackFunction : public UIThreadExtensionFunction {
   ResponseAction Run() override;
 
  private:
+  void OnAllLogsReady(
+      scoped_refptr<feedback::FeedbackData> feedback_data,
+      std::unique_ptr<feedback::FeedbackData::SystemLogsMap> sys_logs,
+      bool send_histograms,
+      const feedback::FeedbackData::SystemLogsMap& extra_logs);
   void OnCompleted(bool success);
 };
 

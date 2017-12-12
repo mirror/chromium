@@ -54,6 +54,7 @@ class CHROMEOS_EXPORT FakeDebugDaemonClient : public DebugDaemonClient {
                      VoidDBusMethodCallback callback) override;
   void GetScrubbedLogs(const GetLogsCallback& callback) override;
   void GetScrubbedBigLogs(const GetLogsCallback& callback) override;
+  void GetScrubbedSpecialLogs(const GetLogsCallback& callback) override;
   void GetAllLogs(const GetLogsCallback& callback) override;
   void GetLog(const std::string& log_name,
               DBusMethodCallback<std::string> callback) override;

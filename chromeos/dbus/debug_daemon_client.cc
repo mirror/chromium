@@ -256,6 +256,23 @@ class DebugDaemonClientImpl : public DebugDaemonClient {
                        pipe_reader->AsWeakPtr()));
   }
 
+  void GetScrubbedSpecialLogs(const GetLogsCallback& callback) override {
+    PipeReaderWrapper* pipe_reader = new PipeReaderWrapper(callback);
+    base::ScopedFD pipe_write_end = pipe_reader->Initialize();
+
+    dbus::MethodCall method_call(debugd::kDebugdInterface,
+                                 debugd::kGetSpecialFeedbackLogs);
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendFileDescriptor(pipe_write_end.get());
+
+    DVLOG(1) << "Requesting special feedback logs";
+    debugdaemon_proxy_->CallMethod(
+        &method_call, kBigLogsDBusTimeoutMS,
+        base::BindOnce(&DebugDaemonClientImpl::OnBigFeedbackLogsResponse,
+                       weak_ptr_factory_.GetWeakPtr(),
+                       pipe_reader->AsWeakPtr()));
+  }
+
   void GetAllLogs(const GetLogsCallback& callback) override {
     dbus::MethodCall method_call(debugd::kDebugdInterface,
                                  debugd::kGetAllLogs);

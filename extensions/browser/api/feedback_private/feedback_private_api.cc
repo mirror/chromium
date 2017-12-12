@@ -32,6 +32,7 @@
 #include "extensions/common/constants.h"
 
 #if defined(OS_CHROMEOS)
+#include "components/feedback/feedback_util_chromeos.h"
 #include "extensions/browser/api/feedback_private/log_source_access_manager.h"
 #endif  // defined(OS_CHROMEOS)
 
@@ -196,6 +197,12 @@ void FeedbackPrivateGetSystemInformationFunction::OnCompleted(
       SystemInformation sys_info_entry;
       sys_info_entry.key = std::move(itr.first);
       sys_info_entry.value = std::move(itr.second);
+#if defined(OS_CHROMEOS)
+      if (!sys_info_entry.value.empty()) {
+        sys_info_entry.display_value =
+            feedback_util::GetDisplayValue(sys_info_entry.key);
+      }
+#endif  // defined(OS_CHROMEOS)
       sys_info_list.emplace_back(std::move(sys_info_entry));
     }
   }
@@ -281,10 +288,44 @@ ExtensionFunction::ResponseAction FeedbackPrivateSendFeedbackFunction::Run() {
   auto sys_logs = std::make_unique<FeedbackData::SystemLogsMap>();
   const SystemInformationList* sys_info =
       feedback_info.system_information.get();
+  bool need_special_logs = false;
   if (sys_info) {
-    for (const SystemInformation& info : *sys_info)
-      sys_logs->emplace(info.key, info.value);
+    for (const SystemInformation& info : *sys_info) {
+      if (info.display_value)
+        need_special_logs = true;
+      else
+        sys_logs->emplace(info.key, info.value);
+    }
   }
+
+  if (need_special_logs) {
+#if defined(OS_CHROMEOS)
+    feedback_util::GetSpecialLogs(
+        base::Bind(&FeedbackPrivateSendFeedbackFunction::OnAllLogsReady,
+                   this,
+                   std::move(feedback_data),
+                   base::Passed(std::move(sys_logs)),
+                   feedback_info.send_histograms));
+#else
+    NOTREACHED();
+#endif  // defined(OS_CHROMEOS)
+  } else {
+    OnAllLogsReady(std::move(feedback_data),
+                   std::move(sys_logs),
+                   feedback_info.send_histograms,
+                   FeedbackData::SystemLogsMap());
+  }
+
+  return RespondLater();
+}
+
+void FeedbackPrivateSendFeedbackFunction::OnAllLogsReady(
+    scoped_refptr<FeedbackData> feedback_data,
+    std::unique_ptr<FeedbackData::SystemLogsMap> sys_logs,
+    bool send_histograms,
+    const FeedbackData::SystemLogsMap& extra_logs) {
+  for (const auto& entry : extra_logs)
+    sys_logs->emplace(entry.first, entry.second);
 
   feedback_data->SetAndCompressSystemInfo(std::move(sys_logs));
 
@@ -293,7 +334,7 @@ ExtensionFunction::ResponseAction FeedbackPrivateSendFeedbackFunction::Run() {
                                  ->GetService();
   DCHECK(service);
 
-  if (feedback_info.send_histograms) {
+  if (send_histograms) {
     auto histograms = std::make_unique<std::string>();
     *histograms =
         base::StatisticsRecorder::ToJSON(base::JSON_VERBOSITY_LEVEL_FULL);
@@ -305,7 +346,6 @@ ExtensionFunction::ResponseAction FeedbackPrivateSendFeedbackFunction::Run() {
       feedback_data,
       base::Bind(&FeedbackPrivateSendFeedbackFunction::OnCompleted, this));
 
-  return RespondLater();
 }
 
 void FeedbackPrivateSendFeedbackFunction::OnCompleted(bool success) {

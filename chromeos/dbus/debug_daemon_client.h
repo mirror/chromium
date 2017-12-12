@@ -94,6 +94,13 @@ class CHROMEOS_EXPORT DebugDaemonClient
   // system information.
   virtual void GetScrubbedBigLogs(const GetLogsCallback& callback) = 0;
 
+  // Gets the scrubbed logs from debugd that it dumped at the last call
+  // for big logs, but which were either so big that showing them in the
+  // system information dialog would make it unusably slow, or which are
+  // obscure enough that it's just better to try and explain what the
+  // relevant information is.
+  virtual void GetScrubbedSpecialLogs(const GetLogsCallback& callback) = 0;
+
   // Gets all logs collected by debugd.
   virtual void GetAllLogs(const GetLogsCallback& callback) = 0;
 
