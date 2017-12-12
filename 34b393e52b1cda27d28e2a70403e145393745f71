@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "199aa9fc_99737c0b",
+        "filename": "ui/views/view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-12T21:36:03Z",
+      "side": 1,
+      "message": "The only worry is that some View will override this, and not call back to this base impl, which does the actual work.\n\nOne possible mitigation is to keep this non-virtual, but have a no-op virtual method (e.g. OnAccessibilityEvent(...)), which Views can override to get notified when an AX event is sent.\n\nAnother approach is to install a test-implementation of ViewsDelegate in the test, and use that to validate that the right AX event is sent at the right time.",
+      "revId": "34b393e52b1cda27d28e2a70403e145393745f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
