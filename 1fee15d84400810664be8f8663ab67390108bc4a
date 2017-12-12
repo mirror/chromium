@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "801271f0_fac27781",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/startup/sources/debugger/linkifier-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-12T23:32:13Z",
+      "side": 1,
+      "message": "Let\u0027s investigate what\u0027s happening and maybe print the formatted source?",
+      "range": {
+        "startLine": 5,
+        "startChar": 50,
+        "endLine": 5,
+        "endChar": 52
+      },
+      "revId": "1fee15d84400810664be8f8663ab67390108bc4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
