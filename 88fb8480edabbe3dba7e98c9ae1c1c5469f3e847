@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d9123c3_1141aa76",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-in-xhtml-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-12T00:05:22Z",
+      "side": 1,
+      "message": "Looks like the line number is offset by 1, but that\u0027s also how it was before as well.",
+      "revId": "88fb8480edabbe3dba7e98c9ae1c1c5469f3e847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
