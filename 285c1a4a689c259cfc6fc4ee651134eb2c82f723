@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b7ca5c5_be6f335c",
+        "filename": "third_party/WebKit/Source/platform/text/CharacterPropertyDataGenerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-12T19:28:17Z",
+      "side": 1,
+      "message": "To save you need for minor edits in the future (when a few characters are added to Ext A; there are 74 slots available and they\u0027ll not be used for anything other than CJK Ideographs), why don\u0027t you just combine these two blocks? \n\n3400 ~ 9FFF",
+      "range": {
+        "startLine": 44,
+        "startChar": 3,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "285c1a4a689c259cfc6fc4ee651134eb2c82f723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec513ea2_1d2b55df",
+        "filename": "third_party/WebKit/Source/platform/text/CharacterPropertyDataGenerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-12T19:28:17Z",
+      "side": 1,
+      "message": "Are you\u0027re gonna add these two tone marks to the other trie for Hangul (\nhttps://chromium-review.googlesource.com/c/chromium/src/+/820210 ) ?",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "285c1a4a689c259cfc6fc4ee651134eb2c82f723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9daa222_309871ff",
+        "filename": "third_party/WebKit/Source/platform/text/CharacterPropertyDataGenerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-12T19:28:17Z",
+      "side": 1,
+      "message": "Tangut blocks are added here. Then, they should be removed from the other place (switch-statement), shouldn\u0027t they?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "285c1a4a689c259cfc6fc4ee651134eb2c82f723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
