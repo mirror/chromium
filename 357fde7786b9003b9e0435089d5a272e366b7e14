@@ -33,6 +33,24 @@
       "revId": "357fde7786b9003b9e0435089d5a272e366b7e14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66ff142_e1784ef4",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-12T21:57:09Z",
+      "side": 1,
+      "message": "We need the following DOM and selection:\n\n\"\u003ca href\u003d\\\"www\\\" style\u003d\\\"display:block\\\"\u003e\u003ca href\u003d\\\"www\\\" style\u003d\\\"display: inline !important;\\\"\u003e\u003ci\u003e^home|\u003c/i\u003e\u003c/a\u003e  \u003c/a\u003e\"\n\nHowever, HTML parser rejects it as there are nested \u003ca\u003e labels.\n \nCould you construct the input DOM and selection manually? It\u0027s still better than having two extra commands.",
+      "parentUuid": "4eab0696_bd9c67fa",
+      "revId": "357fde7786b9003b9e0435089d5a272e366b7e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
