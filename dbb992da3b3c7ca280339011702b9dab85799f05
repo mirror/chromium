@@ -16,6 +16,24 @@
       "revId": "dbb992da3b3c7ca280339011702b9dab85799f05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a38c09_54351fe3",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-12T15:35:10Z",
+      "side": 1,
+      "message": "It doesn\u0027t need to be made public, but I had no choice since it\u0027s a struct. IMO it made the implementation much simpler. There are a number of return sites that would all need the \"n of m\" treatment.",
+      "parentUuid": "da113523_545f61d7",
+      "revId": "dbb992da3b3c7ca280339011702b9dab85799f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
