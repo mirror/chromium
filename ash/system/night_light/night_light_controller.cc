@@ -14,6 +14,7 @@
 #include "base/i18n/time_formatting.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/power_monitor/power_monitor.h"
 #include "base/time/time.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -124,9 +125,15 @@ NightLightController::NightLightController()
     : delegate_(std::make_unique<NightLightControllerDelegateImpl>()),
       binding_(this) {
   Shell::Get()->session_controller()->AddObserver(this);
+  base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
+  if (power_monitor)
+    power_monitor->AddObserver(this);
 }
 
 NightLightController::~NightLightController() {
+  base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
+  if (power_monitor)
+    power_monitor->RemoveObserver(this);
   Shell::Get()->session_controller()->RemoveObserver(this);
 }
 
@@ -273,6 +280,12 @@ void NightLightController::SetClient(mojom::NightLightClientPtr client) {
   }
 }
 
+void NightLightController::OnResume() {
+  // Time changes while the device is suspended. We need to refresh the schedule
+  // upon device resume to know what the status should be now.
+  Refresh(true /* did_schedule_change */);
+}
+
 void NightLightController::SetDelegateForTesting(
     std::unique_ptr<Delegate> delegate) {
   delegate_ = std::move(delegate);
@@ -393,6 +406,7 @@ void NightLightController::RefreshScheduleTimer(base::Time start_time,
   }
 
   // NOTE: Users can set any weird combinations.
+  const base::Time now = delegate_->GetNow();
   if (end_time <= start_time) {
     // Example:
     // Start: 9:00 PM, End: 6:00 AM.
@@ -402,8 +416,30 @@ void NightLightController::RefreshScheduleTimer(base::Time start_time,
     //        |                    |
     //       end                 start
     //
-    // From our perspective, the end time is always a day later.
-    end_time += base::TimeDelta::FromDays(1);
+    // Note that the above times are times of day (today). It is important to
+    // know where "now" is with respect to these times to decide how to adjust
+    // them.
+    if (end_time >= now) {
+      // If the end time (today) is greater than the time now, this means "now"
+      // is within the NightLight schedule, and the start time is actually
+      // yesterday. The above timeline is interpreted as:
+      //
+      //   21:00 (-1day)              6:00
+      // <----- + ----------- + ------ + ----->
+      //        |             |        |
+      //      start          now      end
+      //
+      start_time -= base::TimeDelta::FromDays(1);
+    } else {
+      // Two possibilities here:
+      // - Either "now" is greater than the end time, but less than start time.
+      //   This means NightLight is outside the schedule, waiting for the next
+      //   start time. The end time is actually a day later.
+      // - Or "now" is greater than both the start and end times. This means
+      //   NightLight is within the schedule, waiting to turn off at the next
+      //   end time, which is also a day later.
+      end_time += base::TimeDelta::FromDays(1);
+    }
   }
 
   DCHECK_GE(end_time, start_time);
@@ -413,7 +449,6 @@ void NightLightController::RefreshScheduleTimer(base::Time start_time,
   bool enable_now = false;
 
   // Where are we now with respect to the start and end times?
-  const base::Time now = delegate_->GetNow();
   if (now < start_time) {
     // Example:
     // Start: 6:00 PM today, End: 6:00 AM tomorrow, Now: 4:00 PM.

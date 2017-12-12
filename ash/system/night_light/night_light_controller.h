@@ -12,6 +12,7 @@
 #include "ash/session/session_observer.h"
 #include "ash/system/night_light/time_of_day.h"
 #include "base/observer_list.h"
+#include "base/power_monitor/power_observer.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "components/prefs/pref_change_registrar.h"
@@ -25,7 +26,8 @@ namespace ash {
 // Controls the NightLight feature that adjusts the color temperature of the
 // screen.
 class ASH_EXPORT NightLightController : public mojom::NightLightController,
-                                        public SessionObserver {
+                                        public SessionObserver,
+                                        public base::PowerObserver {
  public:
   using ScheduleType = mojom::NightLightController::ScheduleType;
 
@@ -109,6 +111,9 @@ class ASH_EXPORT NightLightController : public mojom::NightLightController,
   // ash::mojom::NightLightController:
   void SetCurrentGeoposition(mojom::SimpleGeopositionPtr position) override;
   void SetClient(mojom::NightLightClientPtr client) override;
+
+  // base::PowerObserver:
+  void OnResume() override;
 
   void SetDelegateForTesting(std::unique_ptr<Delegate> delegate);
 
