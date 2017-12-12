@@ -16,6 +16,24 @@
       "revId": "b531336e62fa18100c963e5eee2327dad614aa09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562c8d8f_98109896",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-12T01:40:46Z",
+      "side": 1,
+      "message": "Sorry, it has been merged, do I need to revert?\nWill be careful next time.",
+      "parentUuid": "0174876d_ea5c0c77",
+      "revId": "b531336e62fa18100c963e5eee2327dad614aa09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
