@@ -22,6 +22,30 @@
       "revId": "a11011b2552e3b8fa45678d291bba1adf82126b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1f5559_956ac2ce",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-12T07:47:05Z",
+      "side": 0,
+      "message": "Do you mind if I do this in a follow up? There are a few other places that still use the old PNGs (specifically the cookies and blocked extension icons) and I\u0027d like to see if they can be converted to use vectors as well, but it might bloat this CL with some unrelated cleanup.",
+      "parentUuid": "5b3aa1a2_70c870aa",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 45
+      },
+      "revId": "a11011b2552e3b8fa45678d291bba1adf82126b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

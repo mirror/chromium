@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "be2f0afd_272da25f",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-12T07:47:05Z",
+      "side": 1,
+      "message": "\u003e Did you confirm with a designer that the content paste icon is supposed to look different in two different surfaces (location bar/OIB I assume)? Seems confusing.\n\nYes - maxwalker@ requested it be changed because he thought it looked bad at that size.\n\n\u003e I see now that I was under the false impression that these were just icons being used for content settings in the location bar, but now I can see they\u0027re being used in many surfaces, like in the status tray, wherever extension icons are used, etc. So I don\u0027t think we want to change layout in all those places. But you did say that the only thing wrong with the icons as they currently stand is padding, right? So I\u0027m confused, why aren\u0027t we just rendering the icons at 18dip and then removing some amount of padding from layout?\n\nYes, a few of them are used in lots of places - sorry I didn\u0027t clarify earlier (most of them just have the 16x16 in Page Info and then 18x18 in permission prompt bubbles). RE rendering at 18dip - that sounds like a reasonable workaround. I\u0027ve gone ahead and done that in the next patchset and also sent an updated screenshot to maxwalker@ to approve.\n\n\u003e Note that a while back I filed a specific bug for this at crbug.com/647551\n\nThank you! I added it to the CL description.\n\n\u003e wouldn\u0027t it be a regression if you didn\u0027t add the padding now? And no, I meant 16x16 with 1dip padding on all sides. 1dip left + 16dip icon + 1dip right \u003d 18dip width.\n\nWhoops, you\u0027re right - I think we don\u0027t need to do this now though that we\u0027re changing stuff to be 18x18dip.",
+      "parentUuid": "69e8dbdd_755b682b",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 110,
+        "endChar": 65
+      },
+      "revId": "dbcba4593611c228031269a31ea740b9d1f71f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dd32ca0_fb2397e9",
         "filename": "chrome/browser/ui/cocoa/page_info/page_info_bubble_controller.mm",
         "patchSetId": 14
@@ -224,6 +248,30 @@
       "revId": "dbcba4593611c228031269a31ea740b9d1f71f51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7eefc65_69277b77",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-12-12T07:47:05Z",
+      "side": 1,
+      "message": "Done - I also replied on the bug.",
+      "parentUuid": "cdd8a290_1baa2892",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 59
+      },
+      "revId": "dbcba4593611c228031269a31ea740b9d1f71f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
