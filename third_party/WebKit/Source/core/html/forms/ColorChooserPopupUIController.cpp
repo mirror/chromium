@@ -32,7 +32,6 @@
 #include "core/page/PagePopup.h"
 #include "platform/geometry/IntRect.h"
 #include "public/platform/Platform.h"
-#include "public/web/WebColorChooser.h"
 
 namespace blink {
 
@@ -46,7 +45,7 @@ enum ColorPickerPopupAction {
 ColorChooserPopupUIController::ColorChooserPopupUIController(
     LocalFrame* frame,
     ChromeClient* chrome_client,
-    ColorChooserClient* client)
+    blink::ColorChooserClient* client)
     : ColorChooserUIController(frame, client),
       chrome_client_(chrome_client),
       popup_(nullptr),
@@ -74,7 +73,7 @@ void ColorChooserPopupUIController::OpenUI() {
 
 void ColorChooserPopupUIController::EndChooser() {
   if (chooser_)
-    chooser_->EndChooser();
+    chooser_.reset();
 
   ClosePopup();
 }
@@ -84,10 +83,10 @@ AXObject* ColorChooserPopupUIController::RootAXObject() {
 }
 
 void ColorChooserPopupUIController::WriteDocument(SharedBuffer* data) {
-  Vector<ColorSuggestion> suggestions = client_->Suggestions();
+  Vector<mojom::blink::ColorSuggestionPtr> suggestions = client_->Suggestions();
   Vector<String> suggestion_values;
   for (unsigned i = 0; i < suggestions.size(); i++)
-    suggestion_values.push_back(suggestions[i].color.Serialized());
+    suggestion_values.push_back(suggestions[i]->label);
   IntRect anchor_rect_in_screen = chrome_client_->ViewportToScreen(
       client_->ElementRectRelativeToViewport(), frame_->View());
 
