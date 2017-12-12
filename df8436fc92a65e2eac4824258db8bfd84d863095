@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4f95d43f_a56dc164",
+        "filename": "chrome/browser/notifications/chrome_ash_message_center_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-12T23:00:25Z",
+      "side": 1,
+      "message": "ping this",
+      "parentUuid": "abba08b2_4f98ce47",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 14
+      },
+      "revId": "df8436fc92a65e2eac4824258db8bfd84d863095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "435877b6_c79a9dc9",
         "filename": "chrome/browser/notifications/chrome_ash_message_center_client.h",
         "patchSetId": 1
@@ -141,6 +165,29 @@
       "revId": "df8436fc92a65e2eac4824258db8bfd84d863095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ebe69e32_983c469b",
+        "filename": "chrome/browser/notifications/notification_display_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-12T23:00:25Z",
+      "side": 1,
+      "message": "optional: I think it\u0027s slightly better to leave this as \"SetReadyCallback\" since to my mind, \"closure\" means \"function object with no parameter\" and \"callback\" describes a role, specifically \"function object that I\u0027m passing off and expect the recipient to invoke later\".",
+      "range": {
+        "startLine": 140,
+        "startChar": 13,
+        "endLine": 140,
+        "endChar": 29
+      },
+      "revId": "df8436fc92a65e2eac4824258db8bfd84d863095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d9428b5_55cd7710",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-12T23:00:25Z",
+      "side": 1,
+      "message": "nit: no curlies",
+      "range": {
+        "startLine": 324,
+        "startChar": 31,
+        "endLine": 324,
+        "endChar": 33
+      },
+      "revId": "194848d95204a280ff666ba6faf76416c2bb8f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
