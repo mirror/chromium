@@ -16,6 +16,24 @@
       "revId": "83fc7bf59154fcd3aa68e172d2a4b11111307d58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5ccb13_8a25f962",
+        "filename": "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1251006
+      },
+      "writtenOn": "2017-12-12T09:08:16Z",
+      "side": 1,
+      "message": "Sure. That seems to work.",
+      "parentUuid": "f5e829e9_92cac4cc",
+      "revId": "83fc7bf59154fcd3aa68e172d2a4b11111307d58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
