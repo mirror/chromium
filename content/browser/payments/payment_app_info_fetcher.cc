@@ -17,12 +17,14 @@
 
 namespace content {
 
-PaymentAppInfoFetcher::PaymentAppInfoFetcher()
-    : fetched_payment_app_info_(std::make_unique<PaymentAppInfo>()) {}
-
 PaymentAppInfoFetcher::PaymentAppInfo::PaymentAppInfo() {}
 
 PaymentAppInfoFetcher::PaymentAppInfo::~PaymentAppInfo() {}
+
+// static
+PaymentAppInfoFetcher* PaymentAppInfoFetcher::GetInstance() {
+  return base::Singleton<PaymentAppInfoFetcher>::get();
+}
 
 void PaymentAppInfoFetcher::Start(
     const GURL& context_url,
@@ -30,16 +32,28 @@ void PaymentAppInfoFetcher::Start(
     PaymentAppInfoFetchCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  context_url_ = context_url;
-  callback_ = std::move(callback);
-
   std::unique_ptr<std::vector<std::pair<int, int>>> provider_hosts =
       service_worker_context->GetProviderHostIds(context_url.GetOrigin());
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&PaymentAppInfoFetcher::StartFromUIThread, this,
-                     std::move(provider_hosts)));
+      base::BindOnce(&PaymentAppInfoFetcher::StartOnUI, base::Unretained(this),
+                     std::move(provider_hosts), context_url,
+                     std::move(callback)));
+}
+
+PaymentAppInfoFetcher::PaymentAppInfoFetcher() {}
+
+PaymentAppInfoFetcher::~PaymentAppInfoFetcher() {}
+
+void PaymentAppInfoFetcher::StartOnUI(
+    const std::unique_ptr<std::vector<std::pair<int, int>>>& provider_hosts,
+    const GURL& context_url,
+    PaymentAppInfoFetchCallback callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  fetcher_ = base::MakeUnique<FetcherImpl>(std::move(callback));
+  fetcher_->Start(context_url, std::move(provider_hosts));
 }
 
 PaymentAppInfoFetcher::WebContentsHelper::WebContentsHelper(
@@ -48,9 +62,15 @@ PaymentAppInfoFetcher::WebContentsHelper::WebContentsHelper(
 
 PaymentAppInfoFetcher::WebContentsHelper::~WebContentsHelper() {}
 
-PaymentAppInfoFetcher::~PaymentAppInfoFetcher() {}
+PaymentAppInfoFetcher::FetcherImpl::FetcherImpl(
+    PaymentAppInfoFetchCallback callback)
+    : fetched_payment_app_info_(std::make_unique<PaymentAppInfo>()),
+      callback_(std::move(callback)) {}
 
-void PaymentAppInfoFetcher::StartFromUIThread(
+PaymentAppInfoFetcher::FetcherImpl::~FetcherImpl() {}
+
+void PaymentAppInfoFetcher::FetcherImpl::Start(
+    const GURL& context_url,
     const std::unique_ptr<std::vector<std::pair<int, int>>>& provider_hosts) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
@@ -68,22 +88,33 @@ void PaymentAppInfoFetcher::StartFromUIThread(
     WebContentsImpl* web_content = static_cast<WebContentsImpl*>(
         WebContents::FromRenderFrameHost(render_frame_host));
     if (!web_content || web_content->IsHidden() ||
-        context_url_.spec().compare(
-            web_content->GetLastCommittedURL().spec()) != 0) {
+        context_url.spec().compare(web_content->GetLastCommittedURL().spec()) !=
+            0) {
       continue;
     }
 
     web_contents_helper_ = std::make_unique<WebContentsHelper>(web_content);
 
     web_content->GetManifest(base::Bind(
-        &PaymentAppInfoFetcher::FetchPaymentAppManifestCallback, this));
+        &PaymentAppInfoFetcher::FetcherImpl::FetchPaymentAppManifestCallback,
+        base::Unretained(this)));
     return;
   }
 
   PostPaymentAppInfoFetchResultToIOThread();
 }
 
-void PaymentAppInfoFetcher::FetchPaymentAppManifestCallback(
+void PaymentAppInfoFetcher::FetcherImpl::
+    PostPaymentAppInfoFetchResultToIOThread() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(std::move(callback_),
+                                         std::move(fetched_payment_app_info_)));
+  PaymentAppInfoFetcher::GetInstance()->fetcher_.reset();
+}
+
+void PaymentAppInfoFetcher::FetcherImpl::FetchPaymentAppManifestCallback(
     const GURL& url,
     const Manifest& manifest) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -194,7 +225,8 @@ void PaymentAppInfoFetcher::FetchPaymentAppManifestCallback(
   bool can_download = content::ManifestIconDownloader::Download(
       web_contents_helper_->web_contents(), icon_url_, kPaymentAppIdealIconSize,
       kPaymentAppMinimumIconSize,
-      base::Bind(&PaymentAppInfoFetcher::OnIconFetched, this));
+      base::Bind(&PaymentAppInfoFetcher::FetcherImpl::OnIconFetched,
+                 base::Unretained(this)));
   // |can_download| is false only if web contents are  null or the icon URL is
   // not valid. Both of these conditions are manually checked above, so
   // |can_download| should never be false. The manual checks above are necessary
@@ -202,7 +234,7 @@ void PaymentAppInfoFetcher::FetchPaymentAppManifestCallback(
   DCHECK(can_download);
 }
 
-void PaymentAppInfoFetcher::OnIconFetched(const SkBitmap& icon) {
+void PaymentAppInfoFetcher::FetcherImpl::OnIconFetched(const SkBitmap& icon) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   if (icon.drawsNothing()) {
@@ -223,15 +255,8 @@ void PaymentAppInfoFetcher::OnIconFetched(const SkBitmap& icon) {
   PostPaymentAppInfoFetchResultToIOThread();
 }
 
-void PaymentAppInfoFetcher::PostPaymentAppInfoFetchResultToIOThread() {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::BindOnce(std::move(callback_),
-                                         std::move(fetched_payment_app_info_)));
-}
-
-void PaymentAppInfoFetcher::WarnIfPossible(const std::string& message) {
+void PaymentAppInfoFetcher::FetcherImpl::WarnIfPossible(
+    const std::string& message) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(web_contents_helper_);
 
