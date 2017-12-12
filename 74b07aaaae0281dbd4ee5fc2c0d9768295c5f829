@@ -22,6 +22,30 @@
       "revId": "74b07aaaae0281dbd4ee5fc2c0d9768295c5f829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cf47e4_57ce9b36",
+        "filename": "extensions/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-12T20:35:57Z",
+      "side": 1,
+      "message": "Hmm... it *was* the right bug, and James was working on this back in the day (three years ago?).  This was also just copy-pasted from extensions/DEPS, without editing the comment or TODO.\n\nWould you prefer I update this to a newer bug?",
+      "parentUuid": "8de4d334_0dd6c96b",
+      "range": {
+        "startLine": 45,
+        "startChar": 37,
+        "endLine": 45,
+        "endChar": 60
+      },
+      "revId": "74b07aaaae0281dbd4ee5fc2c0d9768295c5f829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
