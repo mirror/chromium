@@ -5,6 +5,9 @@
 #include "public/web/WebEmbeddedWorker.h"
 
 #include <memory>
+#include "modules/exported/WebEmbeddedWorkerImpl.h"
+#include "modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h"
+#include "modules/serviceworkers/ThreadSafeScriptContainer.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/loader/fetch/ResourceError.h"
@@ -16,7 +19,6 @@
 #include "public/platform/WebContentSettingsClient.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/platform/WebURLResponse.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/web/WebEmbeddedWorkerStartData.h"
@@ -104,11 +106,17 @@ class MockServiceWorkerContextClient : public WebServiceWorkerContextClient {
 };
 
 class MockServiceWorkerInstalledScriptsManager
-    : public WebServiceWorkerInstalledScriptsManager {
+    : public ServiceWorkerInstalledScriptsManager {
  public:
-  MOCK_CONST_METHOD1(IsScriptInstalled, bool(const WebURL& script_url));
+  MockServiceWorkerInstalledScriptsManager()
+      : ServiceWorkerInstalledScriptsManager(
+            WebVector<WebURL>() /* installed_urls */,
+            mojo::MessagePipe().handle1 /* manager_request */,
+            mojo::MessagePipe().handle0 /* manager_host_ptr */){};
+  MOCK_CONST_METHOD1(IsScriptInstalled, bool(const KURL& script_url));
   MOCK_METHOD1(GetRawScriptData,
-               std::unique_ptr<RawScriptData>(const WebURL& script_url));
+               std::unique_ptr<ThreadSafeScriptContainer::RawScriptData>(
+                   const KURL& script_url));
 };
 
 class WebEmbeddedWorkerImplTest : public ::testing::Test {
@@ -123,7 +131,7 @@ class WebEmbeddedWorkerImplTest : public ::testing::Test {
     } else {
       mock_installed_scripts_manager_ = nullptr;
     }
-    worker_ = WebEmbeddedWorker::Create(
+    worker_ = WebEmbeddedWorkerImpl::CreateForTesting(
         std::move(client), std::move(installed_scripts_manager),
         mojo::ScopedMessagePipeHandle(), mojo::ScopedMessagePipeHandle());
 
@@ -152,7 +160,7 @@ class WebEmbeddedWorkerImplTest : public ::testing::Test {
   WebEmbeddedWorkerStartData start_data_;
   MockServiceWorkerContextClient* mock_client_;
   MockServiceWorkerInstalledScriptsManager* mock_installed_scripts_manager_;
-  std::unique_ptr<WebEmbeddedWorker> worker_;
+  std::unique_ptr<WebEmbeddedWorkerImpl> worker_;
 };
 
 }  // namespace
@@ -189,7 +197,7 @@ TEST_F(WebEmbeddedWorkerImplTest, TerminateWhileLoadingScript) {
       .WillOnce(::testing::Return(nullptr));
   if (mock_installed_scripts_manager_) {
     EXPECT_CALL(*mock_installed_scripts_manager_,
-                IsScriptInstalled(start_data_.script_url))
+                IsScriptInstalled(KURL(start_data_.script_url)))
         .Times(1)
         .WillOnce(::testing::Return(false));
   }
@@ -218,7 +226,7 @@ TEST_F(WebEmbeddedWorkerImplTest, TerminateWhilePausedAfterDownload) {
       .WillOnce(::testing::Return(nullptr));
   if (mock_installed_scripts_manager_) {
     EXPECT_CALL(*mock_installed_scripts_manager_,
-                IsScriptInstalled(start_data_.script_url))
+                IsScriptInstalled(KURL(start_data_.script_url)))
         .Times(1)
         .WillOnce(::testing::Return(false));
   }
@@ -262,7 +270,7 @@ TEST_F(WebEmbeddedWorkerImplTest, ScriptNotFound) {
       .WillOnce(::testing::Return(nullptr));
   if (mock_installed_scripts_manager_) {
     EXPECT_CALL(*mock_installed_scripts_manager_,
-                IsScriptInstalled(start_data_.script_url))
+                IsScriptInstalled(KURL(start_data_.script_url)))
         .Times(1)
         .WillOnce(::testing::Return(false));
   }
@@ -291,7 +299,7 @@ TEST_F(WebEmbeddedWorkerImplTest, DontPauseAfterDownload) {
       .WillOnce(::testing::Return(nullptr));
   if (mock_installed_scripts_manager_) {
     EXPECT_CALL(*mock_installed_scripts_manager_,
-                IsScriptInstalled(start_data_.script_url))
+                IsScriptInstalled(KURL(start_data_.script_url)))
         .Times(1)
         .WillOnce(::testing::Return(false));
   }
@@ -309,7 +317,7 @@ TEST_F(WebEmbeddedWorkerImplTest, DontPauseAfterDownload) {
   // This is called on the worker thread.
   if (mock_installed_scripts_manager_) {
     EXPECT_CALL(*mock_installed_scripts_manager_,
-                IsScriptInstalled(start_data_.script_url))
+                IsScriptInstalled(KURL(start_data_.script_url)))
         .Times(1)
         .WillOnce(::testing::Return(false));
   }
@@ -339,7 +347,7 @@ TEST_F(WebEmbeddedWorkerImplTest, PauseAfterDownload) {
       .WillOnce(::testing::Return(nullptr));
   if (mock_installed_scripts_manager_) {
     EXPECT_CALL(*mock_installed_scripts_manager_,
-                IsScriptInstalled(start_data_.script_url))
+                IsScriptInstalled(KURL(start_data_.script_url)))
         .Times(1)
         .WillOnce(::testing::Return(false));
   }
@@ -362,7 +370,7 @@ TEST_F(WebEmbeddedWorkerImplTest, PauseAfterDownload) {
   // This is called on the worker thread.
   if (mock_installed_scripts_manager_) {
     EXPECT_CALL(*mock_installed_scripts_manager_,
-                IsScriptInstalled(start_data_.script_url))
+                IsScriptInstalled(KURL(start_data_.script_url)))
         .Times(1)
         .WillOnce(::testing::Return(false));
   }
