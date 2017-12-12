@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b486e905_e6caf73d",
+        "filename": "chrome/browser/resources/chromeos/network_ui/network_ui.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-12-12T22:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e869df4_c72c370b",
+      "revId": "84384a87083bf35a8cd36fc789acf38e93d5083d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d202b7a8_eb05f9c2",
         "filename": "ui/webui/resources/cr_elements/chromeos/network/cr_network_select.js",
         "patchSetId": 3
