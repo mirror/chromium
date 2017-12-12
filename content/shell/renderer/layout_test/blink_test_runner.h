@@ -90,7 +90,7 @@ class BlinkTestRunner : public RenderViewObserver,
   void EnableAutoResizeMode(const blink::WebSize& min_size,
                             const blink::WebSize& max_size) override;
   void DisableAutoResizeMode(const blink::WebSize& new_size) override;
-  void NavigateSecondaryWindow(const GURL& url) override;
+  void NavigateSecondaryWindow(const std::string& url) override;
   void InspectSecondaryWindow() override;
   void ShowDevTools(const std::string& settings,
                     const std::string& frontend_url) override;
