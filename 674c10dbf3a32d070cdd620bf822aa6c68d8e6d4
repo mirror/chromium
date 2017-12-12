@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6019401b_8bbd1190",
+        "filename": "media/base/video_decoder_config_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-12T21:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "134318c5_1d52d2d2",
+      "revId": "674c10dbf3a32d070cdd620bf822aa6c68d8e6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea76c000_afddbe1c",
         "filename": "media/base/video_util.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T18:14:13Z",
       "side": 1,
       "message": "for discussion: I wonder whether it makes sense to check if (aspect_ratio_numerator \u003e aspect_ratio_denominator), and then always do multiplication first, e.g. the new path would be something like\n\nheight * aspect_ratio_denominator / aspect_ratio_numerator",
+      "revId": "674c10dbf3a32d070cdd620bf822aa6c68d8e6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34eb4865_ff3bad1a",
+        "filename": "media/base/video_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-12T21:17:22Z",
+      "side": 1,
+      "message": "I gave this a shot, and the switch to an integer divide instead of floating point divide and round() is causing all the pixels to be one different. not sure how big a deal this is.",
+      "parentUuid": "ea76c000_afddbe1c",
       "revId": "674c10dbf3a32d070cdd620bf822aa6c68d8e6d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4bea99c0_703e9fff",
+        "filename": "media/base/video_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-12T21:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf4baf11_5ba4b695",
+      "revId": "674c10dbf3a32d070cdd620bf822aa6c68d8e6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b17290bf_b941e404",
         "filename": "third_party/WebKit/LayoutTests/media/video-display-always-increase-size.html",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "674c10dbf3a32d070cdd620bf822aa6c68d8e6d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63343074_f0c9e370",
+        "filename": "third_party/WebKit/LayoutTests/media/video-display-always-increase-size.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1255015
+      },
+      "writtenOn": "2017-12-12T21:17:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b17290bf_b941e404",
+      "revId": "674c10dbf3a32d070cdd620bf822aa6c68d8e6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
