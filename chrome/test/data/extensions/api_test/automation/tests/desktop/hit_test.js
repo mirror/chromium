@@ -17,12 +17,12 @@ var allTests = [
           var button = desktop.find({ attributes: { name: 'Click Me' } });
           if (button) {
             didHitTest = true;
-            button.addEventListener(EventType.ALERT, function() {
+            button.addEventListener(EventType.CLICKED, function() {
               chrome.test.succeed();
             }, true);
             var cx = button.location.left + button.location.width / 2;
             var cy = button.location.top + button.location.height / 2;
-            desktop.hitTest(cx, cy, EventType.ALERT);
+            desktop.hitTest(cx, cy, EventType.CLICKED);
           }
         }
       }, false);
