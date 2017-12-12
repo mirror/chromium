@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "327be083_1a2e204e",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-12T18:43:10Z",
+      "side": 1,
+      "message": "map\u003cECT, struct\u003e instead of min max",
+      "range": {
+        "startLine": 84,
+        "startChar": 22,
+        "endLine": 84,
+        "endChar": 50
+      },
+      "revId": "3b4fac8b9842a9ddbcf2d43ab89d7fb3e25c2fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d3175c_c0645e2f",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-12T18:43:10Z",
+      "side": 1,
+      "message": "Hopefully this can be simplified a little due to other changes.",
+      "revId": "3b4fac8b9842a9ddbcf2d43ab89d7fb3e25c2fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
