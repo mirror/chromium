@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f44dee12_e3752ea0",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-12T16:16:22Z",
+      "side": 0,
+      "message": "remove IDS_AUTOFILL_SAVE_CARD_PROMPT_TITLE_TO_CLOUD and IDS_AUTOFILL_SAVE_CARD_PROMPT_UPLOAD_EXPLANATION if unused?",
+      "revId": "dbaad4aaba7885d8fa08fee909b5dd9e19f2879d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
