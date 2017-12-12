@@ -16,6 +16,24 @@
       "revId": "93239b0477d922b2cfe787637bff5139530950ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418acb44_d118215a",
+        "filename": "gpu/skia_bindings/grcontext_for_gles2_interface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-12T16:21:59Z",
+      "side": 1,
+      "message": "That\u0027s true, though my preference is to not have a branch in the constructor that is for tests.",
+      "parentUuid": "69db0b82_4e7742c1",
+      "revId": "93239b0477d922b2cfe787637bff5139530950ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
