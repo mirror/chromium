@@ -130,11 +130,11 @@ void FrameContentWatcher::NotifyBrowserOfChange() {
   for (const base::StringPiece& selector : transitive_selectors)
     selector_strings.push_back(selector.as_string());
 
-  // TODO(devlin): Frame-ify this message.
-  content::RenderView* view =
-      content::RenderView::FromWebView(top_frame->View());
-  view->Send(new ExtensionHostMsg_OnWatchedPageChange(view->GetRoutingID(),
-                                                      selector_strings));
+  // Note: we send this through render_frame() (even though we checked the
+  // top-most frame) because the top frame may be remote. The browser-side
+  // listener watches for any messages from the WebContents, so this is okay.
+  render_frame()->Send(new ExtensionHostMsg_OnWatchedPageChange(
+      render_frame()->GetRoutingID(), selector_strings));
 }
 
 }  // namespace
