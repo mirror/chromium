@@ -143,17 +143,22 @@ void ClientControlledState::HandleBoundsEvents(WindowState* window_state,
                                                const WMEvent* event) {
   switch (event->type()) {
     case WM_EVENT_SET_BOUNDS: {
-      // TODO(oshima): Send the set bounds request to client.
-      const SetBoundsEvent* set_bounds_event =
-          static_cast<const SetBoundsEvent*>(event);
+      const gfx::Rect& bounds =
+          static_cast<const SetBoundsEvent*>(event)->requested_bounds();
       if (set_bounds_locally_) {
-        window_state->SetBoundsDirect(set_bounds_event->requested_bounds());
+        switch (bounds_change_animation_type_) {
+          case kAnimationNone:
+            window_state->SetBoundsDirect(bounds);
+            break;
+          case kAnimationCrossFade:
+            window_state->SetBoundsDirectCrossFade(bounds);
+            break;
+        }
       } else if (window_state->IsPinned() || window_state->IsTrustedPinned()) {
         // In pinned state, it should ignore the SetBounds from window manager
         // or user.
       } else {
-        delegate_->HandleBoundsRequest(window_state,
-                                       set_bounds_event->requested_bounds());
+        delegate_->HandleBoundsRequest(window_state, bounds);
       }
       break;
     }
