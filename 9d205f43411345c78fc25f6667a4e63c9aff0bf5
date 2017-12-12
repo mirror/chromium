@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a550b278_453fa72e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:47:44Z",
+      "side": 1,
+      "message": "Please shorten the subject line to less than 80 chars (ideally, \u003c 50 chars)\n\nSee https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions",
+      "revId": "9d205f43411345c78fc25f6667a4e63c9aff0bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea66f479_24bd4d22",
         "filename": "chrome/browser/ui/ash/chrome_launcher_prefs.cc",
         "patchSetId": 4
