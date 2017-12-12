@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "719e9431_197412ab",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_base.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-12T05:46:27Z",
+      "side": 1,
+      "message": "nit: this is simple enough to inline below in the return statement.",
+      "revId": "027cb41e6f3eb2ebc1c3c21ab1d70fd0e91c244f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccaf1c44_c83c7277",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.h.tmpl",
+        "patchSetId": 21
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-12-12T05:46:27Z",
+      "side": 1,
+      "message": "Nit: this should return g_empty_atom (this is a global, example https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/input/TouchEventManager.cpp?dr\u003dC\u0026l\u003d56)",
+      "revId": "027cb41e6f3eb2ebc1c3c21ab1d70fd0e91c244f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
