@@ -98,12 +98,12 @@ TEST_F(CrashKeyBreakpadTest, SetChunked) {
   // Since chunk1 through chunk3 are the same size as a storage slot,
   // and the storage NUL-terminates the value, ensure no bytes are
   // lost when chunking.
-  EXPECT_EQ(std::string(127, 'A'), storage()->GetValueForKey("chunky-1"));
+  EXPECT_EQ(std::string(127, 'A'), storage()->GetValueForKey("chunky__1"));
   EXPECT_EQ(std::string("A") + std::string(126, 'B'),
-            storage()->GetValueForKey("chunky-2"));
+            storage()->GetValueForKey("chunky__2"));
   EXPECT_EQ(std::string(2, 'B') + std::string(125, 'C'),
-            storage()->GetValueForKey("chunky-3"));
-  EXPECT_EQ(std::string(3, 'C'), storage()->GetValueForKey("chunky-4"));
+            storage()->GetValueForKey("chunky__3"));
+  EXPECT_EQ(std::string(3, 'C'), storage()->GetValueForKey("chunky__4"));
 
   std::string chunk4(240, 'D');
 
@@ -111,9 +111,10 @@ TEST_F(CrashKeyBreakpadTest, SetChunked) {
 
   ASSERT_EQ(2u, storage()->GetCount());
 
-  EXPECT_EQ(std::string(127, 'D'), storage()->GetValueForKey("chunky-1"));
-  EXPECT_EQ(std::string(240 - 127, 'D'), storage()->GetValueForKey("chunky-2"));
-  EXPECT_FALSE(storage()->GetValueForKey("chunky-3"));
+  EXPECT_EQ(std::string(127, 'D'), storage()->GetValueForKey("chunky__1"));
+  EXPECT_EQ(std::string(240 - 127, 'D'),
+            storage()->GetValueForKey("chunky__2"));
+  EXPECT_FALSE(storage()->GetValueForKey("chunky__3"));
 
   key.Clear();
 
