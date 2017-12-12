@@ -92,6 +92,7 @@ void ParamTraits<storage::DataElement>::Write(base::Pickle* m,
                      .PassInterface()
                      .PassHandle()
                      .release());
+
       break;
     }
     case storage::DataElement::TYPE_UNKNOWN: {
