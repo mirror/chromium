@@ -27,6 +27,8 @@
 #include "components/sync/js/sync_js_controller.h"
 #include "components/version_info/version_info.h"
 
+class ProfileSyncServiceHarness;
+
 namespace syncer {
 
 // This is a base class for implementations of SyncService that contains some
@@ -127,6 +129,8 @@ class SyncServiceBase : public SyncService, public SyncEngineHost {
   base::ThreadChecker thread_checker_;
 
  private:
+  friend class ::ProfileSyncServiceHarness;
+
   DISALLOW_COPY_AND_ASSIGN(SyncServiceBase);
 };
 

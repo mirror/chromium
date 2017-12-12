@@ -69,6 +69,9 @@ class ProfileSyncServiceHarness {
   // command to start from clean slate.
   bool RestartSyncService();
 
+  // Sign out of sync service.
+  void SignoutSyncService();
+
   // Calling this acts as a barrier and blocks the caller until |this| and
   // |partner| have both completed a sync cycle.  When calling this method,
   // the |partner| should be the passive responder who responds to the actions
@@ -138,6 +141,9 @@ class ProfileSyncServiceHarness {
 
   // Signals that sync setup is complete, and that PSS may begin syncing.
   void FinishSyncSetup();
+
+  // Run all tasks posted to the sync thread task runner.
+  void RunSyncThreadTasks();
 
  private:
   ProfileSyncServiceHarness(Profile* profile,
