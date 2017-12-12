@@ -152,17 +152,8 @@ int RendererMain(const MainFunctionParams& parameters) {
   HandleRendererErrorTestParameters(parsed_command_line);
 
   RendererMainPlatformDelegate platform(parameters);
-#if defined(OS_MACOSX)
-  // As long as scrollbars on Mac are painted with Cocoa, the message pump
-  // needs to be backed by a Foundation-level loop to process NSTimers. See
-  // http://crbug.com/306348#c24 for details.
-  std::unique_ptr<base::MessagePump> pump(new base::MessagePumpNSRunLoop());
-  std::unique_ptr<base::MessageLoop> main_message_loop(
-      new base::MessageLoop(std::move(pump)));
-#else
   // The main message loop of the renderer services doesn't have IO or UI tasks.
   std::unique_ptr<base::MessageLoop> main_message_loop(new base::MessageLoop());
-#endif
 
   base::PlatformThread::SetName("CrRendererMain");
 
