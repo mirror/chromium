@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "40c62e8a_21ce8df3",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:03:24Z",
+      "side": 1,
+      "message": "Re #1: Even if it\u0027s fine now, it may break one day because of some complication of the logic. That\u0027s why, ideally, side effects should be avoided when they are unnecessary.\n\nAlso, the pref can already be true by default in some cases - see https://cs.chromium.org/chromium/src/chrome/browser/supervised_user/child_accounts/child_account_service.cc?l\u003d196\u0026rcl\u003d312ddf371d1ff1f7a31d418a3c9cdb1db355d8d9 (although not sure whether this case may ever clash with your policy).\n\nRe #2: Doesn\u0027t it depend on what is put into policy_test_cases.json? The version in the CL uses the \"true\" value of the \"test_policy\" policy, which indeed should impose no pref value with the change I proposed. But the really interesting case is \"false\" - that\u0027s when the pref has to become \"true\".\n\nAs a side note, policy_test_cases is only good for testing simple policy-to-pref relations; one is always free to switch to writing a full-fledged browsertest when a more complex custom logic needs to be involved.",
+      "parentUuid": "5aa926c7_4be69919",
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6deb51de_20b2efc1",
         "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
         "patchSetId": 19
@@ -266,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "6ad5e56b_64285b29",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 19
+      },
+      "lineNbr": 4513,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:03:24Z",
+      "side": 1,
+      "message": "But I\u0027m still not quite getting - the policy itself is just talking about restricting account switching inside user session, and this (IIUC) should work as promised as long as incognito and multi-sign-in are blocked.\n\nOf course, if the admin wants only user X to be allowed to sign in to the device, or something else along these lines, then they would additionally need the sign-in restriction policy. But I think it\u0027s just a different level of control - and not necessarily tied to this policy.\n\nAlso, the fact that this policy isn\u0027t applied to all users on a given device is inferred from it being a user policy, not a device policy.\n\nWDYT?",
+      "parentUuid": "139b071c_edb41ed6",
+      "range": {
+        "startLine": 4513,
+        "startChar": 53,
+        "endLine": 4513,
+        "endChar": 77
+      },
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0be0fdcb_e58ed583",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 19
@@ -330,6 +372,24 @@
       "side": 1,
       "message": "It actually refers to if and else (not on ChromeOS and on ChromeOS) both.\n\nI guess the indentation remains 0 spaces then in this case, if I dont move it inside the ifdef? (I tried 2 spaces but git cl format reverted it to this).",
       "parentUuid": "91cc9264_25e26e3c",
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90af44a_8126bcfb",
+        "filename": "components/signin/core/browser/chrome_connected_header_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:03:24Z",
+      "side": 1,
+      "message": "OK, I won\u0027t insist on this one. But my argument was that the comment actually explains the code representing the exit branch (\"if something then return early\"), rather than the trivial code of the macro condition (\"if not Chrome OS\"). Also if, for instance, someone decides to add some other code for these platforms except Chrome OS, they would have to make another #if block with the copy-pasted condition or to move this comment inside #if.",
+      "parentUuid": "20468a47_2540c7a1",
       "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

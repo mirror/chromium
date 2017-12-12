@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0cfdbd_6ab18529",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:03:24Z",
+      "side": 1,
+      "message": "nit: Please move this declaration to the place right before it\u0027s used - one line below.\nOr, alternatively, just make GetAccountConsistencyPref() return base::Value (as it can already represent the complete tri-state true/false/unset).",
+      "revId": "73071acc4cb41bd4fbb1dfe1e4b10f48d6156024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2587235_7160e8ad",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 20
+      },
+      "lineNbr": 2726,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:03:24Z",
+      "side": 1,
+      "message": "nit: (sorry, missed this during the initial pass) Are you sure you intended to use this \"indicator_tests\" feature? It\u0027s designed for settings that also have a corresponding UI settings control (see [1]), which I don\u0027t think is the case here with the account consistency setting.\n\n[1] https://cs.chromium.org/chromium/src/chrome/test/data/policy/policy_test_cases.json?l\u003d16\u0026rcl\u003d66a0229065510c32eacf89277f718f8972b13a95",
+      "revId": "73071acc4cb41bd4fbb1dfe1e4b10f48d6156024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c02c379_77b6207e",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 20
+      },
+      "lineNbr": 4501,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:03:24Z",
+      "side": 1,
+      "message": "Sorry, this comment is also a bit unclear to me. An unmanaged user has no user policies, therefore it\u0027s understandable that they can\u0027t have this policy enabled. Perhaps you wanted to say something else?",
+      "revId": "73071acc4cb41bd4fbb1dfe1e4b10f48d6156024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8977e6b6_9adbe32e",
+        "filename": "components/signin/core/browser/signin_header_helper_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:03:24Z",
+      "side": 1,
+      "message": "nit: s/ChromeOS/Chrome OS/ (that\u0027s the correct spelling, although admitting it\u0027s not always being followed in the codebase)",
+      "range": {
+        "startLine": 126,
+        "startChar": 44,
+        "endLine": 126,
+        "endChar": 52
+      },
+      "revId": "73071acc4cb41bd4fbb1dfe1e4b10f48d6156024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
