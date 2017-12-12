@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71d0909c_c13ff3c2",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-12T20:41:45Z",
+      "side": 1,
+      "message": "It looks like the tests ran fine on the dbg tryjob. It can be important to keep the coverage in order to catch DCHECK failures on the waterfalls.",
+      "parentUuid": "bc8d3d2a_5557811d",
+      "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c56f8de_cbc57afe",
         "filename": "testing/buildbot/test_suite_exceptions.pyl",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43328df_4901cb92",
+        "filename": "testing/buildbot/test_suite_exceptions.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 3467,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-12T20:41:45Z",
+      "side": 1,
+      "message": "It was a typo on one of the v8 bots\u0027 config files. We should fix this, but let\u0027s do that in a separate CL to avoid confusion.",
+      "parentUuid": "0c56f8de_cbc57afe",
+      "range": {
+        "startLine": 3465,
+        "startChar": 0,
+        "endLine": 3467,
+        "endChar": 31
+      },
+      "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +152,24 @@
       "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d4d731_67899f7f",
+        "filename": "testing/buildbot/test_suites.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-12T20:41:45Z",
+      "side": 1,
+      "message": "I\u0027ve removed app_shell_unittests and nacl_loader_unittests, and left the rest; I don\u0027t think they represent much load.",
+      "parentUuid": "6905098e_3711a94a",
+      "revId": "a4ddb4ae6833b161c6e7742bc0001c96fd85618d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
