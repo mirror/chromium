@@ -488,6 +488,12 @@ class GLRendererShaderTest : public GLRendererTest {
                                        resource_provider_.get()));
     renderer_->Initialize();
     renderer_->SetVisible(true);
+
+    child_context_provider_ = cc::TestContextProvider::Create();
+    child_context_provider_->BindToCurrentThread();
+    child_resource_provider_ =
+        cc::FakeResourceProvider::CreateLayerTreeResourceProvider(
+            child_context_provider_.get(), shared_bitmap_manager_.get());
   }
 
   void TestRenderPassProgram(TexCoordPrecision precision,
@@ -578,6 +584,8 @@ class GLRendererShaderTest : public GLRendererTest {
   std::unique_ptr<cc::FakeOutputSurface> output_surface_;
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager_;
   std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  scoped_refptr<cc::TestContextProvider> child_context_provider_;
+  std::unique_ptr<cc::LayerTreeResourceProvider> child_resource_provider_;
   std::unique_ptr<FakeRendererGL> renderer_;
 };
 
@@ -1559,10 +1567,13 @@ TEST_F(GLRendererShaderTest, DrawRenderPassQuadShaderPermutations) {
   int root_pass_id = 1;
   RenderPass* root_pass;
 
-  ResourceId mask = resource_provider_->CreateResource(
+  ResourceId mask = child_resource_provider_->CreateResource(
       gfx::Size(20, 12), ResourceTextureHint::kDefault,
-      resource_provider_->best_texture_format(), gfx::ColorSpace());
-  resource_provider_->AllocateForTesting(mask);
+      child_resource_provider_->best_texture_format(), gfx::ColorSpace());
+  child_resource_provider_->AllocateForTesting(mask);
+
+  ResourceId mapped_mask = SendResourceAndGetMappedResourceId(
+      mask, resource_provider_.get(), child_resource_provider_.get());
 
   SkScalar matrix[20];
   float amount = 0.5f;
@@ -1639,7 +1650,7 @@ TEST_F(GLRendererShaderTest, DrawRenderPassQuadShaderPermutations) {
                                   gfx::Rect(viewport_size), gfx::Transform(),
                                   cc::FilterOperations());
 
-    cc::AddRenderPassQuad(root_pass, child_pass, mask, gfx::Transform(),
+    cc::AddRenderPassQuad(root_pass, child_pass, mapped_mask, gfx::Transform(),
                           xfer_mode);
 
     renderer_->DecideRenderPassAllocationsForFrame(
@@ -1658,7 +1669,7 @@ TEST_F(GLRendererShaderTest, DrawRenderPassQuadShaderPermutations) {
                                   gfx::Rect(viewport_size), gfx::Transform(),
                                   cc::FilterOperations());
 
-    cc::AddRenderPassQuad(root_pass, child_pass, mask, gfx::Transform(),
+    cc::AddRenderPassQuad(root_pass, child_pass, mapped_mask, gfx::Transform(),
                           xfer_mode);
 
     renderer_->DecideRenderPassAllocationsForFrame(
@@ -1715,8 +1726,8 @@ TEST_F(GLRendererShaderTest, DrawRenderPassQuadShaderPermutations) {
                                   gfx::Rect(viewport_size), gfx::Transform(),
                                   cc::FilterOperations());
 
-    cc::AddRenderPassQuad(root_pass, child_pass, mask, transform_causing_aa,
-                          xfer_mode);
+    cc::AddRenderPassQuad(root_pass, child_pass, mapped_mask,
+                          transform_causing_aa, xfer_mode);
 
     renderer_->DecideRenderPassAllocationsForFrame(
         render_passes_in_draw_order_);
@@ -1734,8 +1745,8 @@ TEST_F(GLRendererShaderTest, DrawRenderPassQuadShaderPermutations) {
                                   gfx::Rect(viewport_size),
                                   transform_causing_aa, cc::FilterOperations());
 
-    cc::AddRenderPassQuad(root_pass, child_pass, mask, transform_causing_aa,
-                          xfer_mode);
+    cc::AddRenderPassQuad(root_pass, child_pass, mapped_mask,
+                          transform_causing_aa, xfer_mode);
 
     renderer_->DecideRenderPassAllocationsForFrame(
         render_passes_in_draw_order_);
