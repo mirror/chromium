@@ -93,6 +93,30 @@
       "revId": "cff50eae0f97d07120612bf148cf9567d491725d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27a8950d_b5e61880",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-12T15:23:11Z",
+      "side": 1,
+      "message": "Can you DCHECK that the value is not NONE when the histogram is recorded?",
+      "parentUuid": "4d60466d_78ae335b",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 25
+      },
+      "revId": "cff50eae0f97d07120612bf148cf9567d491725d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
