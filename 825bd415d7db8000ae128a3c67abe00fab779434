@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e34ebdb5_8ea4b256",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-12T14:56:36Z",
+      "side": 1,
+      "message": "Why not have\n  device.input \u003d opened_device-\u003einput\noutside the if?",
+      "range": {
+        "startLine": 1373,
+        "startChar": 30,
+        "endLine": 1373,
+        "endChar": 43
+      },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b583446_eab1521b",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-12T14:56:36Z",
+      "side": 1,
+      "message": "Here we should DCHECK(device.input) before the if and remove device.input from the condition. If something breaks, there was a bug that we should fix before this patch.",
+      "range": {
+        "startLine": 1549,
+        "startChar": 8,
+        "endLine": 1549,
+        "endChar": 14
+      },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1cdfbd7_24672896",
         "filename": "content/public/common/media_stream_request.cc",
         "patchSetId": 4
@@ -19,6 +65,23 @@
         "endLine": 86,
         "endChar": 43
       },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5509ae_dece38de",
+        "filename": "content/renderer/media/local_media_stream_audio_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-12T14:56:36Z",
+      "side": 1,
+      "message": "DCHECK(device.input)",
       "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -66,6 +129,23 @@
         "endLine": 577,
         "endChar": 0
       },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4b0e4b_66012eb2",
+        "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-12T14:56:36Z",
+      "side": 1,
+      "message": "It would be good to DCHECK(device.input) here.",
       "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
