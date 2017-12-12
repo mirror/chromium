@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67d4a9bc_6bc59147",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3797,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-12T06:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e0a24f7_86720c88",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cc73ac1_5a00b6b0",
         "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877a0a43_a572113c",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-12T06:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cc73ac1_5a00b6b0",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3980a6a6_b2f57e08",
+        "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-12T06:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b39ed8c0_26714979",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54626ecc_f4d0dbfc",
         "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-11T22:57:35Z",
       "side": 1,
       "message": "Would it be better to use wm::TransientWindowManager::GetIfExists here? We\u0027d need to check for null, but I don\u0027t think we should be creating any managers since we\u0027re not adding any new relationships.",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c535f9f_1a67f072",
+        "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-12T06:41:41Z",
+      "side": 1,
+      "message": "Good idea. I found wm::GetTransientParent which does that for us.",
+      "parentUuid": "54626ecc_f4d0dbfc",
       "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "0b811dcc_9cac612d",
+        "filename": "ui/views/accessibility/native_view_accessibility_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-12T06:41:41Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2dd5b0e9_a02aecb2",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8d3c12d_faab7dc6",
         "filename": "ui/views/accessibility/native_view_accessibility_win_unittest.cc",
         "patchSetId": 3
@@ -137,6 +227,24 @@
       "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6214f8f_1e6dc98a",
+        "filename": "ui/views/accessibility/native_view_accessibility_win_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-12T06:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8d3c12d_faab7dc6",
+      "revId": "412bda781b3db435249d9682eab2e899493ce2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
