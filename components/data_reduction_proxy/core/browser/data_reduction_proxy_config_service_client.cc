@@ -24,6 +24,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_mutable_config_values.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_request_options.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_event_creator.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_server.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
@@ -384,6 +385,10 @@ void DataReductionProxyConfigServiceClient::RetrieveRemoteConfig() {
   const std::string& session_key = request_options_->GetSecureSession();
   if (!session_key.empty())
     request.set_session_key(request_options_->GetSecureSession());
+  request.set_dog_food_group(
+      base::FeatureList::IsEnabled(features::kDogFood)
+          ? CreateClientConfigRequest_DogFoodGroup_DOGFOOD
+          : CreateClientConfigRequest_DogFoodGroup_NONDOGFOOD);
   data_reduction_proxy::VersionInfo* version_info =
       request.mutable_version_info();
   uint32_t build;
