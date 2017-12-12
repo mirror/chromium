@@ -15,17 +15,6 @@ cr.exportPath('print_preview_new');
 print_preview_new.State;
 
 /**
- * @typedef {{id: string,
- *            origin: print_preview.DestinationOrigin,
- *            account: string,
- *            capabilities: ?print_preview.Cdd,
- *            displayName: string,
- *            extensionId: string,
- *            extensionName: string}}
- */
-print_preview_new.RecentDestination;
-
-/**
  * Must be kept in sync with the C++ MarginType enum in
  * printing/print_job_constants.h.
  * @enum {number}
@@ -40,7 +29,7 @@ print_preview_new.MarginsTypeValue = {
 /**
  * @typedef {{
  *    version: string,
- *    recentDestinations: (!Array<!print_preview_new.RecentDestination> |
+ *    recentDestinations: (!Array<!print_preview.RecentDestination> |
  *                         undefined),
  *    dpi: ({horizontal_dpi: number,
  *           vertical_dpi: number,
@@ -314,6 +303,18 @@ Polymer({
   /** @private {?print_preview.NativeLayer} */
   nativeLayer_: null,
 
+  /** @private {?print_preview.UserInfo} */
+  userInfo_: null,
+
+  /** @private {?WebUIListenerTracker} */
+  listenerTracker_: null,
+
+  /** @private {!Array<!print_preview.RecentDestination>} */
+  recentDestinations_: [],
+
+  /** @private {?print_preview.DestinationStore} */
+  destinationStore_: null,
+
   /** @type {!print_preview.MeasurementSystem} */
   measurementSystem_: new print_preview.MeasurementSystem(
       ',', '.', print_preview.MeasurementSystemUnitType.IMPERIAL),
@@ -321,6 +322,10 @@ Polymer({
   /** @override */
   attached: function() {
     this.nativeLayer_ = print_preview.NativeLayer.getInstance(),
+    this.userInfo_ = new print_preview.UserInfo();
+    this.listenerTracker_ = new WebUIListenerTracker();
+    this.destinationStore_ = new print_preview.DestinationStore(
+        this.userInfo_, this.listenerTracker_);
     this.nativeLayer_.getInitialSettings().then(
         this.onInitialSettingsSet_.bind(this));
   },
@@ -347,7 +352,10 @@ Polymer({
         settings.thousandsDelimeter, settings.decimalDelimeter,
         settings.unitType);
     this.setSetting('selectionOnly', settings.shouldPrintSelectionOnly);
-    // TODO(rbpotter): add destination store initialization.
+    this.destinationStore_.init(
+        settings.isInAppKioskMode, settings.printerName,
+        settings.serializedDefaultDestinationSelectionRulesStr,
+        this.recentDestinations_);
   },
 
   /**
@@ -365,6 +373,10 @@ Polymer({
       console.error('Unable to parse state ' + e);
       return;  // use default values rather than updating.
     }
+
+    this.recentDestinations_ = savedSettings.recentDestinations || [];
+    if (!Array.isArray(this.recentDestinations_))
+      this.recentDestinations_ = [this.recentDestinations_];
 
     const updateIfDefined = (key1, key2) => {
       if (savedSettings[key2] != undefined)
