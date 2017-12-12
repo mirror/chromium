@@ -26,6 +26,7 @@
 #include "base/path_service.h"
 #include "base/scoped_native_library.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_task_runner_handle.h"
@@ -41,7 +42,6 @@
 #include "chrome/browser/conflicts/module_database_win.h"
 #include "chrome/browser/conflicts/module_event_sink_impl_win.h"
 #include "chrome/browser/first_run/first_run.h"
-#include "chrome/browser/install_verification/win/install_verification.h"
 #include "chrome/browser/memory/swap_thrashing_monitor.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profile_shortcut_manager.h"
@@ -72,6 +72,7 @@
 #include "chrome/installer/util/shell_util.h"
 #include "components/crash/content/app/crash_export_thunks.h"
 #include "components/crash/core/common/crash_key.h"
+#include "components/variations/metrics_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
@@ -394,6 +395,49 @@ void MaybePostSettingsResetPrompt() {
   }
 }
 
+base::FilePath GetExeFilePathForProcess(const base::Process& process) {
+  wchar_t exe_name[MAX_PATH];
+  DWORD exe_name_len = arraysize(exe_name);
+  // Note: requesting the Win32 path format.
+  if (::QueryFullProcessImageName(process.Handle(), 0, exe_name,
+                                  &exe_name_len) == 0) {
+    DPLOG(ERROR) << "Failed to get executable name for process";
+    return base::FilePath();
+  }
+
+  // QueryFullProcessImageName's documentation does not specify behavior when
+  // the buffer is too small, but we know that GetModuleFileNameEx succeeds and
+  // truncates the returned name in such a case. Given that paths of arbitrary
+  // length may exist, the conservative approach is to reject names when
+  // the returned length is that of the buffer.
+  if (exe_name_len > 0 && exe_name_len < arraysize(exe_name))
+    return base::FilePath(exe_name);
+
+  return base::FilePath();
+}
+
+void ReportParentProcessName() {
+  base::ProcessId ppid =
+      base::GetParentProcessId(base::GetCurrentProcessHandle());
+
+  base::Process process(
+      base::Process::OpenWithAccess(ppid, PROCESS_QUERY_LIMITED_INFORMATION));
+
+  uint32_t hash = 0U;
+
+  if (process.IsValid()) {
+    base::FilePath path(GetExeFilePathForProcess(process));
+
+    if (!path.empty()) {
+      std::string ascii_path(base::SysWideToUTF8(path.BaseName().value()));
+      DCHECK(base::IsStringASCII(ascii_path));
+      hash = metrics::HashName(base::ToLowerASCII(ascii_path));
+    }
+  }
+
+  UMA_HISTOGRAM_SPARSE_SLOWLY("Windows.ParentProcessNameHash", hash);
+}
+
 }  // namespace
 
 int DoUninstallTasks(bool chrome_still_running) {
@@ -512,17 +556,16 @@ void ChromeBrowserMainPartsWin::PostBrowserStart() {
   UMA_HISTOGRAM_BOOLEAN("Windows.Tablet",
       base::win::IsTabletDevice(nullptr, ui::GetHiddenWindow()));
 
-  // Set up a task to verify installed modules in the current process.
+  // Set up a task to report the parent process name.
   // TODO(gab): Use base::PostTaskWithTraits() directly when we're convinced
   // BACKGROUND work doesn't interfere with startup (i.e.
   // https://crbug.com/726937).
-  // TODO(robertshield): remove this altogether, https://crbug.com/747557.
   content::BrowserThread::PostAfterStartupTask(
       FROM_HERE,
       base::CreateTaskRunnerWithTraits(
           {base::TaskPriority::BACKGROUND,
            base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN}),
-      base::Bind(&VerifyInstallation));
+      base::Bind(&ReportParentProcessName));
 
   InitializeChromeElf();
 
