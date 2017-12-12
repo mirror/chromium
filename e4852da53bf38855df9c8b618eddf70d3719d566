@@ -34,6 +34,24 @@
       "revId": "e4852da53bf38855df9c8b618eddf70d3719d566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fbf9988_90b9f8fa",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-12-12T23:12:06Z",
+      "side": 1,
+      "message": "It\u0027s up to you - just strikes me as odd to call out to a derived class in the middle of the function.",
+      "parentUuid": "7711d3ab_12b3570a",
+      "revId": "e4852da53bf38855df9c8b618eddf70d3719d566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
