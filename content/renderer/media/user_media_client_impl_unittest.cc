@@ -1386,24 +1386,15 @@ TEST_F(UserMediaClientImplTest, ApplyConstraintsVideoDeviceStopped) {
   }
 }
 
-// These tests check that audio parameters for the associated output device are
-// set according to the renderToAssociatedSink constrainable property.
-TEST_F(UserMediaClientImplTest, RenderToAssociatedSinkTrueAudioParams) {
-  EXPECT_CALL(mock_dispatcher_host_, OnStreamStarted(_));
-  blink::WebMediaStreamTrack web_track =
-      RequestLocalAudioTrackWithAssociatedSink(true);
-  MediaStreamAudioSource* source =
-      MediaStreamAudioSource::From(web_track.Source());
-  EXPECT_TRUE(source->device().matched_output.IsValid());
-}
-
-TEST_F(UserMediaClientImplTest, RenderToAssociatedSinkFalseAudioParams) {
+// This tests checks that the device id of the associated output device is
+// empty if the renderToAssociatedSink constrainable property is set to false.
+TEST_F(UserMediaClientImplTest, RenderToAssociatedSinkFalse) {
   EXPECT_CALL(mock_dispatcher_host_, OnStreamStarted(_));
   blink::WebMediaStreamTrack web_track =
       RequestLocalAudioTrackWithAssociatedSink(false);
   MediaStreamAudioSource* source =
       MediaStreamAudioSource::From(web_track.Source());
-  EXPECT_FALSE(source->device().matched_output.IsValid());
+  EXPECT_TRUE(source->device().matched_output_device_id.empty());
 }
 
 }  // namespace content
