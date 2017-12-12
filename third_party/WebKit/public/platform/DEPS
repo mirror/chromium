@@ -25,6 +25,7 @@ include_rules = [
     # inside and outside Blink.
     "+services/network/public/cpp/cors_error_status.h",
     "+services/network/public/interfaces/cors.mojom-shared.h",
+    "+services/network/public/interfaces/data_pipe_getter.mojom-shared.h",
     "+services/network/public/interfaces/fetch_api.mojom-shared.h",
     "+services/service_manager/public/interfaces",
     "+third_party/skia",
