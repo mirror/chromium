@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cf1157b_390567f2",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-12T18:39:45Z",
+      "side": 1,
+      "message": "It is possible that that the free space check has not terminated at the time that WebApkInstallService::InstallAsync() is called.\n\nI suggest moving the logic which deals with the status to WebApkInstaller. The benefit of moving the logic to WebApkInstaller is that:\n- You don\u0027t need to pass as many parameters around\n- WebApkInstaller deals with one install request at a time. You don\u0027t need to worry about the case of multiple InstallAsync() calls being make prior to the free space check completing\n\nIn particular I suggest adding:\nWebApkInstallService::PopLatestFreeSpaceStatus() {}\nThis function would return the free space status and clear it\n\nWebApkInstallService::TriggerFreeSpaceCheckWithCallback(base::OnceCallback\u003cSpaceStatus\u003e callback) {}\nThis function would be called from WebApkInstaller if the latest status is UNDETERMINED\n\nWebApkInstallService::TriggerFreeSpaceCheck() would also call WebApkInstallService::TriggerFreeSpaceCheckWithCallback()",
+      "revId": "3ce7a2c6a474082c9518ff86bb253335f7f66c16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
