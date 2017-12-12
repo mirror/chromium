@@ -1355,6 +1355,7 @@ const std::string& WebContentsImpl::GetEncoding() const {
 
 void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
   DCHECK(!is_being_destroyed_);
+  const bool was_being_captured = IsBeingCaptured();
   ++capturer_count_;
   DVLOG(1) << "There are now " << capturer_count_
            << " capturing(s) of WebContentsImpl@" << this;
@@ -1364,6 +1365,11 @@ void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
   if (!capture_size.IsEmpty() && preferred_size_for_capture_.IsEmpty()) {
     preferred_size_for_capture_ = capture_size;
     OnPreferredSizeChanged(preferred_size_);
+  }
+
+  if (!was_being_captured) {
+    for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+      view->CaptureStateChanged();
   }
 
   // Ensure that all views are un-occluded before capture begins.
@@ -1388,6 +1394,9 @@ void WebContentsImpl::DecrementCapturerCount() {
       DVLOG(1) << "Executing delayed WasHidden().";
       WasHidden();
     }
+
+    for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
+      view->CaptureStateChanged();
 
     if (should_normally_be_occluded_)
       WasOccluded();
