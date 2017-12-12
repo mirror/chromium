@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <utility>
 
+#include "base/values.h"
 #include "chrome/test/chromedriver/chrome/devtools_client.h"
 #include "chrome/test/chromedriver/chrome/devtools_event_listener.h"
 #include "chrome/test/chromedriver/chrome/devtools_http_client.h"
@@ -140,6 +141,26 @@ Status ChromeImpl::CloseWebView(const std::string& id) {
 
 Status ChromeImpl::ActivateWebView(const std::string& id) {
   return devtools_http_client_->ActivateWebView(id);
+}
+
+Status ChromeImpl::SetAcceptInsecureCerts() {
+  Status status = devtools_websocket_client_->ConnectIfNecessary();
+  if (status.IsError())
+    return status;
+
+  base::DictionaryValue params;
+  status = devtools_websocket_client_->SendCommand("Security.enable", params);
+  if (status.IsError()) {
+    // The target doesn't support the Security domain. We'll fall back to
+    // --ignore-certificate-errors.
+    // TODO(eseckler): Fail here once we remove support for
+    // --ignore-certificate-errors.
+    return Status(kOk);
+  }
+
+  params.SetString("mode", "ignore-all");
+  return devtools_websocket_client_->SendCommand(
+      "Security.setOverrideCertificateErrors", params);
 }
 
 bool ChromeImpl::IsMobileEmulationEnabled() const {
