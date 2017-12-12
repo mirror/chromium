@@ -996,8 +996,8 @@ TEST_F(DataReductionProxyConfigTest, ShouldAcceptServerPreview) {
   // Verify false for kill switch.
   base::CommandLine::ForCurrentProcess()->InitFromArgv(0, nullptr);
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kDataReductionProxyLoFi,
-      switches::kDataReductionProxyLoFiValueDisabled);
+      switches::kDataReductionProxyServerPreviews,
+      switches::kDataReductionProxyServerPreviewsDisabled);
   EXPECT_FALSE(test_config()->ShouldAcceptServerPreview(
       *request.get(), *previews_decider.get()));
   histogram_tester.ExpectBucketCount(
@@ -1043,8 +1043,8 @@ TEST_F(DataReductionProxyConfigTest, ShouldAcceptServerPreview) {
   // Verfiy true for always on.
   base::CommandLine::ForCurrentProcess()->InitFromArgv(0, nullptr);
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kDataReductionProxyLoFi,
-      switches::kDataReductionProxyLoFiValueAlwaysOn);
+      switches::kDataReductionProxyServerPreviews,
+      switches::kDataReductionProxyServerPreviewsLoFi);
   EXPECT_TRUE(test_config()->ShouldAcceptServerPreview(
       *request.get(), *previews_decider.get()));
 }

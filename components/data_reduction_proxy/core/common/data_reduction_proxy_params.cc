@@ -192,9 +192,9 @@ bool IsLoFiOnViaFlags() {
 bool IsLoFiAlwaysOnViaFlags() {
   const std::string& lo_fi_value =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          data_reduction_proxy::switches::kDataReductionProxyLoFi);
+          data_reduction_proxy::switches::kDataReductionProxyServerPreviews);
   return lo_fi_value ==
-         data_reduction_proxy::switches::kDataReductionProxyLoFiValueAlwaysOn;
+         data_reduction_proxy::switches::kDataReductionProxyServerPreviewsLoFi;
 }
 
 bool IsLoFiCellularOnlyViaFlags() {
@@ -216,14 +216,17 @@ bool IsLoFiSlowConnectionsOnlyViaFlags() {
 bool IsLoFiDisabledViaFlags() {
   const std::string& lo_fi_value =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          data_reduction_proxy::switches::kDataReductionProxyLoFi);
-  return lo_fi_value ==
-         data_reduction_proxy::switches::kDataReductionProxyLoFiValueDisabled;
+          data_reduction_proxy::switches::kDataReductionProxyServerPreviews);
+  return lo_fi_value == data_reduction_proxy::switches::
+                            kDataReductionProxyServerPreviewsDisabled;
 }
 
 bool AreLitePagesEnabledViaFlags() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      data_reduction_proxy::switches::kEnableDataReductionProxyLitePage);
+  const std::string& lite_page_value =
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          data_reduction_proxy::switches::kDataReductionProxyServerPreviews);
+  return lite_page_value == data_reduction_proxy::switches::
+                                kDataReductionProxyServerPreviewsPreferLitePage;
 }
 
 bool IsForcePingbackEnabledViaFlags() {

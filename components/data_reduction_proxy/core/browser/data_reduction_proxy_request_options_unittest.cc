@@ -353,14 +353,12 @@ TEST_F(DataReductionProxyRequestOptionsTest, TestExperimentPrecedence) {
   CreateRequestOptions(kVersion);
   VerifyExpectedHeader(expected_header, kPageIdValue);
 
-  // "force_lite_page" has the next lowest priority.
+  // "prefer_lite_page" has the next lowest priority.
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kDataReductionProxyLoFi,
-      switches::kDataReductionProxyLoFiValueAlwaysOn);
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kEnableDataReductionProxyLitePage);
+      switches::kDataReductionProxyServerPreviews,
+      switches::kDataReductionProxyServerPreviewsPreferLitePage);
   expected_experiments.clear();
-  expected_experiments.push_back(chrome_proxy_experiment_force_lite_page());
+  expected_experiments.push_back(chrome_proxy_experiment_prefer_lite_page());
   SetHeaderExpectations(kExpectedSession, kExpectedCredentials, std::string(),
                         kClientStr, kExpectedBuild, kExpectedPatch, kPageId,
                         expected_experiments, &expected_header);
@@ -396,8 +394,8 @@ TEST_F(DataReductionProxyRequestOptionsTest, TestExperimentOtherLoFiFlags) {
 
   // "exp=force_empty_image" is set for CellularOnly flag.
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kDataReductionProxyLoFi,
-      switches::kDataReductionProxyLoFiValueAlwaysOn);
+      switches::kDataReductionProxyServerPreviews,
+      switches::kDataReductionProxyServerPreviewsLoFi);
   expected_experiments.clear();
   expected_experiments.push_back(chrome_proxy_experiment_force_empty_image());
   SetHeaderExpectations(kExpectedSession, kExpectedCredentials, std::string(),
