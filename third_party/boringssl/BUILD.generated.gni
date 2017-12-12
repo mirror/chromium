@@ -327,6 +327,7 @@ crypto_sources = [
   "src/include/openssl/x509v3.h",
   "src/third_party/fiat/curve25519.c",
   "src/third_party/fiat/internal.h",
+  "src/third_party/fiat/p256.c",
 ]
 
 ssl_sources = [
