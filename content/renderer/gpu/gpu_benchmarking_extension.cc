@@ -1007,6 +1007,7 @@ bool GpuBenchmarking::Tap(gin::Arguments* args) {
 }
 
 bool GpuBenchmarking::PointerActionSequence(gin::Arguments* args) {
+  LOG(WARNING) << "HEY";
   GpuBenchmarkingContext context;
   if (!context.Init(false))
     return false;

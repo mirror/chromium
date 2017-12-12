@@ -2592,6 +2592,37 @@ domain Input
       touch
       mouse
 
+  experimental type PointerType extends string
+    enum
+      pointerUp
+      pointerDown
+      pointerMove
+      pause
+
+  experimental type PointerAction extends object
+    properties
+      # Type of action to perform
+      PointerType type
+      # Source of the pointer
+      GestureSourceType pointerType
+      # X coordinate of the event
+      optional number x
+      # Y coordinate of the event
+      optional number y
+      # X coordinate of the current pointer position if known
+      optional number initialX
+      # Y coordinate of the current pointer position if known
+      optional number initialY
+      # the button to press or lift as a result of the action
+      # (default: "none").
+      optional enum button extends string
+        none
+        left
+        middle
+        right
+      # the amount of time in seconds the action should take
+      optional number duration
+
   # UTC time in seconds, counted from January 1, 1970.
   type TimeSinceEpoch extends number
 
@@ -2635,6 +2666,11 @@ domain Input
       # Whether the event was from the left or right side of the keyboard. 1=Left, 2=Right (default:
       # 0).
       optional integer location
+
+  # Dispatches pointer events to the page
+  command dispatchPointerActions
+    parameters
+      array of PointerAction pointerActions
 
   # Dispatches a mouse event to the page.
   command dispatchMouseEvent
