@@ -108,7 +108,7 @@ class TestBackgroundSyncManager : public BackgroundSyncManager {
       const std::string& tag,
       scoped_refptr<ServiceWorkerVersion> active_version,
       blink::mojom::BackgroundSyncEventLastChance last_chance,
-      const ServiceWorkerVersion::LegacyStatusCallback& callback) override;
+      ServiceWorkerVersion::StatusCallback callback) override;
 
   // Override to just store delayed task, and allow tests to control the clock
   // and when delayed tasks are executed.
