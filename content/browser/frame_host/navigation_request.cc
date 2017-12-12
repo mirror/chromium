@@ -1037,14 +1037,25 @@ void NavigationRequest::OnStartChecksComplete(
   // Mark the fetch_start (Navigation Timing API).
   request_params_.navigation_timing.fetch_start = base::TimeTicks::Now();
 
+  bool has_base_url = false;
+  NavigationEntry* last_committed_entry =
+      frame_tree_node_->navigator()->GetController()->GetLastCommittedEntry();
+#if defined(OS_ANDROID)
+  // On Android, a base URL can be set for the frame. If this the case, it is
+  // the URL to use for cookies.
+  if (last_committed_entry)
+    has_base_url = last_committed_entry->GetBaseURLForDataURL().is_empty();
+#endif
+  const GURL& top_document_url =
+      has_base_url && last_committed_entry
+          ? last_committed_entry->GetBaseURLForDataURL()
+          : frame_tree_node_->frame_tree()->root()->current_url();
   // TODO(mkwst): This is incorrect. It ought to use the definition from
   // 'Document::firstPartyForCookies()' in Blink, which walks the ancestor tree
   // and verifies that all origins are PSL-matches (and special-cases extension
   // URLs).
   const GURL& site_for_cookies =
-      frame_tree_node_->IsMainFrame()
-          ? common_params_.url
-          : frame_tree_node_->frame_tree()->root()->current_url();
+      frame_tree_node_->IsMainFrame() ? common_params_.url : top_document_url;
   bool parent_is_main_frame = !frame_tree_node_->parent()
                                   ? false
                                   : frame_tree_node_->parent()->IsMainFrame();
