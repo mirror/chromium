@@ -541,7 +541,7 @@ ui::EventDispatchDetails WindowEventDispatcher::PreDispatchEvent(
     ui::EventTarget* target,
     ui::Event* event) {
   Window* target_window = static_cast<Window*>(target);
-  CHECK(window()->Contains(target_window));
+  // CHECK(window()->Contains(target_window));
 
   if (!(event->flags() & ui::EF_IS_SYNTHESIZED)) {
     fraction_of_time_without_user_input_recorder_.RecordEventAtTime(
