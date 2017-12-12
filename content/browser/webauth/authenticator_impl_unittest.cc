@@ -51,7 +51,7 @@ using webauth::mojom::PublicKeyCredentialParametersPtr;
 
 namespace {
 
-constexpr char kTestOrigin1[] = "https://google.com";
+constexpr char kTestOrigin1[] = "https://a.google.com";
 
 // Test data. CBOR test data can be built using the given diagnostic strings
 // and the utility at "http://cbor.me/".
@@ -362,7 +362,7 @@ const std::vector<uint8_t>& GetU2fAttestationStatementCBOR() {
 
 PublicKeyCredentialRpEntityPtr GetTestPublicKeyCredentialRPEntity() {
   auto entity = PublicKeyCredentialRpEntity::New();
-  entity->id = std::string("localhost");
+  entity->id = std::string(kTestRelyingPartyId);
   entity->name = std::string("TestRP@example.com");
   return entity;
 }
@@ -521,21 +521,70 @@ class TestMakeCredentialCallback {
 
 }  // namespace
 
-// Test that service returns NOT_ALLOWED_ERROR on a call to MakeCredential with
-// an opaque origin.
-TEST_F(AuthenticatorImplTest, MakeCredentialOpaqueOrigin) {
-  NavigateAndCommit(GURL("data:text/html,opaque"));
-  AuthenticatorPtr authenticator = ConnectToAuthenticator();
-  MakePublicKeyCredentialOptionsPtr options =
-      GetTestMakePublicKeyCredentialOptions();
+// Verify behavior for various combinations of origins and rp id's.
+TEST_F(AuthenticatorImplTest, MakeCredentialOriginAndRpIds) {
+  typedef struct {
+    const GURL origin;
+    const base::Optional<std::string> relying_party_id;
+  } SecurityTestCases;
 
-  TestMakeCredentialCallback cb;
-  authenticator->MakeCredential(std::move(options), cb.callback());
-  std::pair<webauth::mojom::AuthenticatorStatus,
-            webauth::mojom::PublicKeyCredentialInfoPtr>& response =
-      cb.WaitForCallback();
-  EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR,
-            response.first);
+  static const SecurityTestCases kValidTestCases[] = {
+      {GURL(kTestOrigin1), base::nullopt}, /* no rp id */
+      {GURL(kTestOrigin1), std::string(kTestRelyingPartyId)},
+      {GURL("https://foo.bar.google.com"),
+       std::string("bar.google.com")}, /* subdomain */
+  };
+
+  static const SecurityTestCases kCrashingTestCases[] = {
+      {GURL(kTestOrigin1), std::string("localhost")},
+      {GURL("about:blank"), base::nullopt},
+      {GURL("about:blank"), std::string(kTestRelyingPartyId)},
+      {GURL("about:blank"), std::string("localhost")},
+      {GURL("data:foobar"), base::nullopt},
+      {GURL("data:foobar"), std::string(kTestRelyingPartyId)},
+      {GURL("data:foobar"), std::string("localhost")},
+      {GURL("data:text/html,opaque"), base::nullopt},
+      {GURL("data:text/html,opaque"), std::string(kTestRelyingPartyId)},
+      {GURL("data:text/html,opaque"), std::string("localhost")},
+  };
+
+  // These instances should return security errors (for circumstances
+  // that would normally crash the renderer).
+  for (const SecurityTestCases& test_case : kCrashingTestCases) {
+    NavigateAndCommit(test_case.origin);
+    AuthenticatorPtr authenticator = ConnectToAuthenticator();
+    MakePublicKeyCredentialOptionsPtr options =
+        GetTestMakePublicKeyCredentialOptions();
+    options->relying_party->id = test_case.relying_party_id;
+
+    TestMakeCredentialCallback cb;
+    authenticator->MakeCredential(std::move(options), cb.callback());
+    std::pair<webauth::mojom::AuthenticatorStatus,
+              webauth::mojom::PublicKeyCredentialInfoPtr>& response =
+        cb.WaitForCallback();
+    EXPECT_EQ(webauth::mojom::AuthenticatorStatus::SECURITY_ERROR,
+              response.first);
+  }
+
+  // These instances pass the origin and relying party checks and return at
+  // the algorithm check.
+  for (const SecurityTestCases& test_case : kValidTestCases) {
+    NavigateAndCommit(test_case.origin);
+    AuthenticatorPtr authenticator = ConnectToAuthenticator();
+
+    MakePublicKeyCredentialOptionsPtr options =
+        GetTestMakePublicKeyCredentialOptions();
+    options->relying_party->id = test_case.relying_party_id;
+    options->public_key_parameters = GetTestPublicKeyCredentialParameters(123);
+
+    TestMakeCredentialCallback cb;
+    authenticator->MakeCredential(std::move(options), cb.callback());
+    std::pair<webauth::mojom::AuthenticatorStatus,
+              webauth::mojom::PublicKeyCredentialInfoPtr>& response =
+        cb.WaitForCallback();
+    EXPECT_EQ(webauth::mojom::AuthenticatorStatus::NOT_SUPPORTED_ERROR,
+              response.first);
+  }
 }
 
 // Test that service returns NOT_SUPPORTED_ERROR if no parameters contain

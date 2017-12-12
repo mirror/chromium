@@ -2855,6 +2855,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="189" label="RFH_INTERFACE_PROVIDER_SUPERFLUOUS"/>
   <int value="190" label="AIRH_UNEXPECTED_BITSTREAM"/>
   <int value="191" label="ARH_UNEXPECTED_BITSTREAM"/>
+  <int value="192" label="AUTH_INVALID_RELYING_PARTY_OR_ORIGIN"/>
 </enum>
 
 <enum name="BadMessageReasonExtensions">
