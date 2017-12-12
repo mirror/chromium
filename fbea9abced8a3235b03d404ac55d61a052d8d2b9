@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db8e47e0_c815e241",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-12T17:24:52Z",
+      "side": 1,
+      "message": "yes, this is better",
+      "parentUuid": "193ae377_b2b9996f",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f389347_3a355e96",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T15:57:32Z",
       "side": 1,
       "message": "Because removing observer twice is no op so, how about call RemoveObservers always?\n\n~ArcAppLauncher() {\n  VLOG_IF(2, !app_launched_) \u003c\u003c ... log message ...;\n  RemoveObservers();\n}",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88051497_5baab4f2",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-12T17:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f389347_3a355e96",
       "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "282fd8ba_9a298ca4",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-12T17:24:52Z",
+      "side": 1,
+      "message": "In this case we should receive multiple OnConnectionReady and when all conditions are met we actually run the app. We remove observers only after launching the app",
+      "parentUuid": "ae4c9c66_02d801c3",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94a41a02_499e72ed",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6539a54a_609d966e",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-12T17:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94a41a02_499e72ed",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "eea504d7_2990bb65",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-12T17:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1e20046_ea6e498b",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3467e906_06271350",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-12T15:57:32Z",
       "side": 1,
       "message": "Could you comment in which case prefs and ArcServiceManager become null?",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42af752e_37b5ddf3",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-12T17:24:52Z",
+      "side": 1,
+      "message": "For service manager this is paranoid check and can be removed. But for prefs I am not sure about delete order on system shutdown and exiting by DTOR. It was here before and I don\u0027t want to change this for now.",
+      "parentUuid": "3467e906_06271350",
       "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +246,24 @@
       "writtenOn": "2017-12-12T15:57:32Z",
       "side": 1,
       "message": "Off topic. This test file looks gigantic now.\nHow about extracting ArcAppLauncher tests into a arc_app_launcher_unittest.cc?\nI\u0027m ok to do it in another CL, if you\u0027d like.",
+      "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99836a65_a78fe209",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-12T17:24:52Z",
+      "side": 1,
+      "message": "It makes sense however requires refactoring. let do in separate CL when have a time",
+      "parentUuid": "291cfcfa_1149965b",
       "revId": "fbea9abced8a3235b03d404ac55d61a052d8d2b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
