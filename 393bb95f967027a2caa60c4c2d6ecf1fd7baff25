@@ -16,6 +16,24 @@
       "revId": "393bb95f967027a2caa60c4c2d6ecf1fd7baff25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f9e225_2b90f506",
+        "filename": "ash/system/network/sms_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-12-12T19:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4a20df8_b9cb9bf0",
+      "revId": "393bb95f967027a2caa60c4c2d6ecf1fd7baff25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
