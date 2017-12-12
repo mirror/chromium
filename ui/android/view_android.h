@@ -144,9 +144,9 @@ class UI_ANDROID_EXPORT ViewAndroid {
                        const SkBitmap& custom_image,
                        const gfx::Point& hotspot);
   void OnBackgroundColorChanged(unsigned int color);
-  void OnTopControlsChanged(float top_controls_offset,
+  void OnTopControlsChanged(float top_controls_shown_ratio,
                             float top_content_offset);
-  void OnBottomControlsChanged(float bottom_controls_offset,
+  void OnBottomControlsChanged(float bottom_controls_shown_ratio,
                                float bottom_content_offset);
   int GetSystemWindowInsetBottom();
 
