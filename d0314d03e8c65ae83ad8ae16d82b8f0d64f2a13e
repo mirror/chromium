@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f69cff13_92158c9f",
+        "filename": "ios/chrome/browser/ui/stack_view/page_animation_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-12T10:40:57Z",
+      "side": 1,
+      "message": "Add description of this param to the comments above.",
+      "range": {
+        "startLine": 69,
+        "startChar": 51,
+        "endLine": 69,
+        "endChar": 61
+      },
+      "revId": "d0314d03e8c65ae83ad8ae16d82b8f0d64f2a13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
