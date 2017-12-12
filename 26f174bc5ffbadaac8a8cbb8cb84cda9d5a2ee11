@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e589318d_62de5d73",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/persistence/persistence-navigator-unique-names.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-12T19:52:14Z",
+      "side": 1,
+      "message": "good/foo/bar/public\nbad/foo/bar/public\nugly/bar/public",
+      "range": {
+        "startLine": 13,
+        "startChar": 72,
+        "endLine": 13,
+        "endChar": 79
+      },
+      "revId": "26f174bc5ffbadaac8a8cbb8cb84cda9d5a2ee11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9441a5_a2b59704",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-12T19:52:14Z",
+      "side": 1,
+      "message": "Only do it for fs projects.",
+      "revId": "26f174bc5ffbadaac8a8cbb8cb84cda9d5a2ee11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
