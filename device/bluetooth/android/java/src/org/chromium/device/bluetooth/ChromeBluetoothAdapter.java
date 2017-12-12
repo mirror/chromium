@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.ParcelUuid;
+import android.util.Pair;
+import android.util.SparseArray;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
@@ -20,6 +22,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.components.location.LocationUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Exposes android.bluetooth.BluetoothAdapter as necessary for C++
@@ -254,9 +257,39 @@ final class ChromeBluetoothAdapter extends BroadcastReceiver {
                 }
             }
 
-            nativeCreateOrUpdateDeviceOnScan(mNativeBluetoothAdapterAndroid,
-                    result.getDevice().getAddress(), result.getDevice(), result.getRssi(),
-                    uuid_strings, result.getScanRecord_getTxPowerLevel());
+            Pair[] serviceDataPairs;
+            Map<ParcelUuid, byte[]> serviceData = result.getScanRecord_getServiceData();
+            if (serviceData == null) {
+                serviceDataPairs = new Pair[] {};
+            } else {
+                serviceDataPairs = new Pair[serviceData.size()];
+                int i = 0;
+                for (Map.Entry<ParcelUuid, byte[]> serviceDataItem : serviceData.entrySet()) {
+                    serviceDataPairs[i++] = Pair.create(
+                            serviceDataItem.getKey().toString(), serviceDataItem.getValue());
+                }
+            }
+
+            Pair[] manufacturerDataPairs;
+            SparseArray<byte[]> manufacturerData =
+                    result.getScanRecord_getManufacturerSpecificData();
+            if (manufacturerData == null) {
+                manufacturerDataPairs = new Pair[] {};
+            } else {
+                manufacturerDataPairs = new Pair[manufacturerData.size()];
+                for (int i = 0; i < manufacturerData.size(); i++) {
+                    manufacturerDataPairs[i] =
+                            Pair.create(manufacturerData.keyAt(i), manufacturerData.valueAt(i));
+                }
+            }
+
+            // Object can be destroyed, but Android keeps calling onScanResult.
+            if (mNativeBluetoothAdapterAndroid != 0) {
+                nativeCreateOrUpdateDeviceOnScan(mNativeBluetoothAdapterAndroid,
+                        result.getDevice().getAddress(), result.getDevice(), result.getRssi(),
+                        uuid_strings, result.getScanRecord_getTxPowerLevel(), serviceDataPairs,
+                        manufacturerDataPairs);
+            }
         }
 
         @Override
@@ -317,7 +350,7 @@ final class ChromeBluetoothAdapter extends BroadcastReceiver {
     // http://crbug.com/505554
     private native void nativeCreateOrUpdateDeviceOnScan(long nativeBluetoothAdapterAndroid,
             String address, Object bluetoothDeviceWrapper, int rssi, String[] advertisedUuids,
-            int txPower);
+            int txPower, Object[] serviceData, Object[] manufacturerData);
 
     // Binds to BluetoothAdapterAndroid::nativeOnAdapterStateChanged
     private native void nativeOnAdapterStateChanged(
