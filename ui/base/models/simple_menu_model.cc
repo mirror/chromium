@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -379,13 +380,17 @@ void SimpleMenuModel::HighlightChangedTo(int index) {
 }
 
 void SimpleMenuModel::ActivatedAt(int index) {
+  int command_id = GetCommandIdAt(index);
+  RecordHistogram(command_id);
   if (delegate_)
-    delegate_->ExecuteCommand(GetCommandIdAt(index), 0);
+    delegate_->ExecuteCommand(command_id, 0);
 }
 
 void SimpleMenuModel::ActivatedAt(int index, int event_flags) {
+  int command_id = GetCommandIdAt(index);
+  RecordHistogram(command_id);
   if (delegate_)
-    delegate_->ExecuteCommand(GetCommandIdAt(index), event_flags);
+    delegate_->ExecuteCommand(command_id, event_flags);
 }
 
 MenuModel* SimpleMenuModel::GetSubmenuModelAt(int index) const {
@@ -455,6 +460,20 @@ void SimpleMenuModel::ValidateItem(const Item& item) {
     DCHECK_GE(item.command_id, 0);
   }
 #endif  // NDEBUG
+}
+
+void SimpleMenuModel::SetHistogramName(std::string histogram_name) {
+  if (!histogram_name_.empty())
+    return;
+
+  histogram_name_ = histogram_name;
+}
+
+void SimpleMenuModel::RecordHistogram(int command) {
+  if (histogram_name_.empty())
+    return;
+
+  UMA_HISTOGRAM_SPARSE_SLOWLY(histogram_name_, command);
 }
 
 }  // namespace ui

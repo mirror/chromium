@@ -22,6 +22,9 @@ class ASH_EXPORT ShelfContextMenuModel : public ui::SimpleMenuModel,
                                          public ui::SimpleMenuModel::Delegate {
  public:
   // The command ids for locally-handled shelf and wallpaper context menu items.
+  // These are used in histograms, do not remove/reorder entries. Only add at
+  // the end just before MENU_LOCAL_END. Also remember to update the CommandId
+  // enum listing in tools/metrics/histograms/enums.xml.
   enum CommandId {
     MENU_LOCAL_START = 500,  // Offset to avoid conflicts with other menus.
     MENU_AUTO_HIDE = MENU_LOCAL_START,
