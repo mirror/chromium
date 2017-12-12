@@ -71,15 +71,6 @@ const int kCheckboxSizeWithPadding = 28;
 // The width of the settings pane in pixels.
 const int kWidth = 360;
 
-// The width of the learn more icon in pixels.
-const int kLearnMoreSize = 12;
-
-// The width of the click target that contains the learn more button in pixels.
-const int kLearnMoreTargetWidth = 28;
-
-// The height of the click target that contains the learn more button in pixels.
-const int kLearnMoreTargetHeight = 40;
-
 // The minimum height of the settings pane in pixels.
 const int kMinimumHeight = 480;
 
@@ -268,8 +259,7 @@ NotifierSettingsView::NotifierButton::NotifierButton(
       notifier_id_(notifier_ui_data.notifier_id),
       icon_view_(new views::ImageView()),
       name_view_(new views::Label(notifier_ui_data.name)),
-      checkbox_(new views::Checkbox(base::string16(), true /* force_md */)),
-      learn_more_(nullptr) {
+      checkbox_(new views::Checkbox(base::string16(), true /* force_md */)) {
   name_view_->SetAutoColorReadabilityEnabled(false);
   name_view_->SetEnabledColor(kLabelColor);
   // "Roboto-Regular, 13sp" is specified in the mock.
@@ -280,35 +270,6 @@ NotifierSettingsView::NotifierButton::NotifierButton(
   checkbox_->set_listener(this);
   checkbox_->SetFocusBehavior(FocusBehavior::NEVER);
   checkbox_->SetAccessibleName(notifier_ui_data.name);
-
-  if (notifier_ui_data.has_advanced_settings) {
-    // Create a more-info button that will be right-aligned.
-    learn_more_ = new views::ImageButton(this);
-    learn_more_->SetFocusPainter(CreateFocusPainter());
-    learn_more_->SetFocusForPlatform();
-
-    ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-    learn_more_->SetImage(
-        views::Button::STATE_NORMAL,
-        rb.GetImageSkiaNamed(IDR_NOTIFICATION_ADVANCED_SETTINGS));
-    learn_more_->SetImage(
-        views::Button::STATE_HOVERED,
-        rb.GetImageSkiaNamed(IDR_NOTIFICATION_ADVANCED_SETTINGS_HOVER));
-    learn_more_->SetImage(
-        views::Button::STATE_PRESSED,
-        rb.GetImageSkiaNamed(IDR_NOTIFICATION_ADVANCED_SETTINGS_PRESSED));
-    learn_more_->SetState(views::Button::STATE_NORMAL);
-    int learn_more_border_width = (kLearnMoreTargetWidth - kLearnMoreSize) / 2;
-    int learn_more_border_height =
-        (kLearnMoreTargetHeight - kLearnMoreSize) / 2;
-    // The image itself is quite small, this large invisible border creates a
-    // much bigger click target.
-    learn_more_->SetBorder(views::CreateEmptyBorder(
-        learn_more_border_height, learn_more_border_width,
-        learn_more_border_height, learn_more_border_width));
-    learn_more_->SetImageAlignment(views::ImageButton::ALIGN_CENTER,
-                                   views::ImageButton::ALIGN_MIDDLE);
-  }
 
   UpdateIconImage(notifier_ui_data.icon);
 }
@@ -335,20 +296,6 @@ bool NotifierSettingsView::NotifierButton::checked() const {
   return checkbox_->checked();
 }
 
-bool NotifierSettingsView::NotifierButton::has_learn_more() const {
-  return learn_more_ != nullptr;
-}
-
-void NotifierSettingsView::NotifierButton::SendLearnMorePressedForTest() {
-  if (learn_more_ == nullptr)
-    return;
-  gfx::Point point(110, 120);
-  ui::MouseEvent pressed(ui::ET_MOUSE_PRESSED, point, point,
-                         ui::EventTimeForNow(), ui::EF_LEFT_MOUSE_BUTTON,
-                         ui::EF_LEFT_MOUSE_BUTTON);
-  ButtonPressed(learn_more_, pressed);
-}
-
 void NotifierSettingsView::NotifierButton::ButtonPressed(
     views::Button* button,
     const ui::Event& event) {
@@ -358,10 +305,6 @@ void NotifierSettingsView::NotifierButton::ButtonPressed(
     // back to the previous state.
     checkbox_->SetChecked(!checkbox_->checked());
     Button::NotifyClick(event);
-  } else if (button == learn_more_) {
-    Shell::Get()
-        ->message_center_controller()
-        ->OnNotifierAdvancedSettingsRequested(notifier_id_);
   }
 }
 
@@ -394,19 +337,10 @@ void NotifierSettingsView::NotifierButton::GridChanged() {
   // Add a padding column which contains expandable blank space.
   cs->AddPaddingColumn(1, 0);
 
-  // Add a column for the learn more button if necessary.
-  if (learn_more_) {
-    cs->AddPaddingColumn(0, kInternalHorizontalSpacing);
-    cs->AddColumn(GridLayout::CENTER, GridLayout::CENTER, 0,
-                  GridLayout::USE_PREF, 0, 0);
-  }
-
   layout->StartRow(0, 0);
   layout->AddView(checkbox_);
   layout->AddView(icon_view_);
   layout->AddView(name_view_);
-  if (learn_more_)
-    layout->AddView(learn_more_);
 
   Layout();
 }
