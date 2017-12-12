@@ -850,22 +850,25 @@ void GetFormAndField(autofill::FormData* form,
 }
 
 - (void)onFormDataFilled:(const autofill::FormData&)form {
-  std::unique_ptr<base::DictionaryValue> formData(new base::DictionaryValue);
-  formData->SetString("formName", base::UTF16ToUTF8(form.name));
+  std::unique_ptr<base::DictionaryValue> JSONForm(new base::DictionaryValue);
+  JSONForm->SetString("formName", base::UTF16ToUTF8(form.name));
   // Note: Destruction of all child base::Value types is handled by the root
   // formData object on its own destruction.
-  auto fieldsData = base::MakeUnique<base::DictionaryValue>();
+  auto JSONFields = base::MakeUnique<base::DictionaryValue>();
 
-  const std::vector<autofill::FormFieldData>& fields = form.fields;
-  for (const auto& fieldData : fields) {
-    fieldsData->SetKey(base::UTF16ToUTF8(fieldData.name),
-                       base::Value(fieldData.value));
+  const std::vector<autofill::FormFieldData>& autofillFields = form.fields;
+  for (const auto& autofillField : autofillFields) {
+    if (JSONFields->HasKey(base::UTF16ToUTF8(autofillField.name)) &&
+        autofillField.value.empty())
+      continue;
+    JSONFields->SetKey(base::UTF16ToUTF8(autofillField.name),
+                       base::Value(autofillField.value));
   }
-  formData->Set("fields", std::move(fieldsData));
+  JSONForm->Set("fields", std::move(JSONFields));
 
   // Stringify the JSON data and send it to the UIWebView-side fillForm method.
-  std::string dataString;
-  base::JSONWriter::Write(*formData.get(), &dataString);
+  std::string JSONString;
+  base::JSONWriter::Write(*JSONForm.get(), &JSONString);
 
   // It is possible that the fill was not initiated by selecting a suggestion.
   // In this case we provide an empty callback.
@@ -873,7 +876,7 @@ void GetFormAndField(autofill::FormData* form,
     suggestionHandledCompletion_ = [^{
     } copy];
   [jsAutofillManager_
-                fillForm:base::SysUTF8ToNSString(dataString)
+                fillForm:base::SysUTF8ToNSString(JSONString)
       forceFillFieldName:base::SysUTF16ToNSString(pendingAutocompleteField_)
        completionHandler:suggestionHandledCompletion_];
   suggestionHandledCompletion_ = nil;
