@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17f88e24_13ea8367",
+        "filename": "base/test/android/url_utils.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-12T01:14:52Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "816e2582_d96199a5",
+      "revId": "7928ccfc79e7d63164c5a38e6e965212afbc05ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb40065c_4bf4030f",
         "filename": "base/test/android/url_utils.h",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6b594708_467fb1e5",
+        "filename": "base/test/android/url_utils.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-12T01:14:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb40065c_4bf4030f",
+      "revId": "7928ccfc79e7d63164c5a38e6e965212afbc05ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bf17e06_b27f7d91",
         "filename": "base/test/android/url_utils.h",
         "patchSetId": 15
@@ -50,6 +86,24 @@
       "revId": "7928ccfc79e7d63164c5a38e6e965212afbc05ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09cef4cc_75b2adc2",
+        "filename": "base/test/android/url_utils.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-12T01:14:52Z",
+      "side": 1,
+      "message": "Done, talked offline, class is removed to align with other util c++ files.",
+      "parentUuid": "7bf17e06_b27f7d91",
+      "revId": "7928ccfc79e7d63164c5a38e6e965212afbc05ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
