@@ -422,6 +422,18 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // the page has changed.
   virtual void SetTooltipText(const base::string16& tooltip_text) = 0;
 
+#if defined(OS_MACOSX)
+  // Freezes the areas of screen occupied by Chrome windows. Intended for the
+  // (brief!) interval while the compositor swaps in a new frame, and makes the
+  // swap visually atomic. If misused, can create visual artifacts if there's
+  // motion behind Chrome windows.
+  virtual void SetFrozenForRepaint(bool frozen);
+
+  // Return true if the last frame submitted to the compositor matches
+  // |desired_size|. Use HasAcceleratedSurface() if the swap must be complete.
+  virtual bool HasPendingFrameOfSize(const gfx::Size& desired_size) const;
+#endif
+
   // Return true if the view has an accelerated surface that contains the last
   // presented frame for the view. If |desired_size| is non-empty, true is
   // returned only if the accelerated surface size matches.

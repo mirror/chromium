@@ -98,6 +98,15 @@ gfx::Size RenderWidgetHostViewBase::GetPhysicalBackingSize() const {
       ui::GetScaleFactorForNativeView(GetNativeView()));
 }
 
+#if defined(OS_MACOSX)
+void RenderWidgetHostViewBase::SetFrozenForRepaint(bool frozen) {}
+
+bool RenderWidgetHostViewBase::HasPendingFrameOfSize(
+    const gfx::Size& desired_size) const {
+  return false;
+}
+#endif
+
 bool RenderWidgetHostViewBase::DoBrowserControlsShrinkBlinkSize() const {
   return false;
 }
