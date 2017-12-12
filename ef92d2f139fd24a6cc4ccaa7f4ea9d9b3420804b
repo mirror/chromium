@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e37ccb6_70dc2599",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-12T19:46:54Z",
+      "side": 1,
+      "message": "\\63 would be better, since it marks the major mode (3) and the number of characters (3), which \u0027c\u0027 doesn\u0027t.",
+      "range": {
+        "startLine": 12,
+        "startChar": 32,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "ef92d2f139fd24a6cc4ccaa7f4ea9d9b3420804b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
