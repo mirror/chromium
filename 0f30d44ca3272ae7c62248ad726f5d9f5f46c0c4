@@ -16,6 +16,24 @@
       "revId": "0f30d44ca3272ae7c62248ad726f5d9f5f46c0c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88952726_68d16629",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-12T18:47:32Z",
+      "side": 1,
+      "message": "\u003e Seems like a pattern similar to what the HISTOGRAM_MACROS elide, might be worth considering one that does similar here if we have to use statics.\n\nI\u0027m generally not a fan of macros, and I\u0027m not sure how the statics influence that decision. This //base API is also not the preferred API (it\u0027s more verbose and less flexible), but it\u0027s what allows layers that can\u0027t depend on //components/crash/core directly to set crash keys.\n\n\u003e Instead of allocating this as a static can we hold it within this object? WMPI instances are 1:1 with \u003cvideo\u003e or \u003caudio\u003e elements, so as more are created we\u0027ll overwrite this value. Meaning any eventual crash may be tagged with the wrong key.\n\nCrash keys do need to be declared statically for a couple of reasons (they cannot be destructed, try to not allocating in crashy contexts). This CL isn\u0027t changing the overwrite behavior, so that issue already exists.",
+      "parentUuid": "7898e45c_12ce8a88",
+      "revId": "0f30d44ca3272ae7c62248ad726f5d9f5f46c0c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
