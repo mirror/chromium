@@ -117,6 +117,30 @@
       "revId": "df8436fc92a65e2eac4824258db8bfd84d863095",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a11d1ce_8b61d437",
+        "filename": "chrome/browser/notifications/chrome_ash_message_center_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-12T18:59:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "998fb527_d296a2b3",
+      "range": {
+        "startLine": 42,
+        "startChar": 24,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "df8436fc92a65e2eac4824258db8bfd84d863095",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
