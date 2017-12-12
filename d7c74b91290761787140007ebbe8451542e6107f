@@ -50,6 +50,24 @@
       "revId": "d7c74b91290761787140007ebbe8451542e6107f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134366d2_72a7a18d",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-12T17:31:44Z",
+      "side": 1,
+      "message": "AFAIU chrome and ash versions are locked together and will be for the forseeable future. I do not look forward to maintaining a cross-compatible API if that ever changes.",
+      "parentUuid": "e8750373_7dd60ea0",
+      "revId": "d7c74b91290761787140007ebbe8451542e6107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
