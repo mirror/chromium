@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "6ff0a9bc_1f6123d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-12T15:09:11Z",
+      "side": 1,
+      "message": "s/add/adds",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683d9a64_a8ef5cb8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-12T15:09:11Z",
+      "side": 1,
+      "message": "nit: rename to onBeforeSessionLaunch to reflect the timing better? Launching seems pretty vague",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 38
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35dc7d71_5c19efde",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-12T15:09:11Z",
+      "side": 1,
+      "message": "nit: Move the comment above or below all the annotations? In between looks odd.",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 53
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63837c3d_09a6b5cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-12T15:09:11Z",
+      "side": 1,
+      "message": "Why is this a singleton vs something created and referenced by something like ChromeMediaRouter and passed to MediaRouteProvider implementations?",
+      "range": {
+        "startLine": 122,
+        "startChar": 43,
+        "endLine": 122,
+        "endChar": 46
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d6c322_ab4a3ee6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-12T15:09:11Z",
+      "side": 1,
+      "message": "In the if below this is not set to true, so in theory one can call this many times between stopApplication() and onSessionClosed() which would reset the pending session launch request and call stopApplication() more than once.\n\n(I realize this is likely the existing logic, just that your change makes its failure more obvious)",
+      "range": {
+        "startLine": 159,
+        "startChar": 12,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac257650_7191c52c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CreateRouteRequest.java",
         "patchSetId": 6
@@ -18,6 +133,53 @@
         "startChar": 12,
         "endLine": 170,
         "endChar": 19
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e8abd9_31e8c31a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CreateRouteRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-12T15:09:11Z",
+      "side": 1,
+      "message": "This could be changed to crbug.com/665639 or removed (we can\u0027t use ConnectedTask since connect/disconnect to the GoogleApiClient in the Cast case actually mean Wi-Fi connection to the selected Cast device, not just being able to bind to the GooglePlayServices service).\nThe bug is assigned to zqzhang@.",
+      "parentUuid": "ac257650_7191c52c",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 19
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a17450_a8edcd1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-12-12T15:09:11Z",
+      "side": 1,
+      "message": "Do you intend to restructure the packages down the line?\n\nI\u0027d suggest having something like:\n\nmedia.router. - Chrome MediaRouter JNI implementation, interfaces\nmedia.router.remoting - MediaFlinging/Remoting specific implementation\nmedia.router.websdk - Cast Web SDK specific implementation\nmedia.router.cast - Classes using the Cast Android SDK, used be .remoting/.websdk\nmedia.router.base - Shared implementation of .remoting/.websdk that can use .cast\n\nYou could merge media.router.cast/base into media.router until another protocol (like DIAL) is added - which may never happen, and keep .websdk as .cast.\n\n(not requesting to do that in any nearest future, rather documenting my thoughts).",
+      "range": {
+        "startLine": 13,
+        "startChar": 48,
+        "endLine": 13,
+        "endChar": 52
       },
       "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
