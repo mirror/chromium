@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "575b4c21_9a2b7163",
+        "filename": "chrome/browser/devtools/device/adb/adb_client_socket.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-12T17:57:40Z",
+      "side": 1,
+      "message": "Remote debugging is supported over existing ADB (Android Debug Bridge) connection,\nin addition to raw USB connection. This socket talks to the local ADB daemon which routes debugging traffic to a remote device.",
+      "revId": "fd0778ea36938ac3f23af7935dd3f601cdbbf0f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
