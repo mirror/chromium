@@ -122,7 +122,7 @@ Output.SPACE = ' ';
 Output.ROLE_INFO_ = {
   alert: {msgId: 'role_alert'},
   alertDialog: {msgId: 'role_alertdialog', outputContextFirst: true},
-  article: {msgId: 'role_article', inherits: 'abstractContainer'},
+  article: {msgId: 'role_article', inherits: 'abstractItem'},
   application: {msgId: 'role_application', inherits: 'abstractContainer'},
   banner: {msgId: 'role_banner', inherits: 'abstractContainer'},
   button: {msgId: 'role_button', earconId: 'BUTTON'},
@@ -152,7 +152,8 @@ Output.ROLE_INFO_ = {
   list: {msgId: 'role_list'},
   listBox: {msgId: 'role_listbox', earconId: 'LISTBOX'},
   listBoxOption: {msgId: 'role_listitem', earconId: 'LIST_ITEM'},
-  listItem: {msgId: 'role_listitem', earconId: 'LIST_ITEM'},
+  listItem:
+      {msgId: 'role_listitem', earconId: 'LIST_ITEM', inherits: 'abstractItem'},
   log: {
     msgId: 'role_log',
   },
@@ -191,7 +192,7 @@ Output.ROLE_INFO_ = {
     earconId: 'LISTBOX'
   },
   status: {msgId: 'role_status'},
-  tab: {msgId: 'role_tab'},
+  tab: {msgId: 'role_tab', inherits: 'abstractItem'},
   tabList: {msgId: 'role_tablist', inherits: 'abstractContainer'},
   tabPanel: {msgId: 'role_tabpanel'},
   searchBox: {msgId: 'role_search', earconId: 'EDITABLE_TEXT'},
@@ -202,7 +203,7 @@ Output.ROLE_INFO_ = {
   toolbar: {msgId: 'role_toolbar', ignoreAncestry: true},
   toggleButton: {msgId: 'role_button', inherits: 'checkBox'},
   tree: {msgId: 'role_tree'},
-  treeItem: {msgId: 'role_treeitem'},
+  treeItem: {msgId: 'role_treeitem', inherits: 'abstractItem'},
   window: {ignoreAncestry: true}
 };
 
@@ -285,6 +286,16 @@ Output.RULES = {
     abstractContainer: {
       enter: `$nameFromNode $role $state $description`,
       leave: `@exited_container($role)`
+    },
+    abstractItem: {
+      // Note that ChromeVox generally does not output position/count. Only for
+      // some roles (see sub-output rules) or when explicitly provided by an
+      // author (via posInSet), do we include them in the output.
+      enter: `$nameFromNode $role $state $restriction $description
+          $if($posInSet, @describe_index($posInSet, $setSize))`,
+      speak: `$state $name= $role
+          $if($posInSet, @describe_index($posInSet, $setSize))
+          $description $restriction`
     },
     abstractRange: {
       speak: `$if($valueForRange, $valueForRange, $value)
@@ -385,7 +396,6 @@ Output.RULES = {
       speak: `$state $name $role @describe_index($posInSet, $setSize)
           $description $restriction`
     },
-    listItem: {enter: `$name= $role $state $description`},
     listMarker: {speak: `$name`},
     menu: {
       enter: `$name $role`,
@@ -421,8 +431,9 @@ Output.RULES = {
     radioButton: {
       speak: `$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF))
           $if($checked, @describe_radio_selected($name),
-          @describe_radio_unselected($name)) $description $state
-          $restriction`
+          @describe_radio_unselected($name))
+          @describe_index($posInSet, $setSize)
+          $description $state $restriction`
     },
     rootWebArea: {enter: `$name`, speak: `$if($name, $name, $docUrl)`},
     region: {speak: `$state $nameOrTextContent $description`},
@@ -603,6 +614,12 @@ Output.isTruthy = function(node, attrib) {
   switch (attrib) {
     case 'checked':
       return node.checked && node.checked !== 'false';
+
+    // Chrome automatically calculates these attributes.
+    case 'posInSet':
+      return node.htmlAttributes['aria-posinset'];
+    case 'setSize':
+      return node.htmlAttributes['aria-setsize'];
     default:
       return node[attrib] !== undefined || node.state[attrib];
   }
