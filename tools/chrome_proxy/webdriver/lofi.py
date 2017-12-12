@@ -20,6 +20,8 @@ class LoFi(IntegrationTest):
       # Disable server experiments such as tamper detection.
       test_driver.AddChromeArg('--data-reduction-proxy-server-experiments-'
                                'disabled')
+      test_driver.AddChromeArg('--enable-features='
+                               'DataReductionProxyDecidesTransform')
 
       test_driver.LoadURL('http://check.googlezip.net/static/index.html')
 
@@ -45,7 +47,8 @@ class LoFi(IntegrationTest):
       # Disable server experiments such as tamper detection.
       test_driver.AddChromeArg('--data-reduction-proxy-server-experiments-'
                                'disabled')
-
+      test_driver.AddChromeArg('--enable-features='
+                               'DataReductionProxyDecidesTransform')
       test_driver.AddChromeArg('--force-fieldtrial-params='
                                'NetworkQualityEstimator.Enabled:'
                                'force_effective_connection_type/Slow2G')
@@ -126,6 +129,8 @@ class LoFi(IntegrationTest):
       # --profile-type=default command line for the same user profile and cache
       # to be used across the two page loads.
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
+      test_driver.AddChromeArg('--enable-features='
+                               'DataReductionProxyDecidesTransform')
       test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
       test_driver.AddChromeArg('--profile-type=default')
       test_driver.AddChromeArg('--data-reduction-proxy-server-experiments-'
