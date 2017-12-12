@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea819e94_4709d340",
+        "filename": "components/proximity_auth/bluetooth_low_energy_connection_finder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-12T17:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "244ad1a5_c99b2334",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59012c67_73d8a506",
         "filename": "device/bluetooth/android/java/src/org/chromium/device/bluetooth/ChromeBluetoothAdapter.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3e1c63_e90698ac",
+        "filename": "device/bluetooth/android/java/src/org/chromium/device/bluetooth/ChromeBluetoothAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-12T17:05:30Z",
+      "side": 1,
+      "message": "Java will complain about unchecked assignment when creating array with generics. This could be solved by using lists. However this would require more complicated handling on JNI side, which defeats the purpose of using arrays as easier to handle.\nSimpler option is to get rid of generics on Pair objects. This will silence compiler and does not really matter for JNI.",
+      "parentUuid": "59012c67_73d8a506",
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "c119acf4_c30316b6",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-12T17:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "776ee3eb_63b8bfc0",
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b174a4a9_55c5e852",
         "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
         "patchSetId": 1
@@ -94,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "b83fabcf_872e5184",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-12T17:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b174a4a9_55c5e852",
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1170bdbc_d86d4cda",
         "filename": "device/bluetooth/bluetooth_device.h",
         "patchSetId": 1
@@ -108,6 +186,24 @@
       "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f9383d_143fcc08",
+        "filename": "device/bluetooth/bluetooth_device.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-12T17:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1170bdbc_d86d4cda",
+      "revId": "0a0e512d945b424e8ad5161c76fc8fb9d41840bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
