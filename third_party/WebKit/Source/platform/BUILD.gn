@@ -1928,6 +1928,7 @@ jumbo_source_set("blink_platform_unittests_sources") {
     "//testing/gtest",
     "//third_party:freetype_harfbuzz",
     "//third_party/WebKit/Source/platform/blob:unit_tests",
+    "//third_party/WebKit/Source/platform/heap",
     "//third_party/WebKit/Source/platform/instrumentation:unit_tests",
     "//third_party/WebKit/Source/platform/loader:unit_tests",
     "//third_party/WebKit/Source/platform/network:unit_tests",
