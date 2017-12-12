@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3d3228e6_844dc1a7",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-12-12T21:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9d4d781_76e59124",
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c7f4044_73534a3f",
         "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d4d322_e5207ba2",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-12-12T21:10:28Z",
+      "side": 1,
+      "message": "I prefer to have explicit and distinctive behavior. While suggested approach could be shorter in terms of code, it might make finding errors harder in future.",
+      "parentUuid": "1c7f4044_73534a3f",
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "65d743fd_3c39b589",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-12-12T21:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66daae0b_cfdf53c2",
+      "range": {
+        "startLine": 334,
+        "startChar": 43,
+        "endLine": 334,
+        "endChar": 56
+      },
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44d6ce3f_16666f66",
         "filename": "chrome/browser/policy/policy_conversions.cc",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c9bdd5_c2b08538",
+        "filename": "chrome/browser/policy/policy_conversions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-12-12T21:10:28Z",
+      "side": 1,
+      "message": "Just being overcautious.",
+      "parentUuid": "44d6ce3f_16666f66",
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "ab0ceabb_f41479bd",
+        "filename": "chrome/browser/policy/policy_conversions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-12-12T21:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82bf1b2c_8b93a347",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0731464e_3ece6bbb",
         "filename": "chrome/browser/policy/policy_conversions.h",
         "patchSetId": 3
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "2dd1775e_cd5644ab",
+        "filename": "chrome/browser/policy/policy_conversions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-12-12T21:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0731464e_3ece6bbb",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99d1f724_f56ffa05",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 3
@@ -136,6 +262,24 @@
       "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7489481d_83a7a119",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1001299
+      },
+      "writtenOn": "2017-12-12T21:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99d1f724_f56ffa05",
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
