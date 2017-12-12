@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c9c53d4_38ecdf2b",
+        "filename": "third_party/WebKit/Source/platform/heap/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-12T19:48:24Z",
+      "side": 1,
+      "message": "also, this should probably be in public_deps, since it\u0027s required to use the platform/heap/ public headers",
+      "revId": "9a4b49116380a5ae9aeec8ef88efe653c7704d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
