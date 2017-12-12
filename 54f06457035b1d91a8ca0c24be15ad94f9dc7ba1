@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22c81d5c_a2eea1bd",
+        "filename": "luci-milo.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 2933,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-12T18:14:07Z",
+      "side": 1,
+      "message": "The category here need to be changed to \"android\"",
+      "revId": "54f06457035b1d91a8ca0c24be15ad94f9dc7ba1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
