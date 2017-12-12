@@ -281,6 +281,30 @@
       "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1c1a66_1f6c431e",
+        "filename": "components/security_interstitials/content/security_interstitial_page.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T01:17:48Z",
+      "side": 1,
+      "message": "I was worried about making it into two methods because it would be easy for someone to call GetHTMLContents and forget to call SetUpMetricsOnShow. So I decided to just move the metrics setup stuff to the constructor. I think that should be okay, I don\u0027t see that it makes any difference doing it in the constructor vs Show().",
+      "parentUuid": "436502ec_86a66410",
+      "range": {
+        "startLine": 68,
+        "startChar": 63,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "58822c58e1c33c7a40a19ba52f75bc6988ad7c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
