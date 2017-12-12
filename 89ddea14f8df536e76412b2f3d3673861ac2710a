@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e95937f_8ec14f2f",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-12T15:41:37Z",
+      "side": 1,
+      "message": "DeleteSoon(FROM_HERE, db_.release())",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 120,
+        "endChar": 67
+      },
+      "revId": "89ddea14f8df536e76412b2f3d3673861ac2710a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20da865_bbcd1d78",
+        "filename": "content/browser/dom_storage/session_storage_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-12T15:41:37Z",
+      "side": 1,
+      "message": "If you decide to use a RefCountedDeleteOnSequence\u003cRefCountedDeleteOnSequence\u003e as I recommended here https://chromium-review.googlesource.com/c/chromium/src/+/816038/1/content/browser/dom_storage/session_storage_database.h#50 , you won\u0027t have access to a TaskRunner to DCHECK RunsTasksInCurrentSequence. You can instead use SEQUENCE_CHECKER https://cs.chromium.org/chromium/src/base/sequence_checker.h",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 60
+      },
+      "revId": "89ddea14f8df536e76412b2f3d3673861ac2710a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48490b12_c1adac82",
+        "filename": "content/browser/dom_storage/session_storage_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-12T15:41:37Z",
+      "side": 1,
+      "message": "Instead of having a |commit_task_runner_| member, you could replace this with:\n\nRefCountedDeleteOnSequence\u003cRefCountedDeleteOnSequence\u003e\n\nAnd keep the destructor as-is.",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 61
+      },
+      "revId": "89ddea14f8df536e76412b2f3d3673861ac2710a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3387b621_46a183a3",
+        "filename": "content/browser/dom_storage/session_storage_database.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-12T15:41:37Z",
+      "side": 1,
+      "message": "scoped_refptr\u003cSequencedTaskRunner\u003e\n\nSince this constructor is taking a ref on the SequencedTaskRunner https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#object-ownership-and-calling-conventions",
+      "range": {
+        "startLine": 57,
+        "startChar": 25,
+        "endLine": 57,
+        "endChar": 51
+      },
+      "revId": "89ddea14f8df536e76412b2f3d3673861ac2710a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8511e0dc_1d48f177",
+        "filename": "content/browser/dom_storage/session_storage_database_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-12T15:41:37Z",
+      "side": 1,
+      "message": "I recommend adding a base::test::ScopedTaskEnvironment member to your test fixture and changing this to base::ThreadTaskRunnerHandle::Get() to simplify the DCHECKs in session_storage_database.cc.",
+      "range": {
+        "startLine": 109,
+        "startChar": 56,
+        "endLine": 109,
+        "endChar": 63
+      },
+      "revId": "89ddea14f8df536e76412b2f3d3673861ac2710a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
