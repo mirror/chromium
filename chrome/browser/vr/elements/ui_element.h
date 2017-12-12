@@ -342,6 +342,8 @@ class UiElement : public cc::AnimationTarget {
 
   void SetTransitionedProperties(const std::set<TargetProperty>& properties);
   void SetTransitionDuration(base::TimeDelta delta);
+  void SetAnimationCompletionCallback(
+      vr::AnimationPlayer::AnimationCompletedCallback callback);
 
   void AddAnimation(std::unique_ptr<cc::Animation> animation);
   void RemoveAnimation(int animation_id);

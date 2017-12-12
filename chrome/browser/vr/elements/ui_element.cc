@@ -566,6 +566,11 @@ void UiElement::SetTransitionDuration(base::TimeDelta delta) {
   animation_player_.SetTransitionDuration(delta);
 }
 
+void UiElement::SetAnimationCompletionCallback(
+    vr::AnimationPlayer::AnimationCompletedCallback callback) {
+  animation_player_.set_animation_completed_callback(callback);
+}
+
 void UiElement::AddAnimation(std::unique_ptr<cc::Animation> animation) {
   animation_player_.AddAnimation(std::move(animation));
 }
