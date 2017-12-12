@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e115526_8a8fd19e",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceMotionDispatcher.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-12T19:13:49Z",
+      "side": 1,
+      "message": "This cast is unnecessary.",
+      "range": {
+        "startLine": 70,
+        "startChar": 9,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "6ef04865775fcd55eed044b9c23fcdf569a4ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0729e87c_80c5cd1f",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceMotionEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-12T19:13:49Z",
+      "side": 1,
+      "message": "Const casts should be avoided unless there is a well-documented reason they are safe. Why not instead make |device_motion_data_| a Member\u003cconst DeviceMotionData\u003e?",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 55
+      },
+      "revId": "6ef04865775fcd55eed044b9c23fcdf569a4ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
