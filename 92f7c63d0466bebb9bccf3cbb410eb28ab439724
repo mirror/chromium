@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d465e4a_4579b3e0",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T21:20:40Z",
+      "side": 1,
+      "message": "nit: // views::Button:",
+      "revId": "92f7c63d0466bebb9bccf3cbb410eb28ab439724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa7adb0_aa1880cd",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T21:20:40Z",
+      "side": 1,
+      "message": "nit: LoginUserView* const parent_ \u003d nullptr; since |parent_| should never change during the lifetime of TapButton.",
+      "revId": "92f7c63d0466bebb9bccf3cbb410eb28ab439724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64fb50df_03bb6fe2",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T21:20:40Z",
+      "side": 1,
+      "message": "Drop ref here. Think a temp object is only guaranteed to be alive during the evaluation of the expression and could be gone after that. It is safer to just make a copy.",
+      "range": {
+        "startLine": 434,
+        "startChar": 12,
+        "endLine": 434,
+        "endChar": 13
+      },
+      "revId": "92f7c63d0466bebb9bccf3cbb410eb28ab439724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
