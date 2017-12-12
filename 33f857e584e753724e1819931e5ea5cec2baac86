@@ -22,6 +22,30 @@
       "revId": "33f857e584e753724e1819931e5ea5cec2baac86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2652fc21_965dc7be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-12T21:34:59Z",
+      "side": 1,
+      "message": "Yes, we need both. setTabSwitcherMode() is called when entering the tab switcher and exiting. When exiting, inTabSwitcherMode() returns true until onTabSwitcherTransitionFinished is called. onTabSwitcherTransitionFinished is only called while existing (which is odd).\n\nonTabSwitcherTransitionFinished does run in accessibility mode and when animations are disabled. It\u0027s called from ToolbarManager\u0027s OverviewModeObserver.",
+      "parentUuid": "9b45cae0_e6558116",
+      "range": {
+        "startLine": 386,
+        "startChar": 4,
+        "endLine": 389,
+        "endChar": 5
+      },
+      "revId": "33f857e584e753724e1819931e5ea5cec2baac86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
