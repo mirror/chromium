@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3647a50_7d9be15c",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-12T21:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86eb6689_575ae203",
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef5d07b3_655cedc4",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc51c853_ff3bbc54",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-12T21:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef5d07b3_655cedc4",
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "38c230be_292e64a1",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-12T21:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7a79e3b_ceccbedc",
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b455f347_b33b6ea7",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c922f78_0bb3acb6",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-12T21:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b455f347_b33b6ea7",
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1534ba3d_dbaa7444",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-12T21:35:32Z",
+      "side": 1,
+      "message": "If we\u0027re going to post task, we might as well merge it with the PostAfterStartupTask. PTAL.",
+      "parentUuid": "0c9e85a6_b7f81200",
+      "range": {
+        "startLine": 386,
+        "startChar": 61,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa11961b_897b4d68",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 1
@@ -200,6 +296,30 @@
       "side": 1,
       "message": "I don\u0027t think there\u0027s a task scheduler construct that knows about the browser startup sequence.",
       "parentUuid": "34bad6d0_be1283bb",
+      "range": {
+        "startLine": 1111,
+        "startChar": 26,
+        "endLine": 1111,
+        "endChar": 46
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb7faf5_0448bee5",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-12T21:35:32Z",
+      "side": 1,
+      "message": "++fdoray for real this time.",
+      "parentUuid": "e185350f_a16fb403",
       "range": {
         "startLine": 1111,
         "startChar": 26,
