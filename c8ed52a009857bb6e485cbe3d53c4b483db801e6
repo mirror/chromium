@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e8e4893_b35ab1fe",
+        "filename": "ios/chrome/browser/ui/history_popup/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-12-12T09:48:32Z",
+      "side": 1,
+      "message": "I guess the alternative would be for the BVC to hold the logic behind enabling or not fullscreen when tab history is shown? More encapsulation, but also way more piping and code in BVC. Is that the reasoning?",
+      "range": {
+        "startLine": 41,
+        "startChar": 41,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "c8ed52a009857bb6e485cbe3d53c4b483db801e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
