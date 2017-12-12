@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "241e1a01_457b89a9",
+        "filename": "components/cronet/native/buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-12T22:40:08Z",
+      "side": 1,
+      "message": "Per our conversation I\u0027ve refactored \"Buffer\" to be an interface instead of struct and added 2 methods - InitWithAlloc and InitWithDataAndCallback. PTAL.",
+      "parentUuid": "4aa3334d_eb349988",
+      "range": {
+        "startLine": 23,
+        "startChar": 70,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdf5243e_99225518",
         "filename": "components/cronet/native/buffer.cc",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "de944bcc_a854ee34",
+        "filename": "components/cronet/native/buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-12T22:40:08Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "cdf5243e_99225518",
+      "range": {
+        "startLine": 32,
+        "startChar": 47,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa2405d3_48b7ad56",
         "filename": "components/cronet/native/executors.cc",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-08T19:20:34Z",
       "side": 1,
       "message": "I feel like this should take a SequenceTaskRunner as an argument rather than create one.\nCreateTaskRunner-\u003eCreateFromTaskRunner",
+      "range": {
+        "startLine": 62,
+        "startChar": 55,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3644a805_cd8cae3a",
+        "filename": "components/cronet/native/executors.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-12T22:40:08Z",
+      "side": 1,
+      "message": "Maybe, but that would be an internal method, not exposed to the app.",
+      "parentUuid": "fa2405d3_48b7ad56",
       "range": {
         "startLine": 62,
         "startChar": 55,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9ca72327_07079a6b",
+        "filename": "components/cronet/native/executors_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-12T22:40:08Z",
+      "side": 1,
+      "message": "This was a hacky way to initialize task scheduler and friends for testing. \n\nI\u0027ve moved it into \u0027Cronet_InitializeForTesting(), but it seems that base::test::ScopedTaskEnvironment::RunUntilIdle(); doesn\u0027t do the right thing waiting for completion.\n\nI\u0027ll try to figure this out.",
+      "parentUuid": "39dde21a_b2308f80",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 79
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67946805_2f263ca3",
         "filename": "components/cronet/native/include/cronet_c.h",
         "patchSetId": 13
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d46563fb_91573861",
+        "filename": "components/cronet/native/include/cronet_c.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-12T22:40:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67946805_2f263ca3",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 6
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a77077be_1a50cb48",
         "filename": "components/cronet/native/runnables.h",
         "patchSetId": 13
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-08T19:20:34Z",
       "side": 1,
       "message": "nit: This is implementation inheritance, which I generally shy away from, but I don\u0027t have a better idea, so marking resolved.\nhttps://google.github.io/styleguide/cppguide.html#Inheritance",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 47
+      },
+      "revId": "c891bd20fbf9b1bb380b594f70e4985c7de30d44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e3e050_32ceab74",
+        "filename": "components/cronet/native/runnables.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-12T22:40:08Z",
+      "side": 1,
+      "message": "Interesting point, maybe there should be some kind of \u0027InterfaceContextHolder\u0027 that will implement SetContext/GetContext? \nOn the other hand the implementation is trivial, so maybe there is no good reason to have BaseCronet_runnable at all?\nOn the third hand :) this seems to fit into allowed \u0027is a\u0027 scenario with public inheritance, so maybe its ok?",
+      "parentUuid": "a77077be_1a50cb48",
       "range": {
         "startLine": 21,
         "startChar": 0,
