@@ -12,6 +12,9 @@
 using testing::Each;
 using testing::ElementsAre;
 
+using testing::Each;
+using testing::ElementsAre;
+
 namespace base {
 
 TEST(RefCountedMemoryUnitTest, RefCountedStaticMemory) {
