@@ -4,6 +4,8 @@
 
 source_set("cpp") {
   sources = [
+    "fake_geolocation.cc",
+    "fake_geolocation.h",
     "geoposition.cc",
     "geoposition.h",
     "location_provider.h",
@@ -11,5 +13,7 @@ source_set("cpp") {
 
   deps = [
     "//device/geolocation/public/interfaces",
+    "//services/device/public/interfaces",
+    "//services/service_manager/public/cpp",
   ]
 }
