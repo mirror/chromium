@@ -22,6 +22,30 @@
       "revId": "b7f21be5ae75b9a43c64e01147eca731dcabb999",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a18884_a636c8ac",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-12-12T01:51:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5461edb0_3573d9e2",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 69
+      },
+      "revId": "b7f21be5ae75b9a43c64e01147eca731dcabb999",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
