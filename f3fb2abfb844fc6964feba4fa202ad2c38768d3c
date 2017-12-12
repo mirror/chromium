@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a93dc7ab_3ef39d93",
+        "filename": "ash/window_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T21:08:14Z",
+      "side": 1,
+      "message": "As this function is async, it\u0027s entirely possible you could hit this if ash created then immediately destroyed the display. So, I don\u0027t think you should NOTREACHED here. How about a comment?",
+      "range": {
+        "startLine": 363,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 69
+      },
+      "revId": "f3fb2abfb844fc6964feba4fa202ad2c38768d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5bcaf4d_ebe50642",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T21:08:14Z",
+      "side": 1,
+      "message": "Please document this doesn\u0027t delete the children in anyway.",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "f3fb2abfb844fc6964feba4fa202ad2c38768d3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
