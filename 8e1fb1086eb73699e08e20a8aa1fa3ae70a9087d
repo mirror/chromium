@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81aa3cb8_d411d2d6",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-12T00:36:29Z",
+      "side": 1,
+      "message": "can you add comment that this is null in unit test?",
+      "revId": "8e1fb1086eb73699e08e20a8aa1fa3ae70a9087d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
