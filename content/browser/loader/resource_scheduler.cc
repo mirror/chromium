@@ -1095,6 +1095,9 @@ void ResourceScheduler::OnClientCreated(
   ClientId client_id = MakeClientId(child_id, route_id);
   DCHECK(!base::ContainsKey(client_map_, client_id));
 
+  LOG(ERROR) << "#### ResourceScheduler::OnClientCreated"
+             << ", child_id=" << child_id << ", route_id=" << route_id;
+
   Client* client = new Client(
       network_quality_estimator, this);
   client_map_[client_id] = client;
@@ -1105,6 +1108,9 @@ void ResourceScheduler::OnClientDeleted(int child_id, int route_id) {
   ClientId client_id = MakeClientId(child_id, route_id);
   ClientMap::iterator it = client_map_.find(client_id);
   DCHECK(it != client_map_.end());
+
+  LOG(ERROR) << "#### ResourceScheduler::OnClientDeleted"
+             << ", child_id=" << child_id << ", route_id=" << route_id;
 
   Client* client = it->second;
   // ResourceDispatcherHost cancels all requests except for cross-renderer

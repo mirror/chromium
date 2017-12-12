@@ -228,6 +228,10 @@ RenderViewHostImpl::RenderViewHostImpl(
   GetProcess()->EnableSendQueue();
 
   if (ResourceDispatcherHostImpl::Get()) {
+    LOG(ERROR) << "#### RenderViewHostImpl ctor"
+               << ", child_id=" << GetProcess()->GetID()
+               << ", route_id=" << GetRoutingID();
+
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(
@@ -246,6 +250,10 @@ RenderViewHostImpl::RenderViewHostImpl(
 
 RenderViewHostImpl::~RenderViewHostImpl() {
   if (ResourceDispatcherHostImpl::Get()) {
+    LOG(ERROR) << "#### RenderViewHostImpl dtor"
+               << ", child_id=" << GetProcess()->GetID()
+               << ", route_id=" << GetRoutingID();
+
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&ResourceDispatcherHostImpl::OnRenderViewHostDeleted,

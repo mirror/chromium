@@ -5,6 +5,7 @@
 #include "chrome/browser/profiles/profile_destroyer.h"
 
 #include <memory>
+#include <sstream>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -13,7 +14,11 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "chrome/browser/profiles/profile.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host.h"
+#include "content/public/browser/render_widget_host_iterator.h"
 
 namespace {
 
@@ -24,6 +29,20 @@ const int64_t kTimerDelaySeconds = 5;
 #else
 const int64_t kTimerDelaySeconds = 1;
 #endif
+
+// ####
+std::string DumpRenderWidgetURL() {
+  std::ostringstream oss;
+  std::unique_ptr<content::RenderWidgetHostIterator> widget_it(
+      content::RenderWidgetHost::GetRenderWidgetHosts());
+  while (content::RenderWidgetHost* widget = widget_it->GetNextHost()) {
+    content::RenderViewHost* view = content::RenderViewHost::From(widget);
+    if (!view)
+      continue;
+    oss << view->GetMainFrame()->GetLastCommittedURL().spec() << ", ";
+  }
+  return oss.str();
+}
 
 }  // namespace
 
@@ -55,7 +74,8 @@ void ProfileDestroyer::DestroyProfileWhenAppropriate(Profile* const profile) {
   DCHECK(hosts.empty() || profile->IsOffTheRecord() ||
          profile->HasOffTheRecordProfile() ||
          content::RenderProcessHost::run_renderer_in_process())
-      << "Profile still has " << hosts.size() << " hosts";
+      << "Profile still has " << hosts.size() << " hosts"
+      << ", urls=" << DumpRenderWidgetURL();
   // Note that we still test for !profile->IsOffTheRecord here even though we
   // DCHECK'd above because we want to protect Release builds against this even
   // we need to identify if there are leaks when we run Debug builds.
