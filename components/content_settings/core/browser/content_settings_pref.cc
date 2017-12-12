@@ -280,8 +280,6 @@ void ContentSettingsPref::ReadContentSettingsFromPref() {
         // Resource Identifiers have been supported by the API but never used by
         // any users of the API.
         // TODO(crbug.com/754178): remove |resource_identifier| from the API.
-        NOTREACHED();
-
         base::Time last_modified = GetTimeStamp(settings_dictionary);
         for (base::DictionaryValue::Iterator j(*resource_dictionary);
              !j.IsAtEnd();

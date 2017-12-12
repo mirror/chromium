@@ -1799,6 +1799,9 @@ extern const char kUiSlowAnimationsDescription[];
 extern const char kExperimentalTabControllerName[];
 extern const char kExperimentalTabControllerDescription[];
 
+extern const char kDebugNavTreeName[];
+extern const char kDebugNavTreeDescription[];
+
 #endif  // defined(TOOLKIT_VIEWS)
 
 #if defined(TOOLKIT_VIEWS) || defined(OS_ANDROID)
