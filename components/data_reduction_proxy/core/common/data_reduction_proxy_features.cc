@@ -30,6 +30,9 @@ const base::Feature kDataReductionProxyDecidesTransform{
 #endif  // defined(OS_ANDROID)
 };
 
+// Enabled for Chrome dog fooders.
+const base::Feature kDogfood{"Dogfood", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables the data saver promo for low memory Android devices.
 const base::Feature kDataReductionProxyLowMemoryDevicePromo{
     "DataReductionProxyLowMemoryDevicePromo",
