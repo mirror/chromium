@@ -917,7 +917,6 @@ void WindowSelectorItem::StartDrag() {
 
 void WindowSelectorItem::EndDrag() {
   window_grid_->SetSelectionWidgetVisibility(true);
-
   // First stack this item's window below the snapped window if split view mode
   // is active.
   aura::Window* dragged_window = GetWindow();
