@@ -1,0 +1,22 @@
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+
+<canvas><canvas id="canvas" width="2000" height="2000"></canvas>
+<script>
+// Premul code path
+test(function() {
+    gl = canvas.getContext("webgl");
+    gl.canvas.width += 60000;
+    gl.canvas.height += 60000;
+    gl.canvas.toDataURL();
+}, "canvas.toDataURL() should not crash on a big premul canvas."); 
+
+// Unpremul code path
+test(function() {
+    var attribs = {premultipliedAlpha: false};
+    gl = canvas.getContext("webgl", attribs);
+    gl.canvas.width += 60000;
+    gl.canvas.height += 60000;
+    gl.canvas.toDataURL();
+}, "canvas.toDataURL() should not crash on a big unpremul canvas."); 
+</script>
