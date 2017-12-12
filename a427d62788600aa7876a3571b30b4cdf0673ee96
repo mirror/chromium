@@ -16,6 +16,24 @@
       "revId": "a427d62788600aa7876a3571b30b4cdf0673ee96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee9fb3b_a40884a4",
+        "filename": "content/browser/frame_host/render_frame_host_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-12T18:27:58Z",
+      "side": 1,
+      "message": "Unless we know of a bug that this would solve, I\u0027m inclined to do the least amount of changes to get the known bugs fixed; to reduce risk when merging this.",
+      "parentUuid": "c29511a3_99f20844",
+      "revId": "a427d62788600aa7876a3571b30b4cdf0673ee96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
