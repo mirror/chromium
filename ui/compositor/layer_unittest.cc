@@ -21,7 +21,6 @@
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
-#include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "cc/animation/animation_events.h"
@@ -102,35 +101,6 @@ class ColoredLayer : public Layer, public LayerDelegate {
   SkColor color_;
 };
 
-// Layer delegate for painting text with fade effect on canvas.
-class DrawFadedStringLayerDelegate : public LayerDelegate {
- public:
-  DrawFadedStringLayerDelegate(SkColor back_color, const gfx::Size& layer_size)
-      : background_color_(back_color), layer_size_(layer_size) {}
-
-  ~DrawFadedStringLayerDelegate() override {}
-
-  // Overridden from LayerDelegate:
-  void OnPaintLayer(const ui::PaintContext& context) override {
-    ui::PaintRecorder recorder(context, layer_size_);
-    gfx::Rect bounds(layer_size_);
-    recorder.canvas()->DrawColor(background_color_);
-    const base::string16 text = base::ASCIIToUTF16("Tests!");
-    recorder.canvas()->DrawFadedString(text, font_list_, SK_ColorRED, bounds,
-                                       0);
-  }
-
-  void OnDeviceScaleFactorChanged(float old_device_scale_factor,
-                                  float new_device_scale_factor) override {}
-
- private:
-  const SkColor background_color_;
-  const gfx::FontList font_list_;
-  const gfx::Size layer_size_;
-
-  DISALLOW_COPY_AND_ASSIGN(DrawFadedStringLayerDelegate);
-};
-
 class LayerWithRealCompositorTest : public testing::Test {
  public:
   LayerWithRealCompositorTest() {
@@ -181,15 +151,6 @@ class LayerWithRealCompositorTest : public testing::Test {
   Layer* CreateNoTextureLayer(const gfx::Rect& bounds) {
     Layer* layer = CreateLayer(LAYER_NOT_DRAWN);
     layer->SetBounds(bounds);
-    return layer;
-  }
-
-  std::unique_ptr<Layer> CreateDrawFadedStringLayerDelegate(
-      const gfx::Rect& bounds,
-      DrawFadedStringLayerDelegate* delegate) {
-    std::unique_ptr<Layer> layer(new Layer(LAYER_TEXTURED));
-    layer->SetBounds(bounds);
-    layer->set_delegate(delegate);
     return layer;
   }
 
@@ -1540,44 +1501,6 @@ TEST_F(LayerWithRealCompositorTest, ModifyHierarchy) {
   ASSERT_FALSE(bitmap.empty());
   EXPECT_TRUE(MatchesPNGFile(bitmap, ref_img2, cc::ExactPixelComparator(true)));
 }
-
-// It is really hard to write pixel test on text rendering,
-// due to different font appearance.
-// So we choose to check result only on Windows.
-// See https://codereview.chromium.org/1634103003/#msg41
-#if defined(OS_WIN)
-TEST_F(LayerWithRealCompositorTest, CanvasDrawFadedString) {
-  gfx::Size size(50, 50);
-  GetCompositor()->SetScaleAndSize(1.0f, size);
-  DrawFadedStringLayerDelegate delegate(SK_ColorBLUE, size);
-  std::unique_ptr<Layer> layer(
-      CreateDrawFadedStringLayerDelegate(gfx::Rect(size), &delegate));
-  DrawTree(layer.get());
-
-  SkBitmap bitmap;
-  ReadPixels(&bitmap);
-  ASSERT_FALSE(bitmap.empty());
-
-  base::FilePath ref_img =
-      test_data_directory().AppendASCII("string_faded.png");
-  // WritePNGFile(bitmap, ref_img, true);
-
-  float percentage_pixels_large_error = 8.0f;  // 200px / (50*50)
-  float percentage_pixels_small_error = 0.0f;
-  float average_error_allowed_in_bad_pixels = 80.f;
-  int large_error_allowed = 255;
-  int small_error_allowed = 0;
-
-  EXPECT_TRUE(MatchesPNGFile(bitmap, ref_img,
-                             cc::FuzzyPixelComparator(
-                                 true,
-                                 percentage_pixels_large_error,
-                                 percentage_pixels_small_error,
-                                 average_error_allowed_in_bad_pixels,
-                                 large_error_allowed,
-                                 small_error_allowed)));
-}
-#endif  // defined(OS_WIN)
 
 // Opacity is rendered correctly.
 // Checks that modifying the hierarchy correctly affects final composite.
