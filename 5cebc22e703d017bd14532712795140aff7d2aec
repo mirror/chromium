@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "894b509c_ebe7a418",
+        "filename": "services/audio/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-12T18:11:51Z",
+      "side": 1,
+      "message": "How come you\u0027ve named this target \"lib\" vs just \"audio\"? - I see some other //services doing this, but don\u0027t see any documentation for it.",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e89aaa_1f12dfb0",
+        "filename": "services/audio/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-12T18:11:51Z",
+      "side": 1,
+      "message": "Do you need these as public_deps? They only need to be public if they\u0027re exposing headers from these targets or need global defines from them.",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8afa56_89e6930d",
+        "filename": "services/audio/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-12T18:11:51Z",
+      "side": 1,
+      "message": "Do you need these as public_deps? They only need to be public if they\u0027re exposing headers from these targets.",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b24d09_9f7d3f61",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-12T18:11:51Z",
+      "side": 1,
+      "message": "Yuck.",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6adcb71_99f7d89d",
+        "filename": "services/audio/service.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-12T18:11:51Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb130bd_49bb1ba0",
+        "filename": "services/audio/test/service_unittest_manifest.json",
+        "patchSetId": 16
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-12T18:11:51Z",
+      "side": 1,
+      "message": "Does this add a new unittests target? Or is it rolled up as part of existing component_unittests? If it\u0027s a new unittest you\u0027ll need to update bot configurations to run it I think.",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
