@@ -252,6 +252,30 @@
     },
     {
       "key": {
+        "uuid": "d9eef757_3bf783e8",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-12-12T23:04:35Z",
+      "side": 1,
+      "message": "Ah, makes sense, thanks! For some reason I thought RepeatingCallback was ref counted.",
+      "parentUuid": "02ee4dd8_1241f8a7",
+      "range": {
+        "startLine": 779,
+        "startChar": 57,
+        "endLine": 779,
+        "endChar": 66
+      },
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6d909e_6246acdb",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 4
