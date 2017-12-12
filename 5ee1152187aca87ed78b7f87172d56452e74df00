@@ -37,6 +37,25 @@
     },
     {
       "key": {
+        "uuid": "e4dc36e1_53cd946b",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-12T02:01:03Z",
+      "side": 1,
+      "message": "(Impl) SGTM!",
+      "parentUuid": "71a1c94f_fc1d623a",
+      "tag": "mailMessageId\u003d\u003cCA+apAgHa-mm5mz0Yn_K+787KnAEe6H4zxoETYCsUte01Ee+P7g@mail.gmail.com\u003e",
+      "revId": "5ee1152187aca87ed78b7f87172d56452e74df00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9da3bbcc_407f56e7",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/interface_definition.tmpl",
         "patchSetId": 4
