@@ -2327,6 +2327,22 @@
             ]
         }
     ],
+    "OfflinePageCache": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Control",
+                    "disable_features": [
+                        "OfflineBookmarks",
+                        "OfflineRecentPages"
+                    ]
+                }
+            ]
+        }
+    ],
     "OfflinePagesAsyncLoading": [
         {
             "platforms": [
