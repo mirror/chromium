@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc3e102_59e218bd",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T11:15:40Z",
+      "side": 1,
+      "message": "Does this still need to do io_task_runner_ checks and post tasks to io_task_runner_? I\u0027m pretty sure that if we specify a task runner when adding an interface to the BinderRegistry, that task runner gets used for dispatching all subsequent tasks for that bound interface, no?",
+      "revId": "06f915bd005da0bc8d5792ee620b699a28a698fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
