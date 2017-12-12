@@ -16,6 +16,24 @@
       "revId": "90d9a6617b82553856b806a8cb0782b4b51c3d54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4283e7c_ce66019e",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-12T14:01:41Z",
+      "side": 1,
+      "message": "Wait that means we should initialize the current RFH if it is not initialized. Otherwise the Javascript navigation won\u0027t have effect.",
+      "parentUuid": "0287cb18_1fc114e5",
+      "revId": "90d9a6617b82553856b806a8cb0782b4b51c3d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
