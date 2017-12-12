@@ -45,11 +45,23 @@ HTMLViewSourceParser::HTMLViewSourceParser(HTMLViewSourceDocument& document,
 void HTMLViewSourceParser::PumpTokenizer() {
   xss_auditor_.Init(GetDocument(), nullptr);
 
+  auto* current = input_.Current();
+  bool supports_16_bit = current->Supports16Bit();
+
   while (true) {
-    source_tracker_.Start(input_.Current(), tokenizer_.get(), token_);
-    if (!tokenizer_->NextToken(input_.Current(), token_))
-      return;
-    source_tracker_.end(input_.Current(), tokenizer_.get(), token_);
+    if (supports_16_bit) {
+      auto& current_16_bit = *static_cast<SegmentedStringImpl<true>*>(current);
+      source_tracker_.Start(current_16_bit, tokenizer_.get(), token_);
+      if (!tokenizer_->NextToken(current_16_bit, token_))
+        return;
+      source_tracker_.end(current_16_bit, tokenizer_.get(), token_);
+    } else {
+      auto& current_8_bit = *static_cast<SegmentedStringImpl<false>*>(current);
+      source_tracker_.Start(current_8_bit, tokenizer_.get(), token_);
+      if (!tokenizer_->NextToken(current_8_bit, token_))
+        return;
+      source_tracker_.end(current_8_bit, tokenizer_.get(), token_);
+    }
 
     std::unique_ptr<XSSInfo> xss_info =
         xss_auditor_.FilterToken(FilterTokenRequest(
