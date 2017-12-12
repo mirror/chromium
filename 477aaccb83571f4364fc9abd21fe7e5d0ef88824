@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dd4bafc_2d065031",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-12T00:19:51Z",
+      "side": 1,
+      "message": "Upstream countries - Where is the logic to limit that ? My concern is this starts uploading to all countries unless thats what your intention is",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 5
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978b3753_945b774c",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-12T00:19:51Z",
+      "side": 1,
+      "message": "If possible, try to move this entire \"CVC\" logic to method.\n\nThat method populates \"upstream_decision_metrics_\" and \"upload_request_.active_experiments.",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 26
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d202ae88_ea0ed256",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-12T00:19:51Z",
+      "side": 1,
+      "message": "upload_decision_metrics name looks confusing me, I thought it is related to some UMA logging and not detected logging. Your call, This is my first time reading this part of code.",
+      "range": {
+        "startLine": 156,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 9
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afce1750_4effe261",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-12T00:19:51Z",
+      "side": 1,
+      "message": "Your call : try to move \"detected_values \u0026\u0026 ..\" a method.",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 8
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f32059_5ccc1912",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-12T00:19:51Z",
+      "side": 1,
+      "message": "s/detected problems/detected state ?",
+      "range": {
+        "startLine": 315,
+        "startChar": 4,
+        "endLine": 315,
+        "endChar": 5
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0cd6f67_f943ab1b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-12T00:19:51Z",
+      "side": 1,
+      "message": "For easy reference, do you plan to link payments corresponding proto. So it is easier check both are in sync as much as possible.",
+      "range": {
+        "startLine": 33,
+        "startChar": 1,
+        "endLine": 33,
+        "endChar": 2
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297c5225_f3f0b98e",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-12T00:19:51Z",
+      "side": 1,
+      "message": "Multiple address lines (Common in India for whatever reason) - All are captured here ?",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5c6508_835c7c1a",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-12T00:19:51Z",
+      "side": 1,
+      "message": "What does locality/administration area mean ? State like California ? (Or is this only in Canada) ? Payments platform is working on \"State as min address in India\" as state is what decides tax. \n\nMy only concern is i18n of these. How do we think about these ?",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 12
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61654d6_8501bae6",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2770,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-12T00:19:51Z",
+      "side": 1,
+      "message": "Side comment, not relevant to this CL : Do we have any logging on \"how many times zips conflict\" (or any fields conflict) here ?",
+      "range": {
+        "startLine": 2770,
+        "startChar": 4,
+        "endLine": 2770,
+        "endChar": 5
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274f334c_3c4d6fc5",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-12-12T00:19:51Z",
+      "side": 1,
+      "message": "Not in this CL - But as per Google C++ standards, we should not define these string constants. Preferable ways is const char* kVariableName (Similar to here - https://cs.corp.google.com/search/?q\u003d%22static+const+char*+k%22+file:%5C.cc\u0026type\u003dcs)",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 302,
+        "endChar": 5
+      },
+      "revId": "477aaccb83571f4364fc9abd21fe7e5d0ef88824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
