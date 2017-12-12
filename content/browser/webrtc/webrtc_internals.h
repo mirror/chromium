@@ -120,7 +120,7 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
 
   // This allows unit-tests to override to using either a mock, or a locally
   // scoped, version of WebRtcEventLogManager.
-  virtual WebRtcEventLogManager* GetWebRtcEventLogManager();
+  virtual WebRtcEventLogManager* webrtc_event_log_manager();
 
   device::mojom::WakeLockPtr wake_lock_;
 

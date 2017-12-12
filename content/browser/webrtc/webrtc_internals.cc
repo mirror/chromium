@@ -124,7 +124,7 @@ WebRTCInternals* WebRTCInternals::GetInstance() {
   return g_webrtc_internals.Pointer();
 }
 
-WebRtcEventLogManager* WebRTCInternals::GetWebRtcEventLogManager() {
+WebRtcEventLogManager* WebRTCInternals::webrtc_event_log_manager() {
   return WebRtcEventLogManager::GetInstance();
 }
 
@@ -352,7 +352,7 @@ void WebRTCInternals::EnableLocalEventLogRecordings(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 #if BUILDFLAG(ENABLE_WEBRTC)
 #if defined(OS_ANDROID)
-  GetWebRtcEventLogManager()->EnableLocalLogging(
+  webrtc_event_log_manager()->EnableLocalLogging(
       event_log_recordings_file_path_);
 #else
   DCHECK(web_contents);
@@ -372,7 +372,7 @@ void WebRTCInternals::DisableLocalEventLogRecordings() {
   event_log_recordings_ = false;
   // Tear down the dialog since the user has unchecked the event log checkbox.
   select_file_dialog_ = nullptr;
-  GetWebRtcEventLogManager()->DisableLocalLogging();
+  webrtc_event_log_manager()->DisableLocalLogging();
 #endif
 }
 
@@ -416,7 +416,7 @@ void WebRTCInternals::FileSelected(const base::FilePath& path,
     case SelectionType::kRtcEventLogs:
       event_log_recordings_file_path_ = path;
       event_log_recordings_ = true;
-      GetWebRtcEventLogManager()->EnableLocalLogging(path);
+      webrtc_event_log_manager()->EnableLocalLogging(path);
       break;
     case SelectionType::kAudioDebugRecordings:
       audio_debug_recordings_file_path_ = path;
