@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8a8662f_1ddbf7ae",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-12T16:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a95bb1e_d3265592",
+      "range": {
+        "startLine": 34,
+        "startChar": 36,
+        "endLine": 34,
+        "endChar": 67
+      },
+      "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80e8e07a_ef0a42eb",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "43dcffd6_ff3a0353",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-12T16:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80e8e07a_ef0a42eb",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 59
+      },
+      "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb5205cf_12350393",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 10
@@ -62,6 +110,24 @@
       "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b65100_9dd1bfa4",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-12T16:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb5205cf_12350393",
+      "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "4ef28b37_f222d187",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-12T16:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f602b19_c8e206df",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 7
+      },
+      "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eeff66b_88189fb8",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 10
@@ -102,6 +192,24 @@
       "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05670d1_423aed3d",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-12-12T16:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eeff66b_88189fb8",
+      "revId": "cd38fd91140fb1f29206b21fad581e0351e92aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
