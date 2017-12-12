@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "019c3f9c_a090daf5",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-12T04:15:32Z",
+      "side": 1,
+      "message": "Does ordering matter? This is now a separate mojo MessagePipe and so messages may arrive out of order relative to the other interfaces. Is that OK? Are there ordering requirements here?",
+      "revId": "647c85f70b9add19f74db7321380835abc83f404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23024df2_493a0328",
+        "filename": "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-12T04:15:32Z",
+      "side": 1,
+      "message": "FWIW, --enable-viz does not use this class. Is this plumbing meaningful without --enable-viz?",
+      "revId": "647c85f70b9add19f74db7321380835abc83f404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8b0b21_5370819b",
+        "filename": "services/viz/privileged/interfaces/compositing/display_private.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-12T04:15:32Z",
+      "side": 1,
+      "message": "The \"private\" in DisplayPrivate made sense before we decided we should have privileged directories. I now feel like this should just be called Display and DisplayClient. I mention this now because I\u0027m not sure we want to keep around this private suffix for too long or else other teams may follow this.",
+      "revId": "647c85f70b9add19f74db7321380835abc83f404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
