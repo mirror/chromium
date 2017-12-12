@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "1240a8e1_6832e1d1",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-12T10:02:57Z",
+      "side": 1,
+      "message": "nit: Please clarify the text here as well. According to this, the string would be allowed to contain null characters in the middle.",
+      "range": {
+        "startLine": 45,
+        "startChar": 34,
+        "endLine": 45,
+        "endChar": 45
+      },
+      "revId": "bd33ed25b64301da721dc11842d55584d0c53831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c2c0710_a72c5712",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 3
@@ -64,6 +87,23 @@
       "writtenOn": "2017-12-12T09:58:52Z",
       "side": 1,
       "message": "Can you please add a test that has exactly one terminating zero, and one that has two terminating zeroes?",
+      "revId": "bd33ed25b64301da721dc11842d55584d0c53831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a022d66f_d8dd0f6c",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-12T10:02:57Z",
+      "side": 1,
+      "message": "nit: Are strings with null characters in the middle valid UTF-8?\n\nIf not, consider just reusing INVALID_UTF8. Other I\u0027d suggest returning something more actionable, maybe DecoderError::NULL_CHARACTERS_IN_STRING?",
       "revId": "bd33ed25b64301da721dc11842d55584d0c53831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
