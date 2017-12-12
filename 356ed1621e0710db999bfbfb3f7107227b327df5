@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35e42b72_507eddfc",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-12T18:57:33Z",
+      "side": 1,
+      "message": "This confused me at first read through. I somehow assumed that these things are IDs, but being able to use 0 here indicates that these are more like indices. If that is the case, could we rename the members to |video_stream_index_| and |photo_stream_index_| to make it more clear?",
+      "revId": "356ed1621e0710db999bfbfb3f7107227b327df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

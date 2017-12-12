@@ -50,6 +50,24 @@
       "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346cfbec_9ed98ff7",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-12T18:57:33Z",
+      "side": 1,
+      "message": "With the complexity of this class increasing, the need for unit test increases as well. We definitely need to do that before launching, but can be a follow up CL to this one.",
+      "parentUuid": "afdd4284_2975eda2",
+      "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
