@@ -650,6 +650,10 @@ void ShellSurfaceBase::OnSurfaceCommit() {
   }
 }
 
+bool ShellSurfaceBase::IsTouchEnabled(Surface*) const {
+  return true;
+}
+
 void ShellSurfaceBase::OnSetFrame(SurfaceFrameType type) {
   // TODO(reveman): Allow frame to change after surface has been enabled.
   switch (type) {
