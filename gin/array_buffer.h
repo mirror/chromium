@@ -25,7 +25,7 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   void Free(void* data, size_t length) override;
   void Free(void* data, size_t length, AllocationMode mode) override;
 
-  void SetProtection(void* data, size_t length, Protection protection) override;
+  bool SetProtection(void* data, size_t length, Protection protection) override;
 
   GIN_EXPORT static ArrayBufferAllocator* SharedInstance();
 };

@@ -82,27 +82,22 @@ void ArrayBufferAllocator::Free(void* data,
   }
 }
 
-void ArrayBufferAllocator::SetProtection(void* data,
+bool ArrayBufferAllocator::SetProtection(void* data,
                                          size_t length,
                                          Protection protection) {
   switch (protection) {
-    case Protection::kNoAccess: {
+    case Protection::kNoAccess:
 #if defined(OS_POSIX)
-      int ret = mprotect(data, length, PROT_NONE);
-      CHECK(!ret);
+      return mprotect(data, length, PROT_NONE) == 0;
 #else
-      BOOL ret = VirtualFree(data, length, MEM_DECOMMIT);
-      CHECK(ret);
+      return VirtualFree(data, length, MEM_DECOMMIT);
 #endif
-      break;
-    }
     case Protection::kReadWrite:
 #if defined(OS_POSIX)
-      mprotect(data, length, PROT_READ | PROT_WRITE);
+      return mprotect(data, length, PROT_READ | PROT_WRITE) == 0;
 #else
-      VirtualAlloc(data, length, MEM_COMMIT, PAGE_READWRITE);
+      return VirtualAlloc(data, length, MEM_COMMIT, PAGE_READWRITE);
 #endif
-      break;
     default:
       NOTREACHED();
   }

@@ -46,8 +46,9 @@ TEST_F(ArrayBufferTest, SetProtectionReadWrite) {
       PerIsolateData::From(isolate)->allocator();
 
   void* buffer = allocator->Reserve(kBufferLength);
-  allocator->SetProtection(buffer, kBufferLength,
-                           v8::ArrayBuffer::Allocator::Protection::kReadWrite);
+  CHECK(allocator->SetProtection(
+      buffer, kBufferLength,
+      v8::ArrayBuffer::Allocator::Protection::kReadWrite));
   volatile int* int_buffer = static_cast<volatile int*>(buffer);
   // Try assigning to the buffer. This will fault if we don't SetProtection
   // first.
