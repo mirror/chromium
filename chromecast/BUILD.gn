@@ -200,6 +200,7 @@ cast_test_group("cast_tests") {
         # Disable PartitionAllocTest.RepeatedReturnNullDirect (b/67975693)
         gtest_excludes += [ "PartitionAllocTest.RepeatedReturnNullDirect" ]
       } else {
+        # Disable FileUtilTest.DeleteDirRecursiveWithOpenFile (b/70425842 tmpfs doesn't support file attributes).
         # Disable ProcessMetricsTest.GetNumberOfThreads (b/15610509)
         # Disable ProcessUtilTest.* (need to define OS_ANDROID)
         # Disable StackContainer.BufferAlignment (don't support 16-byte alignment)
@@ -207,6 +208,7 @@ cast_test_group("cast_tests") {
         # Disable PostTasksViaTaskRunner/* to green up devices (b/62246873)
         # Disable WorkerDetaches to green up devices (b/62246873)
         gtest_excludes += [
+          "FileUtilTest.DeleteDirRecursiveWithOpenFile",
           "ProcessMetricsTest.GetNumberOfThreads",
           "ProcessUtilTest.*",
           "StackContainer.BufferAlignment",
