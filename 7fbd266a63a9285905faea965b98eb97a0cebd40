@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "98e6cb6b_49624351",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-12T01:03:47Z",
+      "side": 1,
+      "message": "drive-by: This seems to raise interesting questions about whether you can use SW+AsyncCookies API to circumvent the third-party cookie policy, but I think these values are right. What we block is starting the service worker based on the policy.\n\nWhen you call navigator.serviceWorker.register() we check the top-level frame and use that as \"first_party_for_cookies_url\" (ServiceWorkerProviderHost::CanServeContainerHostMethods() calls ServiceWorkerProviderHost::AllowServiceWorker() which calls ContentBrowserClient::AllowServiceWorker()). And we block registering/starting the worker if the cookie policy blocks it. Similarly, we do this when starting a service worker for controlled page/frame load. But once there\u0027s a service worker execution context, there\u0027s no way to know what \"frame\" it\u0027s for, since there might not be a frame (e.g., if SW started up due to a push notification).\n\nIt\u0027s probably worth documenting this mechanism/mentioning it in the OWP bug/privacy review.",
+      "revId": "7fbd266a63a9285905faea965b98eb97a0cebd40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f538c9a_ddf4edc5",
         "filename": "third_party/WebKit/Source/modules/cookie_store/GlobalCookieStore.cpp",
         "patchSetId": 3
