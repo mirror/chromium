@@ -162,7 +162,7 @@ const base::Feature kLoadingWithMojo{"LoadingWithMojo",
 // cache is considered invalid on every enumeration request.
 const base::Feature kMediaDevicesSystemMonitorCache{
   "MediaDevicesSystemMonitorCaching",
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(OS_WIN)
       base::FEATURE_ENABLED_BY_DEFAULT
 #else
       base::FEATURE_DISABLED_BY_DEFAULT
