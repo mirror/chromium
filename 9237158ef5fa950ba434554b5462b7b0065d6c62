@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c1189c0_2411e5cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationBuilderBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-12T18:02:21Z",
+      "side": 1,
+      "message": "here for consistency I would pass both the smallIconId and the contentTest as parameters - also that way there\u0027s only one context being passed so it\u0027s less confusing",
+      "range": {
+        "startLine": 392,
+        "startChar": 0,
+        "endLine": 392,
+        "endChar": 71
+      },
+      "revId": "9237158ef5fa950ba434554b5462b7b0065d6c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e48d5bd_a0d32cab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkServiceClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-12T18:02:21Z",
+      "side": 1,
+      "message": "You should set the public version on the builder before building it with Notification.Builder.setPublicVersion - see https://developer.android.com/reference/android/app/Notification.Builder.html#setPublicVersion(android.app.Notification)",
+      "revId": "9237158ef5fa950ba434554b5462b7b0065d6c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b97fc3_550f65fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkServiceClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-12T18:02:21Z",
+      "side": 1,
+      "message": "nit: I think \u0027buildPublicNotification\u0027 is sufficient.",
+      "revId": "9237158ef5fa950ba434554b5462b7b0065d6c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7273eff_e3828a47",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkServiceClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-12-12T18:02:21Z",
+      "side": 1,
+      "message": "Do we get the remote context anywhere else and if so could we reuse that code?",
+      "range": {
+        "startLine": 192,
+        "startChar": 0,
+        "endLine": 192,
+        "endChar": 84
+      },
+      "revId": "9237158ef5fa950ba434554b5462b7b0065d6c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
