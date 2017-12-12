@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7bbb63b3_25ca397c",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T19:38:23Z",
+      "side": 1,
+      "message": "It\u0027s inferred based on the second argument (BindInterface is a templated function).",
+      "parentUuid": "915fc788_884abbdb",
+      "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a41bbff_3c33fa8e",
         "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
         "patchSetId": 10
@@ -64,6 +82,24 @@
       "writtenOn": "2017-12-12T11:31:40Z",
       "side": 1,
       "message": "jam@, dcheng@: Is WebKit/common/ a right place to put this file?\n\nmojom::ClipboardHost is implemented by content/browser/renderer_host/clipboard_host_impl.h (not by WebKit/common/xxx.h).\n\n(Actually I\u0027m not fully sure about where .mojom should be defined.)",
+      "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946dce24_f7e56707",
+        "filename": "third_party/WebKit/common/clipboard/clipboard.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T19:38:23Z",
+      "side": 1,
+      "message": "In the past, the \u0027common\u0027 bits were in public/*/, but it\u0027s also a bit confusing, because we had to manually add DEPS for header-only data types that were actually OK to use from both browser and renderer.\n\nEverything in common is implicitly OK to use from both renderer and browser processes, and defining the mojo interface there makes sense to me. It also  matches the pattern used by content and other directories, where \u0027common\u0027 contains the IPC definitions to go between processes.",
+      "parentUuid": "63afb7ed_32887a69",
       "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
