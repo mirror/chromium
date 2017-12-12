@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "ash/public/cpp/ash_pref_names.h"
+#include "ash/shell.h"
 #include "base/sys_info.h"
 #include "base/values.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
@@ -15,6 +16,9 @@
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/arc/arc_util.h"
 #include "components/prefs/pref_service.h"
+#include "ui/events/devices/touchscreen_device.h"
+#include "ui/events/test/device_data_manager_test_api.h"
+#include "ui/events/test/event_generator.h"
 
 namespace {
 
@@ -124,6 +128,44 @@ IN_PROC_BROWSER_TEST_F(ChromeOSInfoPrivateTest, UnknownDeviceType) {
   SetDeviceType("UNKNOWN");
   ASSERT_TRUE(RunPlatformAppTestWithArg("chromeos_info_private/extended",
                                         "unknown device type"))
+      << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(ChromeOSInfoPrivateTest, StylusNotAvailable) {
+  ui::test::DeviceDataManagerTestAPI test_api;
+  test_api.SetTouchscreenDevices({});
+  ASSERT_TRUE(RunPlatformAppTestWithArg("chromeos_info_private/extended",
+                                        "stylus not available"))
+      << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(ChromeOSInfoPrivateTest, StylusAvailable) {
+  ui::test::DeviceDataManagerTestAPI test_api;
+  ui::TouchscreenDevice stylus(1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL,
+                               "Touchscreen", gfx::Size(1024, 768), 0);
+  stylus.is_stylus = true;
+  test_api.SetTouchscreenDevices({stylus});
+
+  ASSERT_TRUE(RunPlatformAppTestWithArg("chromeos_info_private/extended",
+                                        "stylus available"))
+      << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(ChromeOSInfoPrivateTest, StylusSeen) {
+  ui::test::DeviceDataManagerTestAPI test_api;
+  ui::TouchscreenDevice stylus(1, ui::InputDeviceType::INPUT_DEVICE_INTERNAL,
+                               "Touchscreen", gfx::Size(1024, 768), 0);
+  stylus.is_stylus = true;
+  test_api.SetTouchscreenDevices({stylus});
+
+  ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow());
+  generator.EnterPenPointerMode();
+  generator.PressTouch();
+  generator.ReleaseTouch();
+  generator.ExitPenPointerMode();
+
+  ASSERT_TRUE(RunPlatformAppTestWithArg("chromeos_info_private/extended",
+                                        "stylus seen"))
       << message_;
 }
 
