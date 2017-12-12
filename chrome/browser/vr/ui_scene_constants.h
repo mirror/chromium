@@ -196,7 +196,7 @@ static constexpr float kOmniboxCloseButtonDiameterDMM = kButtonDiameterDMM;
 static constexpr float kOmniboxCloseButtonVerticalOffsetDMM = -0.75f;
 
 static constexpr float kSuggestionHeightDMM = 0.088f;
-static constexpr float kSuggestionGapDMM = 0.008f;
+static constexpr float kSuggestionGapDMM = 0.0018f;
 static constexpr float kSuggestionLineGapDMM = 0.01f;
 static constexpr float kSuggestionIconSizeDMM = 0.036f;
 static constexpr float kSuggestionIconFieldWidthDMM = 0.104f;
@@ -215,7 +215,7 @@ static constexpr int kSpeechRecognitionOpacityAnimationDurationMs = 200;
 
 static constexpr float kModalPromptFadeOpacity = 0.5f;
 
-static constexpr float kKeyboardDistance = 2.0f;
+static constexpr float kKeyboardDistance = 2.2f;
 static constexpr float kKeyboardVerticalOffsetDMM = -0.45f;
 static constexpr float kKeyboardRotationRadians = -0.14f;
 
