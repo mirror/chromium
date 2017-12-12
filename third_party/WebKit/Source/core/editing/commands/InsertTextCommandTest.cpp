@@ -242,4 +242,26 @@ TEST_F(InsertTextCommandTest, CheckTabSpanElementNoCrash) {
                                         Selection().GetSelectionInDOMTree()));
 }
 
+// http://crbug.com/792548
+TEST_F(InsertTextCommandTest, AnchorElementWithBlockCrash) {
+  GetDocument().setDesignMode("on");
+  Selection().SetSelection(
+      SetSelectionTextToBody("<a href='www' style=\"display:block\">"
+                             "  <i>^home|<i>"
+                             "</a>"));
+
+  GetDocument().execCommand("InsertOrderedList", false, " ",
+                            ASSERT_NO_EXCEPTION);
+  GetDocument().execCommand("Outdent", false, " ", ASSERT_NO_EXCEPTION);
+  // Crash happens here with when '\n' is inserted.
+  GetDocument().execCommand("inserttext", false, "a\n", ASSERT_NO_EXCEPTION);
+
+  EXPECT_EQ(
+      "<i style=\"display: inline !important;\">"
+      "<a href=\"www\" style=\"display: inline !important;\">a</a>"
+      "</i>|"
+      "<a href=\"www\">  </a>",
+      GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
+}
+
 }  // namespace blink
