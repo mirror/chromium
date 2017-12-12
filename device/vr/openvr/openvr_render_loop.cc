@@ -104,6 +104,7 @@ void OpenVRRenderLoop::RequestPresent(
     mojom::VRSubmitFrameClientPtrInfo submit_client_info,
     mojom::VRPresentationProviderRequest request,
     base::Callback<void(bool)> callback) {
+  LOG(ERROR) << "ASDF OpenVRRenderLoop::RequestPresent";
 #if defined(OS_WIN)
   int32_t adapter_index;
   vr::VRSystem()->GetDXGIOutputInfo(&adapter_index);
