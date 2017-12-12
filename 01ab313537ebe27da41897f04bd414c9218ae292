@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "5c5e97ec_ec6fabf0",
+        "filename": "components/offline_items_collection/core/android/offline_content_aggregator_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-12T19:01:58Z",
+      "side": 1,
+      "message": "Not exactly feedback on this patch, but is there a chance we make this name less confusing? IT looks like generated code and it sits on top of this file. Perhaps it is per guidelines, but still...",
+      "range": {
+        "startLine": 162,
+        "startChar": 25,
+        "endLine": 162,
+        "endChar": 75
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5d32a9c_845ed98f",
         "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
         "patchSetId": 10
@@ -87,6 +110,29 @@
         "startChar": 44,
         "endLine": 129,
         "endChar": 73
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b26b6f_59443284",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-12T19:01:58Z",
+      "side": 1,
+      "message": "Hey, what are the benefits of using base::Optional over std::unique_ptr?\n\nI found this, but since this is not std::optional I am not sure if and how that applies.\nhttps://stackoverflow.com/questions/44856701/what-to-use-stdoptional-or-stdunique-ptr",
+      "range": {
+        "startLine": 129,
+        "startChar": 50,
+        "endLine": 129,
+        "endChar": 58
       },
       "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -151,6 +197,30 @@
       "writtenOn": "2017-12-12T18:28:15Z",
       "side": 1,
       "message": "I still think we need a PumpLoop at the end of all of these methods right?",
+      "range": {
+        "startLine": 370,
+        "startChar": 0,
+        "endLine": 370,
+        "endChar": 1
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc40a025_656005bb",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-12T19:01:58Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "d12b14f1_5ea29a6e",
       "range": {
         "startLine": 370,
         "startChar": 0,
