@@ -18,9 +18,14 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "chrome/app/shutdown_signal_handlers_posix.h"
-#include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/sessions/session_restore.h"
 #include "content/public/browser/browser_thread.h"
+
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/lifetime/application_lifetime_chromeos.h"
+#else
+#include "chrome/browser/lifetime/application_lifetime.h"
+#endif
 
 using content::BrowserThread;
 
@@ -96,7 +101,7 @@ void ExitHandler::OnSessionRestoreDone(int /* num_tabs */) {
 void ExitHandler::Exit() {
 #if defined(OS_CHROMEOS)
   // On ChromeOS, exiting on signal should be always clean.
-  chrome::ExitCleanly();
+  chromeos::ExitCleanly();
 #else
   chrome::AttemptExit();
 #endif

@@ -12,6 +12,13 @@ class Browser;
 
 namespace chrome {
 
+#if !defined(OS_ANDROID)
+// Marks shutdown intented, not a crash.
+void MarkAsCleanShutdown();
+#endif
+
+void AttemptExitInternal(bool try_to_quit_application);
+
 // Starts a user initiated exit process. Called from Browser::Exit.
 // On platforms other than ChromeOS, this is equivalent to
 // CloseAllBrowsers() On ChromeOS, this tells session manager
@@ -39,20 +46,6 @@ void AttemptRelaunch();
 //  Note that the exit process may be interrupted by download or
 // unload handler, and the browser may or may not exit.
 void AttemptExit();
-
-#if defined(OS_CHROMEOS)
-// Shutdown chrome cleanly without blocking. This is called
-// when SIGTERM is received on Chrome OS, and always sets
-// exit-cleanly bit and exits the browser, even if there is
-// ongoing downloads or a page with onbeforeunload handler.
-//
-// If you need to exit or restart in your code on ChromeOS,
-// use AttemptExit or AttemptRestart respectively.
-void ExitCleanly();
-
-// Returns true if any of the above Attempt calls have been called.
-bool IsAttemptingShutdown();
-#endif
 
 #if !defined(OS_ANDROID)
 // Closes all browsers and if successful, quits.

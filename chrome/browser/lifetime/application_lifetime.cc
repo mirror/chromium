@@ -21,11 +21,12 @@
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/chrome_notification_types.h"
-#include "chrome/browser/download/download_core_service.h"
 #include "chrome/browser/lifetime/browser_close_manager.h"
+#include "chrome/browser/lifetime/termination_notification.h"
 #include "chrome/browser/metrics/thread_watcher.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/user_manager.h"
 #include "chrome/common/chrome_constants.h"
@@ -34,24 +35,18 @@
 #include "components/keep_alive_registry/keep_alive_registry.h"
 #include "components/metrics/metrics_service.h"
 #include "components/prefs/pref_service.h"
-#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/notification_service.h"
 
 #if !defined(OS_ANDROID)
-#include "chrome/browser/lifetime/termination_notification.h"
-#include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
-#include "chrome/browser/ui/browser_list.h"
-#include "chrome/browser/ui/browser_tabstrip.h"
-#include "chrome/browser/ui/browser_window.h"
 #endif
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/boot_times_recorder.h"
-#include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/lifetime/application_lifetime_chromeos.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
-#include "chromeos/dbus/power_policy_controller.h"
+#include "chromeos/dbus/power_manager_client.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #endif
 
@@ -61,64 +56,6 @@
 #endif
 
 namespace chrome {
-namespace {
-
-#if !defined(OS_ANDROID)
-// Returns true if all browsers can be closed without user interaction.
-// This currently checks if there is pending download, or if it needs to
-// handle unload handler.
-bool AreAllBrowsersCloseable() {
-  if (BrowserList::GetInstance()->empty())
-    return true;
-
-  // If there are any downloads active, all browsers are not closeable.
-  // However, this does not block for malicious downloads.
-  if (DownloadCoreService::NonMaliciousDownloadCountAllProfiles() > 0)
-    return false;
-
-  // Check TabsNeedBeforeUnloadFired().
-  for (auto* browser : *BrowserList::GetInstance()) {
-    if (browser->TabsNeedBeforeUnloadFired())
-      return false;
-  }
-  return true;
-}
-#endif  // !defined(OS_ANDROID)
-
-#if defined(OS_CHROMEOS)
-// Sets kApplicationLocale in |local_state| for the login screen on the next
-// application start, if it is forced to a specific value due to enterprise
-// policy or the owner's locale.  Returns true if any pref has been modified.
-bool SetLocaleForNextStart(PrefService* local_state) {
-  // If a policy mandates the login screen locale, use it.
-  chromeos::CrosSettings* cros_settings = chromeos::CrosSettings::Get();
-  const base::ListValue* login_screen_locales = nullptr;
-  std::string login_screen_locale;
-  if (cros_settings->GetList(chromeos::kDeviceLoginScreenLocales,
-                             &login_screen_locales) &&
-      !login_screen_locales->empty() &&
-      login_screen_locales->GetString(0, &login_screen_locale)) {
-    local_state->SetString(prefs::kApplicationLocale, login_screen_locale);
-    return true;
-  }
-
-  // Login screen should show up in owner's locale.
-  std::string owner_locale = local_state->GetString(prefs::kOwnerLocale);
-  if (!owner_locale.empty() &&
-      local_state->GetString(prefs::kApplicationLocale) != owner_locale &&
-      !local_state->IsManagedPreference(prefs::kApplicationLocale)) {
-    local_state->SetString(prefs::kApplicationLocale, owner_locale);
-    return true;
-  }
-
-  return false;
-}
-
-// Whether chrome should send stop request to a session manager.
-bool g_send_stop_request_to_session_manager = false;
-#endif
-
-}  // namespace
 
 #if !defined(OS_ANDROID)
 void MarkAsCleanShutdown() {
@@ -190,24 +127,7 @@ void CloseAllBrowsers() {
 
 void AttemptUserExit() {
 #if defined(OS_CHROMEOS)
-  VLOG(1) << "AttemptUserExit";
-  browser_shutdown::StartShutdownTracing();
-  chromeos::BootTimesRecorder::Get()->AddLogoutTimeMarker("LogoutStarted",
-                                                          false);
-
-  PrefService* state = g_browser_process->local_state();
-  if (state) {
-    chromeos::BootTimesRecorder::Get()->OnLogoutStarted(state);
-
-    if (SetLocaleForNextStart(state)) {
-      TRACE_EVENT0("shutdown", "CommitPendingWrite");
-      state->CommitPendingWrite();
-    }
-  }
-  g_send_stop_request_to_session_manager = true;
-  // On ChromeOS, always terminate the browser, regardless of the result of
-  // AreAllBrowsersCloseable(). See crbug.com/123107.
-  browser_shutdown::NotifyAndTerminate(true /* fast_path */);
+  chromeos::AttemptUserExitChromeOS();
 #else
   // Reset the restart bit that might have been set in cancelled restart
   // request.
@@ -248,14 +168,7 @@ void AttemptRestart() {
   pref_service->SetBoolean(prefs::kWasRestarted, true);
 
 #if defined(OS_CHROMEOS)
-  chromeos::BootTimesRecorder::Get()->set_restart_requested();
-
-  DCHECK(!g_send_stop_request_to_session_manager);
-  // Make sure we don't send stop request to the session manager.
-  g_send_stop_request_to_session_manager = false;
-  // Run exit process in clean stack.
-  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
-                                   base::Bind(&ExitCleanly));
+  chromeos::AttemptRestart();
 #else
   // Set the flag to restore state after the restart.
   pref_service->SetBoolean(prefs::kRestartLastSessionOnShutdown, true);
@@ -290,28 +203,6 @@ void AttemptExit() {
   AttemptExitInternal(true);
 #endif
 }
-
-#if defined(OS_CHROMEOS)
-// A function called when SIGTERM is received.
-void ExitCleanly() {
-  VLOG(1) << "ExitCleanly";
-  // We always mark exit cleanly.
-  MarkAsCleanShutdown();
-
-  // Don't block when SIGTERM is received. AreaAllBrowsersCloseable()
-  // can be false in following cases. a) power-off b) signout from
-  // screen locker.
-  if (!AreAllBrowsersCloseable())
-    browser_shutdown::OnShutdownStarting(browser_shutdown::END_SESSION);
-  else
-    browser_shutdown::OnShutdownStarting(browser_shutdown::BROWSER_EXIT);
-  AttemptExitInternal(true);
-}
-
-bool IsAttemptingShutdown() {
-  return g_send_stop_request_to_session_manager;
-}
-#endif
 
 #if !defined(OS_ANDROID)
 void SessionEnding() {
