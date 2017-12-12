@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb5fb39d_ad3df300",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-12T00:41:44Z",
+      "side": 1,
+      "message": "By convention for Chromium changes we omit the bug URL and write this as simply:\n\nBug: 479898",
+      "revId": "ad9784c0487da7b2ee95aad3545d4948e8755739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780f3309_4d458bf2",
+        "filename": "net/quic/core/crypto/quic_decrypter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-12T00:41:44Z",
+      "side": 1,
+      "message": "This would also be a good candidate for conversion.",
+      "revId": "ad9784c0487da7b2ee95aad3545d4948e8755739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f2a7db_6a78b9df",
+        "filename": "net/quic/core/crypto/quic_encrypter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-12T00:41:44Z",
+      "side": 1,
+      "message": "This would also be a good candidate for conversion",
+      "revId": "ad9784c0487da7b2ee95aad3545d4948e8755739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
