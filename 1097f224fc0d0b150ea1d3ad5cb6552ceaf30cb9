@@ -94,6 +94,23 @@
     },
     {
       "key": {
+        "uuid": "c919120d_815eba05",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-12T01:00:04Z",
+      "side": 1,
+      "message": "nit: is it worth a DCHECK that it\u0027s in the map?",
+      "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7da54618_9d538146",
         "filename": "gpu/command_buffer/client/client_transfer_cache.h",
         "patchSetId": 3
@@ -128,6 +145,30 @@
       "writtenOn": "2017-12-12T00:09:16Z",
       "side": 1,
       "message": "I don\u0027t really know, but I wonder if a map of std::pair to Id is better? Not sure how this compares to nested maps, but seems like it could be more efficient?",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 28
+      },
+      "revId": "1097f224fc0d0b150ea1d3ad5cb6552ceaf30cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05dc0363_dda4ec17",
+        "filename": "gpu/command_buffer/client/client_transfer_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-12T01:00:04Z",
+      "side": 1,
+      "message": "Or because cc::TransferCacheEntryType is a contiguous (short) enum, and array for the outer map is probably ideal.",
+      "parentUuid": "fdf92bb5_85cc5fc3",
       "range": {
         "startLine": 66,
         "startChar": 20,
