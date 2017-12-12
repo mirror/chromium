@@ -118,6 +118,9 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
               NetErrorDetails* net_error_details,
               const CompletionCallback& callback);
 
+  int GetHostResolutionResult(const CompletionCallback& callback);
+
+  void OnHostResolutionComplete(int rv);
   void OnRequestComplete(int rv);
 
   // Helper method that calls |factory_|'s GetTimeDelayForWaitingJob(). It
@@ -143,6 +146,9 @@ class NET_EXPORT_PRIVATE QuicStreamRequest {
   CompletionCallback callback_;
   NetErrorDetails* net_error_details_;  // Unowned.
   std::unique_ptr<QuicChromiumClientSession::Handle> session_;
+
+  int host_resolution_result_;
+  CompletionCallback host_resolution_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicStreamRequest);
 };
@@ -237,7 +243,8 @@ class NET_EXPORT_PRIVATE QuicStreamFactory
              int cert_verify_flags,
              const GURL& url,
              const NetLogWithSource& net_log,
-             QuicStreamRequest* request);
+             QuicStreamRequest* request,
+             bool* expect_host_resolution);
 
   // Called when the handshake for |session| is confirmed. If QUIC is disabled
   // currently disabled, then it closes the connection and returns true.
