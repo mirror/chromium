@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3212f441_d44d1836",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-12T23:01:43Z",
+      "side": 1,
+      "message": "nit: Add something about how the new patch is meant to fix the test flakiness.",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011cae81_0d91814c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/resources/cookie.pl",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-12T23:01:43Z",
+      "side": 1,
+      "message": "Just curious-- was the change here meaningful?  (I can see how the .js file could reduce flakiness, but I wasn\u0027t sure if this mattered as well.)  No objections either way.",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5d23fa_962b3953",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-12T23:01:43Z",
+      "side": 1,
+      "message": "Is this related to the rest?  Just wondering if it makes merging any trickier.",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
