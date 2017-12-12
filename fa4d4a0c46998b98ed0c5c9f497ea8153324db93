@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bdb38d7d_42f50aa3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphBubbleController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-12T21:09:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "37e09287_f2f45ccb",
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1306b67_db078a03",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/ArrowBubbleDrawable.java",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00295e6_0dae1e57",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/ArrowBubbleDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-12T21:09:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a1306b67_db078a03",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 48
+      },
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f4dabe0d_7854148e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/BubbleDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-12T21:09:12Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "92bbb2c3_31e49206",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 13
+      },
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f2763e3_c2f6ce75",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/BubbleDrawable.java",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e741adf_a95de10f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/BubbleDrawable.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-12T21:09:12Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "6f2763e3_c2f6ce75",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 57
+      },
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -132,6 +222,30 @@
       "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043c0163_f238fb16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/TextBubble.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-12T21:09:12Z",
+      "side": 1,
+      "message": "Done.\n\nI dropped the new BubbleDrawable class in favor of a setter/getter on ArrowBubbleDrawable and left the arrow height as built-in padding.",
+      "parentUuid": "1d474612_663a0019",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 21
+      },
+      "revId": "fa4d4a0c46998b98ed0c5c9f497ea8153324db93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

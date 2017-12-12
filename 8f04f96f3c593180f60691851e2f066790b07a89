@@ -22,6 +22,30 @@
       "revId": "8f04f96f3c593180f60691851e2f066790b07a89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635aee45_f584a77a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphBubbleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-12T21:09:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "549031d7_ab59f7fc",
+      "range": {
+        "startLine": 237,
+        "startChar": 8,
+        "endLine": 248,
+        "endChar": 9
+      },
+      "revId": "8f04f96f3c593180f60691851e2f066790b07a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
