@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "177ce70b_4b8406af",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-12T20:47:02Z",
+      "side": 1,
+      "message": "Maybe DCHECK(app_list_refreshed_callback_.is_null()); ?",
+      "revId": "eced02e6a5c38a63e2276bf7d4fb0653d592a1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c6f62d_f798770b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-12T20:47:02Z",
+      "side": 1,
+      "message": "#include \"base/callback.h\"",
+      "revId": "eced02e6a5c38a63e2276bf7d4fb0653d592a1ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

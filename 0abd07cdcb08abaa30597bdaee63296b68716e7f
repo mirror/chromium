@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b4679a74_8ac8e0e2",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-12-12T20:47:02Z",
+      "side": 1,
+      "message": "It\u0027s good that you found the actual cause of the race, and the latest patchset itself LG, but I guess my original question still stands.\n\nDon\u0027t we still have a race in arc_app_launcher.cc too? To me, it looks like LaunchAppWithIntent() always needs intent_helper() instance. Otherwise, I guess the helper function only partially works.",
+      "parentUuid": "3c97219a_3716c648",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 13
+      },
+      "revId": "0abd07cdcb08abaa30597bdaee63296b68716e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2c46be8_ae1d103b",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
         "patchSetId": 3
