@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "336c188c_fff89846",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-12T23:58:31Z",
+      "side": 1,
+      "message": "Depends on browser window size if the test works.",
+      "parentUuid": "6566b2d2_d8143b01",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 21
+      },
+      "revId": "24cec5f1340c3e6a2190479288447d979428345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5836e95_33c69e7c",
         "filename": "tools/chrome_proxy/webdriver/lite_page.py",
         "patchSetId": 1
@@ -83,6 +107,30 @@
       "writtenOn": "2017-12-12T23:43:51Z",
       "side": 1,
       "message": "Why only on Android? Does the server check OS? Consider add note to comment as to why only for android.",
+      "range": {
+        "startLine": 194,
+        "startChar": 3,
+        "endLine": 194,
+        "endChar": 14
+      },
+      "revId": "24cec5f1340c3e6a2190479288447d979428345c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c96c8dc_52ee1019",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-12T23:58:31Z",
+      "side": 1,
+      "message": "Depends on browser window size if the test works.",
+      "parentUuid": "de9e89d7_5705a6cb",
       "range": {
         "startLine": 194,
         "startChar": 3,
