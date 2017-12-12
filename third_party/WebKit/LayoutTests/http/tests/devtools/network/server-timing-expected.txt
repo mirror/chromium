@@ -1,0 +1,157 @@
+Tests that server-timing headers are parsed correctly.
+
+
+metric
+0 {"name":"metric"}
+metric;dur
+0 {"name":"metric"}
+metric;dur=123.4
+0 {"name":"metric","duration":123.4}
+metric;dur="123.4"
+0 {"name":"metric","duration":123.4}
+metric;desc
+0 {"name":"metric"}
+metric;desc=description
+0 {"name":"metric","description":"description"}
+metric;desc="description"
+0 {"name":"metric","description":"description"}
+metric;dur;desc
+0 {"name":"metric"}
+metric;dur=123.4;desc
+0 {"name":"metric","duration":123.4}
+metric;dur;desc=description
+0 {"name":"metric","description":"description"}
+metric;dur=123.4;desc=description
+0 {"name":"metric","duration":123.4,"description":"description"}
+metric;desc;dur
+0 {"name":"metric"}
+metric;desc;dur=123.4
+0 {"name":"metric","duration":123.4}
+metric;desc=description;dur
+0 {"name":"metric","description":"description"}
+metric;desc=description;dur=123.4
+0 {"name":"metric","description":"description","duration":123.4}
+aB3!#$%&'*+-.^_`|~
+0 {"name":"aB3!#$%&'*+-.^_`|~"}
+metric ; 
+0 {"name":"metric"}
+metric , 
+0 {"name":"metric"}
+metric ; dur = 123.4 ; desc = description
+0 {"name":"metric","duration":123.4,"description":"description"}
+metric ; desc = description ; dur = 123.4
+0 {"name":"metric","description":"description","duration":123.4}
+metric	;	
+0 {"name":"metric"}
+metric	,	
+0 {"name":"metric"}
+metric	;	dur	=	123.4	;	desc	=	description
+0 {"name":"metric","duration":123.4,"description":"description"}
+metric	;	desc	=	description	;	dur	=	123.4
+0 {"name":"metric","description":"description","duration":123.4}
+metric1;dur=12.3;desc=description1,metric2;dur=45.6;desc=description2,metric3;dur=78.9;desc=description3
+0 {"name":"metric1","duration":12.3,"description":"description1"}
+1 {"name":"metric2","duration":45.6,"description":"description2"}
+2 {"name":"metric3","duration":78.9,"description":"description3"}
+metric1,metric2 ,metric3, metric4 , metric5
+0 {"name":"metric1"}
+1 {"name":"metric2"}
+2 {"name":"metric3"}
+3 {"name":"metric4"}
+4 {"name":"metric5"}
+metric;desc=\
+0 {"name":"metric"}
+metric;desc="
+0 {"name":"metric"}
+metric;desc=\\
+0 {"name":"metric"}
+metric;desc=\"
+0 {"name":"metric"}
+metric;desc="\
+0 {"name":"metric"}
+metric;desc=""
+0 {"name":"metric"}
+metric;desc=\\\
+0 {"name":"metric"}
+metric;desc=\\"
+0 {"name":"metric"}
+metric;desc=\"\
+0 {"name":"metric"}
+metric;desc=\""
+0 {"name":"metric"}
+metric;desc="\\
+0 {"name":"metric"}
+metric;desc="\"
+0 {"name":"metric"}
+metric;desc=""\
+0 {"name":"metric"}
+metric;desc="""
+0 {"name":"metric"}
+metric;desc=\\\\
+0 {"name":"metric"}
+metric;desc=\\\"
+0 {"name":"metric"}
+metric;desc=\\"\
+0 {"name":"metric"}
+metric;desc=\\""
+0 {"name":"metric"}
+metric;desc=\"\\
+0 {"name":"metric"}
+metric;desc=\"\"
+0 {"name":"metric"}
+metric;desc=\""\
+0 {"name":"metric"}
+metric;desc=\"""
+0 {"name":"metric"}
+metric;desc="\\\
+0 {"name":"metric"}
+metric;desc="\\"
+0 {"name":"metric","description":"\\"}
+metric;desc="\"\
+0 {"name":"metric"}
+metric;desc="\""
+0 {"name":"metric","description":"\""}
+metric;desc=""\\
+0 {"name":"metric"}
+metric;desc=""\"
+0 {"name":"metric"}
+metric;desc="""\
+0 {"name":"metric"}
+metric;desc=""""
+0 {"name":"metric"}
+metric;dur=12.3;desc=description1,metric;dur=45.6;desc=description2
+0 {"name":"metric","duration":12.3,"description":"description1"}
+1 {"name":"metric","duration":45.6,"description":"description2"}
+metric;dur=foo
+0 {"name":"metric"}
+metric;dur="foo"
+0 {"name":"metric"}
+metric;foo=bar;desc=description;foo=bar;dur=123.4;foo=bar
+0 {"name":"metric","description":"description","duration":123.4}
+metric;dur=123.4;dur=567.8
+0 {"name":"metric","duration":123.4}
+metric;desc=description1;desc=description2
+0 {"name":"metric","description":"description1"}
+metric;dur;dur=123.4
+0 {"name":"metric","duration":123.4}
+metric;desc;desc=description
+0 {"name":"metric","description":"description"}
+metric;DuR=123.4;DeSc=description
+0 {"name":"metric","duration":123.4,"description":"description"}
+metric=foo;dur;dur=123.4,metric2
+0 {"name":"metric"}
+metric"foo;dur;dur=123.4,metric2
+0 {"name":"metric"}
+ 
+=
+;
+,
+=;
+;=
+=,
+,=
+;,
+,;
+Tests ran to completion.
+
+

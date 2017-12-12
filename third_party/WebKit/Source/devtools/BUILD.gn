@@ -551,6 +551,7 @@ all_devtools_files = [
   "front_end/sdk/ScreenCaptureModel.js",
   "front_end/sdk/Script.js",
   "front_end/sdk/SecurityOriginManager.js",
+  "front_end/sdk/ServerTiming.js",
   "front_end/sdk/ServiceWorkerCacheModel.js",
   "front_end/sdk/ServiceWorkerManager.js",
   "front_end/sdk/SourceMap.js",
