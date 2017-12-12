@@ -40,6 +40,9 @@ class GPU_EXPORT DiscardableHandleBase {
   // Ensures this is a valid allocation for use with a DiscardableHandleBase.
   static bool ValidateParameters(const Buffer* buffer, uint32_t byte_offset);
 
+  // Functions for logging only.
+  bool IsDeletedForLogging() const;
+
   // Test only functions.
   bool IsLockedForTesting() const;
   bool IsDeletedForTesting() const;
