@@ -80,6 +80,18 @@ cr.define('extensions', function() {
       'observeDataChanges_(data.*)',
     ],
 
+    listeners: {'view-enter-start': 'enter_'},
+
+    enter_: function() {
+      if (this.$['code-section'].lineCount < 1000)
+        return;
+
+      this.$['code-section'].toggleCode();
+      listenOnce(this, 'view-enter-finish', () => {
+        this.$['code-section'].toggleCode();
+      });
+    },
+
     /** @override */
     ready: function() {
       cr.ui.FocusOutlineManager.forDocument(document);
