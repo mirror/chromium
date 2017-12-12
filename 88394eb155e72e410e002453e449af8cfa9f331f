@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65650904_0aa160a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-12T19:08:12Z",
+      "side": 1,
+      "message": "My initial thinking is that this would be nicer to be pushed lower where clients could observe changes to the favicon store natively.  It doesn\u0027t immediately look like FaviconDriverObserver is good for us.\n\nI think my concerns with this class is that it implies onUpdateFavicon works for all URLs, but really it only works for partner bookmarks.  I\u0027d recommend the bookmark manager just observe the partner bookmkark reader and get updates there.\n\nUnless we can make this observe changes across all URLs, I think this manager cache is probably overkill.  The converse is that we would make the FaviconCache a global singleton that would be refcounted.  I think the problem is still that we aren\u0027t actually getting updates across all favicon types, so it still is a bit misleading.  For now, I\u0027d recommend rolling the observer into the bookmark reader and drop this class.",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "88394eb155e72e410e002453e449af8cfa9f331f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb00abc_ce702836",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-12T19:08:12Z",
+      "side": 1,
+      "message": "are you sure the formatting of the key\u0027s are the same?\n\nwww.example.com\nwww.example.com/\nexample.com\nhttp://www.example.com/\nhttp://example.com/\n\nI think we should use snapshot() here and do fuzzy matching of the URLs.  Or we should call into native and normalize the URL using whatever the favicon store would do.",
+      "revId": "88394eb155e72e410e002453e449af8cfa9f331f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
