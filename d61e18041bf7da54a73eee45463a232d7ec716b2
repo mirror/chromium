@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a422c36_389ca0c2",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-12T18:42:20Z",
+      "side": 1,
+      "message": "Second part of condition can be simplified to the following?\n\n     (major_type_guid !\u003d MFMediaType_Image \u0026\u0026\n       (stream \u003d\u003d kPreferredPhotoStream ||\n       !GetFrameRateFromMediaType(type, \u0026format-\u003eframe_rate)))",
+      "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cdc4b6b_bf48c7a0",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-12T18:42:20Z",
+      "side": 1,
+      "message": "Why is this change needed? Do we need to set the |step| of this mojom::Range to 0 if |max_size.height() \u003d\u003d min_size.height()|?",
+      "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdd4284_2975eda2",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-12T18:42:20Z",
+      "side": 1,
+      "message": "Is there potential concurrent access of |video_stream_take_photo_callbacks_|? \nHere we are inside |lock_|, but in method TakePhoto() where we also modify it, we are not.",
+      "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
