@@ -246,13 +246,6 @@ void SpellCheckProvider::OnRespondTextCheck(
 }
 #endif
 
-void SpellCheckProvider::EnableSpellcheck(bool enable) {
-  WebLocalFrame* frame = render_frame()->GetWebFrame();
-  frame->EnableSpellChecking(enable);
-  if (!enable)
-    frame->RemoveSpellingMarkers();
-}
-
 bool SpellCheckProvider::SatisfyRequestFromCache(
     const base::string16& text,
     WebTextCheckingCompletion* completion) {
