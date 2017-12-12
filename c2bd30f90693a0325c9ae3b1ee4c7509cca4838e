@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e003df25_df58aa2d",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-from-2-characteristics.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-12T19:33:07Z",
+      "side": 1,
+      "message": "Put this on the previous line (at least the `)),`)",
+      "revId": "c2bd30f90693a0325c9ae3b1ee4c7509cca4838e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "459b0643_022b1f88",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-object.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-12T19:33:07Z",
+      "side": 1,
+      "message": "put this on the previous line",
+      "revId": "c2bd30f90693a0325c9ae3b1ee4c7509cca4838e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
