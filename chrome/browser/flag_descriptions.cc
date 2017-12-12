@@ -1864,11 +1864,6 @@ const char kEnableFaviconsFromWebManifestName[] =
 const char kEnableFaviconsFromWebManifestDescription[] =
     "Fetch Web Manifests on page load to read favicons from them.";
 
-const char kEnableMidiManagerDynamicInstantiationName[] =
-    "MIDIManager dynamic instantiation for Web MIDI.";
-const char kEnableMidiManagerDynamicInstantiationDescription[] =
-    "Enable MIDIManager dynamic instantiation for Web MIDI.";
-
 const char kEnableNtpAssetDownloadSuggestionsName[] =
     "Show asset downloads on the New Tab page";
 const char kEnableNtpAssetDownloadSuggestionsDescription[] =
