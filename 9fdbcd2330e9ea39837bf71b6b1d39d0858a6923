@@ -175,6 +175,30 @@
       "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c56c14f_4bbb56df",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-12T05:39:42Z",
+      "side": 1,
+      "message": "Yep.",
+      "parentUuid": "749fadc2_2199220b",
+      "range": {
+        "startLine": 87,
+        "startChar": 47,
+        "endLine": 87,
+        "endChar": 56
+      },
+      "revId": "9fdbcd2330e9ea39837bf71b6b1d39d0858a6923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78737c9c_eb7de5da",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-12T05:39:42Z",
+      "side": 1,
+      "message": "Oh, also check {0xfc}–{0xff}.",
+      "range": {
+        "startLine": 574,
+        "startChar": 6,
+        "endLine": 574,
+        "endChar": 18
+      },
+      "revId": "027f661d5725f2a52c4be64e1172b63dcb893651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
