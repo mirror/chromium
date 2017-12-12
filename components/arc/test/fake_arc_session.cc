@@ -14,13 +14,12 @@ FakeArcSession::FakeArcSession() = default;
 
 FakeArcSession::~FakeArcSession() = default;
 
-void FakeArcSession::Start(ArcInstanceMode request_mode) {
-  target_mode_ = request_mode;
+void FakeArcSession::UpgradeToFull() {
+  full_container_requested_ = true;
   if (boot_failure_emulation_enabled_) {
     for (auto& observer : observer_list_)
       observer.OnSessionStopped(boot_failure_reason_, false);
-  } else if (!boot_suspended_ &&
-             target_mode_ == ArcInstanceMode::FULL_INSTANCE) {
+  } else if (!boot_suspended_) {
     running_ = true;
   }
 }
@@ -28,10 +27,6 @@ void FakeArcSession::Start(ArcInstanceMode request_mode) {
 void FakeArcSession::Stop() {
   stop_requested_ = true;
   StopWithReason(ArcStopReason::SHUTDOWN);
-}
-
-base::Optional<ArcInstanceMode> FakeArcSession::GetTargetMode() {
-  return target_mode_;
 }
 
 bool FakeArcSession::IsStopRequested() {

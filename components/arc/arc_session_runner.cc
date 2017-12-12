@@ -271,10 +271,9 @@ void ArcSessionRunner::StartArcSession() {
     // separately with RecordInstanceRestartAfterCrashUma().
     if (!restart_after_crash_count_)
       RecordInstanceCrashUma(ArcContainerLifetimeEvent::CONTAINER_STARTING);
-  } else {
-    DCHECK_EQ(ArcInstanceMode::MINI_INSTANCE, arc_session_->GetTargetMode());
   }
-  arc_session_->Start(target_mode_.value());
+  if (target_mode_ == ArcInstanceMode::FULL_INSTANCE)
+    arc_session_->UpgradeToFull();
 }
 
 void ArcSessionRunner::RestartArcSession() {
@@ -296,7 +295,7 @@ void ArcSessionRunner::OnSessionStopped(ArcStopReason stop_reason,
   // The observers should be agnostic to the existence of the limited-purpose
   // instance.
   const bool notify_observers =
-      ShouldNotifyOnSessionStopped(arc_session_->GetTargetMode());
+      ShouldNotifyOnSessionStopped(target_mode_);
 
   arc_session_->RemoveObserver(this);
   arc_session_.reset();

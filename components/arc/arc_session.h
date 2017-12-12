@@ -9,8 +9,6 @@
 
 #include "base/macros.h"
 #include "base/observer_list.h"
-#include "base/optional.h"
-#include "components/arc/arc_instance_mode.h"
 #include "components/arc/arc_stop_reason.h"
 
 namespace arc {
@@ -44,20 +42,12 @@ class ArcSession {
       ArcBridgeService* arc_bridge_service);
   virtual ~ArcSession();
 
-  // Starts an instance in the |request_mode|. Start(FULL_INSTANCE) should
-  // not be called twice or more. When Start(MINI_INSTANCE) was called then
-  // Start(FULL_INSTANCE) is called, it upgrades the mini instance to a full
-  // instance.
-  virtual void Start(ArcInstanceMode request_mode) = 0;
+  // Sends a D-Bus message to start or to upgrade to a full instance.
+  virtual void UpgradeToFull() = 0;
 
   // Requests to stop the currently-running instance regardless of its mode.
   // The completion is notified via OnSessionStopped() of the Observer.
   virtual void Stop() = 0;
-
-  // Returns the current target mode, in which eventually this instance is
-  // running.
-  // If the instance is not yet started, this returns nullopt.
-  virtual base::Optional<ArcInstanceMode> GetTargetMode() = 0;
 
   // Returns true if Stop() has been called already.
   virtual bool IsStopRequested() = 0;
