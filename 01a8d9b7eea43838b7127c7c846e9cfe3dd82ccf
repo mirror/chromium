@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd582ace_51e8dbef",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-12T20:59:11Z",
+      "side": 1,
+      "message": "Done, using a 250ms timeout. I don\u0027t want to be too aggressive here, we don\u0027t want to throttle a legit 10fps app even further. But at 4fps, I think pose latency isn\u0027t going to be the deciding factor in making it responsive.",
+      "parentUuid": "d16fa33d_5d0c2630",
+      "range": {
+        "startLine": 989,
+        "startChar": 6,
+        "endLine": 989,
+        "endChar": 34
+      },
+      "revId": "01a8d9b7eea43838b7127c7c846e9cfe3dd82ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5720b3e7_b1681da2",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "01a8d9b7eea43838b7127c7c846e9cfe3dd82ccf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8064ba26_3f292a1c",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-12T20:59:11Z",
+      "side": 1,
+      "message": "Moot, mthiesse@ replaced this with a direct call in crrev.com/c/788240.",
+      "parentUuid": "5720b3e7_b1681da2",
+      "revId": "01a8d9b7eea43838b7127c7c846e9cfe3dd82ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

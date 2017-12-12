@@ -22,6 +22,30 @@
       "revId": "52d21598d6a31b7cc889eb5036937bb5be006e0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0c12d2_ac91dee6",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-12T20:59:11Z",
+      "side": 0,
+      "message": "Moot, mthiesse@ replaced this with a direct call in crrev.com/c/788240.",
+      "parentUuid": "b23af29d_8ed2bc44",
+      "range": {
+        "startLine": 986,
+        "startChar": 2,
+        "endLine": 986,
+        "endChar": 68
+      },
+      "revId": "52d21598d6a31b7cc889eb5036937bb5be006e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
