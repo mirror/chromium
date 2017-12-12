@@ -34,7 +34,8 @@ class DedicatedWorkerHost : public service_manager::mojom::InterfaceProvider {
       return;
 
     BindWorkerInterface(interface_name, std::move(interface_pipe), process,
-                        origin_);
+                        origin_, WebContextType::kDedicatedWorker,
+                        mojo::GetBadMessageCallback());
   }
 
  private:
