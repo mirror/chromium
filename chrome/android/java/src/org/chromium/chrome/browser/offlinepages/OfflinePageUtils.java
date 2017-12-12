@@ -95,6 +95,8 @@ public class OfflinePageUtils {
          */
         boolean isOfflinePage(Tab tab);
 
+        boolean isWPK(Tab tab);
+
         /**
          * Returns whether the tab is showing offline preview.
          * @param tab The current tab.
@@ -135,6 +137,20 @@ public class OfflinePageUtils {
             if (offlinePageBridge == null) return false;
 
             return offlinePageBridge.isOfflinePage(webContents);
+        }
+
+        @Override
+        public boolean isWPK(Tab tab) {
+            if (tab == null) return false;
+
+            WebContents webContents = tab.getWebContents();
+            if (webContents == null) return false;
+
+            OfflinePageBridge offlinePageBridge =
+                    getInstance().getOfflinePageBridge(tab.getProfile());
+            if (offlinePageBridge == null) return false;
+
+            return offlinePageBridge.isWPK(webContents);
         }
 
         @Override
@@ -407,6 +423,10 @@ public class OfflinePageUtils {
      */
     public static boolean isOfflinePage(Tab tab) {
         return getInstance().isOfflinePage(tab);
+    }
+
+    public static boolean isWPK(Tab tab) {
+        return getInstance().isWPK(tab);
     }
 
     /**
