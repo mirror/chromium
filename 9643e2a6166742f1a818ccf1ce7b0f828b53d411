@@ -22,6 +22,30 @@
       "revId": "9643e2a6166742f1a818ccf1ce7b0f828b53d411",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2decb6b_8f1a7b04",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-12T01:19:53Z",
+      "side": 1,
+      "message": "AFAICT, DeX first appeared with Android N.",
+      "parentUuid": "91ce14f0_e53ce4be",
+      "range": {
+        "startLine": 113,
+        "startChar": 51,
+        "endLine": 113,
+        "endChar": 67
+      },
+      "revId": "9643e2a6166742f1a818ccf1ce7b0f828b53d411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
