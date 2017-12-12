@@ -629,7 +629,8 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
         FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
         base::BindOnce(
             &WebRtcLogUtil::DeleteOldAndRecentWebRtcLogFiles,
-            WebRtcLogList::GetWebRtcLogDirectoryForProfile(profile_->GetPath()),
+            WebRtcLogList::GetWebRtcLogDirectoryForBrowserContextPath(
+                profile_->GetPath()),
             delete_begin_),
         clear_webrtc_logs_.GetCompletionCallback());
 #endif
