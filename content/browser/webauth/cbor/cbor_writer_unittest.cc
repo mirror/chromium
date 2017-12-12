@@ -16,7 +16,7 @@ namespace content {
 
 TEST(CBORWriterTest, TestWriteUint) {
   typedef struct {
-    const uint64_t value;
+    const int64_t value;
     const base::StringPiece cbor;
   } UintTestCase;
 
@@ -37,6 +37,36 @@ TEST(CBORWriterTest, TestWriteUint) {
 
   for (const UintTestCase& test_case : kUintTestCases) {
     auto cbor = CBORWriter::Write(CBORValue(test_case.value));
+    ASSERT_TRUE(cbor.has_value());
+    EXPECT_THAT(cbor.value(), testing::ElementsAreArray(test_case.cbor));
+  }
+}
+
+TEST(CBORWriterTest, TestWriteNegativeInteger) {
+  struct NegativeIntTestCase {
+    const int64_t negative_int;
+    const base::StringPiece cbor;
+  };
+
+  static const NegativeIntTestCase kNegativeIntTestCases[] = {
+      {-1, base::StringPiece("\x20")},
+      {-10, base::StringPiece("\x29")},
+      {-23, base::StringPiece("\x36")},
+      {-24, base::StringPiece("\x37")},
+      {-25, base::StringPiece("\x38\x18")},
+      {-100, base::StringPiece("\x38\x63")},
+      {-1000, base::StringPiece("\x39\x03\xe7")},
+      {-4294967295, base::StringPiece("\x3a\xff\xff\xff\xfe")},
+      {std::numeric_limits<int64_t>::min(),
+       base::StringPiece("\x3b\x7f\xff\xff\xff\xff\xff\xff\xff")},
+  };
+
+  int test_case_index = 0;
+  for (const NegativeIntTestCase& test_case : kNegativeIntTestCases) {
+    SCOPED_TRACE(testing::Message()
+                 << "testing  negative int at index: " << test_case_index++);
+
+    auto cbor = CBORWriter::Write(CBORValue(test_case.negative_int));
     ASSERT_TRUE(cbor.has_value());
     EXPECT_THAT(cbor.value(), testing::ElementsAreArray(test_case.cbor));
   }
@@ -92,7 +122,7 @@ TEST(CBORWriterTest, TestWriteArray) {
       // clang-format on
   };
   std::vector<CBORValue> array;
-  for (int i = 1; i <= 25; i++) {
+  for (int64_t i = 1; i <= 25; i++) {
     array.push_back(CBORValue(i));
   }
   auto cbor = CBORWriter::Write(CBORValue(array));
