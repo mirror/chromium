@@ -2,12 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/common/partial_circular_buffer.h"
+#include "components/webrtc_logging/common/partial_circular_buffer.h"
 
 #include <algorithm>
 
 #include "base/logging.h"
 
+namespace webrtc_logging {
 namespace {
 
 inline uint32_t Min3(uint32_t a, uint32_t b, uint32_t c) {
@@ -184,3 +185,5 @@ void PartialCircularBuffer::DoWrite(const uint8_t* input, uint32_t input_size) {
 
   buffer_data_->end_position = position_;
 }
+
+}  // namespace webrtc_logging

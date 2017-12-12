@@ -7,8 +7,11 @@
 
 // IPC messages for WebRTC logging.
 
+#include <vector>
+
 #include "chrome/common/media/webrtc_logging_message_data.h"
 #include "ipc/ipc_message_macros.h"
+#include "ipc/ipc_message_utils.h"
 
 #define IPC_MESSAGE_START WebRtcLoggingMsgStart
 
