@@ -1085,6 +1085,16 @@
       "src/third_party/android_tools/sdk/platform-tools/adb",
     ]
   },
+  "vr_pixeltests": {
+    "label": "//chrome/browser/vr:vr_pixeltests",
+    "type": "script",
+    "script": "//testing/scripts/run_gold_test.py",
+    "args": [
+      "vr_pixeltests",
+      "-v",
+      "-v",
+    ],
+  },
   "performance_browser_tests": {
     "label": "//chrome/test:performance_browser_tests",
     "type": "script",
@@ -1160,10 +1170,6 @@
   },
   "vr_common_unittests": {
     "label": "//chrome/browser/vr:vr_common_unittests",
-    "type": "console_test_launcher",
-  },
-  "vr_pixeltests": {
-    "label": "//chrome/browser/vr:vr_pixeltests",
     "type": "console_test_launcher",
   },
   "vr_testapp": {

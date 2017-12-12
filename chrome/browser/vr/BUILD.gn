@@ -303,9 +303,18 @@ test("vr_pixeltests") {
     ":vr_gl_test_support",
     ":vr_test_support",
   ]
+
   if (is_android) {
     deps += [ "//ui/android:ui_java" ]
   }
+
+  data = [
+    "//testing/scripts/common.py",
+    "//testing/xvfb.py",
+    "//testing/scripts/run_gold_test.py",
+    "//third_party/catapult/third_party/gsutil/",
+    "//tools/perf/generate_legacy_perf_dashboard_json.py",
+  ]
 }
 
 test("vr_common_perftests") {
