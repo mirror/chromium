@@ -21,15 +21,14 @@
 #include "url/gurl.h"
 
 namespace content {
+namespace audio_renderer_sink_cache_unittest {
 
-namespace {
 const char* const kDefaultDeviceId =
     media::AudioDeviceDescription::kDefaultDeviceId;
 const char kAnotherDeviceId[] = "another-device-id";
 const char kUnhealthyDeviceId[] = "i-am-sick";
 const int kRenderFrameId = 124;
 const int kDeleteTimeoutMs = 500;
-}  // namespace
 
 class AudioRendererSinkCacheTest : public testing::Test {
  public:
@@ -391,4 +390,5 @@ TEST_F(AudioRendererSinkCacheTest, SmokeTest) {
   loop_event.RunAndWait();
 }
 
+}  // namespace audio_renderer_sink_cache_unittest
 }  // namespace content

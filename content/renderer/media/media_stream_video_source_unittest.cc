@@ -28,6 +28,7 @@ using ::testing::DoAll;
 using ::testing::SaveArg;
 
 namespace content {
+namespace media_stream_video_source_unittest {
 
 ACTION_P(RunClosure, closure) {
   closure.Run();
@@ -673,4 +674,5 @@ TEST_F(MediaStreamVideoSourceTest, StartStopAndNotifyRestartNotSupported) {
   base::RunLoop().RunUntilIdle();
 }
 
+}  // namespace media_stream_video_source_unittest
 }  // namespace content
