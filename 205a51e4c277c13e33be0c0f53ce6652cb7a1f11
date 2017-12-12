@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2292dc34_ebf77288",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2058,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-12T23:32:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff08c757_373b789f",
+      "revId": "205a51e4c277c13e33be0c0f53ce6652cb7a1f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87d463dc_39b57898",
         "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T22:36:49Z",
       "side": 1,
       "message": "You were telling me that you create as many throttles as there are sessions. Why is it not so?",
+      "revId": "205a51e4c277c13e33be0c0f53ce6652cb7a1f11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12bdb7b6_f72c0843",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-12T23:32:48Z",
+      "side": 1,
+      "message": "I was wrong. Now doing multiple.",
+      "parentUuid": "87d463dc_39b57898",
       "revId": "205a51e4c277c13e33be0c0f53ce6652cb7a1f11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
