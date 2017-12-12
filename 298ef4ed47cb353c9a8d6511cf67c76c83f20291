@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c7d8681_75ad2429",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1953,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-12T23:02:06Z",
+      "side": 1,
+      "message": "Oops this was git cl format and me butting heads.",
+      "parentUuid": "5e264b17_bf441c79",
+      "revId": "298ef4ed47cb353c9a8d6511cf67c76c83f20291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "605c6667_8fc6f461",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "298ef4ed47cb353c9a8d6511cf67c76c83f20291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6791c545_dfb27b40",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1956,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-12T23:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "605c6667_8fc6f461",
+      "revId": "298ef4ed47cb353c9a8d6511cf67c76c83f20291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
