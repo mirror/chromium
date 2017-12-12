@@ -27,6 +27,7 @@
 #include "content/browser/download/download_manager_impl.h"
 #include "content/browser/download/download_task_runner.h"
 #include "content/browser/frame_host/interstitial_page_impl.h"
+#include "content/browser/frame_host/navigator.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/devtools_agent_host.h"
@@ -2011,7 +2012,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessDevToolsProtocolTest, TargetNoDiscovery) {
   Attach();
   command_params.reset(new base::DictionaryValue());
   command_params->SetBoolean("autoAttach", true);
-  command_params->SetBoolean("waitForDebuggerOnStart", true);
+  command_params->SetBoolean("waitForDebuggerOnStart", false);
   SendCommand("Target.setAutoAttach", std::move(command_params), true);
   EXPECT_TRUE(notifications_.empty());
   command_params.reset(new base::DictionaryValue());
@@ -2052,6 +2053,90 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessDevToolsProtocolTest, TargetNoDiscovery) {
   EXPECT_EQ(target_id, temp);
   EXPECT_TRUE(params->GetString("sessionId", &temp));
   EXPECT_EQ(session_id, temp);
+}
+
+IN_PROC_BROWSER_TEST_F(SitePerProcessDevToolsProtocolTest,
+                       WaitForDebuggerOnStart) {
+  std::string temp;
+  std::string target_id;
+  std::unique_ptr<base::DictionaryValue> command_params;
+  std::unique_ptr<base::DictionaryValue> params;
+
+  GURL main_url(embedded_test_server()->GetURL("/site_per_process_main.html"));
+  NavigateToURLBlockUntilNavigationsComplete(shell(), main_url, 1);
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+
+  // Enable auto-attach.
+  Attach();
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetBoolean("autoAttach", true);
+  command_params->SetBoolean("waitForDebuggerOnStart", true);
+  SendCommand("Target.setAutoAttach", std::move(command_params), true);
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetBoolean("value", true);
+  SendCommand("Target.setAttachToFrames", std::move(command_params), true);
+  EXPECT_TRUE(notifications_.empty());
+
+  // Load cross-site page into iframe.
+  GURL::Replacements replace_host;
+  GURL cross_site_url(embedded_test_server()->GetURL("/title1.html"));
+  replace_host.SetHostStr("foo.com");
+  cross_site_url = cross_site_url.ReplaceComponents(replace_host);
+
+  NavigationController::LoadURLParams navigate_params(cross_site_url);
+  navigate_params.transition_type = ui::PAGE_TRANSITION_LINK;
+  navigate_params.frame_tree_node_id = root->child_at(0)->frame_tree_node_id();
+  root->child_at(0)->navigator()->GetController()->LoadURLWithParams(
+      navigate_params);
+
+  params = WaitForNotification("Target.attachedToTarget", true);
+  std::string session_id;
+  EXPECT_TRUE(params->GetString("sessionId", &session_id));
+  EXPECT_TRUE(params->GetString("targetInfo.targetId", &target_id));
+  EXPECT_TRUE(params->GetString("targetInfo.type", &temp));
+  EXPECT_EQ("iframe", temp);
+
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetString("message",
+                            "{\"id\": 1, \"method\": \"Network.enable\"}");
+  command_params->SetString("sessionId", session_id);
+  SendCommand("Target.sendMessageToTarget", std::move(command_params), true);
+
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetString("message",
+                            "{\"id\": 2, \"method\": "
+                            "\"Network.setUserAgentOverride\", \"params\": "
+                            "{\"userAgent\": \"test\"}}");
+  command_params->SetString("sessionId", session_id);
+  SendCommand("Target.sendMessageToTarget", std::move(command_params), true);
+
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetString(
+      "message",
+      "{\"id\": 3, \"method\": \"Runtime.runIfWaitingForDebugger\"}");
+  command_params->SetString("sessionId", session_id);
+  SendCommand("Target.sendMessageToTarget", std::move(command_params), false);
+
+  while (true) {
+    params = WaitForNotification("Target.receivedMessageFromTarget", false);
+    EXPECT_TRUE(params->GetString("sessionId", &temp));
+    EXPECT_EQ(session_id, temp);
+    std::string message;
+    ASSERT_TRUE(params->GetString("message", &message));
+    std::unique_ptr<base::Value> value = base::JSONReader::Read(message);
+    ASSERT_TRUE(value && value->is_dict());
+    std::unique_ptr<base::DictionaryValue> dict =
+        base::DictionaryValue::From(std::move(value));
+    if (dict->GetString("method", &temp) &&
+        temp == "Network.requestWillBeSent") {
+      EXPECT_TRUE(dict->GetString("params.request.headers.User-Agent", &temp));
+      EXPECT_EQ("test", temp);
+      break;
+    }
+  }
 }
 
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, SetAndGetCookies) {
