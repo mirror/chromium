@@ -15,15 +15,16 @@
 #include "base/logging.h"
 #include "base/task_scheduler/post_task.h"
 #include "components/update_client/component.h"
+#include "components/update_client/configurator.h"
 #include "components/update_client/task_traits.h"
 #include "components/update_client/update_client.h"
 
 namespace update_client {
 
 ActionRunner::ActionRunner(const Component& component,
-                           const std::vector<uint8_t>& key_hash)
+                           scoped_refptr<Configurator> config)
     : component_(component),
-      key_hash_(key_hash),
+      config_(config),
       main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
 
 ActionRunner::~ActionRunner() {
@@ -46,8 +47,9 @@ void ActionRunner::Unpack() {
   base::FilePath file_path;
   installer->GetInstalledFile(component_.action_run(), &file_path);
 
-  auto unpacker = base::MakeRefCounted<ComponentUnpacker>(key_hash_, file_path,
-                                                          installer, nullptr);
+  auto unpacker = base::MakeRefCounted<ComponentUnpacker>(
+      config_->GetRunActionKeyHash(), file_path, installer,
+      config_->CreateServiceManagerConnector());
   unpacker->Unpack(
       base::BindOnce(&ActionRunner::UnpackComplete, base::Unretained(this)));
 }
