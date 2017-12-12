@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "3837da18_ec003e4e",
+        "filename": "chrome/browser/usb/web_usb_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-12T17:04:17Z",
+      "side": 1,
+      "message": "[new patchset not ready for review]\n\nHi Peter,\n\nI\u0027m thinking we should use GetForSystemNotifications() here, and keep using the GetLastUsedProfileAllowedByPolicy only for opening the landing page when the user clicks. Currently GetForSystemNotifications() is not implemented except on Chrome OS, and even there it has problems because it synchronously loads the signin profile (which is usually already loaded anyway, but in some cases this could be janky). After poking around a bit I think our options for other platforms (win/linux/mac) are:\n\na) use the \"system profile\"[1], which is currently used for user manager webui bubble. Load it synchronously. It\u0027s probably usually not already loaded so this could be a common source of jank.\nb) use the \"system profile\" but load it asynchronously. Create a \"DisplaySystemNotification\" static that takes a notification and either displays immediately if possible or loads the profile asynchronously and then displays it. Callers of \"GetForSystemProfile\" would have to be conscious that it could return null.\nc) change NotificationDisplayService so it doesn\u0027t require any profile (allows a null profile), and have NDS::GetForSystemNotification (or NDS::GetForProfile(nullptr)) return that one. When I looked at this before, it meant updating a lot of places that assume a valid profile, although in theory it should be workable. Perhaps after your updates to share more profile handling code this will be easier.\nd) do what this patch does and just hang it off a semi-arbitrary profile. This seems like not the greatest general solution since for some other system notifications it may not be that easy to track which profile the last notification was hung off when it comes time to update or close the notification, and because it would lead to slightly wrong behavior like closing the notification when you close out a profile.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/profiles/profile_manager.h?rcl\u003d233c85dc290be25930697148265a34ecd43ff1e7\u0026l\u003d182",
+      "parentUuid": "09fe47e9_93671098",
+      "revId": "8045ea6258494f80f10ac210dbd46098d7da5d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfcb273c_b1c35930",
         "filename": "chrome/browser/usb/web_usb_detector_unittest.cc",
         "patchSetId": 3
