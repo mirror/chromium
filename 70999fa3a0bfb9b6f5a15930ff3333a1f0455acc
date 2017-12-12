@@ -52,6 +52,24 @@
       "revId": "70999fa3a0bfb9b6f5a15930ff3333a1f0455acc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c879db8_fd82d37c",
+        "filename": "ash/sidebar/sidebar_widget.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-12-12T04:25:31Z",
+      "side": 1,
+      "message": "Thanks. Acked.",
+      "parentUuid": "852a0ea6_a5f71f9f",
+      "revId": "70999fa3a0bfb9b6f5a15930ff3333a1f0455acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
