@@ -46,7 +46,7 @@ class AudioSystemCallbackExpectations {
   AudioSystem::OnInputDeviceInfoCallback GetInputDeviceInfoCallback(
       const base::Location& location,
       base::OnceClosure on_cb_received,
-      const base::Optional<AudioParameters>& expected_input,
+      const AudioParameters& expected_input,
       const base::Optional<AudioParameters>& expected_associated_output,
       const std::string& expected_associated_device_id);
 
@@ -76,10 +76,10 @@ class AudioSystemCallbackExpectations {
   void OnInputDeviceInfo(
       const std::string& from_here,
       base::OnceClosure on_cb_received,
-      const base::Optional<AudioParameters>& expected_input,
+      const AudioParameters& expected_input,
       const base::Optional<AudioParameters>& expected_associated_output,
       const std::string& expected_associated_device_id,
-      const base::Optional<AudioParameters>& input,
+      const AudioParameters& input,
       const base::Optional<AudioParameters>& associated_output,
       const std::string& associated_device_id);
 
@@ -325,7 +325,7 @@ TYPED_TEST_P(AudioSystemTestTemplate, GetInputDeviceInfoNoAssociation) {
       "non-default-device-id",
       this->expectations_.GetInputDeviceInfoCallback(
           FROM_HERE, wait_loop.QuitClosure(), this->input_params_,
-          base::Optional<AudioParameters>(), std::string()));
+          AudioParameters(), std::string()));
   wait_loop.Run();
 }
 

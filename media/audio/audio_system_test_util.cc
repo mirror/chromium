@@ -48,7 +48,7 @@ AudioSystem::OnInputDeviceInfoCallback
 AudioSystemCallbackExpectations::GetInputDeviceInfoCallback(
     const base::Location& location,
     base::OnceClosure on_cb_received,
-    const base::Optional<AudioParameters>& expected_input,
+    const AudioParameters& expected_input,
     const base::Optional<AudioParameters>& expected_associated_output,
     const std::string& expected_associated_device_id) {
   return base::BindOnce(&AudioSystemCallbackExpectations::OnInputDeviceInfo,
@@ -107,21 +107,15 @@ void AudioSystemCallbackExpectations::OnDeviceDescriptions(
 void AudioSystemCallbackExpectations::OnInputDeviceInfo(
     const std::string& from_here,
     base::OnceClosure on_cb_received,
-    const base::Optional<AudioParameters>& expected_input,
+    const AudioParameters& expected_input,
     const base::Optional<AudioParameters>& expected_associated_output,
     const std::string& expected_associated_device_id,
-    const base::Optional<AudioParameters>& input,
+    const AudioParameters& input,
     const base::Optional<AudioParameters>& associated_output,
     const std::string& associated_device_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_) << from_here;
-  if (expected_input) {
-    EXPECT_TRUE(input) << from_here;
-    EXPECT_EQ(expected_input->AsHumanReadableString(),
-              input->AsHumanReadableString())
-        << from_here;
-  } else {
-    EXPECT_FALSE(input) << from_here;
-  }
+  EXPECT_EQ(expected_input.AsHumanReadableString(),
+            input.AsHumanReadableString());
   if (expected_associated_output) {
     EXPECT_TRUE(associated_output) << from_here;
     EXPECT_EQ(expected_associated_output->AsHumanReadableString(),

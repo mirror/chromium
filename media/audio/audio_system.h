@@ -32,7 +32,7 @@ class MEDIA_EXPORT AudioSystem {
   using OnAudioParamsCallback =
       base::OnceCallback<void(const base::Optional<AudioParameters>&)>;
   using OnInputDeviceInfoCallback =
-      base::OnceCallback<void(const base::Optional<AudioParameters>&,
+      base::OnceCallback<void(const AudioParameters&,
                               const base::Optional<AudioParameters>&,
                               const std::string&)>;
 

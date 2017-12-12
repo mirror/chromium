@@ -20,23 +20,29 @@ LocalMediaStreamAudioSource::LocalMediaStreamAudioSource(
   DVLOG(1) << "LocalMediaStreamAudioSource::LocalMediaStreamAudioSource()";
   SetDevice(device);
 
-  // If the device buffer size was not provided, use a default.
-  int frames_per_buffer = device.input.frames_per_buffer();
-  if (frames_per_buffer <= 0) {
+  int frames_per_buffer = 0, sample_rate = 0;
+  if (device.input) {
+    // If the device buffer size was not provided, use a default.
+    frames_per_buffer = device.input->frames_per_buffer();
+    sample_rate = device.input->sample_rate();
+    if (frames_per_buffer <= 0) {
 // TODO(miu): Like in ProcessedLocalAudioSource::GetBufferSize(), we should
 // re-evaluate whether Android needs special treatment here. Or, perhaps we
 // should just DCHECK_GT(device...frames_per_buffer, 0)?
 // http://crbug.com/638081
 #if defined(OS_ANDROID)
-    frames_per_buffer = device.input.sample_rate() / 50;  // 20 ms
+      frames_per_buffer = sample_rate / 50;  // 20 ms
 #else
-    frames_per_buffer = device.input.sample_rate() / 100;  // 10 ms
+      frames_per_buffer = sample_rate / 100;  // 10 ms
 #endif
+    }
   }
 
   SetFormat(media::AudioParameters(
       media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
-      device.input.channel_layout(), device.input.sample_rate(),
+      device.input ? device.input->channel_layout()
+                   : media::CHANNEL_LAYOUT_NONE,
+      sample_rate,
       16,  // Legacy parameter (data is always in 32-bit float format).
       frames_per_buffer));
 }
