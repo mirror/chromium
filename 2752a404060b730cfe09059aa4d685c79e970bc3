@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "383bbbba_b2914ad6",
+        "filename": "content/browser/media/session/media_session_controllers_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "ah I\u0027ve never seen this way, and assumed it was old/outdated. Done.",
+      "parentUuid": "79dc9035_db72688f",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e57c9da7_41704989",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6c670488_30f5e016",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e57c9da7_41704989",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6181daa_7daa5ec7",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 5
@@ -47,6 +83,30 @@
       "writtenOn": "2017-12-01T11:40:22Z",
       "side": 1,
       "message": "What about simply adding:\n```\nMockMediaSessionController* mock_media_session_controller() {\n  return mock_media_session_controller_.get();\n}\n```",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 38
+      },
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfc37f4_82e85d1b",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "Because we move mock_media_session_controller_, so any access after that would be bad, but we still want to see if the mock object is being accessed, so we take the pointer here.",
+      "parentUuid": "d6181daa_7daa5ec7",
       "range": {
         "startLine": 65,
         "startChar": 4,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "412fb5eb_6e509764",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "072c733c_70a800ce",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "714767fe_3953c8a9",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 5
@@ -87,6 +165,30 @@
       "writtenOn": "2017-12-01T11:40:22Z",
       "side": 1,
       "message": "It isn\u0027t rare to have the members of the class as `private` with accessors.",
+      "range": {
+        "startLine": 97,
+        "startChar": 1,
+        "endLine": 97,
+        "endChar": 10
+      },
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308ee413_95a10385",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "? It\u0027s protected, and no?",
+      "parentUuid": "714767fe_3953c8a9",
       "range": {
         "startLine": 97,
         "startChar": 1,
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "b4996e88_8630c0aa",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4327a5ab_f767e9d2",
+      "range": {
+        "startLine": 104,
+        "startChar": 50,
+        "endLine": 104,
+        "endChar": 66
+      },
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d43a055b_bfa2867f",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 5
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "25b639ee_1615fa13",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d43a055b_bfa2867f",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2727f814_c3e2ac35",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 5
@@ -153,6 +297,24 @@
       "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916d459f_40c22821",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2727f814_c3e2ac35",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "0e7543ec_62fa451e",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4111521_e93d51b0",
+      "range": {
+        "startLine": 153,
+        "startChar": 18,
+        "endLine": 153,
+        "endChar": 34
+      },
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c6287c8_f1224929",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 5
@@ -196,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "c8ffc317_1ca79a45",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c6287c8_f1224929",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb1a8c9a_da27b1cb",
         "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
         "patchSetId": 5
@@ -210,6 +414,24 @@
       "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089f61f1_ab2fdd77",
+        "filename": "content/browser/media/session/media_session_controllers_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-12-12T23:06:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb1a8c9a_da27b1cb",
+      "revId": "2752a404060b730cfe09059aa4d685c79e970bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
