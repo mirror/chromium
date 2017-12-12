@@ -91,7 +91,7 @@ class WebRTCInternalsForTest : public WebRTCInternals {
 
   bool HasWakeLock() { return mock_wake_lock_.HasWakeLock(); }
 
-  WebRtcEventLogManager* GetWebRtcEventLogManager() override {
+  WebRtcEventLogManager* webrtc_event_log_manager() override {
     return &temporary_webrtc_event_log_manager_;
   }
 
