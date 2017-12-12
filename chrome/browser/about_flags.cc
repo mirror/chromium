@@ -17,7 +17,7 @@
 #include "base/i18n/base_i18n_switches.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
-#include "base/metrics/histogram_macros.h"
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/metrics_hashes.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -3752,7 +3752,7 @@ void ReportAboutFlagsHistogramSwitches(const std::string& uma_histogram_name,
 
     // Sparse histogram macro does not cache the histogram, so it's safe
     // to use macro with non-static histogram name here.
-    UMA_HISTOGRAM_SPARSE_SLOWLY(uma_histogram_name, uma_id);
+    base::UmaHistogramSparse(uma_histogram_name, uma_id);
   }
 }
 
@@ -3767,7 +3767,7 @@ void ReportAboutFlagsHistogramFeatures(const std::string& uma_histogram_name,
 
     // Sparse histogram macro does not cache the histogram, so it's safe
     // to use macro with non-static histogram name here.
-    UMA_HISTOGRAM_SPARSE_SLOWLY(uma_histogram_name, uma_id);
+    base::UmaHistogramSparse(uma_histogram_name, uma_id);
   }
 }
 
