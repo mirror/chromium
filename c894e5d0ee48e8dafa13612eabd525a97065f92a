@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "835bd17a_e1fb3df9",
+        "filename": "content/shell/common/shell_messages.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T01:27:44Z",
+      "side": 1,
+      "message": "Please use GURL for url parameters.",
+      "range": {
+        "startLine": 71,
+        "startChar": 20,
+        "endLine": 71,
+        "endChar": 31
+      },
+      "revId": "c894e5d0ee48e8dafa13612eabd525a97065f92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
