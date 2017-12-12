@@ -207,7 +207,7 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   // There's a subtle difference between a unique origin and an origin that
   // has the SandboxOrigin flag set. The latter implies the former, and, in
   // addition, the SandboxOrigin flag is inherited by iframes.
-  bool IsUnique() const { return is_unique_; }
+  bool IsUnique() const;
 
   // Assigns a suborigin namespace to the SecurityOrigin. addSuborigin() must
   // only ever be called once per SecurityOrigin(). If it is called on a

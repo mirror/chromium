@@ -573,10 +573,10 @@ TEST_F(SecurityOriginTest, UniquenessPropagatesToBlobFileUrls) {
   for (const TestCase& test : cases) {
     scoped_refptr<SecurityOrigin> origin =
         SecurityOrigin::CreateFromString(test.url);
-    EXPECT_EQ(test.expected_uniqueness, origin->IsUnique());
 
     // Without local access from local origins:
     EXPECT_EQ("null", origin->ToString());
+    EXPECT_TRUE(origin->IsUnique());
 
     KURL blob_url = BlobURL::CreatePublicURL(origin.get());
     scoped_refptr<SecurityOrigin> blob_url_origin =
@@ -588,6 +588,7 @@ TEST_F(SecurityOriginTest, UniquenessPropagatesToBlobFileUrls) {
     // With local access from local origins:
     origin->GrantLocalAccessFromLocalOrigin();
     EXPECT_EQ("file://", origin->ToString());
+    EXPECT_EQ(test.expected_uniqueness, origin->IsUnique());
 
     blob_url = BlobURL::CreatePublicURL(origin.get());
     blob_url_origin = SecurityOrigin::Create(blob_url);
@@ -735,7 +736,7 @@ TEST_F(SecurityOriginTest, UrlOriginConversionsFile) {
 
     // Test ToUrlOrigin
     from_url_origin = SecurityOrigin::CreateFromUrlOrigin(url_origin);
-    EXPECT_TRUE(url_origin.IsSameOriginWith(from_url_origin->ToUrlOrigin()))
+    EXPECT_FALSE(url_origin.IsSameOriginWith(from_url_origin->ToUrlOrigin()))
         << test_case.url << " : " << url_origin.Serialize();
 
     from_url_origin->GrantLocalAccessFromLocalOrigin();

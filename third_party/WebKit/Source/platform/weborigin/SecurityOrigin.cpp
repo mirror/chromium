@@ -375,7 +375,7 @@ bool SecurityOrigin::CanDisplay(const KURL& url) const {
 
 bool SecurityOrigin::IsPotentiallyTrustworthy() const {
   DCHECK_NE(protocol_, "data");
-  if (IsUnique())
+  if (is_unique_)
     return is_unique_origin_potentially_trustworthy_;
 
   if (SchemeRegistry::ShouldTreatURLSchemeAsSecure(protocol_) || IsLocal() ||
@@ -429,6 +429,10 @@ bool SecurityOrigin::IsLocalhost() const {
   // canonicalization that excludes the braces; a simple string comparison is
   // simpler than trying to adjust Blink's canonicalization.
   return host_ == "[::1]" || net::IsLocalhost(host_.Ascii().data());
+}
+
+bool SecurityOrigin::IsUnique() const {
+  return is_unique_ || (IsLocal() && !local_access_from_local_origin_);
 }
 
 String SecurityOrigin::ToString() const {
