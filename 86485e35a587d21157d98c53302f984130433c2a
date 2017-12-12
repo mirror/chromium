@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dda42388_cf51cbd7",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-12T00:03:40Z",
+      "side": 1,
+      "message": "Line 129 might segfault. If you pass a base::WeakPtr as an argument, you need to do:\nif (service.Get()) {\n  service-\u003espace_status_ \u003d status;\n}\n\nHere are two alternatives\nAlternative #1:\nbase::Callback\u003cvoid(int)\u003e* check_space_callback \u003d base::Bind(\u0026WebApkInstallService::OnGotSpaceStatus, weak_ptr_factory_.GetWeakPtr());\nuintptr_t callback_pointer \u003d\n      reinterpret_cast\u003cuintptr_t\u003e(new base::Callback\u003cvoid(int)\u003e(check_space_callback));\n\nJNI_WebApkInstallService_OnGetSpaceStatus() would not change\n\nWebApkInstallService::OnGotSpaceStatus() would be\nWebApkInstallService::OnGotSpaceStatus(int status) {\n  space_status_ \u003d status;\n}\n\nAlternative #2:\nuintptr_t weak_ptr \u003d reinterpret_cast\u003cuintptr_t\u003e(new base::WeakPtr\u003cWebApkInstallService\u003e(weak_ptr_factory_.GetWeakPtr()));\nJava_WebApkInstallService_checkFreeSpace(env, weak_ptr)\n\nand then in JNI_WebApkInstallService_OnGetSpaceStatus()\nbase::WeakPtr\u003cWebApkInstallService\u003e* weak_ptr \u003d reinterpret_cast\u003cbase::WeakPtr\u003cWebApkInstallService\u003e*\u003e(jweak_ptr);\nif (weak_ptr-\u003eGet()) {\n  weak_ptr-\u003eGet()-\u003espace_status_ \u003d status;\n}\n\n(My personal preference is for alternative #1)",
+      "revId": "86485e35a587d21157d98c53302f984130433c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

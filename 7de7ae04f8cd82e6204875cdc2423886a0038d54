@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ea866c1_b198bcb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-12T00:03:40Z",
+      "side": 1,
+      "message": "Nit: mean -\u003e means",
+      "revId": "7de7ae04f8cd82e6204875cdc2423886a0038d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
