@@ -373,13 +373,11 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   ProvideServiceWorkerContainerClientToWorker(
       worker_clients, worker_context_client_->CreateServiceWorkerProvider());
 
-  if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
-    std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
-        worker_context_client_->CreateServiceWorkerFetchContext();
-    DCHECK(web_worker_fetch_context);
-    ProvideWorkerFetchContextToWorker(worker_clients,
-                                      std::move(web_worker_fetch_context));
-  }
+  std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
+      worker_context_client_->CreateServiceWorkerFetchContext();
+  DCHECK(web_worker_fetch_context);
+  ProvideWorkerFetchContextToWorker(worker_clients,
+                                    std::move(web_worker_fetch_context));
 
   std::unique_ptr<WorkerSettings> worker_settings =
       std::make_unique<WorkerSettings>(document->GetSettings());

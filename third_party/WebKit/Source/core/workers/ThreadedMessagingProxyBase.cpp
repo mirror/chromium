@@ -41,20 +41,18 @@ ThreadedMessagingProxyBase::ThreadedMessagingProxyBase(
   DCHECK(IsParentContextThread());
   g_live_messaging_proxy_count++;
 
-  if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
-    Document* document = ToDocument(execution_context_);
-    WebLocalFrameImpl* web_frame =
-        WebLocalFrameImpl::FromFrame(document->GetFrame());
-    std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
-        web_frame->Client()->CreateWorkerFetchContext();
-    DCHECK(web_worker_fetch_context);
-    web_worker_fetch_context->SetApplicationCacheHostID(
-        document->Fetcher()->Context().ApplicationCacheHostID());
-    web_worker_fetch_context->SetIsOnSubframe(
-        document->GetFrame() != document->GetFrame()->Tree().Top());
-    ProvideWorkerFetchContextToWorker(worker_clients,
-                                      std::move(web_worker_fetch_context));
-  }
+  Document* document = ToDocument(execution_context_);
+  WebLocalFrameImpl* web_frame =
+      WebLocalFrameImpl::FromFrame(document->GetFrame());
+  std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
+      web_frame->Client()->CreateWorkerFetchContext();
+  DCHECK(web_worker_fetch_context);
+  web_worker_fetch_context->SetApplicationCacheHostID(
+      document->Fetcher()->Context().ApplicationCacheHostID());
+  web_worker_fetch_context->SetIsOnSubframe(document->GetFrame() !=
+                                            document->GetFrame()->Tree().Top());
+  ProvideWorkerFetchContextToWorker(worker_clients,
+                                    std::move(web_worker_fetch_context));
 }
 
 ThreadedMessagingProxyBase::~ThreadedMessagingProxyBase() {
