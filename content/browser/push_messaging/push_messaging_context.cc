@@ -26,6 +26,14 @@ PushMessagingContext::~PushMessagingContext() {
   service_worker_context_->RemoveObserver(this);
 }
 
+void PushMessagingContext::CreateService(mojom::PushMessagingRequest request,
+                                         RenderProcessHost* render_process_host,
+                                         RenderFrameHost* render_frame_host,
+                                         const url::Origin& origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // TODO: Magic goes here.
+}
+
 void PushMessagingContext::OnRegistrationDeleted(int64_t registration_id,
                                                  const GURL& pattern) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

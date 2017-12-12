@@ -128,6 +128,7 @@ class CONTENT_EXPORT StoragePartitionImpl
   BluetoothAllowedDevicesMap* GetBluetoothAllowedDevicesMap();
   BlobURLLoaderFactory* GetBlobURLLoaderFactory();
   BlobRegistryWrapper* GetBlobRegistry();
+  PushMessagingContext* GetPushMessagingContext();
 
   // mojom::StoragePartitionService interface.
   void OpenLocalStorage(

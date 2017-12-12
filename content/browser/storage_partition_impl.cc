@@ -707,6 +707,10 @@ BlobRegistryWrapper* StoragePartitionImpl::GetBlobRegistry() {
   return blob_registry_.get();
 }
 
+PushMessagingContext* StoragePartitionImpl::GetPushMessagingContext() {
+  return push_messaging_context_.get();
+}
+
 void StoragePartitionImpl::OpenLocalStorage(
     const url::Origin& origin,
     mojo::InterfaceRequest<mojom::LevelDBWrapper> request) {

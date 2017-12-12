@@ -12,11 +12,14 @@ class Origin;
 }
 
 namespace content {
+
+class RenderFrameHost;
 class RenderProcessHost;
 
 void CreateDedicatedWorkerHostFactory(
     blink::mojom::DedicatedWorkerFactoryRequest request,
     RenderProcessHost* host,
+    RenderFrameHost* frame,
     const url::Origin& origin);
 
 }  // namespace content

@@ -48,7 +48,8 @@ class RendererInterfaceBinders {
                      RenderProcessHost* host,
                      const url::Origin& origin) {
     if (parameterized_binder_registry_.TryBindInterface(
-            interface_name, &interface_pipe, host, origin)) {
+            interface_name, &interface_pipe, host, nullptr /* frame */,
+            origin)) {
       return;
     }
 
@@ -62,7 +63,7 @@ class RendererInterfaceBinders {
                         mojo::ScopedMessagePipeHandle* interface_pipe,
                         RenderFrameHost* frame) {
     return parameterized_binder_registry_.TryBindInterface(
-        interface_name, interface_pipe, frame->GetProcess(),
+        interface_name, interface_pipe, frame->GetProcess(), frame,
         frame->GetLastCommittedOrigin());
   }
 
@@ -70,6 +71,7 @@ class RendererInterfaceBinders {
   void InitializeParameterizedBinderRegistry();
 
   service_manager::BinderRegistryWithArgs<RenderProcessHost*,
+                                          RenderFrameHost*,
                                           const url::Origin&>
       parameterized_binder_registry_;
 };
@@ -80,6 +82,7 @@ template <typename Interface>
 void ForwardServiceRequest(const char* service_name,
                            mojo::InterfaceRequest<Interface> request,
                            RenderProcessHost* host,
+                           RenderFrameHost* frame,
                            const url::Origin& origin) {
   auto* connector = BrowserContext::GetConnectorFor(host->GetBrowserContext());
   connector->BindInterface(service_name, std::move(request));
@@ -104,38 +107,48 @@ void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
   parameterized_binder_registry_.AddInterface(
       base::Bind(&ForwardServiceRequest<device::mojom::VibrationManager>,
                  device::mojom::kServiceName));
-  parameterized_binder_registry_.AddInterface(
-      base::Bind([](blink::mojom::WebSocketRequest request,
-                    RenderProcessHost* host, const url::Origin& origin) {
+  parameterized_binder_registry_.AddInterface(base::Bind(
+      [](blink::mojom::WebSocketRequest request, RenderProcessHost* host,
+         RenderFrameHost* frame, const url::Origin& origin) {
         WebSocketManager::CreateWebSocket(host->GetID(), MSG_ROUTING_NONE,
                                           std::move(request));
       }));
   parameterized_binder_registry_.AddInterface(
       base::Bind([](payments::mojom::PaymentManagerRequest request,
-                    RenderProcessHost* host, const url::Origin& origin) {
+                    RenderProcessHost* host, RenderFrameHost* frame,
+                    const url::Origin& origin) {
         static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
             ->GetPaymentAppContext()
             ->CreatePaymentManager(std::move(request));
       }));
   parameterized_binder_registry_.AddInterface(
       base::Bind([](blink::mojom::PermissionServiceRequest request,
-                    RenderProcessHost* host, const url::Origin& origin) {
+                    RenderProcessHost* host, RenderFrameHost* frame,
+                    const url::Origin& origin) {
         static_cast<RenderProcessHostImpl*>(host)
             ->permission_service_context()
             .CreateServiceForWorker(std::move(request), origin);
       }));
   parameterized_binder_registry_.AddInterface(base::BindRepeating(
       [](blink::mojom::LockManagerRequest request, RenderProcessHost* host,
-         const url::Origin& origin) {
+         RenderFrameHost* frame, const url::Origin& origin) {
         static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
             ->GetLockManager()
             ->CreateService(std::move(request));
       }));
   parameterized_binder_registry_.AddInterface(
       base::Bind(&CreateDedicatedWorkerHostFactory));
+  parameterized_binder_registry_.AddInterface(base::Bind(
+      [](mojom::PushMessagingRequest request, RenderProcessHost* host,
+         RenderFrameHost* frame, const url::Origin& origin) {
+        static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
+            ->GetPushMessagingContext()
+            ->CreateService(std::move(request), host, frame, origin);
+      }));
   parameterized_binder_registry_.AddInterface(
       base::Bind([](blink::mojom::NotificationServiceRequest request,
-                    RenderProcessHost* host, const url::Origin& origin) {
+                    RenderProcessHost* host, RenderFrameHost* frame,
+                    const url::Origin& origin) {
         static_cast<StoragePartitionImpl*>(host->GetStoragePartition())
             ->GetPlatformNotificationContext()
             ->CreateService(host->GetID(), origin, std::move(request));

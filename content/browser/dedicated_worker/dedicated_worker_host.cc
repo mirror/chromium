@@ -79,6 +79,7 @@ class DedicatedWorkerFactoryImpl : public blink::mojom::DedicatedWorkerFactory {
 void CreateDedicatedWorkerHostFactory(
     blink::mojom::DedicatedWorkerFactoryRequest request,
     RenderProcessHost* host,
+    RenderFrameHost* frame,
     const url::Origin& origin) {
   mojo::MakeStrongBinding(
       std::make_unique<DedicatedWorkerFactoryImpl>(host->GetID(), origin),

@@ -10,12 +10,19 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/browser/service_worker/service_worker_context_core_observer.h"
+#include "content/common/push_messaging.mojom.h"
 
 class GURL;
+
+namespace url {
+class Origin;
+}
 
 namespace content {
 
 class BrowserContext;
+class RenderFrameHost;
+class RenderProcessHost;
 class ServiceWorkerContextWrapper;
 
 // Observes the service worker context of the storage partition owning this
@@ -27,7 +34,14 @@ class PushMessagingContext : public ServiceWorkerContextCoreObserver,
       BrowserContext* browser_context,
       const scoped_refptr<ServiceWorkerContextWrapper>& service_worker_context);
 
-  // ServiceWorkerContextCoreObserver methods
+  // Creates a new service for the given |request|. The |render_frame_host|
+  // must be given when creating a service for a document.
+  void CreateService(mojom::PushMessagingRequest request,
+                     RenderProcessHost* render_process_host,
+                     RenderFrameHost* render_frame_host,
+                     const url::Origin& origin);
+
+  // ServiceWorkerContextCoreObserver overrides:
   void OnRegistrationDeleted(int64_t registration_id,
                              const GURL& pattern) override;
   void OnStorageWiped() override;

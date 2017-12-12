@@ -107,7 +107,6 @@
 #include "content/browser/payments/payment_manager.h"
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
-#include "content/browser/push_messaging/push_messaging_manager.h"
 #include "content/browser/quota_dispatcher_host.h"
 #include "content/browser/renderer_host/clipboard_host_impl.h"
 #include "content/browser/renderer_host/file_utilities_host_impl.h"
@@ -1355,9 +1354,6 @@ RenderProcessHostImpl::RenderProcessHostImpl(
                                            storage_partition_impl_->GetPath()));
   }
 
-  push_messaging_manager_.reset(new PushMessagingManager(
-      GetID(), storage_partition_impl_->GetServiceWorkerContext()));
-
   AddObserver(indexed_db_factory_.get());
 
   InitializeChannelProxy();
@@ -1883,10 +1879,6 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(base::Bind(&device::GamepadHapticsManager::Create));
 
   registry->AddInterface(base::Bind(&device::GamepadMonitor::Create));
-
-  registry->AddInterface(
-      base::Bind(&PushMessagingManager::BindRequest,
-                 base::Unretained(push_messaging_manager_.get())));
 
   registry->AddInterface(
       base::Bind(&BackgroundFetchServiceImpl::Create, GetID(),
