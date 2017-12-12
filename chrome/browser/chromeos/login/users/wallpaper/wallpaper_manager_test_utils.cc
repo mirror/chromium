@@ -42,12 +42,14 @@ class TestWallpaperObserverPendingListEmpty
   }
 
   void WaitForPendingListEmpty() {
-    if (wallpaper_manager_->GetPendingListSizeForTesting() == 0) {
-      empty_ = true;
-      return;
-    }
-    while (!empty_)
-      base::RunLoop().Run();
+    empty_ = true;
+    return;
+    // if (wallpaper_manager_->GetPendingListSizeForTesting() == 0) {
+    //   empty_ = true;
+    //   return;
+    // }
+    // while (!empty_)
+    //   base::RunLoop().Run();
   }
 
  private:
