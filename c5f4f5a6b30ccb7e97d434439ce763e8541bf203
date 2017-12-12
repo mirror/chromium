@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4db13940_59968743",
+        "filename": "chrome/browser/chromeos/login/ui/simple_web_view_dialog.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T18:42:31Z",
+      "side": 1,
+      "message": "Exactly. You just just need to make sure BrowserCommandController doesn\u0027t expose the command_updater. Any other code that happens to use it\u0027s own CommandUpdater can do what it wants.",
+      "parentUuid": "b69e4c37_a3050e33",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 368,
+        "endChar": 1
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "678df0b7_7c637380",
         "filename": "chrome/browser/command_updater.h",
         "patchSetId": 27
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "BrowserCommandController implements both CommandUpdaterDelegate and CommandUpdater interfaces, and they both declare a function ExecuteCommandWithDisposition, so I have to rename one of them otherwise I get a name clash. Or maybe I\u0027m missing something, maybe there\u0027s a way around it.\n\nBtw this is the error I\u0027m getting from the compiler:\nerror: functions that differ only in their return type cannot be overloaded\n\n// CommandUpdaterDelegate\nvirtual void ExecuteCommandWithDisposition(int id, WindowOpenDisposition disposition) \u003d 0;\n\n// CommandUpdater\nvirtual bool ExecuteCommandWithDisposition(int id, WindowOpenDisposition disposition) \u003d 0;",
       "parentUuid": "c2f22cd7_4b86eb0a",
+      "range": {
+        "startLine": 16,
+        "startChar": 44,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83cff071_5a42dca8",
+        "filename": "chrome/browser/command_updater_delegate.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T18:42:31Z",
+      "side": 1,
+      "message": "Ah, I see. As adding \u0027Impl\u0027 is unnecessary to the public api is unnecessary for other consumers and mildly confusing I think the fix should be in BrowserCommandController. Probably easiest is to make BrowserCommandController no longer implement CommandUpdaterDelegate. Instead have BrowserCommandController own a (private) object that implements CommandUpdaterDelegate. The implementation would trivially call back to BrowserCommandController::ExecuteCommandWithDispositionImpl. Alternatively you could make BrowserCommandController\u0027s implementation of the execute functions not delegate to the CommandUpdater. There really isn\u0027t a need to use the delegate in this case.",
+      "parentUuid": "4bdd4fc8_6b581c0a",
       "range": {
         "startLine": 16,
         "startChar": 44,
