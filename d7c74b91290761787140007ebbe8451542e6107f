@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b147df03_4d879021",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T17:27:20Z",
+      "side": 1,
+      "message": "nit: blank line",
+      "revId": "d7c74b91290761787140007ebbe8451542e6107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7c89d6_0e3f52e7",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T17:27:20Z",
+      "side": 1,
+      "message": "Since normally we don\u0027t show disabled_filter_, I would suggest initializing it to null, then:\n\nif (!contents_-\u003eenabled()) {\n  if (!disabled_filter_)\n    CreateDisabledFilter();\n  ... set bounds ...\n} else if (disabled_filter_) {\n  disabled_filter_-\u003eSetVisible(false);\n}",
+      "revId": "d7c74b91290761787140007ebbe8451542e6107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8750373_7dd60ea0",
+        "filename": "ash/public/interfaces/ash_message_center_controller.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-12T17:27:20Z",
+      "side": 1,
+      "message": "An we insert data like this to a mojom file without versioning? I guess if we are just using it within a single executable (chrome)? +estade@",
+      "revId": "d7c74b91290761787140007ebbe8451542e6107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
