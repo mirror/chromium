@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2db9f010_eb8db534",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-12T00:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5965a3aa_3ada92c7",
+      "range": {
+        "startLine": 46,
+        "startChar": 32,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25d59528_23883898",
         "filename": "components/viz/common/resources/resource_format_utils.cc",
         "patchSetId": 26
@@ -45,6 +69,30 @@
       "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975df0c2_94c5aab0",
+        "filename": "components/viz/common/resources/resource_format_utils.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-12T00:52:11Z",
+      "side": 1,
+      "message": "Removed the need for this.",
+      "parentUuid": "25d59528_23883898",
+      "range": {
+        "startLine": 190,
+        "startChar": 35,
+        "endLine": 190,
+        "endChar": 47
+      },
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +164,24 @@
       "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a196b54d_21a5fa90",
+        "filename": "gpu/command_buffer/client/raster_interface.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-12T00:52:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c9f3d73f_7319e64b",
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +277,30 @@
       "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e1e2ef_9ae95d46",
+        "filename": "gpu/raster/raster_texture_format.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-12T00:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b74ef2_cfc15ede",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 18
+      },
+      "revId": "d256f9d818c3eb7ab178ffcf293b75012bf18263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
