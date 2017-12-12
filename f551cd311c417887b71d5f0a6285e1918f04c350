@@ -137,6 +137,30 @@
       "revId": "f551cd311c417887b71d5f0a6285e1918f04c350",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80ce36b_f2e117c6",
+        "filename": "third_party/WebKit/Source/platform/text/Character.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-12T09:26:38Z",
+      "side": 1,
+      "message": "I don\u0027t know the answer. I\u0027d add if there were any feedback either to us or to other browser vendors.\n\nWebKit\u0027s list here:\nhttps://trac.webkit.org/browser/webkit/trunk/Source/WebCore/platform/graphics/FontCascade.cpp#L1214",
+      "parentUuid": "b3c645fa_7fdc7192",
+      "range": {
+        "startLine": 231,
+        "startChar": 3,
+        "endLine": 234,
+        "endChar": 18
+      },
+      "revId": "f551cd311c417887b71d5f0a6285e1918f04c350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
