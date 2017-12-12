@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "chromeos/attestation/attestation_constants.h"
 #include "url/gurl.h"
 
 class AccountId;
@@ -199,7 +200,7 @@ class PlatformVerificationFlow
   void OnCertificateReady(const ChallengeContext& context,
                           const AccountId& account_id,
                           std::unique_ptr<base::Timer> timer,
-                          bool operation_success,
+                          const PrivacyCAOperationStatus operation_status,
                           const std::string& certificate_chain);
 
   // A callback run after a constant delay to handle timeouts for lengthy
@@ -233,8 +234,8 @@ class PlatformVerificationFlow
   // An AttestationFlow::CertificateCallback that handles renewal completion.
   // |old_certificate_chain| contains the chain that has been replaced.
   void RenewCertificateCallback(const std::string& old_certificate_chain,
-                                bool operation_success,
-                                const std::string& certificate_chain);
+      chromeos::attestation::PrivacyCAOperationStatus operation_status,
+      const std::string& certificate_chain);
 
   AttestationFlow* attestation_flow_;
   std::unique_ptr<AttestationFlow> default_attestation_flow_;

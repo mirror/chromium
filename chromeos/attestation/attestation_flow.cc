@@ -60,11 +60,11 @@ void DBusDataMethodCallback(
   if (!result.has_value()) {
     LOG(ERROR) << "Attestation: DBus data operation failed.";
     if (!callback.is_null())
-      callback.Run(false, "");
+      callback.Run(FAILURE, "");
     return;
   }
   if (!callback.is_null())
-    callback.Run(result->success, result->data);
+    callback.Run(result->success ? SUCCESS : FAILURE, result->data);
 }
 
 }  // namespace
@@ -123,7 +123,7 @@ void AttestationFlow::GetCertificate(
   const base::Closure do_cert_request = base::Bind(
       &AttestationFlow::StartCertificateRequest, weak_factory_.GetWeakPtr(),
       certificate_profile, account_id, request_origin, force_new_key, callback);
-  const base::Closure on_failure = base::Bind(callback, false, "");
+  const base::Closure on_failure = base::Bind(callback, FAILURE, "");
   const base::Closure initiate_enroll = base::Bind(
       &AttestationFlow::WaitForAttestationReadyAndStartEnroll,
       weak_factory_.GetWeakPtr(), base::TimeTicks::Now() + ready_timeout_,
@@ -248,7 +248,7 @@ void AttestationFlow::StartCertificateRequest(
     cryptohome_client_->TpmAttestationDoesKeyExist(
         key_type, cryptohome::Identification(account_id), key_name,
         base::Bind(&DBusBoolRedirectCallback, on_key_exists, on_key_not_exists,
-                   base::Bind(callback, false, ""),
+                   base::Bind(callback, FAILURE, ""),
                    "check for existence of attestation key"));
   }
 }
@@ -263,7 +263,7 @@ void AttestationFlow::SendCertificateRequestToPCA(
   if (!success) {
     LOG(ERROR) << "Attestation: Failed to create certificate request.";
     if (!callback.is_null())
-      callback.Run(false, "");
+      callback.Run(FAILURE, "");
     return;
   }
 
@@ -284,7 +284,7 @@ void AttestationFlow::SendCertificateResponseToDaemon(
   if (!success) {
     LOG(ERROR) << "Attestation: Certificate request failed.";
     if (!callback.is_null())
-      callback.Run(false, "");
+      callback.Run(PRIVACY_CA_BAD_REQUEST, "");
     return;
   }
 

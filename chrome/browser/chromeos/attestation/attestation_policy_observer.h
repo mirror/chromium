@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chromeos/attestation/attestation_constants.h"
 
 namespace policy {
 class CloudPolicyClient;
@@ -88,6 +89,7 @@ class AttestationPolicyObserver {
   // TODO(dkrahn): A better solution would be to wait for a dbus signal which
   // indicates the system is ready to process this task. See crbug.com/256845.
   void Reschedule();
+  void RescheduleIfNeeded(const PrivacyCAOperationStatus status);
 
   CrosSettings* cros_settings_;
   policy::CloudPolicyClient* policy_client_;

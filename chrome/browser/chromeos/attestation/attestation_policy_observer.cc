@@ -87,6 +87,22 @@ void DBusStringCallback(
   on_success.Run(result->data);
 }
 
+void DBusPrivacyCACallback(
+    const base::Callback<void(const std::string&)> on_success,
+    const base::Callback<void(
+        const chromeos::attestation::PrivacyCAOperationStatus)> on_failure,
+    const base::Location& from_here,
+    const chromeos::attestation::PrivacyCAOperationStatus status,
+    const std::string& data) {
+  if (status == chromeos::attestation::SUCCESS) {
+    on_success.Run(data);
+    return;
+  }
+  LOG(ERROR) << "Cryptohome DBus method failed: " << from_here.ToString();
+  if (!on_failure.is_null())
+    on_failure.Run(status);
+}
+
 }  // namespace
 
 namespace chromeos {
@@ -189,15 +205,16 @@ void AttestationPolicyObserver::GetNewCertificate() {
       true,              // Force a new key to be generated.
       base::Bind(
           [](const base::Callback<void(const std::string&)> on_success,
-             const base::Closure& on_failure, const base::Location& from_here,
-             bool success, const std::string& data) {
-            DBusStringCallback(on_success, on_failure, from_here,
-                               CryptohomeClient::TpmAttestationDataResult{
-                                   success, std::move(data)});
+             const base::Callback<void(
+                 chromeos::attestation::PrivacyCAOperationStatus)> on_failure,
+             const base::Location& from_here,
+             const PrivacyCAOperationStatus status, const std::string& data) {
+            DBusPrivacyCACallback(on_success, on_failure, from_here,
+                               status, std::move(data));
           },
           base::Bind(&AttestationPolicyObserver::UploadCertificate,
                      weak_factory_.GetWeakPtr()),
-          base::Bind(&AttestationPolicyObserver::Reschedule,
+          base::Bind(&AttestationPolicyObserver::RescheduleIfNeeded,
                      weak_factory_.GetWeakPtr()),
           FROM_HERE));
 }
@@ -309,6 +326,12 @@ void AttestationPolicyObserver::MarkAsUploaded(const std::string& key_payload) {
       kEnterpriseMachineKey, new_payload,
       base::BindOnce(DBusBoolRedirectCallback, base::Closure(), base::Closure(),
                      base::Closure(), FROM_HERE));
+}
+
+void AttestationPolicyObserver::RescheduleIfNeeded(
+    const PrivacyCAOperationStatus status) {
+  if (status != PRIVACY_CA_BAD_REQUEST)
+    Reschedule();
 }
 
 void AttestationPolicyObserver::Reschedule() {
