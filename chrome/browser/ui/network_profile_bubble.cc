@@ -36,13 +36,13 @@ const int kSilenceDurationDays = 100;
 // silent period starts.
 const int kMaxWarnings = 2;
 
-// Implementation of chrome::BrowserListObserver used to wait for a browser
+// Implementation of BrowserListObserver used to wait for a browser
 // window.
-class BrowserListObserver : public chrome::BrowserListObserver {
+class BrowserListObserver : public BrowserListObserver {
  private:
   ~BrowserListObserver() override;
 
-  // Overridden from chrome::BrowserListObserver:
+  // Overridden from BrowserListObserver:
   void OnBrowserAdded(Browser* browser) override;
   void OnBrowserRemoved(Browser* browser) override;
   void OnBrowserSetLastActive(Browser* browser) override;
