@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "82bf6c74_4468292e",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-12T23:45:35Z",
+      "side": 1,
+      "message": "From https://developers.google.com/protocol-buffers/docs/proto#optional:\n\"For enums, the default value is the first value listed in the enum\u0027s type definition.\"",
+      "parentUuid": "5799b5dd_5204d47d",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 11
+      },
+      "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd1d210a_43a0a42b",
         "filename": "components/data_reduction_proxy/proto/client_config.proto",
         "patchSetId": 3
