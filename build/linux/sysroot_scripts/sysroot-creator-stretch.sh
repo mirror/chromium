@@ -140,6 +140,7 @@ DEBIAN_PACKAGES="\
   libidn11
   libjbig0
   libjpeg62-turbo
+  libjpeg62-turbo-dev
   libjson-glib-1.0-0
   libjsoncpp-dev
   libjsoncpp1
