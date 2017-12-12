@@ -66,6 +66,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
             // focused, the new content description is read immediately.
             if (hasFocus() && !urlHasFocus()) mBottomSheet.requestFocus();
 
+            if (!isNativeLibraryReady()) return;
             mLocationBar.updateLoadingState(true);
         }
 
@@ -107,6 +108,11 @@ public class BottomToolbarPhone extends ToolbarPhone {
             boolean isMovingUp = transitionFraction > mLastPeekToHalfHeightFraction;
             mLastPeekToHalfHeightFraction = transitionFraction;
             updateToolbarButtonAnimation(isMovingUp);
+        }
+
+        @Override
+        public void onNativeLibraryReady() {
+            mLocationBar.updateLoadingState(true);
         }
     };
 
@@ -324,6 +330,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
      * @param useLightDrawable If the handle color should be light.
      */
     public void updateHandleTint(boolean useLightDrawable) {
+        if (mToolbarHandleView == null) return;
         mToolbarHandleView.setImageDrawable(useLightDrawable ? mHandleLight : mHandleDark);
     }
 

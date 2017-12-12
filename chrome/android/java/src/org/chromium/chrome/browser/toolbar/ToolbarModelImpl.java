@@ -215,7 +215,8 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_SHOW_GOOGLE_G_IN_OMNIBOX);
 
         boolean isShownInBottomSheet = mBottomSheet != null && !mBottomSheet.isShowingNewTab()
-                && mBottomSheet.isSheetOpen() && TextUtils.isEmpty(urlBarText)
+                && mBottomSheet.isNativeLibraryReady() && mBottomSheet.isSheetOpen()
+                && TextUtils.isEmpty(urlBarText)
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_CLEAR_URL_ON_OPEN)
                 && ChromeFeatureList.isEnabled(
@@ -287,6 +288,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
 
     private boolean clearUrlForBottomSheetOpen() {
         return mBottomSheet != null && mBottomSheet.isSheetOpen()
+                && mBottomSheet.isNativeLibraryReady()
                 && mBottomSheet.getTargetSheetState() != BottomSheet.SHEET_STATE_PEEK
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_CLEAR_URL_ON_OPEN);

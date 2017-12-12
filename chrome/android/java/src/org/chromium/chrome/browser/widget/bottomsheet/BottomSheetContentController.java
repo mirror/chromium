@@ -148,7 +148,9 @@ public class BottomSheetContentController
         public void onSheetClosed(@StateChangeReason int reason) {
             removeIcons();
 
-            if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_DESTROY_SUGGESTIONS)) {
+            if (mBottomSheet.isNativeLibraryReady()
+                    && ChromeFeatureList.isEnabled(
+                               ChromeFeatureList.CHROME_HOME_DESTROY_SUGGESTIONS)) {
                 // TODO(bauerb): Implement support for destroying the home sheet after a delay.
                 mSelectedItemId = NO_CONTENT_ID;
                 mBottomSheet.showContent(null);
@@ -427,6 +429,8 @@ public class BottomSheetContentController
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        if (!mBottomSheet.isNativeLibraryReady()) return false;
+
         mConsecutiveBookmarkTaps =
                 item.getItemId() == R.id.action_bookmarks ? mConsecutiveBookmarkTaps + 1 : 0;
         if (mConsecutiveBookmarkTaps >= 5) {

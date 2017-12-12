@@ -57,24 +57,28 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     private static final long ANIMATION_DURATION_MS = 150L;
 
     private final View mView;
+    private final View mLoadingView;
     private final SuggestionsRecyclerView mRecyclerView;
-    private final NewTabPageAdapter mAdapter;
-    private final ContextMenuManager mContextMenuManager;
-    private final SuggestionsUiDelegateImpl mSuggestionsUiDelegate;
-    private final TileGroup.Delegate mTileGroupDelegate;
-    @Nullable
-    private final SuggestionsCarousel mSuggestionsCarousel;
     private final SuggestionsSheetVisibilityChangeObserver mBottomSheetObserver;
     private final ChromeActivity mActivity;
     private final BottomSheet mSheet;
-    private final LogoView mLogoView;
-    private final LogoDelegateImpl mLogoDelegate;
     private final LocationBarPhone mLocationBar;
     private final ViewGroup mControlContainerView;
     private final View mToolbarPullHandle;
     private final View mToolbarShadow;
 
+    private NewTabPageAdapter mAdapter;
+    private ContextMenuManager mContextMenuManager;
+    private SuggestionsUiDelegateImpl mSuggestionsUiDelegate;
+    private TileGroup.Delegate mTileGroupDelegate;
+    private LogoView mLogoView;
+    private LogoDelegateImpl mLogoDelegate;
+
+    @Nullable
+    private SuggestionsCarousel mSuggestionsCarousel;
+
     private boolean mNewTabShown;
+    private boolean mSuggestionsInitialized;
     private boolean mSearchProviderHasLogo = true;
     private float mLastSheetHeightFraction = 1f;
 
@@ -103,23 +107,15 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
     public SuggestionsBottomSheetContent(final ChromeActivity activity, final BottomSheet sheet,
             TabModelSelector tabModelSelector, SnackbarManager snackbarManager) {
-        SuggestionsDependencyFactory depsFactory = SuggestionsDependencyFactory.getInstance();
-        Profile profile = Profile.getLastUsedProfile();
-        SuggestionsNavigationDelegate navigationDelegate =
-                new SuggestionsNavigationDelegateImpl(activity, profile, sheet, tabModelSelector);
         mActivity = activity;
         mSheet = sheet;
-        mTileGroupDelegate =
-                new TileGroupDelegateImpl(activity, profile, navigationDelegate, snackbarManager);
-        mSuggestionsUiDelegate = new SuggestionsUiDelegateImpl(
-                depsFactory.createSuggestionSource(profile), depsFactory.createEventReporter(),
-                navigationDelegate, profile, sheet, activity.getReferencePool(), snackbarManager);
 
         mView = LayoutInflater.from(activity).inflate(
                 R.layout.suggestions_bottom_sheet_content, null);
         Resources resources = mView.getResources();
         int backgroundColor = SuggestionsConfig.getBackgroundColor(resources);
         mView.setBackgroundColor(backgroundColor);
+        mLoadingView = mView.findViewById(R.id.loading_view);
         mRecyclerView = mView.findViewById(R.id.recycler_view);
         mRecyclerView.setBackgroundColor(backgroundColor);
         mToolbarHeight = resources.getDimensionPixelSize(R.dimen.bottom_control_container_height);
@@ -128,38 +124,10 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
                 + resources.getDimensionPixelSize(R.dimen.ntp_logo_margin_bottom_modern)
                 - mToolbarHeight;
 
-        TouchEnabledDelegate touchEnabledDelegate = activity.getBottomSheet()::setTouchEnabled;
-        mContextMenuManager = new ContextMenuManager(
-                navigationDelegate, touchEnabledDelegate, activity::closeContextMenu);
-        activity.getWindowAndroid().addContextMenuCloseListener(mContextMenuManager);
-        mSuggestionsUiDelegate.addDestructionObserver(() -> {
-            activity.getWindowAndroid().removeContextMenuCloseListener(mContextMenuManager);
-        });
-
-        UiConfig uiConfig = new UiConfig(mRecyclerView);
-        mRecyclerView.init(uiConfig, mContextMenuManager);
-
-        OfflinePageBridge offlinePageBridge = depsFactory.getOfflinePageBridge(profile);
-
-        mSuggestionsCarousel =
-                ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL)
-                ? new SuggestionsCarousel(
-                          uiConfig, mSuggestionsUiDelegate, mContextMenuManager, offlinePageBridge)
-                : null;
-
-        // Inflate the logo in a container so its layout attributes are applied, then take it out.
-        FrameLayout logoContainer = (FrameLayout) LayoutInflater.from(activity).inflate(
-                R.layout.suggestions_bottom_sheet_logo, null);
-        mLogoView = logoContainer.findViewById(R.id.search_provider_logo);
-        logoContainer.removeView(mLogoView);
-
-        mAdapter = new NewTabPageAdapter(mSuggestionsUiDelegate,
-                /* aboveTheFoldView = */ null, mLogoView, uiConfig, offlinePageBridge,
-                mContextMenuManager, mTileGroupDelegate, mSuggestionsCarousel);
-
         mBottomSheetObserver = new SuggestionsSheetVisibilityChangeObserver(this, activity) {
             @Override
             public void onContentShown(boolean isFirstShown) {
+                if (!mSuggestionsInitialized) return;
                 // TODO(dgn): Temporary workaround to trigger an event in the backend when the
                 // sheet is opened following inactivity. See https://crbug.com/760974. Should be
                 // moved back to the "new opening of the sheet" path once we are able to trigger it
@@ -183,11 +151,13 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
             @Override
             public void onContentHidden() {
+                if (!mSuggestionsInitialized) return;
                 SuggestionsMetrics.recordSurfaceHidden();
             }
 
             @Override
             public void onContentStateChanged(@BottomSheet.SheetState int contentState) {
+                if (!mSuggestionsInitialized) return;
                 if (contentState == BottomSheet.SHEET_STATE_HALF) {
                     SuggestionsMetrics.recordSurfaceHalfVisible();
                     mRecyclerView.setScrollEnabled(false);
@@ -201,6 +171,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
             @Override
             public void onSheetClosed(@StateChangeReason int reason) {
+                if (!mSuggestionsInitialized) return;
                 super.onSheetClosed(reason);
 
                 if (ChromeFeatureList.isEnabled(
@@ -213,8 +184,17 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
 
             @Override
             public void onSheetOffsetChanged(float heightFraction) {
+                if (!mSuggestionsInitialized) return;
                 mLastSheetHeightFraction = heightFraction;
                 updateLogoTransition();
+            }
+
+            @Override
+            public void onNativeLibraryReady() {
+                // Need to initialize suggestions first before calling super so that the suggestion
+                // sheet visibility can be updated correctly.
+                initializeSuggestions(tabModelSelector, snackbarManager);
+                super.onNativeLibraryReady();
             }
         };
 
@@ -233,13 +213,6 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         mControlContainerView = (ViewGroup) activity.findViewById(R.id.control_container);
         mToolbarPullHandle = activity.findViewById(R.id.toolbar_handle);
         mToolbarShadow = activity.findViewById(R.id.bottom_toolbar_shadow);
-        mLogoDelegate = new LogoDelegateImpl(navigationDelegate, mLogoView, profile);
-        updateSearchProviderHasLogo();
-        if (mSearchProviderHasLogo) {
-            mLogoView.showSearchProviderInitialView();
-            loadSearchProviderLogo();
-        }
-        TemplateUrlService.getInstance().addObserver(this);
         sheet.getNewTabController().addObserver(this);
 
         mView.addOnAttachStateChangeListener(new OnAttachStateChangeListener() {
@@ -270,6 +243,65 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         });
 
         mLocationBar.addUrlFocusChangeListener(this);
+
+        if (mSheet.isNativeLibraryReady()) {
+            initializeSuggestions(tabModelSelector, snackbarManager);
+        }
+    }
+
+    private void initializeSuggestions(
+            TabModelSelector tabModelSelector, SnackbarManager snackbarManager) {
+        mSuggestionsInitialized = true;
+
+        SuggestionsDependencyFactory depsFactory = SuggestionsDependencyFactory.getInstance();
+        Profile profile = Profile.getLastUsedProfile();
+        SuggestionsNavigationDelegate navigationDelegate =
+                new SuggestionsNavigationDelegateImpl(mActivity, profile, mSheet, tabModelSelector);
+
+        mTileGroupDelegate =
+                new TileGroupDelegateImpl(mActivity, profile, navigationDelegate, snackbarManager);
+        mSuggestionsUiDelegate = new SuggestionsUiDelegateImpl(
+                depsFactory.createSuggestionSource(profile), depsFactory.createEventReporter(),
+                navigationDelegate, profile, mSheet, mActivity.getReferencePool(), snackbarManager);
+
+        TouchEnabledDelegate touchEnabledDelegate = mActivity.getBottomSheet()::setTouchEnabled;
+        mContextMenuManager = new ContextMenuManager(
+                navigationDelegate, touchEnabledDelegate, mActivity::closeContextMenu);
+        mActivity.getWindowAndroid().addContextMenuCloseListener(mContextMenuManager);
+        mSuggestionsUiDelegate.addDestructionObserver(() -> {
+            mActivity.getWindowAndroid().removeContextMenuCloseListener(mContextMenuManager);
+        });
+
+        UiConfig uiConfig = new UiConfig(mRecyclerView);
+        mRecyclerView.init(uiConfig, mContextMenuManager);
+
+        OfflinePageBridge offlinePageBridge = depsFactory.getOfflinePageBridge(profile);
+
+        mSuggestionsCarousel =
+                ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL)
+                ? new SuggestionsCarousel(
+                          uiConfig, mSuggestionsUiDelegate, mContextMenuManager, offlinePageBridge)
+                : null;
+
+        // Inflate the logo in a container so its layout attributes are applied, then take it out.
+        FrameLayout logoContainer = (FrameLayout) LayoutInflater.from(mActivity).inflate(
+                R.layout.suggestions_bottom_sheet_logo, null);
+        mLogoView = logoContainer.findViewById(R.id.search_provider_logo);
+        logoContainer.removeView(mLogoView);
+
+        mAdapter = new NewTabPageAdapter(mSuggestionsUiDelegate,
+                /* aboveTheFoldView = */ null, mLogoView, uiConfig, offlinePageBridge,
+                mContextMenuManager, mTileGroupDelegate, mSuggestionsCarousel);
+
+        mLogoDelegate = new LogoDelegateImpl(navigationDelegate, mLogoView, profile);
+        updateSearchProviderHasLogo();
+        if (mSearchProviderHasLogo) {
+            mLogoView.showSearchProviderInitialView();
+            loadSearchProviderLogo();
+        }
+        TemplateUrlService.getInstance().addObserver(this);
+
+        mLoadingView.setVisibility(View.GONE);
     }
 
     @Override
@@ -400,6 +432,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     }
 
     private void updateLogoTransition() {
+        if (!mSuggestionsInitialized) return;
         boolean showLogo = shouldShowLogo();
 
         // If the logo is not shown, reset all transitions.
@@ -464,6 +497,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
     }
 
     private void updateLogoVisibility() {
+        if (!mSuggestionsInitialized) return;
         boolean showLogo = shouldShowLogo();
         mAdapter.setLogoVisibility(showLogo);
         int top = showLogo ? 0 : mToolbarHeight;

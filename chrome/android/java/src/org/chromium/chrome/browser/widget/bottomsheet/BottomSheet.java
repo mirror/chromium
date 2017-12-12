@@ -294,6 +294,9 @@ public class BottomSheet
     /** The speed of the swipe the last time the sheet was opened. */
     private long mLastSheetOpenMicrosPerDp;
 
+    /** Whether native library is ready. */
+    private boolean mNativeInitialized;
+
     /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
      * Home.
@@ -415,8 +418,9 @@ public class BottomSheet
             startX = mVisibleViewportRect.left + (mContainerWidth - allowedSwipeWidth) / 2;
             endX = startX + allowedSwipeWidth;
         } else if (ChromeSwitches.CHROME_HOME_SWIPE_LOGIC_VELOCITY.equals(logicType)
-                || ChromeFeatureList.isEnabled(
-                           ChromeFeatureList.CHROME_HOME_SWIPE_VELOCITY_FEATURE)) {
+                || mNativeInitialized
+                        && ChromeFeatureList.isEnabled(
+                                   ChromeFeatureList.CHROME_HOME_SWIPE_VELOCITY_FEATURE)) {
             if (mVelocityLogicBlockSwipe) return false;
 
             double dpPerMs = scrollDistanceDp / (double) timeDeltaMs;
@@ -469,12 +473,14 @@ public class BottomSheet
         addObserver(mMetrics);
 
         mGestureDetector = new BottomSheetSwipeDetector(context, this);
+        mIsTouchEnabled = true;
 
         BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                 .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
                     @Override
                     public void onSuccess(boolean alreadyStarted) {
-                        mIsTouchEnabled = true;
+                        mNativeInitialized = true;
+                        for (BottomSheetObserver o : mObservers) o.onNativeLibraryReady();
                     }
 
                     @Override
@@ -1087,6 +1093,13 @@ public class BottomSheet
     }
 
     /**
+     * @return Whether native library is ready.
+     */
+    public boolean isNativeLibraryReady() {
+        return mNativeInitialized;
+    }
+
+    /**
      * Called when the animation to swap BottomSheetContent ends.
      * @param content The BottomSheetContent showing at the end of the animation.
      */
@@ -1174,15 +1187,17 @@ public class BottomSheet
 
         if (mHelpBubble != null) mHelpBubble.dismiss();
 
-        Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
-        tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED);
+        if (mNativeInitialized) {
+            Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
+            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED);
 
-        if (reason == StateChangeReason.SWIPE) {
-            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_SWIPE);
-        } else if (reason == StateChangeReason.EXPAND_BUTTON) {
-            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_BUTTON);
-        } else if (reason == StateChangeReason.OMNIBOX_FOCUS) {
-            tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_OMNIBOX_FOCUS);
+            if (reason == StateChangeReason.SWIPE) {
+                tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_SWIPE);
+            } else if (reason == StateChangeReason.EXPAND_BUTTON) {
+                tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_BUTTON);
+            } else if (reason == StateChangeReason.OMNIBOX_FOCUS) {
+                tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED_FROM_OMNIBOX_FOCUS);
+            }
         }
     }
 
@@ -1659,6 +1674,8 @@ public class BottomSheet
      * This method must be called after the toolbar has had at least one layout pass.
      */
     public void showColdStartHelpBubble() {
+        if (!mNativeInitialized) return;
+
         // If FRE is not complete, the FRE screen is likely covering ChromeTabbedActivity so the
         // help bubble should not be shown.
         if (!FirstRunStatus.getFirstRunFlowComplete()) return;
