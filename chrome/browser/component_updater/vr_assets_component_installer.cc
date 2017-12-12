@@ -130,12 +130,14 @@ std::vector<std::string> VrAssetsComponentInstallerTraits::GetMimeTypes()
 }
 
 void RegisterVrAssetsComponent(ComponentUpdateService* cus) {
+#if defined(GOOGLE_CHROME_BUILD)
   std::unique_ptr<ComponentInstallerPolicy> policy(
       new VrAssetsComponentInstallerTraits());
   auto installer = base::MakeRefCounted<ComponentInstaller>(std::move(policy));
   installer->Register(cus, base::Closure());
   vr::Assets::GetInstance()->GetMetricsHelper()->OnRegisteredComponent();
   VLOG(1) << "Registered VR assets component";
+#endif  // defined(GOOGLE_CHROME_BUILD)
 }
 
 }  // namespace component_updater
