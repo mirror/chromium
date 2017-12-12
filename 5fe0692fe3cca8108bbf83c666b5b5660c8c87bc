@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d09b0f3_e4a5e035",
+        "filename": "ui/aura/window_tree_host_platform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T23:13:50Z",
+      "side": 1,
+      "message": "I don\u0027t think WindowTreeHostPlatform works in X11, does it? Should this code NOTREACHED if X11? Or ifdef WindowTreeHost::Create() around !X11.",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 44
+      },
+      "revId": "5fe0692fe3cca8108bbf83c666b5b5660c8c87bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
