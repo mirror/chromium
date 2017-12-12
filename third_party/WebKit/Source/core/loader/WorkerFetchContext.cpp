@@ -231,7 +231,8 @@ std::unique_ptr<WebURLLoader> WorkerFetchContext::CreateURLLoader(
 }
 
 bool WorkerFetchContext::IsControlledByServiceWorker() const {
-  return web_context_->IsControlledByServiceWorker();
+  // return web_context_->IsControlledByServiceWorker();
+  return false;
 }
 
 int WorkerFetchContext::ApplicationCacheHostID() const {
