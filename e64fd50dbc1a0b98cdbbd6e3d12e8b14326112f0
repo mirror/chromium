@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9413eb5_565ac28f",
+        "filename": "ash/shelf/shelf_constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T23:05:05Z",
+      "side": 1,
+      "message": "Is there a reason to separate the strings like this? Keep them closer to the code. If they are only used in one place, I would inline the string there.",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5fd5790_d7a01721",
+        "filename": "ui/base/models/simple_menu_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T23:05:05Z",
+      "side": 1,
+      "message": "Why do you have this code? Can\u0027t this function blindly set histogram_name_ to the supplied arg?",
+      "range": {
+        "startLine": 466,
+        "startChar": 7,
+        "endLine": 466,
+        "endChar": 30
+      },
+      "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460c4679_47558dc3",
+        "filename": "ui/base/models/simple_menu_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T23:05:05Z",
+      "side": 1,
+      "message": "use base::UmaHistogramSparse (see https://chromium-review.googlesource.com/c/chromium/src/+/822033 )",
+      "range": {
+        "startLine": 476,
+        "startChar": 2,
+        "endLine": 476,
+        "endChar": 29
+      },
+      "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd2936d_31e00298",
+        "filename": "ui/base/models/simple_menu_model.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T23:05:05Z",
+      "side": 1,
+      "message": "const std::string\u0026",
+      "range": {
+        "startLine": 169,
+        "startChar": 24,
+        "endLine": 169,
+        "endChar": 35
+      },
+      "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b11a71_cedfcf5f",
+        "filename": "ui/base/models/simple_menu_model.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-12T23:05:05Z",
+      "side": 1,
+      "message": "Add description.",
+      "range": {
+        "startLine": 204,
+        "startChar": 14,
+        "endLine": 204,
+        "endChar": 29
+      },
+      "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
