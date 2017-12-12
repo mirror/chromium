@@ -25,6 +25,8 @@
 //     * 4: Arrays, with the number of elements known at the start.
 //     * 5: Maps, with the number of elements known at the start
 //              of the container.
+//     * 7: Simple values.
+//
 // Unsupported:
 //  * Negative integers.
 //  * Floating-point numbers.
