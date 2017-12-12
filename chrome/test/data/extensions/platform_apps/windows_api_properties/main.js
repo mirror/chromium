@@ -38,12 +38,20 @@ var tests = [
   makeEventTest('onMinimized', function() { current.minimize(); }),
   makeEventTest('onMaximized', function() { current.maximize(); }),
   makeEventTest('onRestored', function() {
+    var doRestore = function() {
+      current.onMinimized.removeListener(doRestore);
+      current.restore();
+    };
+    current.onMinimized.addListener(doRestore);
     current.minimize();
-    current.restore();
   }),
   makeEventTest('onRestored', function() {
+    var doRestore = function() {
+      current.onMaximized.removeListener(doRestore);
+      current.restore();
+    };
+    current.onMaximized.addListener(doRestore);
     current.maximize();
-    current.restore();
   }),
   makeEventTest('onBoundsChanged', function() {
     current.outerBounds.setPosition(5, 5);
