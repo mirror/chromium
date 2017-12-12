@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "decd0c30_141fddd2",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:59:24Z",
+      "side": 1,
+      "message": "nit: Put into anonymous namespace.",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a73974a_682dcf02",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:59:24Z",
+      "side": 1,
+      "message": "nit: Put into anonymous namespace.",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0604a00b_050951a8",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:59:24Z",
+      "side": 1,
+      "message": "What\u0027s about the policy handlers that can add nontrivial transformations of the prefs? I think it\u0027s technically feasibly to involve them here via policy::BuildHandlerList().\nPerhaps you had performance / complexity concerns? Then please at least document this decision here, and provide some reasoning why it\u0027s safe for this specific use case.",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef89135_1ab0231d",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:59:24Z",
+      "side": 1,
+      "message": "nit: Maybe replace this comment with the actual documentation on what it does and what it checks?",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3c4cca_0603c948",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:59:24Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this function accept |CrosSettings| as well? Otherwise it\u0027ll trust the current value of the whitelist, which can be restricted during OffHours?",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa1bdf8_3796c4ef",
+        "filename": "chrome/browser/chromeos/policy/off_hours/device_off_hours_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:59:24Z",
+      "side": 1,
+      "message": "nit: Please document that the pointer can\u0027t be null because the off hours mode won\u0027t be set otherwise.",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9fb5e9_bccb66ac",
+        "filename": "chrome/browser/chromeos/settings/cros_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:59:24Z",
+      "side": 1,
+      "message": "nit: This has to be defined before the previous function, according to the order in the header file.",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c04bfd9_b4f8284c",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:59:24Z",
+      "side": 1,
+      "message": "Hmm, I\u0027d rather prefer to not expose this small chunk (with somewhat vaguely defined responsibilities), but instead the whole conversion done in this class. WDYT?",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e0b125_41015344",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-12T00:59:24Z",
+      "side": 1,
+      "message": "nit: Please rename the variable, it changed its meaning - it\u0027s now specifying the session length limit due to OffHours end.",
+      "revId": "77ebdbd0130d1fcca4962a02180f7a976db7c336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
