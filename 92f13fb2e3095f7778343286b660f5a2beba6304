@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41489297_a7de9a01",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-12T13:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c87638_e6bce529",
+      "range": {
+        "startLine": 103,
+        "startChar": 1,
+        "endLine": 106,
+        "endChar": 3
+      },
+      "revId": "92f13fb2e3095f7778343286b660f5a2beba6304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f41c8b7_b8c79d67",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4193afe5_cc19c809",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-12T13:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f41c8b7_b8c79d67",
+      "range": {
+        "startLine": 801,
+        "startChar": 16,
+        "endLine": 801,
+        "endChar": 24
+      },
+      "revId": "92f13fb2e3095f7778343286b660f5a2beba6304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3d16fc8_cff5d29c",
         "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-12T11:04:28Z",
       "side": 1,
       "message": "this is not fully clear to me. Can you make it a bit more explicit?\nEven if I translate it in the positive form (Which IMHO is more readable in general)\nthis reads as:\nglobal_success || (pid !\u003d kInvalidPID) ? std::move(...) : nullptr\n\nBut my question is: why can\u0027t we just always move  global_dump? Isn\u0027t that just going to be nullptr when it needs to? I feel I am missing some case here.\nLooks like the single dump case is allowed to have a failed_memory_dump_count \u003e 0 somehow ?",
+      "range": {
+        "startLine": 324,
+        "startChar": 25,
+        "endLine": 324,
+        "endChar": 37
+      },
+      "revId": "92f13fb2e3095f7778343286b660f5a2beba6304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea7681d_18da4569",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-12T13:13:55Z",
+      "side": 1,
+      "message": "The problem is that it is not going to be nullptr when it needs to be. \n\nWith the multi-process case, we always want global_dump to be non-null because some processes could have failed and others could have succeceded. In the single process case, if one process fails, then the dump as a whole is irrelevant and should be ignored. This is why I have this explicit check here. I\u0027ve changed it to be clearer",
+      "parentUuid": "e3d16fc8_cff5d29c",
       "range": {
         "startLine": 324,
         "startChar": 25,
@@ -91,6 +163,30 @@
       "revId": "92f13fb2e3095f7778343286b660f5a2beba6304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "023f2bca_ef592894",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-12T13:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34a3a5d4_180b0958",
+      "range": {
+        "startLine": 35,
+        "startChar": 29,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "92f13fb2e3095f7778343286b660f5a2beba6304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
