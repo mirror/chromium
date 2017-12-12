@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6556fad3_53eef24b",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-12-12T15:39:02Z",
+      "side": 1,
+      "message": "This is necessary since otherwise if we remove or add options, people who have explicitly set this flag will end up shifting to a different variant, rather than it being disabled for them (since flags are stored by feature number, rather than anything specific to the constants.)",
+      "parentUuid": "ea9ca2e0_fc29060c",
+      "revId": "7353924c870d0935eb886a8e3fd688115099b82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc1bb160_bf7b96a9",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "7353924c870d0935eb886a8e3fd688115099b82d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b6cd42_0d71dbc8",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-12-12T15:39:02Z",
+      "side": 1,
+      "message": "enums.xml and the LoginCustomFlags seem to only store the category (the corresponding test only generates a value for the entire tls13-variant flag, rather than each possible value), so this seems to be fine?",
+      "parentUuid": "dc1bb160_bf7b96a9",
+      "revId": "7353924c870d0935eb886a8e3fd688115099b82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
