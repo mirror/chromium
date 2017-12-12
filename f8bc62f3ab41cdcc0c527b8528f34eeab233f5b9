@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d54362a_f2c0e83f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T23:01:27Z",
+      "side": 1,
+      "message": "what is the \u0027 for?",
+      "revId": "f8bc62f3ab41cdcc0c527b8528f34eeab233f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91344978_cf34463c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-12T23:01:27Z",
+      "side": 1,
+      "message": "continue -\u003e continuing, CL -\u003e this CL",
+      "revId": "f8bc62f3ab41cdcc0c527b8528f34eeab233f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
