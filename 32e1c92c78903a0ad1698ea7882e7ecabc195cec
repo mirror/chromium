@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81bfaa6d_87d95769",
+        "filename": "base/memory/ref_counted_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-12T19:18:34Z",
+      "side": 1,
+      "message": "Can we split out the base changes into its own CL, and provide coverage in ref_counted_memory_unittest.cc ?",
+      "revId": "32e1c92c78903a0ad1698ea7882e7ecabc195cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31dc7a22_20270f7e",
+        "filename": "extensions/browser/api/usb/usb_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-12T19:18:34Z",
+      "side": 1,
+      "message": "BTW, no need for else if after a return.",
+      "revId": "32e1c92c78903a0ad1698ea7882e7ecabc195cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
