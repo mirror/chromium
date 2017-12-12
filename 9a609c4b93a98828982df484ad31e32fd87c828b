@@ -103,6 +103,24 @@
       "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0e9664_bfd033dc",
+        "filename": "third_party/WebKit/common/clipboard/clipboard.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-12T23:07:01Z",
+      "side": 1,
+      "message": "yep this is fine. I do find it a bit confusing that it\u0027s webkit/common and not webkit/public/common, but that\u0027s a different conversation",
+      "parentUuid": "946dce24_f7e56707",
+      "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
