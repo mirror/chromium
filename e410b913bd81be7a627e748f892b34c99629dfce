@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9aee0b8_685793c6",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98918a5b_883bac53",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49604e03_4af2f067",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16fc746_8a317a9d",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "Correct.",
+      "parentUuid": "49604e03_4af2f067",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6afca085_418eff43",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "653ca785_b8031fbc",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f436318e_a29aecab",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25b60ef_c3d0a666",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "Whoops! Fixed.",
+      "parentUuid": "f436318e_a29aecab",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0fc08c53_80084ddc",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "622c3f27_43f3e271",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f78fde1_72a24146",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 14
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8087866c_6d25d20d",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "As discussed, the computed offset is bound to (probably) sane numbers [0,1] via its construction. We will leave this as-is for now.",
+      "parentUuid": "7f78fde1_72a24146",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "002246df_2cbf24d3",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 14
@@ -118,6 +226,24 @@
       "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e4de00_7bcebc00",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "It was more the fact that keyframes.Keys() isn\u0027t sortable. Removed the TODO, it was basically me complaining about the world :)",
+      "parentUuid": "002246df_2cbf24d3",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "8b7debce_6b61f718",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInputTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d484184_eb57b76f",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a0b3b18_ad217b2d",
         "filename": "third_party/WebKit/Source/core/animation/ElementAnimation.h",
         "patchSetId": 14
@@ -169,6 +313,24 @@
       "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8a4bcb_d741198d",
+        "filename": "third_party/WebKit/Source/core/animation/ElementAnimation.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a0b3b18_ad217b2d",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "660357d5_ef600010",
+        "filename": "third_party/WebKit/Source/core/animation/ElementAnimation.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c28b300_a95c196b",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fb734ea_2a8a24b9",
         "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectTest.cpp",
         "patchSetId": 14
@@ -203,6 +383,24 @@
       "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff234051_5f094ff3",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectTest.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-12T15:06:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fb734ea_2a8a24b9",
+      "revId": "e410b913bd81be7a627e748f892b34c99629dfce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
