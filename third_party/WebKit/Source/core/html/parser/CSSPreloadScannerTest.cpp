@@ -198,8 +198,7 @@ TEST_F(CSSPreloadScannerTest, ReferrerPolicyHeader) {
       dummy_page_holder->GetDocument(), "http://127.0.0.1/foo.css");
 
   KURL url("http://127.0.0.1/foo.css");
-  ResourceResponse response;
-  response.SetURL(url);
+  ResourceResponse response(url);
   response.SetHTTPStatusCode(200);
   response.SetHTTPHeaderField("referrer-policy", "unsafe-url");
   CSSStyleSheetResource* resource =
