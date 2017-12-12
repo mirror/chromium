@@ -38702,14 +38702,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="MPArch.RWH_HangMonitorUnresponsive" units="ms">
-  <owner>amaralp@chromium.org</owner>
-  <summary>
-    The length of time the renderer is unresponsive according to the hang
-    monitor. Recorded when the renderer regains responsiveness.
-  </summary>
-</histogram>
-
 <histogram name="MPArch.RWH_InputEventDelta" units="ms">
   <obsolete>
     renamed MPArch.IIR_InputEventDelta.
