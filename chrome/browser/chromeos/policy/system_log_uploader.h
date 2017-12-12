@@ -63,6 +63,9 @@ class SystemLogUploader : public UploadJob::Delegate {
 
     virtual ~Delegate() {}
 
+    // Returns current policy dump in JSON format.
+    virtual std::string GetPolicyAsJSON() = 0;
+
     // Loads system logs and invokes |upload_callback|.
     virtual void LoadSystemLogs(const LogUploadCallback& upload_callback) = 0;
 
@@ -101,7 +104,10 @@ class SystemLogUploader : public UploadJob::Delegate {
   void StartLogUpload();
 
   // The callback is invoked by the Delegate if system logs have been loaded
-  // from disk, uploads system logs.
+  // from disk, adds policy dump and calls UploadSystemLogs.
+  void OnSystemLogsLoaded(std::unique_ptr<SystemLogs> system_logs);
+
+  // Uploads system logs.
   void UploadSystemLogs(std::unique_ptr<SystemLogs> system_logs);
 
   // Helper method that figures out when the next system log upload should
