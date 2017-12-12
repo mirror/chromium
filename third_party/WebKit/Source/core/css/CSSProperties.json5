@@ -30,7 +30,7 @@
         "ParseSingleValue",
         "ParseShorthand",
         "IsLayoutDependent",
-        "CSSValueFromComputedStyle",
+        "CSSValueFromComputedStyleInternal",
         "ColorIncludingFallback"
       ],
     },
@@ -427,7 +427,7 @@
     // (e.g. font-size / ems)
     {
       name: "color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       inherited: true,
       field_group: "inherited",
@@ -724,7 +724,7 @@
     },
     {
       name: "background-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       field_group: "background",
       field_template: "external",
@@ -783,7 +783,7 @@
     },
     {
       name: "border-bottom-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -829,7 +829,7 @@
     },
     {
       name: "border-bottom-width",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -882,7 +882,7 @@
     },
     {
       name: "border-left-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -906,7 +906,7 @@
     },
     {
       name: "border-left-width",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -920,7 +920,7 @@
     },
     {
       name: "border-right-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -944,7 +944,7 @@
     },
     {
       name: "border-right-width",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -958,7 +958,7 @@
     },
     {
       name: "border-top-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -1004,7 +1004,7 @@
     },
     {
       name: "border-top-width",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "surround",
       field_template: "external",
@@ -1092,7 +1092,7 @@
     },
     {
       name: "caret-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       inherited: true,
       field_group: "*",
@@ -1218,14 +1218,14 @@
     },
     {
       name: "cx",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       svg: true,
       converter: "ConvertLength",
     },
     {
       name: "cy",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       svg: true,
       converter: "ConvertLength",
@@ -1301,7 +1301,7 @@
     },
     {
       name: "flex-basis",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "*",
       field_template: "<length>",
@@ -1350,7 +1350,7 @@
     },
     {
       name: "flood-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       svg: true,
       converter: "ConvertColor",
@@ -1405,7 +1405,7 @@
     },
     {
       name: "grid-column-gap",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       field_group: "*",
       field_template: "<length>",
       default_value: "Length(kFixed)",
@@ -1433,7 +1433,7 @@
     },
     {
       name: "grid-row-gap",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       field_group: "*",
       field_template: "<length>",
       default_value: "Length(kFixed)",
@@ -1575,7 +1575,7 @@
     },
     {
       name: "lighting-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       svg: true,
       converter: "ConvertColor",
@@ -1594,7 +1594,7 @@
     },
     {
       name: "line-height-step",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       inherited: true,
       runtime_flag: "CSSSnapSize",
       field_group: "*",
@@ -1811,7 +1811,7 @@
     },
     {
       name: "offset-distance",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "*",
       field_template: "<length>",
@@ -1886,7 +1886,7 @@
     },
     {
       name: "outline-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       field_group: "*",
       field_template: "external",
@@ -1898,7 +1898,7 @@
     },
     {
       name: "outline-offset",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "*",
       field_template: "primitive",
@@ -1921,7 +1921,7 @@
     },
     {
       name: "outline-width",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "*",
       field_template: "external",
@@ -2087,21 +2087,21 @@
     },
     {
       name: "r",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       svg: true,
       converter: "ConvertLength",
     },
     {
       name: "rx",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       svg: true,
       converter: "ConvertLengthOrAuto",
     },
     {
       name: "ry",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       svg: true,
       converter: "ConvertLengthOrAuto",
@@ -2164,7 +2164,7 @@
     },
     {
       name: "scroll-padding-top",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
       field_template: "<length>",
@@ -2174,7 +2174,7 @@
     },
     {
       name: "scroll-padding-bottom",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
       field_template: "<length>",
@@ -2184,7 +2184,7 @@
     },
     {
       name: "scroll-padding-left",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
       field_template: "<length>",
@@ -2194,7 +2194,7 @@
     },
     {
       name: "scroll-padding-right",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
       field_template: "<length>",
@@ -2256,7 +2256,7 @@
     },
     {
       name: "scroll-snap-margin-top",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
       field_template: "<length>",
@@ -2265,7 +2265,7 @@
     },
     {
       name: "scroll-snap-margin-bottom",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
       field_template: "<length>",
@@ -2274,7 +2274,7 @@
     },
     {
       name: "scroll-snap-margin-left",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
       field_template: "<length>",
@@ -2283,7 +2283,7 @@
     },
     {
       name: "scroll-snap-margin-right",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       runtime_flag: "CSSScrollSnapPoints",
       field_group: "*",
       field_template: "<length>",
@@ -2394,7 +2394,7 @@
     },
     {
       name: "stop-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       svg: true,
       converter: "ConvertColor",
@@ -2426,7 +2426,7 @@
     },
     {
       name: "stroke-dashoffset",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       inherited: true,
       svg: true,
@@ -2529,7 +2529,7 @@
     },
     {
       name: "text-decoration-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       field_group: "*",
       field_template: "external",
@@ -2776,14 +2776,14 @@
     },
     {
       name: "x",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       svg: true,
       converter: "ConvertLength",
     },
     {
       name: "y",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       svg: true,
       converter: "ConvertLength",
@@ -2807,7 +2807,7 @@
     },
     {
       name: "-webkit-border-horizontal-spacing",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       inherited: true,
       field_group: "inherited",
@@ -2824,7 +2824,7 @@
     },
     {
       name: "-webkit-border-vertical-spacing",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       inherited: true,
       field_group: "inherited",
@@ -2941,7 +2941,7 @@
     },
     {
       name: "column-rule-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       field_group: "*",
       field_template: "external",
@@ -2964,7 +2964,7 @@
     },
     {
       name: "column-rule-width",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       field_group: "*",
       field_template: "external",
@@ -3186,7 +3186,7 @@
     },
     {
       name: "-webkit-tap-highlight-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       inherited: true,
       field_group: "*",
       field_template: "<color>",
@@ -3200,7 +3200,7 @@
     },
     {
       name: "-webkit-text-emphasis-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       inherited: true,
       field_group: "*",
       field_template: "external",
@@ -3229,7 +3229,7 @@
     },
     {
       name: "-webkit-text-fill-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       inherited: true,
       field_group: "*",
       field_template: "external",
@@ -3249,7 +3249,7 @@
     },
     {
       name: "-webkit-text-stroke-color",
-      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyle", "ColorIncludingFallback"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal", "ColorIncludingFallback"],
       interpolable: true,
       inherited: true,
       field_group: "*",
@@ -3262,7 +3262,7 @@
     },
     {
       name: "-webkit-text-stroke-width",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       inherited: true,
       field_group: "*",
       field_template: "primitive",
@@ -3359,7 +3359,7 @@
     },
     {
       name: "word-spacing",
-      property_methods: ["ParseSingleValue"],
+      property_methods: ["ParseSingleValue", "CSSValueFromComputedStyleInternal"],
       interpolable: true,
       inherited: true,
       converter: "ConvertSpacing",
