@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea9ca2e0_fc29060c",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-12T08:45:05Z",
+      "side": 1,
+      "message": "Lines 765/766 and 768/769 are identical. There are more below. Have you checked whether this is necessary? I don\u0027t think so.",
+      "revId": "7353924c870d0935eb886a8e3fd688115099b82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1bb160_bf7b96a9",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-12T08:45:05Z",
+      "side": 1,
+      "message": "You need to update enums.xml, see tools/metrics/histograms/README.md --\u003e Flag Histograms",
+      "revId": "7353924c870d0935eb886a8e3fd688115099b82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
