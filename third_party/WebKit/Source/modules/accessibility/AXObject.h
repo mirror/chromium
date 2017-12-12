@@ -623,6 +623,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   bool AriaCheckedIsPresent() const;
   bool AriaPressedIsPresent() const;
   bool SupportsActiveDescendant() const;
+  bool SupportsExpanded() const;
   bool SupportsARIAAttributes() const;
   virtual bool SupportsARIADragging() const { return false; }
   virtual bool SupportsARIADropping() const { return false; }
