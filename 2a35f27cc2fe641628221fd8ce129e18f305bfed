@@ -34,6 +34,41 @@
       "revId": "2a35f27cc2fe641628221fd8ce129e18f305bfed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392822f5_323cf49d",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-12-12T06:02:28Z",
+      "side": 1,
+      "message": "OK, that makes sense. I don\u0027t think we can let it revert to ALLOW so let\u0027s go with this as is.",
+      "parentUuid": "3b779868_3afc2a77",
+      "revId": "2a35f27cc2fe641628221fd8ce129e18f305bfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364b1776_b5f59654",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-12-12T06:02:28Z",
+      "side": 1,
+      "message": "s/no longer/not/",
+      "revId": "2a35f27cc2fe641628221fd8ce129e18f305bfed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
