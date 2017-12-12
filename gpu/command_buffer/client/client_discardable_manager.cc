@@ -182,6 +182,14 @@ ClientDiscardableHandle ClientDiscardableManager::GetHandle(
   return found->second;
 }
 
+bool ClientDiscardableHandle::IsDeletedForLogging(
+    ClientDiscardableHandle::Id handle_id) {
+  auto found = handles_.find(handle_id);
+  if (found == handles_.end())
+    return false;
+  return found->second.IsDeletedForLogging();
+}
+
 bool ClientDiscardableManager::FindAllocation(CommandBuffer* command_buffer,
                                               scoped_refptr<Buffer>* buffer,
                                               int32_t* shm_id,

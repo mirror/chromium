@@ -15,6 +15,7 @@ void ClientTransferCache::CreateCacheEntry(
     gles2::GLES2CmdHelper* helper,
     MappedMemoryManager* mapped_memory,
     const cc::ClientTransferCacheEntry& entry) {
+  base::AutoLock hold(lock_);
   ScopedMappedMemoryPtr mapped_alloc(entry.SerializedSize(), helper,
                                      mapped_memory);
   DCHECK(mapped_alloc.valid());
@@ -39,6 +40,7 @@ void ClientTransferCache::CreateCacheEntry(
 bool ClientTransferCache::LockTransferCacheEntry(
     cc::TransferCacheEntryType type,
     uint32_t id) {
+  base::AutoLock hold(lock_);
   auto discardable_handle_id = FindDiscardableHandleId(type, id);
   if (discardable_handle_id.is_null())
     return false;
@@ -55,6 +57,7 @@ void ClientTransferCache::UnlockTransferCacheEntry(
     gles2::GLES2CmdHelper* helper,
     cc::TransferCacheEntryType type,
     uint32_t id) {
+  base::AutoLock hold(lock_);
   DCHECK(!FindDiscardableHandleId(type, id).is_null());
   helper->UnlockTransferCacheEntryINTERNAL(static_cast<uint32_t>(type), id);
 }
@@ -63,6 +66,7 @@ void ClientTransferCache::DeleteTransferCacheEntry(
     gles2::GLES2CmdHelper* helper,
     cc::TransferCacheEntryType type,
     uint32_t id) {
+  base::AutoLock hold(lock_);
   auto discardable_handle_id = FindDiscardableHandleId(type, id);
   if (discardable_handle_id.is_null())
     return;
