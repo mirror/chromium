@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "707d8134_b80e08ba",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T17:07:04Z",
+      "side": 1,
+      "message": "nit: this block isn\u0027t needed anymore.",
+      "revId": "f998e34982e1c691f751ae35274cea67e5a3b41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b17f648_a18d6474",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T17:07:04Z",
+      "side": 1,
+      "message": "Remove observer at end of test, just in case.",
+      "revId": "f998e34982e1c691f751ae35274cea67e5a3b41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59251c5c_fc3d8a19",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T17:07:04Z",
+      "side": 1,
+      "message": "optional: A way to make this clearer in the code is to reset the wallpaper_blur_changed_count() in the observer and compare to 0 each time.\n\nbtw, I\u0027m generally OK with test observers and similar test code having public members like wallpaper_blur_changed_count_. I think the boilerplate getters/setters/etc. aren\u0027t worth it, and it saves some typing/space.",
+      "revId": "f998e34982e1c691f751ae35274cea67e5a3b41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eebd375_24e17f64",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T17:07:04Z",
+      "side": 1,
+      "message": "nit: const wallpaper::WallpaperInfo info(\"\", WALLPAPER_LAYOUT_CENTER, wallpaper::DEVICE, base::Time::Now());",
+      "revId": "f998e34982e1c691f751ae35274cea67e5a3b41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad99277c_084e2497",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T17:07:04Z",
+      "side": 1,
+      "message": "nit: remove observer",
+      "revId": "f998e34982e1c691f751ae35274cea67e5a3b41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b384e25b_966ee7a1",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-12T17:07:04Z",
+      "side": 1,
+      "message": "nit: remove observer",
+      "revId": "f998e34982e1c691f751ae35274cea67e5a3b41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
