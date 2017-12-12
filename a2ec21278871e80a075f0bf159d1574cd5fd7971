@@ -451,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "8db3d8f4_4831315a",
+        "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-12T01:39:39Z",
+      "side": 1,
+      "message": "Ah, right.\nThat explains why people do things like this with __attribute__((weak))\nhttps://github.com/opencv/opencv/blob/master/3rdparty/cpufeatures/cpu-features.c#L504\n\nGiven the two options (android_getCpuFeatures and __attribute__((weak)) ), I think android_getCpuFeatures is less bad.",
+      "parentUuid": "383afa5e_f937e011",
+      "revId": "a2ec21278871e80a075f0bf159d1574cd5fd7971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca2439f1_e48e80c1",
         "filename": "third_party/zlib/contrib/optimizations/arm/arm_features.h",
         "patchSetId": 2
