@@ -323,7 +323,7 @@ bool SyncFileSystemGetUsageAndQuotaFunction::RunAsync() {
 }
 
 void SyncFileSystemGetUsageAndQuotaFunction::DidGetUsageAndQuota(
-    storage::QuotaStatusCode status,
+    blink::QuotaStatusCode status,
     int64_t usage,
     int64_t quota) {
   // Repost to switch from IO thread to UI thread for SendResponse().
@@ -337,8 +337,8 @@ void SyncFileSystemGetUsageAndQuotaFunction::DidGetUsageAndQuota(
   }
 
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (status != storage::kQuotaStatusOk) {
-    error_ = QuotaStatusCodeToString(status);
+  if (status != blink::kQuotaStatusOk) {
+    error_ = blink::QuotaStatusCodeToString(status);
     SendResponse(false);
     return;
   }

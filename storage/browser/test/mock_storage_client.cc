@@ -15,8 +15,7 @@
 #include "net/base/url_util.h"
 #include "storage/browser/quota/quota_manager_proxy.h"
 
-using storage::kQuotaErrorInvalidModification;
-using storage::kQuotaStatusOk;
+using blink::kQuotaErrorInvalidModification;
 
 namespace content {
 
@@ -185,7 +184,7 @@ void MockStorageClient::RunDeleteOriginData(
     origin_data_.erase(itr);
   }
 
-  callback.Run(kQuotaStatusOk);
+  callback.Run(blink::kQuotaStatusOk);
 }
 
 }  // namespace content

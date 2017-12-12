@@ -31,14 +31,18 @@
 #ifndef WebStorageQuotaError_h
 #define WebStorageQuotaError_h
 
+#include "third_party/WebKit/common/quota/quota_status_code.h"
+
 namespace blink {
 
 // The error code used for WebStorageQuota.
+// TODO(sashab): Remove this class and update callers to use blink::StorageType
+// instead.
 enum WebStorageQuotaError {
-  kWebStorageQuotaErrorNotSupported = 7,
-  kWebStorageQuotaErrorInvalidModification = 11,
-  kWebStorageQuotaErrorInvalidAccess = 13,
-  kWebStorageQuotaErrorAbort = 17,
+  kWebStorageQuotaErrorNotSupported = kQuotaErrorNotSupported,
+  kWebStorageQuotaErrorInvalidModification = kQuotaErrorInvalidModification,
+  kWebStorageQuotaErrorInvalidAccess = kQuotaErrorInvalidAccess,
+  kWebStorageQuotaErrorAbort = kQuotaErrorAbort,
 };
 
 }  // namespace blink
