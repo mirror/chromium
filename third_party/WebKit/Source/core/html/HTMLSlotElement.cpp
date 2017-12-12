@@ -53,17 +53,49 @@ namespace {
 constexpr size_t kLCSTableSizeLimit = 16;
 }
 
-inline HTMLSlotElement::HTMLSlotElement(Document& document)
-    : HTMLElement(slotTag, document) {
+HTMLSlotElement* HTMLSlotElement::Create(Document& document) {
+  return new HTMLSlotElement(document);
+}
+
+HTMLSlotElement* HTMLSlotElement::CreateFilteredSlotForUserAgent(
+    Document& document,
+    AssignmentFilter* filter) {
+  HTMLSlotElement* slot = new HTMLSlotElement(document, filter);
+  slot->setAttribute(nameAttr, InternalFilteredSlotName());
+  return slot;
+}
+
+HTMLSlotElement* HTMLSlotElement::CreateFallbackSlotForUserAgent(
+    Document& document) {
+  HTMLSlotElement* slot = new HTMLSlotElement(document);
+  slot->setAttribute(nameAttr, InternalFallbackSlotName());
+  return slot;
+}
+
+inline HTMLSlotElement::HTMLSlotElement(Document& document,
+                                        AssignmentFilter* filter)
+    : HTMLElement(slotTag, document), filter_(filter) {
   UseCounter::Count(document, WebFeature::kHTMLSlotElement);
   SetHasCustomStyleCallbacks();
 }
 
-DEFINE_NODE_FACTORY(HTMLSlotElement);
-
 // static
 AtomicString HTMLSlotElement::NormalizeSlotName(const AtomicString& name) {
   return (name.IsNull() || name.IsEmpty()) ? g_empty_atom : name;
+}
+
+// static
+const AtomicString& HTMLSlotElement::InternalFilteredSlotName() {
+  DEFINE_STATIC_LOCAL(const AtomicString, filtered_slot_name,
+                      ("internal-filtered-slot"));
+  return filtered_slot_name;
+}
+
+// static
+const AtomicString& HTMLSlotElement::InternalFallbackSlotName() {
+  DEFINE_STATIC_LOCAL(const AtomicString, fallback_slot_name,
+                      ("internal-fallback-slot"));
+  return fallback_slot_name;
 }
 
 const HeapVector<Member<Node>>& HTMLSlotElement::AssignedNodes() const {
@@ -98,6 +130,12 @@ const HeapVector<Member<Node>>& HTMLSlotElement::GetDistributedNodes() {
 void HTMLSlotElement::AppendAssignedNode(Node& host_child) {
   DCHECK(host_child.IsSlotable());
   assigned_nodes_.push_back(&host_child);
+}
+
+bool HTMLSlotElement::ShouldAssignForDefaultSlotInUserAgentShadow(
+    const Node& host_child) {
+  DCHECK(host_child.IsSlotable());
+  return !HasFilter() || filter_->CanAssign(host_child);
 }
 
 void HTMLSlotElement::ResolveDistributedNodes() {
@@ -144,6 +182,7 @@ void HTMLSlotElement::SaveAndClearDistribution() {
 }
 
 void HTMLSlotElement::DispatchSlotChangeEvent() {
+  DCHECK(!ContainingShadowRoot() || !ContainingShadowRoot()->IsUserAgent());
   Event* event = Event::CreateBubble(EventTypeNames::slotchange);
   event->SetTarget(this);
   DispatchScopedEvent(event);
@@ -198,7 +237,7 @@ Node* HTMLSlotElement::DistributedNodePreviousTo(const Node& node) const {
 }
 
 AtomicString HTMLSlotElement::GetName() const {
-  return NormalizeSlotName(FastGetAttribute(HTMLNames::nameAttr));
+  return NormalizeSlotName(FastGetAttribute(nameAttr));
 }
 
 void HTMLSlotElement::AttachLayoutTree(AttachContext& context) {
@@ -455,6 +494,10 @@ bool HTMLSlotElement::HasSlotableChild() const {
 }
 
 void HTMLSlotElement::EnqueueSlotChangeEvent() {
+  // TODO(kochi): Research more effective way to suppress slotchange event
+  // for user-agent shadows.
+  if (ContainingShadowRoot() && ContainingShadowRoot()->IsUserAgent())
+    return;
   if (slotchange_event_enqueued_)
     return;
   MutationObserver::EnqueueSlotChange(*this);
@@ -488,6 +531,7 @@ void HTMLSlotElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(distributed_nodes_);
   visitor->Trace(old_distributed_nodes_);
   visitor->Trace(distributed_indices_);
+  visitor->Trace(filter_);
   HTMLElement::Trace(visitor);
 }
 
