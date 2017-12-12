@@ -6,12 +6,12 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
-#include "mash/quick_launch/public/interfaces/constants.mojom.h"
-#include "mash/quick_launch/quick_launch.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
 
 #if defined(OS_CHROMEOS)
 #include "ash/public/interfaces/constants.mojom.h"  // nogncheck
+#include "mash/quick_launch/public/interfaces/constants.mojom.h"
+#include "mash/quick_launch/quick_launch.h"
 #endif                                              // defined(OS_CHROMEOS)
 
 #if defined(OS_LINUX) && !defined(OS_ANDROID)
@@ -27,10 +27,10 @@ struct Service {
 };
 
 constexpr Service kServices[] = {
-    {mash::quick_launch::mojom::kServiceName, "Quick Launch"},
     {ui::mojom::kServiceName, "UI Service"},
 #if defined(OS_CHROMEOS)
     {ash::mojom::kServiceName, "Ash Window Manager and Shell"},
+    {mash::quick_launch::mojom::kServiceName, "Quick Launch"},
     {"accessibility_autoclick", "Ash Accessibility Autoclick"},
     {"touch_hud", "Ash Touch Hud"},
 #endif  // defined(OS_CHROMEOS)
