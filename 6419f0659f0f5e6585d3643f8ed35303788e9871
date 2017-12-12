@@ -177,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "63f264be_c10f565b",
+        "filename": "chrome/test/data/policy/policy_test_cases.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-12-12T20:00:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ef0abcf9_00ddfb39",
+      "range": {
+        "startLine": 891,
+        "startChar": 4,
+        "endLine": 891,
+        "endChar": 49
+      },
+      "revId": "6419f0659f0f5e6585d3643f8ed35303788e9871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9a5d928_07ed171e",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 4
