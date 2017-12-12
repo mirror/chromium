@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ecd450f0_ae1a1aaf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-12T17:00:00Z",
+      "side": 1,
+      "message": "nit: this is a bit vague and incorrect as ticker so own keyframe effects. Maybe\nrewrite as \"each corresponding to one keyframe effect\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 57
+      },
+      "revId": "ac17d58f146333607060e0e802b5593c53d7c081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa77fbbf_c6eee387",
         "filename": "cc/animation/animation_player.cc",
         "patchSetId": 15
