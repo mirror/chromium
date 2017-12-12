@@ -16,6 +16,24 @@
       "revId": "9a3f92eee052ff1048d660262b5a5bc38c52f555",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69751f6d_53f4b285",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-12T17:51:10Z",
+      "side": 1,
+      "message": "Removed inherits from the roles that don\u0027t fit the rule. Re-looking at the rules involved, all enter rules would be empty (i.e. they are not read if entered but not explicitly focused). The rules involved are all different enough it really doesn\u0027t make sense to group them together.",
+      "parentUuid": "76015e6a_d89038e6",
+      "revId": "9a3f92eee052ff1048d660262b5a5bc38c52f555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
