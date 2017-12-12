@@ -4,19 +4,16 @@
 
 #include "core/css/properties/longhands/TextUnderlinePosition.h"
 
-#include "core/css/parser/CSSPropertyParserHelpers.h"
-
 namespace blink {
 namespace CSSLonghand {
 
-const CSSValue* TextUnderlinePosition::ParseSingleValue(
-    CSSParserTokenRange& range,
-    const CSSParserContext& context,
-    const CSSParserLocalContext&) const {
-  // auto | [ under || [ left | right ] ], but we only support auto | under
-  // for now
-  return CSSPropertyParserHelpers::ConsumeIdent<CSSValueAuto, CSSValueUnder>(
-      range);
+const CSSValue* TextUnderlinePosition::CSSValueFromComputedStyleInternal(
+    const ComputedStyle& style,
+    const SVGComputedStyle&,
+    const LayoutObject*,
+    Node*,
+    bool allow_visited_style) const {
+  return CSSIdentifierValue::Create(style.TextUnderlinePosition());
 }
 
 }  // namespace CSSLonghand
