@@ -116,6 +116,24 @@
       "revId": "39347dbbcd003d4133c9b6b1f41c407f6ff54214",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5c01a90_11909ee0",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-12T08:34:56Z",
+      "side": 1,
+      "message": "Hmm... ultimately I think what we want is to actually just send WebDragData across as a Mojo struct and let the receiving side figure out what to do with it. I think we\u0027ll need to do this for drag and drop anyway down the road.\n\nLet\u0027s add a TODO for doing that--I\u0027m happy to help with that particular bit once this CL lands.",
+      "parentUuid": "9a81de0d_26173139",
+      "revId": "39347dbbcd003d4133c9b6b1f41c407f6ff54214",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
