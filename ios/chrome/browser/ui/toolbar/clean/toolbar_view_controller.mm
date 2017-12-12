@@ -81,6 +81,12 @@
 // Top anchor at the bottom of the safeAreaLayoutGuide. Used so views don't
 // overlap with the Status Bar.
 @property(nonatomic, strong) NSLayoutYAxisAnchor* topSafeAnchor;
+// Icon used when Toolbar is expanded on incognito.
+@property(nonatomic, strong) UIImageView* incognitoIcon;
+// LocationBarContainerStackView Leading constraint. Its constant will change
+// when the Toolbar is expanded on incognito mode in order to create a margin.
+@property(nonatomic, strong)
+    NSLayoutConstraint* locationBarContainerStackViewLeadingConstraint;
 
 @property(nonatomic, strong) ToolbarView* view;
 @end
@@ -117,6 +123,9 @@
 @synthesize expandedToolbarConstraints = _expandedToolbarConstraints;
 @synthesize topSafeAnchor = _topSafeAnchor;
 @synthesize regularToolbarConstraints = _regularToolbarConstraints;
+@synthesize incognitoIcon = _incognitoIcon;
+@synthesize locationBarContainerStackViewLeadingConstraint =
+    _locationBarContainerStackViewLeadingConstraint;
 
 #pragma mark - Public
 
@@ -155,13 +164,13 @@
                                  [self
                                      setHorizontalTranslationOffset:
                                          kToolbarButtonAnimationOffset
-                                                         forButtons:
+                                                           forViews:
                                                   self.leadingStackViewButtons];
                                  [self
                                      setHorizontalTranslationOffset:
                                          -kToolbarButtonAnimationOffset
-                                                         forButtons:
-                                                 self.trailingStackViewButtons];
+                                                           forViews:
+                                                self.trailingStackViewButtons];
                                  [self setAllVisibleToolbarButtonsOpacity:0];
                                }
                                completion:nil];
@@ -171,11 +180,27 @@
     self.shadowView.alpha = 0;
     self.fullBleedShadowView.alpha = 1;
   }];
+
+  // If on incognito mode fade in the incognito icon.
+  if (self.buttonFactory.style == INCOGNITO) {
+    self.incognitoIcon.hidden = NO;
+    self.incognitoIcon.alpha = 0;
+    self.locationBarContainerStackViewLeadingConstraint.constant =
+        kLeadingMarginIncognitoExpanded;
+    [self setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
+                                forViews:@[ self.incognitoIcon ]];
+    [animator addAnimations:^{
+      [self setHorizontalTranslationOffset:0 forViews:@[ self.incognitoIcon ]];
+      self.incognitoIcon.alpha = 1;
+    }
+                delayFactor:ios::material::kDuration2];
+  }
+
   // When the locationBarContainer has been expanded the Contract button will
   // fade in.
   [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
     [self setHorizontalTranslationOffset:kToolbarButtonAnimationOffset
-                              forButtons:@[ self.contractButton ]];
+                                forViews:@[ self.contractButton ]];
 
     [UIViewPropertyAnimator
         runningPropertyAnimatorWithDuration:ios::material::kDuration1
@@ -185,9 +210,9 @@
                                    self.contractButton.alpha = 1;
                                    [self
                                        setHorizontalTranslationOffset:0
-                                                           forButtons:@[
-                                                             self.contractButton
-                                                           ]];
+                                                             forViews:@[
+                                                            self.contractButton
+                                                             ]];
                                  }
                                  completion:nil];
   }];
@@ -220,12 +245,27 @@
     self.shadowView.alpha = 1;
     self.fullBleedShadowView.alpha = 0;
   }];
+
+  // If on incognito mode fade out the incognito icon.
+  if (self.buttonFactory.style == INCOGNITO) {
+    self.locationBarContainerStackViewLeadingConstraint.constant = 0;
+    [animator addAnimations:^{
+      self.incognitoIcon.alpha = 0;
+      self.incognitoIcon.hidden = YES;
+      [self setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
+                                  forViews:@[ self.incognitoIcon ]];
+    }];
+    [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
+      [self setHorizontalTranslationOffset:0 forViews:@[ self.incognitoIcon ]];
+    }];
+  }
+
   // Once the locationBarContainer has been contracted fade in ToolbarButtons.
   [animator addCompletion:^(UIViewAnimatingPosition finalPosition) {
     [self setHorizontalTranslationOffset:kToolbarButtonAnimationOffset
-                              forButtons:self.leadingStackViewButtons];
+                                forViews:self.leadingStackViewButtons];
     [self setHorizontalTranslationOffset:-kToolbarButtonAnimationOffset
-                              forButtons:self.trailingStackViewButtons];
+                                forViews:self.trailingStackViewButtons];
     [UIViewPropertyAnimator
         runningPropertyAnimatorWithDuration:ios::material::kDuration1
                                       delay:ios::material::kDuration4
@@ -234,11 +274,11 @@
                                    [self.view layoutIfNeeded];
                                    [self
                                        setHorizontalTranslationOffset:0
-                                                           forButtons:
+                                                             forViews:
                                                  self.leadingStackViewButtons];
                                    [self
                                        setHorizontalTranslationOffset:0
-                                                           forButtons:
+                                                             forViews:
                                                 self.trailingStackViewButtons];
                                    [self setAllVisibleToolbarButtonsOpacity:1];
                                  }
@@ -362,6 +402,11 @@
   } else {
     [self.locationBarContainerStackView addArrangedSubview:self.contractButton];
   }
+  if (self.buttonFactory.style == INCOGNITO) {
+    [self.locationBarContainerStackView insertArrangedSubview:self.incognitoIcon
+                                                      atIndex:0];
+    self.incognitoIcon.hidden = YES;
+  }
   [self.locationBarContainer addSubview:self.locationBarContainerStackView];
 }
 
@@ -466,16 +511,18 @@
   NSLayoutConstraint* locationBarContainerStackViewTopConstraint =
       [self.locationBarContainerStackView.topAnchor
           constraintEqualToAnchor:self.locationBarContainer.topAnchor];
+  self.locationBarContainerStackViewLeadingConstraint =
+      [self.locationBarContainerStackView.leadingAnchor
+          constraintEqualToAnchor:locationBarContainerSafeAreaGuide
+                                      .leadingAnchor];
   [NSLayoutConstraint activateConstraints:@[
     [self.locationBarContainerStackView.bottomAnchor
         constraintEqualToAnchor:self.locationBarContainer.bottomAnchor],
-    [self.locationBarContainerStackView.leadingAnchor
-        constraintEqualToAnchor:locationBarContainerSafeAreaGuide
-                                    .leadingAnchor],
     [self.locationBarContainerStackView.trailingAnchor
         constraintEqualToAnchor:locationBarContainerSafeAreaGuide
                                     .trailingAnchor],
     locationBarContainerStackViewTopConstraint,
+    self.locationBarContainerStackViewLeadingConstraint,
   ]];
   [self.regularToolbarConstraints
       addObject:locationBarContainerStackViewTopConstraint];
@@ -956,6 +1003,16 @@
   return _fullBleedShadowView;
 }
 
+- (UIImageView*)incognitoIcon {
+  if (!_incognitoIcon) {
+    _incognitoIcon = [[UIImageView alloc]
+        initWithImage:[UIImage imageNamed:@"incognito_marker_typing"]];
+    _incognitoIcon.translatesAutoresizingMaskIntoConstraints = NO;
+    _incognitoIcon.contentMode = UIViewContentModeScaleAspectFit;
+  }
+  return _incognitoIcon;
+}
+
 #pragma mark - Private
 
 // Sets the progress of the progressBar to 1 then hides it.
@@ -990,15 +1047,15 @@
   }
 }
 
-// Offsets the horizontal translation transform of all visible Toolbar Buttons
+// Offsets the horizontal translation transform of all visible UIViews
 // in |array| by |offset|. Used for fade in animations.
 - (void)setHorizontalTranslationOffset:(LayoutOffset)offset
-                            forButtons:(NSArray<ToolbarButton*>*)array {
-  for (UIButton* button in array) {
-    if (!button.hidden)
-      button.transform = (offset != 0)
-                             ? CGAffineTransformMakeTranslation(offset, 0)
-                             : CGAffineTransformIdentity;
+                              forViews:(NSArray<UIView*>*)array {
+  for (UIView* view in array) {
+    if (!view.hidden)
+      view.transform = (offset != 0)
+                           ? CGAffineTransformMakeTranslation(offset, 0)
+                           : CGAffineTransformIdentity;
   }
 }
 
