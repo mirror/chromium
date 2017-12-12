@@ -34,6 +34,24 @@
       "revId": "b17f41842baad89bb85a1d2197007ab875ad2c46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ac3bee_58d55568",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/elements/edit/set-attribute-non-html-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-12T01:43:47Z",
+      "side": 1,
+      "message": "Oh interesting. I misread it as removed lines.",
+      "parentUuid": "11e6bac7_f6bf7efe",
+      "revId": "b17f41842baad89bb85a1d2197007ab875ad2c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
