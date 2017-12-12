@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ccdfd12_357a07f7",
+        "filename": "chrome/browser/notifications/notification_display_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-12T23:49:45Z",
+      "side": 1,
+      "message": "Is there any way we could do this implicitly in GetForSystemNotifications, e.g. by using a callback there? It would allow us to keep exposing a single, consistent API.\n\nWith lambdas such calls would look as follows, which looks fine to me:\n\nNotificationDisplayService::GetSystemService(base::BindOnce(\n  [](const Notification\u0026 notification, NotificationDisplayService* service) {\n    service-\u003eDisplay(notification);\n  }, notification));",
+      "revId": "9e63b9bb29505feee4389d2a659809ed58f4d980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a83b36e_4ea046fd",
+        "filename": "chrome/browser/notifications/stub_notification_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-12T23:49:45Z",
+      "side": 1,
+      "message": "Please annotate random booleans with what they are:\n\nfalse /* by_user */, true /* silent */",
+      "revId": "9e63b9bb29505feee4389d2a659809ed58f4d980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d19e57e_ec5e84f6",
+        "filename": "chrome/browser/usb/web_usb_detector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-12T23:49:45Z",
+      "side": 1,
+      "message": "typo?",
+      "revId": "9e63b9bb29505feee4389d2a659809ed58f4d980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
