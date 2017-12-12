@@ -236,6 +236,8 @@ class PLATFORM_EXPORT FontCache {
   void DumpFontPlatformDataCache(base::trace_event::ProcessMemoryDump*);
   void DumpShapeResultCache(base::trace_event::ProcessMemoryDump*);
 
+  long NumEntries(){return font_platform_data_cache_.size();};
+
   ~FontCache() {}
 
  private:

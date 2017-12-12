@@ -102,6 +102,8 @@ FontPlatformData* FontCache::GetFontPlatformData(
     PlatformInit();
   }
 
+  LOG(INFO) << "Num FontCache entries: " << NumEntries();
+
 #if !defined(OS_MACOSX)
   if (creation_params.CreationType() == kCreateFontByFamily &&
       creation_params.Family() == FontFamilyNames::system_ui) {

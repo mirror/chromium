@@ -51,6 +51,7 @@ FontPlatformData::FontPlatformData(WTF::HashTableDeletedValueType)
       paint_text_flags_(0)
 #endif
 {
+  CountAndLogFontIds();
 }
 
 FontPlatformData::FontPlatformData()
@@ -65,6 +66,7 @@ FontPlatformData::FontPlatformData()
       paint_text_flags_(0)
 #endif
 {
+  CountAndLogFontIds();
 }
 
 FontPlatformData::FontPlatformData(float size,
@@ -82,6 +84,7 @@ FontPlatformData::FontPlatformData(float size,
       paint_text_flags_(0)
 #endif
 {
+  CountAndLogFontIds();
 }
 
 FontPlatformData::FontPlatformData(const FontPlatformData& source)
@@ -104,6 +107,7 @@ FontPlatformData::FontPlatformData(const FontPlatformData& source)
       paint_text_flags_(source.paint_text_flags_)
 #endif
 {
+  CountAndLogFontIds();
 }
 
 FontPlatformData::FontPlatformData(const FontPlatformData& src, float text_size)
@@ -132,6 +136,8 @@ FontPlatformData::FontPlatformData(const FontPlatformData& src, float text_size)
 #if defined(OS_WIN)
   QuerySystemForRenderStyle();
 #endif
+    CountAndLogFontIds();
+
 }
 
 FontPlatformData::FontPlatformData(const PaintTypeface& paint_tf,
@@ -164,9 +170,13 @@ FontPlatformData::FontPlatformData(const PaintTypeface& paint_tf,
 #if defined(OS_WIN)
   QuerySystemForRenderStyle();
 #endif
+    CountAndLogFontIds();
+
 }
 
-FontPlatformData::~FontPlatformData() {}
+FontPlatformData::~FontPlatformData() {
+  CountAndLogFontIds(false);
+}
 
 #if defined(OS_MACOSX)
 CTFontRef FontPlatformData::CtFont() const {
@@ -203,6 +213,7 @@ const FontPlatformData& FontPlatformData::operator=(
 #if defined(OS_WIN)
   paint_text_flags_ = 0;
 #endif
+  CountAndLogFontIds();
 
   return *this;
 }
@@ -297,5 +308,18 @@ bool FontPlatformData::FontContainsCharacter(UChar32 character) {
 const PaintTypeface& FontPlatformData::GetPaintTypeface() const {
   return paint_typeface_;
 }
+
+void FontPlatformData::CountAndLogFontIds(bool insert) {
+  static HashSet<SkFontID> font_ids;
+  if (insert) {
+    HashSet<SkFontID>::AddResult add_result = font_ids.insert(UniqueID());
+    if (add_result.is_new_entry)
+      LOG(INFO) << "Now using " << font_ids.size() << " unique Skia fonts.";
+  } else {
+    font_ids.erase(UniqueID());
+    LOG(INFO) << "Now using " << font_ids.size() << " unique Skia fonts.";
+  }
+}
+
 
 }  // namespace blink

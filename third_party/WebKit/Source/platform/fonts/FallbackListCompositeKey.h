@@ -95,6 +95,7 @@ struct FallbackListCompositeKeyHash {
 struct FallbackListCompositeKeyTraits
     : WTF::SimpleClassHashTraits<FallbackListCompositeKey> {
   STATIC_ONLY(FallbackListCompositeKeyTraits);
+  static const bool kEmptyValueIsZero = false;
 };
 
 }  // namespace blink
