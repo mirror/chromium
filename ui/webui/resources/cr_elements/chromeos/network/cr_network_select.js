@@ -166,10 +166,17 @@ Polymer({
                             CrOnc.ConnectionState.CONNECTED) ?
         this.networkStateList_[0] :
         null;
-    if (defaultState.GUID != this.defaultStateGuid_) {
-      this.defaultStateGuid_ = defaultState.GUID;
-      this.fire('default-network-changed', defaultState);
+
+    if (!defaultState && !this.defaultStateGuid_)
+      return;
+
+    if (defaultState && this.defaultStateGuid_ &&
+        defaultState.GUID == this.defaultStateGuid_) {
+      return;
     }
+
+    this.defaultStateGuid_ = defaultState ? defaultState.GUID : '';
+    this.fire('default-network-changed', defaultState);
   },
 
   /**
