@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29dd8705_8c1a493c",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScannerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-12T21:10:15Z",
+      "side": 1,
+      "message": "resource-\u003eResourceBuffer() should be nullptr for this test.\n\nPreviously, this is achieved by FinishAsError().\nPerhaps this can also be achieved by Finish() (i.e. in this patch set without further modifications), because CSSStyleSheetResource::NotifyFinished() calls ClearData().\n\nSo, could you add |ASSERT_FALSE(resource-\u003eResourceBuffer());| and add a comment like:\n  We need a CSSStylesheetResource with null ResourceBuffer below for testing.\n  This isn\u0027t to require that Fetch() with a data: URL result in null ResourceBuffer().",
+      "revId": "199066ec643380a8258162c5511dea76a7c30767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826cbae0_7c17140f",
+        "filename": "third_party/WebKit/Source/core/html/parser/PreloadRequest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-12T21:10:15Z",
+      "side": 1,
+      "message": "This ResourceClient* argument is only for CSSs, or more particularly,\nCSSPreloaderResourceClient.\n\nAt least a comment that mentions this is only for CSSs is needed.\n\nI also prefer to make the argument type |CSSPreloaderResourceClient*|, to further discourage the use of this argument, because CSSPreloaderResourceClient is the only ResourceClient added to unused preloaded Resources, and I\u0027d like to limit such ResourceClients in the context of \nhttps://chromium-review.googlesource.com/c/chromium/src/+/598910.",
+      "revId": "199066ec643380a8258162c5511dea76a7c30767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71d72edf_257744fe",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-12T21:10:15Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "199066ec643380a8258162c5511dea76a7c30767",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
