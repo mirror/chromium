@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d97d3d6d_4b749050",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T01:29:58Z",
+      "side": 1,
+      "message": "Right; this is to support the code below:",
+      "parentUuid": "bc613e69_0a332f66",
+      "range": {
+        "startLine": 179,
+        "startChar": 1,
+        "endLine": 179,
+        "endChar": 72
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7670f930_1c726107",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-01T19:32:56Z",
       "side": 1,
       "message": "Similarly, this can\u0027t underflow, since align \u003e pre-slack as a result of the \u0026 above, unless align was 0. So what we need initially is an ASSERT(align) at that start of the routine, if we want to be paranoid rather than using safe variables here.",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 27
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a650f518_093ad2f6",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T01:29:58Z",
+      "side": 1,
+      "message": "Yes, we could add such an assert. One thing I was hoping to avoid was a reliance on not-immediately-obvious preconditions for using non-safe-numerics. If we find CheckedNumerics call sites too ugly (and I think we do), I think we need to address that before I evangelize it further (as I intend to do).",
+      "parentUuid": "7670f930_1c726107",
       "range": {
         "startLine": 180,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bf08f93e_d488e2f8",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T01:29:58Z",
+      "side": 1,
+      "message": "I think that\u0027s (part of) what these DCHECKs below are trying to assert. Maybe we move them up and change them to CHECKs? It still seems somewhat unclear.",
+      "parentUuid": "a69fa58d_f00510ea",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 28
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13104528_a2d8edeb",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc13e47_e1cb23af",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T01:29:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "13104528_a2d8edeb",
+      "range": {
+        "startLine": 197,
+        "startChar": 4,
+        "endLine": 197,
+        "endChar": 49
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6ef22e27_b1bf8a35",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T01:29:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "664545d4_cc00c6ce",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 79
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff748bcc_e28bbca3",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 1
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "949a5e94_f6880649",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T01:29:58Z",
+      "side": 1,
+      "message": "You don\u0027t think we can trust SystemAllocPages\u0027 callees (VirtualAlloc/mmap) to determine that?",
+      "parentUuid": "ff748bcc_e28bbca3",
+      "range": {
+        "startLine": 241,
+        "startChar": 15,
+        "endLine": 241,
+        "endChar": 33
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d2ba786_54d94fdc",
         "filename": "base/allocator/partition_allocator/page_allocator.cc",
         "patchSetId": 1
@@ -151,6 +295,30 @@
       "writtenOn": "2017-12-01T19:32:56Z",
       "side": 1,
       "message": "then these become redundant.",
+      "range": {
+        "startLine": 249,
+        "startChar": 1,
+        "endLine": 249,
+        "endChar": 68
+      },
+      "revId": "503ac2a1f5c4bf5dd629cb49f58e42d12e8daab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ad33f8_cfa39280",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-12T01:29:58Z",
+      "side": 1,
+      "message": "Maybe they are anyway.",
+      "parentUuid": "8d2ba786_54d94fdc",
       "range": {
         "startLine": 249,
         "startChar": 1,
