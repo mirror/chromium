@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "24b77029_bb1fbd47",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-12T05:28:23Z",
+      "side": 1,
+      "message": "That\u0027s fine since every int value fits in int64_t. I believe you can use strict_cast\u003c\u003e for this, but checked_cast\u003c\u003e is fine.",
+      "parentUuid": "9f66893f_770072c4",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 44
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1123eec1_67eb0ed2",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 13
@@ -460,6 +484,30 @@
       "side": 1,
       "message": "Could you specify the extra set of parenthesis?",
       "parentUuid": "746db50a_622fa646",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "d137cb0b67014a9ae6b8867fd2acb803e0458aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b8d32f_9f414bfd",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-12T05:28:23Z",
+      "side": 1,
+      "message": "They\u0027re gone now. :)",
+      "parentUuid": "58d8a208_938a83c6",
       "range": {
         "startLine": 51,
         "startChar": 45,
