@@ -381,6 +381,7 @@ class ASH_EXPORT WindowState : public aura::WindowObserver {
   // a scale animation.
   void SetBoundsDirectAnimated(const gfx::Rect& bounds);
 
+ private:
   // Sets the window's |bounds| and transition to the new bounds with
   // a cross fade animation.
   void SetBoundsDirectCrossFade(const gfx::Rect& bounds);
