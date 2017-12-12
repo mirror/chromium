@@ -131,10 +131,10 @@ class WebApkInstaller : public net::URLFetcherDelegate {
   // Talks to the Chrome WebAPK server to generate a WebAPK on the server and to
   // Google Play to install the downloaded WebAPK. Calls |callback| once the
   // install completed or failed.
-  void InstallAsync(const ShortcutInfo& shortcut_info,
-                    const SkBitmap& primary_icon,
-                    const SkBitmap& badge_icon,
-                    const FinishCallback& finish_callback);
+  void InstallAsyncImpl(const ShortcutInfo& shortcut_info,
+                        const SkBitmap& primary_icon,
+                        const SkBitmap& badge_icon,
+                        const FinishCallback& finish_callback);
 
   // Talks to the Chrome WebAPK server to update a WebAPK on the server and to
   // the Google Play server to install the downloaded WebAPK.
