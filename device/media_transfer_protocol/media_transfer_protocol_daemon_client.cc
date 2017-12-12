@@ -13,8 +13,8 @@
 #include "dbus/message.h"
 #include "dbus/object_path.h"
 #include "dbus/object_proxy.h"
-#include "device/media_transfer_protocol/mtp_file_entry.pb.h"
 #include "device/media_transfer_protocol/mtp_storage_info.pb.h"
+#include "device/media_transfer_protocol/mtp_file_entry.pb.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 namespace device {
@@ -24,6 +24,15 @@ namespace {
 const char kInvalidResponseMsg[] = "Invalid Response: ";
 uint32_t kMaxChunkSize = 1024 * 1024;  // D-Bus has message size limits.
 
+mojom::MtpFileEntryPtr GetMojoMtpFileEntryPtrFromProtobuf(MtpFileEntry entry) {
+  return mojom::MtpFileEntry::New(
+      entry.item_id(),
+      entry.parent_id(),
+      entry.file_name(),
+      entry.file_size(),
+      entry.modification_time(),
+      static_cast<mojom::MtpFileEntry::FileType>(entry.file_type()));
+}
 // The MediaTransferProtocolDaemonClient implementation.
 class MediaTransferProtocolDaemonClientImpl
     : public MediaTransferProtocolDaemonClient {
@@ -406,11 +415,16 @@ class MediaTransferProtocolDaemonClientImpl
       return;
     }
 
-    std::vector<MtpFileEntry> file_entries;
+    // This vector of mojo format MtpFileEntryPtr gets informations from
+    // protobuf format data and it will be passed to the client callback.
+    std::vector<mojom::MtpFileEntryPtr> file_entries;
     file_entries.reserve(entries_protobuf.file_entries_size());
-    for (int i = 0; i < entries_protobuf.file_entries_size(); ++i)
-      file_entries.push_back(entries_protobuf.file_entries(i));
-    callback.Run(file_entries);
+    for (int i = 0; i < entries_protobuf.file_entries_size(); ++i) {
+      const auto& entry = entries_protobuf.file_entries(i);
+      file_entries.push_back(
+          GetMojoMtpFileEntryPtrFromProtobuf(entry));
+    }
+    callback.Run(std::move(file_entries));
   }
 
   // Handles the result of ReadFileChunk and calls |callback| or
