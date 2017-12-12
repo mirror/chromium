@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f598a4b_918124c2",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T02:03:45Z",
+      "side": 1,
+      "message": "Now we are not using this function. I removed |canceled_| and |received_after_cancel_| accordingly.",
+      "revId": "abe7292f7236272f752ea77cf93504793c989375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

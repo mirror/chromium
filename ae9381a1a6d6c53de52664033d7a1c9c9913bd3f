@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcef5c57_8697e8ba",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1349,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T02:03:45Z",
+      "side": 0,
+      "message": "As many of IPC related things are moved to MojoAsyncResourceHandler I removed this test.",
+      "revId": "ae9381a1a6d6c53de52664033d7a1c9c9913bd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b50a7428_84fcc0b9",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T02:03:45Z",
+      "side": 0,
+      "message": "\"sync load\" will be gone from the browser side shortly. Ditto below.",
+      "revId": "ae9381a1a6d6c53de52664033d7a1c9c9913bd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d60cb3b_188f6e9b",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3061,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T02:03:45Z",
+      "side": 0,
+      "message": "This is done in MakeTestFilter.",
+      "revId": "ae9381a1a6d6c53de52664033d7a1c9c9913bd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97cf99f1_e63ef556",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3182,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T02:03:45Z",
+      "side": 0,
+      "message": "DataReceivedACK will be gone shortly.",
+      "revId": "ae9381a1a6d6c53de52664033d7a1c9c9913bd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7458dfef_6a3412d4",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3267,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T02:03:45Z",
+      "side": 0,
+      "message": "DataReceivedACK will be gone shortly.",
+      "revId": "ae9381a1a6d6c53de52664033d7a1c9c9913bd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e8c0f7b_9d70649e",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3320,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T02:03:45Z",
+      "side": 0,
+      "message": "ditto",
+      "range": {
+        "startLine": 3320,
+        "startChar": 35,
+        "endLine": 3320,
+        "endChar": 61
+      },
+      "revId": "ae9381a1a6d6c53de52664033d7a1c9c9913bd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce8cbd10_14b9b7e3",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3377,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T02:03:45Z",
+      "side": 0,
+      "message": "This is covered by RegisterDownloadedTempFileWithMojo.",
+      "revId": "ae9381a1a6d6c53de52664033d7a1c9c9913bd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f74e57c_85bf7e8f",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3745,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-12T02:03:45Z",
+      "side": 0,
+      "message": "This message is covered in MojoAsyncResourceHandler.",
+      "revId": "ae9381a1a6d6c53de52664033d7a1c9c9913bd3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
