@@ -26,14 +26,14 @@ class SingleThreadTaskRunner;
 namespace update_client {
 
 class Component;
+class Configurator;
 
 class ActionRunner {
  public:
   using Callback =
       base::OnceCallback<void(bool succeeded, int error_code, int extra_code1)>;
 
-  ActionRunner(const Component& component,
-               const std::vector<uint8_t>& key_hash);
+  ActionRunner(const Component& component, scoped_refptr<Configurator> config);
   ~ActionRunner();
 
   void Run(Callback run_complete);
@@ -50,9 +50,13 @@ class ActionRunner {
 
   const Component& component_;
 
-  // Contains the key hash of the CRX this object is allowed to run. This value
-  // is using during the unpacking of the CRX to verify its integrity.
-  const std::vector<uint8_t> key_hash_;
+  // The configurator is used to fetch the key hash of the CRX this object is
+  // allowed to run, and to manufacture a mojo service connector. These values
+  // are using during the unpacking of the CRX.
+  scoped_refptr<Configurator> config_;
+
+  // A connector, used to communicate to mojo services to handle unpacking.
+  std::unique_ptr<service_manager::Connector> connector_;
 
   // Used to post callbacks to the main thread.
   scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
