@@ -16,6 +16,24 @@
       "revId": "e08ca13399af294c22a37b49da1f18d44c16a0dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e951d4d3_a0b99746",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-12T17:32:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1a58c5e_1834800d",
+      "revId": "e08ca13399af294c22a37b49da1f18d44c16a0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
