@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e19deba_ef9532be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21500dbe_2dcbcc00",
+      "range": {
+        "startLine": 742,
+        "startChar": 48,
+        "endLine": 742,
+        "endChar": 88
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eade0249_029f36aa",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c94b11_ad564fa8",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eade0249_029f36aa",
+      "range": {
+        "startLine": 405,
+        "startChar": 2,
+        "endLine": 405,
+        "endChar": 40
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bc382b12_924a938d",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a897d66_63bcb115",
+      "range": {
+        "startLine": 412,
+        "startChar": 2,
+        "endLine": 412,
+        "endChar": 25
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d613452a_f750ff69",
         "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf80a85a_6d251ec2",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d613452a_f750ff69",
+      "range": {
+        "startLine": 149,
+        "startChar": 4,
+        "endLine": 149,
+        "endChar": 47
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "137caa1a_d13e43f2",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Done. Thanks.",
+      "parentUuid": "d2e21fe4_658c4f83",
+      "range": {
+        "startLine": 172,
+        "startChar": 18,
+        "endLine": 173,
+        "endChar": 28
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcaa9681_ee38c901",
         "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c546d8ed_68923af9",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcaa9681_ee38c901",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 175,
+        "endChar": 39
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "f4916f30_6d850a64",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Ok, I changed the OnGetAllItemsDone to a mock method and setting an EXPECT_CALL before calling GetAllItems. Now the behavior is same as before.",
+      "parentUuid": "7b43208e_cfa03417",
+      "range": {
+        "startLine": 165,
+        "startChar": 4,
+        "endLine": 165,
+        "endChar": 69
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6294c2e1_7151dcdc",
         "filename": "components/offline_items_collection/core/offline_content_aggregator_unittest.cc",
         "patchSetId": 7
@@ -255,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "189b773b_b9129fc1",
+        "filename": "components/offline_items_collection/core/offline_content_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "237f7ed6_f2a4063c",
+      "range": {
+        "startLine": 31,
+        "startChar": 53,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "466e53b2_2274f149",
         "filename": "components/offline_items_collection/core/offline_content_provider.h",
         "patchSetId": 7
@@ -275,6 +467,30 @@
       "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d3e76a_d6592db6",
+        "filename": "components/offline_items_collection/core/offline_content_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "466e53b2_2274f149",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 62
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +517,30 @@
     },
     {
       "key": {
+        "uuid": "51369683_e4899484",
+        "filename": "components/offline_items_collection/core/test_support/mock_offline_content_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "77fb496c_5bef4ca2",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 1
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e281c23b_e9589c6b",
         "filename": "components/offline_items_collection/core/test_support/mock_offline_content_provider.cc",
         "patchSetId": 7
@@ -321,6 +561,30 @@
       "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cdd5377_4dd8a1ce",
+        "filename": "components/offline_items_collection/core/test_support/mock_offline_content_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e281c23b_e9589c6b",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 34
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -367,6 +631,30 @@
       "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4718191f_36d2982a",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-12-12T17:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fe89c59_69ddcaf0",
+      "range": {
+        "startLine": 267,
+        "startChar": 4,
+        "endLine": 267,
+        "endChar": 37
+      },
+      "revId": "93979157d5fd3548f2a0268cac9f556ae4bf013d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
