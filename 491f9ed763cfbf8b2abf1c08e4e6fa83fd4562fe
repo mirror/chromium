@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c450f1d_0635a5eb",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-12T23:43:53Z",
+      "side": 1,
+      "message": "This name is too generic. Are we sure it has not been taken before?",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db624c9_7f21d657",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-12T23:43:53Z",
+      "side": 1,
+      "message": "nit: s/kDogFood/kDogfood/",
+      "range": {
+        "startLine": 19,
+        "startChar": 27,
+        "endLine": 19,
+        "endChar": 35
+      },
+      "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5799b5dd_5204d47d",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-12T23:43:53Z",
+      "side": 1,
+      "message": "Consider setting NONDOGFOOD to 0, and DOGFOOD to 1.\nWe want the default value of the enum (i.e., 0) to map to NONDOGFOOD.\n\nAlternatively, add [default \u003d NONDOGFOOD] below similar to\nhttps://cs.chromium.org/chromium/src/remoting/proto/audio.proto?rcl\u003d0f49dec7b462accc52b696834674e93bf5380d3b\u0026l\u003d28",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 11
+      },
+      "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd1d210a_43a0a42b",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-12T23:43:53Z",
+      "side": 1,
+      "message": "nit: s/dog_food/dogfood/\nHere, and everywhere else.",
+      "range": {
+        "startLine": 139,
+        "startChar": 24,
+        "endLine": 139,
+        "endChar": 38
+      },
+      "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
