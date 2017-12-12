@@ -19,6 +19,7 @@
 #include "net/base/net_errors.h"
 #include "net/log/net_log_source.h"
 #include "net/socket/tcp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace {
 
@@ -196,12 +197,34 @@ void AdbClientSocket::SendCommand(const std::string& command,
                                   const CommandCallback& callback) {
   scoped_refptr<net::StringIOBuffer> request_buffer =
       new net::StringIOBuffer(EncodeMessage(command));
-  int result = socket_->Write(request_buffer.get(),
-                              request_buffer->size(),
-                              base::Bind(&AdbClientSocket::ReadResponse,
-                                         base::Unretained(this),
-                                         callback,
-                                         is_void));
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("adb_client_socket", R"(
+        semantics {
+          sender: "ADB Client Socket"
+          description:
+            "Android Debug Bridge (adb) is a versatile command-line tool that "
+            "lets you communicate with a device. The adb command facilitates a "
+            "variety of device actions, such as installing and debugging apps, "
+            "and it provides access to a Unix shell that you can use to run a "
+            "variety of commands on a device."
+          trigger:
+            "A user connects to an Android device using remote debugging."
+          data: "Any data required for remote debugging."
+          destination: LOCAL
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "To use adb with a device connected over USB, you must enable USB "
+            "debugging in the device system settings, under Developer options."
+          policy_exception_justification:
+            "This is not an actual network request."
+        })");
+  int result =
+      socket_->Write(request_buffer.get(), request_buffer->size(),
+                     base::Bind(&AdbClientSocket::ReadResponse,
+                                base::Unretained(this), callback, is_void),
+                     traffic_annotation);
   if (result != net::ERR_IO_PENDING)
     ReadResponse(callback, is_void, result);
 }
