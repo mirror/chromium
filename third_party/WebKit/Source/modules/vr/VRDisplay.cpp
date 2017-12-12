@@ -200,7 +200,9 @@ void VRDisplay::RequestVSync() {
   DVLOG(2) << __FUNCTION__
            << " start: pending_vrdisplay_raf_=" << pending_vrdisplay_raf_
            << " in_animation_frame_=" << in_animation_frame_
-           << " did_submit_this_frame_=" << did_submit_this_frame_;
+           << " did_submit_this_frame_=" << did_submit_this_frame_
+           << " pending_magic_window_vsync_=" << pending_magic_window_vsync_
+           << " pending_presenting_vsync_=" << pending_presenting_vsync_;
   if (!pending_vrdisplay_raf_)
     return;
   Document* doc = navigator_vr_->GetDocument();
@@ -208,20 +210,23 @@ void VRDisplay::RequestVSync() {
     return;
   // If we've switched from magic window to presenting, cancel the Document rAF
   // and start the VrPresentationProvider VSync.
-  if (is_presenting_ && pending_vsync_id_ != -1) {
-    doc->CancelAnimationFrame(pending_vsync_id_);
-    pending_vsync_ = false;
-    pending_vsync_id_ = -1;
+  if (is_presenting_ && pending_magic_window_vsync_id_ != -1) {
+    doc->CancelAnimationFrame(pending_magic_window_vsync_id_);
+    pending_magic_window_vsync_ = false;
+    pending_magic_window_vsync_id_ = -1;
   }
-  if (display_blurred_ || pending_vsync_)
+  if (display_blurred_ || pending_magic_window_vsync_ ||
+      pending_presenting_vsync_)
     return;
 
   if (!is_presenting_) {
     magic_window_provider_->GetPose(
         WTF::Bind(&VRDisplay::OnMagicWindowPose, WrapWeakPersistent(this)));
-    pending_vsync_ = true;
-    pending_vsync_id_ =
+    pending_magic_window_vsync_ = true;
+    pending_magic_window_vsync_id_ =
         doc->RequestAnimationFrame(new VRDisplayFrameRequestCallback(this));
+    DVLOG(2) << __FUNCTION__ << " done: pending_magic_window_vsync_="
+             << pending_magic_window_vsync_;
     return;
   }
   DCHECK(vr_presentation_provider_.is_bound());
@@ -247,11 +252,12 @@ void VRDisplay::RequestVSync() {
   // before rAF (b), after rAF (c), or not at all (d). If rAF isn't called at
   // all, there won't be future frames.
 
-  pending_vsync_ = true;
+  pending_presenting_vsync_ = true;
   vr_presentation_provider_->GetVSync(
       WTF::Bind(&VRDisplay::OnPresentingVSync, WrapWeakPersistent(this)));
 
-  DVLOG(2) << __FUNCTION__ << " done: pending_vsync_=" << pending_vsync_;
+  DVLOG(2) << __FUNCTION__
+           << " done: pending_presenting_vsync_=" << pending_presenting_vsync_;
 }
 
 int VRDisplay::requestAnimationFrame(V8FrameRequestCallback* callback) {
@@ -265,7 +271,7 @@ int VRDisplay::requestAnimationFrame(V8FrameRequestCallback* callback) {
   // arrive earlier than frame submission, but other than that we want to call
   // it as early as possible. See comments inside RequestVSync() for more
   // details on the applicable cases.
-  if (!in_animation_frame_ || did_submit_this_frame_) {
+  if (!is_presenting_ || !in_animation_frame_ || did_submit_this_frame_) {
     RequestVSync();
   }
   FrameRequestCallbackCollection::V8FrameCallback* frame_callback =
@@ -981,7 +987,7 @@ void VRDisplay::ProcessScheduledAnimations(double timestamp) {
     pending_vrdisplay_raf_ = false;
     did_submit_this_frame_ = false;
     scripted_animation_controller_->ServiceScriptedAnimations(timestamp);
-    if (pending_vrdisplay_raf_ && !did_submit_this_frame_) {
+    if (pending_vrdisplay_raf_ && is_presenting_ && !did_submit_this_frame_) {
       DVLOG(2) << __FUNCTION__ << ": vrDisplay.rAF did not submit a frame";
       RequestVSync();
     }
@@ -991,7 +997,8 @@ void VRDisplay::ProcessScheduledAnimations(double timestamp) {
 
   // Sanity check: If pending_vrdisplay_raf_ is true and the vsync provider
   // is connected, we must now have a pending vsync.
-  DCHECK(!pending_vrdisplay_raf_ || pending_vsync_);
+  DCHECK(!pending_vrdisplay_raf_ || pending_magic_window_vsync_ ||
+         pending_presenting_vsync_);
 }
 
 void VRDisplay::OnPresentingVSync(
@@ -1006,7 +1013,7 @@ void VRDisplay::OnPresentingVSync(
     case device::mojom::blink::VRPresentationProvider::VSyncStatus::CLOSING:
       return;
   }
-  pending_vsync_ = false;
+  pending_presenting_vsync_ = false;
 
   frame_pose_ = std::move(pose);
   vr_frame_id_ = frame_id;
@@ -1027,8 +1034,8 @@ void VRDisplay::OnPresentingVSync(
 
 void VRDisplay::OnMagicWindowVSync(double timestamp) {
   DVLOG(2) << __FUNCTION__;
-  pending_vsync_ = false;
-  pending_vsync_id_ = -1;
+  pending_magic_window_vsync_ = false;
+  pending_magic_window_vsync_id_ = -1;
   vr_frame_id_ = -1;
   ProcessScheduledAnimations(timestamp);
 }
@@ -1042,12 +1049,15 @@ void VRDisplay::OnMagicWindowPose(device::mojom::blink::VRPosePtr pose) {
 }
 
 void VRDisplay::OnPresentationProviderConnectionError() {
+  DVLOG(1) << __FUNCTION__ << ";;; is_presenting_=" << is_presenting_
+           << " pending_magic_window_vsync_=" << pending_magic_window_vsync_
+           << " pending_presenting_vsync_=" << pending_presenting_vsync_;
   vr_presentation_provider_.reset();
   if (is_presenting_) {
     ForceExitPresent();
-    pending_vsync_ = false;
-    RequestVSync();
   }
+  pending_presenting_vsync_ = false;
+  RequestVSync();
 }
 
 ScriptedAnimationController& VRDisplay::EnsureScriptedAnimationController(

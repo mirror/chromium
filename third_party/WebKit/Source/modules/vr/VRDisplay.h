@@ -244,8 +244,9 @@ class VRDisplay final : public EventTargetWithInlineData,
   TraceWrapperMember<ScriptedAnimationController>
       scripted_animation_controller_;
   bool pending_vrdisplay_raf_ = false;
-  bool pending_vsync_ = false;
-  int pending_vsync_id_ = -1;
+  bool pending_presenting_vsync_ = false;
+  bool pending_magic_window_vsync_ = false;
+  int pending_magic_window_vsync_id_ = -1;
   bool in_animation_frame_ = false;
   bool did_submit_this_frame_ = false;
   bool display_blurred_ = false;
