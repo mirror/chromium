@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "68a099da_3d20e53b",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-12T00:03:07Z",
+      "side": 1,
+      "message": "Current implementation has the mount ids starting at 1. I do agree that it is strange that mount id can never be 0. Do you think I should submit a patch that changes that logic so that valid mount ids start at 0 instead of 1?",
+      "parentUuid": "49e7608d_cd3a86fb",
+      "revId": "9ffe53fdf3f27666c767aa8db611530f7d24e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3b20e22_57fae0d9",
         "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
         "patchSetId": 1
@@ -50,6 +68,24 @@
       "revId": "9ffe53fdf3f27666c767aa8db611530f7d24e5db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e556c48_6a5fc34d",
+        "filename": "chrome/browser/chromeos/smb_client/smb_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-12-12T00:03:07Z",
+      "side": 1,
+      "message": "That was done in this CL: https://chromium-review.googlesource.com/c/chromium/src/+/749897",
+      "parentUuid": "a3b20e22_57fae0d9",
+      "revId": "9ffe53fdf3f27666c767aa8db611530f7d24e5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
