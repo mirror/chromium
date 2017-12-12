@@ -22,6 +22,30 @@
       "revId": "4e60c55751997d899ac593f460839e814a37340f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34466b9e_aee10fb7",
+        "filename": "third_party/WebKit/Source/platform/wtf/Vector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-12T02:28:56Z",
+      "side": 1,
+      "message": "Yeah, makes sense. I\u0027d prefer landing this CL first since VectorTraits\u003cT\u003e::NotifyElementConstructedAt() will be more error-prone (people may forget calling it).",
+      "parentUuid": "9902f3c1_7077f0a3",
+      "range": {
+        "startLine": 155,
+        "startChar": 23,
+        "endLine": 155,
+        "endChar": 39
+      },
+      "revId": "4e60c55751997d899ac593f460839e814a37340f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
