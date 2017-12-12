@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "ea988223_aa647135",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-12T18:19:43Z",
+      "side": 1,
+      "message": "Ops, forgot to delete this line. Thanks!",
+      "parentUuid": "8536e80d_605321da",
+      "revId": "0abd07cdcb08abaa30597bdaee63296b68716e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "194a0cf9_77e15551",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.h",
         "patchSetId": 3
@@ -53,6 +71,30 @@
       "writtenOn": "2017-12-12T18:12:21Z",
       "side": 1,
       "message": "clarification: Which part of arc_app_utils.cc code are you talking about? I couldn\u0027t see why intent_helper is needed only when |launch_intent| is set.",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 26,
+        "endChar": 13
+      },
+      "revId": "0abd07cdcb08abaa30597bdaee63296b68716e7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c97219a_3716c648",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-12T18:19:43Z",
+      "side": 1,
+      "message": "You are right! My current fix looks bad and it works because introduces some delay. Need to take a look.",
+      "parentUuid": "194a0cf9_77e15551",
       "range": {
         "startLine": 24,
         "startChar": 12,
