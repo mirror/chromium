@@ -118,6 +118,9 @@ class CONTENT_EXPORT WebContentsAndroid
   void ScrollFocusedEditableNodeIntoView(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
+  void OnSelectWordAroundCaret(bool did_select,
+                               int start_adjust,
+                               int end_adjust);
   void SelectWordAroundCaret(JNIEnv* env,
                              const base::android::JavaParamRef<jobject>& obj);
   void AdjustSelectionByCharacterOffset(

@@ -421,13 +421,24 @@ void WebContentsAndroid::ScrollFocusedEditableNodeIntoView(
   frame->GetFrameInputHandler()->ScrollFocusedEditableNodeIntoRect(gfx::Rect());
 }
 
+void WebContentsAndroid::OnSelectWordAroundCaret(bool did_select,
+                                                 int start_adjust,
+                                                 int end_adjust) {
+  LOG(WARNING) << "OnSelectWordAroundcaret called";
+  RenderWidgetHostViewAndroid* rwhva = GetRenderWidgetHostViewAndroid();
+  rwhva->OnSelectWordAroundCaretAck(did_select, start_adjust, end_adjust);
+}
+
 void WebContentsAndroid::SelectWordAroundCaret(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
-  RenderViewHost* host = web_contents_->GetRenderViewHost();
-  if (!host)
+  LOG(WARNING) << "SelectWordAroundCaret";
+  RenderFrameHostImpl* frame = web_contents_->GetFocusedFrame();
+  if (!frame)
     return;
-  host->SelectWordAroundCaret();
+  frame->GetFrameInputHandler()->SelectWordAroundCaret(
+      base::BindOnce(&WebContentsAndroid::OnSelectWordAroundCaret,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void WebContentsAndroid::AdjustSelectionByCharacterOffset(

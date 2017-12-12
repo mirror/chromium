@@ -349,6 +349,10 @@ class CONTENT_EXPORT RenderWidget
     return *input_handler_;
   }
 
+  RenderWidgetInputHandler* GetInputHandler() const {
+    return input_handler_.get();
+  }
+
   void SetHandlingInputEventForTesting(bool handling_input_event);
 
   // Deliveres |message| together with compositor state change updates. The

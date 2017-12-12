@@ -317,6 +317,10 @@ interface FrameInputHandler {
   AdjustSelectionByCharacterOffset(
       int32 start, int32 end, blink.mojom.SelectionMenuBehavior behavior);
 
+  // Requests the renderer to select word around caret.
+  // Expects ack with new selection information when finished.
+  SelectWordAroundCaret() => (bool didSelect, int32 startAdjust, int32 endAdjust);
+
   // Requests the renderer to move the selection extent point to a new position.
   // Expects a MoveRangeSelectionExtent_ACK message when finished.
   MoveRangeSelectionExtent(gfx.mojom.Point extent);

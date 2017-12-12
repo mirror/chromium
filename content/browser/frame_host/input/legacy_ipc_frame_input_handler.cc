@@ -127,6 +127,11 @@ void LegacyIPCFrameInputHandler::SelectRange(const gfx::Point& point,
   SendInput(std::make_unique<InputMsg_SelectRange>(routing_id_, point, extent));
 }
 
+void LegacyIPCFrameInputHandler::SelectWordAroundCaret(
+    SelectWordAroundCaretCallback callback) {
+  LOG(WARNING) << "LegacyIPCFrameInputHandler";
+}
+
 void LegacyIPCFrameInputHandler::AdjustSelectionByCharacterOffset(
     int32_t start,
     int32_t end,

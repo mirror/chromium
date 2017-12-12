@@ -33,13 +33,15 @@ FrameInputHandlerImpl::FrameInputHandlerImpl(
   weak_this_ = weak_ptr_factory_.GetWeakPtr();
   // If we have created an input event queue move the mojo request over to the
   // compositor thread.
-  if (RenderThreadImpl::current()->compositor_task_runner() &&
+  if (false && RenderThreadImpl::current()->compositor_task_runner() &&
       input_event_queue_) {
+    LOG(WARNING) << "compositor thread";
     // Mojo channel bound on compositor thread.
     RenderThreadImpl::current()->compositor_task_runner()->PostTask(
         FROM_HERE, base::BindOnce(&FrameInputHandlerImpl::BindNow,
                                   base::Unretained(this), std::move(request)));
   } else {
+    LOG(WARNING) << "main thread";
     // Mojo channel bound on main thread.
     BindNow(std::move(request));
   }
@@ -294,6 +296,44 @@ void FrameInputHandlerImpl::SelectRange(const gfx::Point& base,
   render_frame_->GetWebFrame()->SelectRange(
       render_view->ConvertWindowPointToViewport(base),
       render_view->ConvertWindowPointToViewport(extent));
+}
+
+void FrameInputHandlerImpl::SelectWordAroundCaret(
+    SelectWordAroundCaretCallback callback) {
+  if (!main_thread_task_runner_->BelongsToCurrentThread()) {
+    if (input_event_queue_) {
+      input_event_queue_->QueueClosure(
+          base::BindOnce(&FrameInputHandlerImpl::SelectWordAroundCaret,
+                         weak_this_, std::move(callback)));
+    }
+    return;
+  }
+  if (!render_frame_)
+    return;
+
+  blink::WebLocalFrame* frame = render_frame_->GetWebFrame();
+  bool did_select = false;
+  int start_adjust = 0;
+  int end_adjust = 0;
+
+  blink::WebRange initial_range = frame->SelectionRange();
+  render_frame_->GetRenderWidget()->GetInputHandler()->set_handling_input_event(
+      true);
+  if (!initial_range.IsNull())
+    did_select = frame->SelectWordAroundCaret();
+  if (did_select) {
+    blink::WebRange adjusted_range = frame->SelectionRange();
+    start_adjust = adjusted_range.StartOffset() - initial_range.StartOffset();
+    end_adjust = adjusted_range.EndOffset() - initial_range.EndOffset();
+  }
+  render_frame_->GetRenderWidget()->GetInputHandler()->set_handling_input_event(
+      false);
+  LOG(WARNING) << "Before run callback";
+  LOG(WARNING) << "did_select = " << did_select
+               << " start_adjust = " << start_adjust
+               << " end_adjust = " << end_adjust;
+  std::move(callback).Run(did_select, start_adjust, end_adjust);
+  // std::move(callback).Run(false, 0, 0);
 }
 
 void FrameInputHandlerImpl::AdjustSelectionByCharacterOffset(
