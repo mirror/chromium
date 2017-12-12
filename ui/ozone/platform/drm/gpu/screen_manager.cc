@@ -377,11 +377,11 @@ OverlayPlane ScreenManager::GetModesetBuffer(
   if (!buffer) {
     LOG(ERROR) << "Failed to create scanout buffer";
     return OverlayPlane(nullptr, 0, gfx::OVERLAY_TRANSFORM_INVALID, gfx::Rect(),
-                        gfx::RectF());
+                        gfx::RectF(), -1);
   }
 
   FillModesetBuffer(drm, controller, buffer.get());
-  return OverlayPlane(buffer);
+  return OverlayPlane(buffer, -1);
 }
 
 bool ScreenManager::EnableController(HardwareDisplayController* controller) {
