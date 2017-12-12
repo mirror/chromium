@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "972f84b2_92373335",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-12T11:35:16Z",
+      "side": 1,
+      "message": "How do we generally represent the absence of a device? Is it by empty audio parameters i.e. media::AudioParameters()?\nIf we use AudioParameters() here instead of UnavailableDeviceParams(), some of the browser tests are failing. Your suggestion on this, please?",
+      "range": {
+        "startLine": 577,
+        "startChar": 73,
+        "endLine": 577,
+        "endChar": 0
+      },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
