@@ -44,7 +44,9 @@ RemoteFontFaceSource::RemoteFontFaceSource(CSSFontFace* css_font_face,
     period_ = kSwapPeriod;
   }
   // Note: this may call NotifyFinished() and ClearResource().
-  SetResource(font);
+  SetResource(font, font_selector_->GetExecutionContext()
+                        ->GetTaskRunner(TaskType::kUnspecedLoading)
+                        .get());
 }
 
 RemoteFontFaceSource::~RemoteFontFaceSource() = default;

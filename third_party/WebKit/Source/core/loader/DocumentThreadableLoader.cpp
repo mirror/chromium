@@ -1218,7 +1218,7 @@ void DocumentThreadableLoader::LoadRequestAsync(
         GetExecutionContext(), client_);
     ThreadableLoaderClient* client = client_;
     Clear();
-    // setResource() might call notifyFinished() and thus clear()
+    // Fetching might call NotifyFinished() and thus clear()
     // synchronously, and in such cases ThreadableLoaderClient is already
     // notified and |client| is null.
     if (!client)
