@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eaa7a8e5_bb00e980",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-12-12T03:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c4d4a64_38df7954",
+      "revId": "43a4975aa92819b889642673b04288b446d6bc56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5ad6d55_4269af58",
         "filename": "base/base_switches.cc",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-11T22:57:35Z",
       "side": 1,
       "message": "crbug.com:// is not a protocol. :-P",
+      "range": {
+        "startLine": 117,
+        "startChar": 32,
+        "endLine": 117,
+        "endChar": 50
+      },
+      "revId": "43a4975aa92819b889642673b04288b446d6bc56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923c4989_7e231e7c",
+        "filename": "base/base_switches.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-12-12T03:27:41Z",
+      "side": 1,
+      "message": ":) I actually got the link working and Chrome actually resolves it properly, but indeed not a protocol",
+      "parentUuid": "e5ad6d55_4269af58",
       "range": {
         "startLine": 117,
         "startChar": 32,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "91596abf_b72241f9",
+        "filename": "base/base_switches.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-12-12T03:27:41Z",
+      "side": 1,
+      "message": "1) Eventually yes I think, for that:\n  - SharedMemory needs to be refractored so that write seals can be applied and we can move to memfd_create. See https://docs.google.com/document/d/1eiECEj0x8_VFqkdf61zjmh061rgdkfvIOUxle-q0AIE\n  - Cloud services, such as GCE, need to enable kernel versions that support memfd_create.\n2) Yeah, I don\u0027t think there\u0027s a reason now to support OS_CHROMEOS, Done",
+      "parentUuid": "097ff8e1_127414db",
+      "revId": "43a4975aa92819b889642673b04288b446d6bc56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec145f98_0c792145",
         "filename": "base/memory/shared_memory_unittest.cc",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "43a4975aa92819b889642673b04288b446d6bc56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93372ee_185c20a3",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-12-12T03:27:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec145f98_0c792145",
+      "revId": "43a4975aa92819b889642673b04288b446d6bc56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
