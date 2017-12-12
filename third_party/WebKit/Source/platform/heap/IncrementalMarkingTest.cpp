@@ -5,10 +5,13 @@
 #include "platform/heap/CallbackStack.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/heap/Heap.h"
+#include "platform/heap/IncrementalMarking.h"
 #include "platform/heap/Member.h"
 #include "platform/heap/ThreadState.h"
 #include "platform/heap/TraceTraits.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if BUILDFLAG(BLINK_HEAP_INCREMENTAL_MARKING)
 
 namespace blink {
 namespace incremental_marking_test {
@@ -210,3 +213,5 @@ TEST(IncrementalMarkingTest, NoWriteBarrierOnMarkedMixinApplication) {
 
 }  // namespace incremental_marking_test
 }  // namespace blink
+
+#endif  // BUILDFLAG(BLINK_HEAP_INCREMENTAL_MARKING)
