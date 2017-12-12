@@ -53,4 +53,30 @@ TEST_F(OriginUtilTest, GURLOriginWithValidWKSecurityOrigin) {
   EXPECT_TRUE(url.port().empty());
 }
 
+// Tests calling GURLOriginWithWKSecurityOrigin with valid origin.
+TEST_F(OriginUtilTest, GURLOriginWithZeroPort) {
+  WKSecurityOriginStub* origin = [[WKSecurityOriginStub alloc] init];
+  [origin setProtocol:@"http"];
+  [origin setHost:@"chromium.org"];
+  [origin setPort:0];
+
+  GURL url(
+      GURLOriginWithWKSecurityOrigin(static_cast<WKSecurityOrigin*>(origin)));
+  EXPECT_EQ("http://chromium.org/", url.spec());
+  EXPECT_TRUE(url.port().empty());
+}
+
+// Tests calling GURLOriginWithWKSecurityOrigin with valid origin.
+TEST_F(OriginUtilTest, GURLOriginWithNonStandardPort) {
+  WKSecurityOriginStub* origin = [[WKSecurityOriginStub alloc] init];
+  [origin setProtocol:@"http"];
+  [origin setHost:@"chromium.org"];
+  [origin setPort:123];
+
+  GURL url(
+      GURLOriginWithWKSecurityOrigin(static_cast<WKSecurityOrigin*>(origin)));
+  EXPECT_EQ("http://chromium.org/", url.spec());
+  EXPECT_EQ("123", url.port());
+}
+
 }  // namespace web
