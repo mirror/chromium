@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "11a8b62b_32b245ea",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-12-12T21:21:23Z",
+      "side": 1,
+      "message": "The problem here splits into two parts, as I think.\nFirst is that we have a disconnected position in functions like MostBackwardCaretPosition.\nAnd we can fix it early in caller like editing/command.\nSecond is that PositionIteratorAlgorithm can\u0027t handle null positions, and we have to add checks to prevent user crashes. DCHECKs may be not enough, as we can see.\nTo solve all these tasks we can add checks on every level.\nBrutal but should work.",
+      "parentUuid": "a9fa90ce_51344ad5",
+      "revId": "0547d1a2e839298b08a9722d1c85f63f71f320a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "051917fa_5560d60c",
         "filename": "third_party/WebKit/Source/core/editing/VisibleUnits.cpp",
         "patchSetId": 1
