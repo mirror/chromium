@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd0a1935_ff241c1f",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/enter-clicks-buttons.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-12T00:14:30Z",
+      "side": 1,
+      "message": "Test was failing because \u0027\\r\u0027 was not mapped to anything. Per https://cs.chromium.org/chromium/src/content/shell/test_runner/event_sender.cc?type\u003dcs\u0026l\u003d1507 it looks like \u0027Enter\u0027 is the right thing to pass to eventSender.keyDown().",
+      "revId": "3c4d52675442113f75c869a6c6c6251aa9b23498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
