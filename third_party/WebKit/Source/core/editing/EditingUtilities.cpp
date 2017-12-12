@@ -505,6 +505,9 @@ template <typename Strategy>
 PositionTemplate<Strategy> NextCandidateAlgorithm(
     const PositionTemplate<Strategy>& position) {
   TRACE_EVENT0("input", "EditingUtility::nextCandidateAlgorithm");
+  if (position.IsNull())
+    return PositionTemplate<Strategy>();
+
   PositionIteratorAlgorithm<Strategy> p(position);
 
   p.Increment();
@@ -569,6 +572,9 @@ template <typename Strategy>
 PositionTemplate<Strategy> PreviousCandidateAlgorithm(
     const PositionTemplate<Strategy>& position) {
   TRACE_EVENT0("input", "EditingUtility::previousCandidateAlgorithm");
+  if (position.IsNull())
+    return PositionTemplate<Strategy>();
+
   PositionIteratorAlgorithm<Strategy> p(position);
 
   p.Decrement();

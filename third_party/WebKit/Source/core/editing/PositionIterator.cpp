@@ -47,6 +47,12 @@ ContainerNode* SelectableParentOf(const Node& node) {
   return parent && !IsUserSelectContain(*parent) ? parent : nullptr;
 }
 
+Node* CheckAnchorNode(Node* anchor_node) {
+  DCHECK(anchor_node) << "PositionIteratorAlgorithm shouldn't be constructed "
+                         "from null position";
+  return anchor_node;
+}
+
 }  // namespace
 
 static const int kInvalidOffset = -1;
@@ -75,7 +81,8 @@ PositionIteratorAlgorithm<Strategy>::PositionIteratorAlgorithm(
 template <typename Strategy>
 PositionIteratorAlgorithm<Strategy>::PositionIteratorAlgorithm(
     const PositionTemplate<Strategy>& pos)
-    : PositionIteratorAlgorithm(pos.AnchorNode(), pos.ComputeEditingOffset()) {}
+    : PositionIteratorAlgorithm(CheckAnchorNode(pos.AnchorNode()),
+                                pos.ComputeEditingOffset()) {}
 
 template <typename Strategy>
 PositionIteratorAlgorithm<Strategy>::PositionIteratorAlgorithm()

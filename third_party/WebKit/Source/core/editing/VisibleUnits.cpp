@@ -938,11 +938,16 @@ static PositionTemplate<Strategy> MostBackwardCaretPosition(
   if (!start_node)
     return PositionTemplate<Strategy>();
 
+  const PositionTemplate<Strategy>& adjust_position =
+      AdjustPositionForBackwardIteration<Strategy>(position);
+
+  if (adjust_position.IsNull())
+    return PositionTemplate<Strategy>();
+
   // iterate backward from there, looking for a qualified position
   Node* const boundary = EnclosingVisualBoundary<Strategy>(start_node);
   // FIXME: PositionIterator should respect Before and After positions.
-  PositionIteratorAlgorithm<Strategy> last_visible(
-      AdjustPositionForBackwardIteration<Strategy>(position));
+  PositionIteratorAlgorithm<Strategy> last_visible(adjust_position);
   const bool start_editable = HasEditableStyle(*start_node);
   Node* last_node = start_node;
   bool boundary_crossed = false;
@@ -1051,15 +1056,17 @@ PositionTemplate<Strategy> MostForwardCaretPosition(
   if (!start_node)
     return PositionTemplate<Strategy>();
 
-  // iterate forward from there, looking for a qualified position
-  Node* const boundary = EnclosingVisualBoundary<Strategy>(start_node);
-  // FIXME: PositionIterator should respect Before and After positions.
-  PositionIteratorAlgorithm<Strategy> last_visible(
+  const PositionTemplate<Strategy>& last_position =
       position.IsAfterAnchor()
           ? PositionTemplate<Strategy>::EditingPositionOf(
                 position.AnchorNode(),
                 Strategy::CaretMaxOffset(*position.AnchorNode()))
-          : position);
+          : position;
+
+  // iterate forward from there, looking for a qualified position
+  Node* const boundary = EnclosingVisualBoundary<Strategy>(start_node);
+  // FIXME: PositionIterator should respect Before and After positions.
+  PositionIteratorAlgorithm<Strategy> last_visible(last_position);
   const bool start_editable = HasEditableStyle(*start_node);
   Node* last_node = start_node;
   bool boundary_crossed = false;

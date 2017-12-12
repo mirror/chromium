@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+if (window.testRunner)
+    testRunner.dumpAsText();
+
+window.onload= function() {
+    document.designMode='on';
+    document.execCommand('selectall');
+    document.execCommand('FormatBlock', false, 'pre');
+    document.body.textContent = 'PASS if Blink doesn\'t crash.';
+};
+</script>
+<style>
+.c8:nth-of-type(2n+1) {
+  visibility: collapse;
+}
+
+#el2 {
+  position:absolute;
+}
+</style>
+<body>
+<input><input id=el2 class=c8>
+</body>
+</html>
