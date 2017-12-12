@@ -20,5 +20,6 @@ import third_party  # pylint: disable=unused-import
 if __name__ == '__main__':
   config = chromium_config.ChromiumConfig(
       benchmark_dirs=[path_util.GetPerfBenchmarksDir()],
-      top_level_dir=path_util.GetPerfDir())
+      top_level_dir=path_util.GetPerfDir(),
+      expectations_file=path_util.GetExpectationsPath())
   sys.exit(record_wpr.Main(environment=config))
