@@ -5685,6 +5685,76 @@
                     ]
                 },
                 {
+                    "id": "PointerType",
+                    "experimental": true,
+                    "type": "string",
+                    "enum": [
+                        "pointerUp",
+                        "pointerDown",
+                        "pointerMove",
+                        "pause"
+                    ]
+                },
+                {
+                    "id": "PointerAction",
+                    "experimental": true,
+                    "type": "object",
+                    "properties": [
+                        {
+                            "name": "type",
+                            "description": "Type of action to perform",
+                            "$ref": "PointerType"
+                        },
+                        {
+                            "name": "pointerType",
+                            "description": "Source of the pointer",
+                            "$ref": "GestureSourceType"
+                        },
+                        {
+                            "name": "x",
+                            "description": "X coordinate of the event",
+                            "optional": true,
+                            "type": "number"
+                        },
+                        {
+                            "name": "y",
+                            "description": "Y coordinate of the event",
+                            "optional": true,
+                            "type": "number"
+                        },
+                        {
+                            "name": "initialX",
+                            "description": "X coordinate of the current pointer position if known",
+                            "optional": true,
+                            "type": "number"
+                        },
+                        {
+                            "name": "initialY",
+                            "description": "Y coordinate of the current pointer position if known",
+                            "optional": true,
+                            "type": "number"
+                        },
+                        {
+                            "name": "button",
+                            "description": "the button to press or lift as a result of the action\n(default: \"none\").",
+                            "optional": true,
+                            "type": "string",
+                            "enum": [
+                                "none",
+                                "left",
+                                "middle",
+                                "right"
+                            ]
+                        },
+                        {
+                            "name": "duration",
+                            "description": "the amount of time in seconds the action should take",
+                            "optional": true,
+                            "type": "number"
+                        }
+                    ]
+                },
+                {
                     "id": "TimeSinceEpoch",
                     "description": "UTC time in seconds, counted from January 1, 1970.",
                     "type": "number"
@@ -5783,6 +5853,19 @@
                             "description": "Whether the event was from the left or right side of the keyboard. 1=Left, 2=Right (default:\n0).",
                             "optional": true,
                             "type": "integer"
+                        }
+                    ]
+                },
+                {
+                    "name": "dispatchPointerActions",
+                    "description": "Dispatches pointer events to the page",
+                    "parameters": [
+                        {
+                            "name": "pointerActions",
+                            "type": "array",
+                            "items": {
+                                "$ref": "PointerAction"
+                            }
                         }
                     ]
                 },
