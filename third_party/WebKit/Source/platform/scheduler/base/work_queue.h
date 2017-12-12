@@ -34,6 +34,7 @@ class PLATFORM_EXPORT WorkQueue {
  public:
   enum class QueueType { kDelayed, kImmediate };
 
+  // Note |task_queue| can be null if queue_type is kNonNestable.
   WorkQueue(TaskQueueImpl* task_queue, const char* name, QueueType queue_type);
   ~WorkQueue();
 
@@ -90,6 +91,8 @@ class PLATFORM_EXPORT WorkQueue {
   HeapHandle heap_handle() const { return heap_handle_; }
 
   void set_heap_handle(HeapHandle handle) { heap_handle_ = handle; }
+
+  QueueType queue_type() const { return queue_type_; }
 
   // Returns true if the front task in this queue has an older enqueue order
   // than the front task of |other_queue|. Both queue are assumed to be
