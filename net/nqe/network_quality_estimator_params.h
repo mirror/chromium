@@ -87,12 +87,6 @@ class NET_EXPORT NetworkQualityEstimatorParams {
     return weight_multiplier_per_signal_strength_level_;
   }
 
-  // Returns the fraction of URL requests that should record the correlation
-  // UMA.
-  double correlation_uma_logging_probability() const {
-    return correlation_uma_logging_probability_;
-  }
-
   // Returns an unset value if the effective connection type has not been forced
   // via the |params| provided to this class. Otherwise, returns a value set to
   // the effective connection type that has been forced.
@@ -242,7 +236,6 @@ class NET_EXPORT NetworkQualityEstimatorParams {
   const int throughput_min_transfer_size_kilobytes_;
   const double weight_multiplier_per_second_;
   const double weight_multiplier_per_signal_strength_level_;
-  const double correlation_uma_logging_probability_;
   base::Optional<EffectiveConnectionType> forced_effective_connection_type_;
   bool persistent_cache_reading_enabled_;
   const base::TimeDelta min_socket_watcher_notification_interval_;
