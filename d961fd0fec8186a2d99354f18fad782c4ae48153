@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a771fcc7_e0665ba2",
+        "filename": "chrome/browser/signin/process_dice_header_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-12-12T13:46:39Z",
+      "side": 1,
+      "message": "Ah I think I understand what you mean. In that case, Sync will not be started.\nThe solution would be for DiceTurnSyncOnHelper to support a null browser, so that the dialog would be displayed in the current tab.\n\nThere would still be a problem if the user closes Chrome, but then I don\u0027t know what we can do.",
+      "parentUuid": "1af96272_bd9992d1",
+      "range": {
+        "startLine": 70,
+        "startChar": 36,
+        "endLine": 70,
+        "endChar": 46
+      },
+      "revId": "d961fd0fec8186a2d99354f18fad782c4ae48153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18e84258_8185f448",
         "filename": "chrome/browser/signin/process_dice_header_delegate_impl.h",
         "patchSetId": 3
