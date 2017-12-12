@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17cf8187_62662a6d",
+        "filename": "chrome/renderer/extensions/automation_ax_tree_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-12T01:21:06Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem appropriate to have anything specific to ChromeVox (including comments) at this layer (since we\u0027re actively building other services on this api). Please revise comments. Once we change the api surface (not in this change), we\u0027ll have to test with the ChromeVox extension (which might have used a different set of automation api events).",
+      "revId": "c8b993aefa01a5413c3220d8daf84c3c09d2d117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
