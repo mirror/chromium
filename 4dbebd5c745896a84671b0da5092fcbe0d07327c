@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c82fa05d_dbdb2dd6",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-12T21:11:29Z",
+      "side": 1,
+      "message": "This file is missing where the files came from. E.g. should say where the gradle wrapper came from and how to update it. Should also list the files that you wrote under \"Local Modifications\".\n\nMight also make sense to move the tools that you wrote to a non-third-party directly. E.g. //build/android/android_deps/...",
+      "revId": "4dbebd5c745896a84671b0da5092fcbe0d07327c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
