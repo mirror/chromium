@@ -12,6 +12,8 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "chrome/browser/media/router/discovery/dial/dial_media_sink_service.h"
+#include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h"
 #include "chrome/browser/media/router/issue_manager.h"
 #include "chrome/browser/media/router/issues_observer.h"
 #include "chrome/browser/media/router/media_routes_observer.h"
@@ -101,6 +103,28 @@ class MockPresentationConnectionProxy
   MOCK_METHOD1(DidChangeState,
                void(content::PresentationConnectionState state));
   MOCK_METHOD0(RequestClose, void());
+};
+
+class MockDialMediaSinkService : public DialMediaSinkService {
+ public:
+  explicit MockDialMediaSinkService(
+      const scoped_refptr<net::URLRequestContextGetter>& request_context);
+  ~MockDialMediaSinkService() override;
+
+  MOCK_METHOD2(Start,
+               void(const OnSinksDiscoveredCallback&,
+                    const OnDialSinkAddedCallback&));
+  MOCK_METHOD0(OnUserGesture, void());
+};
+
+class MockCastMediaSinkService : public CastMediaSinkService {
+ public:
+  explicit MockCastMediaSinkService(
+      const scoped_refptr<net::URLRequestContextGetter>& request_context);
+  ~MockCastMediaSinkService() override;
+
+  MOCK_METHOD1(Start, void(const OnSinksDiscoveredCallback&));
+  MOCK_METHOD0(OnUserGesture, void());
 };
 
 }  // namespace media_router
