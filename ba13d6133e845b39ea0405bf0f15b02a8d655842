@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9da28497_73e7e7fc",
+        "filename": "media/base/video_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-12T21:31:46Z",
+      "side": 1,
+      "message": "These sizes are all 32bit int, and there\u0027s a slight chance that we can overflow. To avoid that, consider using safe math or checked math.\n\nhttps://cs.chromium.org/chromium/src/base/numerics/\n\nDoes the spec say any thing about rounding? Maybe we should still keep the rounding part, you can use double, or if use integer, do (A + B/2) / B.",
+      "revId": "ba13d6133e845b39ea0405bf0f15b02a8d655842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
