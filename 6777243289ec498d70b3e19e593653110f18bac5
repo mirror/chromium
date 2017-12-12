@@ -16,6 +16,24 @@
       "revId": "6777243289ec498d70b3e19e593653110f18bac5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147692f5_3ffd3df5",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T20:54:23Z",
+      "side": 1,
+      "message": "Done. Removed those variables completely.",
+      "parentUuid": "81bfff0a_6170c190",
+      "revId": "6777243289ec498d70b3e19e593653110f18bac5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
