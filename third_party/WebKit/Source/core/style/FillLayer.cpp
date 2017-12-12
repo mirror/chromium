@@ -182,9 +182,23 @@ bool FillLayer::operator==(const FillLayer& o) const {
 }
 
 bool FillLayer::VisuallyEqual(const FillLayer& o) const {
-  if (!image_ && !o.image_ && clip_ == o.clip_)
-    return true;
-  return *this == o;
+  if (image_ || o.image_) {
+    if (!DataEquivalent(image_, o.image_) || x_position_ != o.x_position_ ||
+        y_position_ != o.y_position_ ||
+        background_x_origin_ != o.background_x_origin_ ||
+        background_y_origin_ != o.background_y_origin_ ||
+        attachment_ != o.attachment_ || clip_ != o.clip_ ||
+        composite_ != o.composite_ || blend_mode_ != o.blend_mode_ ||
+        origin_ != o.origin_ || repeat_x_ != o.repeat_x_ ||
+        repeat_y_ != o.repeat_y_ || size_type_ != o.size_type_ ||
+        mask_source_type_ != o.mask_source_type_ ||
+        !(size_length_ == o.size_length_) || type_ != o.type_) {
+      return false;
+    }
+  }
+  if (next_ && o.next_)
+    return next_->VisuallyEqual(*o.next_);
+  return next_ == o.next_;
 }
 
 void FillLayer::FillUnsetProperties() {
