@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include "base/lazy_instance.h"
+#include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/frame_host/debug_urls.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/url_constants.h"
@@ -99,6 +100,16 @@ bool WebUIControllerFactoryRegistry::IsURLAcceptableForWebUI(
          // until crbug.com/768526 is resolved.
          GetContentClient()->browser()->IsURLAcceptableForWebUI(browser_context,
                                                                 url);
+}
+
+bool WebUIControllerFactoryRegistry::IsSuitableHost(
+    int child_id,
+    BrowserContext* browser_context,
+    const GURL& url) const {
+  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+  bool current_host_bindings = policy->HasWebUIBindings(child_id);
+  bool expected_url_bindings = UseWebUIBindingsForURL(browser_context, url);
+  return current_host_bindings == expected_url_bindings;
 }
 
 WebUIControllerFactoryRegistry::WebUIControllerFactoryRegistry() {

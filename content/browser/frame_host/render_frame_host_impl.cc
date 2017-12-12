@@ -3259,9 +3259,9 @@ bool RenderFrameHostImpl::CanCommitOrigin(
   // Check the origin against the (potential) origin lock of the current
   // process.
   // TODO(lukasza): https://crbug.com/770239: Expand the check to cover other
-  // verifications from RenderProcessHostImpl::IsSuitableHost (e.g. WebUI
-  // bindings, extension process privilege level, etc.).  Avoid duplicating
-  // the code here and in IsSuitableHost.
+  // verifications from RenderProcessHostImpl::IsSuitableHost (e.g. extension
+  // process privilege level, etc.).  Avoid duplicating the code here and in
+  // IsSuitableHost.
   BrowserContext* browser_context = GetSiteInstance()->GetBrowserContext();
   GURL site_url = SiteInstance::GetSiteForURL(browser_context, origin_url);
   auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
@@ -3899,9 +3899,11 @@ bool RenderFrameHostImpl::CanCommitURL(const GURL& url) {
   if (IsRendererDebugURL(url))
     return false;
 
-  // TODO(creis): We should also check for WebUI pages here.  Also, when the
-  // out-of-process iframes implementation is ready, we should check for
-  // cross-site URLs that are not allowed to commit in this process.
+  // Check if |host| is suitable from WebUI perspective.
+  if (!WebUIControllerFactoryRegistry::GetInstance()->IsSuitableHost(
+          GetProcess()->GetID(), GetSiteInstance()->GetBrowserContext(), url)) {
+    return false;
+  }
 
   // Give the client a chance to disallow URLs from committing.
   return GetContentClient()->browser()->CanCommitURL(GetProcess(), url);

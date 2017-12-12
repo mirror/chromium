@@ -35,6 +35,15 @@ class CONTENT_EXPORT WebUIControllerFactoryRegistry
   bool IsURLAcceptableForWebUI(BrowserContext* browser_context,
                                const GURL& url) const;
 
+  // Returns true if |host| is suitable for |url| (from WebUI perspective).
+  // If |url| is a WebUI url, then it should only be hosted by renderer
+  // processes that have been granted WebUI bindings.  If |url| is *not* a WebUI
+  // url, then it should *not* be hosted by renderer processes that have been
+  // granted WebUI bindings.
+  bool IsSuitableHost(int child_id,
+                      BrowserContext* browser_context,
+                      const GURL& url) const;
+
  private:
   friend struct base::DefaultSingletonTraits<WebUIControllerFactoryRegistry>;
 

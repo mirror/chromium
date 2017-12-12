@@ -3310,14 +3310,14 @@ bool RenderProcessHostImpl::IsSuitableHost(RenderProcessHost* host,
   if (!host->InSameStoragePartition(dest_partition))
     return false;
 
-  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
-  if (policy->HasWebUIBindings(host->GetID()) !=
-      WebUIControllerFactoryRegistry::GetInstance()->UseWebUIBindingsForURL(
-          browser_context, site_url)) {
+  // Check if |host| is suitable from WebUI perspective.
+  if (!WebUIControllerFactoryRegistry::GetInstance()->IsSuitableHost(
+          host->GetID(), browser_context, site_url)) {
     return false;
   }
 
   // Sites requiring dedicated processes can only reuse a compatible process.
+  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
   auto lock_state = policy->CheckOriginLock(host->GetID(), site_url);
   if (lock_state !=
       ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK) {
