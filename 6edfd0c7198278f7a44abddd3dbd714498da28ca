@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "cb479347_2c6817f0",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-12-12T04:41:01Z",
+      "side": 1,
+      "message": "MY LIFE HAS BEEN A LIE :(\n\nSince I was just splitting out the callbacks for OnKeyboardBoundsChanging, I assumed the use of the progressive form verb was applied correctly. Now that I think about it, I think it was correct a long time ago and then when we changed the animation behavior to use the scoped window hide animation, it technically changed such that the bounds were being set before the notification. \n\nThere\u0027s dozens of callers across the codebase and so the options I can think of are:\n1) Leave it as is\n2) Change them all at once in a separate CL.\n3) Change them incrementally by adding another method with a default empty body that also gets called at the same time and then change the callers one by one.\n\nOption #3 is viable in this CL but I\u0027d like to rip the bandaid off all at once. If it\u0027s okay with you, can we go ahead and check this in and I\u0027ll follow up with a name change CL (option #2)? I also have a TODO to rename some of the other methods anyway (disambiguate OnKeyboardClosed and OnKeyboardHidden), so this could easily fit within that work item.",
+      "parentUuid": "8d2a380b_b9105bea",
+      "revId": "6edfd0c7198278f7a44abddd3dbd714498da28ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3090aa40_029c961a",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 3
