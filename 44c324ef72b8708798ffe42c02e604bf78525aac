@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05029afc_9e0c4f6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SearchEngineAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-12T19:32:45Z",
+      "side": 1,
+      "message": "Should this now be called onPermissionsLinkClicked?\n\nif this gets more complicated, we likely should just create our own OnClickListener inside of setupPermissionsLink because we could have that pass computed information there instead of having to recalculate it here.",
+      "range": {
+        "startLine": 394,
+        "startChar": 17,
+        "endLine": 394,
+        "endChar": 38
+      },
+      "revId": "44c324ef72b8708798ffe42c02e604bf78525aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76868d13_f39ba882",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SearchEngineAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-12T19:32:45Z",
+      "side": 1,
+      "message": "I would annotate the function with @StringRes.  I also think you could switch from Integer to int.  If you return 0, that is the equivalent of unset.\n\nWe also had weird conditions where the URL was null due to mismatches, so we might want to return null/0 if the url passed in is null.",
+      "revId": "44c324ef72b8708798ffe42c02e604bf78525aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e5bd15_8ecb2f2a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SearchEngineAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-12T19:32:45Z",
+      "side": 1,
+      "message": "In java land, you need braces if the statement and conditional don\u0027t all fit on one line.",
+      "revId": "44c324ef72b8708798ffe42c02e604bf78525aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7260cc48_ae5f78b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-12T19:32:45Z",
+      "side": 1,
+      "message": "this looks overly indented, but I i\u0027ll defer to git cl format",
+      "revId": "44c324ef72b8708798ffe42c02e604bf78525aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
