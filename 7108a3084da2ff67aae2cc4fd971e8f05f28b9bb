@@ -16,6 +16,24 @@
       "revId": "7108a3084da2ff67aae2cc4fd971e8f05f28b9bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22ea43a_0e4153a0",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_helpers.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T19:56:31Z",
+      "side": 0,
+      "message": "Done.  That resulted in only one call to GetCookieOptions(), so I inlined that function.",
+      "parentUuid": "3cf673d3_f6eb7a82",
+      "revId": "7108a3084da2ff67aae2cc4fd971e8f05f28b9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "dd7796a5_1f74ae92",
+        "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-12T19:56:31Z",
+      "side": 1,
+      "message": "Good point, but moot now that I\u0027ve adapted GetCookieListFromManager() (there was only one remaining call, so I inlined it).",
+      "parentUuid": "6352fbff_51c774f6",
+      "revId": "ded394994dc02cc22622bcfb16e4e9a1cfa38825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea2d804_c74d4386",
         "filename": "chrome/browser/extensions/api/cookies/cookies_api.cc",
         "patchSetId": 4
