@@ -250,8 +250,11 @@ int ServiceWorkerNetworkProvider::provider_id() const {
 }
 
 bool ServiceWorkerNetworkProvider::IsControlledByServiceWorker() const {
+  return false;
+  /*
   return context() && context()->GetControllerVersionId() !=
                           blink::mojom::kInvalidServiceWorkerVersionId;
+  */
 }
 
 // Creates an invalid instance (provider_id() returns
