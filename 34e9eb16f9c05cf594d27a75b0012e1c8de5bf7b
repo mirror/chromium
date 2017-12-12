@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9d4d781_76e59124",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:32:21Z",
+      "side": 1,
+      "message": "nit: document this is a pseudo-location of policy dump file, like in the test.",
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7f4044_73534a3f",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:32:21Z",
+      "side": 1,
+      "message": "Looks like we don\u0027t really need this method. Can we change ReadFiles (maybe rename it to CollectSystemLogs) and make this part of that? Since theoretically, get policy dump is part of the system collection.\n\nThis way, we probably don\u0027t need to change SystemLogUploader and test.",
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66daae0b_cfdf53c2",
+        "filename": "chrome/browser/chromeos/policy/system_log_uploader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:32:21Z",
+      "side": 1,
+      "message": "Think we should use BindOnce and change LogUploadCallback to be a OnceCallback.",
+      "range": {
+        "startLine": 334,
+        "startChar": 43,
+        "endLine": 334,
+        "endChar": 56
+      },
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d6ce3f_16666f66",
+        "filename": "chrome/browser/policy/policy_conversions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:32:21Z",
+      "side": 1,
+      "message": "Out of curiosity, do you really get nullptr for |context|?\n\nProfileManager::GetActiveUserProfile should never return nullptr. Before user profile is fully loaded, it returns the sign-in profile and after that, it returns the user profile.",
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bf1b2c_8b93a347",
+        "filename": "chrome/browser/policy/policy_conversions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:32:21Z",
+      "side": 1,
+      "message": "Do you mean \"with_user_policies\" ?",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0731464e_3ece6bbb",
+        "filename": "chrome/browser/policy/policy_conversions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:32:21Z",
+      "side": 1,
+      "message": "with_user_policies ?",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 18
+      },
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d1f724_f56ffa05",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-12-12T18:32:21Z",
+      "side": 1,
+      "message": "nit: document the bools since there are more than 1 now.\ne.g.\n  true /* with_user_policies */, true /* convert_values */",
+      "revId": "34e9eb16f9c05cf594d27a75b0012e1c8de5bf7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
