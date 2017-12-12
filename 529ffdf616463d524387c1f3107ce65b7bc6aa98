@@ -1,0 +1,314 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32abf539_e5f27bd0",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "nit: blank line below this",
+      "range": {
+        "startLine": 5,
+        "startChar": 64,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0324bd3_bc2d5d73",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "nit: put this below the GetNameForLogging() definition to match the declaration order in the header file",
+      "range": {
+        "startLine": 15,
+        "startChar": 31,
+        "endLine": 15,
+        "endChar": 60
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf367e67_1373e562",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "Thinking outloud: what should happen if the request is redirected multiple times? For example, http://example.test\u003d\u003ehttps://example.test\u003d\u003ehttp://www.example.test\u003d\u003ehttps://www.example.test. This is probably an extreme edge case but if there was one popular site that did something like that, it could throw off our metrics. Maybe the simplest thing is to just set a flag once the histogram has been recorded for a navigation and only record it at most once per navigation?",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 47,
+        "endChar": 50
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5659003_7a7f0328",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "Instead of this flag, would it work to just move the GetPageTransition() check here and return early if it\u0027s not PAGE_TRANSITION_TYPED?",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 15
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94561021_95511ba3",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "nit: const GURL\u0026 to avoid a copy",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 6
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "251fb994_628e72a8",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "Could we also include adding or stripping a www prefix? So we\u0027d record the histogram if:\nredirect_url.GetContent() \u003d\u003d initial_url_.GetContent() or\nredirect_url.GetContent() \u003d\u003d (\"www\" + initial_url_).GetContent() or\n(\"www\" + redirect_url).GetContent() \u003d\u003d initial_url_.GetContent()\n\nGURL::ReplaceComponents might be useful for that, here\u0027s an example: https://cs.chromium.org/chromium/src/chrome/browser/apps/app_browsertest.cc?type\u003dcs\u0026l\u003d491\n\n... Also, looking at this again, maybe we want to use ReplaceComponents to zero out the port for all comparisons. In the rare case that the site is using non-default ports, I think we still want to count those. And it\u0027ll make integration testing easier (see my comment in the unit test file about adding a browser test).",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 63
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619b729b_37dd8291",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "nit: unneeded?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a026e1_ae06001b",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "nit: can move to cc file?",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5108c513_2b6e4480",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "nit: add `// content::NavigationThrottle:` the line above this (that\u0027s the convention for marking groups of inherited methods in subclasses)",
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9180c2_d21aee22",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "Great tests! Could I ask you to add a browser test as well (typed_navigation_timing_throttle_browsertest.cc)? That will serve to test that the throttle is installed in ChromeContentBrowserClient. You can set up two test servers (EmbeddedTestServer), one http and one https, and register a request handler on the http one that redirects to the https one. (example: https://cs.chromium.org/chromium/src/chrome/browser/loader/chrome_resource_dispatcher_host_delegate_browsertest.cc?type\u003dcs\u0026q\u003dregisterrequesthandler\u0026sq\u003dpackage:chromium\u0026l\u003d218)",
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4b0efe_0aa642cb",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "optional nit: EXPECT_TRUE(throttle)",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 31
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5265a0b0_e8b1d426",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "ditto but EXPECT_FALSE",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b84b41f_5a2c66b5",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "Could you add one more test that http://example.test -\u003e https://nonexample.test isn\u0027t recorded? (in other words, a redirect that is an HTTPS upgrade but to a different site)",
+      "range": {
+        "startLine": 87,
+        "startChar": 1,
+        "endLine": 88,
+        "endChar": 40
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5948e1_3fa33392",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 55869,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-12T20:57:42Z",
+      "side": 1,
+      "message": "nit: clarify that it\u0027s only recorded when the upgraded url is the same except for the scheme (modulo the www adding/stripping, if you end up doing that), and also that it\u0027s recorded at most once per navigation, if you go that route (see my previous comments)",
+      "range": {
+        "startLine": 55869,
+        "startChar": 31,
+        "endLine": 55869,
+        "endChar": 0
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
