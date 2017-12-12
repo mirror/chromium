@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61c08737_6470c516",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3655,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-12T17:23:14Z",
+      "side": 1,
+      "message": "Let\u0027s make these a bit more useful and correlatable. We can add the hanvigation_handle as a parameter, which will allow us to tie this event with the NavigationHandle it is for and in traces we can match the events. Alternatively, log the URL or ... maybe both : ).",
+      "revId": "069959fe08c6bb0e2ccb862c9aba5f75f018cdb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09440fc7_8b8790f4",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3657,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-12T17:23:14Z",
+      "side": 1,
+      "message": "If you want also timing information, we could do the same thing as we have done with NavigationThrottles - define a GetName() like API that observers implement, so we can tell how long which ones takes. We will likely have to avoid making it pure virtual, but having a default name that is something like \"unknown\" while implementing it in our entire codebase will be a good compromise. We have discussed this in the past, so I\u0027m supportive if someone wants to get it done.",
+      "revId": "069959fe08c6bb0e2ccb862c9aba5f75f018cdb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
