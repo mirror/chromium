@@ -1268,7 +1268,7 @@ void TestRunnerBindings::ShowWebInspector(gin::Arguments* args) {
 
 void TestRunnerBindings::NavigateSecondaryWindow(const std::string& url) {
   if (runner_)
-    runner_->NavigateSecondaryWindow(GURL(url));
+    runner_->NavigateSecondaryWindow(url);
 }
 
 void TestRunnerBindings::InspectSecondaryWindow() {
@@ -2023,7 +2023,7 @@ void TestRunner::ShowDevTools(const std::string& settings,
   delegate_->ShowDevTools(settings, frontend_url);
 }
 
-void TestRunner::NavigateSecondaryWindow(const GURL& url) {
+void TestRunner::NavigateSecondaryWindow(const std::string& url) {
   delegate_->NavigateSecondaryWindow(url);
 }
 

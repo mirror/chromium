@@ -954,9 +954,9 @@ void BlinkTestController::OnSetPopupBlockingEnabled(bool block_popups) {
   LayoutTestContentBrowserClient::Get()->SetPopupBlockingEnabled(block_popups);
 }
 
-void BlinkTestController::OnNavigateSecondaryWindow(const GURL& url) {
+void BlinkTestController::OnNavigateSecondaryWindow(const std::string& url) {
   if (secondary_window_)
-    secondary_window_->LoadURL(url);
+    secondary_window_->LoadURL(GURL(url));
 }
 
 void BlinkTestController::OnInspectSecondaryWindow() {
