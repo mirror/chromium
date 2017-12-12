@@ -86,8 +86,10 @@ class UiInputManager {
   void SendButtonDown(UiElement* target,
                       const gfx::PointF& target_point,
                       ButtonState button_state);
-  bool SendButtonUp(UiElement* target,
-                    const gfx::PointF& target_point,
+  // We don't need to pass the target to this function, since we always send up
+  // events (focus, etc) to the "input locked" element (i.e., the capturing
+  // element).
+  bool SendButtonUp(const gfx::PointF& target_point,
                     ButtonState button_state);
   void GetVisualTargetElement(const ControllerModel& controller_model,
                               ReticleModel* reticle_model) const;

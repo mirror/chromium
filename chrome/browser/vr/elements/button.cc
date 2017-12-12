@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/vr/elements/rect.h"
+//#include "chrome/browser/vr/elements/shadow.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
 #include "chrome/browser/vr/elements/vector_icon.h"
@@ -35,6 +36,11 @@ Button::Button(base::Callback<void()> click_handler,
   background->set_hit_testable(false);
   background_ = background.get();
   AddChild(std::move(background));
+
+//  auto shadow = base::MakeUnique<Shadow>();
+//  shadow->AddChild(std::move(background));
+//  shadow->SetOpacity(0.5);
+//  AddChild(std::move(shadow));
 
   auto vector_icon = base::MakeUnique<VectorIcon>(512);
   vector_icon->SetType(kTypeButtonForeground);
