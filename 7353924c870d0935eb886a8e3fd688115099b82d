@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "34968058_39992abe",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-12T16:09:51Z",
+      "side": 1,
+      "message": "Wow, I have not found any documentation that warns about that. Thanks for sharing.",
+      "parentUuid": "6556fad3_53eef24b",
+      "revId": "7353924c870d0935eb886a8e3fd688115099b82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc1bb160_bf7b96a9",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "enums.xml and the LoginCustomFlags seem to only store the category (the corresponding test only generates a value for the entire tls13-variant flag, rather than each possible value), so this seems to be fine?",
       "parentUuid": "dc1bb160_bf7b96a9",
+      "revId": "7353924c870d0935eb886a8e3fd688115099b82d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdfbc9c1_053d7799",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1416,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-12T16:09:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b5b6cd42_0d71dbc8",
       "revId": "7353924c870d0935eb886a8e3fd688115099b82d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
