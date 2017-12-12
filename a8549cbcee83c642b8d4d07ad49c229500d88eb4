@@ -22,6 +22,30 @@
       "revId": "a8549cbcee83c642b8d4d07ad49c229500d88eb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c3671a2_40c798dc",
+        "filename": "chrome/browser/sessions/tab_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-12-12T23:29:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e41fdec_403fe36b",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 40
+      },
+      "revId": "a8549cbcee83c642b8d4d07ad49c229500d88eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
