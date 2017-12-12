@@ -16,6 +16,41 @@
       "revId": "917c01184b21625dcc11674ea2ba8b8132d57b24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda1bdf1_320e3240",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/clip/clip-with-transform-resize.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-12T20:02:11Z",
+      "side": 1,
+      "message": "This introduces subsequences which were not invalidated on ancestor clip change.",
+      "parentUuid": "9fc14eb6_33236917",
+      "revId": "917c01184b21625dcc11674ea2ba8b8132d57b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bc9a84_4d5e7b97",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/clip/clip-with-transform-resize.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-12T20:02:11Z",
+      "side": 1,
+      "message": "This produces a visual overflow of the layer bigger than the container. The bug simply didn\u0027t reproduce without it. I haven\u0027t looked into the exact reason. It seems that without it we had other code paths triggering the subsequence invalidation which shadowed this bug.",
+      "revId": "917c01184b21625dcc11674ea2ba8b8132d57b24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
