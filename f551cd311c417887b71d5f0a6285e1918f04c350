@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0245116_54b22e16",
+        "filename": "third_party/WebKit/LayoutTests/fast/css3-text/css3-text-decoration/text-decoration-skip-ink-ideograph.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-12T07:10:40Z",
+      "side": 1,
+      "message": "nit: While switching the encoding to UTF-8, I\u0027d have replaced NCRs with real characters.\n\nAnother nit: I\u0027d have changed the filename to drop \u0027ideograph\u0027 (perhaps replace it with \u0027cjk\u0027).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 37
+      },
+      "revId": "f551cd311c417887b71d5f0a6285e1918f04c350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7926a1_44bed469",
+        "filename": "third_party/WebKit/Source/platform/text/Character.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-12T07:10:40Z",
+      "side": 1,
+      "message": "I saw this function excludes two Hangul tone marks. They need to be added back.\n\nAnd, as of now, CJK Extension E (added recently) is not listed. Instead of trying to list CJK Extension blocks one by one, why don\u0027t you just include the whole Plane 2?  That way, you don\u0027t have to update the block list for CJK Extensions until CJK Extensions spill over to plane 3 (I hope not).",
+      "range": {
+        "startLine": 215,
+        "startChar": 17,
+        "endLine": 215,
+        "endChar": 51
+      },
+      "revId": "f551cd311c417887b71d5f0a6285e1918f04c350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45794f60_81de00d8",
+        "filename": "third_party/WebKit/Source/platform/text/Character.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-12T07:10:40Z",
+      "side": 1,
+      "message": "You don\u0027t want to use a pre-built trie for characters in those blocks because of a size concern? \n\nActually, most of CJK blocks are \"solid\" (without any hole) and large, I wonder if it\u0027s necessary to build a trie for \"CJK Ideograph\" portion of \u0027IsCJKIdeographOrSymbol\u0027. \n\nFor CJK Ideographs + Hangul + Bopomofo + Kana + a few other solid blocks, my guess is that a frozen UnicodeSet would be fast, too. Well,  I guess you have already tried that and determined that trie is faster.",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 47
+      },
+      "revId": "f551cd311c417887b71d5f0a6285e1918f04c350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48cb032_ea9d330a",
+        "filename": "third_party/WebKit/Source/platform/text/Character.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-12T07:10:40Z",
+      "side": 1,
+      "message": "It seems that Bopomofo characters (I was about to mention Bopomofo, but didn\u0027t because testing shows that Bopomofo characters do not seem to touch the bottom of em box in virtually all cases).\n\nDoesn\u0027t IsCJIdeographOrSymbol already cover Bopomofo? \nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/text/CharacterPropertyDataGenerator.h?rcl\u003dcdfef070371418797564c07045b013f36dfcb698\u0026l\u003d79",
+      "range": {
+        "startLine": 222,
+        "startChar": 3,
+        "endLine": 223,
+        "endChar": 33
+      },
+      "revId": "f551cd311c417887b71d5f0a6285e1918f04c350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c645fa_7fdc7192",
+        "filename": "third_party/WebKit/Source/platform/text/Character.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-12-12T07:10:40Z",
+      "side": 1,
+      "message": "How about  \u0027YI\u0027 (syllables and radicals)  ? Not many characters seem likely to touch the bottom of EM box, but ...\n\nhttp://www.unicode.org/charts/PDF/UA490.pdf\nhttp://www.unicode.org/charts/PDF/UA000.pdf",
+      "range": {
+        "startLine": 231,
+        "startChar": 3,
+        "endLine": 234,
+        "endChar": 18
+      },
+      "revId": "f551cd311c417887b71d5f0a6285e1918f04c350",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
