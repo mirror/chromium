@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fd20184_ee53b86e",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:42:25Z",
+      "side": 1,
+      "message": "Nit: Add a comma after \"computed: \u0027getCodeOutput_(code.*)\u0027\" and a new line, such that clang-format does not collapse this.",
+      "revId": "8f3eb7501c16b32dd98580eacc0f1e1c302b1cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487498b5_7b0a2f32",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:42:25Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "8f3eb7501c16b32dd98580eacc0f1e1c302b1cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c620054_3316033f",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:42:25Z",
+      "side": 1,
+      "message": "I think the following might be faster (although probably does not matter in most cases), since it creates a single string, as opposed to concatenating two strings first. Then concatenating the result with the 3rd one.\n\n`${this.code.beforeHighlight}${this.code.highlight}${this.code.afterHighlight}`",
+      "revId": "8f3eb7501c16b32dd98580eacc0f1e1c302b1cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9709b1dd_884103f5",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-12T02:42:25Z",
+      "side": 1,
+      "message": "\u0027sel\u0027 is not an established acronym. Let\u0027s use |selection| instead.",
+      "range": {
+        "startLine": 91,
+        "startChar": 12,
+        "endLine": 91,
+        "endChar": 15
+      },
+      "revId": "8f3eb7501c16b32dd98580eacc0f1e1c302b1cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
