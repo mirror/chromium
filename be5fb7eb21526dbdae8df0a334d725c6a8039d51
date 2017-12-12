@@ -70,6 +70,30 @@
       "revId": "be5fb7eb21526dbdae8df0a334d725c6a8039d51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c1267e_9cf94a36",
+        "filename": "ios/web/web_state/js/form_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-12T22:21:04Z",
+      "side": 1,
+      "message": "Yes, changing DOM is synchronous (rendering not, but here we\u0027re interested only in changing DOM). For example this discussion https://stackoverflow.com/questions/42986295/is-innerhtml-asynchronous (with links)",
+      "parentUuid": "c8813d37_6ac27851",
+      "range": {
+        "startLine": 66,
+        "startChar": 57,
+        "endLine": 66,
+        "endChar": 58
+      },
+      "revId": "be5fb7eb21526dbdae8df0a334d725c6a8039d51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
