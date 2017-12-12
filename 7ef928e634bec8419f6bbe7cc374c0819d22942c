@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "334dafbb_43c96a8b",
+        "filename": "chrome/common/extensions/extension_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-12T19:16:19Z",
+      "side": 1,
+      "message": "Can we add test cases for \" \" and \"  \"? You can add a TODO in those test cases about considering \"Untitled\" for these.",
+      "revId": "7ef928e634bec8419f6bbe7cc374c0819d22942c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37688d85_b831bd67",
+        "filename": "chrome/common/extensions/extension_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-12T19:16:19Z",
+      "side": 1,
+      "message": "ASSERT_TRUE",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 13
+      },
+      "revId": "7ef928e634bec8419f6bbe7cc374c0819d22942c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3aeb21b_7cefb9b8",
+        "filename": "extensions/common/extension.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-12T19:16:19Z",
+      "side": 1,
+      "message": "What about this? Sync cares about this and do you whether the change to |name_| below affects sync?",
+      "range": {
+        "startLine": 572,
+        "startChar": 2,
+        "endLine": 572,
+        "endChar": 21
+      },
+      "revId": "7ef928e634bec8419f6bbe7cc374c0819d22942c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ace4843_5b1d7354",
         "filename": "extensions/common/extension.cc",
         "patchSetId": 2
