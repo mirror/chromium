@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27eed340_4d0d067d",
+        "filename": "content/browser/renderer_host/media/audio_input_stream_handle.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T10:25:07Z",
+      "side": 1,
+      "message": "It would be simpler just to pass deleter_callback here. Any reason not to do that?\n\nCreating intermediate callbacks does have a cost both when creating the callback and when running it.",
+      "revId": "6bed62817765f9cb5ff1a59765b2319726f0a012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595b4c3d_57bc1d75",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T10:25:07Z",
+      "side": 1,
+      "message": "The UniquePtrComparator CL landed, so this could just use erase() directly with the raw pointer once the underlying set specifies the transparent comparator.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 19
+      },
+      "revId": "6bed62817765f9cb5ff1a59765b2319726f0a012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
