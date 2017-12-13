@@ -33,6 +33,24 @@
       "revId": "c0a39b4d58a41d0e6dbde1b8bc44ba3e0e8d30e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc7874f0_fbf1597e",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T09:49:22Z",
+      "side": 1,
+      "message": "ah, nice catch -- i completely missed that call to SetBacklightsForcedOff. updated.",
+      "parentUuid": "5f953771_44beef6d",
+      "revId": "c0a39b4d58a41d0e6dbde1b8bc44ba3e0e8d30e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
