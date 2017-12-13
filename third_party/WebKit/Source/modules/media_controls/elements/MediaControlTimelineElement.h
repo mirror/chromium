@@ -12,9 +12,11 @@
 namespace blink {
 
 class Event;
+class HTMLDivElement;
+class MediaControlCurrentTimeDisplayElement;
 class MediaControlsImpl;
 
-class MediaControlTimelineElement final : public MediaControlSliderElement {
+class MediaControlTimelineElement : public MediaControlSliderElement {
  public:
   MODULES_EXPORT explicit MediaControlTimelineElement(MediaControlsImpl&);
 
@@ -32,6 +34,8 @@ class MediaControlTimelineElement final : public MediaControlSliderElement {
 
   void RenderBarSegments();
 
+  virtual void Trace(blink::Visitor*);
+
  protected:
   const char* GetNameForHistograms() const override;
 
@@ -39,7 +43,14 @@ class MediaControlTimelineElement final : public MediaControlSliderElement {
   void DefaultEventHandler(Event*) override;
   bool KeepEventInNode(Event*) override;
 
+  bool BeginScrubbingEvent(Event&);
+  bool EndScrubbingEvent(Event&);
+
   MediaControlTimelineMetrics metrics_;
+
+  Member<MediaControlCurrentTimeDisplayElement> current_time_display_;
+
+  bool is_touching_ = false;
 };
 
 }  // namespace blink
