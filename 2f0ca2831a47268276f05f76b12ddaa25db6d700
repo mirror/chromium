@@ -22,6 +22,30 @@
       "revId": "2f0ca2831a47268276f05f76b12ddaa25db6d700",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567e707b_4fa55675",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T18:37:01Z",
+      "side": 1,
+      "message": "Done. Added TODO in TabLifecycleUnit::CanDiscard.",
+      "parentUuid": "9775c609_4cb98d64",
+      "range": {
+        "startLine": 359,
+        "startChar": 35,
+        "endLine": 359,
+        "endChar": 53
+      },
+      "revId": "2f0ca2831a47268276f05f76b12ddaa25db6d700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
