@@ -102,10 +102,8 @@ void CanvasResource::PrepareTransferableResource(
   gl->TexParameteri(target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
   gl->ProduceTextureDirectCHROMIUM(texture_id, GetOrCreateGpuMailbox().name);
-  const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-  gl->ShallowFlushCHROMIUM();
   gpu::SyncToken sync_token;
-  gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  gl->GenUnverifiedSyncTokenCHROMIUM(sync_token.GetData());
 
   *out_resource = viz::TransferableResource::MakeGLOverlay(
       GetOrCreateGpuMailbox(), filter, target, sync_token, gfx::Size(Size()),
