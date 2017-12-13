@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c83ebca9_a03eb130",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-13T16:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3dff4fe_6ae04252",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7d62d2a_0b16d224",
         "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-13T15:49:29Z",
       "side": 1,
       "message": "What is the default value, why do you have to call this once?",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff5366e_b6ff0858",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-13T16:24:33Z",
+      "side": 1,
+      "message": "With ARC, booleans are guaranteed to be initialized to NO. This needs to be called once because it is in the setter that I initialize the gradient layer. I can clean up if you prefer; I just didn\u0027t care much about this as this is a 30-line class not exposed in any header.",
+      "parentUuid": "f7d62d2a_0b16d224",
       "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "39df6bf6_03a04483",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-13T16:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a93e9cd8_6298afb5",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1c278cd_8d3cb1e9",
         "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-13T15:49:29Z",
       "side": 1,
       "message": "Why do widths \u003d\u003d height?",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe72fe54_a72ba87e",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-13T16:24:33Z",
+      "side": 1,
+      "message": "Because the gradient is applied to a square area.",
+      "parentUuid": "e1c278cd_8d3cb1e9",
       "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ebc4646b_5178b046",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-13T16:24:33Z",
+      "side": 1,
+      "message": "It is a different set of methods and it communicates to a different object. UITextFieldDelegate has no callback for setText/setAttributedText.",
+      "parentUuid": "16b13529_6dd305d6",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36e244fc_72606cbc",
         "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield_container.mm",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a58282_056d0ce4",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield_container.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-13T16:24:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36e244fc_72606cbc",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "cc56bc49_85b22a12",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-13T16:24:33Z",
+      "side": 1,
+      "message": "This makes the text field container shrink before the left view if both of them don\u0027t fit. See below for more detailed answer.",
+      "parentUuid": "95267e31_8f2d3b07",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb88d657_6c7db873",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 11
@@ -132,6 +258,24 @@
       "writtenOn": "2017-12-13T15:49:29Z",
       "side": 1,
       "message": "Why is this necessary?",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745d1c8c_61bc2498",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-13T16:24:33Z",
+      "side": 1,
+      "message": "Because now the textfield is made to not shrink; which causes the text field container have an intrinsic size of the string; which causes the location bar view to have an intrinsic size of the string + left view + padding. Everything else in the toolbar has fixed size, and the location bar has flexible width. So this instructs autolayout to shrink LBV before it starts to break other constraints.",
+      "parentUuid": "cb88d657_6c7db873",
       "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

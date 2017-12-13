@@ -16,6 +16,24 @@
       "revId": "1c090989b717047829eab075c4960a3512014559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2077b92b_a07c1a63",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-13T16:24:33Z",
+      "side": 0,
+      "message": "yeah, in one of the next patch sets.",
+      "parentUuid": "3ab5496a_8544a476",
+      "revId": "1c090989b717047829eab075c4960a3512014559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
