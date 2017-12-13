@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "606eb7a0_1483e1cc",
+        "filename": "base/metrics/metrics_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T22:30:59Z",
+      "side": 1,
+      "message": "BTW, no need for \"base::\" inside namespace base.",
+      "revId": "ec017130e7d542cfaeb4098d36b14472e2df04e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
