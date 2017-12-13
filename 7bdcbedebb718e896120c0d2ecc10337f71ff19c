@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a2792a_b6d93314",
+        "filename": "chrome/app/vector_icons/content_paste_16.icon",
+        "patchSetId": 21
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:43:14Z",
+      "side": 1,
+      "message": "is content_paste_16 still the right name for this icon? Maybe permissions_bubble_content_paste or something?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c2c03b_a168bdc3",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:43:14Z",
+      "side": 1,
+      "message": "nit: do this closer to where setting is used, or just inline it",
+      "range": {
+        "startLine": 435,
+        "startChar": 0,
+        "endLine": 437,
+        "endChar": 35
+      },
+      "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc8a4e7_28013a5e",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:43:14Z",
+      "side": 1,
+      "message": "this seems like overkill. Just\n\nDCHECK_EQ(CONTENT_SETTINGS_TYPE_USB_CHOOSER_DATA:, object.ui_info.content_settings_type);",
+      "range": {
+        "startLine": 508,
+        "startChar": 2,
+        "endLine": 508,
+        "endChar": 49
+      },
+      "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "099e1d24_cae2c275",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:43:14Z",
+      "side": 1,
+      "message": "I believe you need to respect the native theme and I can\u0027t see how this can be doing that. For example, what does it look like when Chrome is using the GTK theme and you have a dark system theme?",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 72
+      },
+      "revId": "7bdcbedebb718e896120c0d2ecc10337f71ff19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
