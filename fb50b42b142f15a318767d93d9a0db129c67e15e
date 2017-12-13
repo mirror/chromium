@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63bd6dbb_c0e11667",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/writeValue/write-updates-value.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-13T21:31:48Z",
+      "side": 1,
+      "message": "This test should also use GetLastWrittenCharacteristicValue, but that method hasn\u0027t been built into Fake Bluetooth yet.",
+      "revId": "fb50b42b142f15a318767d93d9a0db129c67e15e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
