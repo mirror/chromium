@@ -1478,6 +1478,7 @@ jumbo_component("platform") {
     "//services/service_manager/public/interfaces:interfaces_blink",
     "//skia",
     "//third_party:jpeg",
+    "//third_party/WebKit/Source/platform/heap",
     "//third_party/WebKit/Source/platform/wtf",
     "//third_party/WebKit/common:blink_common",
     "//third_party/WebKit/common:mojo_platform_bindings_blink",
@@ -1498,7 +1499,6 @@ jumbo_component("platform") {
     "//services/service_manager/public/cpp",
     "//third_party:freetype_harfbuzz",
     "//third_party/WebKit/Source/platform/blob",
-    "//third_party/WebKit/Source/platform/heap",
     "//third_party/WebKit/Source/platform/instrumentation",
     "//third_party/WebKit/Source/platform/loader",
     "//third_party/WebKit/Source/platform/media",
@@ -1716,6 +1716,7 @@ jumbo_static_library("test_support") {
 test("blink_platform_unittests") {
   deps = [
     ":blink_platform_unittests_sources",
+    "//third_party/WebKit/Source/platform/heap",
   ]
 }
 
