@@ -8,13 +8,13 @@
 
 namespace ash {
 
-NewWindowController::NewWindowController() : binding_(this) {}
+NewWindowController::NewWindowController() {}
 
-NewWindowController::~NewWindowController() = default;
+NewWindowController::~NewWindowController() {}
 
 void NewWindowController::BindRequest(
     mojom::NewWindowControllerRequest request) {
-  binding_.Bind(std::move(request));
+  bindings_.AddBinding(this, std::move(request));
 }
 
 void NewWindowController::SetClient(
