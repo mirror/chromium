@@ -8,11 +8,58 @@
 #include "platform/audio/VectorMathScalar.h"
 #include "platform/audio/cpu/x86/VectorMathSSE.h"
 #include "platform/wtf/Assertions.h"
-#include "platform/wtf/MathExtras.h"
 
 namespace blink {
 namespace VectorMath {
 namespace X86 {
+
+struct FrameCounts {
+  size_t scalar_for_alignment;
+  size_t sse;
+  size_t scalar;
+};
+
+static size_t GetSSEAlignmentOffsetInNumberOfFloats(const float* source_p) {
+  constexpr size_t kBytesPerRegister = SSE::kBitsPerRegister / 8u;
+  constexpr size_t kAlignmentOffsetMask = kBytesPerRegister - 1u;
+  size_t offset = reinterpret_cast<size_t>(source_p) & kAlignmentOffsetMask;
+  DCHECK_EQ(0u, offset % sizeof(*source_p));
+  return offset / sizeof(*source_p);
+}
+
+static FrameCounts SplitFramesToProcess(const float* source_p,
+                                        size_t frames_to_process) {
+  FrameCounts counts = {0u, 0u, 0u};
+
+  const size_t sse_alignment_offset =
+      GetSSEAlignmentOffsetInNumberOfFloats(source_p);
+
+  // If the first frame is not SSE aligned, the first several frames (at most
+  // three) must be processed separately for proper alignment.
+  const size_t scalar_for_alignment =
+      (SSE::kPackedFloatsPerRegister - sse_alignment_offset) &
+      ~SSE::kFramesToProcessMask;
+
+  // Check which CPU features can be used based on the number of frames to
+  // process and based on CPU support.
+  const bool use_at_least_sse =
+      frames_to_process >= scalar_for_alignment + SSE::kPackedFloatsPerRegister;
+
+  if (use_at_least_sse) {
+    counts.scalar_for_alignment = scalar_for_alignment;
+    frames_to_process -= counts.scalar_for_alignment;
+    // The remaining frames are SSE aligned.
+    DCHECK(SSE::IsAligned(source_p + counts.scalar_for_alignment));
+
+    // Process as many as possible of the remaining frames using SSE.
+    counts.sse = frames_to_process & SSE::kFramesToProcessMask;
+    frames_to_process -= counts.sse;
+  }
+
+  // Process the remaining frames separately.
+  counts.scalar = frames_to_process;
+  return counts;
+}
 
 static ALWAYS_INLINE void Vadd(const float* source1p,
                                int source_stride1,
@@ -24,18 +71,17 @@ static ALWAYS_INLINE void Vadd(const float* source1p,
   size_t i = 0u;
 
   if (source_stride1 == 1 && source_stride2 == 1 && dest_stride == 1) {
-    // If the source1p address is not 16-byte aligned, the first several frames
-    // (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source1p + i) && i < frames_to_process; ++i)
-      dest_p[i] = source1p[i] + source2p[i];
+    const FrameCounts frame_counts =
+        SplitFramesToProcess(source1p, frames_to_process);
 
-    // Now the source1p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vadd(source1p + i, source2p + i, dest_p + i, sse_frames_to_process);
-      i += sse_frames_to_process;
+    Scalar::Vadd(source1p + i, source_stride1, source2p + i, source_stride2,
+                 dest_p + i, dest_stride, frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse > 0u) {
+      SSE::Vadd(source1p + i, source2p + i, dest_p + i, frame_counts.sse);
+      i += frame_counts.sse;
     }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
   }
 
   Scalar::Vadd(source1p + i, source_stride1, source2p + i, source_stride2,
@@ -52,19 +98,19 @@ static ALWAYS_INLINE void Vclip(const float* source_p,
   size_t i = 0u;
 
   if (source_stride == 1 && dest_stride == 1) {
-    // If the source_p address is not 16-byte aligned, the first several
-    // frames  (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
-      dest_p[i] = clampTo(source_p[i], *low_threshold_p, *high_threshold_p);
+    const FrameCounts frame_counts =
+        SplitFramesToProcess(source_p, frames_to_process);
 
-    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
+    Scalar::Vclip(source_p + i, source_stride, low_threshold_p,
+                  high_threshold_p, dest_p + i, dest_stride,
+                  frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse > 0u) {
       SSE::Vclip(source_p + i, low_threshold_p, high_threshold_p, dest_p + i,
-                 sse_frames_to_process);
-      i += sse_frames_to_process;
+                 frame_counts.sse);
+      i += frame_counts.sse;
     }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
   }
 
   Scalar::Vclip(source_p + i, source_stride, low_threshold_p, high_threshold_p,
@@ -78,18 +124,17 @@ static ALWAYS_INLINE void Vmaxmgv(const float* source_p,
   size_t i = 0u;
 
   if (source_stride == 1) {
-    // If the source_p address is not 16-byte aligned, the first several
-    // frames  (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
-      *max_p = std::max(*max_p, fabsf(source_p[i]));
+    const FrameCounts frame_counts =
+        SplitFramesToProcess(source_p, frames_to_process);
 
-    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vmaxmgv(source_p + i, max_p, sse_frames_to_process);
-      i += sse_frames_to_process;
+    Scalar::Vmaxmgv(source_p + i, source_stride, max_p,
+                    frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse > 0u) {
+      SSE::Vmaxmgv(source_p + i, max_p, frame_counts.sse);
+      i += frame_counts.sse;
     }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
   }
 
   Scalar::Vmaxmgv(source_p + i, source_stride, max_p, frames_to_process - i);
@@ -105,18 +150,17 @@ static ALWAYS_INLINE void Vmul(const float* source1p,
   size_t i = 0u;
 
   if (source_stride1 == 1 && source_stride2 == 1 && dest_stride == 1) {
-    // If the source1p address is not 16-byte aligned, the first several
-    // frames  (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source1p + i) && i < frames_to_process; ++i)
-      dest_p[i] = source1p[i] * source2p[i];
+    const FrameCounts frame_counts =
+        SplitFramesToProcess(source1p, frames_to_process);
 
-    // Now the source1p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vmul(source1p + i, source2p + i, dest_p + i, sse_frames_to_process);
-      i += sse_frames_to_process;
+    Scalar::Vmul(source1p + i, source_stride1, source2p + i, source_stride2,
+                 dest_p + i, dest_stride, frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse > 0u) {
+      SSE::Vmul(source1p + i, source2p + i, dest_p + i, frame_counts.sse);
+      i += frame_counts.sse;
     }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
   }
 
   Scalar::Vmul(source1p + i, source_stride1, source2p + i, source_stride2,
@@ -132,18 +176,17 @@ static ALWAYS_INLINE void Vsma(const float* source_p,
   size_t i = 0u;
 
   if (source_stride == 1 && dest_stride == 1) {
-    // If the source_p address is not 16-byte aligned, the first several frames
-    // (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
-      dest_p[i] += *scale * source_p[i];
+    const FrameCounts frame_counts =
+        SplitFramesToProcess(source_p, frames_to_process);
 
-    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vsma(source_p + i, scale, dest_p + i, sse_frames_to_process);
-      i += sse_frames_to_process;
+    Scalar::Vsma(source_p + i, source_stride, scale, dest_p + i, dest_stride,
+                 frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse > 0u) {
+      SSE::Vsma(source_p + i, scale, dest_p + i, frame_counts.sse);
+      i += frame_counts.sse;
     }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
   }
 
   Scalar::Vsma(source_p + i, source_stride, scale, dest_p + i, dest_stride,
@@ -159,18 +202,17 @@ static ALWAYS_INLINE void Vsmul(const float* source_p,
   size_t i = 0u;
 
   if (source_stride == 1 && dest_stride == 1) {
-    // If the source_p address is not 16-byte aligned, the first several frames
-    // (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
-      dest_p[i] = *scale * source_p[i];
+    const FrameCounts frame_counts =
+        SplitFramesToProcess(source_p, frames_to_process);
 
-    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vsmul(source_p + i, scale, dest_p + i, sse_frames_to_process);
-      i += sse_frames_to_process;
+    Scalar::Vsmul(source_p + i, source_stride, scale, dest_p + i, dest_stride,
+                  frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse > 0u) {
+      SSE::Vsmul(source_p + i, scale, dest_p + i, frame_counts.sse);
+      i += frame_counts.sse;
     }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
   }
 
   Scalar::Vsmul(source_p + i, source_stride, scale, dest_p + i, dest_stride,
@@ -184,18 +226,17 @@ static ALWAYS_INLINE void Vsvesq(const float* source_p,
   size_t i = 0u;
 
   if (source_stride == 1) {
-    // If the source_p address is not 16-byte aligned, the first several
-    // frames  (at most three) should be processed separately.
-    for (; !SSE::IsAligned(source_p + i) && i < frames_to_process; ++i)
-      *sum_p += source_p[i] * source_p[i];
+    const FrameCounts frame_counts =
+        SplitFramesToProcess(source_p, frames_to_process);
 
-    // Now the source_p+i address is 16-byte aligned. Start to apply SSE.
-    size_t sse_frames_to_process =
-        (frames_to_process - i) & SSE::kFramesToProcessMask;
-    if (sse_frames_to_process > 0u) {
-      SSE::Vsvesq(source_p + i, sum_p, sse_frames_to_process);
-      i += sse_frames_to_process;
+    Scalar::Vsvesq(source_p + i, source_stride, sum_p,
+                   frame_counts.scalar_for_alignment);
+    i += frame_counts.scalar_for_alignment;
+    if (frame_counts.sse > 0u) {
+      SSE::Vsvesq(source_p + i, sum_p, frame_counts.sse);
+      i += frame_counts.sse;
     }
+    DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
   }
 
   Scalar::Vsvesq(source_p + i, source_stride, sum_p, frames_to_process - i);
@@ -208,28 +249,18 @@ static ALWAYS_INLINE void Zvmul(const float* real1p,
                                 float* real_dest_p,
                                 float* imag_dest_p,
                                 size_t frames_to_process) {
+  FrameCounts frame_counts = SplitFramesToProcess(real1p, frames_to_process);
   size_t i = 0u;
 
-  // If the real1p address is not 16-byte aligned, the first several
-  // frames  (at most three) should be processed separately.
-  for (; !SSE::IsAligned(real1p + i) && i < frames_to_process; ++i) {
-    // Read and compute result before storing them, in case the
-    // destination is the same as one of the sources.
-    float real_result = real1p[i] * real2p[i] - imag1p[i] * imag2p[i];
-    float imag_result = real1p[i] * imag2p[i] + imag1p[i] * real2p[i];
-
-    real_dest_p[i] = real_result;
-    imag_dest_p[i] = imag_result;
-  }
-
-  // Now the real1p+i address is 16-byte aligned. Start to apply SSE.
-  size_t sse_frames_to_process =
-      (frames_to_process - i) & SSE::kFramesToProcessMask;
-  if (sse_frames_to_process > 0u) {
+  Scalar::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i, real_dest_p + i,
+                imag_dest_p + i, frame_counts.scalar_for_alignment);
+  i += frame_counts.scalar_for_alignment;
+  if (frame_counts.sse > 0u) {
     SSE::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i, real_dest_p + i,
-               imag_dest_p + i, sse_frames_to_process);
-    i += sse_frames_to_process;
+               imag_dest_p + i, frame_counts.sse);
+    i += frame_counts.sse;
   }
+  DCHECK_EQ(frames_to_process, i + frame_counts.scalar);
 
   Scalar::Zvmul(real1p + i, imag1p + i, real2p + i, imag2p + i, real_dest_p + i,
                 imag_dest_p + i, frames_to_process - i);
