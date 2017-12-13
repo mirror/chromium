@@ -148,6 +148,8 @@ static_library("utility") {
 
   if (is_chromeos) {
     sources += [
+      "ash_and_ui_service.cc",
+      "ash_and_ui_service.h",
       "mash_service_factory.cc",
       "mash_service_factory.h",
     ]
@@ -162,6 +164,22 @@ static_library("utility") {
       "//mash/quick_launch/public/interfaces",
       "//services/ui:lib",
       "//services/ui/public/interfaces",
+    ]
+
+    if (is_linux) {
+      deps += [
+        "//components/font_service:lib",
+        "//components/font_service/public/interfaces",
+      ]
+    }
+  }
+
+  if (is_chromeos) {
+    deps += [
+      "//ash",
+      "//ash/autoclick/mus:lib",
+      "//ash/touch_hud/mus:lib",
+      "//chrome/services/file_util:lib",
     ]
   }
 

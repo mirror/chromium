@@ -1,0 +1,23 @@
+// Runs the ash and ui mojo services together in a single process.
+{
+  "name": "ash_and_ui",
+  "display_name": "Combined Ash and UI Service",
+  "sandbox_type": "none",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "service_manager:service_factory": [
+          "service_manager::mojom::ServiceFactory"
+        ]
+      },
+      "requires": {
+        "service_manager": [
+          //JAMES are these needed?
+          //"service_manager:client_process",
+          //"service_manager:singleton",
+          "service_manager:all_users"
+        ]
+      }
+    }
+  }
+}

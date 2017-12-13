@@ -988,6 +988,8 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
     if (!instance->StartWithFilePath(
             package_path,
             UtilitySandboxTypeFromString(entry->sandbox_type()))) {
+      LOG(ERROR) << "JAMES failed to start " << params->interface_name()
+              << " name " << params->target().name();
       OnInstanceError(instance);
       params->set_response_data(mojom::ConnectResult::INVALID_ARGUMENT,
                                 Identity());

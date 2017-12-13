@@ -23,6 +23,8 @@ struct Service {
 constexpr Service kServices[] = {
     {mash::quick_launch::mojom::kServiceName, "Quick Launch"},
     {ui::mojom::kServiceName, "UI Service"},
+    {"ash_and_ui", "Combined Ash and UI Services"},
+    //JAMES remove this?
     {ash::mojom::kServiceName, "Ash Window Manager and Shell"},
     {"accessibility_autoclick", "Ash Accessibility Autoclick"},
     {"touch_hud", "Ash Touch Hud"},
@@ -47,6 +49,7 @@ bool IsMashServiceName(const std::string& name) {
   return false;
 }
 
+//JAMES ash_and_ui here?
 bool ShouldTerminateOnServiceQuit(const std::string& name) {
   // Some services going down are treated as catastrophic failures, usually
   // because both the browser and the service cache data about each other's

@@ -159,6 +159,7 @@ WindowServer::WindowServer(WindowServerDelegate* delegate, bool should_host_viz)
     host_frame_sink_manager_->WillAssignTemporaryReferencesExternally();
   user_id_tracker_.AddObserver(this);
   OnUserIdAdded(user_id_tracker_.active_id());
+  LOG(ERROR) << "JAMES window server in pid " << getpid();
 }
 
 WindowServer::~WindowServer() {

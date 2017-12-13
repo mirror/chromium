@@ -178,6 +178,16 @@ if (is_component_build) {
   }
 }
 
+# The mojo ash service + ui services in one process.
+service_manifest("ash_and_ui_manifest") {
+  name = "ash_and_ui"
+  source = "//ash/ash_and_ui_manifest.json"
+  packaged_services = [
+    "//ash:manifest",
+    "//services/ui:manifest",
+  ]
+}
+
 service_manifest("packaged_services_manifest") {
   name = "content_packaged_services"
   source = "mojo/content_packaged_services_manifest.json"
@@ -194,8 +204,11 @@ service_manifest("packaged_services_manifest") {
     "//services/viz:manifest",
   ]
 
+  # JAMES add a layering violation and depend on ash manifests?
   if (enable_mus) {
-    packaged_services += [ "//services/ui:manifest" ]
+    # I think we need this for content_browsertests --mus, chrome --mus, etc.
+    #packaged_services += [ "//services/ui:manifest" ]
+    packaged_services += [ ":ash_and_ui_manifest" ]
   }
 }
 

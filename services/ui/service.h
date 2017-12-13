@@ -76,6 +76,7 @@ class Service : public service_manager::Service,
  public:
   // Contains the configuration necessary to run the UI Service inside the
   // Window Manager's process.
+  //JAMES make this InitParams?
   struct InProcessConfig {
     InProcessConfig();
     ~InProcessConfig();
@@ -100,6 +101,7 @@ class Service : public service_manager::Service,
 
   // |config| should be null when UI Service runs in it's own separate process,
   // as opposed to inside the Window Manager's process.
+  //JAMES make config required?
   explicit Service(const InProcessConfig* config = nullptr);
   ~Service() override;
 

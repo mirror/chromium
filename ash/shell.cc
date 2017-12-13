@@ -619,6 +619,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
   PowerStatus::Initialize();
 
   session_controller_->AddObserver(this);
+  LOG(ERROR) << "JAMES ash shell in pid " << getpid();
 }
 
 Shell::~Shell() {

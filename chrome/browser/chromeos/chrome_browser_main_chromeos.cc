@@ -1114,6 +1114,7 @@ void ChromeBrowserMainPartsChromeos::PostBrowserStart() {
   }
 
   ChromeBrowserMainPartsLinux::PostBrowserStart();
+  LOG(ERROR) << "JAMES browser in pid " << getpid();
 }
 
 // Shut down services before the browser process, etc are destroyed.

@@ -250,6 +250,7 @@ std::unique_ptr<service_manager::Service> CreateEmbeddedUIService(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
     base::WeakPtr<ui::ImageCursorsSet> image_cursors_set_weak_ptr,
     discardable_memory::DiscardableSharedMemoryManager* memory_manager) {
+  LOG(ERROR) << "JAMES CreateEmbeddedUIService";
   ui::Service::InProcessConfig config;
   config.resource_runner = task_runner;
   config.image_cursors_set_weak_ptr = image_cursors_set_weak_ptr;
@@ -258,6 +259,7 @@ std::unique_ptr<service_manager::Service> CreateEmbeddedUIService(
   return std::make_unique<ui::Service>(&config);
 }
 
+//JAMES do we need this?
 void RegisterUIServiceInProcessIfNecessary(
     ServiceManagerConnection* connection) {
   // Some tests don't create BrowserMainLoop.
@@ -269,6 +271,7 @@ void RegisterUIServiceInProcessIfNecessary(
   // Do not embed the UI service if not running with --mus.
   if (!IsUsingMus())
     return;
+  LOG(ERROR) << "JAMES RegisterUIServiceInProcessIfNecessary";
 
   service_manager::EmbeddedServiceInfo info;
   info.factory = base::Bind(
@@ -383,6 +386,7 @@ ServiceManagerContext::ServiceManagerContext() {
     } kManifests[] = {
         {mojom::kBrowserServiceName, IDR_MOJO_CONTENT_BROWSER_MANIFEST},
         {mojom::kGpuServiceName, IDR_MOJO_CONTENT_GPU_MANIFEST},
+        //JAMES need one with ui service and one without, based on flag.
         {mojom::kPackagedServicesServiceName,
          IDR_MOJO_CONTENT_PACKAGED_SERVICES_MANIFEST},
         {mojom::kPluginServiceName, IDR_MOJO_CONTENT_PLUGIN_MANIFEST},

@@ -16,6 +16,7 @@
 #include "components/font_service/public/interfaces/constants.mojom.h"
 #include "mash/quick_launch/public/interfaces/constants.mojom.h"
 #include "mash/quick_launch/quick_launch.h"
+#include "chrome/utility/ash_and_ui_service.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
 #include "services/ui/service.h"
 
@@ -38,7 +39,16 @@ std::unique_ptr<service_manager::Service> CreateUiService() {
   return std::make_unique<ui::Service>();
 }
 
+
+// Chrome OS runs ash and ui services combined in one process.
+std::unique_ptr<service_manager::Service> CreateAshAndUiService() {
+  LOG(ERROR) << "JAMES CreateAshAndUiService";
+  return std::make_unique<AshAndUiService>();
+}
+
+//JAMES eliminate this
 std::unique_ptr<service_manager::Service> CreateAshService() {
+  LOG(ERROR) << "JAMES CreateAshService";
   const bool show_primary_host_on_connect = true;
   return std::make_unique<ash::WindowManagerService>(
       show_primary_host_on_connect);
@@ -64,10 +74,13 @@ std::unique_ptr<service_manager::Service> CreateFontService() {
 
 void RegisterMashServices(
     content::ContentUtilityClient::StaticServiceMap* services) {
+  RegisterMashService(services, "ash_and_ui", &CreateAshAndUiService);
+  //JAMES eliminate this
   RegisterMashService(services, ui::mojom::kServiceName, &CreateUiService);
+  //JAMES eliminate this
+  RegisterMashService(services, ash::mojom::kServiceName, &CreateAshService);
   RegisterMashService(services, mash::quick_launch::mojom::kServiceName,
                       &CreateQuickLaunch);
-  RegisterMashService(services, ash::mojom::kServiceName, &CreateAshService);
   RegisterMashService(services, "accessibility_autoclick",
                       &CreateAccessibilityAutoclick);
   RegisterMashService(services, "touch_hud", &CreateTouchHud);
