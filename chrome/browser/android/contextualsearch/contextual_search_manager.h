@@ -57,14 +57,35 @@ class ContextualSearchManager
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
 
-  // Enables the Contextual Search JS API for the given |WebContents|.
-  void EnableContextualSearchJsApiForOverlay(
+  // Allows the Contextual Search JS API to be enabled for the given
+  // |WebContents|. Once this method is called the JS API can be enabled by
+  // calling |EnableContextualSearchJsApiForUrl| before the page loads.
+  void AllowContextualSearchJsApiForWebContents(
       JNIEnv* env,
       jobject obj,
       const base::android::JavaParamRef<jobject>& j_web_contents);
 
+  // Enables the Contextual Search JS API for the given |j_url|.
+  // This method should be called as soon as possible when the URL navigation
+  // starts so the JavaScript API can be established before the page executes.
+  // A call to AllowContextualSearchJsApiForWebContents must have been made
+  // before making this call. The given URL is stored for future reference when
+  // ShouldEnableJsApi is called by a Renderer through mojo.
+  void EnableContextualSearchJsApiForUrl(
+      JNIEnv* env,
+      jobject obj,
+      const base::android::JavaParamRef<jstring>& j_url);
+
   // ContextualSearchJsApiHandler overrides:
   void SetCaption(std::string caption, bool does_answer) override;
+
+  // Determines whether the JS API should be enabled for the given URL.
+  // Calls the given |callback| with the answer: whether the API should be
+  // enabled.
+  void ShouldEnableJsApi(
+      const std::string& url,
+      contextual_search::mojom::ContextualSearchJsApiService::
+          ShouldEnableJsApiCallback callback) override;
 
  private:
   void OnSearchTermResolutionResponse(
@@ -80,6 +101,10 @@ class ContextualSearchManager
 
   // Our global reference to the Java ContextualSearchManager.
   base::android::ScopedJavaGlobalRef<jobject> java_manager_;
+
+  // The url of the overlay, used to determine if the JS API should be enabled.
+  // See ShouldEnableJsApi.
+  std::string overlay_url_;
 
   // The delegate we're using the do the real work.
   std::unique_ptr<ContextualSearchDelegate> delegate_;

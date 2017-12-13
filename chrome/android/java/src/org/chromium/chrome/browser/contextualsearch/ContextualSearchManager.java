@@ -225,7 +225,7 @@ public class ContextualSearchManager
         mTabModelObserver = new EmptyTabModelObserver() {
             @Override
             public void didSelectTab(Tab tab, TabSelectionType type, int lastId) {
-                if (!mIsPromotingToTab && tab.getId() != lastId
+                if ((!mIsPromotingToTab && tab.getId() != lastId)
                         || mActivity.getTabModelSelector().isIncognitoSelected()) {
                     hideContextualSearch(StateChangeReason.UNKNOWN);
                     mSelectionController.onTabSelected();
@@ -978,6 +978,7 @@ public class ContextualSearchManager
 
         @Override
         public void onContentLoadStarted(String url) {
+            nativeEnableContextualSearchJsApiForUrl(mNativeContextualSearchManagerPtr, url);
             mDidPromoteSearchNavigation = false;
         }
 
@@ -1010,8 +1011,9 @@ public class ContextualSearchManager
         @Override
         public void onContentViewCreated(ContentViewCore contentViewCore) {
             // TODO(donnd): Consider moving to OverlayPanelContent.
-            // Enable the Contextual Search JavaScript API between our service and the new view.
-            nativeEnableContextualSearchJsApiForOverlay(
+            // Allow the Contextual Search JavaScript API to be enabled between our service and the
+            // new view.
+            nativeAllowContextualSearchJsApiForWebContents(
                     mNativeContextualSearchManagerPtr, contentViewCore.getWebContents());
 
             // TODO(mdjones): Move SearchContentViewDelegate ownership to panel.
@@ -1757,8 +1759,10 @@ public class ContextualSearchManager
             ContextualSearchContext contextualSearchContext, WebContents baseWebContents);
     protected native void nativeGatherSurroundingText(long nativeContextualSearchManager,
             ContextualSearchContext contextualSearchContext, WebContents baseWebContents);
-    private native void nativeEnableContextualSearchJsApiForOverlay(
+    private native void nativeAllowContextualSearchJsApiForWebContents(
             long nativeContextualSearchManager, WebContents overlayWebContents);
+    private native void nativeEnableContextualSearchJsApiForUrl(
+            long nativeContextualSearchManager, String url);
     // Don't call these directly, instead call the private methods that cache the results.
     private native String nativeGetTargetLanguage(long nativeContextualSearchManager);
     private native String nativeGetAcceptLanguages(long nativeContextualSearchManager);
