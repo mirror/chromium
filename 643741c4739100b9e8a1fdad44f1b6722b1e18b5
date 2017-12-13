@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "23439140_34eb2a84",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T23:24:48Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t even count the 7. I assumed 8, and that it might either zero-fill or duplicate w.val[0] into w.val[1] and [2].\n\nBut I like your idea to explicitly initialize each vector with vdup_n_u8() (or just vector 3).",
+      "parentUuid": "69c00e21_43fb4c93",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f457a950_d32c3684",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -413,6 +437,30 @@
       "side": 1,
       "message": "\u003e The dup line will fill the 3-element array of 8x 8-bit vectors with one palette color.\n\u003e Then the lane lines fill the other lanes with the other palette colors.\n\u003e \n\u003e So right before the vst3 line, we have a 3-element array filled with the same palette colors.\n\u003e \n\nYeah, I admit NEON\u0027s presentation is a bit confusing, I can attempt an explanation of what this loop does:\n\n    cur \u003d vld3_dup_u8(palette + sizeof(png_color) * (*(sp - 7)));\n\nIf the sp - 7 contains an index pointing to a palette value R\u003d0xDE, G\u003d0xAD, B\u003d0xBE, then you\u0027ll end up with 3 registers for R, G and B. \n\n   r1 \u003d 0xDE DE DE DE DE DE DE DE\n   r2 \u003d 0xAD AD AD AD AD AD AD AD\n   r3 \u003d 0xBE BE BE BE BE BE BE BE\n\nThe vst3_u8 then re-interleaves them, so if I stored the three registers above, I\u0027d end up with this in memory:\n\n   0xDEADBE 0xDEADBE ...\n\nEach vld3_lane_u8 operation changes one column, across the three three registers, so the loop eventually loads the palette information for 8 pixels. \n\nWhat should then happen after the store is dp goes down by 24 bytes and sp (which is holding the input), goes down by 8 bytes.",
       "parentUuid": "203b4271_573ca2d5",
+      "range": {
+        "startLine": 107,
+        "startChar": 3,
+        "endLine": 119,
+        "endChar": 4
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fb0a24c_e44fa506",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T23:24:48Z",
+      "side": 1,
+      "message": "Oh okay. I understand the benefit of the array-of-vectors now. I misunderstood it as populating the same content in each vector.\n\nSuppose the 8 pixels of color values in the palette are (clumped into rgb) 0xDEADBE 0xEF1122 0x334455 0x667788 0x99AABB 0xCCDDEE 0xFF0001 0x234567.\nThe dup line gives us:\n   r1 \u003d 0xDE DE DE DE DE DE DE DE\n   r2 \u003d 0xAD AD AD AD AD AD AD AD\n   r3 \u003d 0xBE BE BE BE BE BE BE BE\nThe lane 1 line gives us:\n   r1 \u003d 0xDE DE DE DE DE DE EF DE\n   r2 \u003d 0xAD AD AD AD AD AD 11 AD\n   r3 \u003d 0xBE BE BE BE BE BE 22 BE\nThe lane 2 line gives us:\n   r1 \u003d 0xDE DE DE DE DE 33 EF DE\n   r2 \u003d 0xAD AD AD AD AD 44 11 AD\n   r3 \u003d 0xBE BE BE BE BE 55 22 BE\n...\nThe lane 7 line gives us:\n   r1 \u003d 0x23 FF CC 99 66 33 EF DE\n   r2 \u003d 0x45 00 DD AA 77 44 11 AD\n   r3 \u003d 0x67 01 EE BB 88 55 22 BE\n\nAt this point, we have 8 pixels with their r/g/b components in r1/r2/r3 respectively. Each lane is a pixel.\nThe vst line then writes them out.\n\nSo it seems like the main benefits here are loop unrolling and a very wide write.\n\nDereferencing (sp - x) will likely be L1 cache hits after the first.\nGetting the palette color value will likely be a cache miss until all of the palette cache lines are hit. The prefetcher may help here. But some weaker ARM chips list their prefetcher as only activating after enough successive requests in the same direction with the same stride. We likely won\u0027t fulfill that requirement.\n\n(256 palette entries max in PNG, with RGBA \u003d 256 * 4 bytes \u003d 1024 bytes. Typical cache lines are 64 bytes. 1024 bytes / 64 bytes \u003d 16 cache lines for the whole palette. 17 if not cache line aligned.)\n\n\nI think I follow now.\n\nIf you want to go to crazy-town, you can measure before and after using __builtin_prefetch() to pull in the palette cache lines. At best, it will only turn 16/17 cache misses into 16/17 cache hits. That\u0027s not a ton of difference, since the loop body will be all hits after the initial misses. So it might not be worth while so don\u0027t feel obligated to.\n\nThank you for helping me follow.",
+      "parentUuid": "caeebab3_695d9a9f",
       "range": {
         "startLine": 107,
         "startChar": 3,
