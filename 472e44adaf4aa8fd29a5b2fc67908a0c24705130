@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e48ef7b3_328f6474",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-13T12:52:24Z",
+      "side": 1,
+      "message": "Why not use a simple global\nint64_t g_unique_identifier \u003d 0;\n\nAnd call ++g_unique_identifier each time you use it?",
+      "revId": "472e44adaf4aa8fd29a5b2fc67908a0c24705130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
