@@ -2120,3 +2120,115 @@ UI.createInlineButton = function(toolbarButton) {
   shadowRoot.appendChild(toolbar.element);
   return element;
 };
+
+/**
+ * @extends {HTMLElement}
+ */
+UI.BaseElement = class extends HTMLElement {
+  static get observedAttributes() {
+    return [
+      'flex',       'padding',    'padding-top',   'padding-bottom', 'padding-left', 'padding-right',
+      'margin',     'margin-top', 'margin-bottom', 'margin-left',    'margin-right', 'overflow',
+      'overflow-x', 'overflow-y', 'font-size',     'color',          'background',   'background-color',
+      'border',     'border-top', 'border-bottom', 'border-left',    'border-right'
+    ];
+  }
+
+  /**
+   * @param {string} attr
+   * @param {?string} oldValue
+   * @param {?string} newValue
+   * @override
+   */
+  attributeChangedCallback(attr, oldValue, newValue) {
+    if (attr === 'flex') {
+      if (newValue === null)
+        this.style.removeProperty('flex');
+      else if (newValue === 'initial' || newValue === 'auto' || newValue === 'none' || newValue.indexOf(' ') !== -1)
+        this.style.setProperty('flex', newValue);
+      else
+        this.style.setProperty('flex', '0 0 ' + newValue);
+      return;
+    }
+    if (newValue === null) {
+      this.style.removeProperty(attr);
+      if (attr.startsWith('padding-') || attr.startsWith('margin-') || attr.startsWith('border-') ||
+          attr.startsWith('background-') || attr.startsWith('overflow-')) {
+        var shorthand = attr.substring(0, attr.indexOf('-'));
+        var shorthandValue = this.getAttribute(shorthand);
+        if (shorthandValue !== null)
+          this.style.setProperty(shorthand, shorthandValue);
+      }
+    } else {
+      this.style.setProperty(attr, newValue);
+    }
+  }
+};
+
+
+/**
+ * @extends {UI.BaseElement}
+ */
+UI.XWidget = class extends UI.BaseElement {
+  constructor() {
+    super();
+    this._initialized = false;
+    this._visible = false;
+    /** @type {?DocumentFragment} */
+    this._shadowRoot;
+
+    if (!UI.XWidget._observer) {
+      UI.XWidget._observer = new ResizeObserver(entries => {
+        for (var entry of entries) {
+          if (entry.target._visible)
+            entry.target.onResize();
+        }
+      });
+    }
+    UI.XWidget._observer.observe(this);
+  }
+
+  /**
+   * @param {string} cssFile
+   */
+  registerRequiredCSS(cssFile) {
+    UI.appendStyle(this._shadowRoot || this, cssFile);
+  }
+
+  /**
+   * @override
+   */
+  connectedCallback() {
+    if (!this._initialized) {
+      this._initialized = true;
+      this.style.setProperty('display', 'flex');
+      this.style.setProperty('flex-direction', 'column');
+      this.style.setProperty('align-items', 'stretch');
+      this.style.setProperty('justify-content', 'flex-start');
+      this.style.setProperty('contain', 'layout style');
+    }
+    this._visible = true;
+    this.onShow();
+  }
+
+  /**
+   * @override
+   */
+  disconnectedCallback() {
+    this._visible = false;
+    this.onHide();
+  }
+
+  onShow() {
+  }
+
+  onHide() {
+  }
+
+  onResize() {
+  }
+};
+
+(function() {
+  self.customElements.define('x-widget', UI.XWidget);
+})();
