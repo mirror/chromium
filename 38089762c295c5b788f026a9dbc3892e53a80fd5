@@ -16,6 +16,58 @@
       "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d65246_5167bd17",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-13T19:44:49Z",
+      "side": 1,
+      "message": "Also, I\u0027d argue that the comment doesn\u0027t match the code: to me, \"error out\" means `return`.",
+      "parentUuid": "32095085_bfd9ca65",
+      "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c8ade2_3af90181",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-13T19:44:49Z",
+      "side": 1,
+      "message": "It might help the reader if you said why. At least I don\u0027t immediately understand why.",
+      "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542408b2_d4e4a538",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-13T19:44:49Z",
+      "side": 1,
+      "message": "If it returns null on failure, what\u0027s the need for the `bool success`?",
+      "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
