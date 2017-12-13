@@ -637,6 +637,7 @@ source_set("blink_headers") {
 
   public_deps = [
     "//net",
+    "//services/network/public/interfaces",
     "//services/service_manager/public/cpp",
     "//skia",
     "//third_party/WebKit/common:blink_common",
@@ -654,7 +655,6 @@ source_set("blink_headers") {
     "//mojo/public/cpp/bindings:bindings",
     "//mojo/public/cpp/system:system",
     "//services/network/public/cpp:cpp",
-    "//services/network/public/interfaces:interfaces",
     "//v8:v8_headers",
   ]
 }
