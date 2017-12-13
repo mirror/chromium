@@ -39,10 +39,6 @@ size_t RegisterWebViewCrashKeys() {
       {kShutdownType, kSmallSize},
       {kBrowserUnpinTrace, kMediumSize},
 
-      // content/:
-      {"discardable-memory-allocated", kSmallSize},
-      {"discardable-memory-free", kSmallSize},
-      {"total-discardable-memory-allocated", kSmallSize},
       {kViewCount, kSmallSize},
 
       // media/:
