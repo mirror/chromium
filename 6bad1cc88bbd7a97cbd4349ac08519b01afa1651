@@ -16,6 +16,24 @@
       "revId": "6bad1cc88bbd7a97cbd4349ac08519b01afa1651",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff292bea_213ade56",
+        "filename": "testing/buildbot/generate_buildbot_json.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-13T21:36:18Z",
+      "side": 1,
+      "message": "This area certainly needs more thought. There\u0027s another ongoing project to make the bots\u0027 names on the waterfalls unique, which will somewhat solve this problem.\n\nThe situation where some gtests have the same name as instrumentation tests and some bots run one but not the other should, IMO, be resolved by running the same bunch of test suites everywhere. (This only came up on chromium.android.fyi.)\n\nFinally, regarding CI-only vs. trybot-only tests: I think the trybots\u0027 mirroring of waterfall bots works pretty well to ensure that test configurations remain consistent. In the long run I think that having separate bots to run tests which shouldn\u0027t run on the trybots can work, and would leave this configuration parameter out of this script and its config files.",
+      "parentUuid": "66def478_4f290563",
+      "revId": "6bad1cc88bbd7a97cbd4349ac08519b01afa1651",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
