@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "03ed9c7b_1f528d69",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T01:57:01Z",
+      "side": 1,
+      "message": "Does this need to be dispatched synchronously? If yes, this is fine. If no, you should use window-\u003eEnqueueWindowEvent.",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19fbbefd_e0e2ff24",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T01:57:01Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ec8cee_deff827b",
+        "filename": "third_party/WebKit/Source/core/events/event_type_names.json5",
+        "patchSetId": 14
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T01:57:01Z",
+      "side": 1,
+      "message": "Just help me understand: What happens two event names conflict?",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e06c33_2e5945e4",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T01:57:01Z",
+      "side": 1,
+      "message": "Are you planning to rename \"stop\" in a follow-up CL?\n\nIt looks confusing to mix \"stop\" and \"freeze\".",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8dbfbdd_077ac567",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T01:57:01Z",
+      "side": 1,
+      "message": "Why do you need to go to Document? Can you directly call window-\u003eDispatchEvent from here?",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e48278_9fb5821c",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T01:57:01Z",
+      "side": 1,
+      "message": "Just to confirm: This iterates all frames in the renderer process, not all frames of that tab. Is this your intention, right?",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77e5fccc_b1867df7",
         "filename": "third_party/WebKit/Source/core/page/Page.cpp",
         "patchSetId": 14
@@ -52,6 +154,41 @@
       "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e51497d2_1862af60",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T01:57:01Z",
+      "side": 1,
+      "message": "In a follow-up CL, would you add a state transition check to SetLifecyclestate? i.e., list all valid transitions with DCHECKs.",
+      "parentUuid": "8c8f2139_79312339",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9836e17_fd8b1c40",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T01:57:01Z",
+      "side": 1,
+      "message": "Add a comment and mention what each state means.",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
