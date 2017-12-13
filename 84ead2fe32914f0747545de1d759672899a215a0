@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2bb9d163_7d9dae12",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04128e1a_2dadd174",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86dd2a4c_ab75e86b",
         "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
         "patchSetId": 11
@@ -94,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "c9ef385e_056207e2",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "This will be fixed in the cl that lands prior to this one.",
+      "parentUuid": "32087143_6cbbbafe",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7686b735_9c24f9ae",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.h",
         "patchSetId": 11
@@ -117,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "18e959ab_c6c6e8f4",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "Thank you.",
+      "parentUuid": "7686b735_9c24f9ae",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec45e15b_bce970da",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.h",
         "patchSetId": 11
@@ -131,6 +191,24 @@
       "revId": "84ead2fe32914f0747545de1d759672899a215a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b8d08a_84c92ff2",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec45e15b_bce970da",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -205,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "12d5c565_bd5ad6ec",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "So is the right thing to put these in the header then? I understand wanting to dedup but it seems like at the cost of polluting the name space (I\u0027m fine with making the change, I just want to be clear on the change you want to see).",
+      "parentUuid": "0724e5aa_5555e555",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d7eec66_f23ad9d9",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
         "patchSetId": 11
@@ -219,6 +321,24 @@
       "revId": "84ead2fe32914f0747545de1d759672899a215a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09bad9ca_b76d3ce1",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "I prefer to set bounds and position because frame is derived from them (and anchorPoint). I\u0027ve found that setting the frame can sometimes result in bounds, etc. properties with tiny fractional components (because they get reverse computed from the frame).",
+      "parentUuid": "2d7eec66_f23ad9d9",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -245,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "98122600_1ca6d747",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "Thank you - I didn\u0027t know about this method (though I\u0027m unsure what to pass to recommendedLayerContentsScale:).",
+      "parentUuid": "49c33df1_0fefa945",
+      "range": {
+        "startLine": 42,
+        "startChar": 26,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75325e5f_4fc359bb",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
         "patchSetId": 11
@@ -256,6 +400,24 @@
       "writtenOn": "2017-11-29T02:43:29Z",
       "side": 1,
       "message": "Maybe +[NSImage imageWithSize:flipped:drawingHandler:]?",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2517456e_9a0e5bd4",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "Is there an advantage to doing it this way, or a reason this more modern way is preferred?",
+      "parentUuid": "75325e5f_4fc359bb",
       "revId": "84ead2fe32914f0747545de1d759672899a215a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -279,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "3dcdbff0_14cdb8c5",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "Great - thank you!",
+      "parentUuid": "338e66eb_8552a5ca",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "395153ec_1fa2db90",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
         "patchSetId": 11
@@ -299,6 +479,30 @@
       "revId": "84ead2fe32914f0747545de1d759672899a215a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0649df_8a6c1f29",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "395153ec_1fa2db90",
+      "range": {
+        "startLine": 189,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 52
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +575,30 @@
     },
     {
       "key": {
+        "uuid": "bea3c45b_276c16cb",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "It looks like they aren\u0027t needed.",
+      "parentUuid": "d33a4a4f_4c00455b",
+      "range": {
+        "startLine": 210,
+        "startChar": 16,
+        "endLine": 210,
+        "endChar": 38
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82a3b8b4_27ce4073",
         "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
         "patchSetId": 11
@@ -382,6 +610,30 @@
       "writtenOn": "2017-11-29T02:43:29Z",
       "side": 1,
       "message": "Hmm, is there any way you could avoid making this group? Or storing the animation in a @protected ivar?",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 41
+      },
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab39a83_11c7ba03",
+        "filename": "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T20:00:51Z",
+      "side": 1,
+      "message": "You\u0027re talking about how I\u0027m creating a group that contains a single animation?\n\nI\u0027m trying to think of ways to clean this up. I was considering setters (e.g. setSpinnerAnimation:) but there would need to be a variant that takes an animation group, and also need to pass the duration. Any suggestions? I didn\u0027t completely follow your ivar idea.",
+      "parentUuid": "82a3b8b4_27ce4073",
       "range": {
         "startLine": 217,
         "startChar": 2,
