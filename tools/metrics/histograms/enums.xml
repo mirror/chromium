@@ -34369,6 +34369,27 @@ Called by update_net_trust_anchors.py.-->
   <int value="10" label="Login action added, Subframe, pw empty"/>
 </enum>
 
+<enum name="PresentAddPassesDialogResult">
+  <summary>
+    Defines the result of Add Passes dialog presentation. The presentation can
+    be successful or unsuccessful if another view controller is currently
+    presented. If number is unsuccessful presentations is high, it means that
+    Chrome has to queue the dialogs to present those dialogs for every
+    downloaded pkpass.
+  </summary>
+  <int value="0" label="Successful">
+    The dialog was sucessesfully presented.
+  </int>
+  <int value="1" label="Another Add Passes View Controller Is Presented">
+    The dialog cannot be presented, because another PKAddPassesViewController is
+    already presented.
+  </int>
+  <int value="2" label="Another View Controller Is Presented">
+    The dialog cannot be presented, because another view controller is already
+    presented.
+  </int>
+</enum>
+
 <enum name="PresentationUrlType">
   <int value="0" label="Other"/>
   <int value="1" label="Cast"/>

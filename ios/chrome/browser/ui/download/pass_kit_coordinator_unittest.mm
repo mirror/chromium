@@ -6,6 +6,7 @@
 
 #import <PassKit/PassKit.h>
 
+#include "base/test/histogram_tester.h"
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "components/infobars/core/infobar.h"
 #import "ios/chrome/browser/download/pass_kit_tab_helper.h"
@@ -53,6 +54,7 @@ class PassKitCoordinatorTest : public PlatformTest {
   FakePassKitTabHelperDelegate* delegate_;
   ScopedKeyWindow scoped_key_window_;
   std::unique_ptr<web::NavigationManager> test_navigation_manager_;
+  base::HistogramTester histogram_tester_;
 };
 
 // Tests that PassKitCoordinator presents PKAddPassesViewController for the
@@ -85,6 +87,100 @@ TEST_F(PassKitCoordinatorTest, ValidPassKitObject) {
 
   EXPECT_FALSE(coordinator_.webState);
   EXPECT_FALSE(coordinator_.pass);
+
+  histogram_tester_.ExpectUniqueSample(
+      kUmaPresentAddPassesDialogResult,
+      static_cast<base::HistogramBase::Sample>(
+          PresentAddPassesDialogResult::Successful),
+      1);
+}
+
+// Tests presenting multiple valid PKPass objects.
+TEST_F(PassKitCoordinatorTest, MultiplePassKitObjects) {
+  if (IsIPadIdiom()) {
+    // Wallet app is not supported on iPads.
+    return;
+  }
+
+  std::string data = testing::GetTestPass();
+  NSData* nsdata = [NSData dataWithBytes:data.c_str() length:data.size()];
+  PKPass* pass = [[PKPass alloc] initWithData:nsdata error:nil];
+  ASSERT_TRUE(pass);
+
+  [coordinator_
+          passKitTabHelper:PassKitTabHelper::FromWebState(web_state_.get())
+      presentDialogForPass:pass
+                  webState:web_state_.get()];
+
+  EXPECT_TRUE(WaitUntilConditionOrTimeout(testing::kWaitForUIElementTimeout, ^{
+    return [base_view_controller_.presentedViewController class] ==
+           [PKAddPassesViewController class];
+  }));
+
+  histogram_tester_.ExpectUniqueSample(
+      kUmaPresentAddPassesDialogResult,
+      static_cast<base::HistogramBase::Sample>(
+          PresentAddPassesDialogResult::Successful),
+      1);
+
+  UIViewController* presented_controller =
+      base_view_controller_.presentedViewController;
+
+  [coordinator_
+          passKitTabHelper:PassKitTabHelper::FromWebState(web_state_.get())
+      presentDialogForPass:pass
+                  webState:web_state_.get()];
+
+  // New UI presentation is ignored.
+  EXPECT_EQ(presented_controller,
+            base_view_controller_.presentedViewController);
+
+  histogram_tester_.ExpectBucketCount(
+      kUmaPresentAddPassesDialogResult,
+      static_cast<base::HistogramBase::Sample>(
+          PresentAddPassesDialogResult::
+              AnotherAddPassesViewControllerIsPresented),
+      1);
+}
+
+// Tests presenting valid PKPass object, while another view controller is
+// already presented.
+TEST_F(PassKitCoordinatorTest, AnotherViewControllerIsPresented) {
+  if (IsIPadIdiom()) {
+    // Wallet app is not supported on iPads.
+    return;
+  }
+
+  // Present another view controller.
+  UIViewController* presented_controller = [[UIViewController alloc] init];
+  [base_view_controller_ presentViewController:presented_controller
+                                      animated:YES
+                                    completion:nil];
+  EXPECT_TRUE(WaitUntilConditionOrTimeout(testing::kWaitForUIElementTimeout, ^{
+    return presented_controller ==
+           base_view_controller_.presentedViewController;
+  }));
+
+  // Attempt to present "Add pkpass UI".
+  std::string data = testing::GetTestPass();
+  NSData* nsdata = [NSData dataWithBytes:data.c_str() length:data.size()];
+  PKPass* pass = [[PKPass alloc] initWithData:nsdata error:nil];
+  ASSERT_TRUE(pass);
+
+  [coordinator_
+          passKitTabHelper:PassKitTabHelper::FromWebState(web_state_.get())
+      presentDialogForPass:pass
+                  webState:web_state_.get()];
+
+  // New UI presentation is ignored.
+  EXPECT_EQ(presented_controller,
+            base_view_controller_.presentedViewController);
+
+  histogram_tester_.ExpectBucketCount(
+      kUmaPresentAddPassesDialogResult,
+      static_cast<base::HistogramBase::Sample>(
+          PresentAddPassesDialogResult::AnotherViewControllerIsPresented),
+      1);
 }
 
 // Tests that PassKitCoordinator presents error infobar for invalid PKPass
@@ -106,6 +202,8 @@ TEST_F(PassKitCoordinatorTest, InvalidPassKitObject) {
             delegate->GetMessageText());
   EXPECT_FALSE(coordinator_.webState);
   EXPECT_FALSE(coordinator_.pass);
+
+  histogram_tester_.ExpectTotalCount(kUmaPresentAddPassesDialogResult, 0);
 }
 
 // Tests that destroying web state nulls out webState property.
