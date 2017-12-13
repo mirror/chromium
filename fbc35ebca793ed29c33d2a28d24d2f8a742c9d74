@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba9a4c59_add942f8",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1256132
+      },
+      "writtenOn": "2017-12-13T21:40:37Z",
+      "side": 1,
+      "message": "DOGFOODGROUP_UNSPECIFIED \u003d 0;\n\nwould be required in g3 land, so we can distinguish if this was just not set. Up to you though as this is Chrome code.",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 10
+      },
+      "revId": "fbc35ebca793ed29c33d2a28d24d2f8a742c9d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
