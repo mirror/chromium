@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27fddf5c_cb48fd79",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1890,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T02:01:31Z",
+      "side": 1,
+      "message": "\u003e Here you\u0027re using mojo pipes to communicate between //content/rebderer/ and WebKit/Source/modules/manifest/.\n\u003e \n\u003e - Is this a common usage of Mojo pipes?\n\nSomewhat. The more common version of this is two components (possibly services) using mojo to abstract away the details of whether they\u0027re running in the same or different processes. In theory, if the clients of this interface in //content/renderer moved into //content/browser, they could continue using ManifestManager largely unmodified.\n\nIn this case it gives us a generated conversion between the web manifest representation inside blink and the representation in //content.\n\n\u003e - Or are you planning to remove this once you move installedapp into Blink?\n\nYes, this only needs to remain until all the clients in //content/renderer (installedapp, devtools, push_messaging and a piece of layouttest support) move into blink or out of the renderer process.",
+      "parentUuid": "abb21562_2c63a876",
+      "revId": "96a052fa13f3419990641b2e7861121160e41f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8108762_588f54ff",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T09:38:44Z",
       "side": 1,
       "message": "Nit: Do these functions need to be Repeating?",
+      "revId": "96a052fa13f3419990641b2e7861121160e41f17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54698c03_ed9b84ad",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T02:01:31Z",
+      "side": 1,
+      "message": "A frame can receive multiple requests for a particular interface so they do need to be repeating. For ManifestManager in particular, the ManifestManager is per-Document, so a client needs to reconnect after navigation.",
+      "parentUuid": "b8108762_588f54ff",
       "revId": "96a052fa13f3419990641b2e7861121160e41f17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
