@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5ddefe7_be43ffc7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-13T23:30:28Z",
+      "side": 1,
+      "message": "Sizes come from the values I found on Wikipedia https://en.wikipedia.org/wiki/Pixel_2\nPixel 2: 1920 × 1080\nPixel 2 XL: 2880 × 1440",
+      "range": {
+        "startLine": 685,
+        "startChar": 24,
+        "endLine": 686,
+        "endChar": 37
+      },
+      "revId": "c4ee24a03d4d4a96c1283269d72836eca4825b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e36feb8_7698ac69",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-13T23:30:28Z",
+      "side": 1,
+      "message": "Checked window.devicePixelRatio on a friend\u0027s physical Pixel 2",
+      "range": {
+        "startLine": 688,
+        "startChar": 42,
+        "endLine": 688,
+        "endChar": 47
+      },
+      "revId": "c4ee24a03d4d4a96c1283269d72836eca4825b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d3686a_d2b4ba38",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-13T23:30:28Z",
+      "side": 1,
+      "message": "Checked window.devicePixelRatio on a friend\u0027s physical Pixel 2 XL",
+      "range": {
+        "startLine": 725,
+        "startChar": 42,
+        "endLine": 725,
+        "endChar": 45
+      },
+      "revId": "c4ee24a03d4d4a96c1283269d72836eca4825b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
