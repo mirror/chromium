@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45c93a36_2f15a8ac",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-getStats.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-12-13T14:37:15Z",
+      "side": 1,
+      "message": "We should also do the same thing for pc.addTrack(track) (no stream). Or if this crashes add a TODO.",
+      "revId": "41c8e1c39bc1569666f50d6d1f573be2b2687856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
