@@ -362,6 +362,11 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
     test_hooks_->DidInvalidateContentOnImplSide(this);
   }
 
+  void InvalidateLayerTreeFrameSink() override {
+    LayerTreeHostImpl::InvalidateLayerTreeFrameSink();
+    test_hooks_->DidInvalidateLayerTreeFrameSink(this);
+  }
+
   void RequestImplSideInvalidationForCheckerImagedTiles() override {
     test_hooks_->DidReceiveImplSideInvalidationRequest(this);
     if (block_impl_side_invalidation_) {
