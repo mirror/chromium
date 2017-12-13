@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1c118c3_3e0722a9",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "764bd223_c05fb1e5",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d385d9a4_746465cd",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "d42a01c0_206fdd51",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "This has always been the current_frame()-\u003ecurrent_render_pass-\u003ecolor_space.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/749101/25/components/viz/service/display/direct_renderer.cc#b660\n\n\nHow about did as the original does, add member ScopedRenderPassTexture::color_space_ ?",
+      "parentUuid": "d385d9a4_746465cd",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "314281ea_44cd0eec",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -67,6 +103,24 @@
       "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becbaa20_6b9b2fa4",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "314281ea_44cd0eec",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "f5551693_1c1b0c1d",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 2914,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5e6ec8f_d97f72dd",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f75998f4_b2fe6e0b",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -101,6 +173,24 @@
       "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0123641a_31b4aac2",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f75998f4_b2fe6e0b",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "5f076300_c4349c3a",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 2919,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4498b5d8_00127dcf",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "802ebe7c_2cd56146",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -135,6 +243,24 @@
       "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb3caf8_3382eb62",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3307,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "802ebe7c_2cd56146",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "c16d561c_cc1746fc",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3599,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e0a671_698ca6fd",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "358c1f42_698ce2ab",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -166,6 +310,24 @@
       "writtenOn": "2017-12-12T21:47:43Z",
       "side": 1,
       "message": "Can we keep checking for wrong size/hint here also and erase them here in this method, so we do all the erasing in one place? It is harder to follow when it gets split.",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591ed97f_14667ee0",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3604,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "The reason why we can not delete it here is, we can not do render_pass_textures_.erase(pair.first) inside a loop of render_pass_textures_. It\u0027s ok to update items in render_pass_textures_ by Allocate/Free. But delete it is improper.",
+      "parentUuid": "358c1f42_698ce2ab",
       "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "cbfef400_752718d5",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3653,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "How about did as the original does, add member ScopedRenderPassTexture::color_space_ ?",
+      "parentUuid": "f046ac99_3bc3236f",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f5c0d3e_c805ac8b",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -200,6 +380,24 @@
       "writtenOn": "2017-12-12T21:47:43Z",
       "side": 1,
       "message": "Can we only make the texture in the map when we allocate it? Do we need to have 0 ids in the map?",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d2c7e5_a1942416",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3662,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-12-13T10:42:27Z",
+      "side": 1,
+      "message": "Sorry, not sure if I get your ideas correctly, this texture_it-\u003esecond.id() is the texture id.",
+      "parentUuid": "0f5c0d3e_c805ac8b",
       "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
