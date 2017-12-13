@@ -50,6 +50,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLHRElement.h"
+#include "core/html/HTMLSlotElement.h"
 #include "core/html/forms/FormController.h"
 #include "core/html/forms/FormData.h"
 #include "core/html/forms/HTMLFormElement.h"
@@ -78,6 +79,25 @@ namespace blink {
 
 using namespace HTMLNames;
 
+class SelectAssignmentFilter final : public AssignmentFilter {
+ public:
+  virtual ~SelectAssignmentFilter() {}
+
+  static SelectAssignmentFilter* Create() {
+    return new SelectAssignmentFilter();
+  }
+
+  bool CanAssign(const Node& node) const override {
+    return node.HasTagName(optionTag) || node.HasTagName(optgroupTag) ||
+           node.HasTagName(hrTag);
+  }
+
+  virtual void Trace(Visitor* visitor) { AssignmentFilter::Trace(visitor); }
+
+ private:
+  SelectAssignmentFilter() {}
+};
+
 // Upper limit of m_listItems. According to the HTML standard, options larger
 // than this limit doesn't work well because |selectedIndex| IDL attribute is
 // signed.
@@ -99,7 +119,7 @@ HTMLSelectElement::HTMLSelectElement(Document& document)
 
 HTMLSelectElement* HTMLSelectElement::Create(Document& document) {
   HTMLSelectElement* select = new HTMLSelectElement(document);
-  select->EnsureLegacyUserAgentShadowRootV0();
+  select->EnsureUserAgentShadowRootV1();
   return select;
 }
 
@@ -1821,9 +1841,9 @@ void HTMLSelectElement::Trace(blink::Visitor* visitor) {
 }
 
 void HTMLSelectElement::DidAddUserAgentShadowRoot(ShadowRoot& root) {
-  HTMLContentElement* content = HTMLContentElement::Create(GetDocument());
-  content->setAttribute(selectAttr, "option,optgroup,hr");
-  root.AppendChild(content);
+  HTMLSlotElement* slot = HTMLSlotElement::CreateFilteredSlotForUserAgent(
+      GetDocument(), SelectAssignmentFilter::Create());
+  root.AppendChild(slot);
 }
 
 HTMLOptionElement* HTMLSelectElement::SpatialNavigationFocusedOption() {
