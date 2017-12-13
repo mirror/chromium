@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "fa1afc52_569135e2",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-13T18:58:04Z",
+      "side": 1,
+      "message": "I do agree with you about the fact that it shouldn\u0027t matter.\nIt is just that, today, in the current implementation, when a client use ImageCapture api, it receives always a step of 0 [1].\n\nYes, the client should not build any logic on top of that about the potential resolutions. I just didn\u0027t want to break existing clients.\n\nSo let\u0027s keep the value to 1.\n\n[1] https://chromium.googlesource.com/chromium/src/media/+/refs/heads/master/capture/video/win/video_capture_device_win.cc#696",
+      "parentUuid": "e2191260_59a4f991",
+      "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afdd4284_2975eda2",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 2
