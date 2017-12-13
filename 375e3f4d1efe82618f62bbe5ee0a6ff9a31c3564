@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7833f0b_a17f13de",
+        "filename": "content/common/content_security_policy/csp_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-13T09:39:14Z",
+      "side": 1,
+      "message": "Does it means that developers can\u0027t report to a URI and to a group_names at the same time?\n\nIf I understand correctly, there are now two directives to define the reporting endpoints.\nreport-uri \u003cURI\u003e\nreport-to \u003cgroup_name\u003e\n\n|use_reporting_api| tells us whether the |report_endpoints| refers to \"report-uri\" or to \"report-to\". Is it correct?\n\nIf you think it is useful, maybe you could add a comment about this above ContentSecurityPolicy::use_reporting_api declaration.",
+      "range": {
+        "startLine": 134,
+        "startChar": 50,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "375e3f4d1efe82618f62bbe5ee0a6ff9a31c3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52d8867_5cff4dd1",
+        "filename": "content/common/content_security_policy/csp_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-13T09:39:14Z",
+      "side": 1,
+      "message": "Nit: Please add a dot \".\" at the end.",
+      "revId": "375e3f4d1efe82618f62bbe5ee0a6ff9a31c3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
