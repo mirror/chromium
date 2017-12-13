@@ -140,7 +140,7 @@ class ProxyResolverFactoryImplTest
 
   void ResolveDns(
       std::unique_ptr<net::HostResolver::RequestInfo> request_info,
-      net::interfaces::HostResolverRequestClientPtr client) override {}
+      network::mojom::HostResolverRequestClientPtr client) override {}
 
   void WaitForNoServiceRefs() {
     DCHECK(!service_ref_run_loop_);

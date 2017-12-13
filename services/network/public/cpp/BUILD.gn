@@ -8,6 +8,10 @@ static_library("cpp") {
   sources = [
     "cors_error_status.cc",
     "cors_error_status.h",
+    "host_resolver_mojo.cc",
+    "host_resolver_mojo.h",
+    "mojo_host_resolver_impl.cc",
+    "mojo_host_resolver_impl.h",
     "mutable_network_traffic_annotation_tag_struct_traits.h",
     "mutable_partial_network_traffic_annotation_tag_struct_traits.h",
     "net_adapters.cc",
@@ -43,15 +47,19 @@ source_set("tests") {
   testonly = true
 
   sources = [
+    "host_resolver_mojo_unittest.cc",
+    "mojo_host_resolver_impl_unittest.cc",
     "mutable_network_traffic_annotation_tag_struct_traits_unittest.cc",
     "mutable_partial_network_traffic_annotation_tag_struct_traits_unittest.cc",
     "network_struct_traits_unittest.cc",
   ]
   deps = [
+    ":cpp",
     ":test_interfaces",
     "//base",
     "//mojo/public/cpp/bindings",
     "//net",
+    "//net:test_support",
     "//testing/gtest",
   ]
 }

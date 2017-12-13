@@ -7,6 +7,7 @@ import("//services/service_manager/public/service_manifest.gni")
 
 source_set("lib") {
   sources = [
+    "mojo_proxy_resolver_v8_tracing_bindings.h",
     "proxy_resolver_factory_impl.cc",
     "proxy_resolver_factory_impl.h",
     "proxy_resolver_impl.cc",
@@ -19,8 +20,8 @@ source_set("lib") {
     "//base",
     "//mojo/public/cpp/bindings",
     "//net",
-    "//net:net_utility_services",
     "//net:net_with_v8",
+    "//services/network/public/cpp",
     "//services/service_manager",
   ]
 
@@ -34,6 +35,7 @@ source_set("tests") {
   testonly = true
 
   sources = [
+    "mojo_proxy_resolver_v8_tracing_bindings_unittest.cc",
     "proxy_resolver_factory_impl_unittest.cc",
     "proxy_resolver_impl_unittest.cc",
     "proxy_resolver_service_unittest.cc",
@@ -43,8 +45,8 @@ source_set("tests") {
     ":lib",
     "//base",
     "//base/test:test_support",
-    "//net:net_browser_services",
     "//net:test_support",
+    "//services/network/public/interfaces",
     "//services/service_manager/public/cpp/test:test_support",
     "//testing/gmock",
     "//testing/gtest",
