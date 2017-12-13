@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5de19d8_9cc32070",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T05:19:23Z",
+      "side": 1,
+      "message": "shouldBeSent might sound like it\u0027s changing behavior. \"expect\" would be nicer: expectSent, expectToBeSent, expectCredentialsToBeSent, or expectCredentialsSent?",
+      "revId": "aad7547d1a841e5f005ada58cdacad98c2772d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23cb29d6_4deea78e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T05:19:23Z",
+      "side": 1,
+      "message": "not send",
+      "revId": "aad7547d1a841e5f005ada58cdacad98c2772d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298a7b96_6968685b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T05:19:23Z",
+      "side": 1,
+      "message": "what\u0027s the diff between having the third param as \"\" vs not defined?",
+      "revId": "aad7547d1a841e5f005ada58cdacad98c2772d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
