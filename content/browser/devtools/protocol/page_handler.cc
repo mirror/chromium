@@ -288,22 +288,24 @@ Response PageHandler::Disable() {
 
 Response PageHandler::Reload(Maybe<bool> bypassCache,
                              Maybe<std::string> script_to_evaluate_on_load) {
+  if (!GetWebContents())
+    return Response::InternalError();
+  ReloadType reload_type = bypassCache.fromMaybe(false)
+                               ? ReloadType::BYPASSING_CACHE
+                               : ReloadType::NORMAL;
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&PageHandler::InnerReload, weak_factory_.GetWeakPtr(),
+                     reload_type));
+  // Fallback to notify renderer about upcoming reload.
+  return Response::FallThrough();
+}
+
+void PageHandler::InnerReload(ReloadType reloadType) {
   WebContentsImpl* web_contents = GetWebContents();
   if (!web_contents)
-    return Response::InternalError();
-
-  if (web_contents->IsCrashed() ||
-      (web_contents->GetController().GetVisibleEntry() &&
-       web_contents->GetController().GetVisibleEntry()->IsViewSourceMode())) {
-    web_contents->GetController().Reload(bypassCache.fromMaybe(false)
-                                             ? ReloadType::BYPASSING_CACHE
-                                             : ReloadType::NORMAL,
-                                         false);
-    return Response::OK();
-  } else {
-    // Handle reload in renderer except for crashed and view source mode.
-    return Response::FallThrough();
-  }
+    return;
+  web_contents->GetController().Reload(reloadType, false);
 }
 
 void PageHandler::Navigate(const std::string& url,
