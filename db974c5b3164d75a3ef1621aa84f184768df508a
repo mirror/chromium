@@ -22,6 +22,23 @@
       "revId": "db974c5b3164d75a3ef1621aa84f184768df508a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3991c7c6_9364c7a6",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_atomic.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-13T16:42:59Z",
+      "side": 1,
+      "message": "nit: s/\"rotation\"/the following?",
+      "revId": "db974c5b3164d75a3ef1621aa84f184768df508a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
