@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cb0c0f4_20d615e6",
+        "filename": "third_party/zlib/deflate.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-12-13T23:20:52Z",
+      "side": 1,
+      "message": "Remove this macro guard.",
+      "revId": "192c7125eb3dc24546394c3ef2d2b77e7cd8b123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ff5387_e859cdee",
+        "filename": "third_party/zlib/inflate.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1210809
+      },
+      "writtenOn": "2017-12-13T23:20:52Z",
+      "side": 1,
+      "message": "Remove this macro guard.",
+      "revId": "192c7125eb3dc24546394c3ef2d2b77e7cd8b123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
