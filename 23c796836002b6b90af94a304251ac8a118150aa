@@ -52,6 +52,24 @@
       "revId": "23c796836002b6b90af94a304251ac8a118150aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e36ffe6_9192def3",
+        "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-13T01:15:48Z",
+      "side": 1,
+      "message": "\u003e Remember how VR reparents all tabs into a fake DisplayAndroid that changes the dip scale and size?\n\u003e \n\u003e This code isn\u0027t equivalent because by using getNonMultiDisplay it\u0027s pulling the real default DisplayAndroid for the activity. Is this the part that you\u0027re concerned about? getNonMultiDisplay not returning the fake display when in VR?\n\nOhh...\n\nI\u0027d say virtual display is the correct display here. But you want the \"real\" scale here, not the \"virtual\" scale.\n\nWell, I don\u0027t know. I can\u0027t see this ever fitting into this whole \"display/window android/view android tree\" structure. So anything we do is going to feel like a hack, in which case we should just make the hack explicit. We could just add another scale to display to be used the here. Trickiest thing is giving it a meaningful name that doesn\u0027t confuse anyone reading it for the first time...",
+      "parentUuid": "5ac6feab_fbb7394a",
+      "revId": "23c796836002b6b90af94a304251ac8a118150aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
