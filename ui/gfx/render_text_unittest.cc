@@ -50,6 +50,7 @@
 #if defined(OS_MACOSX)
 #include <ApplicationServices/ApplicationServices.h>
 
+#include "base/mac/mac_util.h"
 #include "ui/gfx/render_text_mac.h"
 #endif
 
@@ -539,6 +540,41 @@ class RenderTextTest : public testing::Test,
 
   Rect GetSelectionBoundsUnion() {
     return GetSubstringBoundsUnion(render_text_->selection());
+  }
+
+  // Select each range of |render_text_| and ensure the selection bounds and
+  // cursor bounds are sane. The ranges might not be valid, but RenderText
+  // should extend it to a valid range. This means bounds may repeat. However,
+  // they shouldn't go backwards for "normal" strings.
+  void SelectEachRange() {
+    ASSERT_FALSE(render_text_->text().empty());
+    // Assume LTR for now. Start at -1: The text is flush against the display
+    // rect so a cursor may extend into negative coordinates.
+    int max_cursor_x = 0;
+    int max_glyph_x = 0, max_glyph_right = 0;
+
+    for (size_t i = 0; i <= render_text_->text().size(); ++i) {
+      render_text_->SetCursorPosition(i);
+      SCOPED_TRACE(testing::Message("Selected range: ")
+                   << render_text_->selection().ToString());
+
+      // Always subtract the display offset: moving a cursor within the text can
+      // require it to shift to accommodate the cursor itself.
+      const gfx::Rect cursor_bounds = render_text_->GetUpdatedCursorBounds() -
+                                      render_text_->GetUpdatedDisplayOffset();
+      EXPECT_EQ(cursor_bounds.x() + 1, cursor_bounds.right());
+      EXPECT_LE(max_cursor_x, cursor_bounds.x());
+      max_cursor_x = cursor_bounds.x();
+
+      const gfx::Rect glyph_bounds =
+          render_text_->GetCursorBounds(render_text_->selection_model(),
+                                        false) -
+          render_text_->GetUpdatedDisplayOffset();
+      EXPECT_LE(max_glyph_x, glyph_bounds.x());
+      EXPECT_LE(max_glyph_right, glyph_bounds.right());
+      max_glyph_x = glyph_bounds.x();
+      max_glyph_right = glyph_bounds.right();
+    }
   }
 
   Canvas* canvas() { return &canvas_; }
@@ -3743,26 +3779,22 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_SubglyphGraphemePartition) {
     Range bounds[4];
     bool is_rtl;
   } cases[] = {
-    { // From string "A B C D" to glyphs "a bcd".
-      { 0, 1 },
-      { Range(0, 10), Range(10, 13), Range(13, 17), Range(17, 20) },
-      false
-    },
-    { // From string "A B C D" to glyphs "ab cd".
-      { 0, 2 },
-      { Range(0, 5), Range(5, 10), Range(10, 15), Range(15, 20) },
-      false
-    },
-    { // From string "A B C D" to glyphs "dcb a".
-      { 1, 0 },
-      { Range(10, 20), Range(7, 10), Range(3, 7), Range(0, 3) },
-      true
-    },
-    { // From string "A B C D" to glyphs "dc ba".
-      { 2, 0 },
-      { Range(15, 20), Range(10, 15), Range(5, 10), Range(0, 5) },
-      true
-    },
+      {// From string "A B C D" to glyphs "a bcd".
+       {0, 1},
+       {Range(0, 10), Range(10, 13), Range(13, 17), Range(17, 20)},
+       false},
+      {// From string "A B C D" to glyphs "ab cd".
+       {0, 2},
+       {Range(0, 5), Range(5, 10), Range(10, 15), Range(15, 20)},
+       false},
+      {// From string "A B C D" to glyphs "dcb a"
+       {1, 0},
+       {Range(10, 20), Range(7, 10), Range(3, 7), Range(0, 3)},
+       true},
+      {// From string "A B C D" to glyphs "dc ba".
+       {2, 0},
+       {Range(15, 20), Range(10, 15), Range(5, 10), Range(0, 5)},
+       true},
   };
 
   internal::TextRunHarfBuzz run((Font()));
@@ -3926,6 +3958,111 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByEmoji) {
   EXPECT_EQ(ToString16Vec({"x", "😁", "y", "✨"}), GetRunListStrings());
   // U+1F601 is represented as a surrogate pair in UTF-16.
   EXPECT_EQ("[0][1->2][3][4]", GetRunListStructureString());
+}
+
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByEmojiVariationSelectors) {
+  constexpr int kGlyphWidth = 30;
+  SetGlyphWidth(30);
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+
+  // ☎ (U+260E BLACK TELEPHONE) and U+FE0F (a variation selector) combine to
+  // form (on some platforms), ☎️, a red (or blue) telephone. The run can
+  // not break between the codepoints, or the incorrect glyph will be chosen.
+  render_text->SetText(WideToUTF16(L"x\u260E\uFE0Fy"));
+  render_text->SetDisplayRect(Rect(1000, 1000));
+  test_api()->EnsureLayout();
+  EXPECT_EQ(ToString16Vec({"x", "☎\uFE0F", "y"}), GetRunListStrings());
+  EXPECT_EQ("[0][1->2][3]", GetRunListStructureString());
+
+  // Also test moving the cursor across the telephone.
+  EXPECT_EQ(gfx::Range(0, 0), render_text->selection());
+  EXPECT_EQ(0, render_text->GetUpdatedCursorBounds().x());
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
+  EXPECT_EQ(gfx::Range(1, 1), render_text->selection());
+  EXPECT_EQ(1 * kGlyphWidth, render_text->GetUpdatedCursorBounds().x());
+
+#if defined(OS_MACOSX)
+  // Early versions of macOS provide a tofu glyph for the variation selector.
+  // Bail out early except on 10.12 and above.
+  if (base::mac::IsAtMostOS10_11())
+    return;
+#endif
+
+  // Jump over the telephone: two codepoints, but a single glyph.
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
+  EXPECT_EQ(gfx::Range(3, 3), render_text->selection());
+  EXPECT_EQ(2 * kGlyphWidth, render_text->GetUpdatedCursorBounds().x());
+
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
+  EXPECT_EQ(gfx::Range(4, 4), render_text->selection());
+  EXPECT_EQ(3 * kGlyphWidth, render_text->GetUpdatedCursorBounds().x());
+
+  // Nothing else.
+  render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_NONE);
+  EXPECT_EQ(gfx::Range(4, 4), render_text->selection());
+  EXPECT_EQ(3 * kGlyphWidth, render_text->GetUpdatedCursorBounds().x());
+  SelectEachRange();
+}
+
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_OrphanedVariationSelector) {
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+
+  // It should never happen in normal usage, but a variation selector can appear
+  // by itself. In this case, it can form its own text run, with no glyphs.
+  render_text->SetText(WideToUTF16(L"\uFE0F"));
+  test_api()->EnsureLayout();
+  EXPECT_EQ(ToString16Vec({"\uFE0F"}), GetRunListStrings());
+  EXPECT_EQ("[0]", GetRunListStructureString());
+  SelectEachRange();
+}
+
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_AsciiVariationSelector) {
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+
+  // A variation selector doesn't have to appear with Emoji. It will probably
+  // cause the typesetter to render tofu in this case, but it should not break
+  // a text run,
+  render_text->SetText(WideToUTF16(L"x\uFE0Fy"));
+  test_api()->EnsureLayout();
+  EXPECT_EQ(ToString16Vec({"x\uFE0Fy"}), GetRunListStrings());
+  EXPECT_EQ("[0->2]", GetRunListStructureString());
+  SelectEachRange();
+}
+
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_LeadingVariationSelector) {
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+
+  // When a variation selector appears either side of an emoji, ensure the one
+  // after is in the same run.
+  render_text->SetText(WideToUTF16(L"\uFE0F\u260E\uFE0Fy"));
+  test_api()->EnsureLayout();
+  EXPECT_EQ(ToString16Vec({"\uFE0F", "☎\uFE0F", "y"}), GetRunListStrings());
+  EXPECT_EQ("[0][1->2][3]", GetRunListStructureString());
+  SelectEachRange();
+}
+
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_TrailingVariationSelector) {
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+
+  // If a redundant variation selector appears in an emoji run, it also gets
+  // merged into the emoji run.
+  render_text->SetText(WideToUTF16(L"x\u260E\uFE0F\uFE0Fy"));
+  test_api()->EnsureLayout();
+  EXPECT_EQ(ToString16Vec({"x", "☎\uFE0F\uFE0F", "y"}), GetRunListStrings());
+  EXPECT_EQ("[0][1->3][4]", GetRunListStructureString());
+  SelectEachRange();
+}
+
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_MultipleVariationSelectorEmoji) {
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+
+  // Two emoji with variation selectors appearing in a correct sequence should
+  // be in the same run.
+  render_text->SetText(WideToUTF16(L"x\u260E\uFE0F\u260E\uFE0Fy"));
+  test_api()->EnsureLayout();
+  EXPECT_EQ(ToString16Vec({"x", "☎\uFE0F☎\uFE0F", "y"}), GetRunListStrings());
+  EXPECT_EQ("[0][1->4][5]", GetRunListStructureString());
+  SelectEachRange();
 }
 
 TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByAscii) {
