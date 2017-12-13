@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36aaf52a_97f15953",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2858,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-13T23:17:13Z",
+      "side": 1,
+      "message": "I added this test because it\u0027s easier to run an automated test than to test manually.  However, it requires the network for a live search-page-load which makes me think it should be disabled.  Do you know if there\u0027s any best practice for this, or annotation that it requires the network so we don\u0027t need to leave it disabled?",
+      "range": {
+        "startLine": 2858,
+        "startChar": 0,
+        "endLine": 2858,
+        "endChar": 87
+      },
+      "revId": "16b4f611f19507bc7f62a54557ac106a879ab0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

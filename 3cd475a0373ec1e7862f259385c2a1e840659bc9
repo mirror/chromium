@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "798f277e_6060049b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-13T23:17:13Z",
+      "side": 1,
+      "message": "Done.\n\nI was thinking it was better to keep the API short and simple by merging the two method calls.  But I\u0027m happy to split into a Whitelist-URL and Enable-WebContents.",
+      "parentUuid": "d57bbd85_d4b5fbe9",
+      "range": {
+        "startLine": 806,
+        "startChar": 8,
+        "endLine": 808,
+        "endChar": 91
+      },
+      "revId": "3cd475a0373ec1e7862f259385c2a1e840659bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc6cdb83_0fbc86c8",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3cd475a0373ec1e7862f259385c2a1e840659bc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc39f26_b5eb6ae9",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-13T23:17:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc6cdb83_0fbc86c8",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 50
+      },
+      "revId": "3cd475a0373ec1e7862f259385c2a1e840659bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
