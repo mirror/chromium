@@ -16,21 +16,18 @@
 #import "chrome/browser/themes/theme_properties.h"
 #import "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/ui/cocoa/l10n_util.h"
-#import "chrome/browser/ui/cocoa/sprite_view.h"
 #import "chrome/browser/ui/cocoa/tabs/alert_indicator_button_cocoa.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_controller_target.h"
+#include "chrome/browser/ui/cocoa/tabs/tab_spinner_icon_view.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_view.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
-#include "chrome/grit/theme_resources.h"
-#include "components/grit/components_scaled_resources.h"
 #import "extensions/common/extension.h"
 #include "skia/ext/skia_utils_mac.h"
 #import "ui/base/cocoa/menu_controller.h"
-#include "ui/base/resource/resource_bundle.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/gfx/favicon_size.h"
 #include "ui/native_theme/native_theme.h"
-#include "ui/resources/grit/ui_resources.h"
 
 namespace {
 
@@ -64,7 +61,7 @@ class MenuDelegate : public ui::SimpleMenuModel::Delegate {
 }  // namespace
 
 @interface TabController () {
-  base::scoped_nsobject<SpriteView> iconView_;
+  base::scoped_nsobject<TabSpinnerIconView> iconView_;
   base::scoped_nsobject<NSImage> icon_;
   base::scoped_nsobject<NSView> attentionDotView_;
   base::scoped_nsobject<AlertIndicatorButton> alertIndicatorButton_;
@@ -166,7 +163,7 @@ static const CGFloat kPinnedTabWidth = kDefaultTabHeight * 2;
     // Add the favicon view.
     NSRect iconViewFrame =
         NSMakeRect(0, kTabElementYOrigin, gfx::kFaviconSize, gfx::kFaviconSize);
-    iconView_.reset([[SpriteView alloc] initWithFrame:iconViewFrame]);
+    iconView_.reset([[TabSpinnerIconView alloc] initWithFrame:iconViewFrame]);
     [iconView_ setAutoresizingMask:isRTL ? NSViewMinXMargin | NSViewMinYMargin
                                          : NSViewMaxXMargin | NSViewMinYMargin];
     [self updateIconViewFrameWithAnimation:NO];
@@ -453,50 +450,11 @@ static const CGFloat kPinnedTabWidth = kDefaultTabHeight * 2;
   }
   loadingState_ = newLoadingState;
 
-  // The Material Design spinner handles sad tab icon display, etc. directly
-  // based on the loading state. Handle it here until the new spinner code
-  // lands.
-  if (newLoadingState == kTabCrashed) {
-    static NSImage* sadFaviconImage =
-        ui::ResourceBundle::GetSharedInstance()
-            .GetNativeImageNamed(IDR_CRASH_SAD_FAVICON)
-            .CopyNSImage();
-
-    image = sadFaviconImage;
-  } else if (newLoadingState == kTabWaiting) {
-    static NSImage* throbberWaitingImage =
-        ui::ResourceBundle::GetSharedInstance()
-            .GetNativeImageNamed(IDR_THROBBER_WAITING)
-            .CopyNSImage();
-    static NSImage* throbberWaitingIncognitoImage =
-        ui::ResourceBundle::GetSharedInstance()
-            .GetNativeImageNamed(IDR_THROBBER_WAITING_INCOGNITO)
-            .CopyNSImage();
-
-    if ([[iconView_ window] hasDarkTheme]) {
-      image = throbberWaitingIncognitoImage;
-    } else {
-      image = throbberWaitingImage;
-    }
-  } else if (newLoadingState == kTabLoading) {
-    static NSImage* throbberLoadingImage =
-        ui::ResourceBundle::GetSharedInstance()
-            .GetNativeImageNamed(IDR_THROBBER)
-            .CopyNSImage();
-    static NSImage* throbberLoadingIncognitoImage =
-        ui::ResourceBundle::GetSharedInstance()
-            .GetNativeImageNamed(IDR_THROBBER_INCOGNITO)
-            .CopyNSImage();
-
-    if ([[iconView_ window] hasDarkTheme]) {
-      image = throbberLoadingIncognitoImage;
-    } else {
-      image = throbberLoadingImage;
-    }
+  if (newLoadingState == kTabDone) {
+    [iconView_ setTabDoneIcon:image];
+  } else {
+    [iconView_ setTabLoadingState:newLoadingState];
   }
-
-  [iconView_ setImage:image
-      withToastAnimation:(newLoadingState == kTabCrashed)];
 }
 
 - (void)updateAttentionIndicator {
