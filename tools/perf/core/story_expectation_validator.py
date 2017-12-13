@@ -4,6 +4,7 @@
 # found in the LICENSE file.
 """Script to check validity of StoryExpectations."""
 
+import optparse
 import argparse
 import json
 import os
@@ -44,12 +45,17 @@ def validate_story_names(benchmarks):
       continue
     b = benchmark()
     options = browser_options.BrowserFinderOptions()
-    # tabset_repeat is needed for tab_switcher benchmarks.
-    options.tabset_repeat = 1
-    # test_path required for blink_perf benchmark in contrib/.
-    options.test_path = ''
-    # shared_prefs_file required for benchmarks in contrib/vr_benchmarks/
-    options.shared_prefs_file = ''
+
+    # Add default values for any extra commandline options
+    # provided by the benchmark.
+    parser = optparse.OptionParser()
+    before, _ = parser.parse_args([])
+    benchmark.AddBenchmarkCommandLineArgs(parser)
+    after, _ = parser.parse_args([])
+    for extra_option in dir(after):
+        if extra_option not in dir(before):
+            setattr(options, extra_option, getattr(after, extra_option))
+
     story_set = b.CreateStorySet(options)
     failed_stories = b.GetBrokenExpectations(story_set)
     assert not failed_stories, 'Incorrect story names: %s' % str(failed_stories)
