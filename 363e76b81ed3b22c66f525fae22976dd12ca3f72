@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1bfcd5a7_73b94fd4",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-13T06:48:30Z",
+      "side": 1,
+      "message": "The \"GeolocationProviderImpl::OverrideLocationForTesting()\" triggers geolocation-core to send a  overrided geoposition back to its client.\nWithout this the WatchPositionAndGrantPermission() in line 549 will never get response, then this test will be timeout.",
+      "parentUuid": "44d4a1df_7f50f12a",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "900146c6_fb08e082",
         "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a66e17d_a3af2e20",
+        "filename": "components/autofill/content/browser/risk/fingerprint_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-13T06:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "900146c6_fb08e082",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "52011c27_cf34a5f2",
+        "filename": "device/geolocation/public/cpp/fake_geolocation.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-13T06:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43a4855c_2530b12d",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dab2d6a5_15c32f5e",
         "filename": "device/geolocation/public/cpp/fake_geolocation.h",
         "patchSetId": 16
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a49a9092_b102e863",
+        "filename": "device/geolocation/public/cpp/fake_geolocation.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-13T06:48:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dab2d6a5_15c32f5e",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bd133c0_1ef63a74",
         "filename": "device/geolocation/public/cpp/fake_geolocation.h",
         "patchSetId": 16
@@ -81,6 +153,47 @@
       "writtenOn": "2017-12-12T12:42:12Z",
       "side": 1,
       "message": "I would say: The override of the geolocation implementation will be in effect for the duration of this object\u0027s lifetime.",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f0d541_830296b3",
+        "filename": "device/geolocation/public/cpp/fake_geolocation.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-13T06:48:30Z",
+      "side": 1,
+      "message": "Thanks!\nDone.",
+      "parentUuid": "9bd133c0_1ef63a74",
+      "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5204706a_0ddd4081",
+        "filename": "device/geolocation/public/cpp/fake_geolocation.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-12-13T06:48:30Z",
+      "side": 1,
+      "message": "I changed the parameter to const reference, and moved this class to the top of this file.",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 67
+      },
       "revId": "363e76b81ed3b22c66f525fae22976dd12ca3f72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
