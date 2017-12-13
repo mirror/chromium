@@ -92,6 +92,14 @@ class CONTENT_EXPORT StoragePartition {
 #endif  // !defined(OS_ANDROID)
   virtual PlatformNotificationContext* GetPlatformNotificationContext() = 0;
 
+  class NetworkServiceObserver {
+   public:
+    virtual void OnConnectionError() = 0;
+  };
+
+  virtual void AddNetworkServiceObserver(NetworkServiceObserver*);
+  virtual void RemoveNetworkServiceObserver(const NetworkServiceObserver*);
+
   enum : uint32_t {
     REMOVE_DATA_MASK_APPCACHE = 1 << 0,
     REMOVE_DATA_MASK_COOKIES = 1 << 1,
