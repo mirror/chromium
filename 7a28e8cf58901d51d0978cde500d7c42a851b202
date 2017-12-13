@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1df1fee3_5a4de04a",
+        "filename": "content/browser/renderer_host/media/audio_output_authorization_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T11:12:23Z",
+      "side": 1,
+      "message": "I think you should use DeviceParametersReceived() here. Any reason why not?",
+      "range": {
+        "startLine": 155,
+        "startChar": 55,
+        "endLine": 155,
+        "endChar": 79
+      },
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89677c9_522c2c29",
+        "filename": "content/renderer/media/webrtc/processed_local_audio_source.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T11:12:23Z",
+      "side": 1,
+      "message": "This field should be unnecessary. If device() has empty matched_output_device_id that should be enough to know that it should not render to associated sink.",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 33
+      },
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
