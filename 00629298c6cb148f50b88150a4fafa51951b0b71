@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "b8187e3c_ae420671",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-13T19:47:56Z",
+      "side": 1,
+      "message": "If we need to differentiate between images, videos, and other, I\u0027d do:\n\n@IntDef enum on: IMAGE, VIDEO, OTHER.\n\nIf it\u0027s just \"images or videos\" and other, the boolean sounds fine :).",
+      "parentUuid": "b44e2fa7_c0eb8fc4",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 62
+      },
+      "revId": "00629298c6cb148f50b88150a4fafa51951b0b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cc3b683_91dcd00e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUtils.java",
         "patchSetId": 1
