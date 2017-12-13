@@ -11,11 +11,21 @@ namespace ios_web_view {
 class WebViewBrowserState;
 }  // namespace ios_web_view
 
+@class CWVWebView;
+
 @interface CWVWebViewConfiguration ()
+
+// Calls |shutDown|.
++ (void)shutDown;
 
 // The browser state associated with this configuration.
 @property(nonatomic, readonly, nonnull)
     ios_web_view::WebViewBrowserState* browserState;
+
+- (void)addWebView:(nonnull CWVWebView*)webView;
+
+// Destroys |browserState|.
+- (void)shutDown;
 
 @end
 
