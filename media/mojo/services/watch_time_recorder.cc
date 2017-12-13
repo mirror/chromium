@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "base/hash.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/strings/string_piece.h"
 #include "media/base/limits.h"
@@ -228,6 +229,16 @@ void WatchTimeRecorder::OnError(PipelineStatus status) {
   pipeline_status_ = status;
 }
 
+void WatchTimeRecorder::SetAudioDecoderName(const std::string& name) {
+  DCHECK(audio_decoder_name_.empty());
+  audio_decoder_name_ = name;
+}
+
+void WatchTimeRecorder::SetVideoDecoderName(const std::string& name) {
+  DCHECK(video_decoder_name_.empty());
+  video_decoder_name_ = name;
+}
+
 void WatchTimeRecorder::UpdateUnderflowCount(int32_t count) {
   underflow_count_ = count;
 }
@@ -311,6 +322,11 @@ void WatchTimeRecorder::RecordUkmPlaybackData() {
   builder.SetVideoCodec(properties_->video_codec);
   builder.SetHasAudio(properties_->has_audio);
   builder.SetHasVideo(properties_->has_video);
+
+  // Since the pool of video decoders is known, just hash the name and report it
+  // to UKM as an int32_t. We can reconstruct it later for dashboards, etc.
+  builder.SetAudioDecoderNameHash(base::PersistentHash(audio_decoder_name_));
+  builder.SetVideoDecoderNameHash(base::PersistentHash(video_decoder_name_));
 
   builder.SetIsEME(properties_->is_eme);
   builder.SetIsMSE(properties_->is_mse);
