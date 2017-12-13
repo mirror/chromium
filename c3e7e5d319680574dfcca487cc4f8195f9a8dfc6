@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe451409_45a8c73f",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T23:22:52Z",
+      "side": 1,
+      "message": "Do you want to split this into two CLs? land the Slow2g on cellular first?",
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95b61d6_b3786150",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T23:22:52Z",
+      "side": 1,
+      "message": "Can you add to this that \"Slow 2G on Cellular returns Slow 2G when connected to a cellular network, and the actual Effective connection estimate when not on a cellular network.\" Also add \"Previews and other interventions trigger on slower connections.\"",
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e2c5712_eae656b8",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T23:22:52Z",
+      "side": 1,
+      "message": "I\u0027d name this consistently to be server_previews",
+      "range": {
+        "startLine": 204,
+        "startChar": 21,
+        "endLine": 204,
+        "endChar": 36
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe0d3d9_6ded0721",
+        "filename": "net/nqe/network_quality_estimator_params.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T23:22:52Z",
+      "side": 1,
+      "message": "this method name implies we are returning forced_effective_connection_type_. Rename to GetForceEffectiveConnectionType.",
+      "range": {
+        "startLine": 514,
+        "startChar": 31,
+        "endLine": 514,
+        "endChar": 63
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef03619_39d9f236",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T23:22:52Z",
+      "side": 1,
+      "message": "You need to have a corresponding test for AfterM61 to Before M65. The other option is to put both commandline strings, but I\u0027ll let tbansal decide if that is too hacky. This comment appleis to all tests/",
+      "range": {
+        "startLine": 193,
+        "startChar": 3,
+        "endLine": 193,
+        "endChar": 29
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
