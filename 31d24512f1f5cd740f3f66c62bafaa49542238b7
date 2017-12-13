@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34e87693_51a47724",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-12-13T23:03:42Z",
+      "side": 1,
+      "message": "I feel 24h is too long. 8h might be better.\n\nWhat case we hit the 3h limit?",
+      "range": {
+        "startLine": 227,
+        "startChar": 39,
+        "endLine": 227,
+        "endChar": 42
+      },
+      "revId": "31d24512f1f5cd740f3f66c62bafaa49542238b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
