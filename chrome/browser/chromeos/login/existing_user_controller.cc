@@ -50,6 +50,7 @@
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/system/device_disabling_manager.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/signin/easy_unlock_service.h"
 #include "chrome/browser/ui/aura/accessibility/automation_manager_aura.h"
 #include "chrome/browser/ui/webui/chromeos/login/l10n_util.h"
@@ -562,12 +563,21 @@ void ExistingUserController::Login(const UserContext& user_context,
 void ExistingUserController::PerformLogin(
     const UserContext& user_context,
     LoginPerformer::AuthorizationMode auth_mode) {
+  LOG(ERROR) << "ExistingUserController::PerformLogin";
+  LOG(ERROR) << "user_context: plain text password :"
+             << user_context.GetKey()->GetSecret()
+             << "user email: " << user_context.GetAccountId().GetUserEmail();
   VLOG(1) << "Setting flow from PerformLogin";
   ChromeUserManager::Get()
       ->GetUserFlow(user_context.GetAccountId())
       ->SetHost(host_);
 
   BootTimesRecorder::Get()->RecordLoginAttempted();
+
+  safe_browsing::SafeBrowsingService* sb_service =
+      g_browser_process->safe_browsing_service();
+  if (sb_service)
+    sb_service->AddPendingSyncPasswordData(user_context);
 
   // Use the same LoginPerformer for subsequent login as it has state
   // such as Authenticator instance.
@@ -594,6 +604,7 @@ void ExistingUserController::PerformLogin(
     // AuthPolicyCredentialsManager will be created inside the user session
     // which would get status about last authentication and handle possible
     // failures.
+    LOG(ERROR) << "user_context: " << user_context.GetKey()->GetSecret();
     AuthPolicyLoginHelper::TryAuthenticateUser(
         user_context.GetAccountId().GetUserEmail(),
         user_context.GetAccountId().GetObjGuid(),
@@ -823,6 +834,11 @@ void ExistingUserController::OnAuthFailure(const AuthFailure& failure) {
 
   PerformLoginFinishedActions(false /* don't start auto login timer */);
 
+  safe_browsing::SafeBrowsingService* sb_service =
+      g_browser_process->safe_browsing_service();
+  if (sb_service)
+    sb_service->RemovePendingSyncPasswordData(last_login_attempt_account_id_);
+
   if (ChromeUserManager::Get()
           ->GetUserFlow(last_login_attempt_account_id_)
           ->HandleLoginFailure(failure)) {
@@ -888,6 +904,15 @@ void ExistingUserController::OnAuthFailure(const AuthFailure& failure) {
 }
 
 void ExistingUserController::OnAuthSuccess(const UserContext& user_context) {
+  LOG(ERROR) << "ExistingUserController::OnAuthSuccess";
+  LOG(ERROR) << "user_context: plain text password :"
+             << user_context.GetKey()->GetSecret()
+             << "user email: " << user_context.GetAccountId().GetUserEmail();
+  safe_browsing::SafeBrowsingService* sb_service =
+      g_browser_process->safe_browsing_service();
+  if (sb_service)
+    sb_service->AddSyncPasswordData(user_context.GetAccountId());
+
   is_login_in_progress_ = false;
   login_display_->set_signin_completed(true);
 
@@ -960,6 +985,7 @@ void ExistingUserController::OnAuthSuccess(const UserContext& user_context) {
 
 void ExistingUserController::OnProfilePrepared(Profile* profile,
                                                bool browser_launched) {
+  LOG(ERROR) << "ExistingUserController::OnProfilePrepared";
   // Reenable clicking on other windows and status area.
   login_display_->SetUIEnabled(true);
 
@@ -972,6 +998,11 @@ void ExistingUserController::OnProfilePrepared(Profile* profile,
     auth_status_consumer_->OnAuthSuccess(
         UserContext(last_login_attempt_account_id_));
   }
+
+  safe_browsing::SafeBrowsingService* sb_service =
+      g_browser_process->safe_browsing_service();
+  if (sb_service)
+    sb_service->SaveSyncPasswordHash(profile);
 }
 
 void ExistingUserController::OnOffTheRecordAuthSuccess() {
