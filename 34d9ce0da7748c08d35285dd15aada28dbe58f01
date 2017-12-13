@@ -22,6 +22,30 @@
       "revId": "34d9ce0da7748c08d35285dd15aada28dbe58f01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c36fb29_b9579b26",
+        "filename": "content/browser/download/parallel_download_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-13T23:25:27Z",
+      "side": 1,
+      "message": "Done, that\u0027s much better.",
+      "parentUuid": "a6beab16_c5e65504",
+      "range": {
+        "startLine": 170,
+        "startChar": 33,
+        "endLine": 170,
+        "endChar": 34
+      },
+      "revId": "34d9ce0da7748c08d35285dd15aada28dbe58f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
