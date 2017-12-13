@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7bd011c_f0b5570a",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-13T23:25:09Z",
+      "side": 1,
+      "message": "how about this one?",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 17
+      },
+      "revId": "302e3dd24c89d6e2eb0bacda274809df692e6419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e676d7_3a3c0fcc",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-13T23:25:09Z",
+      "side": 1,
+      "message": "maybe add this to the delegate, given that that\u0027s where mount point paths are defined.",
+      "revId": "302e3dd24c89d6e2eb0bacda274809df692e6419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8292deb_47e194c8",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-13T23:25:09Z",
+      "side": 1,
+      "message": "I\u0027d consider making this return unique ptr",
+      "range": {
+        "startLine": 155,
+        "startChar": 6,
+        "endLine": 155,
+        "endChar": 34
+      },
+      "revId": "302e3dd24c89d6e2eb0bacda274809df692e6419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
