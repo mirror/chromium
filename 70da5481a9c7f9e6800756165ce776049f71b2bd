@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "76f6f0c4_d0c1aa71",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T16:44:35Z",
+      "side": 1,
+      "message": "I wasn\u0027t aware of the presubmit check, that\u0027s great. With that enforcement, I\u0027m fine with this!",
+      "parentUuid": "a0ae7f7d_e37f97ff",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 40
+      },
+      "revId": "70da5481a9c7f9e6800756165ce776049f71b2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25a1f1c6_178fe8f2",
         "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit_source_unittest.cc",
         "patchSetId": 7
