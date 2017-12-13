@@ -19,6 +19,7 @@ var AutomationNode = chrome.automation.AutomationNode;
 var Dir = constants.Dir;
 var EventType = chrome.automation.EventType;
 var RoleType = chrome.automation.RoleType;
+var StateType = chrome.automation.StateType;
 
 /**
  * Handles ChromeVox Next commands.
@@ -251,21 +252,33 @@ CommandHandler.onCommand = function(command) {
   var didNavigate = false;
   switch (command) {
     case 'nextCharacter':
+      if (CommandHandler.sendKeyHelper_(current, 35, 'End', 2))
+        return false;
+
       didNavigate = true;
       speechProps['phoneticCharacters'] = true;
       current = current.move(cursors.Unit.CHARACTER, Dir.FORWARD);
       break;
     case 'previousCharacter':
+      if (CommandHandler.sendKeyHelper_(current, 36, 'Home', 2))
+        return false;
+
       dir = Dir.BACKWARD;
       didNavigate = true;
       speechProps['phoneticCharacters'] = true;
       current = current.move(cursors.Unit.CHARACTER, dir);
       break;
     case 'nextWord':
+      if (CommandHandler.sendKeyHelper_(current, 35, 'End', 6))
+        return false;
+
       didNavigate = true;
       current = current.move(cursors.Unit.WORD, Dir.FORWARD);
       break;
     case 'previousWord':
+      if (CommandHandler.sendKeyHelper_(current, 36, 'Home', 6))
+        return false;
+
       dir = Dir.BACKWARD;
       didNavigate = true;
       current = current.move(cursors.Unit.WORD, dir);
@@ -437,11 +450,17 @@ CommandHandler.onCommand = function(command) {
       break;
     case 'right':
     case 'nextObject':
+      if (CommandHandler.sendKeyHelper_(current, 35, 'End'))
+        return false;
+
       didNavigate = true;
       current = current.move(cursors.Unit.NODE, Dir.FORWARD);
       break;
     case 'left':
     case 'previousObject':
+      if (CommandHandler.sendKeyHelper_(current, 36, 'Home'))
+        return false;
+
       dir = Dir.BACKWARD;
       didNavigate = true;
       current = current.move(cursors.Unit.NODE, dir);
@@ -456,12 +475,18 @@ CommandHandler.onCommand = function(command) {
       pred = AutomationPredicate.group;
       break;
     case 'jumpToTop':
+      if (CommandHandler.sendKeyHelper_(current, 36, 'Home', 4))
+        return false;
+
       var node = AutomationUtil.findNodePost(
           current.start.node.root, Dir.FORWARD, AutomationPredicate.object);
       if (node)
         current = cursors.Range.fromNode(node);
       break;
     case 'jumpToBottom':
+      if (CommandHandler.sendKeyHelper_(current, 35, 'End', 4))
+        return false;
+
       var node = AutomationUtil.findLastNode(
           current.start.node.root, AutomationPredicate.object);
       if (node)
@@ -923,6 +948,32 @@ CommandHandler.viewGraphicAsBraille_ = function(current) {
   } else {
     imageNode.getImageData(0, 0);
   }
+};
+
+/**
+ * @param {cursors.Range} current
+ * @param {number} keyCode
+ * @param {string} keyName
+ * @param {number=} modifiers
+ * @return {boolean}
+ * @private */
+CommandHandler.sendKeyHelper_ = function(current, keyCode, keyName, modifiers) {
+  if (cvox.ChromeVox.isStickyModeOn() || !current || !current.start ||
+      !current.start.node || !current.start.node.state[StateType.EDITABLE])
+    return false;
+
+  modifiers = modifiers || 0;
+  var key = {
+    type: 'keydown',
+    keyCode: keyCode,
+    keyName: keyName,
+    charValue: keyCode,
+    modifiers: modifiers
+  };
+  chrome.virtualKeyboardPrivate.sendKeyEvent(key);
+  key['type'] = 'keyup';
+  chrome.virtualKeyboardPrivate.sendKeyEvent(key);
+  return true;
 };
 
 /**
