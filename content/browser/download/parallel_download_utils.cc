@@ -14,6 +14,10 @@ namespace content {
 
 namespace {
 
+// Default value of |kEnableParallelDownloadFinchKey|, when no parameter is
+// specified.
+const bool kDefaultEnabledParallelDownload = true;
+
 // Default value for |kMinSliceSizeFinchKey|, when no parameter is specified.
 const int64_t kMinSliceSizeParallelDownload = 1365333;
 
@@ -164,7 +168,16 @@ int64_t GetMaxContiguousDataBlockSizeFromBeginning(
 }
 
 bool IsParallelDownloadEnabled() {
-  return base::FeatureList::IsEnabled(features::kParallelDownloading);
+  bool feature_enabled =
+      base::FeatureList::IsEnabled(features::kParallelDownloading);
+  std::string finch_value = base::GetFieldTrialParamValueByFeature(
+      features::kParallelDownloading, kEnableParallelDownloadFinchKey);
+  // Disabled when |kEnableParallelDownloadFinchKey| finch config is set to
+  // false.
+  bool enabled_parameter =
+      finch_value.empty() ? kDefaultEnabledParallelDownload
+                          : !base::LowerCaseEqualsASCII(finch_value, "false");
+  return feature_enabled && enabled_parameter;
 }
 
 }  // namespace content
