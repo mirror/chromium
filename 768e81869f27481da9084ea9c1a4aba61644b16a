@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de3e7bda_6215e4cc",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T10:15:18Z",
+      "side": 1,
+      "message": "Nit: say something like\n\n\"A proxy for the CDM to perform tasks on behalf of the CDM. In general, the interpretation of the method and callback parameters are protocol dependent. The CdmProxy implementation is hosted in the media service.\"\n\nSeparately, we should try to get the README.md that describes where the CDM and media services on various platforms checked in \u003d)",
+      "revId": "768e81869f27481da9084ea9c1a4aba61644b16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6680aa6_04380c85",
+        "filename": "media/mojo/services/interface_factory_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T10:15:18Z",
+      "side": 1,
+      "message": "Any reason for LOG instead of DLOG here?",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 7
+      },
+      "revId": "768e81869f27481da9084ea9c1a4aba61644b16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45302791_67b7cb55",
+        "filename": "media/mojo/services/mojo_cdm_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T10:15:18Z",
+      "side": 1,
+      "message": "Consider using flat_set with UniquePtrComparator. Then this will actually be a set, but you can also erase() MojoCdmProxy objects by raw pointer.",
+      "revId": "768e81869f27481da9084ea9c1a4aba61644b16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
