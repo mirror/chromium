@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26d2eba2_a9b0325e",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-13T00:30:58Z",
+      "side": 1,
+      "message": "Rather than adding a Fetch() to RemoteFontFaceSource, I\u0027ve moved |src_value.Fetch(context, this);| back to FontFace.",
+      "parentUuid": "13a73650_07da354d",
+      "revId": "f2497fe7aa85ab4df32aec3e451f1c75573ba192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd5c4e0e_ad45b80d",
         "filename": "third_party/WebKit/Source/core/loader/resource/FontResourceTest.cpp",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "f2497fe7aa85ab4df32aec3e451f1c75573ba192",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bab1ead_bf212c96",
+        "filename": "third_party/WebKit/Source/core/loader/resource/FontResourceTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-13T00:30:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f907366c_163dc759",
+      "revId": "f2497fe7aa85ab4df32aec3e451f1c75573ba192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

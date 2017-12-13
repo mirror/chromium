@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "655cf876_6bb7e96c",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-13T00:30:58Z",
+      "side": 1,
+      "message": "In this patchset, I\u0027ve restored the behavior of not calling CSSFontFace::AddSource() if CSSFontFaceSrcValue::Fetch() fails synchronously.",
+      "revId": "7ab4a9d395c4a9d416370ae75021bb05cc3587d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b327500_4e0d4d59",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-12-13T00:30:58Z",
+      "side": 1,
+      "message": "With the addition of CSSFontFaceSrcValue as a friend and the remove of a few SetResource() calls in this CL, SetResource() can now be private.",
+      "revId": "7ab4a9d395c4a9d416370ae75021bb05cc3587d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
