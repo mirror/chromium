@@ -16,6 +16,24 @@
       "revId": "1e141790a4892259c8561a5c50d0468196bcaec1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7667e1d_f99a4552",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1239517
+      },
+      "writtenOn": "2017-12-13T15:45:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51d98a90_795615e0",
+      "revId": "1e141790a4892259c8561a5c50d0468196bcaec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
