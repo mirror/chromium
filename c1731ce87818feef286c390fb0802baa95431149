@@ -160,6 +160,63 @@
     },
     {
       "key": {
+        "uuid": "1d8c0b36_7087e982",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: This is already included from the header.",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c742ca_4c19ca54",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: Shouldn\u0027t |waiting_for_initial_policy_fetch_| be mentioned here instead? Or I\u0027m not following the logic here.\n\nAnd also please surround the variable name by \"|\" in the comment.",
+      "range": {
+        "startLine": 174,
+        "startChar": 48,
+        "endLine": 174,
+        "endChar": 70
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c3d3cd_9bbf4a0c",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: Maybe use LOG_IF(FATAL)? It will be more obvious that the whole condition is only related to the assertion.",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8ae703d_4bb8aba4",
         "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
         "patchSetId": 9
@@ -251,6 +308,23 @@
       "revId": "c1731ce87818feef286c390fb0802baa95431149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "72983878_1b0e3715",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: I believe the overridden methods are typically not documented additionally - the explanation should come from the base class.\n\nOr you wanted to say this method is more than just an overridden listener method? But then I\u0027d suggest to have a separate method with a clearer name and documentation.",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -383,6 +457,30 @@
       "side": 1,
       "message": "I think this naming is appropriate for a setter, but I\u0027ve updated the documentation to clarify the behavior.",
       "parentUuid": "b3b57fdb_c0eb45ae",
+      "range": {
+        "startLine": 126,
+        "startChar": 7,
+        "endLine": 126,
+        "endChar": 24
+      },
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d678d1d_f870965a",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "I\u0027m also not insisting, but my opinion is that something like with the word \"Store\" or \"Persist\" would be clearer. As a typical setter just updates some data in memory, without persisting it through restarts.",
+      "parentUuid": "91860ef6_942502b9",
       "range": {
         "startLine": 126,
         "startChar": 7,
@@ -600,6 +698,23 @@
     },
     {
       "key": {
+        "uuid": "9effe65b_6e9e90bd",
+        "filename": "components/user_manager/known_user.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: Please add an empty line before this.",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9146018_4a38779a",
         "filename": "components/user_manager/known_user.h",
         "patchSetId": 9
@@ -632,6 +747,23 @@
       "revId": "c1731ce87818feef286c390fb0802baa95431149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d801a47_1bc32c1e",
+        "filename": "components/user_manager/known_user.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: Why typedef, not just \"enum ProfileRequiresPolicy\"?\nAnd probably use the C++11 type-safe enum classes?",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

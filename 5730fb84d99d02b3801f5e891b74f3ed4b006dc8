@@ -2,6 +2,279 @@
   "comments": [
     {
       "key": {
+        "uuid": "18c17746_64a6f22a",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "Can the caller instead adjust |policy_required| whenever the kAllowFailedPolicyFetchForTest command line flag is present?\nIt\u0027ll be easier to follow the code, as there will be no sudden flips where the actual behavior is opposite to the passed flag.",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d114733a_9a29c575",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "Now that we have a special boolean flag for this behavior |policy_required|, can we maybe reduce the complexity here a bit by removing this check of |initial_policy_fetch_timeout|? That is, don\u0027t treat the maximum-value timeout as anything special anymore.",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 102,
+        "endChar": 45
+      },
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2f2aa8_f9ec2aca",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "That\u0027s unfortunate that we have to open this door for some tests...\n\nThey are effectively asking for a breakage of the profile/prefs API contract - because, on one side, ProfileImpl and friends will anyway run the code that is normally waiting for initialization, and on the other side, the policy-based prefs will stay uninitialized.\n\nAnd not saying about additional complexities brought by this flag into this class.\n\nIs there any chance we fix those several tests to not rely on this weird behavior? Not necessarily in the same CL, but can we at least consider this command line flag as a temporary workaround (with a TODO that no more usages are allowed to be introduced, and with some plan of removal of existing usages).",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f2bc73_c2082c4b",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: I\u0027m a bit concerned about explicitly referring to this fact here, as it\u0027s actually depending on how external code works. As two things are implicitly assumed here: first, |force_immediate_load| was passed as true iff it\u0027s restart-after-crash, and second, |store| can only get loaded by this point if |force_immediate_load| was true.\n\nI\u0027m feeling that we could make this better by passing |force_immediate_load| into this class. This flag would be a cleaner indication as to whether empty policy should be treated as a fatal error. Additionally, the flag would allow [D]CHECK\u0027ing our implicit assumptions on when CloudPolicyStore can be already initialized.\n\nEven more, maybe move the CloudPolicyStore::LoadImmediately() call into this class as well? Maybe by reordering the sequence of calls we can get rid of this convoluted execution flow that leads to IsInitializationComplete() becoming true immediately after Connect()?",
+      "range": {
+        "startLine": 170,
+        "startChar": 48,
+        "endLine": 171,
+        "endChar": 47
+      },
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8976ec_d18b989c",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit (optional): You may use LOG_IF(FATAL) instead - this would allow compress the condition and the CHECK into a single statement. Arguably, it\u0027ll be easier to read as the assertion-related could won\u0027t be confused with the actual logic.",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8156ffe_a9a9bfa7",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest appending the message with \"terminating session\" or \"aborting profile initialization\".",
+      "range": {
+        "startLine": 184,
+        "startChar": 69,
+        "endLine": 184,
+        "endChar": 70
+      },
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e619647a_70f42779",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that due to this exit branch we can\u0027t add a [D]CHECK into ProfileImpl::ProfileImpl() that the prefs are initialized. But such check would be very useful to catch other bugs with incorrect initialization after crash-and-restart.\n\nBut, sadly, it\u0027s not super trivial to improve this. Seems like we\u0027d have to make UserCloudPolicyManagerChromeOS::Connect() return a bool, and transform factory methods of UserPolicyManagerFactoryChromeOS to return a boolean success too. WDYT?",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f4ac5c4_2002c0e6",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: This is an overridden method, so a function-level comment seems excessive here. I believe any additional comments in cases like this are typically put inside the function body.",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b28d74_19784280",
+        "filename": "chrome/browser/chromeos/policy/user_cloud_policy_manager_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "There\u0027s another place in the code base that can invoke SetFlagsForUser() - UserSessionManager::RestartToApplyPerSessionFlagsIfNeed(). IIUC, each invocation just overwrites the previous one, so there may be a problem in this area.\n\nIt looks like kProfileRequiresPolicy is more or less safe, as RestartToApplyPerSessionFlagsIfNeed() triggers an immediate restart. But isn\u0027t there a problem with the opposite - the flags set by RestartToApplyPerSessionFlagsIfNeed() being overwritten here and lost after the browser crash-and-restart?",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e9ab782_11eaeb5a",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: This variable name is a bit confusing, as it tells only partial truth: it\u0027s only true for profiles that went through this new code, and only true unless an early browser crash happened, etc...\n\nCan we maybe omit this intermediate variable and start directly from |policy_check_required|? This name sounds more precise to me.\n\nAs a bonus, reducing the number of flags in this piece of code would slightly improve its overwhelming complexity.",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e943305_0ef9af0e",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: Maybe place this after the next condition, closer to the code that actually uses it.",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074cfbe4_f8982373",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: This comment is formatted like referring exclusively to the |wait_for_policy_fetch| variable, while it\u0027s actually talking about the other cases. It\u0027s not clear to me whether you intended to place this comment before the next condition, or you wanted to refer to both the variable and condition and accidentally inserted an empty line.\n\nOne way or another, could you please reformat the comment, so that its attribution is clearer?",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b3ee4a_498fcc25",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "Not sure I\u0027m following: |wait_for_policy_fetch| by definition implies |policy_required|. So this degenerates into a check against |is_stub_user|?..\n\nAnd also the comment right above adds confusion - isn\u0027t the big comment before |wait_for_policy_fetch| already explaining the reasoning behind those blocks?",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da6539f_55f1d23d",
+        "filename": "chrome/browser/chromeos/policy/user_policy_manager_factory_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here, you can transform this constant into a constexpr base::TimeDelta.",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2996f887_657b405d",
+        "filename": "components/user_manager/known_user.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T21:43:16Z",
+      "side": 1,
+      "message": "nit: Append an empty line.",
+      "revId": "5730fb84d99d02b3801f5e891b74f3ed4b006dc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1249bf40_39c6fbb7",
         "filename": "components/user_manager/known_user.h",
         "patchSetId": 15
