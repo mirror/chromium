@@ -76,14 +76,14 @@ void SafeXmlParser::ReportResults(std::unique_ptr<base::Value> parsed_xml,
   delete this;
 }
 
+}  // namespace
+
 const base::Value* GetChildren(const base::Value& element) {
   if (!element.is_dict())
     return nullptr;
   return element.FindKeyOfType(mojom::XmlParser::kChildrenKey,
                                base::Value::Type::LIST);
 }
-
-}  // namespace
 
 std::string GetXmlQualifiedName(const std::string& name_space,
                                 const std::string& name) {
