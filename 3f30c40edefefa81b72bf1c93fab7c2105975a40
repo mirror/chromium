@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8519fb3a_f30abf34",
+        "filename": "base/trace_event/trace_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T20:14:43Z",
+      "side": 1,
+      "message": "Put this below by adding and #else block around line 370?",
+      "revId": "3f30c40edefefa81b72bf1c93fab7c2105975a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5879ab4c_0f42a1f3",
+        "filename": "base/trace_event/trace_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T20:14:43Z",
+      "side": 1,
+      "message": "nit: order this as Win/Mac/Linux?",
+      "revId": "3f30c40edefefa81b72bf1c93fab7c2105975a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74d0eb8c_c8f27dda",
         "filename": "base/trace_event/trace_log.h",
         "patchSetId": 5
