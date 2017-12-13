@@ -11,10 +11,13 @@
 #import "base/mac/mac_util.h"
 #include "base/mac/scoped_cftyperef.h"
 #import "base/strings/sys_string_conversions.h"
+#include "third_party/icu/source/common/unicode/uchar.h"
 #include "ui/gfx/font.h"
 
 namespace gfx {
 namespace {
+
+constexpr NSString* kColorEmojiFontMac = @"Apple Color Emoji";
 
 // CTFontCreateForString() sometimes re-wraps its result in a new CTFontRef with
 // identical attributes. This wastes time shaping the text run and confounds
@@ -76,10 +79,16 @@ bool GetFallbackFont(const Font& font,
                      const base::char16* text,
                      int text_length,
                      Font* result) {
+  CTFontRef ct_font = base::mac::NSToCFCast(font.GetNativeFont());
+  if (ublock_getCode(*text) == UBLOCK_MISCELLANEOUS_SYMBOLS) {
+    base::ScopedCFTypeRef<CTFontRef> emoji_result(CTFontCreateCopyWithFamily(
+        ct_font, 0.0, nullptr, base::mac::NSToCFCast(kColorEmojiFontMac)));
+    *result = Font(base::mac::CFToNSCast(emoji_result.get()));
+    return true;
+  }
   base::ScopedCFTypeRef<CFStringRef> cf_string(
       CFStringCreateWithCharactersNoCopy(kCFAllocatorDefault, text, text_length,
                                          kCFAllocatorNull));
-  CTFontRef ct_font = base::mac::NSToCFCast(font.GetNativeFont());
   base::ScopedCFTypeRef<CTFontRef> ct_result(
       CTFontCreateForString(ct_font, cf_string, {0, text_length}));
   if (FontsEqual(ct_font, ct_result))

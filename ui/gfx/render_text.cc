@@ -814,9 +814,10 @@ bool RenderText::IsValidLogicalIndex(size_t index) const {
   // last rendered glyph to the end of the text without getting invisible cursor
   // positions nor needing unbounded arrow key presses to traverse the ellipsis.
   return index == 0 || index == text().length() ||
-      (index < text().length() &&
-       (truncate_length_ == 0 || index < truncate_length_) &&
-       IsValidCodePointIndex(text(), index));
+         (index < text().length() &&
+          (truncate_length_ == 0 || index < truncate_length_) &&
+          IsValidCodePointIndex(text(), index) &&
+          ublock_getCode(text()[index]) != UBLOCK_VARIATION_SELECTORS);
 }
 
 Rect RenderText::GetCursorBounds(const SelectionModel& caret,
