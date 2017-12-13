@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2db5ee1c_d46324e1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T15:08:20Z",
+      "side": 1,
+      "message": "optional nit: [Feature name] is typically used to group changes that are part of a large feature set, e.g. our labels for [Home] or [Downloads]. For this feature, there is likely only going to be a single patch (or maybe a few patches), so a simple title like \"Hide incognito tab snapshot in Android recents\" is my preferred style.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1476e75_ffd878f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeSwitches.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T15:08:20Z",
+      "side": 1,
+      "message": "The variable name and switch name should mention Android recents.",
+      "range": {
+        "startLine": 188,
+        "startChar": 78,
+        "endLine": 188,
+        "endChar": 87
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056889ab_ebdeb640",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T15:08:20Z",
+      "side": 1,
+      "message": "This isn\u0027t observing incognito tab snapshots but rather controlling them. How about \"IncognitoTabSnapshotController\"?",
+      "range": {
+        "startLine": 19,
+        "startChar": 14,
+        "endLine": 19,
+        "endChar": 41
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f679e567_bc770c3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T15:08:20Z",
+      "side": 1,
+      "message": "Does mWindow#addFlags() work?",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 46
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bf1c68_44227bef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T15:08:20Z",
+      "side": 1,
+      "message": "Put this method at the top of the file.\n\nAlso, registerNewObserver() makes me think that this method is taking some sort of Observer. I think a better method name would be something like \"createController()\".",
+      "range": {
+        "startLine": 93,
+        "startChar": 23,
+        "endLine": 93,
+        "endChar": 42
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9feb4772_92a7aec7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T15:08:20Z",
+      "side": 1,
+      "message": "Can these be registered in the constructor rather than this method?",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1322f78f_063f1723",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserverTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T15:08:20Z",
+      "side": 1,
+      "message": "nit: A failed Assert.assertTrue() will already print \"Expected true\" (or something like that). This message would be more helpful it if said what should return true.",
+      "range": {
+        "startLine": 106,
+        "startChar": 27,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
