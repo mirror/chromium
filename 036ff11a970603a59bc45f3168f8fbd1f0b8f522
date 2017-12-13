@@ -46,6 +46,30 @@
       "revId": "036ff11a970603a59bc45f3168f8fbd1f0b8f522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dfe057d_4940eac4",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-13T17:52:43Z",
+      "side": 1,
+      "message": "If we reverse the condition, we would not send the right install source for extension when it\u0027s a foreground request. Just note that currently, extension updater never sets \"ondemand\" as an install source. This change aims at backward compatibility with the current extension updater implementation. For component updater, crx_component.install_source is always empty, thus the else statement is always executed.",
+      "parentUuid": "51e10a7a_0b791c72",
+      "range": {
+        "startLine": 306,
+        "startChar": 35,
+        "endLine": 306,
+        "endChar": 0
+      },
+      "revId": "036ff11a970603a59bc45f3168f8fbd1f0b8f522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
