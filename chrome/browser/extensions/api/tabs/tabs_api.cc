@@ -99,6 +99,7 @@
 #include "ash/public/cpp/window_pin_type.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "chrome/browser/ui/browser_command_controller.h"
 #include "ui/aura/window.h"
 #endif
 
@@ -602,6 +603,7 @@ ExtensionFunction::ResponseAction WindowsCreateFunction::Run() {
   if (create_data &&
       create_data->state == windows::WINDOW_STATE_LOCKED_FULLSCREEN) {
     SetWindowTrustedPinned(new_window->window(), true);
+    new_window->command_controller()->LockedFullscreenStateChanged();
   }
 #endif
 
@@ -696,10 +698,14 @@ ExtensionFunction::ResponseAction WindowsUpdateFunction::Run() {
       params->update_info.state != windows::WINDOW_STATE_LOCKED_FULLSCREEN &&
       params->update_info.state != windows::WINDOW_STATE_NONE) {
     SetWindowTrustedPinned(controller->window(), false);
+    controller->GetBrowser()->command_controller()->
+        LockedFullscreenStateChanged();
   } else if (!is_window_trusted_pinned &&
              params->update_info.state ==
                  windows::WINDOW_STATE_LOCKED_FULLSCREEN) {
     SetWindowTrustedPinned(controller->window(), true);
+    controller->GetBrowser()->command_controller()->
+        LockedFullscreenStateChanged();
   }
 #endif
 
