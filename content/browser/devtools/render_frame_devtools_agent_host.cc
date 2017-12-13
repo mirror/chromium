@@ -622,10 +622,7 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
 }
 
 void RenderFrameDevToolsAgentHost::DetachSession(int session_id) {
-  if (IsBrowserSideNavigationEnabled()) {
-    // Destroying session automatically detaches in renderer.
-    suspended_messages_by_session_id_.erase(session_id);
-  } else {
+  if (!IsBrowserSideNavigationEnabled()) {
     if (current_)
       current_->Detach(session_id);
     if (pending_)
@@ -647,11 +644,6 @@ bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
   }
 
   if (IsBrowserSideNavigationEnabled()) {
-    if (!navigation_handles_.empty()) {
-      suspended_messages_by_session_id_[session_id].push_back(
-          {call_id, method, message});
-      return true;
-    }
     session->DispatchProtocolMessageToAgent(call_id, method, message);
     session->waiting_messages()[call_id] = {method, message};
   } else {
@@ -744,26 +736,12 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
       static_cast<NavigationHandleImpl*>(navigation_handle);
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
-  navigation_handles_.erase(handle);
 
   // UpdateFrameHost may destruct |this|.
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
   UpdateFrameHost(frame_tree_node_->current_frame_host());
   DCHECK(CheckConsistency());
 
-  if (navigation_handles_.empty()) {
-    for (auto& pair : suspended_messages_by_session_id_) {
-      int session_id = pair.first;
-      DevToolsSession* session = SessionById(session_id);
-      for (const Message& message : pair.second) {
-        session->DispatchProtocolMessageToAgent(message.call_id, message.method,
-                                                message.message);
-        session->waiting_messages()[message.call_id] = {message.method,
-                                                        message.message};
-      }
-    }
-    suspended_messages_by_session_id_.clear();
-  }
   if (handle->HasCommitted()) {
     for (auto* target : protocol::TargetHandler::ForAgentHost(this))
       target->DidCommitNavigation();
@@ -895,7 +873,6 @@ void RenderFrameDevToolsAgentHost::DidStartNavigation(
       static_cast<NavigationHandleImpl*>(navigation_handle);
   if (handle->frame_tree_node() != frame_tree_node_)
     return;
-  navigation_handles_.insert(handle);
   DCHECK(CheckConsistency());
 }
 
@@ -1126,7 +1103,6 @@ void RenderFrameDevToolsAgentHost::DisconnectWebContents() {
   if (IsBrowserSideNavigationEnabled()) {
     UpdateFrameHost(nullptr);
     frame_tree_node_ = nullptr;
-    navigation_handles_.clear();
     WebContentsObserver::Observe(nullptr);
     return;
   }
