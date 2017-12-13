@@ -130,6 +130,8 @@ class CORE_EXPORT SelectionTemplate final {
   void ShowTreeForThis() const;
 #endif
 
+  bool IsValidFor(const Document&) const;
+
  private:
   friend class SelectionEditor;
 
@@ -140,7 +142,6 @@ class CORE_EXPORT SelectionTemplate final {
   };
 
   Document* GetDocument() const;
-  bool IsValidFor(const Document&) const;
   void ResetDirectionCache() const;
 
   PositionTemplate<Strategy> base_;

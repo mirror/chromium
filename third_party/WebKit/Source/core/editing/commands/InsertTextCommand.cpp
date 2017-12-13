@@ -103,7 +103,7 @@ bool InsertTextCommand::PerformTrivialReplace(const String& text) {
   if (text.Contains('\t') || text.Contains(' ') || text.Contains('\n'))
     return false;
 
-  Position start = EndingVisibleSelection().Start();
+  Position start = EndingSelection().Start();
   Position end_position = ReplaceSelectedTextInNode(text);
   if (end_position.IsNull())
     return false;

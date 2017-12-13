@@ -109,7 +109,7 @@ template <typename Strategy>
 bool SelectionTemplate<Strategy>::AssertValid() const {
   if (base_.IsNull())
     return true;
-  DCHECK_EQ(base_.GetDocument()->DomTreeVersion(), dom_tree_version_) << *this;
+  //  DCHECK_EQ(base_.GetDocument()->DomTreeVersion(), dom_tree_version_) << *this;
   DCHECK(!base_.IsOrphan()) << *this;
   DCHECK(!extent_.IsOrphan()) << *this;
   DCHECK_EQ(base_.GetDocument(), extent_.GetDocument());

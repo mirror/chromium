@@ -61,9 +61,9 @@ bool IsValidDocument(const Document& document) {
 }
 
 String DispatchBeforeTextInsertedEvent(const String& text,
-                                       const VisibleSelection& selection,
+                                       const SelectionInDOMTree& selection,
                                        EditingState* editing_state) {
-  Node* start_node = selection.Start().ComputeContainerNode();
+  Node* start_node = selection.ComputeStartPosition().ComputeContainerNode();
   if (!start_node || !RootEditableElement(*start_node))
     return text;
 
@@ -105,8 +105,7 @@ DispatchEventResult DispatchTextInputEvent(LocalFrame* frame,
 }
 
 PlainTextRange GetSelectionOffsets(const SelectionInDOMTree& selection) {
-  const VisibleSelection visible_selection = CreateVisibleSelection(selection);
-  const EphemeralRange range = FirstEphemeralRangeOf(visible_selection);
+  const EphemeralRange range = selection.ComputeRange();
   if (range.IsNull())
     return PlainTextRange();
   ContainerNode* const editable =
@@ -344,7 +343,7 @@ void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
 void TypingCommand::InsertText(
     Document& document,
     const String& text,
-    const SelectionInDOMTree& passed_selection_for_insertion,
+    const SelectionInDOMTree& selection_for_insertion,
     Options options,
     EditingState* editing_state,
     TextCompositionType composition_type,
@@ -353,10 +352,8 @@ void TypingCommand::InsertText(
   LocalFrame* frame = document.GetFrame();
   DCHECK(frame);
 
-  const VisibleSelection& current_selection =
-      frame->Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
-  const VisibleSelection& selection_for_insertion =
-      CreateVisibleSelection(passed_selection_for_insertion);
+  const SelectionInDOMTree& current_selection =
+      frame->Selection().GetSelectionInDOMTree();
 
   String new_text = text;
   if (composition_type != kTextCompositionUpdate) {
@@ -386,8 +383,11 @@ void TypingCommand::InsertText(
   // needs to be audited. see http://crbug.com/590369 for more details.
   document.UpdateStyleAndLayoutIgnorePendingStylesheets();
 
+  LOG(INFO) << "selection_for_insertion: " << selection_for_insertion.ComputeStartPosition() << " to " << selection_for_insertion.ComputeEndPosition();
+
   const PlainTextRange selection_offsets =
-      GetSelectionOffsets(selection_for_insertion.AsSelection());
+      GetSelectionOffsets(selection_for_insertion);
+  LOG(INFO) << "selection for insertion plain text offsets: " << selection_offsets.Start() << " to " << selection_offsets.End();
   if (selection_offsets.IsNull())
     return;
   const size_t selection_start = selection_offsets.Start();
@@ -397,16 +397,13 @@ void TypingCommand::InsertText(
   // should change EditCommand to deal with custom selections in a general way
   // that can be used by all of the commands.
   if (TypingCommand* last_typing_command =
-          LastTypingCommandIfStillOpenForTyping(frame)) {
-    if (last_typing_command->EndingVisibleSelection() !=
-        selection_for_insertion) {
-      const SelectionForUndoStep& selection_for_insertion_as_undo_step =
-          SelectionForUndoStep::From(selection_for_insertion.AsSelection());
-      last_typing_command->SetStartingSelection(
-          selection_for_insertion_as_undo_step);
-      last_typing_command->SetEndingSelection(
-          selection_for_insertion_as_undo_step);
-    }
+      LastTypingCommandIfStillOpenForTyping(frame)) {
+    const SelectionForUndoStep& selection_for_insertion_as_undo_step =
+        SelectionForUndoStep::From(selection_for_insertion);
+    last_typing_command->SetStartingSelection(
+        selection_for_insertion_as_undo_step);
+    last_typing_command->SetEndingSelection(
+        selection_for_insertion_as_undo_step);
 
     last_typing_command->SetCompositionType(composition_type);
     last_typing_command->SetShouldRetainAutocorrectionIndicator(
@@ -426,23 +423,19 @@ void TypingCommand::InsertText(
   TypingCommand* command = TypingCommand::Create(
       document, kInsertText, new_text, options, composition_type);
   bool change_selection = selection_for_insertion != current_selection;
-  if (change_selection) {
-    const SelectionForUndoStep& selection_for_insertion_as_undo_step =
-        SelectionForUndoStep::From(selection_for_insertion.AsSelection());
-    command->SetStartingSelection(selection_for_insertion_as_undo_step);
-    command->SetEndingSelection(selection_for_insertion_as_undo_step);
-  }
+  const SelectionForUndoStep& selection_for_insertion_as_undo_step =
+      SelectionForUndoStep::From(selection_for_insertion);
+  command->SetStartingSelection(selection_for_insertion_as_undo_step);
+  command->SetEndingSelection(selection_for_insertion_as_undo_step);
   command->is_incremental_insertion_ = is_incremental_insertion;
   command->selection_start_ = selection_start;
   command->input_type_ = input_type;
   ABORT_EDITING_COMMAND_IF(!command->Apply());
 
   if (change_selection) {
-    const SelectionInDOMTree& current_selection_as_dom =
-        current_selection.AsSelection();
     command->SetEndingSelection(
-        SelectionForUndoStep::From(current_selection_as_dom));
-    frame->Selection().SetSelection(current_selection_as_dom);
+        SelectionForUndoStep::From(current_selection));
+    frame->Selection().SetSelection(current_selection);
   }
 }
 
@@ -648,6 +641,9 @@ void TypingCommand::InsertText(const String& text,
   const EphemeralRange new_selection_start_collapsed_range =
       PlainTextRange(selection_start_, selection_start_).CreateRange(*editable);
   const Position current_selection_end = EndingSelection().End();
+
+  LOG(INFO) << "Selecting from plain text offset " << selection_start_;
+  LOG(INFO) << "Selecting from " << new_selection_start_collapsed_range.StartPosition() << " to " << current_selection_end;
 
   const SelectionInDOMTree& new_selection =
       SelectionInDOMTree::Builder()

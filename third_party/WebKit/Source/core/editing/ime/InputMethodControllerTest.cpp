@@ -2508,4 +2508,26 @@ TEST_F(InputMethodControllerTest, SetCompositionContainingNewline) {
                              Position(div, PositionAnchorType::kAfterAnchor))));
 }
 
+TEST_F(InputMethodControllerTest, SetCompositionTamil) {
+  // Note: region starts out with space.
+  Element* div =
+      InsertHTMLElement("<div id='sample' contenteditable></div>", "sample");
+
+  Controller().CommitText(" ", Vector<ImeTextSpan>(), 0);
+  // Add character U+0BC7: 'TAMIL VOWEL SIGN EE'
+  Controller().SetComposition(String::FromUTF8("\xE0\xAF\x87"),
+                              Vector<ImeTextSpan>(), 1, 1);
+  // Add character U+0BB5: 'TAMIL LETTER VA'
+  Controller().SetComposition(String::FromUTF8("\xE0\xAF\x87\xE0\xAE\xB5"),
+                              Vector<ImeTextSpan>(), 2, 2);
+
+  EXPECT_EQ(1u, div->CountChildren());
+  Text* text = ToText(div->firstChild());
+  EXPECT_STREQ("\xC2\xA0\xE0\xAF\x87\xE0\xAE\xB5", text->data().Utf8().data());
+
+  Range* range = Controller().CompositionRange();
+  EXPECT_EQ(1u, range->startOffset());
+  EXPECT_EQ(3u, range->endOffset());
+}
+
 }  // namespace blink
