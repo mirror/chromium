@@ -43,6 +43,15 @@ enum class WebApkInstallResult {
   PROBABLE_FAILURE = 2
 };
 
+// A Java counterpart will be generated for this enum.
+// GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.webapps
+enum class SpaceStatus {
+  ENOUGH_SPACE = 0,
+  ENOUGH_SPACE_AFTER_FREE_UP_CACHE = 1,
+  NOT_ENOUGH_SPACE = 2,
+  UNDETERMINED = 3,
+};
+
 // Service which talks to Chrome WebAPK server and Google Play to generate a
 // WebAPK on the server, download it, and install it.
 class WebApkInstallService : public KeyedService {
@@ -64,9 +73,11 @@ class WebApkInstallService : public KeyedService {
   // Returns whether an install for |web_manifest_url| is in progress.
   bool IsInstallInProgress(const GURL& web_manifest_url);
 
-  // Installs WebAPK and adds shortcut to the launcher. It talks to the Chrome
-  // WebAPK server to generate a WebAPK on the server and to Google Play to
-  // install the downloaded WebAPK.
+  // Checks if there is enough space to install WebAPK.
+  // If yes, installs WebAPK and adds shortcut to the launcher. It talks to the
+  // Chrome WebAPK server to generate a WebAPK on the server and to Google Play
+  // to install the downloaded WebAPK. Frees cache to make space if necessary.
+  // If no, fail back to add a shortcut.
   void InstallAsync(content::WebContents* web_contents,
                     const ShortcutInfo& shortcut_info,
                     const SkBitmap& primary_icon,
@@ -90,6 +101,14 @@ class WebApkInstallService : public KeyedService {
    private:
     DISALLOW_COPY_AND_ASSIGN(LifetimeObserver);
   };
+
+  // Installs WebAPK or adds shortcut depends on the |space_status|.
+  void InstallAsyncImpl(content::WebContents* web_contents,
+                        const ShortcutInfo& shortcut_info,
+                        const SkBitmap& primary_icon,
+                        const SkBitmap& badge_icon,
+                        WebAppInstallSource install_source,
+                        SpaceStatus space_status);
 
   // Called once the install/update completed or failed.
   void OnFinishedInstall(std::unique_ptr<LifetimeObserver> observer,
