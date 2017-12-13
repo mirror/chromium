@@ -29,6 +29,10 @@
         test(function () {
             assert_throws("SYNTAX_ERR", function () { wsocket = new WebSocket("#test") });
         }, "Url is #test - should throw SYNTAX_ERR");
+        test(function () {
+            var wsocket = new EventSource('\uD899');
+            assert_equals(wsocket.url.endsWith('%EF%BF%BD'), true);
+        }, "Url is \uD899 - unpaired surrogate codepoint should be replaced with U+FFFD");
     </script>
 </body>
 </html>
