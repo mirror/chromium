@@ -138,7 +138,10 @@ class DedicatedWorkerMessagingProxyForTest
         WorkerBackingThreadStartupData(
             WorkerBackingThreadStartupData::HeapLimitMode::kDefault,
             WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow),
-        script_url, v8_inspector::V8StackTraceId(), source);
+        script_url, v8_inspector::V8StackTraceId());
+    GetWorkerThread()->RequestToEvaluateClassicScript(
+        script_url, source, nullptr /* cached_meta_data */,
+        v8_inspector::V8StackTraceId());
   }
 
   DedicatedWorkerThreadForTest* GetDedicatedWorkerThread() {

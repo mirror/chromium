@@ -438,11 +438,14 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
       WorkerBackingThreadStartupData::CreateDefault(),
       std::make_unique<GlobalScopeInspectorCreationParams>(
           worker_inspector_proxy_->ShouldPauseOnWorkerStart(document)),
-      ParentFrameTaskRunners::Create(), source_code,
-      std::move(cached_meta_data));
+      ParentFrameTaskRunners::Create());
 
   worker_inspector_proxy_->WorkerThreadCreated(document, worker_thread_.get(),
                                                worker_start_data_.script_url);
+
+  worker_thread_->RequestToEvaluateClassicScript(
+      worker_start_data_.script_url, source_code, std::move(cached_meta_data),
+      v8_inspector::V8StackTraceId());
 }
 
 }  // namespace blink

@@ -100,9 +100,7 @@ void WorkerThread::Start(
     const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data,
     std::unique_ptr<GlobalScopeInspectorCreationParams>
         global_scope_inspector_creation_params,
-    ParentFrameTaskRunners* parent_frame_task_runners,
-    const String& source_code,
-    std::unique_ptr<Vector<char>> cached_meta_data) {
+    ParentFrameTaskRunners* parent_frame_task_runners) {
   DCHECK(IsMainThread());
   DCHECK(!parent_frame_task_runners_);
   parent_frame_task_runners_ = parent_frame_task_runners;
@@ -123,8 +121,20 @@ void WorkerThread::Start(
           &WorkerThread::InitializeOnWorkerThread, CrossThreadUnretained(this),
           WTF::Passed(std::move(global_scope_creation_params)),
           thread_startup_data,
-          WTF::Passed(std::move(global_scope_inspector_creation_params)),
-          source_code, WTF::Passed(std::move(cached_meta_data))));
+          WTF::Passed(std::move(global_scope_inspector_creation_params))));
+}
+
+void WorkerThread::RequestToEvaluateClassicScript(
+    const KURL& script_url,
+    const String& source_code,
+    std::unique_ptr<Vector<char>> cached_meta_data,
+    const v8_inspector::V8StackTraceId& stack_id) {
+  GetTaskRunner(TaskType::kUnthrottled)
+      ->PostTask(
+          BLINK_FROM_HERE,
+          CrossThreadBind(&WorkerThread::EvaluateClassicScriptOnWorkerThread,
+                          CrossThreadUnretained(this), script_url, source_code,
+                          WTF::Passed(std::move(cached_meta_data)), stack_id));
 }
 
 void WorkerThread::Terminate() {
@@ -387,9 +397,7 @@ void WorkerThread::InitializeOnWorkerThread(
     std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params,
     const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data,
     std::unique_ptr<GlobalScopeInspectorCreationParams>
-        global_scope_inspector_creation_params,
-    String source_code,
-    std::unique_ptr<Vector<char>> cached_meta_data) {
+        global_scope_inspector_creation_params) {
   DCHECK(IsCurrentThread());
   DCHECK_EQ(ThreadState::kNotStarted, thread_state_);
 
@@ -437,19 +445,19 @@ void WorkerThread::InitializeOnWorkerThread(
     PrepareForShutdownOnWorkerThread();
     return;
   }
+}
 
-  // Worklet will evaluate the script later via Worklet.addModule().
-  // TODO(nhiroki): Start module loading for workers here.
-  // (https://crbug.com/680046)
-  if (GlobalScope()->IsWorkletGlobalScope())
-    return;
+void WorkerThread::EvaluateClassicScriptOnWorkerThread(
+    const KURL& script_url,
+    String source_code,
+    std::unique_ptr<Vector<char>> cached_meta_data,
+    const v8_inspector::V8StackTraceId& stack_id) {
+  DCHECK(GlobalScope()->IsWorkerGlobalScope());
   WorkerThreadDebugger* debugger = WorkerThreadDebugger::From(GetIsolate());
-  debugger->ExternalAsyncTaskStarted(
-      global_scope_inspector_creation_params->stack_id);
+  debugger->ExternalAsyncTaskStarted(stack_id);
   GlobalScope()->EvaluateClassicScript(script_url, std::move(source_code),
                                        std::move(cached_meta_data));
-  debugger->ExternalAsyncTaskStarted(
-      global_scope_inspector_creation_params->stack_id);
+  debugger->ExternalAsyncTaskStarted(stack_id);
 }
 
 void WorkerThread::PrepareForShutdownOnWorkerThread() {

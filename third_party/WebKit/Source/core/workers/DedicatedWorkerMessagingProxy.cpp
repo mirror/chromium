@@ -93,7 +93,10 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
 
   InitializeWorkerThread(std::move(global_scope_creation_params),
                          CreateBackingThreadStartupData(ToIsolate(document)),
-                         script_url, stack_id, source_code);
+                         script_url, stack_id);
+  // TODO(nhiroki): WorkerThreadCreated();
+  GetWorkerThread()->RequestToEvaluateClassicScript(
+      script_url, source_code, nullptr /* cached_meta_data */, stack_id);
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
