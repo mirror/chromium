@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d73cb495_7b5141d7",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-13T02:37:08Z",
+      "side": 1,
+      "message": "This used to be a merge conflict but I only moved the constraints since they were grouped wrong. Nothing much to review here.",
+      "range": {
+        "startLine": 509,
+        "startChar": 5,
+        "endLine": 509,
+        "endChar": 25
+      },
+      "revId": "80aee85364cfa01529883f7b13bcde6ce25dff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b943478d_ad6e9039",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-13T02:37:08Z",
+      "side": 1,
+      "message": "I still think we should make this change anyways.",
+      "revId": "80aee85364cfa01529883f7b13bcde6ce25dff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
