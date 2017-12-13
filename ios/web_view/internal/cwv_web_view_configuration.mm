@@ -12,6 +12,7 @@
 #import "ios/web_view/internal/cwv_user_content_controller_internal.h"
 #include "ios/web_view/internal/web_view_browser_state.h"
 #include "ios/web_view/internal/web_view_global_state_util.h"
+#import "ios/web_view/public/cwv_web_view.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -20,6 +21,8 @@
 @interface CWVWebViewConfiguration () {
   // The BrowserState for this configuration.
   std::unique_ptr<ios_web_view::WebViewBrowserState> _browserState;
+
+  NSHashTable* _webViews;
 }
 
 // Initializes configuration with the specified browser state mode.
@@ -32,8 +35,15 @@
 @synthesize preferences = _preferences;
 @synthesize userContentController = _userContentController;
 
+static CWVWebViewConfiguration* defaultConfiguration;
+static CWVWebViewConfiguration* incognitoConfiguration;
+
++ (void)shutDown {
+  [defaultConfiguration shutDown];
+  [incognitoConfiguration shutDown];
+}
+
 + (instancetype)defaultConfiguration {
-  static CWVWebViewConfiguration* defaultConfiguration;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     auto browserState =
@@ -45,7 +55,6 @@
 }
 
 + (instancetype)incognitoConfiguration {
-  static CWVWebViewConfiguration* incognitoConfiguration;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     auto browserState =
@@ -75,6 +84,8 @@
 
     _userContentController =
         [[CWVUserContentController alloc] initWithConfiguration:self];
+
+    _webViews = [NSHashTable weakObjectsHashTable];
   }
   return self;
 }
@@ -89,6 +100,17 @@
 
 - (ios_web_view::WebViewBrowserState*)browserState {
   return _browserState.get();
+}
+
+- (void)addWebView:(CWVWebView*)webView {
+  [_webViews addObject:webView];
+}
+
+- (void)shutDown {
+  for (CWVWebView* webView in _webViews) {
+    [webView shutDown];
+  }
+  _browserState.reset();
 }
 
 @end
