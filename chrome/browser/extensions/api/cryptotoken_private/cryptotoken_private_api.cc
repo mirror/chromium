@@ -6,9 +6,13 @@
 
 #include <stddef.h>
 
+#include "base/base64.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/common/pref_names.h"
 #include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/pref_service.h"
+#include "crypto/sha2.h"
 #include "extensions/common/error_utils.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 
@@ -87,24 +91,51 @@ CryptotokenPrivateCanOriginAssertAppIdFunction::Run() {
   return RespondNow(OneArgument(base::MakeUnique<base::Value>(false)));
 }
 
-// TODO(agl/mab): remove special casing for individual attestation in
-// Javascript in favour of an enterprise policy, which can be accessed like
-// this:
-//
-// #include "chrome/browser/profiles/profile.h"
-// #include "components/prefs/pref_service.h"
-//
-//   Profile* const profile = Profile::FromBrowserContext(browser_context());
-//   const PrefService* const prefs = profile->GetPrefs();
-//   const base::ListValue* const permit_attestation =
-//       prefs->GetList(prefs::kSecurityKeyPermitAttestation);
-//
-//   for (size_t i = 0; i < permit_attestation->GetSize(); i++) {
-//     std::string value;
-//     if (!permit_attestation->GetString(i, &value)) {
-//       continue;
-//     }
-//   }
+CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction::
+    CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction()
+    : chrome_details_(this) {}
+
+ExtensionFunction::ResponseAction
+CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction::Run() {
+  std::unique_ptr<cryptotoken_private::IsAppIdHashInEnterpriseContext::Params>
+      params(
+          cryptotoken_private::IsAppIdHashInEnterpriseContext::Params::Create(
+              *args_));
+  EXTENSION_FUNCTION_VALIDATE(params);
+
+  std::string app_id_hash_base64 = params->app_id_hash_base64;
+  // Pad the provided base64 string with '=' characters because |Base64Decode|
+  // demands it.
+  app_id_hash_base64.append((4 - (app_id_hash_base64.size() % 4)) % 4, '=');
+  std::string app_id_hash;
+  if (!base::Base64Decode(app_id_hash_base64, &app_id_hash)) {
+    LOG(ERROR)
+        << "isAppIdHashInEnterpriseContext: failed to base64 decode argument: "
+        << app_id_hash_base64;
+    return RespondNow(OneArgument(base::MakeUnique<base::Value>(false)));
+  }
+
+  Profile* const profile = Profile::FromBrowserContext(browser_context());
+  const PrefService* const prefs = profile->GetPrefs();
+  const base::ListValue* const permit_attestation =
+      prefs->GetList(prefs::kSecurityKeyPermitAttestation);
+
+  bool result = false;
+  for (const auto& i : *permit_attestation) {
+    const std::string& s = i.GetString();
+    if (s.find("/") == std::string::npos) {
+      // No slashes mean that this is a webauthn RP ID, not a U2F AppID.
+      continue;
+    }
+
+    if (crypto::SHA256HashString(s) == app_id_hash) {
+      result = true;
+      break;
+    }
+  }
+
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(result)));
+}
 
 }  // namespace api
 }  // namespace extensions
