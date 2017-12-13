@@ -22,6 +22,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_web_ui.h"
+#include "content/test/test_render_view_host.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::DictionaryValue;
@@ -197,6 +198,7 @@ class SyncInternalsMessageHandlerTest : public ::testing::Test {
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
+  content::RenderViewHostTestEnabler rvh_test_enabler_;
   TestingProfile profile_;
   scoped_refptr<content::SiteInstance> site_instance_;
   std::unique_ptr<content::WebContents> web_contents_;

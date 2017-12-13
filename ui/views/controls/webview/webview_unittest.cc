@@ -16,6 +16,7 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/web_contents_tester.h"
 #include "content/test/test_content_browser_client.h"
+#include "content/test/test_render_view_host.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
 #include "ui/views/controls/native/native_view_host.h"
@@ -178,6 +179,7 @@ class WebViewUnitTest : public views::test::WidgetTest {
 
  private:
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
+  content::RenderViewHostTestEnabler rvh_test_enabler_;
   std::unique_ptr<content::TestBrowserContext> browser_context_;
   content::TestContentBrowserClient test_browser_client_;
 

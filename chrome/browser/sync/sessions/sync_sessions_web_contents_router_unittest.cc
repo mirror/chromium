@@ -8,6 +8,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/web_contents_tester.h"
+#include "content/test/test_render_view_host.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace sync_sessions {
@@ -42,6 +43,7 @@ class SyncSessionsWebContentsRouterTest : public testing::Test {
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
+  content::RenderViewHostTestEnabler rvh_test_enabler_;
   TestingProfile profile_;
   SyncSessionsWebContentsRouter* router_;
   std::unique_ptr<content::WebContents> test_contents_;
