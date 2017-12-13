@@ -76,6 +76,16 @@ const float kDraggedImageOpacity = 0.5f;
 
 namespace {
 
+// The UMA histogram that logs the commands which are executed on non-app
+// context menus.
+constexpr char kNonAppContextMenuExecuteCommand[] =
+    "Apps.ContextMenuExecuteCommand.NotFromApp";
+
+// The UMA histogram that logs the commands which are executed on app context
+// menus.
+constexpr char kAppContextMenuExecuteCommand[] =
+    "Apps.ContextMenuExecuteCommand.FromApp";
+
 // A class to temporarily disable a given bounds animator.
 class BoundsAnimatorDisabler {
  public:
@@ -1732,11 +1742,15 @@ void ShelfView::AfterGetContextMenuItems(
     std::vector<mojom::MenuItemPtr> menu_items) {
   context_menu_id_ = shelf_id;
   const int64_t display_id = GetDisplayIdForView(this);
-  ShowMenu(std::make_unique<ShelfContextMenuModel>(
-               std::move(menu_items), model_->GetShelfItemDelegate(shelf_id),
-               display_id),
-           source, point, true /* context_menu */, source_type,
-           nullptr /* ink_drop */);
+  std::unique_ptr<ShelfContextMenuModel> menu_model =
+      std::make_unique<ShelfContextMenuModel>(
+          std::move(menu_items), model_->GetShelfItemDelegate(shelf_id),
+          display_id);
+  menu_model->SetHistogramName(ShelfItemForView(source)
+                                   ? kAppContextMenuExecuteCommand
+                                   : kNonAppContextMenuExecuteCommand);
+  ShowMenu(std::move(menu_model), source, point, true /* context_menu */,
+           source_type, nullptr /* ink_drop */);
 }
 
 void ShelfView::ShowContextMenuForView(views::View* source,
@@ -1773,9 +1787,12 @@ void ShelfView::ShowContextMenuForView(views::View* source,
   const ShelfItem* item = ShelfItemForView(source);
   if (!item || !model_->GetShelfItemDelegate(item->id)) {
     context_menu_id_ = ShelfID();
-    ShowMenu(std::make_unique<ShelfContextMenuModel>(
-                 std::vector<mojom::MenuItemPtr>(), nullptr, display_id),
-             source, context_menu_point, true, source_type, nullptr);
+    std::unique_ptr<ShelfContextMenuModel> menu_model =
+        std::make_unique<ShelfContextMenuModel>(
+            std::vector<mojom::MenuItemPtr>(), nullptr, display_id);
+    menu_model->SetHistogramName(kNonAppContextMenuExecuteCommand);
+    ShowMenu(std::move(menu_model), source, context_menu_point, true,
+             source_type, nullptr);
     return;
   }
 
@@ -1860,6 +1877,13 @@ void ShelfView::OnMenuClosed(views::InkDrop* ink_drop) {
   context_menu_id_ = ShelfID();
 
   closing_event_time_ = launcher_menu_runner_->closing_event_time();
+
+  if (shelf_button_context_menu_time_ != base::Time()) {
+    // If the context menu came from a ShelfButton.
+    UMA_HISTOGRAM_TIMES("Apps.ContextMenuUserJourneyTime.ShelfButton",
+                        base::Time::Now() - shelf_button_context_menu_time_);
+    shelf_button_context_menu_time_ = base::Time();
+  }
 
   if (ink_drop)
     ink_drop->AnimateToState(views::InkDropState::DEACTIVATED);
