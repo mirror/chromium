@@ -4,17 +4,20 @@
 
 #include "chrome/browser/vr/testapp/vr_test_context.h"
 
+#include "base/files/file_util.h"
 #include "base/i18n/icu_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/numerics/ranges.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/utf_string_conversion_utils.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/vr/controller_mesh.h"
 #include "chrome/browser/vr/keyboard_delegate.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/model/toolbar_state.h"
+#include "chrome/browser/vr/skia_surface_provider.h"
 #include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/text_input_delegate.h"
@@ -32,6 +35,7 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/events/event.h"
 #include "ui/events/keycodes/dom/dom_code.h"
+#include "ui/gfx/codec/png_codec.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/angle_conversions.h"
 
@@ -51,6 +55,9 @@ constexpr gfx::Point3F kLaserOrigin = {0.5f, -0.5f, 0.f};
 constexpr gfx::Vector3dF kLaserLocalOffset = {0.f, -0.0075f, -0.05f};
 constexpr float kControllerScaleFactor = 1.5f;
 
+constexpr gfx::SizeF kKeyboardSize = {1.2f, 0.37f};
+constexpr char kKeyboardImagePath[] = "chrome/browser/vr/testapp/keyboard.png";
+
 void RotateToward(const gfx::Vector3dF& fwd, gfx::Transform* transform) {
   gfx::Quaternion quat(kForwardVector, fwd);
   transform->PreconcatTransform(gfx::Transform(quat));
@@ -58,29 +65,139 @@ void RotateToward(const gfx::Vector3dF& fwd, gfx::Transform* transform) {
 
 }  // namespace
 
+class TestKeyboardRenderer {
+ public:
+  TestKeyboardRenderer() = default;
+  ~TestKeyboardRenderer() = default;
+
+  void Initialize(vr::SkiaSurfaceProvider* provider,
+                  UiElementRenderer* renderer) {
+    renderer_ = renderer;
+
+    // Note that we simply render an image for the keyboard and the actual input
+    // is provided by the physical keyboard.
+    // Read and decode keyboard image.
+    base::FilePath dir;
+    PathService::Get(base::DIR_CURRENT, &dir);
+    dir = dir.Append(base::FilePath().AppendASCII(kKeyboardImagePath));
+    DCHECK(base::PathExists(dir));
+    std::string file_contents;
+    base::ReadFileToString(dir, &file_contents);
+    const unsigned char* data =
+        reinterpret_cast<const unsigned char*>(file_contents.data());
+    SkBitmap bitmap;
+    gfx::PNGCodec::Decode(data, file_contents.length(), &bitmap);
+
+    drawn_size_.SetSize(bitmap.width(), bitmap.height());
+    surface_ = provider->MakeSurface(drawn_size_);
+    DCHECK(surface_);
+
+    surface_->getCanvas()->drawBitmap(bitmap, 0, 0);
+    texture_handle_ = provider->FlushSurface(surface_.get(), texture_handle_);
+  }
+
+  void Draw(const CameraModel& model,
+            const gfx::Transform& world_space_transform) {
+    renderer_->DrawTexturedQuad(
+        texture_handle_, UiElementRenderer::kTextureLocationLocal,
+        model.view_proj_matrix * world_space_transform, gfx::RectF(0, 0, 1, 1),
+        1, {drawn_size_.width(), drawn_size_.height()}, 0);
+  }
+
+ private:
+  GLuint texture_handle_;
+  sk_sp<SkSurface> surface_;
+  gfx::Size drawn_size_;
+  UiElementRenderer* renderer_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(TestKeyboardRenderer);
+};
+
 // This stub delegate does nothing today, but can be expanded to offer
 // legitimate keyboard support if required.
-class TestKeyboardDelegate : KeyboardDelegate {
+class TestKeyboardDelegate : public KeyboardDelegate {
  public:
-  // KeyboardDelegate implemenation.
-  void ShowKeyboard() override {}
-  void HideKeyboard() override {}
-  void SetTransform(const gfx::Transform&) override {}
+  TestKeyboardDelegate()
+      : renderer_(base::MakeUnique<TestKeyboardRenderer>()) {}
+
+  void ShowKeyboard() override { editing_ = true; }
+  void HideKeyboard() override { editing_ = false; }
+
+  void SetTransform(const gfx::Transform& transform) override {
+    world_space_transform_ = transform;
+  }
+
   bool HitTest(const gfx::Point3F& ray_origin,
                const gfx::Point3F& ray_target,
                gfx::Point3F* hit_position) override {
+    // TODO(ymalik): Add hittesting logic for the keyboard.
     return false;
   }
-  void Draw(const CameraModel&) override {}
 
-  // Testapp-specific hooks.
+  void Draw(const CameraModel& model) override {
+    if (!editing_)
+      return;
+
+    // We try to simulate what the gvr keyboard does here by scaling and
+    // translating the keyboard on top of the provided transform.
+    gfx::Transform world_space_transform = world_space_transform_;
+    world_space_transform.Scale(kKeyboardSize.width(), kKeyboardSize.height());
+    world_space_transform.Translate(gfx::Vector2dF(0, -0.2));
+    renderer_->Draw(model, world_space_transform);
+  }
+
+  void Initialize(vr::SkiaSurfaceProvider* provider,
+                  UiElementRenderer* renderer) {
+    renderer_->Initialize(provider, renderer);
+  }
+
   void SetUiInterface(vr::KeyboardUiInterface* keyboard) {
     keyboard_interface_ = keyboard;
   }
-  void UpdateInput(const vr::TextInputInfo& info) {}
+
+  void UpdateInput(const vr::TextInputInfo& info) { input_info_ = info; }
+
+  bool HandleInput(ui::Event* e) {
+    DCHECK(keyboard_interface_);
+    DCHECK(e->IsKeyEvent());
+    if (!editing_)
+      return false;
+
+    auto* event = e->AsKeyEvent();
+    switch (event->key_code()) {
+      case ui::VKEY_RETURN:
+        input_info_.text.clear();
+        input_info_.selection_start = input_info_.selection_end = 0;
+        keyboard_interface_->OnInputCommitted(input_info_);
+        break;
+      case ui::VKEY_BACK:
+        input_info_.text.pop_back();
+        input_info_.selection_start--;
+        input_info_.selection_end--;
+        keyboard_interface_->OnInputEdited(input_info_);
+        break;
+      default:
+        std::string character;
+        base::WriteUnicodeCharacter(event->GetText(), &character);
+        input_info_.text =
+            input_info_.text.append(base::UTF8ToUTF16(character));
+        input_info_.selection_start++;
+        input_info_.selection_end++;
+        keyboard_interface_->OnInputEdited(input_info_);
+        break;
+    }
+    // We want to continue handling this keypress if the Ctrl key is down so
+    // that we can do things like duming the tree in editing mode.
+    return !event->IsControlDown();
+  }
 
  private:
+  std::unique_ptr<TestKeyboardRenderer> renderer_;
+
   vr::KeyboardUiInterface* keyboard_interface_ = nullptr;
+  gfx::Transform world_space_transform_;
+  bool editing_;
+  TextInputInfo input_info_;
 };
 
 VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
@@ -97,8 +214,8 @@ VrTestContext::VrTestContext() : view_scale_factor_(kDefaultViewScaleFactor) {
   text_input_delegate_ = base::MakeUnique<vr::TextInputDelegate>();
   keyboard_delegate_ = base::MakeUnique<vr::TestKeyboardDelegate>();
 
-  ui_ = base::MakeUnique<Ui>(this, nullptr, nullptr, text_input_delegate_.get(),
-                             UiInitialState());
+  ui_ = base::MakeUnique<Ui>(this, nullptr, keyboard_delegate_.get(),
+                             text_input_delegate_.get(), UiInitialState());
 
   text_input_delegate_->SetRequestFocusCallback(
       base::BindRepeating(&vr::Ui::RequestFocus, base::Unretained(ui_.get())));
@@ -156,6 +273,9 @@ void VrTestContext::DrawFrame() {
 void VrTestContext::HandleInput(ui::Event* event) {
   if (event->IsKeyEvent()) {
     if (event->type() != ui::ET_KEY_PRESSED) {
+      return;
+    }
+    if (keyboard_delegate_->HandleInput(event)) {
       return;
     }
     switch (event->AsKeyEvent()->code()) {
@@ -332,6 +452,9 @@ void VrTestContext::OnGlInitialized() {
   ui_->OnGlInitialized(content_texture_id,
                        UiElementRenderer::kTextureLocationLocal, false);
 
+  keyboard_delegate_->Initialize(ui_->scene()->SurfaceProviderForTesting(),
+                                 ui_->ui_element_renderer());
+
   ui_->ui_element_renderer()->SetUpController(
       ControllerMesh::LoadFromResources());
 }
@@ -458,7 +581,6 @@ void VrTestContext::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
 
 void VrTestContext::OnExitVrPromptResult(vr::ExitVrPromptChoice choice,
                                          vr::UiUnsupportedMode reason) {
-  LOG(ERROR) << "exit prompt result: " << choice;
   if (reason == UiUnsupportedMode::kVoiceSearchNeedsRecordAudioOsPermission &&
       choice == CHOICE_EXIT) {
     voice_search_enabled_ = true;
