@@ -50,6 +50,8 @@
 #include "core/typed_arrays/DOMTypedArray.h"
 #include "core/typed_arrays/FlexibleArrayBufferView.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/common/mailbox.h"
+#include "gpu/command_buffer/common/sync_token.h"
 #include "modules/webgl/ANGLEInstancedArrays.h"
 #include "modules/webgl/EXTBlendMinMax.h"
 #include "modules/webgl/EXTFragDepth.h"
@@ -108,6 +110,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/TaskType.h"
 #include "skia/ext/texture_handle.h"
+#include "third_party/skia/include/gpu/GrContext.h"
 
 namespace blink {
 
@@ -773,17 +776,14 @@ scoped_refptr<StaticBitmapImage> WebGLRenderingContextBase::GetImage(
         std::make_unique<AcceleratedImageBufferSurface>(size, ColorParams());
     if (!surface->IsValid())
       return nullptr;
-    std::unique_ptr<ImageBuffer> buffer =
-        ImageBuffer::Create(std::move(surface));
-    if (!buffer->CopyRenderingResultsFromDrawingBuffer(GetDrawingBuffer(),
-                                                       kBackBuffer)) {
+    if (!CopyRenderingResultsFromDrawingBuffer(surface.get(), kBackBuffer)) {
       // copyRenderingResultsFromDrawingBuffer is expected to always succeed
       // because we've explicitly created an Accelerated surface and have
       // already validated it.
       NOTREACHED();
       return nullptr;
     }
-    return buffer->NewImageSnapshot(hint, reason);
+    return surface->NewImageSnapshot(hint, reason);
   }
 
   // If on a worker thread, create a copy from the drawing buffer and create
@@ -1491,17 +1491,15 @@ bool WebGLRenderingContextBase::PaintRenderingResultsToCanvas(
   canvas()->ClearCopiedImage();
   marked_canvas_dirty_ = false;
 
-  if (!canvas()->GetOrCreateImageBuffer())
+  if (!canvas()->TryCreateImageBuffer())
     return false;
 
   ScopedTexture2DRestorer restorer(this);
   ScopedFramebufferRestorer fbo_restorer(this);
 
   GetDrawingBuffer()->ResolveAndBindForReadAndDraw();
-  if (!canvas()
-           ->GetOrCreateImageBuffer()
-           ->CopyRenderingResultsFromDrawingBuffer(GetDrawingBuffer(),
-                                                   source_buffer)) {
+  if (!CopyRenderingResultsFromDrawingBuffer(canvas()->WebGLBuffer(),
+                                             source_buffer)) {
     // Currently, copyRenderingResultsFromDrawingBuffer is expected to always
     // succeed because cases where canvas()-buffer() is not accelerated are
     // handle before reaching this point.  If that assumption ever stops holding
@@ -1509,6 +1507,100 @@ bool WebGLRenderingContextBase::PaintRenderingResultsToCanvas(
     NOTREACHED();
     return false;
   }
+
+  return true;
+}
+
+bool WebGLRenderingContextBase::CopyRenderingResultsFromDrawingBuffer(
+    AcceleratedImageBufferSurface* webgl_buffer,
+    SourceDrawingBuffer source_buffer) const {
+  std::unique_ptr<WebGraphicsContext3DProvider> provider =
+      Platform::Current()->CreateSharedOffscreenGraphicsContext3DProvider();
+  if (!provider)
+    return false;
+  gpu::gles2::GLES2Interface* gl = provider->ContextGL();
+  GLuint texture_id = webgl_buffer->GetBackingTextureHandleForOverwrite();
+  if (!texture_id)
+    return false;
+
+  gl->Flush();
+
+  return drawing_buffer_->CopyToPlatformTexture(
+      gl, GL_TEXTURE_2D, texture_id, true, false, IntPoint(0, 0),
+      IntRect(IntPoint(0, 0), drawing_buffer_->Size()), source_buffer);
+}
+
+bool WebGLRenderingContextBase::CopyToPlatformTexture(
+    scoped_refptr<StaticBitmapImage> image,
+    gpu::gles2::GLES2Interface* gl,
+    GLenum target,
+    GLuint texture,
+    bool premultiply_alpha,
+    bool flip_y,
+    const IntPoint& dest_point,
+    const IntRect& source_sub_rectangle) {
+  if (!Extensions3DUtil::CanUseCopyTextureCHROMIUM(target))
+    return false;
+
+  if (!image || !image->IsTextureBacked() || !image->IsValid())
+    return false;
+
+  // Get the texture ID, flushing pending operations if needed.
+  const GrGLTextureInfo* texture_info = skia::GrBackendObjectToGrGLTextureInfo(
+      image->PaintImageForCurrentFrame().GetSkImage()->getTextureHandle(true));
+  if (!texture_info || !texture_info->fID)
+    return false;
+
+  WebGraphicsContext3DProvider* provider = image->ContextProvider();
+  if (!provider || !provider->GetGrContext())
+    return false;
+  gpu::gles2::GLES2Interface* source_gl = provider->ContextGL();
+
+  gpu::Mailbox mailbox;
+
+  // Contexts may be in a different share group. We must transfer the texture
+  // through a mailbox first.
+  source_gl->GenMailboxCHROMIUM(mailbox.name);
+  source_gl->ProduceTextureDirectCHROMIUM(texture_info->fID, mailbox.name);
+  const GLuint64 shared_fence_sync = source_gl->InsertFenceSyncCHROMIUM();
+  source_gl->Flush();
+
+  gpu::SyncToken produce_sync_token;
+  source_gl->GenSyncTokenCHROMIUM(shared_fence_sync,
+                                  produce_sync_token.GetData());
+  gl->WaitSyncTokenCHROMIUM(produce_sync_token.GetConstData());
+
+  GLuint source_texture = gl->CreateAndConsumeTextureCHROMIUM(mailbox.name);
+
+  // The canvas is stored in a premultiplied format, so unpremultiply if
+  // necessary. The canvas is also stored in an inverted position, so the flip
+  // semantics are reversed.
+  // It is expected that callers of this method have already allocated
+  // the platform texture with the appropriate size.
+  gl->CopySubTextureCHROMIUM(
+      source_texture, 0, target, texture, 0, dest_point.X(), dest_point.Y(),
+      source_sub_rectangle.X(), source_sub_rectangle.Y(),
+      source_sub_rectangle.Width(), source_sub_rectangle.Height(),
+      flip_y ? GL_FALSE : GL_TRUE, GL_FALSE,
+      premultiply_alpha ? GL_FALSE : GL_TRUE);
+
+  gl->DeleteTextures(1, &source_texture);
+
+  const GLuint64 context_fence_sync = gl->InsertFenceSyncCHROMIUM();
+
+  gl->Flush();
+
+  gpu::SyncToken copy_sync_token;
+  gl->GenSyncTokenCHROMIUM(context_fence_sync, copy_sync_token.GetData());
+  source_gl->WaitSyncTokenCHROMIUM(copy_sync_token.GetConstData());
+  // This disassociates the texture from the mailbox to avoid leaking the
+  // mapping between the two in cases where the texture is recycled by skia.
+  source_gl->ProduceTextureDirectCHROMIUM(0, mailbox.name);
+
+  // Undo grContext texture binding changes introduced in this function.
+  GrContext* gr_context = provider->GetGrContext();
+  CHECK(gr_context);  // We already check / early-out above if null.
+  gr_context->resetContext(kTextureBinding_GrGLBackendState);
 
   return true;
 }
@@ -4994,23 +5086,27 @@ void WebGLRenderingContextBase::TexImageCanvasByGPU(
     GLint yoffset,
     const IntRect& source_sub_rectangle) {
   if (!canvas->Is3d()) {
-    ImageBuffer* buffer = canvas->GetOrCreateImageBuffer();
-    if (buffer &&
-        !buffer->CopyToPlatformTexture(
-            FunctionIDToSnapshotReason(function_id), ContextGL(), target,
-            target_texture, unpack_premultiply_alpha_, unpack_flip_y_,
-            IntPoint(xoffset, yoffset), source_sub_rectangle)) {
+    if (canvas->TryCreateImageBuffer()) {
+      scoped_refptr<StaticBitmapImage> image =
+          canvas->Canvas2DBuffer()->NewImageSnapshot(
+              kPreferAcceleration, FunctionIDToSnapshotReason(function_id));
+      if (CopyToPlatformTexture(image, ContextGL(), target, target_texture,
+                                unpack_premultiply_alpha_, unpack_flip_y_,
+                                IntPoint(xoffset, yoffset),
+                                source_sub_rectangle)) {
+        return;
+      }
       NOTREACHED();
-    }
-  } else {
-    WebGLRenderingContextBase* gl =
-        ToWebGLRenderingContextBase(canvas->RenderingContext());
-    ScopedTexture2DRestorer restorer(gl);
-    if (!gl->GetDrawingBuffer()->CopyToPlatformTexture(
-            ContextGL(), target, target_texture, unpack_premultiply_alpha_,
-            !unpack_flip_y_, IntPoint(xoffset, yoffset), source_sub_rectangle,
-            kBackBuffer)) {
-      NOTREACHED();
+    } else {
+      WebGLRenderingContextBase* gl =
+          ToWebGLRenderingContextBase(canvas->RenderingContext());
+      ScopedTexture2DRestorer restorer(gl);
+      if (!gl->GetDrawingBuffer()->CopyToPlatformTexture(
+              ContextGL(), target, target_texture, unpack_premultiply_alpha_,
+              !unpack_flip_y_, IntPoint(xoffset, yoffset), source_sub_rectangle,
+              kBackBuffer)) {
+        NOTREACHED();
+      }
     }
   }
 }
@@ -5338,40 +5434,37 @@ void WebGLRenderingContextBase::TexImageHelperHTMLVideoElement(
   if (use_copyTextureCHROMIUM) {
     // Try using an accelerated image buffer, this allows YUV conversion to be
     // done on the GPU.
-    std::unique_ptr<ImageBufferSurface> surface =
+    std::unique_ptr<AcceleratedImageBufferSurface> surface =
         WTF::WrapUnique(new AcceleratedImageBufferSurface(
             IntSize(video->videoWidth(), video->videoHeight())));
     if (surface->IsValid()) {
-      std::unique_ptr<ImageBuffer> image_buffer(
-          ImageBuffer::Create(std::move(surface)));
-      if (image_buffer) {
-        // The video element paints an RGBA frame into our surface here. By
-        // using an AcceleratedImageBufferSurface, we enable the WebMediaPlayer
-        // implementation to do any necessary color space conversion on the GPU
-        // (though it may still do a CPU conversion and upload the results).
-        video->PaintCurrentFrame(
-            image_buffer->Canvas(),
-            IntRect(0, 0, video->videoWidth(), video->videoHeight()), nullptr,
-            already_uploaded_id, frame_metadata_ptr);
+      // The video element paints an RGBA frame into our surface here. By
+      // using an AcceleratedImageBufferSurface, we enable the WebMediaPlayer
+      // implementation to do any necessary color space conversion on the GPU
+      // (though it may still do a CPU conversion and upload the results).
+      video->PaintCurrentFrame(
+          surface->Canvas(),
+          IntRect(0, 0, video->videoWidth(), video->videoHeight()), nullptr,
+          already_uploaded_id, frame_metadata_ptr);
 
-        // This is a straight GPU-GPU copy, any necessary color space conversion
-        // was handled in the paintCurrentFrameInContext() call.
+      // This is a straight GPU-GPU copy, any necessary color space conversion
+      // was handled in the paintCurrentFrameInContext() call.
 
-        // Note that copyToPlatformTexture no longer allocates the destination
-        // texture.
-        TexImage2DBase(target, level, internalformat, video->videoWidth(),
-                       video->videoHeight(), 0, format, type, nullptr);
+      // Note that copyToPlatformTexture no longer allocates the destination
+      // texture.
+      TexImage2DBase(target, level, internalformat, video->videoWidth(),
+                     video->videoHeight(), 0, format, type, nullptr);
 
-        if (image_buffer->CopyToPlatformTexture(
-                FunctionIDToSnapshotReason(function_id), ContextGL(), target,
-                texture->Object(), unpack_premultiply_alpha_, unpack_flip_y_,
-                IntPoint(0, 0),
-                IntRect(0, 0, video->videoWidth(), video->videoHeight()))) {
-          texture->UpdateLastUploadedFrame(frame_metadata);
-          return;
-        }
+      scoped_refptr<StaticBitmapImage> image = surface->NewImageSnapshot(
+          kPreferAcceleration, FunctionIDToSnapshotReason(function_id));
+      if (CopyToPlatformTexture(
+              image, ContextGL(), target, texture->Object(),
+              unpack_premultiply_alpha_, unpack_flip_y_, IntPoint(0, 0),
+              IntRect(0, 0, video->videoWidth(), video->videoHeight()))) {
+        texture->UpdateLastUploadedFrame(frame_metadata);
+        return;
       }
-    }
+      }
   }
 
   scoped_refptr<Image> image =

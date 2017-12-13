@@ -1,5 +1,7 @@
 include_rules = [
     "+gpu/GLES2/gl2extchromium.h",
     "+gpu/command_buffer/client/gles2_interface.h",
+    "+gpu/command_buffer/common/mailbox.h",
+    "+gpu/command_buffer/common/sync_token.h",
     "+skia/ext",
 ]

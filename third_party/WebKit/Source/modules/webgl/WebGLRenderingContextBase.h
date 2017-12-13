@@ -1693,6 +1693,18 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   const unsigned version_;
 
   bool IsPaintable() const final { return GetDrawingBuffer(); }
+  bool CopyRenderingResultsFromDrawingBuffer(AcceleratedImageBufferSurface*,
+                                             SourceDrawingBuffer) const;
+  // Destroys the TEXTURE_2D binding for the active texture unit of the passed
+  // context. Assumes the destination texture has already been allocated.
+  bool CopyToPlatformTexture(scoped_refptr<StaticBitmapImage>,
+                             gpu::gles2::GLES2Interface*,
+                             GLenum target,
+                             GLuint texture,
+                             bool premultiply_alpha,
+                             bool flip_y,
+                             const IntPoint& dest_point,
+                             const IntRect& source_sub_rectangle);
 };
 
 // TODO(fserb): remove this.
