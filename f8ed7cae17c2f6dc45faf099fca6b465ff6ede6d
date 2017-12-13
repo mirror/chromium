@@ -52,6 +52,24 @@
       "revId": "f8ed7cae17c2f6dc45faf099fca6b465ff6ede6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35b3710_410fba57",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-13T21:16:02Z",
+      "side": 1,
+      "message": "Sorry Mike, I see that my prev explanation was bit confusing. Thanks again for review and for your attention to details!",
+      "parentUuid": "29eb762a_775a85bf",
+      "revId": "f8ed7cae17c2f6dc45faf099fca6b465ff6ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
