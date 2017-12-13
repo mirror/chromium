@@ -68,8 +68,7 @@ ExpandArrowView::ExpandArrowView(ContentsView* contents_view,
       contents_view_(contents_view),
       app_list_view_(app_list_view),
       weak_ptr_factory_(this) {
-  if (features::IsAppListFocusEnabled())
-    SetFocusBehavior(FocusBehavior::ALWAYS);
+  SetFocusBehavior(FocusBehavior::ALWAYS);
   SetPaintToLayer();
   layer()->SetFillsBoundsOpaquely(false);
 

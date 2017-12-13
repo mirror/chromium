@@ -73,8 +73,7 @@ class SearchAnswerWebView : public views::WebView {
     OnVisibilityEvent(false);
     // Focus Behavior is originally set in WebView::SetWebContents, but
     // overriden here because we do not want the webview to get focus.
-    if (features::IsAppListFocusEnabled())
-      SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
+    SetFocusBehavior(FocusBehavior::ACCESSIBLE_ONLY);
   }
 
   void RemovedFromWidget() override {
