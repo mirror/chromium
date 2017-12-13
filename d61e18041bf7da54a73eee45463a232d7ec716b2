@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e2191260_59a4f991",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-12-13T18:42:34Z",
+      "side": 1,
+      "message": "I don\u0027t understand. If the max and min of a range are the same, it should not matter what the step is set to. I also don\u0027t understand how a client would conclude that photo resolution can or cannot be different from video resolution based on this value?\nAlso, the std::min() expression seems quite complicated for something that can be either 0 or 1.\nPlease clarify.",
+      "parentUuid": "5f531622_85e9e72e",
+      "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afdd4284_2975eda2",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 2
