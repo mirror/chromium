@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54cfee44_7c6657fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-12-13T17:59:05Z",
+      "side": 1,
+      "message": "Maybe [ozone/wayland] Initial touch event support implementation?",
+      "parentUuid": "05a35bd2_5b7f36cb",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a139fe04_05ceba88",
         "filename": "ui/ozone/platform/wayland/fake_server.cc",
         "patchSetId": 6
@@ -47,6 +65,41 @@
       "writtenOn": "2017-12-12T22:52:17Z",
       "side": 1,
       "message": "subsurfaces?",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c69d9b_1f5d12b1",
+        "filename": "ui/ozone/platform/wayland/wayland_connection.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-12-13T17:59:05Z",
+      "side": 1,
+      "message": "indeed \"subsurfaces\" is misleading here. As per the wayland docs:\n\n\"To avoid race conditions, input events that are likely to trigger further requests (such as button presses, key events, pointer motions) carry serial numbers, and requests such as wl_surface.set_popup require that the serial number of the triggering event is specified...\"",
+      "parentUuid": "ece35ae7_6c4fba43",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf4764a_870e642b",
+        "filename": "ui/ozone/platform/wayland/wayland_connection.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-12-13T17:59:05Z",
+      "side": 1,
+      "message": "this line is going to conflict against ToT code, since it is already present.",
       "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -132,6 +185,24 @@
       "writtenOn": "2017-12-12T22:52:17Z",
       "side": 1,
       "message": "you need to rebase?",
+      "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccbc47b6_64ebc86e",
+        "filename": "ui/ozone/platform/wayland/wayland_window.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-12-13T17:59:05Z",
+      "side": 1,
+      "message": "definitively.",
+      "parentUuid": "c6f48d09_b403ea0d",
       "revId": "172ee500d632e152564b17199f99ec21dbbd8c1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
