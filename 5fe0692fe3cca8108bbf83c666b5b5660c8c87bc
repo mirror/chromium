@@ -22,6 +22,30 @@
       "revId": "5fe0692fe3cca8108bbf83c666b5b5660c8c87bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798e6257_45330fda",
+        "filename": "ui/aura/window_tree_host_platform.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-12-13T03:57:45Z",
+      "side": 1,
+      "message": "It should be possible to make it work, with an X11Window. I have been wanting to get rid of WindowTreeHostX11 for a while. So if that works out, that would be pretty neat! (I think app-shell also uses WTHX11, but WTHPlatform + X11Window should also be sufficient for that)",
+      "parentUuid": "6d09b0f3_e4a5e035",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 44
+      },
+      "revId": "5fe0692fe3cca8108bbf83c666b5b5660c8c87bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
