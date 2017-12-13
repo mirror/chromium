@@ -2777,40 +2777,6 @@ if (use_v8_in_net) {
   }
 }
 
-if (enable_net_mojo) {
-  source_set("net_browser_services") {
-    sources = [
-      "dns/mojo_host_resolver_impl.cc",
-      "dns/mojo_host_resolver_impl.h",
-    ]
-
-    public_deps = [
-      ":net",
-      "//base",
-      "//mojo/public/cpp/bindings",
-      "//net/interfaces",
-    ]
-  }
-
-  source_set("net_utility_services") {
-    sources = [
-      "dns/host_resolver_mojo.cc",
-      "dns/host_resolver_mojo.h",
-    ]
-
-    deps = [
-      ":net_with_v8",
-      "//base",
-    ]
-
-    public_deps = [
-      ":net",
-      "//mojo/public/cpp/bindings",
-      "//net/interfaces",
-    ]
-  }
-}
-
 if (!is_ios && !is_android) {
   executable("cert_verify_tool") {
     testonly = true
@@ -4801,11 +4767,9 @@ test("net_unittests") {
     "dns/dns_util_unittest.cc",
     "dns/host_cache_unittest.cc",
     "dns/host_resolver_impl_unittest.cc",
-    "dns/host_resolver_mojo_unittest.cc",
     "dns/mapped_host_resolver_unittest.cc",
     "dns/mdns_cache_unittest.cc",
     "dns/mdns_client_unittest.cc",
-    "dns/mojo_host_resolver_impl_unittest.cc",
     "dns/record_parsed_unittest.cc",
     "dns/record_rdata_unittest.cc",
     "dns/serial_worker_unittest.cc",
@@ -4975,7 +4939,6 @@ test("net_unittests") {
     "proxy/dhcp_proxy_script_adapter_fetcher_win_unittest.cc",
     "proxy/dhcp_proxy_script_fetcher_factory_unittest.cc",
     "proxy/dhcp_proxy_script_fetcher_win_unittest.cc",
-    "proxy/mojo_proxy_resolver_v8_tracing_bindings_unittest.cc",
     "proxy/multi_threaded_proxy_resolver_unittest.cc",
     "proxy/network_delegate_error_observer_unittest.cc",
     "proxy/proxy_bypass_rules_unittest.cc",
@@ -5556,20 +5519,6 @@ test("net_unittests") {
       "proxy/proxy_resolver_v8_tracing_unittest.cc",
       "proxy/proxy_resolver_v8_tracing_wrapper_unittest.cc",
       "proxy/proxy_resolver_v8_unittest.cc",
-    ]
-  }
-
-  if (enable_net_mojo) {
-    deps += [
-      ":net_browser_services",
-      ":net_utility_services",
-      "//mojo/edk/system",
-    ]
-  } else {
-    sources -= [
-      "dns/host_resolver_mojo_unittest.cc",
-      "dns/mojo_host_resolver_impl_unittest.cc",
-      "proxy/mojo_proxy_resolver_v8_tracing_bindings_unittest.cc",
     ]
   }
 
