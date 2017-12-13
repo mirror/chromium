@@ -37,6 +37,7 @@ namespace chromeos {
 
 class AccessibilityExtensionLoader;
 class AccessibilityHighlightManager;
+class ScopedKeyboardStateSetter;
 class SelectToSpeakEventHandler;
 class SwitchAccessEventHandler;
 
@@ -438,6 +439,8 @@ class AccessibilityManager
 
   std::unique_ptr<chromeos::SwitchAccessEventHandler>
       switch_access_event_handler_;
+
+  std::unique_ptr<ScopedKeyboardStateSetter> keyboard_state_setter_;
 
   base::WeakPtrFactory<AccessibilityManager> weak_ptr_factory_;
 
