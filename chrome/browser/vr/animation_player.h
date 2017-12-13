@@ -8,6 +8,7 @@
 #include <set>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/macros.h"
 #include "cc/animation/animation.h"
 #include "chrome/browser/vr/transition.h"
@@ -33,6 +34,8 @@ namespace vr {
 // functionality.
 class AnimationPlayer final {
  public:
+  typedef base::Callback<void(int target_property)> AnimationCompletedCallback;
+
   static int GetNextAnimationId();
   static int GetNextGroupId();
 
@@ -91,6 +94,10 @@ class AnimationPlayer final {
                                 const gfx::SizeF& default_value) const;
   SkColor GetTargetColorValue(int target_property, SkColor default_value) const;
 
+  void set_animation_completed_callback(AnimationCompletedCallback callback) {
+    animation_completed_callback_ = callback;
+  }
+
  private:
   void StartAnimations(base::TimeTicks monotonic_time);
   template <typename ValueType>
@@ -107,6 +114,7 @@ class AnimationPlayer final {
   cc::AnimationTarget* target_ = nullptr;
   Animations animations_;
   Transition transition_;
+  AnimationCompletedCallback animation_completed_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };
