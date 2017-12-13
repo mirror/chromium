@@ -10,7 +10,7 @@ mojom("interfaces") {
   ]
   deps = [
     "//mojo/common:common_custom_types",
-    "//net/interfaces",
+    "//services/network/public/interfaces",
     "//url/mojo:url_mojom_gurl",
   ]
 }

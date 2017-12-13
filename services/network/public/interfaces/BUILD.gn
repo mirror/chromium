@@ -6,11 +6,15 @@ import("//mojo/public/tools/bindings/mojom.gni")
 
 mojom("interfaces") {
   sources = [
+    "address_family.mojom",
     "cookie_manager.mojom",
     "cors.mojom",
     "data_pipe_getter.mojom",
     "fetch_api.mojom",
+    "host_resolver_service.mojom",
     "http_request_headers.mojom",
+    "ip_address.mojom",
+    "ip_endpoint.mojom",
     "mutable_network_traffic_annotation_tag.mojom",
     "mutable_partial_network_traffic_annotation_tag.mojom",
     "network_change_manager.mojom",

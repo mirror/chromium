@@ -1,0 +1,17 @@
+# Copyright 2016 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//services/network/public/interfaces/host_resolver_service.mojom"
+public_headers = [ "//net/dns/host_resolver.h" ]
+traits_headers = [ "//services/network/public/cpp/mojo_host_struct_traits.h" ]
+sources = [
+  "//services/network/public/cpp/mojo_host_struct_traits.cc",
+]
+type_mappings = [
+  "network.mojom.HostResolverRequestInfo=std::unique_ptr<net::HostResolver::RequestInfo>[move_only]",
+  "network.mojom.AddressList=net::AddressList",
+]
+public_deps = [
+  "//net",
+]

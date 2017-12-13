@@ -278,7 +278,7 @@ void MockMojoProxyResolver::GetProxyForUrl(
     case GetProxyForUrlAction::MAKE_DNS_REQUEST: {
       auto request = std::make_unique<net::HostResolver::RequestInfo>(
           net::HostPortPair(url.spec(), 12345));
-      net::interfaces::HostResolverRequestClientPtr dns_client;
+      network::mojom::HostResolverRequestClientPtr dns_client;
       mojo::MakeRequest(&dns_client);
       client->ResolveDns(std::move(request), std::move(dns_client));
       blocked_clients_.push_back(
@@ -449,7 +449,7 @@ void MockMojoProxyResolverFactory::CreateResolver(
     case CreateProxyResolverAction::MAKE_DNS_REQUEST: {
       auto request = std::make_unique<net::HostResolver::RequestInfo>(
           net::HostPortPair(pac_script, 12345));
-      net::interfaces::HostResolverRequestClientPtr dns_client;
+      network::mojom::HostResolverRequestClientPtr dns_client;
       mojo::MakeRequest(&dns_client);
       client->ResolveDns(std::move(request), std::move(dns_client));
       blocked_clients_.push_back(
