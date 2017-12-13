@@ -10,14 +10,25 @@
 #include <vector>
 
 #include "net/ssl/ssl_info.h"
+#include "url/gurl.h"
 
 namespace chrome_browser_ssl {
 class SSLErrorAssistantConfig;
+class DynamicInterstitial;
 }  // namespace chrome_browser_ssl
 
 namespace net {
 class SSLInfo;
 }
+
+// Enum class used to represent the interstitial that would be displayed for a
+// dynamic interstitial. Maps to DynamicInterstitial::InterstitialPageType.
+enum class DynamicInterstitialPageType {
+  NONE = 0,
+  SSL,
+  CAPTIVE_PORTAL,
+  MITM_SOFTWARE
+};
 
 // Struct which stores data about a known MITM software pulled from the
 // SSLErrorAssistant proto.
@@ -29,6 +40,31 @@ struct MITMSoftwareType {
   const std::string name;
   const std::string issuer_common_name_regex;
   const std::string issuer_organization_regex;
+};
+
+class DynamicInterstitialInfo {
+ public:
+  explicit DynamicInterstitialInfo(
+      const chrome_browser_ssl::DynamicInterstitial& entry);
+  ~DynamicInterstitialInfo();
+
+  std::unordered_set<std::string> spki_hashes() const { return spki_hashes_; }
+
+  DynamicInterstitialPageType interstitial_type() const {
+    return interstitial_type_;
+  }
+
+  int cert_error() const { return cert_error_; }
+
+  const GURL support_url() const { return support_url_; }
+
+ private:
+  std::unordered_set<std::string> spki_hashes_;
+  const DynamicInterstitialPageType interstitial_type_;
+  const int cert_error_;
+  const GURL support_url_;
+
+  DISALLOW_COPY_AND_ASSIGN(DynamicInterstitialInfo);
 };
 
 // Helper class for SSLErrorHandler. This class is responsible for reading in
@@ -50,6 +86,12 @@ class SSLErrorAssistant {
   const std::string MatchKnownMITMSoftware(
       const scoped_refptr<net::X509Certificate>& cert);
 
+  // Returns a DynamicInterstitialInfo from |dynamic_interstitial_list_| that
+  // matches with |ssl_info|. If there is no match, return null. Loads
+  // |dynamic_interstitial_list_| on the first use.
+  DynamicInterstitialInfo* MatchDynamicInterstitial(
+      const net::SSLInfo& ssl_info);
+
   void SetErrorAssistantProto(
       std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig> proto);
 
@@ -66,6 +108,11 @@ class SSLErrorAssistant {
   // Data about a known MITM software pulled from the SSLErrorAssistant proto.
   // Null until MatchKnownMITMSoftware() is called.
   std::unique_ptr<std::vector<MITMSoftwareType>> mitm_software_list_;
+
+  // Dynamic interstitials data pulled from the SSLErrorAssistant proto. Null
+  // until MatchDynamicInterstitial() is called.
+  std::vector<std::unique_ptr<DynamicInterstitialInfo>>
+      dynamic_interstitial_list_;
 
   // Error assistant configuration.
   std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
