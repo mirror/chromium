@@ -16,6 +16,24 @@
       "revId": "e16ea79c90263f67fcda0cf2ab52c29061766368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5a94ee_26b039d3",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-12-13T00:08:08Z",
+      "side": 1,
+      "message": "This test runs in content_shell. Presumably there\u0027s a test runner involved, but I\u0027m not 100% sure if it\u0027s the same one you\u0027re referring to.\n\nMy first version of the test added a misspelled word, and relied on the spell checker to actually mark it as misspelled. That turned out to be flaky, so I added some JavaScript to disable the spell checker and add the marker manually.\n\nSince we\u0027re also running browser-side code here (this test doesn\u0027t run chrome/, but it does run content/), if there\u0027s a browser-side way to disable spellcheck (perhaps by messing with the test runner, since it implements WebTextCheckClient?), we could use that here.\n\nIf all else fails, maybe we can add a misspelled word and use JavaScript to add a misspelling marker, and hope that it stays there since the word is in fact misspelled. There may be some flakiness issues we have to spend time dealing with if we take this approach though.",
+      "parentUuid": "1920cb83_5535c867",
+      "revId": "e16ea79c90263f67fcda0cf2ab52c29061766368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
