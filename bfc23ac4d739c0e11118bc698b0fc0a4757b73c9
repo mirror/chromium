@@ -34,6 +34,24 @@
       "revId": "bfc23ac4d739c0e11118bc698b0fc0a4757b73c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3b5b049_cd83931f",
+        "filename": "cc/layers/viewport.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-12-13T17:20:21Z",
+      "side": 1,
+      "message": "Thanks! Could you add that to the comment?",
+      "parentUuid": "fa8b2058_bd73d175",
+      "revId": "bfc23ac4d739c0e11118bc698b0fc0a4757b73c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
