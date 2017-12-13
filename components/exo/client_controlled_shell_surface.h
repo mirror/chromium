@@ -131,9 +131,7 @@ class ClientControlledShellSurface
   // Overridden from ShellSurface:
   void SetWidgetBounds(const gfx::Rect& bounds) override;
   void InitializeWindowState(ash::wm::WindowState* window_state) override;
-  void UpdateBackdrop() override;
   float GetScale() const override;
-  bool CanAnimateWindowStateTransitions() const override;
   aura::Window* GetDragWindow() override;
   std::unique_ptr<ash::WindowResizer> CreateWindowResizer(
       aura::Window* window,
@@ -141,6 +139,8 @@ class ClientControlledShellSurface
   bool OnMouseDragged(const ui::MouseEvent& event) override;
   gfx::Point GetWidgetOrigin() const override;
   gfx::Point GetSurfaceOrigin() const override;
+
+  void UpdateBackdrop();
 
   // Lock the compositor if it's not already locked, or extends the
   // lock timeout if it's already locked.
@@ -166,6 +166,8 @@ class ClientControlledShellSurface
   Orientation expected_orientation_ = Orientation::LANDSCAPE;
 
   ash::wm::ClientControlledState* client_controlled_state_ = nullptr;
+
+  ui::WindowShowState pending_show_state_ = ui::SHOW_STATE_NORMAL;
 
   std::unique_ptr<ui::CompositorLock> orientation_compositor_lock_;
 
