@@ -1,0 +1,478 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37ea7332_b13f26dd",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "nit: s//value/g, this is now slightly confusing given we renamed the method from ReadLength to ReadUnsignedInt.",
+      "range": {
+        "startLine": 112,
+        "startChar": 43,
+        "endLine": 112,
+        "endChar": 49
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c15c5b_30009a45",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "nit: Looks like technically additional_info \u003d 28..31 are not \"simple values\", so it might be actually more correct to return UNKNOWN_ADDITIONAL_INFO here.",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 62
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8bdd2a_67e59190",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "Hmm, when calling this, we make the assumption that this is not a narrowing conversion because of the check in ReadUnsignedInt.\n\nShould we make this uint64_t instead? In that case we would no longer be able to use strict_cast, but checked_cast should still be constexpr-evaluable.\n\nJeffrey, WDYT?",
+      "range": {
+        "startLine": 153,
+        "startChar": 54,
+        "endLine": 153,
+        "endChar": 57
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b8ffe7_b87f5aed",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "Jeffrey, is this preferred over strict_cast, even if the output type can represent the entire range of the input type (both are int in this case).",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 27
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e415010_0105cb2b",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "Can we move this two lines inside the default statement in the switch?",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5763d11_37b1a750",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "Add that \"break\" stop code is also not supported.",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a14b66c0_db477d8b",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "pharsing nit: \"Simple values that are unassigned/reserved as per RFC 7049 are not supported and treated as errors.\"",
+      "range": {
+        "startLine": 43,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 24
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd88ceef_474f57ef",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "nit: Same here. No need to name this struct type.",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04f63c3_232bbc66",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "nit: auto\u0026",
+      "range": {
+        "startLine": 284,
+        "startChar": 13,
+        "endLine": 284,
+        "endChar": 32
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9535bda9_0adb6a13",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "We still need tests for (correctly rejecting) 16 and 32 bit floating point types, that is, 0xF9 and 0xFA, respectively.",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313a09ba_a054288c",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "nit: Let\u0027s make this a C-style array of std::vector\u003c\u003e\u0027s.",
+      "range": {
+        "startLine": 568,
+        "startChar": 15,
+        "endLine": 568,
+        "endChar": 25
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366966e9_34c925b4",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "comment nit: To better indicate what kind of value this is:\n\n// Simple value (28, reserved)",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff83560_f9fa676a",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "This should be (0xF8, 0x18), which is first reserved simple value. Feel free to leave this case as well if you prefer. Also, comment:\n// Simple value (27, reserved).",
+      "range": {
+        "startLine": 573,
+        "startChar": 6,
+        "endLine": 574,
+        "endChar": 19
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb0e653_741d078c",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "Let\u0027s add a test for the last reserved value (instead, or in addition), which is 31.",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abcb628d_c4aa6a42",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "comment nit: Simple value (32, unassigned). Same below.",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffaa6d43_41a76e70",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "nit: Technically, this is not a simple value. Just additional information 28 for major type 7, which is unassigned.",
+      "range": {
+        "startLine": 583,
+        "startChar": 20,
+        "endLine": 583,
+        "endChar": 32
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32bfd495_1de77a16",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "nit: You could simply just output the array here, so that humans do not have to count lines. I cannot recall exactly, but I am sure that either GTest defines either operator\u003c\u003c for vector\u003cT\u003e, or if not, defines an appropriate flavor ::testing::PrintToString(vec) that will do exactly we want here.",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5192bd76_04348579",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "nit: Why NULL, and not, e.g., Undefined value?",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bfa1571_7823760f",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "Do you think it would be useful to make this a constexpr constructor, and write something like:\n\nsimple_value_(\n(static_cast\u003cint\u003e(in_simple) \u003e\u003d 20 \u0026\u0026  static_cast\u003cint\u003e(in_simple) \u003c\u003d 23)\n ? in_simple\n : base::internal::CheckOnFailure::HandleFailure\u003cSimpleValue\u003e());\n\nThat would allow doing this check compile time in constant expressions.",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020036b0_04703d2b",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "Jeffrey, what do you think about making the underlying type unsigned here?",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a87195_39989aa0",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "Can we add 4 test cases here and make sure all 4 values are supported, will compile, and won\u0027t CHECK?",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd37274b_64beac78",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "ASSERT to avoid crashing in the next line if not equal. Same below in a couple of places.",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 12
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebd620b_1a41ba56",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "Hmm, here again, this could be a strict_cast if SimpleValue\u0027s underlying type would be unsigned.",
+      "range": {
+        "startLine": 96,
+        "startChar": 22,
+        "endLine": 96,
+        "endChar": 34
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28be514_815b6aa5",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T21:58:41Z",
+      "side": 1,
+      "message": "nit: No need to name type.",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
