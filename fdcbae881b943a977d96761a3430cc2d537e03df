@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4afe1e58_c5b0a295",
+        "filename": "chrome/services/printing/pdf_to_pwg_raster_converter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-13T22:12:28Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3d76c30f_77b08da0",
+      "revId": "fdcbae881b943a977d96761a3430cc2d537e03df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b78b68_c09763c6",
         "filename": "chrome/services/printing/public/interfaces/pdf_render_settings.typemap",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a24f0bad_a492a62a",
+        "filename": "chrome/services/printing/public/interfaces/pdf_render_settings.typemap",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-13T22:12:28Z",
+      "side": 1,
+      "message": "It seems .typemap files don\u0027t wrap at 80 (ex: https://cs.chromium.org/chromium/src/services/service_manager/public/cpp/interface_provider_spec.typemap)\ngit cl format actually arranged the file that way.",
+      "parentUuid": "b3b78b68_c09763c6",
+      "revId": "fdcbae881b943a977d96761a3430cc2d537e03df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33c9a46c_57aac0e6",
         "filename": "chrome/services/printing/public/interfaces/pdf_to_pwg_raster_converter.typemap",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "fdcbae881b943a977d96761a3430cc2d537e03df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91998418_ced76b21",
+        "filename": "chrome/services/printing/public/interfaces/pdf_to_pwg_raster_converter.typemap",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-13T22:12:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "33c9a46c_57aac0e6",
+      "revId": "fdcbae881b943a977d96761a3430cc2d537e03df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
