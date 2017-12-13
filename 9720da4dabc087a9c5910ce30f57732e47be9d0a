@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "858b648a_9222483b",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-13T23:23:22Z",
+      "side": 1,
+      "message": "Good eye!  This is true of std::map and friends but not of base::flat_map though.",
+      "parentUuid": "51c48084_787d3ef0",
+      "range": {
+        "startLine": 107,
+        "startChar": 48,
+        "endLine": 107,
+        "endChar": 56
+      },
+      "revId": "9720da4dabc087a9c5910ce30f57732e47be9d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4b1aa50_1e6f88fc",
         "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
         "patchSetId": 18
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "151e9c68_61c2c802",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-13T23:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4b1aa50_1e6f88fc",
+      "revId": "9720da4dabc087a9c5910ce30f57732e47be9d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3f7dbec_7266a56a",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
         "patchSetId": 18
@@ -56,6 +98,24 @@
       "revId": "9720da4dabc087a9c5910ce30f57732e47be9d0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4793a5df_6515dff7",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-13T23:23:22Z",
+      "side": 1,
+      "message": "There isn\u0027t strictly a need for the static method anymore (other than the ctor is still private obviously).  I left because I feel it helps document that the window is passed an original profile even though it uses an OTR profile ultimately.  I don\u0027t feel strongly about whether it stays or goes but have left it for now.",
+      "parentUuid": "b3f7dbec_7266a56a",
+      "revId": "9720da4dabc087a9c5910ce30f57732e47be9d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

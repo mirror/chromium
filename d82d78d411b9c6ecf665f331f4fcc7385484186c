@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "fae6d7c3_f6f2544f",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-13T23:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a6c5082_f9aee539",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc666b10_6044244e",
         "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
         "patchSetId": 16
@@ -505,6 +523,24 @@
     },
     {
       "key": {
+        "uuid": "3246dbcf_d9f9d9ea",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-13T23:23:22Z",
+      "side": 1,
+      "message": "Sounds good.  This will have to be a WiredDisplayMRP or integration test.",
+      "parentUuid": "aa3c760f_5836b0d2",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21c7e426_3874f921",
         "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
         "patchSetId": 16
@@ -590,6 +626,24 @@
       "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854f8f5d_33d06a39",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-12-13T23:23:22Z",
+      "side": 1,
+      "message": "Ah, ok.  Using a std::move() then.",
+      "parentUuid": "196d6676_8fe86fc8",
+      "revId": "d82d78d411b9c6ecf665f331f4fcc7385484186c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
