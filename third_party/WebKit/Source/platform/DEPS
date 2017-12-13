@@ -46,6 +46,7 @@ include_rules = [
     #TODO(nverne): remove this
     "+public/web/WebKit.h",
     "+services/viz/public/interfaces/compositing/compositor_frame_sink.mojom-blink.h",
+    "+services/network/public/interfaces/request_context_frame_type.mojom-shared.h",
     "+skia/ext",
     "+third_party/ced/src/compact_enc_det/compact_enc_det.h",
     "+third_party/khronos",
