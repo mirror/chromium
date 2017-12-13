@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7e5e3ba_ba3e7b86",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-13T04:46:23Z",
+      "side": 1,
+      "message": "Can this just be a // comment? Maybe also explain why we don\u0027t need to pass real strings?",
+      "revId": "3b41930e8ec14eb90aba0dfe47da013cb242d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713792ce_154ff286",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-13T04:46:23Z",
+      "side": 1,
+      "message": "This seems a bit nasty. The other option I see here would be to have a listener for the attribute change of the decision string and then use that to set the hidden attribute and the class. That seems a little cleaner but I\u0027m not sure if it\u0027s worth the effort to change. I defer to OWNERS",
+      "revId": "3b41930e8ec14eb90aba0dfe47da013cb242d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81cda231_fc4ff1f7",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-13T04:46:23Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think category and setting are used anymore and can be removed",
+      "revId": "3b41930e8ec14eb90aba0dfe47da013cb242d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9637aab2_927a2ae2",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-13T04:46:23Z",
+      "side": 1,
+      "message": "nit: this should have an @return",
+      "revId": "3b41930e8ec14eb90aba0dfe47da013cb242d2b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
