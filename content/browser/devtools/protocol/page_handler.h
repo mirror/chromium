@@ -24,6 +24,7 @@
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/readback_types.h"
+#include "content/public/browser/reload_type.h"
 #include "content/public/common/javascript_dialog_type.h"
 #include "url/gurl.h"
 
@@ -140,6 +141,7 @@ class PageHandler : public DevToolsDomainHandler,
   WebContentsImpl* GetWebContents();
   void NotifyScreencastVisibility(bool visible);
   void InnerSwapCompositorFrame();
+  void InnerReload(content::ReloadType reloadType);
   void ScreencastFrameCaptured(viz::CompositorFrameMetadata metadata,
                                const SkBitmap& bitmap,
                                ReadbackResponse response);

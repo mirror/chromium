@@ -55,7 +55,6 @@ Page reloaded.
                 _transferSize : <number>
                 bodySize : <number>
                 content : {
-                    compression : <number>
                     mimeType : "text/html"
                     size : <number>
                 }
@@ -94,8 +93,8 @@ Page reloaded.
                 headersSize : <number>
                 httpVersion : "HTTP/1.1"
                 redirectURL : ""
-                status : 200
-                statusText : "OK"
+                status : 304
+                statusText : "Not Modified"
             }
             serverIPAddress : "127.0.0.1"
             startedDateTime : <plausible>

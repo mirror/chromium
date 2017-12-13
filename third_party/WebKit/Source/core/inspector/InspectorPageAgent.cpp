@@ -587,10 +587,6 @@ Response InspectorPageAgent::reload(
       optional_script_to_evaluate_on_load.fromMaybe("");
   v8_session_->setSkipAllPauses(true);
   reloading_ = true;
-  inspected_frames_->Root()->Reload(optional_bypass_cache.fromMaybe(false)
-                                        ? kFrameLoadTypeReloadBypassingCache
-                                        : kFrameLoadTypeReload,
-                                    ClientRedirectPolicy::kNotClientRedirect);
   return Response::OK();
 }
 
