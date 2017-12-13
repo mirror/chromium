@@ -167,21 +167,23 @@ class DataPipeElementReader : public net::UploadElementReader {
 
   void OnHandleReadable(MojoResult result) {
     if (result == MOJO_RESULT_OK) {
-      int read = Read(buf_.get(), buf_length_, net::CompletionCallback());
-      DCHECK_GT(read, 0);
-      std::move(read_callback_).Run(read);
+      int result = ReadInternal(buf_.get(), buf_length_);
+      if (result != net::ERR_IO_PENDING) {
+        buf_ = nullptr;
+        buf_length_ = 0;
+        std::move(read_callback_).Run(result);
+      }
     } else {
+      buf_ = nullptr;
+      buf_length_ = 0;
       std::move(read_callback_).Run(net::ERR_FAILED);
     }
-    buf_ = nullptr;
-    buf_length_ = 0;
   }
 
   // net::UploadElementReader implementation:
   int Init(const net::CompletionCallback& callback) override {
     // Init rewinds the stream. Throw away current state.
-    if (!read_callback_.is_null())
-      std::move(read_callback_).Run(net::ERR_FAILED);
+    read_callback_.Reset();
     buf_ = nullptr;
     buf_length_ = 0;
     handle_watcher_.Cancel();
@@ -209,6 +211,16 @@ class DataPipeElementReader : public net::UploadElementReader {
   int Read(net::IOBuffer* buf,
            int buf_length,
            const net::CompletionCallback& callback) override {
+    int result = ReadInternal(buf, buf_length);
+    if (result == net::ERR_IO_PENDING) {
+      buf_ = buf;
+      buf_length_ = buf_length;
+      read_callback_ = std::move(callback);
+    }
+    return result;
+  }
+
+  int ReadInternal(net::IOBuffer* buf, int buf_length) {
     if (!BytesRemaining())
       return net::OK;
 
@@ -221,10 +233,7 @@ class DataPipeElementReader : public net::UploadElementReader {
     }
 
     if (rv == MOJO_RESULT_SHOULD_WAIT) {
-      buf_ = buf;
-      buf_length_ = buf_length;
       handle_watcher_.ArmOrNotify();
-      read_callback_ = std::move(callback);
       return net::ERR_IO_PENDING;
     }
 
