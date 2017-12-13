@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5410e8ec_6c0864ea",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/security/origin-view-then-interstitial-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-13T22:56:00Z",
+      "side": 1,
+      "message": "I don\u0027t understand where this content is coming from.",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 37
+      },
+      "revId": "2c3a877ce3fd462ce9e0f80c0146265fd7592c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81fd1350_9dfe155c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-13T22:56:00Z",
+      "side": 1,
+      "message": "For my own education: Why do we use \"async e\" here but only \"e\" in the similar function createCertificateViewerButtonForCert below?",
+      "range": {
+        "startLine": 46,
+        "startChar": 37,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "2c3a877ce3fd462ce9e0f80c0146265fd7592c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b745a6_6664515a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-13T22:56:00Z",
+      "side": 1,
+      "message": "Can you either remove this line (since I seriously doubt we\u0027re ever going to make a change here) or update the owner to someone else?",
+      "range": {
+        "startLine": 881,
+        "startChar": 6,
+        "endLine": 881,
+        "endChar": 115
+      },
+      "revId": "2c3a877ce3fd462ce9e0f80c0146265fd7592c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
