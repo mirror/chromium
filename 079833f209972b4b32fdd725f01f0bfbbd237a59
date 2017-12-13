@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98594ce7_d491ac64",
+        "filename": "net/base/proxy_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-13T14:27:10Z",
+      "side": 0,
+      "message": "Instead of deleting this comment altogether, please move it to data_reduction_proxy_delegate.h where GetAlternativeProxy() is declared.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 68
+      },
+      "revId": "079833f209972b4b32fdd725f01f0bfbbd237a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
