@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9d570a9_16954593",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:13:25Z",
+      "side": 1,
+      "message": "nit: remove if not needed anymore",
+      "revId": "80d81c1ebebc46f0cea2133fa9b782c85a256481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff8e9974_8041906b",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:13:25Z",
+      "side": 1,
+      "message": "nit: maybe comment as to why it\u0027s important to check the title for this item? maybe check the titles for all of the items? (I haven\u0027t heard of shelf groups before, so the significance of this check is lost on me...)",
+      "revId": "80d81c1ebebc46f0cea2133fa9b782c85a256481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
