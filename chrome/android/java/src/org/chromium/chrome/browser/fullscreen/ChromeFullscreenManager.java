@@ -476,7 +476,6 @@ public class ChromeFullscreenManager
         }
         boolean controlsResizeView =
                 topContentOffset > 0 || bottomControlOffset < getBottomControlsHeight();
-        controlsResizeView &= !VrShellDelegate.isInVr();
         mControlsResizeView = controlsResizeView;
         Tab tab = getTab();
         if (tab == null) return;
@@ -641,6 +640,11 @@ public class ChromeFullscreenManager
     @Override
     public void setPositionsForTab(float topControlsOffset, float bottomControlsOffset,
             float topContentOffset) {
+        if (VrShellDelegate.isInVr()) {
+            topControlsOffset = -getTopControlsHeight();
+            bottomControlsOffset = getBottomControlsHeight();
+            topContentOffset = 0;
+        }
         float rendererTopControlOffset =
                 Math.round(Math.max(topControlsOffset, -getTopControlsHeight()));
         float rendererBottomControlOffset =
