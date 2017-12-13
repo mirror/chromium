@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b9ad3cc_9f60e328",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-13T15:37:42Z",
+      "side": 1,
+      "message": "Nit: should not say 16M (not future proof). Say: maximum supported size.",
+      "range": {
+        "startLine": 769,
+        "startChar": 53,
+        "endLine": 769,
+        "endChar": 56
+      },
+      "revId": "435492856a2f7420551de883a5c8fa906cfaead7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2190e1f3_de16b9b1",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-12-13T15:37:42Z",
+      "side": 1,
+      "message": "output parameters are awkward for readability.  Would be cleaner to add a new method to CanvasRenderingContext:\nvirtual IntSize RenderBufferSize() const \u003d 0;",
+      "range": {
+        "startLine": 774,
+        "startChar": 53,
+        "endLine": 774,
+        "endChar": 66
+      },
+      "revId": "435492856a2f7420551de883a5c8fa906cfaead7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
