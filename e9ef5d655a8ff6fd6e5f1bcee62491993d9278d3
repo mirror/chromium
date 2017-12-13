@@ -217,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "7d1ee6f1_b243f174",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-13T18:44:59Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "35aeebcc_7311e9ce",
+      "range": {
+        "startLine": 354,
+        "startChar": 3,
+        "endLine": 354,
+        "endChar": 30
+      },
+      "revId": "e9ef5d655a8ff6fd6e5f1bcee62491993d9278d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16ab2a87_eda128bd",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 1
