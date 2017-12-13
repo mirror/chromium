@@ -671,6 +671,17 @@ chrome.developerPrivate.updateExtensionConfiguration = function(update, callback
 chrome.developerPrivate.loadUnpacked = function(options, callback) {};
 
 /**
+ * Notifies the browser that a user began a drag in order to install an
+ * extension.
+ * @param {function(string):void} callback A callback invoked with a GUID used
+ *     for loading the folder     from the drop. The callback is invoked as soon
+ *     as a GUID is ready,     and the GUID should then be supplied to
+ *     loadUnpacked() when/if the     item is dropped.
+ * @see https://developer.chrome.com/extensions/developerPrivate#method-notifyDragInstallInProgress
+ */
+chrome.developerPrivate.notifyDragInstallInProgress = function(callback) {};
+
+/**
  * Loads an extension / app.
  * @param {Object} directory The directory to load the extension from.
  * @param {function(string):void} callback

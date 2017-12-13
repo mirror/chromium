@@ -55,6 +55,7 @@
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/drop_data.h"
 #include "extensions/browser/api/file_handlers/app_file_handler_util.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_registry.h"
@@ -117,6 +118,8 @@ const char kCannotRepairPolicyExtension[] =
 
 const char kUnpackedAppsFolder[] = "apps_target";
 const char kManifestFile[] = "manifest.json";
+
+base::FilePath* g_drop_path_for_testing = nullptr;
 
 ExtensionService* GetExtensionService(content::BrowserContext* context) {
   return ExtensionSystem::Get(context)->extension_service();
@@ -967,6 +970,52 @@ void DeveloperPrivateLoadUnpackedFunction::OnGotManifestError(
   Respond(OneArgument(
       CreateLoadError(file_path, error, line_number, manifest, retry_guid_)
           .ToValue()));
+}
+
+DeveloperPrivateNotifyDragInstallInProgressFunction::
+    DeveloperPrivateNotifyDragInstallInProgressFunction() = default;
+DeveloperPrivateNotifyDragInstallInProgressFunction::
+    ~DeveloperPrivateNotifyDragInstallInProgressFunction() = default;
+
+ExtensionFunction::ResponseAction
+DeveloperPrivateNotifyDragInstallInProgressFunction::Run() {
+  content::WebContents* web_contents = GetSenderWebContents();
+  if (!web_contents)
+    return RespondNow(Error(kCouldNotFindWebContentsError));
+
+  const base::FilePath* file_path = nullptr;
+  if (g_drop_path_for_testing) {
+    file_path = g_drop_path_for_testing;
+  } else {
+    content::DropData* drop_data = web_contents->GetDropData();
+    if (!drop_data)
+      return RespondNow(Error("No current drop data."));
+
+    if (drop_data->filenames.empty())
+      return RespondNow(Error("No files being dragged."));
+
+    const ui::FileInfo& file_info = drop_data->filenames.front();
+    file_path = &file_info.path;
+  }
+
+  DCHECK(file_path);
+  // NOTE(devlin): There is no analogous "NotifyDragInstallStopped" function,
+  // but these paths are cleaned up when the WebContents is destroyed. Unless
+  // someone is dragging-and-dropping a *lot* of directories, this should be
+  // fine.
+  // Additionally, we don't do further validation that the file is a directory
+  // here. This is validated in the JS, but if that fails, then trying to load
+  // the file as an unpacked extension will also fail (reasonably gracefully).
+  DeveloperPrivateAPI::UnpackedRetryId guid =
+      DeveloperPrivateAPI::Get(browser_context())
+          ->AddUnpackedPath(web_contents, *file_path);
+  return RespondNow(OneArgument(std::make_unique<base::Value>(guid)));
+}
+
+// static
+void DeveloperPrivateNotifyDragInstallInProgressFunction::SetDropPathForTesting(
+    base::FilePath* file_path) {
+  g_drop_path_for_testing = file_path;
 }
 
 bool DeveloperPrivateChooseEntryFunction::ShowPicker(
