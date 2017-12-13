@@ -2336,6 +2336,25 @@
                         "OmniboxUIExperimentHideSuggestionUrlScheme",
                         "OmniboxUIExperimentHideSuggestionUrlTrivialSubdomains"
                     ]
+                },
+                {
+                    "name": "Beta_HideSuggestionUrlSchemeAndTrivialSubdomains_Experiment",
+                    "enable_features": [
+                        "OmniboxUIExperimentHideSuggestionUrlScheme",
+                        "OmniboxUIExperimentHideSuggestionUrlTrivialSubdomains"
+                    ]
+                },
+                {
+                    "name": "Beta_Desktop_OmniboxTailSuggestions",
+                    "enable_features": [
+                        "OmniboxTailSuggestions"
+                    ]
+                },
+                {
+                    "name": "Beta_Desktop_OmniboxTailSuggestions_Counterfactual",
+                    "enable_features": [
+                        "OmniboxTailSuggestions"
+                    ]
                 }
             ]
         }
