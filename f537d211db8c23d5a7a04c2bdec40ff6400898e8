@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b688900c_616d57f3",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6c387b6e_f865cf0d",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adc7b245_afc0f9b5",
         "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "\u003e I don\u0027t think it should be run more times than the old code, so if something is broken, it should have been broken before.\n\u003e \n\u003e I moved it to the caller since if we only need it when interactive mode, that\u0027s clearer.\n\u003e \n\u003e The function declaration gives no real clue as to what this is doing.  Why do we need to set that property?  And why does the function also activate the widget -- to ensure it\u0027s on top so users see it?\n\nOn Mac, the `browser_tests` binary isn\u0027t build as a .app bundle. So Mac makes it \"non-activatable\". That\u0027s actually a useful default since it helps spot flakes that depend on reliable window-focus on the bots. This call hacks the process type so that it\u0027s activatable (and since a prior activation may have failed, activates it again).",
       "parentUuid": "8ee4ad3f_cea1d809",
+      "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07b2a1e_c5f85969",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "OK, I did my best to capture this in comments in test_browser_dialog_mac.h.",
+      "parentUuid": "9a8e3682_45508039",
       "revId": "f537d211db8c23d5a7a04c2bdec40ff6400898e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

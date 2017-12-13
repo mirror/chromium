@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39f5564b_ba0d933a",
+        "filename": "chrome/browser/first_run/first_run_dialog.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Bah.  grep + sed.  I wasn\u0027t specific enough with my matching expression apparently.",
+      "parentUuid": "206eb165_2552ca33",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921518ca_876aec75",
         "filename": "chrome/browser/infobars/infobars_browsertest.cc",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f8dc9ede_aea36aef",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Nah, despite the wonky capitalization (want to fix that some day), \"infobar\" is the preferred spelling :).  components/infobars is consistent about this, not everywhere else is though.",
+      "parentUuid": "921518ca_876aec75",
+      "range": {
+        "startLine": 105,
+        "startChar": 72,
+        "endLine": 105,
+        "endChar": 79
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f26c3005_caca5475",
         "filename": "chrome/browser/infobars/infobars_browsertest.cc",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71606bf2_167b9125",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f26c3005_caca5475",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "3a71dab5_de18ab73",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Oops!  Thanks",
+      "parentUuid": "bf87087a_b95e4230",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "305139f5_7529ac6a",
         "filename": "chrome/browser/infobars/infobars_browsertest.cc",
         "patchSetId": 6
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "3e3fd4d3_05a0955a",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Sure.  I didn\u0027t have a good name.",
+      "parentUuid": "305139f5_7529ac6a",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b55a850_85c31eac",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 6
@@ -107,6 +203,24 @@
       "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16736ae_e74648b1",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3526,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b55a850_85c31eac",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "08211f0f_2dbade66",
+        "filename": "chrome/browser/ui/collected_cookies_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "I think these sorts of comments should just all go away.  If you are confused as to how to run the tests, looking at the definition of ShowAndVerifyUI() will take you right to the class that tells you.  As-is they\u0027re just maintenance hassle when updating this stuff.",
+      "parentUuid": "b175e33e_02a36e90",
+      "range": {
+        "startLine": 66,
+        "startChar": 17,
+        "endLine": 66,
+        "endChar": 56
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55990a5b_81ebbc87",
         "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
         "patchSetId": 6
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "c320d0a8_5fcbebbc",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "55990a5b_81ebbc87",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6044ba88_d3c39a0d",
         "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
         "patchSetId": 6
@@ -164,6 +320,24 @@
       "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d77a4c7_39010f3c",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6044ba88_d3c39a0d",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "bbbd1a3a_03fb15c0",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a186dfd2_56dc0731",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 44
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c9473f4_62f06c1e",
         "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
         "patchSetId": 6
@@ -204,6 +402,24 @@
       "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f09eeb9_2011a523",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c9473f4_62f06c1e",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "84270b9e_ec08b087",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "I think it\u0027s a bit too specific to dialogs to be there.  Instead, I moved it to the top of this function, which I think is slightly clearer.",
+      "parentUuid": "4dde1de9_4272f2a2",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6e9feb7_1efcea48",
         "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
         "patchSetId": 6
@@ -235,6 +469,24 @@
       "writtenOn": "2017-12-12T03:29:56Z",
       "side": 1,
       "message": "Layering aside - I\u0027m a bit worried about these rotting if there\u0027s no bot coverage. I think it would be fine to omit them in the .cc, perhaps at the top,\n\n #if !defined(TOOLKIT_VIEWS)\n #error Platform doesn\u0027t support TestBrowserDialog\n #endif\n\n\nAnd then just omit this file in the .gn",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1aa312_5861e0a4",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Since the #if\u0027d out sections are all just NOTIMPLEMENTEDs, I\u0027m not too worried about rot.  I\u0027m more concerned about trying to make this a compile/link error to build, because I\u0027m not convinced there aren\u0027t non-TOOLKIT_VIEWS platforms today which link in this file but don\u0027t run these tests.  Maybe if this was its own test target and not a part of browser_tests this would be OK, but it seems worrisome to go down this path as-is.",
+      "parentUuid": "d6e9feb7_1efcea48",
       "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -258,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "c54671f7_c89756a2",
+        "filename": "chrome/browser/ui/test/test_browser_ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "I had originally omitted both, but clang-format insists on adding the bottom one back, so I added the top one too.",
+      "parentUuid": "f7099617_e8142d50",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92960fef_2c3f63b7",
         "filename": "chrome/browser/ui/test/test_browser_ui.h",
         "patchSetId": 6
@@ -269,6 +539,24 @@
       "writtenOn": "2017-12-12T03:29:56Z",
       "side": 1,
       "message": "This is a bit orthogonal, but I\u0027ve been wanting to start a bikeshed about the naming of these. The collocation \"BrowserTest\" is so stuck in our brains that it\u0027s hard to insert \"UI\" into the string. I.e. is it \"UIBrowserTest\" or \"BrowserUITest\". At the time of writing, and still, I think BrowserUITest / BrowserDialogTest is more correct, but that doesn\u0027t stop my muscle memory (and others\u0027) always wanting to type \"DialogBrowserTest\".\n\nIt does mean that browser_ui_browsertest.cc would become ui_browser_test_browsertest.cc but in_process_browser_test_browsertest.cc has already set a precedent for that.\n\nAnyway, just a stray thought - probably not worth trying to overhaul things in this CL unless it\u0027s started irritating you as well.",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bdb052_0204c9dc",
+        "filename": "chrome/browser/ui/test/test_browser_ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "I hate all the names of all these, because the core class name, template name, and name of the actual test case used to invoke these are all permutations of each other: TestBrowserUI, UIBrowserTest, BrowserUITest.  These should probably be something like: BrowserUITestSupport, BrowserUITest, InvokeBrowserUI?\n\nBut I\u0027m not sure how much better that really is.",
+      "parentUuid": "92960fef_2c3f63b7",
       "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -298,6 +586,30 @@
     },
     {
       "key": {
+        "uuid": "36520606_a9e3e236",
+        "filename": "chrome/browser/ui/update_chrome_dialog_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57b4c2dd_a72ba661",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38bd8bcb_87f01964",
         "filename": "chrome/browser/ui/views/bookmarks/bookmark_editor_view_browsertest.cc",
         "patchSetId": 6
@@ -318,6 +630,30 @@
       "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85976718_8e021961",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_editor_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T03:36:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38bd8bcb_87f01964",
+      "range": {
+        "startLine": 27,
+        "startChar": 51,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
