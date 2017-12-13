@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "777f7603_ed283dbe",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-13T03:45:16Z",
+      "side": 1,
+      "message": "I made the change just for fewer code. I think it should be the same, considering it is built from Mru windows. I restored to original code in case I misunderstood this.",
+      "parentUuid": "46fc1456_506d4838",
+      "range": {
+        "startLine": 148,
+        "startChar": 25,
+        "endLine": 148,
+        "endChar": 44
+      },
+      "revId": "127fa7f7f01680c448fe38ce4030383bd19bad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae972f5d_7ee6e851",
         "filename": "ash/display/display_move_window_util_unittest.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "48e6001f_d89edcef",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-13T03:45:16Z",
+      "side": 1,
+      "message": "It is in ExtendedDesktopTest. This test is a bit of duplicate though.",
+      "parentUuid": "ae972f5d_7ee6e851",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 340,
+        "endChar": 60
+      },
+      "revId": "127fa7f7f01680c448fe38ce4030383bd19bad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5773c6fb_b3e62549",
         "filename": "ui/wm/core/transient_window_manager.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-08T23:20:38Z",
       "side": 1,
       "message": "Sorry for leading you down the wrong path. The only way this code can work is if it knows container_ids line up on the two roots. There is no guarantee of that outside of ash. Additionally it\u0027s entirely possible to have a window with a transient parent in a different root. While weird, it\u0027s possible. So, in other words, I think this code belongs in ash.",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 61
+      },
+      "revId": "127fa7f7f01680c448fe38ce4030383bd19bad5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844cdbcf_2a5d64c4",
+        "filename": "ui/wm/core/transient_window_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-12-13T03:45:16Z",
+      "side": 1,
+      "message": "Ack. How about in ash/wm/window_state.h?",
+      "parentUuid": "5773c6fb_b3e62549",
       "range": {
         "startLine": 39,
         "startChar": 4,
