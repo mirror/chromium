@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69c00e21_43fb4c93",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-12-13T00:44:04Z",
+      "side": 1,
+      "message": "Awkwardly, uint8x8x4_t is a struct containing a single uint8x8_t[4] array.\n\nC\u0027s kind of lax about how initialization can be expressed.  Some good compilers will warn you to write it this way to make it clear how the layout is structured:\n\nuint8x8x4_t w \u003d {{\n   { 0,0,0,0, 0,0,0 },\n}};\n\nAn extra set of braces, the outer ones for the struct, the middles ones for its single array member, and the very inner ones for each vector.\n\nNow, I think this will happen to all work as intended, because if you initialize some fields but not others in C, they rest are byte zeroed.  But there are a couple things we can do here to write this more clearly...\n\n1) probably initialize all 8 bytes to zero instead of just the first 7.  I find that writing this with a little space between groups of 4 helps the correct count stand out: { 0,0,0,0, 0,0,0,0 }.\n2) zero initialize w.val[0-2] all explicitly, or even all of [0-3].  The last redundant-seeming initialization will probably not actually cause any extra code generation, given the w.val[3] \u003d vdup_n_u8(0xff);\n\nI think we can probably write all this as\n\nuint8x8x4_t w \u003d {\n  vdup_n_u8(0x00),\n  vdup_n_u8(0x00),\n  vdup_n_u8(0x00),\n  vdup_n_u8(0xff),\n};",
+      "parentUuid": "c656c4ff_966dd2a9",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f457a950_d32c3684",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
