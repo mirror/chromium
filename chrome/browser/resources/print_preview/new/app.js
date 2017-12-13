@@ -132,6 +132,12 @@ Polymer({
     },
   },
 
+  /**
+   * @private {number} Number of recent destinations to save.
+   * @const
+   */
+  NUM_DESTINATIONS_: 3,
+
   /** @private {?print_preview.NativeLayer} */
   nativeLayer_: null,
 
@@ -140,6 +146,12 @@ Polymer({
 
   /** @private {?WebUIListenerTracker} */
   listenerTracker_: null,
+
+  /** @private {?print_preview.DestinationStore} */
+  destinationStore_: null,
+
+  /** @private {!EventTracker} */
+  tracker_: new EventTracker(),
 
   /** @type {!print_preview.MeasurementSystem} */
   measurementSystem_: new print_preview.MeasurementSystem(
@@ -156,6 +168,15 @@ Polymer({
     this.listenerTracker_ = new WebUIListenerTracker();
     this.destinationStore_ = new print_preview.DestinationStore(
         this.userInfo_, this.listenerTracker_);
+    this.tracker_.add(
+        this.destinationStore_,
+        print_preview.DestinationStore.EventType.DESTINATION_SELECT,
+        this.onDestinationSelect_.bind(this));
+    this.tracker_.add(
+        this.destinationStore_,
+        print_preview.DestinationStore.EventType
+            .SELECTED_DESTINATION_CAPABILITIES_READY,
+        this.onDestinationUpdated_.bind(this));
     this.nativeLayer_.getInitialSettings().then(
         this.onInitialSettingsSet_.bind(this));
   },
@@ -191,6 +212,49 @@ Polymer({
         settings.isInAppKioskMode, settings.printerName,
         settings.serializedDefaultDestinationSelectionRulesStr,
         this.recentDestinations_);
+  },
+
+  onDestinationSelect_: function() {
+    this.destination_ = this.destinationStore_.selectedDestination;
+  },
+
+  onDestinationUpdated_: function() {
+    this.destination_.capabilities =
+        this.destinationStore_.selectedDestination.capabilities;
+  },
+
+  updateRecentDestinations_: function() {
+    if (!this.destination)
+      return;
+
+    // Determine if this destination is already in the recent destinations,
+    // and where in the array it is located.
+    const newDestination =
+        print_preview.makeRecentDestination(assert(this.destination));
+    let indexFound = this.recentDestinations_.findIndex(function(recent) {
+      return (
+          newDestination.id == recent.id &&
+          newDestination.origin == recent.origin);
+    });
+
+    // No change
+    if (indexFound == 0 &&
+        this.recentDestinations_[0].capabilities ==
+            newDestination.capabilities) {
+      return;
+    }
+
+    // Shift the array so that the nth most recent destination is located at
+    // index n.
+    if (indexFound == -1 &&
+        this.recentDestinations_.length == this.NUM_DESTINATIONS_) {
+      indexFound = this.NUM_DESTINATIONS_ - 1;
+    }
+    if (indexFound != -1)
+      this.recentDestinations_.splice(indexFound, 1);
+
+    // Add the most recent destination
+    this.recentDestinations_.splice(0, 0, newDestination);
   },
 
   /**
