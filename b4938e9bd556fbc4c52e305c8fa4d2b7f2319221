@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9acf93db_6f80be30",
+        "filename": "media/audio/mac/scoped_audio_unit.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-13T18:57:07Z",
+      "side": 1,
+      "message": "Hmm I think the output/input drivers already set this, so you might need to delete it from them too if you\u0027re doing this. Also should be \"enable_io\"",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a448e05b_dbe8c01a",
+        "filename": "media/audio/mac/scoped_audio_unit.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-13T18:57:07Z",
+      "side": 1,
+      "message": "Just !enableIO?",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
