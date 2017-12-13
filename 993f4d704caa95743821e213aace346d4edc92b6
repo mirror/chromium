@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "bc7b4f33_ee3e6745",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T23:34:27Z",
+      "side": 0,
+      "message": "Sure. We can keep this CL as a buffer class conversion CL and work issues I raised in other CLs. Especially this since it\u0027s a critism of the existing code.",
+      "parentUuid": "b495a291_403d4756",
+      "revId": "993f4d704caa95743821e213aace346d4edc92b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13916c60_f214badf",
+        "filename": "device/usb/usb_device_handle_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T23:34:27Z",
+      "side": 0,
+      "message": "Many places to switch to std::make_unique as well...",
+      "revId": "993f4d704caa95743821e213aace346d4edc92b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bb4062c_661d4cf2",
         "filename": "device/usb/usb_device_handle_impl.cc",
         "patchSetId": 4
@@ -48,6 +83,23 @@
       "writtenOn": "2017-12-13T22:57:17Z",
       "side": 0,
       "message": "Comment on issues with the existing code: Should this delegate to the above Transfer ctor? As is, I don\u0027t see |length_| getting initialized!",
+      "revId": "993f4d704caa95743821e213aace346d4edc92b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ce34aa_2b621896",
+        "filename": "device/usb/usb_device_handle_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T23:34:27Z",
+      "side": 0,
+      "message": "Maybe there should be a function to create dummy test data?",
       "revId": "993f4d704caa95743821e213aace346d4edc92b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

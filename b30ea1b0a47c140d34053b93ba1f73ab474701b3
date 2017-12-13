@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "8bb0a50c_dd9e394e",
+        "filename": "device/usb/usb_descriptors.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T23:34:27Z",
+      "side": 1,
+      "message": "Is |length| here the same as |buffer|\u0027s length? Can you use buffer-\u003edata() instead of creating a copy?",
+      "revId": "b30ea1b0a47c140d34053b93ba1f73ab474701b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5bec6bc_0be160a9",
         "filename": "device/usb/usb_device_handle_impl.cc",
         "patchSetId": 4
