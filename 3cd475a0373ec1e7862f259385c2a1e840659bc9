@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d57bbd85_d4b5fbe9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-13T20:59:25Z",
+      "side": 1,
+      "message": "The order of these still concerns me a bit; I think this actually happens later now (onContentLoadStarted will be part of the URL loading process). I\u0027d prefer something like:\n\n[whitelist|enable]JsApiForUrl(...);\nmSearchPanel.loadUrlInPanel(...);\nassociateManagerAndPanelContent(...);\n\nThe last piece I would expect to be in #onContentViewCreated.",
+      "range": {
+        "startLine": 806,
+        "startChar": 8,
+        "endLine": 808,
+        "endChar": 91
+      },
+      "revId": "3cd475a0373ec1e7862f259385c2a1e840659bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6cdb83_0fbc86c8",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-13T20:59:25Z",
+      "side": 1,
+      "message": "nit: remove here and below",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 50
+      },
+      "revId": "3cd475a0373ec1e7862f259385c2a1e840659bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b7ba74_0d690dd5",
+        "filename": "components/contextual_search/common/contextual_search_js_api_service.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-13T20:59:25Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 12,
+        "startChar": 64,
+        "endLine": 12,
+        "endChar": 66
+      },
+      "revId": "3cd475a0373ec1e7862f259385c2a1e840659bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
