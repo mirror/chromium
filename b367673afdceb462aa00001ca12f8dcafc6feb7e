@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e7f63a65_6d080e94",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-13T20:50:34Z",
+      "side": 1,
+      "message": "Yes, thanks!",
+      "parentUuid": "a92b7a23_9fb2db71",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 30
+      },
+      "revId": "b367673afdceb462aa00001ca12f8dcafc6feb7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1711367d_dab5cceb",
         "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
         "patchSetId": 20
