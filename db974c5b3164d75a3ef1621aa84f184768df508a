@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c86e9a54_67fa546b",
+        "filename": "ui/ozone/platform/drm/gpu/drm_overlay_validator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-12-13T16:49:28Z",
+      "side": 1,
+      "message": "It might be clearer to use the constant kInvalidPlatformFile (base/files/platform_file.h) instead of -1.",
+      "revId": "db974c5b3164d75a3ef1621aa84f184768df508a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51e85b39_bf563761",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
         "patchSetId": 4
