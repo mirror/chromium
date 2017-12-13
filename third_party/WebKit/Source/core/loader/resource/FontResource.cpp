@@ -75,12 +75,13 @@ static void RecordPackageFormatHistogram(FontPackageFormat format) {
 }
 
 FontResource* FontResource::Fetch(FetchParameters& params,
-                                  ResourceFetcher* fetcher) {
+                                  ResourceFetcher* fetcher,
+                                  FontResourceClient* client) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
             WebURLRequest::kFrameTypeNone);
   params.SetRequestContext(WebURLRequest::kRequestContextFont);
   return ToFontResource(
-      fetcher->RequestResource(params, FontResourceFactory(), nullptr));
+      fetcher->RequestResource(params, FontResourceFactory(), client));
 }
 
 FontResource::FontResource(const ResourceRequest& resource_request,
@@ -214,8 +215,9 @@ void FontResource::NotifyFinished() {
 }
 
 bool FontResource::IsLowPriorityLoadingAllowedForRemoteFont() const {
-  DCHECK(!Url().ProtocolIsData());
   DCHECK(!IsLoaded());
+  if (Url().ProtocolIsData())
+    return false;
   ResourceClientWalker<FontResourceClient> walker(Clients());
   while (FontResourceClient* client = walker.Next()) {
     if (!client->IsLowPriorityLoadingAllowedForRemoteFont()) {

@@ -26,25 +26,18 @@
 namespace blink {
 
 RemoteFontFaceSource::RemoteFontFaceSource(CSSFontFace* css_font_face,
-                                           FontResource* font,
                                            FontSelector* font_selector,
                                            FontDisplay display)
     : face_(css_font_face),
       font_selector_(font_selector),
       display_(display),
       period_(display == kFontDisplaySwap ? kSwapPeriod : kBlockPeriod),
-      histograms_(font->Url().ProtocolIsData()
-                      ? FontLoadHistograms::kFromDataURL
-                      : font->IsLoaded() ? FontLoadHistograms::kFromMemoryCache
-                                         : FontLoadHistograms::kFromUnknown),
       is_intervention_triggered_(false) {
   DCHECK(face_);
   if (ShouldTriggerWebFontsIntervention()) {
     is_intervention_triggered_ = true;
     period_ = kSwapPeriod;
   }
-  // Note: this may call NotifyFinished() and ClearResource().
-  SetResource(font);
 }
 
 RemoteFontFaceSource::~RemoteFontFaceSource() = default;
@@ -68,9 +61,6 @@ bool RemoteFontFaceSource::IsValid() const {
 
 void RemoteFontFaceSource::NotifyFinished(Resource* resource) {
   FontResource* font = ToFontResource(resource);
-  histograms_.MaySetDataSource(font->GetResponse().WasCached()
-                                   ? FontLoadHistograms::kFromDiskCache
-                                   : FontLoadHistograms::kFromNetwork);
   histograms_.RecordRemoteFont(font);
 
   custom_font_data_ = font->GetCustomFontData();
@@ -139,10 +129,6 @@ void RemoteFontFaceSource::SwitchToFailurePeriod() {
 }
 
 bool RemoteFontFaceSource::ShouldTriggerWebFontsIntervention() {
-  if (histograms_.GetDataSource() == FontLoadHistograms::kFromMemoryCache ||
-      histograms_.GetDataSource() == FontLoadHistograms::kFromDataURL)
-    return false;
-
   if (!font_selector_->GetExecutionContext()->IsDocument())
     return false;
 
@@ -274,6 +260,8 @@ void RemoteFontFaceSource::FontLoadHistograms::RecordFallbackTime() {
 
 void RemoteFontFaceSource::FontLoadHistograms::RecordRemoteFont(
     const FontResource* font) {
+  MaySetDataSource(DataSourceForLoadFinish(font));
+
   DEFINE_STATIC_LOCAL(EnumerationHistogram, cache_hit_histogram,
                       ("WebFont.CacheHit", kCacheHitEnumMax));
   cache_hit_histogram.Count(DataSourceMetricsValue());
