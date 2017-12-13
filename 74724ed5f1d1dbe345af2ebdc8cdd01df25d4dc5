@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a7dfc45a_9da9db44",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-13T22:33:11Z",
+      "side": 1,
+      "message": "I don\u0027t think adding the param to those import functions is the right approach, since after deprecating the option we may still want to keep tests for the behavior, with the tests changed to verify the cert is no longer allowed. If the test code itself depends on the flag to read the cert file that wouldn\u0027t work.\n\nFor ImportClientCertAndKeyFromFile (which is importing a cert into NSS db, perhaps could be better named too), I think a more appropriate fix would be for it to not use X509Certificate at all. But that may be too big a change to do in this same CL, since it\u0027d need to update a few other tests that call the function too.",
+      "parentUuid": "943138f7_2935977a",
+      "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0dfbaab_13ab516a",
         "filename": "chromeos/network/client_cert_resolver_unittest.cc",
         "patchSetId": 3
