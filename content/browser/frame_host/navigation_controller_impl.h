@@ -350,6 +350,11 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
   // specified |offset|.  The index returned is not guaranteed to be valid.
   int GetIndexForOffset(int offset) const;
 
+  // Returns true if the |pending_entry_| should be treated as a reload. For
+  // e.g. navigating to the last committed url via the address bar or clicking
+  // on a link which results in a navigation to the last committed navigation.
+  bool ShouldTreatNavigationAsReload();
+
   // ---------------------------------------------------------------------------
 
   // The user browser context associated with this controller.
