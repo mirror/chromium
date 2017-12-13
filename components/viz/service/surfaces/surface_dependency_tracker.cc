@@ -11,7 +11,7 @@
 namespace viz {
 
 namespace {
-constexpr uint32_t kDefaultNumberOfFramesToDeadline = 4;
+constexpr uint32_t kDefaultNumberOfFramesToDeadline = 10;
 }
 
 SurfaceDependencyTracker::SurfaceDependencyTracker(
