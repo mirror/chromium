@@ -33,7 +33,7 @@
     Exposed=(Window,Worker)
 ] interface URLUtilsReadOnly {
     stringifier readonly attribute USVString href;
-    readonly attribute USVString origin;
+    [CallWith=ScriptState] readonly attribute USVString origin;
 
     readonly attribute USVString protocol;
     readonly attribute USVString host;

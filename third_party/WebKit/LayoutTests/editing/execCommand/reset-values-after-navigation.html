@@ -5,7 +5,7 @@
 <script>
     window.jsTestIsAsync = true;
     window.onmessage = function (e) {
-        if (e.origin == location.protocol + "//" + location.host) {
+        if (e.origin == location.origin) {
             queryCommandValues = JSON.parse(e.data);
             shouldBeEqualToString('queryCommandValues["DefaultParagraphSeparator"]', "div");
             shouldBeEqualToString('queryCommandValues["StyleWithCSS"]', "");

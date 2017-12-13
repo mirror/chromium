@@ -26,6 +26,8 @@
 
 #include "core/url/DOMURLUtilsReadOnly.h"
 
+#include "core/dom/ExecutionContext.h"
+#include "platform/bindings/ScriptState.h"
 #include "platform/weborigin/KnownPorts.h"
 #include "platform/weborigin/SecurityOrigin.h"
 
@@ -38,10 +40,26 @@ String DOMURLUtilsReadOnly::href() {
   return kurl.GetString();
 }
 
-String DOMURLUtilsReadOnly::origin(const KURL& kurl) {
+String DOMURLUtilsReadOnly::origin(const KURL& kurl,
+                                   FileOriginSerialization serializes_as) {
   if (kurl.IsNull())
     return "";
-  return SecurityOrigin::Create(kurl)->ToString();
+
+  scoped_refptr<SecurityOrigin> origin = SecurityOrigin::Create(kurl);
+  if (serializes_as == FileOriginSerialization::kFile && origin->IsLocal())
+    origin->GrantLocalAccessFromLocalOrigin();
+
+  return origin->ToString();
+}
+
+String DOMURLUtilsReadOnly::origin(ScriptState* script_state) {
+  FileOriginSerialization serializes_as =
+      ExecutionContext::From(script_state)
+              ->GetSecurityOrigin()
+              ->IsGrantedLocalAccessFromLocalOrigin()
+          ? FileOriginSerialization::kFile
+          : FileOriginSerialization::kNull;
+  return origin(Url(), serializes_as);
 }
 
 String DOMURLUtilsReadOnly::host(const KURL& kurl) {

@@ -8,7 +8,7 @@
     NoInterfaceObject // Always used on target of 'implements'
 ] interface HTMLHyperlinkElementUtils {
     [CEReactions] stringifier attribute USVString href;
-    readonly attribute USVString origin;
+    [CallWith=ScriptState] readonly attribute USVString origin;
 
     [CEReactions] attribute USVString protocol;
     [CEReactions] attribute USVString username;

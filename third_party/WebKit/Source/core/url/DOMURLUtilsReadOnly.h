@@ -33,16 +33,22 @@
 
 namespace blink {
 
+class ScriptState;
+
 class CORE_EXPORT DOMURLUtilsReadOnly {
  public:
+  enum class FileOriginSerialization { kFile, kNull };
+
   virtual KURL Url() const = 0;
   virtual String Input() const = 0;
   virtual ~DOMURLUtilsReadOnly() {}
 
   String href();
 
-  static String origin(const KURL&);
-  String origin() { return origin(Url()); }
+  static String origin(
+      const KURL&,
+      FileOriginSerialization = FileOriginSerialization::kNull);
+  String origin(ScriptState*);
 
   static String protocol(const KURL& url) { return url.Protocol() + ":"; }
   String protocol() { return protocol(Url()); }
