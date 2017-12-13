@@ -52,6 +52,24 @@
       "revId": "06f915bd005da0bc8d5792ee620b699a28a698fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a91f2ab_6139fc98",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-13T15:10:42Z",
+      "side": 1,
+      "message": "Hey Renjie,\n\nAs Daniel noted, we\u0027re now *on* |io_task_runner_| in this method, so you can change the rest of the body as well (it\u0027s currently assuming that it\u0027s on the UI thread). One question about correctness though: Does that break the two-step initialization starting at line 244 below (i.e., did the first step actually need to be on the UI thread)? Alternatively, does it obviate the need for two-step initialization since we now know we\u0027re on the IO thread when we start the initialization? It seems like one or the other should be true, i.e., either the two-step initialization was needed and being on the IO thread here is actually problematic, or we can eliminate the two-step initialization entirely now that we\u0027re on the IO thread here. :)",
+      "parentUuid": "78f42f00_a57dd1ff",
+      "revId": "06f915bd005da0bc8d5792ee620b699a28a698fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
