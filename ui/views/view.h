@@ -513,6 +513,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // The LayoutManager is owned by the View and is deleted when the view is
   // deleted, or when a new LayoutManager is installed.
   LayoutManager* GetLayoutManager() const;
+  void SetLayoutManager(std::unique_ptr<LayoutManager> layout);
+  // Deprecated version that takes ownership of a raw pointer.
   void SetLayoutManager(LayoutManager* layout);
 
   // Attributes ----------------------------------------------------------------
