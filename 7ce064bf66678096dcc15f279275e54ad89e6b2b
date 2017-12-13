@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49027ddf_6bd2b537",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-13T23:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "402772e0_3c7a4cc4",
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84d58e26_a2b614e8",
         "filename": "ios/web_view/internal/cwv_web_view.mm",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36520e65_4cb56901",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-13T23:27:24Z",
+      "side": 1,
+      "message": "Yeah this doesn\u0027t have to be weak, reverting that. Also removing the above comment block since it doesn\u0027t apply anymore now that CWVWebViewConfigurations are singletons.",
+      "parentUuid": "84d58e26_a2b614e8",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 8
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "97570d40_7625b3d5",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-13T23:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2941e464_a5e6ac43",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17555cfa_e50f5f7e",
         "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59d49f4_365cb5fd",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-13T23:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17555cfa_e50f5f7e",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "f3454a0f_753e0316",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-13T23:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79104bf0_ff9bf16d",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e21f3379_8e195224",
         "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
         "patchSetId": 5
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "d4cd8822_610f1bec",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-13T23:27:24Z",
+      "side": 1,
+      "message": "Done. Added a DCHECK to ensure that this is called before dealloc.",
+      "parentUuid": "e21f3379_8e195224",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8426ec85_79fb2b78",
         "filename": "ios/web_view/public/cwv_web_view.h",
         "patchSetId": 5
@@ -154,6 +292,30 @@
       "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2030f0d8_2f1bedff",
+        "filename": "ios/web_view/public/cwv_web_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-13T23:27:24Z",
+      "side": 1,
+      "message": "Done. Also moved to a different file.",
+      "parentUuid": "8426ec85_79fb2b78",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 16
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
