@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "42ffafd3_3565662a",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T22:16:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "21bddaae_2a5860e5",
+      "range": {
+        "startLine": 261,
+        "startChar": 27,
+        "endLine": 261,
+        "endChar": 54
+      },
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcd5a0f5_dd7b4490",
         "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
         "patchSetId": 2
@@ -131,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "fd3dbbe0_74bf5cbf",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T22:16:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2868588c_6339a900",
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9456f838_a58d48b6",
         "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
         "patchSetId": 2
@@ -163,6 +205,24 @@
       "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8580ce0e_e88161c6",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T22:16:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eba824f9_657f9c85",
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

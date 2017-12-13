@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1392c6c3_3fcb23f9",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T22:16:47Z",
+      "side": 1,
+      "message": "s/Untrusted/NotTrusted/\n\nuntrusted is not a word :(",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "ac0b0da9ad816f80a7a09ece4fa753265e8e4675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189ef2da_da3b3130",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T22:16:47Z",
+      "side": 1,
+      "message": "Would it make sense to create the items as not trusted by default?",
+      "range": {
+        "startLine": 126,
+        "startChar": 32,
+        "endLine": 126,
+        "endChar": 42
+      },
+      "revId": "ac0b0da9ad816f80a7a09ece4fa753265e8e4675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8e97a2_d7de1af2",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T22:16:47Z",
+      "side": 1,
+      "message": "NotTrusted...\nSame below.",
+      "range": {
+        "startLine": 201,
+        "startChar": 33,
+        "endLine": 201,
+        "endChar": 63
+      },
+      "revId": "ac0b0da9ad816f80a7a09ece4fa753265e8e4675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2bac74_532e76cd",
+        "filename": "chrome/browser/offline_pages/offline_page_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T22:16:47Z",
+      "side": 1,
+      "message": "Original check URL from WC against url in offline page.\nI think you lost that in refactoring. Can you take a look at this again?",
+      "range": {
+        "startLine": 189,
+        "startChar": 30,
+        "endLine": 189,
+        "endChar": 42
+      },
+      "revId": "ac0b0da9ad816f80a7a09ece4fa753265e8e4675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fc5256_8b7ab30d",
+        "filename": "components/offline_pages/core/offline_page_item.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T22:16:47Z",
+      "side": 1,
+      "message": "why not false by default?\nApplies on every line.",
+      "revId": "ac0b0da9ad816f80a7a09ece4fa753265e8e4675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c271ad_d06a7d4b",
+        "filename": "components/offline_pages/core/offline_page_item.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T22:16:47Z",
+      "side": 1,
+      "message": "Thanks!",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 17
+      },
+      "revId": "ac0b0da9ad816f80a7a09ece4fa753265e8e4675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
