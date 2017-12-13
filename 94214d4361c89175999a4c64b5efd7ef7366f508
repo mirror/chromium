@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4a09146_f854e58c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-13T05:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ff0a9bc_1f6123d3",
+      "range": {
+        "startLine": 14,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "683d9a64_a8ef5cb8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41eaa33d_7d8cc082",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-13T05:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "683d9a64_a8ef5cb8",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 38
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b0195a8b_02ff75a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-13T05:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35dc7d71_5c19efde",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 53
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63837c3d_09a6b5cc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "62111de9_073cbab7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-13T05:44:27Z",
+      "side": 1,
+      "message": "I did not originally investigate the consequences of this being a singleton. The Cast SDK V3 SessionManager seems to be a singleton, so I did not think too much of it.\n\nIf this were not a singleton, the MediaRouteManager interface needs to be changed, and would have to depend on the [...].router.cast package (unless I were to extract an interface); not spending that much time in Java, I don\u0027t know if this falls into layering concerns or not (even though the rest of the classes are not particularly well layered). The reference would additionally have to be passed to CreateRouteRequest and CastSessionImpl/RemotingCastSession. It\u0027s also not immediately clear to future readers that that each MediaRouteProvider doesn\u0027t have its own ChromeCastSessionManager. If the manager is a singleton, it is clear that there can only be a single CastSession alive at a time.\n\nSingletons do make testing harder, and I know they are considered anti-patterns. If you have a modicum of preference for this not being a singleton, I will gladly implement the necessary changes. The true TL;DR can probably be summed up as \"it required fewer changes in my prototype, and I carried it over\", so I don\u0027t think any of the arguments I have brought up are particularly strong.",
+      "parentUuid": "63837c3d_09a6b5cc",
+      "range": {
+        "startLine": 122,
+        "startChar": 43,
+        "endLine": 122,
+        "endChar": 46
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51d6c322_ab4a3ee6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2017-12-12T15:09:11Z",
       "side": 1,
       "message": "In the if below this is not set to true, so in theory one can call this many times between stopApplication() and onSessionClosed() which would reset the pending session launch request and call stopApplication() more than once.\n\n(I realize this is likely the existing logic, just that your change makes its failure more obvious)",
+      "range": {
+        "startLine": 159,
+        "startChar": 12,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbc4d6a_9e41fd48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-13T05:44:27Z",
+      "side": 1,
+      "message": "CastSessionImpl explicitly handles multiple calls to stopApplication(), so I interpreted that to mean that multiple calls were possible/not a problem.\n\nI assumed that we would want newer requests to preempt older requests, as long as no session was currently launching, and wrote a unit test to highlight this behavior. In practice, I don\u0027t know how likely it is that we would have multiple requests launching at once.",
+      "parentUuid": "51d6c322_ab4a3ee6",
       "range": {
         "startLine": 159,
         "startChar": 12,
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "00c96ab9_d9e4288a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CreateRouteRequest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-13T05:44:27Z",
+      "side": 1,
+      "message": "Removed the TODOs.",
+      "parentUuid": "38e8abd9_31e8c31a",
+      "range": {
+        "startLine": 170,
+        "startChar": 12,
+        "endLine": 170,
+        "endChar": 19
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8a17450_a8edcd1f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
         "patchSetId": 6
@@ -175,6 +319,30 @@
       "writtenOn": "2017-12-12T15:09:11Z",
       "side": 1,
       "message": "Do you intend to restructure the packages down the line?\n\nI\u0027d suggest having something like:\n\nmedia.router. - Chrome MediaRouter JNI implementation, interfaces\nmedia.router.remoting - MediaFlinging/Remoting specific implementation\nmedia.router.websdk - Cast Web SDK specific implementation\nmedia.router.cast - Classes using the Cast Android SDK, used be .remoting/.websdk\nmedia.router.base - Shared implementation of .remoting/.websdk that can use .cast\n\nYou could merge media.router.cast/base into media.router until another protocol (like DIAL) is added - which may never happen, and keep .websdk as .cast.\n\n(not requesting to do that in any nearest future, rather documenting my thoughts).",
+      "range": {
+        "startLine": 13,
+        "startChar": 48,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ce1f62_4dd27810",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/remoting/RemotingMediaRouteProvider.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-13T05:44:27Z",
+      "side": 1,
+      "message": "I was not planning on it, since I didn\u0027t really know what made sense (but I did find that media.router.cast.remoting wasn\u0027t ideal). What you are proposing does make sense though :)",
+      "parentUuid": "f8a17450_a8edcd1f",
       "range": {
         "startLine": 13,
         "startChar": 48,
@@ -207,6 +375,30 @@
       "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4c7087_7bc2eaba",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManagerTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-12-13T05:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a436c703_de3e78b4",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "94214d4361c89175999a4c64b5efd7ef7366f508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
