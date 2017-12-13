@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "937d09ed_bacc4ac0",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 10793,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-12-13T08:54:52Z",
+      "side": 1,
+      "message": "I would suggest instead of forcing this to be a specially formatted string. To make this a list of strings so that each entry is a separate country code.\nE.g.:\n\u0027type\u0027: \u0027list\u0027,\n\u0027schema\u0027: {\n    \u0027type\u0027: \u0027array\u0027,\n    \u0027items\u0027: { \u0027type\u0027: \u0027string\u0027 },\n},",
+      "range": {
+        "startLine": 10792,
+        "startChar": 6,
+        "endLine": 10793,
+        "endChar": 37
+      },
+      "revId": "a619fc738077283cd532a72713465a6d15fdd94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
