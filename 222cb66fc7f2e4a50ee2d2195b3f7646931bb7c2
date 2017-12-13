@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "febd1733_e3b3e755",
+        "filename": "chrome/browser/devtools/devtools_window.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T00:27:45Z",
+      "side": 1,
+      "message": "I did notice that there were a bunch of implementations of OpenColorChooser for each platform, and I think only android makes use of the ColorSuggestions vector.  I was hoping at one stage that I could delete suggestions from the function.\n\nI think the style guide makes it optional to include the name or not when it is not used.\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions\n\nIf you feel strongly, I can delete the name, but my preference is to not make style changes like this.  If I delete this param name, then I would be inclined to look at every other function in this file and see if any of them have unused params.",
+      "parentUuid": "6851f2f2_88c3ef3c",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e01c02d1_9c57c23e",
         "filename": "chrome/browser/extensions/extension_view_host.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ec2d84_790f2cb7",
+        "filename": "chrome/browser/extensions/extension_view_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T00:27:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e01c02d1_9c57c23e",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "27219a98_dd6b726a",
+        "filename": "chrome/browser/ui/app_list/custom_launcher_page_contents.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T00:27:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a6214470_6fc779f0",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52082d42_9650253e",
         "filename": "components/web_contents_delegate_android/color_chooser_android.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04ba46f_f6695352",
+        "filename": "components/web_contents_delegate_android/color_chooser_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T00:27:45Z",
+      "side": 1,
+      "message": "I assume that you are asking whether the ColorSuggestion struct should be in color_chooser.mojom.h, or if it should be in some other file.\n\nI think color_chooser.mojom.h is the right file for it since ColorSuggestion is only used in relation to ColorChooser.\n\nPreviously there were 2 files:\n* content/public/common/color_suggestion.mojom.h contained ColorSuggestion which needed to be visible to content/public.\n\n* content/common/color_chooser.mojom.h held the mojom interface definitions which we didn\u0027t want to make public.\n\nNow that both files are in WebKit/common, they are both visible across pretty much everything so they can be back in a single file.",
+      "parentUuid": "52082d42_9650253e",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "02b4a692_20d7350e",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserPopupUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T00:27:45Z",
+      "side": 1,
+      "message": "range-based for loop seems like a good option",
+      "parentUuid": "986e3d87_a02d6d45",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c64c922e_d9535a64",
         "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserPopupUIController.h",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-12T22:46:43Z",
       "side": 1,
       "message": "Don\u0027t need blink:: here and below.",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4902ffa1_c4dcdb12",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserPopupUIController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T00:27:45Z",
+      "side": 1,
+      "message": "I\u0027m glad you picked this up because I was meaning to ask about this.\n\nThere are 2 classes named ColorChooserClient.\nblink::ColorChooserClient\nblink::mojom::blink::ColorChooserClient.\n\nIf I don\u0027t specify any namespace, then the compiler thinks that I\u0027m refering to the mojo class.  This is surprising to me.\n\nDo you know where the rules for this are defined?",
+      "parentUuid": "c64c922e_d9535a64",
       "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
