@@ -51,6 +51,24 @@
       "revId": "57a8b60b6998af4d5aeb41492e8863eae99c34e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d889b02e_6b9b30fa",
+        "filename": "content/browser/renderer_host/input/touch_emulator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-12-13T21:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae3ffed_2c55650b",
+      "revId": "57a8b60b6998af4d5aeb41492e8863eae99c34e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
