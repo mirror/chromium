@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3ead322_e07da9e7",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-13T13:48:26Z",
+      "side": 1,
+      "message": "SetInitialMethod would be a better name. The comment should also reflect that this will only set the initial method.",
+      "revId": "619e23059bd76719453a947bd84dbe777f5c058f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ccfeb8_58857e01",
+        "filename": "content/public/test/test_navigation_throttle_inserter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-13T13:48:26Z",
+      "side": 1,
+      "message": "I don\u0027t support inserting a Throttle at WillStartRequest time. I don\u0027t want us to be modifying the list of throttles as we\u0027re iterating through it. If the issue is that you don\u0027t have the HTTP method at DidStartNavigation time, then as soon as we can remove the old code (around next week) we\u0027ll be able to move this info to DidStartNavigation (PlzNavigate has it at that moment).",
+      "revId": "619e23059bd76719453a947bd84dbe777f5c058f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
