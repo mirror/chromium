@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41920dc6_e2638dc6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-13T10:18:12Z",
+      "side": 1,
+      "message": "Do you mean it would make mShownInNtp redundant and we\u0027ll be able to remove it?",
+      "range": {
+        "startLine": 1053,
+        "startChar": 74,
+        "endLine": 1053,
+        "endChar": 88
+      },
+      "revId": "423a2cfefa211475896b8ea7858c050019b60024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68848cd9_2eeb7a91",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-13T10:18:12Z",
+      "side": 1,
+      "message": "nit: not that it changes much, but making it an `else if` would avoid nesting too much",
+      "range": {
+        "startLine": 1058,
+        "startChar": 14,
+        "endLine": 1058,
+        "endChar": 15
+      },
+      "revId": "423a2cfefa211475896b8ea7858c050019b60024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
