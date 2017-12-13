@@ -5,26 +5,20 @@
 #ifndef WebPushClient_h
 #define WebPushClient_h
 
-#include "public/platform/WebCallbacks.h"
-#include "public/platform/modules/push_messaging/WebPushError.h"
-#include "public/platform/modules/push_messaging/WebPushProvider.h"
-#include <memory>
+#include "base/callback_forward.h"
 
 namespace blink {
 
-class WebServiceWorkerRegistration;
-struct WebPushSubscriptionOptions;
+class WebString;
 
 class WebPushClient {
  public:
-  virtual ~WebPushClient() {}
+  virtual ~WebPushClient() = default;
 
-  // Ownership of the WebServiceWorkerRegistration is not transferred.
-  // Ownership of the callbacks is transferred to the client.
-  virtual void Subscribe(WebServiceWorkerRegistration*,
-                         const WebPushSubscriptionOptions&,
-                         bool user_gesture,
-                         std::unique_ptr<WebPushSubscriptionCallbacks>) = 0;
+  // Loads the manifest associated with the current frame and, if any, invokes
+  // the |callback| with the application server key defined within it.
+  virtual void GetApplicationServerKeyFromManifest(
+      base::OnceCallback<void(const WebString&)>) = 0;
 };
 
 }  // namespace blink

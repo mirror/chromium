@@ -15,7 +15,6 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/Frame.h"
 #include "core/frame/LocalFrame.h"
-#include "modules/push_messaging/PushController.h"
 #include "modules/push_messaging/PushError.h"
 #include "modules/push_messaging/PushMessagingBridge.h"
 #include "modules/push_messaging/PushSubscription.h"
@@ -26,12 +25,41 @@
 #include "platform/bindings/ScriptState.h"
 #include "platform/wtf/Assertions.h"
 #include "public/platform/Platform.h"
-#include "public/platform/modules/push_messaging/WebPushClient.h"
 #include "public/platform/modules/push_messaging/WebPushProvider.h"
 #include "public/platform/modules/push_messaging/WebPushSubscriptionOptions.h"
 
 namespace blink {
 namespace {
+
+// Error message to include when attempting to subscribe without passing an
+// applicationServerKey, either in the subscribe() call or through a manifest.
+const char kMissingApplicationServerKeyMessage[] =
+    "Registration failed - missing applicationServerKey, and "
+    "gcm_sender_id not found in manifest";
+
+// Error message to include when attempting to subscribe without permission.
+const char kPermissionDeniedMessage[] =
+    "Registration failed - permission denied";
+
+// Error message to explain that the userVisibleOnly flag must be set.
+const char kUserVisibleOnlyRequired[] =
+    "Push subscriptions that don't enable userVisibleOnly are not supported.";
+
+// Returns the Push API's permission value corresponding to the given |status|.
+// https://w3c.github.io/push-api/#dom-pushpermissionstate
+String PermissionStatusToString(mojom::blink::PermissionStatus status) {
+  switch (status) {
+    case mojom::blink::PermissionStatus::GRANTED:
+      return "granted";
+    case mojom::blink::PermissionStatus::DENIED:
+      return "denied";
+    case mojom::blink::PermissionStatus::ASK:
+      return "prompt";
+  }
+
+  NOTREACHED();
+  return "denied";
+}
 
 WebPushProvider* PushProvider() {
   WebPushProvider* web_push_provider = Platform::Current()->PushProvider();
@@ -65,33 +93,70 @@ ScriptPromise PushManager::subscribe(ScriptState* script_state,
   if (exception_state.HadException())
     return ScriptPromise();
 
+  ExecutionContext* context = ExecutionContext::From(script_state);
+  Document* document = ToDocumentOrNull(context);
+
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   ScriptPromise promise = resolver->Promise();
 
-  // The document context is the only reasonable context from which to ask the
-  // user for permission to use the Push API. The embedder should persist the
-  // permission so that later calls in different contexts can succeed.
-  if (ExecutionContext::From(script_state)->IsDocument()) {
-    Document* document = ToDocument(ExecutionContext::From(script_state));
-    LocalFrame* frame = document->GetFrame();
-    if (!document->domWindow() || !frame)
-      return ScriptPromise::RejectWithDOMException(
-          script_state,
-          DOMException::Create(kInvalidStateError,
-                               "Document is detached from window."));
-    PushController::ClientFrom(frame).Subscribe(
-        registration_->WebRegistration(), web_options,
-        Frame::HasTransientUserActivation(frame, true /* checkIfMainThread */),
-        std::make_unique<PushSubscriptionCallbacks>(resolver, registration_));
+  if (document && (!document->domWindow() || !document->GetFrame())) {
+    resolver->Reject(DOMException::Create(
+          kInvalidStateError, "Document is detached from window."));
+    return promise;
+  }
+
+  // When the "applicationServerKey" property hasn't been explicitly passed to
+  // the PushManager.subscribe() call, we'll attempt to get it from the manifest
+  // if the call has been made from a Document context.
+  //
+  // Workers do not have an associated manifest, so we'll skip the check there.
+  if (document && web_options.application_server_key.IsEmpty()) {
+    PushMessagingBridge::From(registration_)
+        ->GetApplicationServerKeyFromManifest(WTF::Bind(
+            &PushManager::SubscribeWithApplicationServerKey,
+            WrapWeakPersistent(this), WrapPersistent(resolver), web_options));
   } else {
-    PushProvider()->Subscribe(
-        registration_->WebRegistration(), web_options,
-        Frame::HasTransientUserActivation(nullptr,
-                                          true /* checkIfMainThread */),
-        std::make_unique<PushSubscriptionCallbacks>(resolver, registration_));
+    SubscribeWithApplicationServerKey(resolver, web_options,
+                                      web_options.application_server_key);
   }
 
   return promise;
+}
+
+void PushManager::SubscribeWithApplicationServerKey(
+    ScriptPromiseResolver* resolver,
+    const WebPushSubscriptionOptions& options,
+    const String& application_server_key) {
+  if (application_server_key.IsEmpty()) {
+    resolver->Reject(
+        DOMException::Create(kAbortError, kMissingApplicationServerKeyMessage));
+    return;
+  }
+
+  WebPushSubscriptionOptions new_options;
+  new_options.user_visible_only = options.user_visible_only;
+  new_options.application_server_key = application_server_key;
+
+  PushMessagingBridge::From(registration_)
+      ->RequestPermission(WTF::Bind(
+          &PushManager::SubscribeWithPermissionRequested,
+          WrapWeakPersistent(this), WrapPersistent(resolver), new_options));
+}
+
+void PushManager::SubscribeWithPermissionRequested(
+    ScriptPromiseResolver* resolver,
+    const WebPushSubscriptionOptions& options,
+    mojom::blink::PermissionStatus permission_status) {
+  if (permission_status != mojom::blink::PermissionStatus::GRANTED) {
+    resolver->Reject(
+        DOMException::Create(kNotAllowedError, kPermissionDeniedMessage));
+    return;
+  }
+
+  PushProvider()->Subscribe(
+      registration_->WebRegistration(), options,
+      Frame::HasTransientUserActivation(nullptr, true /* checkIfMainThread */),
+      std::make_unique<PushSubscriptionCallbacks>(resolver, registration_));
 }
 
 ScriptPromise PushManager::getSubscription(ScriptState* script_state) {
@@ -117,8 +182,31 @@ ScriptPromise PushManager::permissionState(
                                "Document is detached from window."));
   }
 
-  return PushMessagingBridge::From(registration_)
-      ->GetPermissionState(script_state, options);
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  // The `userVisibleOnly` flag on |options| must be set, as it's intended to be
+  // a contract with the developer that they will show a notification upon
+  // receiving a push message. Permission is denied without this setting.
+  //
+  // TODO(peter): Would it be better to resolve DENIED rather than rejecting?
+  if (!options.hasUserVisibleOnly() || !options.userVisibleOnly()) {
+    resolver->Reject(
+        DOMException::Create(kNotSupportedError, kUserVisibleOnlyRequired));
+    return promise;
+  }
+
+  PushMessagingBridge::From(registration_)
+      ->GetPermissionStatus(WTF::Bind(&PushManager::GotPermissionStatus,
+                                      WrapWeakPersistent(this),
+                                      WrapPersistent(resolver)));
+
+  return promise;
+}
+
+void PushManager::GotPermissionStatus(ScriptPromiseResolver* resolver,
+                                      mojom::blink::PermissionStatus status) {
+  resolver->Resolve(PermissionStatusToString(status));
 }
 
 void PushManager::Trace(blink::Visitor* visitor) {

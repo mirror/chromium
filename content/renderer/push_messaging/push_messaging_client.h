@@ -5,73 +5,40 @@
 #ifndef CONTENT_RENDERER_PUSH_MESSAGING_PUSH_MESSAGING_CLIENT_H_
 #define CONTENT_RENDERER_PUSH_MESSAGING_PUSH_MESSAGING_CLIENT_H_
 
-#include <stdint.h>
-
-#include <memory>
-#include <string>
-#include <vector>
-
+#include "base/callback_forward.h"
 #include "base/macros.h"
-#include "content/common/push_messaging.mojom.h"
-#include "content/public/renderer/render_frame_observer.h"
-#include "third_party/WebKit/public/platform/modules/manifest/manifest.mojom.h"
+#include "third_party/WebKit/public/platform/modules/manifest/manifest_manager.mojom.h"
 #include "third_party/WebKit/public/platform/modules/push_messaging/WebPushClient.h"
+
+namespace blink {
+class WebString;
+}
 
 class GURL;
 
-namespace blink {
-struct WebPushSubscriptionOptions;
-}
-
 namespace content {
 
-namespace mojom {
-enum class PushRegistrationStatus;
-}
-
 struct Manifest;
-struct PushSubscriptionOptions;
 
-class PushMessagingClient : public RenderFrameObserver,
-                            public blink::WebPushClient {
+class PushMessagingClient : public blink::WebPushClient {
  public:
-  explicit PushMessagingClient(RenderFrame* render_frame);
+  explicit PushMessagingClient(blink::mojom::ManifestManager* manifest_manager);
   ~PushMessagingClient() override;
 
+  // blink::WebPushClient implementation:
+  void GetApplicationServerKeyFromManifest(
+      base::OnceCallback<void(const blink::WebString&)> callback) override;
+
  private:
-  // RenderFrameObserver implementation.
-  void OnDestruct() override;
-
-  // WebPushClient implementation.
-  void Subscribe(
-      blink::WebServiceWorkerRegistration* service_worker_registration,
-      const blink::WebPushSubscriptionOptions& options,
-      bool user_gesture,
-      std::unique_ptr<blink::WebPushSubscriptionCallbacks> callbacks) override;
-
-  void DidGetManifest(
-      blink::WebServiceWorkerRegistration* service_worker_registration,
-      const blink::WebPushSubscriptionOptions& options,
-      bool user_gesture,
-      std::unique_ptr<blink::WebPushSubscriptionCallbacks> callbacks,
-      const GURL& manifest_url,
+  // Called when the manifest, if any, has been loaded. Failures in loading
+  // the manifest will be communicated through an empty origin.
+  void GotApplicationServerKeyFromManifest(
+      base::OnceCallback<void(const blink::WebString&)> callback,
+      const GURL& url,
       const Manifest& manifest);
 
-  void DoSubscribe(
-      blink::WebServiceWorkerRegistration* service_worker_registration,
-      const PushSubscriptionOptions& options,
-      bool user_gesture,
-      std::unique_ptr<blink::WebPushSubscriptionCallbacks> callbacks);
-
-  void DidSubscribe(
-      std::unique_ptr<blink::WebPushSubscriptionCallbacks> callbacks,
-      mojom::PushRegistrationStatus status,
-      const base::Optional<GURL>& endpoint,
-      const base::Optional<PushSubscriptionOptions>& options,
-      const base::Optional<std::vector<uint8_t>>& p256dh,
-      const base::Optional<std::vector<uint8_t>>& auth);
-
-  mojom::PushMessagingPtr push_messaging_manager_;
+  // The manifest manager associated with the same RenderFrameImpl as |this|.
+  blink::mojom::ManifestManager* manifest_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(PushMessagingClient);
 };

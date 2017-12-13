@@ -62,7 +62,6 @@
 #include "modules/navigatorcontentutils/NavigatorContentUtilsClient.h"
 #include "modules/presentation/PresentationController.h"
 #include "modules/presentation/PresentationReceiver.h"
-#include "modules/push_messaging/PushController.h"
 #include "modules/quota/StorageQuotaClient.h"
 #include "modules/remoteplayback/HTMLMediaElementRemotePlayback.h"
 #include "modules/remoteplayback/RemotePlayback.h"
@@ -157,7 +156,6 @@ void ModulesInitializer::InstallSupplements(LocalFrame& frame) const {
   WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(&frame);
   WebFrameClient* client = web_frame->Client();
   DCHECK(client);
-  ProvidePushControllerTo(frame, client->PushClient());
   ProvideUserMediaTo(frame, UserMediaClient::Create(client->UserMediaClient()));
   ProvideIndexedDBClientTo(frame, IndexedDBClient::Create(frame));
   ProvideLocalFileSystemTo(frame, LocalFileSystemClient::Create());

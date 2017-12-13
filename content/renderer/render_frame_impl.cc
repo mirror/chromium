@@ -4916,7 +4916,7 @@ blink::WebPresentationClient* RenderFrameImpl::PresentationClient() {
 
 blink::WebPushClient* RenderFrameImpl::PushClient() {
   if (!push_messaging_client_)
-    push_messaging_client_ = new PushMessagingClient(this);
+    push_messaging_client_ = new PushMessagingClient(&GetManifestManager());
   return push_messaging_client_;
 }
 

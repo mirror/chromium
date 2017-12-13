@@ -4,34 +4,25 @@
 
 #include "modules/push_messaging/PushMessagingBridge.h"
 
-#include "core/dom/DOMException.h"
-#include "core/dom/ExceptionCode.h"
+#include "core/dom/Document.h"
+#include "core/frame/Frame.h"
+#include "core/frame/LocalFrame.h"
+#include "core/frame/WebLocalFrameImpl.h"
 #include "modules/permissions/PermissionUtils.h"
-#include "modules/push_messaging/PushError.h"
-#include "modules/push_messaging/PushSubscriptionOptionsInit.h"
-#include "platform/bindings/ScriptState.h"
 #include "platform/wtf/Functional.h"
-#include "public/platform/modules/push_messaging/WebPushError.h"
+#include "public/platform/modules/push_messaging/WebPushClient.h"
+#include "public/web/WebFrameClient.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
+
 namespace {
 
-// Error message to explain that the userVisibleOnly flag must be set.
-const char kUserVisibleOnlyRequired[] =
-    "Push subscriptions that don't enable userVisibleOnly are not supported.";
-
-String PermissionStatusToString(mojom::blink::PermissionStatus status) {
-  switch (status) {
-    case mojom::blink::PermissionStatus::GRANTED:
-      return "granted";
-    case mojom::blink::PermissionStatus::DENIED:
-      return "denied";
-    case mojom::blink::PermissionStatus::ASK:
-      return "prompt";
-  }
-
-  NOTREACHED();
-  return "denied";
+WebFrameClient& GetWebFrameClient(LocalFrame& frame) {
+  WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(frame);
+  DCHECK(web_frame);
+  DCHECK(web_frame->Client());
+  return *web_frame->Client();
 }
 
 }  // namespace
@@ -60,45 +51,61 @@ PushMessagingBridge::PushMessagingBridge(
 
 PushMessagingBridge::~PushMessagingBridge() = default;
 
+// static
 const char* PushMessagingBridge::SupplementName() {
   return "PushMessagingBridge";
 }
 
-ScriptPromise PushMessagingBridge::GetPermissionState(
-    ScriptState* script_state,
-    const PushSubscriptionOptionsInit& options) {
-  ExecutionContext* context = ExecutionContext::From(script_state);
+void PushMessagingBridge::RequestPermission(
+    base::OnceCallback<void(mojom::blink::PermissionStatus)> callback) {
+  ExecutionContext* context = GetExecutionContext();
   if (!permission_service_) {
     ConnectToPermissionService(context,
                                mojo::MakeRequest(&permission_service_));
   }
 
-  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
-  ScriptPromise promise = resolver->Promise();
+  Document* document = ToDocumentOrNull(context);
+  Frame* frame = document ? document->GetFrame() : nullptr;
 
-  // The `userVisibleOnly` flag on |options| must be set, as it's intended to be
-  // a contract with the developer that they will show a notification upon
-  // receiving a push message. Permission is denied without this setting.
-  //
-  // TODO(peter): Would it be better to resolve DENIED rather than rejecting?
-  if (!options.hasUserVisibleOnly() || !options.userVisibleOnly()) {
-    resolver->Reject(
-        DOMException::Create(kNotSupportedError, kUserVisibleOnlyRequired));
-    return promise;
+  permission_service_->RequestPermission(
+      CreatePermissionDescriptor(mojom::blink::PermissionName::NOTIFICATIONS),
+      Frame::HasTransientUserActivation(frame, true /* checkIfMainThread */),
+      std::move(callback));
+}
+
+void PushMessagingBridge::GetPermissionStatus(
+    base::OnceCallback<void(mojom::blink::PermissionStatus)> callback) {
+  if (!permission_service_) {
+    ConnectToPermissionService(GetExecutionContext(),
+                               mojo::MakeRequest(&permission_service_));
   }
 
   permission_service_->HasPermission(
       CreatePermissionDescriptor(mojom::blink::PermissionName::NOTIFICATIONS),
-      WTF::Bind(&PushMessagingBridge::DidGetPermissionState,
-                WrapPersistent(this), WrapPersistent(resolver)));
-
-  return promise;
+      std::move(callback));
 }
 
-void PushMessagingBridge::DidGetPermissionState(
-    ScriptPromiseResolver* resolver,
-    mojom::blink::PermissionStatus status) {
-  resolver->Resolve(PermissionStatusToString(status));
+void PushMessagingBridge::GetApplicationServerKeyFromManifest(
+    base::OnceCallback<void(const String&)> callback) {
+  DCHECK(GetExecutionContext()->IsDocument());
+
+  Document* document = ToDocument(GetExecutionContext());
+  LocalFrame* frame = document->GetFrame();
+  DCHECK(frame);
+
+  GetWebFrameClient(*frame).PushClient()->GetApplicationServerKeyFromManifest(
+      WTF::Bind(&PushMessagingBridge::GotApplicationServerKeyFromManifest,
+                WrapWeakPersistent(this), std::move(callback)));
+}
+
+void PushMessagingBridge::GotApplicationServerKeyFromManifest(
+    base::OnceCallback<void(const String&)> callback,
+    const WebString& application_server_key) {
+  std::move(callback).Run(application_server_key);
+}
+
+ExecutionContext* PushMessagingBridge::GetExecutionContext() {
+  return GetSupplementable()->GetExecutionContext();
 }
 
 }  // namespace blink
