@@ -5,12 +5,16 @@
 #include "chrome/browser/offline_pages/offline_page_utils.h"
 
 #include "base/bind.h"
+#include "base/files/file.h"
+#include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -31,48 +35,46 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
+#include "crypto/secure_hash.h"
+#include "crypto/sha2.h"
 #include "net/base/mime_util.h"
 
 namespace offline_pages {
 namespace {
 
+class OfflinePageComparer {
+ public:
+  OfflinePageComparer() = default;
+
+  bool operator()(const OfflinePageItem& a, const OfflinePageItem& b) {
+    return a.creation_time > b.creation_time;
+  }
+};
+
 void OnGetPagesByURLDone(
     const GURL& url,
     int tab_id,
     const std::vector<std::string>& namespaces_to_show_in_original_tab,
-    const base::Callback<void(const OfflinePageItem*)>& callback,
+    const base::Callback<void(const std::vector<OfflinePageItem>&)>& callback,
     const MultipleOfflinePageItemResult& pages) {
-  const OfflinePageItem* selected_page_for_final_url = nullptr;
-  const OfflinePageItem* selected_page_for_original_url = nullptr;
+  std::vector<OfflinePageItem> selected_pages;
   std::string tab_id_str = base::IntToString(tab_id);
 
+  // Exclude pages whose tab id does not match.
   for (const auto& page : pages) {
     if (base::ContainsValue(namespaces_to_show_in_original_tab,
                             page.client_id.name_space) &&
         page.client_id.id != tab_id_str) {
       continue;
     }
-
-    if (OfflinePageUtils::EqualsIgnoringFragment(url, page.url)) {
-      if (!selected_page_for_final_url ||
-          page.creation_time > selected_page_for_final_url->creation_time) {
-        selected_page_for_final_url = &page;
-      }
-    } else {
-      // This is consistent with exact match against original url done in
-      // OfflinePageModelImpl.
-      DCHECK(url == page.original_url);
-      if (!selected_page_for_original_url ||
-          page.creation_time > selected_page_for_original_url->creation_time) {
-        selected_page_for_original_url = &page;
-      }
-    }
+    selected_pages.push_back(page);
   }
 
-  // Match for final URL should take high priority than matching for original
-  // URL.
-  callback.Run(selected_page_for_final_url ? selected_page_for_final_url
-                                           : selected_page_for_original_url);
+  // Sort based on creation date.
+  std::sort(selected_pages.begin(), selected_pages.end(),
+            OfflinePageComparer());
+
+  callback.Run(selected_pages);
 }
 
 bool IsSupportedByDownload(content::BrowserContext* browser_context,
@@ -145,17 +147,17 @@ void DoCalculateSizeBetween(
 }  // namespace
 
 // static
-void OfflinePageUtils::SelectPageForURL(
+void OfflinePageUtils::SelectPagesForURL(
     content::BrowserContext* browser_context,
     const GURL& url,
     URLSearchMode url_search_mode,
     int tab_id,
-    const base::Callback<void(const OfflinePageItem*)>& callback) {
+    const base::Callback<void(const std::vector<OfflinePageItem>&)>& callback) {
   OfflinePageModel* offline_page_model =
       OfflinePageModelFactory::GetForBrowserContext(browser_context);
   if (!offline_page_model) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, nullptr));
+        FROM_HERE, base::Bind(callback, std::vector<OfflinePageItem>()));
     return;
   }
 
@@ -328,6 +330,45 @@ bool OfflinePageUtils::GetCachedOfflinePageSizeBetween(
   offline_page_model->GetPagesRemovedOnCacheReset(
       base::Bind(&DoCalculateSizeBetween, callback, begin_time, end_time));
   return true;
+}
+
+// static
+std::string OfflinePageUtils::ComputeDigest(const base::FilePath& file_path) {
+  base::File file(file_path, base::File::FLAG_OPEN | base::File::FLAG_READ);
+  if (!file.IsValid())
+    return std::string();
+
+  std::unique_ptr<crypto::SecureHash> secure_hash(
+      crypto::SecureHash::Create(crypto::SecureHash::SHA256));
+
+  const int kMaxBufferSize = 1024;
+  std::vector<char> buffer(kMaxBufferSize);
+  int bytes_read;
+  do {
+    bytes_read = file.ReadAtCurrentPos(buffer.data(), kMaxBufferSize);
+    if (bytes_read > 0)
+      secure_hash->Update(buffer.data(), bytes_read);
+  } while (bytes_read > 0);
+  if (bytes_read < 0)
+    return std::string();
+
+  std::string result_bytes(crypto::kSHA256Length, 0);
+  secure_hash->Finish(&(result_bytes[0]), result_bytes.size());
+  return result_bytes;
+}
+
+// static
+bool OfflinePageUtils::ValidateFile(const base::FilePath& file_path,
+                                    int64_t expected_file_size,
+                                    const std::string& expected_digest) {
+  int64_t actual_file_size;
+  if (!base::GetFileSize(file_path, &actual_file_size))
+    return false;
+  if (expected_file_size != actual_file_size)
+    return false;
+
+  std::string actual_digest = ComputeDigest(file_path);
+  return expected_digest == actual_digest;
 }
 
 }  // namespace offline_pages
