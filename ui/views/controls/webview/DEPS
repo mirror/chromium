@@ -5,3 +5,9 @@ include_rules = [
   "+ui/views",
   "+ui/web_dialogs",
 ]
+
+specific_include_rules = {
+  ".*_unittest\.cc": [
+    "+content/test",
+  ],
+}

@@ -1293,7 +1293,7 @@ RenderProcessHostImpl::RenderProcessHostImpl(
       route_provider_binding_(this),
       visible_widgets_(0),
       priority_({
-            kLaunchingProcessIsBackgrounded,
+        kLaunchingProcessIsBackgrounded,
             kLaunchingProcessIsBoostedForPendingView,
 #if defined(OS_ANDROID)
             ChildProcessImportance::NORMAL,
@@ -1326,7 +1326,7 @@ RenderProcessHostImpl::RenderProcessHostImpl(
           new base::WeakPtrFactory<RenderProcessHostImpl>(this)),
       frame_sink_provider_(id_),
       shared_bitmap_allocation_notifier_impl_(
-          viz::ServerSharedBitmapManager::current()),
+          BrowserMainLoop::GetInstance()->GetServerSharedBitmapManager()),
       weak_factory_(this) {
 #if BUILDFLAG(ENABLE_WEBRTC)
   // WebRTCInternals' constructor needs to be invoked from a scope that allows

@@ -204,5 +204,8 @@ specific_include_rules = {
   ],
   "display_info_provider_chromeos_unittest.cc": [
     "+ui/events/devices/touch_device_transform.h"
-  ]
+  ],
+  ".*_unittest\.cc": [
+    "+content/test",
+  ],
 }

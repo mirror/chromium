@@ -33,6 +33,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_web_ui.h"
+#include "content/test/test_render_view_host.h"
 #include "net/http/http_status_code.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -159,6 +160,7 @@ class BrowsingHistoryHandlerTest : public ::testing::Test {
   }
 
   content::TestBrowserThreadBundle thread_bundle_;
+  content::RenderViewHostTestEnabler rvh_test_enabler_;
   std::unique_ptr<TestingProfile> profile_;
   TestSyncService* sync_service_;
   history::FakeWebHistoryService* web_history_service_;

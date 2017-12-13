@@ -17,8 +17,8 @@
 #include "chrome/browser/extensions/test_extension_environment.h"
 #include "chrome/browser/extensions/test_extension_system.h"
 #include "chrome/test/base/testing_profile.h"
-#include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/web_contents.h"
+#include "content/test/test_render_view_host.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
@@ -69,6 +69,7 @@ class RequestContentScriptTest : public ExtensionServiceTestBase {
 
 TEST(DeclarativeContentActionTest, InvalidCreation) {
   TestExtensionEnvironment env;
+  content::RenderViewHostTestEnabler rvh_test_enabler;
   std::string error;
   std::unique_ptr<const ContentAction> result;
 
@@ -99,6 +100,7 @@ TEST(DeclarativeContentActionTest, InvalidCreation) {
 
 TEST(DeclarativeContentActionTest, ShowPageActionWithoutPageAction) {
   TestExtensionEnvironment env;
+  content::RenderViewHostTestEnabler rvh_test_enabler;
 
   // We install a component extension because all other extensions have a
   // required action.
@@ -127,6 +129,7 @@ TEST(DeclarativeContentActionTest, ShowPageActionWithoutPageAction) {
 
 TEST(DeclarativeContentActionTest, ShowPageAction) {
   TestExtensionEnvironment env;
+  content::RenderViewHostTestEnabler rvh_test_enabler;
 
   const Extension* extension = env.MakeExtension(
       *ParseJson("{\"page_action\": { \"default_title\": \"Extension\" } }"));
@@ -160,6 +163,7 @@ TEST(DeclarativeContentActionTest, ShowPageAction) {
 
 TEST(DeclarativeContentActionTest, SetIcon) {
   TestExtensionEnvironment env;
+  content::RenderViewHostTestEnabler rvh_test_enabler;
 
   // Simulate the process of passing ImageData to SetIcon::Create.
   SkBitmap bitmap;
