@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b54aff3_0bfdb35b",
+        "filename": "ios/web/web_state/js/form_inttest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T18:43:08Z",
+      "side": 1,
+      "message": "Sure, after rebase this file is removed from CL.",
+      "parentUuid": "5360d5d6_4f07f84e",
+      "range": {
+        "startLine": 60,
+        "startChar": 31,
+        "endLine": 60,
+        "endChar": 35
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8859d2f_6858752f",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "ab560bd0_3f319d5f",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T18:43:08Z",
+      "side": 1,
+      "message": "I\u0027ve added text to CL description:\n\n__gCrWeb.common.getFormIdentifier updated to be called for form from another frame\n(in password_controller.js and autofill_controller.js this method could be called\nfrom the main frame for a form from iframe)",
+      "parentUuid": "d8859d2f_6858752f",
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e9b1eee_994d6514",
         "filename": "ios/web/web_state/js/resources/message.js",
         "patchSetId": 8
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-13T01:24:49Z",
       "side": 1,
       "message": "This will throw an exception if called from cross origin iframe. I remember web developers complained about chrome exceptions. Can we handle this case gracefully?",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 25
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e08e34_6f078374",
+        "filename": "ios/web/web_state/js/resources/message.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T18:43:08Z",
+      "side": 1,
+      "message": "Form.js has a guard (line 24) against executing into cross-origin iframes, so our code can\u0027t call functions from message.js. So exceptions would be only in case when somebody else calls our messaging functions. Should we care about that? If yes, what do you think about using the same guard as in form.js?",
+      "parentUuid": "8e9b1eee_994d6514",
       "range": {
         "startLine": 70,
         "startChar": 22,
@@ -135,6 +201,53 @@
     },
     {
       "key": {
+        "uuid": "4cc8ece0_907e611f",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2289,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T18:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1766cbf1_20c74f38",
+      "range": {
+        "startLine": 2289,
+        "startChar": 44,
+        "endLine": 2289,
+        "endChar": 52
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c1e9aa0_a9fcf9a4",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2319,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T18:43:08Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use here _documentURL also?",
+      "range": {
+        "startLine": 2319,
+        "startChar": 23,
+        "endLine": 2319,
+        "endChar": 68
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c83d77b4_85b84ef9",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 8
@@ -155,6 +268,30 @@
       "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f363a891_3bcd60fa",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2332,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T18:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c83d77b4_85b84ef9",
+      "range": {
+        "startLine": 2332,
+        "startChar": 15,
+        "endLine": 2332,
+        "endChar": 27
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -181,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "7057dcaf_0b1bda51",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2463,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T18:43:08Z",
+      "side": 1,
+      "message": "No problem, we can do that.",
+      "parentUuid": "148b575d_8b9c213d",
+      "range": {
+        "startLine": 2463,
+        "startChar": 19,
+        "endLine": 2463,
+        "endChar": 0
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21f92465_8cf2793c",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 8
@@ -204,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "4fdf66e6_1d79caeb",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2510,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T18:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f92465_8cf2793c",
+      "range": {
+        "startLine": 2510,
+        "startChar": 17,
+        "endLine": 2510,
+        "endChar": 0
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dda9c0b_d79bedc1",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 8
@@ -224,6 +409,30 @@
       "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd65a5ea_11c097d1",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2552,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T18:43:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dda9c0b_d79bedc1",
+      "range": {
+        "startLine": 2552,
+        "startChar": 2,
+        "endLine": 2552,
+        "endChar": 23
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
