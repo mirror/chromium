@@ -631,13 +631,24 @@ LayoutManager* View::GetLayoutManager() const {
   return layout_manager_.get();
 }
 
-void View::SetLayoutManager(LayoutManager* layout_manager) {
-  if (layout_manager == layout_manager_.get())
-    return;
+void View::SetLayoutManager(std::unique_ptr<LayoutManager> layout_manager) {
+  // Some code keeps a bare pointer to the layout manager for calling
+  // derived-class-specific-functions. It's an easy mistake to create a new
+  // unique_ptr and re-set the layout manager with a new unique_ptr, which
+  // will cause a crash.
+  CHECK(layout_manager_.get() != layout_manager.get());
 
-  layout_manager_.reset(layout_manager);
+  layout_manager_ = std::move(layout_manager);
   if (layout_manager_)
     layout_manager_->Installed(this);
+}
+
+void View::SetLayoutManager(LayoutManager* layout) {
+  // Some callers of this deprecated function may set the same layout manager
+  // twice, which used to be a no-op. Retain this behavior to avoid crashing.
+  if (layout == layout_manager_.get())
+    return;
+  SetLayoutManager(std::unique_ptr<LayoutManager>(layout));
 }
 
 // Attributes ------------------------------------------------------------------
