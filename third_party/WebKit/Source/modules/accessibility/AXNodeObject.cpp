@@ -630,9 +630,10 @@ bool AXNodeObject::IsTextControl() const {
     case kTextFieldRole:
     case kTextFieldWithComboBoxRole:
     case kSearchBoxRole:
-    // TODO(dmazzoni): kSpinButtonRole might need to be removed.
-    case kSpinButtonRole:
       return true;
+    case kSpinButtonRole:
+      // We can't guarantee how non-native spin buttons are implemented.
+      return IsNativeSpinButton();
     default:
       return false;
   }
@@ -1337,8 +1338,9 @@ String AXNodeObject::GetText() const {
     return String();
 
   if (IsNativeTextControl() &&
-      (IsHTMLTextAreaElement(*node) || IsHTMLInputElement(*node)))
+      (IsHTMLTextAreaElement(*node) || IsHTMLInputElement(*node))) {
     return ToTextControlElement(*node).value();
+  }
 
   if (!node->IsElementNode())
     return String();
@@ -1535,7 +1537,7 @@ bool AXNodeObject::ValueForRange(float* out_value) const {
     return true;
   }
 
-  if (IsNativeSlider()) {
+  if (IsNativeSlider() || IsNativeSpinButton()) {
     *out_value = ToHTMLInputElement(*GetNode()).valueAsNumber();
     return true;
   }
