@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4663ae37_2c205d6a",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-13T17:36:47Z",
+      "side": 1,
+      "message": "would it make sense to pass this to EnterNextState instead?",
+      "revId": "6371d6d131029e92f4d7dd7fe4fe16856aea19c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64255f15_a904b0f9",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-13T17:36:47Z",
+      "side": 1,
+      "message": "nit: DLOG to prevent a malicious client from spamming the logs in release builds",
+      "range": {
+        "startLine": 327,
+        "startChar": 6,
+        "endLine": 327,
+        "endChar": 9
+      },
+      "revId": "6371d6d131029e92f4d7dd7fe4fe16856aea19c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c120cf9b_28975ca0",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-13T17:36:47Z",
+      "side": 1,
+      "message": "if we need to keep this setter then consider having some \"scoped\" or auto reset code in this function so we reset it in a more automatic way",
+      "revId": "6371d6d131029e92f4d7dd7fe4fe16856aea19c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
