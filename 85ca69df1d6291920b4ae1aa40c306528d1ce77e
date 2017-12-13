@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "a0189e29_ce26aa01",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-13T23:22:59Z",
+      "side": 1,
+      "message": "Do these actually need to be in the header?\n\nI think the issue is more static member variables have to be in both places, and usually the values are set in the cc file instead of the header.",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 13
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c877140_a7772174",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-13T23:22:59Z",
+      "side": 1,
+      "message": "should we also enable the gamepad here?",
+      "range": {
+        "startLine": 66,
+        "startChar": 42,
+        "endLine": 66,
+        "endChar": 54
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c0c3c78_0099bb80",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-13T23:22:59Z",
+      "side": 1,
+      "message": "is this right?",
+      "range": {
+        "startLine": 73,
+        "startChar": 40,
+        "endLine": 73,
+        "endChar": 47
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e61150e_09f6eae0",
         "filename": "chrome/browser/vr/test/vr_browser_test.cc",
         "patchSetId": 17
@@ -18,6 +87,29 @@
         "startChar": 33,
         "endLine": 134,
         "endChar": 42
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd86422_5bfa8112",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-13T23:22:59Z",
+      "side": 1,
+      "message": "nit: inconsistent use of \u003c\u003c",
+      "range": {
+        "startLine": 149,
+        "startChar": 30,
+        "endLine": 149,
+        "endChar": 32
       },
       "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -71,6 +163,53 @@
     },
     {
       "key": {
+        "uuid": "5398af3b_0b7c5505",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-13T23:22:59Z",
+      "side": 1,
+      "message": "Test expectations may also work?  See context_lost_expectations.py.",
+      "parentUuid": "cc16f6f8_0823d845",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a52ea67_0b41e825",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-13T23:22:59Z",
+      "side": 1,
+      "message": "nit - comments are complete sentences with capitalization and punctuation.",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e113ff3_e1f93963",
         "filename": "chrome/browser/vr/test/vr_transition_utils.cc",
         "patchSetId": 17
@@ -82,6 +221,30 @@
       "writtenOn": "2017-12-12T19:46:20Z",
       "side": 1,
       "message": "ExecuteScript runs with a user gesture (there\u0027s ExecuteScriptWithoutUserGesture if you don\u0027t want that), so we can just directly call requestPresent instead of having to do the hacky workaround the instrumentation tests use of actually sending a click event to the canvas.",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9872b04_d58de12c",
+        "filename": "chrome/browser/vr/test/vr_transition_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-13T23:22:59Z",
+      "side": 1,
+      "message": "Add a comment about this.",
+      "parentUuid": "6e113ff3_e1f93963",
       "range": {
         "startLine": 13,
         "startChar": 23,
