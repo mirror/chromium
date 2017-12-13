@@ -35,9 +35,10 @@ void SmbService::Mount(const file_system_provider::MountOptions& options,
                        const base::FilePath& share_path,
                        MountResponse callback) {
   chromeos::DBusThreadManager::Get()->GetSmbProviderClient()->Mount(
-      share_path, base::BindOnce(&SmbService::OnMountResponse,
-                                 weak_ptr_factory_.GetWeakPtr(),
-                                 base::Passed(&callback), options));
+      base::FilePath(share_path),
+      base::BindOnce(&SmbService::OnMountResponse,
+                     weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback),
+                     options));
 }
 
 void SmbService::OnMountResponse(
