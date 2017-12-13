@@ -91,6 +91,11 @@ struct OfflinePageItem {
   // page can be trusted. This field will always be an empty string for
   // temporary and shared pages.
   std::string digest;
+
+  // Whether the page is deemed trusted or not. NOTE: this is not persisted into
+  // the offline pages metadata database. It will be set on the fly when an
+  // OfflinePageItem is created and the trusted state is decided.
+  bool is_trusted;
 };
 
 }  // namespace offline_pages
