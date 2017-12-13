@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a270877_6127a53c",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-13T06:30:51Z",
+      "side": 1,
+      "message": "httpBody is given as a const ref, this code feels slightly weird... (the real weird part is ElementAt, which is a const method but returns mutable ref)\n\nBut given that we\u0027re storing back the pipe it\u0027s probably just okay🤔",
+      "revId": "b3927f5284611d12a6c30a747a4254a76b02af03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf5f2ad_b7abbe16",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-13T06:30:51Z",
+      "side": 1,
+      "message": "Might be helpful to make this comment slightly more top-down?\n\nSet the cloned DataPipeGetter to the output |request_body|, while keeping the original message pipe back in the input |httpBody|. This way the consumer of the |httpBody| can retrieve the data pipe multiple times (e.g. during redirects) until the data is actually read out.",
+      "revId": "b3927f5284611d12a6c30a747a4254a76b02af03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
