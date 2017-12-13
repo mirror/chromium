@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c01657e_a9ad320a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-13T06:53:40Z",
+      "side": 1,
+      "message": "780785 for moving task runners to per-frame task runners? We don\u0027t have a crbug only for loading/timer, so I\u0027d be fine if you could make a new one.",
+      "parentUuid": "fa8ef11c_a742d08c",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "223822f0948c5d49aa221ade9440b93f2cbe1213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67f50ce0_456944e1",
         "filename": "third_party/WebKit/Source/core/css/FontFaceSet.h",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-12-13T01:38:07Z",
       "side": 1,
       "message": "Is there any reason this needs to be unthrottled instead of kUnspecTimer / Loading?\n\nI agree that we should have a better internal task though.",
+      "revId": "223822f0948c5d49aa221ade9440b93f2cbe1213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72585fa_eb276e3c",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-12-13T06:53:40Z",
+      "side": 1,
+      "message": "In the view of compatibility, the task runner is |WebSchedulerImpl::timer_web_task_runner_| before this CL, and the task runner is created at RendererSchedulerImpl::NewTimerTaskQueue. The task runner IS throttable. Is it OK to change this to unthrottled?",
+      "parentUuid": "67f50ce0_456944e1",
       "revId": "223822f0948c5d49aa221ade9440b93f2cbe1213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
