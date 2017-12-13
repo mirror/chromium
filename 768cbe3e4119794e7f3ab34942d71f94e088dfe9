@@ -334,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "b514b182_1813b66b",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3604,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-13T16:31:01Z",
+      "side": 1,
+      "message": "Sure, by \"here\" i mean in this method. We can add things that are the wrong size to passes_to_delete like we do for to passes that aren\u0027t in the frame, and they\u0027ll be erased below.",
+      "parentUuid": "591ed97f_14667ee0",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f046ac99_3bc3236f",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -369,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "bc174b6c_e0cc83ce",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3653,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-13T16:31:01Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be simpler to just set the params colorspace when we draw the RenderPassDrawQuad? Do we not have the colorspace there?",
+      "parentUuid": "cbfef400_752718d5",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f5c0d3e_c805ac8b",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 29
@@ -398,6 +434,24 @@
       "side": 1,
       "message": "Sorry, not sure if I get your ideas correctly, this texture_it-\u003esecond.id() is the texture id.",
       "parentUuid": "0f5c0d3e_c805ac8b",
+      "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e8fe4b_6070d620",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 3662,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-13T16:31:01Z",
+      "side": 1,
+      "message": "Right, but when we make the ScopedRenderPassTexture, it will allocate a non-zero texture id. So when is there a 0 texture id in the render_pass_textures_ map?",
+      "parentUuid": "19d2c7e5_a1942416",
       "revId": "768cbe3e4119794e7f3ab34942d71f94e088dfe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
