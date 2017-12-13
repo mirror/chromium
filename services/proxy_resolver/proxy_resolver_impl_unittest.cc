@@ -50,9 +50,8 @@ class TestRequestClient : public mojom::ProxyResolverRequestClient {
   void ReportResult(int32_t error, const net::ProxyInfo& results) override;
   void Alert(const std::string& message) override;
   void OnError(int32_t line_number, const std::string& message) override;
-  void ResolveDns(
-      std::unique_ptr<net::HostResolver::RequestInfo> request_info,
-      net::interfaces::HostResolverRequestClientPtr client) override;
+  void ResolveDns(std::unique_ptr<net::HostResolver::RequestInfo> request_info,
+                  network::mojom::HostResolverRequestClientPtr client) override;
 
   // Mojo error handler.
   void OnConnectionError();
@@ -97,7 +96,7 @@ void TestRequestClient::OnError(int32_t line_number,
 
 void TestRequestClient::ResolveDns(
     std::unique_ptr<net::HostResolver::RequestInfo> request_info,
-    net::interfaces::HostResolverRequestClientPtr client) {}
+    network::mojom::HostResolverRequestClientPtr client) {}
 
 void TestRequestClient::OnConnectionError() {
   event_waiter_.NotifyEvent(CONNECTION_ERROR);

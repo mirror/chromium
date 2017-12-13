@@ -7,7 +7,7 @@
 // TODO(amistry): Resolve the conflict between these two sets of definitions.
 module proxy_resolver.mojom;
 
-import "net/interfaces/host_resolver_service.mojom";
+import "services/network/public/interfaces/host_resolver_service.mojom";
 import "url/mojo/url.mojom";
 
 const string kProxyResolverServiceName = "proxy_resolver";
@@ -48,8 +48,8 @@ interface ProxyResolverRequestClient {
   Alert(string error);
   OnError(int32 line_number, string error);
 
-  ResolveDns(net.interfaces.HostResolverRequestInfo request_info,
-             net.interfaces.HostResolverRequestClient client);
+  ResolveDns(network.mojom.HostResolverRequestInfo request_info,
+             network.mojom.HostResolverRequestClient client);
 };
 
 // Creates a ProxyResolver that uses the provided PAC script. The ProxyResolver
@@ -69,6 +69,6 @@ interface ProxyResolverFactoryRequestClient {
   Alert(string error);
   OnError(int32 line_number, string error);
 
-  ResolveDns(net.interfaces.HostResolverRequestInfo request_info,
-             net.interfaces.HostResolverRequestClient client);
+  ResolveDns(network.mojom.HostResolverRequestInfo request_info,
+             network.mojom.HostResolverRequestClient client);
 };
