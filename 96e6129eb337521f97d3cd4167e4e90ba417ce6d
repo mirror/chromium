@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74b5809c_c34b0e6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T02:07:11Z",
+      "side": 1,
+      "message": "No need to capitalize.",
+      "range": {
+        "startLine": 10,
+        "startChar": 13,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "96e6129eb337521f97d3cd4167e4e90ba417ce6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ea588c_84567214",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T02:07:11Z",
+      "side": 1,
+      "message": "r384698",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "96e6129eb337521f97d3cd4167e4e90ba417ce6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325bec1a_96191850",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T02:07:11Z",
+      "side": 1,
+      "message": "As someone reading this comment for the time, I don\u0027t know what to make of this. Who is doing this monitoring? By Chrome itself via some hang detector mechanism? Via manual testing? Does QA need to do something here to verify some property of this CL?",
+      "revId": "96e6129eb337521f97d3cd4167e4e90ba417ce6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51610284_2af02947",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T02:07:11Z",
+      "side": 1,
+      "message": "needs",
+      "range": {
+        "startLine": 16,
+        "startChar": 30,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "96e6129eb337521f97d3cd4167e4e90ba417ce6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
