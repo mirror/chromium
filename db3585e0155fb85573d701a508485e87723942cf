@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e937152_c5bf2152",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-13T18:23:11Z",
+      "side": 1,
+      "message": "Put this part into a helper function. It will make this easier to read and understand, it can be tested, and we will most likely need it again.\n\nEntryType MapEntryType(bool is_directory);",
+      "revId": "db3585e0155fb85573d701a508485e87723942cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed7117c_dbeb46e2",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-13T18:23:11Z",
+      "side": 1,
+      "message": "emplace_back(). It saves creating a temporary then copying it into the vector.",
+      "revId": "db3585e0155fb85573d701a508485e87723942cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
