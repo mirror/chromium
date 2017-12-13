@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65ecaf68_c3ce844f",
+        "filename": "components/components_chromium_strings.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-13T02:04:04Z",
+      "side": 1,
+      "message": "Two things:\n\n- This should go in chrome/app/generated_resources.grd along with the other IDS_FEEDBACK_* entries.\n- Just to make sure, Have you managed to get sign off from UX/privacy on using this language?",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 18
+      },
+      "revId": "d9f4ba03c429ca9047bd40d9d3f7d866d7107d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2675ee_8ffd68dc",
+        "filename": "components/feedback/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-13T02:04:04Z",
+      "side": 1,
+      "message": "None of these newly added entries belong here.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "d9f4ba03c429ca9047bd40d9d3f7d866d7107d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8951ba_49d095ce",
+        "filename": "components/feedback/feedback_util_chromeos.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-13T02:04:04Z",
+      "side": 1,
+      "message": "Please remove this entire file, and move its contents to FeedbackPrivateDelegate as pure virtual functions. Add implementations in both ChromeFeedbackPrivateDelegate and ShellFeedbackPrivateDelegate.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "d9f4ba03c429ca9047bd40d9d3f7d866d7107d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbce4d7e_444ebe90",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-13T02:04:04Z",
+      "side": 1,
+      "message": "I need to see the debugd implementation to assess this. This doesn\u0027t look right. We shouldn\u0027t retrieve the iwlwifi_dump at this point at all.\n\nHow about this. Remove that concept of a \"display value\" entirely. Instead, all you need to do is check whether the iwlwifi_dump logs exists or not.\n\nif (iwlwifi_dump_exists) {\n  SystemInformation sys_info_entry;\n  sys_info_entry.key \u003d \"iwlwifi_dump\";\n  sys_info_entry.value \u003d \u003cThe translated value you want to display\u003e;\n  sys_info_list.emplace_back(std::move(sys_info_entry));\n}\n  \n\nThat\u0027s better because we don\u0027t have to handle any special cases. It becomes as one of the normal values we have.\n\nThe |iwlwifi_dump_exists| should be very cheap to claculate, just check if a file(s) exist(s). The call to check that can live in the FeedbackPrivateDelegate.",
+      "range": {
+        "startLine": 201,
+        "startChar": 10,
+        "endLine": 201,
+        "endChar": 39
+      },
+      "revId": "d9f4ba03c429ca9047bd40d9d3f7d866d7107d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c261214_9fc7fcbb",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-13T02:04:04Z",
+      "side": 1,
+      "message": "This part needs some work, but I expect it will change much after you handle my other comments, so I won\u0027t comment on it now.",
+      "range": {
+        "startLine": 291,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 3
+      },
+      "revId": "d9f4ba03c429ca9047bd40d9d3f7d866d7107d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
