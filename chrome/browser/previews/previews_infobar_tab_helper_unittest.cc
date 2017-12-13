@@ -23,6 +23,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.h"
+#include "components/data_reduction_proxy/proto/data_store.pb.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/request_header/offline_page_header.h"
 #include "components/offline_pages/features/features.h"
@@ -262,6 +263,13 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
             data_reduction_proxy_settings->data_reduction_proxy_service()
                 ->compression_stats()
                 ->GetHttpOriginalContentLength());
+
+  EXPECT_EQ(expected_file_size,
+            data_reduction_proxy_settings->data_reduction_proxy_service()
+                ->compression_stats()
+                ->DataUsageMapForTesting()
+                .find(kTestUrl)
+                ->second->data_used());
 
   EXPECT_FALSE(infobar_tab_helper->displayed_preview_infobar());
 }
