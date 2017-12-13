@@ -50,7 +50,7 @@ Vector<String> InlineStylePropertyMap::getProperties() {
           ToCSSCustomPropertyDeclaration(property_reference.Value());
       result.push_back(custom_declaration.GetName());
     } else {
-      result.push_back(getPropertyNameString(property_id));
+      result.push_back(CSSProperty::Get(property_id).GetPropertyNameString());
     }
   }
   return result;
@@ -83,7 +83,7 @@ InlineStylePropertyMap::GetIterationEntries() {
       DCHECK(decl.Value());
       value.SetCSSStyleValue(CSSUnparsedValue::FromCSSValue(*decl.Value()));
     } else {
-      name = getPropertyNameString(property_id);
+      name = property_reference.Property().GetPropertyNameString();
       CSSStyleValueVector style_value_vector =
           StyleValueFactory::CssValueToStyleValueVector(
               property_id, property_reference.Value());
