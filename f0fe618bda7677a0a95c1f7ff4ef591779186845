@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f601b3_c49caf41",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-13T23:00:11Z",
+      "side": 1,
+      "message": "This might work, but obviously RunCommand([\u0027ninja\u0027] on line #685 re-builds these targets with \u0027-DLLVM_ENABLE_THREADS\u003dOFF\u0027. What would be the best way to build these two targets in a separate configuration?",
+      "range": {
+        "startLine": 656,
+        "startChar": 2,
+        "endLine": 656,
+        "endChar": 12
+      },
+      "revId": "f0fe618bda7677a0a95c1f7ff4ef591779186845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
