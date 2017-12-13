@@ -474,6 +474,30 @@
     },
     {
       "key": {
+        "uuid": "a013f9a8_d649af2f",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T22:10:45Z",
+      "side": 1,
+      "message": "When in locked-fullscreen mode you want to allow these commands to be enabled, right? To accomplish this you disable everything, and then explicitly enable them. You don\u0027t really want to blindly reenable them, rather you want to reenable them *if* they were enabled before. Otherwise the enabled state is incorrect. Additionally some of these items are dynamic. For example, IDC_FIND_NEXT. For the dynamic ones you want to allow them to change event when in lockscreen, right? I didn\u0027t see you letting through changes for these.",
+      "parentUuid": "c60491ee_b4087b38",
+      "range": {
+        "startLine": 1203,
+        "startChar": 4,
+        "endLine": 1206,
+        "endChar": 35
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff5258ec_2d4dda03",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 27
@@ -509,6 +533,30 @@
       "side": 1,
       "message": "Not following this comment either.",
       "parentUuid": "ff5258ec_2d4dda03",
+      "range": {
+        "startLine": 1219,
+        "startChar": 6,
+        "endLine": 1220,
+        "endChar": 56
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf4f95f_afbc52b7",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T22:10:45Z",
+      "side": 1,
+      "message": "I believe my comment above touches on this. Please let know if I\u0027m still not clear (or feel free to IM directly if needed).",
+      "parentUuid": "a9846661_b0c47e99",
       "range": {
         "startLine": 1219,
         "startChar": 6,

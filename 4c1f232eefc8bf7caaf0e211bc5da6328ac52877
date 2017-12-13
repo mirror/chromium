@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85cd1dc8_5eb1848c",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T22:10:45Z",
+      "side": 1,
+      "message": "Please add a test to ensure IDC_FIND_NEXT isn\u0027t enabled (I\u0027m assuming it shouldn\u0027t be given there is no find text).",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 75
+      },
+      "revId": "4c1f232eefc8bf7caaf0e211bc5da6328ac52877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df834deb_04826246",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T22:10:45Z",
+      "side": 1,
+      "message": "Could you add a call to TabStateChanged and any other interesting functions to ensure it doesn\u0027t trigger enabling some ids?",
+      "revId": "4c1f232eefc8bf7caaf0e211bc5da6328ac52877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c06fe0_5baac57f",
+        "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T22:10:45Z",
+      "side": 1,
+      "message": "Are you sure this should be enabled? I would expect it to be false given nothing is selected.",
+      "range": {
+        "startLine": 132,
+        "startChar": 50,
+        "endLine": 132,
+        "endChar": 58
+      },
+      "revId": "4c1f232eefc8bf7caaf0e211bc5da6328ac52877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
