@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a5b10373_050e164e",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T03:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b596a28_eb453761",
+      "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d01a486_58b2f717",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748c356b_3d2269d4",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T03:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d01a486_58b2f717",
+      "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8412ab59_2ad9a619",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T03:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "600b29f0_8e1d3327",
+      "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcff3d23_55a3140d",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed1af5d_1841a628",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T03:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcff3d23_55a3140d",
+      "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b84fd674_2e5c4cc9",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T03:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b481fc51_a8e35f61",
+      "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26cfdbfb_accc260e",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-13T01:45:49Z",
       "side": 1,
       "message": "I think it would be better to also have the policy check here:)",
+      "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a476c3b_2506ce62",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T03:17:33Z",
+      "side": 1,
+      "message": "Done. Also added a unit test for IsPolicyControlled(). (Will address the style inconsistency such as /* \u003d*/ in follow-up CLs)",
+      "parentUuid": "26cfdbfb_accc260e",
       "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "98005f0e_3b081b66",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T03:17:33Z",
+      "side": 1,
+      "message": "Done. Rename it to CanSetUserWallpaper() to be consistent with other Set* methods.",
+      "parentUuid": "49c506d3_adae54f5",
+      "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16a9a4dc_1e74cad7",
         "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe14743e_65db5b86",
+        "filename": "ash/wallpaper/wallpaper_controller_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T03:17:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16a9a4dc_1e74cad7",
+      "revId": "5fcafa67cfba8ac9eb32312f869cd8a83857a332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
