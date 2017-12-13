@@ -172,12 +172,13 @@ void HTMLDialogElement::showModal(ExceptionState& exception_state) {
   GetDocument().AddToTopLayer(this);
   SetBooleanAttribute(openAttr, true);
 
-  // Throw away the AX cache first, so the subsequent steps don't have a chance
+  ForceLayoutForCentering();
+
+  // Throw away the AX cache first  so the focusing steps don't have a chance
   // of queuing up AX events on objects that would be invalidated when the cache
   // is thrown away.
   InertSubtreesChanged(GetDocument());
 
-  ForceLayoutForCentering();
   SetFocusForDialog(this);
 }
 
