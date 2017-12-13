@@ -262,6 +262,7 @@ class StoragePartitionImpl::NetworkContextOwner {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     context_getter_ = std::move(context_getter);
     network_context_ = std::make_unique<NetworkContext>(
+        nullptr,//io_thread
         std::move(network_context_request),
         context_getter_->GetURLRequestContext());
   }

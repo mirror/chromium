@@ -60,10 +60,10 @@ class CONTENT_EXPORT NetworkContext : public mojom::NetworkContext {
                  std::unique_ptr<URLRequestContextBuilderMojo> builder);
 
   // Creates a NetworkContext that wraps a consumer-provided URLRequestContext
-  // that the NetworkContext does not own. In this case, there is no
-  // NetworkService object.
+  // that the NetworkContext does not own.
   // TODO(mmenke):  Remove this constructor when the network service ships.
-  NetworkContext(mojom::NetworkContextRequest request,
+  NetworkContext(NetworkServiceImpl* network_service,
+                 mojom::NetworkContextRequest request,
                  net::URLRequestContext* url_request_context);
 
   ~NetworkContext() override;
