@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d76c30f_77b08da0",
+        "filename": "chrome/services/printing/pdf_to_pwg_raster_converter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T20:30:24Z",
+      "side": 1,
+      "message": "Can we forward declare instead?",
+      "revId": "fdcbae881b943a977d96761a3430cc2d537e03df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3b78b68_c09763c6",
         "filename": "chrome/services/printing/public/interfaces/pdf_render_settings.typemap",
         "patchSetId": 10
