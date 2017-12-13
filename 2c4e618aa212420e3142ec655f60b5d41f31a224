@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "394b46d5_de96ad39",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-13T19:47:14Z",
+      "side": 1,
+      "message": "Switched to reinterpret_cast.\n\nstatic_cast from \u0027const wchar_t *\u0027 to \u0027LPARAM\u0027 (aka \u0027long\u0027) is not allowed.",
+      "parentUuid": "18765bd7_6c56e5dc",
+      "range": {
+        "startLine": 530,
+        "startChar": 16,
+        "endLine": 530,
+        "endChar": 24
+      },
+      "revId": "2c4e618aa212420e3142ec655f60b5d41f31a224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4261ddf3_7b47e97d",
         "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5311ab81_9c6698a7",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-13T19:47:14Z",
+      "side": 1,
+      "message": "Switched to reinterpret_cast.\n\nstatic_cast from \u0027const wchar_t *\u0027 to \u0027LPARAM\u0027 (aka \u0027long\u0027) is not allowed.",
+      "parentUuid": "4261ddf3_7b47e97d",
+      "range": {
+        "startLine": 565,
+        "startChar": 25,
+        "endLine": 565,
+        "endChar": 33
+      },
+      "revId": "2c4e618aa212420e3142ec655f60b5d41f31a224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3dc3409_5f2d064e",
         "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "2c4e618aa212420e3142ec655f60b5d41f31a224",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d872131e_3afaeff1",
+        "filename": "ui/shell_dialogs/select_file_dialog_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-13T19:47:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3dc3409_5f2d064e",
+      "range": {
+        "startLine": 571,
+        "startChar": 24,
+        "endLine": 571,
+        "endChar": 42
+      },
+      "revId": "2c4e618aa212420e3142ec655f60b5d41f31a224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
