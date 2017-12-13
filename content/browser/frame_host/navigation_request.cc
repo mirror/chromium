@@ -4,7 +4,10 @@
 
 #include "content/browser/frame_host/navigation_request.h"
 
+#include <map>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
@@ -837,8 +840,11 @@ void NavigationRequest::OnResponseStarted(
   // navigation, and in the meantime another navigation reads the incorrect
   // IsUnused() value from the same process when making a process reuse
   // decision.
+  const GURL& target_origin = common_params_.base_url_for_data_url.is_empty()
+                                  ? common_params_.url
+                                  : common_params_.base_url_for_data_url;
   if (render_frame_host &&
-      SiteInstanceImpl::ShouldAssignSiteForURL(common_params_.url)) {
+      SiteInstanceImpl::ShouldAssignSiteForURL(target_origin)) {
     render_frame_host->GetProcess()->SetIsUsed();
 
     // For sites that require a dedicated process, set the site URL now if it
@@ -848,8 +854,8 @@ void NavigationRequest::OnResponseStarted(
     SiteInstanceImpl* instance = render_frame_host->GetSiteInstance();
     if (!instance->HasSite() &&
         SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
-            instance->GetBrowserContext(), common_params_.url)) {
-      instance->SetSite(common_params_.url);
+            instance->GetBrowserContext(), target_origin)) {
+      instance->SetSite(target_origin);
     }
   }
 
