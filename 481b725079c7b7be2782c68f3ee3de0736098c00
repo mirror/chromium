@@ -16,6 +16,24 @@
       "revId": "481b725079c7b7be2782c68f3ee3de0736098c00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e57ee84_1fad5c34",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-12-13T00:50:35Z",
+      "side": 0,
+      "message": "sand\nhttps://pantheon.corp.google.com/storage/browser/chromeos-autotest-results/161813323-chromeos-test/chromeos6-row3-rack14-host15/debug/\n\nand\n\nnyan_kitty\nhttps://pantheon.corp.google.com/storage/browser/chromeos-autotest-results/162091796-chromeos-test/chromeos4-row13-rack2-host7/login_LoginSuccess/sysinfo/var/log_diff/chrome/\n\nare where I saw the NOTREACHED() log. (I myself don\u0027t own these devices. I\u0027ve just been examining the bot logs.)",
+      "parentUuid": "9421f71e_8f057b79",
+      "revId": "481b725079c7b7be2782c68f3ee3de0736098c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
