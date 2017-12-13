@@ -10,7 +10,9 @@
 
 namespace base {
 
-WaitableEventWatcher::WaitableEventWatcher() = default;
+WaitableEventWatcher::WaitableEventWatcher(
+    scoped_refptr<SequencedTaskRunner> task_runner)
+    : task_runner_(std::move(task_runner)) {}
 
 WaitableEventWatcher::~WaitableEventWatcher() {}
 

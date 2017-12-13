@@ -363,6 +363,7 @@ ChromeBrowsingDataRemoverDelegate::ChromeBrowsingDataRemoverDelegate(
       clear_reporting_cache_(sub_task_forward_callback_),
       clear_video_perf_history_(sub_task_forward_callback_),
 #if BUILDFLAG(ENABLE_PLUGINS)
+      watcher_(base::SequencedTaskRunnerHandle::Get()),
       flash_lso_helper_(BrowsingDataFlashLSOHelper::Create(browser_context)),
 #endif
 #if defined(OS_ANDROID)

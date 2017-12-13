@@ -7,6 +7,7 @@
 
 #include "base/base_export.h"
 #include "base/macros.h"
+#include "base/sequenced_task_runner.h"
 #include "build/build_config.h"
 
 #if defined(OS_WIN)
@@ -76,7 +77,10 @@ class BASE_EXPORT WaitableEventWatcher
 {
  public:
   using EventCallback = OnceCallback<void(WaitableEvent*)>;
-  WaitableEventWatcher();
+
+  // |task_runner| is used for asynchronous executions e.g. calling a callback
+  // at StartWatching().
+  explicit WaitableEventWatcher(scoped_refptr<SequencedTaskRunner> task_runner);
 
 #if defined(OS_WIN)
   ~WaitableEventWatcher() override;
@@ -98,6 +102,9 @@ class BASE_EXPORT WaitableEventWatcher
   void StopWatching();
 
  private:
+  // Used for asynchronous executions.
+  scoped_refptr<SequencedTaskRunner> task_runner_;
+
 #if defined(OS_WIN)
   void OnObjectSignaled(HANDLE h) override;
 
