@@ -210,6 +210,10 @@ class CONTENT_EXPORT RenderWidgetHostDelegate {
   // Returns the TextInputManager tracking text input state.
   virtual TextInputManager* GetTextInputManager();
 
+  // Returns true if the contents is being captured (e.g. for screenshots or
+  // mirroring).
+  virtual bool IsBeingCaptured() const;
+
   // Returns true if this RenderWidgetHost should remain hidden. This is used by
   // the RenderWidgetHost to ask the delegate if it can be shown in the event of
   // something other than the WebContents attempting to enable visibility of

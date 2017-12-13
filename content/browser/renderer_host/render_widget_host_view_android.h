@@ -113,7 +113,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void Focus() override;
   bool HasFocus() const override;
   void Show() override;
-  void Hide() override;
   Visibility GetVisibility() const override;
   gfx::Rect GetViewBounds() const override;
   gfx::Size GetVisibleViewportSize() const override;
@@ -351,8 +350,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       const viz::CompositorFrameMetadata& frame_metadata,
       bool is_transparent);
 
-  void ShowInternal();
-  void HideInternal();
   void AttachLayers();
   void RemoveLayers();
 
@@ -397,6 +394,11 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   void OnFocusInternal();
   void LostFocusInternal();
+
+  // RenderWidgetHostViewBase:
+  void DoHide() override;
+  void WasShown() override;
+  void WasHidden() override;
 
   // The model object.
   RenderWidgetHostImpl* host_;

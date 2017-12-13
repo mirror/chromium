@@ -184,16 +184,22 @@ viz::CompositorFrame CreateDelegatedFrame(float scale_factor,
   return frame;
 }
 
+// Calling show and hide also needs to be propagated to child frame by the
+// |frame_connector_| which itself requires a |frame_proxy_in_parent_renderer|
+// (set to nullptr for MockFrameConnectorDelegate). To avoid crashing the test
+// |frame_connector_| is to set to nullptr in the 2 tests below.
+
 TEST_F(RenderWidgetHostViewChildFrameTest, ShowHide) {
-  // Calling show and hide also needs to be propagated to child frame by the
-  // |frame_connector_| which itself requires a |frame_proxy_in_parent_renderer|
-  // (set to nullptr for MockFrameConnectorDelegate). To avoid crashing the test
-  // |frame_connector_| is to set to nullptr.
   view_->SetFrameConnectorDelegate(nullptr);
   RenderWidgetHostViewBase_TestShowHide(view_);
 }
 
-// No occlusion test because RenderWidgetHostViewChildFrame doesn't track its
+TEST_F(RenderWidgetHostViewChildFrameTest, ShowHideAndCapture) {
+  view_->SetFrameConnectorDelegate(nullptr);
+  RenderWidgetHostViewBase_TestShowHideAndCapture(view_, &delegate_);
+}
+
+// No occlusion tests because RenderWidgetHostViewChildFrame doesn't track its
 // occlusion.
 
 // Verify that SubmitCompositorFrame behavior is correct when a delegated

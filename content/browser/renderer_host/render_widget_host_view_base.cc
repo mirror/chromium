@@ -5,6 +5,7 @@
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 
 #include "base/bind.h"
+#include "base/command_line.h"
 #include "base/logging.h"
 #include "base/unguessable_token.h"
 #include "build/build_config.h"
@@ -19,6 +20,7 @@
 #include "content/browser/renderer_host/text_input_manager.h"
 #include "content/common/content_switches_internal.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/content_switches.h"
 #include "media/base/video_frame.h"
 #include "ui/base/layout.h"
 #include "ui/base/ui_base_types.h"
@@ -143,10 +145,23 @@ ui::TextInputClient* RenderWidgetHostViewBase::GetTextInputClient() {
   return nullptr;
 }
 
-void RenderWidgetHostViewBase::CaptureStateChanged() {}
+void RenderWidgetHostViewBase::Hide() {
+  DoHide();
+  DCHECK_EQ(Visibility::HIDDEN, GetVisibility());
+
+  // If the view was already hidden, DoHide() might not have called
+  // VisibilityChanged() and the host might still assume it's visible. Call
+  // WasHidden() directly to ensure that the RenderWidgetHost is hidden.
+  if (!IsBeingCaptured())
+    WasHidden();
+}
 
 bool RenderWidgetHostViewBase::IsShowing() {
   return GetVisibility() != Visibility::HIDDEN;
+}
+
+void RenderWidgetHostViewBase::CaptureStateChanged() {
+  VisibilityOrCaptureStateChanged();
 }
 
 void RenderWidgetHostViewBase::SetIsInVR(bool is_in_vr) {
@@ -561,6 +576,10 @@ viz::SurfaceId RenderWidgetHostViewBase::SurfaceIdForTesting() const {
   return viz::SurfaceId();
 }
 
+void RenderWidgetHostViewBase::VisibilityChanged() {
+  VisibilityOrCaptureStateChanged();
+}
+
 #if defined(USE_AURA)
 void RenderWidgetHostViewBase::OnDidScheduleEmbed(
     int routing_id,
@@ -596,7 +615,40 @@ RenderWidgetHostViewBase::GetWindowTreeClientFromRenderer() {
       mojo::MakeRequest(&render_widget_window_tree_client_));
   return window_tree_client;
 }
-
 #endif
+
+void RenderWidgetHostViewBase::VisibilityOrCaptureStateChanged() {
+  Visibility visibility = GetVisibility();
+
+  // Occlusion is undesirable for browser tests, since it will flakily change
+  // test behavior.
+  static const bool occlusion_disabled =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableBackgroundingOccludedWindowsForTesting);
+
+  if (occlusion_disabled && visibility == Visibility::OCCLUDED)
+    visibility = Visibility::VISIBLE;
+
+  if (visibility == Visibility::VISIBLE)
+    was_ever_visible_ = true;
+
+  if (visibility == Visibility::VISIBLE || IsBeingCaptured()) {
+    WasShown();
+  } else {
+    // If the view was never visible, trust that its initial visibility is
+    // correct and don't call WasHidden(). It is important not to call
+    // WasHidden() in these situations that may trigger VisibilityChanged():
+    // - The view is added to a hidden parent that is about to be shown.
+    // - The view is added to a hidden parent but is still expected to act
+    //   like if it was visible (e.g. prerendering).
+    if (was_ever_visible_)
+      WasHidden();
+  }
+}
+
+bool RenderWidgetHostViewBase::IsBeingCaptured() const {
+  RenderWidgetHostImpl* const host = GetRenderWidgetHostImpl();
+  return host && host->IsBeingCaptured();
+}
 
 }  // namespace content

@@ -1653,10 +1653,27 @@ TEST_F(RenderWidgetHostViewAuraTest, FinishCompositionByMouse) {
             GetMessageNames(GetAndResetDispatchedMessages()));
 }
 
+TEST_F(RenderWidgetHostViewAuraTest, AddToHiddenParent) {
+  aura_test_helper_->root_window()->Hide();
+  view_->InitAsChild(aura_test_helper_->root_window());
+
+  // The host shouldn't be hidden when the view is added to an hidden parent
+  // before having been shown once.
+  EXPECT_FALSE(view_->GetRenderWidgetHostImpl()->is_hidden());
+}
+
 TEST_F(RenderWidgetHostViewAuraTest, ShowHide) {
   view_->InitAsChild(aura_test_helper_->root_window());
   view_->SetBounds(kViewBounds);
   RenderWidgetHostViewBase_TestShowHide(view_);
+}
+
+TEST_F(RenderWidgetHostViewAuraTest, ShowHideAndCapture) {
+  view_->InitAsChild(aura_test_helper_->root_window());
+  view_->SetBounds(kViewBounds);
+
+  RenderWidgetHostViewBase_TestShowHideAndCapture(
+      view_, render_widget_host_delegate());
 }
 
 TEST_F(RenderWidgetHostViewAuraTest, Occlusion) {
@@ -1680,41 +1697,26 @@ TEST_F(RenderWidgetHostViewAuraTest, Occlusion) {
                  base::Unretained(other_window.get())));
 }
 
-// Checks that WasOcculded/WasUnOccluded notifies RenderWidgetHostImpl.
-TEST_F(RenderWidgetHostViewAuraTest, WasOccluded) {
-  view_->InitAsChild(nullptr);
-  view_->Show();
-  EXPECT_FALSE(widget_host_->is_hidden());
+TEST_F(RenderWidgetHostViewAuraTest, OcclusionAndCapture) {
+  view_->InitAsChild(aura_test_helper_->root_window());
+  view_->SetBounds(kViewBounds);
 
-  // Verifies WasOccluded sets RenderWidgetHostImpl as hidden and WasUnOccluded
-  // resets the state.
-  view_->WasOccluded();
-  EXPECT_TRUE(widget_host_->is_hidden());
-  view_->WasUnOccluded();
-  EXPECT_FALSE(widget_host_->is_hidden());
+  std::unique_ptr<aura::Window> other_window(
+      aura::test::CreateTestWindowWithDelegateAndType(
+          nullptr, aura::client::WINDOW_TYPE_NORMAL, 0, kViewBounds,
+          aura_test_helper_->root_window(), false));
 
-  // Verifies WasOccluded sets RenderWidgetHostImpl as hidden and Show resets
-  // the state.
-  view_->WasOccluded();
-  EXPECT_TRUE(widget_host_->is_hidden());
-  view_->Show();
-  EXPECT_FALSE(widget_host_->is_hidden());
-
-  // WasOccluded and WasUnOccluded are not in pairs. The last one dictates
-  // the final state.
-  for (int i = 0; i < 2; ++i) {
-    view_->WasOccluded();
-    EXPECT_TRUE(widget_host_->is_hidden());
-  }
-  view_->WasUnOccluded();
-  EXPECT_FALSE(widget_host_->is_hidden());
-
-  for (int i = 0; i < 4; ++i) {
-    view_->WasUnOccluded();
-    EXPECT_FALSE(widget_host_->is_hidden());
-  }
-  view_->WasOccluded();
-  EXPECT_TRUE(widget_host_->is_hidden());
+  RenderWidgetHostViewBase_TestOcclusionAndCapture(
+      view_, render_widget_host_delegate(),
+      base::BindRepeating(
+          [](aura::Window* other_window, bool view_is_occluded) {
+            // Show/hide another window to occlude |view_|.
+            if (view_is_occluded)
+              other_window->Show();
+            else
+              other_window->Hide();
+          },
+          base::Unretained(other_window.get())));
 }
 
 // Checks that touch-event state is maintained correctly.
@@ -3213,6 +3215,8 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
         MakeDelegatedFrame(1.f, frame_size, view_rect), nullptr);
     ASSERT_TRUE(views[i]->HasPrimarySurface());
     EXPECT_TRUE(views[i]->HasFallbackSurface());
+    // Set bounds so that views don't occlude each other.
+    views[i]->SetBounds(gfx::Rect(300 * i, 0, 300, 300));
     views[i]->Hide();
   }
 
@@ -3335,7 +3339,9 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
         views[i]->GetNativeView(),
         parent_view_->GetNativeView()->GetRootWindow(),
         gfx::Rect());
-    views[i]->SetSize(view_rect.size());
+    // Set bounds so that views don't occlude each other.
+    views[i]->SetBounds(gfx::Rect(view_rect.width() * i, 0, view_rect.width(),
+                                  view_rect.height()));
   }
 
   // Make each renderer visible, and swap a frame on it, then make it invisible.
@@ -3479,7 +3485,9 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFramesWithLocking) {
         views[i]->GetNativeView(),
         parent_view_->GetNativeView()->GetRootWindow(),
         gfx::Rect());
-    views[i]->SetSize(view_rect.size());
+    // Set bounds so that views don't occlude each other.
+    views[i]->SetBounds(gfx::Rect(view_rect.width() * i, 0, view_rect.width(),
+                                  view_rect.height()));
   }
 
   // Make each renderer visible and swap a frame on it. No eviction should
@@ -3553,7 +3561,9 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFramesWithMemoryPressure) {
         views[i]->GetNativeView(),
         parent_view_->GetNativeView()->GetRootWindow(),
         gfx::Rect());
-    views[i]->SetSize(view_rect.size());
+    // Set bounds so that views don't occlude each other.
+    views[i]->SetBounds(gfx::Rect(view_rect.width() * i, 0, view_rect.width(),
+                                  view_rect.height()));
   }
 
   // Make each renderer visible and swap a frame on it. No eviction should

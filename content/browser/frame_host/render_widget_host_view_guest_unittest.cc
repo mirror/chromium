@@ -101,6 +101,10 @@ TEST_F(RenderWidgetHostViewGuestTest, ShowHide) {
   RenderWidgetHostViewBase_TestShowHide(view_);
 }
 
+TEST_F(RenderWidgetHostViewGuestTest, ShowHideAndCapture) {
+  RenderWidgetHostViewBase_TestShowHideAndCapture(view_, &delegate_);
+}
+
 // No occlusion test because RenderWidgetHostViewGuest doesn't track its
 // occlusion.
 

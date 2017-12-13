@@ -108,10 +108,9 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   RenderWidgetHost* GetRenderWidgetHost() const final;
   void SetBackgroundColorToDefault() final;
   ui::TextInputClient* GetTextInputClient() override;
+  void Hide() final;
   bool IsShowing() final;
   void CaptureStateChanged() override;
-  void WasUnOccluded() override {}
-  void WasOccluded() override {}
   void SetIsInVR(bool is_in_vr) override;
   base::string16 GetSelectedText() override;
   bool IsMouseLocked() override;
@@ -547,12 +546,38 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
 
   WebContentsAccessibility* web_contents_accessibility_;
 
+ protected:
+  // Implementations must call this when the visibility of the view changes.
+  // Calls WasShown()/WasHidden() depending on the visibility and capture state
+  // of the view.
+  void VisibilityChanged();
+
  private:
 #if defined(USE_AURA)
   void OnDidScheduleEmbed(int routing_id,
                           int embed_id,
                           const base::UnguessableToken& token);
 #endif
+
+  // Invoked from Hide(). Should hide the view.
+  virtual void DoHide() = 0;
+
+  // Invoked when the view becomes visible and/or captured.
+  virtual void WasShown() = 0;
+
+  // Invoked when the view becomes non-visible and non-captured.
+  virtual void WasHidden() = 0;
+
+  // Calls WasShown()/WasHidden() depending on the visibility and capture state
+  // of the view.
+  void VisibilityOrCaptureStateChanged();
+
+  // Returns true if the view is being captured (e.g. for screenshots or
+  // mirroring).
+  bool IsBeingCaptured() const;
+
+  // Whether the view was ever visible.
+  bool was_ever_visible_ = false;
 
   gfx::Rect current_display_area_;
 

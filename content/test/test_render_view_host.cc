@@ -119,11 +119,6 @@ bool TestRenderWidgetHostView::HasFocus() const {
 
 void TestRenderWidgetHostView::Show() {
   is_showing_ = true;
-  is_occluded_ = false;
-}
-
-void TestRenderWidgetHostView::Hide() {
-  is_showing_ = false;
 }
 
 Visibility TestRenderWidgetHostView::GetVisibility() const {
@@ -132,14 +127,6 @@ Visibility TestRenderWidgetHostView::GetVisibility() const {
 
 void TestRenderWidgetHostView::CaptureStateChanged() {
   ++num_capture_state_changed_;
-}
-
-void TestRenderWidgetHostView::WasUnOccluded() {
-  is_occluded_ = false;
-}
-
-void TestRenderWidgetHostView::WasOccluded() {
-  is_occluded_ = true;
 }
 
 void TestRenderWidgetHostView::RenderProcessGone(base::TerminationStatus status,
@@ -231,6 +218,14 @@ void TestRenderWidgetHostView::OnFirstSurfaceActivation(
 void TestRenderWidgetHostView::OnFrameTokenChanged(uint32_t frame_token) {
   OnFrameTokenChangedForView(frame_token);
 }
+
+void TestRenderWidgetHostView::DoHide() {
+  is_showing_ = false;
+}
+
+void TestRenderWidgetHostView::WasShown() {}
+
+void TestRenderWidgetHostView::WasHidden() {}
 
 TestRenderViewHost::TestRenderViewHost(
     SiteInstance* instance,

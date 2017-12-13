@@ -114,7 +114,6 @@ class CONTENT_EXPORT RenderWidgetHostView {
   virtual bool HasFocus() const = 0;
 
   // Shows/hides the view.  These must always be called together in pairs.
-  // It is not legal to call Hide() multiple times in a row.
   virtual void Show() = 0;
   virtual void Hide() = 0;
 
@@ -128,14 +127,6 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // Must be called when this view starts/stops being captured (e.g. for
   // screenshots or mirroring).
   virtual void CaptureStateChanged() = 0;
-
-  // Indicates if the view is currently occluded (e.g, not visible because it's
-  // covered up by other windows), and as a result the view's renderer may be
-  // suspended. If Show() is called on a view then its state should be re-set to
-  // being un-occluded (an explicit WasUnOccluded call will not be made for
-  // that). These calls are not necessarily made in pairs.
-  virtual void WasUnOccluded() = 0;
-  virtual void WasOccluded() = 0;
 
   // Retrieve the bounds of the View, in screen coordinates.
   virtual gfx::Rect GetViewBounds() const = 0;

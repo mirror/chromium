@@ -54,7 +54,11 @@ TEST_F(RenderWidgetHostViewAndroidTest, ShowHide) {
   RenderWidgetHostViewBase_TestShowHide(view_);
 }
 
-// No occlusion test because RenderWidgetHostViewAndroid doesn't track its
+TEST_F(RenderWidgetHostViewAndroidTest, ShowHideAndCapture) {
+  RenderWidgetHostViewBase_TestShowHideAndCapture(view_, &delegate_);
+}
+
+// No occlusion tests because RenderWidgetHostViewAndroid doesn't track its
 // occlusion.
 
 }  // namespace content

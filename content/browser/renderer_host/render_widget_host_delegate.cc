@@ -80,6 +80,10 @@ TextInputManager* RenderWidgetHostDelegate::GetTextInputManager() {
   return nullptr;
 }
 
+bool RenderWidgetHostDelegate::IsBeingCaptured() const {
+  return false;
+}
+
 bool RenderWidgetHostDelegate::IsHidden() {
   return false;
 }
