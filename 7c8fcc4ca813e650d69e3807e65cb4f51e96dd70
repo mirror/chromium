@@ -46,6 +46,30 @@
       "revId": "7c8fcc4ca813e650d69e3807e65cb4f51e96dd70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bcd526_e813f8c9",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T11:45:31Z",
+      "side": 1,
+      "message": "Note to self - if we agree on keeping the 0 in line 143 in the .cc file, I should still change it to 0u.",
+      "parentUuid": "42926dab_77f432cb",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "7c8fcc4ca813e650d69e3807e65cb4f51e96dd70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
