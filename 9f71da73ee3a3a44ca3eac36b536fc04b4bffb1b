@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7b92a8ca_27c1899d",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-13T17:06:36Z",
+      "side": 1,
+      "message": "Ah, it\u0027s a bug in my English :) I somehow mixed up ceiling and floor :))",
+      "parentUuid": "457e562a_3e5c76bb",
+      "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72a3cd34_bfbfcdcc",
         "filename": "media/base/audio_latency.cc",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "What\u0027s missing are the different max buffer sizes per platform, and the fact that we only want to increase the final Web Audio buffer size by multiples of the chosen hardware buffer size and not the minimum. On OSX for example if someone requests a buffer size of 5000 frames we would have:\n\nbuffer_size \u003d [5000/128]*128 \u003d 5120\noutput_buffer_size \u003d clamp(5120) between 128 and 4096 \u003d 4096\nrounded_buffer_size \u003d [5000/4096]*4096 \u003d 8192\n\nThe thought here being that we know the hardware can run at 4096 so it doesn\u0027t make sense for Web Audio to run at 5120, but 8192 would make sense. For values below the max though you\u0027re right that this calculation is redundant.\n\nMaybe the code could be simplified by shortcutting the calculations if requested_buffer_size is \u003e kMaxAudioBufferSize. Do you want me to try to refactor this a bit? Or does any of this not make sense?",
       "parentUuid": "72a3cd34_bfbfcdcc",
+      "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e12767_7e84cb7f",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-13T17:06:36Z",
+      "side": 1,
+      "message": "How do we guarantee that output_buffer_size is still a multiple of minimum buffer size and where is it documented? And why it has to be a multiplier of minimum buffer size? Why we don\u0027t relate to the actual hardware buffer size instead? Could you put rationale for calculations into the comment?\nRefactoring would be helpful! Thanks",
+      "parentUuid": "85e8b099_4480b1f6",
       "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
