@@ -22,6 +22,30 @@
       "revId": "ef50e9f8e6b33a9249e16e02f13d9558b91b008e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "445aeeaf_9866f81c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 981,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-13T15:53:03Z",
+      "side": 1,
+      "message": "I don\u0027t think this call needs to be after the overlay has been set up. Since we\u0027re no longer pushing information to the renderer, it is no longer a dependency for this. We should be able to call this immediately before mSearchPanel.loadUrlInPanel(...) in #loadSearchUrl. This way, there is no ambiguity in the order of events; we never have to worry about the renderer querying the browser before this is set.",
+      "parentUuid": "675b68e8_8e2c4c7f",
+      "range": {
+        "startLine": 981,
+        "startChar": 0,
+        "endLine": 981,
+        "endChar": 92
+      },
+      "revId": "ef50e9f8e6b33a9249e16e02f13d9558b91b008e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
