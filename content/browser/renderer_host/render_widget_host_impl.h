@@ -627,6 +627,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       const std::vector<gfx::Rect>& character_bounds) override;
   void OnImeCancelComposition() override;
 
+  void WasEvicted();
+
  protected:
   // ---------------------------------------------------------------------------
   // The following method is overridden by RenderViewHost to send upwards to
