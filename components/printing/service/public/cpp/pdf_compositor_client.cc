@@ -16,7 +16,6 @@ namespace {
 // PdfCompositor pipe open just long enough to dispatch a reply, at which point
 // the reply is forwarded to the wrapped |callback|.
 void OnCompositeToPdf(
-    printing::mojom::PdfCompositorPtr compositor,
     printing::mojom::PdfCompositor::CompositeToPdfCallback callback,
     scoped_refptr<base::SequencedTaskRunner> task_runner,
     mojom::PdfCompositor::Status status,
@@ -26,7 +25,6 @@ void OnCompositeToPdf(
 }
 
 void OnIsReadyToComposite(
-    mojom::PdfCompositorPtr compositor,
     printing::mojom::PdfCompositor::IsReadyToCompositeCallback callback,
     scoped_refptr<base::SequencedTaskRunner> task_runner,
     bool is_ready) {
@@ -83,8 +81,8 @@ void PdfCompositorClient::IsReadyToComposite(
 
   compositor_->IsReadyToComposite(
       frame_id, page_num, subframe_content_ids,
-      base::BindOnce(&OnIsReadyToComposite, base::Passed(&compositor_),
-                     std::move(callback), callback_task_runner));
+      base::BindOnce(&OnIsReadyToComposite, std::move(callback),
+                     callback_task_runner));
 }
 
 // Composite the final picture and convert into a PDF file.
@@ -106,8 +104,8 @@ void PdfCompositorClient::CompositeToPdf(
 
   compositor_->CompositeToPdf(
       frame_id, page_num, std::move(buffer_handle), subframe_content_ids,
-      base::BindOnce(&OnCompositeToPdf, base::Passed(&compositor_),
-                     std::move(callback), callback_task_runner));
+      base::BindOnce(&OnCompositeToPdf, std::move(callback),
+                     callback_task_runner));
 }
 
 }  // namespace printing
