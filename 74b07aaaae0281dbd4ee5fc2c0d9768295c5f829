@@ -70,6 +70,30 @@
       "revId": "74b07aaaae0281dbd4ee5fc2c0d9768295c5f829",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d190ef91_668048f3",
+        "filename": "extensions/browser/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T05:05:09Z",
+      "side": 1,
+      "message": "I think it\u0027s good to keep a bug about it, because it\u0027s not desirable (even if fixing it isn\u0027t currently heavily staffed).  I\u0027ve updated the bug reference and the TODO to let James off the hook. :)",
+      "parentUuid": "0efaa917_a0b6652a",
+      "range": {
+        "startLine": 45,
+        "startChar": 37,
+        "endLine": 45,
+        "endChar": 60
+      },
+      "revId": "74b07aaaae0281dbd4ee5fc2c0d9768295c5f829",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
