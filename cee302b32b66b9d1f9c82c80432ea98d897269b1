@@ -22,6 +22,30 @@
       "revId": "cee302b32b66b9d1f9c82c80432ea98d897269b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d978a405_d6ac2ac3",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-12-13T01:22:56Z",
+      "side": 1,
+      "message": "Note that this is just moving code.\n\nThe \"arm\" here comes from what LLVM calls the architecture, and it uses a different name than GN for every supported architecture other than ARM, so I don\u0027t think that would be correct. I will try to fix this in a followup.",
+      "parentUuid": "996067b0_8ad2a9a9",
+      "range": {
+        "startLine": 18,
+        "startChar": 107,
+        "endLine": 18,
+        "endChar": 110
+      },
+      "revId": "cee302b32b66b9d1f9c82c80432ea98d897269b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
