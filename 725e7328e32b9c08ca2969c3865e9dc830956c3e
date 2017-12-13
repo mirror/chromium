@@ -52,6 +52,24 @@
       "revId": "725e7328e32b9c08ca2969c3865e9dc830956c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cfb50a3_9cd0e594",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-12-13T00:32:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0634a03e_77de46dd",
+      "revId": "725e7328e32b9c08ca2969c3865e9dc830956c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
