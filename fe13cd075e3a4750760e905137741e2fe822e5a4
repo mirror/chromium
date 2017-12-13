@@ -22,6 +22,30 @@
       "revId": "fe13cd075e3a4750760e905137741e2fe822e5a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57645c4_c0ee0d19",
+        "filename": "build/android/bytecode/java/org/chromium/bytecode/CustomResourcesClassAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-12-13T20:44:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ec6573f2_2df395df",
+      "range": {
+        "startLine": 181,
+        "startChar": 35,
+        "endLine": 181,
+        "endChar": 93
+      },
+      "revId": "fe13cd075e3a4750760e905137741e2fe822e5a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
