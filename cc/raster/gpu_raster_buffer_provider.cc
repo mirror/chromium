@@ -53,8 +53,8 @@ static void RasterizeSourceOOP(
   float recording_to_raster_scale =
       transform.scale() / raster_source->recording_scale_factor();
   gl->RasterCHROMIUM(raster_source->GetDisplayItemList().get(),
-                     raster_full_rect.x(), raster_full_rect.y(),
-                     playback_rect.x(), playback_rect.y(),
+                     playback_settings.image_provider, raster_full_rect.x(),
+                     raster_full_rect.y(), playback_rect.x(), playback_rect.y(),
                      playback_rect.width(), playback_rect.height(),
                      transform.translation().x(), transform.translation().y(),
                      recording_to_raster_scale);

@@ -12,6 +12,7 @@
 namespace cc {
 class ClientTransferCacheEntry;
 class DisplayItemList;
+class ImageProvider;
 }
 
 extern "C" typedef struct _ClientBuffer* ClientBuffer;
