@@ -71,6 +71,14 @@ for (let params of testParams) {
   }, "toString is correct for " + params.cssText);
 }
 
+for (let params of testParams) {
+  let matrixComponent = new CSSMatrixComponent(params.input, {});
+
+  test(() => {
+    assert_equals(matrixComponent.is2D, params.input.is2D);
+  }, "is2D value should be matrix's is2D when second parameter is not CSSMatrixComponentOptions");
+}
+
 test(() => {
   assert_throws(new TypeError(), () => { new CSSMatrixComponent(); });
   assert_throws(new TypeError(), () => { new CSSMatrixComponent(0); });
