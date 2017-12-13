@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d257271_a4a4b027",
+        "filename": "third_party/WebKit/Source/core/animation/PropertyHandle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-13T12:57:34Z",
+      "side": 0,
+      "message": "Yep, impossible. The result of PropertyID is hard-coded into every subclass by the generator. The base class returns CSSPropertyInvalid, but only after a NOTREACHED().",
+      "parentUuid": "123166fe_83e4ecc3",
+      "revId": "027cb41e6f3eb2ebc1c3c21ab1d70fd0e91c244f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e1f1410_a1175b0a",
         "filename": "third_party/WebKit/Source/core/animation/PropertyHandle.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T03:37:14Z",
       "side": 0,
       "message": "nit: It\u0027s not a big deal in this case, but the contained expression is still evaluated in non-debug mode. You should use DCHECK_NE(CSSPropertyVariable, property.PropertyID()) to avoid this.",
+      "revId": "027cb41e6f3eb2ebc1c3c21ab1d70fd0e91c244f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa66bd34_20e8ef4c",
+        "filename": "third_party/WebKit/Source/core/animation/PropertyHandle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-13T12:57:34Z",
+      "side": 0,
+      "message": "Oh interesting. If I change it to DCHECK_NE(CSSPropertyVariable, property.PropertyID()) is property.PropertyID() still evaluated, or only does it only happen in the straight DCHECK version?",
+      "parentUuid": "9e1f1410_a1175b0a",
       "revId": "027cb41e6f3eb2ebc1c3c21ab1d70fd0e91c244f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
