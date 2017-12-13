@@ -44,5 +44,8 @@ const base::Feature kMissingViaHeaderShortDuration{
 const base::Feature kDataReductionProxyRobustConnection{
     "DataReductionProxyRobustConnection", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enabled for Chrome dogfooders.
+const base::Feature kDogfood{"Dogfood", base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features
 }  // namespace data_reduction_proxy
