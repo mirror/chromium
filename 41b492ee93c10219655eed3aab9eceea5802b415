@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eb4d5e0_4ef1be15",
+        "filename": "chromeos/chromeos_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-13T23:19:11Z",
+      "side": 1,
+      "message": "can you a comment here?",
+      "revId": "41b492ee93c10219655eed3aab9eceea5802b415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
