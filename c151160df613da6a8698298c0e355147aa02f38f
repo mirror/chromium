@@ -48,6 +48,53 @@
     },
     {
       "key": {
+        "uuid": "b2a4fcdb_738678ed",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-13T23:09:51Z",
+      "side": 1,
+      "message": "I agree; this change should be reverted.",
+      "parentUuid": "35c15c5b_30009a45",
+      "range": {
+        "startLine": 127,
+        "startChar": 38,
+        "endLine": 127,
+        "endChar": 62
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b89aa20_0f084b4f",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-13T23:09:51Z",
+      "side": 1,
+      "message": "Putting this check here is kinda odd. I\u0027d expect it to live in ReadSimpleValue, since floating point values do use the Simple Value major type.",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 3
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc8bdd2a_67e59190",
         "filename": "content/browser/webauth/cbor/cbor_reader.cc",
         "patchSetId": 9
@@ -82,6 +129,30 @@
       "writtenOn": "2017-12-13T21:58:41Z",
       "side": 1,
       "message": "Jeffrey, is this preferred over strict_cast, even if the output type can represent the entire range of the input type (both are int in this case).",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 27
+      },
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43b8f2c_9a09dd70",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-13T23:09:51Z",
+      "side": 1,
+      "message": "I think strict_cast is always preferred when it compiles.",
+      "parentUuid": "f5b8ffe7_b87f5aed",
       "range": {
         "startLine": 155,
         "startChar": 15,
@@ -379,6 +450,24 @@
     },
     {
       "key": {
+        "uuid": "53294d50_d86425d9",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-13T23:09:51Z",
+      "side": 1,
+      "message": "We can\u0027t actually use CBORValue in a constant expression since the destructor isn\u0027t defaulted, so I don\u0027t think it\u0027s worth obfuscating the initialization like this.",
+      "parentUuid": "7bfa1571_7823760f",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "020036b0_04703d2b",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 9
@@ -390,6 +479,24 @@
       "writtenOn": "2017-12-13T21:58:41Z",
       "side": 1,
       "message": "Jeffrey, what do you think about making the underlying type unsigned here?",
+      "revId": "c151160df613da6a8698298c0e355147aa02f38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6dd1688_fd3086d5",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-12-13T23:09:51Z",
+      "side": 1,
+      "message": "I generally favor signed types when we\u0027re not representing bits. For this particular enum, I don\u0027t expect the underlying type to matter, although I could be missing something.",
+      "parentUuid": "020036b0_04703d2b",
       "revId": "c151160df613da6a8698298c0e355147aa02f38f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
