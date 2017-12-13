@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "46ef56d4_8d96a076",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1609,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-13T00:47:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc3c8245_945f43ce",
+      "revId": "5d3dfd66065d6c2ba8d8d423701ab3bc8996b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34bc8f15_41455cf2",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5d3dfd66065d6c2ba8d8d423701ab3bc8996b331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ca6376_a63180f7",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-13T00:47:59Z",
+      "side": 1,
+      "message": "thanks for the suggestion!",
+      "parentUuid": "34bc8f15_41455cf2",
+      "revId": "5d3dfd66065d6c2ba8d8d423701ab3bc8996b331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
