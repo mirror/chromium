@@ -178,8 +178,15 @@ void MojoAudioDecoder::OnInitialized(bool success,
 
   if (success && !mojo_decoder_buffer_writer_) {
     mojo::ScopedDataPipeConsumerHandle remote_consumer_handle;
-    mojo_decoder_buffer_writer_ = MojoDecoderBufferWriter::Create(
-        DemuxerStream::AUDIO, &remote_consumer_handle);
+
+    if (writer_capacity_for_testing_ == 0) {
+      mojo_decoder_buffer_writer_ = MojoDecoderBufferWriter::Create(
+          DemuxerStream::AUDIO, &remote_consumer_handle);
+    } else {
+      mojo_decoder_buffer_writer_ = MojoDecoderBufferWriter::Create(
+          writer_capacity_for_testing_, &remote_consumer_handle);
+    }
+
     // Pass consumer end to |remote_decoder_|.
     remote_decoder_->SetDataSource(std::move(remote_consumer_handle));
   }

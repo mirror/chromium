@@ -275,10 +275,15 @@ void MojoVideoDecoder::BindRemoteDecoder() {
       base::MakeRefCounted<MojoVideoFrameHandleReleaser>(
           std::move(video_frame_handle_releaser_ptr_info), task_runner_);
 
-  // Create |decoder_buffer_pipe|, and bind |mojo_decoder_buffer_writer_| to it.
   mojo::ScopedDataPipeConsumerHandle remote_consumer_handle;
-  mojo_decoder_buffer_writer_ = MojoDecoderBufferWriter::Create(
-      DemuxerStream::VIDEO, &remote_consumer_handle);
+
+  if (writer_capacity_for_testing_ == 0) {
+    mojo_decoder_buffer_writer_ = MojoDecoderBufferWriter::Create(
+        DemuxerStream::VIDEO, &remote_consumer_handle);
+  } else {
+    mojo_decoder_buffer_writer_ = MojoDecoderBufferWriter::Create(
+        writer_capacity_for_testing_, &remote_consumer_handle);
+  }
 
   // Generate |command_buffer_id|.
   media::mojom::CommandBufferIdPtr command_buffer_id;

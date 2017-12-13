@@ -82,8 +82,11 @@ void MojoAudioDecoderService::Decode(mojom::DecoderBufferPtr buffer,
 
 void MojoAudioDecoderService::Reset(ResetCallback callback) {
   DVLOG(1) << __func__;
-  decoder_->Reset(base::Bind(&MojoAudioDecoderService::OnResetDone, weak_this_,
-                             base::Passed(&callback)));
+
+  // Reset the reader so that pending decodes will be dispatches first.
+  mojo_decoder_buffer_reader_->Reset(
+      base::Bind(&MojoAudioDecoderService::OnReaderResetDone, weak_this_,
+                 base::Passed(&callback)));
 }
 
 void MojoAudioDecoderService::OnInitialized(
@@ -116,6 +119,11 @@ void MojoAudioDecoderService::OnReadDone(DecodeCallback callback,
 
   decoder_->Decode(buffer, base::Bind(&MojoAudioDecoderService::OnDecodeStatus,
                                       weak_this_, base::Passed(&callback)));
+}
+
+void MojoAudioDecoderService::OnReaderResetDone(ResetCallback callback) {
+  decoder_->Reset(base::Bind(&MojoAudioDecoderService::OnResetDone, weak_this_,
+                             base::Passed(&callback)));
 }
 
 void MojoAudioDecoderService::OnDecodeStatus(DecodeCallback callback,

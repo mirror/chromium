@@ -44,6 +44,10 @@ class MojoAudioDecoder : public AudioDecoder, public mojom::AudioDecoderClient {
   // AudioDecoderClient implementation.
   void OnBufferDecoded(mojom::AudioBufferPtr buffer) final;
 
+  void set_writer_capacity_for_testing(uint32_t capacity) {
+    writer_capacity_for_testing_ = capacity;
+  }
+
  private:
   void BindRemoteDecoder();
 
@@ -70,6 +74,9 @@ class MojoAudioDecoder : public AudioDecoder, public mojom::AudioDecoderClient {
   mojom::AudioDecoderPtr remote_decoder_;
 
   std::unique_ptr<MojoDecoderBufferWriter> mojo_decoder_buffer_writer_;
+
+  // Used for testing. If 0, default size will be used.
+  uint32_t writer_capacity_for_testing_ = 0;
 
   // Binding for AudioDecoderClient, bound to the |task_runner_|.
   mojo::AssociatedBinding<AudioDecoderClient> client_binding_;

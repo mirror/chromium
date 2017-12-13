@@ -19,7 +19,7 @@ namespace media {
 
 namespace {
 
-std::unique_ptr<mojo::DataPipe> CreateDataPipe(DemuxerStream::Type type) {
+uint32_t GetDefaultCapacity(DemuxerStream::Type type) {
   uint32_t capacity = 0;
 
   if (type == DemuxerStream::AUDIO) {
@@ -36,7 +36,7 @@ std::unique_ptr<mojo::DataPipe> CreateDataPipe(DemuxerStream::Type type) {
     capacity = 512 * 1024;
   }
 
-  return base::MakeUnique<mojo::DataPipe>(capacity);
+  return capacity;
 }
 
 bool IsPipeReadWriteError(MojoResult result) {
@@ -52,10 +52,20 @@ std::unique_ptr<MojoDecoderBufferReader> MojoDecoderBufferReader::Create(
     DemuxerStream::Type type,
     mojo::ScopedDataPipeProducerHandle* producer_handle) {
   DVLOG(1) << __func__;
-  std::unique_ptr<mojo::DataPipe> data_pipe = CreateDataPipe(type);
+  return Create(GetDefaultCapacity(type), producer_handle);
+}
+
+// static
+std::unique_ptr<MojoDecoderBufferReader> MojoDecoderBufferReader::Create(
+    uint32_t capacity,
+    mojo::ScopedDataPipeProducerHandle* producer_handle) {
+  DVLOG(1) << __func__;
+  DCHECK_GT(capacity, 0u);
+
+  auto data_pipe = std::make_unique<mojo::DataPipe>(capacity);
   *producer_handle = std::move(data_pipe->producer_handle);
-  return base::WrapUnique(
-      new MojoDecoderBufferReader(std::move(data_pipe->consumer_handle)));
+  return std::make_unique<MojoDecoderBufferReader>(
+      std::move(data_pipe->consumer_handle));
 }
 
 MojoDecoderBufferReader::MojoDecoderBufferReader(
@@ -81,6 +91,8 @@ MojoDecoderBufferReader::MojoDecoderBufferReader(
 MojoDecoderBufferReader::~MojoDecoderBufferReader() {
   DVLOG(1) << __func__;
   CancelAllPendingReadCBs();
+  if (reset_cb_)
+    std::move(reset_cb_).Run();
 }
 
 void MojoDecoderBufferReader::CancelReadCB(ReadCB read_cb) {
@@ -101,6 +113,8 @@ void MojoDecoderBufferReader::CancelAllPendingReadCBs() {
 
 void MojoDecoderBufferReader::CompleteCurrentRead() {
   DVLOG(4) << __func__;
+  DCHECK(!pending_read_cbs_.empty());
+  DCHECK_EQ(pending_read_cbs_.size(), pending_buffers_.size());
 
   ReadCB read_cb = std::move(pending_read_cbs_.front());
   pending_read_cbs_.pop_front();
@@ -112,6 +126,9 @@ void MojoDecoderBufferReader::CompleteCurrentRead() {
   bytes_read_ = 0;
 
   std::move(read_cb).Run(std::move(buffer));
+
+  if (pending_read_cbs_.empty() && reset_cb_)
+    std::move(reset_cb_).Run();
 }
 
 void MojoDecoderBufferReader::ScheduleNextRead() {
@@ -128,6 +145,7 @@ void MojoDecoderBufferReader::ReadDecoderBuffer(
     mojom::DecoderBufferPtr mojo_buffer,
     ReadCB read_cb) {
   DVLOG(3) << __func__;
+  DCHECK(!reset_cb_);
 
   if (!consumer_handle_.is_valid()) {
     DCHECK(pending_read_cbs_.empty());
@@ -150,6 +168,22 @@ void MojoDecoderBufferReader::ReadDecoderBuffer(
 
   // To reduce latency, always process pending reads immediately.
   ProcessPendingReads();
+}
+
+void MojoDecoderBufferReader::Reset(base::OnceClosure reset_cb) {
+  DVLOG(2) << __func__;
+  DCHECK(!reset_cb_);
+
+  if (pending_read_cbs_.empty()) {
+    std::move(reset_cb).Run();
+    return;
+  }
+
+  reset_cb_ = std::move(reset_cb);
+}
+
+bool MojoDecoderBufferReader::HasPendingReads() const {
+  return !pending_read_cbs_.empty();
 }
 
 void MojoDecoderBufferReader::OnPipeReadable(
@@ -213,6 +247,7 @@ void MojoDecoderBufferReader::ProcessPendingReads() {
     }
 
     DCHECK_EQ(result, MOJO_RESULT_OK);
+    DVLOG(4) << __func__ << ": " << num_bytes << " bytes read.";
     DCHECK_GT(num_bytes, 0u);
     bytes_read_ += num_bytes;
 
@@ -248,10 +283,20 @@ std::unique_ptr<MojoDecoderBufferWriter> MojoDecoderBufferWriter::Create(
     DemuxerStream::Type type,
     mojo::ScopedDataPipeConsumerHandle* consumer_handle) {
   DVLOG(1) << __func__;
-  std::unique_ptr<mojo::DataPipe> data_pipe = CreateDataPipe(type);
+  return Create(GetDefaultCapacity(type), consumer_handle);
+}
+
+// static
+std::unique_ptr<MojoDecoderBufferWriter> MojoDecoderBufferWriter::Create(
+    uint32_t capacity,
+    mojo::ScopedDataPipeConsumerHandle* consumer_handle) {
+  DVLOG(1) << __func__;
+  DCHECK_GT(capacity, 0u);
+
+  auto data_pipe = std::make_unique<mojo::DataPipe>(capacity);
   *consumer_handle = std::move(data_pipe->consumer_handle);
-  return base::WrapUnique(
-      new MojoDecoderBufferWriter(std::move(data_pipe->producer_handle)));
+  return std::make_unique<MojoDecoderBufferWriter>(
+      std::move(data_pipe->producer_handle));
 }
 
 MojoDecoderBufferWriter::MojoDecoderBufferWriter(
@@ -367,6 +412,7 @@ void MojoDecoderBufferWriter::ProcessPendingWrites() {
     }
 
     DCHECK_EQ(MOJO_RESULT_OK, result);
+    DVLOG(4) << __func__ << ": " << num_bytes << " bytes written.";
     DCHECK_GT(num_bytes, 0u);
     bytes_written_ += num_bytes;
     if (bytes_written_ == buffer_size) {
