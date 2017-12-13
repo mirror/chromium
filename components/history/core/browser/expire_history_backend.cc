@@ -511,6 +511,9 @@ void ExpireHistoryBackend::DoExpireIteration() {
 
 void ExpireHistoryBackend::ClearOldOnDemandFavicons(
     base::Time expiration_threshold) {
+  if (!thumb_db_)
+    return;
+
   if (!base::FeatureList::IsEnabled(internal::kClearOldOnDemandFavicons))
     return;
 
