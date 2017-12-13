@@ -225,7 +225,7 @@ public class ContextualSearchManager
         mTabModelObserver = new EmptyTabModelObserver() {
             @Override
             public void didSelectTab(Tab tab, TabSelectionType type, int lastId) {
-                if (!mIsPromotingToTab && tab.getId() != lastId
+                if ((!mIsPromotingToTab && tab.getId() != lastId)
                         || mActivity.getTabModelSelector().isIncognitoSelected()) {
                     hideContextualSearch(StateChangeReason.UNKNOWN);
                     mSelectionController.onTabSelected();
@@ -350,6 +350,15 @@ public class ContextualSearchManager
      */
     private @Nullable ContentViewCore getSearchPanelContentViewCore() {
         return mSearchPanel == null ? null : mSearchPanel.getContentViewCore();
+    }
+
+    /**
+     * @return the {@link WebContents} of the {@code mSearchPanel} or {@code null}.
+     */
+    private @Nullable WebContents getSearchPanelWebContents() {
+        return getSearchPanelContentViewCore() == null
+                ? null
+                : getSearchPanelContentViewCore().getWebContents();
     }
 
     /** @return The Base Page's {@link WebContents}. */
@@ -793,7 +802,9 @@ public class ContextualSearchManager
         assert mSearchPanel != null;
         mLoadedSearchUrlTimeMs = System.currentTimeMillis();
         mLastSearchRequestLoaded = mSearchRequest;
-        mSearchPanel.loadUrlInPanel(mSearchRequest.getSearchUrl());
+        String searchUrl = mSearchRequest.getSearchUrl();
+        nativeWhitelistContextualSearchJsApiUrl(mNativeContextualSearchManagerPtr, searchUrl);
+        mSearchPanel.loadUrlInPanel(searchUrl);
         mDidStartLoadingResolvedSearchRequest = true;
 
         // TODO(pedrosimonetti): If the user taps on a word and quickly after that taps on the
@@ -852,9 +863,9 @@ public class ContextualSearchManager
 
     @Override
     public void stopPanelContentsNavigation() {
-        if (getSearchPanelContentViewCore() == null) return;
+        if (getSearchPanelWebContents() == null) return;
 
-        getSearchPanelContentViewCore().getWebContents().stop();
+        getSearchPanelWebContents().stop();
     }
 
     // ============================================================================================
@@ -978,6 +989,8 @@ public class ContextualSearchManager
 
         @Override
         public void onContentLoadStarted(String url) {
+            nativeEnableContextualSearchJsApiForWebContents(
+                    mNativeContextualSearchManagerPtr, getSearchPanelWebContents());
             mDidPromoteSearchNavigation = false;
         }
 
@@ -1009,11 +1022,6 @@ public class ContextualSearchManager
 
         @Override
         public void onContentViewCreated(ContentViewCore contentViewCore) {
-            // TODO(donnd): Consider moving to OverlayPanelContent.
-            // Enable the Contextual Search JavaScript API between our service and the new view.
-            nativeEnableContextualSearchJsApiForOverlay(
-                    mNativeContextualSearchManagerPtr, contentViewCore.getWebContents());
-
             // TODO(mdjones): Move SearchContentViewDelegate ownership to panel.
             mSearchContentViewDelegate.setOverlayPanelContentViewCore(contentViewCore);
         }
@@ -1757,7 +1765,9 @@ public class ContextualSearchManager
             ContextualSearchContext contextualSearchContext, WebContents baseWebContents);
     protected native void nativeGatherSurroundingText(long nativeContextualSearchManager,
             ContextualSearchContext contextualSearchContext, WebContents baseWebContents);
-    private native void nativeEnableContextualSearchJsApiForOverlay(
+    private native void nativeWhitelistContextualSearchJsApiUrl(
+            long nativeContextualSearchManager, String url);
+    private native void nativeEnableContextualSearchJsApiForWebContents(
             long nativeContextualSearchManager, WebContents overlayWebContents);
     // Don't call these directly, instead call the private methods that cache the results.
     private native String nativeGetTargetLanguage(long nativeContextualSearchManager);

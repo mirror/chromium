@@ -2854,6 +2854,36 @@ public class ContextualSearchManagerTest {
     }
 
     /**
+     * Tests the Translate Caption on a tap gesture.
+     * This test is disabled because it relies on the network and a live search result,
+     * which would be flaky for bots.
+     */
+    @DisabledTest(message = "Useful for manual testing when a network is connected.")
+    @Test
+    @SmallTest
+    @Feature({"ContextualSearch"})
+    public void testTranslateCaption() throws InterruptedException, TimeoutException {
+        // Tapping a German word should trigger translation.
+        simulateTapSearch("german");
+
+        // Make sure we tried to trigger translate.
+        Assert.assertTrue("Translation was not forced with the current request URL: "
+                        + mManager.getRequest().getSearchUrl(),
+                mManager.getRequest().isTranslationForced());
+
+        // Wait for the translate caption to be shown in the Bar.
+        int waitFactor = 5; // We need to wait an extra long time for the panel content to render.
+        CriteriaHelper.pollUiThread(new Criteria() {
+            @Override
+            public boolean isSatisfied() {
+                ContextualSearchBarControl barControl = mPanel.getSearchBarControl();
+                return barControl != null && barControl.getCaptionVisible()
+                        && !TextUtils.isEmpty(barControl.getCaptionText());
+            }
+        }, 3000 * waitFactor, DEFAULT_POLLING_INTERVAL * waitFactor);
+    }
+
+    /**
      * Tests that Contextual Search works in fullscreen. Specifically, tests that tapping a word
      * peeks the panel, expanding the bar results in the bar ending at the correct spot in the page
      * and tapping the base page closes the panel.
