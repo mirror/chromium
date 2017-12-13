@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b629d656_0b44b73d",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-12-13T08:42:20Z",
+      "side": 1,
+      "message": "ArcWallpaperService uses image ID to identify which SetCustomWallpaper request causes OnWallpaperDataChanged here. However image_id stored at #125 is no longer valid because the ImageSkia is once converted into SkBitmap in WallpaperControllerClient. Also image_id is only unique in a process, so we cannot use image_id to identify SetCustomWallpaper request here.\n\nIs it possible to ask implementing something which enables ArcWallpaperService to identify which SetCustomWallpaper request causes OnWallpaperDataChanged?",
+      "range": {
+        "startLine": 152,
+        "startChar": 10,
+        "endLine": 152,
+        "endChar": 15
+      },
+      "revId": "535f2ff5a516dbf70ecfdd93cdbabf95c860dfa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
