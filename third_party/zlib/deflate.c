@@ -50,6 +50,8 @@
 /* @(#) $Id$ */
 #include <assert.h>
 #include "deflate.h"
+/* CPU feature detection helpers. */
+#include "contrib/optimizations/arm/arm_features.h"
 #include "x86.h"
 
 const char deflate_copyright[] =
@@ -283,7 +285,11 @@ int ZEXPORT deflateInit2_(strm, level, method, windowBits, memLevel, strategy,
      * output size for (length,distance) codes is <= 24 bits.
      */
 
+#if defined(USE_ARMV8_CRC32)
+    arm_check_features();
+#else
     x86_check_features();
+#endif
 
     if (version == Z_NULL || version[0] != my_version[0] ||
         stream_size != sizeof(z_stream)) {
