@@ -1324,6 +1324,17 @@ hooks = [
                 '-vpython-tool', 'install',
     ],
   },
+
+  # Download Android's AutoFDO files for clang.
+  {
+    'name': 'update_android_afdo_profiles',
+    'pattern': '.',
+    # Android builds are only supported on Linux and Mac. Additionally, we
+    # require bzip2 to pull the profiles, and that may not be present on
+    # Windows.
+    'condition': 'host_os == "linux" or host_os == "mac"',
+    'action': [ 'vpython', 'src/profiles/android/update_profile.py' ],
+  },
 ]
 
 recursedeps = [
