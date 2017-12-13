@@ -176,6 +176,12 @@ const char kDataReductionProxyLoFiDisabled[] = "Disable";
 const char kDataReductionProxyLoFiSlowConnectionsOnly[] =
     "Slow connections only";
 
+const char kDataSaverServerPreviewsName[] = "Data Saver Server Previews";
+const char kDataSaverServerPreviewsDescription[] =
+    "Allow the Data Reduction Proxy to serve previews on slow connections.";
+const char kDataSaverServerPreviewsPreferLitePage[] =
+    "Enabled (Prefer Lite Page)";
+
 const char kDatasaverPromptName[] = "Cellular Data Saver Prompt";
 const char kDatasaverPromptDescription[] =
     "Enables a prompt, which appears when a cellular network connection is "
@@ -325,13 +331,6 @@ const char kEnableNoScriptPreviewsName[] = "NoScript previews";
 
 const char kEnableNoScriptPreviewsDescription[] =
     "Enable disabling JavaScript on some pages on slow networks.";
-
-const char kEnableDataReductionProxyLitePageName[] =
-    "Lite pages for Data Saver Lo-Fi mode";
-const char kEnableDataReductionProxyLitePageDescription[] =
-    "Enable lite pages in Data Saver Lo-Fi mode. Previews of pages will be "
-    "shown instead of image placeholders when Lo-Fi is on. Data Saver and "
-    "Lo-Fi must be enabled for lite pages to be shown.";
 
 const char kDataReductionProxyServerAlternative1[] = "Use alt. server config 1";
 const char kDataReductionProxyServerAlternative2[] = "Use alt. server config 2";
@@ -659,10 +658,14 @@ const char kForceEffectiveConnectionTypeName[] =
     "Override effective connection type";
 const char kForceEffectiveConnectionTypeDescription[] =
     "Overrides the effective connection type of the current connection "
-    "returned by the network quality estimator.";
+    "returned by the network quality estimator. Slow 2G on Cellular returns "
+    "Slow 2G when connected to a cellular network, and the actual estimate "
+    "effective connection type when not on a cellular network.";
 const char kEffectiveConnectionTypeUnknownDescription[] = "Unknown";
 const char kEffectiveConnectionTypeOfflineDescription[] = "Offline";
 const char kEffectiveConnectionTypeSlow2GDescription[] = "Slow 2G";
+const char kEffectiveConnectionTypeSlow2GOnCellularDescription[] =
+    "Slow 2G On Cellular";
 const char kEffectiveConnectionType2GDescription[] = "2G";
 const char kEffectiveConnectionType3GDescription[] = "3G";
 const char kEffectiveConnectionType4GDescription[] = "4G";
