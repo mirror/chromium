@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a63f9ba_8fbb1d5b",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-13T23:02:43Z",
+      "side": 1,
+      "message": "I kept the flush here because it looked like it might be intentional.",
+      "range": {
+        "startLine": 193,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 11
+      },
+      "revId": "3e16c7c3ba8267a713359c5db69d5472132c4166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

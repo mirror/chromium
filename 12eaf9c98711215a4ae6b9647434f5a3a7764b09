@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5680c75e_ccdd92df",
+        "filename": "content/renderer/media/android/stream_texture_wrapper_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-12-13T23:02:43Z",
+      "side": 0,
+      "message": "We don\u0027t need the flush here, right? I can keep it if there\u0027s a reason for this.",
+      "range": {
+        "startLine": 76,
+        "startChar": 14,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "12eaf9c98711215a4ae6b9647434f5a3a7764b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
