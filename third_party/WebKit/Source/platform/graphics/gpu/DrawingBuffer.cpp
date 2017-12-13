@@ -57,6 +57,7 @@
 #include "public/platform/WebCompositorSupport.h"
 #include "public/platform/WebExternalTextureLayer.h"
 #include "skia/ext/texture_handle.h"
+#include "third_party/skia/include/core/SkColorSpaceXform.h"
 #include "third_party/skia/include/core/SkSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLTypes.h"
@@ -1106,26 +1107,38 @@ void DrawingBuffer::Bind(GLenum target) {
   gl_->BindFramebuffer(target, WantExplicitResolve() ? multisample_fbo_ : fbo_);
 }
 
-bool DrawingBuffer::PaintRenderingResultsToImageData(
-    int& width,
-    int& height,
+scoped_refptr<Uint8Array> DrawingBuffer::PaintRenderingResultsToDataArray(
     SourceDrawingBuffer source_buffer,
-    WTF::ArrayBufferContents& contents) {
+    IntSize& size) {
   ScopedStateRestorer scoped_state_restorer(this);
 
-  DCHECK(!premultiplied_alpha_);
-  width = Size().Width();
-  height = Size().Height();
+  int width = Size().Width();
+  int height = Size().Height();
 
   CheckedNumeric<int> data_size = 4;
   data_size *= width;
   data_size *= height;
+  if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled() &&
+      use_half_float_storage_) {
+    data_size *= 2;
+  }
   if (!data_size.IsValid())
-    return false;
+    return nullptr;
 
-  WTF::ArrayBufferContents pixels(width * height, 4,
-                                  WTF::ArrayBufferContents::kNotShared,
-                                  WTF::ArrayBufferContents::kDontInitialize);
+  size = Size();
+  unsigned byte_length = width * height * 4;
+  if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled() &&
+      use_half_float_storage_) {
+    byte_length *= 2;
+  }
+  scoped_refptr<ArrayBuffer> dst_buffer =
+      ArrayBuffer::CreateOrNull(byte_length, 1);
+  if (!dst_buffer)
+    return nullptr;
+  scoped_refptr<Uint8Array> data_array =
+      Uint8Array::Create(std::move(dst_buffer), 0, byte_length);
+  if (!data_array)
+    return nullptr;
 
   GLuint fbo = 0;
   state_restorer_->SetFramebufferBindingDirty();
@@ -1139,9 +1152,10 @@ bool DrawingBuffer::PaintRenderingResultsToImageData(
     gl_->BindFramebuffer(GL_FRAMEBUFFER, fbo_);
   }
 
-  ReadBackFramebuffer(static_cast<unsigned char*>(pixels.Data()), width, height,
-                      kReadbackRGBA, WebGLImageConversion::kAlphaDoNothing);
-  FlipVertically(static_cast<uint8_t*>(pixels.Data()), width, height);
+  ReadBackFramebuffer(static_cast<unsigned char*>(data_array->Data()), width,
+                      height, kReadbackRGBA,
+                      WebGLImageConversion::kAlphaDoNothing);
+  FlipVertically(static_cast<uint8_t*>(data_array->Data()), width, height);
 
   if (fbo) {
     gl_->FramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
@@ -1149,8 +1163,7 @@ bool DrawingBuffer::PaintRenderingResultsToImageData(
     gl_->DeleteFramebuffers(1, &fbo);
   }
 
-  pixels.Transfer(contents);
-  return true;
+  return data_array;
 }
 
 void DrawingBuffer::ReadBackFramebuffer(unsigned char* pixels,
@@ -1169,11 +1182,22 @@ void DrawingBuffer::ReadBackFramebuffer(unsigned char* pixels,
     state_restorer_->SetPixelPackBufferBindingDirty();
     gl_->BindBuffer(GL_PIXEL_PACK_BUFFER, 0);
   }
-  gl_->ReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+
+  GLenum data_type = GL_UNSIGNED_BYTE;
+  if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled() &&
+      use_half_float_storage_) {
+    if (webgl_version_ > kWebGL1)
+      data_type = GL_HALF_FLOAT;
+    else
+      data_type = GL_HALF_FLOAT_OES;
+  }
+  gl_->ReadPixels(0, 0, width, height, GL_RGBA, data_type, pixels);
 
   size_t buffer_size = 4 * width * height;
-
-  if (readback_order == kReadbackSkia) {
+  if (data_type != GL_UNSIGNED_BYTE)
+    buffer_size *= 2;
+  // For half float storage Skia order is RGBA, hence no swizzling is needed.
+  if (readback_order == kReadbackSkia && data_type == GL_UNSIGNED_BYTE) {
 #if (SK_R32_SHIFT == 16) && !SK_B32_SHIFT
     // Swizzle red and blue channels to match SkBitmap's byte ordering.
     // TODO(kbr): expose GL_BGRA as extension.
@@ -1184,11 +1208,15 @@ void DrawingBuffer::ReadBackFramebuffer(unsigned char* pixels,
   }
 
   if (op == WebGLImageConversion::kAlphaDoPremultiply) {
-    for (size_t i = 0; i < buffer_size; i += 4) {
-      pixels[i + 0] = std::min(255, pixels[i + 0] * pixels[i + 3] / 255);
-      pixels[i + 1] = std::min(255, pixels[i + 1] * pixels[i + 3] / 255);
-      pixels[i + 2] = std::min(255, pixels[i + 2] * pixels[i + 3] / 255);
-    }
+    std::unique_ptr<SkColorSpaceXform> xform =
+        SkColorSpaceXform::New(SkColorSpace::MakeSRGBLinear().get(),
+                               SkColorSpace::MakeSRGBLinear().get());
+    SkColorSpaceXform::ColorFormat color_format =
+        SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat;
+    if (data_type != GL_UNSIGNED_BYTE)
+      color_format = SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat;
+    xform->apply(color_format, pixels, color_format, pixels, width * height,
+                 kPremul_SkAlphaType);
   } else if (op != WebGLImageConversion::kAlphaDoNothing) {
     NOTREACHED();
   }
@@ -1197,8 +1225,12 @@ void DrawingBuffer::ReadBackFramebuffer(unsigned char* pixels,
 void DrawingBuffer::FlipVertically(uint8_t* framebuffer,
                                    int width,
                                    int height) {
-  std::vector<uint8_t> scanline(width * 4);
   unsigned row_bytes = width * 4;
+  if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled() &&
+      use_half_float_storage_) {
+    row_bytes *= 2;
+  }
+  std::vector<uint8_t> scanline(row_bytes);
   unsigned count = height / 2;
   for (unsigned i = 0; i < count; i++) {
     uint8_t* row_a = framebuffer + i * row_bytes;

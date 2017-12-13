@@ -406,12 +406,6 @@ void ImageBuffer::OnCanvasDisposed() {
     surface_->SetCanvasResourceHost(nullptr);
 }
 
-const unsigned char* ImageDataBuffer::Pixels() const {
-  if (uses_pixmap_)
-    return static_cast<const unsigned char*>(pixmap_.addr());
-  return data_;
-}
-
 ImageDataBuffer::ImageDataBuffer(scoped_refptr<StaticBitmapImage> image) {
   image_bitmap_ = image;
   sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
@@ -437,11 +431,17 @@ bool ImageDataBuffer::EncodeImage(const String& mime_type,
   if (uses_pixmap_) {
     src = pixmap_;
   } else {
+    SkColorType color_type = kRGBA_8888_SkColorType;
+    sk_sp<SkColorSpace> color_space = nullptr;
+    if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled()) {
+      if (color_params_.GetSkColorType() != kN32_SkColorType)
+        color_type = kRGBA_F16_SkColorType;
+      color_space = color_params_.GetSkColorSpaceForSkSurfaces();
+    }
     SkImageInfo info =
-        SkImageInfo::Make(Width(), Height(), kRGBA_8888_SkColorType,
-                          kUnpremul_SkAlphaType, nullptr);
-    const size_t rowBytes = info.minRowBytes();
-    src.reset(info, Pixels(), rowBytes);
+        SkImageInfo::Make(size_.Width(), size_.Height(), color_type,
+                          kUnpremul_SkAlphaType, color_space);
+    src.reset(info, data_, info.minRowBytes());
   }
 
   if (mime_type == "image/jpeg") {
