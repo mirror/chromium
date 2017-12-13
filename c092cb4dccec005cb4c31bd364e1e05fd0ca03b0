@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fce88dd_e4d3b4de",
+        "filename": "chrome/utility/mash_service_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T22:16:03Z",
+      "side": 1,
+      "message": "optional: Consider naming this RegisterOutOfProcessMashServices() so it\u0027s clearer.",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "c092cb4dccec005cb4c31bd364e1e05fd0ca03b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
