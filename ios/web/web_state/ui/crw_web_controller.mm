@@ -138,6 +138,7 @@ struct UserInteractionEvent {
 // Keys for JavaScript command handlers context.
 NSString* const kUserIsInteractingKey = @"userIsInteracting";
 NSString* const kOriginURLKey = @"originURL";
+NSString* const kIsMainFrame = @"isMainFrame";
 
 // Standard User Defaults key for "Log JS" debug setting.
 NSString* const kLogJavaScript = @"LogJavascript";
@@ -607,7 +608,8 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // DictionaryValue. Returns NO if the format for the message was invalid.
 - (BOOL)respondToMessage:(base::DictionaryValue*)crwMessage
        userIsInteracting:(BOOL)userIsInteracting
-               originURL:(const GURL&)originURL;
+               originURL:(const GURL&)originURL
+             isMainFrame:(BOOL)isMainFrame;
 // Called when web controller receives a new message from the web page.
 - (void)didReceiveScriptMessage:(WKScriptMessage*)message;
 // Returns a new script which wraps |script| with windowID check so |script| is
@@ -2194,7 +2196,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (BOOL)respondToMessage:(base::DictionaryValue*)message
        userIsInteracting:(BOOL)userIsInteracting
-               originURL:(const GURL&)originURL {
+               originURL:(const GURL&)originURL
+             isMainFrame:(BOOL)isMainFrame {
   std::string command;
   if (!message->GetString("command", &command)) {
     DLOG(WARNING) << "JS message parameter not found: command";
@@ -2223,6 +2226,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   NSURL* originNSURL = net::NSURLWithGURL(originURL);
   if (originNSURL)
     context[kOriginURLKey] = originNSURL;
+  context[kIsMainFrame] = isMainFrame ? @YES : @NO;
   return handlerImplementation(self, handler, message, context);
 }
 
@@ -2278,8 +2282,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (BOOL)respondToWKScriptMessage:(WKScriptMessage*)scriptMessage {
-  if (!scriptMessage.frameInfo.mainFrame) {
-    // Messages from iframes are not currently supported.
+  GURL main_frame_url = net::GURLWithNSURL([_webView URL]);
+  GURL message_frame_origin = web::GURLOriginWithWKSecurityOrigin(
+      scriptMessage.frameInfo.securityOrigin);
+  if (main_frame_url.GetOrigin() != message_frame_origin) {
+    // Messages from cross-origin iframes are not currently supported.
     return NO;
   }
 
@@ -2305,7 +2312,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
   if ([scriptMessage.name isEqualToString:kScriptMessageName]) {
     return [self respondToMessage:command
                 userIsInteracting:[self userIsInteracting]
-                        originURL:net::GURLWithNSURL([_webView URL])];
+                        originURL:net::GURLWithNSURL([_webView URL])
+                      isMainFrame:scriptMessage.frameInfo.mainFrame];
   }
 
   NOTREACHED();
@@ -2317,6 +2325,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (BOOL)handleAddPluginPlaceholdersMessage:(base::DictionaryValue*)message
                                    context:(NSDictionary*)context {
+  if (!context[kIsMainFrame])
+    return NO;
   // Inject the script that adds the plugin placeholders.
   [[_jsInjectionReceiver
       instanceOfClass:[CRWJSPluginPlaceholderManager class]] inject];
@@ -2325,6 +2335,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (BOOL)handleChromeSendMessage:(base::DictionaryValue*)message
                         context:(NSDictionary*)context {
+  if (!context[kIsMainFrame])
+    return NO;
   if (_webStateImpl->HasWebUI()) {
     const GURL currentURL([self currentURL]);
     if (web::GetWebClient()->IsAppSpecificURL(currentURL)) {
@@ -2353,6 +2365,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (BOOL)handleConsoleMessage:(base::DictionaryValue*)message
                      context:(NSDictionary*)context {
+  if (!context[kIsMainFrame])
+    return NO;
   // Do not log if JS logging is off.
   if (![[NSUserDefaults standardUserDefaults] boolForKey:kLogJavaScript]) {
     return YES;
@@ -2380,6 +2394,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (BOOL)handleDocumentFaviconsMessage:(base::DictionaryValue*)message
                               context:(NSDictionary*)context {
+  if (!context[kIsMainFrame])
+    return NO;
   base::ListValue* favicons = nullptr;
   if (!message->GetList("favicons", &favicons)) {
     DLOG(WARNING) << "JS message parameter not found: favicons";
@@ -2501,18 +2517,24 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (BOOL)handleWindowHistoryBackMessage:(base::DictionaryValue*)message
                                context:(NSDictionary*)context {
+  if (!context[kIsMainFrame])
+    return NO;
   [self goDelta:-1];
   return YES;
 }
 
 - (BOOL)handleWindowHistoryForwardMessage:(base::DictionaryValue*)message
                                   context:(NSDictionary*)context {
+  if (!context[kIsMainFrame])
+    return NO;
   [self goDelta:1];
   return YES;
 }
 
 - (BOOL)handleWindowHistoryGoMessage:(base::DictionaryValue*)message
                              context:(NSDictionary*)context {
+  if (!context[kIsMainFrame])
+    return NO;
   double delta = 0;
   if (message->GetDouble("value", &delta)) {
     [self goDelta:static_cast<int>(delta)];
@@ -2529,6 +2551,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (BOOL)handleWindowHistoryDidPushStateMessage:(base::DictionaryValue*)message
                                        context:(NSDictionary*)context {
+  if (!context[kIsMainFrame])
+    return NO;
   DCHECK(_changingHistoryState);
   _changingHistoryState = NO;
 
@@ -2602,6 +2626,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 - (BOOL)handleWindowHistoryDidReplaceStateMessage:
     (base::DictionaryValue*)message
                                           context:(NSDictionary*)context {
+  if (!context[kIsMainFrame])
+    return NO;
   DCHECK(_changingHistoryState);
   _changingHistoryState = NO;
 
@@ -2655,6 +2681,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (BOOL)handleRestoreSessionErrorMessage:(base::DictionaryValue*)message
                                  context:(NSDictionary*)context {
+  if (!context[kIsMainFrame])
+    return NO;
   std::string errorMessage;
   if (!message->GetString("message", &errorMessage)) {
     DLOG(WARNING) << "JS message parameter not found: message";
