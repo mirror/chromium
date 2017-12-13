@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "41db20c7_a8258184",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aa78355_f1d031a5",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae8365a4_092d6228",
         "filename": "content/test/BUILD.gn",
         "patchSetId": 4
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "a0660cbe_bc9eaac1",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1891,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "This line is too long (\u003e80) so \u0027git cl format\u0027 modified it, we\u0027d better keep this change?",
+      "parentUuid": "bbbb43a0_4d2ac211",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e8e2698_3b332ea9",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
         "patchSetId": 4
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "2e8e2698_3b332ea9",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80d4f4ab_cfa171e3",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "353d536c_0765e727",
       "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -196,6 +250,24 @@
     },
     {
       "key": {
+        "uuid": "05ff3a79_032d2b68",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done. Changed to use WTF\u0027s threading primitives.",
+      "parentUuid": "4266207c_49a7d0fe",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "209e10a5_20a82b5c",
         "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
         "patchSetId": 4
@@ -225,6 +297,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "209e10a5_20a82b5c",
+      "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da8cd141_aff37784",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "199bcd27_40afa555",
       "revId": "ed9db722585b73c0eaf4560e1149794af43b1f1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

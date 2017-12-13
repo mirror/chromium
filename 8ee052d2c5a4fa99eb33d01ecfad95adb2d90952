@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a608dbc_14098b0e",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 1891,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "This line is too long (\u003e80) so \u0027git cl format\u0027 modified it, we\u0027d better keep this change?",
+      "parentUuid": "2fb5d727_14781476",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd54633d_91c77b75",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ad72dedd_01f21492",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd54633d_91c77b75",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67bc0b88_2dd92b33",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
         "patchSetId": 6
@@ -47,6 +83,30 @@
       "writtenOn": "2017-12-11T02:17:47Z",
       "side": 1,
       "message": "Now we actually don\u0027t need to use WebVector since this is in Blink, but also I don\u0027t think we need to change them at a time. If it\u0027s simple change, you can do it in this CL. \nWdyt?",
+      "range": {
+        "startLine": 35,
+        "startChar": 20,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769ff718_304bd2e4",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Ack. I\u0027m considering to address this together with the replacement of RawScriptData in a follow-up CL.",
+      "parentUuid": "67bc0b88_2dd92b33",
       "range": {
         "startLine": 35,
         "startChar": 20,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "f1762870_08467d87",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c106307_94abe007",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 13
+      },
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df75b876_3347a92e",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
         "patchSetId": 6
@@ -93,6 +177,24 @@
       "writtenOn": "2017-12-11T02:17:47Z",
       "side": 1,
       "message": "After onion soup, We no longer need to use you can use InstalledScriptsManager::ScriptData. (but this could be in another patch.)",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263d3b92_45c71500",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Nice, Thanks! I\u0027d like to replace RawScriptData with InstalledScriptsManager::ScriptData in a follow-up CL. Added a TODO for this.",
+      "parentUuid": "df75b876_3347a92e",
       "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "0df29dca_9e560dc7",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "d0d3bd1c_0da3800d",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "406ef4bd_40e24498",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 6
@@ -130,6 +250,24 @@
       "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e0553e_943c8a27",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "406ef4bd_40e24498",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "ce015280_b49d91ed",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc9e7c66_69d3993d",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69499e7d_2effd860",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
         "patchSetId": 6
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "3696236a_473e6a40",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69499e7d_2effd860",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da6c23f4_0ad42fe2",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
         "patchSetId": 6
@@ -181,6 +355,24 @@
       "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f81812c_4e41679b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ThreadSafeScriptContainer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da6c23f4_0ad42fe2",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +410,24 @@
     },
     {
       "key": {
+        "uuid": "b9f30d98_6b0e3c11",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44bf41b6_15ba76b3",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1950ced7_a2512686",
         "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
         "patchSetId": 6
@@ -232,6 +442,24 @@
       "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee9aee6_50075ca2",
+        "filename": "third_party/WebKit/public/web/WebEmbeddedWorker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1950ced7_a2512686",
+      "revId": "8ee052d2c5a4fa99eb33d01ecfad95adb2d90952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
