@@ -679,28 +679,26 @@ TEST_P(FrameProcessorTest, AudioVideo_Discontinuity_TimestampOffset) {
   // threshold.
   CheckExpectedRangesByTimestamp(audio_.get(),
                                  "{ [55,85) [100,130) [200,230) }");
-  // Note that the range adjacency logic used in this case is doesn't consider
-  // DTS 85 to be close enough to [100,140), since the first DTS in video
+  // Note that the range adjacency logic used in this case considers
+  // DTS 85 to be close enough to [100,140), even though the first DTS in video
   // range [100,140) is actually 110. The muxed data started a coded frame
-  // group at time 100, but actual DTS is used for adjacency checks while
-  // appending.
-  CheckExpectedRangesByTimestamp(video_.get(),
-                                 "{ [55,95) [100,140) [200,240) }");
+  // group at time 100, informing the adjacency logic.
+  CheckExpectedRangesByTimestamp(video_.get(), "{ [55,140) [200,240) }");
 
   // Verify the buffers.
   // Re-seek now that we've appended data earlier than what already satisfied
   // our initial seek to start.
   SeekStream(audio_.get(), Milliseconds(55));
-  SeekStream(video_.get(), Milliseconds(55));
   CheckReadsThenReadStalls(audio_.get(), "55:0 65:10 75:20");
-  CheckReadsThenReadStalls(video_.get(), "65:10 75:20 85:30");
   SeekStream(audio_.get(), Milliseconds(100));
-  SeekStream(video_.get(), Milliseconds(100));
   CheckReadsThenReadStalls(audio_.get(), "100:0 110:10 120:20");
-  CheckReadsThenReadStalls(video_.get(), "110:10 120:20 130:30");
   SeekStream(audio_.get(), Milliseconds(200));
-  SeekStream(video_.get(), Milliseconds(200));
   CheckReadsThenReadStalls(audio_.get(), "200:0 210:10 220:20");
+
+  SeekStream(video_.get(), Milliseconds(55));
+  CheckReadsThenReadStalls(video_.get(),
+                           "65:10 75:20 85:30 110:10 120:20 130:30");
+  SeekStream(video_.get(), Milliseconds(200));
   CheckReadsThenReadStalls(video_.get(), "210:10 220:20 230:30");
 }
 
