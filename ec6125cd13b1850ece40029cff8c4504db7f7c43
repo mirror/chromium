@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "416cc378_73c446c9",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_web_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-12-13T23:48:30Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c9b26626_7e045076",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "ec6125cd13b1850ece40029cff8c4504db7f7c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "377b16c0_1f559ff4",
         "filename": "ui/app_list/views/app_list_item_view.cc",
         "patchSetId": 3
