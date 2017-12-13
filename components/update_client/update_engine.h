@@ -17,6 +17,7 @@
 #include "base/containers/queue.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "components/update_client/component.h"
@@ -69,6 +70,16 @@ class UpdateEngine {
   using UpdateContexts = std::set<std::unique_ptr<UpdateContext>>;
   using UpdateContextIterator = UpdateContexts::iterator;
 
+  void DoUpdate(bool is_foreground,
+                const std::vector<std::string>& ids,
+                UpdateClient::CrxDataCallback crx_data_callback,
+                Callback update_callback);
+
+  void DoSendUninstallPing(const std::string& id,
+                           const base::Version& version,
+                           int reason,
+                           Callback update_callback);
+
   void UpdateComplete(UpdateContextIterator it, Error error);
 
   void ComponentCheckingForUpdatesStart(UpdateContextIterator it,
@@ -87,6 +98,9 @@ class UpdateEngine {
   // Returns true if the update engine rejects this update call because it
   // occurs too soon.
   bool IsThrottled(bool is_foreground) const;
+
+  // Detects if Chrome is installed per-user or per-system.
+  void ReadIsMachineInstall();
 
   // base::TimeDelta GetNextUpdateDelay(const Component& component) const;
 
@@ -114,6 +128,9 @@ class UpdateEngine {
   // update protocol. See the comments for X-Retry-After header.
   base::TimeTicks throttle_updates_until_;
 
+  // True if this is a per-system Chrome instance of the browser.
+  static base::Optional<bool> is_machine_install_;
+
   DISALLOW_COPY_AND_ASSIGN(UpdateEngine);
 };
 
@@ -121,6 +138,7 @@ class UpdateEngine {
 struct UpdateContext {
   UpdateContext(
       const scoped_refptr<Configurator>& config,
+      bool is_machine_install,
       bool is_foreground,
       const std::vector<std::string>& ids,
       UpdateClient::CrxDataCallback crx_data_callback,
@@ -132,8 +150,11 @@ struct UpdateContext {
 
   scoped_refptr<Configurator> config;
 
+  // True if Chrome is installed per-system.
+  const bool is_machine_install = false;
+
   // True if this update has been initiated by the user.
-  bool is_foreground = false;
+  const bool is_foreground = false;
 
   // True if the component updates are enabled in this context.
   const bool enabled_component_updates;

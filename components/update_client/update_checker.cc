@@ -50,7 +50,8 @@ bool IsEncryptionRequired(const IdToComponentPtrMap& components) {
 
 class UpdateCheckerImpl : public UpdateChecker {
  public:
-  UpdateCheckerImpl(const scoped_refptr<Configurator>& config,
+  UpdateCheckerImpl(bool is_machine_install,
+                    const scoped_refptr<Configurator>& config,
                     PersistedData* metadata);
   ~UpdateCheckerImpl() override;
 
@@ -79,6 +80,7 @@ class UpdateCheckerImpl : public UpdateChecker {
 
   base::ThreadChecker thread_checker_;
 
+  bool is_machine_install_;
   const scoped_refptr<Configurator> config_;
   PersistedData* metadata_ = nullptr;
   std::vector<std::string> ids_checked_;
@@ -89,9 +91,12 @@ class UpdateCheckerImpl : public UpdateChecker {
   DISALLOW_COPY_AND_ASSIGN(UpdateCheckerImpl);
 };
 
-UpdateCheckerImpl::UpdateCheckerImpl(const scoped_refptr<Configurator>& config,
+UpdateCheckerImpl::UpdateCheckerImpl(bool is_machine_install,
+                                     const scoped_refptr<Configurator>& config,
                                      PersistedData* metadata)
-    : config_(config), metadata_(metadata) {}
+    : is_machine_install_(is_machine_install),
+      config_(config),
+      metadata_(metadata) {}
 
 UpdateCheckerImpl::~UpdateCheckerImpl() {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -119,8 +124,7 @@ void UpdateCheckerImpl::CheckForUpdates(
 
 // This function runs on the blocking pool task runner.
 void UpdateCheckerImpl::ReadUpdaterStateAttributes() {
-  const bool is_machine_install = !config_->IsPerUserInstall();
-  updater_state_attributes_ = UpdaterState::GetState(is_machine_install);
+  updater_state_attributes_ = UpdaterState::GetState(is_machine_install_);
 }
 
 void UpdateCheckerImpl::CheckForUpdatesHelper(
@@ -222,9 +226,11 @@ void UpdateCheckerImpl::UpdateCheckFailed(const IdToComponentPtrMap& components,
 }  // namespace
 
 std::unique_ptr<UpdateChecker> UpdateChecker::Create(
+    bool is_machine_install,
     const scoped_refptr<Configurator>& config,
     PersistedData* persistent) {
-  return base::MakeUnique<UpdateCheckerImpl>(config, persistent);
+  return base::MakeUnique<UpdateCheckerImpl>(is_machine_install, config,
+                                             persistent);
 }
 
 }  // namespace update_client

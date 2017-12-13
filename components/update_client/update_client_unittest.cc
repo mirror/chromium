@@ -235,6 +235,7 @@ TEST_F(UpdateClientTest, OneCrxNoUpdate) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -345,6 +346,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateNoUpdate) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -555,6 +557,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdate) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -823,6 +826,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateDownloadTimeout) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -1089,6 +1093,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdate) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -1415,6 +1420,7 @@ TEST_F(UpdateClientTest, OneCrxInstallError) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -1601,6 +1607,7 @@ TEST_F(UpdateClientTest, OneCrxDiffUpdateFailsFullUpdateSucceeds) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -1902,6 +1909,7 @@ TEST_F(UpdateClientTest, OneCrxNoUpdateQueuedCall) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -2013,6 +2021,7 @@ TEST_F(UpdateClientTest, OneCrxInstall) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -2204,6 +2213,7 @@ TEST_F(UpdateClientTest, ConcurrentInstallSameCRX) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -2308,6 +2318,7 @@ TEST_F(UpdateClientTest, EmptyIdList) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -2357,6 +2368,7 @@ TEST_F(UpdateClientTest, SendUninstallPing) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return nullptr;
@@ -2455,6 +2467,7 @@ TEST_F(UpdateClientTest, RetryAfter) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -2628,6 +2641,7 @@ TEST_F(UpdateClientTest, TwoCrxUpdateOneUpdateDisabled) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -2874,6 +2888,7 @@ TEST_F(UpdateClientTest, OneCrxUpdateCheckFails) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -2954,6 +2969,7 @@ TEST_F(UpdateClientTest, ActionRun_Install) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();
@@ -3112,6 +3128,7 @@ TEST_F(UpdateClientTest, ActionRun_NoUpdate) {
   class FakeUpdateChecker : public UpdateChecker {
    public:
     static std::unique_ptr<UpdateChecker> Create(
+        bool is_machine_install,
         const scoped_refptr<Configurator>& config,
         PersistedData* metadata) {
       return base::MakeUnique<FakeUpdateChecker>();

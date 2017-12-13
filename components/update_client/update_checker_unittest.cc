@@ -211,7 +211,7 @@ void UpdateCheckerTest::UpdateCheckComplete(int error, int retry_after_sec) {
 std::unique_ptr<UpdateContext> UpdateCheckerTest::MakeFakeUpdateContext()
     const {
   return std::make_unique<UpdateContext>(
-      config_, false, std::vector<std::string>(),
+      config_, false, false, std::vector<std::string>(),
       UpdateClient::CrxDataCallback(), UpdateEngine::NotifyObserversCallback(),
       UpdateEngine::Callback(), nullptr);
 }
@@ -235,7 +235,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckSuccess) {
   EXPECT_TRUE(post_interceptor_->ExpectRequest(
       new PartialMatch("updatecheck"), test_file("updatecheck_reply_1.xml")));
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -302,7 +302,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckInvalidAp) {
   EXPECT_TRUE(post_interceptor_->ExpectRequest(
       new PartialMatch("updatecheck"), test_file("updatecheck_reply_1.xml")));
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -332,7 +332,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckSuccessNoBrand) {
       new PartialMatch("updatecheck"), test_file("updatecheck_reply_1.xml")));
 
   config_->SetBrand("TOOLONG");   // Sets an invalid brand code.
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -358,7 +358,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckError) {
   EXPECT_TRUE(
       post_interceptor_->ExpectRequest(new PartialMatch("updatecheck"), 403));
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -386,7 +386,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckDownloadPreference) {
 
   config_->SetDownloadPreference(string("cacheable"));
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -412,7 +412,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckCupError) {
       new PartialMatch("updatecheck"), test_file("updatecheck_reply_1.xml")));
 
   config_->SetEnabledCupSigning(true);
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -451,7 +451,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckCupError) {
 TEST_F(UpdateCheckerTest, UpdateCheckRequiresEncryptionError) {
   config_->SetUpdateCheckUrl(GURL("http:\\foo\bar"));
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -477,7 +477,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckLastRollCall) {
   EXPECT_TRUE(post_interceptor_->ExpectRequest(
       new PartialMatch("updatecheck"), test_file("updatecheck_reply_4.xml")));
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -491,7 +491,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckLastRollCall) {
                      base::Unretained(this)));
   RunThreads();
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "extra=\"params\"",
       true,
@@ -517,7 +517,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckLastActive) {
   EXPECT_TRUE(post_interceptor_->ExpectRequest(
       new PartialMatch("updatecheck"), test_file("updatecheck_reply_4.xml")));
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -535,7 +535,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckLastActive) {
   EXPECT_FALSE(metadata_->GetActiveBit(kUpdateItemId));
 
   activity_data_service_->SetActiveBit(kUpdateItemId, true);
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "extra=\"params\"",
       true,
@@ -546,7 +546,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckLastActive) {
   // The active bit should be reset.
   EXPECT_FALSE(metadata_->GetActiveBit(kUpdateItemId));
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "extra=\"params\"",
       true,
@@ -572,7 +572,7 @@ TEST_F(UpdateCheckerTest, ComponentDisabled) {
   EXPECT_TRUE(post_interceptor_->ExpectRequest(
       new PartialMatch("updatecheck"), test_file("updatecheck_reply_1.xml")));
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -591,7 +591,7 @@ TEST_F(UpdateCheckerTest, ComponentDisabled) {
             post_interceptor_->GetRequests()[0].find("<disabled"));
 
   crx_component.disabled_reasons = std::vector<int>();
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "", false,
       base::BindOnce(&UpdateCheckerTest::UpdateCheckComplete,
@@ -614,7 +614,7 @@ TEST_F(UpdateCheckerTest, ComponentDisabled) {
                               "<disabled reason=\"0\"/>"));
 
   crx_component.disabled_reasons = std::vector<int>({1});
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "", false,
       base::BindOnce(&UpdateCheckerTest::UpdateCheckComplete,
@@ -626,7 +626,7 @@ TEST_F(UpdateCheckerTest, ComponentDisabled) {
                               "<disabled reason=\"1\"/>"));
 
   crx_component.disabled_reasons = std::vector<int>({4, 8, 16});
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "", false,
       base::BindOnce(&UpdateCheckerTest::UpdateCheckComplete,
@@ -642,7 +642,7 @@ TEST_F(UpdateCheckerTest, ComponentDisabled) {
                               "<disabled reason=\"16\"/>"));
 
   crx_component.disabled_reasons = std::vector<int>({0, 4, 8, 16});
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "", false,
       base::BindOnce(&UpdateCheckerTest::UpdateCheckComplete,
@@ -665,7 +665,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckUpdateDisabled) {
       new PartialMatch("updatecheck"), test_file("updatecheck_reply_1.xml")));
 
   config_->SetBrand("");
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
@@ -696,7 +696,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckUpdateDisabled) {
   // Expects the update check to include the "updatedisabled" attribute.
   component->crx_component_.supports_group_policy_enable_component_updates =
       true;
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "", false,
       base::BindOnce(&UpdateCheckerTest::UpdateCheckComplete,
@@ -713,7 +713,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckUpdateDisabled) {
   // Expects the update check to not include the "updatedisabled" attribute.
   component->crx_component_.supports_group_policy_enable_component_updates =
       false;
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "", true,
       base::BindOnce(&UpdateCheckerTest::UpdateCheckComplete,
@@ -730,7 +730,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckUpdateDisabled) {
   // Expects the update check to not include the "updatedisabled" attribute.
   component->crx_component_.supports_group_policy_enable_component_updates =
       true;
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "", true,
       base::BindOnce(&UpdateCheckerTest::UpdateCheckComplete,
@@ -747,7 +747,7 @@ TEST_F(UpdateCheckerTest, NoUpdateActionRun) {
       new PartialMatch("updatecheck"),
       test_file("updatecheck_reply_noupdate.xml")));
 
-  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_ = UpdateChecker::Create(false, config_, metadata_.get());
 
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();

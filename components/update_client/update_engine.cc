@@ -13,12 +13,14 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/prefs/pref_service.h"
 #include "components/update_client/component.h"
 #include "components/update_client/configurator.h"
 #include "components/update_client/crx_update_item.h"
 #include "components/update_client/persisted_data.h"
+#include "components/update_client/task_traits.h"
 #include "components/update_client/update_checker.h"
 #include "components/update_client/update_client_errors.h"
 #include "components/update_client/utils.h"
@@ -27,6 +29,7 @@ namespace update_client {
 
 UpdateContext::UpdateContext(
     const scoped_refptr<Configurator>& config,
+    bool is_machine_install,
     bool is_foreground,
     const std::vector<std::string>& ids,
     UpdateClient::CrxDataCallback crx_data_callback,
@@ -34,6 +37,7 @@ UpdateContext::UpdateContext(
     UpdateEngine::Callback callback,
     CrxDownloader::Factory crx_downloader_factory)
     : config(config),
+      is_machine_install(is_machine_install),
       is_foreground(is_foreground),
       enabled_component_updates(config->EnabledComponentUpdates()),
       ids(ids),
@@ -47,6 +51,8 @@ UpdateContext::UpdateContext(
 }
 
 UpdateContext::~UpdateContext() {}
+
+base::Optional<bool> UpdateEngine::is_machine_install_;
 
 UpdateEngine::UpdateEngine(
     const scoped_refptr<Configurator>& config,
@@ -79,10 +85,37 @@ void UpdateEngine::Update(bool is_foreground,
     return;
   }
 
+  if (!is_machine_install_.has_value()) {
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE, kTaskTraits,
+        base::BindOnce(&UpdateEngine::ReadIsMachineInstall,
+                       base::Unretained(this)),
+        base::BindOnce(&UpdateEngine::DoUpdate, base::Unretained(this),
+                       is_foreground, base::ConstRef(ids),
+                       std::move(crx_data_callback), std::move(callback)));
+    return;
+  }
+
+  DoUpdate(is_foreground, ids, std::move(crx_data_callback),
+           std::move(callback));
+}
+
+// This function runs on the blocking pool task runner.
+void UpdateEngine::ReadIsMachineInstall() {
+  is_machine_install_ = !config_->IsPerUserInstall();
+}
+
+void UpdateEngine::DoUpdate(bool is_foreground,
+                            const std::vector<std::string>& ids,
+                            UpdateClient::CrxDataCallback crx_data_callback,
+                            Callback callback) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(is_machine_install_.has_value());
+
   const auto result = update_contexts_.insert(base::MakeUnique<UpdateContext>(
-      config_, is_foreground, ids, std::move(crx_data_callback),
-      notify_observers_callback_, std::move(callback),
-      crx_downloader_factory_));
+      config_, *is_machine_install_, is_foreground, ids,
+      std::move(crx_data_callback), notify_observers_callback_,
+      std::move(callback), crx_downloader_factory_));
 
   DCHECK(result.second);
 
@@ -154,8 +187,9 @@ void UpdateEngine::DoUpdateCheck(const UpdateContextIterator it) {
   const auto& update_context = *it;
   DCHECK(update_context);
 
-  update_context->update_checker =
-      update_checker_factory_(config_, metadata_.get());
+  DCHECK_EQ(update_context->is_machine_install, *is_machine_install_);
+  update_context->update_checker = update_checker_factory_(
+      update_context->is_machine_install, config_, metadata_.get());
 
   update_context->update_checker->CheckForUpdates(
       update_context->ids, update_context->components,
@@ -345,8 +379,29 @@ void UpdateEngine::SendUninstallPing(const std::string& id,
                                      Callback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  if (!is_machine_install_.has_value()) {
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE, kTaskTraits,
+        base::BindOnce(&UpdateEngine::ReadIsMachineInstall,
+                       base::Unretained(this)),
+        base::BindOnce(&UpdateEngine::DoSendUninstallPing,
+                       base::Unretained(this), id, version, reason,
+                       std::move(callback)));
+    return;
+  }
+
+  DoSendUninstallPing(id, version, reason, std::move(callback));
+}
+
+void UpdateEngine::DoSendUninstallPing(const std::string& id,
+                                       const base::Version& version,
+                                       int reason,
+                                       Callback callback) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(is_machine_install_.has_value());
+
   const auto result = update_contexts_.insert(base::MakeUnique<UpdateContext>(
-      config_, false, std::vector<std::string>{id},
+      config_, false, *is_machine_install_, std::vector<std::string>{id},
       UpdateClient::CrxDataCallback(), UpdateEngine::NotifyObserversCallback(),
       std::move(callback), nullptr));
 
