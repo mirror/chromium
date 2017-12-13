@@ -82,26 +82,32 @@ static UChar AsHexDigit(UChar cc) {
   return 0;
 }
 
-typedef Vector<UChar, 64> ConsumedCharacterBuffer;
+template <bool supports16bit>
+using ConsumedCharacterBuffer =
+    Vector<std::conditional_t<supports16bit, UChar, LChar>, 64>;
 
-static void UnconsumeCharacters(SegmentedString& source,
-                                ConsumedCharacterBuffer& consumed_characters) {
+template <bool supports16bit>
+static void UnconsumeCharacters(
+    SegmentedStringImpl<supports16bit>& source,
+    ConsumedCharacterBuffer<supports16bit>& consumed_characters) {
   if (consumed_characters.size() == 1)
     source.Push(consumed_characters[0]);
   else if (consumed_characters.size() == 2) {
     source.Push(consumed_characters[1]);
     source.Push(consumed_characters[0]);
   } else
-    source.Prepend(SegmentedString(String(consumed_characters)),
-                   SegmentedString::PrependType::kUnconsume);
+    source.Prepend(
+        SegmentedStringImpl<supports16bit>(String(consumed_characters)),
+        SegmentedStringImpl<supports16bit>::PrependType::kUnconsume);
 }
 
-static bool ConsumeNamedEntity(SegmentedString& source,
+template <bool supports16bit>
+static bool ConsumeNamedEntity(SegmentedStringImpl<supports16bit>& source,
                                DecodedHTMLEntity& decoded_entity,
                                bool& not_enough_characters,
                                UChar additional_allowed_character,
                                UChar& cc) {
-  ConsumedCharacterBuffer consumed_characters;
+  ConsumedCharacterBuffer<supports16bit> consumed_characters;
   HTMLEntitySearch entity_search;
   while (!source.IsEmpty()) {
     cc = source.CurrentChar();
@@ -152,7 +158,8 @@ static bool ConsumeNamedEntity(SegmentedString& source,
   return false;
 }
 
-bool ConsumeHTMLEntity(SegmentedString& source,
+template <bool supports16bit>
+bool ConsumeHTMLEntity(SegmentedStringImpl<supports16bit>& source,
                        DecodedHTMLEntity& decoded_entity,
                        bool& not_enough_characters,
                        UChar additional_allowed_character) {
@@ -173,7 +180,7 @@ bool ConsumeHTMLEntity(SegmentedString& source,
   };
   EntityState entity_state = kInitial;
   UChar32 result = 0;
-  ConsumedCharacterBuffer consumed_characters;
+  ConsumedCharacterBuffer<supports16bit> consumed_characters;
 
   while (!source.IsEmpty()) {
     UChar cc = source.CurrentChar();
@@ -273,6 +280,15 @@ bool ConsumeHTMLEntity(SegmentedString& source,
   UnconsumeCharacters(source, consumed_characters);
   return false;
 }
+
+template bool ConsumeHTMLEntity<false>(SegmentedStringImpl<false>&,
+                                       DecodedHTMLEntity&,
+                                       bool&,
+                                       UChar);
+template bool ConsumeHTMLEntity<true>(SegmentedStringImpl<true>&,
+                                      DecodedHTMLEntity&,
+                                      bool&,
+                                      UChar);
 
 static size_t AppendUChar32ToUCharArray(UChar32 value, UChar* result) {
   if (U_IS_BMP(value)) {

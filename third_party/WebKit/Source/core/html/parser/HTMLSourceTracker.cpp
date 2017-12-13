@@ -32,7 +32,7 @@ namespace blink {
 
 HTMLSourceTracker::HTMLSourceTracker() : is_started_(false) {}
 
-void HTMLSourceTracker::Start(SegmentedString& current_input,
+void HTMLSourceTracker::Start(const SegmentedString& current_input,
                               HTMLTokenizer* tokenizer,
                               HTMLToken& token) {
   if (token.GetType() == HTMLToken::kUninitialized && !is_started_) {
@@ -50,7 +50,7 @@ void HTMLSourceTracker::Start(SegmentedString& current_input,
                       previous_source_.length());
 }
 
-void HTMLSourceTracker::end(SegmentedString& current_input,
+void HTMLSourceTracker::end(const SegmentedString& current_input,
                             HTMLTokenizer* tokenizer,
                             HTMLToken& token) {
   is_started_ = false;
