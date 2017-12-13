@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6fa5fc9_2acca05c",
+        "filename": "chrome/browser/plugins/chrome_plugin_service_filter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-13T00:24:25Z",
+      "side": 1,
+      "message": "This comment is out of date.",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 59
+      },
+      "revId": "90cf7e4375044ae0d322b5a69854dceee619062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e919f12_0878945b",
+        "filename": "chrome/browser/plugins/chrome_plugin_service_filter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-13T00:24:25Z",
+      "side": 1,
+      "message": "Should this be set to allow? Detect blocks right?",
+      "range": {
+        "startLine": 200,
+        "startChar": 32,
+        "endLine": 200,
+        "endChar": 72
+      },
+      "revId": "90cf7e4375044ae0d322b5a69854dceee619062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
