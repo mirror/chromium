@@ -13,6 +13,7 @@ class LoFi(IntegrationTest):
   #  Checks that the compressed image is below a certain threshold.
   #  The test page is uncacheable otherwise a cached page may be served that
   #  doesn't have the correct via headers.
+  @ChromeVersionBeforeM(65)
   def testLoFi(self):
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
@@ -39,6 +40,7 @@ class LoFi(IntegrationTest):
 
   # Checks that LoFi images are served when LoFi slow connections are used and
   # the network quality estimator returns Slow2G.
+  @ChromeVersionBeforeM(65)
   def testLoFiSlowConnection(self):
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
@@ -74,6 +76,7 @@ class LoFi(IntegrationTest):
   # returns 4G.
   # If-heavy stopped being added in M61.
   @ChromeVersionBeforeM(61)
+  @ChromeVersionBeforeM(65)
   def testLoFiIfHeavyFastConnection(self):
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
@@ -118,6 +121,7 @@ class LoFi(IntegrationTest):
   # enabled and Lo-Fi disabled and the same test page is loaded. This third page
   # load should not pick the Lo-Fi placeholder from cache and original image
   # should be loaded.
+  @ChromeVersionBeforeM(65)
   def testLoFiCacheBypass(self):
     # If it was attempted to run with another experiment, skip this test.
     if common.ParseFlags().browser_args and ('--data-reduction-proxy-experiment'
@@ -191,6 +195,7 @@ class LoFi(IntegrationTest):
   # Checks that LoFi images are served and the force empty image experiment
   # directive is provided when LoFi is always-on without Lite Pages enabled.
   @ChromeVersionEqualOrAfterM(61)
+  @ChromeVersionBeforeM(65)
   def testLoFiForcedExperiment(self):
     # If it was attempted to run with another experiment, skip this test.
     if common.ParseFlags().browser_args and ('--data-reduction-proxy-experiment'
