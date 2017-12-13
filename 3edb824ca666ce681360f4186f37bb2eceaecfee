@@ -101,6 +101,24 @@
       "revId": "3edb824ca666ce681360f4186f37bb2eceaecfee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c12b19_d69d8309",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1203986
+      },
+      "writtenOn": "2017-12-13T04:56:15Z",
+      "side": 1,
+      "message": "We could do that. Do I have access to `console.warn` from here? Or would you want first-class UI for this? If we did `console.warn`, analytics providers could pick up on those messages, as opposed to somewhere deep inside the network tab.\n\nThese are some of the warnings that might help a developer:\ncould not convert duration to float (security concern?)\nextraneous parameters supplied (security concern?)\nextra trailing characters\nnamed parameter with no value\n\nEverything else is just whitespace and extraneous delimiters.",
+      "parentUuid": "a2b7876e_72bb3b8d",
+      "revId": "3edb824ca666ce681360f4186f37bb2eceaecfee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
