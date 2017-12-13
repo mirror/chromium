@@ -619,6 +619,10 @@ void PdfConverterUtilityProcessHostClient::Stop() {
   // Disconnect the PdfToEmfConverterPtr, it will lead to the closing of the
   // utility process.
   pdf_to_emf_converter_.reset();
+  if (utility_process_host_) {
+    utility_process_host_->Send(
+        new ChromeUtilityMsg_RenderPDFPagesToMetafiles_Stop());
+  }
 }
 
 void PdfConverterUtilityProcessHostClient::OnProcessCrashed(int exit_code) {
