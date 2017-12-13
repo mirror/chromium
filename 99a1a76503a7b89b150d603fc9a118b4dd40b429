@@ -22,6 +22,30 @@
       "revId": "99a1a76503a7b89b150d603fc9a118b4dd40b429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32f97ed_c05e62f7",
+        "filename": "ios/chrome/browser/ui/settings/accounts_collection_egtest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-12-13T20:16:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4ddb4e_09416446",
+      "range": {
+        "startLine": 46,
+        "startChar": 47,
+        "endLine": 46,
+        "endChar": 71
+      },
+      "revId": "99a1a76503a7b89b150d603fc9a118b4dd40b429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
