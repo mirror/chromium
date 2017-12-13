@@ -4099,7 +4099,6 @@ TEST_P(QuicFramerTest, BuildAckFramePacketOneAckBlockMaxLength) {
   header.packet_number = kPacketNumber;
 
   QuicAckFrame ack_frame = InitAckFrame(kPacketNumber);
-  SetQuicReloadableFlag(quic_frames_deque3, true);
   ack_frame.ack_delay_time = QuicTime::Delta::Zero();
 
   QuicFrames frames = {QuicFrame(&ack_frame)};
