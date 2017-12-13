@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbf17bf6_02c84739",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/setproperty-null.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-12-13T07:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f32f243_f00cbbd0",
+      "range": {
+        "startLine": 4,
+        "startChar": 38,
+        "endLine": 4,
+        "endChar": 41
+      },
+      "revId": "2fe888d639998afd8fecb405cbbda4cae07a2c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a97c151a_ed6b562f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/setproperty-undefined.html",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "2fe888d639998afd8fecb405cbbda4cae07a2c8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e2d9869_d16a18f8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/cssom/setproperty-undefined.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-12-13T07:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a97c151a_ed6b562f",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 15
+      },
+      "revId": "2fe888d639998afd8fecb405cbbda4cae07a2c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
