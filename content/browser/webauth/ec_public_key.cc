@@ -6,8 +6,8 @@
 
 #include <utility>
 
+#include "components/cbor/cbor_writer.h"
 #include "content/browser/webauth/authenticator_utils.h"
-#include "content/browser/webauth/cbor/cbor_writer.h"
 
 namespace content {
 
@@ -40,11 +40,11 @@ ECPublicKey::ECPublicKey(std::string algorithm,
 }
 
 std::vector<uint8_t> ECPublicKey::EncodeAsCBOR() {
-  CBORValue::MapValue map;
-  map["alg"] = CBORValue(algorithm_.c_str());
-  map["x"] = CBORValue(x_coordinate_);
-  map["y"] = CBORValue(y_coordinate_);
-  auto cbor = CBORWriter::Write(CBORValue(map));
+  cbor::CBORValue::MapValue map;
+  map["alg"] = cbor::CBORValue(algorithm_.c_str());
+  map["x"] = cbor::CBORValue(x_coordinate_);
+  map["y"] = cbor::CBORValue(y_coordinate_);
+  auto cbor = cbor::CBORWriter::Write(cbor::CBORValue(map));
   DCHECK(cbor.has_value());
   return cbor.value();
 }

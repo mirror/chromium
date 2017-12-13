@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/webauth/cbor/cbor_writer.h"
+#include "components/cbor/cbor_writer.h"
 
 #include <string>
 
@@ -12,7 +12,7 @@
 
 /* Leveraging RFC 7049 examples from
    https://github.com/cbor/test-vectors/blob/master/appendix_a.json. */
-namespace content {
+namespace cbor {
 
 TEST(CBORWriterTest, TestWriteUint) {
   typedef struct {
@@ -303,4 +303,4 @@ TEST(CBORWriterTest, OverlyNestedCBOR) {
   EXPECT_FALSE(CBORWriter::Write(CBORValue(map), 4).has_value());
 }
 
-}  // namespace content
+}  // namespace cbor

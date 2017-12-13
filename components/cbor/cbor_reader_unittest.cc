@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/webauth/cbor/cbor_reader.h"
+#include "components/cbor/cbor_reader.h"
 #include "base/strings/stringprintf.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 /* Leveraging RFC 7049 examples from
    https://github.com/cbor/test-vectors/blob/master/appendix_a.json. */
-namespace content {
+namespace cbor {
 
 TEST(CBORReaderTest, TestReadUint) {
   typedef struct {
@@ -527,4 +527,4 @@ TEST(CBORReaderTest, TestExtraneousCBORDataError) {
   }
 }
 
-}  // namespace content
+}  // namespace cbor

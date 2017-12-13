@@ -7,8 +7,8 @@
 #include <utility>
 
 #include "base/numerics/safe_conversions.h"
+#include "components/cbor/cbor_writer.h"
 #include "content/browser/webauth/authenticator_utils.h"
-#include "content/browser/webauth/cbor/cbor_writer.h"
 
 namespace content {
 
@@ -85,15 +85,15 @@ FidoAttestationStatement::FidoAttestationStatement(
       signature_(std::move(signature)),
       x509_certificates_(std::move(x509_certificates)) {}
 
-CBORValue::MapValue FidoAttestationStatement::GetAsCBORMap() {
-  CBORValue::MapValue attstmt_map;
-  attstmt_map[kSignatureKey] = CBORValue(signature_);
+cbor::CBORValue::MapValue FidoAttestationStatement::GetAsCBORMap() {
+  cbor::CBORValue::MapValue attstmt_map;
+  attstmt_map[kSignatureKey] = cbor::CBORValue(signature_);
 
-  std::vector<CBORValue> array;
+  std::vector<cbor::CBORValue> array;
   for (auto cert : x509_certificates_) {
-    array.push_back(CBORValue(cert));
+    array.push_back(cbor::CBORValue(cert));
   }
-  attstmt_map[kX509CertKey] = CBORValue(array);
+  attstmt_map[kX509CertKey] = cbor::CBORValue(array);
   return attstmt_map;
 }
 
