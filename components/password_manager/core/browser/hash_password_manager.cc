@@ -24,6 +24,8 @@ bool HashPasswordManager::SavePasswordHash(const base::string16& password) {
   if (!prefs_)
     return false;
 
+  LOG(ERROR) << "HashPasswordManager::SavePasswordHash " << password;
+
   base::Optional<SyncPasswordData> current_sync_password_data =
       RetrievePasswordHash();
   // If it is the same password, no need to save password hash again.
@@ -34,15 +36,27 @@ bool HashPasswordManager::SavePasswordHash(const base::string16& password) {
     return true;
   }
 
-  std::string salt = CreateRandomSalt();
-  std::string hash = base::NumberToString(
-      password_manager_util::CalculateSyncPasswordHash(password, salt));
-  EncryptAndSaveToPrefs(prefs::kSyncPasswordHash, hash);
+  SyncPasswordData sync_password_data;
+  sync_password_data.salt = CreateRandomSalt();
+  sync_password_data.length = password.size();
+  sync_password_data.hash = password_manager_util::CalculateSyncPasswordHash(
+      password, sync_password_data.salt);
 
-  // Password length and salt are stored together.
-  std::string length_salt = LengthAndSaltToString(salt, password.size());
-  return EncryptAndSaveToPrefs(prefs::kSyncPasswordLengthAndHashSalt,
-                               length_salt);
+  return SavePasswordHash(sync_password_data);
+}
+
+bool HashPasswordManager::SavePasswordHash(
+    const SyncPasswordData& sync_password_data) {
+  LOG(ERROR) << "HashPasswordManager::SavePasswordHash "
+             << sync_password_data.hash;
+  bool result =
+      EncryptAndSaveToPrefs(prefs::kSyncPasswordHash,
+                            base::NumberToString(sync_password_data.hash)) &&
+      EncryptAndSaveToPrefs(prefs::kSyncPasswordLengthAndHashSalt,
+                            LengthAndSaltToString(sync_password_data.salt,
+                                                  sync_password_data.length));
+  LOG(ERROR) << "HashPasswordManager::SavePasswordHash " << result;
+  return result;
 }
 
 void HashPasswordManager::ClearSavedPasswordHash() {
