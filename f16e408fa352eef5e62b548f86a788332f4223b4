@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "fa3bb2b8_97955776",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-13T15:52:04Z",
+      "side": 1,
+      "message": "Ah, thanks for reminding me about that thread. All good with the additional context.",
+      "parentUuid": "ec79ef06_94eb96ad",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "f16e408fa352eef5e62b548f86a788332f4223b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd18019c_81f7caf4",
         "filename": "components/arc/common/usb_host.mojom",
         "patchSetId": 18
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "No, after Init, the Android side gets the DeviceAdded events for the prexisting devices and it keeps a list of devices.",
       "parentUuid": "6958e8ad_17007345",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "f16e408fa352eef5e62b548f86a788332f4223b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41b896e_394b3d85",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-13T15:52:04Z",
+      "side": 1,
+      "message": "OK - odd design choice (e.g. how do they recover in case of crashes?), but that\u0027s no security concern.",
+      "parentUuid": "8b439a47_19d0b2e9",
       "range": {
         "startLine": 31,
         "startChar": 27,
