@@ -2679,6 +2679,9 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
 
   if (local_surface_id == last_local_surface_id_ &&
       new_surface_properties != last_surface_properties_) {
+    base::debug::ScopedCrashKeyString key_value(
+        bad_message::GetSurfaceSynchronizationKey(),
+        new_surface_properties.ToDiffString(last_surface_properties_));
     bad_message::ReceivedBadMessage(
         GetProcess(), bad_message::RWH_SURFACE_INVARIANTS_VIOLATION);
     return;

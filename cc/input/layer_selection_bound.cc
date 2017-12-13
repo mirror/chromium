@@ -2,8 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/logging.h"
 #include "cc/input/layer_selection_bound.h"
+#include "base/logging.h"
+#include "base/strings/stringprintf.h"
 
 namespace cc {
 
@@ -20,6 +21,12 @@ bool LayerSelectionBound::operator==(const LayerSelectionBound& other) const {
 
 bool LayerSelectionBound::operator!=(const LayerSelectionBound& other) const {
   return !(*this == other);
+}
+
+std::string LayerSelectionBound::ToString() const {
+  return base::StringPrintf("LayerSelectionBound(%d, %d, %s, %s, %d)", type,
+                            layer_id, edge_top.ToString().c_str(),
+                            edge_bottom.ToString().c_str(), hidden);
 }
 
 }  // namespace cc
