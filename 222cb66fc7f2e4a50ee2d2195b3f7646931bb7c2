@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "13b26c37_d90ef46c",
+        "filename": "components/web_contents_delegate_android/color_chooser_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T03:15:47Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s currently a place for interfaces private to both blink and content/browser so as is will probably do for now at least.",
+      "parentUuid": "fa32a1a0_30e013a4",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79baa8bf_042135cb",
         "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserPopupUIController.cpp",
         "patchSetId": 4
@@ -564,6 +582,24 @@
       "side": 1,
       "message": "These fields are used by the subclass",
       "parentUuid": "01ff51db_ce9b6e41",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b3d230f_74dd498c",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T03:15:47Z",
+      "side": 1,
+      "message": "|chooser_| is used once. Ideally, it shouldn\u0027t be.",
+      "parentUuid": "0b1ea484_739ab001",
       "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
