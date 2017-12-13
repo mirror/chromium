@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7695e504_924137cc",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state_impl_io_data.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T17:05:57Z",
+      "side": 1,
+      "message": "Do we ned this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 26,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "a2e037cc6200bd101c6db3aa259659693c1cdc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2bcfe4_5c5aefc1",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state_impl_io_data.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T17:05:57Z",
+      "side": 1,
+      "message": "This preserves current behavior. Right?",
+      "range": {
+        "startLine": 318,
+        "startChar": 51,
+        "endLine": 318,
+        "endChar": 74
+      },
+      "revId": "a2e037cc6200bd101c6db3aa259659693c1cdc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df510b0_469a3627",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state_io_data.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T17:05:57Z",
+      "side": 1,
+      "message": "No need for this. Default constructor is called automatically.",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 25
+      },
+      "revId": "a2e037cc6200bd101c6db3aa259659693c1cdc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5fc879_aa970ca2",
+        "filename": "ios/net/cookies/cookie_store_ios_persistent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T17:05:57Z",
+      "side": 1,
+      "message": "nit: s/Create/Constructs",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 11
+      },
+      "revId": "a2e037cc6200bd101c6db3aa259659693c1cdc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
