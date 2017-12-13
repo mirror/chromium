@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<style>
+#log {
+  height: 500px;
+}
+#top {
+  display: inline-block;
+  overflow: hidden;
+}
+#spacer {
+  height: 2000px;
+}
+.container {
+  transform: translateX(0px);
+  padding: 2px;
+  border: 1px solid black;
+  overflow: hidden;
+}
+.leaf {
+  transform: translateX(0px);
+  width: 10px;
+  height: 10px;
+  padding: 2px;
+  background-color: green;
+  overflow: hidden;
+}
+</style>
+
+<pre id='log'></pre>
+<div id='top'></div>
+<div id='spacer'></div>
+
+<script src='../resources/runner.js'></script>
+
+<script>
+function populate_container(parent, depth) {
+  for (let i = 0; i < depth; i++) {
+    let child = document.createElement('div');
+    child.className = 'container';
+    parent.appendChild(child);
+    parent = child;
+  }
+  let leaf = document.createElement('div');
+  leaf.className = 'leaf';
+  parent.appendChild(leaf);
+}
+
+function populate_page(num, depth) {
+  let top = document.getElementById('top');
+  top.innerHTML = '';
+  for (let i = 0; i < num; i++) {
+    populate_container(top, depth);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  populate_page(10, 100);
+  document.body.offsetHeight;
+  PerfTestRunner.measureTime({
+    description: "Measure overhead of scrolling the frame.",
+    run: function() {
+      let scroller = document.scrollingElement;
+      for (let i = 0; i < 10000; i++) {
+        document.scrollingElement.scrollTop = i % 1000;
+      }
+    }
+  });
+});
+</script>
