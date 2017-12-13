@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07a4f381_52951d6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T01:39:18Z",
+      "side": 1,
+      "message": "Typically the help bubble would dismiss on any touch interaction (#setDismissOnTouchInteraction()) or on a timeout. I think for simplicity, we can dismiss it on any touch interaction for now.",
+      "revId": "f70d4e9bbaca95c8f6fa61ec173c7ba255658586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523660a9_83c6bdd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T01:39:18Z",
+      "side": 1,
+      "message": "Should this get set back to false after the bubble is dismissed?",
+      "range": {
+        "startLine": 812,
+        "startChar": 20,
+        "endLine": 812,
+        "endChar": 36
+      },
+      "revId": "f70d4e9bbaca95c8f6fa61ec173c7ba255658586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e88e9a_78d17099",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 3238,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T01:39:18Z",
+      "side": 1,
+      "message": "Can we do a quick check w/ Shimi on this string? I\u0027m wondering if maybe we want it to be something like \"Next time, pull up on the address bar.\" or \"..swipe up on..\".\n\nIf Shimi is out or slow to respond. I\u0027m okay with doing the string finalization after the holidays since we have some time.",
+      "range": {
+        "startLine": 3238,
+        "startChar": 29,
+        "endLine": 3238,
+        "endChar": 63
+      },
+      "revId": "f70d4e9bbaca95c8f6fa61ec173c7ba255658586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29bd35c3_5cbf7353",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 3240,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T01:39:18Z",
+      "side": 1,
+      "message": "For these descriptions we have language elsewhere that says \u0027Downloads\u0027 should use the same translation as in Chrome settings and menu items. Can we include that for these as well?",
+      "revId": "f70d4e9bbaca95c8f6fa61ec173c7ba255658586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
