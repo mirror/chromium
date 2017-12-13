@@ -495,8 +495,8 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
   }
 
   base::TimeTicks task_start_time;
-  TRACE_TASK_EXECUTION("TaskQueueManager::ProcessTaskFromWorkQueue",
-                       pending_task);
+  TRACE_EVENT0("toplevel, benchmark",
+               "TaskQueueManager::ProcessTaskFromWorkQueue");
 
   NotifyWillProcessTaskObservers(pending_task, queue, time_before_task,
                                  &task_start_time);
