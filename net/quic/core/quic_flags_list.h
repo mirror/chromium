@@ -114,18 +114,10 @@ QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_allow_address_change_for_udp_proxy,
           true)
 
-// If true, allow a new BBR connection option to use a slower STARTUP once loss
-// occurs
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_slower_startup, true)
-
 // Deprecate QuicAckFrame.largest_observed since it is redundant.
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_deprecate_largest_observed,
           true)
-
-// Fully drain the queue in QUIC BBR at least once per cycle(8 rounds) when
-// activated by the BBR3 connection option.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_fully_drain_queue, true)
 
 // When true, allows connection options to be sent to completely disable packet
 // conservation in QUIC BBR STARTUP or make it more aggressive.
