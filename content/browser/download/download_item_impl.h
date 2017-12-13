@@ -19,6 +19,7 @@
 #include "base/time/time.h"
 #include "content/browser/download/download_destination_observer.h"
 #include "content/browser/download/download_request_handle.h"
+#include "content/browser/download/download_ukm.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_item.h"
@@ -750,6 +751,9 @@ class CONTENT_EXPORT DownloadItemImpl
   // Whether the download should fetch the response body for non successful HTTP
   // response.
   bool fetch_error_body_ = false;
+
+  // The DownloadkUkmHelper that is used for recording UKM information.
+  DownloadUkmHelper download_ukm_helper_;
 
   base::WeakPtrFactory<DownloadItemImpl> weak_ptr_factory_;
 
