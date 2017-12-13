@@ -147,6 +147,23 @@ class ChromeVoxPanelWidgetObserver : public views::WidgetObserver {
   DISALLOW_COPY_AND_ASSIGN(ChromeVoxPanelWidgetObserver);
 };
 
+class ScopedKeyboardStateSetter {
+ public:
+  ScopedKeyboardStateSetter() : is_enabled_(keyboard::IsKeyboardEnabled()) {
+    keyboard::SetRequestedKeyboardState(keyboard::KEYBOARD_STATE_ENABLED);
+  }
+
+  ~ScopedKeyboardStateSetter() {
+    if (!is_enabled_)
+      keyboard::SetRequestedKeyboardState(keyboard::KEYBOARD_STATE_DISABLED);
+  }
+
+ private:
+  bool is_enabled_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedKeyboardStateSetter);
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 // AccessibilityStatusEventDetails
 
@@ -1443,6 +1460,8 @@ void AccessibilityManager::PostLoadChromeVox() {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         ::switches::kEnableAudioFocus);
   }
+
+  keyboard_state_setter_.reset(new ScopedKeyboardStateSetter());
 }
 
 void AccessibilityManager::PostUnloadChromeVox() {
@@ -1463,6 +1482,8 @@ void AccessibilityManager::PostUnloadChromeVox() {
   chromeos::DBusThreadManager::Get()
       ->GetPowerManagerClient()
       ->SetBacklightsForcedOff(false);
+
+  keyboard_state_setter_.reset();
 }
 
 void AccessibilityManager::PostSwitchChromeVoxProfile() {
