@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc7fcbf4_89bd748d",
+        "filename": ".gitignore",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "/profiles looks like a new top-level directory.\n\nDid you consider using chrome/build/ instead? That\u0027s what I was suggested for putting the Windows order files, which seem somewhat analogous to this.",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c3a359_0b995d3e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "Maybe explain the AutoFDO term very briefly for readers that are not familiar.",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2998a9a_4a49d5eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "Surely there\u0027s a bug tracking this work? Otherwise create one :-) That will be good for folks following along to see when this lands, if it gets reverted, any follow-ups, and to report perf numbers on etc.",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38ed3c2_f8a291a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "Looks like this accidentally got mixed in with the other lines. I think it should be at the end.",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d1fe2d_7c80d91a",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1340,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be conditionalized on target_os \u003d android instead? Regular Linux checkouts don\u0027t generally pull all the Android stuff.",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d71cc23_655be5fb",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "(Maybe not for you to answer, but now I\u0027m curious why some hooks use \"python\" and some use \"vpython\" in this file..)",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46a5b94_6fe8cec5",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "What does the \"AFDO to be split into its own config\" comment refer to?",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad203c1b_10b651ba",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "should we error in the else case here? i.e. complain that default sample profile is currently only available on Android?",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300a9ad0_75f53835",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "I think this needs to be fixed before landing. Maybe look at how the Windows order files are hooked up.",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd693dfb_0b1b8a8e",
+        "filename": "build/secondary/third_party/android_platform/development/scripts/stack.pydeps",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with stack.pydeps. What does it do?",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007df1b4_1efc30b0",
+        "filename": "profiles/android/update_profile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "I suppose the \"a bit differently\" explains why download_from_google_storage.py can\u0027t be used instead of this script? Maybe put that in the comment.",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2629f8bf_d281ae8b",
+        "filename": "profiles/android/update_profile.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T17:39:51Z",
+      "side": 1,
+      "message": "This is a world-readable bucket right, no special permissions needed?",
+      "revId": "f7d4fef4672f5d03c190018b8c339088b4232615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
