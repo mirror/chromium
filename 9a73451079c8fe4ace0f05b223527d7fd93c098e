@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24a231d2_4d417577",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T14:06:57Z",
+      "side": 1,
+      "message": "crbug reference",
+      "range": {
+        "startLine": 120,
+        "startChar": 49,
+        "endLine": 120,
+        "endChar": 50
+      },
+      "revId": "9a73451079c8fe4ace0f05b223527d7fd93c098e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8183e806_7f2855c9",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T14:06:57Z",
+      "side": 1,
+      "message": "All these should be extern const int instead of constexpr.\nOtherwise you are creating a different constant in each translation unit that includes this file.\nSee internal go/totw/140",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "9a73451079c8fe4ace0f05b223527d7fd93c098e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af678ac7_0f89148e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T14:06:57Z",
+      "side": 1,
+      "message": "This struct name is too general for the content namespace. Rename it (WebRtcLogPeerConnectionKey or similar) or add an extra namespace (webrtc_logs or similar)",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "9a73451079c8fe4ace0f05b223527d7fd93c098e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
