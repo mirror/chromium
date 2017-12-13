@@ -8,6 +8,8 @@
 
 goog.provide('BrailleCommandHandler');
 
+goog.require('BackgroundKeyboardHandler');
+
 goog.scope(function() {
 /**
  * Maps a dot pattern to a command.
@@ -85,6 +87,38 @@ BrailleCommandHandler.getDots = function(command) {
       return key;
   }
   return 0;
+};
+
+/**
+ * @param {string} command
+ * @return {boolean} True if the command should propagate.
+ */
+BrailleCommandHandler.onEditCommand = function(command) {
+  switch (command) {
+    case 'previousCharacter':
+      BackgroundKeyboardHandler.sendKeyPress(37, 'ArrowLeft');
+      break;
+    case 'nextCharacter':
+      BackgroundKeyboardHandler.sendKeyPress(39, 'ArrowRight');
+      break;
+    case 'previousWord':
+      BackgroundKeyboardHandler.sendKeyPress(37, 'ArrowLeft', 4);
+      break;
+    case 'nextWord':
+      BackgroundKeyboardHandler.sendKeyPress(39, 'ArrowRight', 4);
+      break;
+    case 'previousObject':
+    case 'previousLine':
+      BackgroundKeyboardHandler.sendKeyPress(38, 'ArrowUp');
+      break;
+    case 'nextObject':
+    case 'nextLine':
+      BackgroundKeyboardHandler.sendKeyPress(40, 'ArrowDown');
+      break;
+    default:
+      return true;
+  }
+  return false;
 };
 
 /**
