@@ -53,8 +53,7 @@ class CORE_EXPORT ScriptPromiseResolver
     //    detached, the V8 isolate is terminated or the associated
     //    ExecutionContext is stopped.
     DCHECK(state_ == kDetached || !is_promise_called_ ||
-           !GetScriptState()->ContextIsValid() || !GetExecutionContext() ||
-           GetExecutionContext()->IsContextDestroyed());
+           !HasValidExecutionContext());
   }
 #endif
 
@@ -101,6 +100,11 @@ class CORE_EXPORT ScriptPromiseResolver
   // promise is pending and the associated ExecutionContext isn't stopped.
   void KeepAliveWhilePending();
 
+  // Whether the v8::Context associated with this resolver is valid and the
+  // corresponding blink::ExecutionContext still attached. When this returns
+  // false, calls to Resolve and Reject will be ignored.
+  bool HasValidExecutionContext();
+
   virtual void Trace(blink::Visitor*);
 
  protected:
@@ -119,8 +123,7 @@ class CORE_EXPORT ScriptPromiseResolver
 
   template <typename T>
   void ResolveOrReject(T value, ResolutionState new_state) {
-    if (state_ != kPending || !GetScriptState()->ContextIsValid() ||
-        !GetExecutionContext() || GetExecutionContext()->IsContextDestroyed())
+    if (state_ != kPending || !HasValidExecutionContext())
       return;
     DCHECK(new_state == kResolving || new_state == kRejecting);
     state_ = new_state;

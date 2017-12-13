@@ -155,9 +155,11 @@ class NotificationCallbacks
   ~NotificationCallbacks() override {}
 
   void OnSuccess() override {
-    Frame* frame =
-        ToDocument(ExecutionContext::From(resolver_->GetScriptState()))
-            ->GetFrame();
+    if (!resolver_->HasValidExecutionContext())
+      return;
+    auto* context = ExecutionContext::From(resolver_->GetScriptState());
+    auto* document = ToDocumentOrDie(context);
+    Frame* frame = document->GetFrame();
     SECURITY_CHECK(!frame ||
                    same_origin_requirement_ ==
                        SameOriginRequirement::kCanBeCrossOrigin ||
@@ -184,11 +186,11 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
   ~RequestCallbacks() override {}
 
   void OnSuccess(std::unique_ptr<WebCredential> web_credential) override {
-    ExecutionContext* context =
-        ExecutionContext::From(resolver_->GetScriptState());
-    if (!context)
+    if (!resolver_->HasValidExecutionContext())
       return;
-    Frame* frame = ToDocument(context)->GetFrame();
+    auto* context = ExecutionContext::From(resolver_->GetScriptState());
+    auto* document = ToDocumentOrDie(context);
+    Frame* frame = document->GetFrame();
     SECURITY_CHECK(!frame || IsSameOriginWithAncestors(frame));
 
     std::unique_ptr<WebCredential> credential =
@@ -235,11 +237,11 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
 
   void OnSuccess(
       webauth::mojom::blink::PublicKeyCredentialInfoPtr credential) override {
-    ExecutionContext* context =
-        ExecutionContext::From(resolver_->GetScriptState());
-    if (!context)
+    if (!resolver_->HasValidExecutionContext())
       return;
-    Frame* frame = ToDocument(context)->GetFrame();
+    auto* context = ExecutionContext::From(resolver_->GetScriptState());
+    auto* document = ToDocumentOrDie(context);
+    Frame* frame = document->GetFrame();
     SECURITY_CHECK(!frame || frame == frame->Tree().Top());
 
     if (!frame) {

@@ -55,6 +55,11 @@ void ScriptPromiseResolver::KeepAliveWhilePending() {
   keep_alive_ = this;
 }
 
+bool ScriptPromiseResolver::HasValidExecutionContext() {
+  return GetScriptState()->ContextIsValid() && GetExecutionContext() &&
+         !GetExecutionContext()->IsContextDestroyed();
+}
+
 void ScriptPromiseResolver::OnTimerFired(TimerBase*) {
   DCHECK(state_ == kResolving || state_ == kRejecting);
   if (!GetScriptState()->ContextIsValid()) {
