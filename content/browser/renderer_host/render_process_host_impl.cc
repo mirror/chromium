@@ -502,7 +502,7 @@ class SpareRenderProcessHostManager : public RenderProcessHostObserver {
   void WarmupSpareRenderProcessHost(BrowserContext* browser_context) {
     StoragePartitionImpl* current_partition =
         static_cast<StoragePartitionImpl*>(
-            BrowserContext::GetStoragePartition(browser_context, nullptr));
+            BrowserContext::GetDefaultStoragePartition(browser_context));
 
     if (spare_render_process_host_ &&
         matching_browser_context_ == browser_context &&
@@ -529,8 +529,8 @@ class SpareRenderProcessHostManager : public RenderProcessHostObserver {
     spare_render_process_host_->Init();
   }
 
-  // If |partition| is null, this gets the default partition from the browser
-  // context.
+  // If |partition| is null, this gets the partition for |site_instance| from
+  // the browser context.
   RenderProcessHost* MaybeTakeSpareRenderProcessHost(
       BrowserContext* browser_context,
       StoragePartition* partition,
@@ -540,10 +540,11 @@ class SpareRenderProcessHostManager : public RenderProcessHostObserver {
         browser_context == matching_browser_context_ && !is_for_guests_only &&
         !partition) {
       // If the spare renderer matches for everything but possibly the storage
-      // partition, and the passed-in partition is null, get the default storage
-      // partition. If this is the case, the default storage partition will
-      // already have been created and there is no possibility of breaking tests
-      // by GetDefaultStoragePartition prematurely creating one.
+      // partition, and the passed-in partition is null, get the storage
+      // partition for |site_instance| (which should be the default storage
+      // partition as is_for_guests_only is false). The default storage
+      // partition will already have been created and there is no possibility of
+      // breaking tests by GetStoragePartition prematurely creating one.
       partition =
           BrowserContext::GetStoragePartition(browser_context, site_instance);
     }
@@ -1251,6 +1252,16 @@ RenderProcessHost* RenderProcessHostImpl::CreateRenderProcessHost(
   if (!storage_partition_impl) {
     storage_partition_impl = static_cast<StoragePartitionImpl*>(
         BrowserContext::GetStoragePartition(browser_context, site_instance));
+  }
+  // If we've made a StoragePartition for guests, stash the Site URL on it. This
+  // way, when we start a service worker inside this storage partition, it can
+  // create the appropriate SiteInstance for finding a process (e.g., it will
+  // try to start a worker from "https://example.com/sw.js" but needs to use the
+  // site URL "chrome-guest://blahblah" to get an appropriate process.)
+  if (is_for_guests_only &&
+      storage_partition_impl->site_for_service_worker().is_empty()) {
+    storage_partition_impl->set_site_for_service_worker(
+        site_instance->GetSiteURL());
   }
 
   return new RenderProcessHostImpl(browser_context, storage_partition_impl,

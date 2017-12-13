@@ -8,6 +8,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/test/scoped_feature_list.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
+#include "content/browser/site_instance_impl.h"
+#include "content/browser/storage_partition_impl.h"
 #include "content/common/service_worker/embedded_worker_settings.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_features.h"
@@ -306,6 +308,60 @@ TEST_F(ServiceWorkerProcessManagerTest, AllocateWorkerProcess_InShutdown) {
   EXPECT_EQ(ServiceWorkerMetrics::StartSituation::UNKNOWN,
             process_info.start_situation);
   EXPECT_TRUE(process_manager_->instance_info_.empty());
+}
+
+// Tests that ServiceWorkerProcessManager uses
+// StoragePartitionImpl::site_for_service_worker() when it's set. This enables
+// finding the appropriate process when inside a StoragePartition for guests
+// (e.g., the <webview> tag). https://crbug.com/781313
+TEST_F(ServiceWorkerProcessManagerTest,
+       AllocateWorkerProcess_StoragePartitionForGuests) {
+  const GURL kSiteUrl = GURL("chrome-guest://wat");
+  const int kEmbeddedWorkerId = 100;
+
+  // Create a process for kSiteUrl.
+  std::unique_ptr<MockRenderProcessHost> host(CreateRenderProcessHost());
+  RenderProcessHostImpl::AddFrameWithSite(browser_context_.get(), host.get(),
+                                          kSiteUrl);
+
+  // Allocate a process to a worker. It should not use the kSiteUrl process,
+  // since |script_url_| is for a different origin.
+  {
+    ServiceWorkerProcessManager::AllocatedProcessInfo process_info;
+    ServiceWorkerStatusCode status = process_manager_->AllocateWorkerProcess(
+        kEmbeddedWorkerId, pattern_, script_url_,
+        true /* can_use_existing_process */, &process_info);
+    EXPECT_EQ(SERVICE_WORKER_OK, status);
+    EXPECT_NE(host->GetID(), process_info.process_id);
+  }
+  // Release the process.
+  process_manager_->ReleaseWorkerProcess(kEmbeddedWorkerId);
+
+  // Now change ServiceWorkerProcessManager to use a StoragePartition with
+  // |site_for_service_worker| set.
+  scoped_refptr<SiteInstanceImpl> site_instance =
+      SiteInstanceImpl::CreateForURL(browser_context_.get(), kSiteUrl);
+  StoragePartitionImpl* storage_partition =
+      static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
+          browser_context_.get(), site_instance.get()));
+  storage_partition->set_site_for_service_worker(site_instance->GetSiteURL());
+  process_manager_->set_storage_partition(storage_partition);
+
+  // Allocate a process to a worker. It should use the kSiteUrl process, even
+  // though |script_url_| is for a different origin.
+  {
+    ServiceWorkerProcessManager::AllocatedProcessInfo process_info;
+    ServiceWorkerStatusCode status = process_manager_->AllocateWorkerProcess(
+        kEmbeddedWorkerId, pattern_, script_url_,
+        true /* can_use_existing_process */, &process_info);
+    EXPECT_EQ(SERVICE_WORKER_OK, status);
+    EXPECT_EQ(host->GetID(), process_info.process_id);
+  }
+
+  // Release the process.
+  process_manager_->ReleaseWorkerProcess(kEmbeddedWorkerId);
+  RenderProcessHostImpl::RemoveFrameWithSite(browser_context_.get(), host.get(),
+                                             kSiteUrl);
 }
 
 }  // namespace content
