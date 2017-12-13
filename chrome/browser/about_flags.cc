@@ -1455,9 +1455,11 @@ const FeatureEntry kFeatureEntries[] = {
      ENABLE_DISABLE_VALUE_TYPE(
          chromeos::switches::kEnableNetworkPortalNotification,
          chromeos::switches::kDisableNetworkPortalNotification)},
-    {"network-settings-config", flag_descriptions::kNetworkSettingsConfigName,
-     flag_descriptions::kNetworkSettingsConfigDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(chromeos::switches::kNetworkSettingsConfig)},
+    {"disable-network-settings-config",
+     flag_descriptions::kDisableNetworkSettingsConfigName,
+     flag_descriptions::kDisableNetworkSettingsConfigDescription, kOsCrOS,
+     SINGLE_DISABLE_VALUE_TYPE(
+         chromeos::switches::kDisableNetworkSettingsConfig)},
 #endif  // OS_CHROMEOS
 #if BUILDFLAG(ENABLE_PLUGINS)
     {"allow-nacl-socket-api", flag_descriptions::kAllowNaclSocketApiName,
@@ -1477,8 +1479,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAshEnableUnifiedDesktopDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(switches::kEnableUnifiedDesktop)},
     {
-        "disable-boot-animation", flag_descriptions::kBootAnimationName,
-        flag_descriptions::kBootAnimationDescription, kOsCrOSOwnerOnly,
+        "disable-boot-animation",
+        flag_descriptions::kBootAnimationName,
+        flag_descriptions::kBootAnimationDescription,
+        kOsCrOSOwnerOnly,
         SINGLE_DISABLE_VALUE_TYPE(chromeos::switches::kDisableBootAnimation),
     },
     {"disable-easy-unlock-bluetooth-low-energy-detection",
@@ -1490,13 +1494,16 @@ const FeatureEntry kFeatureEntries[] = {
     {
         "disable-office-editing-component-app",
         flag_descriptions::kOfficeEditingComponentAppName,
-        flag_descriptions::kOfficeEditingComponentAppDescription, kOsCrOS,
+        flag_descriptions::kOfficeEditingComponentAppDescription,
+        kOsCrOS,
         SINGLE_DISABLE_VALUE_TYPE(
             chromeos::switches::kDisableOfficeEditingComponentApp),
     },
     {
-        "enable-background-blur", flag_descriptions::kEnableBackgroundBlurName,
-        flag_descriptions::kEnableBackgroundBlurDescription, kOsCrOS,
+        "enable-background-blur",
+        flag_descriptions::kEnableBackgroundBlurName,
+        flag_descriptions::kEnableBackgroundBlurDescription,
+        kOsCrOS,
         FEATURE_VALUE_TYPE(app_list::features::kEnableBackgroundBlur),
     },
     {"enable-easyunlock-promotions",
@@ -1504,8 +1511,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEasyUnlockPromotionsDescription, kOsCrOS,
      FEATURE_VALUE_TYPE(features::kEasyUnlockPromotions)},
     {
-        "enable-pinch", flag_descriptions::kPinchScaleName,
-        flag_descriptions::kPinchScaleDescription, kOsLinux | kOsWin | kOsCrOS,
+        "enable-pinch",
+        flag_descriptions::kPinchScaleName,
+        flag_descriptions::kPinchScaleDescription,
+        kOsLinux | kOsWin | kOsCrOS,
         ENABLE_DISABLE_VALUE_TYPE(switches::kEnablePinch,
                                   switches::kDisablePinch),
     },
@@ -1549,14 +1558,17 @@ const FeatureEntry kFeatureEntries[] = {
 #endif  // OS_WIN
 #if defined(OS_CHROMEOS)
     {
-        "ash-debug-shortcuts", flag_descriptions::kDebugShortcutsName,
-        flag_descriptions::kDebugShortcutsDescription, kOsAll,
+        "ash-debug-shortcuts",
+        flag_descriptions::kDebugShortcutsName,
+        flag_descriptions::kDebugShortcutsDescription,
+        kOsAll,
         SINGLE_VALUE_TYPE(ash::switches::kAshDebugShortcuts),
     },
     {
         "ash-enable-mirrored-screen",
         flag_descriptions::kAshEnableMirroredScreenName,
-        flag_descriptions::kAshEnableMirroredScreenDescription, kOsCrOS,
+        flag_descriptions::kAshEnableMirroredScreenDescription,
+        kOsCrOS,
         SINGLE_VALUE_TYPE(ash::switches::kAshEnableMirroredScreen),
     },
     {"ash-shelf-color", flag_descriptions::kAshShelfColorName,
