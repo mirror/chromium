@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2ec616d_22c4fbdc",
+        "filename": "media/capture/video/chromeos/camera_device_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1132275
+      },
+      "writtenOn": "2017-12-13T06:58:10Z",
+      "side": 1,
+      "message": "Can we also document that the value should be 0, 90, 180 or 270? And explicitly say that \"Clockwise angle through which the output image needs to be rotated to be upright on the device screen in its native orientation.\"",
+      "range": {
+        "startLine": 127,
+        "startChar": 37,
+        "endLine": 127,
+        "endChar": 44
+      },
+      "revId": "fa3154de4d2909f6da95274ebcce3c6d312eccf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
