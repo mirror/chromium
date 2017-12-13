@@ -73,4 +73,9 @@ public interface BottomSheetObserver {
      * @param newContent The new {@link BottomSheetContent}, or null if the sheet has no content.
      */
     void onSheetContentChanged(@Nullable BottomSheetContent newContent);
+
+    /**
+     * A notification that the native library is initialized.
+     */
+    void onNativeLibraryReady();
 }

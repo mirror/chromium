@@ -34,4 +34,7 @@ public class EmptyBottomSheetObserver implements BottomSheetObserver {
 
     @Override
     public void onSheetContentChanged(BottomSheetContent newContent) {}
+
+    @Override
+    public void onNativeLibraryReady() {}
 }
