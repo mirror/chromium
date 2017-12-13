@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2954af2e_6f330b40",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/sigsys_handlers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-12-13T21:13:38Z",
+      "side": 1,
+      "message": "Tiny nit: The previous file uses capital-S \"Seccomp\".",
+      "range": {
+        "startLine": 71,
+        "startChar": 33,
+        "endLine": 71,
+        "endChar": 40
+      },
+      "revId": "1f3326bcd35fadbe2618f79ee81294f388414335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
