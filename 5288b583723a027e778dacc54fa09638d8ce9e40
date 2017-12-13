@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae684e5a_88b9e246",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 7534,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "Button and menu item titles on Mac need to be title case. Can you add a \"use_titlecase\" block for IDS_PROFILES_DICE_* similar to the ones for IDS_PROFILES_*",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8761e51_13478506",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 13
+      },
+      "lineNbr": 7591,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "(e.g. similar to these)",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385446de_cfb3f83d",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "something for a possible follow-up: TIL: there are 7 structs in Chrome called \u0027AccountInfo\u0027 -- should components/signin/core/browser/account_info.h be in namespace signin -- 12 header files in components/signin/core/browser already do this",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa39471_0f135ae4",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "comment like\n\n// Manages its own lifetime.\n\nor\n\n// Deletes itself when...\n\n(but also what does delete this? I see OneClickSigninSyncStarter deletes itself -- what deletes the DiceTurnSyncOnHelper?)",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2622909_f2a9d8f2",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "There may be some tricky lifetime implications by taking a raw weak pointer to Profile* and Browser*. What if the window closes before this object is destroyed?\n\nCan you take a SessionID instead of a Browser*? And not take a Profile* at all, since there\u0027s always one on a Browser*",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "347f16d2_0ac3e30f",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "perhaps signin_promo_container?",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28461dda_deeabd0f",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "Can you comment here why the insets can\u0027t be applied to the BoxLayout rather than as borders to the individual views?",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79d0006_cd80c1c2",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "I think it\u0027s more that views::LabelButton already has a border (a ButtonBorder) and you can\u0027t add a second border.",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3e9a64_367d3569",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "auto -\u003e base::string16  (auto doesn\u0027t really improve readability here)",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6392e6_7d8546d9",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "Should this be ui::NativeTheme::kColorId_ProminentButtonColor ?  Note that GTK themes on Linux can override this to be some ugly color like orange. If kGoogleBlue500 is hardcoded here, I think you can end up with an inconsistent button color.\n\nAlso note that since the ui::NativeTheme can override this, it\u0027s important that we don\u0027t override the logic around the auto color readability.\n\nThere\u0027s also inverted/high-contrast themes to consider on Windows -- see https://bugs.chromium.org/p/chromium/issues/detail?id\u003d738292 . It\u0027s worth checking this now or the a11y review may block release.",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f926acb_7d4277ac",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "setting SK_ColorTRANSPARENT will disable subpixel AA -- I don\u0027t think that\u0027s what you want.",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1548f123_085fa6ba",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:40:58Z",
+      "side": 1,
+      "message": "What\u0027s the `20`?",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
