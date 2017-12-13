@@ -22,6 +22,30 @@
       "revId": "5230f039be5677b0532cdc2e1b0f78f6525dd3e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc8bd03a_076f310d",
+        "filename": "remoting/client/chromoting_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-12-13T09:02:51Z",
+      "side": 1,
+      "message": "client_ is null before the caller calls Connect() or after the caller calls Disconnect(). The actual problem here is that weak_factory_.InvalidateWeakPtrs() below can only be called once. We may do something like this instead:\n\n  if (weak_factory_.IsValid()) {\n    weak_factory_.InvalidateWeakPtrs();\n  }\n\nAnyway. The flaw of this design is that the caller can only disconnect once. To reconnect they will need to create a new ChromotingSession instance. I think the proper fix is to factor out a Core class that lives between (Connected, Disconnect), but I don\u0027t think it would get into M64...",
+      "parentUuid": "a1177eec_19e06b39",
+      "range": {
+        "startLine": 503,
+        "startChar": 17,
+        "endLine": 503,
+        "endChar": 0
+      },
+      "revId": "5230f039be5677b0532cdc2e1b0f78f6525dd3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
