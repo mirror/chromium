@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22ea0faa_c09d87fe",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-13T23:41:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we should mention C++ since client may not really know or care about C++ use inside framework. Also I don\u0027t think we should use the word \"app\". Maybe just:\n\n\"Must be called before object is deallocated.\"\n\nI wrote something about a clean shutdown first, but that also probably is meaningless to a client.",
+      "range": {
+        "startLine": 30,
+        "startChar": 51,
+        "endLine": 30,
+        "endChar": 54
+      },
+      "revId": "849138f1ebb9edb1027baafa637142156683f7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82887cdf_85d57da3",
+        "filename": "ios/web_view/internal/cwv_web_view_internal.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-13T23:41:50Z",
+      "side": 1,
+      "message": "Is this accurate? Maybe associated configuration makes more sense?",
+      "range": {
+        "startLine": 12,
+        "startChar": 54,
+        "endLine": 12,
+        "endChar": 72
+      },
+      "revId": "849138f1ebb9edb1027baafa637142156683f7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
