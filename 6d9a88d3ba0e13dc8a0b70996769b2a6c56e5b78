@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c71264d_c33871e8",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-13T21:23:00Z",
+      "side": 0,
+      "message": "Let\u0027s check for data url explicitly here.",
+      "revId": "6d9a88d3ba0e13dc8a0b70996769b2a6c56e5b78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
