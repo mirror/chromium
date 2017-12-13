@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "53b425b7_4976f758",
+        "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T00:04:46Z",
+      "side": 1,
+      "message": "No, we have one global set of binders that receive the RenderProcessHost* and Origin when they\u0027re run.",
+      "parentUuid": "32eee2bf_634f7062",
+      "revId": "9e29931b62d2edf32f3c84a07b2477fa00a27d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca0a62c9_b70bb554",
         "filename": "content/browser/background_fetch/background_fetch_service_impl.cc",
         "patchSetId": 11
