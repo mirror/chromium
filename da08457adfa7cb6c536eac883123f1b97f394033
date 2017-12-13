@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88103d29_305c2da5",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyNames.cpp.tmpl",
+        "patchSetId": 21
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-13T12:39:07Z",
+      "side": 0,
+      "message": "You mean the cssPropertyID method in this file? It doesn\u0027t seem to be used for that.",
+      "parentUuid": "e9801963_5b1c638c",
+      "revId": "da08457adfa7cb6c536eac883123f1b97f394033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ba177ca_0f37ca9e",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 21
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T05:46:27Z",
       "side": 0,
       "message": "I guess this todo is invalid now? We have a subclass for every property and descriptor?",
+      "revId": "da08457adfa7cb6c536eac883123f1b97f394033",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3728c5_c290bbcf",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-13T12:39:07Z",
+      "side": 0,
+      "message": "Yep, obsolete TODO. Didn\u0027t end up needed a not_implemented flag as far as I can tell.",
+      "parentUuid": "5ba177ca_0f37ca9e",
       "revId": "da08457adfa7cb6c536eac883123f1b97f394033",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
