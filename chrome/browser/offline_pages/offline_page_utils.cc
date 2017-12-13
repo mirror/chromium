@@ -172,7 +172,9 @@ const OfflinePageItem* OfflinePageUtils::GetOfflinePageFromWebContents(
     content::WebContents* web_contents) {
   OfflinePageTabHelper* tab_helper =
       OfflinePageTabHelper::FromWebContents(web_contents);
-  if (!tab_helper)
+  // TODO(jianli): Remove this when the UI knows how to handle untrusted
+  // offline pages.
+  if (!tab_helper || !tab_helper->IsShowingTrustedOfflinePage())
     return nullptr;
   const OfflinePageItem* offline_page = tab_helper->offline_page();
   if (!offline_page)
