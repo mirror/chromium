@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4c59d1cd_a85e4a61",
+        "filename": "ui/native_theme/common_theme.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-13T15:42:42Z",
+      "side": 1,
+      "message": "Okay. I\u0027ll document that, at least.",
+      "parentUuid": "ccd670eb_18a72e86",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 3
+      },
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c683964_0f8dc89b",
         "filename": "ui/native_theme/native_theme_mac.mm",
         "patchSetId": 2
@@ -164,6 +188,30 @@
       "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938483ce_5fa3db4d",
+        "filename": "ui/native_theme/native_theme_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-12-13T15:42:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61ca1f16_ef182191",
+      "range": {
+        "startLine": 626,
+        "startChar": 2,
+        "endLine": 627,
+        "endChar": 36
+      },
+      "revId": "0bd6b6c73d7e6bf84d37421e4bf3fd33de0d576c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
