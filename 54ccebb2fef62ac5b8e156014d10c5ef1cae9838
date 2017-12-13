@@ -342,6 +342,24 @@
     },
     {
       "key": {
+        "uuid": "7742ffd1_f73f9fa2",
+        "filename": "services/audio/public/cpp/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-13T14:57:46Z",
+      "side": 1,
+      "message": "Ah, right. The name confused me. Isn\u0027t it more of a MojoToAudioSystemAdapter, in the sense that you have a mojo connection, and you get an AudioSystem impl? :D I still think this means it needs an EXPORT macro though, but we can just add it in the future if we get link issues.",
+      "parentUuid": "2bbb6419_ec962848",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cb4eac1_1266051a",
         "filename": "services/audio/public/cpp/OWNERS",
         "patchSetId": 10
