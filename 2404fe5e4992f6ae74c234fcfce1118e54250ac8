@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d959e7da_9fb784a0",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T08:45:54Z",
+      "side": 1,
+      "message": "Sorry I meant the early return should be in WallpaperControllerClient::ShowUserWallpaper() instead of WallpaperController::ShowUserWallpaper().",
+      "parentUuid": "686d2379_e136b1bd",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa74e2ad_51eb8362",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 6
