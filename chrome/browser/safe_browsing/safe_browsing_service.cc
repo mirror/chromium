@@ -24,6 +24,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/ping_manager.h"
@@ -67,6 +68,15 @@
 #include "chrome/browser/safe_browsing/incident_reporting/resource_request_detector.h"
 #include "chrome/browser/safe_browsing/protocol_manager.h"
 #include "components/safe_browsing/password_protection/password_protection_service.h"
+#endif
+
+#if defined(OS_CHROMEOS)
+#include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/password_manager/password_store_factory.h"
+#include "chromeos/login/auth/user_context.h"
+#include "components/password_manager/core/browser/hash_password_manager.h"
+#include "components/password_manager/core/browser/password_manager_util.h"
+#include "components/password_manager/core/browser/password_store.h"
 #endif
 
 using content::BrowserThread;
@@ -135,6 +145,7 @@ SafeBrowsingService::~SafeBrowsingService() {
 }
 
 void SafeBrowsingService::Initialize() {
+  LOG(ERROR) << "SafeBrowsingService::Initialize() " << this;
   // Ensure FileTypePolicies's Singleton is instantiated during startup.
   // This guarantees we'll log UMA metrics about its state.
   FileTypePolicies::GetInstance();
@@ -590,4 +601,85 @@ void SafeBrowsingService::CreateTriggerManager() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   trigger_manager_ = base::MakeUnique<TriggerManager>(ui_manager_.get());
 }
+
+#if defined(OS_CHROMEOS)
+void SafeBrowsingService::AddPendingSyncPasswordData(
+    const chromeos::UserContext& user_context) {
+  std::string secret = user_context.GetKey()->GetSecret();
+  LOG(ERROR) << "SafeBrowsingService::AddPendingSyncPasswordData " << secret;
+  base::string16 secret_16(base::UTF8ToUTF16(secret));
+  const auto it = sync_password_map_.find(user_context.GetAccountId());
+  // Do nothing if password matches previous password.
+  if (it != sync_password_map_.end() &&
+      password_manager_util::CalculateSyncPasswordHash(
+          secret_16, it->second.salt) == it->second.hash) {
+    LOG(ERROR) << "Password not changed";
+    return;
+  }
+  // If there's no record of this sync password or there's a password change,
+  // update |sync_password_map_|.
+  password_manager::HashPasswordManager hash_password_manager;
+  password_manager::SyncPasswordData sync_password_data;
+  sync_password_data.salt = hash_password_manager.CreateRandomSalt();
+  sync_password_data.length = secret.size();
+  sync_password_data.hash = password_manager_util::CalculateSyncPasswordHash(
+      secret_16, sync_password_data.salt);
+  LOG(ERROR) << "SafeBrowsingService::AddPendingSyncPasswordData with hash "
+             << sync_password_data.hash;
+  DCHECK(!pending_sync_password_);
+  pending_sync_password_ = base::MakeUnique<
+      std::pair<AccountId, password_manager::SyncPasswordData>>(std::make_pair(
+      user_context.GetAccountId(), std::move(sync_password_data)));
+}
+
+void SafeBrowsingService::AddSyncPasswordData(const AccountId& account_id) {
+  LOG(ERROR) << "SafeBrowsingService::AddSyncPasswordData";
+  if (!pending_sync_password_ || pending_sync_password_->first != account_id)
+    return;
+
+  LOG(ERROR) << "hash " << pending_sync_password_->second.hash;
+  sync_password_map_[std::move(pending_sync_password_->first)] =
+      std::move(pending_sync_password_->second);
+  LOG(ERROR) << "2";
+  pending_sync_password_.reset();
+  LOG(ERROR) << "3";
+}
+
+void SafeBrowsingService::SaveSyncPasswordHash(Profile* profile) {
+  LOG(ERROR) << "SafeBrowsingService::SaveSyncPasswordHash";
+  DCHECK(profile);
+
+  user_manager::User* user =
+      chromeos::ProfileHelper::Get()->GetUserByProfile(profile);
+  if (!user)
+    return;
+
+  const auto it = sync_password_map_.find(user->GetAccountId());
+  if (it != sync_password_map_.end()) {
+    scoped_refptr<password_manager::PasswordStore> password_store =
+        PasswordStoreFactory::GetForProfile(profile,
+                                            ServiceAccessType::EXPLICIT_ACCESS);
+    if (password_store) {
+      LOG(ERROR) << "SafeBrowsingService::SaveSyncPasswordHash "
+                 << it->second.hash;
+      password_store->SaveSyncPasswordHash(it->second);
+    }
+  }
+}
+
+void SafeBrowsingService::RemovePendingSyncPasswordData(
+    const AccountId& account_id) {
+  LOG(ERROR) << "SafeBrowsingService::RemovePendingSyncPasswordData";
+  if (!pending_sync_password_ || pending_sync_password_->first != account_id)
+    return;
+  pending_sync_password_.reset();
+}
+
+bool SafeBrowsingService::HasSyncPasswordData(const AccountId& account_id) {
+  auto it = sync_password_map_.find(account_id);
+  return it != sync_password_map_.end();
+}
+
+#endif
+
 }  // namespace safe_browsing
