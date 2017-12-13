@@ -809,6 +809,7 @@ class LocalDeviceInstrumentationTestRun(
         html_results.flush()
       for result in results:
         result.SetLink(failure_filename, html_results.Link())
+        result.SetLink("GoldenLink-" + failure_filename, failure_link)
 
   #override
   def _ShouldRetry(self, test, result):
