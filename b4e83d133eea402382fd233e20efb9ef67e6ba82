@@ -22,6 +22,30 @@
       "revId": "b4e83d133eea402382fd233e20efb9ef67e6ba82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8646a152_e5219c9b",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-13T17:58:02Z",
+      "side": 1,
+      "message": "I think currently it\u0027s possible for tests(that use fake devices) to have an empty matched_output_device_id even if renderToAssociatedSink is true. We need to handle such cases similar to |input| field. May be then we can have a RenderToAssociatedSinkTrue test.",
+      "parentUuid": "b063023e_4df8684e",
+      "range": {
+        "startLine": 1391,
+        "startChar": 32,
+        "endLine": 1391,
+        "endChar": 59
+      },
+      "revId": "b4e83d133eea402382fd233e20efb9ef67e6ba82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
