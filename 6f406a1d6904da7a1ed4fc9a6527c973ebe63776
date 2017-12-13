@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2cc48ead_db712a37",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-13T22:13:59Z",
+      "side": 1,
+      "message": "Sweet! I didn\u0027t know that changing its type was an option.",
+      "parentUuid": "29aa3f44_8013aee1",
+      "revId": "6f406a1d6904da7a1ed4fc9a6527c973ebe63776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0106a85c_afac31d7",
         "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "6f406a1d6904da7a1ed4fc9a6527c973ebe63776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485a50b6_b9fcdeb5",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-12-13T22:13:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0106a85c_afac31d7",
+      "revId": "6f406a1d6904da7a1ed4fc9a6527c973ebe63776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
