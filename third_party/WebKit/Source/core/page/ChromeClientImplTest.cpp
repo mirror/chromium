@@ -128,8 +128,8 @@ class FakeColorChooserClient
   IntRect ElementRectRelativeToViewport() const override { return IntRect(); }
   Color CurrentColor() override { return Color(); }
   bool ShouldShowSuggestions() const override { return false; }
-  Vector<ColorSuggestion> Suggestions() const override {
-    return Vector<ColorSuggestion>();
+  Vector<mojom::ColorSuggestion> Suggestions() const override {
+    return Vector<mojom::ColorSuggestion>();
   }
 
  private:
