@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72fc2001_3010d528",
+        "filename": "net/reporting/reporting_uploader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-13T17:48:07Z",
+      "side": 1,
+      "message": "I don\u0027t understand what\u0027s going on here. Would you mind explaining what this does?",
+      "revId": "92050f3e30e0134ae440e51cb13f74beb98dbd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077ddda4_974ac129",
+        "filename": "net/reporting/reporting_uploader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-13T17:48:07Z",
+      "side": 1,
+      "message": "std::make_unique is preferred now",
+      "range": {
+        "startLine": 96,
+        "startChar": 25,
+        "endLine": 96,
+        "endChar": 41
+      },
+      "revId": "92050f3e30e0134ae440e51cb13f74beb98dbd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7902cf_4fb644bc",
+        "filename": "net/reporting/reporting_uploader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-12-13T17:48:07Z",
+      "side": 1,
+      "message": "This one needs a comment too",
+      "revId": "92050f3e30e0134ae440e51cb13f74beb98dbd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
