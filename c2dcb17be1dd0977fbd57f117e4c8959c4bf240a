@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d515d418_74352c55",
+        "filename": "ui/message_center/views/message_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-13T23:20:16Z",
+      "side": 1,
+      "message": "move this to anonymous namespace?",
+      "revId": "c2dcb17be1dd0977fbd57f117e4c8959c4bf240a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
