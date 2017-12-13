@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab9afc40_bd07f8b1",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T18:00:02Z",
+      "side": 1,
+      "message": "I think there\u0027s value in keeping this, even if redundant - it indicates to readers that come across this here, that this constant is accessible from other compilation units. Otherwise, they might not see its declaration in the header file, and assume it\u0027s local to this unit.\nWdyt?",
+      "parentUuid": "be948a8f_4af580e7",
+      "range": {
+        "startLine": 14,
+        "startChar": 60,
+        "endLine": 14,
+        "endChar": 61
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec7d0cd8_62696096",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5089a6_b7aaadef",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T18:00:02Z",
+      "side": 1,
+      "message": "Done\nFYI, though \"unit test\" is ten times more common (this number is rather accurate, btw), the code base does have ~170 instances of the hyphenated variant.",
+      "parentUuid": "ec7d0cd8_62696096",
+      "range": {
+        "startLine": 234,
+        "startChar": 29,
+        "endLine": 234,
+        "endChar": 30
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e96ccbb3_284082a1",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T18:00:02Z",
+      "side": 1,
+      "message": "I\u0027ve shuffled the private/protected parts accordingly.",
+      "parentUuid": "9ca80c5c_984f847e",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 7
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0b9f151_29ebcb44",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2416e42_b820b821",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T18:00:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0b9f151_29ebcb44",
+      "range": {
+        "startLine": 163,
+        "startChar": 59,
+        "endLine": 163,
+        "endChar": 76
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "077e57b7_4c26319a",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T18:00:02Z",
+      "side": 1,
+      "message": "I will remove all or none, depending on what you respond to my other comment about this topic.\nResolving this issue; I\u0027ll (most likely) not forget.",
+      "parentUuid": "c8ffa819_45b2e35d",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 6
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcdb493a_b30a9975",
         "filename": "content/browser/webrtc/webrtc_local_event_log_manager.h",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-13T17:02:41Z",
       "side": 1,
       "message": "Convenience alias are allowed in the private section, but not here.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 7
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72232bb2_fd355227",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T18:00:02Z",
+      "side": 1,
+      "message": "I\u0027ve s/protected/private.\nFor my information, why is it OK in the private part, but not the protected part? An inheriting class is very likely to require the very same convenience aliases.",
+      "parentUuid": "bcdb493a_b30a9975",
       "range": {
         "startLine": 38,
         "startChar": 2,
