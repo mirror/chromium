@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a643522a_69385ec2",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-12-13T22:28:17Z",
+      "side": 1,
+      "message": "ContainsSurface looks good. But I think that you use it from GetHitTestData() -- there can be a default hit_test_data_provider_ class that does what you have below the else?\n\nmostly I\u0027m thinking about making sure that either we are in new hit-testing or not.",
+      "revId": "23daf3c0e3af4c80d0f12095c4f75a6ad0de8cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
