@@ -22,6 +22,30 @@
       "revId": "420f9b804f9b3046f2401a7fe057a33af167ea38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c13725c_3d707d8a",
+        "filename": "components/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-13T18:50:33Z",
+      "side": 1,
+      "message": "Yes, I missed this one.",
+      "parentUuid": "c721f702_876a4202",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 39
+      },
+      "revId": "420f9b804f9b3046f2401a7fe057a33af167ea38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
