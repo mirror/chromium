@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "07f9f4de_8eb6aef4",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-13T07:05:28Z",
+      "side": 1,
+      "message": "I think we should DCHECK inside the if. device.input can be empty if device type is not audio.",
+      "parentUuid": "72d121e2_ec2dc2b1",
+      "range": {
+        "startLine": 1549,
+        "startChar": 8,
+        "endLine": 1549,
+        "endChar": 14
+      },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1cdfbd7_24672896",
         "filename": "content/public/common/media_stream_request.cc",
         "patchSetId": 4
