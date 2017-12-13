@@ -636,7 +636,7 @@ bool ServiceWorkerVersion::FinishRequest(int request_id,
                          request, "Handled", was_handled);
   request_timeouts_.erase(request->timeout_iter);
   pending_requests_.Remove(request_id);
-  if (!HasWork()) {
+  if (!ServiceWorkerUtils::IsServicificationEnabled() && !HasWork()) {
     for (auto& observer : listeners_)
       observer.OnNoWork(this);
   }
@@ -722,7 +722,7 @@ void ServiceWorkerVersion::OnStreamResponseStarted() {
 void ServiceWorkerVersion::OnStreamResponseFinished() {
   DCHECK_GT(pending_stream_response_count_, 0);
   pending_stream_response_count_--;
-  if (!HasWork()) {
+  if (!ServiceWorkerUtils::IsServicificationEnabled() && !HasWork()) {
     for (auto& observer : listeners_)
       observer.OnNoWork(this);
   }
@@ -1728,12 +1728,17 @@ void ServiceWorkerVersion::StopWorkerIfIdle() {
   // StopWorkerIfIdle() may be called for two reasons: "idle-timeout" or
   // "ping-timeout". For idle-timeout (i.e. ping hasn't timed out), check if the
   // worker really is idle.
-  if (!ping_controller_->IsTimedOut() && HasWork())
+  if (!ping_controller_->IsTimedOut() && HasWorkOnBrowser())
     return;
   embedded_worker_->StopIfNotAttachedToDevTools();
 }
 
 bool ServiceWorkerVersion::HasWork() const {
+  DCHECK(!ServiceWorkerUtils::IsServicificationEnabled());
+  return HasWorkOnBrowser();
+}
+
+bool ServiceWorkerVersion::HasWorkOnBrowser() const {
   return !pending_requests_.IsEmpty() || pending_stream_response_count_ > 0 ||
          !start_callbacks_.empty();
 }
@@ -1950,7 +1955,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
     observer.OnRunningStateChanged(this);
   if (should_restart) {
     StartWorkerInternal();
-  } else if (!HasWork()) {
+  } else if (!HasWorkOnBrowser()) {
     for (auto& observer : listeners_)
       observer.OnNoWork(this);
   }

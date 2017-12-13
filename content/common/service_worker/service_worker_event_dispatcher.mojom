@@ -156,4 +156,7 @@ interface ServiceWorkerEventDispatcher {
   // worker. Unlike the other functions in this interface, Ping() does not
   // dispatch an event.
   Ping() => ();
+
+  // hogehoge
+  TriggerIdleTimerImmediately();
 };

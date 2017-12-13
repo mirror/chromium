@@ -198,7 +198,12 @@ void ServiceWorkerRegistration::ActivateWaitingVersionWhenReady() {
     ActivateWaitingVersion(false /* delay */);
     return;
   }
-
+  if (ServiceWorkerUtils::IsServicificationEnabled()) {
+    DCHECK_NE(EmbeddedWorkerStatus::STOPPED,
+              active_version()->running_status());
+    DCHECK(active_version()->event_dispatcher());
+    active_version()->event_dispatcher()->TriggerIdleTimerImmediately();
+  }
   StartLameDuckTimerIfNeeded();
 }
 
@@ -291,9 +296,15 @@ bool ServiceWorkerRegistration::IsReadyToActivate() const {
     return true;
   }
   if (IsLameDuckActiveVersion()) {
-    return !active->HasWork() ||
-           waiting->TimeSinceSkipWaiting() > kMaxLameDuckTime ||
-           active->TimeSinceNoControllees() > kMaxLameDuckTime;
+    if (ServiceWorkerUtils::IsServicificationEnabled()) {
+      return active->running_status() == EmbeddedWorkerStatus::STOPPED ||
+             waiting->TimeSinceSkipWaiting() > kMaxLameDuckTime ||
+             active->TimeSinceNoControllees() > kMaxLameDuckTime;
+    } else {
+      return !active->HasWork() ||
+             waiting->TimeSinceSkipWaiting() > kMaxLameDuckTime ||
+             active->TimeSinceNoControllees() > kMaxLameDuckTime;
+    }
   }
   return false;
 }

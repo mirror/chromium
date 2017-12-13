@@ -1811,6 +1811,14 @@ void ServiceWorkerContextClient::Ping(PingCallback callback) {
   std::move(callback).Run();
 }
 
+void ServiceWorkerContextClient::TriggerIdleTimerImmediately() {
+  LOG(ERROR) << __PRETTY_FUNCTION__;
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+  DCHECK(context_);
+  DCHECK(context_->timeout_timer);
+  context_->timeout_timer->TriggerIdleTimerImmediately();
+}
+
 void ServiceWorkerContextClient::OnNavigationPreloadResponse(
     int fetch_event_id,
     std::unique_ptr<blink::WebURLResponse> response,

@@ -394,8 +394,9 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // Used to allow tests to change wall clock for testing.
   void SetClockForTesting(base::Clock* clock);
 
-  // Returns true if the service worker has work to do: it has pending
-  // requests, in-progress streaming URLRequestJobs, or pending start callbacks.
+  // Non-S13nServiceWorker: returns true if the service worker has work to do:
+  // it has pending requests, in-progress streaming URLRequestJobs, or pending
+  // start callbacks.
   bool HasWork() const;
 
   // Returns the number of pending external request count of this worker.
@@ -635,6 +636,15 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // Sets |stale_time_| if this worker is stale, causing an update to eventually
   // occur once the worker stops or is running too long.
   void MarkIfStale();
+
+  // Returns true if the service worker has work to do on the browser: it has
+  // pending requests, in-progress streaming URLRequestJobs, or pending start
+  // callbacks.
+  //
+  // S13nServiceWorker: note that this method may return false even when the
+  // service worker still has work to do; clients may dispatch events to the
+  // service worker directly.
+  bool HasWorkOnBrowser() const;
 
   void FoundRegistrationForUpdate(
       ServiceWorkerStatusCode status,
