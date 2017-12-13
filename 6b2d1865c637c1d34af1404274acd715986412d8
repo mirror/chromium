@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c280432_eb2486a4",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-12-13T22:19:18Z",
+      "side": 1,
+      "message": "docstring?",
+      "range": {
+        "startLine": 41,
+        "startChar": 62,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "6b2d1865c637c1d34af1404274acd715986412d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fab09d7_a636037e",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-12-13T22:19:18Z",
+      "side": 1,
+      "message": "Nit: at 53, the prefix \"GetCan\" is used for a similar Boolean-valued function, so maybe you want GetIsAppIdHashInEnterpriseContext?",
+      "range": {
+        "startLine": 71,
+        "startChar": 65,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "6b2d1865c637c1d34af1404274acd715986412d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3246a416_234f6535",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1245564
+      },
+      "writtenOn": "2017-12-13T22:19:18Z",
+      "side": 1,
+      "message": "Maybe a more specific word than \"individual\", like \"unique\" or \"identifying\".  Or, even better, state how the token behaves differently if this knob is not set.",
+      "range": {
+        "startLine": 26,
+        "startChar": 15,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "6b2d1865c637c1d34af1404274acd715986412d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
