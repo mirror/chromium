@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef68770_0d6f6afc",
+        "filename": "net/data/cert_issuer_source_aia_unittest/generate-certs.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-12-13T02:18:35Z",
+      "side": 1,
+      "message": "hm, importing the submodule as the name of the parent feels a bit weird.\n\nmaybe:\nrename common.py to __init__.py, so you can just do import gencerts\n(I guess __init__.py could also do \"import * from common.py\", but I guess that\u0027s probably less prefered)\n\nor:\ncome up with a different name for one?",
+      "revId": "4380aff9811cdd83465a52f34b64ad6faa014f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
