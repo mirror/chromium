@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be9339c7_42306b7b",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-13T19:07:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3dced0e_dae4764b",
+      "revId": "4b7fb2915ad570ddcb187d8978bf1516a1ebc0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42285153_2c267b5d",
         "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4b7fb2915ad570ddcb187d8978bf1516a1ebc0ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebb8de5_b7ee6b11",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-13T19:07:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42285153_2c267b5d",
+      "revId": "4b7fb2915ad570ddcb187d8978bf1516a1ebc0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ca5aefd4_86d56908",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-13T19:07:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54570341_a9c9e712",
+      "revId": "4b7fb2915ad570ddcb187d8978bf1516a1ebc0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c947c07f_79bde2a6",
         "filename": "third_party/WebKit/Source/modules/xr/XR.idl",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "4b7fb2915ad570ddcb187d8978bf1516a1ebc0ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2d31e7_be7d41d9",
+        "filename": "third_party/WebKit/Source/modules/xr/XR.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1243285
+      },
+      "writtenOn": "2017-12-13T19:07:57Z",
+      "side": 1,
+      "message": "Done. All links checked.",
+      "parentUuid": "c947c07f_79bde2a6",
+      "revId": "4b7fb2915ad570ddcb187d8978bf1516a1ebc0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
