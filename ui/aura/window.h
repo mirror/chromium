@@ -342,11 +342,11 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // Overridden from ui::LayerOwner:
   std::unique_ptr<ui::Layer> RecreateLayer() override;
 
-#if !defined(NDEBUG)
+// #if !defined(NDEBUG)
   // These methods are useful when debugging.
   std::string GetDebugInfo() const;
   void PrintWindowHierarchy(int depth) const;
-#endif
+// #endif
 
   // Returns true if there was state needing to be cleaned up.
   bool CleanupGestureState();

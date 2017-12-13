@@ -1,8 +1,8 @@
-// Copyright 2015 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/host/ash_window_tree_host_unified.h"
+#include "ash/host/ash_window_tree_host_mus_unified.h"
 
 #include <memory>
 #include <utility>
@@ -30,14 +30,21 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
 
   ui::EventTarget* FindTargetForEvent(ui::EventTarget* root,
                                       ui::Event* event) override {
-    if (root == src_root_ && !event->target()) {
-      delegate_->SetCurrentEventTargeterSourceHost(src_root_->GetHost());
+    // LOG(ERROR) << "MSW UnifiedEventTargeter::FindTargetForEvent A root:" << static_cast<aura::Window*>(root)->GetName() << " src_root_:" << static_cast<aura::Window*>(src_root_)->GetName() << " event->target():" << event->target(); 
+    LOG(ERROR) << "MSW UnifiedEventTargeter::FindTargetForEvent A eq:" << (root == src_root_) << " target:" << (event->target() ? static_cast<aura::Window*>(event->target())->GetName() : "(nullptr)"); 
+    if (root == src_root_) {
+      // delegate_->SetCurrentEventTargeterSourceHost(src_root_->GetHost());
 
       if (event->IsLocatedEvent()) {
         ui::LocatedEvent* located_event = static_cast<ui::LocatedEvent*>(event);
+        LOG(ERROR) << "MSW FindTargetForEvent location before: " << located_event->location().ToString();
         located_event->ConvertLocationToTarget(
-            static_cast<aura::Window*>(nullptr), dst_root_);
+            static_cast<aura::Window*>(event->target()), dst_root_); 
+        located_event->set_root_location_f(located_event->location_f());
+        LOG(ERROR) << "MSW FindTargetForEvent location after: " << located_event->location().ToString();
       }
+      if (event->target())
+        ui::Event::DispatcherApi(event).set_target(nullptr);
       ignore_result(
           dst_root_->GetHost()->event_sink()->OnEventFromSource(event));
 
@@ -45,10 +52,11 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
       delegate_->SetCurrentEventTargeterSourceHost(nullptr);
 
       return nullptr;
-    } else {
-      NOTIMPLEMENTED() << "event type:" << event->type();
-      return aura::WindowTargeter::FindTargetForEvent(root, event);
     }
+    
+    // NOTIMPLEMENTED_LOG_ONCE() << "event type:" << event->type(); // TODO(msw): NOTREACHED(); 
+    // return aura::WindowTargeter::FindTargetForEvent(root, event);
+    return nullptr; 
   }
 
  private:
@@ -59,30 +67,33 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
   DISALLOW_COPY_AND_ASSIGN(UnifiedEventTargeter);
 };
 
-AshWindowTreeHostUnified::AshWindowTreeHostUnified(
-    const gfx::Rect& initial_bounds,
+AshWindowTreeHostMusUnified::AshWindowTreeHostMusUnified(
+    aura::WindowTreeHostMusInitParams init_params,
     AshWindowTreeHostMirroringDelegate* delegate)
-    : AshWindowTreeHostPlatform(), delegate_(delegate) {
+    : AshWindowTreeHostMus(std::move(init_params)), delegate_(delegate) {
   DCHECK(delegate);
-  std::unique_ptr<ui::PlatformWindow> window(new ui::StubWindow(this));
-  window->SetBounds(initial_bounds);
-  SetPlatformWindow(std::move(window));
+  // std::unique_ptr<ui::PlatformWindow> window(new ui::StubWindow(this, false, GetBoundsInPixels()));
+  // // window->SetBounds(initial_bounds);
+  // // window->SetBounds(GetBoundsInPixels()); 
+  // SetPlatformWindow(std::move(window));
+  // Hide(); 
 }
 
-AshWindowTreeHostUnified::~AshWindowTreeHostUnified() {
+AshWindowTreeHostMusUnified::~AshWindowTreeHostMusUnified() {
   for (auto* ash_host : mirroring_hosts_)
     ash_host->AsWindowTreeHost()->window()->RemoveObserver(this);
 }
 
-void AshWindowTreeHostUnified::PrepareForShutdown() {
-  AshWindowTreeHostPlatform::PrepareForShutdown();
+void AshWindowTreeHostMusUnified::PrepareForShutdown() {
+  AshWindowTreeHostMus::PrepareForShutdown();
 
   for (auto* host : mirroring_hosts_)
     host->PrepareForShutdown();
 }
 
-void AshWindowTreeHostUnified::RegisterMirroringHost(
+void AshWindowTreeHostMusUnified::RegisterMirroringHost(
     AshWindowTreeHost* mirroring_ash_host) {
+  LOG(ERROR) << "MSW AshWindowTreeHostMusUnified::RegisterMirroringHost A"; 
   aura::Window* src_root = mirroring_ash_host->AsWindowTreeHost()->window();
   src_root->SetEventTargeter(
       std::make_unique<UnifiedEventTargeter>(src_root, window(), delegate_));
@@ -92,27 +103,27 @@ void AshWindowTreeHostUnified::RegisterMirroringHost(
   mirroring_ash_host->AsWindowTreeHost()->window()->AddObserver(this);
 }
 
-void AshWindowTreeHostUnified::SetBoundsInPixels(const gfx::Rect& bounds) {
-  AshWindowTreeHostPlatform::SetBoundsInPixels(bounds);
+void AshWindowTreeHostMusUnified::SetBoundsInPixels(const gfx::Rect& bounds) {
+  AshWindowTreeHostMus::SetBoundsInPixels(bounds);
   OnHostResizedInPixels(bounds.size());
 }
 
-void AshWindowTreeHostUnified::SetCursorNative(gfx::NativeCursor cursor) {
+void AshWindowTreeHostMusUnified::SetCursorNative(gfx::NativeCursor cursor) {
   for (auto* host : mirroring_hosts_)
     host->AsWindowTreeHost()->SetCursor(cursor);
 }
 
-void AshWindowTreeHostUnified::OnCursorVisibilityChangedNative(bool show) {
+void AshWindowTreeHostMusUnified::OnCursorVisibilityChangedNative(bool show) {
   for (auto* host : mirroring_hosts_)
     host->AsWindowTreeHost()->OnCursorVisibilityChanged(show);
 }
 
-void AshWindowTreeHostUnified::OnBoundsChanged(const gfx::Rect& bounds) {
+void AshWindowTreeHostMusUnified::OnBoundsChanged(const gfx::Rect& bounds) {
   if (platform_window())
     OnHostResizedInPixels(bounds.size());
 }
 
-void AshWindowTreeHostUnified::OnWindowDestroying(aura::Window* window) {
+void AshWindowTreeHostMusUnified::OnWindowDestroying(aura::Window* window) {
   auto iter =
       std::find_if(mirroring_hosts_.begin(), mirroring_hosts_.end(),
                    [window](AshWindowTreeHost* ash_host) {

@@ -106,6 +106,9 @@ ui::CursorData EventDispatcher::GetCurrentMouseCursor() const {
 
 bool EventDispatcher::SetCaptureWindow(ServerWindow* window,
                                        ClientSpecificId client_id) {
+  // TODO(msw): It's possible that ash and mus are trying to set capture, and in doing so disrupt UnifiedEventTargeter... 
+  // Setting a pre-target handler might help... Fixing the capture pattern might help... 
+  LOG(ERROR) << "MSW EventDispatcher::SetCaptureWindow "; 
   if (!window)
     client_id = kInvalidClientId;
 

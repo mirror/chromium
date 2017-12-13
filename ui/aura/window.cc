@@ -663,7 +663,7 @@ void Window::OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                     new_device_scale_factor);
 }
 
-#if !defined(NDEBUG)
+// #if !defined(NDEBUG)
 std::string Window::GetDebugInfo() const {
   return base::StringPrintf(
       "%s<%d> bounds(%d, %d, %d, %d) %s %s opacity=%.1f",
@@ -685,7 +685,7 @@ void Window::PrintWindowHierarchy(int depth) const {
     child->PrintWindowHierarchy(depth + 1);
   }
 }
-#endif
+// #endif
 
 void Window::RemoveOrDestroyChildren() {
   while (!children_.empty()) {

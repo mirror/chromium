@@ -1518,22 +1518,22 @@ void WindowTreeClient::OnWindowInputEvent(
 //
 // TODO: this should really be covered by |root_location|. See 608547 for
 // details.
-#if defined(USE_OZONE)
-  std::unique_ptr<ui::MouseEvent> mapped_event_with_native;
-  if (mapped_event->type() == ui::ET_MOUSE_MOVED ||
-      mapped_event->type() == ui::ET_MOUSE_DRAGGED) {
-    mapped_event_with_native = std::make_unique<ui::MouseEvent>(
-        static_cast<const base::NativeEvent&>(mapped_event.get()));
-    // MouseEvent(NativeEvent) sets the root_location to location.
-    mapped_event_with_native->set_root_location_f(
-        event_location_in_screen_pixel_layout);
-    // |mapped_event| is now the NativeEvent. It's expected the location of the
-    // NativeEvent is the same as root_location.
-    mapped_event->AsMouseEvent()->set_location_f(
-        event_location_in_screen_pixel_layout);
-    event_to_dispatch = mapped_event_with_native.get();
-  }
-#endif
+// #if defined(USE_OZONE)
+//   std::unique_ptr<ui::MouseEvent> mapped_event_with_native;
+//   if (mapped_event->type() == ui::ET_MOUSE_MOVED ||
+//       mapped_event->type() == ui::ET_MOUSE_DRAGGED) {
+//     mapped_event_with_native = std::make_unique<ui::MouseEvent>(
+//         static_cast<const base::NativeEvent&>(mapped_event.get()));
+//     // MouseEvent(NativeEvent) sets the root_location to location.
+//     mapped_event_with_native->set_root_location_f(
+//         event_location_in_screen_pixel_layout);
+//     // |mapped_event| is now the NativeEvent. It's expected the location of the
+//     // NativeEvent is the same as root_location.
+//     mapped_event->AsMouseEvent()->set_location_f(
+//         event_location_in_screen_pixel_layout);
+//     event_to_dispatch = mapped_event_with_native.get();
+//   }
+// #endif
   DispatchEventToTarget(event_to_dispatch, window);
   ack_handler.set_handled(event_to_dispatch->handled());
 }

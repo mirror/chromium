@@ -79,6 +79,7 @@ bool DisplayManager::SetDisplayConfiguration(
     int64_t primary_display_id,
     int64_t internal_display_id,
     const std::vector<display::Display>& mirrors) {
+      LOG(ERROR) << "MSW DisplayManager::SetDisplayConfiguration displays:" << displays.size() << " mirrors:" << mirrors.size(); 
   DCHECK_NE(display::kUnifiedDisplayId, internal_display_id);
   if (window_server_->display_creation_config() !=
       DisplayCreationConfig::MANUAL) {
@@ -133,16 +134,16 @@ bool DisplayManager::SetDisplayConfiguration(
     Display* ws_display = GetDisplayById(display.id());
     if (!ws_display) {
       if (display.id() == display::kUnifiedDisplayId) {
-        if (displays.size() != 1u) {
-          LOG(ERROR) << "SetDisplayConfiguration passed 2+ displays in unified";
-          return false;
-        }
-        if (mirrors.size() <= 1u) {
-          LOG(ERROR) << "SetDisplayConfiguration passed <2 mirrors in unified";
-          return false;
-        }
-        NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified mode.";
-        return false;
+        // if (displays.size() != 1u) {
+        //   LOG(ERROR) << "SetDisplayConfiguration passed 2+ displays in unified";
+        //   return false;
+        // }
+        // if (mirrors.size() <= 1u) {
+        //   LOG(ERROR) << "SetDisplayConfiguration passed <2 mirrors in unified";
+        //   return false;
+        // }
+        // NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified mode.";
+        // return false;
       } else {
         LOG(ERROR) << "SetDisplayConfiguration passed unknown display id "
                    << display.id();
@@ -169,6 +170,10 @@ bool DisplayManager::SetDisplayConfiguration(
                                   display::DisplayList::Type::PRIMARY);
   for (size_t i = 0; i < displays.size(); ++i) {
     Display* ws_display = GetDisplayById(displays[i].id());
+    if (!ws_display && displays[i].id() == display::kUnifiedDisplayId) { 
+      CreateDisplay(displays[i], viewport_metrics[i]);
+      ws_display = GetDisplayById(displays[i].id());
+    } 
     DCHECK(ws_display);
     ws_display->SetDisplay(displays[i]);
     ws_display->OnViewportMetricsChanged(viewport_metrics[i]);

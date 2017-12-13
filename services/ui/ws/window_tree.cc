@@ -345,6 +345,7 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
 
   Display* display = display_manager()->GetDisplayById(display_to_create.id());
   const bool display_already_existed = display != nullptr;
+  LOG(ERROR) << "MSW WindowTree::ProcessSetDisplayRoot display:" << display_to_create.id() << " already-existed:" << display_already_existed << " mirrors:" << mirrors.size();
   if (!display) {
     // Create a display if the window manager is extending onto a new display.
     display = display_manager()->AddDisplayForWindowManager(
@@ -355,8 +356,8 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
     display->InitWindowManagerDisplayRoots();
   }
 
-  if (!mirrors.empty())
-    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified mode support.";
+  // if (!mirrors.empty())
+  //   NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified mode support.";
 
   DCHECK(display);
   WindowManagerDisplayRoot* display_root =
@@ -378,6 +379,7 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
   }
   if (display_already_existed &&
       display->platform_display()->GetAcceleratedWidget()) {
+    LOG(ERROR) << "MSW WindowTree::ProcessSetDisplayRoot CALLING WmOnAcceleratedWidgetForDisplay!!!!"; 
     // Notify the window manager that the dispay's accelerated widget is already
     // available, if the display is being reused for a new window tree host.
     window_manager_internal_->WmOnAcceleratedWidgetForDisplay(
@@ -1507,10 +1509,11 @@ void WindowTree::DispatchInputEventImpl(ServerWindow* target,
   GenerateEventAckId();
   event_ack_callback_ = std::move(callback);
   WindowManagerDisplayRoot* display_root = GetWindowManagerDisplayRoot(target);
-  DCHECK(display_root);
-  event_source_wms_ = display_root->window_manager_state();
+  // DCHECK(display_root);
+  if (display_root)
+    event_source_wms_ = display_root->window_manager_state();
   // Should only get events from windows attached to a host.
-  DCHECK(event_source_wms_);
+  // DCHECK(event_source_wms_);
   bool matched_pointer_watcher = EventMatchesPointerWatcher(event);
   client()->OnWindowInputEvent(
       event_ack_id_, TransportIdForWindow(target), event_location.display_id,

@@ -340,6 +340,7 @@ void WindowManager::OnWmAcceleratedWidgetAvailableForDisplay(
     int64_t display_id,
     gfx::AcceleratedWidget widget) {
   WindowTreeHostManager* manager = Shell::Get()->window_tree_host_manager();
+  LOG(ERROR) << "MSW WindowManager::OnWmAcceleratedWidgetAvailableForDisplay display:" << display_id << " aw:" << widget; 
   AshWindowTreeHost* host =
       manager->GetAshWindowTreeHostForDisplayId(display_id);
   // The display may have been destroyed before getting this async callback.
