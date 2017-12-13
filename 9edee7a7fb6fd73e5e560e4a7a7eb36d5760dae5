@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "162b928a_4c203bd5",
+        "filename": "third_party/WebKit/Source/platform/heap/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-13T17:07:41Z",
+      "side": 1,
+      "message": "public_deps isn\u0027t actually defined yet in this target, so this should be just `public_deps \u003d`.\n\nYou\u0027ll also need to merge in https://crrev.com/c/823030.",
+      "revId": "9edee7a7fb6fd73e5e560e4a7a7eb36d5760dae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
