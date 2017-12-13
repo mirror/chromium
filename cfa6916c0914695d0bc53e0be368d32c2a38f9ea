@@ -16,6 +16,24 @@
       "revId": "cfa6916c0914695d0bc53e0be368d32c2a38f9ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470327bf_620d41e8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1475,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-13T21:10:35Z",
+      "side": 1,
+      "message": "Yes. For the case we just expand the rect to cover the whole width or height of the border box rect, which is covered by the rect returned here.",
+      "parentUuid": "14a950a9_0b8ee649",
+      "revId": "cfa6916c0914695d0bc53e0be368d32c2a38f9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
