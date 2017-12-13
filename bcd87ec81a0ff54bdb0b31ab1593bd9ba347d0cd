@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "258091e0_3de3681b",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5488,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-13T00:55:40Z",
+      "side": 1,
+      "message": "Note: this test worked prior to code change.",
+      "range": {
+        "startLine": 5488,
+        "startChar": 13,
+        "endLine": 5488,
+        "endChar": 58
+      },
+      "revId": "bcd87ec81a0ff54bdb0b31ab1593bd9ba347d0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e808f5_b33fb1da",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5562,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-13T00:55:40Z",
+      "side": 1,
+      "message": "Note, this part failed prior to code change. Gap still existed.",
+      "range": {
+        "startLine": 5562,
+        "startChar": 14,
+        "endLine": 5562,
+        "endChar": 78
+      },
+      "revId": "bcd87ec81a0ff54bdb0b31ab1593bd9ba347d0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f045918b_933fc155",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5574,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-13T00:55:40Z",
+      "side": 1,
+      "message": "Note, the next line didn\u0027t fail prior to code change, but the gap was still there internally (TimeRanges coalesces immediately adjacent ranges).",
+      "range": {
+        "startLine": 5572,
+        "startChar": 14,
+        "endLine": 5574,
+        "endChar": 13
+      },
+      "revId": "bcd87ec81a0ff54bdb0b31ab1593bd9ba347d0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f846f45_8f581f62",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5577,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-13T00:55:40Z",
+      "side": 1,
+      "message": "Note, the next line failed prior to code change due to there still being two ranges.",
+      "range": {
+        "startLine": 5576,
+        "startChar": 15,
+        "endLine": 5577,
+        "endChar": 28
+      },
+      "revId": "bcd87ec81a0ff54bdb0b31ab1593bd9ba347d0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a97f6ada_92910d12",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5585,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-13T00:55:40Z",
+      "side": 1,
+      "message": "Note, the next line didn\u0027t fail prior to code change, but the gap was still there internally (TimeRanges coalesces overlapping ranges).",
+      "range": {
+        "startLine": 5584,
+        "startChar": 15,
+        "endLine": 5585,
+        "endChar": 74
+      },
+      "revId": "bcd87ec81a0ff54bdb0b31ab1593bd9ba347d0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb51846d_983f3fca",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5588,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-13T00:55:40Z",
+      "side": 1,
+      "message": "Note, the next line failed prior to code change due to there still being two ranges.",
+      "range": {
+        "startLine": 5587,
+        "startChar": 15,
+        "endLine": 5588,
+        "endChar": 28
+      },
+      "revId": "bcd87ec81a0ff54bdb0b31ab1593bd9ba347d0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef449ff_198e0ba4",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5595,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-12-13T00:55:40Z",
+      "side": 1,
+      "message": "Note, this group of lines passed prior to code change because 130ms is just close enough to the keyframe time 150ms of the next range, and the range is finally coalesced.",
+      "range": {
+        "startLine": 5593,
+        "startChar": 15,
+        "endLine": 5595,
+        "endChar": 40
+      },
+      "revId": "bcd87ec81a0ff54bdb0b31ab1593bd9ba347d0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
