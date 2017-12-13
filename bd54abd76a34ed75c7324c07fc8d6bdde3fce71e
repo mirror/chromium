@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "46c475c2_70a3de9e",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T00:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fa8eff9_ae93d33a",
+      "range": {
+        "startLine": 15,
+        "startChar": 43,
+        "endLine": 15,
+        "endChar": 57
+      },
+      "revId": "bd54abd76a34ed75c7324c07fc8d6bdde3fce71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55864372_852b5fd5",
         "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "204af8b0_530c0ede",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T00:00:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55864372_852b5fd5",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "bd54abd76a34ed75c7324c07fc8d6bdde3fce71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2f1cfc9_5a44a407",
         "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
         "patchSetId": 11
@@ -59,6 +107,24 @@
       "writtenOn": "2017-12-12T23:01:42Z",
       "side": 1,
       "message": "Both for doDrop and doDragEnter, can we make it easier for future reader to distinguish between the MD only code and the non-MD? I am having a bit of a hard time understanding if this affects the old code or not. How about the following?\n\ndoDrop: function(e) {\n  if (this.isMdExtensions_)\n    this.doDropMd_(e);\n  else\n    this.doDropNonMd_(e);\n}\n\nDo the two codepaths share enough code to keep them entangled?",
+      "revId": "bd54abd76a34ed75c7324c07fc8d6bdde3fce71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6730e5_f8f8a7d4",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T00:00:09Z",
+      "side": 1,
+      "message": "They do share enough code IMO (mostly because I don\u0027t want to duplicate the matching regexp for if we can handle a file drop, but also because I want to centralize the chrome.send() calls).  But I totally understand what you mean and agree.  What if we split them up differently to hopefully still make this a bit easier on the eyes?\n\nLemme know what you think of the latest patch set version - hopefully it\u0027s a bit clearer.",
+      "parentUuid": "b2f1cfc9_5a44a407",
       "revId": "bd54abd76a34ed75c7324c07fc8d6bdde3fce71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
