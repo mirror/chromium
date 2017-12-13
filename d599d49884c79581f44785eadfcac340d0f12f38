@@ -16,6 +16,24 @@
       "revId": "d599d49884c79581f44785eadfcac340d0f12f38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd207efc_717564c0",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-12-13T23:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97a522cf_bc24ad43",
+      "revId": "d599d49884c79581f44785eadfcac340d0f12f38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
