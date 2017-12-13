@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc0fdd23_159e22df",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-12-13T15:26:26Z",
+      "side": 0,
+      "message": "This line is removed because it caused the following layout bug:\nhttps://drive.google.com/file/d/1z5lD5GFmjlXIIlWH3bZUQcbS-KQtWzc1/view\n\nAnd this line is useless as there is layout constraint already.",
+      "revId": "09d051ba47fd2f8ed821e7cb24ee4d0fd05cbc2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
