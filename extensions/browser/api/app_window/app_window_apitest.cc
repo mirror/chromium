@@ -54,23 +54,29 @@ IN_PROC_BROWSER_TEST_F(ExperimentalAppWindowApiTest, SetIcon) {
             app_window->app_icon_url().spec().find("icon.png"));
 }
 
-// TODO(asargent) - Figure out what to do about the fact that minimize events
-// don't work under ubuntu unity.
-// (crbug.com/162794 and https://bugs.launchpad.net/unity/+bug/998073).
-// TODO(linux_aura) http://crbug.com/163931
-// Flaky on Mac, http://crbug.com/232330
-#if defined(TOOLKIT_VIEWS) && !(defined(OS_LINUX) && !defined(OS_CHROMEOS) && defined(USE_AURA))
-
-IN_PROC_BROWSER_TEST_F(AppWindowApiTest, Properties) {
-#if defined(OS_MACOSX)
-  if (base::mac::IsOS10_10())
-    return;  // Fails when swarmed. http://crbug.com/660582
-#endif
-  EXPECT_TRUE(
-      RunExtensionTest("platform_apps/windows_api_properties")) << message_;
+IN_PROC_BROWSER_TEST_F(AppWindowApiTest, OnMinimizedEvent) {
+  EXPECT_TRUE(RunExtensionTestWithArg("platform_apps/windows_api_properties",
+                                      "minimized"))
+      << message_;
 }
 
-#endif  // defined(TOOLKIT_VIEWS)
+IN_PROC_BROWSER_TEST_F(AppWindowApiTest, OnMaximizedEvent) {
+  EXPECT_TRUE(RunExtensionTestWithArg("platform_apps/windows_api_properties",
+                                      "maximized"))
+      << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(AppWindowApiTest, OnRestoredEvent) {
+  EXPECT_TRUE(RunExtensionTestWithArg("platform_apps/windows_api_properties",
+                                      "restored"))
+      << message_;
+}
+
+IN_PROC_BROWSER_TEST_F(AppWindowApiTest, OnBoundsChangedEvent) {
+  EXPECT_TRUE(RunExtensionTestWithArg("platform_apps/windows_api_properties",
+                                      "boundsChanged"))
+      << message_;
+}
 
 IN_PROC_BROWSER_TEST_F(AppWindowApiTest, AlwaysOnTopWithPermissions) {
   EXPECT_TRUE(RunPlatformAppTest(
