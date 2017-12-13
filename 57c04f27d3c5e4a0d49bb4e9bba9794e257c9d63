@@ -171,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "e1c3709b_1aec5d45",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-13T08:58:44Z",
+      "side": 1,
+      "message": "\u003e Done, but not very useful IMO.\n\nI was thinking more like:\n// Stores a record of the what was committed in this NavigationEntry\u0027s main frame before it was replaced (e.g., by history.replaceState()).\n\nIt\u0027s perhaps a recap of part of the field declaration, but I think it\u0027s worthwhile to explain the concept again.",
+      "parentUuid": "a716e3f1_b5ce691e",
+      "revId": "57c04f27d3c5e4a0d49bb4e9bba9794e257c9d63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83c9df8e_466425d0",
         "filename": "content/browser/frame_host/navigation_entry_impl.h",
         "patchSetId": 9

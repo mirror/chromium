@@ -242,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "1de25f7b_2bd9f19f",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-13T08:58:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "41ef8b79_221bf1c2",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e593bbd_7b06f210",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 5
@@ -754,6 +772,24 @@
     },
     {
       "key": {
+        "uuid": "0eb96343_456c65b1",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-13T08:58:44Z",
+      "side": 1,
+      "message": "\u003e Ack, thanks for the clarification! Is there anything I should take care of? Perhaps an additional browser test for the scenario described above?\n\nYes, I think a browser test for the history replacement case would be useful, just so we can verify how it behaves.  Thanks!",
+      "parentUuid": "e13435f1_81d65fa4",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15a1a282_08b5e188",
         "filename": "content/public/browser/navigation_entry.h",
         "patchSetId": 5
@@ -854,6 +890,24 @@
       "side": 1,
       "message": "What doesn\u0027t feel right is that we\u0027d rename |url| but not be consistent with the rest of the fields (e.g. timestamp). I think the wrapping struct/proto already provides sufficient context without coining a new term, but I\u0027m open to your naming suggestions since you seem to be feeling quite strongly, but I\u0027d recommend avoiding the term \u0027landing\u0027 since it contradicts an existing concept. Perhaps replaced_url?",
       "parentUuid": "ea5492fa_38dae799",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7009941_231c1d04",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-13T08:58:44Z",
+      "side": 1,
+      "message": "\u003e What doesn\u0027t feel right is that we\u0027d rename |url| but not be consistent with the rest of the fields (e.g. timestamp).\n\nI\u0027m not opposed to prefixing the others as well (foo_url, foo_timestamp, foo_transition_type), if we come up with a name we\u0027re both happy with.\n\n\u003e I think the wrapping struct/proto already provides sufficient context without coining a new term, but I\u0027m open to your naming suggestions since you seem to be feeling quite strongly, \n\nThe main reason I feel this isn\u0027t sufficient is that \"ReplacedEntryData\" sounds like it tracks what was most recently replaced (e.g., what was the URL/etc just before the current one), and not the \"first\" one.  It\u0027s ambiguous in context, and I feel like readers will always have to come here to figure out what it means.\n\n(We\u0027ve also been bitten by people misusing ambiguously named URLs in the past, which is another reason I\u0027m hoping to qualify it.)\n\n\u003e but I\u0027d recommend avoiding the term \u0027landing\u0027 since it contradicts an existing concept. Perhaps replaced_url?\n\nreplaced_url has the same problem, in that it sounds like something that might get updated on every replacement.\n\nWhat concept is \"landing\" contradicting?  We\u0027re already using that term in the comment of CopyReplacedNavigationEntryDataIfPreviouslyEmpty, and it seems to make sense to me from a server redirect perspective.  It seems like client redirects would be post-landing, but maybe that\u0027s where we\u0027re disagreeing?\n\nI\u0027m not sure if \"original\" or \"first\" would be much better.\n\nI\u0027d really prefer to have a name for this if we can, but I won\u0027t hold the CL up any longer if we can\u0027t find something to agree on.  Hopefully I\u0027ve conveyed why I\u0027m concerned about it, at any rate.",
+      "parentUuid": "c637ed7b_2dd8a3c5",
       "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
