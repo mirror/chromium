@@ -33,6 +33,40 @@
       "revId": "b30ea1b0a47c140d34053b93ba1f73ab474701b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9dff31d_5bf1de3d",
+        "filename": "device/usb/usb_descriptors.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T22:57:17Z",
+      "side": 1,
+      "message": "(For later) Possibly more opportunities to not send size separately from the buffer.",
+      "revId": "b30ea1b0a47c140d34053b93ba1f73ab474701b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5bec6bc_0be160a9",
+        "filename": "device/usb/usb_device_handle_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T22:57:17Z",
+      "side": 1,
+      "message": "Is it easy to move the data in place, instead of creating a copy?",
+      "revId": "b30ea1b0a47c140d34053b93ba1f73ab474701b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "144a1e0a_50ddf888",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T22:57:17Z",
+      "side": 0,
+      "message": "Why didn\u0027t this code just use a raw array? Or just reinterpret_cast the buffer\u0027s data as const uint32_t*, and not bother copying?",
+      "revId": "993f4d704caa95743821e213aace346d4edc92b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb4062c_661d4cf2",
+        "filename": "device/usb/usb_device_handle_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T22:57:17Z",
+      "side": 0,
+      "message": "Comment on issues with the existing code: Should this delegate to the above Transfer ctor? As is, I don\u0027t see |length_| getting initialized!",
+      "revId": "993f4d704caa95743821e213aace346d4edc92b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
