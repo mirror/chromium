@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "3307d497_96d9aacf",
+        "filename": "content/public/common/media_stream_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-13T09:49:47Z",
+      "side": 1,
+      "message": "Can we do the below instead?\n\nbool MediaStreamDevice::IsSameDevice(\n    const MediaStreamDevice\u0026 other_device) const {\n  if ((input \u0026\u0026 !other_device.input) || (!input \u0026\u0026 other_device.input))\n    return false;\n\n  bool is_same_device \u003d\n      (type \u003d\u003d other_device.type \u0026\u0026 name \u003d\u003d other_device.name \u0026\u0026\n       id \u003d\u003d other_device.id \u0026\u0026 session_id \u003d\u003d other_device.session_id);\n\n  if (!input \u0026\u0026 !other_device.input)\n    return is_same_device;\n\n  return is_same_device \u0026\u0026\n         input-\u003esample_rate() \u003d\u003d other_device.input-\u003esample_rate() \u0026\u0026\n         input-\u003echannel_layout() \u003d\u003d other_device.input-\u003echannel_layout();\n}",
+      "parentUuid": "c710aabf_c4eec02d",
+      "range": {
+        "startLine": 86,
+        "startChar": 23,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d5509ae_dece38de",
         "filename": "content/renderer/media/local_media_stream_audio_source.cc",
         "patchSetId": 4
