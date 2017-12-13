@@ -206,8 +206,6 @@ class RequestInterceptor : public net::URLRequestInterceptor {
   DISALLOW_COPY_AND_ASSIGN(RequestInterceptor);
 };
 
-}  // namespace
-
 class URLLoaderTest : public testing::Test {
  public:
   URLLoaderTest()
@@ -1266,5 +1264,19 @@ TEST_F(URLLoaderTest, CertStatusOnResponse) {
   EXPECT_EQ(net::CERT_STATUS_DATE_INVALID,
             client()->response_head().cert_status);
 }
+
+TEST_F(URLLoaderTest, CertStatusOnResponse) {
+  net::URLRequestFilter::GetInstance()->ClearHandlers();
+  net::URLRequestFilter::GetInstance()->AddHostnameInterceptor(
+      "https", "example.test",
+      std::unique_ptr<net::URLRequestInterceptor>(
+          new MockHTTPSJobURLRequestInterceptor()));
+
+  EXPECT_EQ(net::OK, Load(GURL("https://example.test/")));
+  EXPECT_EQ(net::CERT_STATUS_DATE_INVALID,
+            client()->response_head().cert_status);
+}
+
+}  // namespace
 
 }  // namespace content
