@@ -5,17 +5,21 @@
 #ifndef CompositorMutatorImpl_h
 #define CompositorMutatorImpl_h
 
+#include <algorithm>
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "core/animation/CompositorAnimator.h"
 #include "platform/graphics/CompositorMutator.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/HeapAllocator.h"
+#include "platform/wtf/WeakPtr.h"
 
 namespace blink {
 
 class CompositorMutatorClient;
+class WaitableEvent;
 
 // Fans out requests from the compositor to all of the registered
 // CompositorAnimators which can then mutate layers through their respective
@@ -23,32 +27,54 @@ class CompositorMutatorClient;
 // CompositorAnimators and sent to the compositor to generate a new compositor
 // frame.
 //
-// Owned by the control thread (unless threaded compositing is disabled).
-// Should be accessed only on the compositor thread.
+// Unless otherwise noted, this should be accessed only on the compositor
+// thread.
 class CORE_EXPORT CompositorMutatorImpl final : public CompositorMutator {
  public:
+  // For use on Main Thread.
   static std::unique_ptr<CompositorMutatorClient> CreateClient();
-  static CompositorMutatorImpl* Create();
 
   // CompositorMutator implementation.
   void Mutate(std::unique_ptr<CompositorMutatorInputState>) override;
-  // TODO(majidvp): Remove when timeline inputs are known.
-  bool HasAnimators() override;
 
-  void RegisterCompositorAnimator(CompositorAnimator*);
-  void UnregisterCompositorAnimator(CompositorAnimator*);
+  // Interface for use by the AnimationWorklet Thread(s)
+  void RegisterCompositorAnimatorOnWorkletThread(CompositorAnimator*);
+  void UnregisterCompositorAnimatorOnWorkletThread(CompositorAnimator*);
+  void SetMutationUpdateOnWorkletThread(
+      std::unique_ptr<CompositorMutatorOutputState>);
 
-  void SetMutationUpdate(std::unique_ptr<CompositorMutatorOutputState>);
   void SetClient(CompositorMutatorClient* client) { client_ = client; }
+
+  ~CompositorMutatorImpl();
+
+  WeakPtr<CompositorMutatorImpl> GetWeakPtr() {
+    return weak_factory_.CreateWeakPtr();
+  }
 
  private:
   CompositorMutatorImpl();
 
+  void RegisterCompositorAnimatorOnCompositorThread(CompositorAnimator*);
+  void UnregisterCompositorAnimatorOnCompositorThread(CompositorAnimator*);
+
+  void MutateOnWorkletThread(const CompositorMutatorInputState*,
+                             CompositorMutatorOutputState*,
+                             WaitableEvent*);
+
+  // The AnimationWorkletProxyClientImpls are owned by the WorkerClients
+  // dictionary.
   using CompositorAnimators =
       HashSet<CrossThreadPersistent<CompositorAnimator>>;
   CompositorAnimators animators_;
 
+  // The MutatorClient is owned by the LayerTreeHostImpl, which also indirectly
+  // own us, so this pointer is valid as long as this class exists.
+
   CompositorMutatorClient* client_;
+  std::vector<std::unique_ptr<CompositorMutatorOutputState>> outputs_;
+
+  WeakPtrFactory<CompositorMutatorImpl> weak_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(CompositorMutatorImpl);
 };
 

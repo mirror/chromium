@@ -28,22 +28,20 @@ CompositorMutatorClient::~CompositorMutatorClient() {
 void CompositorMutatorClient::Mutate(
     std::unique_ptr<cc::MutatorInputState> state) {
   TRACE_EVENT0("cc", "CompositorMutatorClient::Mutate");
-  mutator_->Mutate(std::move(state));
+  if (mutator_)
+    mutator_->Mutate(std::move(state));
 }
 
 void CompositorMutatorClient::SetMutationUpdate(
     std::unique_ptr<cc::MutatorOutputState> output_state) {
   TRACE_EVENT0("cc", "CompositorMutatorClient::SetMutationUpdate");
-  client_->SetMutationUpdate(std::move(output_state));
+  if (client_)
+    client_->SetMutationUpdate(std::move(output_state));
 }
 
 void CompositorMutatorClient::SetClient(cc::LayerTreeMutatorClient* client) {
   TRACE_EVENT0("cc", "CompositorMutatorClient::SetClient");
   client_ = client;
-}
-
-bool CompositorMutatorClient::HasAnimators() {
-  return mutator_->HasAnimators();
 }
 
 }  // namespace blink
