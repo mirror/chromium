@@ -1715,6 +1715,8 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_GetNearestFindResult_Reply,
                     float /* distance */)
 #endif
 
+IPC_MESSAGE_ROUTED0(FrameHostMsg_WasEvicted);
+
 // Adding a new message? Stick to the sort order above: first platform
 // independent FrameMsg, then ifdefs for platform specific FrameMsg, then
 // platform independent FrameHostMsg, then ifdefs for platform specific

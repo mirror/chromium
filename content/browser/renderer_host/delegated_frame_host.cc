@@ -618,6 +618,8 @@ void DelegatedFrameHost::EvictDelegatedFrame() {
     return;
   }
 
+  client_->WasEvicted();
+
   if (!HasFallbackSurface())
     return;
 
