@@ -532,6 +532,7 @@ class LocalDeviceInstrumentationTestRun(
     for result in results:
       if logcat_file:
         result.SetLink('logcat', logcat_file.Link())
+        result.SetLink("GoldenLink-" + failure_filename, failure_link)
 
     # Update the result name if the test used flags.
     if flags_to_add:
