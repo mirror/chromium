@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3c6d132_fbab51c0",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-13T20:33:06Z",
+      "side": 1,
+      "message": "Why not send BATTOR_CONTROL_MESSAGE_TYPE_INIT instead? It\u0027s 0x00, and therefore tests the same behavior (that even the message types are escaped properly).",
+      "range": {
+        "startLine": 318,
+        "startChar": 44,
+        "endLine": 318,
+        "endChar": 69
+      },
+      "revId": "6820af7b8cfcc3da6560c9bd3be65f66e8ff18e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885b1e16_dba8f0f4",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-13T20:33:06Z",
+      "side": 1,
+      "message": "same (BATTOR_CONTROL_MESSAGE_TYPE_RESET)",
+      "range": {
+        "startLine": 341,
+        "startChar": 44,
+        "endLine": 341,
+        "endChar": 67
+      },
+      "revId": "6820af7b8cfcc3da6560c9bd3be65f66e8ff18e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b92bd5_fb58414c",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-13T20:33:06Z",
+      "side": 1,
+      "message": "same (BATTOR_CONTROL_MESSAGE_TYPE_SELF_TEST)",
+      "range": {
+        "startLine": 364,
+        "startChar": 44,
+        "endLine": 364,
+        "endChar": 70
+      },
+      "revId": "6820af7b8cfcc3da6560c9bd3be65f66e8ff18e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79be45f3_5ba1c98d",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-13T20:33:06Z",
+      "side": 1,
+      "message": "I think this should be changed a bit to be more specific to this test. No single test should cover all of the possible escape behaviors, because there are indeed multiple behaviors, and there should be no more than one behavior tested per test.\n\nI think the goal of this test is to instead test that the same byte-escape behaviors that we checked in previous tests apply when the byte that needs escaping is in the least significant position of a 16 bit parameter also apply when the byte that needs escaping is in the most significant position of that 16 bit parameter.",
+      "range": {
+        "startLine": 386,
+        "startChar": 2,
+        "endLine": 388,
+        "endChar": 76
+      },
+      "revId": "6820af7b8cfcc3da6560c9bd3be65f66e8ff18e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ef5851_3f07d23f",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-13T20:33:06Z",
+      "side": 1,
+      "message": "I think I\u0027d prefer if you used some other control message that doesn\u0027t need escaping here (e.g. BATTOR_CONTROL_MESSAGE_TYPE_SET_GAIN) rather than a control message type that needs escaping. After all, this test isn\u0027t trying to test that a 0x00 in the control message type position is escaped - we already tested that above. Instead, this test is aimed at the behavior when the byte that needs escaping isn\u0027t in the least significant position. Because of that, we should have as little extraneous \"stuff\" going on in this test as possible, and I think that other bytes that need escaping counts as extraneous stuff.",
+      "range": {
+        "startLine": 392,
+        "startChar": 44,
+        "endLine": 392,
+        "endChar": 69
+      },
+      "revId": "6820af7b8cfcc3da6560c9bd3be65f66e8ff18e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd82d290_2bcd674c",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-12-13T20:33:06Z",
+      "side": 1,
+      "message": "I think it\u0027s probably fine to just verify that it works with battor_control_byte_start and battor_control_byte end, e.g.:\n\nSendControlMessage(\n      BATTOR_CONTROL_MESSAGE_TYPE_SET_GAIN,\n      BATTOR_CONTROL_BYTE_START \u003c\u003c 8,\n      BATTOR_CONTROL_BYTE_END \u003c\u003c 8);\n\nconst char expected_data[] \u003d {\n      BATTOR_CONTROL_BYTE_START, BATTOR_MESSAGE_TYPE_CONTROL,\n      BATTOR_CONTROL_MESSAGE_TYPE_SET_GAIN,\n      BATTOR_CONTROL_BYTE_ESCAPE, BATTOR_CONTROL_BYTE_START,\n      BATTOR_CONTROL_BYTE_ESCAPE, BATTOR_CONTROL_BYTE_END,\n      BATTOR_CONTROL_BYTE_END,\n  };\n\nI think the previous tests have demonstrated that we\u0027re escaping the right bytes and this test should just focus on making sure that the same behavior applies when the bytes are in more significant positions.\n\n(The alternative is to send two control messages, one with \n\nSendControlMessage(\n      BATTOR_CONTROL_MESSAGE_TYPE_SET_GAIN,\n      BATTOR_CONTROL_BYTE_START \u003c\u003c 8,\n      BATTOR_CONTROL_BYTE_END \u003c\u003c 8);\n\nanother with:\n\nSendControlMessage(\n      BATTOR_CONTROL_MESSAGE_TYPE_SET_GAIN,\n      BATTOR_CONTROL_BYTE_ESCAPE \u003c\u003c 8,\n      0x00);\n\nand verify all 16 bits of data, but that doesn\u0027t really seem necessary here. Up to you, though.)",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 4
+      },
+      "revId": "6820af7b8cfcc3da6560c9bd3be65f66e8ff18e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
