@@ -176,7 +176,7 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   void MountEx(const cryptohome::Identification& cryptohome_id,
                const cryptohome::AuthorizationRequest& auth,
                const cryptohome::MountRequest& request,
-               DBusMethodCallback<cryptohome::BaseReply> callback) override;
+               MountCallback callback) override;
   void AddKeyEx(const cryptohome::Identification& cryptohome_id,
                 const cryptohome::AuthorizationRequest& auth,
                 const cryptohome::AddKeyRequest& request,

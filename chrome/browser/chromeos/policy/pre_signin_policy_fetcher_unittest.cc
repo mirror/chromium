@@ -16,11 +16,12 @@
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "chromeos/chromeos_paths.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
-#include "chromeos/cryptohome/homedir_methods.h"
-#include "chromeos/cryptohome/mock_homedir_methods.h"
+#include "chromeos/dbus/cryptohome/rpc.pb.h"
 #include "chromeos/dbus/cryptohome_client.h"
+#include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_cryptohome_client.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
@@ -47,21 +48,58 @@ namespace {
 const char kCachedHomepage[] = "http://cached.test";
 const char kFreshHomepage[] = "http://fresh.test";
 
+// Fake CryptohomeClient implementation for this test.
+class TestCryptohomeClient : public chromeos::FakeCryptohomeClient {
+ public:
+  TestCryptohomeClient() = default;
+  ~TestCryptohomeClient() override = default;
+
+  const cryptohome::Identification& id() const { return id_; }
+
+  const cryptohome::AuthorizationRequest& auth() const { return auth_; }
+
+  const cryptohome::MountRequest& request() const { return request_; }
+
+  void set_error(cryptohome::MountError error) { error_ = error; }
+
+  void MountEx(const cryptohome::Identification& cryptohome_id,
+               const cryptohome::AuthorizationRequest& auth,
+               const cryptohome::MountRequest& request,
+               MountCallback callback) override {
+    id_ = cryptohome_id;
+    auth_ = auth;
+    request_ = request;
+    if (error_) {
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE,
+          base::BindOnce(std::move(callback), false, error_, std::string()));
+      return;
+    }
+    FakeCryptohomeClient::MountEx(cryptohome_id, auth, request,
+                                  std::move(callback));
+  }
+
+ private:
+  cryptohome::Identification id_;
+  cryptohome::AuthorizationRequest auth_;
+  cryptohome::MountRequest request_;
+  cryptohome::MountError error_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestCryptohomeClient);
+};
+
 class PreSigninPolicyFetcherTestBase : public testing::Test {
  protected:
   PreSigninPolicyFetcherTestBase() = default;
 
   void SetUp() override {
-    // Setup mock HomedirMethods - this is used by PreSigninPolicyFetcher to
-    // perform the temporary cryptohome mount.
-    // Ownership of mock_homedir_methods_ is passsed to
-    // HomedirMethods::InitializeForTesting.
-    mock_homedir_methods_ = new cryptohome::MockHomedirMethods;
-    cryptohome::HomedirMethods::InitializeForTesting(mock_homedir_methods_);
 
     // Unmount calls will succeed (currently, PreSigninPolicyFetcher only logs
     // if they fail, so there is no point in testing that).
-    cryptohome_client_.set_unmount_result(true);
+    cryptohome_client_ = new TestCryptohomeClient();
+    chromeos::DBusThreadManager::GetSetterForTesting()->SetCryptohomeClient(
+        base::WrapUnique<chromeos::CryptohomeClient>(cryptohome_client_));
+    cryptohome_client_->set_unmount_result(true);
 
     // Create a temporary directory where the user policy keys will live (these
     // are shared between session_manager and chrome through files) and set it
@@ -73,7 +111,7 @@ class PreSigninPolicyFetcherTestBase : public testing::Test {
     auto cloud_policy_client = base::MakeUnique<MockCloudPolicyClient>();
     cloud_policy_client_ = cloud_policy_client.get();
     pre_signin_policy_fetcher_ = base::MakeUnique<PreSigninPolicyFetcher>(
-        &cryptohome_client_, &session_manager_client_,
+        cryptohome_client_, &session_manager_client_,
         std::move(cloud_policy_client), IsActiveDirectoryManaged(),
         GetAccountId(), cryptohome_key_);
     cached_policy_.payload().mutable_homepagelocation()->set_value(
@@ -87,8 +125,6 @@ class PreSigninPolicyFetcherTestBase : public testing::Test {
 
   void TearDown() override {
     base::RunLoop().RunUntilIdle();
-    cryptohome::HomedirMethods::Shutdown();
-    mock_homedir_methods_ = nullptr;
   }
 
   // Returns true for Active Directory test, false otherwise.
@@ -120,29 +156,6 @@ class PreSigninPolicyFetcherTestBase : public testing::Test {
     return user_policy_keys_dir()
         .AppendASCII(sanitized_username)
         .AppendASCII("policy.pub");
-  }
-
-  // Expect that the hidden cryptohome mount will be attempted, and return
-  // the passed |mount_error|.
-  void ExpectTemporaryCryptohomeMount(cryptohome::MountError mount_error) {
-    EXPECT_CALL(*mock_homedir_methods_,
-                MountEx(GetCryptohomeIdentification(), _, _, _))
-        .WillOnce(WithArgs<2, 3>(Invoke(
-            [mount_error](const cryptohome::MountRequest& mount_request,
-                          cryptohome::HomedirMethods::MountCallback callback) {
-              EXPECT_TRUE(mount_request.hidden_mount());
-              // Expect regular user home (not public mount). Note that ARC
-              // Kiosk apps will not run through PreSigninPolicyFetcher.
-              EXPECT_FALSE(mount_request.public_mount());
-              callback.Run(true /* success */, mount_error,
-                           std::string() /* mount_hash */);
-            })));
-  }
-
-  // Expect that the temporary cryptohome mount will be attempted, and return
-  // success.
-  void ExpectTemporaryCryptohomeMount() {
-    ExpectTemporaryCryptohomeMount(cryptohome::MOUNT_ERROR_NONE);
   }
 
   // Sets up expectations on |cloud_policy_client_|, expecting a fresh policy
@@ -194,8 +207,7 @@ class PreSigninPolicyFetcherTestBase : public testing::Test {
 
   base::test::ScopedTaskEnvironment scoped_task_environment_ = {
       base::test::ScopedTaskEnvironment::MainThreadType::UI};
-  cryptohome::MockHomedirMethods* mock_homedir_methods_ = nullptr;
-  chromeos::FakeCryptohomeClient cryptohome_client_;
+  TestCryptohomeClient* cryptohome_client_ = nullptr;
   chromeos::FakeSessionManagerClient session_manager_client_;
   UserPolicyBuilder cached_policy_;
   UserPolicyBuilder fresh_policy_;
@@ -235,7 +247,6 @@ class PreSigninPolicyFetcherTest : public PreSigninPolicyFetcherTestBase {
 // user). The cached policy fetch succeeds with NO_POLICY.
 // PreSigninPolicyFetcher does not attempt to fetch fresh policy.
 TEST_F(PreSigninPolicyFetcherTest, NoPolicy) {
-  ExpectTemporaryCryptohomeMount();
   // session_manager's RetrievePolicy* methods signal that there is no policy by
   // passing an empty string as policy blob.
   session_manager_client_.set_user_policy_without_session(
@@ -245,25 +256,36 @@ TEST_F(PreSigninPolicyFetcherTest, NoPolicy) {
   ExecuteFetchPolicy();
 
   VerifyExpectationsOnClient();
+  cryptohome::MountRequest request = cryptohome_client_->request();
 
   EXPECT_TRUE(policy_retrieved_called_);
   EXPECT_EQ(PreSigninPolicyFetcher::PolicyFetchResult::NO_POLICY,
             obtained_policy_fetch_result_);
   EXPECT_FALSE(obtained_policy_payload_);
+  EXPECT_TRUE(request.hidden_mount());
+  // Expect regular user home (not public mount). Note that ARC
+  // Kiosk apps will not run through PreSigninPolicyFetcher.
+  EXPECT_FALSE(request.public_mount());
 }
 
 // Test that PreSigninPolicyFetcher signals an error when the temporary
 // cryptohome mount fails.
 TEST_F(PreSigninPolicyFetcherTest, CryptohomeTemporaryMountError) {
-  ExpectTemporaryCryptohomeMount(
+  cryptohome_client_->set_error(
       cryptohome::MountError::MOUNT_ERROR_KEY_FAILURE);
 
   ExecuteFetchPolicy();
+
+  cryptohome::MountRequest request = cryptohome_client_->request();
 
   EXPECT_TRUE(policy_retrieved_called_);
   EXPECT_EQ(PreSigninPolicyFetcher::PolicyFetchResult::ERROR,
             obtained_policy_fetch_result_);
   EXPECT_FALSE(obtained_policy_payload_);
+  EXPECT_TRUE(request.hidden_mount());
+  // Expect regular user home (not public mount). Note that ARC
+  // Kiosk apps will not run through PreSigninPolicyFetcher.
+  EXPECT_FALSE(request.public_mount());
 }
 
 // Break the signature of cached policy. We expect that the cached policy
@@ -275,7 +297,6 @@ TEST_F(PreSigninPolicyFetcherTest, CachedPolicyFailsToValidate) {
 
   StoreUserPolicyKey(cached_policy_.GetPublicSigningKeyAsString());
 
-  ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
       GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
@@ -283,11 +304,16 @@ TEST_F(PreSigninPolicyFetcherTest, CachedPolicyFailsToValidate) {
   ExecuteFetchPolicy();
 
   VerifyExpectationsOnClient();
+  cryptohome::MountRequest request = cryptohome_client_->request();
 
   EXPECT_TRUE(policy_retrieved_called_);
   EXPECT_EQ(PreSigninPolicyFetcher::PolicyFetchResult::ERROR,
             obtained_policy_fetch_result_);
   EXPECT_FALSE(obtained_policy_payload_);
+  EXPECT_TRUE(request.hidden_mount());
+  // Expect regular user home (not public mount). Note that ARC
+  // Kiosk apps will not run through PreSigninPolicyFetcher.
+  EXPECT_FALSE(request.public_mount());
 }
 
 // Don't call StoreUserPolicyKey - chrome won't find a cached policy key. We
@@ -295,7 +321,6 @@ TEST_F(PreSigninPolicyFetcherTest, CachedPolicyFailsToValidate) {
 // PolicyFetchResult::ERROR as response. PreSigninPolicyFetcher will not
 // attempt to fetch fresh policy in this case.
 TEST_F(PreSigninPolicyFetcherTest, NoCachedPolicyKeyAccessible) {
-  ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
       GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
@@ -303,11 +328,16 @@ TEST_F(PreSigninPolicyFetcherTest, NoCachedPolicyKeyAccessible) {
   ExecuteFetchPolicy();
 
   VerifyExpectationsOnClient();
+  cryptohome::MountRequest request = cryptohome_client_->request();
 
   EXPECT_TRUE(policy_retrieved_called_);
   EXPECT_EQ(PreSigninPolicyFetcher::PolicyFetchResult::ERROR,
             obtained_policy_fetch_result_);
   EXPECT_FALSE(obtained_policy_payload_);
+  EXPECT_TRUE(request.hidden_mount());
+  // Expect regular user home (not public mount). Note that ARC
+  // Kiosk apps will not run through PreSigninPolicyFetcher.
+  EXPECT_FALSE(request.public_mount());
 }
 
 // Cached policy is available and validates. However, fresh policy fetch fails
@@ -316,8 +346,6 @@ TEST_F(PreSigninPolicyFetcherTest, NoCachedPolicyKeyAccessible) {
 // callback.
 TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchFails) {
   StoreUserPolicyKey(cached_policy_.GetPublicSigningKeyAsString());
-
-  ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
       GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
@@ -326,6 +354,8 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchFails) {
   ExecuteFetchPolicy();
 
   VerifyExpectationsOnClient();
+
+  cryptohome::MountRequest request = cryptohome_client_->request();
 
   // Fresh policy fetch fails with a CloudPolicyClient error.
   cloud_policy_client_->NotifyClientError();
@@ -337,6 +367,10 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchFails) {
   EXPECT_TRUE(obtained_policy_payload_);
   EXPECT_EQ(kCachedHomepage,
             obtained_policy_payload_->homepagelocation().value());
+  EXPECT_TRUE(request.hidden_mount());
+  // Expect regular user home (not public mount). Note that ARC
+  // Kiosk apps will not run through PreSigninPolicyFetcher.
+  EXPECT_FALSE(request.public_mount());
 }
 
 // Cached policy is available and validates. However, fresh policy fetch fails
@@ -345,7 +379,6 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchFails) {
 TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchTimeout) {
   StoreUserPolicyKey(cached_policy_.GetPublicSigningKeyAsString());
 
-  ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
       GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
@@ -354,6 +387,8 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchTimeout) {
   ExecuteFetchPolicy();
 
   VerifyExpectationsOnClient();
+
+  cryptohome::MountRequest request = cryptohome_client_->request();
 
   // Fresh policy fetch times out.
   EXPECT_TRUE(pre_signin_policy_fetcher_->ForceTimeoutForTesting());
@@ -365,6 +400,10 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchTimeout) {
   EXPECT_TRUE(obtained_policy_payload_);
   EXPECT_EQ(kCachedHomepage,
             obtained_policy_payload_->homepagelocation().value());
+  EXPECT_TRUE(request.hidden_mount());
+  // Expect regular user home (not public mount). Note that ARC
+  // Kiosk apps will not run through PreSigninPolicyFetcher.
+  EXPECT_FALSE(request.public_mount());
 }
 
 // Cached policy is available and validates. Fresh policy fetch is also
@@ -374,13 +413,13 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchTimeout) {
 TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchFailsToValidate) {
   StoreUserPolicyKey(cached_policy_.GetPublicSigningKeyAsString());
 
-  ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
       GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
   ExpectFreshPolicyFetchOnClient(PolicyBuilder::kFakeToken,
                                  PolicyBuilder::kFakeDeviceId);
   ExecuteFetchPolicy();
+  cryptohome::MountRequest request = cryptohome_client_->request();
 
   VerifyExpectationsOnClient();
 
@@ -400,6 +439,10 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchFailsToValidate) {
   EXPECT_TRUE(obtained_policy_payload_);
   EXPECT_EQ(kCachedHomepage,
             obtained_policy_payload_->homepagelocation().value());
+  EXPECT_TRUE(request.hidden_mount());
+  // Expect regular user home (not public mount). Note that ARC
+  // Kiosk apps will not run through PreSigninPolicyFetcher.
+  EXPECT_FALSE(request.public_mount());
 }
 
 // Cached policy is available and validates. Fresh policy fetch is also
@@ -409,7 +452,6 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchFailsToValidate) {
 TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchSuccess) {
   StoreUserPolicyKey(cached_policy_.GetPublicSigningKeyAsString());
 
-  ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
       GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
@@ -418,6 +460,7 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchSuccess) {
   ExecuteFetchPolicy();
 
   VerifyExpectationsOnClient();
+  cryptohome::MountRequest request = cryptohome_client_->request();
 
   // Fresh policy fetch is successful and validates.
   cloud_policy_client_->SetPolicy(dm_protocol::kChromeUserPolicyType,
@@ -433,6 +476,10 @@ TEST_F(PreSigninPolicyFetcherTest, FreshPolicyFetchSuccess) {
   EXPECT_TRUE(obtained_policy_payload_);
   EXPECT_EQ(kFreshHomepage,
             obtained_policy_payload_->homepagelocation().value());
+  EXPECT_TRUE(request.hidden_mount());
+  // Expect regular user home (not public mount). Note that ARC
+  // Kiosk apps will not run through PreSigninPolicyFetcher.
+  EXPECT_FALSE(request.public_mount());
 }
 
 // Tests for PreSigninPolicyFetcher with an Active Directory account.
@@ -450,7 +497,6 @@ class PreSigninPolicyFetcherTestAD : public PreSigninPolicyFetcherTestBase {
 // For Active Directory, we only have unsigned cached policy. There is no policy
 // key and no fresh policy fetch is attempted currently.
 TEST_F(PreSigninPolicyFetcherTestAD, UnsignedCachedPolicyForActiveDirectory) {
-  ExpectTemporaryCryptohomeMount();
   session_manager_client_.set_user_policy_without_session(
       GetCryptohomeIdentification(), cached_policy_.GetBlob());
 
@@ -458,6 +504,7 @@ TEST_F(PreSigninPolicyFetcherTestAD, UnsignedCachedPolicyForActiveDirectory) {
   ExecuteFetchPolicy();
 
   VerifyExpectationsOnClient();
+  cryptohome::MountRequest request = cryptohome_client_->request();
 
   EXPECT_TRUE(policy_retrieved_called_);
   EXPECT_EQ(PreSigninPolicyFetcher::PolicyFetchResult::SUCCESS,
@@ -465,6 +512,10 @@ TEST_F(PreSigninPolicyFetcherTestAD, UnsignedCachedPolicyForActiveDirectory) {
   EXPECT_TRUE(obtained_policy_payload_);
   EXPECT_EQ(kCachedHomepage,
             obtained_policy_payload_->homepagelocation().value());
+  EXPECT_TRUE(request.hidden_mount());
+  // Expect regular user home (not public mount). Note that ARC
+  // Kiosk apps will not run through PreSigninPolicyFetcher.
+  EXPECT_FALSE(request.public_mount());
 }
 
 }  // namespace

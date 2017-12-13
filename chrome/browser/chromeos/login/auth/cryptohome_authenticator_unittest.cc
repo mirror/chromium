@@ -149,7 +149,7 @@ class TestCryptohomeClient : public ::chromeos::FakeCryptohomeClient {
   void MountEx(const cryptohome::Identification& cryptohome_id,
                const cryptohome::AuthorizationRequest& auth,
                const cryptohome::MountRequest& request,
-               DBusMethodCallback<cryptohome::BaseReply> callback) override {
+               MountCallback callback) override {
     EXPECT_EQ(is_create_attempt_expected_, request.has_create());
     if (is_create_attempt_expected_) {
       EXPECT_EQ(expected_authorization_secret_,
@@ -160,12 +160,11 @@ class TestCryptohomeClient : public ::chromeos::FakeCryptohomeClient {
     EXPECT_EQ(expected_id_, cryptohome_id);
     EXPECT_EQ(expected_authorization_secret_, auth.key().secret());
 
-    cryptohome::BaseReply reply;
-    reply.MutableExtension(cryptohome::MountReply::reply)
-        ->set_sanitized_username(
-            cryptohome::MockAsyncMethodCaller::kFakeSanitizedUsername);
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(std::move(callback), reply));
+        FROM_HERE,
+        base::BindOnce(
+            std::move(callback), true, cryptohome::MOUNT_ERROR_NONE,
+            cryptohome::MockAsyncMethodCaller::kFakeSanitizedUsername));
   }
 
  private:

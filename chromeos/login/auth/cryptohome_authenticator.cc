@@ -187,7 +187,7 @@ void DoMount(const base::WeakPtr<AuthAttemptState>& attempt,
   // a legacy key with no label while those created by Chrome OS M39 and newer
   // will have a key with the label kCryptohomeGAIAKeyLabel.
   auth_key->set_secret(key->GetSecret());
-  cryptohome::HomedirMethods::GetInstance()->MountEx(
+  DBusThreadManager::Get()->GetCryptohomeClient()->MountEx(
       cryptohome::Identification(attempt->user_context.GetAccountId()), auth,
       mount, base::Bind(&OnMount, attempt, resolver));
 }
@@ -433,7 +433,7 @@ void MountPublic(const base::WeakPtr<AuthAttemptState>& attempt,
   // is left empty. Authentication's key label is also set to an empty string,
   // which is a wildcard allowing any key to match to allow cryptohomes created
   // in a legacy way. (See comments in DoMount.)
-  cryptohome::HomedirMethods::GetInstance()->MountEx(
+  DBusThreadManager::Get()->GetCryptohomeClient()->MountEx(
       cryptohome::Identification(attempt->user_context.GetAccountId()),
       cryptohome::AuthorizationRequest(), mount,
       base::Bind(&OnMount, attempt, resolver));
