@@ -38,9 +38,7 @@ namespace content {
 
 class AudioFocusDelegate;
 class AudioFocusManagerTest;
-namespace media_session_impl_service_routing_unittest {
 class MediaSessionImplServiceRoutingTest;
-}
 class MediaSessionImplStateObserver;
 class MediaSessionImplVisibilityBrowserTest;
 class MediaSessionObserver;
@@ -203,8 +201,7 @@ class MediaSessionImpl : public MediaSession,
   friend class ::MediaSessionImplBrowserTest;
   friend class content::MediaSessionImplVisibilityBrowserTest;
   friend class content::AudioFocusManagerTest;
-  friend class content::media_session_impl_service_routing_unittest::
-      MediaSessionImplServiceRoutingTest;
+  friend class content::MediaSessionImplServiceRoutingTest;
   friend class content::MediaSessionImplStateObserver;
   friend class content::MediaSessionServiceImplBrowserTest;
 

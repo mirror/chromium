@@ -27,7 +27,8 @@ using testing::Return;
 using testing::ReturnRef;
 
 namespace content {
-namespace audio_mirroring_manager_unittest {
+
+namespace {
 
 class MockDiverter : public AudioMirroringManager::Diverter {
  public:
@@ -96,6 +97,8 @@ class MockMirroringDestination
   int query_count_;
   bool is_duplication_;
 };
+
+}  // namespace
 
 class AudioMirroringManagerTest : public testing::Test {
  public:
@@ -767,5 +770,4 @@ TEST_F(AudioMirroringManagerTest,
   ExpectNoLongerManagingAnything();
 }
 
-}  // namespace audio_mirroring_manager_unittest
 }  // namespace content

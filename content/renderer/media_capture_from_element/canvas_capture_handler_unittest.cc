@@ -27,7 +27,8 @@ using ::testing::Test;
 using ::testing::TestWithParam;
 
 namespace content {
-namespace canvas_capture_handler_unittest {
+
+namespace {
 
 static const int kTestCanvasCaptureWidth = 320;
 static const int kTestCanvasCaptureHeight = 240;
@@ -41,6 +42,8 @@ static const int kTestAlphaValue = 175;
 ACTION_P(RunClosure, closure) {
   closure.Run();
 }
+
+}  // namespace
 
 class CanvasCaptureHandlerTest
     : public TestWithParam<testing::tuple<bool, int, int>> {
@@ -238,5 +241,4 @@ INSTANTIATE_TEST_CASE_P(
                        ::testing::Values(kTestCanvasCaptureFrameEvenSize,
                                          kTestCanvasCaptureFrameOddSize)));
 
-}  // namespace canvas_capture_handler_unittest
 }  // namespace content

@@ -38,10 +38,6 @@ namespace content {
 
 class InputDispositionHandler;
 
-namespace input_router_impl_unittest {
-class InputRouterImplTest;
-}
-
 class CONTENT_EXPORT InputRouterImplClient : public InputRouterClient {
  public:
   virtual mojom::WidgetInputHandler* GetWidgetInputHandler() = 0;
@@ -99,7 +95,7 @@ class CONTENT_EXPORT InputRouterImpl
   bool OnMessageReceived(const IPC::Message& message) override;
 
  private:
-  friend class input_router_impl_unittest::InputRouterImplTest;
+  friend class InputRouterImplTest;
 
   // Keeps track of last position of touch points and sets MovementXY for them.
   void SetMovementXYForTouchPoints(blink::WebTouchEvent* event);

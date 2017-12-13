@@ -53,10 +53,9 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/common/frame_policy.h"
 
-namespace content {
-namespace navigation_controller_impl_unittest {
-
 using base::Time;
+
+namespace {
 
 // Creates an image with a 1x1 SkBitmap of the specified |color|.
 gfx::Image CreateImage(SkColor color) {
@@ -129,6 +128,10 @@ int64_t GenerateSequenceNumber() {
   static int64_t next_number = base::Time::Now().ToDoubleT() * 1000000;
   return ++next_number;
 }
+
+}  // namespace
+
+namespace content {
 
 // TimeSmoother tests ----------------------------------------------------------
 
@@ -5306,5 +5309,4 @@ TEST_F(NavigationControllerTest, PendingEntryIndexUpdatedWithTransient) {
   EXPECT_EQ(url_1, controller.GetEntryAtIndex(1)->GetURL());
 }
 
-}  // namespace navigation_controller_impl_unittest
 }  // namespace content

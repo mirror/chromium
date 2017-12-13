@@ -21,10 +21,6 @@ namespace content {
 
 class BackgroundSyncContext;
 
-namespace background_sync_service_impl_unittest {
-class BackgroundSyncServiceImplTest;
-}
-
 class CONTENT_EXPORT BackgroundSyncServiceImpl
     : public blink::mojom::BackgroundSyncService {
  public:
@@ -35,8 +31,7 @@ class CONTENT_EXPORT BackgroundSyncServiceImpl
   ~BackgroundSyncServiceImpl() override;
 
  private:
-  friend class background_sync_service_impl_unittest::
-      BackgroundSyncServiceImplTest;
+  friend class BackgroundSyncServiceImplTest;
 
   // blink::mojom::BackgroundSyncService methods:
   void Register(blink::mojom::SyncRegistrationPtr options,

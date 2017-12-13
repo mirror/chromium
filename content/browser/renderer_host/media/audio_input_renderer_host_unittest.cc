@@ -48,7 +48,7 @@ using ::testing::StrictMock;
 
 namespace content {
 
-namespace audio_input_renderer_host_unittest {
+namespace {
 
 const int kStreamId = 100;
 const int kRenderProcessId = 42;
@@ -234,6 +234,8 @@ class MockControllerFactory : public AudioInputController::Factory {
  private:
   std::vector<scoped_refptr<MockController>> controller_list_;
 };
+
+}  // namespace
 
 class AudioInputRendererHostTest : public testing::Test {
  public:
@@ -525,5 +527,4 @@ TEST_F(AudioInputRendererHostTest, TabCaptureStream) {
   EXPECT_CALL(*controller_factory_.controller(0), DidClose());
 }
 
-}  // namespace audio_input_renderer_host_unittest
 }  // namespace content

@@ -49,10 +49,6 @@ class AudioOutputStream;
 
 namespace content {
 
-namespace audio_mirroring_manager_unittest {
-class AudioMirroringManagerTest;
-}
-
 class CONTENT_EXPORT AudioMirroringManager {
  public:
   // Interface for diverting audio data to an alternative AudioOutputStream.
@@ -124,7 +120,7 @@ class CONTENT_EXPORT AudioMirroringManager {
   virtual void StopMirroring(MirroringDestination* destination);
 
  private:
-  friend class audio_mirroring_manager_unittest::AudioMirroringManagerTest;
+  friend class AudioMirroringManagerTest;
 
   struct StreamRoutingState {
     // The source render frame associated with the audio stream.

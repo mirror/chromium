@@ -646,9 +646,9 @@ class TestProxyConfigLazyPoller : public mojom::ProxyConfigPollerClient {
   void OnLazyProxyConfigPoll() override { ++times_polled_; }
 
   mojom::ProxyConfigPollerClientPtr BindInterface() {
-    mojom::ProxyConfigPollerClientPtr mojo_interface;
-    binding_.Bind(MakeRequest(&mojo_interface));
-    return mojo_interface;
+    mojom::ProxyConfigPollerClientPtr interface;
+    binding_.Bind(MakeRequest(&interface));
+    return interface;
   }
 
   int GetAndClearTimesPolled() {

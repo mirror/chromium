@@ -28,10 +28,6 @@ class ResourceController;
 class ResourceDispatcherHostImpl;
 struct WebPluginInfo;
 
-namespace mime_sniffing_resource_handler_unittest {
-class MimeSniffingResourceHandlerTest;
-}
-
 // ResourceHandler that, if necessary, buffers a response body without passing
 // it to the next ResourceHandler until it can perform mime sniffing on it.
 //
@@ -58,8 +54,7 @@ class CONTENT_EXPORT MimeSniffingResourceHandler
  private:
   class Controller;
 
-  friend class mime_sniffing_resource_handler_unittest::
-      MimeSniffingResourceHandlerTest;
+  friend class MimeSniffingResourceHandlerTest;
   enum State {
     // Starting state of the MimeSniffingResourceHandler. In this state, it is
     // acting as a blind pass-through ResourceHandler until the response is

@@ -34,7 +34,8 @@
 #include "third_party/WebKit/common/service_worker/service_worker_registration.mojom.h"
 
 namespace content {
-namespace service_worker_url_loader_job_unittest {
+
+namespace {
 
 void ReceiveStartLoaderCallback(StartLoaderCallback* out_callback,
                                 StartLoaderCallback callback) {
@@ -463,6 +464,8 @@ std::unique_ptr<ResourceResponseHead> CreateResponseInfoFromServiceWorker() {
   head->did_service_worker_navigation_preload = false;
   return head;
 }
+
+}  // namespace
 
 // ServiceWorkerURLLoaderJobTest is for testing the handling of requests
 // by a service worker via ServiceWorkerURLLoaderJob.
@@ -956,5 +959,4 @@ TEST_F(ServiceWorkerURLLoaderJobTest, Redirect) {
   EXPECT_EQ(new_url, redirect_info.new_url);
 }
 
-}  // namespace service_worker_url_loader_job_unittest
 }  // namespace content

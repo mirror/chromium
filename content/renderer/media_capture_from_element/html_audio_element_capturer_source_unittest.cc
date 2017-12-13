@@ -26,7 +26,6 @@ using ::testing::Mock;
 using ::testing::Property;
 
 namespace content {
-namespace html_audio_element_capturer_source_unittest {
 
 static const int kNumChannelsForTest = 1;
 static const int kBufferDurationMs = 10;
@@ -193,5 +192,4 @@ TEST_F(HTMLAudioElementCapturerSourceTest,
   track()->RemoveSink(&sink);
 }
 
-}  // namespace html_audio_element_capturer_source_unittest
 }  // namespace content

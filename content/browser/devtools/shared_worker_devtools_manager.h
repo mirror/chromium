@@ -18,12 +18,6 @@ namespace content {
 class SharedWorkerDevToolsAgentHost;
 class SharedWorkerHost;
 
-namespace shared_worker_devtools_manager_unittest {
-class SharedWorkerDevToolsManagerTest;
-FORWARD_DECLARE_TEST(SharedWorkerDevToolsManagerTest, BasicTest);
-FORWARD_DECLARE_TEST(SharedWorkerDevToolsManagerTest, AttachTest);
-}  // namespace shared_worker_devtools_manager_unittest
-
 // Manages WorkerDevToolsAgentHost's for Shared Workers.
 // This class lives on UI thread.
 class CONTENT_EXPORT SharedWorkerDevToolsManager {
@@ -43,14 +37,9 @@ class CONTENT_EXPORT SharedWorkerDevToolsManager {
  private:
   friend struct base::DefaultSingletonTraits<SharedWorkerDevToolsManager>;
   friend class SharedWorkerDevToolsAgentHost;
-  friend class shared_worker_devtools_manager_unittest::
-      SharedWorkerDevToolsManagerTest;
-  FRIEND_TEST_ALL_PREFIXES(
-      shared_worker_devtools_manager_unittest::SharedWorkerDevToolsManagerTest,
-      BasicTest);
-  FRIEND_TEST_ALL_PREFIXES(
-      shared_worker_devtools_manager_unittest::SharedWorkerDevToolsManagerTest,
-      AttachTest);
+  friend class SharedWorkerDevToolsManagerTest;
+  FRIEND_TEST_ALL_PREFIXES(SharedWorkerDevToolsManagerTest, BasicTest);
+  FRIEND_TEST_ALL_PREFIXES(SharedWorkerDevToolsManagerTest, AttachTest);
 
   SharedWorkerDevToolsManager();
   ~SharedWorkerDevToolsManager();

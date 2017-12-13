@@ -25,10 +25,6 @@ namespace content {
 
 class MediaStreamManager;
 
-namespace media_stream_dispatcher_host_unittest {
-class MockMediaStreamDispatcherHost;
-}
-
 // MediaStreamDispatcherHost is a delegate for Media Stream API messages used by
 // MediaStreamImpl.  There is one MediaStreamDispatcherHost per
 // RenderProcessHost, the former owned by the latter.
@@ -52,8 +48,7 @@ class CONTENT_EXPORT MediaStreamDispatcherHost
   }
 
  private:
-  friend class media_stream_dispatcher_host_unittest::
-      MockMediaStreamDispatcherHost;
+  friend class MockMediaStreamDispatcherHost;
 
   mojom::MediaStreamDeviceObserver* GetMediaStreamDeviceObserverForFrame(
       int render_frame_id);

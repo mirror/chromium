@@ -29,10 +29,6 @@ class AudioRendererSink;
 namespace content {
 class AudioRendererSinkCache;
 
-namespace audio_renderer_mixer_manager_unittest {
-class AudioRendererMixerManagerTest;
-}
-
 // Manages sharing of an AudioRendererMixer among AudioRendererMixerInputs based
 // on their AudioParameters configuration.  Inputs with the same AudioParameters
 // configuration will share a mixer while a new AudioRendererMixer will be
@@ -93,8 +89,7 @@ class CONTENT_EXPORT AudioRendererMixerManager
       std::unique_ptr<AudioRendererSinkCache> sink_cache);
 
  private:
-  friend class audio_renderer_mixer_manager_unittest::
-      AudioRendererMixerManagerTest;
+  friend class AudioRendererMixerManagerTest;
 
   // Define a key so that only those AudioRendererMixerInputs from the same
   // RenderView, AudioParameters and output device can be mixed together.

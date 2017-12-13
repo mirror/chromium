@@ -29,7 +29,7 @@ using blink::WebInputEvent;
 using blink::WebMouseWheelEvent;
 
 namespace content {
-namespace mouse_wheel_event_queue_unittest {
+namespace {
 
 const float kWheelScrollX = 10;
 const float kWheelScrollY = 12;
@@ -143,6 +143,8 @@ enum WheelScrollingMode {
   kWheelScrollLatching,
   kAsyncWheelEvents,
 };
+
+}  // namespace
 
 class MouseWheelEventQueueTest
     : public testing::TestWithParam<WheelScrollingMode>,
@@ -841,5 +843,4 @@ INSTANTIATE_TEST_CASE_P(MouseWheelEventQueueTests,
                                         kWheelScrollLatching,
                                         kAsyncWheelEvents));
 
-}  // namespace mouse_wheel_event_queue_unittest
 }  // namespace content

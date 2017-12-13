@@ -101,11 +101,6 @@ struct ResizeParams;
 struct ScreenInfo;
 struct TextInputState;
 
-namespace render_widget_host_view_aura_unittest {
-class RenderWidgetHostViewAuraTest;
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, AutoResizeWithScale);
-}  // namespace render_widget_host_view_aura_unittest
-
 // This implements the RenderWidgetHost interface that is exposed to
 // embedders of content, and adds things only visible to content.
 class CONTENT_EXPORT RenderWidgetHostImpl
@@ -682,9 +677,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
                            StopAndStartHangMonitorTimeout);
   FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostTest,
                            ShorterDelayHangMonitorTimeout);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      AutoResizeWithScale);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, AutoResizeWithScale);
   FRIEND_TEST_ALL_PREFIXES(DevToolsManagerTest,
                            NoUnresponsiveDialogInInspectedContents);
   friend class MockRenderWidgetHost;

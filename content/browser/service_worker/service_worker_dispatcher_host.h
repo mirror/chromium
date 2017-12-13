@@ -40,16 +40,6 @@ class ServiceWorkerHandle;
 class ServiceWorkerProviderHost;
 class ServiceWorkerVersion;
 
-namespace service_worker_dispatcher_host_unittest {
-class ServiceWorkerDispatcherHostTest;
-class TestingServiceWorkerDispatcherHost;
-FORWARD_DECLARE_TEST(ServiceWorkerDispatcherHostTest,
-                     ProviderCreatedAndDestroyed);
-FORWARD_DECLARE_TEST(ServiceWorkerDispatcherHostTest, CleanupOnRendererCrash);
-FORWARD_DECLARE_TEST(BackgroundSyncManagerTest,
-                     RegisterWithoutLiveSWRegistration);
-}  // namespace service_worker_dispatcher_host_unittest
-
 // ServiceWorkerDispatcherHost is the browser-side endpoint for several IPC
 // messages for service workers. There is a 1:1 correspondence between
 // renderer processes and ServiceWorkerDispatcherHosts. Currently
@@ -114,19 +104,14 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
  private:
   friend class BrowserThread;
   friend class base::DeleteHelper<ServiceWorkerDispatcherHost>;
-  friend class service_worker_dispatcher_host_unittest::
-      ServiceWorkerDispatcherHostTest;
-  friend class service_worker_dispatcher_host_unittest::
-      TestingServiceWorkerDispatcherHost;
-  FRIEND_TEST_ALL_PREFIXES(
-      service_worker_dispatcher_host_unittest::ServiceWorkerDispatcherHostTest,
-      ProviderCreatedAndDestroyed);
-  FRIEND_TEST_ALL_PREFIXES(
-      service_worker_dispatcher_host_unittest::ServiceWorkerDispatcherHostTest,
-      CleanupOnRendererCrash);
-  FRIEND_TEST_ALL_PREFIXES(
-      service_worker_dispatcher_host_unittest::BackgroundSyncManagerTest,
-      RegisterWithoutLiveSWRegistration);
+  friend class ServiceWorkerDispatcherHostTest;
+  friend class TestingServiceWorkerDispatcherHost;
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerDispatcherHostTest,
+                           ProviderCreatedAndDestroyed);
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerDispatcherHostTest,
+                           CleanupOnRendererCrash);
+  FRIEND_TEST_ALL_PREFIXES(BackgroundSyncManagerTest,
+                           RegisterWithoutLiveSWRegistration);
 
   using StatusCallback = base::Callback<void(ServiceWorkerStatusCode status)>;
   enum class ProviderStatus { OK, NO_CONTEXT, DEAD_HOST, NO_HOST, NO_URL };

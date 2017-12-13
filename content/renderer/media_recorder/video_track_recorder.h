@@ -43,10 +43,6 @@ const int kVEAEncoderMinResolutionHeight = 480;
 
 namespace content {
 
-namespace video_track_recorder_unittest {
-class VideoTrackRecorderTest;
-}
-
 // VideoTrackRecorder is a MediaStreamVideoSink that encodes the video frames
 // received from a Stream Video Track. This class is constructed and used on a
 // single thread, namely the main Render thread. This mirrors the other
@@ -119,7 +115,7 @@ class CONTENT_EXPORT VideoTrackRecorder : public MediaStreamVideoSink {
 
    protected:
     friend class base::RefCountedThreadSafe<Encoder>;
-    friend class video_track_recorder_unittest::VideoTrackRecorderTest;
+    friend class VideoTrackRecorderTest;
 
     virtual ~Encoder();
 
@@ -181,7 +177,7 @@ class CONTENT_EXPORT VideoTrackRecorder : public MediaStreamVideoSink {
   void OnVideoFrameForTesting(const scoped_refptr<media::VideoFrame>& frame,
                               base::TimeTicks capture_time);
  private:
-  friend class video_track_recorder_unittest::VideoTrackRecorderTest;
+  friend class VideoTrackRecorderTest;
 
   void InitializeEncoder(CodecId codec,
                          const OnEncodedVideoCB& on_encoded_video_callback,

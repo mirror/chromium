@@ -34,10 +34,6 @@ namespace content {
 
 class AudioTrackRecorder;
 
-namespace media_recorder_handler_unittest {
-class MediaRecorderHandlerTest;
-}
-
 // MediaRecorderHandler orchestrates the creation, lifetime management and
 // mapping between:
 // - MediaStreamTrack(s) providing data,
@@ -71,7 +67,7 @@ class CONTENT_EXPORT MediaRecorderHandler final
       std::unique_ptr<blink::WebMediaCapabilitiesQueryCallbacks> cb) override;
 
  private:
-  friend class media_recorder_handler_unittest::MediaRecorderHandlerTest;
+  friend class MediaRecorderHandlerTest;
 
   // Called to indicate there is encoded video data available. |encoded_alpha|
   // represents the encode output of alpha channel when available, can be

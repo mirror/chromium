@@ -48,7 +48,8 @@ using net::TestCompletionCallback;
 using net::WrappedIOBuffer;
 
 namespace content {
-namespace service_worker_storage_unittest {
+
+namespace {
 
 using RegistrationData = ServiceWorkerDatabase::RegistrationData;
 using ResourceRecord = ServiceWorkerDatabase::ResourceRecord;
@@ -303,6 +304,8 @@ bool VerifyResponseMetadata(ServiceWorkerStorage* storage,
                       expected_metadata.length()));
   return true;
 }
+
+}  // namespace
 
 class ServiceWorkerStorageTest : public testing::Test {
  public:
@@ -2082,5 +2085,4 @@ TEST_F(ServiceWorkerStorageDiskTest, EnabledNavigationPreloadState) {
   EXPECT_EQ(kHeaderValue, state.header);
 }
 
-}  // namespace service_worker_storage_unittest
 }  // namespace content

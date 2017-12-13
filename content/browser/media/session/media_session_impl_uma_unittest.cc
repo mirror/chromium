@@ -16,11 +16,12 @@
 #include "third_party/WebKit/public/platform/modules/mediasession/media_session.mojom.h"
 
 namespace content {
-namespace media_session_impl_uma_unittest {
 
 using MediaSessionUserAction = MediaSessionUmaHelper::MediaSessionUserAction;
 using SuspendType = MediaSession::SuspendType;
 using MediaSessionAction = blink::mojom::MediaSessionAction;
+
+namespace {
 
 static const int kPlayerId = 0;
 
@@ -59,6 +60,8 @@ ActionMappingEntry kActionMappings[] = {
     {MediaSessionAction::SEEK_BACKWARD, MediaSessionUserAction::SeekBackward},
     {MediaSessionAction::SEEK_FORWARD, MediaSessionUserAction::SeekForward},
 };
+
+}  // anonymous namespace
 
 class MediaSessionImplUmaTest : public RenderViewHostImplTestHarness {
  public:
@@ -175,5 +178,4 @@ TEST_F(MediaSessionImplUmaTest, RecordMediaSessionAction) {
   }
 }
 
-}  // namespace media_session_impl_uma_unittest
 }  // namespace content

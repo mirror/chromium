@@ -19,7 +19,6 @@ using testing::Invoke;
 using testing::_;
 
 namespace content {
-namespace service_video_capture_provider_unittest {
 
 static const std::string kStubDeviceId = "StubDevice";
 static const media::VideoCaptureParams kArbitraryParams;
@@ -400,5 +399,4 @@ TEST_F(ServiceVideoCaptureProviderTest,
   ASSERT_TRUE(connection_has_been_closed);
 }
 
-}  // namespace service_video_capture_provider_unittest
 }  // namespace content

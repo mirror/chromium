@@ -24,7 +24,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-namespace base_file_unittest {
+namespace {
 
 const char kTestData1[] = "Let's write some data to the file!\n";
 const char kTestData2[] = "Writing more data.\n";
@@ -47,6 +47,8 @@ const uint8_t kHashOfTestData1To3[] = {
     0xcb, 0xf6, 0x8b, 0xf1, 0x0f, 0x80, 0x03, 0xdb, 0x86, 0xb3, 0x13,
     0x43, 0xaf, 0xac, 0x8c, 0x71, 0x75, 0xbd, 0x03, 0xfb, 0x5f, 0xc9,
     0x05, 0x65, 0x0f, 0x8c, 0x80, 0xaf, 0x08, 0x74, 0x43, 0xa8};
+
+}  // namespace
 
 class BaseFileTest : public testing::Test {
  public:
@@ -767,5 +769,4 @@ TEST_F(BaseFileTest, WriteDataToSparseFile) {
   ExpectHashValue(kHashOfTestData1To3, base_file_->Finish());
 }
 
-}  // namespace base_file_unittest
 }  // namespace content

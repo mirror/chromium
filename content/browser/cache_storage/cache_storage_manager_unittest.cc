@@ -58,7 +58,8 @@ using blink::mojom::CacheStorageError;
 using network::mojom::FetchResponseType;
 
 namespace content {
-namespace cache_storage_manager_unittest {
+
+namespace {
 
 bool IsIndexFileCurrent(const base::FilePath& cache_dir) {
   base::File::Info info;
@@ -102,6 +103,8 @@ class TestCacheStorageObserver : public CacheStorageContextImpl::Observer {
   int notify_list_changed_count = 0;
   int notify_content_changed_count = 0;
 };
+
+}  // anonymous namespace
 
 // Returns a BlobProtocolHandler that uses |blob_storage_context|. Caller owns
 // the memory.
@@ -1833,5 +1836,4 @@ INSTANTIATE_TEST_CASE_P(CacheStorageQuotaClientTests,
                         CacheStorageQuotaClientTestP,
                         ::testing::Values(false, true));
 
-}  // namespace cache_storage_manager_unittest
 }  // namespace content
