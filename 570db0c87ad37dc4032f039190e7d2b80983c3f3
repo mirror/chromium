@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "430d153c_4af3aa30",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-13T00:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bde6a07c_b12d69f9",
+      "revId": "570db0c87ad37dc4032f039190e7d2b80983c3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a20cbf7b_335ab2d0",
         "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "570db0c87ad37dc4032f039190e7d2b80983c3f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85ada03_ef6d4064",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-13T00:05:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a20cbf7b_335ab2d0",
+      "revId": "570db0c87ad37dc4032f039190e7d2b80983c3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +121,24 @@
       "revId": "570db0c87ad37dc4032f039190e7d2b80983c3f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee6054b_1c423743",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-13T00:05:00Z",
+      "side": 1,
+      "message": "Change test name do TestReadStringWithInvalidContinuationByte. \nThe test byte is is the input bytes that caused cluster fuzz check failure.",
+      "parentUuid": "a4255107_c933ac5d",
+      "revId": "570db0c87ad37dc4032f039190e7d2b80983c3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
