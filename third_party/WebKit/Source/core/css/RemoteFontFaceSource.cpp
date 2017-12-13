@@ -216,8 +216,7 @@ void RemoteFontFaceSource::BeginLoadIfNeeded() {
               kOtherMessageSource, kInfoMessageLevel,
               "Slow network is detected. See "
               "https://www.chromestatus.com/feature/5636954674692096 for more "
-              "details. Fallback font will be used while loading: " +
-                  font->Url().ElidedString()));
+              "details. Fallback font will be used while loading web font."));
 
       // Set the loading priority to VeryLow only when all other clients agreed
       // that this font is not required for painting the text.
