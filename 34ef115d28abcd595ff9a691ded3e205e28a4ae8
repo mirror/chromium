@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb052ee4_3d769989",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-13T00:12:35Z",
+      "side": 1,
+      "message": "!empty()",
+      "range": {
+        "startLine": 303,
+        "startChar": 37,
+        "endLine": 303,
+        "endChar": 43
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08ec5a1_d0daaabc",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-13T00:12:35Z",
+      "side": 1,
+      "message": "can we add the new code in the else if clause instead of changing the entire if statement?",
+      "range": {
+        "startLine": 306,
+        "startChar": 13,
+        "endLine": 306,
+        "endChar": 22
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80d45d0_3c2f29f6",
+        "filename": "components/update_client/update_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-13T00:12:35Z",
+      "side": 1,
+      "message": "needs more documentation for this member. Also, waffles@ might be ok with always providing a install source value for components instead of empty to eliminate a special case and a branch in the code.",
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8317665b_0939d870",
+        "filename": "extensions/browser/updater/update_data_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-13T00:12:35Z",
+      "side": 1,
+      "message": "needs initializing",
+      "range": {
+        "startLine": 49,
+        "startChar": 29,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ecdcde_30ba3a67",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-13T00:12:35Z",
+      "side": 1,
+      "message": "can this be some kind of smart pointer?",
+      "range": {
+        "startLine": 104,
+        "startChar": 19,
+        "endLine": 104,
+        "endChar": 20
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b4ad81_619d0553",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-13T00:12:35Z",
+      "side": 1,
+      "message": "empty()",
+      "range": {
+        "startLine": 132,
+        "startChar": 20,
+        "endLine": 132,
+        "endChar": 24
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "324b30a8_0ac1c3bb",
+        "filename": "extensions/browser/updater/update_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-13T00:12:35Z",
+      "side": 1,
+      "message": "is this member initialized?",
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516ca392_12c33a85",
+        "filename": "extensions/browser/updater/update_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-13T00:12:35Z",
+      "side": 1,
+      "message": "is this member initialized",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 32
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7a05f9_e4dc5e41",
+        "filename": "extensions/browser/updater/update_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-12-13T00:12:35Z",
+      "side": 1,
+      "message": "can this stuff use smart pointers?",
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
