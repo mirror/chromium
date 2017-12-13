@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5c5120d_f6638998",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-13T02:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a13d9d57_6c174538",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 11
+      },
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8bbc71e_ea051688",
         "filename": "chrome/browser/offline_pages/offline_page_tab_helper.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-11T21:09:13Z",
       "side": 1,
       "message": "How can I check whether a Not trusted OfflinePage is shown?\n\nDid you consider making it:\nIsShownOfflinePageTrusted()\nwhich could be complemented by:\nIsShownOfflinePageNotTrusted()\n\nor do you specifically want to make 2 checks:\nWe are showing offline page, and the page is trusted?",
+      "range": {
+        "startLine": 261,
+        "startChar": 27,
+        "endLine": 261,
+        "endChar": 54
+      },
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bddaae_2a5860e5",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-13T02:24:32Z",
+      "side": 1,
+      "message": "Removed. Switched to adding is_trusted to OfflinePageItem.",
+      "parentUuid": "f8bbc71e_ea051688",
       "range": {
         "startLine": 261,
         "startChar": 27,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "2868588c_6339a900",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-13T02:24:32Z",
+      "side": 1,
+      "message": "Switched to adding is_trusted.",
+      "parentUuid": "dcd5a0f5_dd7b4490",
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9456f838_a58d48b6",
         "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
         "patchSetId": 2
@@ -76,6 +142,24 @@
       "writtenOn": "2017-12-11T21:09:13Z",
       "side": 1,
       "message": "Please document this. Also is Offline part necessary in the name given we already have the context of offline tab helper?",
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba824f9_657f9c85",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-13T02:24:32Z",
+      "side": 1,
+      "message": "Comment added.\n\nRenamed to ReportPrefetchMetrics since they\u0027re more related to PrefetchService.",
+      "parentUuid": "9456f838_a58d48b6",
       "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -96,6 +180,24 @@
       "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32344152_b0961853",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-13T02:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14175c0a_55ce30d6",
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
