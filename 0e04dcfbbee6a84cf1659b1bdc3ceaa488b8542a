@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e83e0471_2bc2dea1",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T16:14:48Z",
+      "side": 1,
+      "message": "nit: Move to private (ditto for other methods that are not intended to be used in test body).",
+      "revId": "0e04dcfbbee6a84cf1659b1bdc3ceaa488b8542a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
