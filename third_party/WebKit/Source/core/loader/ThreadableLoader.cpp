@@ -46,7 +46,6 @@ ThreadableLoader* ThreadableLoader::Create(
     const ThreadableLoaderOptions& options,
     const ResourceLoaderOptions& resource_loader_options) {
   DCHECK(client);
-
   if (context.IsWorkerGlobalScope()) {
     if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
       ToWorkerGlobalScope(&context)->EnsureFetcher();
