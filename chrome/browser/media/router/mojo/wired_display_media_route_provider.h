@@ -8,8 +8,10 @@
 #include "base/containers/flat_map.h"
 #include "base/containers/flat_set.h"
 #include "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h"
+#include "chrome/browser/ui/media_router/presentation_receiver_window_controller.h"
 #include "chrome/common/media_router/media_route_provider_helper.h"
 #include "chrome/common/media_router/mojo/media_router.mojom.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "ui/display/display_observer.h"
 
@@ -100,6 +102,32 @@ class WiredDisplayMediaRouteProvider : public mojom::MediaRouteProvider,
   virtual display::Display GetPrimaryDisplay() const;
 
  private:
+  class WebContentsTitleObserver : public content::WebContentsObserver {
+   public:
+    WebContentsTitleObserver(
+        content::WebContents* web_contents,
+        base::RepeatingCallback<void(const std::string& title)> callback);
+    ~WebContentsTitleObserver() override;
+
+    void TitleWasSet(content::NavigationEntry* entry) override;
+
+   private:
+    const base::RepeatingCallback<void(const std::string& title)> callback_;
+  };
+
+  struct Presentation {
+   public:
+    Presentation(
+        const MediaRoute& route,
+        std::unique_ptr<PresentationReceiverWindowController> window_controller,
+        std::unique_ptr<WebContentsTitleObserver> title_observer);
+    ~Presentation();
+
+    MediaRoute route;
+    std::unique_ptr<PresentationReceiverWindowController> window_controller;
+    std::unique_ptr<WebContentsTitleObserver> title_observer;
+  };
+
   // Sends the current list of routes to each query in |route_queries_|.
   void NotifyRouteObservers() const;
 
@@ -108,6 +136,19 @@ class WiredDisplayMediaRouteProvider : public mojom::MediaRouteProvider,
 
   // Notifies |media_router_| of the current sink availability.
   void ReportSinkAvailability(const std::vector<MediaSinkInternal>& sinks);
+
+  void OnPresentationWindowTerminated(const std::string& presentation_id);
+
+  void OnPresentationTitleChanged(const std::string& presentation_id,
+                                  const std::string& title);
+
+  std::unique_ptr<Presentation> CreatePresentation(
+      const std::string& presentation_id,
+      const display::Display& display,
+      const MediaRoute& media_source);
+
+  base::Optional<display::Display> GetDisplayBySinkId(
+      const std::string& sink_id) const;
 
   // Returns a list of available sinks. A display can be a sink if it is
   // secondary and does not mirror a primary display.
@@ -122,8 +163,10 @@ class WiredDisplayMediaRouteProvider : public mojom::MediaRouteProvider,
   // Mojo pointer to the Media Router.
   mojom::MediaRouterPtr media_router_;
 
-  // Active routes managed by this provider.
-  base::flat_map<MediaRoute::Id, MediaRoute> routes_;
+  Profile* profile_;
+
+  // Active presentations managed by this provider.
+  base::flat_map<std::string, std::unique_ptr<Presentation>> presentations_;
 
   // A set of MediaSource IDs associated with queries for MediaRoute updates.
   base::flat_set<std::string> route_queries_;
