@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f8d8560_1f7fe378",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-13T20:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09b694c7_a587aa43",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "686d2379_e136b1bd",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 6
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "56a21783_050cf555",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-13T20:22:45Z",
+      "side": 1,
+      "message": "As we discussed offline, I\u0027ll remain the old logic. However, we can always come back to it later when necessary.",
+      "parentUuid": "d959e7da_9fb784a0",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa74e2ad_51eb8362",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 6
@@ -68,6 +104,24 @@
       "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae06b6d7_d3ef80a5",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-13T20:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa74e2ad_51eb8362",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "5f6ae010_f6235855",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-13T20:22:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97e985f0_aabaa984",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b785981e_ec1d2ab9",
         "filename": "ash/wallpaper/wallpaper_controller.h",
         "patchSetId": 6
@@ -102,6 +174,24 @@
       "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "466a8d67_b087a6da",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-13T20:22:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b785981e_ec1d2ab9",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
