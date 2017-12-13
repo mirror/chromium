@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/time/time.h"
+#include "chrome/browser/ui/input_method/input_method_export.h"
 #include "ui/base/ime/composition_text.h"
 #include "ui/base/ime/ime_engine_handler_interface.h"
 #include "url/gurl.h"
@@ -29,7 +30,8 @@ class KeyEvent;
 
 namespace input_method {
 
-class InputMethodEngineBase : virtual public ui::IMEEngineHandlerInterface {
+class INPUT_METHOD_EXPORT InputMethodEngineBase
+    : virtual public ui::IMEEngineHandlerInterface {
  public:
   struct KeyboardEvent {
     KeyboardEvent();
@@ -85,7 +87,7 @@ class InputMethodEngineBase : virtual public ui::IMEEngineHandlerInterface {
     virtual void OnKeyEvent(
         const std::string& engine_id,
         const InputMethodEngineBase::KeyboardEvent& event,
-        ui::IMEEngineHandlerInterface::KeyEventDoneCallback& key_data) = 0;
+        ui::IMEEngineHandlerInterface::KeyEventDoneCallback key_data) = 0;
 
     // Called when Chrome terminates on-going text input session.
     virtual void OnReset(const std::string& engine_id) = 0;
@@ -145,7 +147,7 @@ class InputMethodEngineBase : virtual public ui::IMEEngineHandlerInterface {
   void Reset() override;
   void MaybeSwitchEngine() override;
   void ProcessKeyEvent(const ui::KeyEvent& key_event,
-                       KeyEventDoneCallback& callback) override;
+                       KeyEventDoneCallback callback) override;
   void SetSurroundingText(const std::string& text,
                           uint32_t cursor_pos,
                           uint32_t anchor_pos,
@@ -182,7 +184,7 @@ class InputMethodEngineBase : virtual public ui::IMEEngineHandlerInterface {
   // Adds unprocessed key event to |request_map_|.
   std::string AddRequest(
       const std::string& component_id,
-      ui::IMEEngineHandlerInterface::KeyEventDoneCallback& key_data);
+      ui::IMEEngineHandlerInterface::KeyEventDoneCallback key_data);
 
  protected:
   // Notifies InputContextHandler that the composition is changed.
