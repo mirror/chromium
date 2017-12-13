@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41d294dc_02a95a22",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 2208,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T18:50:12Z",
+      "side": 1,
+      "message": "If we\u0027re disabling all handlers for iframes, I think we should disable iframe commands also",
+      "range": {
+        "startLine": 2208,
+        "startChar": 18,
+        "endLine": 2208,
+        "endChar": 29
+      },
+      "revId": "6c47519c8e9fb51c8b7d1a08ea7f15a74e6771c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
