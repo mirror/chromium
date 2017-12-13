@@ -1862,6 +1862,7 @@ jumbo_source_set("blink_platform_unittests_sources") {
     "text/BidiResolverTest.cpp",
     "text/BidiTestHarness.h",
     "text/CharacterTest.cpp",
+    "text/CursorPositionTest.cpp",
     "text/DateTimeFormatTest.cpp",
     "text/HyphenationTest.cpp",
     "text/ICUErrorTest.cpp",
