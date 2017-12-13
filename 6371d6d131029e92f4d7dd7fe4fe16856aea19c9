@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97e901d4_fb07dc54",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-13T23:27:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4663ae37_2c205d6a",
+      "revId": "6371d6d131029e92f4d7dd7fe4fe16856aea19c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64255f15_a904b0f9",
         "filename": "components/exo/client_controlled_shell_surface.cc",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-13T17:36:47Z",
       "side": 1,
       "message": "nit: DLOG to prevent a malicious client from spamming the logs in release builds",
+      "range": {
+        "startLine": 327,
+        "startChar": 6,
+        "endLine": 327,
+        "endChar": 9
+      },
+      "revId": "6371d6d131029e92f4d7dd7fe4fe16856aea19c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d5b121_0a3f04dd",
+        "filename": "components/exo/client_controlled_shell_surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-13T23:27:15Z",
+      "side": 1,
+      "message": "This was to troubleshoot on the device if it ever happens. Changed to VLOG(1) for now.",
+      "parentUuid": "64255f15_a904b0f9",
       "range": {
         "startLine": 327,
         "startChar": 6,
