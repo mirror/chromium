@@ -132,6 +132,24 @@
     },
     {
       "key": {
+        "uuid": "518c9243_f0a94187",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-13T12:53:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a4c58114_abcdad6e",
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "530516b1_7e2fc4a2",
         "filename": "content/renderer/media/user_media_processor.cc",
         "patchSetId": 2
@@ -161,6 +179,24 @@
       "side": 1,
       "message": "Sure. I\u0027ll take up your suggestion of using Optional in another CL. For now, shall we keep clear()?",
       "parentUuid": "530516b1_7e2fc4a2",
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bcdd201_f2d9e2fa",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-13T12:53:01Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "e9d4b290_759e1e02",
       "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
