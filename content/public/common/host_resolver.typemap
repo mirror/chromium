@@ -1,0 +1,10 @@
+mojom = "//content/public/common/host_resolver.mojom"
+public_headers = [ "net/base/host_port_pair.h" ]
+traits_headers = [ "//content/public/comm/host_resolver_traits.h" ]
+sources = [
+  "//content/public/comm/host_resolver_traits.cc",
+]
+public_deps = [
+  "//net",
+]
+type_mappings = [ "content.mojom.HostPortPair=net::HostPortPair" ]

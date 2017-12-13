@@ -1,0 +1,78 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "url_loader.mojom";
+
+struct HostPortPair {
+  string? host;
+  uint16 port;
+};
+
+enum AddressFamily {
+	ADDRESS_FAMILY_UNSPECIFIED,   // AF_UNSPEC
+  ADDRESS_FAMILY_IPV4,          // AF_INET
+  ADDRESS_FAMILY_IPV6,          // AF_INET6
+};
+
+enum HostResolverFlags {
+	HOST_RESOLVER_CANONNAME = 1,  // AI_CANONNAME
+  // Hint to the resolver proc that only loopback addresses are configured.
+  HOST_RESOLVER_LOOPBACK_ONLY = 2,
+  // Indicate the address family was set because no IPv6 support was detected.
+  HOST_RESOLVER_DEFAULT_FAMILY_SET_DUE_TO_NO_IPV6 = 4,
+  // The resolver should only invoke getaddrinfo, not DnsClient.
+  HOST_RESOLVER_SYSTEM_ONLY = 8
+};
+
+struct RequestInfo {
+	// The hostname to resolve, and the port to use in resulting sockaddrs.
+  HostPortPair host_port_pair;
+
+  // The address family to restrict results to.
+  AddressFamily address_family;
+
+  // Flags to use when resolving this request.
+  HostResolverFlags host_resolver_flags;
+
+  // Whether it is ok to return a result from the host cache.
+  bool allow_cached_response;
+
+  // Whether this request was started by the DNS prefetcher.
+  bool is_speculative;
+
+  // Indicates a request for myIpAddress (to differentiate from other requests
+  // for localhost, currently used by Chrome OS).
+  bool is_my_ip_address;
+};
+
+struct IPAddressBytes {
+	array<uint8> bytes;
+};
+
+struct IPAddress {
+	IPAddressBytes ip_address;
+};
+
+struct IPEndPoint {
+	IPAddress address;
+	uint16 port;
+};
+
+struct AddressList {
+	array<IPEndPoint> endpoints;
+	string canonical_name;
+};
+
+interface Request {
+	ChangeRequestPriority(RequestPriority priority);
+};
+
+struct NetLogWithSource {
+};
+
+interface HostResolver {
+	Resolve(RequestInfo info, RequestPriority priority, AddressList list, Request request, NetLogWithSource? net_log);
+};
