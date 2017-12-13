@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "7a6ea86d_8c46dc5b",
+        "filename": "content/browser/renderer_host/media/audio_output_authorization_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-13T13:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fbaff6d_7b2e651d",
+      "range": {
+        "startLine": 155,
+        "startChar": 55,
+        "endLine": 155,
+        "endChar": 79
+      },
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f17428c_5d2695ac",
         "filename": "content/renderer/media/user_media_processor.cc",
         "patchSetId": 2
@@ -203,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "a4ebd35a_d6848fda",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-13T13:46:11Z",
+      "side": 1,
+      "message": "Added a TODO for this in media_stream_request.h.",
+      "parentUuid": "2bcdd201_f2d9e2fa",
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d89677c9_522c2c29",
         "filename": "content/renderer/media/webrtc/processed_local_audio_source.h",
         "patchSetId": 2
@@ -271,6 +313,30 @@
       "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1c44ad_2d38b675",
+        "filename": "content/renderer/media/webrtc/processed_local_audio_source.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-13T13:46:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccab92a9_5d53871b",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 33
+      },
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
