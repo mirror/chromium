@@ -171,7 +171,8 @@ video::-webkit-media-controls-overlay-play-button {
 }
 
 /* TODO(xjz): Move media remoting elements to a separate css file. */
-video::-internal-media-remoting-interstitial {
+video::-internal-media-remoting-interstitial,
+video::-internal-picture-in-picture-interstitial {
     width: inherit;
     height: inherit;
     position: relative;
@@ -190,7 +191,8 @@ video::-internal-media-remoting-interstitial {
     transition: opacity .3s ease-in-out;
 }
 
-video::-internal-media-remoting-background-image {
+video::-internal-media-remoting-background-image,
+video::-internal-picture-in-picture-background-image {
     display: flex;
     position: absolute;
     margin: 0;
@@ -236,6 +238,22 @@ video::-internal-media-remoting-cast-text-message {
     text-align: center;
     background-color: transparent;
     font-size: 90%;
+    font-family: Roboto-Regular, Sans-serif, Segoe, Serif, Helvetica;
+    padding: 0px;
+    margin: 0px;
+}
+
+video::-internal-picture-in-picture-message {
+    display: inline;
+    position: absolute;
+    top: calc(50%);
+    border: none;
+    color: rgba(255,255,255,.54);
+    width: 100%;
+    text-wrap: none;
+    text-align: center;
+    background-color: transparent;
+    font-size: 75%;
     font-family: Roboto-Regular, Sans-serif, Segoe, Serif, Helvetica;
     padding: 0px;
     margin: 0px;
@@ -491,6 +509,26 @@ audio::-internal-media-controls-cast-button, video::-internal-media-controls-cas
     -webkit-appearance: none;
     background-image: -webkit-image-set(
       url(default_100_percent/legacy/mediaplayer_cast_off.png) 1x);
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: flex;
+    flex: none;
+    box-sizing: border-box;
+    width: 32px;
+    height: 32px;
+    padding: 0px;
+    border-width: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-color: initial;
+    color: inherit;
+}
+
+audio::-internal-media-controls-picture-in-picture-button, video::-internal-media-controls-picture-in-picture-button {
+    -webkit-appearance: none;
+    background-image: -webkit-image-set(
+      url(default_100_percent/legacy/mediaplayer_pictureinpicture.png) 1x);
     background-size: 32px;
     background-repeat: no-repeat;
     background-position: center center;

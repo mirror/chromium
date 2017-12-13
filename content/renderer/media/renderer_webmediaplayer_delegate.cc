@@ -10,6 +10,8 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/sys_info.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "content/common/media/media_player_delegate_messages.h"
 #include "content/public/common/content_client.h"
 #include "content/public/renderer/content_renderer_client.h"
@@ -111,6 +113,22 @@ void RendererWebMediaPlayerDelegate::DidPlayerMutedStatusChange(int delegate_id,
                                                                 bool muted) {
   Send(new MediaPlayerDelegateHostMsg_OnMutedStatusChanged(routing_id(),
                                                            delegate_id, muted));
+}
+
+void RendererWebMediaPlayerDelegate::PictureInPicture(
+    viz::FrameSinkId frame_sink_id,
+    const gfx::Size& size) {
+  Send(new MediaPlayerDelegateHostMsg_OnPictureInPicture(routing_id(),
+                                                         frame_sink_id, size));
+}
+
+void RendererWebMediaPlayerDelegate::PictureInPictureSurfaceIdUpdated(
+    viz::FrameSinkId frame_sink_id,
+    uint32_t parent_id,
+    base::UnguessableToken nonce,
+    const gfx::Size& size) {
+  Send(new MediaPlayerDelegateHostMsg_OnUpdatePictureInPictureSurfaceId(
+      routing_id(), frame_sink_id, parent_id, nonce, size));
 }
 
 void RendererWebMediaPlayerDelegate::DidPause(int player_id) {

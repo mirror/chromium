@@ -37,6 +37,7 @@
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/media/MediaCustomControlsFullscreenDetector.h"
 #include "core/html/media/MediaRemotingInterstitial.h"
+#include "core/html/media/PictureInPictureInterstitial.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html_names.h"
 #include "core/imagebitmap/ImageBitmap.h"
@@ -66,7 +67,7 @@ enum VideoPersistenceControlsType {
 }  // anonymous namespace
 
 inline HTMLVideoElement::HTMLVideoElement(Document& document)
-    : HTMLMediaElement(videoTag, document), remoting_interstitial_(nullptr) {
+    : HTMLMediaElement(videoTag, document), remoting_interstitial_(nullptr), picture_in_picture_interstitial_(nullptr) {
   if (document.GetSettings()) {
     default_poster_url_ =
         AtomicString(document.GetSettings()->GetDefaultVideoPosterURL());
@@ -89,6 +90,7 @@ void HTMLVideoElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(image_loader_);
   visitor->Trace(custom_controls_fullscreen_detector_);
   visitor->Trace(remoting_interstitial_);
+  visitor->Trace(picture_in_picture_interstitial_);
   HTMLMediaElement::Trace(visitor);
 }
 
@@ -193,6 +195,9 @@ void HTMLVideoElement::ParseAttribute(
     // a grayscaled and blurred copy.
     if (remoting_interstitial_)
       remoting_interstitial_->OnPosterImageChanged();
+
+    if (picture_in_picture_interstitial_)
+      picture_in_picture_interstitial_->OnPosterImageChanged();
   } else {
     HTMLMediaElement::ParseAttribute(params);
   }
@@ -524,6 +529,21 @@ void HTMLVideoElement::MediaRemotingStarted(
 void HTMLVideoElement::MediaRemotingStopped() {
   if (remoting_interstitial_)
     remoting_interstitial_->Hide();
+}
+
+void HTMLVideoElement::PictureInPictureStarted() {
+  if (!picture_in_picture_interstitial_) {
+    picture_in_picture_interstitial_ = new PictureInPictureInterstitial(*this);
+    ShadowRoot& shadow_root = EnsureUserAgentShadowRoot();
+    shadow_root.InsertBefore(picture_in_picture_interstitial_, shadow_root.firstChild());
+    HTMLMediaElement::AssertShadowRootChildren(shadow_root);
+  }
+  picture_in_picture_interstitial_->Show();
+}
+
+void HTMLVideoElement::PictureInPictureStopped() {
+  if (picture_in_picture_interstitial_)
+    picture_in_picture_interstitial_->Hide();
 }
 
 WebMediaPlayer::DisplayType HTMLVideoElement::DisplayType() const {

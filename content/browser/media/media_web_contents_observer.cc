@@ -7,10 +7,13 @@
 #include <memory>
 
 #include "build/build_config.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "content/browser/media/audible_metrics.h"
 #include "content/browser/media/audio_stream_monitor.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/media/media_player_delegate_messages.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "ipc/ipc_message_macros.h"
@@ -110,6 +113,11 @@ bool MediaWebContentsObserver::OnMessageReceived(
                         OnMediaPlaying)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMutedStatusChanged,
                         OnMediaMutedStatusChanged)
+    IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnPictureInPicture,
+                        OnPictureInPicture)
+    IPC_MESSAGE_HANDLER(
+        MediaPlayerDelegateHostMsg_OnUpdatePictureInPictureSurfaceId,
+        OnUpdatePictureInPictureSurfaceId)
     IPC_MESSAGE_HANDLER(
         MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChanged,
         OnMediaEffectivelyFullscreenChanged)
@@ -334,6 +342,25 @@ void MediaWebContentsObserver::OnMediaMutedStatusChanged(
     bool muted) {
   const MediaPlayerId id(render_frame_host, delegate_id);
   web_contents_impl()->MediaMutedStatusChanged(id, muted);
+}
+
+void MediaWebContentsObserver::OnPictureInPicture(
+    RenderFrameHost* render_frame_host,
+    viz::FrameSinkId frame_sink_id,
+    const gfx::Size& size) {
+  ContentBrowserClient* browser_client = GetContentClient()->browser();
+  browser_client->PictureInPicture(render_frame_host, frame_sink_id, size);
+}
+
+void MediaWebContentsObserver::OnUpdatePictureInPictureSurfaceId(
+    RenderFrameHost* render_frame_host,
+    viz::FrameSinkId frame_sink_id,
+    uint32_t parent_id,
+    base::UnguessableToken nonce,
+    const gfx::Size& size) {
+  ContentBrowserClient* browser_client = GetContentClient()->browser();
+  browser_client->UpdatePictureInPictureSurfaceId(
+      render_frame_host, frame_sink_id, parent_id, nonce, size);
 }
 
 void MediaWebContentsObserver::AddMediaPlayerEntry(
