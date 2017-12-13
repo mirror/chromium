@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0390a4bd_240b41cd",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T07:42:44Z",
+      "side": 1,
+      "message": "Thanks. One subtlety is that I don\u0027t think cloning is strictly necessary: things seemed to work without cloning. This is probably just because all the callsites currently don\u0027t need it. I think there can be no blobs so no data pipes in navigation requests, so the history_serialization and RenderFrameImpl::NavigateInternal callsites never hit this code. The service_worker_context_client one doesn\u0027t need it since it doesn\u0027t reuse request_body after passing the WebHTTPBody to the service worker. However things are less error-prone if we just respect the constness of |input|. I wrote a comment to that effect.",
+      "parentUuid": "043b5363_05f8f59c",
+      "revId": "2c42911b2c9cba2079b8a8e5c86ab82235c7b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2db37cdd_e2305edb",
         "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.fetch-event-request-body.html",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-13T07:15:24Z",
       "side": 1,
       "message": "nit: indent is off?",
+      "revId": "2c42911b2c9cba2079b8a8e5c86ab82235c7b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c359b56a_01b73fe7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.fetch-event-request-body.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T07:42:44Z",
+      "side": 1,
+      "message": "good point (someday we should have a formatter for WPT tests...)",
+      "parentUuid": "2db37cdd_e2305edb",
       "revId": "2c42911b2c9cba2079b8a8e5c86ab82235c7b2ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
