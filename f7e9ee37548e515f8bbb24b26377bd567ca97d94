@@ -16,6 +16,24 @@
       "revId": "f7e9ee37548e515f8bbb24b26377bd567ca97d94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df7578e_ccaf8f2e",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-13T19:00:38Z",
+      "side": 1,
+      "message": "I went with this, because Start() allows CMSS to start resolving devices with CastSocketService, which IIUC can be done regardless of firewall rules.",
+      "parentUuid": "4d41f0a0_824d0910",
+      "revId": "f7e9ee37548e515f8bbb24b26377bd567ca97d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
