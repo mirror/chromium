@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5c77e39_34c1e320",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T18:17:04Z",
+      "side": 1,
+      "message": "nit: You can save some characters and just not name this type anymore:\n\nstatic const struct { ... } kStringTestCases[] \u003d ...",
+      "range": {
+        "startLine": 127,
+        "startChar": 9,
+        "endLine": 127,
+        "endChar": 23
+      },
+      "revId": "ada8d45fac7201ac8128b71d1ce947c4a690074a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5593ceb9_fc8ff138",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T18:17:04Z",
+      "side": 1,
+      "message": "nit: So this would stop at the first \u0027\\0\u0027. Does simply using operator\u003c\u003c do weird things? Consider base::ReplaceChars instead to get a sanitized string.",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 68
+      },
+      "revId": "ada8d45fac7201ac8128b71d1ce947c4a690074a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09b5d31_e04b3e47",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T18:17:04Z",
+      "side": 1,
+      "message": "I\u0027d argue that the continuation byte is an implementation detail here, what\u0027s important is that the invalid byte sequence follows a NUL character. How about:\n\nWithInvalidByteSequenceAfterNUL",
+      "range": {
+        "startLine": 160,
+        "startChar": 35,
+        "endLine": 160,
+        "endChar": 62
+      },
+      "revId": "ada8d45fac7201ac8128b71d1ce947c4a690074a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478271fa_890cc822",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T18:17:04Z",
+      "side": 1,
+      "message": "phrasing suggestion: UTF-8 validation should not stop at the first NUL character in the string, that is, a string with an invalid byte sequence should fail UTF-8 validation even if the invalid character is located after one or more NUL characters. Here, 0xA6 is an unexpected continuation byte.",
+      "revId": "ada8d45fac7201ac8128b71d1ce947c4a690074a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
