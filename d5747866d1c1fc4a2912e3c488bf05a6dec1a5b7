@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0f99bbe_9af1eca3",
+        "filename": "chrome/browser/sessions/tab_loader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T16:25:50Z",
+      "side": 1,
+      "message": "Should you also ASSERT that TabLoader::shared_tab_loader_ is null at this point? Otherwise the shared instance leaks across tests, right?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 39
+      },
+      "revId": "d5747866d1c1fc4a2912e3c488bf05a6dec1a5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
