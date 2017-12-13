@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f4d18b1_536f02ad",
+        "filename": "ios/chrome/browser/ui/qr_scanner/qr_scanner_view_controller_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-12-13T11:16:23Z",
+      "side": 1,
+      "message": "While you\u0027re here, can you create a bug and TODO to fix whatever the architectural flaw is that causes us to need to swizzle?",
+      "range": {
+        "startLine": 410,
+        "startChar": 3,
+        "endLine": 410,
+        "endChar": 11
+      },
+      "revId": "58cf44440b5eaac115760376d41798d3c57ed802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
