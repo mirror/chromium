@@ -16,6 +16,24 @@
       "revId": "5126378280c9a803038304b1f57ea457b8c5ce96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9b5091_25377082",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-13T23:58:30Z",
+      "side": 1,
+      "message": "ah, missed it, thanks.",
+      "parentUuid": "b9a58ed6_04cd4470",
+      "revId": "5126378280c9a803038304b1f57ea457b8c5ce96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
