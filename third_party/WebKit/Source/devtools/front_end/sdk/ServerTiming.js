@@ -25,36 +25,105 @@ SDK.ServerTiming = class {
     if (!rawServerTimingHeaders.length)
       return null;
 
-    /**
-     * @param {?string} valueString
-     * @return {?Array<!SDK.ServerTiming>}
-     */
-    function createFromHeaderValue(valueString) {
-      // https://www.w3.org/TR/server-timing/
-      var serverTimingMetricRegExp =
-          /[ \t]*([\!\#\$\%\&\'\*\+\-\.\^\_\`\|\~0-9A-Za-z]+)[ \t]*(?:=[ \t]*(\d+(?:\.\d+)?))?[ \t]*(?:;[ \t]*(?:"([^"]+)"|([\!\#\$\%\&\'\*\+\-\.\^\_\`\|\~0-9A-Za-z]+)))?[ \t]*(?:,(.*))?/;
-      var metricMatch;
-      var result = [];
-      while (valueString && (metricMatch = serverTimingMetricRegExp.exec(valueString))) {
-        var metric = metricMatch[1];
-        var value = metricMatch[2];
-        var description = metricMatch[3] || metricMatch[4];
-        if (value !== undefined)
-          value = Math.abs(parseFloat(metricMatch[2]));
-        valueString = metricMatch[5];  // comma delimited headers
-        if (value === undefined || isNaN(value))
-          value = null;
-        result.push(new SDK.ServerTiming(metric, value, description));
-      }
-      return result;
-    }
-
     var serverTimings = rawServerTimingHeaders.reduce((memo, header) => {
-      var timing = createFromHeaderValue(header.value);
-      Array.prototype.push.apply(memo, timing);
+      var timing = this.createFromHeaderValue(header.value);
+      memo.pushAll(timing.map(function(entry) {
+        return {
+          name: entry.name,
+          duration: entry.hasOwnProperty('duration') ? entry.duration : null,
+          description: entry.hasOwnProperty('description') ? entry.description : '',
+        };
+      }));
       return memo;
     }, []);
     serverTimings.sort((a, b) => a.metric.toLowerCase().compareTo(b.metric.toLowerCase()));
     return serverTimings;
+  }
+
+  /**
+   * @param {?string} valueString
+   * @return {?Array<!Object>}
+   */
+  static createFromHeaderValue(valueString) {
+    function consumeChar(char) {
+      console.assert(['"', ';', '=', ','].indexOf(char) > -1);
+      var result = new RegExp(`^(?:\s*)(?:${char})(?:\s*)(.*)`, 'g').exec(valueString);
+      if (!result)
+        return false;
+
+      valueString = result[1];
+      return true;
+    }
+    function consumeToken() {
+      // https://tools.ietf.org/html/rfc7230#appendix-B
+      var result = /^(?:\s*)([\w!#$%&'*+\-.^`|~]+)(?:\s*)(.*)/g.exec(valueString);
+      if (!result)
+        return false;
+
+      valueString = result[2];
+      return result;
+    }
+    function consumeTokenOrQuotedString() {
+      if (consumeChar('"'))
+        return consumeQuotedString();
+
+
+      var valueMatch = consumeToken();
+      if (valueMatch)
+        return valueMatch[1];
+    }
+    function consumeQuotedString() {
+      var result = '';
+      while (valueString.length) {
+        if (valueString[0] === '"') {
+          valueString = valueString.substring(1);
+          return result;
+        }
+        if (valueString[0] === '\\') {
+          valueString = valueString.substring(1);
+          if (!valueString.length)
+            return false;
+        }
+        result += valueString[0];
+        valueString = valueString.substring(1);
+      }
+      return false;
+    }
+
+    var result = [];
+    var nameMatch;
+    while ((nameMatch = consumeToken()) !== false) {
+      var entry = {name: nameMatch[1]};
+
+      while (consumeChar(';')) {
+        var paramNameMatch;
+        if (!(paramNameMatch = consumeToken()) || !consumeChar('='))
+          continue;
+
+        var paramValue;
+        if (!(paramValue = consumeTokenOrQuotedString()))
+          continue;
+
+        var paramName = paramNameMatch[1].toLowerCase();
+        switch (paramName) {
+          case 'dur':
+            if (!entry.hasOwnProperty('duration')) {
+              var duration = parseFloat(paramValue);
+              if (!isNaN(duration))
+                entry.duration = duration;
+            }
+            break;
+          case 'desc':
+            if (!entry.hasOwnProperty('description'))
+              entry.description = paramValue;
+            break;
+        }
+      }
+
+      result.push(entry);
+      if (!consumeChar(','))
+        break;
+    }
+    return result;
   }
 };
