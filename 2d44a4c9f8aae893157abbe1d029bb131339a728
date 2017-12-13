@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54229556_effb0d39",
+        "filename": "content/browser/loader/resource_dispatcher_host_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-13T04:35:47Z",
+      "side": 1,
+      "message": "nit: // Cancel the request handled by |loader|.",
+      "revId": "2d44a4c9f8aae893157abbe1d029bb131339a728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
