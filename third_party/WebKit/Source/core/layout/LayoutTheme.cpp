@@ -258,6 +258,8 @@ void LayoutTheme::AdjustStyle(ComputedStyle& style, Element* e) {
       return AdjustSearchFieldStyle(style);
     case kSearchFieldCancelButtonPart:
       return AdjustSearchFieldCancelButtonStyle(style);
+    case kPasswordFieldAssistButtonPart:
+      return AdjustPasswordButtonStyle(style);
     default:
       break;
   }
@@ -595,6 +597,11 @@ bool LayoutTheme::ShouldHaveSpinButton(HTMLInputElement* input_element) const {
          input_element->type() != InputTypeNames::range;
 }
 
+bool LayoutTheme::ShouldHavePasswordAssistButton(
+    HTMLInputElement* input_element) const {
+  return input_element->type() == InputTypeNames::password;
+}
+
 void LayoutTheme::AdjustMenuListButtonStyle(ComputedStyle&, Element*) const {}
 
 void LayoutTheme::AdjustSliderContainerStyle(ComputedStyle& style,
@@ -620,6 +627,8 @@ void LayoutTheme::AdjustSliderThumbSize(ComputedStyle&) const {}
 void LayoutTheme::AdjustSearchFieldStyle(ComputedStyle&) const {}
 
 void LayoutTheme::AdjustSearchFieldCancelButtonStyle(ComputedStyle&) const {}
+
+void LayoutTheme::AdjustPasswordButtonStyle(ComputedStyle&) const {}
 
 void LayoutTheme::PlatformColorsDidChange() {
   Page::PlatformColorsChanged();

@@ -81,6 +81,25 @@ class SearchFieldCancelButtonElement final : public HTMLDivElement {
   bool capturing_;
 };
 
+class PasswordAssistButtonElement final : public HTMLDivElement {
+ public:
+  class PasswordAssistButtonOwner : public GarbageCollectedMixin {
+   public:
+    virtual ~PasswordAssistButtonOwner() {}
+    virtual void PasswordButtonPressed() = 0;
+  };
+  static PasswordAssistButtonElement* Create(Document&,
+                                             PasswordAssistButtonOwner&);
+
+  void Trace(blink::Visitor*) override;
+
+ private:
+  explicit PasswordAssistButtonElement(Document&, PasswordAssistButtonOwner&);
+  void DefaultEventHandler(Event*) override;
+
+  Member<PasswordAssistButtonOwner> password_button_owner_;
+};
+
 }  // namespace blink
 
 #endif

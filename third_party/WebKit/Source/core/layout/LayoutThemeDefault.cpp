@@ -43,6 +43,10 @@ static const float kDefaultCancelButtonSize = 9;
 static const float kMinCancelButtonSize = 5;
 static const float kMaxCancelButtonSize = 21;
 
+static const float kDefaultPasswordAssistButtonSize = 16;
+static const float kMinPasswordAssistButtonSize = 5;
+static const float kMaxPasswordAssistButtonSize = 21;
+
 static bool UseMockTheme() {
   return LayoutTestSupport::IsMockThemeEnabledForTest();
 }
@@ -295,6 +299,17 @@ void LayoutThemeDefault::AdjustSearchFieldCancelButtonStyle(
       kMaxCancelButtonSize));
   style.SetWidth(Length(cancel_button_size, kFixed));
   style.SetHeight(Length(cancel_button_size, kFixed));
+}
+
+void LayoutThemeDefault::AdjustPasswordButtonStyle(ComputedStyle& style) const {
+  // Scale the button size based on the font size
+  float font_scale = style.FontSize() / kDefaultControlFontPixelSize;
+  int password_assist_button_size =
+      lroundf(std::min(std::max(kMinPasswordAssistButtonSize,
+                                kDefaultPasswordAssistButtonSize * font_scale),
+                       kMaxPasswordAssistButtonSize));
+  style.SetWidth(Length(password_assist_button_size, kFixed));
+  style.SetHeight(Length(password_assist_button_size, kFixed));
 }
 
 void LayoutThemeDefault::AdjustMenuListStyle(ComputedStyle& style,

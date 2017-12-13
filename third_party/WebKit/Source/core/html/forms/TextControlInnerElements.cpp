@@ -201,4 +201,47 @@ bool SearchFieldCancelButtonElement::WillRespondToMouseClickEvents() {
   return HTMLDivElement::WillRespondToMouseClickEvents();
 }
 
+// ----------------------------
+
+inline PasswordAssistButtonElement::PasswordAssistButtonElement(
+    Document& document,
+    PasswordAssistButtonOwner& owner)
+    : HTMLDivElement(document), password_button_owner_(owner) {}
+
+PasswordAssistButtonElement* PasswordAssistButtonElement::Create(
+    Document& document,
+    PasswordAssistButtonOwner& owner) {
+  PasswordAssistButtonElement* element =
+      new PasswordAssistButtonElement(document, owner);
+  element->SetShadowPseudoId(AtomicString("-webkit-password-assist-button"));
+  element->setAttribute(idAttr, ShadowElementNames::PasswordAssistButton());
+  return element;
+}
+
+void PasswordAssistButtonElement::Trace(blink::Visitor* visitor) {
+  visitor->Trace(password_button_owner_);
+  HTMLDivElement::Trace(visitor);
+}
+
+void PasswordAssistButtonElement::DefaultEventHandler(Event* event) {
+  // If the element is visible, on mouseup, notify owner.
+  HTMLInputElement* input(ToHTMLInputElement(OwnerShadowHost()));
+  if (!input || input->IsDisabledOrReadOnly()) {
+    if (!event->DefaultHandled())
+      HTMLDivElement::DefaultEventHandler(event);
+    return;
+  }
+
+  if (event->type() == EventTypeNames::click && event->IsMouseEvent() &&
+      ToMouseEvent(event)->button() ==
+          static_cast<short>(WebPointerProperties::Button::kLeft)) {
+    if (password_button_owner_)
+      password_button_owner_->PasswordButtonPressed();
+    event->SetDefaultHandled();
+  }
+
+  if (!event->DefaultHandled())
+    HTMLDivElement::DefaultEventHandler(event);
+}
+
 }  // namespace blink

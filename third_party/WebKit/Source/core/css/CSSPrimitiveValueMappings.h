@@ -384,6 +384,8 @@ inline CSSIdentifierValue::CSSIdentifierValue(ControlPart e)
     case kSearchFieldCancelButtonPart:
       value_id_ = CSSValueSearchfieldCancelButton;
       break;
+    case kPasswordFieldAssistButtonPart:
+      value_id_ = CSSValuePasswordfieldAssistButton;
     case kTextFieldPart:
       value_id_ = CSSValueTextfield;
       break;

@@ -34,14 +34,17 @@
 #include "core/html/forms/InputType.h"
 #include "core/html/forms/InputTypeView.h"
 #include "core/html/forms/SpinButtonElement.h"
+#include "core/html/forms/TextControlInnerElements.h"
 
 namespace blink {
 
 // The class represents types of which UI contain text fields.
 // It supports not only the types for BaseTextInputType but also type=number.
-class TextFieldInputType : public InputType,
-                           public InputTypeView,
-                           protected SpinButtonElement::SpinButtonOwner {
+class TextFieldInputType
+    : public InputType,
+      public InputTypeView,
+      protected SpinButtonElement::SpinButtonOwner,
+      protected PasswordAssistButtonElement::PasswordAssistButtonOwner {
   USING_GARBAGE_COLLECTED_MIXIN(TextFieldInputType);
 
  public:
@@ -74,6 +77,7 @@ class TextFieldInputType : public InputType,
   virtual void DidSetValueByUserEdit();
 
   void HandleKeydownEventForSpinButton(KeyboardEvent*);
+  bool ShouldHavePasswordAssistButton() const;
   bool ShouldHaveSpinButton() const;
   Element* ContainerElement() const;
 
@@ -101,6 +105,9 @@ class TextFieldInputType : public InputType,
   void SpinButtonDidReleaseMouseCapture(SpinButtonElement::EventDispatch) final;
 
   SpinButtonElement* GetSpinButtonElement() const;
+
+  // PasswordAssistButtonElement::PasswordAssistButtonOwner functions.
+  void PasswordButtonPressed() override;
 };
 
 }  // namespace blink

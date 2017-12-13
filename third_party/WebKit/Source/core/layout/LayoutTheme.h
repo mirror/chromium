@@ -218,6 +218,7 @@ class CORE_EXPORT LayoutTheme : public RefCounted<LayoutTheme> {
   virtual int SliderTickOffsetFromTrackCenter() const = 0;
 
   virtual bool ShouldHaveSpinButton(HTMLInputElement*) const;
+  virtual bool ShouldHavePasswordAssistButton(HTMLInputElement*) const;
 
   // Functions for <select> elements.
   virtual bool DelegatesMenuListRendering() const { return false; }
@@ -269,6 +270,7 @@ class CORE_EXPORT LayoutTheme : public RefCounted<LayoutTheme> {
   virtual void AdjustSliderThumbStyle(ComputedStyle&) const;
   virtual void AdjustSearchFieldStyle(ComputedStyle&) const;
   virtual void AdjustSearchFieldCancelButtonStyle(ComputedStyle&) const;
+  virtual void AdjustPasswordButtonStyle(ComputedStyle&) const;
   void AdjustStyleUsingFallbackTheme(ComputedStyle&);
   void AdjustCheckboxStyleUsingFallbackTheme(ComputedStyle&) const;
   void AdjustRadioStyleUsingFallbackTheme(ComputedStyle&) const;

@@ -128,6 +128,10 @@ SpinButtonElement* TextFieldInputType::GetSpinButtonElement() const {
           ShadowElementNames::SpinButton()));
 }
 
+void TextFieldInputType::PasswordButtonPressed() {
+  LOG(ERROR) << "Password Button pressed";
+}
+
 bool TextFieldInputType::ShouldShowFocusRingOnMouseFocus() const {
   return true;
 }
@@ -270,6 +274,10 @@ LayoutObject* TextFieldInputType::CreateLayoutObject(
   return new LayoutTextControlSingleLine(&GetElement());
 }
 
+bool TextFieldInputType::ShouldHavePasswordAssistButton() const {
+  return LayoutTheme::GetTheme().ShouldHavePasswordAssistButton(&GetElement());
+}
+
 bool TextFieldInputType::ShouldHaveSpinButton() const {
   return LayoutTheme::GetTheme().ShouldHaveSpinButton(&GetElement());
 }
@@ -280,9 +288,11 @@ void TextFieldInputType::CreateShadowSubtree() {
   DCHECK(!shadow_root->HasChildren());
 
   Document& document = GetElement().GetDocument();
+  bool should_have_password_button = ShouldHavePasswordAssistButton();
   bool should_have_spin_button = ShouldHaveSpinButton();
   bool should_have_data_list_indicator = GetElement().HasValidDataListOptions();
-  bool creates_container = should_have_spin_button ||
+  bool creates_container = should_have_password_button ||
+                           should_have_spin_button ||
                            should_have_data_list_indicator || NeedsContainer();
 
   HTMLElement* inner_editor = GetElement().CreateInnerEditorElement();
@@ -304,6 +314,10 @@ void TextFieldInputType::CreateShadowSubtree() {
 
   if (should_have_data_list_indicator)
     container->AppendChild(DataListIndicatorElement::Create(document));
+  if (should_have_password_button) {
+    container->AppendChild(
+        PasswordAssistButtonElement::Create(document, *this));
+  }
   // FIXME: Because of a special handling for a spin button in
   // LayoutTextControlSingleLine, we need to put it to the last position. It's
   // inconsistent with multiple-fields date/time types.

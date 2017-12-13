@@ -95,6 +95,9 @@ class ThemePainterDefault final : public ThemePainter {
   bool PaintSearchFieldCancelButton(const LayoutObject&,
                                     const PaintInfo&,
                                     const IntRect&) override;
+  bool PaintPasswordFieldAssistButton(const LayoutObject&,
+                                      const PaintInfo&,
+                                      const IntRect&) override;
 
   void SetupMenuListArrow(const Document&,
                           const ComputedStyle&,
