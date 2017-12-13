@@ -24,13 +24,14 @@ namespace {
 struct Service {
   const char* name;
   const char* description;
+  const char* process_group = nullptr;
 };
 
 constexpr Service kServices[] = {
     {mash::quick_launch::mojom::kServiceName, "Quick Launch"},
-    {ui::mojom::kServiceName, "UI Service"},
+    {ui::mojom::kServiceName, "UI Service", "ash_and_ui"},
 #if defined(OS_CHROMEOS)
-    {ash::mojom::kServiceName, "Ash Window Manager and Shell"},
+    {ash::mojom::kServiceName, "Ash Window Manager and Shell", "ash_and_ui"},
     {"accessibility_autoclick", "Ash Accessibility Autoclick"},
     {"touch_hud", "Ash Touch Hud"},
 #endif  // defined(OS_CHROMEOS)
@@ -43,9 +44,12 @@ constexpr Service kServices[] = {
 
 void RegisterOutOfProcessServices(
     content::ContentBrowserClient::OutOfProcessServiceMap* services) {
-  for (size_t i = 0; i < arraysize(kServices); ++i) {
-    (*services)[kServices[i].name] =
-        base::ASCIIToUTF16(kServices[i].description);
+  for (const auto& service : kServices) {
+    base::Optional<std::string> process_group;
+    if (service.process_group)
+      process_group.emplace(service.process_group);
+    (*services)[service.name] = {base::ASCIIToUTF16(service.description),
+                                 process_group};
   }
 }
 
