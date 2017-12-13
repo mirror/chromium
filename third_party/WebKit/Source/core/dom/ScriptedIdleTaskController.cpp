@@ -209,9 +209,14 @@ void ScriptedIdleTaskController::RunCallback(
     double deadline_seconds,
     IdleDeadline::CallbackType callback_type) {
   DCHECK(!paused_);
-  IdleTask* idle_task = idle_tasks_.Take(id);
-  if (!idle_task)
+
+  // Keep the idle task in |idle_tasks_| so that it's still wrapper-traced.
+  auto idle_task_iter = idle_tasks_.find(id);
+  if (idle_task_iter == idle_tasks_.end() || !idle_task_iter->value) {
+    idle_tasks_.erase(idle_task_iter);
     return;
+  }
+  IdleTask* idle_task = idle_task_iter->value;
 
   double allotted_time_millis =
       std::max((deadline_seconds - MonotonicallyIncreasingTime()) * 1000, 0.0);
@@ -231,6 +236,11 @@ void ScriptedIdleTaskController::RunCallback(
           GetExecutionContext(), id, allotted_time_millis,
           callback_type == IdleDeadline::CallbackType::kCalledByTimeout));
   idle_task->invoke(IdleDeadline::Create(deadline_seconds, callback_type));
+
+  // Finally there is no need to keep the idle task alive.
+  //
+  // Do not use the iterator because the idle task might update |idle_tasks_|.
+  idle_tasks_.erase(id);
 }
 
 void ScriptedIdleTaskController::ContextDestroyed(ExecutionContext*) {
