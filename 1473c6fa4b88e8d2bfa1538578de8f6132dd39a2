@@ -16,6 +16,24 @@
       "revId": "1473c6fa4b88e8d2bfa1538578de8f6132dd39a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a597e4_7cd673b9",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:48:33Z",
+      "side": 1,
+      "message": "For RenderWidgetHostViewAura and RenderWidgetHostViewMac, I was able to add the view to a visible parent in unit tests.\n\nAura: https://chromium-review.googlesource.com/c/chromium/src/+/803839/19/content/browser/renderer_host/render_widget_host_view_aura_unittest.cc#1657\nMac: https://chromium-review.googlesource.com/c/chromium/src/+/803839/19/content/browser/renderer_host/render_widget_host_view_mac_unittest.mm#459\n\nFor RenderWidgetHostViewAndroid, I would need to create a ContentViewCore and I\u0027m not sure that this is possible in unit tests currently.",
+      "parentUuid": "eddc382f_cef3231c",
+      "revId": "1473c6fa4b88e8d2bfa1538578de8f6132dd39a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
