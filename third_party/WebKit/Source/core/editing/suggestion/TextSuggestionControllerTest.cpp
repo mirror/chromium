@@ -429,4 +429,28 @@ TEST_F(TextSuggestionControllerTest,
                          .first);
 }
 
+TEST_F(TextSuggestionControllerTest, CallbackHappensAfterDocumentDestroyed) {
+  SetBodyContent(
+      "<div contenteditable>"
+      "embiggen"
+      "</div>");
+  Element* div = GetDocument().QuerySelector("div");
+  Node* text = div->firstChild();
+
+  // Mark "embiggen" as misspelled
+  GetDocument().Markers().AddSpellingMarker(
+      EphemeralRange(Position(text, 0), Position(text, 8)));
+  // Select inside before "embiggen"
+  GetDocument().GetFrame()->Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(Position(text, 1), Position(text, 1))
+          .Build());
+
+  LocalFrame& frame = *GetDocument().GetFrame();
+  GetDocument().Shutdown();
+
+  // Shouldn't crash
+  frame.GetTextSuggestionController().SuggestionMenuTimeoutCallback(0);
+}
+
 }  // namespace blink
