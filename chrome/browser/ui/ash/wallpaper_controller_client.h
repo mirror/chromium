@@ -7,6 +7,7 @@
 
 #include "ash/public/interfaces/wallpaper.mojom.h"
 #include "base/macros.h"
+#include "chrome/browser/ui/ash/wallpaper_policy_handler.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 namespace wallpaper {
@@ -17,7 +18,9 @@ enum WallpaperType;
 
 // Handles method calls sent from ash to chrome. Also sends messages from chrome
 // to ash.
-class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient {
+class WallpaperControllerClient
+    : public ash::mojom::WallpaperControllerClient,
+      public chromeos::WallpaperPolicyHandler::Delegate {
  public:
   WallpaperControllerClient();
   ~WallpaperControllerClient() override;
@@ -60,6 +63,10 @@ class WallpaperControllerClient : public ash::mojom::WallpaperControllerClient {
 
   // ash::mojom::WallpaperControllerClient:
   void OpenWallpaperPicker() override;
+
+  // chromeos::WallpaperPolicyHandler::Delegate:
+  void OnDeviceWallpaperChanged() override;
+  void OnDeviceWallpaperPolicyCleared() override;
 
   // Flushes the mojo pipe to ash.
   void FlushForTesting();
