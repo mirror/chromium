@@ -465,6 +465,24 @@ class DeveloperPrivateLoadUnpackedFunction
   DeveloperPrivateAPI::UnpackedRetryId retry_guid_;
 };
 
+class DeveloperPrivateNotifyDragInstallInProgressFunction
+    : public DeveloperPrivateAPIFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("developerPrivate.notifyDragInstallInProgress",
+                             DEVELOPERPRIVATE_NOTIFYDRAGINSTALLINPROGRESS);
+
+  DeveloperPrivateNotifyDragInstallInProgressFunction();
+
+  ResponseAction Run() override;
+
+  static void SetDropPathForTesting(base::FilePath* file_path);
+
+ private:
+  ~DeveloperPrivateNotifyDragInstallInProgressFunction() override;
+
+  DISALLOW_COPY_AND_ASSIGN(DeveloperPrivateNotifyDragInstallInProgressFunction);
+};
+
 class DeveloperPrivateChoosePathFunction
     : public DeveloperPrivateChooseEntryFunction {
  public:
