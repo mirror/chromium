@@ -16,6 +16,24 @@
       "revId": "ff59e2f7779bb41cdf5f428b0a23aefee2c162cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1146bc_f69260f8",
+        "filename": "content/browser/browser_side_navigation_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-13T13:10:43Z",
+      "side": 1,
+      "message": "The first is the current behaviour, which is incorrect.\nThe second is the expected behaviour (in the future).\n\nI will turn the commented code into a comment.\nDone",
+      "parentUuid": "547f16e7_d0ebed09",
+      "revId": "ff59e2f7779bb41cdf5f428b0a23aefee2c162cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
