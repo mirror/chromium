@@ -23,6 +23,7 @@ class AccessibilityControllerClient
   void InitForTesting(ash::mojom::AccessibilityControllerPtr controller);
 
   // ash::mojom::AccessibilityControllerClient:
+  void UpdateSpokenFeedback(bool enabled) override;
   void TriggerAccessibilityAlert(ash::mojom::AccessibilityAlert alert) override;
   void PlayEarcon(int32_t sound_key) override;
   void PlayShutdownSound(PlayShutdownSoundCallback callback) override;
