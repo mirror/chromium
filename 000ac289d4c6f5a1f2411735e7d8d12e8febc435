@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "341be9f4_59fd2f76",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-13T18:53:39Z",
+      "side": 1,
+      "message": "A few thoughts, why have this cross-browser code call out to chromium setup methods more than once?  Why not just one \u0027performChromiumSetup\u0027 call?\n\nAlso, why not have the chromium specific feature detection happen inside the performChromiumSetup call?\n\nFinally, Mojo doesn\u0027t seem necessary to guard againt calling setBluetoothFakeAdapter, just checking for setBluetoothFakeAdapter does.",
+      "range": {
+        "startLine": 56,
+        "startChar": 18,
+        "endLine": 56,
+        "endChar": 59
+      },
+      "revId": "000ac289d4c6f5a1f2411735e7d8d12e8febc435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
