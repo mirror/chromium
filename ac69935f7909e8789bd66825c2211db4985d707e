@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c71926a6_5859c617",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-13T04:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44608bcc_561bdeb3",
+      "range": {
+        "startLine": 30,
+        "startChar": 43,
+        "endLine": 30,
+        "endChar": 66
+      },
+      "revId": "ac69935f7909e8789bd66825c2211db4985d707e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6425ed48_bb99e4cd",
         "filename": "components/language/content/browser/geo_language_provider.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "ac69935f7909e8789bd66825c2211db4985d707e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3320112_ac4f37c9",
+        "filename": "components/language/content/browser/geo_language_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-13T04:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6425ed48_bb99e4cd",
+      "range": {
+        "startLine": 43,
+        "startChar": 44,
+        "endLine": 43,
+        "endChar": 2
+      },
+      "revId": "ac69935f7909e8789bd66825c2211db4985d707e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f5772159_fc7191b0",
+        "filename": "components/language/content/browser/geo_language_provider.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-13T04:40:16Z",
+      "side": 1,
+      "message": "thanks for the catch! :)",
+      "parentUuid": "2dfab914_64c90e7d",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "ac69935f7909e8789bd66825c2211db4985d707e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e563c6dd_9f1baea5",
         "filename": "components/language/content/browser/geo_language_provider.h",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "ac69935f7909e8789bd66825c2211db4985d707e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71fc7c0_fe235d6a",
+        "filename": "components/language/content/browser/geo_language_provider.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-13T04:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e563c6dd_9f1baea5",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 21
+      },
+      "revId": "ac69935f7909e8789bd66825c2211db4985d707e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
