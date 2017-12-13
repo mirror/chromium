@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "26af6f32_b95f36a8",
+        "filename": "content/browser/renderer_host/media/audio_output_authorization_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T12:17:32Z",
+      "side": 1,
+      "message": "I think the reason for that in the old code is that |matched_output| used to not be a media::AudioParameters.",
+      "parentUuid": "84642c02_32240857",
+      "range": {
+        "startLine": 155,
+        "startChar": 55,
+        "endLine": 155,
+        "endChar": 79
+      },
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d89677c9_522c2c29",
         "filename": "content/renderer/media/webrtc/processed_local_audio_source.h",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "So, instead of checking for render_to_associated_sink() at https://chromium-review.googlesource.com/c/chromium/src/+/822311/2/content/renderer/media/webrtc_audio_device_impl.cc#429, we can just check for an empty matched_output_device_id there.",
       "parentUuid": "d89677c9_522c2c29",
+      "range": {
+        "startLine": 142,
+        "startChar": 7,
+        "endLine": 142,
+        "endChar": 33
+      },
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccab92a9_5d53871b",
+        "filename": "content/renderer/media/webrtc/processed_local_audio_source.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T12:17:32Z",
+      "side": 1,
+      "message": "Correct.",
+      "parentUuid": "3471bd2b_41a4258b",
       "range": {
         "startLine": 142,
         "startChar": 7,
