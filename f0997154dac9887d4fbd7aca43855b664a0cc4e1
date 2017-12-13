@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0f0d2b0_623ba0fc",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-13T17:00:54Z",
+      "side": 1,
+      "message": "Please add a TODO(tangltom) here to move this code to chrome/browser/ui/signin folder and to add a unit test.",
+      "range": {
+        "startLine": 189,
+        "startChar": 25,
+        "endLine": 189,
+        "endChar": 46
+      },
+      "revId": "f0997154dac9887d4fbd7aca43855b664a0cc4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17294436_00b8ee0b",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-13T17:00:54Z",
+      "side": 1,
+      "message": "I think the code would be easier to read as (it will also avoid doing an access to the vector at each iteration):\nstd::string gaia_default_account_id \u003d cookie_accounts.empty() ? \"\" : cookie_accounts[0].id;\nfor (const std::string\u0026 account_id : account_ids) {\n  AccountInfo acount_info \u003d account_tracker_service-\u003eGetAccountInfo(account_id);\n  if (account_id \u003d\u003d gaia_default_account_id)\n    accounts.insert(accounts.begin(), account_info);\n  else\n    accounts.push_back(account_info);\n  return accounts;\n}",
+      "revId": "f0997154dac9887d4fbd7aca43855b664a0cc4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e038855_51859faa",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-13T17:00:54Z",
+      "side": 1,
+      "message": "Multi-line ifs require \"{\".",
+      "range": {
+        "startLine": 208,
+        "startChar": 42,
+        "endLine": 208,
+        "endChar": 57
+      },
+      "revId": "f0997154dac9887d4fbd7aca43855b664a0cc4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "747bbd4e_2c1c26df",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-13T17:00:54Z",
+      "side": 1,
+      "message": "Is the \"though ...\" a bug? Should you file a bug about this?",
+      "range": {
+        "startLine": 1113,
+        "startChar": 60,
+        "endLine": 1113,
+        "endChar": 66
+      },
+      "revId": "f0997154dac9887d4fbd7aca43855b664a0cc4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
