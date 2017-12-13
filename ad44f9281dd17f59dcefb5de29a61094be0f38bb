@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aeb7445_7d9be435",
+        "filename": "chrome/test/data/webui/extensions/extension_load_error_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T22:16:15Z",
+      "side": 1,
+      "message": "Eh, this is reaching within code-section\u0027s DOM to make assertions. Could we check the visibility of loadError.$.code itself, with https://cs.chromium.org/chromium/src/chrome/test/data/webui/extensions/extension_test_util.js?l\u003d155, or would that not work?",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 70,
+        "endChar": 57
+      },
+      "revId": "ad44f9281dd17f59dcefb5de29a61094be0f38bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
