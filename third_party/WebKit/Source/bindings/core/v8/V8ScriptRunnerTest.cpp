@@ -65,10 +65,13 @@ class V8ScriptRunnerTest : public ::testing::Test {
     return ScriptResource::CreateForTest(NullURL(), UTF8Encoding());
   }
 
-  ScriptResource* CreateResource() {
-    ScriptResource* resource =
-        ScriptResource::CreateForTest(Url(), UTF8Encoding());
+  ScriptResource* CreateResource(const WTF::TextEncoding& encoding) {
+    ScriptResource* resource = ScriptResource::CreateForTest(Url(), encoding);
     String code = Code();
+    ResourceResponse response;
+    response.SetURL(Url());
+    response.SetHTTPStatusCode(200);
+    resource->SetResponse(response);
     resource->AppendData(code.Utf8().data(), code.Utf8().length());
     resource->FinishForTest();
     return resource;
@@ -99,7 +102,7 @@ TEST_F(V8ScriptRunnerTest, emptyResourceDoesNotHaveCacheHandler) {
 
 TEST_F(V8ScriptRunnerTest, parseOption) {
   V8TestingScope scope;
-  ScriptSourceCode source_code(nullptr, CreateResource());
+  ScriptSourceCode source_code(nullptr, CreateResource(UTF8Encoding()));
   EXPECT_TRUE(
       CompileScript(scope.GetScriptState(), source_code, kV8CacheOptionsParse));
   CachedMetadataHandler* cache_handler = source_code.CacheHandler();
@@ -109,14 +112,14 @@ TEST_F(V8ScriptRunnerTest, parseOption) {
       cache_handler->GetCachedMetadata(TagForCodeCache(cache_handler)));
   // The cached data is associated with the encoding.
   ScriptResource* another_resource =
-      ScriptResource::CreateForTest(Url(), UTF16LittleEndianEncoding());
+      CreateResource(UTF16LittleEndianEncoding());
   EXPECT_FALSE(cache_handler->GetCachedMetadata(
       TagForParserCache(another_resource->CacheHandler())));
 }
 
 TEST_F(V8ScriptRunnerTest, codeOption) {
   V8TestingScope scope;
-  ScriptSourceCode source_code(nullptr, CreateResource());
+  ScriptSourceCode source_code(nullptr, CreateResource(UTF8Encoding()));
   CachedMetadataHandler* cache_handler = source_code.CacheHandler();
   SetCacheTimeStamp(cache_handler);
 
@@ -128,7 +131,7 @@ TEST_F(V8ScriptRunnerTest, codeOption) {
   EXPECT_TRUE(cache_handler->GetCachedMetadata(TagForCodeCache(cache_handler)));
   // The cached data is associated with the encoding.
   ScriptResource* another_resource =
-      ScriptResource::CreateForTest(Url(), UTF16LittleEndianEncoding());
+      CreateResource(UTF16LittleEndianEncoding());
   EXPECT_FALSE(cache_handler->GetCachedMetadata(
       TagForCodeCache(another_resource->CacheHandler())));
 }
