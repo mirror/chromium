@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eec01d1f_d360bf94",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T03:47:20Z",
+      "side": 1,
+      "message": "nit: need braces.",
+      "revId": "b00ea093fe26e71cd555c2079bd30b1ff6b29c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

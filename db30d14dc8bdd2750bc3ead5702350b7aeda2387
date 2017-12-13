@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ec509849_10c6e0de",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T03:47:20Z",
+      "side": 1,
+      "message": "+tsepez since the data passes over IPC and needs security review anyway.",
+      "parentUuid": "7f0b131b_ef43c99a",
+      "revId": "db30d14dc8bdd2750bc3ead5702350b7aeda2387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f221a5f0_a47a8efc",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 1
