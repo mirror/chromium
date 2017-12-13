@@ -185,6 +185,9 @@ class ASH_EXPORT WallpaperController
                                       int height,
                                       SkColor color);
 
+  // Returns the expected file path to save the device policy wallpaper.
+  static base::FilePath GetDevicePolicyWallpaperFilePath();
+
   // Binds the mojom::WallpaperController interface request to this object.
   void BindRequest(mojom::WallpaperControllerRequest request);
 
@@ -333,6 +336,7 @@ class ASH_EXPORT WallpaperController
       const GURL& wallpaper_url,
       const base::FilePath& file_path,
       const base::FilePath& resized_directory) override;
+  void SetDeviceWallpaperPolicyEnforced(bool enforced) override;
   void ShowUserWallpaper(mojom::WallpaperUserInfoPtr user_info) override;
   void ShowSigninWallpaper() override;
   void RemoveUserWallpaper(mojom::WallpaperUserInfoPtr user_info,
@@ -423,6 +427,24 @@ class ASH_EXPORT WallpaperController
   // Returns whether the current wallpaper is set by device policy.
   bool IsDevicePolicyWallpaper() const;
 
+  // Returns true if device wallpaper policy is in effect and we are at the
+  // login screen right now.
+  bool ShouldSetDevicePolicyWallpaper() const;
+
+  // Sets the device policy controlled wallpaper for enterprise managed device
+  // in login screen if device policy kDeviceWallpaperImage is in effect. Do
+  // nothing if we are inside of a user session.
+  void SetDevicePolicyWallpaperIfApplicable();
+
+  // Called when the device policy controlled wallpaper has been decoded.
+  void OnDevicePolicyWallpaperDecoded(
+      std::unique_ptr<user_manager::UserImage> device_wallpaper_image);
+
+  // Called when the device wallpaper policy has been cleared. The wallpaper
+  // should revert to whatever it should be if we are at the login screen. Do
+  // nothing if we are inside of a user session.
+  void ClearDevicePolicyWallpaperIfApplicable();
+
   // When wallpaper resizes, we can check which displays will be affected. For
   // simplicity, we only lock the compositor for the internal display.
   void GetInternalDisplayCompositorLock();
@@ -481,6 +503,9 @@ class ASH_EXPORT WallpaperController
   int wallpaper_reload_delay_;
 
   bool is_wallpaper_blurred_ = false;
+
+  // Whether the device wallpaper policy is enforced on this device.
+  bool is_device_wallpaper_policy_enforced_ = false;
 
   scoped_refptr<base::SequencedTaskRunner> sequenced_task_runner_;
 
