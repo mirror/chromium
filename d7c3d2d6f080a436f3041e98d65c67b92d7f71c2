@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb611d36_0d7fe5bc",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-13T05:34:19Z",
+      "side": 0,
+      "message": "Can you update `enums.xml` to mark these as \"(Deprecated)\".",
+      "revId": "d7c3d2d6f080a436f3041e98d65c67b92d7f71c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
