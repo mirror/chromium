@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6da8fc1_8061f5a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T18:12:20Z",
+      "side": 1,
+      "message": "nit: The other histograms/actions for the download manger are prefixed with \n\"Android.DownloadManager\". Should we use the same prefix?",
+      "range": {
+        "startLine": 370,
+        "startChar": 17,
+        "endLine": 370,
+        "endChar": 47
+      },
+      "revId": "9611ef82fc291205e2f721555f2641bb42cbc757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a38bb1f9_61a1e570",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T18:12:20Z",
+      "side": 1,
+      "message": "Do we want to distinguish between info being shown and info being hidden?",
+      "range": {
+        "startLine": 379,
+        "startChar": 12,
+        "endLine": 379,
+        "endChar": 56
+      },
+      "revId": "9611ef82fc291205e2f721555f2641bb42cbc757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
