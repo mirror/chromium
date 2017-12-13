@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f14baa13_2d1a937e",
+        "filename": "content/browser/web_contents/aura/overscroll_window_animation_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-13T15:22:41Z",
+      "side": 1,
+      "message": "nit: It is better to have each of these cases in a separate test.\nEach smaller tests ensures we only test a single concern. Also\nthis ensures the state is clean across them.",
+      "range": {
+        "startLine": 242,
+        "startChar": 38,
+        "endLine": 242,
+        "endChar": 74
+      },
+      "revId": "12bf37d93b3c8743a2a7269e378c7579bc4651cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c45cb321_c0ca9a5e",
+        "filename": "content/browser/web_contents/aura/overscroll_window_animation_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-13T15:22:41Z",
+      "side": 1,
+      "message": "nit: I think we need a test case where y is None and we ensure it does not affect\nthe overscroll.",
+      "range": {
+        "startLine": 294,
+        "startChar": 1,
+        "endLine": 295,
+        "endChar": 58
+      },
+      "revId": "12bf37d93b3c8743a2a7269e378c7579bc4651cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12da6af_99abc93e",
+        "filename": "content/test/mock_overscroll_controller_delegate_aura.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-13T15:22:41Z",
+      "side": 1,
+      "message": "nit: This really should only accept cc::OverscrollBehavior. Also we should call on OnOverscrollBehaviorUpdate. IMHO, the current name and input are too broad \nand confuse with existing methods in this class.\n\nAn alternative is to add a second parameters to existing OnOverscrollModeChange\nand pass in current OverscrollBehavior that way. That way delegates\ndon\u0027t even need to keep track of it. This assumes overscrollbehavior is only relevant \nwhen overscroll mode change which seems like a reasonable assumption.\n\nI am fine with either of these changes.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 62
+      },
+      "revId": "12bf37d93b3c8743a2a7269e378c7579bc4651cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
