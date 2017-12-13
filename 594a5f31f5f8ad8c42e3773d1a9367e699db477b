@@ -16,6 +16,24 @@
       "revId": "594a5f31f5f8ad8c42e3773d1a9367e699db477b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b693a5d_40fd1bda",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 3299,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-13T15:25:03Z",
+      "side": 1,
+      "message": "This addition is here to prevent the toolbar from being shown when opening a link in a new tab on iPhone X (with the safe area compatible toolbar). It is not needed as part of the normal fullscreen behavior.\nI think we would have this problem is the safe area compatible toolbar was enabled with the current toolbar on iPad (you cannot test it as it is disabled if the device is not iPhone X).",
+      "parentUuid": "6d064fc3_96436c14",
+      "revId": "594a5f31f5f8ad8c42e3773d1a9367e699db477b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
