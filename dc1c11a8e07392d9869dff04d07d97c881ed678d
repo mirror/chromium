@@ -34,6 +34,24 @@
       "revId": "dc1c11a8e07392d9869dff04d07d97c881ed678d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5d8e71_17c4d59d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-13T00:36:35Z",
+      "side": 1,
+      "message": "Hmm...yeah, I didn\u0027t see that.  The fact the scale factor differs based on that flag that the java side is likely oblivious of is definitely an issue.\n\nMaybe we should just change the concept of the second param?  Should we just pass the ratio and the size in pixel?  Right now, it\u0027s trying to pass the shown amount in pixels based on the shown ratio and the height.  Maybe the two args should be the shown_ratio and top_controls_pix from above.  Then it would be up to the client to do that multiplication correctly.\n\nI guess the second problem is if two clients that are using these values to position things then they could be out of sync.  I don\u0027t see an immediate path forward here to be honest.  As soon as we allow multiple clients to round/multiply these values to absolutely position things on the screen I think we are asking for trouble.\n\nThe bug mentions the fallback VR rendering, so I\u0027m wondering why fullscreen comes into play with that at all?  Is the problem the height as reported by the renderer isn\u0027t valid anymore?  What multiplied factor in this function is wrong?  Should we be doing something to make whatever is being multiplied here correct?",
+      "parentUuid": "333df3b6_708f14f8",
+      "revId": "dc1c11a8e07392d9869dff04d07d97c881ed678d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
