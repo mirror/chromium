@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3bb6497_64a74b2a",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-12-13T18:09:57Z",
+      "side": 1,
+      "message": "Learning more...\n\nWhat code starts needing to be thread safe with this CL? Why?",
+      "revId": "85f1765c40031286070d66f5ceb0db7ae97c61af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
