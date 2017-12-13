@@ -83,7 +83,7 @@ class ChromeFindRequestManagerTest : public InProcessBrowserTest {
 
 
 // Tests searching in a full-page PDF.
-IN_PROC_BROWSER_TEST_F(ChromeFindRequestManagerTest, FindInPDF) {
+IN_PROC_BROWSER_TEST_F(ChromeFindRequestManagerTest, DISABLED_FindInPDF) {
   LoadAndWait("/find_in_pdf_page.pdf");
   ASSERT_TRUE(pdf_extension_test_util::EnsurePDFHasLoaded(contents()));
 

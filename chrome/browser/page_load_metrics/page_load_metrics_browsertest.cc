@@ -631,7 +631,7 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NonHtmlMainResource) {
   EXPECT_TRUE(NoPageLoadMetricsRecorded());
 }
 
-IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NonHttpOrHttpsUrl) {
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, DISABLED_NonHttpOrHttpsUrl) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUIVersionURL));
