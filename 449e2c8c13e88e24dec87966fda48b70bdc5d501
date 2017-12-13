@@ -281,6 +281,30 @@
       "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be21d9f7_921188fa",
+        "filename": "net/quic/chromium/quic_chromium_client_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-12-13T00:02:38Z",
+      "side": 1,
+      "message": "As we discussed offline, we will also probe the alternative network if we path degrades on non-default network, which means we only not try to migrate if we path degrade on default network and we exceeds the maximum number of times.",
+      "parentUuid": "cfe28b95_20b367db",
+      "range": {
+        "startLine": 1873,
+        "startChar": 33,
+        "endLine": 1873,
+        "endChar": 58
+      },
+      "revId": "449e2c8c13e88e24dec87966fda48b70bdc5d501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
