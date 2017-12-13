@@ -128,6 +128,24 @@
       "revId": "bd54abd76a34ed75c7324c07fc8d6bdde3fce71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa47668_0be4b31b",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T01:59:33Z",
+      "side": 1,
+      "message": "Thanks. Yes latest version is easier to understand.",
+      "parentUuid": "2f6730e5_f8f8a7d4",
+      "revId": "bd54abd76a34ed75c7324c07fc8d6bdde3fce71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
