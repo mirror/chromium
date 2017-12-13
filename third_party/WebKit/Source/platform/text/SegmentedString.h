@@ -29,38 +29,54 @@
 
 namespace blink {
 
-class SegmentedString;
-
-class PLATFORM_EXPORT SegmentedSubstring {
+template <bool supports16bit>
+class SegmentedSubstring {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
-  SegmentedSubstring() { data_.string8_ptr = nullptr; }
+  SegmentedSubstring() { void_ptr = nullptr; }
 
-  SegmentedSubstring(const String& str)
-      : length_(str.length()),
-        string_(str) {
+  SegmentedSubstring(const String& str) : length_(str.length()), string_(str) {
     if (length_) {
-      if (string_.Is8Bit()) {
-        is8_bit_ = true;
-        data_.string8_ptr = string_.Characters8();
-        current_char_ = *data_.string8_ptr;
-      } else {
+      if (supports16bit && !string_.Is8Bit()) {
         is8_bit_ = false;
-        data_.string16_ptr = string_.Characters16();
-        current_char_ = *data_.string16_ptr;
+        string16_ptr = string_.Characters16();
+        current_char_ = *string16_ptr;
+      } else {
+        is8_bit_ = true;
+        string8_ptr = string_.Characters8();
+        current_char_ = *string8_ptr;
       }
     } else {
       is8_bit_ = true;
-      data_.string8_ptr = nullptr;
+      string8_ptr = nullptr;
+    }
+  }
+
+  SegmentedSubstring(const SegmentedSubstring<!supports16bit>& s)
+      : length_(s.length_),
+        do_not_exclude_line_numbers_(s.do_not_exclude_line_numbers_),
+        is8_bit_(s.is8_bit_),
+        string_(s.string_) {
+    void_ptr = s.void_ptr;
+    if (!supports16bit) {
+      DCHECK_EQ(true, is8_bit_);
+      DCHECK_EQ(true, string_.Is8Bit());
+    } else if (length_) {
+      if (is8_bit_)
+        current_char_ = *string8_ptr;
+      else
+        current_char_ = *string16_ptr;
     }
   }
 
   void Clear() {
     length_ = 0;
-    is8_bit_ = true;
-    data_.string8_ptr = nullptr;
-    current_char_ = 0;
+    void_ptr = nullptr;
+    if (supports16bit) {
+      is8_bit_ = true;
+      current_char_ = 0;
+    }
   }
 
   bool ExcludeLineNumbers() const { return !do_not_exclude_line_numbers_; }
@@ -88,30 +104,41 @@ class PLATFORM_EXPORT SegmentedSubstring {
     // This checks if either 8 or 16 bit strings are in the first character
     // (where we can't rewind). Since length_ is greater than zero, we can check
     // the Impl() directly and avoid a branch here.
-    if (data_.void_ptr == string_.Impl()->Bytes())
+    if (void_ptr == string_.Impl()->Bytes())
       return false;
 
-    if (is8_bit_) {
-      if (*(data_.string8_ptr - 1) != c)
+    if (supports16bit && !is8_bit_) {
+      if (*(string16_ptr - 1) != c)
         return false;
 
-      --data_.string8_ptr;
+      --string16_ptr;
     } else {
-      if (*(data_.string16_ptr - 1) != c)
+      DCHECK(!(c & 0xff00));
+      if (*(string8_ptr - 1) != c)
         return false;
 
-      --data_.string16_ptr;
+      --string8_ptr;
     }
 
-    current_char_ = c;
+    if (supports16bit)
+      current_char_ = c;
     ++length_;
     return true;
   }
 
-  ALWAYS_INLINE UChar GetCurrentChar() const { return current_char_; }
+  UChar GetCurrentChar() const {
+    return supports16bit ? current_char_ : *string8_ptr;
+  }
 
-  ALWAYS_INLINE void IncrementAndDecrementLength() {
-    current_char_ = is8_bit_ ? *++data_.string8_ptr : *++data_.string16_ptr;
+  void IncrementAndDecrementLength() {
+    if (supports16bit) {
+      if (is8_bit_)
+        current_char_ = *++string8_ptr;
+      else
+        current_char_ = *++string16_ptr;
+    } else {
+      ++string8_ptr;
+    }
     --length_;
   }
 
@@ -127,26 +154,42 @@ class PLATFORM_EXPORT SegmentedSubstring {
     const LChar* string8_ptr;
     const UChar* string16_ptr;
     const void* void_ptr;
-  } data_;
+  };
   int length_ = 0;
   UChar current_char_ = 0;
   bool do_not_exclude_line_numbers_ = true;
   bool is8_bit_ = true;
   String string_;
+
+  friend class SegmentedSubstring<!supports16bit>;
 };
 
-class PLATFORM_EXPORT SegmentedString {
-  DISALLOW_NEW();
+class PLATFORM_EXPORT SegmentedStringBase {
+ public:
+  virtual ~SegmentedStringBase(){};
+  virtual bool Supports16Bit() const = 0;
+  virtual void Close() = 0;
+  virtual bool IsClosed() const = 0;
+  virtual bool IsEmpty() const = 0;
+  virtual String ToString() const = 0;
+  virtual void Clear() = 0;
+  virtual OrdinalNumber CurrentColumn() const = 0;
+  virtual OrdinalNumber CurrentLine() const = 0;
+};
+
+template <bool supports16bit>
+class PLATFORM_EXPORT SegmentedStringImpl final : public SegmentedStringBase {
+  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
-  SegmentedString()
+  SegmentedStringImpl()
       : number_of_characters_consumed_prior_to_current_string_(0),
         number_of_characters_consumed_prior_to_current_line_(0),
         current_line_(0),
         closed_(false),
         empty_(true) {}
 
-  SegmentedString(const String& str)
+  SegmentedStringImpl(const String& str)
       : current_string_(str),
         number_of_characters_consumed_prior_to_current_string_(0),
         number_of_characters_consumed_prior_to_current_line_(0),
@@ -154,15 +197,36 @@ class PLATFORM_EXPORT SegmentedString {
         closed_(false),
         empty_(!str.length()) {}
 
-  void Clear();
-  void Close();
+  SegmentedStringImpl(const SegmentedStringImpl<!supports16bit>& s)
+      : current_string_(s.current_string_),
+        number_of_characters_consumed_prior_to_current_string_(
+            s.number_of_characters_consumed_prior_to_current_string_),
+        number_of_characters_consumed_prior_to_current_line_(
+            s.number_of_characters_consumed_prior_to_current_line_),
+        current_line_(s.current_line_),
+        closed_(s.closed_),
+        empty_(s.empty_) {
+    for (auto& substring : s.substrings_)
+      substrings_.push_back(substring);
+  }
 
-  void Append(const SegmentedString&);
+  // SegmentedStringBase implementation.
+  bool Supports16Bit() const { return supports16bit; }
+  void Close() final;
+  bool IsClosed() const final { return closed_; }
+  bool IsEmpty() const final { return empty_; }
+  String ToString() const final;
+  void Clear() final;
+  // The method is moderately slow, comparing to CurrentLine method.
+  OrdinalNumber CurrentColumn() const final;
+  OrdinalNumber CurrentLine() const final;
+
+  void Append(const SegmentedStringImpl&);
   enum class PrependType {
     kNewInput = 0,
     kUnconsume = 1,
   };
-  void Prepend(const SegmentedString&, PrependType);
+  void Prepend(const SegmentedStringImpl&, PrependType);
 
   bool ExcludeLineNumbers() const {
     return current_string_.ExcludeLineNumbers();
@@ -171,10 +235,7 @@ class PLATFORM_EXPORT SegmentedString {
 
   void Push(UChar);
 
-  bool IsEmpty() const { return empty_; }
   unsigned length() const;
-
-  bool IsClosed() const { return closed_; }
 
   enum LookAheadResult {
     kDidNotMatch,
@@ -251,6 +312,7 @@ class PLATFORM_EXPORT SegmentedString {
 
   // Writes the consumed characters into consumedCharacters, which must
   // have space for at least |count| characters.
+  void Advance(unsigned count, LChar* consumed_characters);
   void Advance(unsigned count, UChar* consumed_characters);
 
   int NumberOfCharactersConsumed() const {
@@ -260,15 +322,10 @@ class PLATFORM_EXPORT SegmentedString {
            number_of_pushed_characters;
   }
 
-  String ToString() const;
-
   ALWAYS_INLINE UChar CurrentChar() const {
     return current_string_.GetCurrentChar();
   }
 
-  // The method is moderately slow, comparing to currentLine method.
-  OrdinalNumber CurrentColumn() const;
-  OrdinalNumber CurrentLine() const;
   // Sets value of line/column variables. Column is specified indirectly by a
   // parameter columnAftreProlog which is a value of column that we should get
   // after a prolog (first prologLength characters) has been consumed.
@@ -277,8 +334,8 @@ class PLATFORM_EXPORT SegmentedString {
                           int prolog_length);
 
  private:
-  void Append(const SegmentedSubstring&);
-  void Prepend(const SegmentedSubstring&, PrependType);
+  void Append(const SegmentedSubstring<supports16bit>&);
+  void Prepend(const SegmentedSubstring<supports16bit>&, PrependType);
 
   void AdvanceSubstring();
 
@@ -299,27 +356,31 @@ class PLATFORM_EXPORT SegmentedString {
     unsigned count = string.length();
     if (count > length())
       return kNotEnoughCharacters;
-    UChar* consumed_characters;
+    std::conditional_t<supports16bit, UChar, LChar>* consumed_characters;
     String consumed_string =
         String::CreateUninitialized(count, consumed_characters);
     Advance(count, consumed_characters);
     LookAheadResult result = kDidNotMatch;
     if (consumed_string.StartsWith(string, case_sensitivity))
       result = kDidMatch;
-    Prepend(SegmentedString(consumed_string), PrependType::kUnconsume);
+    Prepend(SegmentedStringImpl(consumed_string), PrependType::kUnconsume);
     return result;
   }
 
   bool IsComposite() const { return !substrings_.IsEmpty(); }
 
-  SegmentedSubstring current_string_;
+  SegmentedSubstring<supports16bit> current_string_;
   int number_of_characters_consumed_prior_to_current_string_;
   int number_of_characters_consumed_prior_to_current_line_;
   int current_line_;
-  Deque<SegmentedSubstring> substrings_;
+  Deque<SegmentedSubstring<supports16bit>> substrings_;
   bool closed_;
   bool empty_;
+
+  friend class SegmentedStringImpl<!supports16bit>;
 };
+
+using SegmentedString = SegmentedStringImpl<true>;
 
 }  // namespace blink
 
