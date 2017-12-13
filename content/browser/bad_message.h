@@ -249,6 +249,10 @@ base::debug::CrashKeyString* GetKilledProcessOriginLockKey();
 // Retuns a key named "requested_site_url".
 base::debug::CrashKeyString* GetRequestedSiteURLKey();
 
+// Returns a crash key named "surface-invariants-violation" for storing the
+// change in CompositorFrameMetadata that caused the violation.
+base::debug::CrashKeyString* GetSurfaceSynchronizationKey();
+
 }  // namespace bad_message
 }  // namespace content
 
