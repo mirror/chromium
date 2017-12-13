@@ -101,6 +101,20 @@ declare_args() {
 
   # Strip the debug info of symbols file in lib.unstripped to reduce size.
   strip_debug_info = false
+
+  # Path to an AFDO profile to use while building with clang, if any. Empty
+  # implies none.
+  clang_sample_profile_path = ""
+
+  # Some configurations (e.g. Android) have default sample profiles. If this is
+  # true and clang_sample_profile_path is empty, we'll fall back to the default.
+  clang_use_default_sample_profile = is_official_build
+
+  # Whether to assert to the compiler that the AFDO profiles are accurate.
+  # True will cause the compiler to optimize uncovered functions for size
+  # (despite passing -O2 or -O3), which reduces binary size by quite a bit,
+  # potentially at the cost of some performance.
+  clang_sample_profile_is_accurate = true
 }
 
 declare_args() {
@@ -196,6 +210,30 @@ config("compiler") {
     # Common GCC compiler flags setup.
     # --------------------------------
     cflags += [ "-fno-strict-aliasing" ]  # See http://crbug.com/32204
+
+    # AFDO on clang. Clang doesn't seem to suffer from the bug that caused AFDO
+    # to be split into its own config in the first place, so this isn't part of
+    # that config.
+    if (is_clang) {
+      _sample_path = ""
+      if (clang_sample_profile_path != "") {
+        _sample_path = clang_sample_profile_path
+      } else if (clang_use_default_sample_profile) {
+        if (is_android) {
+          _sample_path = rebase_path("//profiles/android/afdo.prof")
+        }
+      }
+
+      if (_sample_path != "") {
+        # FIXME: This isn't currently treated as an input to compilation. So, if
+        # all we change is the profile's bits, the world doesn't get rebuilt. It
+        # probably should.
+        cflags += [ "-fprofile-sample-use=${_sample_path}" ]
+        if (clang_sample_profile_is_accurate) {
+          cflags += [ "-fprofile-sample-accurate" ]
+        }
+      }
+    }
 
     # Stack protection.
     if (is_mac) {
