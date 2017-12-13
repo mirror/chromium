@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "356d5378_95f5aee7",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-13T01:24:51Z",
+      "side": 1,
+      "message": "Right, but `git cl format` changes this.",
+      "parentUuid": "3d04a953_ec508d5a",
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e60af8f0_8b1a8012",
         "filename": "chrome/BUILD.gn",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9447a776_58a5e20e",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-13T01:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e60af8f0_8b1a8012",
+      "range": {
+        "startLine": 888,
+        "startChar": 9,
+        "endLine": 888,
+        "endChar": 46
+      },
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a70e917b_edc9d58c",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 4
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "533b91a6_57e8ca4e",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-13T01:24:51Z",
+      "side": 1,
+      "message": "No. Now we don\u0027t create v8_context_snapshot.bin for CrOS.",
+      "parentUuid": "a70e917b_edc9d58c",
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7657cc8a_acfa29ed",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca478bf0_536adf38",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-13T01:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7657cc8a_acfa29ed",
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "c33e616c_7f738dd5",
+        "filename": "content/shell/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-13T01:24:51Z",
+      "side": 1,
+      "message": "we wanted to ship to v8_context_snapshot.bin without any conditions, and it was the reason we have them in \"sources\"(648) and \"public_deps\"(654).\nNow I understand we have to check build configurations, and moving them in \u0027if use_v8_context_snapshot\u0027 branches.",
+      "parentUuid": "0019361b_7263ceda",
+      "range": {
+        "startLine": 665,
+        "startChar": 6,
+        "endLine": 665,
+        "endChar": 13
+      },
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff3f7f47_95e4114b",
         "filename": "extensions/shell/BUILD.gn",
         "patchSetId": 4
@@ -119,6 +221,30 @@
       "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7913100d_3ea07140",
+        "filename": "extensions/shell/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-13T01:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff3f7f47_95e4114b",
+      "range": {
+        "startLine": 377,
+        "startChar": 10,
+        "endLine": 377,
+        "endChar": 22
+      },
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
