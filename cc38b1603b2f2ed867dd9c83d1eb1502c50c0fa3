@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc7728bd_8500d1fe",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-13T20:20:05Z",
+      "side": 1,
+      "message": "nit: missed this last time, but can you prefix sanitizer_arch and sanitizer_runtimes with an _?\n\nThat will prevent them from being visible to .gn files that import this .gni.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "cc38b1603b2f2ed867dd9c83d1eb1502c50c0fa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
