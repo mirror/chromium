@@ -175,6 +175,30 @@
       "revId": "f0997154dac9887d4fbd7aca43855b664a0cc4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa205ed6_6fba8393",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T23:51:58Z",
+      "side": 1,
+      "message": "\u003e Yes, I think I should. But I\u0027ll wait what Trent has to say about that.\n\nheh - I just noticed this :).\n\nThe a11y requirement is that all text in the UI must exceed a minimum 4.5:1 contrast ratio. If white on kGoogleBlue500 doesn\u0027t do that then it\u0027s definitely a bug. (this is one of the questions you get asked in your a11y review).\n\nIf auto_color_readability tries to do more than 4.5:1 then that\u0027s also a bug, but the MdTextButton() constructor _does_ do label()-\u003eSetAutoColorReadabilityEnabled(false). So does LabelButton *unless* color_utils::IsInvertedColorScheme() returns true. SetAutoColorReadabilityEnabled(false) may be the right thing to do, but HoverButton is probably the right place to do it. (e.g. HoverButton::SetProminent(..) or similar to match MdTextButton::SetProminent(..).\n\nThere are some threads you can follow in bugs like http://crbug.com/696262  http://crbug.com/619922 \n\nI haven\u0027t noticed anyone complaining about the white-on-blue we use for the \"prominent\" MD buttons.",
+      "parentUuid": "691b9212_891e2280",
+      "range": {
+        "startLine": 1113,
+        "startChar": 60,
+        "endLine": 1113,
+        "endChar": 66
+      },
+      "revId": "f0997154dac9887d4fbd7aca43855b664a0cc4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
