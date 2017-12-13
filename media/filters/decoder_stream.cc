@@ -339,6 +339,7 @@ void DecoderStream<StreamType>::OnDecoderSelected(
       << StreamTraits::GetDecoderConfig(stream_).AsHumanReadableString();
 
   if (state_ == STATE_REINITIALIZING_DECODER) {
+    UpdateStatistics();
     CompleteDecoderReinitialization(true);
     return;
   }
@@ -348,6 +349,12 @@ void DecoderStream<StreamType>::OnDecoderSelected(
   if (StreamTraits::NeedsBitstreamConversion(decoder_.get()))
     stream_->EnableBitstreamConverter();
   base::ResetAndReturn(&init_cb_).Run(true);
+
+  // Post statistics update task. This needs to be posted to ensure that
+  // clients have been signaled first.
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&DecoderStream<StreamType>::UpdateStatistics,
+                                weak_factory_.GetWeakPtr()));
 }
 
 template <DemuxerStream::Type StreamType>
@@ -833,6 +840,13 @@ void DecoderStream<StreamType>::OnDecoderReset() {
 
   // The resetting process will be continued in OnDecoderReinitialized().
   ReinitializeDecoder();
+}
+
+template <DemuxerStream::Type StreamType>
+void DecoderStream<StreamType>::UpdateStatistics() {
+  FUNCTION_DVLOG(2);
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  traits_.ReportStatistics(statistics_cb_, 0);
 }
 
 template class DecoderStream<DemuxerStream::VIDEO>;

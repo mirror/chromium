@@ -196,6 +196,9 @@ class MEDIA_EXPORT DecoderStream {
   void ResetDecoder();
   void OnDecoderReset();
 
+  // Posted task which updates statistics after |init_cb_| runs.
+  void UpdateStatistics();
+
   DecoderStreamTraits<StreamType> traits_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;

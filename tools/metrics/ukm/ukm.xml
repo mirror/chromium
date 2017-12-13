@@ -850,6 +850,13 @@ be describing additional metrics about the same event.
       is true because we don't always know the codec.
     </summary>
   </metric>
+  <metric name="AudioDecoderNameHash">
+    <summary>
+      base::PersistentHash of audio decoder name, zero if none or unknown
+      (Cast/HLS/etc). See WatchTimeRecorderTest::PrintExpectedDecoderNameHashes
+      for expected values.
+    </summary>
+  </metric>
   <metric name="HasAudio">
     <summary>
       Boolean value indicating the presence of audio.
@@ -912,6 +919,13 @@ be describing additional metrics about the same event.
     <summary>
       media::VideoCodec enum value. Can be kUnknownVideoCodec even with HasVideo
       is true because we don't always know the codec.
+    </summary>
+  </metric>
+  <metric name="VideoDecoderNameHash">
+    <summary>
+      base::PersistentHash of video decoder name, zero if none or unknown
+      (Cast/HLS/etc). See WatchTimeRecorderTest::PrintExpectedDecoderNameHashes
+      for expected values.
     </summary>
   </metric>
   <metric name="VideoNaturalHeight">
