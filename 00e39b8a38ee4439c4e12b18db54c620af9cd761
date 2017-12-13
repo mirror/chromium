@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4b8ccdc_dd1235e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-13T03:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92835a7d_6c2c3b48",
+      "revId": "00e39b8a38ee4439c4e12b18db54c620af9cd761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4b47d03_749bbb6f",
         "filename": "storage/browser/quota/storage_monitor_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "00e39b8a38ee4439c4e12b18db54c620af9cd761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6a8577_c0d149e7",
+        "filename": "storage/browser/quota/storage_monitor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-13T03:12:28Z",
+      "side": 1,
+      "message": "Thanks; missed this one. Done.",
+      "parentUuid": "b4b47d03_749bbb6f",
+      "revId": "00e39b8a38ee4439c4e12b18db54c620af9cd761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cc6669a1_a5d4d51c",
+        "filename": "storage/browser/test/mock_storage_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-13T03:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e22214c1_ea40e3f3",
+      "revId": "00e39b8a38ee4439c4e12b18db54c620af9cd761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8a0ce1d_5c6b8043",
         "filename": "third_party/WebKit/common/quota/quota_status_code.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "00e39b8a38ee4439c4e12b18db54c620af9cd761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8fa41c7_ff0bce68",
+        "filename": "third_party/WebKit/common/quota/quota_status_code.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-13T03:12:28Z",
+      "side": 1,
+      "message": "Done. Added:\n// These values are used by WebStorageQuotaError and need to match\n// dom/ExceptionState.h.\n// TODO(sashab): Remove this class and replace with a mojo struct.",
+      "parentUuid": "b8a0ce1d_5c6b8043",
+      "revId": "00e39b8a38ee4439c4e12b18db54c620af9cd761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "00e39b8a38ee4439c4e12b18db54c620af9cd761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3d3d36_15065529",
+        "filename": "third_party/WebKit/public/platform/WebStorageQuotaError.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-13T03:12:28Z",
+      "side": 1,
+      "message": "Thanks; it was a big patch ;) Done.",
+      "parentUuid": "4ead6322_63c4258c",
+      "range": {
+        "startLine": 39,
+        "startChar": 68,
+        "endLine": 39,
+        "endChar": 79
+      },
+      "revId": "00e39b8a38ee4439c4e12b18db54c620af9cd761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
