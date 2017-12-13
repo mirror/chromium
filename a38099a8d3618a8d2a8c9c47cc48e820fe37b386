@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f04c003a_8d5367b7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83226,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-12-13T22:40:20Z",
+      "side": 1,
+      "message": "does that mean it waits for a contentful paint of an http(s) page, or does it record nothing for those startups? If it\u0027s the latter, could you say something like \"It is not recorded when the first loaded page is non http(s)...\". If it\u0027s the former then you\u0027d have to make that clearer somehow.\n\nI notice from the CL description it\u0027s the same condition as ...NavigationCommit, but I find the comment for that histogram more confusing somehow.",
+      "revId": "a38099a8d3618a8d2a8c9c47cc48e820fe37b386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
