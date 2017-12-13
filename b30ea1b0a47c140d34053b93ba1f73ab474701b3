@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "a0088ca8_0bc3d53c",
+        "filename": "device/usb/usb_descriptors.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-13T23:39:16Z",
+      "side": 1,
+      "message": "Nope. :(\n\nnet::IOBuffer has no length so we pass around our own length variables and they are often less than the total size of the buffer because less data was available from the device than the maximum allowed.",
+      "parentUuid": "8bb0a50c_dd9e394e",
+      "revId": "b30ea1b0a47c140d34053b93ba1f73ab474701b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5bec6bc_0be160a9",
         "filename": "device/usb/usb_device_handle_impl.cc",
         "patchSetId": 4
