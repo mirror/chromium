@@ -142,6 +142,41 @@
     },
     {
       "key": {
+        "uuid": "82755715_5ee0d5fb",
+        "filename": "components/web_contents_delegate_android/color_chooser_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T00:39:11Z",
+      "side": 1,
+      "message": "Should they both be visible from anywhere though? ColorChooser seems more specific to communication between blink and content.",
+      "parentUuid": "b04ba46f_f6695352",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79baa8bf_042135cb",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserPopupUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T00:39:11Z",
+      "side": 1,
+      "message": "ColorChooserUIController::EndChooser();",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "986e3d87_a02d6d45",
         "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserPopupUIController.cpp",
         "patchSetId": 4
@@ -206,6 +241,137 @@
       "side": 1,
       "message": "I\u0027m glad you picked this up because I was meaning to ask about this.\n\nThere are 2 classes named ColorChooserClient.\nblink::ColorChooserClient\nblink::mojom::blink::ColorChooserClient.\n\nIf I don\u0027t specify any namespace, then the compiler thinks that I\u0027m refering to the mojo class.  This is surprising to me.\n\nDo you know where the rules for this are defined?",
       "parentUuid": "c64c922e_d9535a64",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f98f2a_b13c94ae",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T00:39:11Z",
+      "side": 1,
+      "message": "Create the ColorChooserFactoryPtr only when using it or share it across all ColorChoosers for a particular Document.",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218250cf_a2f90093",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T00:39:11Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a1169a_9777be30",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T00:39:11Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ad1d28_e5c618db",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T00:39:11Z",
+      "side": 1,
+      "message": "Can |client_| be null?",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 13
+      },
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a9fdf5_d27b33b6",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T00:39:11Z",
+      "side": 1,
+      "message": "I think you want WrapWeakPersistent.",
+      "range": {
+        "startLine": 91,
+        "startChar": 63,
+        "endLine": 91,
+        "endChar": 69
+      },
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0abe8f_a71aa248",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T00:39:11Z",
+      "side": 1,
+      "message": "USING_PRE_FINALIZER(ColorChooserUIController, Dispose);\n\nvoid Dispose() { binding_.Close(); }",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ff51db_ce9b6e41",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T00:39:11Z",
+      "side": 1,
+      "message": "private",
       "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
