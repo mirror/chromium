@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cc34ed3_4bc9e12a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/FilteredUISourceCodeListProvider.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-13T21:40:49Z",
+      "side": 1,
+      "message": "binding.network always exists",
+      "range": {
+        "startLine": 115,
+        "startChar": 22,
+        "endLine": 115,
+        "endChar": 38
+      },
+      "revId": "b9b908e83a458948cc3a42946d2477b7a3c7802c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
