@@ -16,6 +16,24 @@
       "revId": "c7356ebea488b13caaf2df57f93bf4b9cf9842f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b2a1a9_8a6269fa",
+        "filename": "ui/gl/gl_surface_glx.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-13T15:23:04Z",
+      "side": 0,
+      "message": "Most unit tests use GLSurfaceTestSupport which calls XInitThreads(). There are some gpu/perf tests that don\u0027t go through that path and would need to have XInitThreads() or InitializeThreadedX11() added.\n\nXInitTheads() returns immediately if the internal mutex already exists, so it can be safely called multiple times, even if the documentation doesn\u0027t state as much. We use this feature heavily today. I can add another layer of synchronization in InitializeThreadedX11() but it seems like overkill?\n\nTechnically the right thing to do is make sure all code paths that need XInitThreads() call it immediately and never call it again and then to remove the call from here but... I don\u0027t know if that is going to do anything other than add maintenance burden.",
+      "parentUuid": "e96ca720_3ee43c07",
+      "revId": "c7356ebea488b13caaf2df57f93bf4b9cf9842f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
