@@ -552,6 +552,10 @@
                 "href": "/extensions/content_scripts"
               },
               {
+                "title": "Reach Peak Performance",
+                "href": "/extensions/performance"
+              },
+              {
                 "title": "activeTab Permission",
                 "href": "/extensions/activeTab"
               },
