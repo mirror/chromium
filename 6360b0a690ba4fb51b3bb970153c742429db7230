@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e27c7f88_e942e0b9",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-13T19:51:29Z",
+      "side": 1,
+      "message": "Looks good, but it seems that CronetEnvironment::quic_user_agent_id_ is not used.",
+      "range": {
+        "startLine": 330,
+        "startChar": 20,
+        "endLine": 330,
+        "endChar": 42
+      },
+      "revId": "6360b0a690ba4fb51b3bb970153c742429db7230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
