@@ -186,12 +186,14 @@ class MEDIA_EXPORT SourceBufferRangeByPts : public SourceBufferRange {
   // Returns an iterator in |keyframe_map_| pointing to the next keyframe after
   // |timestamp|. If |skip_given_timestamp| is true, this returns the first
   // keyframe with a timestamp strictly greater than |timestamp|.
-  KeyframeMap::iterator GetFirstKeyframeAt(base::TimeDelta timestamp,
-                                           bool skip_given_timestamp);
+  KeyframeMap::const_iterator GetFirstKeyframeAt(
+      base::TimeDelta timestamp,
+      bool skip_given_timestamp) const;
 
   // Returns an iterator in |keyframe_map_| pointing to the first keyframe
   // before or at |timestamp|.
-  KeyframeMap::iterator GetFirstKeyframeAtOrBefore(base::TimeDelta timestamp);
+  KeyframeMap::const_iterator GetFirstKeyframeAtOrBefore(
+      base::TimeDelta timestamp) const;
 
   // Helper method to delete buffers in |buffers_| starting at
   // |starting_point|, an index in |buffers_|.

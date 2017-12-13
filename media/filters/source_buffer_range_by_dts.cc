@@ -103,7 +103,7 @@ void SourceBufferRangeByDts::Seek(DecodeTimestamp timestamp) {
   DCHECK(CanSeekTo(timestamp));
   DCHECK(!keyframe_map_.empty());
 
-  KeyframeMap::iterator result = GetFirstKeyframeAtOrBefore(timestamp);
+  KeyframeMap::const_iterator result = GetFirstKeyframeAtOrBefore(timestamp);
   next_buffer_index_ = result->second - keyframe_map_index_base_;
   CHECK_LT(next_buffer_index_, static_cast<int>(buffers_.size()))
       << next_buffer_index_ << ", size = " << buffers_.size();
@@ -113,7 +113,7 @@ int SourceBufferRangeByDts::GetConfigIdAtTime(DecodeTimestamp timestamp) {
   DCHECK(CanSeekTo(timestamp));
   DCHECK(!keyframe_map_.empty());
 
-  KeyframeMap::iterator result = GetFirstKeyframeAtOrBefore(timestamp);
+  KeyframeMap::const_iterator result = GetFirstKeyframeAtOrBefore(timestamp);
   CHECK(result != keyframe_map_.end());
   size_t buffer_index = result->second - keyframe_map_index_base_;
   CHECK_LT(buffer_index, buffers_.size())
@@ -155,7 +155,7 @@ std::unique_ptr<SourceBufferRangeByDts> SourceBufferRangeByDts::SplitRange(
   CHECK(!buffers_.empty());
 
   // Find the first keyframe at or after |timestamp|.
-  KeyframeMap::iterator new_beginning_keyframe =
+  KeyframeMap::const_iterator new_beginning_keyframe =
       GetFirstKeyframeAt(timestamp, false);
 
   // If there is no keyframe after |timestamp|, we can't split the range.
@@ -311,18 +311,19 @@ size_t SourceBufferRangeByDts::GetRemovalGOP(
     DecodeTimestamp* removal_end_timestamp) {
   size_t bytes_removed = 0;
 
-  KeyframeMap::iterator gop_itr = GetFirstKeyframeAt(start_timestamp, false);
+  KeyframeMap::const_iterator gop_itr =
+      GetFirstKeyframeAt(start_timestamp, false);
   if (gop_itr == keyframe_map_.end())
     return 0;
   int keyframe_index = gop_itr->second - keyframe_map_index_base_;
-  BufferQueue::iterator buffer_itr = buffers_.begin() + keyframe_index;
-  KeyframeMap::iterator gop_end = keyframe_map_.end();
+  BufferQueue::const_iterator buffer_itr = buffers_.begin() + keyframe_index;
+  KeyframeMap::const_iterator gop_end = keyframe_map_.end();
   if (end_timestamp < GetBufferedEndTimestamp())
     gop_end = GetFirstKeyframeAtOrBefore(end_timestamp);
 
   // Check if the removal range is within a GOP and skip the loop if so.
   // [keyframe]...[start_timestamp]...[end_timestamp]...[keyframe]
-  KeyframeMap::iterator gop_itr_prev = gop_itr;
+  KeyframeMap::const_iterator gop_itr_prev = gop_itr;
   if (gop_itr_prev != keyframe_map_.begin() && --gop_itr_prev == gop_end)
     gop_end = gop_itr;
 
@@ -333,7 +334,8 @@ size_t SourceBufferRangeByDts::GetRemovalGOP(
     int next_gop_index = gop_itr == keyframe_map_.end()
                              ? buffers_.size()
                              : gop_itr->second - keyframe_map_index_base_;
-    BufferQueue::iterator next_gop_start = buffers_.begin() + next_gop_index;
+    BufferQueue::const_iterator next_gop_start =
+        buffers_.begin() + next_gop_index;
     for (; buffer_itr != next_gop_start; ++buffer_itr) {
       gop_size += (*buffer_itr)->data_size();
     }
@@ -431,7 +433,7 @@ DecodeTimestamp SourceBufferRangeByDts::NextKeyframeTimestamp(
   if (timestamp < GetStartTimestamp() || timestamp >= GetBufferedEndTimestamp())
     return kNoDecodeTimestamp();
 
-  KeyframeMap::iterator itr = GetFirstKeyframeAt(timestamp, false);
+  KeyframeMap::const_iterator itr = GetFirstKeyframeAt(timestamp, false);
   if (itr == keyframe_map_.end())
     return kNoDecodeTimestamp();
 
@@ -501,16 +503,17 @@ SourceBufferRange::BufferQueue::iterator SourceBufferRangeByDts::GetBufferItrAt(
                                 CompareStreamParserBufferToDecodeTimestamp);
 }
 
-SourceBufferRangeByDts::KeyframeMap::iterator
+SourceBufferRangeByDts::KeyframeMap::const_iterator
 SourceBufferRangeByDts::GetFirstKeyframeAt(DecodeTimestamp timestamp,
-                                           bool skip_given_timestamp) {
+                                           bool skip_given_timestamp) const {
   return skip_given_timestamp ? keyframe_map_.upper_bound(timestamp)
                               : keyframe_map_.lower_bound(timestamp);
 }
 
-SourceBufferRangeByDts::KeyframeMap::iterator
-SourceBufferRangeByDts::GetFirstKeyframeAtOrBefore(DecodeTimestamp timestamp) {
-  KeyframeMap::iterator result = keyframe_map_.lower_bound(timestamp);
+SourceBufferRangeByDts::KeyframeMap::const_iterator
+SourceBufferRangeByDts::GetFirstKeyframeAtOrBefore(
+    DecodeTimestamp timestamp) const {
+  KeyframeMap::const_iterator result = keyframe_map_.lower_bound(timestamp);
   // lower_bound() returns the first element >= |timestamp|, so we want the
   // previous element if it did not return the element exactly equal to
   // |timestamp|.
@@ -548,7 +551,7 @@ bool SourceBufferRangeByDts::TruncateAt(
   }
 
   // Remove keyframes from |starting_point| onward.
-  KeyframeMap::iterator starting_point_keyframe =
+  KeyframeMap::const_iterator starting_point_keyframe =
       keyframe_map_.lower_bound((*starting_point)->GetDecodeTimestamp());
   keyframe_map_.erase(starting_point_keyframe, keyframe_map_.end());
 
