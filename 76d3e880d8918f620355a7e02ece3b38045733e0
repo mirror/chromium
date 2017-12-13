@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e307a97d_cd358ec2",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3590,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-13T01:50:34Z",
+      "side": 1,
+      "message": "That\u0027s not needed, since the check on line 3602 is what we care about.",
+      "parentUuid": "5265b208_fefb0609",
+      "revId": "76d3e880d8918f620355a7e02ece3b38045733e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3af98988_7d5598b7",
         "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T22:59:35Z",
       "side": 1,
       "message": "Should the test wait for the navigation to complete?",
+      "revId": "76d3e880d8918f620355a7e02ece3b38045733e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391d2ebb_f4835538",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3607,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-13T01:50:34Z",
+      "side": 1,
+      "message": "no need, the crash would happen synchronously on the 3603 line.",
+      "parentUuid": "3af98988_7d5598b7",
       "revId": "76d3e880d8918f620355a7e02ece3b38045733e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
