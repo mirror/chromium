@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8612e576_a97f867c",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:27:45Z",
+      "side": 1,
+      "message": "why is this a TODO? I don\u0027t think it\u0027s used any more? Also, I don\u0027t think you need to rename it to INLINE. That\u0027s an implementation detail. The entire message center is hosted in and anchored to the tray, so really this just means that Ash will handle showing settings.",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 71
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f4846b_20d6f428",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:27:45Z",
+      "side": 1,
+      "message": "this seems superfluous because it\u0027s only called once.",
+      "range": {
+        "startLine": 451,
+        "startChar": 0,
+        "endLine": 455,
+        "endChar": 3
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dafe097_5dfcb8aa",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:27:45Z",
+      "side": 1,
+      "message": "please don\u0027t add test-only methods if you can avoid it. In this case, it\u0027s easily avoided.",
+      "range": {
+        "startLine": 457,
+        "startChar": 0,
+        "endLine": 460,
+        "endChar": 3
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c6cc23_3cc1e3b0",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:27:45Z",
+      "side": 1,
+      "message": "do we really need this function? Why don\u0027t we just call set_can_process_events_within_subtree(false) on the views that don\u0027t handle events?",
+      "range": {
+        "startLine": 416,
+        "startChar": 5,
+        "endLine": 416,
+        "endChar": 46
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b3e495_19f29ace",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:27:45Z",
+      "side": 1,
+      "message": "please use auto in situations like this (don\u0027t need the same type to be explicitly expressed twice in the same line)",
+      "range": {
+        "startLine": 526,
+        "startChar": 2,
+        "endLine": 526,
+        "endChar": 66
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d0b51b_de0b02cc",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:27:45Z",
+      "side": 1,
+      "message": "should this all be conditioned on whether inline settings are available?",
+      "range": {
+        "startLine": 501,
+        "startChar": 2,
+        "endLine": 534,
+        "endChar": 0
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e71d7c_19f44d8c",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:27:45Z",
+      "side": 1,
+      "message": "move this inside the condition? i.e.\n\nif (sender \u003d\u003d header_row_) {\n  if (IsExpandable())\n    ...\n  return\n}",
+      "range": {
+        "startLine": 686,
+        "startChar": 6,
+        "endLine": 686,
+        "endChar": 20
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7b11e8_9011a47d",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:27:45Z",
+      "side": 1,
+      "message": "You can write tests without resorting to test setters like this, so please avoid it. Adding this extra layer of indirection makes the code more confusing because whenever you read \"message_center()\" you don\u0027t know exactly what you\u0027re getting or when it differs from MessageCenter::Get() without further investigation.\n\nYou may want to wait for https://chromium-review.googlesource.com/c/chromium/src/+/811991 to land since this fixes a similar issue (gets rid of that nefarious MessageViewDelegate and creates a real message center for tests).",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 3
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76081d1_12725720",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-13T18:27:45Z",
+      "side": 1,
+      "message": "nit:\n// Views for inline settings.\nviews::RadioButton* [...]",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 296,
+        "endChar": 50
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
