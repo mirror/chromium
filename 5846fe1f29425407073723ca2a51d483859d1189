@@ -1,0 +1,313 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d898c0bf_49949e0e",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: Omit \"chromeos::attestation::\" - this code is already in that namespace.",
+      "range": {
+        "startLine": 209,
+        "startChar": 17,
+        "endLine": 209,
+        "endChar": 40
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cae30fa_b39ee3c2",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: Indentation is wrong - three spaces are missing.\n\nAnd out of curiosity - isn\u0027t \"git cl format\" able to recognize and fix this?",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 31
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b5cb79_e597ec43",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: Put this method definition after Reschedule(), to match the declaration order.",
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ab3d1d_3a3705e2",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "Would it make sense to log something on this occasion?",
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6355ec_22327c01",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: Please provide a comment for this function - how is the |status| affecting the decision for the reschedule?",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 25
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226f1d91_24e9116a",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: Values of trivial types - like enums - are normally just accepted by value. There are not many benefits from accepting something by a const value (which means a const copy).",
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4adcc9_6ab6a638",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: You may want to move the function definition under the chromeos::attestation namespace, to get rid of those lengthy namespace qualifications. (But, of course, still wrap it inside an anonymous namespace.)",
+      "range": {
+        "startLine": 41,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 37
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2daa0d_c13cecde",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "I\u0027m not an OWNER of this file, but it seems weird to me that \"reschedule\" operation can result not in an actual deferred Start(), but in performing some upload immediately.\nI\u0027d think that, at very least, the method should be named differently. Or this case should be covered by the calling code.",
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ff1169_e3da048c",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: Omit \"chromeos::attestation::\".",
+      "range": {
+        "startLine": 237,
+        "startChar": 6,
+        "endLine": 237,
+        "endChar": 29
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76e841a_00a1dc48",
+        "filename": "chrome/browser/chromeos/policy/enrollment_handler_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here, please add curly brackets around if\u0027s and else\u0027s bodies.",
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52255814_7abaa1be",
+        "filename": "chromeos/attestation/attestation_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: Please add a documentation for the whole enum.",
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e5f4a9_bcb7f0f9",
+        "filename": "chromeos/attestation/attestation_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "This pollutes the enclosing namespace with this uninformative name - note that it generates the symbol chromeos::attestation::SUCCESS. So either use \"enum class\" or rename the enum to something like \"PCA_OPERATION_STATUS_SUCCESS\".",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 9
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99efcbe_b659c829",
+        "filename": "chromeos/attestation/attestation_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "\"PRIVACY_CA_BAD_REQUEST\" is also a type of failure.\nPerhaps you wanted to say here something like \"UNKNOWN_FAILURE\"?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 9
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f0c989_d72fcdf7",
+        "filename": "chromeos/cryptohome/async_method_caller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: The indentation seems to be wrong. See https://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 6
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55b0e23_0aa95713",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-13T18:17:58Z",
+      "side": 1,
+      "message": "nit: Ditto for indentation.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 8
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
