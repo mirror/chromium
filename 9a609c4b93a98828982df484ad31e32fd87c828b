@@ -211,6 +211,24 @@
       "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6c61139_2b66303d",
+        "filename": "third_party/WebKit/common/clipboard/clipboard.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003205
+      },
+      "writtenOn": "2017-12-13T02:13:54Z",
+      "side": 1,
+      "message": "I\u0027ve asked kinuko@ about not having a WebKit/public/common as well. Today, I think WebKit/common is effectively WebKit/public/common (because content is using it too). In the future, when/if we have a WebKit/browser, then I expect we\u0027ll want a separation between WebKit/public/common and WebKit/common. I imagine that WebKit/public/common will be for renderer interfaces that things outside Blink need to use, while WebKit/common would be for blink-internal things.",
+      "parentUuid": "b9baf278_aba5f067",
+      "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
