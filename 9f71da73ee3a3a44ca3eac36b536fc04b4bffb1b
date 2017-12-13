@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "457e562a_3e5c76bb",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-13T14:39:10Z",
+      "side": 1,
+      "message": "We should be rounding up (ceiling) unless you\u0027ve spotted a bug in the code. :)",
+      "parentUuid": "9f03d839_dd8aca56",
+      "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72a3cd34_bfbfcdcc",
         "filename": "media/base/audio_latency.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-13T13:08:40Z",
       "side": 1,
       "message": "Sorry I\u0027m very confused here and cannot really process the sequence of formulas.\nLet\u0027s say requested_buffer_size is r, minimum_buffer_size is m and [] is ceil operation.\nThen substituting output_buffer_size \u003d [r/m]*m formula above into the formula below we get\nrounded_buffer_size \u003d [r/([r/m]/m)]*[r/m]*m \u003d [(r/m)/[r/m]]*[r/m]*m\n- correct?\nWhich is effectively [r/m]*m? Correct?\nThen why do we need the second formula? Or am I missing something?",
+      "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e8b099_4480b1f6",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-13T14:39:10Z",
+      "side": 1,
+      "message": "What\u0027s missing are the different max buffer sizes per platform, and the fact that we only want to increase the final Web Audio buffer size by multiples of the chosen hardware buffer size and not the minimum. On OSX for example if someone requests a buffer size of 5000 frames we would have:\n\nbuffer_size \u003d [5000/128]*128 \u003d 5120\noutput_buffer_size \u003d clamp(5120) between 128 and 4096 \u003d 4096\nrounded_buffer_size \u003d [5000/4096]*4096 \u003d 8192\n\nThe thought here being that we know the hardware can run at 4096 so it doesn\u0027t make sense for Web Audio to run at 5120, but 8192 would make sense. For values below the max though you\u0027re right that this calculation is redundant.\n\nMaybe the code could be simplified by shortcutting the calculations if requested_buffer_size is \u003e kMaxAudioBufferSize. Do you want me to try to refactor this a bit? Or does any of this not make sense?",
+      "parentUuid": "72a3cd34_bfbfcdcc",
       "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
