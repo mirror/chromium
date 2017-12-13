@@ -41,7 +41,7 @@ class LoginDisplayHostViews : public LoginDisplayHost,
   void OnStartSignInScreen(const LoginScreenContext& context) override;
   void OnPreferencesChanged() override;
   void OnStartAppLaunch() override;
-  void StartArcKiosk(const AccountId& account_id) override;
+  void OnStartArcKiosk() override;
   void StartVoiceInteractionOobe() override;
   bool IsVoiceInteractionOobe() override;
 

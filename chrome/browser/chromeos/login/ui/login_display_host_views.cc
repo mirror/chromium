@@ -101,7 +101,7 @@ void LoginDisplayHostViews::OnStartAppLaunch() {
   NOTIMPLEMENTED();
 }
 
-void LoginDisplayHostViews::StartArcKiosk(const AccountId& account_id) {
+void LoginDisplayHostViews::OnStartArcKiosk() {
   NOTIMPLEMENTED();
 }
 

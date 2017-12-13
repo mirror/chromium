@@ -19,6 +19,7 @@ class AccountId;
 
 namespace chromeos {
 
+class ArcKioskController;
 class AppLaunchController;
 class DemoAppLauncher;
 class LoginScreenContext;
@@ -106,7 +107,7 @@ class LoginDisplayHost {
   void StartDemoAppLaunch();
 
   // Starts ARC kiosk splash screen.
-  virtual void StartArcKiosk(const AccountId& account_id) = 0;
+  void StartArcKiosk(const AccountId& account_id);
 
   // Start voice interaction OOBE.
   virtual void StartVoiceInteractionOobe() = 0;
@@ -120,6 +121,7 @@ class LoginDisplayHost {
 
   virtual void OnStartSignInScreen(const LoginScreenContext& context) = 0;
   virtual void OnStartAppLaunch() = 0;
+  virtual void OnStartArcKiosk() = 0;
 
   // Deletes |auth_prewarmer_|.
   void OnAuthPrewarmDone();
@@ -132,6 +134,9 @@ class LoginDisplayHost {
 
   // Demo app launcher.
   std::unique_ptr<DemoAppLauncher> demo_app_launcher_;
+
+  // ARC kiosk controller.
+  std::unique_ptr<ArcKioskController> arc_kiosk_controller_;
 
  private:
   base::WeakPtrFactory<LoginDisplayHost> weak_factory_;
