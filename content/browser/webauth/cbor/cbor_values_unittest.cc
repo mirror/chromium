@@ -108,6 +108,12 @@ TEST(CBORValuesTest, ConstructMap) {
   }
 }
 
+TEST(CBORValuesTest, ConstructSimpleValue) {
+  CBORValue value(CBORValue::SimpleValue::FALSE_VALUE);
+  EXPECT_EQ(CBORValue::Type::SIMPLE_VALUE, value.type());
+  EXPECT_EQ(CBORValue::SimpleValue::FALSE_VALUE, value.GetSimpleValue());
+}
+
 // Test copy constructors
 TEST(CBORValuesTest, CopyUnsigned) {
   CBORValue value(74);
@@ -182,6 +188,19 @@ TEST(CBORValuesTest, CopyMap) {
   ASSERT_EQ(copied_value.GetMap().count("unsigned"), 1u);
   EXPECT_EQ(value.GetMap().find("unsigned")->second.GetUnsigned(),
             copied_value.GetMap().find("unsigned")->second.GetUnsigned());
+}
+
+TEST(CBORValuesTest, CopySimpleValue) {
+  CBORValue value(CBORValue::SimpleValue::TRUE_VALUE);
+  CBORValue copied_value(value.Clone());
+  EXPECT_EQ(value.type(), copied_value.type());
+  EXPECT_EQ(value.GetSimpleValue(), copied_value.GetSimpleValue());
+
+  CBORValue blank;
+
+  blank = value.Clone();
+  EXPECT_EQ(value.type(), blank.type());
+  EXPECT_EQ(value.GetSimpleValue(), blank.GetSimpleValue());
 }
 
 // Test move constructors and move-assignment
@@ -265,6 +284,19 @@ TEST(CBORValuesTest, SelfSwap) {
   CBORValue test(1);
   std::swap(test, test);
   EXPECT_TRUE(test.GetUnsigned() == 1);
+}
+
+TEST(CBORValuesTest, MoveSimpleValue) {
+  CBORValue value(CBORValue::SimpleValue::UNDEFINED);
+  CBORValue moved_value(std::move(value));
+  EXPECT_EQ(CBORValue::Type::SIMPLE_VALUE, moved_value.type());
+  EXPECT_EQ(CBORValue::SimpleValue::UNDEFINED, moved_value.GetSimpleValue());
+
+  CBORValue blank;
+
+  blank = CBORValue(CBORValue::SimpleValue::UNDEFINED);
+  EXPECT_EQ(CBORValue::Type::SIMPLE_VALUE, blank.type());
+  EXPECT_EQ(CBORValue::SimpleValue::UNDEFINED, blank.GetSimpleValue());
 }
 
 }  // namespace content

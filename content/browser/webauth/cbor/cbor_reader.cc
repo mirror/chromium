@@ -41,6 +41,8 @@ const char kMapKeyOutOfOrder[] =
     "order.";
 const char kNonMinimalCBOREncoding[] =
     "Unsigned integers must be encoded with minimum number of bytes.";
+const char kUnsupportedSimpleValue[] =
+    "Unsupported or unassigned simple value type.";
 
 }  // namespace
 
@@ -81,7 +83,7 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
   const uint8_t additional_info = GetAdditionalInfo(initial_byte);
 
   uint64_t length;
-  if (!ReadUnsignedInt(additional_info, &length))
+  if (!ReadUnsignedInt(major_type, additional_info, &length))
     return base::nullopt;
 
   switch (major_type) {
@@ -95,6 +97,8 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
       return ReadCBORArray(length, max_nesting_level);
     case CBORValue::Type::MAP:
       return ReadCBORMap(length, max_nesting_level);
+    case CBORValue::Type::SIMPLE_VALUE:
+      return ReadSimpleValue(length);
     case CBORValue::Type::NONE:
       break;
   }
@@ -103,7 +107,9 @@ base::Optional<CBORValue> CBORReader::DecodeCBOR(int max_nesting_level) {
   return base::nullopt;
 }
 
-bool CBORReader::ReadUnsignedInt(int additional_info, uint64_t* length) {
+bool CBORReader::ReadUnsignedInt(CBORValue::Type major_type,
+                                 int additional_info,
+                                 uint64_t* length) {
   uint8_t additional_bytes = 0;
   if (additional_info < 24) {
     *length = additional_info;
@@ -117,7 +123,15 @@ bool CBORReader::ReadUnsignedInt(int additional_info, uint64_t* length) {
   } else if (additional_info == 27) {
     additional_bytes = 8;
   } else {
-    error_code_ = DecoderError::UNKNOWN_ADDITIONAL_INFO;
+    error_code_ = major_type == CBORValue::Type::SIMPLE_VALUE
+                      ? DecoderError::UNSUPPORTED_SIMPLE_VALUE
+                      : DecoderError::UNKNOWN_ADDITIONAL_INFO;
+    return false;
+  }
+
+  // Floating point numbers are not supported.
+  if (additional_bytes > 1 && major_type == CBORValue::Type::SIMPLE_VALUE) {
+    error_code_ = DecoderError::UNSUPPORTED_MAJOR_TYPE;
     return false;
   }
 
@@ -134,6 +148,23 @@ bool CBORReader::ReadUnsignedInt(int additional_info, uint64_t* length) {
 
   *length = int_data;
   return CheckUintEncodedByteLength(additional_bytes, int_data);
+}
+
+base::Optional<CBORValue> CBORReader::ReadSimpleValue(int value) {
+  switch (value) {
+    case base::checked_cast<int>(CBORValue::SimpleValue::FALSE_VALUE):
+      return CBORValue(CBORValue::SimpleValue::FALSE_VALUE);
+    case base::checked_cast<int>(CBORValue::SimpleValue::TRUE_VALUE):
+      return CBORValue(CBORValue::SimpleValue::TRUE_VALUE);
+    case base::checked_cast<int>(CBORValue::SimpleValue::NULL_VALUE):
+      return CBORValue(CBORValue::SimpleValue::NULL_VALUE);
+    case base::checked_cast<int>(CBORValue::SimpleValue::UNDEFINED):
+      return CBORValue(CBORValue::SimpleValue::UNDEFINED);
+    default:
+      break;
+  }
+  error_code_ = DecoderError::UNSUPPORTED_SIMPLE_VALUE;
+  return base::nullopt;
 }
 
 base::Optional<CBORValue> CBORReader::ReadString(uint64_t num_bytes) {
@@ -277,6 +308,8 @@ const char* CBORReader::ErrorCodeToString(DecoderError error) {
       return kMapKeyOutOfOrder;
     case DecoderError::NON_MINIMAL_CBOR_ENCODING:
       return kNonMinimalCBOREncoding;
+    case DecoderError::UNSUPPORTED_SIMPLE_VALUE:
+      return kUnsupportedSimpleValue;
     default:
       NOTREACHED();
       return "Unknown error code.";
