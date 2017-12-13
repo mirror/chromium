@@ -22,6 +22,30 @@
       "revId": "c092cb4dccec005cb4c31bd364e1e05fd0ca03b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5943c900_ea8977a3",
+        "filename": "chrome/utility/mash_service_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T23:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fce88dd_e4d3b4de",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "c092cb4dccec005cb4c31bd364e1e05fd0ca03b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
