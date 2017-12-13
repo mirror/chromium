@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69f12c23_68799f1d",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T16:50:42Z",
+      "side": 1,
+      "message": "Are you sure you want isnull, and not verifying the size isn\u0027t empty?",
+      "range": {
+        "startLine": 787,
+        "startChar": 21,
+        "endLine": 787,
+        "endChar": 27
+      },
+      "revId": "779ed0e121ece8393d8354269e46aaadbecb7666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
