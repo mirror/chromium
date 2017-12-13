@@ -180,7 +180,8 @@ using content::RenderViewHost;
 - (void)checkSpelling:(id)sender {
   content::WebContents* webContents = content::WebContents::FromRenderViewHost(
       RenderViewHost::From(renderWidgetHost_));
-  DCHECK(webContents && webContents->GetFocusedFrame());
+  if (!webContents || !webContents->GetFocusedFrame())
+    return;
 
   spellcheck::mojom::SpellCheckPanelPtr focused_spell_check_panel_client;
   webContents->GetFocusedFrame()->GetRemoteInterfaces()->GetInterface(
@@ -204,7 +205,8 @@ using content::RenderViewHost;
 
   content::WebContents* webContents = content::WebContents::FromRenderViewHost(
       RenderViewHost::From(renderWidgetHost_));
-  DCHECK(webContents && webContents->GetFocusedFrame());
+  if (!webContents || !webContents->GetFocusedFrame())
+    return;
 
   spellcheck::mojom::SpellCheckPanelPtr focused_spell_check_panel_client;
   webContents->GetFocusedFrame()->GetRemoteInterfaces()->GetInterface(
