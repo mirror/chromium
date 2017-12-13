@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acd784cc_ed81c6f5",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T21:54:49Z",
+      "side": 1,
+      "message": "Chrome should only depend upon content/public. I didn\u0027t look at what you\u0027re changing in content. Is it possible to move it to content/public/test?",
+      "range": {
+        "startLine": 209,
+        "startChar": 6,
+        "endLine": 209,
+        "endChar": 18
+      },
+      "revId": "be340639522043e84be842a9cdb55fca1086ce26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
