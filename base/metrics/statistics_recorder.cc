@@ -81,53 +81,48 @@ void StatisticsRecorder::RegisterHistogramProvider(
 // static
 HistogramBase* StatisticsRecorder::RegisterOrDeleteDuplicate(
     HistogramBase* histogram) {
-  HistogramBase* histogram_to_delete = nullptr;
-  HistogramBase* histogram_to_return = nullptr;
-  {
-    base::AutoLock auto_lock(lock_.Get());
-    if (!histograms_) {
-      histogram_to_return = histogram;
+  std::unique_ptr<HistogramBase> histogram_to_delete;
+  base::AutoLock auto_lock(lock_.Get());
 
-      // As per crbug.com/79322 the histograms are intentionally leaked, so we
-      // need to annotate them. Because ANNOTATE_LEAKING_OBJECT_PTR may be used
-      // only once for an object, the duplicates should not be annotated.
-      // Callers are responsible for not calling RegisterOrDeleteDuplicate(ptr)
-      // twice |if (!histograms_)|.
-      ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
-    } else {
-      const char* name = histogram->histogram_name();
-      StringPiece name_piece(name);
-      HistogramMap::iterator it = histograms_->find(name_piece);
-      if (histograms_->end() == it) {
-        // |name_piece| is guaranteed to never change or be deallocated so long
-        // as the histogram is alive (which is forever).
-        (*histograms_)[name_piece] = histogram;
-        ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
-        // If there are callbacks for this histogram, we set the kCallbackExists
-        // flag.
-        auto callback_iterator = callbacks_->find(name);
-        if (callback_iterator != callbacks_->end()) {
-          if (!callback_iterator->second.is_null())
-            histogram->SetFlags(HistogramBase::kCallbackExists);
-          else
-            histogram->ClearFlags(HistogramBase::kCallbackExists);
-        }
-        histogram_to_return = histogram;
-      } else if (histogram == it->second) {
-        // The histogram was registered before.
-        histogram_to_return = histogram;
-      } else {
-        // We already have one histogram with this name.
-        DCHECK_EQ(StringPiece(histogram->histogram_name()),
-                  StringPiece(it->second->histogram_name()))
-            << "hash collision";
-        histogram_to_return = it->second;
-        histogram_to_delete = histogram;
-      }
-    }
+  if (!histograms_) {
+    // As per crbug.com/79322 the histograms are intentionally leaked, so we
+    // need to annotate them. Because ANNOTATE_LEAKING_OBJECT_PTR may be used
+    // only once for an object, the duplicates should not be annotated.
+    // Callers are responsible for not calling RegisterOrDeleteDuplicate(ptr)
+    // twice |if (!histograms_)|.
+    ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
+    return histogram;
   }
-  delete histogram_to_delete;
-  return histogram_to_return;
+
+  const char* const name = histogram->histogram_name();
+  HistogramBase*& registered = (*histograms_)[name];
+
+  if (!registered) {
+    // |name| is guaranteed to never change or be deallocated so long
+    // as the histogram is alive (which is forever).
+    registered = histogram;
+    ANNOTATE_LEAKING_OBJECT_PTR(histogram);  // see crbug.com/79322
+    // If there are callbacks for this histogram, we set the kCallbackExists
+    // flag.
+    const auto callback_iterator = callbacks_->find(name);
+    if (callback_iterator != callbacks_->end()) {
+      if (!callback_iterator->second.is_null())
+        histogram->SetFlags(HistogramBase::kCallbackExists);
+      else
+        histogram->ClearFlags(HistogramBase::kCallbackExists);
+    }
+    return histogram;
+  }
+
+  if (histogram == registered) {
+    // The histogram was registered before.
+    return histogram;
+  }
+
+  // We already have one histogram with this name.
+  DCHECK_EQ(StringPiece(name), StringPiece(registered->histogram_name()));
+  histogram_to_delete.reset(histogram);
+  return registered;
 }
 
 // static
@@ -527,7 +522,6 @@ void StatisticsRecorder::DumpHistogramsToVlog(void* instance) {
   StatisticsRecorder::WriteGraph(std::string(), &output);
   VLOG(1) << output;
 }
-
 
 // static
 StatisticsRecorder::HistogramMap* StatisticsRecorder::histograms_ = nullptr;
