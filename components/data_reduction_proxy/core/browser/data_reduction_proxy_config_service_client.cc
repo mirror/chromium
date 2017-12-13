@@ -16,6 +16,7 @@
 #include "base/logging.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/metrics_features.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -384,6 +385,10 @@ void DataReductionProxyConfigServiceClient::RetrieveRemoteConfig() {
   const std::string& session_key = request_options_->GetSecureSession();
   if (!session_key.empty())
     request.set_session_key(request_options_->GetSecureSession());
+  request.set_dogfood_group(
+      base::metrics::IsDogFoodUser()
+          ? CreateClientConfigRequest_DogfoodGroup_DOGFOOD
+          : CreateClientConfigRequest_DogfoodGroup_NONDOGFOOD);
   data_reduction_proxy::VersionInfo* version_info =
       request.mutable_version_info();
   uint32_t build;
