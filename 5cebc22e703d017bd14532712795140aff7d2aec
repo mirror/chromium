@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "a1bbdcc2_032c7cb2",
+        "filename": "services/audio/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-13T14:32:50Z",
+      "side": 1,
+      "message": "I believe we\u0027ll need them to be public for an upcoming \"audio\" target (see above).\nAm I wrong? (I\u0027m a bit confused by GN so far)",
+      "parentUuid": "b7e89aaa_1f12dfb0",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45b24d09_9f7d3f61",
         "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
         "patchSetId": 16
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "b1c9cbc6_79452576",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-13T14:32:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f77614_cf922614",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6adcb71_99f7d89d",
         "filename": "services/audio/service.h",
         "patchSetId": 16
@@ -156,6 +192,24 @@
       "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcc5506_3cf78704",
+        "filename": "services/audio/service.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-13T14:32:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6adcb71_99f7d89d",
+      "revId": "5cebc22e703d017bd14532712795140aff7d2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

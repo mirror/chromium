@@ -324,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "2bbb6419_ec962848",
+        "filename": "services/audio/public/cpp/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-13T14:32:50Z",
+      "side": 1,
+      "message": "Hmmm but we build is as a part of the client, not a part of the service, right?",
+      "parentUuid": "f1de36b5_41e29a60",
+      "revId": "54ccebb2fef62ac5b8e156014d10c5ef1cae9838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cb4eac1_1266051a",
         "filename": "services/audio/public/cpp/OWNERS",
         "patchSetId": 10
