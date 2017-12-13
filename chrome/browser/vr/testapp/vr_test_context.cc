@@ -471,12 +471,16 @@ void VrTestContext::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {}
 void VrTestContext::StartAutocomplete(const base::string16& string) {
   auto result = base::MakeUnique<OmniboxSuggestions>();
   for (int i = 0; i < 5; i++) {
+    base::string16 description =
+        (i % 2 == 0)
+            ? base::UTF8ToUTF16("")
+            : base::UTF8ToUTF16(
+                  "Very lengthy description of the suggestion that would wrap "
+                  "if not truncated through some other means.");
     result->suggestions.emplace_back(OmniboxSuggestion(
         base::UTF8ToUTF16("Suggestion ") + base::IntToString16(i + 1),
-        base::UTF8ToUTF16(
-            "Very lengthy description of the suggestion that would wrap "
-            "if not truncated through some other means."),
-        AutocompleteMatch::Type::VOICE_SUGGEST, GURL("http://www.test.com/")));
+        description, AutocompleteMatch::Type::VOICE_SUGGEST,
+        GURL("http://www.test.com/")));
   }
   ui_->SetOmniboxSuggestions(std::move(result));
 }

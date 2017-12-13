@@ -17,6 +17,10 @@
 
 namespace vr_shell {
 
+namespace {
+constexpr size_t kMaxNumberOfSuggestions = 4;
+}  // namespace
+
 AutocompleteController::AutocompleteController(vr::BrowserUiInterface* ui)
     : profile_(ProfileManager::GetActiveUserProfile()), ui_(ui) {
   auto client = base::MakeUnique<ChromeAutocompleteProviderClient>(profile_);
@@ -61,8 +65,26 @@ void AutocompleteController::OnResultChanged(bool default_match_changed) {
   for (const auto& match : autocomplete_controller_->result()) {
     suggestions->suggestions.emplace_back(vr::OmniboxSuggestion(
         match.contents, match.description, match.type, match.destination_url));
+    if (suggestions->suggestions.size() >= kMaxNumberOfSuggestions)
+      break;
   }
-  ui_->SetOmniboxSuggestions(std::move(suggestions));
+  suggestions_timeout_.Cancel();
+
+  if (suggestions->suggestions.size() < kMaxNumberOfSuggestions) {
+    suggestions_timeout_.Reset(base::Bind(
+        [](vr::BrowserUiInterface* ui,
+           std::unique_ptr<vr::OmniboxSuggestions> suggestions) {
+          ui->SetOmniboxSuggestions(std::move(suggestions));
+        },
+        base::Unretained(ui_), base::Passed(&suggestions)));
+
+    // TODO(vollick): maybe a timer would be better here. Whatever.
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE, suggestions_timeout_.callback(),
+        base::TimeDelta::FromMilliseconds(150));
+  } else {
+    ui_->SetOmniboxSuggestions(std::move(suggestions));
+  }
 }
 
 }  // namespace vr_shell

@@ -50,6 +50,7 @@ struct ColorScheme {
 
   // These colors should be named generically, if possible, so that they can be
   // meaningfully reused by multiple elements.
+  float background_brightness;
   SkColor world_background;
   SkColor world_background_text;
   SkColor floor;

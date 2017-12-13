@@ -24,52 +24,14 @@ namespace vr {
 
 namespace {
 
-constexpr float kTolerance = 1e-5f;
-
-// Returns true if two elements are in the same plane.
-bool ArePlanar(const UiElement& e1, const UiElement& e2) {
-  gfx::Vector3dF n1 = e1.GetNormal();
-  gfx::Vector3dF n2 = e2.GetNormal();
-  if (!base::IsApproximatelyEqual(n1.x(), n2.x(), kTolerance) ||
-      !base::IsApproximatelyEqual(n1.y(), n2.y(), kTolerance) ||
-      !base::IsApproximatelyEqual(n1.z(), n2.z(), kTolerance)) {
-    return false;
-  }
-  return base::IsApproximatelyEqual(
-      0.0f, gfx::DotProduct(n1, e1.GetCenter() - e2.GetCenter()), kTolerance);
-}
-
 template <typename P>
 UiScene::Elements GetVisibleElements(UiElement* root,
                                      UiElement* reticle_element,
                                      P predicate) {
-  Reticle* reticle = static_cast<Reticle*>(reticle_element);
-  UiElement* target = reticle ? reticle->TargetElement() : nullptr;
   UiScene::Elements elements;
-  int reticle_parent_id = 0;
   for (auto& element : *root) {
-    if (element.IsVisible() && predicate(&element)) {
+    if (element.IsVisible() && predicate(&element))
       elements.push_back(&element);
-      if (target && target->id() == element.id()) {
-        reticle_parent_id = element.id();
-        // Draw the reticle after the last child that resides in the same plane
-        // as this element. This way, the reticle can't be partially hidden as
-        // it passes across portions of a composite element. By walking the
-        // element's subtree in reverse pre-order, we start at the last-rendered
-        // child and work backwards, possibly as far as the originally targeted
-        // element.
-        for (auto& child : base::Reversed(element)) {
-          if (predicate(&child) && ArePlanar(element, child)) {
-            reticle_parent_id = child.id();
-            break;
-          }
-        }
-      }
-    }
-    if (reticle_parent_id == element.id()) {
-      elements.push_back(reticle);
-      reticle->SetDrawPhase(element.draw_phase());
-    }
   }
   return elements;
 }
@@ -249,20 +211,6 @@ UiScene::Elements UiScene::GetVisibleWebVrOverlayForegroundElements() const {
 UiScene::Elements UiScene::GetVisibleControllerElements() const {
   return GetVisibleElements(
       GetUiElementByName(kControllerGroup), nullptr, [](UiElement* element) {
-        if (element->name() == kReticle) {
-          Reticle* reticle = static_cast<Reticle*>(element);
-          // If the reticle has a non-null target element,
-          // it would have been positioned elsewhere.
-          bool need_to_add_reticle = !reticle->TargetElement();
-          if (need_to_add_reticle) {
-            // We must always update the reticle's draw phase when it is
-            // included in a list of elements we vend. The other controller
-            // elements are drawn in the foreground phase, so we will update the
-            // reticle to match here.
-            reticle->SetDrawPhase(kPhaseForeground);
-          }
-          return need_to_add_reticle;
-        }
         return element->draw_phase() == kPhaseForeground;
       });
 }
