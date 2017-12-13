@@ -248,6 +248,7 @@ class CORE_EXPORT DocumentLoader
   static bool ShouldClearWindowName(
       const LocalFrame&,
       const SecurityOrigin* previous_security_origin,
+      const KURL* previous_url,
       const Document& new_document);
 
   Vector<KURL> redirect_chain_;
