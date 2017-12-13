@@ -553,17 +553,18 @@ void FakeCryptohomeClient::MountEx(
     const cryptohome::Identification& cryptohome_id,
     const cryptohome::AuthorizationRequest& auth,
     const cryptohome::MountRequest& request,
-    DBusMethodCallback<cryptohome::BaseReply> callback) {
-  cryptohome::BaseReply reply;
-  cryptohome::MountReply* mount =
-      reply.MutableExtension(cryptohome::MountReply::reply);
-  mount->set_sanitized_username(GetStubSanitizedUsername(cryptohome_id));
+    MountCallback callback) {
+  bool success = true;
+  cryptohome::MountError error = cryptohome::MOUNT_ERROR_NONE;
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kTestEncryptionMigrationUI) &&
       !request.to_migrate_from_ecryptfs()) {
-    reply.set_error(cryptohome::CRYPTOHOME_ERROR_MOUNT_OLD_ENCRYPTION);
+    error = cryptohome::MOUNT_ERROR_OLD_ENCRYPTION;
+    success = false;
   }
-  ReturnProtobufMethodCallback(reply, std::move(callback));
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(std::move(callback), success, error,
+                                GetStubSanitizedUsername(cryptohome_id)));
 }
 
 void FakeCryptohomeClient::AddKeyEx(
