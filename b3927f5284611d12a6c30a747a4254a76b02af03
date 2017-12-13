@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "470919c2_2d534028",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T06:51:22Z",
+      "side": 1,
+      "message": "Yes, it\u0027s all pretty weird. The point of storing the pipe back was to respect the constness (also it\u0027s needed for correctness in case Blink uses the request multiple times as you note below).\n\nThere\u0027s also a danger that this thread might not be the thread the data_pipe_getter was created on, in which case we can\u0027t restore it as normal. I\u0027m assuming/hoping this doesn\u0027t happen. But I don\u0027t know how to DCHECK() against that.",
+      "parentUuid": "4a270877_6127a53c",
+      "revId": "b3927f5284611d12a6c30a747a4254a76b02af03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebf5f2ad_b7abbe16",
         "filename": "content/renderer/loader/web_url_request_util.cc",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "b3927f5284611d12a6c30a747a4254a76b02af03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ee2830_5eaf6ff7",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T06:51:22Z",
+      "side": 1,
+      "message": "Done, with a slight modification: the data is actually read out multiple times during redirects.",
+      "parentUuid": "ebf5f2ad_b7abbe16",
+      "revId": "b3927f5284611d12a6c30a747a4254a76b02af03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
