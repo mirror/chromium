@@ -93,7 +93,7 @@ class OfflinePageTabHelper :
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
 
-  void SelectPageForURLDone(const OfflinePageItem* offline_page);
+  void SelectPagesForURLDone(const std::vector<OfflinePageItem>& offline_pages);
 
   void DuplicateCheckDoneForScheduleDownload(
       content::WebContents* web_contents,

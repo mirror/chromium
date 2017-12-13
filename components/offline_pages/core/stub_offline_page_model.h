@@ -64,6 +64,7 @@ class StubOfflinePageModel : public OfflinePageModelImpl {
   const base::FilePath& GetArchiveDirectory(
       const std::string& name_space) const override;
   ClientPolicyController* GetPolicyController() override;
+  bool IsArchiveInInternalDir(const base::FilePath& file_path) const override;
   OfflineEventLogger* GetLogger() override;
 
  private:
