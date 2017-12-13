@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
 
+#include <vector>
+
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/location.h"
@@ -16,6 +18,9 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_context.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h"
@@ -38,6 +43,14 @@
 #else
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
+#endif
+
+#if defined(OS_WIN)
+#include "base/win/windows_version.h"
+#include "ui/aura/window.h"
+#include "ui/aura/window_tree_host.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #endif
 
 using base::UserMetricsAction;
@@ -404,6 +417,71 @@ void FullscreenController::ExitFullscreenModeInternal() {
 
   exclusive_access_manager()->UpdateExclusiveAccessExitBubbleContent(
       ExclusiveAccessBubbleHideCallback());
+// Workaround for OS bug:
+// When exited fullscreen (for browser window with intermediate D3D
+// window) back to maximize, window is drawn wrong,
+// Workaround:
+// move window to other display and back. Have to unmaximize to make it
+// possible. Due to unmaximaze, have to temporary set rcNormalPosition =
+// maximuized position so that window change on unmaximize is not so
+// noticable.
+// It's nescessary to move window to other screen and back with detailed
+// steps, because just double call to SetWindowPlacement won't work due to
+// it's handling of multiple displays.
+#if defined(OS_WIN)
+  if (base::win::GetVersion() < base::win::VERSION_WIN10 ||
+      display::Screen::GetScreen()->GetNumDisplays() < 2)
+    return;
+  Browser* browser = chrome::FindBrowserWithWebContents(
+      exclusive_access_manager()->context()->GetActiveWebContents());
+  DCHECK(browser);
+  aura::WindowTreeHost* window_tree_host =
+      browser->window()->GetNativeWindow()->GetHost();
+  DCHECK(window_tree_host);
+  display::Display current_display =
+      display::Screen::GetScreen()->GetDisplayNearestWindow(
+          browser->window()->GetNativeWindow());
+
+  window_tree_host->compositor()->GetCompositorLock(
+      nullptr, base::TimeDelta::FromMilliseconds(120));
+  HWND browser_hwnd = window_tree_host->GetAcceleratedWidget();
+
+  RECT old_maximized_rect = {0};
+  GetWindowRect(browser_hwnd, &old_maximized_rect);
+
+  WINDOWPLACEMENT wndp;
+  wndp.length = sizeof(wndp);
+  GetWindowPlacement(browser_hwnd, &wndp);
+  RECT old_restored_rect = wndp.rcNormalPosition;
+  wndp.rcNormalPosition = old_maximized_rect;
+  SetWindowPlacement(browser_hwnd, &wndp);
+  ShowWindow(browser_hwnd, SW_RESTORE);
+
+  // Window needs to be moved to |other_display| - and then back, that makes
+  // bug to disappear.
+  std::vector<display::Display> displays =
+      display::Screen::GetScreen()->GetAllDisplays();
+  display::Display other_display;
+  for (display::Display display : displays) {
+    if (display.id() != current_display.id()) {
+      other_display = display;
+      break;
+    }
+  }
+  DCHECK_NE(-1, other_display.id());
+  SetWindowPos(browser_hwnd, 0, other_display.bounds().x(),
+               other_display.bounds().y(),
+               gfx::Rect(old_maximized_rect).width(),
+               gfx::Rect(old_maximized_rect).height(), 0);
+
+  SetWindowPos(browser_hwnd, 0, old_maximized_rect.left, old_maximized_rect.top,
+               old_maximized_rect.right - old_maximized_rect.left,
+               old_maximized_rect.bottom - old_maximized_rect.top, 0);
+  ShowWindow(browser_hwnd, SW_MAXIMIZE);
+  GetWindowPlacement(browser_hwnd, &wndp);
+  wndp.rcNormalPosition = old_restored_rect;
+  SetWindowPlacement(browser_hwnd, &wndp);
+#endif  // defined(OS_WIN)
 }
 
 bool FullscreenController::IsPrivilegedFullscreenForTab() const {
