@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78f2c54c_130e5cd2",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-13T23:50:31Z",
+      "side": 1,
+      "message": "nit: It would be briefer to write this as\n\n  if (hang_monitor_timeout_ \u0026\u0026 in_flight_event_count_ \u003e 0 \u0026\u0026 !is_hidden_)\n    hang_monitor_timeout_-\u003eRestart(hung_renderer_delay_);",
+      "range": {
+        "startLine": 1060,
+        "startChar": 0,
+        "endLine": 1062,
+        "endChar": 48
+      },
+      "revId": "3081dd85ebc5ebb2f403541c8882ab6de9a56658",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

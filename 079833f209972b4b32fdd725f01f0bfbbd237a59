@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dba8b4f5_65001c42",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 38711,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-13T23:50:31Z",
+      "side": 0,
+      "message": "Please mark removed histograms as \u003cobsolete\u003e rather than removing their metadata.",
+      "range": {
+        "startLine": 38705,
+        "startChar": 0,
+        "endLine": 38711,
+        "endChar": 12
+      },
+      "revId": "079833f209972b4b32fdd725f01f0bfbbd237a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
