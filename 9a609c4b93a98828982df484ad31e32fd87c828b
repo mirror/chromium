@@ -193,6 +193,24 @@
       "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9baf278_aba5f067",
+        "filename": "third_party/WebKit/common/clipboard/clipboard.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T02:09:25Z",
+      "side": 1,
+      "message": "What confuses me is... almost all mojom are, in nature, used by both browser and renderer.\n\nThen what mojom should go to WebKit/common/? What mojom should go to WebKit/public/modules/? My understanding is that it depends on where the mojom interface is implemented. If the interface is implemented in WebKit/common/, the mojom file should go to WebKit/common/ etc.\n\nIn the case of ClipboardHost, it is implemented by browser, so I was not sure if WebKit/common/ is a right place to put the file.",
+      "parentUuid": "9942e16f_809059ff",
+      "revId": "9a609c4b93a98828982df484ad31e32fd87c828b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
