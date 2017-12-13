@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "f341c279_65c87a01",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-13T16:19:16Z",
+      "side": 1,
+      "message": "I\u0027d go for 2). It\u0027s simpler than you may think. I\u0027ll leave it to you when, as you may want to wait if you need to merge some changes back.",
+      "parentUuid": "cb479347_2c6817f0",
+      "revId": "6edfd0c7198278f7a44abddd3dbd714498da28ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3090aa40_029c961a",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 3
