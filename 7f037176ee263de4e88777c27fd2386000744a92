@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "740a3bd7_53b6bad5",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-12-13T23:15:01Z",
+      "side": 0,
+      "message": "FYI: I think this declaration is no longer needed",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 71
+      },
+      "revId": "7f037176ee263de4e88777c27fd2386000744a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
