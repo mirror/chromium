@@ -52,6 +52,24 @@
       "revId": "1b98664af6ae11e6d8f84594f9e38a06a015bda9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cf2e050_2de20aee",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSPositionValue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-12-13T10:00:20Z",
+      "side": 1,
+      "message": "That would have been the \"variable name is subset of type name so don\u0027t include the name at all\" rule.",
+      "parentUuid": "9f714f28_14da25ae",
+      "revId": "1b98664af6ae11e6d8f84594f9e38a06a015bda9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
