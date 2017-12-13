@@ -64,7 +64,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_MUS)
-#include "chrome/utility/mash_service_factory.h"
+#include "chrome/utility/mus_service_factory.h"
 #endif
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
@@ -292,8 +292,11 @@ void ChromeContentUtilityClient::RegisterServices(
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 #if BUILDFLAG(ENABLE_MUS)
+  RegisterMusServices(services);
+#if defined(OS_CHROMEOS)
   RegisterMashServices(services);
 #endif
+#endif  // BUILDFLAG(ENABLE_MUS)
 }
 
 void ChromeContentUtilityClient::RegisterNetworkBinders(

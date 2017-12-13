@@ -148,8 +148,8 @@ static_library("utility") {
 
   if (enable_mus) {
     sources += [
-      "mash_service_factory.cc",
-      "mash_service_factory.h",
+      "mus_service_factory.cc",
+      "mus_service_factory.h",
     ]
     deps += [
       "//mash/quick_launch:lib",
