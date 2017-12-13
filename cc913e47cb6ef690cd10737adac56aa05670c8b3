@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e7d7924_45394b99",
+        "filename": "base/threading/sequenced_task_runner_handle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-13T14:19:30Z",
+      "side": 1,
+      "message": "I wonder if we should avoid changing base and use something like this in blink?\n\nIdeally we could make this test-only (in a special header).\n\nI could suggest adding a static function to public/platform/scheduler/test, which will a) make this visible to test code in content/renderer and blink b) ensure that it isn\u0027t used in production code c) avoid needing base/ changes.",
+      "range": {
+        "startLine": 25,
+        "startChar": 44,
+        "endLine": 25,
+        "endChar": 57
+      },
+      "revId": "cc913e47cb6ef690cd10737adac56aa05670c8b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
