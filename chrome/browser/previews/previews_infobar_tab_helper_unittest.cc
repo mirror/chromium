@@ -23,6 +23,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.h"
+#include "components/data_reduction_proxy/proto/data_store.pb.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/request_header/offline_page_header.h"
 #include "components/offline_pages/features/features.h"
@@ -238,6 +239,16 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
   offline_pages::OfflinePageHeader header;
   offline_pages::OfflinePageTabHelper::FromWebContents(web_contents())
       ->SetOfflinePage(item, header, true);
+
+  auto* data_reduction_proxy_settings =
+      DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
+          web_contents()->GetBrowserContext());
+
+  EXPECT_TRUE(data_reduction_proxy_settings->data_reduction_proxy_service()
+                  ->compression_stats()
+                  ->DataUsageMapForTesting()
+                  .empty());
+
   CallDidFinishNavigation();
 
   InfoBarService* infobar_service =
@@ -249,9 +260,6 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
   content::WebContentsTester::For(web_contents())
       ->NavigateAndCommit(GURL(kTestUrl));
 
-  auto* data_reduction_proxy_settings =
-      DataReductionProxyChromeSettingsFactory::GetForBrowserContext(
-          web_contents()->GetBrowserContext());
   EXPECT_EQ(0, data_reduction_proxy_settings->data_reduction_proxy_service()
                    ->compression_stats()
                    ->GetHttpReceivedContentLength());
@@ -262,6 +270,11 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
             data_reduction_proxy_settings->data_reduction_proxy_service()
                 ->compression_stats()
                 ->GetHttpOriginalContentLength());
+
+  EXPECT_FALSE(data_reduction_proxy_settings->data_reduction_proxy_service()
+                   ->compression_stats()
+                   ->DataUsageMapForTesting()
+                   .empty());
 
   EXPECT_FALSE(infobar_tab_helper->displayed_preview_infobar());
 }
