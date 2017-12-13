@@ -32,7 +32,7 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
  public:
   enum DisplayPeriod { kBlockPeriod, kSwapPeriod, kFailurePeriod };
 
-  RemoteFontFaceSource(CSSFontFace*, FontResource*, FontSelector*, FontDisplay);
+  RemoteFontFaceSource(CSSFontFace*, FontSelector*, FontDisplay);
   ~RemoteFontFaceSource() override;
   void Dispose();
 
@@ -49,6 +49,8 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
 
   bool IsInBlockPeriod() const override { return period_ == kBlockPeriod; }
   bool IsInFailurePeriod() const override { return period_ == kFailurePeriod; }
+
+  void MaybeTriggerWebFontsIntervention();
 
   // For UMA reporting
   bool HadBlankText() override { return histograms_.HadBlankText(); }
@@ -85,11 +87,11 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
       kFromNetwork
     };
 
-    FontLoadHistograms(DataSource data_source)
+    FontLoadHistograms()
         : load_start_time_(0),
           blank_paint_time_(0),
           is_long_limit_exceeded_(false),
-          data_source_(data_source) {}
+          data_source_(kFromUnknown) {}
     void LoadStarted();
     void FallbackFontPainted(DisplayPeriod);
     void LongLimitExceeded();
@@ -98,6 +100,12 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
     bool HadBlankText() { return blank_paint_time_; }
     DataSource GetDataSource() { return data_source_; }
     void MaySetDataSource(DataSource);
+
+    static DataSource DataSourceForLoadFinish(const FontResource* font) {
+      if (font->Url().ProtocolIsData())
+        return kFromDataURL;
+      return font->GetResponse().WasCached() ? kFromDiskCache : kFromNetwork;
+    }
 
    private:
     void RecordLoadTimeHistogram(const FontResource*, int duration);
@@ -110,7 +118,6 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
 
   void SwitchToSwapPeriod();
   void SwitchToFailurePeriod();
-  bool ShouldTriggerWebFontsIntervention();
   bool IsLowPriorityLoadingAllowedForRemoteFont() const override;
 
   // Our owning font face.
