@@ -1252,6 +1252,16 @@ RenderProcessHost* RenderProcessHostImpl::CreateRenderProcessHost(
     storage_partition_impl = static_cast<StoragePartitionImpl*>(
         BrowserContext::GetStoragePartition(browser_context, site_instance));
   }
+  // If we've made a StoragePartition for guests, stash the Site URL on it. This
+  // way, when we start a service worker inside this storage partition, it can
+  // create the appropriate SiteInstance for finding a process (e.g., it will
+  // try to start a worker from "https://example.com/sw.js" but needs to use the
+  // site URL "chrome-guest://blahblah" to get an appropriate process.)
+  if (is_for_guests_only &&
+      storage_partition_impl->site_for_service_worker().is_empty()) {
+    storage_partition_impl->set_site_for_service_worker(
+        site_instance->GetSiteURL());
+  }
 
   return new RenderProcessHostImpl(browser_context, storage_partition_impl,
                                    is_for_guests_only);
