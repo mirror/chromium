@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20f78638_ff184826",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T10:12:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fbf8829_43108e3f",
+      "range": {
+        "startLine": 118,
+        "startChar": 23,
+        "endLine": 118,
+        "endChar": 26
+      },
+      "revId": "79fbfdd8eb7bbb76afd93e5f10d51b1022b42980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41d5fbbd_ad972abf",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "79fbfdd8eb7bbb76afd93e5f10d51b1022b42980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66efb430_95f0c158",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T10:12:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41d5fbbd_ad972abf",
+      "range": {
+        "startLine": 165,
+        "startChar": 32,
+        "endLine": 166,
+        "endChar": 65
+      },
+      "revId": "79fbfdd8eb7bbb76afd93e5f10d51b1022b42980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "caf55304_d089b4fe",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T10:12:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dad412d_f83340e8",
+      "range": {
+        "startLine": 169,
+        "startChar": 59,
+        "endLine": 169,
+        "endChar": 66
+      },
+      "revId": "79fbfdd8eb7bbb76afd93e5f10d51b1022b42980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24b64f1a_7733b6cb",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "bc64953d_b0fc7003",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T10:12:08Z",
+      "side": 1,
+      "message": "Please see the ctor - it specifies the trait \"MayBlock\", so that file-IO would be permitted.",
+      "parentUuid": "24b64f1a_7733b6cb",
+      "range": {
+        "startLine": 174,
+        "startChar": 58,
+        "endLine": 175,
+        "endChar": 22
+      },
+      "revId": "79fbfdd8eb7bbb76afd93e5f10d51b1022b42980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad417278_232d50f8",
         "filename": "content/browser/webrtc/webrtc_local_event_log_manager.cc",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "79fbfdd8eb7bbb76afd93e5f10d51b1022b42980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e89f430_51d24621",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T10:12:08Z",
+      "side": 1,
+      "message": "I meant that we flush, close, then inform the observer. But I agree that the comment might be superfluous; removed.",
+      "parentUuid": "ad417278_232d50f8",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 23
+      },
+      "revId": "79fbfdd8eb7bbb76afd93e5f10d51b1022b42980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
