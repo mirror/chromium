@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c982ac92_4084130e",
+        "filename": "base/i18n/message_formatter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-12-13T00:54:06Z",
+      "side": 1,
+      "message": "Ah, yep looks like it. It will only \u003ddelete if the function is not implemented, so it missed this one.",
+      "parentUuid": "3218c932_2865616c",
+      "revId": "7cdd97b7ac8476c689b22b67d1fba6ffd1bb21a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e43bcee9_3a210ec2",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValue.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "7cdd97b7ac8476c689b22b67d1fba6ffd1bb21a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5694db0b_c791f2ed",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBValue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-12-13T00:54:06Z",
+      "side": 1,
+      "message": "Yeah, fair enough, this is a weird rule. Done.",
+      "parentUuid": "e43bcee9_3a210ec2",
+      "revId": "7cdd97b7ac8476c689b22b67d1fba6ffd1bb21a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
