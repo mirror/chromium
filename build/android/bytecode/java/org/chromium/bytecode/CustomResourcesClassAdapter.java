@@ -16,6 +16,7 @@ import static org.objectweb.asm.Opcodes.IF_ICMPGE;
 import static org.objectweb.asm.Opcodes.ILOAD;
 import static org.objectweb.asm.Opcodes.INVOKESPECIAL;
 import static org.objectweb.asm.Opcodes.INVOKESTATIC;
+import static org.objectweb.asm.Opcodes.INVOKEVIRTUAL;
 import static org.objectweb.asm.Opcodes.RETURN;
 
 import static org.chromium.bytecode.TypeUtils.ASSET_MANAGER;
@@ -28,6 +29,7 @@ import static org.chromium.bytecode.TypeUtils.CONTEXT_WRAPPER;
 import static org.chromium.bytecode.TypeUtils.DISPLAY_LEAK_ACTIVITY;
 import static org.chromium.bytecode.TypeUtils.INT;
 import static org.chromium.bytecode.TypeUtils.RESOURCES;
+import static org.chromium.bytecode.TypeUtils.STRING;
 import static org.chromium.bytecode.TypeUtils.THEME;
 import static org.chromium.bytecode.TypeUtils.VOID;
 
@@ -102,7 +104,8 @@ class CustomResourcesClassAdapter extends ClassVisitor {
                         + "#" + methodSignature);
             }
         }
-        return super.visitMethod(access, name, desc, signature, exceptions);
+        return new RewriteGetIdentifierMethodVisitor(
+                super.visitMethod(access, name, desc, signature, exceptions));
     }
 
     @Override
@@ -156,6 +159,31 @@ class CustomResourcesClassAdapter extends ClassVisitor {
             return mClassLoader.loadClass(className.replace('/', '.'));
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Remaps Resources.getIdentifier() method calls to use BuildHooksAndroid.
+     *
+     * resourceObj.getIdentifier(String, String, String) becomes:
+     * BuildHooksAndroid.getIdentifier(resourceObj, String, String, String);
+     */
+    private static final class RewriteGetIdentifierMethodVisitor extends MethodVisitor {
+        RewriteGetIdentifierMethodVisitor(MethodVisitor mv) {
+            super(ASM5, mv);
+        }
+
+        @Override
+        public void visitMethodInsn(
+                int opcode, String owner, String name, String desc, boolean itf) {
+            String methodName = "getIdentifier";
+            if (opcode == INVOKEVIRTUAL && owner.equals(RESOURCES) && name.equals(methodName)
+                    && desc.equals(TypeUtils.getMethodDescriptor(INT, STRING, STRING, STRING))) {
+                super.visitMethodInsn(INVOKESTATIC, BUILD_HOOKS_ANDROID, methodName,
+                        TypeUtils.getMethodDescriptor(INT, RESOURCES, STRING, STRING, STRING), itf);
+            } else {
+                super.visitMethodInsn(opcode, owner, name, desc, itf);
+            }
         }
     }
 
