@@ -20,9 +20,6 @@ class GL_EXPORT VSyncProviderWin : public gfx::VSyncProvider {
 
   // gfx::VSyncProvider overrides;
   void GetVSyncParameters(const UpdateVSyncCallback& callback) override;
-  bool GetVSyncParametersIfAvailable(base::TimeTicks* timebase,
-                                     base::TimeDelta* interval) override;
-  bool SupportGetVSyncParametersIfAvailable() override;
 
  private:
   gfx::AcceleratedWidget window_;

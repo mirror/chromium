@@ -1,4 +1,3 @@
-
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -198,8 +197,10 @@ void OffTheRecordProfileIOData::InitializeInternal(
           new net::DefaultChannelIDStore(nullptr)));
 
   using content::CookieStoreConfig;
-  std::unique_ptr<net::CookieStore> cookie_store(CreateCookieStore(
-      CookieStoreConfig(base::FilePath(), false, false, nullptr)));
+  std::unique_ptr<net::CookieStore> cookie_store(
+      CreateCookieStore(CookieStoreConfig(
+          base::FilePath(), CookieStoreConfig::EPHEMERAL_SESSION_COOKIES,
+          nullptr)));
   cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
 
   builder->SetCookieAndChannelIdStores(std::move(cookie_store),

@@ -8,7 +8,6 @@
 
 #include "base/bind_helpers.h"
 #include "base/callback.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
@@ -230,8 +229,9 @@ void SettingsResetPromptModel::ReportUmaMetrics() const {
                             homepage_reset_state(), RESET_STATE_MAX);
   UMA_HISTOGRAM_COUNTS_100("SettingsResetPrompt.NumberOfExtensionsToDisable",
                            extensions_to_disable().size());
-  base::UmaHistogramSparse("SettingsResetPrompt.DelayBeforePromptParam",
-                           prompt_config_->delay_before_prompt().InSeconds());
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
+      "SettingsResetPrompt.DelayBeforePromptParam",
+      prompt_config_->delay_before_prompt().InSeconds());
 }
 
 void SettingsResetPromptModel::InitDefaultSearchData() {

@@ -165,7 +165,7 @@ class BLINK_PLATFORM_EXPORT Platform {
   virtual WebCookieJar* CookieJar() { return nullptr; }
 
   // Must return non-null.
-  virtual WebClipboard* Clipboard();
+  virtual WebClipboard* Clipboard() { return nullptr; }
 
   // Must return non-null.
   virtual WebFileUtilities* GetFileUtilities() { return nullptr; }
@@ -599,10 +599,8 @@ class BLINK_PLATFORM_EXPORT Platform {
 
   // Fills in the WebMediaStream to capture from the WebMediaPlayer identified
   // by the second parameter.
-  virtual void CreateHTMLVideoElementCapturer(
-      WebMediaStream*,
-      WebMediaPlayer*,
-      scoped_refptr<base::SingleThreadTaskRunner>) {}
+  virtual void CreateHTMLVideoElementCapturer(WebMediaStream*,
+                                              WebMediaPlayer*) {}
   virtual void CreateHTMLAudioElementCapturer(WebMediaStream*,
                                               WebMediaPlayer*) {}
 

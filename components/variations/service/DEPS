@@ -1,6 +1,5 @@
 include_rules = [
   "+components/data_use_measurement/core",
-  "+components/encrypted_messages",
   "+components/metrics",
   "+components/network_time",
   "+components/pref_registry",

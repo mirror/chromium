@@ -646,7 +646,7 @@ class PreviewsStateResourceDispatcherHostDelegate
     ResourceDispatcherHost::Get()->SetDelegate(this);
   }
 
-  PreviewsState DetermineEnabledPreviews(
+  PreviewsState DeterminePreviewsState(
       net::URLRequest* request,
       content::ResourceContext* resource_context,
       content::PreviewsState previews_to_allow) override {

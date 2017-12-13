@@ -133,8 +133,8 @@ using ios::material::TimingFunction;
   // If set to |YES|, disables animations that tests would otherwise trigger.
   BOOL _unitTesting;
 
-  // Keeps track of the last known toolbar Y origin.
-  CGFloat _lastKnownToolbarYOrigin;
+  // Keeps track of the last known toolbar frame.
+  CGRect _lastKnownToolbarFrame;
 
   // Keeps track of last known trait collection used by the subviews.
   UITraitCollection* _lastKnownTraitCollection;
@@ -252,7 +252,6 @@ using ios::material::TimingFunction;
                                         font:[MDCTypography subheadFont]
                                    textColor:textColor
                                    tintColor:tintColor];
-  _locationBarView.clipsToBounds = YES;
   _keyboardDelegate = [[ToolbarAssistiveKeyboardDelegateImpl alloc] init];
   _keyboardDelegate.dispatcher = dispatcher;
   _keyboardDelegate.omniboxTextField = _locationBarView.textField;
@@ -1000,10 +999,10 @@ using ios::material::TimingFunction;
 
 - (void)toolbarDidLayout {
   CGRect frame = self.view.frame;
-  if (frame.origin.y == _lastKnownToolbarYOrigin)
+  if (CGRectEqualToRect(_lastKnownToolbarFrame, frame))
     return;
   [self updateToolbarAlphaForFrame:frame];
-  _lastKnownToolbarYOrigin = frame.origin.y;
+  _lastKnownToolbarFrame = frame;
 }
 
 - (void)windowDidChange {

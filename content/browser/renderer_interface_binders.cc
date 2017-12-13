@@ -122,7 +122,7 @@ void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
                     RenderProcessHost* host, const url::Origin& origin) {
         static_cast<RenderProcessHostImpl*>(host)
             ->permission_service_context()
-            .CreateServiceForWorker(std::move(request), origin);
+            .CreateService(std::move(request));
       }));
   parameterized_binder_registry_.AddInterface(base::BindRepeating(
       [](blink::mojom::LockManagerRequest request, RenderProcessHost* host,
@@ -140,8 +140,6 @@ void RendererInterfaceBinders::InitializeParameterizedBinderRegistry() {
             ->GetPlatformNotificationContext()
             ->CreateService(host->GetID(), origin, std::move(request));
       }));
-  parameterized_binder_registry_.AddInterface(
-      base::BindRepeating(&BackgroundFetchServiceImpl::Create));
 }
 
 RendererInterfaceBinders& GetRendererInterfaceBinders() {

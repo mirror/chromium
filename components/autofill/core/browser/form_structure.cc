@@ -596,7 +596,7 @@ bool FormStructure::IsAutofillFieldMetadataEnabled() {
 }
 
 std::string FormStructure::FormSignatureAsStr() const {
-  return base::NumberToString(form_signature());
+  return base::Uint64ToString(form_signature());
 }
 
 bool FormStructure::IsAutofillable() const {

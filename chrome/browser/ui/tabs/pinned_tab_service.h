@@ -20,7 +20,7 @@ class Profile;
 // pinned tabs to restore at startup. PinnedTabService listens for the
 // appropriate set of notifications to know it should update preferences.
 class PinnedTabService : public content::NotificationObserver,
-                         public BrowserListObserver,
+                         public chrome::BrowserListObserver,
                          public KeyedService {
  public:
   explicit PinnedTabService(Profile* profile);
@@ -32,7 +32,7 @@ class PinnedTabService : public content::NotificationObserver,
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
-  // BrowserListObserver:
+  // chrome::BrowserListObserver:
   void OnBrowserClosing(Browser* browser) override;
 
   Profile* profile_;

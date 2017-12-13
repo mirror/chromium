@@ -27,9 +27,7 @@ import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.PositionObserver;
 import org.chromium.content.browser.ViewPositionObserver;
 import org.chromium.content.browser.input.HandleViewResources;
-import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
-import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.display.DisplayAndroid.DisplayAndroidObserver;
 import org.chromium.ui.touch_selection.TouchHandleOrientation;
@@ -62,7 +60,6 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
     private final PopupWindow mContainer;
     private final PositionObserver.Listener mParentPositionListener;
     private ContentViewCore mContentViewCore;
-    private WebContents mWebContents;
     private PositionObserver mParentPositionObserver;
     private Drawable mDrawable;
 
@@ -186,8 +183,7 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
                 destroy();
             }
         };
-        mWebContents = mContentViewCore.getWebContents();
-        GestureListenerManager.fromWebContents(mWebContents).addListener(mGestureStateListener);
+        mContentViewCore.addGestureStateListener(mGestureStateListener);
         mNativeDrawable = nativeInit(HandleViewResources.getHandleHorizontalPaddingRatio());
     }
 
@@ -532,10 +528,8 @@ public class PopupTouchHandleDrawable extends View implements DisplayAndroidObse
         mDrawableObserverList.removeObserver(this);
         if (mContentViewCore == null) return;
         hide();
-
-        GestureListenerManager.fromWebContents(mWebContents).removeListener(mGestureStateListener);
+        mContentViewCore.removeGestureStateListener(mGestureStateListener);
         mContentViewCore = null;
-        mWebContents = null;
     }
 
     @CalledByNative

@@ -105,11 +105,8 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
   void DestroySystemClock();
 
   // Saves the name and install path of a compatible component.
-  void RegisterCompatibleCrosComponentPath(const std::string& name,
-                                           const base::FilePath& path);
-
-  // Removes the name and install path entry of a component.
-  void UnregisterCompatibleCrosComponentPath(const std::string& name);
+  void SetCompatibleCrosComponentPath(const std::string& name,
+                                      const base::FilePath& path);
 
   // Checks if the current installed component is compatible given a component
   // |name|. If compatible, sets |path| to be its installed path.

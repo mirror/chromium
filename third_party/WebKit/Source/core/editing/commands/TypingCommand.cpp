@@ -333,9 +333,11 @@ void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
     return;
   }
 
-  const size_t new_end = selection_start + text_length;
-  const SelectionInDOMTree& selection = CreateSelection(
-      new_end, new_end, EndingSelection().IsDirectional(), element);
+  const size_t end = selection_start + text_length;
+  const size_t start =
+      CompositionType() == kTextCompositionUpdate ? selection_start : end;
+  const SelectionInDOMTree& selection =
+      CreateSelection(start, end, EndingSelection().IsDirectional(), element);
   SetEndingSelection(SelectionForUndoStep::From(selection));
 }
 
@@ -387,7 +389,7 @@ void TypingCommand::InsertText(
   document.UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   const PlainTextRange selection_offsets =
-      GetSelectionOffsets(selection_for_insertion.AsSelection());
+      GetSelectionOffsets(frame->Selection().GetSelectionInDOMTree());
   if (selection_offsets.IsNull())
     return;
   const size_t selection_start = selection_offsets.Start();
@@ -595,17 +597,24 @@ void TypingCommand::InsertText(const String& text,
   text_to_insert_ = text;
 
   if (text.IsEmpty()) {
-    InsertTextRunWithoutNewlines(text, editing_state);
+    InsertTextRunWithoutNewlines(text, select_inserted_text, editing_state);
     return;
   }
   size_t selection_start = selection_start_;
+  // FIXME: Need to implement selectInsertedText for cases where more than one
+  // insert is involved. This requires support from insertTextRunWithoutNewlines
+  // and insertParagraphSeparator for extending an existing selection; at the
+  // moment they can either put the caret after what's inserted or select what's
+  // inserted, but there's no way to "extend selection" to include both an old
+  // selection that ends just before where we want to insert text and the newly
+  // inserted text.
   unsigned offset = 0;
   size_t newline;
   while ((newline = text.find('\n', offset)) != kNotFound) {
     if (newline > offset) {
       const size_t insertion_length = newline - offset;
       InsertTextRunWithoutNewlines(text.Substring(offset, insertion_length),
-                                   editing_state);
+                                   false, editing_state);
       if (editing_state->IsAborted())
         return;
 
@@ -623,10 +632,21 @@ void TypingCommand::InsertText(const String& text,
     ++selection_start;
   }
 
+  if (!offset) {
+    InsertTextRunWithoutNewlines(text, select_inserted_text, editing_state);
+    if (editing_state->IsAborted())
+      return;
+
+    AdjustSelectionAfterIncrementalInsertion(GetDocument().GetFrame(),
+                                             selection_start, text.length(),
+                                             editing_state);
+    return;
+  }
+
   if (text.length() > offset) {
     const size_t insertion_length = text.length() - offset;
     InsertTextRunWithoutNewlines(text.Substring(offset, insertion_length),
-                                 editing_state);
+                                 select_inserted_text, editing_state);
     if (editing_state->IsAborted())
       return;
 
@@ -634,43 +654,22 @@ void TypingCommand::InsertText(const String& text,
                                              selection_start, insertion_length,
                                              editing_state);
   }
-
-  if (!select_inserted_text)
-    return;
-
-  // If the caller wants the newly-inserted text to be selected, we select from
-  // the plain text offset corresponding to the beginning of the range (possibly
-  // collapsed) being replaced by the text insert, to wherever the selection was
-  // left after the final run of text was inserted.
-  ContainerNode* const editable =
-      RootEditableElementOrTreeScopeRootNodeOf(EndingSelection().Base());
-
-  const EphemeralRange new_selection_start_collapsed_range =
-      PlainTextRange(selection_start_, selection_start_).CreateRange(*editable);
-  const Position current_selection_end = EndingSelection().End();
-
-  const SelectionInDOMTree& new_selection =
-      SelectionInDOMTree::Builder()
-          .SetBaseAndExtent(new_selection_start_collapsed_range.StartPosition(),
-                            current_selection_end)
-          .Build();
-
-  SetEndingSelection(SelectionForUndoStep::From(new_selection));
 }
 
 void TypingCommand::InsertTextRunWithoutNewlines(const String& text,
+                                                 bool select_inserted_text,
                                                  EditingState* editing_state) {
   CompositeEditCommand* command;
   if (IsIncrementalInsertion()) {
     command = InsertIncrementalTextCommand::Create(
-        GetDocument(), text,
+        GetDocument(), text, select_inserted_text,
         composition_type_ == kTextCompositionNone
             ? InsertIncrementalTextCommand::
                   kRebalanceLeadingAndTrailingWhitespaces
             : InsertIncrementalTextCommand::kRebalanceAllWhitespaces);
   } else {
     command = InsertTextCommand::Create(
-        GetDocument(), text,
+        GetDocument(), text, select_inserted_text,
         composition_type_ == kTextCompositionNone
             ? InsertTextCommand::kRebalanceLeadingAndTrailingWhitespaces
             : InsertTextCommand::kRebalanceAllWhitespaces);

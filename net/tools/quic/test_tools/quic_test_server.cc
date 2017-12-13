@@ -97,7 +97,7 @@ class QuicTestDispatcher : public QuicSimpleDispatcher {
     QuicConnection* connection = new QuicConnection(
         id, client, helper(), alarm_factory(), CreatePerConnectionWriter(),
         /* owns_writer= */ true, Perspective::IS_SERVER,
-        GetSupportedVersions());
+        GetSupportedTransportVersions());
 
     QuicServerSessionBase* session = nullptr;
     if (stream_factory_ != nullptr || crypto_stream_factory_ != nullptr) {
@@ -150,7 +150,7 @@ QuicTestServer::QuicTestServer(std::unique_ptr<ProofSource> proof_source,
 QuicTestServer::QuicTestServer(
     std::unique_ptr<ProofSource> proof_source,
     const QuicConfig& config,
-    const ParsedQuicVersionVector& supported_versions,
+    const QuicTransportVersionVector& supported_versions,
     QuicHttpResponseCache* response_cache)
     : QuicServer(std::move(proof_source),
                  config,

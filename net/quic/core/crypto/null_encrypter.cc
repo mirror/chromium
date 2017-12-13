@@ -68,10 +68,6 @@ size_t NullEncrypter::GetNoncePrefixSize() const {
   return 0;
 }
 
-size_t NullEncrypter::GetIVSize() const {
-  return 0;
-}
-
 size_t NullEncrypter::GetMaxPlaintextSize(size_t ciphertext_size) const {
   return ciphertext_size - GetHashLength();
 }

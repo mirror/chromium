@@ -17,7 +17,7 @@ class ListValue;
 }
 
 class SigninErrorHandler : public content::WebUIMessageHandler,
-                           public BrowserListObserver {
+                           public chrome::BrowserListObserver {
  public:
   // Constructor of a message handler that handles messages from the
   // sign-in error WebUI.
@@ -28,7 +28,7 @@ class SigninErrorHandler : public content::WebUIMessageHandler,
   SigninErrorHandler(Browser* browser, bool is_system_profile);
   ~SigninErrorHandler() override;
 
-  // BrowserListObserver:
+  // chrome::BrowserListObserver:
   void OnBrowserRemoved(Browser* browser) override;
 
   // content::WebUIMessageHandler:

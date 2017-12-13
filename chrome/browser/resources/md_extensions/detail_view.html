@@ -10,6 +10,7 @@
 <link rel="import" href="chrome://resources/html/action_link.html">
 <link rel="import" href="chrome://resources/html/action_link_css.html">
 <link rel="import" href="chrome://resources/html/cr.html">
+<link rel="import" href="chrome://resources/html/i18n_behavior.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-icon/iron-icon.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-icons/iron-icons.html">
@@ -58,7 +59,7 @@
         background-color: white;
         margin: auto;
         min-height: 100%;
-        width: var(--cr-toolbar-field-width);
+        width: 680px;
       }
 
       #top-bar {
@@ -194,8 +195,7 @@
         </div>
         <div class="section continuation control-line" id="enable-section">
           <span class$="{{computeEnabledStyle_(data.state)}}">
-            [[computeEnabledText_(data.state, '$i18nPolymer{itemOn}',
-                '$i18nPolymer{itemOff}')]]
+            [[computeEnabledText_(data.state)]]
           </span>
           <div class="layout horizontal">
             <cr-tooltip-icon hidden$="[[!data.controlledInfo]]"
@@ -270,13 +270,11 @@
           <div class="section-content">[[data.id]]</div>
         </div>
         <template is="dom-if" if="[[inDevMode]]">
-          <div class="section block" id="inspectable-views">
+          <div class="section block" id="inspectable-views"
+              hidden="[[!data.views.length]]">
             <div class="section-title">$i18n{itemInspectViews}</div>
             <div class="section-content">
               <ul id="inspect-views">
-                <li hidden="[[data.views.length]]">
-                  $i18n{noActiveViews}
-                </li>
                 <template is="dom-repeat" items="[[data.views]]">
                   <li>
                     <a is="action-link" class="inspectable-view"

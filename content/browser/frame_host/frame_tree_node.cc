@@ -158,8 +158,7 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
           unique_name,
           false /* should enforce strict mixed content checking */,
           false /* is a potentially trustworthy unique origin */,
-          false /* has received a user gesture */,
-          false /* has received a user gesture before nav */),
+          false /* has received a user gesture */),
       is_created_by_script_(is_created_by_script),
       devtools_frame_token_(devtools_frame_token),
       frame_owner_properties_(frame_owner_properties),
@@ -577,13 +576,6 @@ void FrameTreeNode::DidStopLoading() {
 
   // Notify the RenderFrameHostManager of the event.
   render_manager()->OnDidStopLoading();
-
-  // Notify accessibility that the user is no longer trying to load or
-  // reload a page.
-  BrowserAccessibilityManager* manager =
-      current_frame_host()->browser_accessibility_manager();
-  if (manager)
-    manager->DidStopLoading();
 }
 
 void FrameTreeNode::DidChangeLoadProgress(double load_progress) {
@@ -652,11 +644,6 @@ void FrameTreeNode::BeforeUnloadCanceled() {
 void FrameTreeNode::OnSetHasReceivedUserGesture() {
   render_manager_.OnSetHasReceivedUserGesture();
   replication_state_.has_received_user_gesture = true;
-}
-
-void FrameTreeNode::OnSetHasReceivedUserGestureBeforeNavigation(bool value) {
-  render_manager_.OnSetHasReceivedUserGestureBeforeNavigation(value);
-  replication_state_.has_received_user_gesture_before_nav = value;
 }
 
 FrameTreeNode* FrameTreeNode::GetSibling(int relative_offset) const {

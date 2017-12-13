@@ -545,9 +545,9 @@ cr.define('interventions_internals', () => {
         .then((response) => {
           let statuses = $('previews-enabled-status');
 
-          response.statuses.forEach((value) => {
+          getSortedKeysByDescription(response.statuses).forEach((key) => {
+            let value = response.statuses.get(key);
             let message = value.description + ': ';
-            let key = value.htmlId;
             message += value.enabled ? 'Enabled' : 'Disabled';
 
             assert(!$(key), 'Component ' + key + ' already existed!');
@@ -569,15 +569,15 @@ cr.define('interventions_internals', () => {
         .then((response) => {
           let flags = $('previews-flags-table');
 
-          response.flags.forEach((flag) => {
-            let key = flag.htmlId;
+          getSortedKeysByDescription(response.flags).forEach((key) => {
+            let value = response.flags.get(key);
             assert(!$(key), 'Component ' + key + ' already existed!');
 
             let flagDescription = document.createElement('a');
             flagDescription.setAttribute('class', 'previews-flag-description');
             flagDescription.setAttribute('id', key + 'Description');
-            flagDescription.setAttribute('href', flag.link);
-            flagDescription.textContent = flag.description;
+            flagDescription.setAttribute('href', value.link);
+            flagDescription.textContent = value.description;
 
             let flagNameTd = document.createElement('td');
             flagNameTd.appendChild(flagDescription);
@@ -585,7 +585,7 @@ cr.define('interventions_internals', () => {
             let flagValueTd = document.createElement('td');
             flagValueTd.setAttribute('class', 'previews-flag-value');
             flagValueTd.setAttribute('id', key + 'Value');
-            flagValueTd.textContent = flag.value;
+            flagValueTd.textContent = value.value;
 
             let node = document.createElement('tr');
             node.setAttribute('class', 'previews-flag-container');

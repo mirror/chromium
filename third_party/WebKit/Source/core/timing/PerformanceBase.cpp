@@ -32,7 +32,6 @@
 #include "core/timing/PerformanceBase.h"
 
 #include <algorithm>
-#include "bindings/core/v8/V8ObjectBuilder.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentTiming.h"
 #include "core/dom/events/Event.h"
@@ -569,7 +568,7 @@ void PerformanceBase::ResumeSuspendedObservers() {
 }
 
 void PerformanceBase::DeliverObservationsTimerFired(TimerBase*) {
-  decltype(active_observers_) observers;
+  PerformanceObservers observers;
   active_observers_.Swap(observers);
   for (const auto& observer : observers) {
     if (observer->ShouldBeSuspended())
@@ -611,17 +610,6 @@ DOMHighResTimeStamp PerformanceBase::now() const {
   return MonotonicTimeToDOMHighResTimeStamp(MonotonicallyIncreasingTime());
 }
 
-ScriptValue PerformanceBase::toJSONForBinding(ScriptState* script_state) const {
-  V8ObjectBuilder result(script_state);
-  BuildJSONValue(result);
-  return result.GetScriptValue();
-}
-
-void PerformanceBase::BuildJSONValue(V8ObjectBuilder& builder) const {
-  builder.AddNumber("timeOrigin", timeOrigin());
-  // |memory| is not part of the spec, omitted.
-}
-
 void PerformanceBase::Trace(blink::Visitor* visitor) {
   visitor->Trace(frame_timing_buffer_);
   visitor->Trace(resource_timing_buffer_);
@@ -633,13 +621,6 @@ void PerformanceBase::Trace(blink::Visitor* visitor) {
   visitor->Trace(active_observers_);
   visitor->Trace(suspended_observers_);
   EventTargetWithInlineData::Trace(visitor);
-}
-
-void PerformanceBase::TraceWrappers(
-    const ScriptWrappableVisitor* visitor) const {
-  for (const auto& observer : observers_)
-    visitor->TraceWrappers(observer);
-  EventTargetWithInlineData::TraceWrappers(visitor);
 }
 
 }  // namespace blink

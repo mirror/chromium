@@ -37,7 +37,7 @@ import java.util.concurrent.TimeoutException;
  */
 @RunWith(ContentJUnit4ClassRunner.class)
 @CommandLineFlags.Add({"enable-features=VideoFullscreenOrientationLock",
-        MediaSwitches.AUTOPLAY_NO_GESTURE_REQUIRED_POLICY})
+        MediaSwitches.IGNORE_AUTOPLAY_RESTRICTIONS_FOR_TESTS})
 public class VideoFullscreenOrientationLockTest {
     @Rule
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();

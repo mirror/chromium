@@ -361,8 +361,6 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual void SetHasReceivedUserGesture(bool received_previously) {}
 
-  virtual void SetHasReceivedUserGestureBeforeNavigation(bool value) {}
-
   virtual void AbortClientNavigation() {}
 
   virtual WebSpellCheckPanelHostClient* SpellCheckPanelHostClient() const = 0;
@@ -385,6 +383,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual void SetVirtualTimePauser(
       WebScopedVirtualTimePauser virtual_time_pauser) {}
+
+  virtual Frame* FindFrame(const AtomicString& name) const = 0;
 };
 
 }  // namespace blink

@@ -34,8 +34,7 @@ class VaapiTFPPicture : public VaapiPicture {
                   int32_t picture_buffer_id,
                   const gfx::Size& size,
                   uint32_t texture_id,
-                  uint32_t client_texture_id,
-                  uint32_t texture_target);
+                  uint32_t client_texture_id);
 
   ~VaapiTFPPicture() override;
 

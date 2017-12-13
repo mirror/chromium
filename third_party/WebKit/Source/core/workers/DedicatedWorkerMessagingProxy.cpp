@@ -94,20 +94,6 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
   InitializeWorkerThread(std::move(global_scope_creation_params),
                          CreateBackingThreadStartupData(ToIsolate(document)),
                          script_url, stack_id, source_code);
-
-  // Post all queued tasks to the worker.
-  for (auto& queued_task : queued_early_tasks_) {
-    WTF::CrossThreadClosure task = CrossThreadBind(
-        &DedicatedWorkerObjectProxy::ProcessMessageFromWorkerObject,
-        CrossThreadUnretained(&WorkerObjectProxy()),
-        WTF::Passed(std::move(queued_task.message)),
-        WTF::Passed(std::move(queued_task.channels)),
-        CrossThreadUnretained(GetWorkerThread()), queued_task.stack_id);
-    GetWorkerThread()
-        ->GetTaskRunner(TaskType::kPostedMessage)
-        ->PostTask(BLINK_FROM_HERE, std::move(task));
-  }
-  queued_early_tasks_.clear();
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
@@ -128,12 +114,27 @@ void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
         ->GetTaskRunner(TaskType::kPostedMessage)
         ->PostTask(BLINK_FROM_HERE, std::move(task));
   } else {
-    // GetWorkerThread() returns nullptr while the worker thread is being
-    // created. In that case, push events into the queue and dispatch them in
-    // WorkerThreadCreated().
     queued_early_tasks_.push_back(
         QueuedTask{std::move(message), std::move(channels), stack_id});
   }
+}
+
+void DedicatedWorkerMessagingProxy::WorkerThreadCreated() {
+  DCHECK(IsParentContextThread());
+  ThreadedMessagingProxyBase::WorkerThreadCreated();
+
+  for (auto& queued_task : queued_early_tasks_) {
+    WTF::CrossThreadClosure task = CrossThreadBind(
+        &DedicatedWorkerObjectProxy::ProcessMessageFromWorkerObject,
+        CrossThreadUnretained(&WorkerObjectProxy()),
+        std::move(queued_task.message),
+        WTF::Passed(std::move(queued_task.channels)),
+        CrossThreadUnretained(GetWorkerThread()), queued_task.stack_id);
+    GetWorkerThread()
+        ->GetTaskRunner(TaskType::kPostedMessage)
+        ->PostTask(BLINK_FROM_HERE, std::move(task));
+  }
+  queued_early_tasks_.clear();
 }
 
 bool DedicatedWorkerMessagingProxy::HasPendingActivity() const {
@@ -165,24 +166,16 @@ void DedicatedWorkerMessagingProxy::DispatchErrorEvent(
   if (!worker_object_)
     return;
 
-  // We don't bother checking the AskedToTerminate() flag for dispatching the
-  // event on the owner context, because exceptions should *always* be reported
-  // even if the thread is terminated as the spec says:
-  //
-  // "Thus, error reports propagate up to the chain of dedicated workers up to
-  // the original Document, even if some of the workers along this chain have
-  // been terminated and garbage collected."
-  // https://html.spec.whatwg.org/multipage/workers.html#runtime-script-errors-2
+  // We don't bother checking the askedToTerminate() flag here, because
+  // exceptions should *always* be reported even if the thread is terminated.
+  // This is intentionally different than the behavior in MessageWorkerTask,
+  // because terminated workers no longer deliver messages (section 4.6 of the
+  // WebWorker spec), but they do report exceptions.
+
   ErrorEvent* event =
       ErrorEvent::Create(error_message, location->Clone(), nullptr);
   if (worker_object_->DispatchEvent(event) != DispatchEventResult::kNotCanceled)
     return;
-
-  // The worker thread can already be terminated.
-  if (!GetWorkerThread()) {
-    DCHECK(AskedToTerminate());
-    return;
-  }
 
   // The HTML spec requires to queue an error event using the DOM manipulation
   // task source.

@@ -235,7 +235,7 @@ void PpapiThread::PreCacheFontForFlash(const void* logfontw) {
 }
 
 void PpapiThread::SetActiveURL(const std::string& url) {
-  GetContentClient()->SetActiveURL(GURL(url), std::string());
+  GetContentClient()->SetActiveURL(GURL(url));
 }
 
 PP_Resource PpapiThread::CreateBrowserFont(

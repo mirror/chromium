@@ -39,7 +39,7 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
   // Takes ownership of |transport_socket|, which should already be connected
   // by the time Connect() is called.  If tunnel is true then on Connect()
   // this socket will establish an Http tunnel.
-  HttpProxyClientSocket(std::unique_ptr<ClientSocketHandle> transport_socket,
+  HttpProxyClientSocket(ClientSocketHandle* transport_socket,
                         const std::string& user_agent,
                         const HostPortPair& endpoint,
                         const HostPortPair& proxy_server,
@@ -77,16 +77,17 @@ class NET_EXPORT_PRIVATE HttpProxyClientSocket : public ProxyClientSocket {
   void ClearConnectionAttempts() override {}
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override {}
   int64_t GetTotalReceivedBytes() const override;
-  void ApplySocketTag(const SocketTag& tag) override;
 
   // Socket implementation.
   int Read(IOBuffer* buf,
            int buf_len,
            const CompletionCallback& callback) override;
+  // TODO(crbug.com/656607): Remove default value.
   int Write(IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback,
-            const NetworkTrafficAnnotationTag& traffic_annotation) override;
+            const NetworkTrafficAnnotationTag& traffic_annotation =
+                NO_TRAFFIC_ANNOTATION_BUG_656607) override;
   int SetReceiveBufferSize(int32_t size) override;
   int SetSendBufferSize(int32_t size) override;
   int GetPeerAddress(IPEndPoint* address) const override;

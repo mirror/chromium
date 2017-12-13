@@ -20,10 +20,9 @@
 #include "net/base/test_completion_callback.h"
 #include "net/log/net_log_source.h"
 #include "net/log/net_log_with_source.h"
-#include "net/socket/socket_tag.h"
 #include "net/socket/socket_test_util.h"
 #include "net/socket/stream_socket.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -83,7 +82,6 @@ class MockClientSocket : public net::StreamSocket {
   MOCK_METHOD0(ClearConnectionAttempts, void());
   MOCK_METHOD1(AddConnectionAttempts, void(const net::ConnectionAttempts&));
   MOCK_CONST_METHOD0(GetTotalReceivedBytes, int64_t());
-  MOCK_METHOD1(ApplySocketTag, void(const net::SocketTag&));
 };
 
 // Break up |data| into a bunch of chunked MockReads/Writes and push
@@ -185,9 +183,10 @@ class FakeSSLClientSocketTest : public testing::Test {
 
         scoped_refptr<net::IOBuffer> write_buf(
             new net::StringIOBuffer(kWriteTestData));
-        int write_status = fake_ssl_client_socket.Write(
-            write_buf.get(), arraysize(kWriteTestData),
-            test_completion_callback.callback(), TRAFFIC_ANNOTATION_FOR_TESTS);
+        int write_status =
+            fake_ssl_client_socket.Write(write_buf.get(),
+                                         arraysize(kWriteTestData),
+                                         test_completion_callback.callback());
         ExpectStatus(mode, arraysize(kWriteTestData), write_status,
                      &test_completion_callback);
       } else {

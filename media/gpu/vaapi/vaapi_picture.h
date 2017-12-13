@@ -57,8 +57,7 @@ class MEDIA_GPU_EXPORT VaapiPicture {
                int32_t picture_buffer_id,
                const gfx::Size& size,
                uint32_t texture_id,
-               uint32_t client_texture_id,
-               uint32_t texture_target);
+               uint32_t client_texture_id);
 
   scoped_refptr<VaapiWrapper> vaapi_wrapper_;
 
@@ -68,7 +67,6 @@ class MEDIA_GPU_EXPORT VaapiPicture {
   const gfx::Size size_;
   const uint32_t texture_id_;
   const uint32_t client_texture_id_;
-  const uint32_t texture_target_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

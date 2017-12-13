@@ -4,10 +4,9 @@
 
 #include "chromeos/components/tether/error_tolerant_ble_advertisement_impl.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/callback_forward.h"
+#include "base/memory/ptr_util.h"
 #include "chromeos/components/tether/ble_constants.h"
 #include "chromeos/components/tether/fake_ble_synchronizer.h"
 #include "device/bluetooth/bluetooth_advertisement.h"
@@ -24,7 +23,7 @@ const uint8_t kInvertedConnectionFlag = 0x01;
 const char kDeviceId[] = "deviceId";
 
 std::unique_ptr<cryptauth::DataWithTimestamp> GenerateAdvertisementData() {
-  return std::make_unique<cryptauth::DataWithTimestamp>("advertisement1", 1000L,
+  return base::MakeUnique<cryptauth::DataWithTimestamp>("advertisement1", 1000L,
                                                         2000L);
 }
 
@@ -39,11 +38,11 @@ class ErrorTolerantBleAdvertisementImplTest : public testing::Test {
     fake_advertisement_ = nullptr;
     stopped_callback_called_ = false;
 
-    fake_synchronizer_ = std::make_unique<FakeBleSynchronizer>();
+    fake_synchronizer_ = base::MakeUnique<FakeBleSynchronizer>();
 
-    advertisement_ = std::make_unique<ErrorTolerantBleAdvertisementImpl>(
+    advertisement_ = base::MakeUnique<ErrorTolerantBleAdvertisementImpl>(
         kDeviceId,
-        std::make_unique<cryptauth::DataWithTimestamp>(
+        base::MakeUnique<cryptauth::DataWithTimestamp>(
             *fake_advertisement_data_),
         fake_synchronizer_.get());
 

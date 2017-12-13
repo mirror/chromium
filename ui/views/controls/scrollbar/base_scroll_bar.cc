@@ -24,6 +24,9 @@
 #include "ui/views/controls/scrollbar/base_scroll_bar_thumb.h"
 #include "ui/views/widget/widget.h"
 
+#undef min
+#undef max
+
 namespace views {
 
 ///////////////////////////////////////////////////////////////////////////////

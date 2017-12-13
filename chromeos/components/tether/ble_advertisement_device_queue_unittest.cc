@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/memory/ptr_util.h"
 #include "chromeos/components/tether/ble_constants.h"
 #include "components/cryptauth/remote_device_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -25,7 +26,7 @@ class BleAdvertisementDeviceQueueTest : public testing::Test {
       : test_devices_(cryptauth::GenerateTestRemoteDevices(5)) {}
 
   void SetUp() override {
-    device_queue_ = std::make_unique<BleAdvertisementDeviceQueue>();
+    device_queue_ = base::MakeUnique<BleAdvertisementDeviceQueue>();
   }
 
   std::unique_ptr<BleAdvertisementDeviceQueue> device_queue_;

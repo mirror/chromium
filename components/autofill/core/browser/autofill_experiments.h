@@ -44,7 +44,8 @@ extern const base::Feature kAutofillSuppressDisusedCreditCards;
 extern const base::Feature kAutofillToolkitViewsCreditCardDialogsMac;
 extern const base::Feature kAutofillUpstreamAllowAllEmailDomains;
 extern const base::Feature kAutofillUpstreamRequestCvcIfMissing;
-extern const base::Feature kAutofillUpstreamSendPanFirstSix;
+extern const base::Feature kAutofillUpstreamShowGoogleLogo;
+extern const base::Feature kAutofillUpstreamShowNewUi;
 extern const base::Feature kAutofillUpstreamUseAutofillProfileComparator;
 extern const char kCreditCardSigninPromoImpressionLimitParamKey[];
 extern const char kAutofillCreditCardLastUsedDateShowExpirationDateKey[];
@@ -140,10 +141,13 @@ bool IsAutofillSendBillingCustomerNumberExperimentEnabled();
 // in the offer to save bubble if it was not detected during the checkout flow.
 bool IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled();
 
-// Returns whether the experiment is enabled where Chrome Upstream sends the
-// first six digits of the card PAN to Google Payments to help determine whether
-// card upload is possible.
-bool IsAutofillUpstreamSendPanFirstSixExperimentEnabled();
+// Returns whether the experiment is enabled where Chrome Upstream displays a
+// Google Logo in the save card bubble/infobar.
+bool IsAutofillUpstreamShowGoogleLogoExperimentEnabled();
+
+// Returns whether the experiment is enabled where Chrome Upstream displays a
+// new save card bubble/infobar design.
+bool IsAutofillUpstreamShowNewUiExperimentEnabled();
 
 #if defined(OS_MACOSX)
 // Returns whether the Credit Card Autofill Touch Bar experiment is enabled.

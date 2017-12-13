@@ -318,8 +318,9 @@ PerformanceServerTimingVector PerformanceResourceTiming::serverTiming() const {
   return serverTiming_;
 }
 
-void PerformanceResourceTiming::BuildJSONValue(V8ObjectBuilder& builder) const {
-  PerformanceEntry::BuildJSONValue(builder);
+void PerformanceResourceTiming::BuildJSONValue(ScriptState* script_state,
+                                               V8ObjectBuilder& builder) const {
+  PerformanceEntry::BuildJSONValue(script_state, builder);
   builder.AddString("initiatorType", initiatorType());
   builder.AddString("nextHopProtocol", nextHopProtocol());
   builder.AddNumber("workerStart", workerStart());
@@ -340,8 +341,7 @@ void PerformanceResourceTiming::BuildJSONValue(V8ObjectBuilder& builder) const {
 
   Vector<ScriptValue> serverTiming;
   for (unsigned i = 0; i < serverTiming_.size(); i++) {
-    serverTiming.push_back(
-        serverTiming_[i]->toJSONForBinding(builder.GetScriptState()));
+    serverTiming.push_back(serverTiming_[i]->toJSONForBinding(script_state));
   }
   builder.Add("serverTiming", serverTiming);
 }

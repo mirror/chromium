@@ -16,7 +16,7 @@ namespace ash {
 class ASH_EXPORT DesktopTaskSwitchMetricRecorder
     : public ::wm::ActivationChangeObserver {
  public:
-  DesktopTaskSwitchMetricRecorder();
+  explicit DesktopTaskSwitchMetricRecorder();
   ~DesktopTaskSwitchMetricRecorder() override;
 
   // wm::ActivationChangeObserver:

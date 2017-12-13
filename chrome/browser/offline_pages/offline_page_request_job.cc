@@ -692,21 +692,21 @@ bool OfflinePageRequestJob::CopyFragmentOnRedirect(const GURL& location) const {
 }
 
 void OfflinePageRequestJob::OnOpenComplete(int result) {
-  base::UmaHistogramSparse("OfflinePages.RequestJob.OpenFileErrorCode",
-                           -result);
+  UMA_HISTOGRAM_SPARSE_SLOWLY("OfflinePages.RequestJob.OpenFileErrorCode",
+                              -result);
 }
 
 void OfflinePageRequestJob::OnSeekComplete(int64_t result) {
   if (result < 0) {
-    base::UmaHistogramSparse("OfflinePages.RequestJob.SeekFileErrorCode",
-                             static_cast<int>(-result));
+    UMA_HISTOGRAM_SPARSE_SLOWLY("OfflinePages.RequestJob.SeekFileErrorCode",
+                                static_cast<int>(-result));
   }
 }
 
 void OfflinePageRequestJob::OnReadComplete(net::IOBuffer* buf, int result) {
   if (result < 0) {
-    base::UmaHistogramSparse("OfflinePages.RequestJob.ReadFileErrorCode",
-                             -result);
+    UMA_HISTOGRAM_SPARSE_SLOWLY("OfflinePages.RequestJob.ReadFileErrorCode",
+                                -result);
   }
 }
 

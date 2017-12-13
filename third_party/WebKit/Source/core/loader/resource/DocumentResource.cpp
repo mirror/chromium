@@ -32,13 +32,12 @@
 namespace blink {
 
 DocumentResource* DocumentResource::FetchSVGDocument(FetchParameters& params,
-                                                     ResourceFetcher* fetcher,
-                                                     ResourceClient* client) {
+                                                     ResourceFetcher* fetcher) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
             WebURLRequest::kFrameTypeNone);
   params.SetRequestContext(WebURLRequest::kRequestContextImage);
   return ToDocumentResource(
-      fetcher->RequestResource(params, SVGDocumentResourceFactory(), client));
+      fetcher->RequestResource(params, SVGDocumentResourceFactory()));
 }
 
 DocumentResource::DocumentResource(

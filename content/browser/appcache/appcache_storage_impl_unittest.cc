@@ -1671,7 +1671,7 @@ class AppCacheStorageImplTest : public testing::Test {
     void OnContentBlocked(int host_id, const GURL& manifest_url) override {}
     void OnSetSubresourceFactory(
         int host_id,
-        mojom::URLLoaderFactoryPtr url_loader_factory) override {}
+        mojo::MessagePipeHandle loader_factory_pipe_handle) override {}
 
     bool error_event_was_raised_;
   };

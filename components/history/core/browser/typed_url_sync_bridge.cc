@@ -90,6 +90,7 @@ TypedURLSyncBridge::TypedURLSyncBridge(
       history_backend_observer_(this) {
   DCHECK(history_backend_);
   DCHECK(sequence_checker_.CalledOnValidSequence());
+  DCHECK(sync_metadata_database_);
 }
 
 TypedURLSyncBridge::~TypedURLSyncBridge() {
@@ -191,6 +192,7 @@ base::Optional<ModelError> TypedURLSyncBridge::ApplySyncChanges(
     std::unique_ptr<MetadataChangeList> metadata_change_list,
     EntityChangeList entity_changes) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
+  DCHECK(sync_metadata_database_);
 
   std::vector<GURL> pending_deleted_urls;
   TypedURLVisitVector new_synced_visits;
@@ -201,7 +203,7 @@ base::Optional<ModelError> TypedURLSyncBridge::ApplySyncChanges(
   for (const EntityChange& entity_change : entity_changes) {
     if (entity_change.type() == EntityChange::ACTION_DELETE) {
       URLRow url_row;
-      int64_t url_id = TypedURLSyncMetadataDatabase::StorageKeyToURLID(
+      int64_t url_id = sync_metadata_database_->StorageKeyToURLID(
           entity_change.storage_key());
       if (!history_backend_->GetURLByID(url_id, &url_row)) {
         // Ignoring the case that there is no matching URLRow with URLID
@@ -261,11 +263,12 @@ base::Optional<ModelError> TypedURLSyncBridge::ApplySyncChanges(
 void TypedURLSyncBridge::GetData(StorageKeyList storage_keys,
                                  DataCallback callback) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
+  DCHECK(sync_metadata_database_);
 
   auto batch = base::MakeUnique<MutableDataBatch>();
   for (const std::string& key : storage_keys) {
     URLRow url_row;
-    URLID url_id = TypedURLSyncMetadataDatabase::StorageKeyToURLID(key);
+    URLID url_id = sync_metadata_database_->StorageKeyToURLID(key);
 
     ++num_db_accesses_;
     if (!history_backend_->GetURLByID(url_id, &url_row)) {
@@ -349,7 +352,6 @@ void TypedURLSyncBridge::OnURLVisited(HistoryBackend* history_backend,
                                       const RedirectList& redirects,
                                       base::Time visit_time) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
-  DCHECK(sync_metadata_database_);
 
   if (processing_syncer_changes_)
     return;  // These are changes originating from us, ignore.
@@ -368,7 +370,6 @@ void TypedURLSyncBridge::OnURLVisited(HistoryBackend* history_backend,
 void TypedURLSyncBridge::OnURLsModified(HistoryBackend* history_backend,
                                         const URLRows& changed_urls) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
-  DCHECK(sync_metadata_database_);
 
   if (processing_syncer_changes_)
     return;  // These are changes originating from us, ignore.
@@ -395,7 +396,6 @@ void TypedURLSyncBridge::OnURLsDeleted(HistoryBackend* history_backend,
                                        const URLRows& deleted_rows,
                                        const std::set<GURL>& favicon_urls) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
-  DCHECK(sync_metadata_database_);
 
   if (processing_syncer_changes_)
     return;  // These are changes originating from us, ignore.
@@ -441,12 +441,6 @@ void TypedURLSyncBridge::Init() {
 
   history_backend_observer_.Add(history_backend_);
   LoadMetadata();
-}
-
-void TypedURLSyncBridge::OnDatabaseError() {
-  sync_metadata_database_ = nullptr;
-  change_processor()->ReportError(FROM_HERE,
-                                  "HistoryDatabase encountered error");
 }
 
 int TypedURLSyncBridge::GetErrorPercentage() const {

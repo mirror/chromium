@@ -257,11 +257,6 @@ TEST(ObserverListTest, BasicTest) {
     it3 = it3;
     EXPECT_EQ(it3, it1);
     EXPECT_EQ(it3, it2);
-    // Iterator post increment.
-    ObserverList<Foo>::const_iterator it4 = it3++;
-    EXPECT_EQ(it4, it1);
-    EXPECT_EQ(it4, it2);
-    EXPECT_NE(it4, it3);
   }
 
   {
@@ -280,11 +275,6 @@ TEST(ObserverListTest, BasicTest) {
     it3 = it3;
     EXPECT_EQ(it3, it1);
     EXPECT_EQ(it3, it2);
-    // Iterator post increment.
-    ObserverList<Foo>::iterator it4 = it3++;
-    EXPECT_EQ(it4, it1);
-    EXPECT_EQ(it4, it2);
-    EXPECT_NE(it4, it3);
   }
 
   for (auto& observer : observer_list)

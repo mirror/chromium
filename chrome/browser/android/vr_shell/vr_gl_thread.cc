@@ -118,9 +118,6 @@ void VrGLThread::ExitPresent() {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
       FROM_HERE, base::Bind(&VrShell::ExitPresent, weak_vr_shell_));
-  // TODO(vollick): Ui should hang onto the appropriate pointer rather than
-  // bouncing through VrGLThread.
-  vr_shell_gl_->OnExitPresent();
 }
 
 void VrGLThread::ExitFullscreen() {

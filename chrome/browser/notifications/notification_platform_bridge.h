@@ -63,7 +63,7 @@ class NotificationPlatformBridge {
   virtual void SetReadyCallback(NotificationBridgeReadyCallback callback) = 0;
 
  protected:
-  NotificationPlatformBridge() = default;
+  NotificationPlatformBridge() {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridge);

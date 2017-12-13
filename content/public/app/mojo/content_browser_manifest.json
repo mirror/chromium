@@ -18,10 +18,10 @@
           "ui::mojom::Gpu"
         ],
         "renderer": [
+          "blink::mojom::BackgroundFetchService",
           "blink::mojom::BackgroundSyncService",
           "blink::mojom::BlobRegistry",
           "blink::mojom::BroadcastChannelProvider",
-          "blink::mojom::ClipboardHost",
           "blink::mojom::LockManager",
           "blink::mojom::Hyphenation",
           "blink::mojom::MimeRegistry",
@@ -29,6 +29,7 @@
           "blink::mojom::ReportingServiceProxy",
           "blink::mojom::WebDatabaseHost",
           "content::mojom::AppCacheBackend",
+          "content::mojom::ClipboardHost",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FileUtilitiesHost",
           "content::mojom::FrameSinkProvider",
@@ -123,7 +124,6 @@
           // impossible this week. Remove once sky/ken fix this.
           "autofill::mojom::AutofillDriver",
           "autofill::mojom::PasswordManagerDriver",
-          "blink::mojom::BackgroundFetchService",
           "blink::mojom::DedicatedWorkerFactory",
           "blink::mojom::LockManager",
           "blink::mojom::GeolocationService",
@@ -140,8 +140,6 @@
 
           // TODO(beng): figure out how to overlay test interfaces like this.
           "content::mojom::BrowserTarget",
-
-          "content::mojom::ColorChooserFactory",
 
           // InputInjector is only exposed when gpu benchmarking is enabled.
           "content::mojom::InputInjector",
@@ -194,7 +192,6 @@
     "navigation:service_worker": {
       "provides": {
         "renderer": [
-          "blink::mojom::BackgroundFetchService",
           "blink::mojom::LockManager",
           "blink::mojom::NotificationService",
           "blink::mojom::PermissionService",

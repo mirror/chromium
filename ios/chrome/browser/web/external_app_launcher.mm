@@ -15,7 +15,8 @@
 #import "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h"
 #import "ios/chrome/browser/web/external_apps_launch_policy_decider.h"
 #import "ios/chrome/browser/web/mailto_handler.h"
-#import "ios/chrome/browser/web/mailto_handler_manager.h"
+#import "ios/chrome/browser/web/mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/nullable_mailto_url_rewriter.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/third_party/material_components_ios/src/components/BottomSheet/src/MDCBottomSheetController.h"
 #import "net/base/mac/url_conversions.h"
@@ -98,7 +99,7 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
 // Shows a prompt in Material Design for the user to choose which mail client
 // app to use to handle a mailto:// URL.
 - (void)promptForMailClientWithURL:(const GURL&)URL
-              mailtoHandlerManager:(MailtoHandlerManager*)manager;
+                       URLRewriter:(MailtoURLRewriter*)rewriter;
 // Presents an alert controller with |prompt| and |openLabel| as button label
 // on the root view controller before launching an external app identified by
 // |URL|.
@@ -150,14 +151,14 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
 }
 
 - (void)promptForMailClientWithURL:(const GURL&)URL
-              mailtoHandlerManager:(MailtoHandlerManager*)manager {
+                       URLRewriter:(MailtoURLRewriter*)rewriter {
   GURL copiedURLToOpen = URL;
   OpenMailHandlerViewController* mailHandlerChooser =
       [[OpenMailHandlerViewController alloc]
-          initWithManager:manager
-          selectedHandler:^(MailtoHandler* _Nonnull handler) {
-            LaunchMailClientApp(copiedURLToOpen, handler);
-          }];
+          initWithRewriter:rewriter
+           selectedHandler:^(MailtoHandler* _Nonnull handler) {
+             LaunchMailClientApp(copiedURLToOpen, handler);
+           }];
   MDCBottomSheetController* bottomSheet = [[MDCBottomSheetController alloc]
       initWithContentViewController:mailHandlerChooser];
   [[[[UIApplication sharedApplication] keyWindow] rootViewController]
@@ -318,14 +319,14 @@ void LaunchMailClientApp(const GURL& URL, MailtoHandler* handler) {
 
   // Replaces |URL| with a rewritten URL if it is of mailto: scheme.
   if (gURL.SchemeIs(url::kMailToScheme)) {
-    MailtoHandlerManager* manager =
-        [MailtoHandlerManager mailtoHandlerManagerWithStandardHandlers];
-    NSString* handlerID = [manager defaultHandlerID];
+    MailtoURLRewriter* rewriter =
+        [NullableMailtoURLRewriter mailtoURLRewriterWithStandardHandlers];
+    NSString* handlerID = [rewriter defaultHandlerID];
     if (!handlerID) {
-      [self promptForMailClientWithURL:gURL mailtoHandlerManager:manager];
+      [self promptForMailClientWithURL:gURL URLRewriter:rewriter];
       return YES;
     }
-    MailtoHandler* handler = [manager defaultHandlerByID:handlerID];
+    MailtoHandler* handler = [rewriter defaultHandlerByID:handlerID];
     LaunchMailClientApp(gURL, handler);
     return YES;
   }

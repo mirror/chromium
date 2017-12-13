@@ -14,7 +14,7 @@ namespace metrics {
 
 // This class watches for any incognito window being opened from the time it is
 // instantiated to the time it is destroyed.
-class WindowedIncognitoObserver : public BrowserListObserver {
+class WindowedIncognitoObserver : public chrome::BrowserListObserver {
  public:
   WindowedIncognitoObserver();
   ~WindowedIncognitoObserver() override;
@@ -32,7 +32,7 @@ class WindowedIncognitoObserver : public BrowserListObserver {
   }
 
  private:
-  // BrowserListObserver implementation.
+  // chrome::BrowserListObserver implementation.
   void OnBrowserAdded(Browser* browser) override;
 
   // Gets set if an incognito window was opened during the lifetime of the

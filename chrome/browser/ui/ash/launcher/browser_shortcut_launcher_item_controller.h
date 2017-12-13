@@ -21,8 +21,9 @@ class WebContents;
 
 // Shelf item delegate for a browser shortcut; only one such item should exist.
 // This item shows an application menu that lists open browser windows or tabs.
-class BrowserShortcutLauncherItemController : public ash::ShelfItemDelegate,
-                                              public BrowserListObserver {
+class BrowserShortcutLauncherItemController
+    : public ash::ShelfItemDelegate,
+      public chrome::BrowserListObserver {
  public:
   explicit BrowserShortcutLauncherItemController(ash::ShelfModel* shelf_model);
 
@@ -64,7 +65,7 @@ class BrowserShortcutLauncherItemController : public ash::ShelfItemDelegate,
   // Get a list of active browsers.
   BrowserList::BrowserVector GetListOfActiveBrowsers();
 
-  // BrowserListObserver:
+  // chrome::BrowserListObserver:
   void OnBrowserClosing(Browser* browser) override;
 
   ash::ShelfModel* shelf_model_;

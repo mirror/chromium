@@ -16,7 +16,7 @@ struct GoodiesDisplayerTestInfo;
 
 // Handles display of OOBE Goodies page on first display of browser window on
 // new Chromebooks.
-class GoodiesDisplayer : public BrowserListObserver {
+class GoodiesDisplayer : public chrome::BrowserListObserver {
  public:
   // ChromeOS Goodies page for new Chromebook promos.
   static const char kGoodiesURL[];
@@ -32,7 +32,7 @@ class GoodiesDisplayer : public BrowserListObserver {
   static void Delete();
 
  private:
-  // Overridden from BrowserListObserver.
+  // Overridden from chrome::BrowserListObserver.
   void OnBrowserSetLastActive(Browser* browser) override;
 
   DISALLOW_COPY_AND_ASSIGN(GoodiesDisplayer);

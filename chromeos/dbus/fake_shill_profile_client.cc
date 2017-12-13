@@ -9,7 +9,6 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
-#include "base/containers/adapters.h"
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -229,42 +228,24 @@ void FakeShillProfileClient::GetProfilePathsContainingService(
     const std::string& service_path,
     std::vector<std::string>* profiles) {
   for (const auto& profile : profiles_) {
-    if (profile->entries.FindKeyOfType(service_path,
-                                       base::Value::Type::DICTIONARY)) {
+    if (GetServiceDataFromProfile(profile.get(), service_path, nullptr))
       profiles->push_back(profile->path);
-    }
   }
 }
 
 bool FakeShillProfileClient::GetService(const std::string& service_path,
                                         std::string* profile_path,
                                         base::DictionaryValue* properties) {
-  DCHECK(profile_path);
-  DCHECK(properties);
-
   properties->Clear();
-  // Returns the entry added latest.
-  for (const auto& profile : base::Reversed(profiles_)) {
-    const base::Value* entry = profile->entries.FindKeyOfType(
-        service_path, base::Value::Type::DICTIONARY);
-    if (entry) {
-      *profile_path = profile->path;
-      *properties = static_cast<base::DictionaryValue&&>(entry->Clone());
-      return true;
-    }
-  }
-  return false;
-}
 
-bool FakeShillProfileClient::HasService(const std::string& service_path) {
+  bool found_profile = false;
   for (const auto& profile : profiles_) {
-    if (profile->entries.FindKeyOfType(service_path,
-                                       base::Value::Type::DICTIONARY)) {
-      return true;
+    if (GetServiceDataFromProfile(profile.get(), service_path, properties)) {
+      found_profile = true;
+      *profile_path = profile->path;
     }
   }
-
-  return false;
+  return found_profile;
 }
 
 void FakeShillProfileClient::ClearProfiles() {
@@ -281,6 +262,22 @@ FakeShillProfileClient::ProfileProperties* FakeShillProfileClient::GetProfile(
   if (!error_callback.is_null())
     error_callback.Run("Error.InvalidProfile", "Invalid profile");
   return nullptr;
+}
+
+bool FakeShillProfileClient::GetServiceDataFromProfile(
+    const FakeShillProfileClient::ProfileProperties* profile,
+    const std::string& service_path,
+    base::DictionaryValue* properties) {
+  const base::DictionaryValue* entry;
+  if (!profile->entries.GetDictionaryWithoutPathExpansion(service_path,
+                                                          &entry)) {
+    return false;
+  }
+
+  if (properties)
+    properties->MergeDictionary(entry);
+
+  return true;
 }
 
 }  // namespace chromeos

@@ -173,8 +173,6 @@ public abstract class ChromeFeatureList {
     public static final String CHROME_HOME_PROMO = "ChromeHomePromo";
     public static final String CHROME_HOME_PROMO_INFO_ONLY = "ChromeHomePromoInfoOnly";
     public static final String CHROME_HOME_PROMO_ON_STARTUP = "ChromeHomePromoOnStartup";
-    public static final String CHROME_HOME_PULL_TO_REFRESH_IPH_AT_TOP =
-            "ChromeHomePullToRefreshIphAtTop";
     public static final String CHROME_HOME_SHOW_GOOGLE_G_WHEN_URL_CLEARED =
             "ChromeHomeShowGoogleGWhenUrlCleared";
     public static final String CHROME_HOME_SURVEY = "ChromeHomeSurvey";
@@ -225,6 +223,7 @@ public abstract class ChromeFeatureList {
     public static final String NTP_MODERN_LAYOUT = "NTPModernLayout";
     public static final String NTP_FOREIGN_SESSIONS_SUGGESTIONS = "NTPForeignSessionsSuggestions";
     public static final String NTP_LAUNCH_AFTER_INACTIVITY = "NTPLaunchAfterInactivity";
+    public static final String NTP_OFFLINE_PAGES_FEATURE_NAME = "NTPOfflinePages";
     public static final String NTP_SHOW_GOOGLE_G_IN_OMNIBOX = "NTPShowGoogleGInOmnibox";
     public static final String NTP_SNIPPETS_INCREASED_VISIBILITY = "NTPSnippetsIncreasedVisibility";
     public static final String OMNIBOX_SPARE_RENDERER = "OmniboxSpareRenderer";

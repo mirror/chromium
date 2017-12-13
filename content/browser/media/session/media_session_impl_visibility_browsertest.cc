@@ -103,9 +103,7 @@ class MediaSessionImplVisibilityBrowserTest
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(
-        switches::kAutoplayPolicy,
-        switches::autoplay::kNoUserGestureRequiredPolicy);
+    command_line->AppendSwitch(switches::kIgnoreAutoplayRestrictionsForTests);
 #if !defined(OS_ANDROID)
     command_line->AppendSwitch(switches::kEnableAudioFocus);
 #endif  // !defined(OS_ANDROID)

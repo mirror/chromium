@@ -106,7 +106,7 @@ class TestServerSession : public QuicServerSessionBase {
       QuicCompressedCertsCache* compressed_certs_cache) override {
     return new QuicCryptoServerStream(
         crypto_config, compressed_certs_cache,
-        GetQuicReloadableFlag(enable_quic_stateless_reject_support), this,
+        FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support, this,
         stream_helper());
   }
 
@@ -116,7 +116,8 @@ class TestServerSession : public QuicServerSessionBase {
 
 const size_t kMaxStreamsForTest = 10;
 
-class QuicServerSessionBaseTest : public QuicTestWithParam<ParsedQuicVersion> {
+class QuicServerSessionBaseTest
+    : public QuicTestWithParam<QuicTransportVersion> {
  protected:
   QuicServerSessionBaseTest()
       : QuicServerSessionBaseTest(crypto_test_utils::ProofSourceForTesting()) {}
@@ -138,7 +139,7 @@ class QuicServerSessionBaseTest : public QuicTestWithParam<ParsedQuicVersion> {
 
     connection_ = new StrictMock<MockQuicConnection>(
         &helper_, &alarm_factory_, Perspective::IS_SERVER,
-        SupportedVersions(GetParam()));
+        SupportedTransportVersions(GetParam()));
     session_.reset(new TestServerSession(
         config_, connection_, &owner_, &stream_helper_, &crypto_config_,
         &compressed_certs_cache_, &response_cache_));
@@ -190,7 +191,7 @@ MATCHER_P(EqualsProto, network_params, "") {
 
 INSTANTIATE_TEST_CASE_P(Tests,
                         QuicServerSessionBaseTest,
-                        ::testing::ValuesIn(AllSupportedVersions()));
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 TEST_P(QuicServerSessionBaseTest, CloseStreamDueToReset) {
   // Open a stream, then reset it.
   // Send two bytes of payload to open it.
@@ -365,7 +366,7 @@ class MockQuicCryptoServerStream : public QuicCryptoServerStream {
       : QuicCryptoServerStream(
             crypto_config,
             compressed_certs_cache,
-            GetQuicReloadableFlag(enable_quic_stateless_reject_support),
+            FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support,
             session,
             helper) {}
   ~MockQuicCryptoServerStream() override {}
@@ -569,21 +570,21 @@ class StreamMemberLifetimeTest : public QuicServerSessionBaseTest {
 
 INSTANTIATE_TEST_CASE_P(StreamMemberLifetimeTests,
                         StreamMemberLifetimeTest,
-                        ::testing::ValuesIn(AllSupportedVersions()));
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 // Trigger an operation which causes an async invocation of
 // ProofSource::GetProof.  Delay the completion of the operation until after the
 // stream has been destroyed, and verify that there are no memory bugs.
 TEST_P(StreamMemberLifetimeTest, Basic) {
-  SetQuicReloadableFlag(enable_quic_stateless_reject_support, true);
-  SetQuicReloadableFlag(quic_use_cheap_stateless_rejects, true);
+  FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support = true;
+  FLAGS_quic_reloadable_flag_quic_use_cheap_stateless_rejects = true;
 
   const QuicClock* clock = helper_.GetClock();
-  ParsedQuicVersion version = AllSupportedVersions().front();
+  QuicTransportVersion version = AllSupportedTransportVersions().front();
   CryptoHandshakeMessage chlo = crypto_test_utils::GenerateDefaultInchoateCHLO(
-      clock, version.transport_version, &crypto_config_);
+      clock, version, &crypto_config_);
   chlo.SetVector(kCOPT, QuicTagVector{kSREJ});
-  std::vector<ParsedQuicVersion> packet_version_list = {version};
+  std::vector<QuicTransportVersion> packet_version_list = {version};
   std::unique_ptr<QuicEncryptedPacket> packet(ConstructEncryptedPacket(
       1, true, false, 1,
       string(chlo.GetSerialized(Perspective::IS_CLIENT)

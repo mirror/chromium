@@ -31,6 +31,7 @@
 #include "components/omnibox/browser/omnibox_edit_model.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_popup_model.h"
+#include "components/omnibox/browser/suggestion_answer.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/toolbar_model.h"
 #include "content/public/browser/web_contents.h"
@@ -483,9 +484,12 @@ void OmniboxViewViews::OnTemporaryTextMaybeChanged(
     saved_temporary_selection_ = GetSelectedRange();
 
   // Get friendly accessibility label.
+  base::string16 description =
+      match.answer ? match.answer->second_line().AccessibleText()
+                   : match.description;
   friendly_suggestion_text_ = AutocompleteMatchType::ToAccessibilityLabel(
-      match, display_text, model()->popup_model()->selected_line(),
-      model()->result().size(), &friendly_suggestion_text_prefix_length_);
+      match.type, display_text, description,
+      &friendly_suggestion_text_prefix_length_);
 
   SetWindowTextAndCaretPos(display_text, display_text.length(), false,
                            notify_text_changed);
@@ -873,8 +877,6 @@ void OmniboxViewViews::OnBlur() {
   else
     CloseOmniboxPopup();
 
-  OnShiftKeyChanged(false);
-
   // Tell the model to reset itself.
   model()->OnKillFocus();
 
@@ -990,8 +992,6 @@ bool OmniboxViewViews::HandleKeyEvent(views::Textfield* textfield,
     // The omnibox contents may change while the control key is pressed.
     if (event.key_code() == ui::VKEY_CONTROL)
       model()->OnControlKeyChanged(false);
-    else if (event.key_code() == ui::VKEY_SHIFT)
-      OnShiftKeyChanged(false);
 
     return false;
   }
@@ -1016,9 +1016,6 @@ bool OmniboxViewViews::HandleKeyEvent(views::Textfield* textfield,
       return model()->OnEscapeKeyPressed();
     case ui::VKEY_CONTROL:
       model()->OnControlKeyChanged(true);
-      break;
-    case ui::VKEY_SHIFT:
-      OnShiftKeyChanged(true);
       break;
     case ui::VKEY_DELETE:
       if (shift && model()->popup_model()->IsOpen())

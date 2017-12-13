@@ -141,6 +141,7 @@
       'ToTLinuxASan': 'clang_tot_asan_lsan_static_release',
       'ToTLinuxASanLibfuzzer': 'release_libfuzzer_asan_clang_tot',
       'ToTLinuxMSan': 'clang_tot_msan_release',
+      'ToTLinuxLLD': 'clang_tot_lld_release_shared',
       'ToTLinuxThinLTO': 'clang_tot_release_full_symbols_thin_lto_static_use_lld',
       'ToTLinuxUBSanVptr': 'clang_tot_edge_ubsan_no_recover_hack_static_release',
       'ToTMac': 'clang_tot_minimal_symbols_shared_release',
@@ -358,7 +359,7 @@
       'UBSan Release': 'ubsan_release_bot',
       'UBSan vptr Release': 'ubsan_vptr_edge_release_bot',
       'Win ASan Release Media': 'asan_fuzzer_v8_heap_chrome_with_codecs_release_bot_x86',
-      'Win ASan Release': 'asan_fuzzer_v8_heap_release_bot',
+      'Win ASan Release': 'asan_fuzzer_v8_heap_release_bot_x86',
       'Win SyzyASAN LKGR': 'syzyasan_no_pch_release_x86',
     },
 
@@ -1045,8 +1046,8 @@
       'clang', 'asan', 'fuzzer', 'v8_heap', 'chrome_with_codecs', 'release_bot', 'x86',
     ],
 
-    'asan_fuzzer_v8_heap_release_bot': [
-      'clang', 'asan', 'fuzzer', 'v8_heap', 'release_bot',
+    'asan_fuzzer_v8_heap_release_bot_x86': [
+      'clang', 'asan', 'fuzzer', 'v8_heap', 'release_bot', 'x86',
     ],
 
     'asan_lsan_chromeos_release_trybot': [
@@ -1218,6 +1219,11 @@
 
     'clang_tot_release_full_symbols_thin_lto_static_use_lld': [
       'clang_tot', 'release', 'full_symbols', 'thin_lto', 'static', 'use_lld',
+    ],
+
+    'clang_tot_lld_release_shared': [
+      # TODO(crbug.com/605819): Enable debug info in release builds.
+      'clang_tot', 'release', 'shared', 'use_lld',
     ],
 
     'clang_tot_shared_debug': [

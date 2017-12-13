@@ -23,7 +23,6 @@
 #include "base/test/simple_test_tick_clock.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
-#include "components/viz/common/features.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/gl_helper.h"
@@ -500,9 +499,11 @@ class FakeDelegatedFrameHostClientAura : public DelegatedFrameHostClientAura,
 class FakeRenderWidgetHostViewAura : public RenderWidgetHostViewAura {
  public:
   FakeRenderWidgetHostViewAura(RenderWidgetHost* widget,
-                               bool is_guest_view_hack)
+                               bool is_guest_view_hack,
+                               bool enable_surface_synchronization)
       : RenderWidgetHostViewAura(widget,
                                  is_guest_view_hack,
+                                 enable_surface_synchronization,
                                  false /* is_mus_browser_plugin_guest */),
         delegated_frame_host_client_(
             new FakeDelegatedFrameHostClientAura(this)) {
@@ -559,11 +560,7 @@ class FakeRenderWidgetHostViewAura : public RenderWidgetHostViewAura {
   }
 
   bool HasPrimarySurface() const {
-    return GetDelegatedFrameHost()->HasPrimarySurface();
-  }
-
-  bool HasFallbackSurface() const {
-    return GetDelegatedFrameHost()->HasFallbackSurface();
+    return GetDelegatedFrameHost()->HasPrimarySurfaceForTesting();
   }
 
   bool released_front_lock_active() const {
@@ -710,7 +707,7 @@ class RenderWidgetHostViewAuraTest : public testing::Test {
         std::move(delegated_frame_host_client);
   }
 
-  void SetUpEnvironment() {
+  void SetUpEnvironment(bool enable_surface_synchronization) {
     mojo_feature_list_.InitAndEnableFeature(features::kMojoInputMessages);
     ImageTransportFactory::SetFactory(
         std::make_unique<NoTransportImageTransportFactory>());
@@ -733,7 +730,8 @@ class RenderWidgetHostViewAuraTest : public testing::Test {
     delegates_.back()->set_widget_host(parent_host_);
     const bool is_mus_browser_plugin_guest = false;
     parent_view_ = new RenderWidgetHostViewAura(
-        parent_host_, is_guest_view_hack_, is_mus_browser_plugin_guest);
+        parent_host_, is_guest_view_hack_, enable_surface_synchronization,
+        is_mus_browser_plugin_guest);
     parent_view_->InitAsChild(nullptr);
     aura::client::ParentWindowWithContext(parent_view_->GetNativeView(),
                                           aura_test_helper_->root_window(),
@@ -745,7 +743,8 @@ class RenderWidgetHostViewAuraTest : public testing::Test {
                                                     process_host_, routing_id);
     delegates_.back()->set_widget_host(widget_host_);
     widget_host_->Init();
-    view_ = new FakeRenderWidgetHostViewAura(widget_host_, is_guest_view_hack_);
+    view_ = new FakeRenderWidgetHostViewAura(widget_host_, is_guest_view_hack_,
+                                             enable_surface_synchronization);
     base::RunLoop().RunUntilIdle();
   }
 
@@ -778,7 +777,9 @@ class RenderWidgetHostViewAuraTest : public testing::Test {
     ImageTransportFactory::Terminate();
   }
 
-  void SetUp() override { SetUpEnvironment(); }
+  void SetUp() override {
+    SetUpEnvironment(false /* enable_surface_synchronization */);
+  }
 
   void TearDown() override { TearDownEnvironment(); }
 
@@ -856,7 +857,7 @@ class RenderWidgetHostViewAuraTest : public testing::Test {
     if (render_widget_host_delegate()->GetFocusedRenderWidgetHost(
             widget_host_) != view->GetRenderWidgetHost()) {
       render_widget_host_delegate()->set_focused_widget(
-          view->GetRenderWidgetHostImpl());
+          RenderWidgetHostImpl::From(view->GetRenderWidgetHost()));
     }
 
     TextInputManager* manager =
@@ -911,13 +912,8 @@ class RenderWidgetHostViewAuraTest : public testing::Test {
 class RenderWidgetHostViewAuraSurfaceSynchronizationTest
     : public RenderWidgetHostViewAuraTest {
   void SetUp() override {
-    surface_synchronization_feature_list_.InitAndEnableFeature(
-        features::kEnableSurfaceSynchronization);
-    SetUpEnvironment();
+    SetUpEnvironment(true /* enable_surface_synchronization */);
   }
-
- private:
-  base::test::ScopedFeatureList surface_synchronization_feature_list_;
 };
 
 class RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest
@@ -2345,7 +2341,7 @@ TEST_F(RenderWidgetHostViewAuraTest, AutoResizeWithScale) {
                                                 run_loop.QuitClosure());
   run_loop.Run();
 
-  ASSERT_EQ(1u, sink_->message_count());
+  EXPECT_EQ(1u, sink_->message_count());
   {
     const IPC::Message* msg = sink_->GetMessageAt(0);
     EXPECT_EQ(static_cast<uint32_t>(ViewMsg_SetLocalSurfaceIdForAutoResize::ID),
@@ -3111,33 +3107,8 @@ TEST_F(RenderWidgetHostViewAuraTest, OutputSurfaceIdChange) {
   view_->RunOnCompositingDidCommit();
 }
 
-// This test verifies that if a fallback surface activates on a hidden view
-// then the fallback is dropped.
-TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-       DropFallbackWhenHidden) {
-  view_->InitAsChild(nullptr);
-  aura::client::ParentWindowWithContext(
-      view_->GetNativeView(), parent_view_->GetNativeView()->GetRootWindow(),
-      gfx::Rect());
-
-  EXPECT_FALSE(view_->HasPrimarySurface());
-  ASSERT_TRUE(view_->delegated_frame_host_);
-
-  view_->Hide();
-  view_->SetSize(gfx::Size(300, 300));
-  EXPECT_FALSE(view_->HasPrimarySurface());
-
-  // Submitting a CompositorFrame should not update the fallback SurfaceId
-  view_->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId,
-      MakeDelegatedFrame(1.f, gfx::Size(400, 400), gfx::Rect(400, 400)),
-      nullptr);
-  EXPECT_FALSE(view_->HasPrimarySurface());
-  EXPECT_FALSE(view_->HasFallbackSurface());
-}
-
-// This test verifies that the primary SurfaceId is populated on resize and
-// the fallback SurfaceId is populated on SubmitCompositorFrame.
+// This test verifies that the primary SurfaceInfo is populated on resize and
+// the fallback SurfaceInfo is populated on SubmitCompositorFrame.
 TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest, SurfaceChanges) {
   view_->InitAsChild(nullptr);
   aura::client::ParentWindowWithContext(
@@ -3152,18 +3123,18 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest, SurfaceChanges) {
   view_->SetSize(gfx::Size(300, 300));
   ASSERT_TRUE(view_->HasPrimarySurface());
   EXPECT_EQ(gfx::Size(300, 300), view_->window_->layer()->size());
-  EXPECT_FALSE(view_->HasFallbackSurface());
+  EXPECT_FALSE(view_->window_->layer()->GetFallbackSurfaceId()->is_valid());
   EXPECT_EQ(gfx::Size(300, 300),
             view_->delegated_frame_host_->CurrentFrameSizeInDipForTesting());
 
-  // Resizing should update the primary SurfaceId.
+  // Resizing should update the primary SurfaceInfo.
   view_->SetSize(gfx::Size(400, 400));
   EXPECT_EQ(gfx::Size(400, 400), view_->window_->layer()->size());
   EXPECT_FALSE(view_->window_->layer()->GetFallbackSurfaceId()->is_valid());
   EXPECT_EQ(gfx::Size(400, 400),
             view_->delegated_frame_host_->CurrentFrameSizeInDipForTesting());
 
-  // Submitting a CompositorFrame should update the fallback SurfaceId
+  // Submitting a CompositorFrame should update the fallback SurfaceInfo
   view_->SubmitCompositorFrame(
       kArbitraryLocalSurfaceId,
       MakeDelegatedFrame(1.f, gfx::Size(400, 400), gfx::Rect(400, 400)),
@@ -3171,7 +3142,32 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest, SurfaceChanges) {
   EXPECT_EQ(gfx::Size(400, 400), view_->window_->layer()->size());
 }
 
-// This test verifies that the primary SurfaceId is updated on device scale
+// This test verifies that even if the primary surface is evicted after
+// the view is hidden, when it is shown again, the layer is repopulated.
+TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest, HideThenShow) {
+  view_->InitAsChild(nullptr);
+  aura::client::ParentWindowWithContext(
+      view_->GetNativeView(), parent_view_->GetNativeView()->GetRootWindow(),
+      gfx::Rect());
+
+  EXPECT_FALSE(view_->HasPrimarySurface());
+  ASSERT_TRUE(view_->delegated_frame_host_);
+
+  view_->SetSize(gfx::Size(300, 300));
+  ASSERT_TRUE(view_->HasPrimarySurface());
+  EXPECT_EQ(gfx::Size(300, 300), view_->window_->layer()->size());
+  EXPECT_EQ(gfx::Size(300, 300),
+            view_->delegated_frame_host_->CurrentFrameSizeInDipForTesting());
+
+  view_->Hide();
+  view_->delegated_frame_host_->ClearDelegatedFrame();
+  ASSERT_FALSE(view_->HasPrimarySurface());
+
+  view_->Show();
+  ASSERT_TRUE(view_->HasPrimarySurface());
+}
+
+// This test verifies that the primary SurfaceInfo is updated on device scale
 // factor changes.
 TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
        DeviceScaleFactorChanges) {
@@ -3191,7 +3187,7 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
       *view_->window_->layer()->GetPrimarySurfaceId();
   EXPECT_FALSE(view_->window_->layer()->GetFallbackSurfaceId()->is_valid());
 
-  // Resizing should update the primary SurfaceId.
+  // Resizing should update the primary SurfaceInfo.
   aura_test_helper_->test_screen()->SetDeviceScaleFactor(2.0f);
   viz::SurfaceId new_surface_id =
       *view_->window_->layer()->GetPrimarySurfaceId();
@@ -3230,7 +3226,9 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
 
 // This test verifies that frame eviction plays well with surface
 // synchronizaton. This test is similar to
-// RenderWidgetHostViewAuraTest.DiscardDelegatedFrame.
+// RenderWidgetHostViewAuraTest.DiscardDelegatedFrame but resizes instead
+// of submitting frame as that's when the primary surface is set when
+// surface synchronization is on.
 TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
        DiscardDelegatedFrames) {
   view_->InitAsChild(nullptr);
@@ -3239,8 +3237,6 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
       FrameEvictionManager::GetInstance()->GetMaxNumberOfSavedFrames();
   ASSERT_LE(2u, max_renderer_frames);
   size_t renderer_count = max_renderer_frames + 1;
-  gfx::Rect view_rect(100, 100);
-  gfx::Size frame_size = view_rect.size();
 
   std::unique_ptr<RenderWidgetHostImpl* []> hosts(
       new RenderWidgetHostImpl*[renderer_count]);
@@ -3255,7 +3251,8 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
                                                 process_host_, routing_id);
     delegates_.back()->set_widget_host(hosts[i]);
     hosts[i]->Init();
-    views[i] = new FakeRenderWidgetHostViewAura(hosts[i], false);
+    views[i] = new FakeRenderWidgetHostViewAura(
+        hosts[i], false, true /* enable_surface_synchronization */);
     // Prevent frames from being skipped due to resize, this test does not
     // run a UI compositor so the DelegatedFrameHost doesn't get the chance
     // to release its resize lock once it receives a frame of the expected
@@ -3265,101 +3262,64 @@ TEST_F(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
     aura::client::ParentWindowWithContext(
         views[i]->GetNativeView(),
         parent_view_->GetNativeView()->GetRootWindow(), gfx::Rect());
-    views[i]->SetSize(view_rect.size());
-    ASSERT_TRUE(views[i]->HasPrimarySurface());
-  }
-
-  // Make each renderer visible, and swap a frame on it, then make it invisible.
-  for (size_t i = 0; i < renderer_count; ++i) {
+    // Make each renderer visible, resize it, then make it invisible.
     views[i]->Show();
-    ASSERT_TRUE(views[i]->HasPrimarySurface());
-    ASSERT_FALSE(views[i]->HasFallbackSurface());
-    views[i]->SubmitCompositorFrame(
-        kArbitraryLocalSurfaceId,
-        MakeDelegatedFrame(1.f, frame_size, view_rect), nullptr);
-    ASSERT_TRUE(views[i]->HasPrimarySurface());
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    views[i]->SetSize(gfx::Size(300, 300));
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
     views[i]->Hide();
   }
 
   // There should be max_renderer_frames with a frame in it, and one without it.
   // Since the logic is LRU eviction, the first one should be without.
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
   for (size_t i = 1; i < renderer_count; ++i)
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
 
   // LRU renderer is [0], make it visible, it shouldn't evict anything yet.
   views[0]->Show();
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
-  EXPECT_TRUE(views[1]->HasFallbackSurface());
+  EXPECT_TRUE(views[0]->HasPrimarySurface());
+  EXPECT_FALSE(views[1]->HasPrimarySurface());
 
-  // Swap a frame on it, it should evict the next LRU [1].
-  views[0]->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
-      nullptr);
-  EXPECT_TRUE(views[0]->HasFallbackSurface());
-  EXPECT_FALSE(views[1]->HasFallbackSurface());
+  // Resize [0], it should evict the next LRU [1].
+  views[0]->SetSize(gfx::Size(300, 300));
+  EXPECT_TRUE(views[0]->HasPrimarySurface());
+  EXPECT_FALSE(views[1]->HasPrimarySurface());
   views[0]->Hide();
 
-  // LRU renderer is [1], still hidden. Swap a frame on it, it should evict
+  // LRU renderer is [1], still hidden. Resize it, it should evict
   // the next LRU [2].
-  views[1]->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
-      nullptr);
-  EXPECT_TRUE(views[0]->HasFallbackSurface());
-  EXPECT_TRUE(views[1]->HasFallbackSurface());
-  EXPECT_FALSE(views[2]->HasFallbackSurface());
+  views[1]->Show();
+  views[1]->SetSize(gfx::Size(300, 300));
+  views[1]->Hide();
+  EXPECT_TRUE(views[0]->HasPrimarySurface());
+  EXPECT_TRUE(views[1]->HasPrimarySurface());
+  EXPECT_FALSE(views[2]->HasPrimarySurface());
   for (size_t i = 3; i < renderer_count; ++i)
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
 
-  // Make all renderers but [0] visible and swap a frame on them, keep [0]
+  // Make all renderers but [0] visible and resize them, keep [0]
   // hidden, it becomes the LRU.
   for (size_t i = 1; i < renderer_count; ++i) {
     views[i]->Show();
-    // The renderers who don't have a frame should be waiting. The ones that
-    // have a frame should not.
-    views[i]->SubmitCompositorFrame(
-        kArbitraryLocalSurfaceId,
-        MakeDelegatedFrame(1.f, frame_size, view_rect), nullptr);
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    views[i]->SetSize(gfx::Size(300, 300));
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
   }
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
 
-  // Swap a frame on [0], it should be evicted immediately.
-  views[0]->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
-      nullptr);
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
+  // Resize [0], it should be evicted immediately.
+  views[0]->SetSize(gfx::Size(300, 300));
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
 
   // Make [0] visible, and swap a frame on it. Nothing should be evicted
   // although we're above the limit.
   views[0]->Show();
-  views[0]->SubmitCompositorFrame(
-      kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
-      nullptr);
+  views[0]->SetSize(gfx::Size(300, 300));
   for (size_t i = 0; i < renderer_count; ++i)
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
 
   // Make [0] hidden, it should evict its frame.
   views[0]->Hide();
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
-
-  // Make [0] visible, don't give it a frame, it should be waiting.
-  views[0]->Show();
-  // Make [0] hidden, it should stop waiting.
-  views[0]->Hide();
-
-  // Make [1] hidden, resize it. It should drop its frame.
-  views[1]->Hide();
-  EXPECT_TRUE(views[1]->HasFallbackSurface());
-  gfx::Size size2(200, 200);
-  viz::LocalSurfaceId id2 = parent_local_surface_id_allocator_.GenerateId();
-  views[1]->SetSize(size2);
-  EXPECT_FALSE(views[1]->HasFallbackSurface());
-  // Show it, it should block until we give it a frame.
-  views[1]->Show();
-  views[1]->SubmitCompositorFrame(
-      id2, MakeDelegatedFrame(1.f, size2, gfx::Rect(size2)), nullptr);
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
 
   for (size_t i = 0; i < renderer_count; ++i) {
     views[i]->Destroy();
@@ -3390,7 +3350,8 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
                                                 process_host_, routing_id);
     delegates_.back()->set_widget_host(hosts[i]);
     hosts[i]->Init();
-    views[i] = new FakeRenderWidgetHostViewAura(hosts[i], false);
+    views[i] = new FakeRenderWidgetHostViewAura(
+        hosts[i], false, false /* enable_surface_synchronization */);
     // Prevent frames from being skipped due to resize, this test does not
     // run a UI compositor so the DelegatedFrameHost doesn't get the chance
     // to release its resize lock once it receives a frame of the expected
@@ -3410,20 +3371,20 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
     views[i]->SubmitCompositorFrame(
         kArbitraryLocalSurfaceId,
         MakeDelegatedFrame(1.f, frame_size, view_rect), nullptr);
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
     views[i]->Hide();
   }
 
   // There should be max_renderer_frames with a frame in it, and one without it.
   // Since the logic is LRU eviction, the first one should be without.
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
   for (size_t i = 1; i < renderer_count; ++i)
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
 
   // LRU renderer is [0], make it visible, it shouldn't evict anything yet.
   views[0]->Show();
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
-  EXPECT_TRUE(views[1]->HasFallbackSurface());
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
+  EXPECT_TRUE(views[1]->HasPrimarySurface());
   // Since [0] doesn't have a frame, it should be waiting for the renderer to
   // give it one.
   EXPECT_TRUE(views[0]->released_front_lock_active());
@@ -3432,8 +3393,8 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
   views[0]->SubmitCompositorFrame(
       kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
       nullptr);
-  EXPECT_TRUE(views[0]->HasFallbackSurface());
-  EXPECT_FALSE(views[1]->HasFallbackSurface());
+  EXPECT_TRUE(views[0]->HasPrimarySurface());
+  EXPECT_FALSE(views[1]->HasPrimarySurface());
   // Now that [0] got a frame, it shouldn't be waiting any more.
   EXPECT_FALSE(views[0]->released_front_lock_active());
   views[0]->Hide();
@@ -3443,11 +3404,11 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
   views[1]->SubmitCompositorFrame(
       kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
       nullptr);
-  EXPECT_TRUE(views[0]->HasFallbackSurface());
-  EXPECT_TRUE(views[1]->HasFallbackSurface());
-  EXPECT_FALSE(views[2]->HasFallbackSurface());
+  EXPECT_TRUE(views[0]->HasPrimarySurface());
+  EXPECT_TRUE(views[1]->HasPrimarySurface());
+  EXPECT_FALSE(views[2]->HasPrimarySurface());
   for (size_t i = 3; i < renderer_count; ++i)
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
 
   // Make all renderers but [0] visible and swap a frame on them, keep [0]
   // hidden, it becomes the LRU.
@@ -3456,22 +3417,22 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
     // The renderers who don't have a frame should be waiting. The ones that
     // have a frame should not.
     // In practice, [1] has a frame, but anything after has its frame evicted.
-    EXPECT_EQ(!views[i]->HasFallbackSurface(),
+    EXPECT_EQ(!views[i]->HasPrimarySurface(),
               views[i]->released_front_lock_active());
     views[i]->SubmitCompositorFrame(
         kArbitraryLocalSurfaceId,
         MakeDelegatedFrame(1.f, frame_size, view_rect), nullptr);
     // Now everyone has a frame.
     EXPECT_FALSE(views[i]->released_front_lock_active());
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
   }
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
 
   // Swap a frame on [0], it should be evicted immediately.
   views[0]->SubmitCompositorFrame(
       kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
       nullptr);
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
 
   // Make [0] visible, and swap a frame on it. Nothing should be evicted
   // although we're above the limit.
@@ -3483,11 +3444,11 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
       nullptr);
   EXPECT_FALSE(views[0]->released_front_lock_active());
   for (size_t i = 0; i < renderer_count; ++i)
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
 
   // Make [0] hidden, it should evict its frame.
   views[0]->Hide();
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
 
   // Make [0] visible, don't give it a frame, it should be waiting.
   views[0]->Show();
@@ -3498,11 +3459,11 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames) {
 
   // Make [1] hidden, resize it. It should drop its frame.
   views[1]->Hide();
-  EXPECT_TRUE(views[1]->HasFallbackSurface());
+  EXPECT_TRUE(views[1]->HasPrimarySurface());
   gfx::Size size2(200, 200);
   viz::LocalSurfaceId id2 = parent_local_surface_id_allocator_.GenerateId();
   views[1]->SetSize(size2);
-  EXPECT_FALSE(views[1]->HasFallbackSurface());
+  EXPECT_FALSE(views[1]->HasPrimarySurface());
   // Show it, it should block until we give it a frame.
   views[1]->Show();
   EXPECT_TRUE(views[1]->released_front_lock_active());
@@ -3539,7 +3500,8 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFramesWithLocking) {
                                                 process_host_, routing_id);
     delegates_.back()->set_widget_host(hosts[i]);
     hosts[i]->Init();
-    views[i] = new FakeRenderWidgetHostViewAura(hosts[i], false);
+    views[i] = new FakeRenderWidgetHostViewAura(
+        hosts[i], false, false /* enable_surface_synchronization */);
     views[i]->InitAsChild(nullptr);
     aura::client::ParentWindowWithContext(
         views[i]->GetNativeView(),
@@ -3556,26 +3518,26 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFramesWithLocking) {
         i ? parent_local_surface_id_allocator_.GenerateId()
           : kArbitraryLocalSurfaceId,
         MakeDelegatedFrame(1.f, frame_size, view_rect), nullptr);
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
   }
 
   // If we hide [0], then [0] should be evicted.
   views[0]->Hide();
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
 
   // If we lock [0] before hiding it, then [0] should not be evicted.
   views[0]->Show();
   views[0]->SubmitCompositorFrame(
       kArbitraryLocalSurfaceId, MakeDelegatedFrame(1.f, frame_size, view_rect),
       nullptr);
-  EXPECT_TRUE(views[0]->HasFallbackSurface());
+  EXPECT_TRUE(views[0]->HasPrimarySurface());
   views[0]->GetDelegatedFrameHost()->LockResources();
   views[0]->Hide();
-  EXPECT_TRUE(views[0]->HasFallbackSurface());
+  EXPECT_TRUE(views[0]->HasPrimarySurface());
 
   // If we unlock [0] now, then [0] should be evicted.
   views[0]->GetDelegatedFrameHost()->UnlockResources();
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
 
   for (size_t i = 0; i < renderer_count; ++i) {
     views[i]->Destroy();
@@ -3613,7 +3575,8 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFramesWithMemoryPressure) {
                                                 process_host_, routing_id);
     delegates_.back()->set_widget_host(hosts[i]);
     hosts[i]->Init();
-    views[i] = new FakeRenderWidgetHostViewAura(hosts[i], false);
+    views[i] = new FakeRenderWidgetHostViewAura(
+        hosts[i], false, false /* enable_surface_synchronization */);
     views[i]->InitAsChild(nullptr);
     aura::client::ParentWindowWithContext(
         views[i]->GetNativeView(),
@@ -3629,27 +3592,27 @@ TEST_F(RenderWidgetHostViewAuraTest, DiscardDelegatedFramesWithMemoryPressure) {
     views[i]->SubmitCompositorFrame(
         kArbitraryLocalSurfaceId,
         MakeDelegatedFrame(1.f, frame_size, view_rect), nullptr);
-    EXPECT_TRUE(views[i]->HasFallbackSurface());
+    EXPECT_TRUE(views[i]->HasPrimarySurface());
   }
 
   // If we hide one, it should not get evicted.
   views[0]->Hide();
   base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(views[0]->HasFallbackSurface());
+  EXPECT_TRUE(views[0]->HasPrimarySurface());
   // Using a lesser memory pressure event however, should evict.
   SimulateMemoryPressure(
       base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE);
   base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(views[0]->HasFallbackSurface());
+  EXPECT_FALSE(views[0]->HasPrimarySurface());
 
   // Check the same for a higher pressure event.
   views[1]->Hide();
   base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(views[1]->HasFallbackSurface());
+  EXPECT_TRUE(views[1]->HasPrimarySurface());
   SimulateMemoryPressure(
       base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL);
   base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(views[1]->HasFallbackSurface());
+  EXPECT_FALSE(views[1]->HasPrimarySurface());
 
   for (size_t i = 0; i < renderer_count; ++i) {
     views[i]->Destroy();
@@ -6066,6 +6029,7 @@ class RenderWidgetHostViewAuraWithViewHarnessTest
     // This instance is destroyed in the TearDown method below.
     view_ = new RenderWidgetHostViewAura(
         contents()->GetRenderViewHost()->GetWidget(), false,
+        false /* enable_surface_synchronization */,
         false /* is_mus_browser_plugin_guest */);
   }
 

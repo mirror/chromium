@@ -15,11 +15,9 @@
 
 using blink::WebVector;
 
-namespace {
-static const size_t kMaxNumberOfAudioFifoBuffers = 10;
-}
-
 namespace content {
+
+static const size_t kMaxNumberOfBuffers = 10;
 
 // Size of the buffer that WebAudio processes each time, it is the same value
 // as AudioNode::ProcessingSizeInFrames in WebKit.
@@ -81,7 +79,7 @@ void WebRtcLocalAudioSourceProvider::OnSetFormat(
   audio_converter_->AddInput(this);
   fifo_.reset(new media::AudioFifo(
       params.channels(),
-      kMaxNumberOfAudioFifoBuffers * params.frames_per_buffer()));
+      kMaxNumberOfBuffers * params.frames_per_buffer()));
 }
 
 void WebRtcLocalAudioSourceProvider::OnReadyStateChanged(

@@ -46,7 +46,8 @@ enum ValidateMenuItemSelector {
 
 namespace ProfileMenuControllerInternal {
 
-class Observer : public BrowserListObserver, public AvatarMenuObserver {
+class Observer : public chrome::BrowserListObserver,
+                 public AvatarMenuObserver {
  public:
   Observer(ProfileMenuController* controller) : controller_(controller) {
     BrowserList::AddObserver(this);
@@ -54,7 +55,7 @@ class Observer : public BrowserListObserver, public AvatarMenuObserver {
 
   ~Observer() override { BrowserList::RemoveObserver(this); }
 
-  // BrowserListObserver:
+  // chrome::BrowserListObserver:
   void OnBrowserAdded(Browser* browser) override {}
   void OnBrowserRemoved(Browser* browser) override {
     [controller_ activeBrowserChangedTo:chrome::GetLastActiveBrowser()];

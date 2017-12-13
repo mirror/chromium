@@ -29,7 +29,6 @@
 #ifndef AXList_h
 #define AXList_h
 
-#include "base/macros.h"
 #include "modules/accessibility/AXLayoutObject.h"
 
 namespace blink {
@@ -37,6 +36,8 @@ namespace blink {
 class AXObjectCacheImpl;
 
 class AXList final : public AXLayoutObject {
+  WTF_MAKE_NONCOPYABLE(AXList);
+
  private:
   AXList(LayoutObject*, AXObjectCacheImpl&);
 
@@ -51,8 +52,6 @@ class AXList final : public AXLayoutObject {
  private:
   bool IsDescriptionList() const;
   bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;
-
-  DISALLOW_COPY_AND_ASSIGN(AXList);
 };
 
 }  // namespace blink

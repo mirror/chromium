@@ -23,12 +23,10 @@ DirectLayerTreeFrameSink::DirectLayerTreeFrameSink(
     Display* display,
     scoped_refptr<ContextProvider> context_provider,
     scoped_refptr<ContextProvider> worker_context_provider,
-    scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     SharedBitmapManager* shared_bitmap_manager)
     : LayerTreeFrameSink(std::move(context_provider),
                          std::move(worker_context_provider),
-                         std::move(compositor_task_runner),
                          gpu_memory_buffer_manager,
                          shared_bitmap_manager),
       frame_sink_id_(frame_sink_id),

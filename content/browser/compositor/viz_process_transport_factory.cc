@@ -44,8 +44,6 @@ constexpr uint32_t kBrowserClientId = 0u;
 scoped_refptr<ui::ContextProviderCommandBuffer> CreateContextProviderImpl(
     scoped_refptr<gpu::GpuChannelHost> gpu_channel_host,
     bool support_locking,
-    bool support_gles2_interface,
-    bool support_raster_interface,
     ui::ContextProviderCommandBuffer* shared_context_provider,
     ui::command_buffer_metrics::ContextType type) {
   constexpr bool kAutomaticFlushes = false;
@@ -59,8 +57,6 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateContextProviderImpl(
   attributes.bind_generates_resource = false;
   attributes.lose_context_when_out_of_memory = true;
   attributes.buffer_preserved = false;
-  attributes.enable_gles2_interface = support_gles2_interface;
-  attributes.enable_raster_interface = support_raster_interface;
 
   GURL url("chrome://gpu/VizProcessTransportFactory::CreateContextProvider");
   return base::MakeRefCounted<ui::ContextProviderCommandBuffer>(
@@ -252,15 +248,6 @@ void VizProcessTransportFactory::ResizeDisplay(ui::Compositor* compositor,
   // Do nothing and resize when a CompositorFrame with a new size arrives.
 }
 
-void VizProcessTransportFactory::SetDisplayColorMatrix(
-    ui::Compositor* compositor,
-    const SkMatrix44& matrix) {
-  auto iter = compositor_data_map_.find(compositor);
-  if (iter == compositor_data_map_.end() || !iter->second.display_private)
-    return;
-  iter->second.display_private->SetDisplayColorMatrix(gfx::Transform(matrix));
-}
-
 void VizProcessTransportFactory::SetDisplayColorSpace(
     ui::Compositor* compositor,
     const gfx::ColorSpace& blending_color_space,
@@ -443,7 +430,6 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
 
   // Create LayerTreeFrameSink with the browser end of CompositorFrameSink.
   viz::ClientLayerTreeFrameSink::InitParams params;
-  params.compositor_task_runner = compositor->task_runner();
   params.gpu_memory_buffer_manager = GetGpuMemoryBufferManager();
   // TODO(crbug.com/730660): Make a ClientSharedBitmapManager to pass here.
   params.shared_bitmap_manager = shared_bitmap_manager_.get();
@@ -474,11 +460,7 @@ void VizProcessTransportFactory::OnEstablishedGpuChannel(
 bool VizProcessTransportFactory::CreateContextProviders(
     scoped_refptr<gpu::GpuChannelHost> gpu_channel_host) {
   constexpr bool kSharedWorkerContextSupportsLocking = true;
-  constexpr bool kSharedWorkerContextSupportsGLES2 = true;
-  constexpr bool kSharedWorkerContextSupportsRaster = true;
   constexpr bool kCompositorContextSupportsLocking = false;
-  constexpr bool kCompositorContextSupportsGLES2 = true;
-  constexpr bool kCompositorContextSupportsRaster = false;
 
   if (CheckContextLost(compositor_context_provider_.get())) {
     // Both will be lost because they are in the same share group.
@@ -488,9 +470,8 @@ bool VizProcessTransportFactory::CreateContextProviders(
 
   if (!shared_worker_context_provider_) {
     shared_worker_context_provider_ = CreateContextProviderImpl(
-        gpu_channel_host, kSharedWorkerContextSupportsLocking,
-        kSharedWorkerContextSupportsGLES2, kSharedWorkerContextSupportsRaster,
-        nullptr, ui::command_buffer_metrics::BROWSER_WORKER_CONTEXT);
+        gpu_channel_host, kSharedWorkerContextSupportsLocking, nullptr,
+        ui::command_buffer_metrics::BROWSER_WORKER_CONTEXT);
 
     auto result = shared_worker_context_provider_->BindToCurrentThread();
     if (result != gpu::ContextResult::kSuccess) {
@@ -502,7 +483,6 @@ bool VizProcessTransportFactory::CreateContextProviders(
   if (!compositor_context_provider_) {
     compositor_context_provider_ = CreateContextProviderImpl(
         std::move(gpu_channel_host), kCompositorContextSupportsLocking,
-        kCompositorContextSupportsGLES2, kCompositorContextSupportsRaster,
         shared_worker_context_provider_.get(),
         ui::command_buffer_metrics::UI_COMPOSITOR_CONTEXT);
     compositor_context_provider_->SetDefaultTaskRunner(resize_task_runner_);

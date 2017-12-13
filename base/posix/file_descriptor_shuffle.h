@@ -42,7 +42,7 @@ class InjectionDelegate {
   virtual void Close(int fd) = 0;
 
  protected:
-  virtual ~InjectionDelegate() = default;
+  virtual ~InjectionDelegate() {}
 };
 
 // An implementation of the InjectionDelegate interface using the file

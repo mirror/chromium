@@ -11,8 +11,8 @@
 #include "base/command_line.h"
 #include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/sparse_histogram.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/clock.h"
 #include "base/values.h"
@@ -167,8 +167,9 @@ void JsonRequest::OnURLFetchComplete(const net::URLFetcher* source) {
   DCHECK_EQ(url_fetcher_.get(), source);
   const URLRequestStatus& status = url_fetcher_->GetStatus();
   int response = url_fetcher_->GetResponseCode();
-  base::UmaHistogramSparse("NewTabPage.Snippets.FetchHttpResponseOrErrorCode",
-                           status.is_success() ? response : status.error());
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
+      "NewTabPage.Snippets.FetchHttpResponseOrErrorCode",
+      status.is_success() ? response : status.error());
 
   if (!status.is_success()) {
     std::move(request_completed_callback_)

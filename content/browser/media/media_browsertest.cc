@@ -27,9 +27,7 @@ const char kClean[] = "CLEAN";
 #endif
 
 void MediaBrowserTest::SetUpCommandLine(base::CommandLine* command_line) {
-  command_line->AppendSwitchASCII(
-      switches::kAutoplayPolicy,
-      switches::autoplay::kNoUserGestureRequiredPolicy);
+  command_line->AppendSwitch(switches::kIgnoreAutoplayRestrictionsForTests);
 }
 
 void MediaBrowserTest::RunMediaTestPage(const std::string& html_page,

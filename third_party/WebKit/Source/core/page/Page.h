@@ -25,7 +25,6 @@
 
 #include <memory>
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/dom/ViewportDescription.h"
 #include "core/frame/Deprecation.h"
@@ -45,6 +44,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashSet.h"
+#include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/web/WebWindowFeatures.h"
 
@@ -88,6 +88,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
                                public PageVisibilityNotifier,
                                public SettingsDelegate {
   USING_GARBAGE_COLLECTED_MIXIN(Page);
+  WTF_MAKE_NONCOPYABLE(Page);
   friend class Settings;
 
  public:
@@ -95,6 +96,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   // required.
   struct CORE_EXPORT PageClients final {
     STACK_ALLOCATED();
+    WTF_MAKE_NONCOPYABLE(PageClients);
 
    public:
     PageClients();
@@ -102,7 +104,6 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
     Member<ChromeClient> chrome_client;
     EditorClient* editor_client;
-    DISALLOW_COPY_AND_ASSIGN(PageClients);
   };
 
   static Page* Create(PageClients& page_clients) {
@@ -110,7 +111,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   }
 
   // An "ordinary" page is a fully-featured page owned by a web view.
-  static Page* CreateOrdinary(PageClients&);
+  static Page* CreateOrdinary(PageClients&, Page* opener);
 
   ~Page() override;
 
@@ -125,6 +126,11 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   // This set does not include Pages created for other, internal purposes
   // (SVGImages, inspector overlays, page popups etc.)
   static PageSet& OrdinaryPages();
+
+  // Returns pages related to the current browsing context (excluding the
+  // current page).  See also
+  // https://html.spec.whatwg.org/multipage/browsers.html#unit-of-related-browsing-contexts
+  HeapVector<Member<Page>> RelatedPages();
 
   static void PlatformColorsChanged();
 
@@ -398,7 +404,10 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   HeapHashSet<WeakMember<PluginsChangedObserver>> plugins_changed_observers_;
 
-  DISALLOW_COPY_AND_ASSIGN(Page);
+  // A circular, double-linked list of pages that are related to the current
+  // browsing context.  See also RelatedPages method.
+  Member<Page> next_related_page_;
+  Member<Page> prev_related_page_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Page>;

@@ -136,8 +136,7 @@ class PLATFORM_EXPORT EffectPaintPropertyNode
   }
 
   bool RequiresCompositingForAnimation() const {
-    return direct_compositing_reasons_ &
-           CompositingReason::kComboActiveAnimation;
+    return direct_compositing_reasons_ & CompositingReason::kActiveAnimation;
   }
 
   const CompositorElementId& GetCompositorElementId() const {

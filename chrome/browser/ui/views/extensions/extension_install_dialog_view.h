@@ -31,6 +31,7 @@ class ResourceBundle;
 
 namespace views {
 class GridLayout;
+class ImageButton;
 class Link;
 }
 
@@ -163,16 +164,19 @@ class ExpandableContainerView : public views::View,
   // A view which displays all the details of an IssueAdviceInfoEntry.
   class DetailsView : public views::View {
    public:
-    explicit DetailsView(const PermissionDetails& details);
+    DetailsView(int horizontal_space, bool parent_bulleted);
     ~DetailsView() override {}
 
     // views::View:
     gfx::Size CalculatePreferredSize() const override;
 
+    void AddDetail(const base::string16& detail);
+
     // Animates this to be a height proportional to |state|.
     void AnimateToState(double state);
 
    private:
+    views::GridLayout* layout_;
     double state_;
 
     DISALLOW_COPY_AND_ASSIGN(DetailsView);
@@ -181,14 +185,21 @@ class ExpandableContainerView : public views::View,
   // Expand/Collapse the detail section for this ExpandableContainerView.
   void ToggleDetailLevel();
 
+  // Updates |arrow_toggle_| according to the given state.
+  void UpdateArrowToggle(bool expanded);
+
   // A view for showing |issue_advice.details|.
   DetailsView* details_view_;
 
   gfx::SlideAnimation slide_animation_;
 
-  // The 'Show Details' link shown under the heading (changes to 'Hide Details'
+  // The 'more details' link shown under the heading (changes to 'hide details'
   // when the details section is expanded).
-  views::Link* details_link_;
+  views::Link* more_details_;
+
+  // The up/down arrow next to the 'more detail' link (points up/down depending
+  // on whether the details section is expanded).
+  views::ImageButton* arrow_toggle_;
 
   // Whether the details section is expanded.
   bool expanded_;

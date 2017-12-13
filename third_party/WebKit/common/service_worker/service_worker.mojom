@@ -4,7 +4,6 @@
 
 module blink.mojom;
 
-import "third_party/WebKit/common/service_worker/service_worker_error_type.mojom";
 import "url/mojo/url.mojom";
 
 // Host for a running service worker execution context. Implemented in the
@@ -19,7 +18,7 @@ interface ServiceWorkerHost {
   // Clears V8 code cache for |url| set by the above |SetCachedMetadata| before.
   ClearCachedMetadata(url.mojom.Url url);
 
-  // TODO(xiaofeng.zhang): Impl all methods.
+  // TODO(leonhsl): Impl all methods.
   // GetClient();
   // GetClients();
   // OpenNewTab();
@@ -28,10 +27,5 @@ interface ServiceWorkerHost {
   // FocusClient();
   // NavigateClient();
   // SkipWaiting();
-
-  // Corresponds to Clients#claim(). Allows an active service worker to set
-  // itself as the controller for all clients within its scope.
-  // On success, |error| is kNone without |error_msg| set.
-  // Otherwise, |error| and |error_msg| describe the failure.
-  ClaimClients() => (ServiceWorkerErrorType error, string? error_msg);
+  // ClaimClients();
 };

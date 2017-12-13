@@ -137,8 +137,6 @@
 #include "device/gamepad/public/cpp/gamepads.h"
 #include "gin/public/debug.h"
 #include "gpu/GLES2/gl2extchromium.h"
-#include "gpu/command_buffer/client/gles2_interface.h"
-#include "gpu/command_buffer/client/raster_interface.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/config/gpu_switches.h"
 #include "gpu/ipc/client/command_buffer_proxy_impl.h"
@@ -375,17 +373,14 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateOffscreenContext(
     scoped_refptr<gpu::GpuChannelHost> gpu_channel_host,
     const gpu::SharedMemoryLimits& limits,
     bool support_locking,
-    bool support_gles2_interface,
-    bool support_raster_interface,
     bool support_oop_rasterization,
     ui::command_buffer_metrics::ContextType type,
     int32_t stream_id,
     gpu::SchedulingPriority stream_priority) {
   DCHECK(gpu_channel_host);
   // This is used to create a few different offscreen contexts:
-  // - The shared main thread context, used by blink for 2D Canvas.
-  // - The compositor worker context, used for GPU raster.
-  // - The media context, used for accelerated video decoding.
+  // - The shared main thread context (offscreen) used by blink for canvas.
+  // - The worker context (offscreen) used for GPU raster and video decoding.
   // This is for an offscreen context, so the default framebuffer doesn't need
   // alpha, depth, stencil, antialiasing.
   gpu::gles2::ContextCreationAttribHelper attributes;
@@ -396,8 +391,6 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateOffscreenContext(
   attributes.sample_buffers = 0;
   attributes.bind_generates_resource = false;
   attributes.lose_context_when_out_of_memory = true;
-  attributes.enable_gles2_interface = support_gles2_interface;
-  attributes.enable_raster_interface = support_raster_interface;
   attributes.enable_oop_rasterization = support_oop_rasterization;
 
   const bool automatic_flushes = false;
@@ -736,11 +729,7 @@ void RenderThreadImpl::Init(
   idle_notifications_to_skip_ = 0;
 
   appcache_dispatcher_.reset(
-      new AppCacheDispatcher(new AppCacheFrontendImpl()));
-  registry->AddInterface(
-      base::BindRepeating(&AppCacheDispatcher::Bind,
-                          base::Unretained(appcache_dispatcher())),
-      GetMainTaskRunner());
+      new AppCacheDispatcher(Get(), new AppCacheFrontendImpl()));
   dom_storage_dispatcher_.reset(new DomStorageDispatcher());
   main_thread_indexed_db_dispatcher_.reset(new IndexedDBDispatcher());
   main_thread_cache_storage_dispatcher_.reset(
@@ -1494,12 +1483,9 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   // use lower limits than the default.
   gpu::SharedMemoryLimits limits = gpu::SharedMemoryLimits::ForMailboxContext();
   bool support_locking = true;
-  bool support_gles2_interface = true;
-  bool support_raster_interface = false;
   bool support_oop_rasterization = false;
   scoped_refptr<ui::ContextProviderCommandBuffer> media_context_provider =
       CreateOffscreenContext(gpu_channel_host, limits, support_locking,
-                             support_gles2_interface, support_raster_interface,
                              support_oop_rasterization,
                              ui::command_buffer_metrics::MEDIA_CONTEXT,
                              kGpuStreamIdDefault, kGpuStreamPriorityDefault);
@@ -1550,12 +1536,9 @@ RenderThreadImpl::SharedMainThreadContextProvider() {
   }
 
   bool support_locking = false;
-  bool support_gles2_interface = true;
-  bool support_raster_interface = false;
   bool support_oop_rasterization = false;
   shared_main_thread_contexts_ = CreateOffscreenContext(
       std::move(gpu_channel_host), gpu::SharedMemoryLimits(), support_locking,
-      support_gles2_interface, support_raster_interface,
       support_oop_rasterization,
       ui::command_buffer_metrics::RENDERER_MAINTHREAD_CONTEXT,
       kGpuStreamIdDefault, kGpuStreamPriorityDefault);
@@ -1771,7 +1754,8 @@ bool RenderThreadImpl::OnControlMessageReceived(const IPC::Message& msg) {
   }
 
   // Some messages are handled by delegates.
-  if (dom_storage_dispatcher_->OnMessageReceived(msg)) {
+  if (appcache_dispatcher_->OnMessageReceived(msg) ||
+      dom_storage_dispatcher_->OnMessageReceived(msg)) {
     return true;
   }
   return false;
@@ -2022,7 +2006,6 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
   viz::ClientLayerTreeFrameSink::InitParams params;
-  params.compositor_task_runner = compositor_task_runner_;
   params.enable_surface_synchronization =
       features::IsSurfaceSynchronizationEnabled();
   params.local_surface_id_provider =
@@ -2119,9 +2102,6 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   attributes.sample_buffers = 0;
   attributes.bind_generates_resource = false;
   attributes.lose_context_when_out_of_memory = true;
-  attributes.enable_gles2_interface = true;
-  attributes.enable_raster_interface = false;
-  attributes.enable_oop_rasterization = false;
 
   constexpr bool automatic_flushes = false;
   constexpr bool support_locking = false;
@@ -2155,9 +2135,9 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
             : CreateExternalBeginFrameSource(routing_id);
     callback.Run(std::make_unique<SynchronousLayerTreeFrameSink>(
         std::move(context_provider), std::move(worker_context_provider),
-        compositor_task_runner_, GetGpuMemoryBufferManager(),
-        shared_bitmap_manager(), routing_id, g_next_layer_tree_frame_sink_id++,
-        std::move(begin_frame_source), sync_compositor_message_filter_.get(),
+        GetGpuMemoryBufferManager(), shared_bitmap_manager(), routing_id,
+        g_next_layer_tree_frame_sink_id++, std::move(begin_frame_source),
+        sync_compositor_message_filter_.get(),
         std::move(frame_swap_message_queue)));
     return;
   }
@@ -2430,7 +2410,7 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
     // Note: If context is lost, delete reference after releasing the lock.
     viz::ContextProvider::ScopedContextLock lock(
         shared_worker_context_provider_.get());
-    if (shared_worker_context_provider_->RasterContext()
+    if (shared_worker_context_provider_->ContextGL()
             ->GetGraphicsResetStatusKHR() == GL_NO_ERROR)
       return shared_worker_context_provider_;
   }
@@ -2453,11 +2433,8 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
   bool support_oop_rasterization =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableOOPRasterization);
-  bool support_gles2_interface = !support_oop_rasterization;
-  bool support_raster_interface = true;
   shared_worker_context_provider_ = CreateOffscreenContext(
       std::move(gpu_channel_host), gpu::SharedMemoryLimits(), support_locking,
-      support_gles2_interface, support_raster_interface,
       support_oop_rasterization,
       ui::command_buffer_metrics::RENDER_WORKER_CONTEXT, stream_id,
       stream_priority);

@@ -203,6 +203,10 @@ void RenderWidgetHostViewChildFrame::InitAsChild(gfx::NativeView parent_view) {
   NOTREACHED();
 }
 
+RenderWidgetHost* RenderWidgetHostViewChildFrame::GetRenderWidgetHost() const {
+  return host_;
+}
+
 void RenderWidgetHostViewChildFrame::SetSize(const gfx::Size& size) {
   host_->WasResized();
 }
@@ -683,11 +687,6 @@ bool RenderWidgetHostViewChildFrame::IsMouseLocked() {
   return host_->delegate()->HasMouseLock(host_);
 }
 
-RenderWidgetHostImpl* RenderWidgetHostViewChildFrame::GetRenderWidgetHostImpl()
-    const {
-  return host_;
-}
-
 viz::FrameSinkId RenderWidgetHostViewChildFrame::GetFrameSinkId() {
   return frame_sink_id_;
 }
@@ -1078,6 +1077,17 @@ ui::TextInputType RenderWidgetHostViewChildFrame::GetTextInputType() const {
   if (text_input_manager_->GetTextInputState())
     return text_input_manager_->GetTextInputState()->type;
   return ui::TEXT_INPUT_TYPE_NONE;
+}
+
+gfx::Point RenderWidgetHostViewChildFrame::GetViewOriginInRoot() const {
+  if (frame_connector_) {
+    auto origin = GetViewBounds().origin() -
+                  frame_connector_->GetRootRenderWidgetHostView()
+                      ->GetViewBounds()
+                      .origin();
+    return gfx::Point(origin.x(), origin.y());
+  }
+  return gfx::Point();
 }
 
 RenderWidgetHostViewBase*

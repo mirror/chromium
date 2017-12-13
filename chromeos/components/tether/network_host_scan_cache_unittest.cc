@@ -7,6 +7,7 @@
 #include <memory>
 #include <vector>
 
+#include "base/memory/ptr_util.h"
 #include "base/test/scoped_task_environment.h"
 #include "chromeos/components/tether/device_id_tether_network_guid_map.h"
 #include "chromeos/components/tether/fake_host_scan_cache.h"
@@ -38,16 +39,16 @@ class NetworkHostScanCacheTest : public NetworkStateTest {
         NetworkStateHandler::TECHNOLOGY_ENABLED);
 
     mock_tether_host_response_recorder_ =
-        std::make_unique<NiceMock<MockTetherHostResponseRecorder>>();
+        base::MakeUnique<NiceMock<MockTetherHostResponseRecorder>>();
     device_id_tether_network_guid_map_ =
-        std::make_unique<DeviceIdTetherNetworkGuidMap>();
+        base::MakeUnique<DeviceIdTetherNetworkGuidMap>();
 
     ON_CALL(*mock_tether_host_response_recorder_,
             GetPreviouslyConnectedHostIds())
         .WillByDefault(Invoke(
             this, &NetworkHostScanCacheTest::GetPreviouslyConnectedHostIds));
 
-    host_scan_cache_ = std::make_unique<NetworkHostScanCache>(
+    host_scan_cache_ = base::MakeUnique<NetworkHostScanCache>(
         network_state_handler(), mock_tether_host_response_recorder_.get(),
         device_id_tether_network_guid_map_.get());
 
@@ -55,7 +56,7 @@ class NetworkHostScanCacheTest : public NetworkStateTest {
     // FakeHostScanCache in memory and update it alongside |host_scan_cache_|.
     // Use a std::vector to track which device IDs correspond to devices whose
     // Tether networks' HasConnectedToHost fields are expected to be set.
-    expected_cache_ = std::make_unique<FakeHostScanCache>();
+    expected_cache_ = base::MakeUnique<FakeHostScanCache>();
     has_connected_to_host_device_ids_.clear();
   }
 

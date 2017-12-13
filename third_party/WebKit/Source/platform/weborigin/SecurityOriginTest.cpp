@@ -30,8 +30,6 @@
 
 #include "platform/weborigin/SecurityOrigin.h"
 
-#include <stdint.h>
-
 #include "platform/blob/BlobURL.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/weborigin/KURL.h"
@@ -45,7 +43,7 @@
 
 namespace blink {
 
-const uint16_t kMaxAllowedPort = UINT16_MAX;
+const int kMaxAllowedPort = 65535;
 
 class SecurityOriginTest : public ::testing::Test {
  public:
@@ -55,8 +53,19 @@ class SecurityOriginTest : public ::testing::Test {
   }
 };
 
+TEST_F(SecurityOriginTest, InvalidPortsCreateUniqueOrigins) {
+  int ports[] = {-100, -1, kMaxAllowedPort + 1, 1000000};
+
+  for (size_t i = 0; i < WTF_ARRAY_LENGTH(ports); ++i) {
+    scoped_refptr<const SecurityOrigin> origin =
+        SecurityOrigin::Create("http", "example.com", ports[i]);
+    EXPECT_TRUE(origin->IsUnique())
+        << "Port " << ports[i] << " should have generated a unique origin.";
+  }
+}
+
 TEST_F(SecurityOriginTest, ValidPortsCreateNonUniqueOrigins) {
-  uint16_t ports[] = {0, 80, 443, 5000, kMaxAllowedPort};
+  int ports[] = {0, 80, 443, 5000, kMaxAllowedPort};
 
   for (size_t i = 0; i < WTF_ARRAY_LENGTH(ports); ++i) {
     scoped_refptr<const SecurityOrigin> origin =
@@ -427,7 +436,7 @@ TEST_F(SecurityOriginTest, CreateFromTuple) {
   struct TestCase {
     const char* scheme;
     const char* host;
-    uint16_t port;
+    unsigned short port;
     const char* origin;
   } cases[] = {
       {"http", "example.com", 80, "http://example.com"},
@@ -552,7 +561,7 @@ TEST_F(SecurityOriginTest, UrlOriginConversions) {
     const char* const url;
     const char* const scheme;
     const char* const host;
-    uint16_t port;
+    unsigned short port;
   } cases[] = {
       // IP Addresses
       {"http://192.168.9.1/", "http", "192.168.9.1", 80},

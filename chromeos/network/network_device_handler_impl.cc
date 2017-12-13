@@ -113,7 +113,7 @@ void SetDevicePropertyInternal(
     const base::Value& value,
     const base::Closure& callback,
     const network_handler::ErrorCallback& error_callback) {
-  NET_LOG(USER) << "Device.SetProperty: " << property_name << " = " << value;
+  NET_LOG(USER) << "Device.SetProperty: " << property_name;
   DBusThreadManager::Get()->GetShillDeviceClient()->SetProperty(
       dbus::ObjectPath(device_path),
       property_name,

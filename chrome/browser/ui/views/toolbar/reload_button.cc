@@ -41,9 +41,14 @@ const char ReloadButton::kViewClassName[] = "ReloadButton";
 ReloadButton::ReloadButton(Profile* profile, CommandUpdater* command_updater)
     : ToolbarButton(profile, this, CreateMenuModel()),
       command_updater_(command_updater),
+      intended_mode_(MODE_RELOAD),
+      visible_mode_(MODE_RELOAD),
       double_click_timer_delay_(
           base::TimeDelta::FromMilliseconds(views::GetDoubleClickInterval())),
-      mode_switch_timer_delay_(base::TimeDelta::FromMilliseconds(1350)) {}
+      mode_switch_timer_delay_(base::TimeDelta::FromMilliseconds(1350)),
+      menu_enabled_(false),
+      testing_mouse_hovered_(false),
+      testing_reload_count_(0) {}
 
 ReloadButton::~ReloadButton() {}
 
@@ -54,8 +59,8 @@ void ReloadButton::ChangeMode(Mode mode, bool force) {
   // safe to change it to the other image type, make the change immediately;
   // otherwise we'll let it happen later.
   if (force || (!IsMouseHovered() && !testing_mouse_hovered_) ||
-      ((mode == Mode::kStop) ? !double_click_timer_.IsRunning()
-                             : (visible_mode_ != Mode::kStop))) {
+      ((mode == MODE_STOP) ? !double_click_timer_.IsRunning()
+                           : (visible_mode_ != MODE_STOP))) {
     double_click_timer_.Stop();
     mode_switch_timer_.Stop();
     if (mode != visible_mode_)
@@ -67,7 +72,7 @@ void ReloadButton::ChangeMode(Mode mode, bool force) {
     // reload to stop due to the double-click timer running.  (Disabled reload
     // state is only applicable when instant extended API is enabled and mode
     // is NTP, which is handled just above.)
-  } else if (visible_mode_ != Mode::kReload) {
+  } else if (visible_mode_ != MODE_RELOAD) {
     SetEnabled(false);
 
     // Go ahead and change to reload after a bit, which allows repeated
@@ -96,8 +101,8 @@ bool ReloadButton::GetTooltipText(const gfx::Point& p,
                                   base::string16* tooltip) const {
   int reload_tooltip = menu_enabled_ ?
       IDS_TOOLTIP_RELOAD_WITH_MENU : IDS_TOOLTIP_RELOAD;
-  int text_id =
-      (visible_mode_ == Mode::kReload) ? reload_tooltip : IDS_TOOLTIP_STOP;
+  int text_id = (visible_mode_ == MODE_RELOAD) ?
+      reload_tooltip : IDS_TOOLTIP_STOP;
   tooltip->assign(l10n_util::GetStringUTF16(text_id));
   return true;
 }
@@ -114,7 +119,7 @@ void ReloadButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 }
 
 bool ReloadButton::ShouldShowMenu() {
-  return menu_enabled_ && (visible_mode_ == Mode::kReload);
+  return menu_enabled_ && (visible_mode_ == MODE_RELOAD);
 }
 
 void ReloadButton::ShowDropDownMenu(ui::MenuSourceType source_type) {
@@ -126,13 +131,13 @@ void ReloadButton::ButtonPressed(views::Button* /* button */,
                                  const ui::Event& event) {
   ClearPendingMenu();
 
-  if (visible_mode_ == Mode::kStop) {
+  if (visible_mode_ == MODE_STOP) {
     if (command_updater_)
       command_updater_->ExecuteCommandWithDisposition(
           IDC_STOP, WindowOpenDisposition::CURRENT_TAB);
     // The user has clicked, so we can feel free to update the button, even if
     // the mouse is still hovering.
-    ChangeMode(Mode::kReload, true);
+    ChangeMode(MODE_RELOAD, true);
     return;
   }
 
@@ -150,7 +155,7 @@ void ReloadButton::ButtonPressed(views::Button* /* button */,
     }
 
     // Start a timer - while this timer is running, the reload button cannot be
-    // changed to a stop button.  We do not set |intended_mode_| to Mode::kStop
+    // changed to a stop button.  We do not set |intended_mode_| to MODE_STOP
     // here as the browser will do that when it actually starts loading (which
     // may happen synchronously, thus the need to do this before telling the
     // browser to execute the reload command).
@@ -206,10 +211,11 @@ void ReloadButton::ExecuteCommand(int command_id, int event_flags) {
   ExecuteBrowserCommand(browser_command, event_flags);
 }
 
-std::unique_ptr<ui::SimpleMenuModel> ReloadButton::CreateMenuModel() {
-  auto menu_model = std::make_unique<ui::SimpleMenuModel>(this);
+ui::SimpleMenuModel* ReloadButton::CreateMenuModel() {
+  ui::SimpleMenuModel* menu_model = new ui::SimpleMenuModel(this);
   for (size_t i = 0; i < arraysize(kReloadMenuItems); ++i)
     menu_model->AddItemWithStringId(kReloadMenuItems[i], kReloadMenuItems[i]);
+
   return menu_model;
 }
 
@@ -225,7 +231,7 @@ void ReloadButton::ChangeModeInternal(Mode mode) {
   // |tp| can be NULL in unit tests.
   if (tp) {
     const gfx::VectorIcon& icon =
-        (mode == Mode::kReload) ? vector_icons::kReloadIcon : kNavigateStopIcon;
+        (mode == MODE_RELOAD) ? vector_icons::kReloadIcon : kNavigateStopIcon;
     const SkColor normal_color =
         tp->GetColor(ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON);
     const SkColor disabled_color =

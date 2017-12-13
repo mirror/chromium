@@ -98,7 +98,9 @@ void LoginManagerTest::SetUp() {
 
 void LoginManagerTest::TearDownOnMainThread() {
   MixinBasedBrowserTest::TearDownOnMainThread();
-
+  if (LoginDisplayHost::default_host())
+    LoginDisplayHost::default_host()->Finalize(base::OnceClosure());
+  base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(embedded_test_server()->ShutdownAndWaitUntilComplete());
 }
 

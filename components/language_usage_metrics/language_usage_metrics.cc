@@ -6,13 +6,14 @@
 
 #include <algorithm>
 
-#include "base/metrics/histogram_functions.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_tokenizer.h"
 #include "base/strings/string_util.h"
 
 namespace {
 void RecordAcceptLanguage(int language_code) {
-  base::UmaHistogramSparse("LanguageUsage.AcceptLanguage", language_code);
+  UMA_HISTOGRAM_SPARSE_SLOWLY("LanguageUsage.AcceptLanguage",
+                              language_code);
 }
 }  // namespace
 
@@ -31,8 +32,8 @@ void LanguageUsageMetrics::RecordApplicationLanguage(
     const std::string& application_locale) {
   const int language_code = ToLanguageCode(application_locale);
   if (language_code != 0)
-    base::UmaHistogramSparse("LanguageUsage.ApplicationLanguage",
-                             language_code);
+    UMA_HISTOGRAM_SPARSE_SLOWLY("LanguageUsage.ApplicationLanguage",
+                                language_code);
 }
 
 // static

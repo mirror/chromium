@@ -9,9 +9,10 @@
 #include "modules/background_fetch/BackgroundFetchRegistration.h"
 #include "modules/background_fetch/BackgroundFetchTypeConverters.h"
 #include "modules/background_fetch/IconDefinition.h"
+#include "public/platform/InterfaceProvider.h"
+#include "public/platform/Platform.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerRequest.h"
-#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -49,8 +50,9 @@ void BackgroundFetchBridge::Fetch(const String& developer_id,
                                   const BackgroundFetchOptions& options,
                                   RegistrationCallback callback) {
   GetService()->Fetch(
-      GetSupplementable()->WebRegistration()->RegistrationId(), developer_id,
-      std::move(requests), mojom::blink::BackgroundFetchOptions::From(options),
+      GetSupplementable()->WebRegistration()->RegistrationId(),
+      GetSecurityOrigin(), developer_id, std::move(requests),
+      mojom::blink::BackgroundFetchOptions::From(options),
       WTF::Bind(&BackgroundFetchBridge::DidGetRegistration,
                 WrapPersistent(this), WTF::Passed(std::move(callback))));
 }
@@ -59,7 +61,8 @@ void BackgroundFetchBridge::Abort(const String& developer_id,
                                   const String& unique_id,
                                   AbortCallback callback) {
   GetService()->Abort(GetSupplementable()->WebRegistration()->RegistrationId(),
-                      developer_id, unique_id, std::move(callback));
+                      GetSecurityOrigin(), developer_id, unique_id,
+                      std::move(callback));
 }
 
 void BackgroundFetchBridge::UpdateUI(const String& developer_id,
@@ -72,7 +75,8 @@ void BackgroundFetchBridge::UpdateUI(const String& developer_id,
 void BackgroundFetchBridge::GetRegistration(const String& developer_id,
                                             RegistrationCallback callback) {
   GetService()->GetRegistration(
-      GetSupplementable()->WebRegistration()->RegistrationId(), developer_id,
+      GetSupplementable()->WebRegistration()->RegistrationId(),
+      GetSecurityOrigin(), developer_id,
       WTF::Bind(&BackgroundFetchBridge::DidGetRegistration,
                 WrapPersistent(this), WTF::Passed(std::move(callback))));
 }
@@ -95,7 +99,7 @@ void BackgroundFetchBridge::DidGetRegistration(
 void BackgroundFetchBridge::GetDeveloperIds(GetDeveloperIdsCallback callback) {
   GetService()->GetDeveloperIds(
       GetSupplementable()->WebRegistration()->RegistrationId(),
-      std::move(callback));
+      GetSecurityOrigin(), std::move(callback));
 }
 
 void BackgroundFetchBridge::AddRegistrationObserver(
@@ -104,16 +108,16 @@ void BackgroundFetchBridge::AddRegistrationObserver(
   GetService()->AddRegistrationObserver(unique_id, std::move(observer));
 }
 
-mojom::blink::BackgroundFetchService* BackgroundFetchBridge::GetService() {
+const SecurityOrigin* BackgroundFetchBridge::GetSecurityOrigin() {
+  return GetSupplementable()->GetExecutionContext()->GetSecurityOrigin();
+}
+
+mojom::blink::BackgroundFetchServicePtr& BackgroundFetchBridge::GetService() {
   if (!background_fetch_service_) {
-    auto request = mojo::MakeRequest(&background_fetch_service_);
-    if (auto* interface_provider = GetSupplementable()
-                                       ->GetExecutionContext()
-                                       ->GetInterfaceProvider()) {
-      interface_provider->GetInterface(std::move(request));
-    }
+    Platform::Current()->GetInterfaceProvider()->GetInterface(
+        mojo::MakeRequest(&background_fetch_service_));
   }
-  return background_fetch_service_.get();
+  return background_fetch_service_;
 }
 
 }  // namespace blink

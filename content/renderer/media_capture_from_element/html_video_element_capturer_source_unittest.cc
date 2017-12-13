@@ -35,6 +35,7 @@ class MockWebMediaPlayer : public blink::WebMediaPlayer,
   void Load(LoadType, const blink::WebMediaPlayerSource&, CORSMode) override {}
   void Play() override {}
   void Pause() override {}
+  bool SupportsSave() const override { return true; }
   void Seek(double seconds) override {}
   void SetRate(double) override {}
   void SetVolume(double) override {}
@@ -91,7 +92,6 @@ class HTMLVideoElementCapturerSourceTest : public testing::Test {
         web_media_player_(new MockWebMediaPlayer()),
         html_video_capturer_(new HtmlVideoElementCapturerSource(
             web_media_player_->AsWeakPtr(),
-            base::ThreadTaskRunnerHandle::Get(),
             base::ThreadTaskRunnerHandle::Get())) {}
 
   // Necessary callbacks and MOCK_METHODS for them.

@@ -129,10 +129,6 @@ class CORE_EXPORT PaintLayerPainter {
                              GraphicsContext&,
                              const PaintLayerPaintingInfo&,
                              PaintLayerFlags);
-  void PaintAncestorClippingMask(const PaintLayerFragment&,
-                                 GraphicsContext&,
-                                 const PaintLayerPaintingInfo&,
-                                 PaintLayerFlags);
   void PaintChildClippingMaskForFragments(const PaintLayerFragments&,
                                           GraphicsContext&,
                                           const PaintLayerPaintingInfo&,

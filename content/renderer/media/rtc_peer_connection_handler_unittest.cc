@@ -559,6 +559,11 @@ TEST_F(RTCPeerConnectionHandlerTest, NoCallbacksToClientAfterStop) {
   RunMessageLoopsUntilIdle();
 }
 
+TEST_F(RTCPeerConnectionHandlerTest, DestructAllHandlers) {
+  EXPECT_CALL(*mock_client_.get(), ReleasePeerConnectionHandler()).Times(1);
+  RTCPeerConnectionHandler::DestructAllHandlers();
+}
+
 TEST_F(RTCPeerConnectionHandlerTest, CreateOffer) {
   blink::WebRTCSessionDescriptionRequest request;
   blink::WebMediaConstraints options;

@@ -204,8 +204,11 @@ extern const char kEnableAutofillCreditCardLastUsedDateDisplayDescription[];
 extern const char kEnableAutofillCreditCardUploadCvcPromptName[];
 extern const char kEnableAutofillCreditCardUploadCvcPromptDescription[];
 
-extern const char kEnableAutofillCreditCardUploadSendPanFirstSixName[];
-extern const char kEnableAutofillCreditCardUploadSendPanFirstSixDescription[];
+extern const char kEnableAutofillCreditCardUploadGoogleLogoName[];
+extern const char kEnableAutofillCreditCardUploadGoogleLogoDescription[];
+
+extern const char kEnableAutofillCreditCardUploadNewUiName[];
+extern const char kEnableAutofillCreditCardUploadNewUiDescription[];
 
 extern const char kEnableAutofillSendBillingCustomerNumberName[];
 extern const char kEnableAutofillSendBillingCustomerNumberDescription[];
@@ -314,10 +317,8 @@ extern const char kEnableOutOfProcessHeapProfilingName[];
 extern const char kEnableOutOfProcessHeapProfilingDescription[];
 extern const char kEnableOutOfProcessHeapProfilingModeMinimal[];
 extern const char kEnableOutOfProcessHeapProfilingModeAll[];
-extern const char kEnableOutOfProcessHeapProfilingModeAllRenderers[];
 extern const char kEnableOutOfProcessHeapProfilingModeBrowser[];
 extern const char kEnableOutOfProcessHeapProfilingModeGpu[];
-extern const char kEnableOutOfProcessHeapProfilingModeManual[];
 extern const char kEnableOutOfProcessHeapProfilingModeRendererSampling[];
 extern const char kOutOfProcessHeapProfilingKeepSmallAllocations[];
 extern const char kOutOfProcessHeapProfilingKeepSmallAllocationsDescription[];
@@ -529,6 +530,9 @@ extern const char kMhtmlGeneratorOptionName[];
 extern const char kMhtmlGeneratorOptionDescription[];
 extern const char kMhtmlSkipNostoreMain[];
 extern const char kMhtmlSkipNostoreAll[];
+
+extern const char kMojoLoadingName[];
+extern const char kMojoLoadingDescription[];
 
 extern const char kMojoVideoEncodeAcceleratorName[];
 extern const char kMojoVideoEncodeAcceleratorDescription[];
@@ -985,9 +989,6 @@ extern const char kWebvrDescription[];
 extern const char kWebVrExperimentalRenderingName[];
 extern const char kWebVrExperimentalRenderingDescription[];
 
-extern const char kWebXrName[];
-extern const char kWebXrDescription[];
-
 extern const char kWifiCredentialSyncName[];
 extern const char kWifiCredentialSyncDescription[];
 
@@ -1051,9 +1052,6 @@ extern const char kChromeHomePersonalizedOmniboxSuggestionsDescription[];
 
 extern const char kChromeHomePromoName[];
 extern const char kChromeHomePromoDescription[];
-
-extern const char kChromeHomePullToRefreshIphAtTopName[];
-extern const char kChromeHomePullToRefreshIphAtTopDescription[];
 
 extern const char kChromeHomeShowGoogleGName[];
 extern const char kChromeHomeShowGoogleGDescription[];
@@ -1183,9 +1181,6 @@ extern const char kEnableWebPaymentsMethodSectionOrderV2Description[];
 extern const char kEnableWebPaymentsSingleAppUiSkipName[];
 extern const char kEnableWebPaymentsSingleAppUiSkipDescription[];
 
-extern const char kGrantNotificationsToDSEName[];
-extern const char kGrantNotificationsToDSENameDescription[];
-
 extern const char kHerbPrototypeChoicesName[];
 extern const char kHerbPrototypeChoicesDescription[];
 extern const char kHerbPrototypeFlavorElderberry[];
@@ -1223,6 +1218,9 @@ extern const char kSiteExplorationUiDescription[];
 extern const char kNtpGoogleGInOmniboxName[];
 extern const char kNtpGoogleGInOmniboxDescription[];
 
+extern const char kNtpOfflinePagesName[];
+extern const char kNtpOfflinePagesDescription[];
+
 extern const char kNtpPopularSitesName[];
 extern const char kNtpPopularSitesDescription[];
 
@@ -1234,9 +1232,6 @@ extern const char kOfflinePagesCtDescription[];
 
 extern const char kOfflinePagesCtV2Name[];
 extern const char kOfflinePagesCtV2Description[];
-
-extern const char kOfflinePagesLimitlessPrefetchingName[];
-extern const char kOfflinePagesLimitlessPrefetchingDescription[];
 
 extern const char kOfflinePagesLoadSignalCollectingName[];
 extern const char kOfflinePagesLoadSignalCollectingDescription[];

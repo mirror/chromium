@@ -295,7 +295,11 @@ TEST_F(CdmAdapterTest, CreateCencSession) {
 
   std::vector<uint8_t> key_id(kKeyIdAsPssh,
                               kKeyIdAsPssh + arraysize(kKeyIdAsPssh));
+#if BUILDFLAG(USE_PROPRIETARY_CODECS)
   CreateSessionAndExpect(EmeInitDataType::CENC, key_id, SUCCESS);
+#else
+  CreateSessionAndExpect(EmeInitDataType::CENC, key_id, FAILURE);
+#endif
 }
 
 TEST_F(CdmAdapterTest, CreateSessionWithBadData) {

@@ -30,8 +30,8 @@ namespace blink {
 class ExceptionState;
 class MediaStreamConstraints;
 class Navigator;
-class V8NavigatorUserMediaErrorCallback;
-class V8NavigatorUserMediaSuccessCallback;
+class NavigatorUserMediaErrorCallback;
+class NavigatorUserMediaSuccessCallback;
 
 class NavigatorMediaStream {
   STATIC_ONLY(NavigatorMediaStream);
@@ -39,8 +39,8 @@ class NavigatorMediaStream {
  public:
   static void getUserMedia(Navigator&,
                            const MediaStreamConstraints&,
-                           V8NavigatorUserMediaSuccessCallback*,
-                           V8NavigatorUserMediaErrorCallback*,
+                           NavigatorUserMediaSuccessCallback*,
+                           NavigatorUserMediaErrorCallback*,
                            ExceptionState&);
 };
 

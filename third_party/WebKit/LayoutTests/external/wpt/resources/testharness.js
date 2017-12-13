@@ -1708,13 +1708,7 @@ policies and contribution forms [3].
         this.tests = new Array();
 
         var this_obj = this;
-        // If remote context is cross origin assigning to onerror is not
-        // possible, so silently catch those errors.
-        try {
-          remote.onerror = function(error) { this_obj.remote_error(error); };
-        } catch (e) {
-          // Ignore.
-        }
+        remote.onerror = function(error) { this_obj.remote_error(error); };
 
         // Keeping a reference to the remote object and the message handler until
         // remote_done() is seen prevents the remote object and its message channel

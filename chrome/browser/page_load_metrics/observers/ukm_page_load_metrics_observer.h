@@ -75,9 +75,6 @@ class UkmPageLoadMetricsObserver
   void OnComplete(const page_load_metrics::mojom::PageLoadTiming& timing,
                   const page_load_metrics::PageLoadExtraInfo& info) override;
 
-  void OnLoadedResource(const page_load_metrics::ExtraRequestCompleteInfo&
-                            extra_request_complete_info) override;
-
  private:
   // Records page load timing related metrics available in PageLoadTiming, such
   // as first contentful paint.
@@ -94,11 +91,6 @@ class UkmPageLoadMetricsObserver
 
   net::NetworkQualityEstimator::NetworkQualityProvider* const
       network_quality_provider_;
-
-  // The number of body (not header) prefilter bytes consumed by requests for
-  // the page.
-  int64_t cache_bytes_ = 0;
-  int64_t network_bytes_ = 0;
 
   // Network quality estimates.
   net::EffectiveConnectionType effective_connection_type_ =

@@ -223,14 +223,11 @@ views::View* SearchResultAnswerCardView::GetSelectedView() const {
              : nullptr;
 }
 
-views::View* SearchResultAnswerCardView::GetFirstResultView() {
-  return num_results() <= 0 ? nullptr : search_answer_container_view_;
-}
-
-void SearchResultAnswerCardView::SetFirstResultSelected(bool selected) {
+views::View* SearchResultAnswerCardView::SetFirstResultSelected(bool selected) {
   if (num_results() <= 0)
-    return;
+    return nullptr;
   search_answer_container_view_->SetSelected(selected);
+  return search_answer_container_view_;
 }
 
 views::View* SearchResultAnswerCardView::GetSearchAnswerContainerViewForTest()

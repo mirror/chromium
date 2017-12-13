@@ -58,7 +58,10 @@ QuicTransportVersionVector FilterSupportedAltSvcVersions(
     for (uint32_t quic_version_label : quic_alt_svc.version) {
       for (QuicTransportVersion supported : supported_versions) {
         QuicVersionLabel supported_version_label_network_order =
-            QuicVersionToQuicVersionLabel(supported);
+            FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label
+                ? QuicVersionToQuicVersionLabel(supported)
+                : QuicEndian::HostToNet32(
+                      QuicVersionToQuicVersionLabel(supported));
         if (supported_version_label_network_order == quic_version_label) {
           supported_alt_svc_versions.push_back(supported);
           RecordAltSvcFormat(IETF_FORMAT);

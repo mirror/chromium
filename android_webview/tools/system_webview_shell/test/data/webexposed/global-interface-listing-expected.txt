@@ -3218,7 +3218,6 @@ interface PerformanceResourceTiming : PerformanceEntry
     getter secureConnectionStart
     getter workerStart
     method constructor
-    method toJSON
 interface PerformanceTiming
     getter connectEnd
     getter connectStart

@@ -217,12 +217,11 @@ const OfflinePageItem* OfflinePageTabHelper::GetOfflinePageForTest() const {
   return provisional_offline_info_.offline_page.get();
 }
 
-const OfflinePageItem* OfflinePageTabHelper::GetOfflinePreviewItem() const {
-  if (provisional_offline_info_.is_showing_offline_preview)
-    return provisional_offline_info_.offline_page.get();
-  if (offline_info_.is_showing_offline_preview)
-    return offline_info_.offline_page.get();
-  return nullptr;
+bool OfflinePageTabHelper::IsShowingOfflinePreview() const {
+  // TODO(ryansturm): Change this once offline pages infrastructure uses
+  // NavigationHandle instead of a back channel. crbug.com/658899
+  return provisional_offline_info_.is_showing_offline_preview ||
+         offline_info_.is_showing_offline_preview;
 }
 
 void OfflinePageTabHelper::ScheduleDownloadHelper(

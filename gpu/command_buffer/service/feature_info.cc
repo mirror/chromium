@@ -1317,18 +1317,16 @@ void FeatureInfo::InitializeFeatures() {
       (gl_version_info_->IsAtLeastGL(2, 1) &&
        gl::HasExtension(extensions, "GL_ARB_texture_rg")) ||
       gl::HasExtension(extensions, "GL_EXT_texture_norm16")) {
-    // TODO(hubbe): Rename ext_texture_norm16 to texture_r16
     feature_flags_.ext_texture_norm16 = true;
     g_r16_is_present = true;
+    AddExtensionString("GL_EXT_texture_norm16");
 
     // Note: EXT_texture_norm16 is not exposed through WebGL API so we validate
     // only the combinations used internally.
-    validators_.pixel_type.AddValue(GL_UNSIGNED_SHORT);
     validators_.texture_format.AddValue(GL_RED_EXT);
     validators_.texture_internal_format.AddValue(GL_R16_EXT);
     validators_.texture_internal_format.AddValue(GL_RED_EXT);
     validators_.texture_unsized_internal_format.AddValue(GL_RED_EXT);
-    validators_.texture_internal_format_storage.AddValue(GL_R16_EXT);
   }
 
   UMA_HISTOGRAM_ENUMERATION(
@@ -1397,10 +1395,6 @@ void FeatureInfo::InitializeFeatures() {
   feature_flags_.khr_debug = gl_version_info_->IsAtLeastGL(4, 3) ||
                              gl_version_info_->IsAtLeastGLES(3, 2) ||
                              gl::HasExtension(extensions, "GL_KHR_debug");
-
-  feature_flags_.chromium_gpu_fence = gl::GLFence::IsGpuFenceSupported();
-  if (feature_flags_.chromium_gpu_fence)
-    AddExtensionString("GL_CHROMIUM_gpu_fence");
 
   feature_flags_.chromium_bind_generates_resource =
       gl::HasExtension(extensions, "GL_CHROMIUM_bind_generates_resource");

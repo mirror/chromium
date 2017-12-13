@@ -19,7 +19,7 @@ class Browser;
 // It tries to restart the browser to release accumulated memory when it
 // is considered non distruptive.
 class BackgroundModeOptimizer : public KeepAliveStateObserver,
-                                BrowserListObserver {
+                                chrome::BrowserListObserver {
  public:
   ~BackgroundModeOptimizer() override;
 
@@ -31,7 +31,7 @@ class BackgroundModeOptimizer : public KeepAliveStateObserver,
   void OnKeepAliveStateChanged(bool is_keeping_alive) override;
   void OnKeepAliveRestartStateChanged(bool can_restart) override;
 
-  // BrowserListObserver implementation.
+  // chrome::BrowserListObserver implementation.
   void OnBrowserAdded(Browser* browser) override;
 
  private:

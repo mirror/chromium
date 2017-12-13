@@ -321,6 +321,22 @@ DesktopAutomationHandler.prototype = {
     if (!node.root)
       return;
 
+    var root = AutomationUtil.getTopLevelRoot(node.root);
+    // If we're crossing out of a root, save it in case it needs recovering.
+    var prevRange = ChromeVoxState.instance.currentRange;
+    var prevNode = prevRange ? prevRange.start.node : null;
+    if (prevNode) {
+      var prevRoot = AutomationUtil.getTopLevelRoot(prevNode);
+      if (prevRoot && prevRoot !== root)
+        ChromeVoxState.instance.focusRecoveryMap.set(prevRoot, prevRange);
+    }
+    // If a previous node was saved for this focus, restore it.
+    var savedRange = ChromeVoxState.instance.focusRecoveryMap.get(root);
+    ChromeVoxState.instance.focusRecoveryMap.delete(root);
+    if (savedRange) {
+      ChromeVoxState.instance.navigateToRange(savedRange, false);
+      return;
+    }
     var event = new CustomAutomationEvent(EventType.FOCUS, node, evt.eventFrom);
     this.onEventDefault(event);
 
@@ -333,7 +349,6 @@ DesktopAutomationHandler.prototype = {
    * @param {!AutomationEvent} evt
    */
   onLoadComplete: function(evt) {
-    this.lastRootUrl_ = '';
     chrome.automation.getFocus(function(focus) {
       if (!focus || !AutomationUtil.isDescendantOf(focus, evt.target))
         return;
@@ -591,7 +606,7 @@ DesktopAutomationHandler.prototype = {
       // starts tabbing before load complete), then don't move ChromeVox's
       // position on the page.
       if (curRoot && focusedRoot == curRoot &&
-          this.lastRootUrl_ == focusedRoot.docUrl)
+          this.lastRootUrl_ == focusedRoot.docUrl && focus != focusedRoot)
         return;
 
       this.lastRootUrl_ = focusedRoot.docUrl || '';
@@ -609,6 +624,10 @@ DesktopAutomationHandler.prototype = {
         if (!curRoot && focus != focusedRoot)
           o.format('$name', focusedRoot);
       }
+
+      if (ChromeVoxState.instance.currentRange &&
+          focus == ChromeVoxState.instance.currentRange.start.node)
+        return;
 
       ChromeVoxState.instance.setCurrentRange(cursors.Range.fromNode(focus));
       if (!this.shouldOutput_(evt))

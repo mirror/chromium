@@ -29,7 +29,6 @@
 #ifndef AXInlineTextBox_h
 #define AXInlineTextBox_h
 
-#include "base/macros.h"
 #include "core/layout/line/AbstractInlineTextBox.h"
 #include "modules/accessibility/AXObject.h"
 
@@ -39,6 +38,8 @@ class Node;
 class AXObjectCacheImpl;
 
 class AXInlineTextBox final : public AXObject {
+  WTF_MAKE_NONCOPYABLE(AXInlineTextBox);
+
  private:
   AXInlineTextBox(scoped_refptr<AbstractInlineTextBox>, AXObjectCacheImpl&);
 
@@ -72,8 +73,6 @@ class AXInlineTextBox final : public AXObject {
   scoped_refptr<AbstractInlineTextBox> inline_text_box_;
 
   bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;
-
-  DISALLOW_COPY_AND_ASSIGN(AXInlineTextBox);
 };
 
 }  // namespace blink

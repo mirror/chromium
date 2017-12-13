@@ -8,7 +8,6 @@
 
 #include "ash/app_list/model/search/search_box_model_observer.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/metrics/user_metrics.h"
 
 namespace app_list {
 
@@ -73,19 +72,14 @@ void SearchBoxModel::SetTabletMode(bool started) {
   UpdateAccessibleName();
 }
 
-void SearchBoxModel::Update(const base::string16& text,
-                            bool is_voice_query,
-                            bool initiated_by_user) {
+void SearchBoxModel::Update(const base::string16& text, bool is_voice_query) {
   if (text_ == text && is_voice_query_ == is_voice_query)
     return;
 
-  if (initiated_by_user) {
-    if (text_.empty() && !text.empty()) {
-      UMA_HISTOGRAM_ENUMERATION("Apps.AppListSearchCommenced", 1, 2);
-      base::RecordAction(base::UserMetricsAction("AppList_EnterSearch"));
-    } else if (!text_.empty() && text.empty()) {
-      base::RecordAction(base::UserMetricsAction("AppList_LeaveSearch"));
-    }
+  // Log that a new search has been commenced whenever the text box text
+  // transitions from empty to non-empty.
+  if (text_.empty() && !text.empty()) {
+    UMA_HISTOGRAM_ENUMERATION("Apps.AppListSearchCommenced", 1, 2);
   }
   text_ = text;
   is_voice_query_ = is_voice_query;

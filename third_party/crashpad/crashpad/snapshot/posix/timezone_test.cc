@@ -15,6 +15,7 @@
 #include "snapshot/posix/timezone.h"
 
 #include <stdlib.h>
+#include <sys/cdefs.h>
 #include <sys/time.h>
 #include <time.h>
 

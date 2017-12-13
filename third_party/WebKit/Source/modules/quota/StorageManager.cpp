@@ -82,6 +82,7 @@ ScriptPromise StorageManager::persist(ScriptState* script_state) {
   GetPermissionService(ExecutionContext::From(script_state))
       .RequestPermission(
           CreatePermissionDescriptor(PermissionName::DURABLE_STORAGE),
+          ExecutionContext::From(script_state)->GetSecurityOrigin(),
           Frame::HasTransientUserActivation(doc ? doc->GetFrame() : nullptr),
           WTF::Bind(&StorageManager::PermissionRequestComplete,
                     WrapPersistent(this), WrapPersistent(resolver)));
@@ -105,6 +106,7 @@ ScriptPromise StorageManager::persisted(ScriptState* script_state) {
   GetPermissionService(ExecutionContext::From(script_state))
       .HasPermission(
           CreatePermissionDescriptor(PermissionName::DURABLE_STORAGE),
+          ExecutionContext::From(script_state)->GetSecurityOrigin(),
           WTF::Bind(&StorageManager::PermissionRequestComplete,
                     WrapPersistent(this), WrapPersistent(resolver)));
   return promise;

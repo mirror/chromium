@@ -28,7 +28,7 @@ class AppCacheFrontendImpl : public AppCacheFrontend {
   void OnContentBlocked(int host_id, const GURL& manifest_url) override;
   void OnSetSubresourceFactory(
       int host_id,
-      mojom::URLLoaderFactoryPtr url_loader_factory) override;
+      mojo::MessagePipeHandle loader_factory_pipe_handle) override;
 };
 
 }  // namespace content

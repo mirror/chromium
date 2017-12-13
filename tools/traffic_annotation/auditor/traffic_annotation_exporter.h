@@ -19,15 +19,15 @@ class TrafficAnnotationExporter {
   TrafficAnnotationExporter(const TrafficAnnotationExporter&) = delete;
   TrafficAnnotationExporter(TrafficAnnotationExporter&&) = delete;
 
-  // Loads annotations from annotations.xml file into |annotation_items_|.
+  // Loads annotations from annotations.xml file into |report_items_|.
   bool LoadAnnotationsXML();
 
-  // Updates |annotation_items_| with current set of extracted annotations and
+  // Updates |report_items_| with current set of extracted annotations and
   // reserved ids. Sets the |modified_| flag if any item is updated.
   bool UpdateAnnotations(const std::vector<AnnotationInstance>& annotations,
                          const std::map<int, std::string>& reserved_ids);
 
-  // Saves |annotation_items_| into annotations.xml.
+  // Saves |report_items_| into annotations.xml.
   bool SaveAnnotationsXML();
 
   // Returns the required updates for annotations.xml.
@@ -44,30 +44,22 @@ class TrafficAnnotationExporter {
 
   bool modified() { return modified_; }
 
-  // Runs tests on content of |annotation_items_|.
-  bool CheckAnnotationItems();
+  // Runs tests on content of |report_items_|.
+  bool CheckReportItems();
 
   // Returns the number of items in annotations.xml for testing.
   unsigned GetXMLItemsCountForTesting();
 
  private:
-  struct AnnotationItem {
-    AnnotationItem();
-    AnnotationItem(const AnnotationItem& other);
-    ~AnnotationItem();
-
-    AnnotationInstance::Type type;
+  struct ReportItem {
+    ReportItem();
+    ReportItem(const ReportItem& other);
+    ~ReportItem();
 
     int unique_id_hash_code;
-    int second_id_hash_code;
-    int content_hash_code;
-
     std::string deprecation_date;
+    int content_hash_code;
     std::vector<std::string> os_list;
-
-    std::set<int> semantics_fields;
-    std::set<int> policy_fields;
-    std::string file_path;
   };
 
   // Generates a text serialized XML for current report items.
@@ -78,7 +70,7 @@ class TrafficAnnotationExporter {
                                 const std::string& new_xml);
 
   std::vector<std::string> all_supported_platforms_;
-  std::map<std::string, AnnotationItem> annotation_items_;
+  std::map<std::string, ReportItem> report_items_;
   const base::FilePath source_path_;
   bool modified_;
 };

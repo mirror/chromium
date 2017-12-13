@@ -98,8 +98,7 @@ class MEDIA_EXPORT AudioOutputStream {
   // Stops playing audio.  The operation completes synchronously meaning that
   // once Stop() has completed executing, no further callbacks will be made to
   // the callback object that was supplied to Start() and it can be safely
-  // deleted. Stop() may be called in any state, e.g. before Start() or after
-  // Stop().
+  // deleted.
   virtual void Stop() = 0;
 
   // Sets the relative volume, with range [0.0, 1.0] inclusive.

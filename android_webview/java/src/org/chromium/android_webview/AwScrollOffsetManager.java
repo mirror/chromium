@@ -248,10 +248,6 @@ public class AwScrollOffsetManager {
         mDelegate.scrollNativeTo(x, y);
     }
 
-    int getScrollX() {
-        return mNativeScrollX;
-    }
-
     int getScrollY() {
         return mNativeScrollY;
     }

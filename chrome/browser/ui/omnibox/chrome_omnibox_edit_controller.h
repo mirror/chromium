@@ -23,6 +23,7 @@ class ChromeOmniboxEditController : public OmniboxEditController {
                             ui::PageTransition transition,
                             AutocompleteMatchType::Type type) override;
   void OnInputInProgress(bool in_progress) override;
+  bool SwitchToTabWithURL(const std::string& url, bool close_this) override;
 
   // Returns the WebContents of the currently active tab.
   virtual content::WebContents* GetWebContents() = 0;

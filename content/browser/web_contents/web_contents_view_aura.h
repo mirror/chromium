@@ -201,6 +201,8 @@ class CONTENT_EXPORT WebContentsViewAura
 
   const bool is_mus_browser_plugin_guest_;
 
+  bool enable_surface_synchronization_ = false;
+
   // NOTE: this is null when running in mus and |is_mus_browser_plugin_guest_|.
   std::unique_ptr<aura::Window> window_;
 

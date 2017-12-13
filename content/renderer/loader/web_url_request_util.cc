@@ -629,6 +629,4 @@ ServiceWorkerMode GetServiceWorkerModeForWebURLRequest(
   return static_cast<ServiceWorkerMode>(request.GetServiceWorkerMode());
 }
 
-#undef STATIC_ASSERT_ENUM
-
 }  // namespace content

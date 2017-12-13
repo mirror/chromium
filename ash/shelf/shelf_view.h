@@ -34,6 +34,7 @@ class MenuModel;
 
 namespace views {
 class BoundsAnimator;
+class MenuModelAdapter;
 class MenuRunner;
 }
 
@@ -362,7 +363,7 @@ class ASH_EXPORT ShelfView : public views::View,
                 ui::MenuSourceType source_type,
                 views::InkDrop* ink_drop);
 
-  // Callback for MenuRunner.
+  // Callback for MenuModelAdapter.
   void OnMenuClosed(views::InkDrop* ink_drop);
 
   // Overridden from views::BoundsAnimatorObserver:
@@ -435,6 +436,7 @@ class ASH_EXPORT ShelfView : public views::View,
 
   // Manages the context menu, and the list menu.
   std::unique_ptr<ui::MenuModel> menu_model_;
+  std::unique_ptr<views::MenuModelAdapter> menu_model_adapter_;
   std::unique_ptr<views::MenuRunner> launcher_menu_runner_;
   std::unique_ptr<ScopedRootWindowForNewWindows>
       scoped_root_window_for_new_windows_;

@@ -20,10 +20,10 @@ class StyleContentAlignmentData {
   StyleContentAlignmentData(
       ContentPosition position,
       ContentDistributionType distribution,
-      OverflowAlignment overflow = OverflowAlignment::kDefault)
+      OverflowAlignment overflow = kOverflowAlignmentDefault)
       : position_(static_cast<unsigned>(position)),
         distribution_(static_cast<unsigned>(distribution)),
-        overflow_(static_cast<unsigned>(overflow)) {}
+        overflow_(overflow) {}
 
   void SetPosition(ContentPosition position) {
     position_ = static_cast<unsigned>(position);
@@ -31,9 +31,7 @@ class StyleContentAlignmentData {
   void SetDistribution(ContentDistributionType distribution) {
     distribution_ = static_cast<unsigned>(distribution);
   }
-  void SetOverflow(OverflowAlignment overflow) {
-    overflow_ = static_cast<unsigned>(overflow);
-  }
+  void SetOverflow(OverflowAlignment overflow) { overflow_ = overflow; }
 
   ContentPosition GetPosition() const {
     return static_cast<ContentPosition>(position_);

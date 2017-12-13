@@ -18,7 +18,6 @@
 #include "base/memory/linked_ptr.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
-#include "extensions/browser/api/web_request/web_request_info.h"
 #include "extensions/browser/warning_set.h"
 #include "net/base/auth.h"
 #include "net/http/http_request_headers.h"
@@ -32,6 +31,10 @@ class DictionaryValue;
 
 namespace extensions {
 class Extension;
+}
+
+namespace net {
+class NetLogWithSource;
 }
 
 namespace extension_web_request_api_helpers {
@@ -149,10 +152,6 @@ typedef std::vector<linked_ptr<ResponseCookieModification> >
 
 // Contains the modification an extension wants to perform on an event.
 struct EventResponseDelta {
-  EventResponseDelta(const std::string& extension_id,
-                     const base::Time& extension_install_time);
-  ~EventResponseDelta();
-
   // ID of the extension that sent this response.
   std::string extension_id;
 
@@ -190,6 +189,10 @@ struct EventResponseDelta {
   // Messages that shall be sent to the background/event/... pages of the
   // extension.
   std::set<std::string> messages_to_extension;
+
+  EventResponseDelta(const std::string& extension_id,
+                     const base::Time& extension_install_time);
+  ~EventResponseDelta();
 
   DISALLOW_COPY_AND_ASSIGN(EventResponseDelta);
 };
@@ -252,7 +255,7 @@ EventResponseDelta* CalculateOnAuthRequiredDelta(
 // Stores in |canceled| whether any extension wanted to cancel the request.
 void MergeCancelOfResponses(const EventResponseDeltas& deltas,
                             bool* canceled,
-                            extensions::WebRequestInfo::Logger* logger);
+                            const net::NetLogWithSource* net_log);
 // Stores in |*new_url| the redirect request of the extension with highest
 // precedence. Extensions that did not command to redirect the request are
 // ignored in this logic.
@@ -260,7 +263,7 @@ void MergeRedirectUrlOfResponses(const GURL& url,
                                  const EventResponseDeltas& deltas,
                                  GURL* new_url,
                                  extensions::WarningSet* conflicting_extensions,
-                                 extensions::WebRequestInfo::Logger* logger);
+                                 const net::NetLogWithSource* net_log);
 // Stores in |*new_url| the redirect request of the extension with highest
 // precedence. Extensions that did not command to redirect the request are
 // ignored in this logic.
@@ -269,7 +272,7 @@ void MergeOnBeforeRequestResponses(
     const EventResponseDeltas& deltas,
     GURL* new_url,
     extensions::WarningSet* conflicting_extensions,
-    extensions::WebRequestInfo::Logger* logger);
+    const net::NetLogWithSource* net_log);
 // Modifies the "Cookie" header in |request_headers| according to
 // |deltas.request_cookie_modifications|. Conflicts are currently ignored
 // silently.
@@ -277,7 +280,7 @@ void MergeCookiesInOnBeforeSendHeadersResponses(
     const EventResponseDeltas& deltas,
     net::HttpRequestHeaders* request_headers,
     extensions::WarningSet* conflicting_extensions,
-    extensions::WebRequestInfo::Logger* logger);
+    const net::NetLogWithSource* net_log);
 // Modifies the headers in |request_headers| according to |deltas|. Conflicts
 // are tried to be resolved.
 // Stores in |request_headers_modified| whether the request headers were
@@ -286,7 +289,7 @@ void MergeOnBeforeSendHeadersResponses(
     const EventResponseDeltas& deltas,
     net::HttpRequestHeaders* request_headers,
     extensions::WarningSet* conflicting_extensions,
-    extensions::WebRequestInfo::Logger* logger,
+    const net::NetLogWithSource* net_log,
     bool* request_headers_modified);
 // Modifies the "Set-Cookie" headers in |override_response_headers| according to
 // |deltas.response_cookie_modifications|. If |override_response_headers| is
@@ -297,7 +300,7 @@ void MergeCookiesInOnHeadersReceivedResponses(
     const net::HttpResponseHeaders* original_response_headers,
     scoped_refptr<net::HttpResponseHeaders>* override_response_headers,
     extensions::WarningSet* conflicting_extensions,
-    extensions::WebRequestInfo::Logger* logger);
+    const net::NetLogWithSource* net_log);
 // Stores a copy of |original_response_header| into |override_response_headers|
 // that is modified according to |deltas|. If |deltas| does not instruct to
 // modify the response headers, |override_response_headers| remains empty.
@@ -313,7 +316,7 @@ void MergeOnHeadersReceivedResponses(
     scoped_refptr<net::HttpResponseHeaders>* override_response_headers,
     GURL* allowed_unsafe_redirect_url,
     extensions::WarningSet* conflicting_extensions,
-    extensions::WebRequestInfo::Logger* logger,
+    const net::NetLogWithSource* net_log,
     bool* response_headers_modified);
 // Merge the responses of blocked onAuthRequired handlers. The first
 // registered listener that supplies authentication credentials in a response,
@@ -325,7 +328,7 @@ bool MergeOnAuthRequiredResponses(
     const EventResponseDeltas& deltas,
     net::AuthCredentials* auth_credentials,
     extensions::WarningSet* conflicting_extensions,
-    extensions::WebRequestInfo::Logger* logger);
+    const net::NetLogWithSource* net_log);
 
 // Triggers clearing each renderer's in-memory cache the next time it navigates.
 void ClearCacheOnNavigation();

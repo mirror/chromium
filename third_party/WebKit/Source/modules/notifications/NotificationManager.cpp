@@ -5,10 +5,10 @@
 #include "modules/notifications/NotificationManager.h"
 
 #include "bindings/core/v8/ScriptPromiseResolver.h"
-#include "bindings/modules/v8/v8_notification_permission_callback.h"
 #include "core/frame/Frame.h"
 #include "core/frame/LocalFrame.h"
 #include "modules/notifications/Notification.h"
+#include "modules/notifications/NotificationPermissionCallback.h"
 #include "modules/permissions/PermissionUtils.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -63,7 +63,7 @@ mojom::blink::PermissionStatus NotificationManager::GetPermissionStatus() {
 
 ScriptPromise NotificationManager::RequestPermission(
     ScriptState* script_state,
-    V8NotificationPermissionCallback* deprecated_callback) {
+    NotificationPermissionCallback* deprecated_callback) {
   ExecutionContext* context = ExecutionContext::From(script_state);
 
   if (!permission_service_) {
@@ -80,21 +80,22 @@ ScriptPromise NotificationManager::RequestPermission(
   Document* doc = ToDocumentOrNull(context);
   permission_service_->RequestPermission(
       CreatePermissionDescriptor(mojom::blink::PermissionName::NOTIFICATIONS),
+      context->GetSecurityOrigin(),
       Frame::HasTransientUserActivation(doc ? doc->GetFrame() : nullptr),
       WTF::Bind(&NotificationManager::OnPermissionRequestComplete,
                 WrapPersistent(this), WrapPersistent(resolver),
-                WrapPersistentCallbackFunction(deprecated_callback)));
+                WrapPersistent(deprecated_callback)));
 
   return promise;
 }
 
 void NotificationManager::OnPermissionRequestComplete(
     ScriptPromiseResolver* resolver,
-    V8NotificationPermissionCallback* deprecated_callback,
+    NotificationPermissionCallback* deprecated_callback,
     mojom::blink::PermissionStatus status) {
   String status_string = Notification::PermissionString(status);
   if (deprecated_callback)
-    deprecated_callback->InvokeAndReportException(nullptr, status_string);
+    deprecated_callback->handleEvent(status_string);
 
   resolver->Resolve(status_string);
 }

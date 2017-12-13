@@ -21,6 +21,7 @@ constexpr SkColor kInactiveButtonColor = SkColorSetARGB(0x8A, 0x5A, 0x5A, 0x5A);
 
 constexpr int kActionIconSize = 20;
 constexpr int kEmptyIconSize = 24;
+constexpr int kEmptyLabelSize = 12;
 constexpr gfx::Insets kActionIconPadding(14);
 constexpr gfx::Insets kEmptyIconPadding(0, 0, 4, 0);
 
@@ -28,6 +29,10 @@ constexpr int kScrollShadowOffsetY = 2;
 constexpr int kScrollShadowBlur = 2;
 
 constexpr int kSettingsTransitionDurationMs = 500;
+
+// Return FontList for the given absolute font size and font weight.
+gfx::FontList GetFontListForSizeAndWeight(int font_size,
+                                          gfx::Font::Weight weight);
 
 }  // namespace message_center_style
 

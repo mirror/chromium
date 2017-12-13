@@ -34,14 +34,15 @@ class NET_EXPORT_PRIVATE UDPClientSocket : public DatagramClientSocket {
                           const IPEndPoint& address) override;
   int ConnectUsingDefaultNetwork(const IPEndPoint& address) override;
   NetworkChangeNotifier::NetworkHandle GetBoundNetwork() const override;
-  void ApplySocketTag(const SocketTag& tag) override;
   int Read(IOBuffer* buf,
            int buf_len,
            const CompletionCallback& callback) override;
+  // TODO(crbug.com/656607): Remove default value.
   int Write(IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback,
-            const NetworkTrafficAnnotationTag& traffic_annotation) override;
+            const NetworkTrafficAnnotationTag& traffic_annotation =
+                NO_TRAFFIC_ANNOTATION_BUG_656607) override;
   void Close() override;
   int GetPeerAddress(IPEndPoint* address) const override;
   int GetLocalAddress(IPEndPoint* address) const override;

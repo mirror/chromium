@@ -31,7 +31,7 @@ class ChromeCleanerPromptDelegate {
 class ChromeCleanerDialogControllerImpl
     : public ChromeCleanerDialogController,
       public ChromeCleanerController::Observer,
-      public BrowserListObserver {
+      public chrome::BrowserListObserver {
  public:
   // An instance should only be created when |cleaner_controller| is in the
   // kScanning state.
@@ -55,7 +55,7 @@ class ChromeCleanerDialogControllerImpl
   void OnCleaning(const ChromeCleanerScannerResults& reported_results) override;
   void OnRebootRequired() override;
 
-  // BrowserListObserver overrides.
+  // chrome::BrowserListObserver overrides.
   void OnBrowserSetLastActive(Browser* browser) override;
 
   // Test specific methods.

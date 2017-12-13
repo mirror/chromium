@@ -133,36 +133,28 @@ class ForceHolAckListener : public QuicAckListenerInterface {
   DISALLOW_COPY_AND_ASSIGN(ForceHolAckListener);
 };
 
+typedef testing::tuple<QuicTransportVersion, Perspective> TestParamsTuple;
+
 struct TestParams {
-  TestParams(const ParsedQuicVersion& version, Perspective perspective)
-      : version(version), perspective(perspective) {
-    QUIC_LOG(INFO) << "TestParams: version: "
-                   << ParsedQuicVersionToString(version)
+  explicit TestParams(TestParamsTuple params)
+      : version(testing::get<0>(params)), perspective(testing::get<1>(params)) {
+    QUIC_LOG(INFO) << "TestParams: version: " << QuicVersionToString(version)
                    << ", perspective: " << perspective;
   }
 
-  TestParams(const TestParams& other)
-      : version(other.version), perspective(other.perspective) {}
-
-  ParsedQuicVersion version;
+  QuicTransportVersion version;
   Perspective perspective;
 };
 
-std::vector<TestParams> GetTestParams() {
-  std::vector<TestParams> params;
-  ParsedQuicVersionVector all_supported_versions = AllSupportedVersions();
-  for (size_t i = 0; i < all_supported_versions.size(); ++i) {
-    for (Perspective p : {Perspective::IS_SERVER, Perspective::IS_CLIENT}) {
-      params.emplace_back(all_supported_versions[i], p);
-    }
-  }
-  return params;
-}
-
-class QuicHeadersStreamTest : public QuicTestWithParam<TestParams> {
+class QuicHeadersStreamTest : public QuicTestWithParam<TestParamsTuple> {
  public:
+  // Constructing the test_params_ object will set the necessary flags before
+  // the MockQuicConnection is constructed, which we need because the latter
+  // will construct a SpdyFramer that will use those flags to decide whether
+  // to construct a decoder adapter.
   QuicHeadersStreamTest()
-      : connection_(new StrictMock<MockQuicConnection>(&helper_,
+      : test_params_(GetParam()),
+        connection_(new StrictMock<MockQuicConnection>(&helper_,
                                                        &alarm_factory_,
                                                        perspective(),
                                                        GetVersion())),
@@ -296,15 +288,15 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParams> {
     headers_handler_.reset();
   }
 
-  Perspective perspective() const { return GetParam().perspective; }
+  Perspective perspective() const { return test_params_.perspective; }
 
   QuicTransportVersion transport_version() const {
-    return GetParam().version.transport_version;
+    return test_params_.version;
   }
 
-  ParsedQuicVersionVector GetVersion() {
-    ParsedQuicVersionVector versions;
-    versions.push_back(GetParam().version);
+  QuicTransportVersionVector GetVersion() {
+    QuicTransportVersionVector versions;
+    versions.push_back(transport_version());
     return versions;
   }
 
@@ -319,6 +311,7 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParams> {
   static const bool kFrameComplete = true;
   static const bool kHasPriority = true;
 
+  const TestParams test_params_;
   MockQuicConnectionHelper helper_;
   MockAlarmFactory alarm_factory_;
   StrictMock<MockQuicConnection>* connection_;
@@ -342,9 +335,12 @@ class QuicHeadersStreamTest : public QuicTestWithParam<TestParams> {
 };
 
 // Run all tests with each version, perspective (client or server)..
-INSTANTIATE_TEST_CASE_P(Tests,
-                        QuicHeadersStreamTest,
-                        ::testing::ValuesIn(GetTestParams()));
+INSTANTIATE_TEST_CASE_P(
+    Tests,
+    QuicHeadersStreamTest,
+    ::testing::Combine(::testing::ValuesIn(AllSupportedTransportVersions()),
+                       ::testing::Values(Perspective::IS_CLIENT,
+                                         Perspective::IS_SERVER)));
 
 TEST_P(QuicHeadersStreamTest, StreamId) {
   EXPECT_EQ(3u, headers_stream_->id());
@@ -464,7 +460,7 @@ TEST_P(QuicHeadersStreamTest, ProcessPushPromise) {
 }
 
 TEST_P(QuicHeadersStreamTest, ProcessPushPromiseDisabledSetting) {
-  SetQuicReloadableFlag(quic_respect_http2_settings_frame, true);
+  FLAGS_quic_reloadable_flag_quic_respect_http2_settings_frame = true;
   session_.OnConfigNegotiated();
   SpdySettingsIR data;
   // Respect supported settings frames SETTINGS_ENABLE_PUSH.
@@ -633,7 +629,7 @@ TEST_P(QuicHeadersStreamTest, ProcessSpdyRstStreamFrame) {
 }
 
 TEST_P(QuicHeadersStreamTest, ProcessSpdySettingsFrame) {
-  SetQuicReloadableFlag(quic_respect_http2_settings_frame, false);
+  FLAGS_quic_reloadable_flag_quic_respect_http2_settings_frame = false;
   SpdySettingsIR data;
   data.AddSetting(SETTINGS_HEADER_TABLE_SIZE, 0);
   SpdySerializedFrame frame(framer_->SerializeFrame(data));
@@ -647,8 +643,8 @@ TEST_P(QuicHeadersStreamTest, ProcessSpdySettingsFrame) {
 }
 
 TEST_P(QuicHeadersStreamTest, RespectHttp2SettingsFrameSupportedFields) {
-  SetQuicReloadableFlag(quic_respect_http2_settings_frame, true);
-  SetQuicReloadableFlag(quic_send_max_header_list_size, true);
+  FLAGS_quic_reloadable_flag_quic_respect_http2_settings_frame = true;
+  FLAGS_quic_reloadable_flag_quic_send_max_header_list_size = true;
   const uint32_t kTestHeaderTableSize = 1000;
   SpdySettingsIR data;
   // Respect supported settings frames SETTINGS_HEADER_TABLE_SIZE,
@@ -664,8 +660,8 @@ TEST_P(QuicHeadersStreamTest, RespectHttp2SettingsFrameSupportedFields) {
 }
 
 TEST_P(QuicHeadersStreamTest, RespectHttp2SettingsFrameUnsupportedFields) {
-  SetQuicReloadableFlag(quic_respect_http2_settings_frame, true);
-  SetQuicReloadableFlag(quic_send_max_header_list_size, true);
+  FLAGS_quic_reloadable_flag_quic_respect_http2_settings_frame = true;
+  FLAGS_quic_reloadable_flag_quic_send_max_header_list_size = true;
   SpdySettingsIR data;
   // Does not support SETTINGS_MAX_CONCURRENT_STREAMS,
   // SETTINGS_INITIAL_WINDOW_SIZE, SETTINGS_ENABLE_PUSH and
@@ -840,7 +836,7 @@ TEST_P(QuicHeadersStreamTest, AckSentData) {
   EXPECT_CALL(session_,
               WritevData(headers_stream_, kHeadersStreamId, _, _, NO_FIN))
       .WillRepeatedly(Invoke(MockQuicSession::ConsumeAllData));
-  if (!GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)) {
+  if (!FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2) {
     EXPECT_CALL(*connection_, CloseConnection(QUIC_INTERNAL_ERROR, _, _));
   }
   InSequence s;
@@ -884,7 +880,7 @@ TEST_P(QuicHeadersStreamTest, AckSentData) {
   headers_stream_->OnStreamFrameAcked(7, 7, false, QuicTime::Delta::Zero());
   // Unsent data is acked.
   EXPECT_CALL(*ack_listener2, OnPacketAcked(7, _));
-  if (GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)) {
+  if (FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2) {
     headers_stream_->OnStreamFrameAcked(14, 10, false, QuicTime::Delta::Zero());
   } else {
     EXPECT_QUIC_BUG(headers_stream_->OnStreamFrameAcked(
@@ -934,7 +930,7 @@ TEST_P(QuicHeadersStreamTest, FrameContainsMultipleHeaders) {
 }
 
 TEST_P(QuicHeadersStreamTest, HeadersGetAckedMultipleTimes) {
-  if (!GetQuicReloadableFlag(quic_allow_multiple_acks_for_data2)) {
+  if (!FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2) {
     return;
   }
   EXPECT_CALL(session_,

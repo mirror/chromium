@@ -14,11 +14,10 @@
 #include "base/json/json_writer.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/sparse_histogram.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
-#include "build/build_config.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_mutable_config_values.h"
@@ -43,10 +42,6 @@
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_status.h"
-
-#if defined(OS_ANDROID)
-#include "net/android/network_library.h"
-#endif
 
 namespace data_reduction_proxy {
 
@@ -377,10 +372,6 @@ void DataReductionProxyConfigServiceClient::RetrieveRemoteConfig() {
   DCHECK(thread_checker_.CalledOnValidThread());
   CreateClientConfigRequest request;
   std::string serialized_request;
-#if defined(OS_ANDROID)
-  request.set_telephony_network_operator(
-      net::android::GetTelephonyNetworkOperator());
-#endif
   const std::string& session_key = request_options_->GetSecureSession();
   if (!session_key.empty())
     request.set_session_key(request_options_->GetSecureSession());
@@ -483,7 +474,8 @@ void DataReductionProxyConfigServiceClient::HandleResponse(
 
   if (net::NetworkChangeNotifier::GetConnectionType() !=
       net::NetworkChangeNotifier::CONNECTION_NONE) {
-    base::UmaHistogramSparse(kUMAConfigServiceFetchResponseCode, response_code);
+    UMA_HISTOGRAM_SPARSE_SLOWLY(kUMAConfigServiceFetchResponseCode,
+                                response_code);
   }
 
   if (status.status() == net::URLRequestStatus::SUCCESS &&

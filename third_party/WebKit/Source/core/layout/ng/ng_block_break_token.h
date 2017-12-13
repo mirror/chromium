@@ -57,10 +57,6 @@ class CORE_EXPORT NGBlockBreakToken : public NGBreakToken {
     return child_break_tokens_;
   }
 
-#ifndef NDEBUG
-  String ToString() const override;
-#endif
-
  private:
   NGBlockBreakToken(NGLayoutInputNode node,
                     LayoutUnit used_block_size,

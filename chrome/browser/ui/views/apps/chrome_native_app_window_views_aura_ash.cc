@@ -290,11 +290,13 @@ void ChromeNativeAppWindowViewsAuraAsh::ShowContextMenuForView(
   int hit_test =
       widget()->non_client_view()->NonClientHitTest(point_in_view_coords);
   if (hit_test == HTCAPTION) {
-    menu_runner_ = std::make_unique<views::MenuRunner>(
+    menu_model_adapter_.reset(new views::MenuModelAdapter(
         menu_model_.get(),
-        views::MenuRunner::HAS_MNEMONICS | views::MenuRunner::CONTEXT_MENU,
         base::Bind(&ChromeNativeAppWindowViewsAuraAsh::OnMenuClosed,
-                   base::Unretained(this)));
+                   base::Unretained(this))));
+    menu_runner_.reset(new views::MenuRunner(
+        menu_model_adapter_->CreateMenu(),
+        views::MenuRunner::HAS_MNEMONICS | views::MenuRunner::CONTEXT_MENU));
     menu_runner_->RunMenuAt(source->GetWidget(), NULL,
                             gfx::Rect(p, gfx::Size(0, 0)),
                             views::MENU_ANCHOR_TOPLEFT, source_type);
@@ -574,6 +576,7 @@ bool ChromeNativeAppWindowViewsAuraAsh::CanTriggerOnMouse() const {
 
 void ChromeNativeAppWindowViewsAuraAsh::OnMenuClosed() {
   menu_runner_.reset();
+  menu_model_adapter_.reset();
   menu_model_.reset();
 }
 

@@ -72,13 +72,11 @@ class NetworkStateListDetailedView::InfoBubble
   }
 
   ~InfoBubble() override {
-    // The detailed view can be destructed before info bubble is destructed.
-    // Call OnInfoBubbleDestroyed only if the detailed view is live.
-    if (detailed_view_)
+    // Anchor view can be destructed before info bubble is destructed. Call
+    // OnInfoBubbleDestroyed only if anchor view is live.
+    if (GetAnchorView())
       detailed_view_->OnInfoBubbleDestroyed();
   }
-
-  void OnNetworkStateListDetailedViewIsDeleting() { detailed_view_ = nullptr; }
 
  private:
   // View:
@@ -178,8 +176,6 @@ NetworkStateListDetailedView::NetworkStateListDetailedView(
       info_bubble_(nullptr) {}
 
 NetworkStateListDetailedView::~NetworkStateListDetailedView() {
-  if (info_bubble_)
-    info_bubble_->OnNetworkStateListDetailedViewIsDeleting();
   ResetInfoBubble();
 }
 

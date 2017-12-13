@@ -378,7 +378,9 @@ class FullscreenObserver : public WebContentsObserver {
 - (BOOL)contentsInFullscreenCaptureMode {
   // Note: Grab a known-valid WebContents pointer from |fullscreenObserver_|.
   content::WebContents* const wc = fullscreenObserver_->web_contents();
-  if (!wc || !wc->IsBeingCaptured() || wc->GetPreferredSize().IsEmpty() ||
+  if (!wc ||
+      wc->GetCapturerCount() == 0 ||
+      wc->GetPreferredSize().IsEmpty() ||
       !(isEmbeddingFullscreenWidget_ ||
         (wc->GetDelegate() &&
          wc->GetDelegate()->IsFullscreenForTabOrPending(wc)))) {

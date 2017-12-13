@@ -56,8 +56,6 @@ namespace debug {
 template<typename T>
 class LeakTracker {
  public:
-  // This destructor suppresses warnings about instances of this class not being
-  // used.
   ~LeakTracker() {}
   static void CheckForLeaks() {}
   static int NumLiveInstances() { return -1; }

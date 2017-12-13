@@ -22,7 +22,6 @@
 #include "chrome/browser/task_manager/web_contents_tags.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
-#include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/location_bar/location_bar.h"
@@ -138,27 +137,8 @@ Browser* GetBrowserForDisposition(NavigateParams* params) {
   }
 
   Profile* profile = params->initiating_profile;
-  Browser* current_browser = params->browser;
 
   switch (params->disposition) {
-    case WindowOpenDisposition::SWITCH_TO_TAB:
-#if !defined(OS_ANDROID)
-      for (auto* browser : *BrowserList::GetInstance()) {
-        // Only look at same profile (and anonymity level).
-        if (browser->profile()->IsSameProfile(profile) &&
-            browser->profile()->GetProfileType() == profile->GetProfileType()) {
-          params->browser = browser;
-          int index = GetIndexOfExistingTab(params);
-          if (index >= 0) {
-            params->browser = current_browser;
-            params->tab_switch_hint = index;
-            return browser;
-          }
-        }
-      }
-      params->browser = current_browser;
-#endif  // !defined(OS_ANDROID)
-    // fall through
     case WindowOpenDisposition::CURRENT_TAB:
       if (params->browser)
         return params->browser;
@@ -552,7 +532,7 @@ void Navigate(NavigateParams* params) {
                                    ui::PAGE_TRANSITION_KEYWORD);
 
   // Check if this is a singleton tab that already exists
-  int singleton_index = GetIndexOfExistingTab(params);
+  int singleton_index = GetIndexOfSingletonTab(params);
 
   // Did we use a prerender?
   bool swapped_in_prerender = false;
@@ -632,11 +612,6 @@ void Navigate(NavigateParams* params) {
   }
 
   if (singleton_index >= 0) {
-    // If switching browsers, make sure it is shown.
-    if (params->disposition == WindowOpenDisposition::SWITCH_TO_TAB &&
-        params->browser != source_browser)
-      params->window_action = NavigateParams::SHOW_WINDOW;
-
     WebContents* target =
         params->browser->tab_strip_model()->GetWebContentsAt(singleton_index);
 
@@ -649,18 +624,6 @@ void Navigate(NavigateParams* params) {
 
     // If the singleton tab isn't already selected, select it.
     if (params->source_contents != params->target_contents) {
-      if (params->disposition == WindowOpenDisposition::SWITCH_TO_TAB) {
-        // Close orphaned NTPs with no history when the user switches away from
-        // them.
-        if (params->source_contents->GetController().CanGoBack() ||
-            (params->source_contents->GetLastCommittedURL().spec() !=
-                 chrome::kChromeUINewTabURL &&
-             params->source_contents->GetLastCommittedURL().spec() !=
-                 chrome::kChromeSearchLocalNtpUrl))
-          params->source_contents->Focus();
-        else
-          params->source_contents->Close();
-      }
       params->browser->tab_strip_model()->ActivateTabAt(singleton_index,
                                                         user_initiated);
     }

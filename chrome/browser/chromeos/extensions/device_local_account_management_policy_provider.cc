@@ -10,7 +10,7 @@
 #include <string>
 
 #include "base/logging.h"
-#include "base/metrics/histogram_functions.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -156,6 +156,9 @@ const char* const kSafeManifestEntries[] = {
 
     // Not useful since it will prevent app from running, but we don't care.
     emk::kKioskSecondaryApps,
+
+    // Whitelisted to only allow Google Now.
+    emk::kLauncherPage,
 
     // Special-cased in IsSafeForPublicSession().
     // emk::kManifestVersion,
@@ -640,8 +643,8 @@ void LogPermissionUmaStats(const std::string& permission_string) {
   // Not a permission.
   if (!permission_info) return;
 
-  base::UmaHistogramSparse("Enterprise.PublicSession.ExtensionPermissions",
-                           permission_info->id());
+  UMA_HISTOGRAM_SPARSE_SLOWLY("Enterprise.PublicSession.ExtensionPermissions",
+                              permission_info->id());
 }
 
 // Returns true for extensions that are considered safe for Public Sessions,

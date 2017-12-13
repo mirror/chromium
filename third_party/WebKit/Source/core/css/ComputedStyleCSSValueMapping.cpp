@@ -517,7 +517,7 @@ static CSSValueList* ValueForItemPositionWithOverflowAlignment(
     result->Append(*CSSIdentifierValue::Create(data.GetPosition()));
   }
   if (data.GetPosition() >= kItemPositionCenter &&
-      data.Overflow() != OverflowAlignment::kDefault)
+      data.Overflow() != kOverflowAlignmentDefault)
     result->Append(*CSSIdentifierValue::Create(data.Overflow()));
   DCHECK_LE(result->length(), 2u);
   return result;
@@ -687,7 +687,7 @@ ValueForContentPositionAndDistributionWithOverflowAlignment(
   // Handle overflow-alignment (only allowed for content-position values)
   if ((data.GetPosition() >= ContentPosition::kCenter ||
        data.Distribution() != ContentDistributionType::kDefault) &&
-      data.Overflow() != OverflowAlignment::kDefault)
+      data.Overflow() != kOverflowAlignmentDefault)
     result->Append(*CSSIdentifierValue::Create(data.Overflow()));
   DCHECK_GT(result->length(), 0u);
   DCHECK_LE(result->length(), 3u);
@@ -3801,21 +3801,29 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return ZoomAdjustedPixelValueForLength(style.ScrollPaddingInlineEnd(),
                                              style);
     case CSSPropertyScrollSnapMarginTop:
-      return ZoomAdjustedPixelValue(style.ScrollSnapMarginTop(), style);
+      return ZoomAdjustedPixelValueForLength(style.ScrollSnapMarginTop(),
+                                             style);
     case CSSPropertyScrollSnapMarginRight:
-      return ZoomAdjustedPixelValue(style.ScrollSnapMarginRight(), style);
+      return ZoomAdjustedPixelValueForLength(style.ScrollSnapMarginRight(),
+                                             style);
     case CSSPropertyScrollSnapMarginBottom:
-      return ZoomAdjustedPixelValue(style.ScrollSnapMarginBottom(), style);
+      return ZoomAdjustedPixelValueForLength(style.ScrollSnapMarginBottom(),
+                                             style);
     case CSSPropertyScrollSnapMarginLeft:
-      return ZoomAdjustedPixelValue(style.ScrollSnapMarginLeft(), style);
+      return ZoomAdjustedPixelValueForLength(style.ScrollSnapMarginLeft(),
+                                             style);
     case CSSPropertyScrollSnapMarginBlockStart:
-      return ZoomAdjustedPixelValue(style.ScrollSnapMarginBlockStart(), style);
+      return ZoomAdjustedPixelValueForLength(style.ScrollSnapMarginBlockStart(),
+                                             style);
     case CSSPropertyScrollSnapMarginBlockEnd:
-      return ZoomAdjustedPixelValue(style.ScrollSnapMarginBlockEnd(), style);
+      return ZoomAdjustedPixelValueForLength(style.ScrollSnapMarginBlockEnd(),
+                                             style);
     case CSSPropertyScrollSnapMarginInlineStart:
-      return ZoomAdjustedPixelValue(style.ScrollSnapMarginInlineStart(), style);
+      return ZoomAdjustedPixelValueForLength(
+          style.ScrollSnapMarginInlineStart(), style);
     case CSSPropertyScrollSnapMarginInlineEnd:
-      return ZoomAdjustedPixelValue(style.ScrollSnapMarginInlineEnd(), style);
+      return ZoomAdjustedPixelValueForLength(style.ScrollSnapMarginInlineEnd(),
+                                             style);
     case CSSPropertyOverscrollBehavior: {
       CSSValueList* list = CSSValueList::CreateSpaceSeparated();
       list->Append(*CSSIdentifierValue::Create(style.OverscrollBehaviorX()));

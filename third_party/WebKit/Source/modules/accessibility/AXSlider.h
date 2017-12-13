@@ -29,7 +29,6 @@
 #ifndef AXSlider_h
 #define AXSlider_h
 
-#include "base/macros.h"
 #include "modules/accessibility/AXLayoutObject.h"
 #include "modules/accessibility/AXMockObject.h"
 
@@ -39,9 +38,11 @@ class AXObjectCacheImpl;
 class HTMLInputElement;
 
 class AXSlider : public AXLayoutObject {
+  WTF_MAKE_NONCOPYABLE(AXSlider);
+
  public:
   static AXSlider* Create(LayoutObject*, AXObjectCacheImpl&);
-  ~AXSlider() override = default;
+  ~AXSlider() override {}
 
  protected:
   AXSlider(LayoutObject*, AXObjectCacheImpl&);
@@ -58,14 +59,14 @@ class AXSlider : public AXLayoutObject {
 
   bool OnNativeSetValueAction(const String&) final;
   AccessibilityOrientation Orientation() const final;
-
-  DISALLOW_COPY_AND_ASSIGN(AXSlider);
 };
 
 class AXSliderThumb final : public AXMockObject {
+  WTF_MAKE_NONCOPYABLE(AXSliderThumb);
+
  public:
   static AXSliderThumb* Create(AXObjectCacheImpl&);
-  ~AXSliderThumb() override = default;
+  ~AXSliderThumb() override {}
 
   AccessibilityRole RoleValue() const override { return kSliderThumbRole; }
 
@@ -74,8 +75,6 @@ class AXSliderThumb final : public AXMockObject {
 
   bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;
   LayoutObject* LayoutObjectForRelativeBounds() const override;
-
-  DISALLOW_COPY_AND_ASSIGN(AXSliderThumb);
 };
 
 }  // namespace blink

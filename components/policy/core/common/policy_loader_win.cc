@@ -130,7 +130,8 @@ void FilterUntrustedPolicy(PolicyMap* policy) {
 
       const PolicyDetails* details =
           GetChromePolicyDetails(key::kExtensionInstallForcelist);
-      base::UmaHistogramSparse("EnterpriseCheck.InvalidPolicies", details->id);
+      UMA_HISTOGRAM_SPARSE_SLOWLY("EnterpriseCheck.InvalidPolicies",
+                                  details->id);
     }
   }
 
@@ -141,7 +142,8 @@ void FilterUntrustedPolicy(PolicyMap* policy) {
       invalid_policies++;
       const PolicyDetails* details =
           GetChromePolicyDetails(kInsecurePolicies[i]);
-      base::UmaHistogramSparse("EnterpriseCheck.InvalidPolicies", details->id);
+      UMA_HISTOGRAM_SPARSE_SLOWLY("EnterpriseCheck.InvalidPolicies",
+                                  details->id);
     }
   }
 

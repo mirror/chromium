@@ -41,10 +41,6 @@ void TestContextSupport::SignalQuery(uint32_t query,
                                 weak_ptr_factory_.GetWeakPtr()));
 }
 
-void TestContextSupport::GetGpuFence(
-    uint32_t gpu_fence_id,
-    base::OnceCallback<void(std::unique_ptr<gfx::GpuFence>)> callback) {}
-
 void TestContextSupport::SetAggressivelyFreeResources(
     bool aggressively_free_resources) {}
 
@@ -108,24 +104,22 @@ bool TestContextSupport::ThreadSafeShallowLockDiscardableTexture(
 void TestContextSupport::CompleteLockDiscardableTexureOnContextThread(
     uint32_t texture_id) {}
 
-void TestContextSupport::CreateTransferCacheEntry(
+gpu::TransferCacheEntryId TestContextSupport::CreateTransferCacheEntry(
     const ClientTransferCacheEntry& entry) {
   NOTIMPLEMENTED();
+  return gpu::TransferCacheEntryId();
 }
 bool TestContextSupport::ThreadsafeLockTransferCacheEntry(
-    TransferCacheEntryType entry_type,
-    uint32_t entry_id) {
+    gpu::TransferCacheEntryId id) {
   NOTIMPLEMENTED();
   return false;
 }
 void TestContextSupport::UnlockTransferCacheEntry(
-    TransferCacheEntryType entry_type,
-    uint32_t entry_id) {
+    gpu::TransferCacheEntryId id) {
   NOTIMPLEMENTED();
 }
 void TestContextSupport::DeleteTransferCacheEntry(
-    TransferCacheEntryType entry_type,
-    uint32_t entry_id) {
+    gpu::TransferCacheEntryId id) {
   NOTIMPLEMENTED();
 }
 

@@ -5,12 +5,12 @@
 #ifndef CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_WRITER_H_
 #define CONTENT_BROWSER_WEBAUTH_CBOR_CBOR_WRITER_H_
 
-#include <stddef.h>
+#include "content/browser/webauth/cbor/cbor_values.h"
+
 #include <stdint.h>
 #include <vector>
 
 #include "base/optional.h"
-#include "content/browser/webauth/cbor/cbor_values.h"
 #include "content/common/content_export.h"
 
 // A basic Concise Binary Object Representation (CBOR) encoder as defined by
@@ -48,13 +48,23 @@
 // Current implementation of CBORWriter encoder meets all the requirements of
 // canonical CBOR.
 
+enum class CborMajorType {
+  kUnsigned = 0,    // Unsigned integer.
+  kNegative = 1,    // Negative integer. Unsupported by this implementation.
+  kByteString = 2,  // Byte string.
+  kString = 3,      // String.
+  kArray = 4,       // Array.
+  kMap = 5,         // Map.
+};
+
 namespace content {
+namespace {
+// Default that should be sufficiently large for most use cases.
+constexpr size_t kDefaultMaxNestingDepth = 16;
+}  // namespace
 
 class CONTENT_EXPORT CBORWriter {
  public:
-  // Default that should be sufficiently large for most use cases.
-  static constexpr size_t kDefaultMaxNestingDepth = 16;
-
   ~CBORWriter();
 
   // Returns the CBOR byte string representation of |node|, unless its nesting
@@ -75,7 +85,7 @@ class CONTENT_EXPORT CBORWriter {
   bool EncodeCBOR(const CBORValue& node, int max_nesting_level);
 
   // Encodes the type and size of the data being added.
-  void StartItem(CBORValue::Type type, uint64_t size);
+  void StartItem(CborMajorType type, uint64_t size);
 
   // Encodes the additional information for the data.
   void SetAdditionalInformation(uint8_t additional_information);

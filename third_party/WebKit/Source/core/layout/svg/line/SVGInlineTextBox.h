@@ -71,7 +71,9 @@ class SVGInlineTextBox final : public InlineTextBox {
     starts_new_text_chunk_ = new_text_chunk;
   }
 
-  int OffsetForPositionInFragment(const SVGTextFragment&, float position) const;
+  int OffsetForPositionInFragment(const SVGTextFragment&,
+                                  LayoutUnit position,
+                                  bool include_partial_glyphs) const;
   FloatRect SelectionRectForTextFragment(const SVGTextFragment&,
                                          int fragment_start_position,
                                          int fragment_end_position,

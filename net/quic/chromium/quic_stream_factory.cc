@@ -1404,9 +1404,7 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
   QuicConnection* connection = new QuicConnection(
       connection_id, QuicSocketAddress(QuicSocketAddressImpl(addr)),
       helper_.get(), alarm_factory_.get(), writer, true /* owns_writer */,
-      Perspective::IS_CLIENT,
-      ParsedQuicVersionVector{
-          ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, quic_version)});
+      Perspective::IS_CLIENT, {quic_version});
   connection->set_ping_timeout(ping_timeout_);
   connection->SetMaxPacketLength(max_packet_length_);
 

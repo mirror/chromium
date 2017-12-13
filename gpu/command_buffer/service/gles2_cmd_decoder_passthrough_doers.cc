@@ -5,7 +5,6 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 
 #include "base/strings/string_number_conversions.h"
-#include "gpu/command_buffer/service/gpu_fence_manager.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gl/dc_renderer_layer_params.h"
@@ -4641,10 +4640,10 @@ error::Error GLES2DecoderPassthroughImpl::DoEndRasterCHROMIUM() {
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoCreateTransferCacheEntryINTERNAL(
-    GLuint entry_type,
-    GLuint entry_id,
+    GLuint64 handle_id,
     GLuint handle_shm_id,
     GLuint handle_shm_offset,
+    GLuint type,
     GLuint data_shm_id,
     GLuint data_shm_offset,
     GLuint data_size) {
@@ -4653,15 +4652,13 @@ error::Error GLES2DecoderPassthroughImpl::DoCreateTransferCacheEntryINTERNAL(
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoUnlockTransferCacheEntryINTERNAL(
-    GLuint entry_type,
-    GLuint entry_id) {
+    GLuint64 handle_id) {
   NOTIMPLEMENTED();
   return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoDeleteTransferCacheEntryINTERNAL(
-    GLuint entry_type,
-    GLuint entry_id) {
+    GLuint64 handle_id) {
   NOTIMPLEMENTED();
   return error::kNoError;
 }
@@ -4672,33 +4669,6 @@ error::Error GLES2DecoderPassthroughImpl::DoWindowRectanglesEXT(
     const volatile GLint* box) {
   std::vector<GLint> box_copy(box, box + (n * 4));
   api()->glWindowRectanglesEXTFn(mode, n, box_copy.data());
-  return error::kNoError;
-}
-
-error::Error GLES2DecoderPassthroughImpl::DoCreateGpuFenceINTERNAL(
-    GLuint gpu_fence_id) {
-  if (!feature_info_->feature_flags().chromium_gpu_fence)
-    return error::kUnknownCommand;
-  if (!GetGpuFenceManager()->CreateGpuFence(gpu_fence_id))
-    return error::kInvalidArguments;
-  return error::kNoError;
-}
-
-error::Error GLES2DecoderPassthroughImpl::DoWaitGpuFenceCHROMIUM(
-    GLuint gpu_fence_id) {
-  if (!feature_info_->feature_flags().chromium_gpu_fence)
-    return error::kUnknownCommand;
-  if (!GetGpuFenceManager()->GpuFenceServerWait(gpu_fence_id))
-    return error::kInvalidArguments;
-  return error::kNoError;
-}
-
-error::Error GLES2DecoderPassthroughImpl::DoDestroyGpuFenceCHROMIUM(
-    GLuint gpu_fence_id) {
-  if (!feature_info_->feature_flags().chromium_gpu_fence)
-    return error::kUnknownCommand;
-  if (!GetGpuFenceManager()->RemoveGpuFence(gpu_fence_id))
-    return error::kInvalidArguments;
   return error::kNoError;
 }
 

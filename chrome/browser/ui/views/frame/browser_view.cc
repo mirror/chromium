@@ -619,7 +619,7 @@ void BrowserView::Show() {
 
   browser()->OnWindowDidShow();
 
-  MaybeShowInvertBubbleView(this);
+  chrome::MaybeShowInvertBubbleView(this);
 }
 
 void BrowserView::ShowInactive() {
@@ -1003,7 +1003,7 @@ void BrowserView::SetFocusToLocationBar(bool select_all) {
 void BrowserView::UpdateReloadStopState(bool is_loading, bool force) {
   if (toolbar_->reload_button()) {
     toolbar_->reload_button()->ChangeMode(
-        is_loading ? ReloadButton::Mode::kStop : ReloadButton::Mode::kReload,
+        is_loading ? ReloadButton::MODE_STOP : ReloadButton::MODE_RELOAD,
         force);
   }
 }
@@ -1625,7 +1625,7 @@ void BrowserView::NativeThemeUpdated(const ui::NativeTheme* theme) {
   // Don't infinitely recurse.
   if (!handling_theme_changed_)
     UserChangedTheme();
-  MaybeShowInvertBubbleView(this);
+  chrome::MaybeShowInvertBubbleView(this);
 }
 
 FullscreenControlHost* BrowserView::GetFullscreenControlHost() {

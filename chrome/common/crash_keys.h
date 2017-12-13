@@ -51,7 +51,7 @@ class ScopedPrinterInfo {
 
 // Crash Key Name Constants ////////////////////////////////////////////////////
 
-// The URL actively being processed in some way.
+// The URL of the active tab.
 extern const char kActiveURL[];
 
 // Installed extensions. |kExtensionID| should be formatted with an integer,
@@ -71,6 +71,19 @@ extern const char kShutdownType[];
 // shutdown sequence. The value is set when we trigger a browser crash due to an
 // invalid attempt to Pin the browser process after that.
 extern const char kBrowserUnpinTrace[];
+
+#if defined(OS_WIN)
+extern const char kHungAudioThreadDetails[];
+
+// Whether the machine is enterprise managed (only sent on Windows).
+extern const char kIsEnterpriseManaged[];
+
+// The "ap" (additional parameters) value in Chrome's ClientState registry key.
+extern const char kApValue[];
+
+// The "name" value in Chrome's ClientState\cohort registry key.
+extern const char kCohortName[];
+#endif
 
 // The user's printers, up to kPrinterInfoCount. Should be set with
 // ScopedPrinterInfo.

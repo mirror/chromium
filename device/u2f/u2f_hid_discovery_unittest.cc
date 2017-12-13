@@ -20,8 +20,6 @@
 
 namespace device {
 
-using ::testing::_;
-
 namespace {
 
 device::mojom::HidDeviceInfoPtr MakeU2fDevice(std::string guid) {
@@ -46,10 +44,6 @@ device::mojom::HidDeviceInfoPtr MakeOtherDevice(std::string guid) {
   other_device->serial_number = "OtherDevice";
   other_device->bus_type = device::mojom::HidBusType::kHIDBusTypeUSB;
   return other_device;
-}
-
-MATCHER_P(IdMatches, id, "") {
-  return arg->GetId() == std::string("hid:") + id;
 }
 
 }  // namespace
@@ -80,36 +74,43 @@ class U2fHidDiscoveryTest : public testing::Test {
 
 TEST_F(U2fHidDiscoveryTest, TestAddRemoveDevice) {
   U2fHidDiscovery discovery(connector_.get());
-  MockU2fDiscoveryObserver observer;
+  MockU2fDiscovery::MockDelegate delegate;
 
-  fake_hid_manager_->AddDevice(MakeU2fDevice("known"));
+  auto u2f_device_known = MakeU2fDevice("known");
+  std::string device_id_known =
+      U2fHidDevice(u2f_device_known->Clone(), nullptr).GetId();
+  fake_hid_manager_->AddDevice(std::move(u2f_device_known));
 
-  EXPECT_CALL(observer, DiscoveryStarted(&discovery, true));
-  discovery.AddObserver(&observer);
+  EXPECT_CALL(delegate, OnStarted(true));
+  discovery.SetDelegate(delegate.GetWeakPtr());
   discovery.Start();
 
   // Devices initially known to the service before discovery started should be
   // reported as KNOWN.
-  EXPECT_CALL(observer, DeviceAdded(&discovery, IdMatches("known")));
+  EXPECT_CALL(delegate, OnDeviceAddedStr(device_id_known));
   scoped_task_environment().RunUntilIdle();
 
   // Devices added during the discovery should be reported as ADDED.
-  EXPECT_CALL(observer, DeviceAdded(&discovery, IdMatches("added")));
-  fake_hid_manager_->AddDevice(MakeU2fDevice("added"));
+  auto u2f_device_added = MakeU2fDevice("added");
+  std::string device_id_added =
+      U2fHidDevice(u2f_device_added->Clone(), nullptr).GetId();
+  EXPECT_CALL(delegate, OnDeviceAddedStr(device_id_added));
+  fake_hid_manager_->AddDevice(std::move(u2f_device_added));
   scoped_task_environment().RunUntilIdle();
 
   // Added non-U2F devices should not be reported at all.
-  EXPECT_CALL(observer, DeviceAdded(_, _)).Times(0);
-  fake_hid_manager_->AddDevice(MakeOtherDevice("other"));
+  auto other_device = MakeOtherDevice("other");
+  EXPECT_CALL(delegate, OnDeviceAddedStr(testing::_)).Times(0);
+  fake_hid_manager_->AddDevice(std::move(other_device));
 
   // Removed non-U2F devices should not be reported at all.
-  EXPECT_CALL(observer, DeviceRemoved(_, _)).Times(0);
+  EXPECT_CALL(delegate, OnDeviceRemovedStr(testing::_)).Times(0);
   fake_hid_manager_->RemoveDevice("other");
   scoped_task_environment().RunUntilIdle();
 
   // Removed U2F devices should be reported as REMOVED.
-  EXPECT_CALL(observer, DeviceRemoved(&discovery, IdMatches("known")));
-  EXPECT_CALL(observer, DeviceRemoved(&discovery, IdMatches("added")));
+  EXPECT_CALL(delegate, OnDeviceRemovedStr(device_id_known));
+  EXPECT_CALL(delegate, OnDeviceRemovedStr(device_id_added));
   fake_hid_manager_->RemoveDevice("known");
   fake_hid_manager_->RemoveDevice("added");
   scoped_task_environment().RunUntilIdle();

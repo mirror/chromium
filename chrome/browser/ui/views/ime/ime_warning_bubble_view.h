@@ -32,7 +32,7 @@ using ImeWarningBubbleResponseCallback =
 // or the parent browser is being destroyed.
 class ImeWarningBubbleView : public views::BubbleDialogDelegateView,
                              public ToolbarActionsBarObserver,
-                             public BrowserListObserver {
+                             public chrome::BrowserListObserver {
  public:
   static void ShowBubble(const extensions::Extension* extension,
                          BrowserView* browser_view,
@@ -45,7 +45,7 @@ class ImeWarningBubbleView : public views::BubbleDialogDelegateView,
   // ToolbarActionsBarObserver:
   void OnToolbarActionsBarAnimationEnded() override;
 
-  // BrowserListObserver:
+  // chrome::BrowserListObserver:
   void OnBrowserRemoved(Browser* browser) override;
 
  private:

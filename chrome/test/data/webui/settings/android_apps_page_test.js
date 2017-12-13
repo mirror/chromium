@@ -59,13 +59,6 @@ suite('AndroidAppsPageTests', function() {
   suite('SubPage', function() {
     var subpage;
 
-    function flushAsync() {
-      Polymer.dom.flush();
-      return new Promise(resolve => {
-        androidAppsPage.async(resolve);
-      });
-    }
-
     /**
      * Returns a new promise that resolves after a window 'popstate' event.
      * @return {!Promise}
@@ -85,10 +78,9 @@ suite('AndroidAppsPageTests', function() {
       setAndroidAppsState(true, false);
       settings.navigateTo(settings.routes.ANDROID_APPS);
       MockInteractions.tap(androidAppsPage.$$('#android-apps'));
-      return flushAsync().then(() => {
-        subpage = androidAppsPage.$$('settings-android-apps-subpage');
-        assertTrue(!!subpage);
-      });
+      Polymer.dom.flush();
+      subpage = androidAppsPage.$$('settings-android-apps-subpage');
+      assertTrue(!!subpage);
     });
 
     test('Sanity', function() {

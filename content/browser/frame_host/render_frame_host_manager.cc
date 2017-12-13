@@ -246,7 +246,7 @@ RenderFrameHostImpl* RenderFrameHostManager::Navigate(
         dest_render_frame_host->GetView()->Hide();
     } else {
       EnsureRenderFrameHostVisibilityConsistent();
-      EnsureRenderFrameHostPageFocusConsistent();
+
       // TODO(nasko): This is a very ugly hack. The Chrome extensions process
       // manager still uses NotificationService and expects to see a
       // RenderViewHost changed notification after WebContents and
@@ -710,10 +710,6 @@ void RenderFrameHostManager::DidCreateNavigationRequest(
 RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
     const NavigationRequest& request) {
   CHECK(IsBrowserSideNavigationEnabled());
-  DCHECK(!request.common_params().url.SchemeIs(url::kJavaScriptScheme))
-      << "Don't call this method for JavaScript URLs as those create a "
-         "temporary  NavigationRequest and we don't want to reset an ongoing "
-         "navigation's speculative RFH.";
 
   // The appropriate RenderFrameHost to commit the navigation.
   RenderFrameHostImpl* navigation_rfh = nullptr;
@@ -837,7 +833,6 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
 
     if (navigation_rfh == render_frame_host_.get()) {
       EnsureRenderFrameHostVisibilityConsistent();
-      EnsureRenderFrameHostPageFocusConsistent();
       // TODO(nasko): This is a very ugly hack. The Chrome extensions process
       // manager still uses NotificationService and expects to see a
       // RenderViewHost changed notification after WebContents and
@@ -1028,14 +1023,6 @@ void RenderFrameHostManager::OnSetHasReceivedUserGesture() {
   for (const auto& pair : proxy_hosts_) {
     pair.second->Send(
         new FrameMsg_SetHasReceivedUserGesture(pair.second->GetRoutingID()));
-  }
-}
-
-void RenderFrameHostManager::OnSetHasReceivedUserGestureBeforeNavigation(
-    bool value) {
-  for (const auto& pair : proxy_hosts_) {
-    pair.second->Send(new FrameMsg_SetHasReceivedUserGestureBeforeNavigation(
-        pair.second->GetRoutingID(), value));
   }
 }
 
@@ -1269,37 +1256,6 @@ RenderFrameHostManager::GetSiteInstanceForNavigation(
   }
 
   return new_instance;
-}
-
-void RenderFrameHostManager::InitializeRenderFrameIfNecessary(
-    RenderFrameHostImpl* render_frame_host) {
-  // TODO(jam): this copies some logic inside GetFrameHostForNavigation, which
-  // also duplicates logic in Navigate. They should all use this method, but
-  // that involves slight reordering.
-  // http://crbug.com/794229
-  if (render_frame_host->IsRenderFrameLive())
-    return;
-
-  if (!ReinitializeRenderFrame(render_frame_host))
-    return;
-
-  if (render_frame_host != render_frame_host_.get())
-    return;
-
-  EnsureRenderFrameHostVisibilityConsistent();
-
-  // TODO(jam): uncomment this when the method is shared. Not adding the call
-  // now to make merge to 63 easier.
-  // EnsureRenderFrameHostPageFocusConsistent();
-
-  // TODO(nasko): This is a very ugly hack. The Chrome extensions process
-  // manager still uses NotificationService and expects to see a
-  // RenderViewHost changed notification after WebContents and
-  // RenderFrameHostManager are completely initialized. This should be
-  // removed once the process manager moves away from NotificationService.
-  // See https://crbug.com/462682.
-  delegate_->NotifyMainFrameSwappedFromRenderManager(
-      nullptr, render_frame_host_->render_view_host());
 }
 
 RenderFrameHostManager::SiteInstanceDescriptor
@@ -2862,15 +2818,6 @@ void RenderFrameHostManager::EnsureRenderFrameHostVisibilityConsistent() {
       view->Show();
     }
   }
-}
-
-void RenderFrameHostManager::EnsureRenderFrameHostPageFocusConsistent() {
-  frame_tree_node_->frame_tree()->SetPageFocus(
-      render_frame_host_->GetSiteInstance(), frame_tree_node_->frame_tree()
-                                                 ->root()
-                                                 ->current_frame_host()
-                                                 ->GetRenderWidgetHost()
-                                                 ->is_focused());
 }
 
 }  // namespace content

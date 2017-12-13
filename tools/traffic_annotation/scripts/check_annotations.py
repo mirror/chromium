@@ -137,34 +137,6 @@ class NetworkTrafficAnnotationChecker():
     return command.returncode
 
 
-  def GetModifiedFiles(self):
-    """Gets the list of modified files from git. Returns None if any error
-    happens."""
-
-    # List of files is extracted the same way as the following test recipe:
-    # https://cs.chromium.org/chromium/tools/depot_tools/recipes/recipe_modules/
-    # tryserver/api.py?l=66
-    args = ["git.bat"] if sys.platform == "win32" else ["git"]
-    args += ["diff", "--cached", "--name-only"]
-
-    original_path = os.getcwd()
-
-    # Change directory to src (two levels upper than build path).
-    os.chdir(os.path.join(self.build_path, "..", ".."))
-    command = subprocess.Popen(args, stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
-    stdout_text, stderr_text = command.communicate()
-
-    if stderr_text:
-      print("Could not run '%s' to get the list of changed files "
-            "beacuse: %s" % (" ".join(args), stderr_text))
-      os.chdir(original_path)
-      return None
-
-    os.chdir(original_path)
-    return stdout_text.splitlines()
-
-
 def main():
   parser = argparse.ArgumentParser(
       description="Traffic Annotation Auditor Presubmit checker.")
@@ -177,24 +149,11 @@ def main():
       '--limit', default=5,
       help='Limit for the maximum number of returned errors and warnings. '
            'Default value is 5, use 0 for unlimited.')
-  parser.add_argument(
-      '--complete', action='store_true',
-      help='Run the test on the complete repository. Otherwise only the '
-           'modified files are tested.')
 
   args = parser.parse_args()
 
   checker = NetworkTrafficAnnotationChecker(args.build_path)
-  if args.complete:
-    file_paths = None
-  else:
-    file_paths = checker.GetModifiedFiles()
-    if file_paths is None:
-      return -1
-    if len(file_paths) == 0:
-      return 0
-
-  return checker.CheckFiles(file_paths=file_paths, limit=args.limit)
+  return checker.CheckFiles(limit=args.limit)
 
 
 if '__main__' == __name__:

@@ -32,10 +32,22 @@ size_t RegisterCastCrashKeys() {
       {"shutdown-type", ::crash_keys::kSmallSize},
       {"browser-unpin-trace", ::crash_keys::kMediumSize},
 
+      // content/:
+      {"discardable-memory-allocated", ::crash_keys::kSmallSize},
+      {"discardable-memory-free", ::crash_keys::kSmallSize},
+      {"subresource_url", ::crash_keys::kLargeSize},
+      {"total-discardable-memory-allocated", ::crash_keys::kSmallSize},
       {"view-count", ::crash_keys::kSmallSize},
 
       // media/:
       {"zero-encode-details", ::crash_keys::kSmallSize},
+
+      // Site isolation.  These keys help debug renderer kills such as
+      // https://crbug.com/773140.
+      {"requested_site_url", ::crash_keys::kSmallSize},
+      {"requested_origin", ::crash_keys::kSmallSize},
+      {"killed_process_origin_lock", ::crash_keys::kSmallSize},
+      {"site_isolation_mode", ::crash_keys::kSmallSize},
 
       // Temporary for https://crbug.com/685996.
       {"user-cloud-policy-manager-connect-trace", ::crash_keys::kMediumSize},

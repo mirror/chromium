@@ -5,7 +5,6 @@
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h"
 
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -162,11 +161,11 @@ void RemoteSuggestionsFetcherImpl::FetchSnippets(
     const RequestParams& params,
     SnippetsAvailableCallback callback) {
   if (!params.interactive_request) {
-    base::UmaHistogramSparse(
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
         "NewTabPage.Snippets.FetchTimeLocal",
         GetMinuteOfTheDay(/*local_time=*/true,
                           /*reduced_resolution=*/true, clock_));
-    base::UmaHistogramSparse(
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
         "NewTabPage.Snippets.FetchTimeUTC",
         GetMinuteOfTheDay(/*local_time=*/false,
                           /*reduced_resolution=*/true, clock_));

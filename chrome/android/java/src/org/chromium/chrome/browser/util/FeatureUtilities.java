@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
@@ -53,6 +54,8 @@ public class FeatureUtilities {
     private static final String SYNTHETIC_CHROME_HOME_EXPERIMENT_NAME = "SyntheticChromeHome";
     private static final String ENABLED_EXPERIMENT_GROUP = "Enabled";
     private static final String DISABLED_EXPERIMENT_GROUP = "Disabled";
+
+    private static final long CHROME_HOME_MAX_ENABLED_TIME_MS = 60000; // 60 seconds.
 
     private static Boolean sHasGoogleAccountAuthenticator;
     private static Boolean sHasRecognitionIntentHandler;
@@ -285,9 +288,6 @@ public class FeatureUtilities {
 
         if (!ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)
                 && manager.isChromeHomeUserPreferenceSet()) {
-            // If we showed the user the old promo, set the info promo preference so that it is not
-            // presented when the opt-in/out promo is turned off.
-            manager.setChromeHomeInfoPromoShown();
             manager.clearChromeHomeUserPreference();
         }
 
@@ -387,25 +387,27 @@ public class FeatureUtilities {
     public static boolean shouldShowChromeHomePromoForStartup() {
         if (DeviceFormFactor.isTablet()) return false;
 
-        ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
-
-        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_INFO_ONLY)
-                && isChromeHomeEnabled()) {
-            prefManager.setChromeHomeInfoPromoShown();
-        }
-
         // The preference will be set if the promo has been seen before. If that is the case, do not
         // show it again.
+        ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
         boolean isChromeHomePrefSet = prefManager.isChromeHomeUserPreferenceSet();
         if (isChromeHomePrefSet) return false;
 
         if (isChromeHomeEnabled()
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_INFO_ONLY)) {
-            boolean promoShown;
+            long chromeHomeEnabledDate = System.currentTimeMillis();
+
             try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
-                promoShown = ChromePreferenceManager.getInstance().hasChromeHomeInfoPromoShown();
+                SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+                chromeHomeEnabledDate = sharedPreferences.getLong(
+                        ChromePreferenceManager.CHROME_HOME_SHARED_PREFERENCES_KEY,
+                        chromeHomeEnabledDate);
             }
-            return !promoShown;
+
+            long timeDeadlineForPromo = chromeHomeEnabledDate + CHROME_HOME_MAX_ENABLED_TIME_MS;
+
+            // If Chrome Home has been enabled for < 60 seconds, show the info dialog.
+            return System.currentTimeMillis() < timeDeadlineForPromo;
         } else if (!isChromeHomeEnabled()
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO_ON_STARTUP)) {

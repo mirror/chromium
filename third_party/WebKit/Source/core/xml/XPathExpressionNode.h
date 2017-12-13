@@ -27,7 +27,6 @@
 #ifndef XPathExpressionNode_h
 #define XPathExpressionNode_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/dom/Node.h"
 #include "core/xml/XPathValue.h"
@@ -60,6 +59,8 @@ class CORE_EXPORT ParseNode : public GarbageCollectedFinalized<ParseNode> {
 };
 
 class CORE_EXPORT Expression : public ParseNode {
+  WTF_MAKE_NONCOPYABLE(Expression);
+
  public:
   Expression();
   ~Expression() override;
@@ -105,7 +106,6 @@ class CORE_EXPORT Expression : public ParseNode {
   bool is_context_node_sensitive_;
   bool is_context_position_sensitive_;
   bool is_context_size_sensitive_;
-  DISALLOW_COPY_AND_ASSIGN(Expression);
 };
 
 }  // namespace XPath

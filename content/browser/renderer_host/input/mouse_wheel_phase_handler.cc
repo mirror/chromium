@@ -13,7 +13,7 @@ namespace content {
 MouseWheelPhaseHandler::MouseWheelPhaseHandler(
     RenderWidgetHostImpl* const host,
     RenderWidgetHostViewBase* const host_view)
-    : host_(host),
+    : host_(RenderWidgetHostImpl::From(host)),
       host_view_(host_view),
       scroll_phase_state_(SCROLL_STATE_UNKNOWN) {}
 

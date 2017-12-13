@@ -4,6 +4,7 @@
 
 #include "chromeos/dbus/fake_smb_provider_client.h"
 
+#include <string>
 #include <utility>
 
 #include "base/bind.h"
@@ -18,7 +19,7 @@ FakeSmbProviderClient::~FakeSmbProviderClient() {}
 
 void FakeSmbProviderClient::Init(dbus::Bus* bus) {}
 
-void FakeSmbProviderClient::Mount(const base::FilePath& share_path,
+void FakeSmbProviderClient::Mount(const std::string& share_path,
                                   MountCallback callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), smbprovider::ERROR_OK, 1));
@@ -28,24 +29,6 @@ void FakeSmbProviderClient::Unmount(int32_t mount_id,
                                     UnmountCallback callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(std::move(callback), smbprovider::ERROR_OK));
-}
-
-void FakeSmbProviderClient::ReadDirectory(int32_t mount_id,
-                                          const base::FilePath& directory_path,
-                                          ReadDirectoryCallback callback) {
-  smbprovider::DirectoryEntryList entry_list;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(std::move(callback), smbprovider::ERROR_OK, entry_list));
-}
-
-void FakeSmbProviderClient::GetMetadataEntry(int32_t mount_id,
-                                             const base::FilePath& entry_path,
-                                             GetMetdataEntryCallback callback) {
-  smbprovider::DirectoryEntry entry;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(std::move(callback), smbprovider::ERROR_OK, entry));
 }
 
 }  // namespace chromeos

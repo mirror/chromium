@@ -95,18 +95,10 @@ class CORE_EXPORT LayoutTableCell : public LayoutBlockFlow {
       return 1;
     return ParseColSpanFromDOM();
   }
-  unsigned ParsedRowSpan() const {
+  unsigned RowSpan() const {
     if (!has_row_span_)
       return 1;
     return ParseRowSpanFromDOM();
-  }
-  unsigned RowSpan() const {
-    unsigned row_span = ParsedRowSpan();
-    if (!row_span) {
-      DCHECK(!Section()->NeedsCellRecalc());
-      row_span = Section()->NumRows() - RowIndex();
-    }
-    return std::min<unsigned>(row_span, kMaxRowIndex);
   }
 
   // Called from HTMLTableCellElement.

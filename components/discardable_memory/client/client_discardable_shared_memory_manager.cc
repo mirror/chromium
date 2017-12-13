@@ -11,6 +11,7 @@
 
 #include "base/atomic_sequence_num.h"
 #include "base/bind.h"
+#include "base/debug/crash_logging.h"
 #include "base/macros.h"
 #include "base/memory/discardable_memory.h"
 #include "base/memory/discardable_shared_memory.h"
@@ -24,7 +25,6 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/trace_event.h"
-#include "components/crash/core/common/crash_key.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
 namespace discardable_memory {
@@ -410,13 +410,14 @@ void ClientDiscardableSharedMemoryManager::DeletedDiscardableSharedMemory(
 void ClientDiscardableSharedMemoryManager::MemoryUsageChanged(
     size_t new_bytes_total,
     size_t new_bytes_free) const {
-  static crash_reporter::CrashKeyString<24> discardable_memory_allocated(
-      "discardable-memory-allocated");
-  discardable_memory_allocated.Set(base::NumberToString(new_bytes_total));
+  static const char kDiscardableMemoryAllocatedKey[] =
+      "discardable-memory-allocated";
+  base::debug::SetCrashKeyValue(kDiscardableMemoryAllocatedKey,
+                                base::Uint64ToString(new_bytes_total));
 
-  static crash_reporter::CrashKeyString<24> discardable_memory_free(
-      "discardable-memory-free");
-  discardable_memory_free.Set(base::NumberToString(new_bytes_free));
+  static const char kDiscardableMemoryFreeKey[] = "discardable-memory-free";
+  base::debug::SetCrashKeyValue(kDiscardableMemoryFreeKey,
+                                base::Uint64ToString(new_bytes_free));
 }
 
 }  // namespace discardable_memory

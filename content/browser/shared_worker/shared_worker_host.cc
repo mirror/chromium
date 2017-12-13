@@ -249,7 +249,7 @@ void SharedWorkerHost::OnWorkerConnectionLost() {
   // This will destroy |this| resulting in client's observing their mojo
   // connection being dropped.
   static_cast<SharedWorkerServiceImpl*>(SharedWorkerService::GetInstance())
-      ->DestroyHost(this);
+      ->DestroyHost(process_id_, route_id_);
 }
 
 void SharedWorkerHost::GetInterface(

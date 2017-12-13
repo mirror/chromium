@@ -209,6 +209,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
       defer_load_cb_(params->defer_load_cb()),
       adjust_allocated_memory_cb_(params->adjust_allocated_memory_cb()),
       last_reported_memory_usage_(0),
+      supports_save_(true),
       chunk_demuxer_(NULL),
       tick_clock_(base::DefaultTickClock::GetInstance()),
       buffered_data_source_host_(
@@ -515,10 +516,7 @@ void WebMediaPlayerImpl::DoLoad(LoadType load_type,
   }
 
   // Set subresource URL for crash reporting.
-  static base::debug::CrashKeyString* subresource_url =
-      base::debug::AllocateCrashKeyString("subresource_url",
-                                          base::debug::CrashKeySize::Size256);
-  base::debug::SetCrashKeyString(subresource_url, gurl.spec());
+  base::debug::SetCrashKeyValue("subresource_url", gurl.spec());
 
   // Used for HLS playback.
   loaded_url_ = gurl;
@@ -531,6 +529,7 @@ void WebMediaPlayerImpl::DoLoad(LoadType load_type,
 
   // Media source pipelines can start immediately.
   if (load_type == kLoadTypeMediaSource) {
+    supports_save_ = false;
     StartPipeline();
   } else {
     data_source_.reset(new MultibufferDataSource(
@@ -627,6 +626,11 @@ void WebMediaPlayerImpl::Pause() {
   media_log_->AddEvent(media_log_->CreateEvent(MediaLogEvent::PAUSE));
 
   UpdatePlayState();
+}
+
+bool WebMediaPlayerImpl::SupportsSave() const {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  return supports_save_;
 }
 
 void WebMediaPlayerImpl::Seek(double seconds) {

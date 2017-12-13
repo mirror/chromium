@@ -92,9 +92,6 @@ class MockHostResolverBase
                        AddressList* addresses,
                        const NetLogWithSource& net_log) override;
   HostCache* GetHostCache() override;
-  bool HasCached(base::StringPiece hostname,
-                 HostCache::Entry::Source* source_out,
-                 HostCache::EntryStaleness* stale_out) const override;
 
   // Detach cancelled request.
   void DetachRequest(size_t id);
@@ -289,9 +286,6 @@ class HangingHostResolver : public HostResolver {
   int ResolveFromCache(const RequestInfo& info,
                        AddressList* addresses,
                        const NetLogWithSource& net_log) override;
-  bool HasCached(base::StringPiece hostname,
-                 HostCache::Entry::Source* source_out,
-                 HostCache::EntryStaleness* stale_out) const override;
 };
 
 // This class sets the default HostResolverProc for a particular scope.  The

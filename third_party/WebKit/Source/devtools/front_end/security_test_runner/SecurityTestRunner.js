@@ -16,12 +16,10 @@ SecurityTestRunner.dumpSecurityPanelSidebarOrigins = function() {
       continue;
 
     TestRunner.addResult('Group: ' + originGroupName);
-    var originTitles = originGroup.childrenListElement.getElementsByTagName('span');
+    var originTitles = originGroup.childrenListElement.getElementsByClassName('title');
 
-    for (var originTitle of originTitles) {
-      if (originTitle.className !== 'tree-element-title')
-        TestRunner.dumpDeepInnerHTML(originTitle);
-    }
+    for (var originTitle of originTitles)
+      TestRunner.dumpDeepInnerHTML(originTitle);
   }
 };
 

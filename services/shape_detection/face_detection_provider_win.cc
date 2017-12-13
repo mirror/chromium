@@ -6,8 +6,6 @@
 
 #include <windows.media.faceanalysis.h>
 
-#include "base/bind.h"
-#include "base/logging.h"
 #include "base/scoped_generic.h"
 #include "base/win/core_winrt_util.h"
 #include "base/win/scoped_hstring.h"
@@ -17,27 +15,9 @@
 
 namespace shape_detection {
 
-namespace {
-
-using ABI::Windows::Media::FaceAnalysis::IFaceDetectorStatics;
+using ABI::Windows::Media::FaceAnalysis::FaceDetector;
 using base::win::ScopedHString;
 using base::win::GetActivationFactory;
-
-BitmapPixelFormat GetPreferredPixelFormat(IFaceDetectorStatics* factory) {
-  static constexpr BitmapPixelFormat kFormats[] = {
-      ABI::Windows::Graphics::Imaging::BitmapPixelFormat_Gray8,
-      ABI::Windows::Graphics::Imaging::BitmapPixelFormat_Nv12};
-
-  for (const auto& format : kFormats) {
-    boolean is_supported = false;
-    factory->IsBitmapPixelFormatSupported(format, &is_supported);
-    if (is_supported)
-      return format;
-  }
-  return ABI::Windows::Graphics::Imaging::BitmapPixelFormat_Unknown;
-}
-
-}  // namespace
 
 void FaceDetectionProviderWin::CreateFaceDetection(
     shape_detection::mojom::FaceDetectionRequest request,
@@ -71,19 +51,10 @@ void FaceDetectionProviderWin::CreateFaceDetection(
     return;
   }
 
-  boolean is_supported = false;
+  boolean is_supported = FALSE;
   factory->get_IsSupported(&is_supported);
-  if (!is_supported)
+  if (is_supported == FALSE)
     return;
-
-  // In the current version, the FaceDetector class only supports images in
-  // Gray8 or Nv12. Gray8 should be a good type but verify it against
-  // FaceDetector’s supported formats.
-  BitmapPixelFormat pixel_format = GetPreferredPixelFormat(factory.Get());
-  if (pixel_format ==
-      ABI::Windows::Graphics::Imaging::BitmapPixelFormat_Unknown) {
-    return;
-  }
 
   // Create an instance of FaceDetector asynchronously.
   AsyncOperation<FaceDetector>::IAsyncOperationPtr async_op;
@@ -98,7 +69,8 @@ void FaceDetectionProviderWin::CreateFaceDetection(
   // fine to use Unretained to bind the callback.
   auto async_operation = AsyncOperation<FaceDetector>::Create(
       base::BindOnce(&FaceDetectionProviderWin::OnFaceDetectorCreated,
-                     base::Unretained(this), std::move(request), pixel_format),
+                     base::Unretained(this), std::move(request),
+                     std::move(factory)),
       std::move(async_op));
   if (!async_operation)
     return;
@@ -116,13 +88,13 @@ FaceDetectionProviderWin::~FaceDetectionProviderWin() = default;
 
 void FaceDetectionProviderWin::OnFaceDetectorCreated(
     shape_detection::mojom::FaceDetectionRequest request,
-    BitmapPixelFormat pixel_format,
+    Microsoft::WRL::ComPtr<IFaceDetectorStatics> factory,
     AsyncOperation<FaceDetector>::IAsyncOperationPtr async_op) {
   binding_->ResumeIncomingMethodCallProcessing();
   async_create_detector_ops_.reset();
 
   Microsoft::WRL::ComPtr<IFaceDetector> face_detector;
-  HRESULT hr =
+  const HRESULT hr =
       async_op ? async_op->GetResults(face_detector.GetAddressOf()) : E_FAIL;
   if (FAILED(hr)) {
     DLOG(ERROR) << "GetResults failed: "
@@ -130,21 +102,9 @@ void FaceDetectionProviderWin::OnFaceDetectorCreated(
     return;
   }
 
-  Microsoft::WRL::ComPtr<ISoftwareBitmapStatics> bitmap_factory;
-  hr = GetActivationFactory<
-      ISoftwareBitmapStatics,
-      RuntimeClass_Windows_Graphics_Imaging_SoftwareBitmap>(&bitmap_factory);
-  if (FAILED(hr)) {
-    DLOG(ERROR) << "ISoftwareBitmapStatics factory failed: "
-                << logging::SystemErrorCodeToString(hr);
-    return;
-  }
-
-  auto impl = std::make_unique<FaceDetectionImplWin>(
-      std::move(face_detector), std::move(bitmap_factory), pixel_format);
-  auto* impl_ptr = impl.get();
-  impl_ptr->SetBinding(
-      mojo::MakeStrongBinding(std::move(impl), std::move(request)));
+  mojo::MakeStrongBinding(base::MakeUnique<FaceDetectionImplWin>(
+                              std::move(factory), std::move(face_detector)),
+                          std::move(request));
 }
 
 }  // namespace shape_detection

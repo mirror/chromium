@@ -8,7 +8,8 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/notifications/chrome_ash_message_center_client.h"
-#include "chrome/browser/notifications/notification_display_service_impl.h"
+#include "chrome/browser/notifications/notification_display_service.h"
+#include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/app_icon_loader.h"
@@ -96,7 +97,7 @@ void NotificationPlatformBridgeChromeOs::HandleNotificationClosed(
   auto iter = active_notifications_.find(id);
   DCHECK(iter != active_notifications_.end());
   ProfileNotification* notification = iter->second.get();
-  NotificationDisplayServiceImpl::GetForProfile(notification->profile())
+  NotificationDisplayServiceFactory::GetForProfile(notification->profile())
       ->ProcessNotificationOperation(
           NotificationCommon::CLOSE, notification->type(),
           notification->notification().origin_url(),
@@ -107,7 +108,7 @@ void NotificationPlatformBridgeChromeOs::HandleNotificationClosed(
 void NotificationPlatformBridgeChromeOs::HandleNotificationClicked(
     const std::string& id) {
   ProfileNotification* notification = GetProfileNotification(id);
-  NotificationDisplayServiceImpl::GetForProfile(notification->profile())
+  NotificationDisplayServiceFactory::GetForProfile(notification->profile())
       ->ProcessNotificationOperation(NotificationCommon::CLICK,
                                      notification->type(),
                                      notification->notification().origin_url(),
@@ -119,7 +120,7 @@ void NotificationPlatformBridgeChromeOs::HandleNotificationButtonClicked(
     const std::string& id,
     int button_index) {
   ProfileNotification* notification = GetProfileNotification(id);
-  NotificationDisplayServiceImpl::GetForProfile(notification->profile())
+  NotificationDisplayServiceFactory::GetForProfile(notification->profile())
       ->ProcessNotificationOperation(NotificationCommon::CLICK,
                                      notification->type(),
                                      notification->notification().origin_url(),

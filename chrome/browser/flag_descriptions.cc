@@ -287,13 +287,17 @@ const char kEnableAutofillCreditCardUploadCvcPromptDescription[] =
     "If enabled, requests missing CVC when offering to upload credit cards to "
     "Google Payments.";
 
-const char kEnableAutofillCreditCardUploadSendPanFirstSixName[] =
-    "Send first six digits of PAN when deciding whether to offer Autofill "
-    "credit card upload";
-const char kEnableAutofillCreditCardUploadSendPanFirstSixDescription[] =
-    "If enabled, when deciding whether to offer credit card upload to Google "
-    "Payments, sends the first six digits of the card number to avoid cases "
-    "where card upload is likely to fail.";
+const char kEnableAutofillCreditCardUploadGoogleLogoName[] =
+    "Show Google Logo for Autofill credit card upload";
+const char kEnableAutofillCreditCardUploadGoogleLogoDescription[] =
+    "If enabled, displays the Google logo in the save prompt when offering to "
+    "upload credit cards to Google Payments.";
+
+const char kEnableAutofillCreditCardUploadNewUiName[] =
+    "Enable updated UI for Autofill credit card upload";
+const char kEnableAutofillCreditCardUploadNewUiDescription[] =
+    "If enabled, displays a new save card bubble/infobar design when offering "
+    "to upload credit cards to Google Payments.";
 
 const char kEnableAutofillSendBillingCustomerNumberName[] =
     "Enable autofill sending billing customer number when calling Google "
@@ -487,15 +491,10 @@ const char kEnableOutOfProcessHeapProfilingDescription[] =
 const char kEnableOutOfProcessHeapProfilingModeMinimal[] =
     "Profile only the browser and GPU processes.";
 const char kEnableOutOfProcessHeapProfilingModeAll[] = "Profile all processes.";
-const char kEnableOutOfProcessHeapProfilingModeAllRenderers[] =
-    "Profiles all renderers.";
 const char kEnableOutOfProcessHeapProfilingModeBrowser[] =
     "Profile only the browser processes.";
 const char kEnableOutOfProcessHeapProfilingModeGpu[] =
     "Profile only the GPU processes.";
-const char kEnableOutOfProcessHeapProfilingModeManual[] =
-    "By default, no processes are profiled. User may choose to start-profiling "
-    "processes via chrome://memory-internals.";
 const char kEnableOutOfProcessHeapProfilingModeRendererSampling[] =
     "Profile a random sampling of renderer processes, ensuring only one is "
     "ever profiled at a time.";
@@ -845,6 +844,10 @@ const char kMhtmlGeneratorOptionDescription[] =
     "Provides experimental options for MHTML file generator.";
 const char kMhtmlSkipNostoreMain[] = "Skips no-store main frame.";
 const char kMhtmlSkipNostoreAll[] = "Skips all no-store resources.";
+
+const char kMojoLoadingName[] = "Use Mojo IPC for resource loading";
+const char kMojoLoadingDescription[] =
+    "Use Mojo IPC instead of traditional Chrome IPC for resource loading.";
 
 const char kMojoVideoEncodeAcceleratorName[] =
     "Hardware-accelerated video encoder accessed using Mojo IPC";
@@ -1596,20 +1599,14 @@ const char kWebrtcStunOriginDescription[] =
 const char kWebvrName[] = "WebVR";
 const char kWebvrDescription[] =
     "Allow web applications to access experimental "
-    "Virtual Reality functionality via the WebVR 1.1 API. This feature will "
-    "eventually be replaced by the WebXR Device API. Warning: Enabling this "
-    "will also allow WebVR content on insecure origins to access these "
-    "powerful APIs, and may pose a security risk.";
+    "Virtual Reality APIs. Warning: Enabling this will also allow WebVR "
+    "content on insecure origins to access these powerful APIs, and may pose a "
+    "security risk.";
 
 const char kWebVrExperimentalRenderingName[] =
     "WebVR experimental rendering optimizations";
 const char kWebVrExperimentalRenderingDescription[] =
     "Experimental rendering path optimizations for WebVR.";
-
-const char kWebXrName[] = "WebXR Device API";
-const char kWebXrDescription[] =
-    "Allow web applications to access experimental APIs to interact with "
-    "Virtual Reality (VR) and Augmented Reality (AR) devices.";
 
 const char kWifiCredentialSyncName[] = "WiFi credential sync";
 const char kWifiCredentialSyncDescription[] =
@@ -1714,11 +1711,6 @@ const char kChromeHomePersonalizedOmniboxSuggestionsDescription[] =
 const char kChromeHomePromoName[] = "Chrome Home Promo";
 const char kChromeHomePromoDescription[] =
     "Enable showing the opt-in/out Chrome Home promo.";
-
-const char kChromeHomePullToRefreshIphAtTopName[] =
-    "Chrome Home Pull-To-Refresh Iph At Top";
-const char kChromeHomePullToRefreshIphAtTopDescription[] =
-    "Show the Chrome Home pull-to-refresh help bubble at the top of the screen";
 
 const char kChromeHomeShowGoogleGName[] = "Chrome Home Show Google G";
 const char kChromeHomeShowGoogleGDescription[] =
@@ -1937,12 +1929,6 @@ const char kEnableWebPaymentsSingleAppUiSkipDescription[] =
     "Enable Web Payments to skip showing its UI if the developer specifies a "
     "single app.";
 
-const char kGrantNotificationsToDSEName[] =
-    "Grant notifications to the Default Search Engine";
-const char kGrantNotificationsToDSENameDescription[] =
-    "Automatically grant the notifications permission to the Default Search "
-    "Engine";
-
 const char kHerbPrototypeChoicesName[] = "Switch preferred flavor of Herb";
 const char kHerbPrototypeChoicesDescription[] =
     "Switching this option changes which tab management prototype is being "
@@ -1998,6 +1984,11 @@ const char kNtpGoogleGInOmniboxName[] = "Google G in New Tab Page omnibox";
 const char kNtpGoogleGInOmniboxDescription[] =
     "Show a Google G in the omnibox on the New Tab Page.";
 
+const char kNtpOfflinePagesName[] = "Enable NTP offline pages";
+const char kNtpOfflinePagesDescription[] =
+    "Enables badging of offline pages on the New Tab page. Only relevant if "
+    "offline pages are enabled.";
+
 const char kNtpPopularSitesName[] = "Show popular sites on the New Tab page";
 const char kNtpPopularSitesDescription[] =
     "Pre-populate the New Tab page with popular sites.";
@@ -2013,13 +2004,6 @@ const char kOfflinePagesCtV2Name[] = "Enable Offline Pages CT V2 features.";
 const char kOfflinePagesCtV2Description[] =
     "V2 features include attributing pages to the app that initiated the "
     "custom tabs, and being able to query for pages by page attribution.";
-
-const char kOfflinePagesLimitlessPrefetchingName[] =
-    "Removes resource usage limits for the prefetching of offline pages.";
-const char kOfflinePagesLimitlessPrefetchingDescription[] =
-    "Allows the prefetching of suggested offline pages to ignore resource "
-    "usage limits. This allows it to completely ignore data usage limitations "
-    "and allows downloads to happen with any kind of connection.";
 
 const char kOfflinePagesLoadSignalCollectingName[] =
     "Enables collecting load timing data for offline page snapshots.";

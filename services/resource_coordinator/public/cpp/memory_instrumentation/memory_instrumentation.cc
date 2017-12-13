@@ -47,9 +47,9 @@ MemoryInstrumentation::~MemoryInstrumentation() {
 void MemoryInstrumentation::RequestGlobalDump(
     RequestGlobalDumpCallback callback) {
   const auto& coordinator = GetCoordinatorBindingForCurrentThread();
-  mojom::GlobalRequestArgsPtr args(mojom::GlobalRequestArgs::New(
-      MemoryDumpType::SUMMARY_ONLY, MemoryDumpLevelOfDetail::BACKGROUND));
-  coordinator->RequestGlobalMemoryDump(std::move(args), callback);
+  base::trace_event::GlobalMemoryDumpRequestArgs args = {
+      MemoryDumpType::SUMMARY_ONLY, MemoryDumpLevelOfDetail::BACKGROUND};
+  coordinator->RequestGlobalMemoryDump(args, callback);
 }
 
 void MemoryInstrumentation::RequestGlobalDumpAndAppendToTrace(
@@ -57,10 +57,9 @@ void MemoryInstrumentation::RequestGlobalDumpAndAppendToTrace(
     MemoryDumpLevelOfDetail level_of_detail,
     RequestGlobalMemoryDumpAndAppendToTraceCallback callback) {
   const auto& coordinator = GetCoordinatorBindingForCurrentThread();
-  mojom::GlobalRequestArgsPtr args(
-      mojom::GlobalRequestArgs::New(dump_type, level_of_detail));
-  coordinator->RequestGlobalMemoryDumpAndAppendToTrace(std::move(args),
-                                                       callback);
+  base::trace_event::GlobalMemoryDumpRequestArgs args = {dump_type,
+                                                         level_of_detail};
+  coordinator->RequestGlobalMemoryDumpAndAppendToTrace(args, callback);
 }
 
 void MemoryInstrumentation::GetVmRegionsForHeapProfiler(

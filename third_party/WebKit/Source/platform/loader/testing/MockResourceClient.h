@@ -32,28 +32,37 @@
 #define MockResourceClient_h
 
 #include "platform/heap/Handle.h"
+#include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceClient.h"
 
 namespace blink {
 
 class MockResourceClient : public GarbageCollectedFinalized<MockResourceClient>,
                            public ResourceClient {
+  USING_PRE_FINALIZER(MockResourceClient, Dispose);
   USING_GARBAGE_COLLECTED_MIXIN(MockResourceClient);
 
  public:
-  MockResourceClient() {}
-  ~MockResourceClient() override {}
+  explicit MockResourceClient(Resource*);
+  ~MockResourceClient() override;
 
-  void NotifyFinished(Resource*) override {
-    CHECK(!notify_finished_called_);
-    notify_finished_called_ = true;
-  }
+  void NotifyFinished(Resource*) override;
   String DebugName() const override { return "MockResourceClient"; }
-  bool NotifyFinishedCalled() const { return notify_finished_called_; }
-  void RemoveAsClient() { ClearResource(); }
+  virtual bool NotifyFinishedCalled() const { return notify_finished_called_; }
+
+  size_t EncodedSizeOnNotifyFinished() const {
+    return encoded_size_on_notify_finished_;
+  }
+
+  virtual void RemoveAsClient();
+  virtual void Dispose();
+
+  void Trace(blink::Visitor*) override;
 
  protected:
-  bool notify_finished_called_ = false;
+  Member<Resource> resource_;
+  bool notify_finished_called_;
+  size_t encoded_size_on_notify_finished_;
 };
 
 }  // namespace blink

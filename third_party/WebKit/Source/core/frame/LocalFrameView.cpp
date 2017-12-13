@@ -1897,12 +1897,9 @@ void LocalFrameView::ProcessUrlFragment(const KURL& url,
       !frame_->GetDocument()->IsSVGDocument())
     return;
 
-  // Try the raw fragment for HTML documents, but skip it for `svgView()`:
   String fragment_identifier = url.FragmentIdentifier();
-  if (!frame_->GetDocument()->IsSVGDocument() &&
-      ProcessUrlFragmentHelper(fragment_identifier, behavior)) {
+  if (ProcessUrlFragmentHelper(fragment_identifier, behavior))
     return;
-  }
 
   // Try again after decoding the ref, based on the document's encoding.
   if (frame_->GetDocument()->Encoding().IsValid()) {
@@ -5633,7 +5630,7 @@ MainThreadScrollingReasons LocalFrameView::GetMainThreadScrollingReasons()
   return reasons;
 }
 
-String LocalFrameView::MainThreadScrollingReasonsAsText() {
+String LocalFrameView::MainThreadScrollingReasonsAsText() const {
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     DCHECK(Lifecycle().GetState() >= DocumentLifecycle::kPrePaintClean);
 
@@ -5650,14 +5647,12 @@ String LocalFrameView::MainThreadScrollingReasonsAsText() {
   }
 
   DCHECK(Lifecycle().GetState() >= DocumentLifecycle::kCompositingClean);
-  if (GraphicsLayer* layer_for_scrolling =
-          LayoutViewportScrollableArea()->LayerForScrolling()) {
-    if (WebLayer* platform_layer = layer_for_scrolling->PlatformLayer()) {
-      String result(MainThreadScrollingReason::mainThreadScrollingReasonsAsText(
-                        platform_layer->MainThreadScrollingReasons())
-                        .c_str());
-      return result;
-    }
+  if (LayerForScrolling() && LayerForScrolling()->PlatformLayer()) {
+    String result(
+        MainThreadScrollingReason::mainThreadScrollingReasonsAsText(
+            LayerForScrolling()->PlatformLayer()->MainThreadScrollingReasons())
+            .c_str());
+    return result;
   }
 
   String result(MainThreadScrollingReason::mainThreadScrollingReasonsAsText(

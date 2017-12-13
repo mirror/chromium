@@ -328,13 +328,14 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
     params.SetIntegrityMetadata(metadata_set);
     params.MutableResourceRequest().SetFetchIntegrity(integrity_attr);
   }
-  CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher(), this);
+  SetResource(CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher()));
 
   if (loading_ && !GetResource()) {
-    // Fetch() synchronous failure case.
     // The request may have been denied if (for example) the stylesheet is
     // local and the document is remote, or if there was a Content Security
-    // Policy Failure.
+    // Policy Failure.  setCSSStyleSheet() can be called synchronuosly in
+    // setResource() and thus resource() is null and |m_loading| is false in
+    // such cases even if the request succeeds.
     loading_ = false;
     RemovePendingSheet();
     NotifyLoadedSheetAndAllCriticalSubresources(

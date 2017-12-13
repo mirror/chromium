@@ -16,6 +16,7 @@ import android.view.View.OnCreateContextMenuListener;
 
 import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.favicon.IconType;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
@@ -153,7 +154,11 @@ public class TileGroup implements MostVisitedSites.Observer {
      */
     private final Collection<Integer> mPendingTasks = new ArrayList<>();
 
-    /** Access point to offline related features. */
+    /**
+     * Access point to offline related features. Will be {@code null} when the badges are disabled.
+     * @see ChromeFeatureList#NTP_OFFLINE_PAGES_FEATURE_NAME
+     */
+    @Nullable
     private final OfflineModelObserver mOfflineModelObserver;
 
     /**
@@ -220,8 +225,13 @@ public class TileGroup implements MostVisitedSites.Observer {
         mTileGroupDelegate = tileGroupDelegate;
         mObserver = observer;
         mTileRenderer = tileRenderer;
-        mOfflineModelObserver = new OfflineModelObserver(offlinePageBridge);
-        mUiDelegate.addDestructionObserver(mOfflineModelObserver);
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME)) {
+            mOfflineModelObserver = new OfflineModelObserver(offlinePageBridge);
+            mUiDelegate.addDestructionObserver(mOfflineModelObserver);
+        } else {
+            mOfflineModelObserver = null;
+        }
     }
 
     @Override
@@ -356,8 +366,10 @@ public class TileGroup implements MostVisitedSites.Observer {
 
         if (!dataChanged) return;
 
-        mOfflineModelObserver.updateAllSuggestionsOfflineAvailability(
-                /* reportPrefetchedSuggestionsCount = */ false);
+        if (mOfflineModelObserver != null) {
+            mOfflineModelObserver.updateAllSuggestionsOfflineAvailability(
+                    /* reportPrefetchedSuggestionsCount = */ false);
+        }
 
         if (countChanged) mObserver.onTileCountChanged();
 

@@ -4,9 +4,11 @@
 
 package org.chromium.chrome.browser.suggestions;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
@@ -31,7 +33,11 @@ public class SuggestionsCarouselAdapter
     /** The list of suggestions held in the carousel currently. */
     private final List<SnippetArticle> mSuggestionsList;
 
-    /** Access point to offline related features. */
+    /**
+     * Access point to offline related features. Will be {@code null} when the badges are disabled.
+     * @see ChromeFeatureList#NTP_OFFLINE_PAGES_FEATURE_NAME
+     */
+    @Nullable
     private final OfflineModelObserver mObserver;
 
     public SuggestionsCarouselAdapter(UiConfig uiConfig, SuggestionsUiDelegate uiDelegate,
@@ -40,8 +46,13 @@ public class SuggestionsCarouselAdapter
         mUiConfig = uiConfig;
         mContextMenuManager = contextMenuManager;
         mSuggestionsList = new ArrayList<>();
-        mObserver = new OfflineModelObserver(offlinePageBridge);
-        mUiDelegate.addDestructionObserver(mObserver);
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME)) {
+            mObserver = new OfflineModelObserver(offlinePageBridge);
+            mUiDelegate.addDestructionObserver(mObserver);
+        } else {
+            mObserver = null;
+        }
     }
 
     @Override
@@ -74,8 +85,10 @@ public class SuggestionsCarouselAdapter
         mSuggestionsList.clear();
         mSuggestionsList.addAll(suggestions);
 
-        mObserver.updateAllSuggestionsOfflineAvailability(
-                /* reportPrefetchedSuggestionsCount = */ false);
+        if (mObserver != null) {
+            mObserver.updateAllSuggestionsOfflineAvailability(
+                    /* reportPrefetchedSuggestionsCount = */ false);
+        }
 
         notifyDataSetChanged();
     }

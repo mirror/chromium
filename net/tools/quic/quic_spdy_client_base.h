@@ -69,7 +69,7 @@ class QuicSpdyClientBase : public QuicClientBase,
   };
 
   QuicSpdyClientBase(const QuicServerId& server_id,
-                     const ParsedQuicVersionVector& supported_versions,
+                     const QuicTransportVersionVector& supported_versions,
                      const QuicConfig& config,
                      QuicConnectionHelperInterface* helper,
                      QuicAlarmFactory* alarm_factory,

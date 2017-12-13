@@ -219,8 +219,7 @@ void PrintViewManagerBase::UpdateForPrintedPage(
         reinterpret_cast<const unsigned char*>(shared_buf->memory()),
         shared_buf->mapped_size()));
 
-    if (PrintedDocument::HasDebugDumpPath())
-      document->DebugDumpData(bytes.get(), FILE_PATH_LITERAL(".pdf"));
+    document->DebugDumpData(bytes.get(), FILE_PATH_LITERAL(".pdf"));
 
     const auto& settings = document->settings();
     if (settings.printer_is_textonly()) {

@@ -21,9 +21,9 @@
 #define SVGResources_h
 
 #include <memory>
-#include "base/macros.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashSet.h"
+#include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
@@ -40,6 +40,7 @@ class SVGElement;
 
 // Holds a set of resources associated with a LayoutObject
 class SVGResources {
+  WTF_MAKE_NONCOPYABLE(SVGResources);
   USING_FAST_MALLOC(SVGResources);
 
  public:
@@ -181,7 +182,6 @@ class SVGResources {
   std::unique_ptr<MarkerData> marker_data_;
   std::unique_ptr<FillStrokeData> fill_stroke_data_;
   LayoutSVGResourceContainer* linked_resource_;
-  DISALLOW_COPY_AND_ASSIGN(SVGResources);
 };
 
 }  // namespace blink

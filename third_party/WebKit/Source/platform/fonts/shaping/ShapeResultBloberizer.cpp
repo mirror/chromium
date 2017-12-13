@@ -171,8 +171,7 @@ inline bool IsSkipInkException(const ShapeResultBloberizer& bloberizer,
   // CJK characters.
   return bloberizer.GetType() == ShapeResultBloberizer::Type::kTextIntercepts &&
          !text.Is8Bit() &&
-         !Character::CanTextDecorationSkipInk(
-             text.CodepointAt(character_index));
+         Character::IsCJKIdeographOrSymbol(text.CodepointAt(character_index));
 }
 
 template <typename TextContainerType>

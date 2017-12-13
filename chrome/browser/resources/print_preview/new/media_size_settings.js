@@ -4,8 +4,4 @@
 
 Polymer({
   is: 'print-preview-media-size-settings',
-
-  properties: {
-    capability: Object,
-  },
 });

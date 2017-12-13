@@ -149,9 +149,7 @@ class EncryptedMediaTest : public MediaBrowserTest,
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(
-        switches::kAutoplayPolicy,
-        switches::autoplay::kNoUserGestureRequiredPolicy);
+    command_line->AppendSwitch(switches::kIgnoreAutoplayRestrictionsForTests);
 #if defined(SUPPORTS_EXTERNAL_CLEAR_KEY_IN_CONTENT_SHELL)
     scoped_feature_list_.InitWithFeatures({media::kExternalClearKeyForTesting},
                                           {});
@@ -260,8 +258,8 @@ IN_PROC_BROWSER_TEST_P(EncryptedMediaTest,
   TestConfigChange(ConfigChangeType::ENCRYPTED_TO_ENCRYPTED);
 }
 
-// https://crbug.com/788748 https://crbug.com/794080
-#if (defined(OS_ANDROID) || defined(OS_LINUX)) && defined(ADDRESS_SANITIZER)
+// https://crbug.com/788748
+#if defined(OS_ANDROID) && defined(ADDRESS_SANITIZER)
 #define MAYBE_FrameSizeChangeVideo DISABLED_FrameSizeChangeVideo
 #else
 #define MAYBE_FrameSizeChangeVideo FrameSizeChangeVideo

@@ -94,7 +94,7 @@ class WebClipboard {
   virtual void WriteDataObject(const WebDragData&) {}
 
  protected:
-  ~WebClipboard() = default;
+  ~WebClipboard() {}
 };
 
 }  // namespace blink

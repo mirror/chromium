@@ -302,9 +302,12 @@ bool SVGElement::HasTransform(
           HasSVGRareData());
 }
 
-static inline bool TransformUsesBoxSize(const ComputedStyle& style) {
-  if ((style.TransformOriginX().IsPercent() ||
-       style.TransformOriginY().IsPercent()) &&
+static inline bool TransformUsesBoxSize(
+    const ComputedStyle& style,
+    ComputedStyle::ApplyTransformOrigin apply_transform_origin) {
+  if (apply_transform_origin == ComputedStyle::kIncludeTransformOrigin &&
+      (style.TransformOriginX().GetType() == kPercent ||
+       style.TransformOriginY().GetType() == kPercent) &&
       style.RequireTransformOrigin(ComputedStyle::kIncludeTransformOrigin,
                                    ComputedStyle::kExcludeMotionPath))
     return true;
@@ -350,7 +353,16 @@ AffineTransform SVGElement::CalculateTransform(
   AffineTransform matrix;
   if (style && style->HasTransform()) {
     FloatRect reference_box = ComputeTransformReferenceBox(*this);
-    if (TransformUsesBoxSize(*style))
+    ComputedStyle::ApplyTransformOrigin apply_transform_origin =
+        ComputedStyle::kIncludeTransformOrigin;
+    // SVGTextElements need special handling for the text positioning code.
+    if (IsSVGTextElement(this)) {
+      // Do not take into account transform-origin, or percentage values.
+      reference_box = FloatRect();
+      apply_transform_origin = ComputedStyle::kExcludeTransformOrigin;
+    }
+
+    if (TransformUsesBoxSize(*style, apply_transform_origin))
       UseCounter::Count(GetDocument(), WebFeature::kTransformUsesBoxSizeOnSVG);
 
     // CSS transforms operate with pre-scaled lengths. To make this work with
@@ -370,13 +382,13 @@ AffineTransform SVGElement::CalculateTransform(
       reference_box.Scale(zoom);
       transform.Scale(1 / zoom);
       style->ApplyTransform(
-          transform, reference_box, ComputedStyle::kIncludeTransformOrigin,
+          transform, reference_box, apply_transform_origin,
           ComputedStyle::kIncludeMotionPath,
           ComputedStyle::kIncludeIndependentTransformProperties);
       transform.Scale(zoom);
     } else {
       style->ApplyTransform(
-          transform, reference_box, ComputedStyle::kIncludeTransformOrigin,
+          transform, reference_box, apply_transform_origin,
           ComputedStyle::kIncludeMotionPath,
           ComputedStyle::kIncludeIndependentTransformProperties);
     }

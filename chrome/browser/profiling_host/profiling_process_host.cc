@@ -190,7 +190,10 @@ void UploadTraceToCrashServer(std::string file_contents,
 }  // namespace
 
 ProfilingProcessHost::ProfilingProcessHost()
-    : is_registered_(false), background_triggers_(this), mode_(Mode::kNone) {}
+    : is_registered_(false),
+      background_triggers_(this),
+      mode_(Mode::kNone),
+      always_sample_for_tests_(false) {}
 
 ProfilingProcessHost::~ProfilingProcessHost() {
   if (is_registered_)
@@ -222,7 +225,7 @@ void ProfilingProcessHost::BrowserChildProcessLaunchedAndConnected(
   // so as not to collide with logic in ProfilingProcessHost::Observe().
   DCHECK_NE(data.process_type, content::ProcessType::PROCESS_TYPE_RENDERER);
 
-  if (!ShouldProfileNonRendererProcessType(data.process_type)) {
+  if (!ShouldProfileProcessType(data.process_type)) {
     return;
   }
 
@@ -355,7 +358,7 @@ void ProfilingProcessHost::AddClientToProfilingService(
 }
 
 // static
-ProfilingProcessHost::Mode ProfilingProcessHost::GetModeForStartup() {
+ProfilingProcessHost::Mode ProfilingProcessHost::GetCurrentMode() {
   const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
 #if BUILDFLAG(USE_ALLOCATOR_SHIM)
   if (cmdline->HasSwitch(switches::kMemlog) ||
@@ -395,10 +398,6 @@ ProfilingProcessHost::Mode ProfilingProcessHost::ConvertStringToMode(
     const std::string& mode) {
   if (mode == switches::kMemlogModeAll)
     return Mode::kAll;
-  if (mode == switches::kMemlogModeAllRenderers)
-    return Mode::kAllRenderers;
-  if (mode == switches::kMemlogModeManual)
-    return Mode::kManual;
   if (mode == switches::kMemlogModeMinimal)
     return Mode::kMinimal;
   if (mode == switches::kMemlogModeBrowser)
@@ -604,15 +603,8 @@ void ProfilingProcessHost::GetProfiledPidsOnIOThread(
   profiling_service_->GetProfiledPids(std::move(post_result_to_ui_thread));
 }
 
-void ProfilingProcessHost::StartManualProfiling(base::ProcessId pid) {
+void ProfilingProcessHost::StartProfiling(base::ProcessId pid) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
-
-  if (!has_started_) {
-    profiling::ProfilingProcessHost::Start(
-        content::ServiceManagerConnection::GetForProcess(), Mode::kManual);
-  } else {
-    SetMode(Mode::kManual);
-  }
 
   // The RenderProcessHost iterator must be used on the UI thread.
   // The BrowserChildProcessHostIterator iterator must be used on the IO thread.
@@ -687,8 +679,7 @@ void ProfilingProcessHost::LaunchAsService() {
   connector_->BindInterface(mojom::kServiceName, &profiling_service_);
 
   // Start profiling the browser if the mode allows.
-  if (ShouldProfileNonRendererProcessType(
-          content::ProcessType::PROCESS_TYPE_BROWSER)) {
+  if (ShouldProfileProcessType(content::ProcessType::PROCESS_TYPE_BROWSER)) {
     ProfilingClientBinder client(connector_.get());
     AddClientToProfilingService(client.take(), base::Process::Current().Pid(),
                                 profiling::mojom::ProcessType::BROWSER);
@@ -727,27 +718,18 @@ void ProfilingProcessHost::SaveTraceToFileOnBlockingThread(
 }
 
 void ProfilingProcessHost::SetMode(Mode mode) {
-  base::AutoLock l(mode_lock_);
   mode_ = mode;
 }
 
 void ProfilingProcessHost::ReportMetrics() {
-  UMA_HISTOGRAM_ENUMERATION("OutOfProcessHeapProfiling.ProfilingMode",
-                            GetMode(), Mode::kCount);
+  UMA_HISTOGRAM_ENUMERATION("OutOfProcessHeapProfiling.ProfilingMode", mode(),
+                            Mode::kCount);
 }
 
-bool ProfilingProcessHost::ShouldProfileNonRendererProcessType(
-    int process_type) {
-  switch (GetMode()) {
+bool ProfilingProcessHost::ShouldProfileProcessType(int process_type) {
+  switch (mode()) {
     case Mode::kAll:
       return true;
-
-    case Mode::kAllRenderers:
-      // Renderer logic is handled in ProfilingProcessHost::Observe.
-      return false;
-
-    case Mode::kManual:
-      return false;
 
     case Mode::kMinimal:
       return (process_type == content::ProcessType::PROCESS_TYPE_GPU ||
@@ -760,7 +742,10 @@ bool ProfilingProcessHost::ShouldProfileNonRendererProcessType(
       return process_type == content::ProcessType::PROCESS_TYPE_BROWSER;
 
     case Mode::kRendererSampling:
-      // Renderer logic is handled in ProfilingProcessHost::Observe.
+      // This seems odd because a renderer does get profiled. However, since
+      // the general rule for the whole type is to not profile in this mode,
+      // returning false is appropriate. kRendererSampling has special case
+      // logic elsewhere to enable rendering specifically chosed renderers.
       return false;
 
     case Mode::kNone:
@@ -776,17 +761,20 @@ bool ProfilingProcessHost::ShouldProfileNonRendererProcessType(
 }
 
 bool ProfilingProcessHost::ShouldProfileNewRenderer(
-    content::RenderProcessHost* renderer) {
-  Mode mode = GetMode();
+    content::RenderProcessHost* renderer) const {
   // Never profile incognito processes.
   if (Profile::FromBrowserContext(renderer->GetBrowserContext())
           ->GetProfileType() == Profile::INCOGNITO_PROFILE) {
     return false;
   }
 
-  if (mode == Mode::kAll || mode == Mode::kAllRenderers) {
+  if (mode() == Mode::kAll) {
     return true;
-  } else if (mode == Mode::kRendererSampling && profiled_renderers_.empty()) {
+  } else if (mode() == Mode::kRendererSampling && profiled_renderers_.empty()) {
+    if (always_sample_for_tests_) {
+      return true;
+    }
+
     // Sample renderers with a 1/3 probability.
     return (base::RandUint64() % 100000) < 33333;
   }
@@ -841,6 +829,10 @@ void ProfilingProcessHost::StartProfilingRenderer(
                          base::Unretained(this), client.take(),
                          base::GetProcId(host->GetHandle()),
                          profiling::mojom::ProcessType::RENDERER));
+}
+
+void ProfilingProcessHost::SetRendererSamplingAlwaysProfileForTest() {
+  always_sample_for_tests_ = true;
 }
 
 bool ProfilingProcessHost::TakingTraceForUpload() {

@@ -25,18 +25,8 @@ namespace skia_bindings {
 // is alive.
 class GrContextForGLES2Interface {
  public:
-  static void DetermineCacheLimitsFromAvailableMemory(
-      size_t* max_resource_cache_bytes,
-      size_t* max_glyph_cache_texture_bytes);
-
-  static void DefaultCacheLimitsForTests(size_t* max_resource_cache_bytes,
-                                         size_t* max_glyph_cache_texture_bytes);
-
   explicit GrContextForGLES2Interface(gpu::gles2::GLES2Interface* gl,
-                                      const gpu::Capabilities& capabilities,
-                                      size_t max_resource_cache_bytes,
-                                      size_t max_glyph_cache_texture_bytes);
-
+                                      const gpu::Capabilities& capabilities);
   virtual ~GrContextForGLES2Interface();
 
   GrContext* get() { return gr_context_.get(); }

@@ -329,12 +329,7 @@ bool SourceBufferStream<RangeClass>::Append(const BufferQueue& buffers) {
     return false;
   }
 
-  if (UpdateMaxInterbufferDtsDistance(buffers)) {
-    // Coalesce |ranges_| using the new fudge room. This helps keep |ranges_|
-    // sorted in complex scenarios.  See https://crbug.com/793247.
-    MergeAllAdjacentRanges();
-  }
-
+  UpdateMaxInterbufferDtsDistance(buffers);
   SetConfigIds(buffers);
 
   // Save a snapshot of stream state before range modifications are made.
@@ -765,10 +760,9 @@ bool SourceBufferStream<RangeClass>::OnlySelectedRangeIsSeeked() const {
 }
 
 template <typename RangeClass>
-bool SourceBufferStream<RangeClass>::UpdateMaxInterbufferDtsDistance(
+void SourceBufferStream<RangeClass>::UpdateMaxInterbufferDtsDistance(
     const BufferQueue& buffers) {
   DCHECK(!buffers.empty());
-  base::TimeDelta old_distance = max_interbuffer_distance_;
   DecodeTimestamp prev_timestamp = last_appended_buffer_decode_timestamp_;
   for (BufferQueue::const_iterator itr = buffers.begin();
        itr != buffers.end(); ++itr) {
@@ -789,13 +783,6 @@ bool SourceBufferStream<RangeClass>::UpdateMaxInterbufferDtsDistance(
         std::max(max_interbuffer_distance_, interbuffer_distance);
     prev_timestamp = current_timestamp;
   }
-  bool changed_max = max_interbuffer_distance_ != old_distance;
-  DVLOG_IF(2, changed_max) << __func__ << " " << GetStreamTypeName()
-                           << " Changed max interbuffer DTS distance from "
-                           << old_distance.InMicroseconds() << "us to "
-                           << max_interbuffer_distance_.InMicroseconds()
-                           << "us";
-  return changed_max;
 }
 
 template <typename RangeClass>
@@ -1508,22 +1495,6 @@ void SourceBufferStream<RangeClass>::MergeWithAdjacentRangeIfNecessary(
     range_for_next_append_ = range_with_new_buffers_itr;
 
   DeleteAndRemoveRange(&next_range_itr);
-}
-
-template <typename RangeClass>
-void SourceBufferStream<RangeClass>::MergeAllAdjacentRanges() {
-  DVLOG(1) << __func__ << " " << GetStreamTypeName()
-           << ": Before: ranges_=" << RangesToString<RangeClass>(ranges_);
-
-  typename RangeList::iterator range_itr = ranges_.begin();
-
-  while (range_itr != ranges_.end()) {
-    MergeWithAdjacentRangeIfNecessary(range_itr);
-    range_itr++;
-  }
-
-  DVLOG(1) << __func__ << " " << GetStreamTypeName()
-           << ": After: ranges_=" << RangesToString<RangeClass>(ranges_);
 }
 
 template <typename RangeClass>

@@ -26,7 +26,6 @@
 #ifndef AXSpinButton_h
 #define AXSpinButton_h
 
-#include "base/macros.h"
 #include "core/html/forms/SpinButtonElement.h"
 #include "modules/accessibility/AXMockObject.h"
 
@@ -35,6 +34,8 @@ namespace blink {
 class AXObjectCacheImpl;
 
 class AXSpinButton final : public AXMockObject {
+  WTF_MAKE_NONCOPYABLE(AXSpinButton);
+
  public:
   static AXSpinButton* Create(AXObjectCacheImpl&);
   ~AXSpinButton() override;
@@ -57,14 +58,12 @@ class AXSpinButton final : public AXMockObject {
   void DetachFromParent() override;
 
   Member<SpinButtonElement> spin_button_element_;
-
-  DISALLOW_COPY_AND_ASSIGN(AXSpinButton);
 };
 
 class AXSpinButtonPart final : public AXMockObject {
  public:
   static AXSpinButtonPart* Create(AXObjectCacheImpl&);
-  ~AXSpinButtonPart() override = default;
+  ~AXSpinButtonPart() override {}
   void SetIsIncrementor(bool value) { is_incrementor_ = value; }
 
  private:

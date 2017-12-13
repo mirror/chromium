@@ -540,6 +540,8 @@ void ExtensionStorageMonitor::StopMonitoringStorage(
 void ExtensionStorageMonitor::StopMonitoringAll() {
   extension_registry_observer_.RemoveAll();
 
+  RemoveAllNotifications();
+
   io_helper_ = nullptr;
   weak_ptr_factory_.InvalidateWeakPtrs();
 }
@@ -554,6 +556,18 @@ void ExtensionStorageMonitor::RemoveNotificationForExtension(
   notified_extension_ids_.erase(ext_id);
   NotificationDisplayService::GetForProfile(profile_)->Close(
       NotificationHandler::Type::TRANSIENT, GetNotificationId(extension_id));
+}
+
+void ExtensionStorageMonitor::RemoveAllNotifications() {
+  if (notified_extension_ids_.empty())
+    return;
+
+  auto* display_service = NotificationDisplayService::GetForProfile(profile_);
+  for (const std::string& extension_id : notified_extension_ids_) {
+    display_service->Close(NotificationHandler::Type::TRANSIENT,
+                           GetNotificationId(extension_id));
+  }
+  notified_extension_ids_.clear();
 }
 
 void ExtensionStorageMonitor::ShowUninstallPrompt(

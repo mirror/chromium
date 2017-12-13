@@ -495,10 +495,8 @@ OAuth2TokenService::StartRequestForClientWithContext(
   RequestParameters request_parameters(client_id,
                                        account_id,
                                        scopes);
-  const CacheEntry* cache_entry = GetCacheEntry(request_parameters);
-  if (cache_entry && cache_entry->access_token.length()) {
-    InformConsumerWithCacheEntry(cache_entry, request.get(),
-                                 request_parameters);
+  if (HasCacheEntry(request_parameters)) {
+    StartCacheLookupRequest(request.get(), request_parameters, consumer);
   } else {
     FetchOAuth2Token(request.get(),
                      account_id,
@@ -545,14 +543,15 @@ OAuth2AccessTokenFetcher* OAuth2TokenService::CreateAccessTokenFetcher(
   return delegate_->CreateAccessTokenFetcher(account_id, getter, consumer);
 }
 
-void OAuth2TokenService::InformConsumerWithCacheEntry(
-    const CacheEntry* cache_entry,
+void OAuth2TokenService::StartCacheLookupRequest(
     RequestImpl* request,
-    const RequestParameters& request_parameters) {
-  DCHECK(cache_entry && cache_entry->access_token.length());
+    const OAuth2TokenService::RequestParameters& request_parameters,
+    OAuth2TokenService::Consumer* consumer) {
+  CHECK(HasCacheEntry(request_parameters));
+  const CacheEntry* cache_entry = GetCacheEntry(request_parameters);
   for (auto& observer : diagnostics_observer_list_) {
     observer.OnFetchAccessTokenComplete(
-        request_parameters.account_id, request->GetConsumerId(),
+        request_parameters.account_id, consumer->id(),
         request_parameters.scopes, GoogleServiceAuthError::AuthErrorNone(),
         cache_entry->expiration_date);
   }
@@ -669,6 +668,12 @@ void OAuth2TokenService::OnFetchComplete(Fetcher* fetcher) {
   // The Fetcher deletes itself.
   iter->second.release();
   pending_fetchers_.erase(iter);
+}
+
+bool OAuth2TokenService::HasCacheEntry(
+    const RequestParameters& request_parameters) {
+  const CacheEntry* cache_entry = GetCacheEntry(request_parameters);
+  return cache_entry && cache_entry->access_token.length();
 }
 
 const OAuth2TokenService::CacheEntry* OAuth2TokenService::GetCacheEntry(

@@ -13,8 +13,6 @@ namespace autotestPrivate {
     boolean isOwner;
     // Is the screen locked?
     boolean isScreenLocked;
-    // Is the screen ready for password?
-    boolean isReadyForPassword;
 
     // Is the logged-in user a regular user?
     boolean isRegularUser;

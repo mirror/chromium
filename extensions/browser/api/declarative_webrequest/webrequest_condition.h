@@ -16,22 +16,30 @@
 #include "extensions/browser/api/declarative_webrequest/webrequest_condition_attribute.h"
 #include "net/http/http_response_headers.h"
 
-namespace extensions {
-struct WebRequestInfo;
+namespace net {
+class URLRequest;
+}
 
-// Container for information about a URL request to determine which
+namespace extensions {
+class ExtensionNavigationUIData;
+
+// Container for information about a URLRequest to determine which
 // rules apply to the request.
 struct WebRequestData {
-  WebRequestData(const WebRequestInfo* request, RequestStage stage);
-  WebRequestData(const WebRequestInfo* request,
+  WebRequestData(net::URLRequest* request, RequestStage stage);
+  WebRequestData(net::URLRequest* request,
                  RequestStage stage,
+                 ExtensionNavigationUIData* navigation_ui_data,
                  const net::HttpResponseHeaders* original_response_headers);
   ~WebRequestData();
 
   // The network request that is currently being processed.
-  const WebRequestInfo* request;
+  net::URLRequest* request;
   // The stage (progress) of the network request.
   RequestStage stage;
+  // Additional information about requests that is not
+  // available in all request stages.
+  ExtensionNavigationUIData* navigation_ui_data;
   const net::HttpResponseHeaders* original_response_headers;
 };
 

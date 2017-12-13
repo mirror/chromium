@@ -21,15 +21,9 @@ class MediaControlsResourceLoader
   // and contains loading animations specific to the timeline.
   static String GetShadowTimelineStyleSheet();
 
-  // The loading specific stylesheet is inserted into the loading panel DOM
+  // The timeline specific stylesheet is inserted into the loading panel DOM
   // tree and contains styles specific to the loading panel.
   static String GetShadowLoadingStyleSheet();
-
-  // Returns the jump SVG image as a string.
-  static String GetJumpSVGImage();
-
-  // Returns the overlay play button stylesheet content as a string.
-  static String GetOverlayPlayStyleSheet();
 
   String GetUAStyleSheet() override;
 

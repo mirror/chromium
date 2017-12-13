@@ -8,7 +8,6 @@
 #include <dcomptypes.h>
 
 #include "base/debug/alias.h"
-#include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/synchronization/waitable_event.h"
@@ -56,7 +55,6 @@ DirectCompositionChildSurfaceWin::~DirectCompositionChildSurfaceWin() {
 }
 
 bool DirectCompositionChildSurfaceWin::Initialize(gl::GLSurfaceFormat format) {
-  ui::ScopedReleaseCurrent release_current;
   d3d11_device_ = gl::QueryD3D11DeviceObjectFromANGLE();
   dcomp_device_ = gl::QueryDirectCompositionDevice(d3d11_device_);
   if (!dcomp_device_)
@@ -75,7 +73,7 @@ bool DirectCompositionChildSurfaceWin::Initialize(gl::GLSurfaceFormat format) {
       eglCreatePbufferSurface(display, GetConfig(), &pbuffer_attribs[0]);
   CHECK(!!default_surface_);
 
-  return release_current.Restore();
+  return true;
 }
 
 void DirectCompositionChildSurfaceWin::ReleaseCurrentSurface() {
@@ -131,7 +129,6 @@ bool DirectCompositionChildSurfaceWin::InitializeSurface() {
 }
 
 void DirectCompositionChildSurfaceWin::ReleaseDrawTexture(bool will_discard) {
-  DCHECK(!gl::GLContext::GetCurrent());
   if (real_surface_) {
     eglDestroySurface(GetDisplay(), real_surface_);
     real_surface_ = nullptr;
@@ -245,33 +242,24 @@ bool DirectCompositionChildSurfaceWin::SupportsDCLayers() const {
 
 bool DirectCompositionChildSurfaceWin::SetDrawRectangle(
     const gfx::Rect& rectangle) {
-  if (!gfx::Rect(size_).Contains(rectangle)) {
-    DLOG(ERROR) << "Draw rectangle must be contained within size of surface";
+  if (draw_texture_)
     return false;
-  }
-
-  if (draw_texture_) {
-    DLOG(ERROR) << "SetDrawRectangle must be called only once per swap buffers";
-    return false;
-  }
-
   DCHECK(!real_surface_);
-
-  ui::ScopedReleaseCurrent release_current;
+  ui::ScopedReleaseCurrent release_current(this);
 
   if ((enable_dc_layers_ && !dcomp_surface_) ||
       (!enable_dc_layers_ && !swap_chain_)) {
     ReleaseCurrentSurface();
     if (!InitializeSurface()) {
-      DLOG(ERROR) << "InitializeSurface failed";
-      // It is likely that restoring the context will fail, so call Restore here
-      // to avoid the assert during ScopedReleaseCurrent destruction.
-      ignore_result(release_current.Restore());
+      LOG(ERROR) << "InitializeSurface failed";
       return false;
     }
   }
 
-  // Check this after reinitializing the surface because we reset state there.
+  if (!gfx::Rect(size_).Contains(rectangle)) {
+    DLOG(ERROR) << "Draw rectangle must be contained within size of surface";
+    return false;
+  }
   if (gfx::Rect(size_) != rectangle && !has_been_rendered_to_) {
     DLOG(ERROR) << "First draw to surface must draw to everything";
     return false;
@@ -311,11 +299,6 @@ bool DirectCompositionChildSurfaceWin::SetDrawRectangle(
   real_surface_ = eglCreatePbufferFromClientBuffer(
       GetDisplay(), EGL_D3D_TEXTURE_ANGLE, buffer, GetConfig(),
       &pbuffer_attribs[0]);
-
-  if (!release_current.Restore()) {
-    DLOG(ERROR) << "Failed to restore context";
-    return false;
-  }
 
   return true;
 }

@@ -151,10 +151,7 @@ void NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(
   if ((enabled_bindings & BINDINGS_POLICY_WEB_UI) &&
       !is_allowed_in_web_ui_renderer) {
     // Log the URL to help us diagnose any future failures of this CHECK.
-    FrameTreeNode* root_node =
-        render_frame_host->frame_tree_node()->frame_tree()->root();
-    GetContentClient()->SetActiveURL(
-        url, root_node->current_url().possibly_invalid_spec());
+    GetContentClient()->SetActiveURL(url);
     CHECK(0);
   }
 }
@@ -1157,12 +1154,9 @@ void NavigatorImpl::RequestNavigation(
   // a Javascript URL should not interrupt a previous navigation.
   // Note: The scoped_request will be destroyed at the end of this function.
   if (dest_url.SchemeIs(url::kJavaScriptScheme)) {
-    // Don't call frame_tree_node->render_manager()->GetFrameHostForNavigation
-    // as that might clear the speculative RFH of an ongoing navigation.
     RenderFrameHostImpl* render_frame_host =
-        frame_tree_node->current_frame_host();
-    frame_tree_node->render_manager()->InitializeRenderFrameIfNecessary(
-        render_frame_host);
+        frame_tree_node->render_manager()->GetFrameHostForNavigation(
+            *scoped_request.get());
     render_frame_host->CommitNavigation(
         nullptr,  // response
         mojom::URLLoaderClientEndpointsPtr(),

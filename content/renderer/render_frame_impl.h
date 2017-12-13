@@ -90,10 +90,6 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
-#if defined(OS_MACOSX)
-#include "third_party/WebKit/common/clipboard/clipboard.mojom.h"
-#endif
-
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "content/renderer/pepper/plugin_power_saver_helper.h"
 #endif
@@ -566,6 +562,7 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::WebSandboxFlags sandbox_flags,
       const blink::ParsedFeaturePolicy& container_policy,
       const blink::WebFrameOwnerProperties& frame_owner_properties) override;
+  blink::WebFrame* FindFrame(const blink::WebString& name) override;
   void DidChangeOpener(blink::WebFrame* frame) override;
   void FrameDetached(DetachType type) override;
   void FrameFocused() override;
@@ -590,7 +587,6 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebVector<blink::WebString>& stopped_matching_selectors)
       override;
   void SetHasReceivedUserGesture() override;
-  void SetHasReceivedUserGestureBeforeNavigation(bool value) override;
   bool ShouldReportDetailedMessageForSource(
       const blink::WebString& source) override;
   void DidAddMessageToConsole(const blink::WebConsoleMessage& message,
@@ -1604,11 +1600,6 @@ class CONTENT_EXPORT RenderFrameImpl
   // scrolled and focused editable node.
   bool has_scrolled_focused_editable_node_into_rect_ = false;
   gfx::Rect rect_for_scrolled_focused_editable_node_;
-
-#if defined(OS_MACOSX)
-  // Return the mojo interface for making ClipboardHost calls.
-  blink::mojom::ClipboardHostPtr clipboard_host_;
-#endif
 
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 

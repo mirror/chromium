@@ -1098,13 +1098,6 @@ static void AccumulateDocumentTouchEventTargetRects(
         node->GetDocument().View()->ShouldThrottleRendering())
       continue;
 
-    // Ignore events which apply to a different LocalFrameRoot, as they have
-    // their own lifecycle. Any events that apply to them will get processed
-    // accordingly.
-    if (node->GetDocument().GetFrame()->LocalFrameRoot() !=
-        document->GetFrame()->LocalFrameRoot())
-      continue;
-
     if (node->IsDocumentNode() && node != document) {
       AccumulateDocumentTouchEventTargetRects(
           rects, event_class, ToDocument(node), supported_fast_actions);
@@ -1150,7 +1143,7 @@ void ScrollingCoordinator::ComputeTouchEventTargetRects(
   TRACE_EVENT0("input", "ScrollingCoordinator::computeTouchEventTargetRects");
 
   Document* document = page_->DeprecatedLocalMainFrame()->GetDocument();
-  if (!document || !document->View() || !document->GetFrame())
+  if (!document || !document->View())
     return;
 
   AccumulateDocumentTouchEventTargetRects(

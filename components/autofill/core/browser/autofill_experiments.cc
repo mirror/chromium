@@ -65,8 +65,10 @@ const base::Feature kAutofillUpstreamAllowAllEmailDomains{
     "AutofillUpstreamAllowAllEmailDomains", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamRequestCvcIfMissing{
     "AutofillUpstreamRequestCvcIfMissing", base::FEATURE_DISABLED_BY_DEFAULT};
-const base::Feature kAutofillUpstreamSendPanFirstSix{
-    "AutofillUpstreamSendPanFirstSix", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kAutofillUpstreamShowGoogleLogo{
+    "AutofillUpstreamShowGoogleLogo", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kAutofillUpstreamShowNewUi{
+    "AutofillUpstreamShowNewUi", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamUseAutofillProfileComparator{
     "AutofillUpstreamUseAutofillProfileComparator",
     base::FEATURE_DISABLED_BY_DEFAULT};
@@ -291,8 +293,20 @@ bool IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled() {
 #endif
 }
 
-bool IsAutofillUpstreamSendPanFirstSixExperimentEnabled() {
-  return base::FeatureList::IsEnabled(kAutofillUpstreamSendPanFirstSix);
+bool IsAutofillUpstreamShowGoogleLogoExperimentEnabled() {
+#if defined(OS_ANDROID)
+  return false;
+#else
+  return base::FeatureList::IsEnabled(kAutofillUpstreamShowGoogleLogo);
+#endif
+}
+
+bool IsAutofillUpstreamShowNewUiExperimentEnabled() {
+#if defined(OS_ANDROID)
+  return false;
+#else
+  return base::FeatureList::IsEnabled(kAutofillUpstreamShowNewUi);
+#endif
 }
 
 #if defined(OS_MACOSX)

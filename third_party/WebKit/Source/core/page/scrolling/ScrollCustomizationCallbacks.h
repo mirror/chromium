@@ -5,7 +5,6 @@
 #ifndef ScrollCustomizationCallbacks_h
 #define ScrollCustomizationCallbacks_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/dom/Element.h"
 #include "platform/heap/Handle.h"
@@ -17,6 +16,8 @@ class ScrollStateCallback;
 
 class CORE_EXPORT ScrollCustomizationCallbacks
     : public GarbageCollected<ScrollCustomizationCallbacks> {
+  WTF_MAKE_NONCOPYABLE(ScrollCustomizationCallbacks);
+
  public:
   ScrollCustomizationCallbacks() {}
   void SetDistributeScroll(Element*, ScrollStateCallback*);
@@ -35,7 +36,6 @@ class CORE_EXPORT ScrollCustomizationCallbacks
       HeapHashMap<WeakMember<Element>, Member<ScrollStateCallback>>;
   ScrollStateCallbackList apply_scroll_callbacks_;
   ScrollStateCallbackList distribute_scroll_callbacks_;
-  DISALLOW_COPY_AND_ASSIGN(ScrollCustomizationCallbacks);
 };
 
 }  // namespace blink

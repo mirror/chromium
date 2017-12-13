@@ -48,7 +48,6 @@ enum class IdNamespaces {
   kQueries,
   kVertexArrays,
   kTransformFeedbacks,
-  kGpuFences,
   kNumIdNamespaces
 };
 
@@ -75,8 +74,6 @@ static_assert(static_cast<int>(IdNamespaces::kVertexArrays) == 2,
               "kVertexArrays should equal 2");
 static_assert(static_cast<int>(IdNamespaces::kTransformFeedbacks) == 3,
               "kTransformFeedbacks should equal 3");
-static_assert(static_cast<int>(IdNamespaces::kGpuFences) == 4,
-              "kGpuFences should equal 4");
 static_assert(kPaths == 0, "kPaths should equal 0");
 
 }  // namespace id_namespaces

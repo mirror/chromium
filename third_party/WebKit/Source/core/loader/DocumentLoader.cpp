@@ -43,7 +43,6 @@
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "core/html/parser/CSSPreloadScanner.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/parser/TextResourceDecoder.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -197,10 +196,8 @@ const KURL& DocumentLoader::Url() const {
 }
 
 Resource* DocumentLoader::StartPreload(Resource::Type type,
-                                       FetchParameters& params,
-                                       CSSPreloaderResourceClient* client) {
+                                       FetchParameters& params) {
   Resource* resource = nullptr;
-  DCHECK(!client || type == Resource::kCSSStyleSheet);
   switch (type) {
     case Resource::kImage:
       if (frame_)
@@ -211,7 +208,7 @@ Resource* DocumentLoader::StartPreload(Resource::Type type,
       resource = ScriptResource::Fetch(params, Fetcher(), nullptr);
       break;
     case Resource::kCSSStyleSheet:
-      resource = CSSStyleSheetResource::Fetch(params, Fetcher(), client);
+      resource = CSSStyleSheetResource::Fetch(params, Fetcher());
       break;
     case Resource::kFont:
       resource = FontResource::Fetch(params, Fetcher());
@@ -1091,25 +1088,15 @@ void DocumentLoader::InstallNewDocument(
       false);
 
   // Persist the user gesture state between frames.
-  bool user_gesture_before_value = false;
   if (user_gesture_bit_set) {
-    user_gesture_before_value = ShouldPersistUserGestureValue(
-        previous_security_origin, document->GetSecurityOrigin());
+    frame_->SetDocumentHasReceivedUserGestureBeforeNavigation(
+        ShouldPersistUserGestureValue(previous_security_origin,
+                                      document->GetSecurityOrigin()));
 
     // Clear the user gesture bit that is not persisted.
     // TODO(crbug.com/736415): Clear this bit unconditionally for all frames.
     if (frame_->IsMainFrame())
       frame_->ClearActivation();
-  }
-
-  // If the user gesture before navigation bit has changed then update it on the
-  // frame.
-  if (frame_->HasReceivedUserGestureBeforeNavigation() !=
-      user_gesture_before_value) {
-    frame_->SetDocumentHasReceivedUserGestureBeforeNavigation(
-        user_gesture_before_value);
-    GetLocalFrameClient().SetHasReceivedUserGestureBeforeNavigation(
-        user_gesture_before_value);
   }
 
   if (ShouldClearWindowName(*frame_, previous_security_origin, *document)) {

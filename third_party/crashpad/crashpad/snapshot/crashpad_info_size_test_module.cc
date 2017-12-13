@@ -70,11 +70,11 @@ struct TestCrashpadInfo {
 __attribute__((
 #if defined(OS_MACOSX)
     section(SEG_DATA ",crashpad_info"),
-#elif defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#elif defined(OS_LINUX) || defined(OS_ANDROID)
     section("crashpad_info"),
-#else
+#else  // !defined(OS_MACOSX) && !defined(OS_LINUX) && !defined(OS_ANDROID)
 #error Port
-#endif
+#endif  // !defined(OS_MACOSX) && !defined(OS_LINUX) && !defined(OS_ANDROID)
 #if defined(ADDRESS_SANITIZER)
     aligned(64),
 #endif  // defined(ADDRESS_SANITIZER)

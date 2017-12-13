@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "base/metrics/field_trial_params.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
@@ -169,7 +168,7 @@ bool DataReductionProxyBypassProtocol::HandleInValidResponseHeadersCase(
       net::ERR_CONNECTION_RESET > -400 && net::ERR_SSL_PROTOCOL_ERROR > -400,
       "net error is not handled");
 
-  base::UmaHistogramSparse(
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
       "DataReductionProxy.InvalidResponseHeadersReceived.NetError",
       -status.error());
 

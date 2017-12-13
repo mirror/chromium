@@ -4,8 +4,6 @@
 
 #include "chromeos/components/tether/ble_synchronizer.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/callback_forward.h"
 #include "base/memory/ptr_util.h"
@@ -165,13 +163,13 @@ class FakeDiscoverySession : public device::MockBluetoothDiscoverySession {
 // Creates a UUIDList with one element of value |id|.
 std::unique_ptr<device::BluetoothAdvertisement::UUIDList> CreateUUIDList(
     const std::string& id) {
-  return std::make_unique<device::BluetoothAdvertisement::UUIDList>(1u, id);
+  return base::MakeUnique<device::BluetoothAdvertisement::UUIDList>(1u, id);
 }
 
 // Creates advertisement data with a UUID list with one element of value |id|.
 std::unique_ptr<device::BluetoothAdvertisement::Data> GenerateAdvertisementData(
     const std::string& id) {
-  auto data = std::make_unique<device::BluetoothAdvertisement::Data>(
+  auto data = base::MakeUnique<device::BluetoothAdvertisement::Data>(
       device::BluetoothAdvertisement::AdvertisementType::
           ADVERTISEMENT_TYPE_PERIPHERAL);
   data->set_service_uuids(CreateUUIDList(id));
@@ -219,7 +217,7 @@ class BleSynchronizerTest : public testing::Test {
     test_clock_->Advance(TimeDeltaMillis(kTimeBetweenEachCommandMs));
     test_task_runner_ = base::MakeRefCounted<base::TestSimpleTaskRunner>();
 
-    synchronizer_ = std::make_unique<BleSynchronizer>(mock_adapter_);
+    synchronizer_ = base::MakeUnique<BleSynchronizer>(mock_adapter_);
     synchronizer_->SetTestDoubles(base::WrapUnique(mock_timer_),
                                   base::WrapUnique(test_clock_),
                                   test_task_runner_);
@@ -347,7 +345,7 @@ class BleSynchronizerTest : public testing::Test {
 
     if (success) {
       start_discovery_args_list_[start_arg_index]->callback.Run(
-          std::make_unique<device::MockBluetoothDiscoverySession>());
+          base::MakeUnique<device::MockBluetoothDiscoverySession>());
     } else {
       start_discovery_args_list_[start_arg_index]->error_callback.Run();
     }

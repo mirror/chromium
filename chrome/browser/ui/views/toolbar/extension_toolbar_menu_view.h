@@ -71,10 +71,10 @@ class ExtensionToolbarMenuView : public views::ScrollView,
   views::MenuItemView* menu_item_;
 
   // The overflow BrowserActionsContainer which is nested in this view.
-  BrowserActionsContainer* container_ = nullptr;
+  BrowserActionsContainer* container_;
 
   // The maximum allowed height for the view.
-  int max_height_ = 0;
+  int max_height_;
 
   ScopedObserver<ToolbarActionsBar, ToolbarActionsBarObserver>
       toolbar_actions_bar_observer_;

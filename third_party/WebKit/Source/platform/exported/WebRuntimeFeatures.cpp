@@ -168,6 +168,9 @@ void WebRuntimeFeatures::EnableLazyParseCSS(bool enable) {
   RuntimeEnabledFeatures::SetLazyParseCSSEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableLoadingWithMojo(bool enable) {
+}
+
 void WebRuntimeFeatures::EnableMediaCapture(bool enable) {
   RuntimeEnabledFeatures::SetMediaCaptureEnabled(enable);
 }
@@ -205,7 +208,6 @@ void WebRuntimeFeatures::EnableNotifications(bool enable) {
 }
 
 void WebRuntimeFeatures::EnableNotificationsWithMojo(bool enable) {
-  RuntimeEnabledFeatures::SetNotificationsWithMojoEnabled(enable);
 }
 
 void WebRuntimeFeatures::EnableNavigatorContentUtils(bool enable) {
@@ -352,10 +354,6 @@ void WebRuntimeFeatures::EnableWebVR(bool enable) {
 
 void WebRuntimeFeatures::EnableWebVRExperimentalRendering(bool enable) {
   RuntimeEnabledFeatures::SetWebVRExperimentalRenderingEnabled(enable);
-}
-
-void WebRuntimeFeatures::EnableWebXR(bool enable) {
-  RuntimeEnabledFeatures::SetWebXREnabled(enable);
 }
 
 void WebRuntimeFeatures::EnablePresentationAPI(bool enable) {

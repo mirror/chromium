@@ -124,7 +124,7 @@ public class AwViewAndroidDelegate extends ViewAndroidDelegate {
             return;
         }
         // This fixes the offset due to a difference in scrolling model of WebView vs. Chrome.
-        leftMargin += mScrollManager.getScrollX();
+        leftMargin += mScrollManager.getScrollY();
         topMargin += mScrollManager.getScrollY();
 
         android.widget.AbsoluteLayout.LayoutParams lp =

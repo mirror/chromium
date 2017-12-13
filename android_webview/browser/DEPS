@@ -15,7 +15,6 @@ include_rules = [
   "+components/autofill/core/common",
   "+components/cdm/browser",
   "+components/crash/content/browser",
-  "+components/crash/core",
   "+components/navigation_interception",
   "+components/policy/core/browser",
   "+components/policy/core/common",

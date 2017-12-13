@@ -7,7 +7,6 @@
 #include "ash/login/ui/login_button.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
-#include "ui/accessibility/ax_node_data.h"
 #include "ui/compositor/layer_animator.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/gfx/font.h"
@@ -77,9 +76,6 @@ class LoginErrorBubbleView : public LoginBaseBubbleView {
 
   // views::View:
   const char* GetClassName() const override { return "LoginErrorBubbleView"; }
-  void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
-    node_data->role = ui::AX_ROLE_TOOLTIP;
-  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(LoginErrorBubbleView);
@@ -119,11 +115,6 @@ class LoginTooltipView : public LoginBaseBubbleView {
     views::Label* text = CreateLabel(message, SK_ColorWHITE);
     text->SetMultiLine(true);
     AddChildView(text);
-  }
-
-  // LoginBaseBubbleView:
-  void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
-    node_data->role = ui::AX_ROLE_TOOLTIP;
   }
 
  private:
@@ -232,9 +223,6 @@ void LoginBubble::Show() {
   bubble_view_->GetWidget()->AddObserver(this);
 
   ScheduleAnimation(true /*visible*/);
-
-  // Fire an alert so ChromeVox will read the contents of the bubble.
-  bubble_view_->NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, true);
 }
 
 void LoginBubble::CloseImmediately() {

@@ -20,19 +20,15 @@ class ContentPreviewsRenderFrameObserver : public content::RenderFrameObserver {
   ContentPreviewsRenderFrameObserver(content::RenderFrame* render_frame);
   ~ContentPreviewsRenderFrameObserver() override;
 
- private:
-  friend class ContentPreviewsRenderFrameObserverTest;
+  static content::PreviewsState GetPreviewsStateFromResponse(
+      content::PreviewsState original_state,
+      const blink::WebURLResponse& web_url_response);
 
+ private:
   // content::RenderFrameObserver:
   void OnDestruct() override;
   void DidCommitProvisionalLoad(bool is_new_navigation,
                                 bool is_same_document_navigation) override;
-
-  // Returns whether |previews_state| is consistent with data reduction
-  // proxy headers found in |web_url_response| with respect to server previews.
-  static bool ValidatePreviewsStateWithResponse(
-      content::PreviewsState previews_state,
-      const blink::WebURLResponse& web_url_response);
 
   DISALLOW_COPY_AND_ASSIGN(ContentPreviewsRenderFrameObserver);
 };

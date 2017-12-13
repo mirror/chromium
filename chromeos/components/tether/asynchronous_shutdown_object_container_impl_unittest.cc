@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/test/scoped_task_environment.h"
 #include "chromeos/components/tether/fake_ad_hoc_ble_advertiser.h"
 #include "chromeos/components/tether/fake_ble_advertiser.h"
@@ -44,7 +45,7 @@ class FakeRemoteDeviceProviderFactory
       const std::string& user_private_key,
       cryptauth::SecureMessageDelegate::Factory*
           secure_message_delegate_factory) override {
-    return std::make_unique<cryptauth::FakeRemoteDeviceProvider>();
+    return base::MakeUnique<cryptauth::FakeRemoteDeviceProvider>();
   }
 };
 
@@ -72,16 +73,16 @@ class AsynchronousShutdownObjectContainerImplTest : public testing::Test {
         fake_remote_device_provider_factory_.get());
 
     fake_cryptauth_service_ =
-        std::make_unique<cryptauth::FakeCryptAuthService>();
+        base::MakeUnique<cryptauth::FakeCryptAuthService>();
 
     test_pref_service_ =
-        std::make_unique<sync_preferences::TestingPrefServiceSyncable>();
+        base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
     TetherComponentImpl::RegisterProfilePrefs(test_pref_service_->registry());
 
     // Note: The null pointers passed to the constructor are not actually used
     // by the object itself; rather, they are simply passed to the constructors
     // of objects created by the container.
-    container_ = std::make_unique<AsynchronousShutdownObjectContainerImpl>(
+    container_ = base::MakeUnique<AsynchronousShutdownObjectContainerImpl>(
         mock_adapter_, fake_cryptauth_service_.get(),
         nullptr /* tether_host_fetcher */, nullptr /* network_state_handler */,
         nullptr /* managed_network_configuration_handler */,

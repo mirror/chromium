@@ -79,9 +79,7 @@ bool VrAssetsComponentInstallerTraits::VerifyInstallation(
     return false;
   }
 
-  if (version.components()[0] > vr::kCompatibleMajorVrAssetsComponentVersion) {
-    // Component needs to be downgraded. Differential downgrades are not
-    // supported. Just delete this component version.
+  if (version.components()[0] != vr::kCompatibleMajorVrAssetsComponentVersion) {
     vr::Assets::GetInstance()->GetMetricsHelper()->OnComponentUpdated(
         vr::AssetsComponentUpdateStatus::kIncompatible, version);
     return false;
@@ -94,13 +92,6 @@ void VrAssetsComponentInstallerTraits::ComponentReady(
     const base::Version& version,
     const base::FilePath& install_dir,
     std::unique_ptr<base::DictionaryValue> manifest) {
-  if (version.components()[0] != vr::kCompatibleMajorVrAssetsComponentVersion) {
-    // Don't propagate component readiness and wait until differential update
-    // delivers compatible component version.
-    vr::Assets::GetInstance()->GetMetricsHelper()->OnComponentUpdated(
-        vr::AssetsComponentUpdateStatus::kIncompatible, version);
-    return;
-  }
   vr::Assets::GetInstance()->OnComponentReady(version, install_dir,
                                               std::move(manifest));
 }

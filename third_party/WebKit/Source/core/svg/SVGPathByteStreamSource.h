@@ -20,7 +20,6 @@
 #ifndef SVGPathByteStreamSource_h
 #define SVGPathByteStreamSource_h
 
-#include "base/macros.h"
 #include "build/build_config.h"
 #include "core/svg/SVGPathByteStream.h"
 #include "core/svg/SVGPathData.h"
@@ -29,6 +28,7 @@
 namespace blink {
 
 class SVGPathByteStreamSource {
+  WTF_MAKE_NONCOPYABLE(SVGPathByteStreamSource);
   STACK_ALLOCATED();
 
  public:
@@ -63,7 +63,6 @@ class SVGPathByteStreamSource {
 
   SVGPathByteStream::DataIterator stream_current_;
   SVGPathByteStream::DataIterator stream_end_;
-  DISALLOW_COPY_AND_ASSIGN(SVGPathByteStreamSource);
 };
 
 }  // namespace blink

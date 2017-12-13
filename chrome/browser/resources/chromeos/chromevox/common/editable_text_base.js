@@ -36,16 +36,7 @@ goog.require('goog.i18n.MessageFormat');
  * @param {boolean} triggeredByUser .
  */
 cvox.TextChangeEvent = function(newValue, newStart, newEnd, triggeredByUser) {
-  Object.defineProperty(this, 'value', {
-    get: function() {
-      return this.value_;
-    }.bind(this),
-    set: function(val) {
-      this.value_ = val.replace('\u00a0', ' ');
-    }.bind(this)
-  });
   this.value = newValue;
-
   this.start = newStart;
   this.end = newEnd;
   this.triggeredByUser = triggeredByUser;
@@ -111,17 +102,8 @@ cvox.ChromeVoxEditableTextBase = function(value, start, end, isPassword, tts) {
   /**
    * Current value of the text field.
    * @type {string}
-   * @private
+   * @protected
    */
-  this.value_ = '';
-  Object.defineProperty(this, 'value', {
-    get: function() {
-      return this.value_;
-    }.bind(this),
-    set: function(val) {
-      this.value_ = val.replace('\u00a0', ' ');
-    }.bind(this)
-  });
   this.value = value;
 
   /**
@@ -335,6 +317,8 @@ cvox.ChromeVoxEditableTextBase.prototype.speak = function(
  * @param {cvox.TextChangeEvent} evt The text change event.
  */
 cvox.ChromeVoxEditableTextBase.prototype.changed = function(evt) {
+  // Normalize space characters.
+  evt.value = evt.value.replace('\u00a0', ' ');
   if (!this.shouldDescribeChange(evt)) {
     this.lastChangeDescribed = false;
     return;

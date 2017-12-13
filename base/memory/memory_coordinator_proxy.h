@@ -16,7 +16,7 @@ namespace base {
 // method descriptions.
 class BASE_EXPORT MemoryCoordinator {
  public:
-  virtual ~MemoryCoordinator() = default;
+  virtual ~MemoryCoordinator() {}
 
   virtual MemoryState GetCurrentMemoryState() const = 0;
 };

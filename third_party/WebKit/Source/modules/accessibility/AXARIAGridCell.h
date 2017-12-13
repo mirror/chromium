@@ -29,7 +29,6 @@
 #ifndef AXARIAGridCell_h
 #define AXARIAGridCell_h
 
-#include "base/macros.h"
 #include "modules/accessibility/AXTableCell.h"
 
 namespace blink {
@@ -37,6 +36,8 @@ namespace blink {
 class AXObjectCacheImpl;
 
 class AXARIAGridCell final : public AXTableCell {
+  WTF_MAKE_NONCOPYABLE(AXARIAGridCell);
+
  private:
   AXARIAGridCell(LayoutObject*, AXObjectCacheImpl&);
 
@@ -60,8 +61,6 @@ class AXARIAGridCell final : public AXTableCell {
   bool IsAriaRowHeader() const;
   AXObject* ParentTable() const override;
   AXObject* ParentRow() const override;
-
-  DISALLOW_COPY_AND_ASSIGN(AXARIAGridCell);
 };
 
 }  // namespace blink

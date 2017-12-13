@@ -77,7 +77,6 @@ class SPDY_EXPORT_PRIVATE Http2DecoderAdapter
   static const char* SpdyFramerErrorToString(SpdyFramerError spdy_framer_error);
 
   Http2DecoderAdapter();
-  explicit Http2DecoderAdapter(bool h2_on_stream_pad_length);
   ~Http2DecoderAdapter() override;
 
   // Set callbacks to be called from the framer.  A visitor must be set, or
@@ -315,9 +314,6 @@ class SPDY_EXPORT_PRIVATE Http2DecoderAdapter
   bool handling_extension_payload_ = false;
 
   bool process_single_input_frame_ = false;
-
-  // Flag value latched at construction.
-  const bool h2_on_stream_pad_length_ : 1;
 };
 
 // Http2DecoderAdapter will use the given visitor implementing this
@@ -368,13 +364,7 @@ class SPDY_EXPORT_PRIVATE SpdyFramerVisitorInterface {
   // |stream_id| The stream that was receiving data.
   virtual void OnStreamEnd(SpdyStreamId stream_id) = 0;
 
-  // Called when padding length field is received on a DATA frame.
-  // |stream_id| The stream receiving data.
-  // |value| The value of the padding length field.
-  virtual void OnStreamPadLength(SpdyStreamId stream_id, size_t value) {}
-
-  // Called when padding is received (the trailing octets, not pad_len field) on
-  // a DATA frame.
+  // Called when padding is received (padding length field or padding octets).
   // |stream_id| The stream receiving data.
   // |len| The number of padding octets.
   virtual void OnStreamPadding(SpdyStreamId stream_id, size_t len) = 0;

@@ -26,14 +26,67 @@ const float kNConnectionBetaLastMax =
 const float kNConnectionAlpha = 3 * kNumConnections * kNumConnections *
                                 (1 - kNConnectionBeta) / (1 + kNConnectionBeta);
 
+struct TestParams {
+  TestParams(bool fix_convex_mode,
+             bool fix_cubic_quantization,
+             bool fix_beta_last_max,
+             bool allow_per_ack_updates)
+      : fix_convex_mode(fix_convex_mode),
+        fix_cubic_quantization(fix_cubic_quantization),
+        fix_beta_last_max(fix_beta_last_max),
+        allow_per_ack_updates(allow_per_ack_updates) {}
+
+  friend std::ostream& operator<<(std::ostream& os, const TestParams& p) {
+    os << "{ fix_convex_mode: " << p.fix_convex_mode
+       << "  fix_cubic_quantization: " << p.fix_cubic_quantization
+       << "  fix_beta_last_max: " << p.fix_beta_last_max
+       << "  allow_per_ack_updates: " << p.allow_per_ack_updates << " }";
+    return os;
+  }
+
+  bool fix_convex_mode;
+  bool fix_cubic_quantization;
+  bool fix_beta_last_max;
+  bool allow_per_ack_updates;
+};
+
+string TestParamToString(const testing::TestParamInfo<TestParams>& params) {
+  return QuicStrCat("convex_mode_", params.param.fix_convex_mode, "_",
+                    "cubic_quantization_", params.param.fix_cubic_quantization,
+                    "_", "beta_last_max_", params.param.fix_beta_last_max, "_",
+                    "allow_per_ack_updates_",
+                    params.param.allow_per_ack_updates);
+}
+
+std::vector<TestParams> GetTestParams() {
+  std::vector<TestParams> params;
+  for (bool fix_convex_mode : {true, false}) {
+    for (bool fix_cubic_quantization : {true, false}) {
+      for (bool fix_beta_last_max : {true, false}) {
+        for (bool allow_per_ack_updates : {true, false}) {
+          TestParams param(fix_convex_mode, fix_cubic_quantization,
+                           fix_beta_last_max, allow_per_ack_updates);
+          params.push_back(param);
+        }
+      }
+    }
+  }
+  return params;
+}
+
 }  // namespace
 
-class CubicBytesTest : public QuicTest {
+class CubicBytesTest : public QuicTestWithParam<TestParams> {
  protected:
   CubicBytesTest()
       : one_ms_(QuicTime::Delta::FromMilliseconds(1)),
         hundred_ms_(QuicTime::Delta::FromMilliseconds(100)),
-        cubic_(&clock_) {}
+        cubic_(&clock_) {
+    cubic_.SetFixConvexMode(GetParam().fix_convex_mode);
+    cubic_.SetFixCubicQuantization(GetParam().fix_cubic_quantization);
+    cubic_.SetFixBetaLastMax(GetParam().fix_beta_last_max);
+    cubic_.SetAllowPerAckUpdates(GetParam().allow_per_ack_updates);
+  }
 
   QuicByteCount RenoCwndInBytes(QuicByteCount current_cwnd) {
     QuicByteCount reno_estimated_cwnd =
@@ -53,7 +106,9 @@ class CubicBytesTest : public QuicTest {
     const int64_t offset =
         ((elapsed_time + rtt).ToMicroseconds() << 10) / 1000000;
     const QuicByteCount delta_congestion_window =
-        ((410 * offset * offset * offset) * kDefaultTCPMSS >> 40);
+        GetParam().fix_cubic_quantization
+            ? ((410 * offset * offset * offset) * kDefaultTCPMSS >> 40)
+            : ((410 * offset * offset * offset) >> 40) * kDefaultTCPMSS;
     const QuicByteCount cubic_cwnd = initial_cwnd + delta_congestion_window;
     return cubic_cwnd;
   }
@@ -72,11 +127,27 @@ class CubicBytesTest : public QuicTest {
   CubicBytes cubic_;
 };
 
+INSTANTIATE_TEST_CASE_P(CubicBytesTests,
+                        CubicBytesTest,
+                        ::testing::ValuesIn(GetTestParams()),
+                        TestParamToString);
+
 // TODO(jokulik): The original "AboveOrigin" test, below, is very
 // loose.  It's nearly impossible to make the test tighter without
 // deploying the fix for convex mode.  Once cubic convex is deployed,
 // replace "AboveOrigin" with this test.
-TEST_F(CubicBytesTest, AboveOriginWithTighterBounds) {
+TEST_P(CubicBytesTest, AboveOriginWithTighterBounds) {
+  if (!GetParam().fix_convex_mode) {
+    // Without convex mode fixed, the behavior of the algorithm is so
+    // far from expected, there's no point in doing a tighter test.
+    return;
+  }
+  if (!GetParam().fix_cubic_quantization && GetParam().allow_per_ack_updates) {
+    // Without quantization mode fixed, the behavior of per ack
+    // updates is so far from expected, there is no point of a tighter
+    // test.
+    return;
+  }
   // Convex growth.
   const QuicTime::Delta rtt_min = hundred_ms_;
   int64_t rtt_min_ms = rtt_min.ToMilliseconds();
@@ -95,8 +166,13 @@ TEST_F(CubicBytesTest, AboveOriginWithTighterBounds) {
   // The maximum number of expected Reno RTTs is calculated by
   // finding the point where the cubic curve and the reno curve meet.
   const int max_reno_rtts =
-      std::sqrt(kNConnectionAlpha / (.4 * rtt_min_s * rtt_min_s * rtt_min_s)) -
-      2;
+      GetParam().fix_cubic_quantization
+          ? std::sqrt(kNConnectionAlpha /
+                      (.4 * rtt_min_s * rtt_min_s * rtt_min_s)) -
+                2
+          : std::sqrt(kNConnectionAlpha /
+                      (.4 * rtt_min_s * rtt_min_s * rtt_min_s)) -
+                1;
   for (int i = 0; i < max_reno_rtts; ++i) {
     // Alternatively, we expect it to increase by one, every time we
     // receive current_cwnd/Alpha acks back.  (This is another way of
@@ -122,6 +198,19 @@ TEST_F(CubicBytesTest, AboveOriginWithTighterBounds) {
     clock_.AdvanceTime(hundred_ms_);
   }
 
+  if (!GetParam().fix_cubic_quantization) {
+    // Because our byte-wise Reno under-estimates the cwnd, we switch to
+    // conservative increases for a few acks before switching to true
+    // cubic increases.
+    for (int i = 0; i < 3; ++i) {
+      const QuicByteCount next_expected_cwnd =
+          ConservativeCwndInBytes(current_cwnd);
+      current_cwnd = cubic_.CongestionWindowAfterAck(
+          kDefaultTCPMSS, current_cwnd, rtt_min, clock_.ApproximateNow());
+      ASSERT_EQ(next_expected_cwnd, current_cwnd);
+    }
+  }
+
   for (int i = 0; i < 54; ++i) {
     const uint64_t max_acks_this_epoch = current_cwnd / kDefaultTCPMSS;
     const QuicTime::Delta interval = QuicTime::Delta::FromMicroseconds(
@@ -132,9 +221,19 @@ TEST_F(CubicBytesTest, AboveOriginWithTighterBounds) {
           kDefaultTCPMSS, current_cwnd, rtt_min, clock_.ApproximateNow());
       const QuicByteCount expected_cwnd = CubicConvexCwndInBytes(
           initial_cwnd, rtt_min, (clock_.ApproximateNow() - initial_time));
-      // If we allow per-ack updates, every update is a small cubic update.
-      ASSERT_EQ(expected_cwnd, current_cwnd);
+      if (GetParam().allow_per_ack_updates) {
+        // If we allow per-ack updates, every update is a small cubic update.
+        ASSERT_EQ(expected_cwnd, current_cwnd);
+      } else {
+        // If we do not allow per-ack updates, we get sporadic cubic updates.
+        ASSERT_GE(expected_cwnd, current_cwnd);
+      }
     }
+  }
+  if (!GetParam().allow_per_ack_updates) {
+    // If we don't allow per-ack updates, we need to artificially
+    // advance the clock to make the cwnd increase.
+    clock_.AdvanceTime(MaxCubicTimeInterval());
   }
   const QuicByteCount expected_cwnd = CubicConvexCwndInBytes(
       initial_cwnd, rtt_min, (clock_.ApproximateNow() - initial_time));
@@ -143,15 +242,24 @@ TEST_F(CubicBytesTest, AboveOriginWithTighterBounds) {
   ASSERT_EQ(expected_cwnd, current_cwnd);
 }
 
-// TODO(ianswett): This test was disabled when all fixes were enabled, but it
-// may be worth fixing.
-TEST_F(CubicBytesTest, DISABLED_AboveOrigin) {
+TEST_P(CubicBytesTest, AboveOrigin) {
+  if ((!GetParam().fix_convex_mode && GetParam().fix_cubic_quantization) ||
+      GetParam().allow_per_ack_updates) {
+    // Without convex mode fixed, the behavior of the algorithm does
+    // not fit the exact pattern of this test.
+    // TODO(jokulik): Once the convex mode fix becomes default, this
+    // test can be replaced with the better AboveOriginTighterBounds
+    // test.
+    return;
+  }
   // Convex growth.
   const QuicTime::Delta rtt_min = hundred_ms_;
   QuicByteCount current_cwnd = 10 * kDefaultTCPMSS;
   // Without the signed-integer, cubic-convex fix, we start out in the
   // wrong mode.
-  QuicPacketCount expected_cwnd = RenoCwndInBytes(current_cwnd);
+  QuicPacketCount expected_cwnd = GetParam().fix_convex_mode
+                                      ? RenoCwndInBytes(current_cwnd)
+                                      : ConservativeCwndInBytes(current_cwnd);
   // Initialize the state.
   clock_.AdvanceTime(one_ms_);
   ASSERT_EQ(expected_cwnd,
@@ -172,11 +280,16 @@ TEST_F(CubicBytesTest, DISABLED_AboveOrigin) {
     clock_.AdvanceTime(hundred_ms_);
     current_cwnd = cubic_.CongestionWindowAfterAck(
         kDefaultTCPMSS, current_cwnd, rtt_min, clock_.ApproximateNow());
-    // When we fix convex mode and the uint64 arithmetic, we
-    // increase the expected_cwnd only after after the first 100ms,
-    // rather than after the initial 1ms.
-    expected_cwnd += kDefaultTCPMSS;
-    ASSERT_NEAR(expected_cwnd, current_cwnd, kDefaultTCPMSS);
+    if (GetParam().fix_convex_mode) {
+      // When we fix convex mode and the uint64 arithmetic, we
+      // increase the expected_cwnd only after after the first 100ms,
+      // rather than after the initial 1ms.
+      expected_cwnd += kDefaultTCPMSS;
+      ASSERT_NEAR(expected_cwnd, current_cwnd, kDefaultTCPMSS);
+    } else {
+      ASSERT_NEAR(expected_cwnd, current_cwnd, kDefaultTCPMSS);
+      expected_cwnd += kDefaultTCPMSS;
+    }
   }
   // Cubic phase.
   for (int i = 0; i < 52; ++i) {
@@ -197,6 +310,10 @@ TEST_F(CubicBytesTest, DISABLED_AboveOrigin) {
   expected_cwnd =
       initial_cwnd / kDefaultTCPMSS +
       (elapsed_time_s * elapsed_time_s * elapsed_time_s * 410) / 1024;
+  // Without the convex mode fix, the result is off by one.
+  if (!GetParam().fix_convex_mode) {
+    ++expected_cwnd;
+  }
   EXPECT_EQ(expected_cwnd, current_cwnd / kDefaultTCPMSS);
 }
 
@@ -209,7 +326,12 @@ TEST_F(CubicBytesTest, DISABLED_AboveOrigin) {
 //
 // - Sets an artificially large initial cwnd to prevent Reno from the
 // convex increases on every ack.
-TEST_F(CubicBytesTest, AboveOriginFineGrainedCubing) {
+TEST_P(CubicBytesTest, AboveOriginFineGrainedCubing) {
+  if (!GetParam().fix_convex_mode || !GetParam().fix_cubic_quantization) {
+    // Without these two fixes, this test cannot pass.
+    return;
+  }
+
   // Start the test with an artificially large cwnd to prevent Reno
   // from over-taking cubic.
   QuicByteCount current_cwnd = 1000 * kDefaultTCPMSS;
@@ -251,7 +373,13 @@ TEST_F(CubicBytesTest, AboveOriginFineGrainedCubing) {
 // cwnd.  When we limit per-ack updates, this would cause the
 // cessation of cubic updates for 30ms.  When we allow per-ack
 // updates, the window continues to grow on every ack.
-TEST_F(CubicBytesTest, PerAckUpdates) {
+TEST_P(CubicBytesTest, PerAckUpdates) {
+  if (!GetParam().fix_convex_mode || !GetParam().fix_cubic_quantization ||
+      !GetParam().allow_per_ack_updates) {
+    // Without these fixes, this test will fail.
+    return;
+  }
+
   // Start the test with a large cwnd and RTT, to force the first
   // increase to be a cubic increase.
   QuicPacketCount initial_cwnd_packets = 150;
@@ -303,12 +431,14 @@ TEST_F(CubicBytesTest, PerAckUpdates) {
   EXPECT_LT(minimum_expected_increase + initial_cwnd, current_cwnd);
 }
 
-TEST_F(CubicBytesTest, LossEvents) {
+TEST_P(CubicBytesTest, LossEvents) {
   const QuicTime::Delta rtt_min = hundred_ms_;
   QuicByteCount current_cwnd = 422 * kDefaultTCPMSS;
   // Without the signed-integer, cubic-convex fix, we mistakenly
   // increment cwnd after only one_ms_ and a single ack.
-  QuicPacketCount expected_cwnd = RenoCwndInBytes(current_cwnd);
+  QuicPacketCount expected_cwnd = GetParam().fix_convex_mode
+                                      ? RenoCwndInBytes(current_cwnd)
+                                      : current_cwnd + kDefaultTCPMSS / 2;
   // Initialize the state.
   clock_.AdvanceTime(one_ms_);
   EXPECT_EQ(expected_cwnd,
@@ -336,13 +466,27 @@ TEST_F(CubicBytesTest, LossEvents) {
   current_cwnd = expected_cwnd;
   EXPECT_GT(pre_loss_cwnd, LastMaxCongestionWindow());
   QuicByteCount expected_last_max =
-      static_cast<QuicByteCount>(pre_loss_cwnd * kNConnectionBetaLastMax);
+      GetParam().fix_beta_last_max
+          ? static_cast<QuicByteCount>(pre_loss_cwnd * kNConnectionBetaLastMax)
+          : static_cast<QuicByteCount>(pre_loss_cwnd * kBetaLastMax);
   EXPECT_EQ(expected_last_max, LastMaxCongestionWindow());
-  EXPECT_LT(expected_cwnd, LastMaxCongestionWindow());
+  if (GetParam().fix_beta_last_max) {
+    EXPECT_LT(expected_cwnd, LastMaxCongestionWindow());
+  } else {
+    // If we don't scale kLastBetaMax, the current window is exactly
+    // equal to the last max congestion window, which would cause us
+    // to land above the origin on the next increase.
+    EXPECT_EQ(expected_cwnd, LastMaxCongestionWindow());
+  }
   // Simulate an increase, and check that we are below the origin.
   current_cwnd = cubic_.CongestionWindowAfterAck(
       kDefaultTCPMSS, current_cwnd, rtt_min, clock_.ApproximateNow());
-  EXPECT_GT(LastMaxCongestionWindow(), current_cwnd);
+  if (GetParam().fix_beta_last_max) {
+    EXPECT_GT(LastMaxCongestionWindow(), current_cwnd);
+  } else {
+    // Without the bug fix, we will be at or above the origin.
+    EXPECT_LE(LastMaxCongestionWindow(), current_cwnd);
+  }
 
   // On the final loss, simulate the condition where the congestion
   // window had a chance to grow nearly to the last congestion window.
@@ -351,17 +495,22 @@ TEST_F(CubicBytesTest, LossEvents) {
   expected_cwnd = static_cast<QuicByteCount>(current_cwnd * kNConnectionBeta);
   EXPECT_EQ(expected_cwnd,
             cubic_.CongestionWindowAfterPacketLoss(current_cwnd));
-  expected_last_max = pre_loss_cwnd;
+  expected_last_max =
+      GetParam().fix_beta_last_max
+          ? pre_loss_cwnd
+          : static_cast<QuicByteCount>(pre_loss_cwnd * kBetaLastMax);
   ASSERT_EQ(expected_last_max, LastMaxCongestionWindow());
 }
 
-TEST_F(CubicBytesTest, BelowOrigin) {
+TEST_P(CubicBytesTest, BelowOrigin) {
   // Concave growth.
   const QuicTime::Delta rtt_min = hundred_ms_;
   QuicByteCount current_cwnd = 422 * kDefaultTCPMSS;
   // Without the signed-integer, cubic-convex fix, we mistakenly
   // increment cwnd after only one_ms_ and a single ack.
-  QuicPacketCount expected_cwnd = RenoCwndInBytes(current_cwnd);
+  QuicPacketCount expected_cwnd = GetParam().fix_convex_mode
+                                      ? RenoCwndInBytes(current_cwnd)
+                                      : current_cwnd + kDefaultTCPMSS / 2;
   // Initialize the state.
   clock_.AdvanceTime(one_ms_);
   EXPECT_EQ(expected_cwnd,

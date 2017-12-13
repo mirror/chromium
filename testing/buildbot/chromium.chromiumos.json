@@ -945,6 +945,8 @@
       {
         "args": [
           "--enable-viz",
+          "--ozone-platform=headless",
+          "--override-use-software-gl-for-tests",
           "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_browsertests.filter"
         ],
         "name": "viz_content_browsertests",
@@ -955,16 +957,6 @@
         "test": "content_browsertests"
       },
       {
-        "swarming": {
-          "can_use_on_swarming_builders": true
-        },
-        "test": "content_unittests"
-      },
-      {
-        "args": [
-          "--mus"
-        ],
-        "name": "mus_content_unittests",
         "swarming": {
           "can_use_on_swarming_builders": true
         },

@@ -46,7 +46,6 @@
 #define PaintLayer_h
 
 #include <memory>
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBox.h"
 #include "core/paint/ClipRectsCache.h"
@@ -87,17 +86,18 @@ enum CompositingQueryMode {
 // FIXME: remove this once the compositing query DCHECKS are no longer hit.
 class CORE_EXPORT DisableCompositingQueryAsserts {
   STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(DisableCompositingQueryAsserts);
 
  public:
   DisableCompositingQueryAsserts();
 
  private:
   AutoReset<CompositingQueryMode> disabler_;
-  DISALLOW_COPY_AND_ASSIGN(DisableCompositingQueryAsserts);
 };
 
 struct PaintLayerRareData {
   USING_FAST_MALLOC(PaintLayerRareData);
+  WTF_MAKE_NONCOPYABLE(PaintLayerRareData);
 
  public:
   PaintLayerRareData();
@@ -148,8 +148,6 @@ struct PaintLayerRareData {
   // The accumulated subpixel offset of a composited layer's composited bounds
   // compared to absolute coordinates.
   LayoutSize subpixel_accumulation;
-
-  DISALLOW_COPY_AND_ASSIGN(PaintLayerRareData);
 };
 
 // PaintLayer is an old object that handles lots of unrelated operations.
@@ -220,6 +218,7 @@ struct PaintLayerRareData {
 // be instanciated for LayoutBoxes. With the current design, it's hard to know
 // that by reading the code.
 class CORE_EXPORT PaintLayer : public DisplayItemClient {
+  WTF_MAKE_NONCOPYABLE(PaintLayer);
 
  public:
   PaintLayer(LayoutBoxModelObject&);
@@ -1315,8 +1314,6 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
                            DescendantDependentFlagsStopsAtThrottledFrames);
   FRIEND_TEST_ALL_PREFIXES(PaintLayerTest,
                            PaintLayerTransformUpdatedOnStyleTransformAnimation);
-
-  DISALLOW_COPY_AND_ASSIGN(PaintLayer);
 };
 
 }  // namespace blink

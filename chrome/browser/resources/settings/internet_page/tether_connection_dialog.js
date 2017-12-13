@@ -25,12 +25,6 @@ Polymer({
     networkProperties: {
       type: Object,
     },
-
-    /**
-     * Whether the network has been lost (e.g., has gone out of range).
-     * @type {boolean}
-     */
-    outOfRange: Boolean,
   },
 
   open: function() {

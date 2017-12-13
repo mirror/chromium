@@ -422,10 +422,6 @@ void EnrollmentScreenHandler::DeclareLocalizedValues(
   builder->Add("adLoginInvalidPassword", IDS_AD_INVALID_PASSWORD);
   builder->Add("adJoinErrorMachineNameInvalid", IDS_AD_MACHINENAME_INVALID);
   builder->Add("adJoinErrorMachineNameTooLong", IDS_AD_MACHINENAME_TOO_LONG);
-  builder->Add("adJoinMoreOptions", IDS_AD_MORE_OPTIONS_BUTTON);
-  builder->Add("adJoinOrgUnit", IDS_AD_ORG_UNIT_HINT);
-  builder->Add("adJoinCancel", IDS_AD_CANCEL_BUTTON);
-  builder->Add("adJoinConfirm", IDS_AD_CONFIRM_BUTTON);
   builder->Add("licenseSelectionCardTitle",
                IDS_ENTERPRISE_ENROLLMENT_LICENSE_SELECTION);
   builder->Add("licenseSelectionCardExplanation",
@@ -573,14 +569,13 @@ void EnrollmentScreenHandler::HandleCompleteLogin(
 
 void EnrollmentScreenHandler::HandleAdCompleteLogin(
     const std::string& machine_name,
-    const std::string& distinguished_name,
     const std::string& user_name,
     const std::string& password) {
   observe_network_failure_ = false;
   DCHECK(controller_);
   DCHECK(authpolicy_login_helper_);
   authpolicy_login_helper_->JoinAdDomain(
-      machine_name, distinguished_name, user_name, password,
+      machine_name, user_name, password,
       base::BindOnce(&EnrollmentScreenHandler::HandleAdDomainJoin,
                      weak_ptr_factory_.GetWeakPtr(), machine_name, user_name));
 }
@@ -588,14 +583,12 @@ void EnrollmentScreenHandler::HandleAdCompleteLogin(
 void EnrollmentScreenHandler::HandleAdDomainJoin(
     const std::string& machine_name,
     const std::string& user_name,
-    authpolicy::ErrorType code,
-    const std::string& machine_domain) {
+    authpolicy::ErrorType code) {
   switch (code) {
-    case authpolicy::ERROR_NONE: {
+    case authpolicy::ERROR_NONE:
       ShowEnrollmentSpinnerScreen();
-      controller_->OnAdJoined(machine_domain);
+      controller_->OnAdJoined(gaia::ExtractDomainName(user_name));
       return;
-    }
     case authpolicy::ERROR_NETWORK_PROBLEM:
       // Could be a network problem, but could also be a misspelled domain name.
       ShowError(IDS_AD_AUTH_NETWORK_ERROR, true);
@@ -626,18 +619,6 @@ void EnrollmentScreenHandler::HandleAdDomainJoin(
       return;
     case authpolicy::ERROR_USER_HIT_JOIN_QUOTA:
       ShowError(IDS_AD_USER_HIT_JOIN_QUOTA, true);
-      return;
-    case authpolicy::ERROR_OU_DOES_NOT_EXIST:
-      ShowError(IDS_AD_OU_DOES_NOT_EXIST, true);
-      return;
-    case authpolicy::ERROR_INVALID_OU:
-      ShowError(IDS_AD_OU_INVALID, true);
-      return;
-    case authpolicy::ERROR_OU_ACCESS_DENIED:
-      ShowError(IDS_AD_OU_ACCESS_DENIED, true);
-      return;
-    case authpolicy::ERROR_SETTING_OU_FAILED:
-      ShowError(IDS_AD_OU_SETTING_FAILED, true);
       return;
 #if !defined(ARCH_CPU_X86_64)
     // Currently, the Active Directory integration is only supported on x86_64

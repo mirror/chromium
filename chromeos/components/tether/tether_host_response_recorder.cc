@@ -4,8 +4,7 @@
 
 #include "chromeos/components/tether/tether_host_response_recorder.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "chromeos/components/tether/pref_names.h"
 #include "components/pref_registry/pref_registry_syncable.h"
@@ -90,11 +89,11 @@ bool TetherHostResponseRecorder::AddRecentResponse(
   // Create a mutable copy of the stored IDs, or create one if it has yet to be
   // stored.
   std::unique_ptr<base::ListValue> updated_ids =
-      ids ? ids->CreateDeepCopy() : std::make_unique<base::ListValue>();
+      ids ? ids->CreateDeepCopy() : base::MakeUnique<base::ListValue>();
 
   // Remove the device ID if it was already present in the list.
   std::unique_ptr<base::Value> device_id_value =
-      std::make_unique<base::Value>(device_id);
+      base::MakeUnique<base::Value>(device_id);
   updated_ids->Remove(*device_id_value, nullptr);
 
   // Add the device ID to the front of the queue.

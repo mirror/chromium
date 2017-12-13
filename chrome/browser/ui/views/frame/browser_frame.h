@@ -121,7 +121,7 @@ class BrowserFrame
   ui::MenuModel* GetSystemMenuModel();
 
  private:
-  // Callback for MenuRunner.
+  // Callback for MenuModelAdapter.
   void OnMenuClosed();
 
   NativeBrowserFrame* native_browser_frame_;

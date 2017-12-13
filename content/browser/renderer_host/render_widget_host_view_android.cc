@@ -571,6 +571,11 @@ void RenderWidgetHostViewAndroid::InitAsFullscreen(
   NOTIMPLEMENTED();
 }
 
+RenderWidgetHost*
+RenderWidgetHostViewAndroid::GetRenderWidgetHost() const {
+  return host_;
+}
+
 void RenderWidgetHostViewAndroid::WasResized() {
   host_->WasResized();
 }
@@ -722,18 +727,30 @@ gfx::Size RenderWidgetHostViewAndroid::GetPhysicalBackingSize() const {
 }
 
 bool RenderWidgetHostViewAndroid::DoBrowserControlsShrinkBlinkSize() const {
-  auto* delegate_view = GetRenderViewHostDelegateView();
+  RenderWidgetHostDelegate* delegate = host_->delegate();
+  if (!delegate)
+    return false;
+
+  RenderViewHostDelegateView* delegate_view = delegate->GetDelegateView();
   return delegate_view ? delegate_view->DoBrowserControlsShrinkBlinkSize()
                        : false;
 }
 
 float RenderWidgetHostViewAndroid::GetTopControlsHeight() const {
-  auto* delegate_view = GetRenderViewHostDelegateView();
+  RenderWidgetHostDelegate* delegate = host_->delegate();
+  if (!delegate)
+    return 0.f;
+
+  RenderViewHostDelegateView* delegate_view = delegate->GetDelegateView();
   return delegate_view ? delegate_view->GetTopControlsHeight() : 0.f;
 }
 
 float RenderWidgetHostViewAndroid::GetBottomControlsHeight() const {
-  auto* delegate_view = GetRenderViewHostDelegateView();
+  RenderWidgetHostDelegate* delegate = host_->delegate();
+  if (!delegate)
+    return 0.f;
+
+  RenderViewHostDelegateView* delegate_view = delegate->GetDelegateView();
   return delegate_view ? delegate_view->GetBottomControlsHeight() : 0.f;
 }
 
@@ -1021,9 +1038,6 @@ bool RenderWidgetHostViewAndroid::OnTouchEvent(
 
   blink::WebTouchEvent web_event = ui::CreateWebTouchEventFromMotionEvent(
       event, result.moved_beyond_slop_region);
-  if (web_event.GetType() == blink::WebInputEvent::kUndefined)
-    return false;
-
   ui::LatencyInfo latency_info(ui::SourceEventType::TOUCH);
   latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
   if (host_->delegate()->GetInputEventRouter()) {
@@ -1812,15 +1826,8 @@ void RenderWidgetHostViewAndroid::GestureEventAck(
   if (overscroll_controller_)
     overscroll_controller_->OnGestureEventAck(event, ack_result);
 
-  auto* view = GetRenderViewHostDelegateView();
-  if (view)
-    view->GestureEventAck(event, ack_result);
-}
-
-RenderViewHostDelegateView*
-RenderWidgetHostViewAndroid::GetRenderViewHostDelegateView() const {
-  RenderWidgetHostDelegate* delegate = host_->delegate();
-  return delegate ? delegate->GetDelegateView() : nullptr;
+  if (content_view_core_)
+    content_view_core_->OnGestureEventAck(event, ack_result);
 }
 
 InputEventAckState RenderWidgetHostViewAndroid::FilterInputEvent(
@@ -1909,9 +1916,6 @@ void RenderWidgetHostViewAndroid::SendMouseEvent(
   blink::WebInputEvent::Type webMouseEventType =
       ui::ToWebMouseEventType(motion_event.GetAction());
 
-  if (webMouseEventType == blink::WebInputEvent::kUndefined)
-    return;
-
   if (webMouseEventType == blink::WebInputEvent::kMouseDown)
     UpdateMouseState(action_button, motion_event.GetX(0), motion_event.GetY(0));
 
@@ -1988,10 +1992,8 @@ void RenderWidgetHostViewAndroid::SendGestureEvent(
   if (overscroll_controller_)
     overscroll_controller_->Enable();
 
-  if (!host_ || !host_->delegate() ||
-      event.GetType() == blink::WebInputEvent::kUndefined) {
+  if (!host_ || !host_->delegate())
     return;
-  }
 
   // We let the touch selection controller see gesture events here, since they
   // may be routed and not make it to FilterInputEvent().
@@ -2123,11 +2125,6 @@ void RenderWidgetHostViewAndroid::DidOverscroll(
 void RenderWidgetHostViewAndroid::DidStopFlinging() {
   if (content_view_core_)
     content_view_core_->DidStopFlinging();
-}
-
-RenderWidgetHostImpl* RenderWidgetHostViewAndroid::GetRenderWidgetHostImpl()
-    const {
-  return host_;
 }
 
 viz::FrameSinkId RenderWidgetHostViewAndroid::GetFrameSinkId() {

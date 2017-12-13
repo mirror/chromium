@@ -98,7 +98,10 @@ LaunchContainer GetLaunchContainer(const ExtensionPrefs* prefs,
   LaunchContainer manifest_launch_container =
       AppLaunchInfo::GetLaunchContainer(extension);
 
-  base::Optional<LaunchContainer> result;
+  const LaunchContainer kInvalidLaunchContainer =
+      static_cast<LaunchContainer>(-1);
+
+  LaunchContainer result = kInvalidLaunchContainer;
 
   if (manifest_launch_container == LAUNCH_CONTAINER_PANEL) {
     // Apps with app.launch.container = 'panel' should always respect the
@@ -134,12 +137,12 @@ LaunchContainer GetLaunchContainer(const ExtensionPrefs* prefs,
   }
 
   // All paths should set |result|.
-  if (!result) {
+  if (result == kInvalidLaunchContainer) {
     DLOG(FATAL) << "Failed to set a launch container.";
     result = LAUNCH_CONTAINER_TAB;
   }
 
-  return *result;
+  return result;
 }
 
 bool HasPreferredLaunchContainer(const ExtensionPrefs* prefs,

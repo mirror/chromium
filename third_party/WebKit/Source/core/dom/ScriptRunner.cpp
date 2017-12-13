@@ -289,7 +289,7 @@ bool ScriptRunner::DoTryStream(ScriptLoader* script_loader) {
   bool success = pending_script->StartStreamingIfPossible(
       ScriptStreamer::kAsync,
       WTF::Bind(&ScriptRunner::NotifyScriptStreamerFinished,
-                WrapWeakPersistent(this)));
+                WrapPersistent(this)));
 #ifndef NDEBUG
   if (was_already_streaming) {
     DCHECK(!success);

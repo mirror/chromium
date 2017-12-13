@@ -26,7 +26,6 @@
 #ifndef LayoutTableSection_h
 #define LayoutTableSection_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/layout/LayoutTable.h"
 #include "core/layout/LayoutTableBoxComponent.h"
@@ -131,6 +130,7 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
 
   struct SpanningRowsHeight {
     STACK_ALLOCATED();
+    WTF_MAKE_NONCOPYABLE(SpanningRowsHeight);
 
    public:
     SpanningRowsHeight()
@@ -142,7 +142,6 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
     int total_rows_height;
     int spanning_cell_height_ignoring_border_spacing;
     bool is_any_row_with_only_spanning_cells;
-    DISALLOW_COPY_AND_ASSIGN(SpanningRowsHeight);
   };
 
   TableGridCell& GridCellAt(unsigned row, unsigned effective_column) {

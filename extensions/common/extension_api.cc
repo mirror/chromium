@@ -52,7 +52,8 @@ std::unique_ptr<base::DictionaryValue> LoadSchemaDictionary(
                  error_message.c_str());
 
   CHECK(result.get()) << error_message << " for schema " << schema;
-  CHECK(result->is_dict()) << " for schema " << schema;
+  CHECK(result->IsType(base::Value::Type::DICTIONARY)) << " for schema "
+                                                       << schema;
   return base::DictionaryValue::From(std::move(result));
 }
 

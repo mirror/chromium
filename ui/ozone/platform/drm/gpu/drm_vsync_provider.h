@@ -19,9 +19,6 @@ class DrmVSyncProvider : public gfx::VSyncProvider {
   ~DrmVSyncProvider() override;
 
   void GetVSyncParameters(const UpdateVSyncCallback& callback) override;
-  bool GetVSyncParametersIfAvailable(base::TimeTicks* timebase,
-                                     base::TimeDelta* interval) override;
-  bool SupportGetVSyncParametersIfAvailable() override;
 
  private:
   DrmWindowProxy* window_;

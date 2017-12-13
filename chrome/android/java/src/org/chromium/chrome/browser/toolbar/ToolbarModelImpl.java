@@ -16,7 +16,6 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
-import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.dom_distiller.DomDistillerServiceFactory;
 import org.chromium.chrome.browser.dom_distiller.DomDistillerTabUtils;
 import org.chromium.chrome.browser.locale.LocaleManager;
@@ -97,13 +96,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     @Override
     public String getCurrentUrl() {
         // TODO(yusufo) : Consider using this for all calls from getTab() for accessing url.
-        if (!hasTab()) {
-            if (mBottomSheet != null && mBottomSheet.isShowingNewTab()) {
-                return UrlConstants.NTP_URL;
-            } else {
-                return "";
-            }
-        }
+        if (!hasTab()) return "";
         // Tab.getUrl() returns empty string if it does not have a URL.
         return getTab().getUrl().trim();
     }
@@ -153,14 +146,6 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
         String entryIdFromUrl = DomDistillerUrlUtils.getValueForKeyInUrl(url, "entry_id");
         if (TextUtils.isEmpty(entryIdFromUrl)) return false;
         return domDistillerService.hasEntry(entryIdFromUrl);
-    }
-
-    @Override
-    public String getTitle() {
-        if (!hasTab()) return "";
-
-        String title = getTab().getTitle();
-        return TextUtils.isEmpty(title) ? title : title.trim();
     }
 
     @Override

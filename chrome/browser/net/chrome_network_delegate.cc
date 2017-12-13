@@ -16,7 +16,8 @@
 #include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/metrics/histogram_functions.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/sparse_histogram.h"
 #include "base/metrics/user_metrics.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
@@ -119,12 +120,12 @@ void ReportInvalidReferrerSend(const GURL& target_url,
 void RecordNetworkErrorHistograms(const net::URLRequest* request,
                                   int net_error) {
   if (request->url().SchemeIs("http")) {
-    base::UmaHistogramSparse("Net.HttpRequestCompletionErrorCodes",
-                             std::abs(net_error));
+    UMA_HISTOGRAM_SPARSE_SLOWLY("Net.HttpRequestCompletionErrorCodes",
+                                std::abs(net_error));
 
     if (request->load_flags() & net::LOAD_MAIN_FRAME_DEPRECATED) {
-      base::UmaHistogramSparse("Net.HttpRequestCompletionErrorCodes.MainFrame",
-                               std::abs(net_error));
+      UMA_HISTOGRAM_SPARSE_SLOWLY(
+          "Net.HttpRequestCompletionErrorCodes.MainFrame", std::abs(net_error));
     }
   }
 }

@@ -9,5 +9,4 @@ interface TaskAttributionTiming : PerformanceEntry {
     readonly attribute DOMString containerSrc;
     readonly attribute DOMString containerId;
     readonly attribute DOMString containerName;
-    serializer = {inherit, attribute};
 };

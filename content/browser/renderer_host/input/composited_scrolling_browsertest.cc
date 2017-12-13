@@ -115,9 +115,9 @@ class CompositedScrollingBrowserTest : public ContentBrowserTest {
   int DoTouchScroll(const gfx::Point& point, const gfx::Vector2d& distance) {
     EXPECT_EQ(0, GetScrollTop());
 
-    int scroll_height = ExecuteScriptAndExtractInt(
+    int scrollHeight = ExecuteScriptAndExtractInt(
         "document.getElementById('scroller').scrollHeight");
-    EXPECT_EQ(1000, scroll_height);
+    EXPECT_EQ(1000, scrollHeight);
 
     SyntheticSmoothScrollGestureParams params;
     params.gesture_source_type = SyntheticGestureParams::TOUCH_INPUT;
@@ -159,11 +159,11 @@ class CompositedScrollingBrowserTest : public ContentBrowserTest {
 IN_PROC_BROWSER_TEST_F(CompositedScrollingBrowserTest,
                        MAYBE_Scroll3DTransformedScroller) {
   LoadURL();
-  int scroll_distance =
+  int scrollDistance =
       DoTouchScroll(gfx::Point(50, 150), gfx::Vector2d(0, 100));
   // The scroll distance is increased due to the rotation of the scroller.
   EXPECT_EQ(std::floor(100 / std::cos(gfx::DegToRad(30.f))) - 1,
-            scroll_distance);
+            scrollDistance);
 }
 
 }  // namespace content

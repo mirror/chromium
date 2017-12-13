@@ -26,6 +26,7 @@ class QuitWithAppsController : public message_center::NotificationDelegate {
   QuitWithAppsController();
 
   // NotificationDelegate interface.
+  void Display() override;
   void Close(bool by_user) override;
   void Click() override;
   void ButtonClick(int button_index) override;

@@ -36,29 +36,28 @@ const int kSilenceDurationDays = 100;
 // silent period starts.
 const int kMaxWarnings = 2;
 
-// Implementation of BrowserListObserver used to wait for a browser
+// Implementation of chrome::BrowserListObserver used to wait for a browser
 // window.
-class NetworkProfileBubbleBrowserListObserver : public BrowserListObserver {
+class BrowserListObserver : public chrome::BrowserListObserver {
  private:
-  ~NetworkProfileBubbleBrowserListObserver() override;
+  ~BrowserListObserver() override;
 
-  // Overridden from ::BrowserListObserver:
+  // Overridden from chrome::BrowserListObserver:
   void OnBrowserAdded(Browser* browser) override;
   void OnBrowserRemoved(Browser* browser) override;
   void OnBrowserSetLastActive(Browser* browser) override;
 };
 
-NetworkProfileBubbleBrowserListObserver::
-    ~NetworkProfileBubbleBrowserListObserver() {}
-
-void NetworkProfileBubbleBrowserListObserver::OnBrowserAdded(Browser* browser) {
+BrowserListObserver::~BrowserListObserver() {
 }
 
-void NetworkProfileBubbleBrowserListObserver::OnBrowserRemoved(
-    Browser* browser) {}
+void BrowserListObserver::OnBrowserAdded(Browser* browser) {
+}
 
-void NetworkProfileBubbleBrowserListObserver::OnBrowserSetLastActive(
-    Browser* browser) {
+void BrowserListObserver::OnBrowserRemoved(Browser* browser) {
+}
+
+void BrowserListObserver::OnBrowserSetLastActive(Browser* browser) {
   NetworkProfileBubble::ShowNotification(browser);
   // No need to observe anymore.
   BrowserList::RemoveObserver(this);
@@ -177,5 +176,5 @@ void NetworkProfileBubble::NotifyNetworkProfileDetected() {
   if (browser)
     ShowNotification(browser);
   else
-    BrowserList::AddObserver(new NetworkProfileBubbleBrowserListObserver());
+    BrowserList::AddObserver(new BrowserListObserver());
 }

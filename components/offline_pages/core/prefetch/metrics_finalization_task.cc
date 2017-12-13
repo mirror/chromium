@@ -11,7 +11,6 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "components/offline_pages/core/offline_store_utils.h"
@@ -177,8 +176,8 @@ void ReportMetricsFor(const PrefetchItemStats& url, const base::Time now) {
   }
 
   // Error code reporting.
-  base::UmaHistogramSparse("OfflinePages.Prefetching.FinishedItemErrorCode",
-                           static_cast<int>(url.error_code));
+  UMA_HISTOGRAM_SPARSE_SLOWLY("OfflinePages.Prefetching.FinishedItemErrorCode",
+                              static_cast<int>(url.error_code));
 
   // Unexpected file size reporting.
   int file_size_enum_value =

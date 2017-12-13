@@ -41,33 +41,23 @@ bool AppendFragmentOffsetAndSize(const NGPhysicalFragment* fragment,
   return has_content;
 }
 
-String StringForBoxType(NGPhysicalFragment::NGBoxType box_type,
-                        bool is_old_layout_root) {
-  StringBuilder result;
+String StringForBoxType(NGPhysicalFragment::NGBoxType box_type) {
   switch (box_type) {
     case NGPhysicalFragment::NGBoxType::kNormalBox:
-      break;
+      return String();
     case NGPhysicalFragment::NGBoxType::kInlineBlock:
-      result.Append("inline-block");
-      break;
+      return "inline-block";
     case NGPhysicalFragment::NGBoxType::kFloating:
-      result.Append("floating");
-      break;
+      return "floating";
     case NGPhysicalFragment::NGBoxType::kOutOfFlowPositioned:
-      result.Append("out-of-flow-positioned");
-      break;
+      return "out-of-flow-positioned";
+    case NGPhysicalFragment::NGBoxType::kOldLayoutRoot:
+      return "old-layout-root";
     case NGPhysicalFragment::NGBoxType::kAnonymousBox:
-      result.Append("anonymous");
-      break;
-    default:
-      NOTREACHED();
+      return "anonymous";
   }
-  if (is_old_layout_root) {
-    if (result.length())
-      result.Append(" ");
-    result.Append("old-layout-root");
-  }
-  return result.ToString();
+  NOTREACHED();
+  return String();
 }
 
 void AppendFragmentToString(const NGPhysicalFragment* fragment,
@@ -83,8 +73,7 @@ void AppendFragmentToString(const NGPhysicalFragment* fragment,
   if (fragment->IsBox()) {
     if (flags & NGPhysicalFragment::DumpType) {
       builder->Append("Box");
-      String box_type =
-          StringForBoxType(fragment->BoxType(), fragment->IsOldLayoutRoot());
+      String box_type = StringForBoxType(fragment->BoxType());
       if (!box_type.IsEmpty()) {
         builder->Append(" (");
         builder->Append(box_type);
@@ -173,7 +162,6 @@ NGPhysicalFragment::NGPhysicalFragment(LayoutObject* layout_object,
       break_token_(std::move(break_token)),
       type_(type),
       box_type_(NGBoxType::kNormalBox),
-      is_old_layout_root_(false),
       is_placed_(false) {}
 
 // Keep the implementation of the destructor here, to avoid dependencies on
@@ -291,7 +279,7 @@ String NGPhysicalFragment::ToString() const {
       "Type: '%d' Size: '%s' Offset: '%s' Placed: '%d', BoxType: '%s'", Type(),
       Size().ToString().Ascii().data(),
       is_placed_ ? Offset().ToString().Ascii().data() : "no offset", IsPlaced(),
-      StringForBoxType(BoxType(), IsOldLayoutRoot()).Ascii().data());
+      StringForBoxType(BoxType()).Ascii().data());
 }
 
 String NGPhysicalFragment::DumpFragmentTree(DumpFlags flags,

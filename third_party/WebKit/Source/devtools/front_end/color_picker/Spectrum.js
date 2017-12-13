@@ -103,14 +103,11 @@ ColorPicker.Spectrum = class extends UI.VBox {
     label.textContent = 'HEX';
 
     UI.installDragHandle(
-        this._hueElement, dragStart.bind(this, positionHue.bind(this)), positionHue.bind(this), null, 'pointer',
-        'default');
+        this._hueElement, dragStart.bind(this, positionHue.bind(this)), positionHue.bind(this), null, 'default');
     UI.installDragHandle(
-        this._alphaElement, dragStart.bind(this, positionAlpha.bind(this)), positionAlpha.bind(this), null, 'pointer',
-        'default');
+        this._alphaElement, dragStart.bind(this, positionAlpha.bind(this)), positionAlpha.bind(this), null, 'default');
     UI.installDragHandle(
-        this._colorElement, dragStart.bind(this, positionColor.bind(this)), positionColor.bind(this), null, 'pointer',
-        'default');
+        this._colorElement, dragStart.bind(this, positionColor.bind(this)), positionColor.bind(this), null, 'default');
 
     if (Runtime.experiments.isEnabled('colorContrastRatio')) {
       var boundToggleColorPicker = this._toggleColorPicker.bind(this);

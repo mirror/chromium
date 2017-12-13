@@ -14,7 +14,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_item_model.h"
 #include "chrome/browser/download/notification/download_item_notification.h"
-#include "chrome/browser/notifications/notification_display_service_impl.h"
+#include "chrome/browser/notifications/notification_display_service.h"
+#include "chrome/browser/notifications/notification_display_service_factory.h"
 #include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/common/chrome_switches.h"
 #include "content/public/browser/download_item.h"
@@ -106,8 +107,8 @@ DownloadNotificationManagerForProfile::DownloadNotificationManagerForProfile(
     Profile* profile,
     DownloadNotificationManager* parent_manager)
     : profile_(profile), parent_manager_(parent_manager) {
-  NotificationDisplayServiceImpl* service =
-      NotificationDisplayServiceImpl::GetForProfile(profile);
+  NotificationDisplayService* service =
+      NotificationDisplayServiceFactory::GetForProfile(profile);
   DCHECK(!service->GetNotificationHandler(NotificationHandler::Type::DOWNLOAD));
   service->AddNotificationHandler(
       NotificationHandler::Type::DOWNLOAD,
@@ -116,7 +117,7 @@ DownloadNotificationManagerForProfile::DownloadNotificationManagerForProfile(
 
 DownloadNotificationManagerForProfile::
     ~DownloadNotificationManagerForProfile() {
-  NotificationDisplayServiceImpl::GetForProfile(profile_)
+  NotificationDisplayServiceFactory::GetForProfile(profile_)
       ->RemoveNotificationHandler(NotificationHandler::Type::DOWNLOAD);
   for (const auto& download : items_) {
     download.first->RemoveObserver(this);

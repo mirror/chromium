@@ -41,7 +41,7 @@ cr.define('extension_sidebar_tests', function() {
       expectEquals(sidebar.$$(selector).id, 'sections-extensions');
     });
 
-    test(assert(TestNames.LayoutAndClickHandlers), function(done) {
+    test(assert(TestNames.LayoutAndClickHandlers), function() {
       extension_test_util.testIcons(sidebar);
 
       var testVisible = extension_test_util.testVisible.bind(null, sidebar);
@@ -59,10 +59,6 @@ cr.define('extension_sidebar_tests', function() {
 
       MockInteractions.tap(sidebar.$$('#sections-extensions'));
       expectDeepEquals(currentPage, {page: Page.LIST});
-
-      // Clicking on the link for the current page should close the dialog.
-      sidebar.addEventListener('close-drawer', () => done());
-      MockInteractions.tap(sidebar.$$('#sections-extensions'));
     });
   });
 

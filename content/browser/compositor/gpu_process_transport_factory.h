@@ -86,8 +86,6 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   void SetDisplayVisible(ui::Compositor* compositor, bool visible) override;
   void ResizeDisplay(ui::Compositor* compositor,
                      const gfx::Size& size) override;
-  void SetDisplayColorMatrix(ui::Compositor* compositor,
-                             const SkMatrix44& matrix) override;
   void SetDisplayColorSpace(ui::Compositor* compositor,
                             const gfx::ColorSpace& blending_color_space,
                             const gfx::ColorSpace& output_color_space) override;
@@ -138,8 +136,6 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
       bool need_alpha_channel,
       bool need_stencil_bits,
       bool support_locking,
-      bool support_gles2_interface,
-      bool support_raster_interface,
       ui::ContextProviderCommandBuffer* shared_context_provider,
       ui::command_buffer_metrics::ContextType type);
 

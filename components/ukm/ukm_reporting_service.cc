@@ -8,7 +8,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/ukm/persisted_logs_metrics_impl.h"
@@ -98,8 +97,8 @@ void UkmReportingService::LogResponseOrErrorCode(int response_code,
                                                  int error_code,
                                                  bool was_https) {
   // |was_https| is ignored since all UKM logs are received over HTTPS.
-  base::UmaHistogramSparse("UKM.LogUpload.ResponseOrErrorCode",
-                           response_code >= 0 ? response_code : error_code);
+  UMA_HISTOGRAM_SPARSE_SLOWLY("UKM.LogUpload.ResponseOrErrorCode",
+                              response_code >= 0 ? response_code : error_code);
 }
 
 void UkmReportingService::LogSuccess(size_t log_size) {

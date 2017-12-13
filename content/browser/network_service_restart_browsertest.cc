@@ -10,10 +10,15 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/network_service.mojom.h"
-#include "content/public/test/browser_test_utils.h"
+#include "content/public/common/network_service_test.mojom.h"
+#include "content/public/common/service_manager_connection.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
+#include "content/public/test/simple_url_loader_test_helper.h"
 #include "content/shell/browser/shell.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 
@@ -39,10 +44,42 @@ class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
     EXPECT_TRUE(embedded_test_server()->Start());
   }
 
-  GURL GetTestURL() const {
+  void SimulateNetworkServiceCrash() {
+    mojom::NetworkServiceTestPtr network_service_test;
+    ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
+        mojom::kNetworkServiceName, &network_service_test);
+
+    base::RunLoop run_loop;
+    network_service_test.set_connection_error_handler(run_loop.QuitClosure());
+
+    network_service_test->SimulateCrash();
+    run_loop.Run();
+  }
+
+  int LoadBasicRequest(mojom::NetworkContext* network_context) {
+    mojom::URLLoaderFactoryPtr url_loader_factory;
+    network_context->CreateURLLoaderFactory(MakeRequest(&url_loader_factory),
+                                            0);
+    // |url_loader_factory| will receive error notification asynchronously if
+    // |network_context| has already encountered error. However it's still false
+    // at this point.
+    EXPECT_FALSE(url_loader_factory.encountered_error());
+
+    std::unique_ptr<ResourceRequest> request =
+        std::make_unique<ResourceRequest>();
     // Use '/echoheader' instead of '/echo' to avoid a disk_cache bug.
     // See https://crbug.com/792255.
-    return embedded_test_server()->GetURL("/echoheader");
+    request->url = embedded_test_server()->GetURL("/echoheader");
+
+    content::SimpleURLLoaderTestHelper simple_loader_helper;
+    std::unique_ptr<content::SimpleURLLoader> simple_loader =
+        content::SimpleURLLoader::Create(std::move(request),
+                                         TRAFFIC_ANNOTATION_FOR_TESTS);
+    simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
+        url_loader_factory.get(), simple_loader_helper.GetCallback());
+    simple_loader_helper.WaitForCallback();
+
+    return simple_loader->NetError();
   }
 
  private:
@@ -54,7 +91,7 @@ class NetworkServiceRestartBrowserTest : public ContentBrowserTest {
 IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
                        NetworkServiceProcessRecovery) {
   mojom::NetworkContextPtr network_context = CreateNetworkContext();
-  EXPECT_EQ(net::OK, LoadBasicRequest(network_context.get(), GetTestURL()));
+  EXPECT_EQ(net::OK, LoadBasicRequest(network_context.get()));
   EXPECT_TRUE(network_context.is_bound());
   EXPECT_FALSE(network_context.encountered_error());
 
@@ -68,26 +105,33 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
   EXPECT_TRUE(network_context.is_bound());
   EXPECT_TRUE(network_context.encountered_error());
   // Make sure we could get |net::ERR_FAILED| with an invalid |network_context|.
-  EXPECT_EQ(net::ERR_FAILED,
-            LoadBasicRequest(network_context.get(), GetTestURL()));
+  EXPECT_EQ(net::ERR_FAILED, LoadBasicRequest(network_context.get()));
 
   // NetworkService should restart automatically and return valid interface.
   mojom::NetworkContextPtr network_context2 = CreateNetworkContext();
-  EXPECT_EQ(net::OK, LoadBasicRequest(network_context2.get(), GetTestURL()));
+  EXPECT_EQ(net::OK, LoadBasicRequest(network_context2.get()));
   EXPECT_TRUE(network_context2.is_bound());
   EXPECT_FALSE(network_context2.encountered_error());
 }
 
+// Flaky on Mac bots. crbug.com/793296
+#if defined(OS_MACOSX)
+#define MAYBE_StoragePartitionImplGetNetworkContext \
+  DISABLED_StoragePartitionImplGetNetworkContext
+#else
+#define MAYBE_StoragePartitionImplGetNetworkContext \
+  StoragePartitionImplGetNetworkContext
+#endif
 // Make sure |StoragePartitionImpl::GetNetworkContext()| returns valid interface
 // after crash.
 IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
-                       StoragePartitionImplGetNetworkContext) {
+                       MAYBE_StoragePartitionImplGetNetworkContext) {
   StoragePartitionImpl* partition = static_cast<StoragePartitionImpl*>(
       BrowserContext::GetDefaultStoragePartition(
           shell()->web_contents()->GetBrowserContext()));
 
   mojom::NetworkContext* old_network_context = partition->GetNetworkContext();
-  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context, GetTestURL()));
+  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context));
 
   // Crash the NetworkService process. Existing interfaces should receive error
   // notifications at some point.
@@ -98,8 +142,7 @@ IN_PROC_BROWSER_TEST_F(NetworkServiceRestartBrowserTest,
   // |partition->GetNetworkContext()| should return a valid new pointer after
   // crash.
   EXPECT_NE(old_network_context, partition->GetNetworkContext());
-  EXPECT_EQ(net::OK,
-            LoadBasicRequest(partition->GetNetworkContext(), GetTestURL()));
+  EXPECT_EQ(net::OK, LoadBasicRequest(partition->GetNetworkContext()));
 }
 
 }  // namespace content

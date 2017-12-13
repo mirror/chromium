@@ -167,11 +167,8 @@ void IdleSpellCheckCallback::HotModeInvocation(IdleDeadline* deadline) {
 }
 
 void IdleSpellCheckCallback::invoke(IdleDeadline* deadline) {
-  // TODO(xiaochengh): IdleSpellCheckCallback should get Document via
-  // SynchronousMutationObserver::GetContext().
-  if (!GetFrame().GetDocument() || !GetFrame().GetDocument()->IsActive())
-    return;
-
+  DCHECK(GetFrame().GetDocument());
+  DCHECK(GetFrame().GetDocument()->IsActive());
   DCHECK_NE(idle_callback_handle_, kInvalidHandle);
   idle_callback_handle_ = kInvalidHandle;
 

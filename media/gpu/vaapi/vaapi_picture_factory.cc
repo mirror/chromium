@@ -42,10 +42,7 @@ std::unique_ptr<VaapiPicture> VaapiPictureFactory::Create(
     int32_t picture_buffer_id,
     const gfx::Size& size,
     uint32_t texture_id,
-    uint32_t client_texture_id,
-    uint32_t texture_target) {
-  DCHECK_EQ(texture_target, GetGLTextureTarget());
-
+    uint32_t client_texture_id) {
   std::unique_ptr<VaapiPicture> picture;
 
   // Select DRM(egl) / TFP(glx) at runtime with --use-gl=egl / --use-gl=desktop
@@ -53,16 +50,14 @@ std::unique_ptr<VaapiPicture> VaapiPictureFactory::Create(
     case kVaapiImplementationDrm:
       picture.reset(new VaapiDrmPicture(vaapi_wrapper, make_context_current_cb,
                                         bind_image_cb, picture_buffer_id, size,
-                                        texture_id, client_texture_id,
-                                        texture_target));
+                                        texture_id, client_texture_id));
       break;
 
 #if defined(USE_X11)
     case kVaapiImplementationX11:
       picture.reset(new VaapiTFPPicture(vaapi_wrapper, make_context_current_cb,
                                         bind_image_cb, picture_buffer_id, size,
-                                        texture_id, client_texture_id,
-                                        texture_target));
+                                        texture_id, client_texture_id));
 
       break;
 #endif  // USE_X11

@@ -98,9 +98,6 @@ void FakeArcBridgeHost::OnTracingInstanceReady(
 
 void FakeArcBridgeHost::OnTtsInstanceReady(mojom::TtsInstancePtr tts_ptr) {}
 
-void FakeArcBridgeHost::OnUsbHostInstanceReady(
-    mojom::UsbHostInstancePtr usb_ptr) {}
-
 void FakeArcBridgeHost::OnVideoInstanceReady(
     mojom::VideoInstancePtr video_ptr) {}
 

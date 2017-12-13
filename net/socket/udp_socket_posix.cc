@@ -35,7 +35,6 @@
 #include "net/log/net_log_source_type.h"
 #include "net/socket/socket_descriptor.h"
 #include "net/socket/socket_options.h"
-#include "net/socket/socket_tag.h"
 #include "net/socket/udp_net_log_parameters.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
@@ -237,8 +236,6 @@ int UDPSocketPosix::Open(AddressFamily address_family) {
     Close();
     return err;
   }
-  if (tag_ != SocketTag())
-    tag_.Apply(socket_);
   return OK;
 }
 
@@ -327,7 +324,6 @@ void UDPSocketPosix::Close() {
   socket_ = kInvalidSocket;
   addr_family_ = 0;
   is_connected_ = false;
-  tag_ = SocketTag();
 
   sent_activity_monitor_.OnClose();
   received_activity_monitor_.OnClose();
@@ -468,8 +464,6 @@ int UDPSocketPosix::Connect(const IPEndPoint& address) {
   int rv = InternalConnect(address);
   net_log_.EndEventWithNetErrorCode(NetLogEventType::UDP_CONNECT, rv);
   is_connected_ = (rv == OK);
-  if (rv != OK)
-    tag_ = SocketTag();
   return rv;
 }
 
@@ -1084,14 +1078,6 @@ int UDPSocketPosix::SetDiffServCodePoint(DiffServCodePoint dscp) {
 
 void UDPSocketPosix::DetachFromThread() {
   DETACH_FROM_THREAD(thread_checker_);
-}
-
-void UDPSocketPosix::ApplySocketTag(const SocketTag& tag) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  if (socket_ != kInvalidSocket && tag != tag_) {
-    tag.Apply(socket_);
-  }
-  tag_ = tag;
 }
 
 }  // namespace net

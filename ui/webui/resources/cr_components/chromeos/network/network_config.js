@@ -358,22 +358,20 @@ Polymer({
       return;
     this.propertiesSent_ = true;
     this.error_ = '';
-
-    var propertiesToSet = this.getPropertiesToSet_();
     if (!this.guid || this.getSource_() == CrOnc.Source.NONE) {
       // New network configurations default to 'AutoConnect' unless prohibited
       // by policy.
       CrOnc.setTypeProperty(
-          propertiesToSet, 'AutoConnect',
+          this.configProperties_, 'AutoConnect',
           !(this.globalPolicy &&
             this.globalPolicy.AllowOnlyPolicyNetworksToConnect));
 
       // Create the configuration, then connect to it in the callback.
       this.networkingPrivate.createNetwork(
-          this.shareNetwork_, propertiesToSet,
+          this.shareNetwork_, this.configProperties_,
           this.createNetworkCallback_.bind(this));
     } else {
-      propertiesToSet.GUID = this.guid;
+      var propertiesToSet = this.getPropertiesToSet_();
       this.networkingPrivate.setProperties(
           this.guid, propertiesToSet, this.setPropertiesCallback_.bind(this));
     }
@@ -644,7 +642,6 @@ Polymer({
             L2TP: {Username: ''},
           };
         }
-        this.security_ = CrOnc.Security.NONE;
         break;
     }
     this.configProperties_ = configProperties;
@@ -889,25 +886,17 @@ Polymer({
    * @private
    */
   setSelectedCerts_: function(pem, certId) {
-    if (pem) {
-      var serverCa = this.serverCaCerts_.find(function(cert) {
-        return cert.pem == pem;
-      });
-      if (serverCa)
-        this.selectedServerCaHash_ = serverCa.hash;
-    }
-    if (!this.selectedServerCaHash_ && this.serverCaCerts_[0])
-      this.selectedServerCaHash_ = this.serverCaCerts_[0].hash;
+    var serverCa = (!!pem && this.serverCaCerts_.find(function(cert) {
+                     return cert.pem == pem;
+                   })) ||
+        this.serverCaCerts_[0];
+    this.selectedServerCaHash_ = (serverCa && serverCa.hash) || '';
 
-    if (certId) {
-      var userCert = this.userCerts_.find(function(cert) {
-        return cert.PKCS11Id == certId;
-      });
-      if (userCert)
-        this.selectedUserCertHash_ = userCert.hash;
-    }
-    if (!this.selectedUserCertHash_ && this.userCerts_[0])
-      this.selectedUserCertHash_ = this.userCerts_[0].hash;
+    var userCert = (!!certId && this.userCerts_.find(function(cert) {
+                     return cert.PKCS11Id == certId;
+                   })) ||
+        this.userCerts_[0];
+    this.selectedUserCertHash_ = (userCert && userCert.hash) || '';
   },
 
   /**
@@ -915,9 +904,6 @@ Polymer({
    * @private
    */
   getIsConfigured_: function() {
-    if (this.configProperties_.Type == CrOnc.Type.VPN)
-      return this.vpnIsConfigured_();
-
     if (this.type == CrOnc.Type.WI_FI) {
       if (!this.get('WiFi.SSID', this.configProperties_))
         return false;
@@ -929,6 +915,8 @@ Polymer({
     }
     if (this.security_ == CrOnc.Security.WPA_EAP)
       return this.eapIsConfigured_();
+    if (this.configProperties_.Type == CrOnc.Type.VPN)
+      return this.vpnIsConfigured_();
     return true;
   },
 
@@ -1071,6 +1059,7 @@ Polymer({
   /** @private */
   getPropertiesToSet_: function() {
     var propertiesToSet = Object.assign({}, this.configProperties_);
+    propertiesToSet.GUID = this.guid;
     var eap = this.getEap_(propertiesToSet);
     if (eap)
       this.setEapProperties_(eap);
@@ -1162,7 +1151,6 @@ Polymer({
     assert(vpn.IPsec);
     if (vpn.IPsec.AuthenticationType == CrOnc.IPsecAuthenticationType.CERT)
       vpn.IPsec.ClientCertPKCS11Id = this.getUserCertPkcs11Id_();
-    vpn.IPsec.IKEVersion = 1;
     vpn.IPsec.SaveCredentials = this.vpnSaveCredentials_;
     vpn.L2TP.SaveCredentials = this.vpnSaveCredentials_;
   },

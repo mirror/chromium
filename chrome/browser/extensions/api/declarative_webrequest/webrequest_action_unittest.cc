@@ -24,7 +24,6 @@
 #include "extensions/browser/api/declarative_webrequest/webrequest_condition.h"
 #include "extensions/browser/api/declarative_webrequest/webrequest_constants.h"
 #include "extensions/browser/api/web_request/web_request_api_helpers.h"
-#include "extensions/browser/api/web_request/web_request_info.h"
 #include "extensions/browser/info_map.h"
 #include "extensions/common/extension.h"
 #include "net/base/request_priority.h"
@@ -153,8 +152,8 @@ bool WebRequestActionWithThreadsTest::ActionWorksOnRequest(
   std::list<LinkedPtrEventResponseDelta> deltas;
   scoped_refptr<net::HttpResponseHeaders> headers(
       new net::HttpResponseHeaders(""));
-  WebRequestInfo request_info(regular_request.get());
-  WebRequestData request_data(&request_info, stage, headers.get());
+  WebRequestData request_data(regular_request.get(), stage, nullptr,
+                              headers.get());
   std::set<std::string> ignored_tags;
   WebRequestAction::ApplyInfo apply_info = { extension_info_map_.get(),
                                              request_data,

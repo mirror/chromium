@@ -45,10 +45,6 @@ int FakeDownloadTask::GetErrorCode() const {
   return error_code_;
 }
 
-int FakeDownloadTask::GetHttpCode() const {
-  return http_code_;
-}
-
 int64_t FakeDownloadTask::GetTotalBytes() const {
   return total_bytes_;
 }
@@ -86,11 +82,6 @@ void FakeDownloadTask::SetDone(bool done) {
 
 void FakeDownloadTask::SetErrorCode(int error_code) {
   error_code_ = error_code;
-  OnDownloadUpdated();
-}
-
-void FakeDownloadTask::SetHttpCode(int http_code) {
-  http_code_ = http_code;
   OnDownloadUpdated();
 }
 

@@ -20,7 +20,6 @@ extern const CGFloat kIncognitoToolbarBackgroundColor;
 
 // Stackview constraints.
 extern const CGFloat kLocationBarVerticalMargin;
-extern const CGFloat kExpandedLocationBarVerticalMargin;
 extern const CGFloat kButtonVerticalMargin;
 extern const CGFloat kLeadingMarginIPad;
 extern const CGFloat kHorizontalMargin;
@@ -30,9 +29,8 @@ extern const CGFloat kStackViewSpacing;
 extern const CGFloat kLocationBarBorderWidth;
 extern const CGFloat kLocationBarBorderColor;
 extern const CGFloat kIncognitoLocationBarBorderColor;
-extern const CGFloat kLocationBarCornerRadius;
-extern const CGFloat kLocationBarShadowHeight;
-extern const CGFloat kLocationBarShadowInset;
+extern const CGFloat kLocationBarShadowRadius;
+extern const CGFloat kLocationBarShadowOpacity;
 extern const CGFloat kIcongnitoLocationBackgroundColor;
 
 // Progress Bar Height.

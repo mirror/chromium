@@ -67,7 +67,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
             if (hasFocus() && !urlHasFocus()) mBottomSheet.requestFocus();
 
             mLocationBar.updateLoadingState(true);
-            updateContentDescription();
         }
 
         @Override
@@ -76,7 +75,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
             updateMenuButtonClickableState();
 
             mLocationBar.updateLoadingState(true);
-            updateContentDescription();
         }
 
         @Override
@@ -373,19 +371,12 @@ public class BottomToolbarPhone extends ToolbarPhone {
             boolean delayAnimation, boolean animate) {
         super.setTabSwitcherMode(inTabSwitcherMode, showToolbar, delayAnimation, animate);
         mExpandButton.setClickable(!inTabSwitcherMode);
-        updateContentDescription();
 
         // Reset top shadow drawable state.
         if (inTabSwitcherMode) {
             mBottomToolbarTopShadowDrawable.getDrawable(0).setAlpha(255);
             mBottomToolbarTopShadowDrawable.getDrawable(1).setAlpha(0);
         }
-    }
-
-    @Override
-    protected void onTabSwitcherTransitionFinished() {
-        super.onTabSwitcherTransitionFinished();
-        updateContentDescription();
     }
 
     @Override
@@ -486,8 +477,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
         mBottomSheet = sheet;
         getLocationBar().setBottomSheet(mBottomSheet);
         mBottomSheet.addObserver(mBottomSheetObserver);
-
-        updateContentDescription();
     }
 
     @Override
@@ -1154,14 +1143,5 @@ public class BottomToolbarPhone extends ToolbarPhone {
     private void updateMenuButtonClickableState() {
         mMenuButton.setClickable(
                 !urlHasFocus() && (!mBottomSheet.isSheetOpen() || mBottomSheet.isShowingNewTab()));
-    }
-
-    private void updateContentDescription() {
-        if (isInTabSwitcherMode() || mBottomSheet.isSheetOpen()) {
-            setContentDescription(null);
-        } else {
-            setContentDescription(
-                    getResources().getString(R.string.bottom_sheet_accessibility_toolbar));
-        }
     }
 }

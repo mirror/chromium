@@ -203,7 +203,7 @@ PositionWithAffinity LayoutSVGInlineText::PositionForPoint(
 
   int offset = closest_distance_box->OffsetForPositionInFragment(
       *closest_distance_fragment,
-      absolute_point.X() - closest_distance_position);
+      LayoutUnit(absolute_point.X() - closest_distance_position), true);
   return CreatePositionWithAffinity(offset + closest_distance_box->Start(),
                                     offset > 0
                                         ? TextAffinity::kUpstreamIfPossible

@@ -32,6 +32,7 @@
 #include "content/common/navigation_gesture.h"
 #include "content/common/navigation_params.h"
 #include "content/common/savable_subframe.h"
+#include "content/public/common/color_suggestion.h"
 #include "content/public/common/common_param_traits.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/context_menu_params.h"
@@ -148,6 +149,11 @@ IPC_STRUCT_TRAITS_BEGIN(blink::WebRemoteScrollProperties)
   IPC_STRUCT_TRAITS_MEMBER(make_visible_in_visual_viewport)
   IPC_STRUCT_TRAITS_MEMBER(behavior)
   IPC_STRUCT_TRAITS_MEMBER(is_for_scroll_sequence)
+IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_TRAITS_BEGIN(content::ColorSuggestion)
+  IPC_STRUCT_TRAITS_MEMBER(color)
+  IPC_STRUCT_TRAITS_MEMBER(label)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::ContextMenuParams)
@@ -457,7 +463,6 @@ IPC_STRUCT_TRAITS_BEGIN(content::FrameReplicationState)
   IPC_STRUCT_TRAITS_MEMBER(scope)
   IPC_STRUCT_TRAITS_MEMBER(insecure_request_policy)
   IPC_STRUCT_TRAITS_MEMBER(has_potentially_trustworthy_unique_origin)
-  IPC_STRUCT_TRAITS_MEMBER(has_received_user_gesture_before_nav)
 IPC_STRUCT_TRAITS_END()
 
 // Parameters included with an OpenURL request.
@@ -825,6 +830,12 @@ IPC_MESSAGE_ROUTED4(FrameMsg_JavaScriptExecuteRequestInIsolatedWorld,
 IPC_MESSAGE_ROUTED1(FrameMsg_Reload,
                     bool /* bypass_cache */)
 
+// Notifies the color chooser client that the user selected a color.
+IPC_MESSAGE_ROUTED2(FrameMsg_DidChooseColorResponse, unsigned, SkColor)
+
+// Notifies the color chooser client that the color chooser has ended.
+IPC_MESSAGE_ROUTED1(FrameMsg_DidEndColorChooser, unsigned)
+
 // Requests the corresponding RenderFrameProxy to be deleted and removed from
 // the frame tree.
 IPC_MESSAGE_ROUTED0(FrameMsg_DeleteProxy)
@@ -1060,11 +1071,6 @@ IPC_MESSAGE_ROUTED0(FrameMsg_SuppressFurtherDialogs)
 // Tells the frame to consider itself to have received a user gesture (based
 // on a user gesture processed in a different process).
 IPC_MESSAGE_ROUTED0(FrameMsg_SetHasReceivedUserGesture)
-
-// Tells the frame to mark that the previous document on that frame had received
-// a user gesture on the same eTLD+1.
-IPC_MESSAGE_ROUTED1(FrameMsg_SetHasReceivedUserGestureBeforeNavigation,
-                    bool /* value */)
 
 IPC_MESSAGE_ROUTED1(FrameMsg_RunFileChooserResponse,
                     std::vector<content::FileChooserFileInfo>)
@@ -1461,11 +1467,6 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_UpdateRenderThrottlingStatus,
 // propagated to any remote frames.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_SetHasReceivedUserGesture)
 
-// Indicates that this frame received a user gesture on a previous navigation on
-// the same eTLD+1. This ensures the state is propagated to any remote frames.
-IPC_MESSAGE_ROUTED1(FrameHostMsg_SetHasReceivedUserGestureBeforeNavigation,
-                    bool /* value */)
-
 // Used to tell the parent that the user right clicked on an area of the
 // content area, and a context menu should be shown for it. The params
 // object contains information about the node(s) that were selected when the
@@ -1506,6 +1507,20 @@ IPC_SYNC_MESSAGE_ROUTED2_2(FrameHostMsg_RunBeforeUnloadConfirm,
                            bool            /* in - is a reload */,
                            bool            /* out - success */,
                            base::string16  /* out - This is ignored.*/)
+
+// Asks the browser to open the color chooser.
+IPC_MESSAGE_ROUTED3(FrameHostMsg_OpenColorChooser,
+                    int /* id */,
+                    SkColor /* color */,
+                    std::vector<content::ColorSuggestion> /* suggestions */)
+
+// Asks the browser to end the color chooser.
+IPC_MESSAGE_ROUTED1(FrameHostMsg_EndColorChooser, int /* id */)
+
+// Change the selected color in the color chooser.
+IPC_MESSAGE_ROUTED2(FrameHostMsg_SetSelectedColorInColorChooser,
+                    int /* id */,
+                    SkColor /* color */)
 
 // Notify browser the theme color has been changed.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_DidChangeThemeColor,

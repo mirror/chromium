@@ -82,7 +82,7 @@ class IDBTransactionTest : public ::testing::Test {
   void SetUp() override {
     url_loader_mock_factory_ = platform_->GetURLLoaderMockFactory();
     WebURLResponse response;
-    response.SetURL(KURL("blob:"));
+    response.SetURL(KURL(NullURL(), "blob:"));
     url_loader_mock_factory_->RegisterURLProtocol(WebString("blob"), response,
                                                   "");
   }

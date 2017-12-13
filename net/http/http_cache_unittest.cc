@@ -797,8 +797,6 @@ TEST(HttpCache, ReleaseBuffer) {
 
 TEST(HttpCache, SimpleGETWithDiskFailures) {
   MockHttpCache cache;
-  base::HistogramTester histograms;
-  const std::string histogram_name = "HttpCache.ParallelWritingPattern";
 
   cache.disk_cache()->set_soft_failures(true);
 
@@ -815,11 +813,6 @@ TEST(HttpCache, SimpleGETWithDiskFailures) {
   EXPECT_EQ(2, cache.network_layer()->transaction_count());
   EXPECT_EQ(0, cache.disk_cache()->open_count());
   EXPECT_EQ(2, cache.disk_cache()->create_count());
-
-  // Since the transactions were in headers phase when failed,
-  // PARALLEL_WRITING_NONE should be logged.
-  histograms.ExpectBucketCount(
-      histogram_name, static_cast<int>(HttpCache::PARALLEL_WRITING_NONE), 2);
 }
 
 // Tests that disk failures after the transaction has started don't cause the
@@ -996,8 +989,6 @@ TEST(HttpCache, SimpleGET_LoadOnlyFromCache_Miss) {
 
 TEST(HttpCache, SimpleGET_LoadPreferringCache_Hit) {
   MockHttpCache cache;
-  base::HistogramTester histograms;
-  const std::string histogram_name = "HttpCache.ParallelWritingPattern";
 
   // write to the cache
   RunTransactionTest(cache.http_cache(), kSimpleGET_Transaction);
@@ -1011,12 +1002,6 @@ TEST(HttpCache, SimpleGET_LoadPreferringCache_Hit) {
   EXPECT_EQ(1, cache.network_layer()->transaction_count());
   EXPECT_EQ(1, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
-
-  histograms.ExpectBucketCount(
-      histogram_name, static_cast<int>(HttpCache::PARALLEL_WRITING_CREATE), 1);
-  histograms.ExpectBucketCount(
-      histogram_name,
-      static_cast<int>(HttpCache::PARALLEL_WRITING_NONE_CACHE_READ), 1);
 }
 
 TEST(HttpCache, SimpleGET_LoadPreferringCache_Miss) {
@@ -5050,8 +5035,6 @@ TEST(HttpCache, SimplePOST_LoadOnlyFromCache_Miss) {
 
 TEST(HttpCache, SimplePOST_LoadOnlyFromCache_Hit) {
   MockHttpCache cache;
-  base::HistogramTester histograms;
-  const std::string histogram_name = "HttpCache.ParallelWritingPattern";
 
   // Test that we hit the cache for POST requests.
 
@@ -5081,10 +5064,6 @@ TEST(HttpCache, SimplePOST_LoadOnlyFromCache_Hit) {
   EXPECT_EQ(1, cache.network_layer()->transaction_count());
   EXPECT_EQ(1, cache.disk_cache()->open_count());
   EXPECT_EQ(1, cache.disk_cache()->create_count());
-
-  histograms.ExpectBucketCount(
-      histogram_name,
-      static_cast<int>(HttpCache::PARALLEL_WRITING_NONE_CACHE_READ), 1);
 }
 
 // Test that we don't hit the cache for POST requests if there is a byte range.

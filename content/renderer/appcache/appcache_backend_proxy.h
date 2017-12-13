@@ -18,9 +18,10 @@ namespace content {
 // Sends appcache related messages to the main process.
 class AppCacheBackendProxy : public AppCacheBackend {
  public:
-  AppCacheBackendProxy();
+  explicit AppCacheBackendProxy(IPC::Sender* sender);
   ~AppCacheBackendProxy() override;
 
+  IPC::Sender* sender() const { return sender_; }
 
   // AppCacheBackend methods
   void RegisterHost(int host_id) override;
@@ -45,6 +46,8 @@ class AppCacheBackendProxy : public AppCacheBackend {
   mojom::AppCacheBackend* GetAppCacheBackendPtr();
 
   mojom::AppCacheBackendPtr app_cache_backend_ptr_;
+
+  IPC::Sender* sender_;
 };
 
 }  // namespace content

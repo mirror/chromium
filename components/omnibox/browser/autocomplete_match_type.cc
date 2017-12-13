@@ -6,10 +6,7 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
-#include "components/omnibox/browser/autocomplete_match.h"
-#include "components/omnibox/browser/suggestion_answer.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -58,9 +55,11 @@ static int AccessibilityLabelPrefixLength(base::string16 accessibility_label) {
   return length == base::string16::npos ? 0 : static_cast<int>(length);
 }
 
-static base::string16 ToAccessibilityLabelImpl(const AutocompleteMatch& match,
-                                               const base::string16& match_text,
-                                               int* label_prefix_length) {
+base::string16 AutocompleteMatchType::ToAccessibilityLabel(
+    AutocompleteMatchType::Type type,
+    const base::string16& match_text,
+    const base::string16& additional_descriptive_text,
+    int* label_prefix_length) {
   // Types with a message ID of zero get |text| returned as-is.
   static constexpr int message_ids[] = {
       0,                             // URL_WHAT_YOU_TYPED
@@ -103,14 +102,13 @@ static base::string16 ToAccessibilityLabelImpl(const AutocompleteMatch& match,
   if (label_prefix_length)
     *label_prefix_length = 0;
 
-  int message = message_ids[match.type];
+  int message = message_ids[type];
   if (!message)
     return match_text;
 
   const base::string16 sentinal =
       base::WideToUTF16(kAccessibilityLabelPrefixEndSentinal);
-  base::string16 description;
-  bool has_description = false;
+  const bool has_description = !additional_descriptive_text.empty();
   switch (message) {
     case IDS_ACC_AUTOCOMPLETE_SEARCH_HISTORY:
     case IDS_ACC_AUTOCOMPLETE_SEARCH:
@@ -118,11 +116,8 @@ static base::string16 ToAccessibilityLabelImpl(const AutocompleteMatch& match,
       // Search match.
       // If additional descriptive text exists with a search, treat as search
       // with immediate answer, such as Weather in Boston: 53 degrees.
-      if (match.answer) {
-        description = match.answer->second_line().AccessibleText();
-        has_description = true;
+      if (has_description)
         message = IDS_ACC_AUTOCOMPLETE_QUICK_ANSWER;
-      }
       break;
 
     case IDS_ACC_AUTOCOMPLETE_HISTORY:
@@ -130,8 +125,6 @@ static base::string16 ToAccessibilityLabelImpl(const AutocompleteMatch& match,
     case IDS_ACC_AUTOCOMPLETE_CLIPBOARD:
       // History match.
       // May have descriptive text for the title of the page.
-      description = match.description;
-      has_description = true;
       break;
     default:
       NOTREACHED();
@@ -142,27 +135,13 @@ static base::string16 ToAccessibilityLabelImpl(const AutocompleteMatch& match,
   if (label_prefix_length) {
     *label_prefix_length =
         has_description
-            ? AccessibilityLabelPrefixLength(
-                  l10n_util::GetStringFUTF16(message, sentinal, description))
+            ? AccessibilityLabelPrefixLength(l10n_util::GetStringFUTF16(
+                  message, sentinal, additional_descriptive_text))
             : AccessibilityLabelPrefixLength(
                   l10n_util::GetStringFUTF16(message, sentinal));
   }
 
-  return has_description
-             ? l10n_util::GetStringFUTF16(message, match_text, description)
-             : l10n_util::GetStringFUTF16(message, match_text);
-}
-
-base::string16 AutocompleteMatchType::ToAccessibilityLabel(
-    const AutocompleteMatch& match,
-    const base::string16& match_text,
-    size_t match_index,
-    size_t total_matches,
-    int* label_prefix_length) {
-  base::string16 result =
-      ToAccessibilityLabelImpl(match, match_text, label_prefix_length);
-
-  return l10n_util::GetStringFUTF16(IDS_ACC_AUTOCOMPLETE_N_OF_M, result,
-                                    base::IntToString16(match_index + 1),
-                                    base::IntToString16(total_matches));
+  return has_description ? l10n_util::GetStringFUTF16(
+                               message, match_text, additional_descriptive_text)
+                         : l10n_util::GetStringFUTF16(message, match_text);
 }

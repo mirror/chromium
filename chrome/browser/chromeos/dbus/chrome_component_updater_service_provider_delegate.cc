@@ -16,14 +16,8 @@ ChromeComponentUpdaterServiceProviderDelegate::
 
 void ChromeComponentUpdaterServiceProviderDelegate::LoadComponent(
     const std::string& name,
-    base::OnceCallback<void(const std::string&)> load_callback) {
-  component_updater::CrOSComponent::LoadComponent(name,
-                                                  std::move(load_callback));
-}
-
-bool ChromeComponentUpdaterServiceProviderDelegate::UnloadComponent(
-    const std::string& name) {
-  return component_updater::CrOSComponent::UnloadComponent(name);
+    const base::Callback<void(const std::string&)>& load_callback) {
+  component_updater::CrOSComponent::LoadComponent(name, load_callback);
 }
 
 }  // namespace chromeos

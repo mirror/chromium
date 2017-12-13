@@ -75,6 +75,8 @@ QuitWithAppsController::QuitWithAppsController()
 
 QuitWithAppsController::~QuitWithAppsController() {}
 
+void QuitWithAppsController::Display() {}
+
 void QuitWithAppsController::Close(bool by_user) {
   if (by_user)
     suppress_for_session_ = !hosted_app_quit_notification_;

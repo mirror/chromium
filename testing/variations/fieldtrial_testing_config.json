@@ -1166,6 +1166,30 @@
             ]
         }
     ],
+    "DelayNavigation": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "DelayNavigation",
+                    "params": {
+                        "delay_millis": "4",
+                        "delay_probability": "0.5",
+                        "randomize_delay": "true"
+                    },
+                    "enable_features": [
+                        "DelayNavigation"
+                    ]
+                }
+            ]
+        }
+    ],
     "DesktopIOSPromotion": [
         {
             "platforms": [
@@ -1761,6 +1785,25 @@
             ]
         }
     ],
+    "LoadingWithMojo": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled_Launch",
+                    "enable_features": [
+                        "LoadingWithMojo"
+                    ]
+                }
+            ]
+        }
+    ],
     "LsdPermissionPrompt": [
         {
             "platforms": [
@@ -2084,7 +2127,8 @@
                     },
                     "enable_features": [
                         "DoodlesOnLocalNtp",
-                        "UseGoogleLocalNtp"
+                        "UseGoogleLocalNtp",
+                        "VoiceSearchOnLocalNtp"
                     ]
                 }
             ]
@@ -2152,7 +2196,6 @@
         {
             "platforms": [
                 "android",
-                "linux",
                 "win"
             ],
             "experiments": [
@@ -2160,15 +2203,11 @@
                     "name": "Enabled",
                     "params": {
                         "hanging_request_duration_http_rtt_multiplier": "5",
-                        "hanging_request_http_rtt_upper_bound_http_rtt_multiplier": "6",
-                        "hanging_request_http_rtt_upper_bound_transport_rtt_multiplier": "8",
                         "hanging_request_min_duration_msec": "3000",
-                        "hanging_request_upper_bound_min_http_rtt_msec": "500",
                         "lower_bound_http_rtt_transport_rtt_multiplier": "1",
                         "rssi_weight_per_signal_strength_level": "0.9",
-                        "throughput_hanging_requests_cwnd_size_multiplier": "1",
                         "throughput_min_requests_in_flight": "5",
-                        "upper_bound_http_rtt_transport_rtt_multiplier": "5"
+                        "upper_bound_http_rtt_transport_rtt_multiplier": "10"
                     }
                 }
             ]
@@ -2284,6 +2323,21 @@
             "experiments": [
                 {
                     "name": "Enabled"
+                }
+            ]
+        }
+    ],
+    "OfflinePages": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "EnabledAsBookmarks",
+                    "enable_features": [
+                        "NTPOfflinePages"
+                    ]
                 }
             ]
         }
@@ -2883,25 +2937,6 @@
             "experiments": [
                 {
                     "name": "Enabled"
-                }
-            ]
-        }
-    ],
-    "RendererSideResourceScheduler": [
-        {
-            "platforms": [
-                "win",
-                "mac",
-                "linux",
-                "chromeos",
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "RendererSideResourceScheduler"
-                    ]
                 }
             ]
         }

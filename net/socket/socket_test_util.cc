@@ -4,12 +4,7 @@
 
 #include "net/socket/socket_test_util.h"
 
-#include <inttypes.h>  // For SCNx64
-#include <stdint.h>
-#include <stdio.h>
-
 #include <algorithm>
-#include <string>
 #include <utility>
 #include <vector>
 
@@ -17,7 +12,6 @@
 #include "base/bind_helpers.h"
 #include "base/callback_helpers.h"
 #include "base/compiler_specific.h"
-#include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/run_loop.h"
@@ -928,9 +922,11 @@ int MockTCPClientSocket::Write(
     IOBuffer* buf,
     int buf_len,
     const CompletionCallback& callback,
-    const NetworkTrafficAnnotationTag& /* traffic_annotation */) {
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(buf);
   DCHECK_GT(buf_len, 0);
+
+  // TODO(crbug.com/656607): Handle traffic annotation.
 
   if (!connected_ || !data_)
     return ERR_UNEXPECTED;
@@ -1354,9 +1350,11 @@ int MockUDPClientSocket::Write(
     IOBuffer* buf,
     int buf_len,
     const CompletionCallback& callback,
-    const NetworkTrafficAnnotationTag& /* traffic_annotation */) {
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(buf);
   DCHECK_GT(buf_len, 0);
+
+  // TODO(crbug.com/656607): Handle traffic annotation.
 
   if (!connected_ || !data_)
     return ERR_UNEXPECTED;
@@ -1443,8 +1441,6 @@ NetworkChangeNotifier::NetworkHandle MockUDPClientSocket::GetBoundNetwork()
     const {
   return network_;
 }
-
-void MockUDPClientSocket::ApplySocketTag(const SocketTag& tag) {}
 
 void MockUDPClientSocket::OnReadComplete(const MockRead& data) {
   if (!data_)
@@ -1776,117 +1772,6 @@ ScopedWebSocketEndpointZeroUnlockDelay::
   EXPECT_EQ(active_delay, base::TimeDelta());
 }
 
-WrappedStreamSocket::WrappedStreamSocket(
-    std::unique_ptr<StreamSocket> transport)
-    : transport_(std::move(transport)) {}
-WrappedStreamSocket::~WrappedStreamSocket() {}
-
-int WrappedStreamSocket::Connect(const CompletionCallback& callback) {
-  return transport_->Connect(callback);
-}
-
-void WrappedStreamSocket::Disconnect() {
-  transport_->Disconnect();
-}
-
-bool WrappedStreamSocket::IsConnected() const {
-  return transport_->IsConnected();
-}
-
-bool WrappedStreamSocket::IsConnectedAndIdle() const {
-  return transport_->IsConnectedAndIdle();
-}
-
-int WrappedStreamSocket::GetPeerAddress(IPEndPoint* address) const {
-  return transport_->GetPeerAddress(address);
-}
-
-int WrappedStreamSocket::GetLocalAddress(IPEndPoint* address) const {
-  return transport_->GetLocalAddress(address);
-}
-
-const NetLogWithSource& WrappedStreamSocket::NetLog() const {
-  return transport_->NetLog();
-}
-
-void WrappedStreamSocket::SetSubresourceSpeculation() {
-  transport_->SetSubresourceSpeculation();
-}
-
-void WrappedStreamSocket::SetOmniboxSpeculation() {
-  transport_->SetOmniboxSpeculation();
-}
-
-bool WrappedStreamSocket::WasEverUsed() const {
-  return transport_->WasEverUsed();
-}
-
-bool WrappedStreamSocket::WasAlpnNegotiated() const {
-  return transport_->WasAlpnNegotiated();
-}
-
-NextProto WrappedStreamSocket::GetNegotiatedProtocol() const {
-  return transport_->GetNegotiatedProtocol();
-}
-
-bool WrappedStreamSocket::GetSSLInfo(SSLInfo* ssl_info) {
-  return transport_->GetSSLInfo(ssl_info);
-}
-
-void WrappedStreamSocket::GetConnectionAttempts(ConnectionAttempts* out) const {
-  transport_->GetConnectionAttempts(out);
-}
-
-void WrappedStreamSocket::ClearConnectionAttempts() {
-  transport_->ClearConnectionAttempts();
-}
-
-void WrappedStreamSocket::AddConnectionAttempts(
-    const ConnectionAttempts& attempts) {
-  transport_->AddConnectionAttempts(attempts);
-}
-
-int64_t WrappedStreamSocket::GetTotalReceivedBytes() const {
-  return transport_->GetTotalReceivedBytes();
-}
-
-void WrappedStreamSocket::ApplySocketTag(const SocketTag& tag) {
-  transport_->ApplySocketTag(tag);
-}
-
-int WrappedStreamSocket::Read(IOBuffer* buf,
-                              int buf_len,
-                              const CompletionCallback& callback) {
-  return transport_->Read(buf, buf_len, callback);
-}
-
-int WrappedStreamSocket::ReadIfReady(IOBuffer* buf,
-                                     int buf_len,
-                                     const CompletionCallback& callback) {
-  return transport_->ReadIfReady(buf, buf_len, callback);
-}
-
-int WrappedStreamSocket::Write(
-    IOBuffer* buf,
-    int buf_len,
-    const CompletionCallback& callback,
-    const NetworkTrafficAnnotationTag& traffic_annotation) {
-  return transport_->Write(buf, buf_len, callback);
-}
-
-int WrappedStreamSocket::SetReceiveBufferSize(int32_t size) {
-  return transport_->SetReceiveBufferSize(size);
-}
-
-int WrappedStreamSocket::SetSendBufferSize(int32_t size) {
-  return transport_->SetSendBufferSize(size);
-}
-
-void MockTaggingStreamSocket::ApplySocketTag(const SocketTag& tag) {
-  tag_ = tag;
-  transport_->ApplySocketTag(tag);
-}
-
 const char kSOCKS5GreetRequest[] = { 0x05, 0x01, 0x00 };
 const int kSOCKS5GreetRequestLength = arraysize(kSOCKS5GreetRequest);
 
@@ -1914,42 +1799,5 @@ int64_t CountWriteBytes(const MockWrite writes[], size_t writes_size) {
     total += write->data_len;
   return total;
 }
-
-#if defined(OS_ANDROID)
-uint64_t GetTaggedBytes(int32_t expected_tag) {
-  // To determine how many bytes the system saw with a particular tag read
-  // the /proc/net/xt_qtaguid/stats file which contains the kernel's
-  // dump of all the UIDs and their tags sent and received bytes.
-  uint64_t bytes = 0;
-  std::string contents;
-  EXPECT_TRUE(base::ReadFileToString(
-      base::FilePath::FromUTF8Unsafe("/proc/net/xt_qtaguid/stats"), &contents));
-  for (size_t i = contents.find('\n');  // Skip first line which is headers.
-       i != std::string::npos && i < contents.length();) {
-    uint64_t tag, rx_bytes;
-    uid_t uid;
-    int n;
-    // Parse out the numbers we care about. For reference here's the column
-    // headers:
-    // idx iface acct_tag_hex uid_tag_int cnt_set rx_bytes rx_packets tx_bytes
-    // tx_packets rx_tcp_bytes rx_tcp_packets rx_udp_bytes rx_udp_packets
-    // rx_other_bytes rx_other_packets tx_tcp_bytes tx_tcp_packets tx_udp_bytes
-    // tx_udp_packets tx_other_bytes tx_other_packets
-    EXPECT_EQ(sscanf(contents.c_str() + i,
-                     "%*d %*s 0x%" SCNx64 " %d %*d %" SCNu64
-                     " %*d %*d %*d %*d %*d %*d %*d %*d "
-                     "%*d %*d %*d %*d %*d %*d %*d%n",
-                     &tag, &uid, &rx_bytes, &n),
-              3);
-    // If this line matches our UID and |expected_tag| then add it to the total.
-    if (uid == getuid() && (int32_t)(tag >> 32) == expected_tag) {
-      bytes += rx_bytes;
-    }
-    // Move |i| to the next line.
-    i += n + 1;
-  }
-  return bytes;
-}
-#endif
 
 }  // namespace net

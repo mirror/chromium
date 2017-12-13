@@ -7,7 +7,6 @@
 
 #include <vector>
 
-#include "base/atomic_sequence_num.h"
 #include "base/containers/span.h"
 #include "cc/paint/transfer_cache_entry.h"
 #include "third_party/skia/include/core/SkImage.h"
@@ -18,33 +17,31 @@ namespace cc {
 // for transferring image data. On the client side, this is a CPU SkPixmap,
 // on the service side the image is uploaded and is a GPU SkImage.
 class CC_PAINT_EXPORT ClientImageTransferCacheEntry
-    : public ClientTransferCacheEntryBase<TransferCacheEntryType::kImage> {
+    : public ClientTransferCacheEntry {
  public:
   explicit ClientImageTransferCacheEntry(
       const SkPixmap* pixmap,
       const SkColorSpace* target_color_space);
   ~ClientImageTransferCacheEntry() final;
 
-  uint32_t Id() const final;
-
   // ClientTransferCacheEntry implementation:
+  TransferCacheEntryType Type() const final;
   size_t SerializedSize() const final;
   bool Serialize(base::span<uint8_t> data) const final;
 
  private:
-  uint32_t id_;
   const SkPixmap* const pixmap_;
   size_t size_ = 0;
-  static base::AtomicSequenceNumber s_next_id_;
 };
 
 class CC_PAINT_EXPORT ServiceImageTransferCacheEntry
-    : public ServiceTransferCacheEntryBase<TransferCacheEntryType::kImage> {
+    : public ServiceTransferCacheEntry {
  public:
   ServiceImageTransferCacheEntry();
   ~ServiceImageTransferCacheEntry() final;
 
   // ServiceTransferCacheEntry implementation:
+  TransferCacheEntryType Type() const final;
   size_t CachedSize() const final;
   bool Deserialize(GrContext* context, base::span<uint8_t> data) final;
 

@@ -315,6 +315,11 @@
       name: "DecodeToYUV",
       status: "experimental",
     },
+    // Remove this flag once we can remove /deep/ at M63.
+    {
+      name: "DeepCombinatorInCSSDynamicProfile",
+      status: "test",
+    },
     {
       name: "DeprecationReporting",
       status: "experimental",
@@ -344,10 +349,6 @@
     },
     {
       name: "DocumentWrite",
-    },
-    {
-      name: "DoubleTapToJumpOnVideo",
-      settable_from_internals: true
     },
     {
       name: "EmbedderCSPEnforcement",
@@ -955,6 +956,11 @@
       name: "ShadowPiercingDescendantCombinator",
       status: "experimental",
     },
+    // Remove this flag once we can remove ::shadow at M63.
+    {
+      name: "ShadowPseudoElementInCSSDynamicProfile",
+      status: "test",
+    },
     {
       name: "ShapeDetection",
       status: "experimental",
@@ -1143,6 +1149,11 @@
       status: "test",
     },
     {
+      name: "WebVR2",
+      depends_on: ["WebVR"],
+      status: "test",
+    },
+    {
       name: "WebVRExperimentalRendering",
       // Don't mark this as depends_on: ["WebVR"], we want to be able to turn
       // it on for just origin trial sites where the dependency is unset.
@@ -1153,10 +1164,6 @@
     {
       name: "WebVTTRegions",
       status: "experimental",
-    },
-    {
-      name: "WebXR",
-      status: "test",
     },
     {
       name: "Worklet",

@@ -88,7 +88,7 @@ void UnblockExtensions(Profile* profile) {
 
 // Handles running a callback when a new Browser for the given profile
 // has been completely created.
-class BrowserAddedForProfileObserver : public BrowserListObserver {
+class BrowserAddedForProfileObserver : public chrome::BrowserListObserver {
  public:
   BrowserAddedForProfileObserver(
       Profile* profile,

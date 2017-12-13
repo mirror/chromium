@@ -4572,15 +4572,15 @@ GLES2DecoderPassthroughImpl::HandleCreateTransferCacheEntryINTERNAL(
       *static_cast<
           const volatile gles2::cmds::CreateTransferCacheEntryINTERNAL*>(
           cmd_data);
-  GLuint entry_type = static_cast<GLuint>(c.entry_type);
-  GLuint entry_id = static_cast<GLuint>(c.entry_id);
+  GLuint64 handle_id = c.handle_id();
   GLuint handle_shm_id = static_cast<GLuint>(c.handle_shm_id);
   GLuint handle_shm_offset = static_cast<GLuint>(c.handle_shm_offset);
+  GLuint type = static_cast<GLuint>(c.type);
   GLuint data_shm_id = static_cast<GLuint>(c.data_shm_id);
   GLuint data_shm_offset = static_cast<GLuint>(c.data_shm_offset);
   GLuint data_size = static_cast<GLuint>(c.data_size);
   error::Error error = DoCreateTransferCacheEntryINTERNAL(
-      entry_type, entry_id, handle_shm_id, handle_shm_offset, data_shm_id,
+      handle_id, handle_shm_id, handle_shm_offset, type, data_shm_id,
       data_shm_offset, data_size);
   if (error != error::kNoError) {
     return error;
@@ -4596,9 +4596,8 @@ GLES2DecoderPassthroughImpl::HandleDeleteTransferCacheEntryINTERNAL(
       *static_cast<
           const volatile gles2::cmds::DeleteTransferCacheEntryINTERNAL*>(
           cmd_data);
-  GLuint entry_type = static_cast<GLuint>(c.entry_type);
-  GLuint entry_id = static_cast<GLuint>(c.entry_id);
-  error::Error error = DoDeleteTransferCacheEntryINTERNAL(entry_type, entry_id);
+  GLuint64 handle_id = c.handle_id();
+  error::Error error = DoDeleteTransferCacheEntryINTERNAL(handle_id);
   if (error != error::kNoError) {
     return error;
   }
@@ -4613,9 +4612,8 @@ GLES2DecoderPassthroughImpl::HandleUnlockTransferCacheEntryINTERNAL(
       *static_cast<
           const volatile gles2::cmds::UnlockTransferCacheEntryINTERNAL*>(
           cmd_data);
-  GLuint entry_type = static_cast<GLuint>(c.entry_type);
-  GLuint entry_id = static_cast<GLuint>(c.entry_id);
-  error::Error error = DoUnlockTransferCacheEntryINTERNAL(entry_type, entry_id);
+  GLuint64 handle_id = c.handle_id();
+  error::Error error = DoUnlockTransferCacheEntryINTERNAL(handle_id);
   if (error != error::kNoError) {
     return error;
   }

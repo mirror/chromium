@@ -205,8 +205,8 @@ class TestURLFetcherDelegate : public net::URLFetcherDelegate {
 
 class ExtensionWebRequestApiTest : public ExtensionApiTest {
  public:
-  void SetUpOnMainThread() override {
-    ExtensionApiTest::SetUpOnMainThread();
+  void SetUpInProcessBrowserTestFixture() override {
+    ExtensionApiTest::SetUpInProcessBrowserTestFixture();
     host_resolver()->AddRule("*", "127.0.0.1");
   }
 

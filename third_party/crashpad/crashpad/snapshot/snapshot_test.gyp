@@ -73,7 +73,6 @@
         'cpu_context_test.cc',
         'crashpad_info_client_options_test.cc',
         'elf/elf_image_reader_test.cc',
-        'elf/elf_image_reader_test_note.S',
         'linux/debug_rendezvous_test.cc',
         'linux/exception_snapshot_linux_test.cc',
         'linux/process_reader_test.cc',
@@ -125,7 +124,7 @@
           'copies': [{
             'destination': '<(PRODUCT_DIR)',
             'files': [
-              'elf/test_exported_symbols.sym',
+              'linux/test_exported_symbols.sym',
             ],
           }],
           'ldflags': [

@@ -294,9 +294,6 @@ class LineLayoutItem {
   }
 
   LayoutRect VisualRect() const { return layout_object_->VisualRect(); }
-  LayoutRect PartialInvalidationRect() const {
-    return layout_object_->PartialInvalidationRect();
-  }
 
   bool IsHashTableDeletedValue() const {
     return layout_object_ == kHashTableDeletedValue;

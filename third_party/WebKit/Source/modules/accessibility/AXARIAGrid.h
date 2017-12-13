@@ -29,14 +29,16 @@
 #ifndef AXARIAGrid_h
 #define AXARIAGrid_h
 
-#include "base/macros.h"
 #include "modules/accessibility/AXTable.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
 class AXObjectCacheImpl;
 
 class AXARIAGrid final : public AXTable {
+  WTF_MAKE_NONCOPYABLE(AXARIAGrid);
+
  private:
   AXARIAGrid(LayoutObject*, AXObjectCacheImpl&);
 
@@ -62,8 +64,6 @@ class AXARIAGrid final : public AXTable {
   unsigned CalculateNumColumns();
   void AddColumnChildren(unsigned num_cols);
   void AddHeaderContainerChild();
-
-  DISALLOW_COPY_AND_ASSIGN(AXARIAGrid);
 };
 
 }  // namespace blink

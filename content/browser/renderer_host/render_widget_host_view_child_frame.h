@@ -84,6 +84,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   // RenderWidgetHostView implementation.
   void InitAsChild(gfx::NativeView parent_view) override;
+  RenderWidgetHost* GetRenderWidgetHost() const override;
   void SetSize(const gfx::Size& size) override;
   void SetBounds(const gfx::Rect& rect) override;
   void Focus() override;
@@ -137,7 +138,6 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   void DidStopFlinging() override;
   bool LockMouse() override;
   void UnlockMouse() override;
-  RenderWidgetHostImpl* GetRenderWidgetHostImpl() const override;
   viz::FrameSinkId GetFrameSinkId() override;
   viz::LocalSurfaceId GetLocalSurfaceId() const override;
   void ProcessKeyboardEvent(const NativeWebKeyboardEvent& event,
@@ -230,6 +230,9 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   ui::TextInputType GetTextInputType() const;
   bool GetSelectionRange(gfx::Range* range) const;
+  // This returns the origin of this views's bounding rect in the coordinates
+  // of the root RenderWidgetHostView.
+  gfx::Point GetViewOriginInRoot() const;
 
   RenderWidgetHostViewBase* GetRootRenderWidgetHostView() const;
 

@@ -17,9 +17,9 @@ namespace content {
 
 namespace {
 
-void BindNamedInterface(base::WeakPtr<service_manager::Connector> connector,
-                        const std::string& name,
-                        mojo::ScopedMessagePipeHandle handle) {
+void BindInterface(base::WeakPtr<service_manager::Connector> connector,
+                   const std::string& name,
+                   mojo::ScopedMessagePipeHandle handle) {
   if (!connector)
     return;
 
@@ -43,7 +43,7 @@ void BlinkInterfaceProviderImpl::GetInterface(
     mojo::ScopedMessagePipeHandle handle) {
   // Construct a closure that can safely be passed across threads if necessary.
   base::OnceClosure closure = base::BindOnce(
-      &BindNamedInterface, connector_, std::string(name), std::move(handle));
+      &BindInterface, connector_, std::string(name), std::move(handle));
 
   if (main_thread_task_runner_->BelongsToCurrentThread()) {
     std::move(closure).Run();

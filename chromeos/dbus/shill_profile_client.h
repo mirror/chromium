@@ -86,10 +86,6 @@ class CHROMEOS_EXPORT ShillProfileClient : public DBusClient {
                             std::string* profile_path,
                             base::DictionaryValue* properties) = 0;
 
-    // Returns true iff an entry sepcified via |service_path| exists in
-    // any profile.
-    virtual bool HasService(const std::string& service_path) = 0;
-
     // Remove all profile entries.
     virtual void ClearProfiles() = 0;
 

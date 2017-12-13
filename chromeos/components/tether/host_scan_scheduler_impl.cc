@@ -4,9 +4,8 @@
 
 #include "chromeos/components/tether/host_scan_scheduler_impl.h"
 
-#include <memory>
-
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/time/default_clock.h"
 #include "chromeos/network/network_handler.h"
@@ -45,8 +44,8 @@ HostScanSchedulerImpl::HostScanSchedulerImpl(
     HostScanner* host_scanner)
     : network_state_handler_(network_state_handler),
       host_scanner_(host_scanner),
-      timer_(std::make_unique<base::OneShotTimer>()),
-      clock_(std::make_unique<base::DefaultClock>()),
+      timer_(base::MakeUnique<base::OneShotTimer>()),
+      clock_(base::MakeUnique<base::DefaultClock>()),
       weak_ptr_factory_(this) {
   network_state_handler_->AddObserver(this, FROM_HERE);
   host_scanner_->AddObserver(this);

@@ -15,7 +15,6 @@
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_lib.h"
-#include "gpu/command_buffer/client/raster_implementation_gles.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
 #include "gpu/ipc/gl_in_process_context.h"
@@ -79,9 +78,6 @@ TestInProcessContextProvider::TestInProcessContextProvider(
       capabilities_.texture_format_bgra8888 = true;
       break;
   }
-
-  raster_context_ = std::make_unique<gpu::raster::RasterImplementationGLES>(
-      context_->GetImplementation(), capabilities_);
 }
 
 TestInProcessContextProvider::~TestInProcessContextProvider() = default;
@@ -94,10 +90,6 @@ gpu::gles2::GLES2Interface* TestInProcessContextProvider::ContextGL() {
   return context_->GetImplementation();
 }
 
-gpu::raster::RasterInterface* TestInProcessContextProvider::RasterContext() {
-  return raster_context_.get();
-}
-
 gpu::ContextSupport* TestInProcessContextProvider::ContextSupport() {
   return context_->GetImplementation();
 }
@@ -106,13 +98,8 @@ class GrContext* TestInProcessContextProvider::GrContext() {
   if (gr_context_)
     return gr_context_->get();
 
-  size_t max_resource_cache_bytes;
-  size_t max_glyph_cache_texture_bytes;
-  skia_bindings::GrContextForGLES2Interface::DefaultCacheLimitsForTests(
-      &max_resource_cache_bytes, &max_glyph_cache_texture_bytes);
   gr_context_.reset(new skia_bindings::GrContextForGLES2Interface(
-      ContextGL(), ContextCapabilities(), max_resource_cache_bytes,
-      max_glyph_cache_texture_bytes));
+      ContextGL(), ContextCapabilities()));
   cache_controller_->SetGrContext(gr_context_->get());
   return gr_context_->get();
 }

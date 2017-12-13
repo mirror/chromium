@@ -58,14 +58,21 @@ GLOzoneEglCast::~GLOzoneEglCast() {
   // eglTerminate must be called first on display before releasing resources
   // and shutting down hardware
   TerminateDisplay();
+  ShutdownHardware();
 }
 
-void GLOzoneEglCast::InitializeHardwareIfNeeded() {
-  if (hardware_initialized_)
+void GLOzoneEglCast::InitializeHardware() {
+  if (state_ == kInitialized) {
     return;
+  }
+  CHECK_EQ(state_, kUninitialized);
 
-  CHECK(egl_platform_->InitializeHardware());
-  hardware_initialized_ = true;
+  if (egl_platform_->InitializeHardware()) {
+    state_ = kInitialized;
+  } else {
+    ShutdownHardware();
+    state_ = kFailed;
+  }
 }
 
 void GLOzoneEglCast::TerminateDisplay() {
@@ -85,6 +92,17 @@ void GLOzoneEglCast::TerminateDisplay() {
 
   EGLBoolean terminate_result = terminate(display);
   DCHECK_EQ(terminate_result, static_cast<EGLBoolean>(EGL_TRUE));
+}
+
+void GLOzoneEglCast::ShutdownHardware() {
+  if (state_ != kInitialized)
+    return;
+
+  DestroyDisplayTypeAndWindow();
+
+  egl_platform_->ShutdownHardware();
+
+  state_ = kUninitialized;
 }
 
 void GLOzoneEglCast::OnSwapBuffers() {
@@ -132,8 +150,10 @@ intptr_t GLOzoneEglCast::GetNativeDisplay() {
 }
 
 void GLOzoneEglCast::CreateDisplayTypeAndWindowIfNeeded() {
-  InitializeHardwareIfNeeded();
-
+  if (state_ == kUninitialized) {
+    InitializeHardware();
+  }
+  DCHECK_EQ(state_, kInitialized);
   if (!have_display_type_) {
     chromecast::Size create_size = FromGfxSize(display_size_);
     display_type_ = egl_platform_->CreateDisplayType(create_size);
@@ -142,7 +162,12 @@ void GLOzoneEglCast::CreateDisplayTypeAndWindowIfNeeded() {
   if (!window_) {
     chromecast::Size create_size = FromGfxSize(display_size_);
     window_ = egl_platform_->CreateWindow(display_type_, create_size);
-    CHECK(window_);
+    if (!window_) {
+      DestroyDisplayTypeAndWindow();
+      state_ = kFailed;
+      LOG(FATAL) << "Create EGLNativeWindowType(" << display_size_.ToString()
+                 << ") failed.";
+    }
   }
 }
 
@@ -157,8 +182,34 @@ bool GLOzoneEglCast::ResizeDisplay(gfx::Size size) {
   return true;
 }
 
+void GLOzoneEglCast::DestroyWindow() {
+  if (window_) {
+    egl_platform_->DestroyWindow(window_);
+    window_ = 0;
+  }
+}
+
+void GLOzoneEglCast::DestroyDisplayTypeAndWindow() {
+  DestroyWindow();
+  if (have_display_type_) {
+    egl_platform_->DestroyDisplayType(display_type_);
+    display_type_ = 0;
+    have_display_type_ = false;
+  }
+}
+
+void GLOzoneEglCast::ChildDestroyed() {
+  if (egl_platform_->MultipleSurfaceUnsupported())
+    DestroyWindow();
+}
+
 bool GLOzoneEglCast::LoadGLES2Bindings(gl::GLImplementation implementation) {
-  InitializeHardwareIfNeeded();
+  if (state_ != kInitialized) {
+    InitializeHardware();
+    if (state_ != kInitialized) {
+      return false;
+    }
+  }
 
   void* lib_egl = egl_platform_->GetEglLibrary();
   void* lib_gles2 = egl_platform_->GetGles2Library();

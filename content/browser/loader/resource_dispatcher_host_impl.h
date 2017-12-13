@@ -270,8 +270,6 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       const NavigationRequestInfo& info,
       std::unique_ptr<NavigationUIData> navigation_ui_data,
       NavigationURLLoaderImplCore* loader,
-      mojom::URLLoaderClientPtr url_loader_client,
-      mojom::URLLoaderRequest url_loader_request,
       ServiceWorkerNavigationHandleCore* service_worker_handle_core,
       AppCacheNavigationHandleCore* appcache_handle_core);
 
@@ -641,7 +639,6 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       net::URLRequest* request,
       ResourceType resource_type,
       ResourceContext* resource_context,
-      network::mojom::FetchRequestMode fetch_request_mode,
       RequestContextType fetch_request_context_type,
       blink::WebMixedContentContextType fetch_mixed_content_context_type,
       AppCacheService* appcache_service,

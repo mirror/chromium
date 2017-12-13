@@ -164,14 +164,15 @@ class MockQuicSimpleServerSession : public QuicSimpleServerSession {
   DISALLOW_COPY_AND_ASSIGN(MockQuicSimpleServerSession);
 };
 
-class QuicSimpleServerStreamTest : public QuicTestWithParam<ParsedQuicVersion> {
+class QuicSimpleServerStreamTest
+    : public QuicTestWithParam<QuicTransportVersion> {
  public:
   QuicSimpleServerStreamTest()
-      : connection_(
-            new StrictMock<MockQuicConnection>(&helper_,
-                                               &alarm_factory_,
-                                               Perspective::IS_SERVER,
-                                               SupportedVersions(GetParam()))),
+      : connection_(new StrictMock<MockQuicConnection>(
+            &helper_,
+            &alarm_factory_,
+            Perspective::IS_SERVER,
+            SupportedTransportVersions(GetParam()))),
         crypto_config_(new QuicCryptoServerConfig(
             QuicCryptoServerConfig::TESTING,
             QuicRandom::GetInstance(),
@@ -231,7 +232,7 @@ class QuicSimpleServerStreamTest : public QuicTestWithParam<ParsedQuicVersion> {
 
 INSTANTIATE_TEST_CASE_P(Tests,
                         QuicSimpleServerStreamTest,
-                        ::testing::ValuesIn(AllSupportedVersions()));
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 TEST_P(QuicSimpleServerStreamTest, TestFraming) {
   EXPECT_CALL(session_, WritevData(_, _, _, _, _))

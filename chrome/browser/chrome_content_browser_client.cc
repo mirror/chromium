@@ -226,6 +226,8 @@
 #include "ppapi/features/features.h"
 #include "ppapi/host/ppapi_host.h"
 #include "printing/features/features.h"
+#include "services/metrics/metrics_mojo_service.h"
+#include "services/metrics/public/interfaces/constants.mojom.h"
 #include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/proxy_resolver/public/interfaces/proxy_resolver.mojom.h"
@@ -410,7 +412,7 @@
 #include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"
 #endif
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-#include "chrome/common/printing/pdf_to_pwg_raster_converter.mojom.h"
+#include "chrome/services/printing/public/interfaces/constants.mojom.h"
 #endif
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
@@ -3213,6 +3215,8 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
         std::make_pair(prefs::mojom::kLocalStateServiceName, info));
   }
   service_manager::EmbeddedServiceInfo info;
+  info.factory = base::Bind(&metrics::CreateMetricsService);
+  services->emplace(metrics::mojom::kMetricsServiceName, info);
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
   {
     service_manager::EmbeddedServiceInfo info;
@@ -3241,8 +3245,8 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
 #endif
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-  (*services)[printing::mojom::kPdfToPwgRasterConverterServiceName] =
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PWG_RASTER_CONVERTOR_NAME);
+  (*services)[printing::mojom::kChromePrintingServiceName] =
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PRINTING_SERVICE_NAME);
 #endif
 
   (*services)[profiling::mojom::kServiceName] =

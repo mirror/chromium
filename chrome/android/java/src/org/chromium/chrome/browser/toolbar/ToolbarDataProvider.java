@@ -55,11 +55,6 @@ public interface ToolbarDataProvider {
     String getText();
 
     /**
-     * @return The title of the current tab, or the empty string if there is currently no tab.
-     */
-    String getTitle();
-
-    /**
      * @return The primary color to use for the background drawable.
      */
     int getPrimaryColor();

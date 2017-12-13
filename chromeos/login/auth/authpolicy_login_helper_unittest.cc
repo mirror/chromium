@@ -24,7 +24,7 @@ class MockAuthPolicyClient : public FakeAuthPolicyClient {
     EXPECT_FALSE(join_ad_domain_called_);
     EXPECT_FALSE(refresh_device_policy_called_);
     join_ad_domain_called_ = true;
-    std::move(callback).Run(authpolicy::ERROR_NONE, std::string());
+    std::move(callback).Run(authpolicy::ERROR_NONE);
   }
 
   void RefreshDevicePolicy(RefreshPolicyCallback callback) override {
@@ -60,11 +60,8 @@ TEST(AuthPolicyLoginHelper, JoinFollowedByRefreshDevicePolicy) {
       std::make_unique<FakeCryptohomeClient>());
   AuthPolicyLoginHelper helper;
   helper.JoinAdDomain(std::string(), std::string(), std::string(),
-                      std::string(),
-                      base::BindOnce([](authpolicy::ErrorType error,
-                                        const std::string& domain) {
+                      base::BindOnce([](authpolicy::ErrorType error) {
                         EXPECT_EQ(authpolicy::ERROR_NONE, error);
-                        EXPECT_TRUE(domain.empty());
                       }));
   mock_client_ptr->CheckExpectations();
 }

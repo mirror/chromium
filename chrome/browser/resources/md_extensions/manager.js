@@ -409,7 +409,11 @@ cr.define('extensions', function() {
      * @private
      */
     changePage_: function(newPage) {
-      this.onCloseDrawer_();
+      const drawer = this.$$('#drawer');
+      if (drawer && drawer.open) {
+        drawer.closeDrawer();
+        this.showDrawer_ = false;
+      }
 
       const optionsDialog = this.$$('#options-dialog');
       if (optionsDialog && optionsDialog.open) {
@@ -451,24 +455,9 @@ cr.define('extensions', function() {
       this.currentPage_ = newPage;
     },
 
-    /**
-     * This method detaches the drawer dialog completely. Should only be
-     * triggered by the dialog's 'close' event.
-     * @private
-     */
+    /** @private */
     onDrawerClose_: function() {
       this.showDrawer_ = false;
-    },
-
-    /**
-     * This method animates the closing of the drawer.
-     * @private
-     */
-    onCloseDrawer_: function() {
-      const drawer = this.$$('#drawer');
-      if (drawer && drawer.open) {
-        drawer.closeDrawer();
-      }
     },
 
     /** @private */

@@ -157,7 +157,7 @@ blink::WebDisplayMode WebContentsDelegate::GetDisplayMode(
 content::ColorChooser* WebContentsDelegate::OpenColorChooser(
     WebContents* web_contents,
     SkColor color,
-    const std::vector<mojom::ColorSuggestionPtr>& suggestions) {
+    const std::vector<ColorSuggestion>& suggestions) {
   return nullptr;
 }
 

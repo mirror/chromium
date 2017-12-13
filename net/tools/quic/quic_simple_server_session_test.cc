@@ -64,6 +64,15 @@ class QuicSimpleServerSessionPeer {
       QuicSimpleServerSession* s) {
     return s->CreateOutgoingDynamicStream();
   }
+
+  static QuicDeque<PromisedStreamInfo>* promised_streams(
+      QuicSimpleServerSession* s) {
+    return &(s->promised_streams_);
+  }
+
+  static QuicStreamId hightest_promised_stream_id(QuicSimpleServerSession* s) {
+    return s->highest_promised_stream_id_;
+  }
 };
 
 namespace {
@@ -80,8 +89,7 @@ class MockQuicCryptoServerStream : public QuicCryptoServerStream {
       : QuicCryptoServerStream(
             crypto_config,
             compressed_certs_cache,
-            GetQuicReloadableFlag(
-                enable_quic_stateless_reject_support),  // NOLINT
+            FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support,
             session,
             helper) {}
   ~MockQuicCryptoServerStream() override = default;
@@ -110,7 +118,7 @@ class MockQuicConnectionWithSendStreamData : public MockQuicConnection {
       MockQuicConnectionHelper* helper,
       MockAlarmFactory* alarm_factory,
       Perspective perspective,
-      const ParsedQuicVersionVector& supported_versions)
+      const QuicTransportVersionVector& supported_versions)
       : MockQuicConnection(helper,
                            alarm_factory,
                            perspective,
@@ -171,7 +179,7 @@ class MockQuicSimpleServerSession : public QuicSimpleServerSession {
 };
 
 class QuicSimpleServerSessionTest
-    : public QuicTestWithParam<ParsedQuicVersion> {
+    : public QuicTestWithParam<QuicTransportVersion> {
  protected:
   QuicSimpleServerSessionTest()
       : crypto_config_(QuicCryptoServerConfig::TESTING,
@@ -190,7 +198,7 @@ class QuicSimpleServerSessionTest
 
     connection_ = new StrictMock<MockQuicConnectionWithSendStreamData>(
         &helper_, &alarm_factory_, Perspective::IS_SERVER,
-        SupportedVersions(GetParam()));
+        SupportedTransportVersions(GetParam()));
     session_.reset(new MockQuicSimpleServerSession(
         config_, connection_, &owner_, &stream_helper_, &crypto_config_,
         &compressed_certs_cache_, &response_cache_));
@@ -228,7 +236,7 @@ class QuicSimpleServerSessionTest
 
 INSTANTIATE_TEST_CASE_P(Tests,
                         QuicSimpleServerSessionTest,
-                        ::testing::ValuesIn(AllSupportedVersions()));
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 TEST_P(QuicSimpleServerSessionTest, CloseStreamDueToReset) {
   // Open a stream, then reset it.
@@ -445,7 +453,7 @@ class QuicSimpleServerSessionServerPushTest
 
     connection_ = new StrictMock<MockQuicConnectionWithSendStreamData>(
         &helper_, &alarm_factory_, Perspective::IS_SERVER,
-        SupportedVersions(GetParam()));
+        SupportedTransportVersions(GetParam()));
     session_.reset(new MockQuicSimpleServerSession(
         config_, connection_, &owner_, &stream_helper_, &crypto_config_,
         &compressed_certs_cache_, &response_cache_));
@@ -513,7 +521,7 @@ class QuicSimpleServerSessionServerPushTest
 
 INSTANTIATE_TEST_CASE_P(Tests,
                         QuicSimpleServerSessionServerPushTest,
-                        ::testing::ValuesIn(AllSupportedVersions()));
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 TEST_P(QuicSimpleServerSessionServerPushTest, TestPromisePushResources) {
   // Tests that given more than kMaxOpenStreamForTest resources, all their

@@ -204,7 +204,11 @@ enum ItemPosition {
   kItemPositionRight
 };
 
-enum class OverflowAlignment : unsigned { kDefault, kUnsafe, kSafe };
+enum OverflowAlignment {
+  kOverflowAlignmentDefault,
+  kOverflowAlignmentUnsafe,
+  kOverflowAlignmentSafe
+};
 
 enum ItemPositionType { kNonLegacyPosition, kLegacyPosition };
 
@@ -246,11 +250,6 @@ enum TextEmphasisPosition {
   kOverLeft,
   kUnderRight,
   kUnderLeft,
-};
-
-enum class LineLogicalSide {
-  kOver,
-  kUnder,
 };
 
 }  // namespace blink

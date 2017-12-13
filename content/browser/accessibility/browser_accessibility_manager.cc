@@ -340,10 +340,6 @@ void BrowserAccessibilityManager::NavigationFailed() {
   user_is_navigating_away_ = false;
 }
 
-void BrowserAccessibilityManager::DidStopLoading() {
-  user_is_navigating_away_ = false;
-}
-
 bool BrowserAccessibilityManager::UseRootScrollOffsetsWhenComputingBounds() {
   return true;
 }

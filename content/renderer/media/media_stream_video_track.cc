@@ -26,7 +26,8 @@ void ResetCallback(std::unique_ptr<VideoCaptureDeliverFrameCB> callback) {
 
 // Empty method used for keeping a reference to the original media::VideoFrame.
 // The reference to |frame| is kept in the closure that calls this method.
-void ReleaseOriginalFrame(const scoped_refptr<media::VideoFrame>& frame) {}
+void ReleaseOriginalFrame(const scoped_refptr<media::VideoFrame>& frame) {
+}
 
 }  // namespace
 

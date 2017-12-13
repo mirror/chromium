@@ -175,8 +175,6 @@ void CoreOobeHandler::RegisterMessages() {
               &CoreOobeHandler::HandleScreenAssetsLoaded);
   AddRawCallback("skipToLoginForTesting",
                  &CoreOobeHandler::HandleSkipToLoginForTesting);
-  AddCallback("skipToUpdateForTesting",
-              &CoreOobeHandler::HandleSkipToUpdateForTesting);
   AddCallback("launchHelpApp",
               &CoreOobeHandler::HandleLaunchHelpApp);
   AddCallback("toggleResetScreen", &CoreOobeHandler::HandleToggleResetScreen);
@@ -388,11 +386,6 @@ void CoreOobeHandler::HandleSkipToLoginForTesting(
   LoginScreenContext context(args);
   if (WizardController::default_controller())
       WizardController::default_controller()->SkipToLoginForTesting(context);
-}
-
-void CoreOobeHandler::HandleSkipToUpdateForTesting() {
-  if (WizardController::default_controller())
-    WizardController::default_controller()->SkipToUpdateForTesting();
 }
 
 void CoreOobeHandler::HandleToggleResetScreen() {

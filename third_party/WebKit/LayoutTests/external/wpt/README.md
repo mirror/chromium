@@ -53,15 +53,8 @@ Running Tests Manually
 ======================
 
 The test server can be started using
-```
-./wpt serve
-```
 
-**On Windows**: You will need to preceed the prior command with
-`python` or the path to the python binary.
-```bash
-python wpt serve
-```
+    ./wpt serve
 
 This will start HTTP servers on two ports and a websockets server on
 one port. By default one web server starts on port 8000 and the other
@@ -89,15 +82,12 @@ file setup documented above, but you must *not* have the
 test server already running when calling `wpt run`. The basic command
 line syntax is:
 
-```bash
+```
 ./wpt run product [tests]
 ```
 
 **On Windows**: You will need to preceed the prior command with
 `python` or the path to the python binary.
-```bash
-python wpt product [tests]
-```
 
 where `product` is currently `firefox` or `chrome` and `[tests]` is a
 list of paths to tests. This will attempt to automatically locate a
@@ -197,12 +187,8 @@ then remove the `tools` and `resources` directories, as above.
 <span id="windows-notes">Windows Notes</span>
 =============================================
 
-On Windows `wpt` commands must be prefixed with `python` or the path
+On Windows `wpt` commands mut bre prefixed with `python` or the path
 to the python binary (if `python` is not in your `%PATH%`).
-
-```bash
-python wpt [command]
-```
 
 Alternatively, you may also use
 [Bash on Ubuntu on Windows](https://msdn.microsoft.com/en-us/commandline/wsl/about)

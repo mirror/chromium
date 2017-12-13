@@ -506,7 +506,11 @@ WebURLLoaderImpl::Context::Context(
       defers_loading_(NOT_DEFERRING),
       request_id_(-1),
       url_loader_factory_(url_loader_factory) {
-  DCHECK(url_loader_factory_ || !resource_dispatcher);
+#if DCHECK_IS_ON()
+  const bool mojo_loading_enabled =
+      base::FeatureList::IsEnabled(features::kLoadingWithMojo);
+  DCHECK(url_loader_factory_ || !mojo_loading_enabled || !resource_dispatcher);
+#endif
 }
 
 void WebURLLoaderImpl::Context::Cancel() {
@@ -1114,9 +1118,7 @@ void WebURLLoaderImpl::PopulateURLResponse(const WebURL& url,
   response->SetMIMEType(WebString::FromUTF8(info.mime_type));
   response->SetTextEncodingName(WebString::FromUTF8(info.charset));
   response->SetExpectedContentLength(info.content_length);
-  response->SetHasMajorCertificateErrors(
-      net::IsCertStatusError(info.cert_status) &&
-      !net::IsCertStatusMinorError(info.cert_status));
+  response->SetHasMajorCertificateErrors(info.has_major_certificate_errors);
   response->SetIsLegacySymantecCert(info.is_legacy_symantec_cert);
   response->SetCertValidityStart(info.cert_validity_start);
   response->SetAppCacheID(info.appcache_id);

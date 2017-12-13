@@ -298,18 +298,11 @@ class MobileHeaderRowView : public NetworkListView::SectionHeaderRowView,
   }
 
   // chromeos::NetworkStateHandlerObserver
-
-  // Called when the available devices changes.
+  // Update state if the Cellular or Tether device state may have changed, or if
+  // the list of Cellular or Tether networks may have changed.
   void DeviceListChanged() override { UpdateState(); }
-
-  // Called when the state of a device changes (e.g. the enabled state).
-  void DevicePropertiesUpdated(const chromeos::DeviceState* device) override {
-    UpdateState();
-  }
-
   void NetworkListChanged() override { UpdateState(); }
 
- private:
   void UpdateState() {
     NetworkStateHandler::TechnologyState cellular_state =
         network_state_handler_->GetTechnologyState(
@@ -407,6 +400,7 @@ class MobileHeaderRowView : public NetworkListView::SectionHeaderRowView,
     SetSubtitle(subtitle);
   }
 
+ private:
   // When Tether is disabled because Bluetooth is off, then enabling Bluetooth
   // will enable Tether. If enabling Bluetooth takes longer than some timeout
   // period, it is assumed that there was an error. In that case, Tether will

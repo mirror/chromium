@@ -18,7 +18,6 @@ var expected = [
   'getVariableValue',
   'loadTimes',
   'management',
-  'metricsPrivate',
   'runtime',
   'send',
   'test',

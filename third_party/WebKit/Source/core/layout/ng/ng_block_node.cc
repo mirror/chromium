@@ -463,12 +463,9 @@ void NGBlockNode::CopyChildFragmentPosition(
   // We should only be positioning children which are relative to ourselves.
   // The flow thread, however, is invisible to LayoutNG, so we need to make
   // an exception there.
-  DCHECK(
-      box_ == layout_box->ContainingBlock() ||
-      (layout_box->ContainingBlock()->IsLayoutFlowThread() &&
-       box_ == layout_box->ContainingBlock()->ContainingBlock()) ||
-      (layout_box->ContainingBlock()->IsInline() &&  // anonymous wrapper case
-       box_->Parent() == layout_box->ContainingBlock()));
+  DCHECK(box_ == layout_box->ContainingBlock() ||
+         (layout_box->ContainingBlock()->IsLayoutFlowThread() &&
+          box_ == layout_box->ContainingBlock()->ContainingBlock()));
 
   // LegacyLayout flips vertical-rl horizontal coordinates before paint.
   // NGLayout flips X location for LegacyLayout compatibility.
@@ -571,7 +568,7 @@ scoped_refptr<NGLayoutResult> NGBlockNode::RunOldLayout(
   // TODO(kojii): Implement use_first_line_style.
   NGFragmentBuilder builder(*this, box_->Style(), writing_mode,
                             box_->StyleRef().Direction());
-  builder.SetIsOldLayoutRoot();
+  builder.SetBoxType(NGPhysicalFragment::NGBoxType::kOldLayoutRoot);
   builder.SetInlineSize(box_size.inline_size);
   builder.SetBlockSize(box_size.block_size);
 

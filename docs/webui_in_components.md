@@ -24,10 +24,10 @@ WebUI resources in `components/` will be added in your specific project folder. 
 `src/components/hello_world/hello_world.html:`
 ```html
 <!DOCTYPE HTML>
-<html dir="$i18n{textdirection}">
+<html i18n-values="dir:textdirection">
 <head>
  <meta charset="utf-8">
- <title>$i18n{helloWorldTitle}</title>
+ <title i18n-content="helloWorldTitle"></title>
  <link rel="stylesheet" href="hello_world.css">
  <script src="chrome://resources/js/cr.js"></script>
  <script src="chrome://resources/js/load_time_data.js"></script>
@@ -35,9 +35,10 @@ WebUI resources in `components/` will be added in your specific project folder. 
  <script src="strings.js"></script>
  <script src="hello_world.js"></script>
 </head>
-<body style="font-family:$i18n{fontfamily};font-size:$i18n{fontSize}">
-  <h1>$i18n{helloWorldTitle}</h1>
+<body i18n-values=".style.fontFamily:fontfamily;.style.fontSize:fontsize">
+  <h1 i18n-content="helloWorldTitle"></h1>
   <p id="welcome-message"></p>
+<script src="chrome://resources/js/i18n_template.js"></script>
 </body>
 </html>
 ```

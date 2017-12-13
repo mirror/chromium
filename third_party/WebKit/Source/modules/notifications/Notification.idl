@@ -78,5 +78,3 @@ enum NotificationPermission {
 
     [MeasureAs=NotificationClosed] void close();
 };
-
-callback NotificationPermissionCallback = void (NotificationPermission permission);

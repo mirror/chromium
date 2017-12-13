@@ -30,7 +30,6 @@ class IOBuffer;
 class IPEndPoint;
 class NetLog;
 struct NetLogSource;
-class SocketTag;
 
 class NET_EXPORT TCPSocketWin : public base::win::ObjectWatcher::Delegate {
  public:
@@ -70,10 +69,12 @@ class NET_EXPORT TCPSocketWin : public base::win::ObjectWatcher::Delegate {
   int ReadIfReady(IOBuffer* buf,
                   int buf_len,
                   const CompletionCallback& callback);
+  // TODO(crbug.com/656607): Remove default value.
   int Write(IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback,
-            const NetworkTrafficAnnotationTag& traffic_annotation);
+            const NetworkTrafficAnnotationTag& traffic_annotation =
+                NO_TRAFFIC_ANNOTATION_BUG_656607);
 
   int GetLocalAddress(IPEndPoint* address) const;
   int GetPeerAddress(IPEndPoint* address) const;
@@ -128,9 +129,6 @@ class NET_EXPORT TCPSocketWin : public base::win::ObjectWatcher::Delegate {
   // no longer be used. This method should be used only for testing. No read,
   // write, or accept operations should be pending.
   SocketDescriptor ReleaseSocketDescriptorForTesting();
-
-  // Apply |tag| to this socket.
-  void ApplySocketTag(const SocketTag& tag);
 
  private:
   class Core;

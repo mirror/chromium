@@ -16,7 +16,7 @@ namespace safe_browsing {
 
 class ChromeCleanerRebootDialogControllerImpl
     : public ChromeCleanerRebootDialogController,
-      public BrowserListObserver {
+      public chrome::BrowserListObserver {
  public:
   class PromptDelegate {
    public:

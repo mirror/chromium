@@ -48,6 +48,9 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
                                       Vector<MessagePortChannel>,
                                       const v8_inspector::V8StackTraceId&);
 
+  // Implements ThreadedMessagingProxyBase.
+  void WorkerThreadCreated() override;
+
   bool HasPendingActivity() const;
 
   // These methods come from worker context thread via

@@ -25,7 +25,7 @@ static base::LazyInstance<ThreadLocalPointer<IndexedDBDispatcher>>::Leaky
 
 namespace {
 
-IndexedDBDispatcher* const kDeletedIndexedDBDispatcherMarker =
+IndexedDBDispatcher* const kHasBeenDeleted =
     reinterpret_cast<IndexedDBDispatcher*>(0x1);
 
 }  // unnamed namespace
@@ -39,12 +39,11 @@ IndexedDBDispatcher::~IndexedDBDispatcher() {
   mojo_owned_callback_state_.clear();
   mojo_owned_database_callback_state_.clear();
 
-  g_idb_dispatcher_tls.Pointer()->Set(kDeletedIndexedDBDispatcherMarker);
+  g_idb_dispatcher_tls.Pointer()->Set(kHasBeenDeleted);
 }
 
 IndexedDBDispatcher* IndexedDBDispatcher::ThreadSpecificInstance() {
-  if (g_idb_dispatcher_tls.Pointer()->Get() ==
-      kDeletedIndexedDBDispatcherMarker) {
+  if (g_idb_dispatcher_tls.Pointer()->Get() == kHasBeenDeleted) {
     NOTREACHED() << "Re-instantiating TLS IndexedDBDispatcher.";
     g_idb_dispatcher_tls.Pointer()->Set(nullptr);
   }

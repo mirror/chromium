@@ -102,6 +102,10 @@ std::string ContentClient::GetProcessTypeNameInEnglish(int type) {
   return std::string();
 }
 
+bool ContentClient::IsSupplementarySiteIsolationModeEnabled() {
+  return false;
+}
+
 OriginTrialPolicy* ContentClient::GetOriginTrialPolicy() {
   return nullptr;
 }

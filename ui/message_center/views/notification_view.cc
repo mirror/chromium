@@ -85,23 +85,23 @@ std::unique_ptr<views::Border> MakeSeparatorBorder(int top,
   return views::CreateSolidSidedBorder(top, left, 0, 0, color);
 }
 
-// NotificationItemView ////////////////////////////////////////////////////////
+// ItemView ////////////////////////////////////////////////////////////////////
 
-// NotificationItemViews are responsible for drawing each list notification
-// item's title and message next to each other within a single column.
-class NotificationItemView : public views::View {
+// ItemViews are responsible for drawing each list notification item's title and
+// message next to each other within a single column.
+class ItemView : public views::View {
  public:
-  explicit NotificationItemView(const NotificationItem& item);
-  ~NotificationItemView() override;
+  explicit ItemView(const NotificationItem& item);
+  ~ItemView() override;
 
   // Overridden from views::View:
   void SetVisible(bool visible) override;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(NotificationItemView);
+  DISALLOW_COPY_AND_ASSIGN(ItemView);
 };
 
-NotificationItemView::NotificationItemView(const NotificationItem& item) {
+ItemView::ItemView(const NotificationItem& item) {
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal,
                                         gfx::Insets(),
                                         kItemTitleToMessagePadding));
@@ -124,9 +124,10 @@ NotificationItemView::NotificationItemView(const NotificationItem& item) {
   SchedulePaint();
 }
 
-NotificationItemView::~NotificationItemView() {}
+ItemView::~ItemView() {
+}
 
-void NotificationItemView::SetVisible(bool visible) {
+void ItemView::SetVisible(bool visible) {
   views::View::SetVisible(visible);
   for (int i = 0; i < child_count(); ++i)
     child_at(i)->SetVisible(visible);
@@ -521,7 +522,7 @@ void NotificationView::CreateOrUpdateListItemViews(
 
   DCHECK(top_view_);
   for (size_t i = 0; i < items.size() && i < kNotificationMaximumItems; ++i) {
-    NotificationItemView* item_view = new NotificationItemView(items[i]);
+    ItemView* item_view = new ItemView(items[i]);
     item_view->SetBorder(MakeTextBorder(padding, i ? 0 : 4, 0));
     item_views_.push_back(item_view);
     top_view_->AddChildView(item_view);

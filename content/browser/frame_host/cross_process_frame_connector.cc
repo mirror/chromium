@@ -72,11 +72,11 @@ void CrossProcessFrameConnector::SetView(RenderWidgetHostViewChildFrame* view) {
     // be called during nested WebContents destruction. See
     // https://crbug.com/644306.
     if (is_scroll_bubbling_ && GetParentRenderWidgetHostView() &&
-        GetParentRenderWidgetHostView()
-            ->GetRenderWidgetHostImpl()
+        RenderWidgetHostImpl::From(
+            GetParentRenderWidgetHostView()->GetRenderWidgetHost())
             ->delegate()) {
-      GetParentRenderWidgetHostView()
-          ->GetRenderWidgetHostImpl()
+      RenderWidgetHostImpl::From(
+          GetParentRenderWidgetHostView()->GetRenderWidgetHost())
           ->delegate()
           ->GetInputEventRouter()
           ->CancelScrollBubbling(view_);
@@ -211,7 +211,9 @@ void CrossProcessFrameConnector::BubbleScrollEvent(
     return;
 
   auto* event_router =
-      parent_view->GetRenderWidgetHostImpl()->delegate()->GetInputEventRouter();
+      RenderWidgetHostImpl::From(parent_view->GetRenderWidgetHost())
+          ->delegate()
+          ->GetInputEventRouter();
 
   gfx::Vector2d offset_from_parent = frame_rect_in_dip_.OffsetFromOrigin();
   blink::WebGestureEvent resent_gesture_event(event);
@@ -297,7 +299,8 @@ void CrossProcessFrameConnector::OnUpdateResizeParams(
   view_->SetFrameSinkId(surface_id.frame_sink_id());
 #endif  // defined(USE_AURA)
 
-  RenderWidgetHostImpl* render_widget_host = view_->GetRenderWidgetHostImpl();
+  RenderWidgetHostImpl* render_widget_host =
+      RenderWidgetHostImpl::From(view_->GetRenderWidgetHost());
   DCHECK(render_widget_host);
 
   if (render_widget_host->auto_resize_enabled()) {
@@ -327,13 +330,16 @@ void CrossProcessFrameConnector::OnVisibilityChanged(bool visible) {
   if (frame_proxy_in_parent_renderer_->frame_tree_node()
           ->render_manager()
           ->ForInnerDelegate()) {
-    view_->GetRenderWidgetHostImpl()
+    RenderWidgetHostImpl::From(view_->GetRenderWidgetHost())
         ->delegate()
         ->OnRenderFrameProxyVisibilityChanged(visible);
     return;
   }
 
-  if (visible && !view_->GetRenderWidgetHostImpl()->delegate()->IsHidden()) {
+  if (visible &&
+      !RenderWidgetHostImpl::From(view_->GetRenderWidgetHost())
+           ->delegate()
+           ->IsHidden()) {
     view_->Show();
   } else if (!visible) {
     view_->Hide();

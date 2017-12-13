@@ -503,7 +503,6 @@ class CONTENT_EXPORT RenderFrameHostManager
   void CancelPendingIfNecessary(RenderFrameHostImpl* render_frame_host);
 
   void OnSetHasReceivedUserGesture();
-  void OnSetHasReceivedUserGestureBeforeNavigation(bool value);
 
   // Sets up the necessary state for a new RenderViewHost.  If |proxy| is not
   // null, it creates a RenderFrameProxy in the target renderer process which is
@@ -520,9 +519,6 @@ class CONTENT_EXPORT RenderFrameHostManager
   // function will never lead to a process being created for the navigation.
   scoped_refptr<SiteInstance> GetSiteInstanceForNavigationRequest(
       const NavigationRequest& navigation_request);
-
-  // Helper to initialize the RenderFrame if it's not initialized.
-  void InitializeRenderFrameIfNecessary(RenderFrameHostImpl* render_frame_host);
 
  private:
   friend class NavigatorTestWithBrowserSideNavigation;
@@ -768,10 +764,6 @@ class CONTENT_EXPORT RenderFrameHostManager
   // we need to set the visibility of the new View to the correct value here
   // after reload.
   void EnsureRenderFrameHostVisibilityConsistent();
-
-  // Similarly to visibility, we need to ensure RenderWidgetHost and
-  // RenderWidget know about page focus.
-  void EnsureRenderFrameHostPageFocusConsistent();
 
   // For use in creating RenderFrameHosts.
   FrameTreeNode* frame_tree_node_;

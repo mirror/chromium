@@ -22,7 +22,7 @@ DirectPtraceConnection::DirectPtraceConnection()
     : PtraceConnection(),
       attachments_(),
       pid_(-1),
-      ptracer_(/* can_log= */ true),
+      ptracer_(),
       initialized_() {}
 
 DirectPtraceConnection::~DirectPtraceConnection() {}

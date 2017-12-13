@@ -25,6 +25,7 @@ class MenuModel;
 }
 
 namespace views {
+class MenuModelAdapter;
 class MenuRunner;
 }
 
@@ -129,7 +130,7 @@ class ChromeNativeAppWindowViewsAuraAsh
   FRIEND_TEST_ALL_PREFIXES(ShapedAppWindowTargeterTest,
                            ResizeInsetsWithinBounds);
 
-  // Callback for MenuRunner
+  // Callback for MenuModelAdapter
   void OnMenuClosed();
 
   // Helper function which returns true if in tablet mode, the auto hide
@@ -145,6 +146,7 @@ class ChromeNativeAppWindowViewsAuraAsh
 
   // Used to show the system menu.
   std::unique_ptr<ui::MenuModel> menu_model_;
+  std::unique_ptr<views::MenuModelAdapter> menu_model_adapter_;
   std::unique_ptr<views::MenuRunner> menu_runner_;
 
   // Used for displaying the toast with instructions on exiting fullscreen.

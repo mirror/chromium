@@ -1,16 +1,20 @@
-per-file *.json=set noparent
-per-file *.idl=set noparent
+# *.json
+# See chrome/common/extensions/OWNERS
 
-per-file *.json=file://extensions/common/api/API_OWNERS
-per-file *.idl=file://extensions/common/api/API_OWNERS
+# For documentation.
+mkearney@chromium.org
+
+# For Chrome OS apps APIs.
+tbarzic@chromium.org
 
 per-file input_method_private.json=shuchen@chromium.org
 per-file webview*.json=paulmeyer@chromium.org
 per-file webview*.json=fsamuel@chromium.org
+per-file webview*.json=lazyboy@chromium.org
 
 # For trivial changes only, like adding a new enum value or attribute.
 # New APIs or changes to existing APIs should be approved by an
-# extensions OWNER from //extensions/common/api/API_OWNERS.
+# extensions OWNER.
 per-file automation*.idl=aboxhall@chromium.org
 per-file automation*.idl=dmazzoni@chromium.org
 per-file automation*.idl=dtseng@chromium.org

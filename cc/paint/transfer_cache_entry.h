@@ -18,13 +18,13 @@ namespace cc {
 //  - Add a type name to the TransferCacheEntryType enum.
 //  - Implement a ClientTransferCacheEntry and ServiceTransferCacheEntry for
 //    your new type.
-//  - Update ServiceTransferCacheEntry::Create in transfer_cache_entry.cc.
-enum class TransferCacheEntryType : uint32_t {
+//  - Update ServiceTransferCacheEntry::Create and ServiceTransferCacheEntry::
+//    DeduceType in transfer_cache_entry.cc.
+enum class TransferCacheEntryType {
   kRawMemory,
   kImage,
-  kPaintTypeface,
   // Add new entries above this line, make sure to update kLast.
-  kLast = kPaintTypeface,
+  kLast = kImage,
 };
 
 // An interface used on the client to serialize a transfer cache entry
@@ -33,13 +33,8 @@ class CC_PAINT_EXPORT ClientTransferCacheEntry {
  public:
   virtual ~ClientTransferCacheEntry() {}
 
-  // Returns the type of this entry. Combined with id, it should form a unique
-  // identifier.
+  // Returns the type of this entry.
   virtual TransferCacheEntryType Type() const = 0;
-
-  // Returns the id of this entry. Combined with type, it should form a unique
-  // identifier.
-  virtual uint32_t Id() const = 0;
 
   // Returns the serialized sized of this entry in bytes. This function will be
   // used to determine how much memory is going to be allocated and passed to
@@ -79,22 +74,6 @@ class CC_PAINT_EXPORT ServiceTransferCacheEntry {
   // context.
   virtual bool Deserialize(GrContext* context, base::span<uint8_t> data) = 0;
 };
-
-// Helpers to simplify subclassing.
-template <class Base, TransferCacheEntryType EntryType>
-class TransferCacheEntryBase : public Base {
- public:
-  static constexpr TransferCacheEntryType kType = EntryType;
-  TransferCacheEntryType Type() const final { return kType; }
-};
-
-template <TransferCacheEntryType EntryType>
-using ClientTransferCacheEntryBase =
-    TransferCacheEntryBase<ClientTransferCacheEntry, EntryType>;
-
-template <TransferCacheEntryType EntryType>
-using ServiceTransferCacheEntryBase =
-    TransferCacheEntryBase<ServiceTransferCacheEntry, EntryType>;
 
 };  // namespace cc
 

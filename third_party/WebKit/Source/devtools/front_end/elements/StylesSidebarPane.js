@@ -2562,8 +2562,8 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
     var cssCompletions = [];
     if (isEditingName) {
       cssCompletions = SDK.cssMetadata().allProperties();
-      if (!this.node().isSVGNode())
-        cssCompletions = cssCompletions.filter(property => !SDK.cssMetadata().isSVGProperty(property));
+      cssCompletions =
+          cssCompletions.filter(property => SDK.cssMetadata().isSVGProperty(property) === this.node().isSVGNode());
     } else {
       cssCompletions = SDK.cssMetadata().propertyValues(this.nameElement.textContent);
     }

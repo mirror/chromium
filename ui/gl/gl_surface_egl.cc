@@ -566,21 +566,7 @@ bool GLSurfaceEGL::InitializeOneOff(EGLNativeDisplayType native_display) {
   // Must be called after InitializeDisplay().
   g_driver_egl.InitializeExtensionBindings();
 
-  return InitializeOneOffCommon();
-}
-
-// static
-bool GLSurfaceEGL::InitializeOneOffForTesting() {
-  g_driver_egl.InitializeClientExtensionBindings();
-  g_display = eglGetCurrentDisplay();
-  g_driver_egl.InitializeExtensionBindings();
-  return InitializeOneOffCommon();
-}
-
-// static
-bool GLSurfaceEGL::InitializeOneOffCommon() {
   g_egl_extensions = eglQueryString(g_display, EGL_EXTENSIONS);
-
   g_egl_create_context_robustness_supported =
       HasEGLExtension("EGL_EXT_create_context_robustness");
   g_egl_create_context_bind_generates_resource_supported =
@@ -608,18 +594,13 @@ bool GLSurfaceEGL::InitializeOneOffCommon() {
       (HasEGLExtension("EGL_ANDROID_front_buffer_auto_refresh") &&
        HasEGLExtension("EGL_ANDROID_create_native_client_buffer"));
 
-#if defined(OS_WIN)
   // Need EGL_ANGLE_flexible_surface_compatibility to allow surfaces with and
-  // without alpha to be bound to the same context. Blacklist direct composition
-  // if MCTU.dll or MCTUX.dll are injected. These are user mode drivers for
-  // display adapters from Magic Control Technology Corporation.
+  // without alpha to be bound to the same context.
   g_use_direct_composition =
       HasEGLExtension("EGL_ANGLE_direct_composition") &&
       HasEGLExtension("EGL_ANGLE_flexible_surface_compatibility") &&
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableDirectComposition) &&
-      !GetModuleHandle(TEXT("MCTU.dll")) && !GetModuleHandle(TEXT("MCTUX.dll"));
-#endif
+          switches::kDisableDirectComposition);
 
   g_egl_display_texture_share_group_supported =
       HasEGLExtension("EGL_ANGLE_display_texture_share_group");
@@ -664,7 +645,7 @@ bool GLSurfaceEGL::InitializeOneOffCommon() {
   // present and we're on Android N or newer, assume that it's usable even if
   // the extension wasn't reported.
   g_egl_android_native_fence_sync_supported =
-      HasEGLExtension("EGL_ANDROID_native_fence_sync");
+      g_driver_egl.ext.b_EGL_ANDROID_native_fence_sync;
 #if defined(OS_ANDROID)
   if (base::android::BuildInfo::GetInstance()->sdk_int() >=
           base::android::SDK_VERSION_NOUGAT &&

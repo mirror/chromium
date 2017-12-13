@@ -205,7 +205,11 @@ struct DefaultCommandLineSwitch {
 };
 
 const DefaultCommandLineSwitch kDefaultSwitches[] = {
-#if !defined(OS_ANDROID)
+#if defined(OS_ANDROID)
+    // TODO(714676): this should probably set the no restrictions autoplay
+    // policy instead.
+    {switches::kIgnoreAutoplayRestrictionsForTests, ""},
+#else
     // GPU shader disk cache disabling is largely to conserve disk space.
     {switches::kDisableGpuShaderDiskCache, ""},
     // Enable audio focus by default (even on non-Android platforms).

@@ -5,6 +5,7 @@
 #include "gpu/command_buffer/service/service_transfer_cache.h"
 
 #include "base/sys_info.h"
+#include "cc/paint/raw_memory_transfer_cache_entry.h"
 
 namespace gpu {
 namespace {
@@ -38,34 +39,30 @@ ServiceTransferCache::ServiceTransferCache()
 
 ServiceTransferCache::~ServiceTransferCache() = default;
 
-bool ServiceTransferCache::CreateLockedEntry(
-    cc::TransferCacheEntryType entry_type,
-    uint32_t entry_id,
-    ServiceDiscardableHandle handle,
-    GrContext* context,
-    base::span<uint8_t> data) {
-  auto key = std::make_pair(entry_type, entry_id);
-  auto found = entries_.Peek(key);
+bool ServiceTransferCache::CreateLockedEntry(TransferCacheEntryId id,
+                                             ServiceDiscardableHandle handle,
+                                             cc::TransferCacheEntryType type,
+                                             GrContext* context,
+                                             base::span<uint8_t> data) {
+  auto found = entries_.Peek(id);
   if (found != entries_.end()) {
     return false;
   }
 
   std::unique_ptr<cc::ServiceTransferCacheEntry> entry =
-      cc::ServiceTransferCacheEntry::Create(entry_type);
+      cc::ServiceTransferCacheEntry::Create(type);
   if (!entry)
     return false;
 
   entry->Deserialize(context, data);
   total_size_ += entry->CachedSize();
-  entries_.Put(key, CacheEntryInternal(handle, std::move(entry)));
+  entries_.Put(id, CacheEntryInternal(handle, std::move(entry)));
   EnforceLimits();
   return true;
 }
 
-bool ServiceTransferCache::UnlockEntry(cc::TransferCacheEntryType entry_type,
-                                       uint32_t entry_id) {
-  auto key = std::make_pair(entry_type, entry_id);
-  auto found = entries_.Peek(key);
+bool ServiceTransferCache::UnlockEntry(TransferCacheEntryId id) {
+  auto found = entries_.Peek(id);
   if (found == entries_.end())
     return false;
 
@@ -73,10 +70,8 @@ bool ServiceTransferCache::UnlockEntry(cc::TransferCacheEntryType entry_type,
   return true;
 }
 
-bool ServiceTransferCache::DeleteEntry(cc::TransferCacheEntryType entry_type,
-                                       uint32_t entry_id) {
-  auto key = std::make_pair(entry_type, entry_id);
-  auto found = entries_.Peek(key);
+bool ServiceTransferCache::DeleteEntry(TransferCacheEntryId id) {
+  auto found = entries_.Peek(id);
   if (found == entries_.end())
     return false;
 
@@ -87,10 +82,8 @@ bool ServiceTransferCache::DeleteEntry(cc::TransferCacheEntryType entry_type,
 }
 
 cc::ServiceTransferCacheEntry* ServiceTransferCache::GetEntry(
-    cc::TransferCacheEntryType entry_type,
-    uint32_t entry_id) {
-  auto key = std::make_pair(entry_type, entry_id);
-  auto found = entries_.Get(key);
+    TransferCacheEntryId id) {
+  auto found = entries_.Get(id);
   if (found == entries_.end())
     return nullptr;
   return found->second.entry.get();

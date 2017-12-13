@@ -16,31 +16,21 @@ class GL_EXPORT GLFenceEGL : public GLFence {
  public:
   static void SetIgnoreFailures();
 
+  GLFenceEGL();
   ~GLFenceEGL() override;
-
-  // Factory method using default initialization.
-  static std::unique_ptr<GLFenceEGL> Create();
-
-  // Factory method using custom initialization.
-  static std::unique_ptr<GLFenceEGL> Create(EGLenum type, EGLint* attribs);
 
   // GLFence implementation:
   bool HasCompleted() override;
   void ClientWait() override;
   void ServerWait() override;
-  void Invalidate() override;
 
   // EGL-specific wait-with-timeout implementation:
   EGLint ClientWaitWithTimeoutNanos(EGLTimeKHR timeout);
 
- protected:
-  GLFenceEGL();
-  bool InitializeInternal(EGLenum type, EGLint* attribs);
-
+ private:
   EGLSyncKHR sync_;
   EGLDisplay display_;
 
- private:
   DISALLOW_COPY_AND_ASSIGN(GLFenceEGL);
 };
 

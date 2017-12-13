@@ -102,26 +102,17 @@ suite('Bluetooth', function() {
   suite('SubPage', function() {
     var subpage;
 
-    function flushAsync() {
-      Polymer.dom.flush();
-      return new Promise(resolve => {
-        bluetoothPage.async(resolve);
-      });
-    }
-
     setup(function() {
       bluetoothApi_.setEnabled(true);
       Polymer.dom.flush();
       var div = bluetoothPage.$$('div.settings-box');
       MockInteractions.tap(div);
-      return flushAsync().then(() => {
-        subpage = bluetoothPage.$$('settings-bluetooth-subpage');
-        subpage.listUpdateFrequencyMs = 0;
-        assertTrue(!!subpage);
-        assertTrue(subpage.bluetoothToggleState);
-        assertFalse(subpage.bluetoothToggleDisabled);
-        assertEquals(0, subpage.listUpdateFrequencyMs);
-      });
+      subpage = bluetoothPage.$$('settings-bluetooth-subpage');
+      subpage.listUpdateFrequencyMs = 0;
+      assertTrue(!!subpage);
+      assertTrue(subpage.bluetoothToggleState);
+      assertFalse(subpage.bluetoothToggleDisabled);
+      assertEquals(0, subpage.listUpdateFrequencyMs);
     });
 
     test('toggle', function() {

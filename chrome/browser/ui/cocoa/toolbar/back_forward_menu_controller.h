@@ -17,9 +17,9 @@
 
 typedef BackForwardMenuModel::ModelType BackForwardMenuType;
 const BackForwardMenuType BACK_FORWARD_MENU_TYPE_BACK =
-    BackForwardMenuModel::ModelType::kBackward;
+    BackForwardMenuModel::BACKWARD_MENU;
 const BackForwardMenuType BACK_FORWARD_MENU_TYPE_FORWARD =
-    BackForwardMenuModel::ModelType::kForward;
+    BackForwardMenuModel::FORWARD_MENU;
 
 // A class that manages the back/forward menu (and delayed-menu button, and
 // model).

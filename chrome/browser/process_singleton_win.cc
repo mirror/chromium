@@ -14,7 +14,6 @@
 #include "base/debug/activity_tracker.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/process/process.h"
 #include "base/process/process_info.h"
@@ -212,7 +211,7 @@ void TerminateProcessWithHistograms(const base::Process& process,
         process.Pid(), exit_code);
     UMA_HISTOGRAM_TIMES("Chrome.ProcessSingleton.TerminateProcessTime",
                         base::TimeTicks::Now() - start_time);
-    base::UmaHistogramSparse(
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
         "Chrome.ProcessSingleton.TerminationWaitErrorCode.Windows", wait_error);
   } else {
     terminate_error = ::GetLastError();
@@ -220,7 +219,7 @@ void TerminateProcessWithHistograms(const base::Process& process,
         ProcessSingleton::TERMINATE_FAILED);
     DPLOG(ERROR) << "Unable to terminate process";
   }
-  base::UmaHistogramSparse(
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
       "Chrome.ProcessSingleton.TerminateProcessErrorCode.Windows",
       terminate_error);
 }

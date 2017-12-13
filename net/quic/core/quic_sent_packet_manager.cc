@@ -111,11 +111,11 @@ void QuicSentPacketManager::SetFromConfig(const QuicConfig& config) {
   if (config.HasClientRequestedIndependentOption(kRENO, perspective_)) {
     SetSendAlgorithm(kRenoBytes);
   } else if (config.HasClientRequestedIndependentOption(kBYTE, perspective_) ||
-             (GetQuicReloadableFlag(quic_default_to_bbr) &&
+             (FLAGS_quic_reloadable_flag_quic_default_to_bbr &&
               config.HasClientRequestedIndependentOption(kQBIC,
                                                          perspective_))) {
     SetSendAlgorithm(kCubicBytes);
-  } else if (GetQuicReloadableFlag(quic_enable_pcc) &&
+  } else if (FLAGS_quic_reloadable_flag_quic_enable_pcc &&
              config.HasClientRequestedIndependentOption(kTPCC, perspective_)) {
     SetSendAlgorithm(kPCC);
   }

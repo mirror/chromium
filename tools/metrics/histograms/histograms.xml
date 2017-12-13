@@ -1340,15 +1340,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Android.PhotoPicker.ExifOrientation" enum="ExifOrientation">
-  <owner>finnur@chromium.org</owner>
-  <summary>
-    Records whether the EXIF orientation directive is present and what it is set
-    to. Collected once per decoded image, but only on Android N and above (and
-    when no IO error occurs).
-  </summary>
-</histogram>
-
 <histogram name="Android.PhotoPicker.ImageByteCount" units="KB">
   <owner>finnur@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
@@ -3164,15 +3155,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Record the delay when power button and volume down key are both pressed,
     which indicates user might want to use accelerator to take screenshot. This
     will help us determine the best chord delay among metrics.
-  </summary>
-</histogram>
-
-<histogram name="Ash.ProcessCreationToFirstPresent" units="ms">
-  <owner>sky@chromium.org</owner>
-  <summary>
-    The delta between when chrome main starts to when the Chrome OS system UI
-    (ash) is visible to the user (specifically the first time pixels are lit up
-    on the primary display showing the Chrome OS system UI).
   </summary>
 </histogram>
 
@@ -5710,15 +5692,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     For credit card forms that are queried for Autofill, a ratio of how many are
     within secure contexts (which includes mixed passive content).
-  </summary>
-</histogram>
-
-<histogram name="Autofill.RationalizationQuality.PhoneNumber"
-    enum="AutofillRationalizationQualityMetric">
-  <owner>wuandy@chromium.org</owner>
-  <summary>
-    The quality of fields rationalization, putting rationalization result into
-    good/ok/bad categories.
   </summary>
 </histogram>
 
@@ -13542,6 +13515,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Proxy scheme of the proxy server via which the warm up URL was fetched.
     Recorded only when non-null response headers were available when the fetch
     of warm  up URL concludes.
+  </summary>
+</histogram>
+
+<histogram name="DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch"
+    enum="BooleanSuccess">
+  <owner>tbansal@chromium.org</owner>
+  <summary>
+    Whether the warmup (or probe) URL was successfully fetched over a data saver
+    proxy.
   </summary>
 </histogram>
 
@@ -25136,9 +25118,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Extensions.WebRequestEventFoundFrame" units="boolean">
-  <obsolete>
-    Deprecated as of 11/2017. No longer relevant after refactoring.
-  </obsolete>
   <owner>rdevlin.cronin@chromium.org</owner>
   <summary>
     Whether or not the render frame lookup for a given webRequest event
@@ -33948,30 +33927,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Media.Engagement.PreloadedList.CheckResult"
-    enum="PreloadedListCheckResult">
-  <owner>beccahughes@chromium.org</owner>
-  <owner>media-dev@chromium.org</owner>
-  <summary>
-    Recorded when the Media Engagement Preloaded List is checked whether a
-    string is present on that list. If the check was successful then the result
-    of the check is recorded in this histogram. If the check was not successful
-    then the reason for the check failing is recorded.
-  </summary>
-</histogram>
-
-<histogram name="Media.Engagement.PreloadedList.LoadResult"
-    enum="PreloadedListLoadResult">
-  <owner>beccahughes@chromium.org</owner>
-  <owner>media-dev@chromium.org</owner>
-  <summary>
-    Recorded when data is loaded into the Media Engagement Preloaded List. If
-    the load is successful then &quot;loaded&quot; is recorded to this
-    histogram. If the load was not successful then the reason why is recorded to
-    this histogram.
-  </summary>
-</histogram>
-
 <histogram name="Media.Engagement.ScoreAtPlayback" units="%">
   <owner>beccahughes@chromium.org</owner>
   <owner>media-dev@chromium.org</owner>
@@ -34163,15 +34118,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Records when a context provider is acquired in media, and when it's released
     because a context loss has been detected.
-  </summary>
-</histogram>
-
-<histogram name="Media.GpuArcVideoDecodeAccelerator.InitializeResult"
-    enum="ArcVideoDecodeAcceleratorResult">
-  <owner>hiroh@chromium.org</owner>
-  <summary>
-    Counts of status values returned from calls to
-    GpuArcVideoDecodeAccelerator::Initialize().
   </summary>
 </histogram>
 
@@ -39462,10 +39408,30 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Navigation.Intercept.WillStart" units="microseconds">
+  <obsolete>
+    Deprecated in favor of mainframe/subframe breakouts
+  </obsolete>
   <owner>csharrison@chromium.org</owner>
   <summary>
     The microseconds it takes for the InterceptNavigationThrottle to determine
     if the navigation should be ignored, at WillStartRequest time.
+  </summary>
+</histogram>
+
+<histogram name="Navigation.Intercept.WillStart.Mainframe" units="microseconds">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    The microseconds it takes for the InterceptNavigationThrottle to determine
+    if the navigation should be ignored, at WillStartRequest time for main
+    frames.
+  </summary>
+</histogram>
+
+<histogram name="Navigation.Intercept.WillStart.Subframe" units="microseconds">
+  <owner>csharrison@chromium.org</owner>
+  <summary>
+    The microseconds it takes for the InterceptNavigationThrottle to determine
+    if the navigation should be ignored, at WillStartRequest time for subframes.
   </summary>
 </histogram>
 
@@ -53457,42 +53423,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="NQE.RTT.NotAHangingRequest.HangingRequest" units="ms">
-  <owner>tbansal@chromium.org</owner>
-  <summary>
-    HTTP RTT observation received by the network quality estimator.  Recorded
-    when the request is detected as hanging.
-  </summary>
-</histogram>
-
-<histogram name="NQE.RTT.NotAHangingRequest.HttpRTT" units="ms">
-  <owner>tbansal@chromium.org</owner>
-  <summary>
-    HTTP RTT observation received by the network quality estimator.  Recorded
-    when the request is detected as not hanging because it was comparable to the
-    HTTP RTT estimate.
-  </summary>
-</histogram>
-
-<histogram name="NQE.RTT.NotAHangingRequest.MinHttpBound" units="ms">
-  <owner>tbansal@chromium.org</owner>
-  <summary>
-    HTTP RTT observation received by the network quality estimator.  Recorded
-    when the request is detected as not hanging because the RTT value was lower
-    than the minimum threshold RTT needed to be categorized as a hanging
-    request.
-  </summary>
-</histogram>
-
-<histogram name="NQE.RTT.NotAHangingRequest.TransportRTT" units="ms">
-  <owner>tbansal@chromium.org</owner>
-  <summary>
-    HTTP RTT observation received by the network quality estimator.  Recorded
-    when the request is detected as not hanging because it was comparable to the
-    transport RTT estimate.
-  </summary>
-</histogram>
-
 <histogram name="NQE.RTT.ObservationSource" enum="NQEObservationSource">
   <owner>tbansal@chromium.org</owner>
   <owner>bengr@chromium.org</owner>
@@ -53550,23 +53480,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Count of the requests that were not marked as hanging by the heuristic
     algorithm in the throughput analyzer in the network quality estimator. A
     sample is recorded everytime the heuristic algorithm is run.
-  </summary>
-</histogram>
-
-<histogram name="NQE.ThroughputObservation.Hanging" units="Kbps">
-  <owner>tbansal@chromium.org</owner>
-  <summary>
-    Throughput observation made by network quality estimator, and eventually
-    discarded because the window (over which the througput was computed) was
-    detected as hanging.
-  </summary>
-</histogram>
-
-<histogram name="NQE.ThroughputObservation.NotHanging" units="Kbps">
-  <owner>tbansal@chromium.org</owner>
-  <summary>
-    Throughput observation made by network quality estimator, and used when the
-    window (over which the througput was computed) was detected as not hanging.
   </summary>
 </histogram>
 
@@ -60483,18 +60396,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Whether the flow was completed when the user had suggestions offered for
     each requested information.
-  </summary>
-</histogram>
-
-<histogram name="PDF.Actions" enum="ChromePDFViewerActions">
-  <owner>hnakashima@chromium.org</owner>
-  <summary>
-    Tracks user actions in the PDF viewer. Logged when the document is opened
-    and when one of the relevant user actions is taken, such as opening the
-    bookmarks bar or setting the zoom mode to fit-to-page. The enum values that
-    are named &quot;First&quot; are logged only once per document, so that we
-    can measure in what percentage of documents a given action was performed at
-    least once.
   </summary>
 </histogram>
 
@@ -69896,17 +69797,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Expected queueing time split by tasks according to their frame status, in
     microseconds. The sum of the split values will be equal to the total,
-    reported on RendererScheduler.ExpectedTaskQueueingDuration2. Recorded for
-    each 1000 ms window.
+    reported on RendererScheduler.ExpectedTaskQueueingDuration2. This is
+    equivalent to RendererScheduler.ExpectedQueueingTimeByFrameType, just with
+    different units. Recorded for each 1000 ms window.
   </summary>
 </histogram>
 
 <histogram base="true" name="RendererScheduler.ExpectedQueueingTimeByFrameType"
     units="ms">
-  <obsolete>
-    Replaced with RendererScheduler.ExpectedQueueingTimeByFrameStatus as of
-    December 2017.
-  </obsolete>
   <owner>npm@chromium.org</owner>
   <summary>
     Expected queueing time split by tasks according to their frame type. The sum
@@ -69916,24 +69814,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="RendererScheduler.ExpectedQueueingTimeByTaskQueue"
-    units="microseconds">
-  <owner>npm@chromium.org</owner>
-  <owner>tdresser@chromium.org</owner>
-  <summary>
-    Expected queueing time split by tasks according to the type of their task
-    queue, in microseconds. The sum of the split values should be equal to the
-    total, reported on RendererScheduler.ExpectedTaskQueueingDuration2. Recorded
-    for each 1000 ms window.
-  </summary>
-</histogram>
-
 <histogram base="true"
     name="RendererScheduler.ExpectedQueueingTimeByTaskQueueType" units="ms">
-  <obsolete>
-    Replaced with RendererScheduler.ExpectedQueueingTimeByTaskQueue as of
-    December 2017.
-  </obsolete>
   <owner>npm@chromium.org</owner>
   <summary>
     Expected queueing time split by tasks according to the type of their task
@@ -70702,27 +70584,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Records the number of times the factory reset dialog was shown. Grouped by
     the viewtype.
-  </summary>
-</histogram>
-
-<histogram name="ResourceCoordinator.IPCPerMinute.Frame" units="count/m">
-  <owner>lpy@chromium.org</owner>
-  <summary>
-    The number of IPCs from frame to GRC. Recorded every 1 minute.
-  </summary>
-</histogram>
-
-<histogram name="ResourceCoordinator.IPCPerMinute.Page" units="count/m">
-  <owner>lpy@chromium.org</owner>
-  <summary>
-    The number of IPCs from page to GRC. Recorded every 1 minute.
-  </summary>
-</histogram>
-
-<histogram name="ResourceCoordinator.IPCPerMinute.Process" units="count/m">
-  <owner>lpy@chromium.org</owner>
-  <summary>
-    The number of IPCs from process to GRC. Recorded every 1 minute.
   </summary>
 </histogram>
 
@@ -73057,28 +72918,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The time that SafeBrowsing actually delayed the browsing experience. It
     records the difference between the time when Chrome would have started
     reading the response for a URL and when the SafeBrowsing system completed
-    its check of that URL. This is the sum of .Mainframe and .Subresource
-    breakout metrics.
-  </summary>
-</histogram>
-
-<histogram name="SB2.Delay.MainFrame" units="ms">
-  <owner>vakh@chromium.org</owner>
-  <summary>
-    The time that SafeBrowsing actually delayed the browsing experience. It
-    records the difference between the time when Chrome would have started
-    reading the response for a URL and when the SafeBrowsing system completed
-    its check of that URL. Logged for main frame resources only.
-  </summary>
-</histogram>
-
-<histogram name="SB2.Delay.Subresource" units="ms">
-  <owner>vakh@chromium.org</owner>
-  <summary>
-    The time that SafeBrowsing actually delayed the browsing experience. It
-    records the difference between the time when Chrome would have started
-    reading the response for a URL and when the SafeBrowsing system completed
-    its check of that URL. Logged for non-main frame resources only.
+    its check of that URL.
   </summary>
 </histogram>
 
@@ -81705,22 +81545,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="SiteIsolation.Flags.IsolateOrigins" enum="BooleanEnabled">
-  <owner>alexmos@chromium.org</owner>
-  <summary>
-    True if the --isolate-origins mode was enabled from the command line,
-    about:flags, or enterprise policy.  Recorded on browser startup.
-  </summary>
-</histogram>
-
-<histogram name="SiteIsolation.Flags.SitePerProcess" enum="BooleanEnabled">
-  <owner>alexmos@chromium.org</owner>
-  <summary>
-    True if the --site-per-process mode was enabled from the command line,
-    about:flags, or enterprise policy.  Recorded on browser startup.
-  </summary>
-</histogram>
-
 <histogram name="SiteIsolation.IsolateAllSitesProcessCountEstimate">
   <owner>creis@chromium.org</owner>
   <summary>
@@ -81851,15 +81675,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The predicted total process count if we isolated no sites, subject to the
     process limit.  Recorded once per UMA ping.
-  </summary>
-</histogram>
-
-<histogram name="SiteIsolation.IsolateOrigins.Size" units="origins">
-  <owner>alexmos@chromium.org</owner>
-  <summary>
-    The number of currently enabled isolated origins.  This includes origins
-    specified via the --isolate-origins command-line flag as well as those
-    configured via enterprise policy.  Recorded on browser startup.
   </summary>
 </histogram>
 
@@ -90977,15 +90792,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="UMA.FileMetricsProvider.Happening"
-    enum="FileMetricsProviderHappening">
-  <owner>bcwhite@chromium.org</owner>
-  <summary>
-    Records various happenings within the FileMetricsProvider for debugging
-    purposes.
-  </summary>
-</histogram>
-
 <histogram name="UMA.FileMetricsProvider.InitialAccessResult"
     enum="FileMetricsProviderAccessResult">
   <owner>asvitkine@chromium.org</owner>
@@ -92636,30 +92442,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="V8.GCBackgroundMarking" units="ms">
-  <owner>ulan@chromium.org</owner>
-  <summary>
-    Time spent in background tasks doing marking in one GC cycle. It is recorded
-    after each GC.
-  </summary>
-</histogram>
-
-<histogram name="V8.GCBackgroundScavenger" units="ms">
-  <owner>ulan@chromium.org</owner>
-  <summary>
-    Time spent in background tasks doing scavenging in one GC cycle. It is
-    recorded after each GC.
-  </summary>
-</histogram>
-
-<histogram name="V8.GCBackgroundSweeping" units="ms">
-  <owner>ulan@chromium.org</owner>
-  <summary>
-    Time spent in background tasks doing sweeping in one GC cycle. It is
-    recorded after each GC.
-  </summary>
-</histogram>
-
 <histogram name="V8.GCCompactor" units="ms">
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent in mark-sweep phase of GC.</summary>
@@ -93523,18 +93305,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>asvitkine@chromium.org</owner>
   <summary>
     HTTP response codes and network error encountered by VariationsService when
-    attempting to fetch a variations seed from the server over an HTTPS
-    connection.
-  </summary>
-</histogram>
-
-<histogram name="Variations.SeedFetchResponseOrErrorCode.HTTP"
-    enum="CombinedHttpResponseAndNetErrorCode">
-  <owner>asvitkine@chromium.org</owner>
-  <summary>
-    HTTP response codes and network error encountered by VariationsService when
-    attempting to fetch a variations seed from the server over an HTTP
-    connection.
+    attempting to fetch a variations seed from the server.
   </summary>
 </histogram>
 
@@ -101373,6 +101144,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Previews.OriginalContentLength"/>
 </histogram_suffixes>
 
+<histogram_suffixes name="DataSaverProxyTypes" separator=".">
+  <owner>tbansal@chromium.org</owner>
+  <suffix name="SecureProxy.Core"
+      label="Over a secure, core data saver proxy."/>
+  <suffix name="SecureProxy.NonCore"
+      label="Over a secure, non-core data saver proxy."/>
+  <suffix name="InsecureProxy.Core"
+      label="Over an insecure, core data saver proxy."/>
+  <suffix name="InsecureProxy.NonCore"
+      label="Over an insecure, non-core data saver proxy."/>
+  <affected-histogram
+      name="DataReductionProxy.WarmupURLFetcherCallback.SuccessfulFetch"/>
+</histogram_suffixes>
+
 <histogram_suffixes name="DataUsageReportSubmissionBytes" separator=".">
   <suffix name="Failed"
       label="Platform external data use observer reported the submission as
@@ -108269,6 +108054,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
              frames."/>
   <affected-histogram
       name="RendererScheduler.ExpectedQueueingTimeByFrameStatus"/>
+  <affected-histogram name="RendererScheduler.ExpectedQueueingTimeByFrameType"/>
 </histogram_suffixes>
 
 <histogram_suffixes
@@ -108289,7 +108075,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="Expected Queueing Time from the unthrottled task queue."/>
   <suffix name="Other"
       label="Expected Queueing Time from events in any other task queue."/>
-  <affected-histogram name="RendererScheduler.ExpectedQueueingTimeByTaskQueue"/>
+  <affected-histogram
+      name="RendererScheduler.ExpectedQueueingTimeByTaskQueueType"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="RendererScheduler.MainThreadLoadSplit" separator=".">

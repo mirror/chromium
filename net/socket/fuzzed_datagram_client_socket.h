@@ -39,7 +39,6 @@ class FuzzedDatagramClientSocket : public DatagramClientSocket {
                           const IPEndPoint& address) override;
   int ConnectUsingDefaultNetwork(const IPEndPoint& address) override;
   NetworkChangeNotifier::NetworkHandle GetBoundNetwork() const override;
-  void ApplySocketTag(const SocketTag& tag) override;
 
   // DatagramSocket implementation:
   void Close() override;
@@ -52,10 +51,12 @@ class FuzzedDatagramClientSocket : public DatagramClientSocket {
   int Read(IOBuffer* buf,
            int buf_len,
            const CompletionCallback& callback) override;
+  // TODO(crbug.com/656607): Remove default value.
   int Write(IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback,
-            const NetworkTrafficAnnotationTag& traffic_annotation) override;
+            const NetworkTrafficAnnotationTag& traffic_annotation =
+                NO_TRAFFIC_ANNOTATION_BUG_656607) override;
   int SetReceiveBufferSize(int32_t size) override;
   int SetSendBufferSize(int32_t size) override;
   int SetDoNotFragment() override;

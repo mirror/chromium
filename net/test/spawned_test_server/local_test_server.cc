@@ -203,7 +203,7 @@ bool LocalTestServer::AddCommandLineArguments(
     const std::string& key = it.key();
 
     // Add arguments from a list.
-    if (value.is_list()) {
+    if (value.IsType(base::Value::Type::LIST)) {
       const base::ListValue* list = NULL;
       if (!value.GetAsList(&list) || !list || list->empty())
         return false;

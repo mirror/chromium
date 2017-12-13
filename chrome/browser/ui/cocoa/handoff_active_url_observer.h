@@ -20,7 +20,7 @@ class HandoffActiveURLObserverDelegate;
 // This class observes changes to the "active URL". This is defined as the
 // visible URL of the WebContents of the selected tab of the most recently
 // focused browser window.
-class HandoffActiveURLObserver : public BrowserListObserver,
+class HandoffActiveURLObserver : public chrome::BrowserListObserver,
                                  public TabStripModelObserver,
                                  public content::WebContentsObserver {
  public:
@@ -28,7 +28,7 @@ class HandoffActiveURLObserver : public BrowserListObserver,
   ~HandoffActiveURLObserver() override;
 
  private:
-  // BrowserListObserver
+  // chrome::BrowserListObserver
   void OnBrowserSetLastActive(Browser* browser) override;
   void OnBrowserRemoved(Browser* browser) override;
 

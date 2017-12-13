@@ -26,7 +26,6 @@
 #ifndef AXMenuListOption_h
 #define AXMenuListOption_h
 
-#include "base/macros.h"
 #include "core/html/forms/HTMLOptionElement.h"
 #include "modules/accessibility/AXMockObject.h"
 
@@ -35,6 +34,8 @@ namespace blink {
 class AXObjectCacheImpl;
 
 class AXMenuListOption final : public AXMockObject {
+  WTF_MAKE_NONCOPYABLE(AXMenuListOption);
+
  public:
   static AXMenuListOption* Create(HTMLOptionElement* element,
                                   AXObjectCacheImpl& ax_object_cache) {
@@ -76,8 +77,6 @@ class AXMenuListOption final : public AXMockObject {
   HTMLSelectElement* ParentSelectNode() const;
 
   Member<HTMLOptionElement> element_;
-
-  DISALLOW_COPY_AND_ASSIGN(AXMenuListOption);
 };
 
 DEFINE_AX_OBJECT_TYPE_CASTS(AXMenuListOption, IsMenuListOption());

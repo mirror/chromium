@@ -13,7 +13,7 @@
 #include "extensions/browser/api/declarative_webrequest/request_stage.h"
 #include "extensions/browser/api/declarative_webrequest/webrequest_condition_attribute.h"
 #include "extensions/browser/api/declarative_webrequest/webrequest_constants.h"
-#include "extensions/browser/api/web_request/web_request_info.h"
+#include "net/url_request/url_request.h"
 
 using url_matcher::URLMatcherConditionFactory;
 using url_matcher::URLMatcherConditionSet;
@@ -45,19 +45,23 @@ namespace keys = declarative_webrequest_constants;
 // WebRequestData
 //
 
-WebRequestData::WebRequestData(const WebRequestInfo* request,
-                               RequestStage stage)
-    : request(request), stage(stage), original_response_headers(nullptr) {}
+WebRequestData::WebRequestData(net::URLRequest* request, RequestStage stage)
+    : request(request),
+      stage(stage),
+      navigation_ui_data(nullptr),
+      original_response_headers(nullptr) {}
 
 WebRequestData::WebRequestData(
-    const WebRequestInfo* request,
+    net::URLRequest* request,
     RequestStage stage,
+    ExtensionNavigationUIData* navigation_ui_data,
     const net::HttpResponseHeaders* original_response_headers)
     : request(request),
       stage(stage),
+      navigation_ui_data(navigation_ui_data),
       original_response_headers(original_response_headers) {}
 
-WebRequestData::~WebRequestData() = default;
+WebRequestData::~WebRequestData() {}
 
 //
 // WebRequestDataWithMatchIds

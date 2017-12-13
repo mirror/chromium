@@ -116,25 +116,21 @@ TEST_F('InterventionsInternalsUITest', 'GetPreviewsEnabled', function() {
 
   test('DisplayCorrectStatuses', () => {
     // Setup testPageHandler behavior.
-    let testArray = [
-      {
-        htmlId: 'params1',
-        description: 'Params 1',
-        enabled: true,
-      },
-      {
-        htmlId: 'params2',
-        description: 'Params 2',
-        enabled: false,
-      },
-      {
-        htmlId: 'params3',
-        description: 'Param 3',
-        enabled: false,
-      },
-    ];
+    let testMap = new Map();
+    testMap.set('params2', {
+      description: 'Params 2',
+      enabled: false,
+    });
+    testMap.set('params3', {
+      description: 'Param 3',
+      enabled: false,
+    });
+    testMap.set('params1', {
+      description: 'Params 1',
+      enabled: true,
+    });
 
-    window.testPageHandler.setTestingPreviewsModeMap(testArray);
+    window.testPageHandler.setTestingPreviewsModeMap(testMap);
     this.setupFnResolver.resolve();
 
     return setupFnResolver.promise
@@ -142,12 +138,18 @@ TEST_F('InterventionsInternalsUITest', 'GetPreviewsEnabled', function() {
           return window.testPageHandler.whenCalled('getPreviewsEnabled');
         })
         .then(() => {
-          testArray.forEach((value) => {
+          testMap.forEach((value, key) => {
             let expected = value.description + ': ' +
                 (value.enabled ? 'Enabled' : 'Disabled');
-            let actual = document.querySelector('#' + value.htmlId).textContent;
+            let actual = document.querySelector('#' + key).textContent;
             expectEquals(expected, actual);
           });
+
+          // Test correct order of statuses displayed on page.
+          let statuses = document.querySelectorAll('.previews-status-value');
+          for (let i = 1; i < statuses.length; i++) {
+            expectGE(statuses[i].textContent, statuses[i - 1].textContent);
+          }
         });
   });
 
@@ -159,28 +161,24 @@ TEST_F('InterventionsInternalsUITest', 'GetPreviewsFlagsDetails', function() {
 
   test('DisplayCorrectStatuses', () => {
     // Setup testPageHandler behavior.
-    let testArray = [
-      {
-        htmlId: 'params2',
-        description: 'Params 2',
-        link: 'Link 2',
-        value: 'Value 2',
-      },
-      {
-        htmlId: 'params3',
-        description: 'Param 3',
-        link: 'Link 3',
-        value: 'Value 3',
-      },
-      {
-        htmlId: 'params1',
-        description: 'Params 1',
-        link: 'Link 1',
-        value: 'Value 1',
-      },
-    ];
+    let testMap = new Map();
+    testMap.set('params2', {
+      description: 'Params 2',
+      link: 'Link 2',
+      value: 'Value 2',
+    });
+    testMap.set('params3', {
+      description: 'Param 3',
+      link: 'Link 3',
+      value: 'Value 3',
+    });
+    testMap.set('params1', {
+      description: 'Params 1',
+      link: 'Link 1',
+      value: 'Value 1',
+    });
 
-    window.testPageHandler.setTestingPreviewsFlagsMap(testArray);
+    window.testPageHandler.setTestingPreviewsFlagsMap(testMap);
     this.setupFnResolver.resolve();
 
     return setupFnResolver.promise
@@ -188,8 +186,7 @@ TEST_F('InterventionsInternalsUITest', 'GetPreviewsFlagsDetails', function() {
           return window.testPageHandler.whenCalled('getPreviewsFlagsDetails');
         })
         .then(() => {
-          testArray.forEach((value) => {
-            let key = value.htmlId;
+          testMap.forEach((value, key) => {
             let actualDescription =
                 document.querySelector('#' + key + 'Description');
             let actualValue = document.querySelector('#' + key + 'Value');
@@ -197,6 +194,12 @@ TEST_F('InterventionsInternalsUITest', 'GetPreviewsFlagsDetails', function() {
             expectEquals(value.link, actualDescription.getAttribute('href'));
             expectEquals(value.value, actualValue.textContent);
           });
+
+          // Test correct order of flags displayed on page.
+          let flags = document.querySelectorAll('.previews-status-value');
+          for (let i = 1; i < flags.length; i++) {
+            expectGE(flags[i].textContent, flags[i - 1].textContent);
+          }
         });
   });
 

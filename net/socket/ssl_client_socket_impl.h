@@ -117,7 +117,6 @@ class SSLClientSocketImpl : public SSLClientSocket,
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override {}
   int64_t GetTotalReceivedBytes() const override;
   void DumpMemoryStats(SocketMemoryStats* stats) const override;
-  void ApplySocketTag(const SocketTag& tag) override;
 
   // Dumps memory allocation stats. |pmd| is the browser process memory dump.
   static void DumpSSLClientSessionMemoryStats(
@@ -130,10 +129,12 @@ class SSLClientSocketImpl : public SSLClientSocket,
   int ReadIfReady(IOBuffer* buf,
                   int buf_len,
                   const CompletionCallback& callback) override;
+  // TODO(crbug.com/656607): Remove default value.
   int Write(IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback,
-            const NetworkTrafficAnnotationTag& traffic_annotation) override;
+            const NetworkTrafficAnnotationTag& traffic_annotation =
+                NO_TRAFFIC_ANNOTATION_BUG_656607) override;
   int SetReceiveBufferSize(int32_t size) override;
   int SetSendBufferSize(int32_t size) override;
 

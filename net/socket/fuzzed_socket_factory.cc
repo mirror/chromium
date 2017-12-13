@@ -38,10 +38,12 @@ class FailingSSLClientSocket : public SSLClientSocket {
     return ERR_UNEXPECTED;
   }
 
+  // TODO(crbug.com/656607): Remove default value.
   int Write(IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback,
-            const NetworkTrafficAnnotationTag& traffic_annotation) override {
+            const NetworkTrafficAnnotationTag& traffic_annotation =
+                NO_TRAFFIC_ANNOTATION_BUG_656607) override {
     NOTREACHED();
     return ERR_UNEXPECTED;
   }
@@ -89,8 +91,6 @@ class FailingSSLClientSocket : public SSLClientSocket {
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override {}
 
   int64_t GetTotalReceivedBytes() const override { return 0; }
-
-  void ApplySocketTag(const net::SocketTag& tag) override {}
 
   // SSLSocket implementation:
   int ExportKeyingMaterial(const base::StringPiece& label,

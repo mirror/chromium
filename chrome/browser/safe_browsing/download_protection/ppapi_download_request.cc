@@ -4,7 +4,6 @@
 
 #include "chrome/browser/safe_browsing/download_protection/ppapi_download_request.h"
 
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/download_protection/download_protection_service.h"
@@ -282,11 +281,11 @@ void PPAPIDownloadRequest::Finish(RequestOutcome reason,
                                   DownloadCheckResult response) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DVLOG(2) << __func__ << " response: " << static_cast<int>(response);
-  base::UmaHistogramSparse(
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
       "SBClientDownload.PPAPIDownloadRequest.RequestOutcome",
       static_cast<int>(reason));
-  base::UmaHistogramSparse("SBClientDownload.PPAPIDownloadRequest.Result",
-                           static_cast<int>(response));
+  UMA_HISTOGRAM_SPARSE_SLOWLY("SBClientDownload.PPAPIDownloadRequest.Result",
+                              static_cast<int>(response));
   UMA_HISTOGRAM_TIMES("SBClientDownload.PPAPIDownloadRequest.RequestDuration",
                       base::TimeTicks::Now() - start_time_);
   if (!callback_.is_null())

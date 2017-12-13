@@ -198,8 +198,7 @@ class CONTENT_EXPORT DelegatedFrameHost
     return support_.get();
   }
 
-  bool HasPrimarySurface() const;
-  bool HasFallbackSurface() const;
+  bool HasPrimarySurfaceForTesting() const { return has_primary_surface_; }
 
   void OnCompositingDidCommitForTesting(ui::Compositor* compositor) {
     OnCompositingDidCommit(compositor);
@@ -347,6 +346,7 @@ class CONTENT_EXPORT DelegatedFrameHost
 
   bool needs_begin_frame_ = false;
 
+  bool has_primary_surface_ = false;
   viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink_ =
       nullptr;
 

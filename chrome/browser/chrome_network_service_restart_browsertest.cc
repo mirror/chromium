@@ -12,8 +12,14 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/network_service_test.mojom.h"
+#include "content/public/common/service_manager_connection.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/test/browser_test.h"
 #include "content/public/test/browser_test_utils.h"
+#include "content/public/test/simple_url_loader_test_helper.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 
@@ -27,10 +33,38 @@ class ChromeNetworkServiceRestartBrowserTest : public InProcessBrowserTest {
     EXPECT_TRUE(embedded_test_server()->Start());
   }
 
-  GURL GetTestURL() const {
+  void SimulateNetworkServiceCrash() {
+    mojom::NetworkServiceTestPtr network_service_test;
+    ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
+        mojom::kNetworkServiceName, &network_service_test);
+
+    base::RunLoop run_loop;
+    network_service_test.set_connection_error_handler(run_loop.QuitClosure());
+
+    network_service_test->SimulateCrash();
+    run_loop.Run();
+  }
+
+  int LoadBasicRequest(mojom::NetworkContext* network_context) {
+    mojom::URLLoaderFactoryPtr url_loader_factory;
+    network_context->CreateURLLoaderFactory(MakeRequest(&url_loader_factory),
+                                            0);
+
+    auto request = std::make_unique<ResourceRequest>();
     // Use '/echoheader' instead of '/echo' to avoid a disk_cache bug.
     // See https://crbug.com/792255.
-    return embedded_test_server()->GetURL("/echoheader");
+    request->url = embedded_test_server()->GetURL("/echoheader");
+
+    content::SimpleURLLoaderTestHelper simple_loader_helper;
+    std::unique_ptr<content::SimpleURLLoader> simple_loader =
+        content::SimpleURLLoader::Create(std::move(request),
+                                         TRAFFIC_ANNOTATION_FOR_TESTS);
+
+    simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
+        url_loader_factory.get(), simple_loader_helper.GetCallback());
+    simple_loader_helper.WaitForCallback();
+
+    return simple_loader->NetError();
   }
 
  private:
@@ -51,7 +85,7 @@ IN_PROC_BROWSER_TEST_F(ChromeNetworkServiceRestartBrowserTest,
       BrowserContext::GetDefaultStoragePartition(browser()->profile());
 
   mojom::NetworkContext* old_network_context = partition->GetNetworkContext();
-  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context, GetTestURL()));
+  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context));
 
   // Crash the NetworkService process. Existing interfaces should receive error
   // notifications at some point.
@@ -62,8 +96,7 @@ IN_PROC_BROWSER_TEST_F(ChromeNetworkServiceRestartBrowserTest,
   // |partition->GetNetworkContext()| should return a valid new pointer after
   // crash.
   EXPECT_NE(old_network_context, partition->GetNetworkContext());
-  EXPECT_EQ(net::OK,
-            LoadBasicRequest(partition->GetNetworkContext(), GetTestURL()));
+  EXPECT_EQ(net::OK, LoadBasicRequest(partition->GetNetworkContext()));
 }
 
 // Make sure |SystemNetworkContextManager::GetContext()| returns valid interface
@@ -79,7 +112,7 @@ IN_PROC_BROWSER_TEST_F(ChromeNetworkServiceRestartBrowserTest,
 
   mojom::NetworkContext* old_network_context =
       system_network_context_manager->GetContext();
-  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context, GetTestURL()));
+  EXPECT_EQ(net::OK, LoadBasicRequest(old_network_context));
 
   // Crash the NetworkService process. Existing interfaces should receive error
   // notifications at some point.
@@ -91,8 +124,7 @@ IN_PROC_BROWSER_TEST_F(ChromeNetworkServiceRestartBrowserTest,
   // pointer after crash.
   EXPECT_NE(old_network_context, system_network_context_manager->GetContext());
   EXPECT_EQ(net::OK,
-            LoadBasicRequest(system_network_context_manager->GetContext(),
-                             GetTestURL()));
+            LoadBasicRequest(system_network_context_manager->GetContext()));
 }
 
 }  // namespace content

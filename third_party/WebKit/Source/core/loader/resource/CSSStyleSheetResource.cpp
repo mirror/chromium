@@ -42,13 +42,12 @@
 namespace blink {
 
 CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchParameters& params,
-                                                    ResourceFetcher* fetcher,
-                                                    ResourceClient* client) {
+                                                    ResourceFetcher* fetcher) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
             WebURLRequest::kFrameTypeNone);
   params.SetRequestContext(WebURLRequest::kRequestContextStyle);
   CSSStyleSheetResource* resource = ToCSSStyleSheetResource(
-      fetcher->RequestResource(params, CSSStyleSheetResourceFactory(), client));
+      fetcher->RequestResource(params, CSSStyleSheetResourceFactory()));
   return resource;
 }
 

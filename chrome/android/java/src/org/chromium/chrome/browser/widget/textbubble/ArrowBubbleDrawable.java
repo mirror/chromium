@@ -37,7 +37,6 @@ class ArrowBubbleDrawable extends Drawable implements Drawable.Callback {
 
     private int mArrowXOffsetPx;
     private boolean mArrowOnTop;
-    private boolean mShowArrow;
 
     public ArrowBubbleDrawable(Context context) {
         mRadiusPx = context.getResources().getDimensionPixelSize(R.dimen.text_bubble_corner_radius);
@@ -104,21 +103,6 @@ class ArrowBubbleDrawable extends Drawable implements Drawable.Callback {
     }
 
     /**
-     * @return Whether or not an arrow is currently shown.
-     */
-    public boolean isShowingArrow() {
-        return mShowArrow;
-    }
-
-    /**
-     * @param showArrow Whether the bubble should have an arrow.
-     */
-    public void setShowArrow(boolean showArrow) {
-        mShowArrow = showArrow;
-        invalidateSelf();
-    }
-
-    /**
      * @param color The color to make the bubble and arrow.
      */
     public void setBubbleColor(@ColorInt int color) {
@@ -148,19 +132,16 @@ class ArrowBubbleDrawable extends Drawable implements Drawable.Callback {
     public void draw(Canvas canvas) {
         mBubbleDrawable.draw(canvas);
 
-        if (mShowArrow) {
-            canvas.save();
-
-            // If the arrow is on the bottom, flip the arrow before drawing.
-            if (!mArrowOnTop) {
-                int arrowCenterYPx = getBounds().height() - mArrowHeightPx / 2;
-                canvas.scale(1, -1, mArrowXOffsetPx, arrowCenterYPx);
-                canvas.translate(0, arrowCenterYPx - mArrowHeightPx / 2);
-            }
-            canvas.translate(mArrowXOffsetPx, 0);
-            canvas.drawPath(mArrowPath, mArrowPaint);
-            canvas.restore();
+        canvas.save();
+        // If the arrow is on the bottom, flip the arrow before drawing.
+        if (!mArrowOnTop) {
+            int arrowCenterYPx = getBounds().height() - mArrowHeightPx / 2;
+            canvas.scale(1, -1, mArrowXOffsetPx, arrowCenterYPx);
+            canvas.translate(0, arrowCenterYPx - mArrowHeightPx / 2);
         }
+        canvas.translate(mArrowXOffsetPx, 0);
+        canvas.drawPath(mArrowPath, mArrowPaint);
+        canvas.restore();
     }
 
     @Override

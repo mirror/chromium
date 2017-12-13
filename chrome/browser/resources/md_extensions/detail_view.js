@@ -9,6 +9,7 @@ cr.define('extensions', function() {
     is: 'extensions-detail-view',
 
     behaviors: [
+      I18nBehavior,
       CrContainerShadowBehavior,
       extensions.ItemBehavior,
     ],
@@ -93,15 +94,12 @@ cr.define('extensions', function() {
     },
 
     /**
-     * @param {!chrome.developerPrivate.ExtensionState} state
-     * @param {string} onText
-     * @param {string} offText
      * @return {string}
      * @private
      */
-    computeEnabledText_: function(state, onText, offText) {
+    computeEnabledText_: function() {
       // TODO(devlin): Get the full spectrum of these strings from bettes.
-      return extensions.isEnabled(state) ? onText : offText;
+      return this.isEnabled_() ? this.i18n('itemOn') : this.i18n('itemOff');
     },
 
     /**

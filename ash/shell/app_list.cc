@@ -293,6 +293,15 @@ class ExampleAppListViewDelegate : public app_list::AppListViewDelegate {
     return NULL;
   }
 
+  std::vector<views::View*> CreateCustomPageWebViews(
+      const gfx::Size& size) override {
+    return std::vector<views::View*>();
+  }
+
+  void CustomLauncherPageAnimationChanged(double progress) override {}
+
+  void CustomLauncherPagePopSubpage() override {}
+
   bool IsSpeechRecognitionEnabled() override { return false; }
 
   void GetWallpaperProminentColors(std::vector<SkColor>* colors) override {

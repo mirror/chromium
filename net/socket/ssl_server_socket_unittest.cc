@@ -66,7 +66,7 @@
 #include "net/test/cert_test_util.h"
 #include "net/test/gtest_util.h"
 #include "net/test/test_data_directory.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
@@ -120,10 +120,12 @@ class FakeDataChannel {
     return PropagateData(buf, buf_len);
   }
 
+  // TODO(crbug.com/656607): Remove default value.
   int Write(IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback,
-            const NetworkTrafficAnnotationTag& traffic_annotation) {
+            const NetworkTrafficAnnotationTag& traffic_annotation =
+                NO_TRAFFIC_ANNOTATION_BUG_656607) {
     DCHECK(write_callback_.is_null());
     if (closed_) {
       if (write_called_after_close_)
@@ -236,14 +238,15 @@ class FakeSocket : public StreamSocket {
     return incoming_->Read(buf, buf_len, callback);
   }
 
+  // TODO(crbug.com/656607): Remove default value.
   int Write(IOBuffer* buf,
             int buf_len,
             const CompletionCallback& callback,
-            const NetworkTrafficAnnotationTag& traffic_annotation) override {
+            const NetworkTrafficAnnotationTag& traffic_annotation =
+                NO_TRAFFIC_ANNOTATION_BUG_656607) override {
     // Write random number of bytes.
     buf_len = rand() % buf_len + 1;
-    return outgoing_->Write(buf, buf_len, callback,
-                            TRAFFIC_ANNOTATION_FOR_TESTS);
+    return outgoing_->Write(buf, buf_len, callback);
   }
 
   int SetReceiveBufferSize(int32_t size) override { return OK; }
@@ -297,8 +300,6 @@ class FakeSocket : public StreamSocket {
     return 0;
   }
 
-  void ApplySocketTag(const SocketTag& tag) override {}
-
  private:
   NetLogWithSource net_log_;
   FakeDataChannel* incoming_;
@@ -325,8 +326,7 @@ TEST(FakeSocketTest, DataTransfer) {
 
   // Write then read.
   int written =
-      server.Write(write_buf.get(), kTestDataSize, CompletionCallback(),
-                   TRAFFIC_ANNOTATION_FOR_TESTS);
+      server.Write(write_buf.get(), kTestDataSize, CompletionCallback());
   EXPECT_GT(written, 0);
   EXPECT_LE(written, kTestDataSize);
 
@@ -340,8 +340,7 @@ TEST(FakeSocketTest, DataTransfer) {
   EXPECT_EQ(ERR_IO_PENDING,
             server.Read(read_buf.get(), kReadBufSize, callback.callback()));
 
-  written = client.Write(write_buf.get(), kTestDataSize, CompletionCallback(),
-                         TRAFFIC_ANNOTATION_FOR_TESTS);
+  written = client.Write(write_buf.get(), kTestDataSize, CompletionCallback());
   EXPECT_GT(written, 0);
   EXPECT_LE(written, kTestDataSize);
 

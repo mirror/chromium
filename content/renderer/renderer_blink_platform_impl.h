@@ -18,6 +18,7 @@
 #include "cc/blink/web_compositor_support_impl.h"
 #include "components/viz/client/client_shared_bitmap_manager.h"
 #include "content/child/blink_platform_impl.h"
+#include "content/common/clipboard.mojom.h"
 #include "content/common/content_export.h"
 #include "content/common/file_utilities.mojom.h"
 #include "content/common/possibly_associated_interface_ptr.h"
@@ -64,6 +65,7 @@ class LocalStorageCachedAreas;
 class NotificationDispatcher;
 class PlatformEventObserverBase;
 class ThreadSafeSender;
+class WebClipboardImpl;
 class WebDatabaseObserverImpl;
 
 class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
@@ -180,8 +182,7 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
       blink::WebMediaStreamTrack* track) override;
   void CreateHTMLVideoElementCapturer(
       blink::WebMediaStream* web_media_stream,
-      blink::WebMediaPlayer* web_media_player,
-      scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
+      blink::WebMediaPlayer* web_media_player) override;
   void CreateHTMLAudioElementCapturer(
       blink::WebMediaStream* web_media_stream,
       blink::WebMediaPlayer* web_media_player) override;
@@ -269,6 +270,9 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   // destructed.
   void SetCompositorThread(blink::scheduler::WebThreadBase* compositor_thread);
 
+  // Return the mojo interface for making ClipboardHost calls.
+  mojom::ClipboardHost& GetClipboardHost();
+
  private:
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
   CreateNetworkURLLoaderFactory();
@@ -294,6 +298,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
 
   std::unique_ptr<blink::WebThread> main_thread_;
   std::unique_ptr<service_manager::Connector> connector_;
+
+  std::unique_ptr<WebClipboardImpl> clipboard_;
 
   class FileUtilities;
   std::unique_ptr<FileUtilities> file_utilities_;
@@ -343,6 +349,7 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   scoped_refptr<blink::mojom::ThreadSafeWebDatabaseHostPtr> web_database_host_;
 
   mojom::FileUtilitiesHostPtrInfo file_utilities_host_info_;
+  mojom::ClipboardHostPtr clipboard_host_;
 
   scoped_refptr<NotificationDispatcher> notification_dispatcher_;
 

@@ -559,12 +559,10 @@ void HttpCache::Transaction::PopulateNetErrorDetails(
 
 void HttpCache::Transaction::SetPriority(RequestPriority priority) {
   priority_ = priority;
-
-  if (network_trans_)
+  if (network_trans_) {
+    DCHECK(!InWriters());
     network_trans_->SetPriority(priority_);
-
-  if (InWriters()) {
-    DCHECK(!network_trans_ || partial_);
+  } else if (InWriters()) {
     entry_->writers->UpdatePriority();
   }
 }

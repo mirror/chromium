@@ -56,6 +56,9 @@ void StubNotificationUIManager::Add(
     notification_added_callback_.Run();
     notification_added_callback_.Reset();
   }
+
+  // Fire the Display() event on the delegate.
+  notification.delegate()->Display();
 }
 
 bool StubNotificationUIManager::Update(

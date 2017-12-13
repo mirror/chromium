@@ -22,25 +22,19 @@ class MethodCall;
 
 namespace chromeos {
 
-// This class exports D-Bus methods that manage components:
+// This class exports a "LoadComponent" D-Bus method that installs a component
+// and return the installed path (if successful) or an error message
+// (on failure):
 //
-// LoadComponent:
 // % dbus-send --system --type=method_call --print-reply
 //     --dest=org.chromium.ComponentUpdaterService
 //     /org/chromium/ComponentUpdaterService
 //     org.chromium.ComponentUpdaterService.LoadComponent
 //     "string:|component name|"
 //
-// % string "/run/imageloader/|component name|/|version|"
+// -> method return sender=:1.42 -> destination=:1.43 reply_serial=2
 //
-// UnloadComponent:
-// % dbus-send --system --type=method_call --print-reply
-//     --dest=org.chromium.ComponentUpdaterService
-//     /org/chromium/ComponentUpdaterService
-//     org.chromium.ComponentUpdaterService.UnloadComponent
-//     "string:|component name|"
-//
-// % (returns empty response on success and error response on failure)
+// string "/run/imageloader/|component name|/|version|"
 class CHROMEOS_EXPORT ComponentUpdaterServiceProvider
     : public CrosDBusService::ServiceProviderInterface {
  public:
@@ -53,9 +47,7 @@ class CHROMEOS_EXPORT ComponentUpdaterServiceProvider
 
     virtual void LoadComponent(
         const std::string& name,
-        base::OnceCallback<void(const std::string&)> load_callback) = 0;
-
-    virtual bool UnloadComponent(const std::string& name) = 0;
+        const base::Callback<void(const std::string&)>& load_callback) = 0;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(Delegate);
@@ -82,10 +74,6 @@ class CHROMEOS_EXPORT ComponentUpdaterServiceProvider
   void OnLoadComponent(dbus::MethodCall* method_call,
                        dbus::ExportedObject::ResponseSender response_sender,
                        const std::string& result);
-
-  // Called on UI thread in response to a D-Bus request.
-  void UnloadComponent(dbus::MethodCall* method_call,
-                       dbus::ExportedObject::ResponseSender response_sender);
 
   std::unique_ptr<Delegate> delegate_;
   // Keep this last so that all weak pointers will be invalidated at the

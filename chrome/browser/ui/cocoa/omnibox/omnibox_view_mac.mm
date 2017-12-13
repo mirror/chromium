@@ -30,6 +30,7 @@
 #include "components/omnibox/browser/omnibox_edit_controller.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_popup_model.h"
+#include "components/omnibox/browser/suggestion_answer.h"
 #include "components/toolbar/toolbar_model.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/common/constants.h"
@@ -613,10 +614,12 @@ void OmniboxViewMac::OnTemporaryTextMaybeChanged(
   [field_ clearUndoChain];
 
   // Get friendly accessibility label.
+  base::string16 description =
+      match.answer ? match.answer->second_line().AccessibleText()
+                   : match.description;
   AnnounceAutocompleteForScreenReader(
-      AutocompleteMatchType::ToAccessibilityLabel(
-          match, display_text, model()->popup_model()->selected_line(),
-          model()->result().size()));
+      AutocompleteMatchType::ToAccessibilityLabel(match.type, display_text,
+                                                  description));
 }
 
 bool OmniboxViewMac::OnInlineAutocompleteTextMaybeChanged(
@@ -819,11 +822,6 @@ bool OmniboxViewMac::OnDoCommandBySelector(SEL cmd) {
   // |-noop:| is sent when the user presses Cmd+Return. Override the no-op
   // behavior with the proper WindowOpenDisposition.
   NSEvent* event = [NSApp currentEvent];
-  if (([event type] == NSKeyDown || [event type] == NSKeyUp) &&
-      [event keyCode] == kVK_Shift) {
-    OnShiftKeyChanged([event type] == NSKeyDown);
-    return true;
-  }
   if (cmd == @selector(insertNewline:) ||
      (cmd == @selector(noop:) &&
       ([event type] == NSKeyDown || [event type] == NSKeyUp) &&
@@ -888,7 +886,6 @@ void OmniboxViewMac::OnSetFocus(bool control_down) {
 }
 
 void OmniboxViewMac::OnKillFocus() {
-  OnShiftKeyChanged(false);
   // Tell the model to reset itself.
   model()->OnWillKillFocus();
   model()->OnKillFocus();

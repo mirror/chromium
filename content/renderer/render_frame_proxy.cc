@@ -57,8 +57,8 @@ static base::LazyInstance<RoutingIDProxyMap>::DestructorAtExit
     g_routing_id_proxy_map = LAZY_INSTANCE_INITIALIZER;
 
 // Facilitates lookup of RenderFrameProxy by WebRemoteFrame.
-typedef std::map<blink::WebRemoteFrame*, RenderFrameProxy*> FrameProxyMap;
-base::LazyInstance<FrameProxyMap>::DestructorAtExit g_frame_proxy_map =
+typedef std::map<blink::WebRemoteFrame*, RenderFrameProxy*> FrameMap;
+base::LazyInstance<FrameMap>::DestructorAtExit g_frame_map =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
@@ -169,8 +169,8 @@ RenderFrameProxy* RenderFrameProxy::FromWebFrame(
     blink::WebRemoteFrame* web_frame) {
   // TODO(dcheng): Turn this into a DCHECK() if it doesn't crash on canary.
   CHECK(web_frame);
-  FrameProxyMap::iterator iter = g_frame_proxy_map.Get().find(web_frame);
-  if (iter != g_frame_proxy_map.Get().end()) {
+  FrameMap::iterator iter = g_frame_map.Get().find(web_frame);
+  if (iter != g_frame_map.Get().end()) {
     RenderFrameProxy* proxy = iter->second;
     DCHECK_EQ(web_frame, proxy->web_frame());
     return proxy;
@@ -216,8 +216,8 @@ void RenderFrameProxy::Init(blink::WebRemoteFrame* web_frame,
 
   render_widget_->RegisterRenderFrameProxy(this);
 
-  std::pair<FrameProxyMap::iterator, bool> result =
-      g_frame_proxy_map.Get().insert(std::make_pair(web_frame_, this));
+  std::pair<FrameMap::iterator, bool> result =
+      g_frame_map.Get().insert(std::make_pair(web_frame_, this));
   CHECK(result.second) << "Inserted a duplicate item.";
 
   enable_surface_synchronization_ = features::IsSurfaceSynchronizationEnabled();
@@ -297,8 +297,6 @@ void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
   web_frame_->SetReplicatedFeaturePolicyHeader(state.feature_policy_header);
   if (state.has_received_user_gesture)
     web_frame_->SetHasReceivedUserGesture();
-  web_frame_->SetHasReceivedUserGestureBeforeNavigation(
-      state.has_received_user_gesture_before_nav);
 
   web_frame_->ResetReplicatedContentSecurityPolicy();
   OnAddContentSecurityPolicies(state.accumulated_csp_headers);
@@ -396,8 +394,6 @@ bool RenderFrameProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_SetHasReceivedUserGesture,
                         OnSetHasReceivedUserGesture)
     IPC_MESSAGE_HANDLER(FrameMsg_ScrollRectToVisible, OnScrollRectToVisible)
-    IPC_MESSAGE_HANDLER(FrameMsg_SetHasReceivedUserGestureBeforeNavigation,
-                        OnSetHasReceivedUserGestureBeforeNavigation)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -566,10 +562,6 @@ void RenderFrameProxy::WasResized() {
   }
 }
 
-void RenderFrameProxy::OnSetHasReceivedUserGestureBeforeNavigation(bool value) {
-  web_frame_->SetHasReceivedUserGestureBeforeNavigation(value);
-}
-
 void RenderFrameProxy::FrameDetached(DetachType type) {
 #if defined(USE_AURA)
   mus_embedded_frame_.reset();
@@ -599,10 +591,10 @@ void RenderFrameProxy::FrameDetached(DetachType type) {
 
   // Remove the entry in the WebFrame->RenderFrameProxy map, as the |web_frame_|
   // is no longer valid.
-  FrameProxyMap::iterator it = g_frame_proxy_map.Get().find(web_frame_);
-  CHECK(it != g_frame_proxy_map.Get().end());
+  FrameMap::iterator it = g_frame_map.Get().find(web_frame_);
+  CHECK(it != g_frame_map.Get().end());
   CHECK_EQ(it->second, this);
-  g_frame_proxy_map.Get().erase(it);
+  g_frame_map.Get().erase(it);
 
   web_frame_ = nullptr;
 
@@ -716,8 +708,6 @@ void RenderFrameProxy::OnMusEmbeddedFrameSurfaceChanged(
 
 void RenderFrameProxy::OnMusEmbeddedFrameSinkIdAllocated(
     const viz::FrameSinkId& frame_sink_id) {
-  // RendererWindowTreeClient should only call this when mus is hosting viz.
-  DCHECK(switches::IsMusHostingViz());
   frame_sink_id_ = frame_sink_id;
   // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
   // changes.

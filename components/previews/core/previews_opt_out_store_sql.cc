@@ -15,7 +15,6 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
@@ -116,7 +115,8 @@ void DatabaseErrorCallback(sql::Connection* db,
   // The default handling is to assert on debug and to ignore on release.
   if (!sql::Connection::IsExpectedSqliteError(extended_error)) {
     DLOG(WARNING) << db->GetErrorMessage();
-    base::UmaHistogramSparse("Previews.OptOut.SQLiteLoadError", extended_error);
+    UMA_HISTOGRAM_SPARSE_SLOWLY("Previews.OptOut.SQLiteLoadError",
+                                extended_error);
   }
 }
 

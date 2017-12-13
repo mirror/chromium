@@ -424,7 +424,7 @@ Me2MeNativeMessagingHostTest::ReadMessageFromOutputPipe() {
     }
 
     std::unique_ptr<base::Value> message = base::JSONReader::Read(message_json);
-    if (!message || !message->is_dict()) {
+    if (!message || !message->IsType(base::Value::Type::DICTIONARY)) {
       return nullptr;
     }
 

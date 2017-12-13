@@ -1679,6 +1679,7 @@ enum WebFeature {
   kFileReaderResultBeforeCompletion = 2158,
   kSyncXhrInPageDismissal = 2159,
   kAsyncXhrInPageDismissal = 2160,
+  kV8LineOrParagraphSeparatorAsLineTerminator = 2161,
   kAnimationSetPlaybackRateCompensatorySeek = 2162,
   kDeepCombinatorInStaticProfile = 2163,
   kPseudoShadowInStaticProfile = 2164,
@@ -1782,7 +1783,6 @@ enum WebFeature {
   kAudioWorkletGlobalScopeRegisterProcessor = 2262,
   kAudioWorkletNodeConstructor = 2263,
   kHTMLMediaElementEmptyLoadWithFutureData = 2264,
-  kCSSValueDisplayContents = 2265,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.

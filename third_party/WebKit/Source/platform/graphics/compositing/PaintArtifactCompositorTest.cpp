@@ -1969,8 +1969,7 @@ scoped_refptr<EffectPaintPropertyNode> CreateSampleEffectNodeWithElementId() {
       EffectPaintPropertyNode::Root(), TransformPaintPropertyNode::Root(),
       ClipPaintPropertyNode::Root(), kColorFilterNone,
       CompositorFilterOperations(), opacity, SkBlendMode::kSrcOver,
-      CompositingReason::kActiveOpacityAnimation,
-      expected_compositor_element_id);
+      CompositingReason::kActiveAnimation, expected_compositor_element_id);
 }
 
 scoped_refptr<TransformPaintPropertyNode>

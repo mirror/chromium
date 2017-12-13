@@ -4,7 +4,6 @@
 
 #include "chrome/browser/safe_browsing/download_protection/check_client_download_request.h"
 
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/rand_util.h"
 #include "base/task_scheduler/post_task.h"
@@ -34,12 +33,12 @@ const char kUnsupportedSchemeUmaPrefix[] = "SBClientDownload.UnsupportedScheme";
 
 void RecordFileExtensionType(const std::string& metric_name,
                              const base::FilePath& file) {
-  base::UmaHistogramSparse(
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
       metric_name, FileTypePolicies::GetInstance()->UmaValueForFile(file));
 }
 
 void RecordArchivedArchiveFileExtensionType(const base::FilePath& file) {
-  base::UmaHistogramSparse(
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
       "SBClientDownload.ArchivedArchiveExtensions",
       FileTypePolicies::GetInstance()->UmaValueForFile(file));
 }
@@ -190,11 +189,11 @@ void CheckClientDownloadRequest::OnURLFetchComplete(
            << ": success=" << source->GetStatus().is_success()
            << " response_code=" << source->GetResponseCode();
   if (source->GetStatus().is_success()) {
-    base::UmaHistogramSparse("SBClientDownload.DownloadRequestResponseCode",
-                             source->GetResponseCode());
+    UMA_HISTOGRAM_SPARSE_SLOWLY("SBClientDownload.DownloadRequestResponseCode",
+                                source->GetResponseCode());
   }
-  base::UmaHistogramSparse("SBClientDownload.DownloadRequestNetError",
-                           -source->GetStatus().error());
+  UMA_HISTOGRAM_SPARSE_SLOWLY("SBClientDownload.DownloadRequestNetError",
+                              -source->GetStatus().error());
   DownloadCheckResultReason reason = REASON_SERVER_PING_FAILED;
   DownloadCheckResult result = DownloadCheckResult::UNKNOWN;
   std::string token;
@@ -630,21 +629,21 @@ void CheckClientDownloadRequest::OnDmgAnalysisFinished(
       item_->GetTargetFilePath());
 
   if (results.success) {
-    base::UmaHistogramSparse("SBClientDownload.DmgFileSuccessByType",
-                             uma_file_type);
+    UMA_HISTOGRAM_SPARSE_SLOWLY("SBClientDownload.DmgFileSuccessByType",
+                                uma_file_type);
   } else {
-    base::UmaHistogramSparse("SBClientDownload.DmgFileFailureByType",
-                             uma_file_type);
+    UMA_HISTOGRAM_SPARSE_SLOWLY("SBClientDownload.DmgFileFailureByType",
+                                uma_file_type);
   }
 
   if (archived_executable_) {
-    base::UmaHistogramSparse("SBClientDownload.DmgFileHasExecutableByType",
-                             uma_file_type);
+    UMA_HISTOGRAM_SPARSE_SLOWLY("SBClientDownload.DmgFileHasExecutableByType",
+                                uma_file_type);
     UMA_HISTOGRAM_COUNTS("SBClientDownload.DmgFileArchivedBinariesCount",
                          results.archived_binary.size());
   } else {
-    base::UmaHistogramSparse("SBClientDownload.DmgFileHasNoExecutableByType",
-                             uma_file_type);
+    UMA_HISTOGRAM_SPARSE_SLOWLY("SBClientDownload.DmgFileHasNoExecutableByType",
+                                uma_file_type);
   }
 
   UMA_HISTOGRAM_TIMES("SBClientDownload.ExtractDmgFeaturesTime",

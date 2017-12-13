@@ -14,7 +14,6 @@
 #include "components/viz/common/gpu/context_cache_controller.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_lib.h"
-#include "gpu/command_buffer/client/raster_implementation_gles.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/ipc/gl_in_process_context.h"
 #include "gpu/skia_bindings/grcontext_for_gles2_interface.h"
@@ -113,10 +112,6 @@ gpu::ContextResult InProcessContextProvider::BindToCurrentThread() {
   context_->GetImplementation()->TraceBeginCHROMIUM(
       "gpu_toplevel", unique_context_name.c_str());
 
-  raster_context_ = std::make_unique<gpu::raster::RasterImplementationGLES>(
-      context_->GetImplementation(),
-      context_->GetImplementation()->capabilities());
-
   return bind_result_;
 }
 
@@ -136,12 +131,6 @@ gpu::gles2::GLES2Interface* InProcessContextProvider::ContextGL() {
   return context_->GetImplementation();
 }
 
-gpu::raster::RasterInterface* InProcessContextProvider::RasterContext() {
-  CheckValidThreadOrLockAcquired();
-
-  return raster_context_.get();
-}
-
 gpu::ContextSupport* InProcessContextProvider::ContextSupport() {
   CheckValidThreadOrLockAcquired();
 
@@ -154,13 +143,8 @@ class GrContext* InProcessContextProvider::GrContext() {
   if (gr_context_)
     return gr_context_->get();
 
-  size_t max_resource_cache_bytes;
-  size_t max_glyph_cache_texture_bytes;
-  skia_bindings::GrContextForGLES2Interface::DefaultCacheLimitsForTests(
-      &max_resource_cache_bytes, &max_glyph_cache_texture_bytes);
   gr_context_.reset(new skia_bindings::GrContextForGLES2Interface(
-      ContextGL(), ContextCapabilities(), max_resource_cache_bytes,
-      max_glyph_cache_texture_bytes));
+      ContextGL(), ContextCapabilities()));
   cache_controller_->SetGrContext(gr_context_->get());
 
   return gr_context_->get();

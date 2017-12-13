@@ -56,6 +56,4 @@ const char* BootstrapTokenTypeToString(BootstrapTokenType type) {
   }
 }
 
-#undef ENUM_CASE
-
 }  // namespace syncer

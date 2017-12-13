@@ -4627,9 +4627,10 @@ _FUNCTION_INFO = {
   },
   "CreateTransferCacheEntryINTERNAL": {
     'decoder_func': 'DoCreateTransferCacheEntryINTERNAL',
-    'cmd_args': 'GLuint entry_type, GLuint entry_id, GLuint handle_shm_id, '
-                'GLuint handle_shm_offset, GLuint data_shm_id, '
-                'GLuint data_shm_offset, GLuint data_size',
+    'cmd_args': 'GLuint64 handle_id, GLuint handle_shm_id, '
+                'GLuint handle_shm_offset, GLuint type, '
+                'GLuint data_shm_id, GLuint data_shm_offset, '
+                'GLuint data_size',
     'internal': True,
     'impl_func': True,
     'client_test': False,
@@ -4637,7 +4638,7 @@ _FUNCTION_INFO = {
   },
   "DeleteTransferCacheEntryINTERNAL": {
     'decoder_func': 'DoDeleteTransferCacheEntryINTERNAL',
-    'cmd_args': 'GLuint entry_type, GLuint entry_id',
+    'cmd_args': 'GLuint64 handle_id',
     'internal': True,
     'impl_func': True,
     'client_test': False,
@@ -4645,7 +4646,7 @@ _FUNCTION_INFO = {
   },
   "UnlockTransferCacheEntryINTERNAL": {
     'decoder_func': 'DoUnlockTransferCacheEntryINTERNAL',
-    'cmd_args': 'GLuint entry_type, GLuint entry_id',
+    'cmd_args': 'GLuint64 handle_id',
     'internal': True,
     'impl_func': True,
     'client_test': False,
@@ -4673,40 +4674,6 @@ _FUNCTION_INFO = {
     'extension': 'EXT_window_rectangles',
     'extension_flag': 'ext_window_rectangles',
     'es3': True,
-  },
-  'CreateGpuFenceCHROMIUM': {
-    'type': 'NoCommand',
-    'impl_func': False,
-    'cmd_args': 'void',
-    'result': ['GLuint'],
-    'extension': 'CHROMIUM_gpu_fence',
-  },
-  'CreateGpuFenceINTERNAL': {
-    'type': 'Custom',
-    'cmd_args': 'GLuint gpu_fence_id',
-    'extension': 'CHROMIUM_gpu_fence',
-    'extension_flag': 'chromium_gpu_fence',
-    'internal': True,
-  },
-  'CreateClientGpuFenceCHROMIUM': {
-    'type': 'NoCommand',
-    'impl_func': False,
-    'cmd_args': 'ClientGpuFence source',
-    'result': ['GLuint'],
-    'extension': 'CHROMIUM_gpu_fence',
-    'extension_flag': 'chromium_gpu_fence',
-  },
-  'WaitGpuFenceCHROMIUM': {
-    'type': 'Custom',
-    'cmd_args': 'GLuint gpu_fence_id',
-    'extension': 'CHROMIUM_gpu_fence',
-    'extension_flag': 'chromium_gpu_fence',
-  },
-  'DestroyGpuFenceCHROMIUM': {
-    'type': 'Custom',
-    'cmd_args': 'GLuint gpu_fence_id',
-    'extension': 'CHROMIUM_gpu_fence',
-    'extension_flag': 'chromium_gpu_fence',
   },
 }
 

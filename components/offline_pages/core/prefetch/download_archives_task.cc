@@ -10,7 +10,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/time/default_clock.h"
 #include "base/time/time.h"
-#include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_store_utils.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
@@ -87,16 +86,11 @@ std::unique_ptr<ItemsToDownload> SelectAndMarkItemsForDownloadSync(
   if (!transaction.Begin())
     return nullptr;
 
-  const int max_concurrent_downloads =
-      IsLimitlessPrefetchingEnabled()
-          ? DownloadArchivesTask::kMaxConcurrentDownloadsForLimitless
-          : DownloadArchivesTask::kMaxConcurrentDownloads;
-
   // Get current count of concurrent downloads and bail early if we are already
   // downloading more than we can.
   std::unique_ptr<int> concurrent_downloads(CountDownloadsInProgress(db));
   if (!concurrent_downloads ||
-      *concurrent_downloads >= max_concurrent_downloads) {
+      *concurrent_downloads >= DownloadArchivesTask::kMaxConcurrentDownloads) {
     return nullptr;
   }
 
@@ -108,7 +102,7 @@ std::unique_ptr<ItemsToDownload> SelectAndMarkItemsForDownloadSync(
   base::DefaultClock clock;
   PrefetchDownloaderQuota downloader_quota(db, &clock);
   int64_t available_quota = downloader_quota.GetAvailableQuotaBytes();
-  if (available_quota <= 0 && !IsLimitlessPrefetchingEnabled())
+  if (available_quota <= 0)
     return nullptr;
 
   ItemsToDownload ready_items = FindItemsReadyForDownload(db);
@@ -121,16 +115,12 @@ std::unique_ptr<ItemsToDownload> SelectAndMarkItemsForDownloadSync(
   auto items_to_download = base::MakeUnique<ItemsToDownload>();
   for (auto& ready_item : ready_items) {
     // Concurrent downloads check.
-    if (*concurrent_downloads >= max_concurrent_downloads)
+    if (*concurrent_downloads >= DownloadArchivesTask::kMaxConcurrentDownloads)
       break;
 
-    // Quota check. Skips all items that violate quota if limitless prefetching
-    // is disabled. If it is enabled then always proceed but still decrement the
-    // quota allowing it to become negative.
-    if (ready_item.archive_body_length > available_quota &&
-        !IsLimitlessPrefetchingEnabled()) {
+    // Quota check. Skips all items that violate quota.
+    if (ready_item.archive_body_length > available_quota)
       continue;
-    }
     available_quota -= ready_item.archive_body_length;
 
     // Explicitly not reusing the GUID from the last archive download attempt
@@ -143,8 +133,7 @@ std::unique_ptr<ItemsToDownload> SelectAndMarkItemsForDownloadSync(
     ++(*concurrent_downloads);
   }
 
-  // Write new remaining quota, limited to a minimum of 0.
-  available_quota = available_quota < 0 ? 0 : available_quota;
+  // Write new remaining quota with date here.
   if (!downloader_quota.SetAvailableQuotaBytes(available_quota))
     return nullptr;
 
@@ -158,13 +147,6 @@ std::unique_ptr<ItemsToDownload> SelectAndMarkItemsForDownloadSync(
 
 // static
 const int DownloadArchivesTask::kMaxConcurrentDownloads = 2;
-
-// This value matches the maximum number of concurrent downloads allowed by the
-// downloads service.
-// TODO(https://crbug.com/793158): obtain this value directly from the downloads
-// service once it is exposed.
-// static
-const int DownloadArchivesTask::kMaxConcurrentDownloadsForLimitless = 4;
 
 DownloadArchivesTask::DownloadArchivesTask(
     PrefetchStore* prefetch_store,

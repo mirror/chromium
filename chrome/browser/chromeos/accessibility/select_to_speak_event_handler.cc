@@ -74,11 +74,6 @@ void SelectToSpeakEventHandler::OnKeyEvent(ui::KeyEvent* event) {
       } else if (state_ == MOUSE_RELEASED) {
         cancel_event = true;
         state_ = INACTIVE;
-      } else if (state_ == SEARCH_DOWN) {
-        // They just tapped the search key without clicking the mouse.
-        // Don't cancel this event -- the search key may still be used
-        // by another part of Chrome, and we didn't use it here.
-        state_ = INACTIVE;
       }
     }
   } else if (state_ == SEARCH_DOWN) {

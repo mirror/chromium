@@ -59,6 +59,9 @@ class TestingAppListServiceImpl : public AppListServiceImpl {
     RecordAppListLaunch();
   }
 
+  void ShowForCustomLauncherPage(Profile* profile) override {}
+  void HideCustomLauncherPage() override {}
+
   void DismissAppList() override { showing_for_profile_ = NULL; }
 
   bool IsAppListVisible() const override { return !!showing_for_profile_; }

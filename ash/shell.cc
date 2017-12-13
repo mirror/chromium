@@ -50,7 +50,6 @@
 #include "ash/magnifier/partial_magnification_controller.h"
 #include "ash/media_controller.h"
 #include "ash/message_center/message_center_controller.h"
-#include "ash/metrics/time_to_first_present_recorder.h"
 #include "ash/new_window_controller.h"
 #include "ash/note_taking_controller.h"
 #include "ash/public/cpp/ash_switches.h"
@@ -767,10 +766,6 @@ Shell::~Shell() {
   // Removes itself as an observer of |pref_service_|.
   shelf_controller_.reset();
 
-  // NightLightController depends on the PrefService as well as the window tree
-  // host manager, and must be destructed before them. crbug.com/724231.
-  night_light_controller_ = nullptr;
-
   shell_port_->Shutdown();
   window_tree_host_manager_->Shutdown();
 
@@ -812,7 +807,9 @@ Shell::~Shell() {
   // TouchDevicesController depends on the PrefService and must be destructed
   // before it.
   touch_devices_controller_ = nullptr;
-
+  // NightLightController depeneds on the PrefService and must be destructed
+  // before it. crbug.com/724231.
+  night_light_controller_ = nullptr;
   local_state_.reset();
   shell_delegate_.reset();
 
@@ -967,9 +964,6 @@ void Shell::Init(ui::ContextFactory* context_factory,
   window_tree_host_manager_->Start();
   AshWindowTreeHostInitParams ash_init_params;
   window_tree_host_manager_->CreatePrimaryHost(ash_init_params);
-
-  time_to_first_present_recorder_ =
-      std::make_unique<TimeToFirstPresentRecorder>(GetPrimaryRootWindow());
 
   root_window_for_new_windows_ = GetPrimaryRootWindow();
 

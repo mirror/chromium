@@ -68,13 +68,13 @@
 #if GTK_MAJOR_VERSION == 2
 #include "chrome/browser/ui/libgtkui/native_theme_gtk2.h"  // nogncheck
 #elif GTK_MAJOR_VERSION == 3
-#include "chrome/browser/ui/libgtkui/native_theme_gtk3.h"         // nogncheck
+#include "chrome/browser/ui/libgtkui/native_theme_gtk3.h"  // nogncheck
+#include "chrome/browser/ui/libgtkui/nav_button_layout_manager_gtk3.h"  // nogncheck
 #include "chrome/browser/ui/libgtkui/nav_button_provider_gtk3.h"  // nogncheck
-#include "chrome/browser/ui/libgtkui/settings_provider_gtk3.h"    // nogncheck
 #endif
 
 #if defined(USE_GIO)
-#include "chrome/browser/ui/libgtkui/settings_provider_gsettings.h"
+#include "chrome/browser/ui/libgtkui/nav_button_layout_manager_gsettings.h"
 #endif
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
@@ -83,6 +83,10 @@
 
 #if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
 #include "chrome/browser/ui/views/nav_button_provider.h"
+#endif
+
+#if defined(USE_GCONF)
+#include "chrome/browser/ui/libgtkui/nav_button_layout_manager_gconf.h"
 #endif
 
 // A minimized port of GtkThemeService into something that can provide colors
@@ -275,13 +279,16 @@ int indicators_count;
 // The unknown content type.
 const char* kUnknownContentType = "application/octet-stream";
 
-std::unique_ptr<SettingsProvider> CreateSettingsProvider(GtkUi* gtk_ui) {
+std::unique_ptr<NavButtonLayoutManager> CreateNavButtonLayoutManager(
+    GtkUi* gtk_ui) {
 #if GTK_MAJOR_VERSION == 3
   if (GtkVersionCheck(3, 14))
-    return std::make_unique<SettingsProviderGtk3>(gtk_ui);
+    return std::make_unique<NavButtonLayoutManagerGtk3>(gtk_ui);
 #endif
 #if defined(USE_GIO)
-  return std::make_unique<SettingsProviderGSettings>(gtk_ui);
+  return std::make_unique<NavButtonLayoutManagerGSettings>(gtk_ui);
+#elif defined(USE_GCONF)
+  return std::make_unique<NavButtonLayoutManagerGconf>(gtk_ui);
 #else
   return nullptr;
 #endif
@@ -336,11 +343,7 @@ gfx::FontRenderParams GetGtkFontRenderParams() {
   return params;
 }
 
-views::LinuxUI::NonClientWindowFrameAction GetDefaultMiddleClickAction() {
-#if GTK_MAJOR_VERSION == 3
-  if (GtkVersionCheck(3, 14))
-    return views::LinuxUI::WINDOW_FRAME_ACTION_NONE;
-#endif
+views::LinuxUI::NonClientMiddleClickAction GetDefaultMiddleClickAction() {
   std::unique_ptr<base::Environment> env(base::Environment::Create());
   switch (base::nix::GetDesktopEnvironment(env.get())) {
     case base::nix::DESKTOP_ENVIRONMENT_KDE4:
@@ -349,9 +352,9 @@ views::LinuxUI::NonClientWindowFrameAction GetDefaultMiddleClickAction() {
       // middle mouse button to create tab groups. We don't support that in
       // Chrome, but at least avoid lowering windows in response to middle
       // clicks to avoid surprising users who expect the KDE behavior.
-      return views::LinuxUI::WINDOW_FRAME_ACTION_NONE;
+      return views::LinuxUI::MIDDLE_CLICK_ACTION_NONE;
     default:
-      return views::LinuxUI::WINDOW_FRAME_ACTION_LOWER;
+      return views::LinuxUI::MIDDLE_CLICK_ACTION_LOWER;
   }
 }
 
@@ -416,13 +419,7 @@ PROTECTED_MEMORY_SECTION base::ProtectedMemory<GdkSetAllowedBackendsFn>
 
 }  // namespace
 
-GtkUi::GtkUi() {
-  window_frame_actions_[WINDOW_FRAME_ACTION_SOURCE_DOUBLE_CLICK] =
-      views::LinuxUI::WINDOW_FRAME_ACTION_TOGGLE_MAXIMIZE;
-  window_frame_actions_[WINDOW_FRAME_ACTION_SOURCE_MIDDLE_CLICK] =
-      GetDefaultMiddleClickAction();
-  window_frame_actions_[WINDOW_FRAME_ACTION_SOURCE_RIGHT_CLICK] =
-      views::LinuxUI::WINDOW_FRAME_ACTION_MENU;
+GtkUi::GtkUi() : middle_click_action_(GetDefaultMiddleClickAction()) {
 #if GTK_MAJOR_VERSION > 2
   // Force Gtk to use Xwayland if it would have used wayland.  libgtkui assumes
   // the use of X11 (eg. X11InputMethodContextImplGtk) and will crash under
@@ -492,7 +489,7 @@ void GtkUi::Initialize() {
 #endif
 
   // We must build this after GTK gets initialized.
-  settings_provider_ = CreateSettingsProvider(this);
+  nav_button_layout_manager_ = CreateNavButtonLayoutManager(this);
 
   indicators_count = 0;
 
@@ -764,10 +761,8 @@ void GtkUi::SetWindowButtonOrdering(
   }
 }
 
-void GtkUi::SetNonClientWindowFrameAction(
-    NonClientWindowFrameActionSourceType source,
-    NonClientWindowFrameAction action) {
-  window_frame_actions_[source] = action;
+void GtkUi::SetNonClientMiddleClickAction(NonClientMiddleClickAction action) {
+  middle_click_action_ = action;
 }
 
 std::unique_ptr<ui::LinuxInputMethodContext> GtkUi::CreateInputMethodContext(
@@ -800,9 +795,9 @@ ui::SelectFileDialog* GtkUi::CreateSelectFileDialog(
   return SelectFileDialogImpl::Create(listener, std::move(policy));
 }
 
-views::LinuxUI::NonClientWindowFrameAction GtkUi::GetNonClientWindowFrameAction(
-    NonClientWindowFrameActionSourceType source) {
-  return window_frame_actions_[source];
+views::LinuxUI::NonClientMiddleClickAction
+GtkUi::GetNonClientMiddleClickAction() {
+  return middle_click_action_;
 }
 
 void GtkUi::NotifyWindowManagerStartupComplete() {

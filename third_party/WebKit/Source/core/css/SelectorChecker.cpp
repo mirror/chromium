@@ -321,9 +321,6 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
 
   // Disable :visited matching when we see the first link or try to match
   // anything else than an ancestors.
-  //
-  // FIXME(emilio): This is_sub_selector check is wrong if we allow sub
-  // selectors with combinators somewhere.
   if (!context.is_sub_selector &&
       (context.element->IsLink() || (relation != CSSSelector::kDescendant &&
                                      relation != CSSSelector::kChild)))
@@ -336,6 +333,8 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
 
   switch (relation) {
     case CSSSelector::kShadowDeepAsDescendant:
+      DCHECK(
+          !RuntimeEnabledFeatures::DeepCombinatorInCSSDynamicProfileEnabled());
       Deprecation::CountDeprecation(context.element->GetDocument(),
                                     WebFeature::kCSSDeepCombinator);
     // fall through
@@ -362,8 +361,6 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
           return match;
         if (NextSelectorExceedsScope(next_context))
           return kSelectorFailsCompletely;
-        if (next_context.element->IsLink())
-          next_context.visited_match_type = kVisitedMatchDisabled;
       }
       return kSelectorFailsCompletely;
     case CSSSelector::kChild: {
@@ -419,10 +416,15 @@ SelectorChecker::MatchStatus SelectorChecker::MatchForRelation(
 
     case CSSSelector::kShadowPseudo: {
       if (!is_ua_rule_ &&
-          context.selector->GetPseudoType() == CSSSelector::kPseudoShadow &&
-          mode_ == kQueryingRules) {
-        UseCounter::Count(context.element->GetDocument(),
-                          WebFeature::kPseudoShadowInStaticProfile);
+          context.selector->GetPseudoType() == CSSSelector::kPseudoShadow) {
+        if (mode_ == kQueryingRules) {
+          UseCounter::Count(context.element->GetDocument(),
+                            WebFeature::kPseudoShadowInStaticProfile);
+        } else if (RuntimeEnabledFeatures::
+                       ShadowPseudoElementInCSSDynamicProfileEnabled()) {
+          Deprecation::CountDeprecation(context.element->GetDocument(),
+                                        WebFeature::kCSSSelectorPseudoShadow);
+        }
       }
       // If we're in the same tree-scope as the scoping element, then following
       // a shadow descendant combinator would escape that and thus the scope.

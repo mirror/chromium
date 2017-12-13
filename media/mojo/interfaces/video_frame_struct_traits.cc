@@ -26,8 +26,7 @@ media::mojom::VideoFrameDataPtr MakeVideoFrameData(
     media::MojoSharedBufferVideoFrame* mojo_frame =
         static_cast<media::MojoSharedBufferVideoFrame*>(input.get());
 
-    mojo::ScopedSharedBufferHandle dup = mojo_frame->Handle().Clone(
-        mojo::SharedBufferHandle::AccessMode::READ_ONLY);
+    mojo::ScopedSharedBufferHandle dup = mojo_frame->Handle().Clone();
     DCHECK(dup.is_valid());
 
     return media::mojom::VideoFrameData::NewSharedBufferData(

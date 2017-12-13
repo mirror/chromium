@@ -124,7 +124,7 @@ class CONTENT_EXPORT ResourceDispatcherHostDelegate {
   // with an unspecified Previews state.  If previews_to_allow is set to
   // anything other than PREVIEWS_UNSPECIFIED, it is taken as a limit on
   // available preview states.
-  virtual PreviewsState DetermineEnabledPreviews(
+  virtual PreviewsState DeterminePreviewsState(
       net::URLRequest* url_request,
       content::ResourceContext* resource_context,
       PreviewsState previews_to_allow);

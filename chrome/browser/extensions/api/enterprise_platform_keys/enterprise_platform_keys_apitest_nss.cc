@@ -13,6 +13,7 @@
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/login/test/https_forwarder.h"
+#include "chrome/browser/chromeos/login/ui/login_display_host.h"
 #include "chrome/browser/chromeos/policy/affiliation_test_helper.h"
 #include "chrome/browser/chromeos/policy/device_policy_cros_browser_test.h"
 #include "chrome/browser/extensions/extension_apitest.h"
@@ -35,6 +36,7 @@
 #include "crypto/nss_util_internal.h"
 #include "crypto/scoped_test_system_nss_key_slot.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/test/result_catcher.h"
 #include "google_apis/gaia/fake_gaia.h"
@@ -323,6 +325,10 @@ class EnterprisePlatformKeysTest
   void TearDownOnMainThread() override {
     ExtensionApiTest::TearDownOnMainThread();
 
+    if (chromeos::LoginDisplayHost::default_host())
+      chromeos::LoginDisplayHost::default_host()->Finalize(base::OnceClosure());
+    base::RunLoop().RunUntilIdle();
+
     if (GetParam().system_token_ == SYSTEM_TOKEN_EXISTS) {
       base::RunLoop loop;
       content::BrowserThread::PostTask(
@@ -394,6 +400,7 @@ class EnterprisePlatformKeysTest
   }
 
  private:
+
   void SetUpTestSystemSlotOnIO(const base::Closure& done_callback) {
     test_system_slot_.reset(new crypto::ScopedTestSystemNSSKeySlot());
     ASSERT_TRUE(test_system_slot_->ConstructedSuccessfully());

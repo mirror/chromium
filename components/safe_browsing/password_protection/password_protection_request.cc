@@ -6,7 +6,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/password_manager/core/browser/password_reuse_detector.h"
@@ -299,7 +298,7 @@ void PasswordProtectionRequest::OnURLFetchComplete(
   const bool is_success = status.is_success();
   const int response_code = source->GetResponseCode();
 
-  base::UmaHistogramSparse(
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
       "PasswordProtection.PasswordProtectionResponseOrErrorCode",
       is_success ? response_code : status.error());
 

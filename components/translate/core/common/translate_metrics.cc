@@ -9,7 +9,6 @@
 #include <algorithm>
 
 #include "base/macros.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/metrics_hashes.h"
 #include "url/url_constants.h"
@@ -120,7 +119,7 @@ void ReportLanguageDetectionConflict(const std::string& page_lang,
   const std::string page_lang_token =
       it == std::end(kLanguageDetectionConflictPageLangs) ? "other" : *it;
 
-  base::UmaHistogramSparse(
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
       metrics_internal::kTranslateLanguageDetectionConflict,
       base::HashMetricName(page_lang_token + "," + cld_lang));
 }

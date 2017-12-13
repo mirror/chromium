@@ -122,9 +122,6 @@ class PlatformInfo(object):
         if not self.is_linux():
             return None
 
-        # Fedora also has /etc/redhat-release, this check must go first.
-        if self._filesystem.exists('/etc/fedora-release'):
-            return 'fedora'
         if self._filesystem.exists('/etc/redhat-release'):
             return 'redhat'
         if self._filesystem.exists('/etc/debian_version'):

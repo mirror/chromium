@@ -28,6 +28,7 @@
 #include "sandbox/linux/system_headers/linux_syscalls.h"
 
 namespace sandbox {
+
 namespace syscall_broker {
 
 namespace {
@@ -41,62 +42,21 @@ int sys_open(const char* pathname, int flags) {
   return syscall(__NR_openat, AT_FDCWD, pathname, flags, mode);
 }
 
-// Perform access(2) on |requested_filename| with mode |mode| if allowed by our
-// permission_list. Write the syscall return value (-errno) to |write_pickle|.
-void AccessFileForIPC(const BrokerCommandSet& allowed_command_set,
-                      const BrokerPermissionList& permission_list,
-                      const std::string& requested_filename,
-                      int mode,
-                      base::Pickle* write_pickle) {
-  const char* file_to_access = NULL;
-  if (!CommandAccessIsSafe(allowed_command_set, permission_list,
-                           requested_filename.c_str(), mode, &file_to_access)) {
-    write_pickle->WriteInt(-permission_list.denied_errno());
-    return;
-  }
-
-  CHECK(file_to_access);
-  if (access(file_to_access, mode) < 0) {
-    write_pickle->WriteInt(-errno);
-    return;
-  }
-
-  write_pickle->WriteInt(0);
-}
-
-void MkdirFileForIPC(const BrokerCommandSet& allowed_command_set,
-                     const BrokerPermissionList& permission_list,
-                     const std::string& filename,
-                     int mode,
-                     base::Pickle* write_pickle) {
-  const char* file_to_access = nullptr;
-  if (!CommandMkdirIsSafe(allowed_command_set, permission_list,
-                          filename.c_str(), &file_to_access)) {
-    write_pickle->WriteInt(-permission_list.denied_errno());
-    return;
-  }
-  if (mkdir(file_to_access, mode) < 0) {
-    write_pickle->WriteInt(-errno);
-    return;
-  }
-  write_pickle->WriteInt(0);
-}
-
-// Open |requested_filename| with |flags| if allowed by our permission list.
+// Open |requested_filename| with |flags| if allowed by our policy.
 // Write the syscall return value (-errno) to |write_pickle| and append
 // a file descriptor to |opened_files| if relevant.
 void OpenFileForIPC(const BrokerCommandSet& allowed_command_set,
-                    const BrokerPermissionList& permission_list,
+                    const BrokerPermissionList& policy,
                     const std::string& requested_filename,
                     int flags,
                     base::Pickle* write_pickle,
                     std::vector<int>* opened_files) {
   const char* file_to_open = NULL;
   bool unlink_after_open = false;
-  if (!CommandOpenIsSafe(allowed_command_set, permission_list,
+  if (!CommandOpenIsSafe(allowed_command_set, policy,
                          requested_filename.c_str(), flags, &file_to_open,
                          &unlink_after_open)) {
-    write_pickle->WriteInt(-permission_list.denied_errno());
+    write_pickle->WriteInt(-policy.denied_errno());
     return;
   }
 
@@ -114,79 +74,43 @@ void OpenFileForIPC(const BrokerCommandSet& allowed_command_set,
   write_pickle->WriteInt(0);
 }
 
-// Perform rename(2) on |old_filename| to |new_filename| and marshal the
-// result to |write_pickle|.
-void RenameFileForIPC(const BrokerCommandSet& allowed_command_set,
-                      const BrokerPermissionList& permission_list,
-                      const std::string& old_filename,
-                      const std::string& new_filename,
+// Perform access(2) on |requested_filename| with mode |mode| if allowed by our
+// policy. Write the syscall return value (-errno) to |write_pickle|.
+void AccessFileForIPC(const BrokerCommandSet& allowed_command_set,
+                      const BrokerPermissionList& policy,
+                      const std::string& requested_filename,
+                      int mode,
                       base::Pickle* write_pickle) {
-  const char* old_file_to_access = nullptr;
-  const char* new_file_to_access = nullptr;
-  if (!CommandRenameIsSafe(allowed_command_set, permission_list,
-                           old_filename.c_str(), new_filename.c_str(),
-                           &old_file_to_access, &new_file_to_access)) {
-    write_pickle->WriteInt(-permission_list.denied_errno());
+  const char* file_to_access = NULL;
+  if (!CommandAccessIsSafe(allowed_command_set, policy,
+                           requested_filename.c_str(), mode, &file_to_access)) {
+    write_pickle->WriteInt(-policy.denied_errno());
     return;
   }
-  if (rename(old_file_to_access, new_file_to_access) < 0) {
-    write_pickle->WriteInt(-errno);
-    return;
-  }
-  write_pickle->WriteInt(0);
-}
 
-// Perform readlink(2) on |filename| using a buffer of MAX_PATH bytes.
-void ReadlinkFileForIPC(const BrokerCommandSet& allowed_command_set,
-                        const BrokerPermissionList& permission_list,
-                        const std::string& filename,
-                        base::Pickle* write_pickle) {
-  const char* file_to_access = nullptr;
-  if (!CommandReadlinkIsSafe(allowed_command_set, permission_list,
-                             filename.c_str(), &file_to_access)) {
-    write_pickle->WriteInt(-permission_list.denied_errno());
-    return;
-  }
-  char buf[PATH_MAX];
-  ssize_t result = readlink(file_to_access, buf, sizeof(buf));
-  if (result < 0) {
+  CHECK(file_to_access);
+  if (access(file_to_access, mode) < 0) {
     write_pickle->WriteInt(-errno);
     return;
   }
-  write_pickle->WriteInt(result);
-  write_pickle->WriteData(buf, result);
-}
 
-void RmdirFileForIPC(const BrokerCommandSet& allowed_command_set,
-                     const BrokerPermissionList& permission_list,
-                     const std::string& requested_filename,
-                     base::Pickle* write_pickle) {
-  const char* file_to_access = nullptr;
-  if (!CommandRmdirIsSafe(allowed_command_set, permission_list,
-                          requested_filename.c_str(), &file_to_access)) {
-    write_pickle->WriteInt(-permission_list.denied_errno());
-    return;
-  }
-  if (rmdir(file_to_access) < 0) {
-    write_pickle->WriteInt(-errno);
-    return;
-  }
   write_pickle->WriteInt(0);
 }
 
 // Perform stat(2) on |requested_filename| and marshal the result to
 // |write_pickle|.
 void StatFileForIPC(const BrokerCommandSet& allowed_command_set,
-                    const BrokerPermissionList& permission_list,
+                    const BrokerPermissionList& policy,
                     BrokerCommand command_type,
                     const std::string& requested_filename,
                     base::Pickle* write_pickle) {
   const char* file_to_access = nullptr;
-  if (!CommandStatIsSafe(allowed_command_set, permission_list,
+  if (!CommandStatIsSafe(allowed_command_set, policy,
                          requested_filename.c_str(), &file_to_access)) {
-    write_pickle->WriteInt(-permission_list.denied_errno());
+    write_pickle->WriteInt(-policy.denied_errno());
     return;
   }
+  CHECK(file_to_access);
   if (command_type == COMMAND_STAT) {
     struct stat sb;
     if (stat(file_to_access, &sb) < 0) {
@@ -207,27 +131,53 @@ void StatFileForIPC(const BrokerCommandSet& allowed_command_set,
   }
 }
 
-void UnlinkFileForIPC(const BrokerCommandSet& allowed_command_set,
-                      const BrokerPermissionList& permission_list,
-                      const std::string& requested_filename,
+// Perform rename(2) on |old_filename| to |new_filename| and marshal the
+// result to |write_pickle|.
+void RenameFileForIPC(const BrokerCommandSet& allowed_command_set,
+                      const BrokerPermissionList& policy,
+                      const std::string& old_filename,
+                      const std::string& new_filename,
                       base::Pickle* write_pickle) {
-  const char* file_to_access = nullptr;
-  if (!CommandUnlinkIsSafe(allowed_command_set, permission_list,
-                           requested_filename.c_str(), &file_to_access)) {
-    write_pickle->WriteInt(-permission_list.denied_errno());
+  const char* old_file_to_access = nullptr;
+  const char* new_file_to_access = nullptr;
+  if (!CommandRenameIsSafe(allowed_command_set, policy, old_filename.c_str(),
+                           new_filename.c_str(), &old_file_to_access,
+                           &new_file_to_access)) {
+    write_pickle->WriteInt(-policy.denied_errno());
     return;
   }
-  if (unlink(file_to_access) < 0) {
+  if (rename(old_file_to_access, new_file_to_access) < 0) {
     write_pickle->WriteInt(-errno);
     return;
   }
   write_pickle->WriteInt(0);
 }
 
+// Perform readlink(2) on |filename| using a buffer of MAX_PATH bytes.
+void ReadlinkFileForIPC(const BrokerCommandSet& allowed_command_set,
+                        const BrokerPermissionList& policy,
+                        const std::string& filename,
+                        base::Pickle* write_pickle) {
+  const char* file_to_access = nullptr;
+  if (!CommandReadlinkIsSafe(allowed_command_set, policy, filename.c_str(),
+                             &file_to_access)) {
+    write_pickle->WriteInt(-policy.denied_errno());
+    return;
+  }
+  char buf[PATH_MAX];
+  ssize_t result = readlink(file_to_access, buf, sizeof(buf));
+  if (result < 0) {
+    write_pickle->WriteInt(-errno);
+    return;
+  }
+  write_pickle->WriteInt(result);
+  write_pickle->WriteData(buf, result);
+}
+
 // Handle a |command_type| request contained in |iter| and write the reply
 // to |write_pickle|, adding any files opened to |opened_files|.
 bool HandleRemoteCommand(const BrokerCommandSet& allowed_command_set,
-                         const BrokerPermissionList& permission_list,
+                         const BrokerPermissionList& policy,
                          base::PickleIterator iter,
                          base::Pickle* write_pickle,
                          std::vector<int>* opened_files) {
@@ -241,17 +191,8 @@ bool HandleRemoteCommand(const BrokerCommandSet& allowed_command_set,
       int flags = 0;
       if (!iter.ReadString(&requested_filename) || !iter.ReadInt(&flags))
         return false;
-      AccessFileForIPC(allowed_command_set, permission_list, requested_filename,
-                       flags, write_pickle);
-      break;
-    }
-    case COMMAND_MKDIR: {
-      std::string requested_filename;
-      int mode = 0;
-      if (!iter.ReadString(&requested_filename) || !iter.ReadInt(&mode))
-        return false;
-      MkdirFileForIPC(allowed_command_set, permission_list, requested_filename,
-                      mode, write_pickle);
+      AccessFileForIPC(allowed_command_set, policy, requested_filename, flags,
+                       write_pickle);
       break;
     }
     case COMMAND_OPEN: {
@@ -259,33 +200,8 @@ bool HandleRemoteCommand(const BrokerCommandSet& allowed_command_set,
       int flags = 0;
       if (!iter.ReadString(&requested_filename) || !iter.ReadInt(&flags))
         return false;
-      OpenFileForIPC(allowed_command_set, permission_list, requested_filename,
-                     flags, write_pickle, opened_files);
-      break;
-    }
-    case COMMAND_READLINK: {
-      std::string filename;
-      if (!iter.ReadString(&filename))
-        return false;
-      ReadlinkFileForIPC(allowed_command_set, permission_list, filename,
-                         write_pickle);
-      break;
-    }
-    case COMMAND_RENAME: {
-      std::string old_filename;
-      std::string new_filename;
-      if (!iter.ReadString(&old_filename) || !iter.ReadString(&new_filename))
-        return false;
-      RenameFileForIPC(allowed_command_set, permission_list, old_filename,
-                       new_filename, write_pickle);
-      break;
-    }
-    case COMMAND_RMDIR: {
-      std::string requested_filename;
-      if (!iter.ReadString(&requested_filename))
-        return false;
-      RmdirFileForIPC(allowed_command_set, permission_list, requested_filename,
-                      write_pickle);
+      OpenFileForIPC(allowed_command_set, policy, requested_filename, flags,
+                     write_pickle, opened_files);
       break;
     }
     case COMMAND_STAT:
@@ -293,17 +209,25 @@ bool HandleRemoteCommand(const BrokerCommandSet& allowed_command_set,
       std::string requested_filename;
       if (!iter.ReadString(&requested_filename))
         return false;
-      StatFileForIPC(allowed_command_set, permission_list,
+      StatFileForIPC(allowed_command_set, policy,
                      static_cast<BrokerCommand>(command_type),
                      requested_filename, write_pickle);
       break;
     }
-    case COMMAND_UNLINK: {
-      std::string requested_filename;
-      if (!iter.ReadString(&requested_filename))
+    case COMMAND_RENAME: {
+      std::string old_filename;
+      std::string new_filename;
+      if (!iter.ReadString(&old_filename) || !iter.ReadString(&new_filename))
         return false;
-      UnlinkFileForIPC(allowed_command_set, permission_list, requested_filename,
+      RenameFileForIPC(allowed_command_set, policy, old_filename, new_filename,
                        write_pickle);
+      break;
+    }
+    case COMMAND_READLINK: {
+      std::string filename;
+      if (!iter.ReadString(&filename))
+        return false;
+      ReadlinkFileForIPC(allowed_command_set, policy, filename, write_pickle);
       break;
     }
     default:

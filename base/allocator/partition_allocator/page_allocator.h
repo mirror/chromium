@@ -39,6 +39,7 @@ enum PageAccessibilityConfiguration {
   PageInaccessible,
   PageReadWrite,
   PageReadExecute,
+  PageReadWriteExecute,
 };
 
 // Allocate one or more pages.

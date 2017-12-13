@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "components/cryptauth/fake_remote_device_provider.h"
 #include "components/cryptauth/remote_device_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -53,13 +54,13 @@ class TetherHostFetcherImplTest : public testing::Test {
     last_fetched_single_host_.reset();
 
     fake_remote_device_provider_ =
-        std::make_unique<cryptauth::FakeRemoteDeviceProvider>();
+        base::MakeUnique<cryptauth::FakeRemoteDeviceProvider>();
     fake_remote_device_provider_->set_synced_remote_devices(test_devices_);
 
-    tether_host_fetcher_ = std::make_unique<TetherHostFetcherImpl>(
+    tether_host_fetcher_ = base::MakeUnique<TetherHostFetcherImpl>(
         fake_remote_device_provider_.get());
 
-    test_observer_ = std::make_unique<TestObserver>();
+    test_observer_ = base::MakeUnique<TestObserver>();
     tether_host_fetcher_->AddObserver(test_observer_.get());
   }
 

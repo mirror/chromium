@@ -105,11 +105,9 @@ views::View* SuggestionsContainerView::GetSelectedView() const {
              : nullptr;
 }
 
-views::View* SuggestionsContainerView::GetFirstResultView() {
+views::View* SuggestionsContainerView::SetFirstResultSelected(bool selected) {
   return nullptr;
 }
-
-void SuggestionsContainerView::SetFirstResultSelected(bool selected) {}
 
 void SuggestionsContainerView::CreateAppsGrid(int apps_num) {
   DCHECK(search_result_tile_views_.empty());

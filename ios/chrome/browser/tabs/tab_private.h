@@ -23,6 +23,9 @@ class WebStateImpl;
 
 @interface Tab (TestingSupport)
 
+// Replaces the existing |externalAppLauncher_|.
+- (void)replaceExternalAppLauncher:(id)externalAppLauncher;
+
 // Returns the Tab owning TabModel.
 - (TabModel*)parentTabModel;
 

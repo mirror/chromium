@@ -57,7 +57,6 @@
 #include "chrome/browser/component_updater/crl_set_component_installer.h"
 #include "chrome/browser/component_updater/downloadable_strings_component_installer.h"
 #include "chrome/browser/component_updater/file_type_policies_component_installer.h"
-#include "chrome/browser/component_updater/mei_preload_component_installer.h"
 #include "chrome/browser/component_updater/optimization_hints_component_installer.h"
 #include "chrome/browser/component_updater/origin_trials_component_installer.h"
 #include "chrome/browser/component_updater/pepper_flash_component_installer.h"
@@ -534,8 +533,6 @@ void RegisterComponentsForUpdate(PrefService* profile_prefs) {
     RegisterDownloadableStringsComponent(cus);
 #endif
   }
-
-  RegisterMediaEngagementPreloadComponent(cus, base::OnceClosure());
 
 #if defined(OS_WIN)
 #if defined(GOOGLE_CHROME_BUILD)
@@ -1711,8 +1708,7 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
   if (parsed_command_line().HasSwitch(switches::kDebugPrint)) {
     base::FilePath path =
         parsed_command_line().GetSwitchValuePath(switches::kDebugPrint);
-    if (!path.empty())
-      printing::PrintedDocument::SetDebugDumpPath(path);
+    printing::PrintedDocument::set_debug_dump_path(path);
   }
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW) && !defined(OFFICIAL_BUILD)
 

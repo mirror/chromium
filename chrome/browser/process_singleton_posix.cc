@@ -67,13 +67,13 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/posix/eintr_wrapper.h"
 #include "base/posix/safe_strerror.h"
 #include "base/rand_util.h"
 #include "base/sequenced_task_runner_helpers.h"
+#include "base/single_thread_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
@@ -369,7 +369,7 @@ class ScopedSocket {
 
 // Returns a random string for uniquifying profile connections.
 std::string GenerateCookie() {
-  return base::NumberToString(base::RandUint64());
+  return base::Uint64ToString(base::RandUint64());
 }
 
 bool CheckCookie(const base::FilePath& path, const base::FilePath& cookie) {
@@ -1146,7 +1146,7 @@ void ProcessSingleton::KillProcess(int pid) {
                                     << base::safe_strerror(errno);
 
   int error_code = (rv == 0) ? 0 : errno;
-  base::UmaHistogramSparse(
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
       "Chrome.ProcessSingleton.TerminateProcessErrorCode.Posix", error_code);
 
   RemoteProcessInteractionResult action = TERMINATE_SUCCEEDED;

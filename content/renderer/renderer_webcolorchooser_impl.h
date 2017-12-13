@@ -9,9 +9,8 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "content/common/color_chooser.mojom.h"
+#include "content/public/common/color_suggestion.h"
 #include "content/public/renderer/render_frame_observer.h"
-#include "mojo/public/cpp/bindings/binding.h"
 #include "third_party/WebKit/public/web/WebColorChooser.h"
 #include "third_party/WebKit/public/web/WebColorChooserClient.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -19,7 +18,6 @@
 namespace content {
 
 class RendererWebColorChooserImpl : public blink::WebColorChooser,
-                                    public mojom::ColorChooserClient,
                                     public RenderFrameObserver {
  public:
   explicit RendererWebColorChooserImpl(RenderFrame* render_frame,
@@ -31,7 +29,9 @@ class RendererWebColorChooserImpl : public blink::WebColorChooser,
   void EndChooser() override;
 
   void Open(SkColor initial_color,
-            std::vector<mojom::ColorSuggestionPtr> suggestions);
+            const std::vector<content::ColorSuggestion>& suggestions);
+
+  blink::WebColorChooserClient* client() { return client_; }
 
  private:
   // RenderFrameObserver implementation:
@@ -39,14 +39,13 @@ class RendererWebColorChooserImpl : public blink::WebColorChooser,
   // away. RendererWebColorChooserImpl is owned by
   // blink::ColorChooserUIController.
   void OnDestruct() override {}
+  bool OnMessageReceived(const IPC::Message& message) override;
 
-  // content::mojom::ColorChooserClient
-  void DidChooseColor(SkColor color) override;
+  void OnDidChooseColorResponse(int color_chooser_id, SkColor color);
+  void OnDidEndColorChooser(int color_chooser_id);
 
-  blink::WebColorChooserClient* blink_client_;
-  mojom::ColorChooserFactoryPtr color_chooser_factory_;
-  mojom::ColorChooserPtr color_chooser_;
-  mojo::Binding<mojom::ColorChooserClient> mojo_client_binding_;
+  int identifier_;
+  blink::WebColorChooserClient* client_;
 
   DISALLOW_COPY_AND_ASSIGN(RendererWebColorChooserImpl);
 };

@@ -95,7 +95,10 @@ ScriptPromise BudgetService::getBudget(ScriptState* script_state) {
   ScriptPromise promise = resolver->Promise();
 
   // Get the budget from the browser BudgetService.
-  service_->GetBudget(WTF::Bind(&BudgetService::GotBudget, WrapPersistent(this),
+  scoped_refptr<const SecurityOrigin> origin(
+      ExecutionContext::From(script_state)->GetSecurityOrigin());
+  service_->GetBudget(origin,
+                      WTF::Bind(&BudgetService::GotBudget, WrapPersistent(this),
                                 WrapPersistent(resolver)));
   return promise;
 }
@@ -139,9 +142,11 @@ ScriptPromise BudgetService::reserve(ScriptState* script_state,
   ScriptPromise promise = resolver->Promise();
 
   // Call to the BudgetService to place the reservation.
-  service_->Reserve(
-      type, WTF::Bind(&BudgetService::GotReservation, WrapPersistent(this),
-                      WrapPersistent(resolver)));
+  scoped_refptr<const SecurityOrigin> origin(
+      ExecutionContext::From(script_state)->GetSecurityOrigin());
+  service_->Reserve(origin, type,
+                    WTF::Bind(&BudgetService::GotReservation,
+                              WrapPersistent(this), WrapPersistent(resolver)));
   return promise;
 }
 

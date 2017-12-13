@@ -1,60 +1,64 @@
-// Copyright 2017 The Chromium Authors. All rights reserved.
+// Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// This file defines the mojo interface between Android and Chromium for video
-// decoding. Any Mojo callee that returns a value does so by callback.
-// However, the caller may receive it by out-param (for sync calls) or
-// via callback (for async calls).
-// However, we only use callbacks to Reset, Flush and Initialize
-// in the present design and don't use for other functions.
-// This is mainly because other VDAClient functions and VDA functions are not
-// correlated.
-// Please don't use this design as a good reference, it is strongly recommended
-// in mojom that all the function results are reported by passed callbacks.
+// This file defined the mojo interface between Android and Chromium for video
+// decoding. See comments of VideoDecodeAccelerator for more info.
 
 module arc.mojom;
 
-import "gfx.mojom";
 import "video_common.mojom";
 
-// Information of the bitstream buffer.
-struct BitstreamBuffer {
-  int32 bitstream_id;
-  // This handle is passed and used in Decode().
-  // The handle fd is ashmem.
-  handle handle_fd;
-  uint32 offset;
+[Extensible]
+enum HalPixelFormatExtension {
+  HAL_PIXEL_FORMAT_YCbCr_420_888 = 0x23,
+  HAL_PIXEL_FORMAT_H264 = 0x34363248,
+  HAL_PIXEL_FORMAT_VP8 = 0x00385056,
+};
+
+enum PortType {
+  PORT_INPUT = 0,
+  PORT_OUTPUT = 1,
+};
+
+struct BufferMetadata {
+  int64 timestamp;  // in microseconds
   uint32 bytes_used;
 };
 
-struct Picture {
-  int32 picture_buffer_id;
-  int32 bitstream_id;
-  // the crop rectangle with the picture buffer to be displayed.
-  Rect crop_rect;
-};
-
-// Format specification of the picture buffer request.
-struct PictureBufferFormat {
-  HalPixelFormat pixel_format;
+struct VideoFormat {
+  uint32 pixel_format;
   uint32 buffer_size;
 
   // minimal number of buffers required to process the video.
   uint32 min_num_buffers;
   uint32 coded_width;
   uint32 coded_height;
+  uint32 crop_left;
+  uint32 crop_width;
+  uint32 crop_top;
+  uint32 crop_height;
 };
 
+// Next MinVersion: 2
 struct VideoDecodeAcceleratorConfig {
-  VideoCodecProfile profile;
-  bool secure_mode;
+  // Deprecated. This config struct is used for decoder only.
+  enum DeviceTypeDeprecated {
+    DEVICE_ENCODER = 0,
+    DEVICE_DECODER = 1,
+  };
+
+  // Deprecated. Only decoder will be supported.
+  DeviceTypeDeprecated device_type_deprecated;
+  uint32 num_input_buffers;
+  uint32 input_pixel_format;
+  [MinVersion=1] bool secure_mode;
 };
 
-// Next MinVersion: 1
-// Next method ID: 8
+// Next MinVersion: 5
+// Deprecated method IDs: 2, 7
+// Next method ID: 11
 interface VideoDecodeAccelerator {
-  [Extensible]
   enum Result {
     SUCCESS = 0,
     ILLEGAL_STATE = 1,
@@ -62,74 +66,42 @@ interface VideoDecodeAccelerator {
     UNREADABLE_INPUT = 3,
     PLATFORM_FAILURE = 4,
     INSUFFICIENT_RESOURCES = 5,
-    CANCELLED = 6,
-    RESULT_MAX = 7,
   };
 
-  // Initializes video decoder accelerator with specific video codec profile.
-  // The caller needs to wait for the initialization result (returned by
-  // callback) before calling any other methods.
-  Initialize@0(VideoDecodeAcceleratorConfig config,
+  [MinVersion=2]
+  Initialize@8(VideoDecodeAcceleratorConfig config,
                VideoDecodeClient client) => (Result result);
 
-  // Allocate protected input buffer with |handle_fd| and aligned |size|.
-  // This function can be called only in secure mode.
-  // If this is succeeded, this returns true. Otherwise, returns false.
-  AllocateProtectedBuffer@7(handle handle_fd,
-                            uint64 size) => (bool success);
+  [MinVersion=4]
+  AllocateProtectedBuffer@10(PortType port, uint32 index, handle handle_fd,
+                             uint64 size) => (bool result);
 
-  // Decodes the content in the shared memory of the bitstream buffer. The
-  // callee needs to map the the shared memory to read the content and is
-  // responsible to release the shared memory by closing the file descriptor.
-  Decode@1(BitstreamBuffer bitstream_buffer);
+  BindSharedMemory@1(PortType port, uint32 index, handle ashmem_fd,
+                     uint32 offset, uint32 length);
 
-  // Sets the number of output picture buffers.
-  AssignPictureBuffers@2(uint32 count);
+  [MinVersion=3]
+  BindDmabuf@9(PortType port, uint32 index, handle dmabuf_fd,
+               array<VideoFramePlane> planes);
 
-  // Assigns a buffer to be used by the accelerator with specified
-  // |picture_buffer_id|.
-  // In secure mode, if a new protected output buffer is allocated for the given
-  // |picture_buffer_id|. Any previously-allocated buffer with the same
-  // |picture_buffer_id| will be released.
-  // Call VDA::ImportBufferForPicture with gfx::GpuMemoryBufferHandle
-  // created from |handle_fd| and |planes|.
-  // This should be preceded by a call to AssignPictureBuffers().
-  ImportBufferForPicture@3(int32 picture_buffer_id, handle handle_fd,
-                           array<VideoFramePlane> planes);
+  UseBuffer@3(PortType port, uint32 index, BufferMetadata metadata);
 
-  // Returns picture buffer with specified |picture_buffer_id| to be reused by
-  // the accelerator.
-  ReusePictureBuffer@4(int32 picture_buffer_id);
+  SetNumberOfOutputBuffers@4(uint32 number);
 
-  // Resets the accelerator, without decoding any pending buffers.
-  // When it is done, the callback will be invoked.
-  Reset@5() => (Result result);
+  Reset@5();
 
-  // Flushes the accelerator. After all the output buffers pending decode have
-  // been returned to client, the callback will be invoked.
-  // Flush() can be cancelled by a succeeding Reset(). In that case, the
-  // callback is called with Result::CANCELLED.
-  Flush@6() => (Result result);
+  Flush@6();
 };
 
-// Next MinVersion: 1
-// Next method ID: 4
+// Deprecated method IDs: 0
+// Next method ID: 6
 interface VideoDecodeClient {
-  // Callback to tell client how many and what size of buffers to provide.
-  ProvidePictureBuffers@0(PictureBufferFormat format);
+  OnError@1(VideoDecodeAccelerator.Result error);
 
-  // Called to notify the client that |picture| is ready to be displayed.
-  // The calls to PictureReady() are in display order and Picture should
-  // be displayed in that order.
-  PictureReady@1(Picture picture);
+  OnBufferDone@2(PortType port, uint32 index, BufferMetadata metadata);
 
-  // Called to notify that decoder has decoded the end of the BitstreamBuffer
-  // with specified |bitstream_id|.
-  NotifyEndOfBitstreamBuffer@2(int32 bitstream_id);
+  OnResetDone@3();
 
-  // Called when an asynchronous error happens, for example, illegal state,
-  // error while decoding the stream, or a platform/system error.
-  // The errors in Initialize(), Reset() and Flush(), will not be reported here,
-  // but will be returned in its callback function.
-  NotifyError@3(VideoDecodeAccelerator.Result error);
+  OnOutputFormatChanged@4(VideoFormat format);
+
+  OnFlushDone@5();
 };

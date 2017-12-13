@@ -26,7 +26,7 @@ class RendererWebApplicationCacheHostImpl : public WebApplicationCacheHostImpl {
   void OnCacheSelected(const AppCacheInfo& info) override;
 
   void SetSubresourceFactory(
-      mojom::URLLoaderFactoryPtr url_loader_factory) override;
+      mojo::MessagePipeHandle loader_factory_pipe_handle) override;
 
  private:
   RenderViewImpl* GetRenderView();

@@ -719,11 +719,11 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // scroll-snap-margin-block-start
-  float ScrollSnapMarginBlockStart() const {
+  const Length& ScrollSnapMarginBlockStart() const {
     return IsHorizontalWritingMode() ? ScrollSnapMarginTop()
                                      : ScrollSnapMarginLeft();
   }
-  void SetScrollSnapMarginBlockStart(float v) {
+  void SetScrollSnapMarginBlockStart(const Length& v) {
     if (IsHorizontalWritingMode())
       SetScrollSnapMarginTop(v);
     else
@@ -731,11 +731,11 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // scroll-snap-margin-block-end
-  float ScrollSnapMarginBlockEnd() const {
+  const Length& ScrollSnapMarginBlockEnd() const {
     return IsHorizontalWritingMode() ? ScrollSnapMarginBottom()
                                      : ScrollSnapMarginRight();
   }
-  void SetScrollSnapMarginBlockEnd(float v) {
+  void SetScrollSnapMarginBlockEnd(const Length& v) {
     if (IsHorizontalWritingMode())
       SetScrollSnapMarginBottom(v);
     else
@@ -743,11 +743,11 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // scroll-snap-margin-inline-start
-  float ScrollSnapMarginInlineStart() const {
+  const Length& ScrollSnapMarginInlineStart() const {
     return IsHorizontalWritingMode() ? ScrollSnapMarginLeft()
                                      : ScrollSnapMarginTop();
   }
-  void SetScrollSnapMarginInlineStart(float v) {
+  void SetScrollSnapMarginInlineStart(const Length& v) {
     if (IsHorizontalWritingMode())
       SetScrollSnapMarginLeft(v);
     else
@@ -755,11 +755,11 @@ class ComputedStyle : public ComputedStyleBase,
   }
 
   // scroll-snap-margin-inline-end
-  float ScrollSnapMarginInlineEnd() const {
+  const Length& ScrollSnapMarginInlineEnd() const {
     return IsHorizontalWritingMode() ? ScrollSnapMarginRight()
                                      : ScrollSnapMarginBottom();
   }
-  void SetScrollSnapMarginInlineEnd(float v) {
+  void SetScrollSnapMarginInlineEnd(const Length& v) {
     if (IsHorizontalWritingMode())
       SetScrollSnapMarginRight(v);
     else
@@ -878,7 +878,6 @@ class ComputedStyle : public ComputedStyleBase,
     SetTextEmphasisMarkInternal(mark);
   }
   const AtomicString& TextEmphasisMarkString() const;
-  LineLogicalSide GetTextEmphasisLineLogicalSide() const;
 
   // -webkit-text-emphasis-color (aka -epub-text-emphasis-color)
   void SetTextEmphasisColor(const StyleColor& color) {

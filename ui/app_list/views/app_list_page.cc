@@ -68,4 +68,9 @@ gfx::Rect AppListPage::GetDefaultContentsBounds() const {
   return contents_view_->GetDefaultContentsBounds();
 }
 
+bool AppListPage::IsCustomLauncherPageActive() const {
+  return contents_view_->IsStateActive(
+      AppListModel::STATE_CUSTOM_LAUNCHER_PAGE);
+}
+
 }  // namespace app_list

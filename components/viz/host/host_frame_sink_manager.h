@@ -116,12 +116,13 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   void UnregisterFrameSinkHierarchy(const FrameSinkId& parent_frame_sink_id,
                                     const FrameSinkId& child_frame_sink_id);
 
-  void DropTemporaryReference(const SurfaceId& surface_id);
-
-  // These two functions should only be used by WindowServer.
+  // These three functions should only be used by WindowServer.
+  // TODO(riajiang): Find a better way for HostFrameSinkManager to do the assign
+  // and drop instead.
   void WillAssignTemporaryReferencesExternally();
   void AssignTemporaryReference(const SurfaceId& surface_id,
                                 const FrameSinkId& owner);
+  void DropTemporaryReference(const SurfaceId& surface_id);
 
   // Asks viz to send updates regarding video activity to |observer|.
   void AddVideoDetectorObserver(mojom::VideoDetectorObserverPtr observer);
@@ -194,7 +195,6 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   void RegisterAfterConnectionLoss();
 
   // mojom::FrameSinkManagerClient:
-  void OnSurfaceCreated(const SurfaceId& surface_id) override;
   void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override;
   void OnClientConnectionClosed(const FrameSinkId& frame_sink_id) override;
   void OnAggregatedHitTestRegionListUpdated(

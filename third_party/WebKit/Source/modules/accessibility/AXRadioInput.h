@@ -5,7 +5,6 @@
 #ifndef AXRadioInput_h
 #define AXRadioInput_h
 
-#include "base/macros.h"
 #include "modules/accessibility/AXLayoutObject.h"
 
 namespace blink {
@@ -14,9 +13,11 @@ class AXObjectCacheImpl;
 class HTMLInputElement;
 
 class AXRadioInput final : public AXLayoutObject {
+  WTF_MAKE_NONCOPYABLE(AXRadioInput);
+
  public:
   static AXRadioInput* Create(LayoutObject*, AXObjectCacheImpl&);
-  ~AXRadioInput() override = default;
+  ~AXRadioInput() override {}
 
   bool IsAXRadioInput() const override { return true; }
   void UpdatePosAndSetSize(int position = 0);
@@ -36,8 +37,6 @@ class AXRadioInput final : public AXLayoutObject {
 
   int pos_in_set_;
   int set_size_;
-
-  DISALLOW_COPY_AND_ASSIGN(AXRadioInput);
 };
 
 DEFINE_AX_OBJECT_TYPE_CASTS(AXRadioInput, IsAXRadioInput());

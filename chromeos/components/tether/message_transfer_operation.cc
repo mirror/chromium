@@ -4,7 +4,6 @@
 
 #include "chromeos/components/tether/message_transfer_operation.h"
 
-#include <memory>
 #include <set>
 
 #include "chromeos/components/tether/message_wrapper.h"
@@ -45,7 +44,7 @@ MessageTransferOperation::MessageTransferOperation(
     BleConnectionManager* connection_manager)
     : remote_devices_(RemoveDuplicatesFromVector(devices_to_connect)),
       connection_manager_(connection_manager),
-      timer_factory_(std::make_unique<TimerFactory>()),
+      timer_factory_(base::MakeUnique<TimerFactory>()),
       weak_ptr_factory_(this) {}
 
 MessageTransferOperation::~MessageTransferOperation() {

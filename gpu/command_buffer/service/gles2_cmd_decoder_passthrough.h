@@ -201,9 +201,6 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
   // Gets the QueryManager for this context.
   QueryManager* GetQueryManager() override;
 
-  // Gets the GpuFenceManager for this context.
-  GpuFenceManager* GetGpuFenceManager() override;
-
   // Gets the FramebufferManager for this context.
   FramebufferManager* GetFramebufferManager() override;
 
@@ -451,8 +448,6 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   // Mailboxes
   MailboxManager* mailbox_manager_;
-
-  std::unique_ptr<GpuFenceManager> gpu_fence_manager_;
 
   // State tracking of currently bound 2D textures (client IDs)
   size_t active_texture_unit_;

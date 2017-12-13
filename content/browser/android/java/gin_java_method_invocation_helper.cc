@@ -53,15 +53,15 @@ void GinJavaMethodInvocationHelper::Init(DispatcherDelegate* dispatcher) {
 void GinJavaMethodInvocationHelper::BuildObjectRefsFromListValue(
     DispatcherDelegate* dispatcher,
     const base::Value& list_value) {
-  DCHECK(list_value.is_list());
+  DCHECK(list_value.IsType(base::Value::Type::LIST));
   const base::ListValue* list;
   list_value.GetAsList(&list);
   for (const auto& entry : *list) {
     if (AppendObjectRef(dispatcher, entry))
       continue;
-    if (entry.is_list()) {
+    if (entry.IsType(base::Value::Type::LIST)) {
       BuildObjectRefsFromListValue(dispatcher, entry);
-    } else if (entry.is_dict()) {
+    } else if (entry.IsType(base::Value::Type::DICTIONARY)) {
       BuildObjectRefsFromDictionaryValue(dispatcher, entry);
     }
   }
@@ -70,7 +70,7 @@ void GinJavaMethodInvocationHelper::BuildObjectRefsFromListValue(
 void GinJavaMethodInvocationHelper::BuildObjectRefsFromDictionaryValue(
     DispatcherDelegate* dispatcher,
     const base::Value& dict_value) {
-  DCHECK(dict_value.is_dict());
+  DCHECK(dict_value.IsType(base::Value::Type::DICTIONARY));
   const base::DictionaryValue* dict;
   dict_value.GetAsDictionary(&dict);
   for (base::DictionaryValue::Iterator iter(*dict);
@@ -78,9 +78,9 @@ void GinJavaMethodInvocationHelper::BuildObjectRefsFromDictionaryValue(
        iter.Advance()) {
     if (AppendObjectRef(dispatcher, iter.value()))
       continue;
-    if (iter.value().is_list()) {
+    if (iter.value().IsType(base::Value::Type::LIST)) {
       BuildObjectRefsFromListValue(dispatcher, iter.value());
-    } else if (iter.value().is_dict()) {
+    } else if (iter.value().IsType(base::Value::Type::DICTIONARY)) {
       BuildObjectRefsFromDictionaryValue(dispatcher, iter.value());
     }
   }

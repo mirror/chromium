@@ -32,7 +32,6 @@
 
 #include <ostream>
 
-#include "base/macros.h"
 #include "core/dom/Element.h"
 #include "core/editing/Forward.h"
 #include "core/editing/TextAffinity.h"
@@ -44,6 +43,7 @@
 #include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/Color.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/Forward.h"
 #include "platform/wtf/Vector.h"
 
 class SkMatrix44;
@@ -149,6 +149,8 @@ class IgnoredReason {
 
 class NameSourceRelatedObject
     : public GarbageCollectedFinalized<NameSourceRelatedObject> {
+  WTF_MAKE_NONCOPYABLE(NameSourceRelatedObject);
+
  public:
   WeakMember<AXObject> object;
   String text;
@@ -157,8 +159,6 @@ class NameSourceRelatedObject
       : object(object), text(text) {}
 
   void Trace(blink::Visitor* visitor) { visitor->Trace(object); }
-
-  DISALLOW_COPY_AND_ASSIGN(NameSourceRelatedObject);
 };
 
 typedef HeapVector<Member<NameSourceRelatedObject>> AXRelatedObjectVector;
@@ -215,6 +215,8 @@ WTF_ALLOW_INIT_WITH_MEM_FUNCTIONS(blink::DescriptionSource);
 namespace blink {
 
 class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
+  WTF_MAKE_NONCOPYABLE(AXObject);
+
  public:
   typedef HeapVector<Member<AXObject>> AXObjectVector;
 
@@ -620,14 +622,13 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   virtual bool IsRichlyEditable() const { return false; }
   bool AriaCheckedIsPresent() const;
   bool AriaPressedIsPresent() const;
-  bool SupportsARIAActiveDescendant() const;
+  bool SupportsActiveDescendant() const;
   bool SupportsARIAAttributes() const;
   virtual bool SupportsARIADragging() const { return false; }
   virtual bool SupportsARIADropping() const { return false; }
   virtual bool SupportsARIAFlowTo() const { return false; }
   virtual bool SupportsARIAOwns() const { return false; }
   bool SupportsRangeValue() const;
-  bool SupportsARIAReadOnly() const;
   virtual SortDirection GetSortDirection() const {
     return kSortDirectionUndefined;
   }
@@ -638,7 +639,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   // Value should be 1-based. 0 means not supported.
   virtual int PosInSet() const { return 0; }
   virtual int SetSize() const { return 0; }
-  bool SupportsARIASetSizeAndPosInSet() const;
+  bool SupportsSetSizeAndPosInSet() const;
 
   // ARIA live-region features.
   bool IsLiveRegion() const;
@@ -855,6 +856,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
 
   bool CanReceiveAccessibilityFocus() const;
   bool NameFromContents(bool recursive) const;
+  bool CanSupportAriaReadOnly() const;
 
   AccessibilityRole ButtonRoleType() const;
 
@@ -898,8 +900,6 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   AccessibilityRole RemapAriaRoleDueToParent(AccessibilityRole) const;
 
   static unsigned number_of_live_ax_objects_;
-
-  DISALLOW_COPY_AND_ASSIGN(AXObject);
 };
 
 MODULES_EXPORT std::ostream& operator<<(std::ostream&, const AXObject&);

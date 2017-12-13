@@ -23,15 +23,13 @@ class StyleSelfAlignmentData {
                          ItemPositionType position_type = kNonLegacyPosition)
       : position_(position),
         position_type_(position_type),
-        overflow_(static_cast<unsigned>(overflow)) {}
+        overflow_(overflow) {}
 
   void SetPosition(ItemPosition position) { position_ = position; }
   void SetPositionType(ItemPositionType position_type) {
     position_type_ = position_type;
   }
-  void SetOverflow(OverflowAlignment overflow) {
-    overflow_ = static_cast<unsigned>(overflow);
-  }
+  void SetOverflow(OverflowAlignment overflow) { overflow_ = overflow; }
 
   ItemPosition GetPosition() const {
     return static_cast<ItemPosition>(position_);

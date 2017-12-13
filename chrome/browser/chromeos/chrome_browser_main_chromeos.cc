@@ -12,8 +12,6 @@
 
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/shelf_model.h"
-#include "ash/public/interfaces/constants.mojom.h"
-#include "ash/public/interfaces/process_creation_time_recorder.mojom.h"
 #include "ash/shell.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
 #include "base/bind.h"
@@ -158,7 +156,6 @@
 #include "components/quirks/quirks_manager.h"
 #include "components/session_manager/core/session_manager.h"
 #include "components/signin/core/account_id/account_id.h"
-#include "components/startup_metric_utils/browser/startup_metric_utils.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "components/user_manager/user_names.h"
@@ -181,7 +178,6 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "printing/backend/print_backend.h"
 #include "rlz/features/features.h"
-#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
@@ -268,16 +264,6 @@ bool ShallAttemptTpmOwnership() {
 #else
   return true;
 #endif
-}
-
-void PushProcessCreationTimeToAsh() {
-  ash::mojom::ProcessCreationTimeRecorderPtr recorder;
-  content::ServiceManagerConnection::GetForProcess()
-      ->GetConnector()
-      ->BindInterface(ash::mojom::kServiceName, &recorder);
-  DCHECK(!startup_metric_utils::MainEntryPointTicks().is_null());
-  recorder->SetMainProcessCreationTime(
-      startup_metric_utils::MainEntryPointTicks());
 }
 
 }  // namespace
@@ -852,8 +838,6 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
 
   // NOTE: Initializes ash::Shell.
   ChromeBrowserMainPartsLinux::PreProfileInit();
-
-  PushProcessCreationTimeToAsh();
 
   // Makes mojo request to TabletModeController in ash.
   tablet_mode_client_ = std::make_unique<TabletModeClient>();

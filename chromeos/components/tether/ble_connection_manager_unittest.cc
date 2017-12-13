@@ -69,7 +69,7 @@ struct ReceivedMessage {
 class MockTimerFactory : public TimerFactory {
  public:
   std::unique_ptr<base::Timer> CreateOneShotTimer() override {
-    return std::make_unique<base::MockTimer>(false /* retains_user_task */,
+    return base::MakeUnique<base::MockTimer>(false /* retains_user_task */,
                                              false /* is_repeating */);
   }
 };
@@ -256,19 +256,19 @@ class BleConnectionManagerTest : public testing::Test {
     verified_received_messages_.clear();
 
     fake_cryptauth_service_ =
-        std::make_unique<cryptauth::FakeCryptAuthService>();
+        base::MakeUnique<cryptauth::FakeCryptAuthService>();
     mock_adapter_ =
         base::MakeRefCounted<NiceMock<device::MockBluetoothAdapter>>();
 
-    device_queue_ = std::make_unique<BleAdvertisementDeviceQueue>();
+    device_queue_ = base::MakeUnique<BleAdvertisementDeviceQueue>();
 
-    fake_ble_advertiser_ = std::make_unique<FakeBleAdvertiser>(
+    fake_ble_advertiser_ = base::MakeUnique<FakeBleAdvertiser>(
         true /* automatically_update_active_advertisements */);
 
-    fake_ble_scanner_ = std::make_unique<FakeBleScanner>(
+    fake_ble_scanner_ = base::MakeUnique<FakeBleScanner>(
         true /* automatically_update_discovery_session */);
 
-    fake_ad_hoc_ble_advertiser_ = std::make_unique<FakeAdHocBleAdvertiser>();
+    fake_ad_hoc_ble_advertiser_ = base::MakeUnique<FakeAdHocBleAdvertiser>();
 
     fake_connection_factory_ = base::WrapUnique(new FakeConnectionFactory(
         mock_adapter_, device::BluetoothUUID(kGattServerUuid)));

@@ -536,20 +536,16 @@ void ObjectPaintInvalidatorWithContext::InvalidateSelection(
 
   object_.GetMutableForPainting().SetSelectionVisualRect(new_selection_rect);
 
-  if (full_invalidation)
-    return;
-
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    // PaintController will handle raster invalidation of the partial rect.
-    object_.GetMutableForPainting().SetPartialInvalidationRect(
-        UnionRect(object_.PartialInvalidationRect(),
-                  UnionRect(new_selection_rect, old_selection_rect)));
-  } else {
-    FullyInvalidatePaint(PaintInvalidationReason::kSelection,
-                         old_selection_rect, new_selection_rect);
+  if (!full_invalidation) {
+    // TODO(crbug.com/732612): Implement partial raster invalidation for
+    // selection.
+    if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+      FullyInvalidatePaint(PaintInvalidationReason::kSelection,
+                           old_selection_rect, new_selection_rect);
+    }
+    context_.painting_layer->SetNeedsRepaint();
+    object_.InvalidateDisplayItemClients(PaintInvalidationReason::kSelection);
   }
-  context_.painting_layer->SetNeedsRepaint();
-  object_.InvalidateDisplayItemClients(PaintInvalidationReason::kSelection);
 }
 
 DISABLE_CFI_PERF
@@ -562,6 +558,11 @@ void ObjectPaintInvalidatorWithContext::InvalidatePartialRect(
   if (rect.IsEmpty())
     return;
 
+  if (reason == PaintInvalidationReason::kNone) {
+    context_.painting_layer->SetNeedsRepaint();
+    object_.InvalidateDisplayItemClients(PaintInvalidationReason::kRectangle);
+  }
+
   context_.MapLocalRectToVisualRectInBacking(object_, rect);
   if (rect.IsEmpty())
     return;
@@ -573,9 +574,6 @@ void ObjectPaintInvalidatorWithContext::InvalidatePartialRect(
     InvalidatePaintRectangleWithContext(rect,
                                         PaintInvalidationReason::kRectangle);
   }
-
-  context_.painting_layer->SetNeedsRepaint();
-  object_.InvalidateDisplayItemClients(PaintInvalidationReason::kRectangle);
 }
 
 DISABLE_CFI_PERF
@@ -585,14 +583,12 @@ ObjectPaintInvalidatorWithContext::InvalidatePaintWithComputedReason(
   DCHECK(!(context_.subtree_flags &
            PaintInvalidatorContext::kSubtreeNoInvalidation));
 
-  // This is before InvalidateSelection before the latter will accumulate
-  // selection visual rects to the partial rect mapped in the former.
-  InvalidatePartialRect(reason);
-
   // We need to invalidate the selection before checking for whether we are
   // doing a full invalidation.  This is because we need to update the previous
   // selection rect regardless.
   InvalidateSelection(reason);
+
+  InvalidatePartialRect(reason);
 
   switch (reason) {
     case PaintInvalidationReason::kNone:

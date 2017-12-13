@@ -727,7 +727,9 @@ void ChromeContentRendererClient::DeferMediaLoad(
   // NOTE: Switch can be used to allow autoplay, unless frame is prerendered.
   //
   // TODO(dalecurtis): Include an idle check too.  http://crbug.com/509135
-  if ((render_frame->IsHidden() && !has_played_media_before) ||
+  if ((render_frame->IsHidden() && !has_played_media_before &&
+       !base::CommandLine::ForCurrentProcess()->HasSwitch(
+           switches::kIgnoreAutoplayRestrictionsForTests)) ||
       prerender::PrerenderHelper::IsPrerendering(render_frame)) {
     new MediaLoadDeferrer(render_frame, closure);
     return;
@@ -1737,4 +1739,14 @@ bool ChromeContentRendererClient::OverrideLegacySymantecCertConsoleMessage(
       "more information.",
       url::Origin::Create(url).Serialize().c_str(), in_future_string);
   return true;
+}
+
+blink::WebFrame* ChromeContentRendererClient::FindFrame(
+    blink::WebLocalFrame* relative_to_frame,
+    const std::string& name) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::FindFrame(relative_to_frame, name);
+#else
+  return nullptr;
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 }

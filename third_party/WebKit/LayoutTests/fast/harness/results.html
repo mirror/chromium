@@ -385,6 +385,7 @@ class Traversal {
     this.filteredCount = 0;
     this.lastDir = "";
     this.html = [];
+    this.resultCounts = {};
     return this;
   }
 
@@ -393,6 +394,10 @@ class Traversal {
       this.testCount++;
       if (filter(node, path)) {
         this.filteredCount++;
+        // Ignore all results except final one, or not?
+        if (!(node.actualFinal in this.resultCounts))
+          this.resultCounts[node.actualFinal] = 0;
+        this.resultCounts[node.actualFinal]++;
         action(node, path, this);
       }
     } else {
@@ -735,15 +740,17 @@ const Query = {
     }
   },
 
-  updateFilters: function() {
+  updateFilters: function(traversal) {
     for (let el of Array.from(
           document.querySelectorAll("#filters > label"))) {
-      let count = this.resultCounts[el.id.replace("_", "+")];
+      let count = traversal.resultCounts[el.id.replace("_", "+")];
       if (count > 0) {
         el.classList.remove("hidden");
+        el.querySelector('input').checked = true;
         el.querySelector('span').innerText = count;
       } else {
         el.classList.add("hidden");
+        el.querySelector("input").checked = false;
         el.querySelector("span").innerText = "";
       }
     }
@@ -764,15 +771,7 @@ const Query = {
     let textFilter = (!searchText || searchText.length < 1)
       ? _ => true
       : test => test.expectPath.includes(searchText);
-    return test => {
-      if (!queryFilter(test) || !textFilter(test))
-        return false;
-      // Ignore all results except final one, or not?
-      if (!(test.actualFinal in this.resultCounts))
-        this.resultCounts[test.actualFinal] = 0;
-      this.resultCounts[test.actualFinal]++;
-      return filterMap.has(test.actualFinal);
-    };
+    return test => queryFilter(test) && filterMap.has(test.actualFinal) && textFilter(test);
   },
 
   query: function(name, queryFilter, reset) {
@@ -780,6 +779,12 @@ const Query = {
     if (reset) {
       this.resetFilters();
       this.lastQueryFilter = queryFilter;
+      let savedSearchText = document.querySelector("#text-filter").value;
+      document.querySelector("#text-filter").value = "";
+      let traversal = new Traversal(globalResults.tests);
+      traversal.traverse(this.applyFilters(queryFilter));
+      this.updateFilters(traversal);
+      document.querySelector("#text-filter").value = savedSearchText;
     }
     let composedFilter = this.applyFilters(queryFilter);
     this.generateReport(name, composedFilter);
@@ -797,7 +802,6 @@ const Query = {
     // Store last report to redisplay.
     this.lastReport = {name: name, filter: filter};
     this.createReportPromise();
-    this.resultCounts = {};
 
     document.querySelector("#report").innerHTML = "";
     document.querySelector("#report_title").innerHTML = name;
@@ -823,7 +827,6 @@ const Query = {
     };
     window.setTimeout( _ => {
       traversal.traverse(filter, report.print);
-      this.updateFilters();
       this.completeReportPromise(traversal);
       this.currentRAF = window.requestAnimationFrame(callback);
     }, 0);

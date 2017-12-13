@@ -39,8 +39,7 @@ class MEDIA_GPU_EXPORT VaapiPictureFactory {
       int32_t picture_buffer_id,
       const gfx::Size& size,
       uint32_t texture_id,
-      uint32_t client_texture_id,
-      uint32_t texture_target);
+      uint32_t client_texture_id);
 
   // Return the type of the VaapiPicture implementation for the given GL
   // implementation.

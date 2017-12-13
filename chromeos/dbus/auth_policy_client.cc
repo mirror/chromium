@@ -69,7 +69,7 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
                                  authpolicy::kJoinADDomainMethod);
     dbus::MessageWriter writer(&method_call);
     if (!writer.AppendProtoAsArrayOfBytes(request)) {
-      std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE, std::string());
+      std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE);
       return;
     }
     writer.AppendFileDescriptor(password_fd);
@@ -178,18 +178,12 @@ class AuthPolicyClientImpl : public AuthPolicyClient {
   void HandleJoinCallback(JoinCallback callback, dbus::Response* response) {
     if (!response) {
       DLOG(ERROR) << "Join: Couldn't call to authpolicy";
-      std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE, std::string());
+      std::move(callback).Run(authpolicy::ERROR_DBUS_FAILURE);
       return;
     }
 
     dbus::MessageReader reader(response);
-    authpolicy::ErrorType error = GetErrorFromReader(&reader);
-    std::string machine_domain;
-    if (error == authpolicy::ERROR_NONE) {
-      if (!reader.PopString(&machine_domain))
-        error = authpolicy::ERROR_DBUS_FAILURE;
-    }
-    std::move(callback).Run(error, machine_domain);
+    std::move(callback).Run(GetErrorFromReader(&reader));
   }
 
   template <class T>

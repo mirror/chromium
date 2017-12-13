@@ -4,18 +4,15 @@
 
 #include "chromeos/components/tether/wifi_hotspot_connector.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/guid.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/time/default_clock.h"
-#include "chromeos/network/device_state.h"
 #include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_handler.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
-#include "chromeos/network/network_type_pattern.h"
 #include "chromeos/network/shill_property_util.h"
 #include "components/proximity_auth/logging/logging.h"
 #include "third_party/cros_system_api/dbus/shill/dbus-constants.h"
@@ -29,8 +26,8 @@ WifiHotspotConnector::WifiHotspotConnector(
     NetworkConnect* network_connect)
     : network_state_handler_(network_state_handler),
       network_connect_(network_connect),
-      timer_(std::make_unique<base::OneShotTimer>()),
-      clock_(std::make_unique<base::DefaultClock>()),
+      timer_(base::MakeUnique<base::OneShotTimer>()),
+      clock_(base::MakeUnique<base::DefaultClock>()),
       weak_ptr_factory_(this) {
   network_state_handler_->AddObserver(this, FROM_HERE);
 }
@@ -88,9 +85,9 @@ void WifiHotspotConnector::ConnectToWifiHotspot(
 
   // If Wi-Fi is enabled, continue with creating the configuration of the
   // hotspot. Otherwise, request that Wi-Fi be enabled and wait; see
-  // UpdateWaitingForWifi.
+  // DeviceListChanged().
   if (network_state_handler_->IsTechnologyEnabled(NetworkTypePattern::WiFi())) {
-    // Ensure that a possible previous pending callback to UpdateWaitingForWifi
+    // Ensure that a possible previous pending callback to DeviceListChanged()
     // won't result in a second call to CreateWifiConfiguration().
     is_waiting_for_wifi_to_enable_ = false;
 
@@ -98,7 +95,7 @@ void WifiHotspotConnector::ConnectToWifiHotspot(
   } else if (!is_waiting_for_wifi_to_enable_) {
     is_waiting_for_wifi_to_enable_ = true;
 
-    // Once Wi-Fi is enabled, UpdateWaitingForWifi will be called.
+    // Once Wi-Fi is enabled, DeviceListChanged() will be called.
     network_state_handler_->SetTechnologyEnabled(
         NetworkTypePattern::WiFi(), true /*enabled */,
         base::Bind(&WifiHotspotConnector::OnEnableWifiError,
@@ -114,7 +111,13 @@ void WifiHotspotConnector::OnEnableWifiError(
 }
 
 void WifiHotspotConnector::DeviceListChanged() {
-  UpdateWaitingForWifi();
+  if (is_waiting_for_wifi_to_enable_ &&
+      network_state_handler_->IsTechnologyEnabled(NetworkTypePattern::WiFi())) {
+    is_waiting_for_wifi_to_enable_ = false;
+
+    if (!ssid_.empty())
+      CreateWifiConfiguration();
+  }
 }
 
 void WifiHotspotConnector::NetworkPropertiesUpdated(
@@ -159,22 +162,6 @@ void WifiHotspotConnector::NetworkPropertiesUpdated(
     // Initiate a connection to the network.
     network_connect_->ConnectToNetworkId(wifi_network_guid_);
   }
-}
-
-void WifiHotspotConnector::DevicePropertiesUpdated(const DeviceState* device) {
-  if (device->Matches(NetworkTypePattern::WiFi()))
-    UpdateWaitingForWifi();
-}
-
-void WifiHotspotConnector::UpdateWaitingForWifi() {
-  if (!is_waiting_for_wifi_to_enable_ ||
-      !network_state_handler_->IsTechnologyEnabled(
-          NetworkTypePattern::WiFi())) {
-    return;
-  }
-  is_waiting_for_wifi_to_enable_ = false;
-  if (!ssid_.empty())
-    CreateWifiConfiguration();
 }
 
 void WifiHotspotConnector::CompleteActiveConnectionAttempt(bool success) {

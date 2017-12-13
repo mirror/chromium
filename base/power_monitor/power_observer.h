@@ -23,7 +23,7 @@ class BASE_EXPORT PowerObserver {
   virtual void OnResume() {}
 
  protected:
-  virtual ~PowerObserver() = default;
+  virtual ~PowerObserver() {}
 };
 
 }  // namespace base

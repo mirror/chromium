@@ -17,10 +17,8 @@ using ::i18n::addressinput::Storage;
 
 // static
 std::unique_ptr<Storage> ValidationRulesStorageFactory::CreateStorage() {
-  // It's OK to leak the ValidationRulesStorageFactory instance; the
-  // JsonPrefStore will block on any write during shutdown anyway.
-  static base::LazyInstance<ValidationRulesStorageFactory>::Leaky instance =
-      LAZY_INSTANCE_INITIALIZER;
+  static base::LazyInstance<ValidationRulesStorageFactory>::DestructorAtExit
+      instance = LAZY_INSTANCE_INITIALIZER;
   return std::unique_ptr<Storage>(
       new ChromeStorageImpl(instance.Get().json_pref_store_.get()));
 }

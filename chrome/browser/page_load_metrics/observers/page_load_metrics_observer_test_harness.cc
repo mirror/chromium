@@ -107,10 +107,8 @@ PageLoadMetricsObserverTestHarness::GetPageLoadExtraInfoForCommittedLoad() {
 void PageLoadMetricsObserverTestHarness::NavigateWithPageTransitionAndCommit(
     const GURL& url,
     ui::PageTransition transition) {
-  auto simulator =
-      content::NavigationSimulator::CreateRendererInitiated(url, main_rfh());
-  simulator->SetTransition(transition);
-  simulator->Commit();
+  controller().LoadURL(url, content::Referrer(), transition, std::string());
+  content::WebContentsTester::For(web_contents())->CommitPendingNavigation();
 }
 
 void PageLoadMetricsObserverTestHarness::NavigateToUntrackedUrl() {

@@ -51,17 +51,6 @@ class AnnotationInstance : public InstanceBase {
                             int start_line,
                             int end_line) override;
 
-  // Returns the proto field numbers of TrafficSemantics fields that are
-  // included in this annotation.
-  void GetSemanticsFieldNumbers(std::set<int>* field_numbers) const;
-
-  // Returns the proto field numbers of TrafficPolicy fields that are included
-  // in this annotation.
-  // For the cookies_allowed field, if the value is YES,
-  // kCookiesAllowedFieldNumber is added to the set and if it is NO,
-  // -kCookiesAllowedFieldNumber is added.
-  void GetPolicyFieldNumbers(std::set<int>* field_numbers) const;
-
   // Checks if an annotation has all required fields.
   AuditorResult IsComplete() const;
 
@@ -73,14 +62,6 @@ class AnnotationInstance : public InstanceBase {
   // be of partial type and the |other| either COMPLETING or BRANCHED_COMPLETING
   // type.
   bool IsCompletableWith(const AnnotationInstance& other) const;
-
-  // Tells if annotation requires two ids. All annotations have the unique id,
-  // but partial annotations also require the completing id, and branched
-  // completing annotations require the group id.
-  bool NeedsTwoIDs() const {
-    return type == Type::ANNOTATION_PARTIAL ||
-           type == Type::ANNOTATION_BRANCHED_COMPLETING;
-  }
 
   // Combines |*this| partial annotation with a completing/branched_completing
   // annotation and returns the combined complete annotation.
@@ -94,18 +75,14 @@ class AnnotationInstance : public InstanceBase {
   // Type of the annotation.
   Type type;
 
-  // Extra id of the annotation (if available). This can be the completing id
-  // for partial annotations, or group id for branched completing annotations.
-  std::string second_id;
+  // Extra id of the annotation (if available).
+  std::string extra_id;
 
   // Hash codes of unique id and extra id (if available).
   int unique_id_hash_code;
-  int second_id_hash_code;
+  int extra_id_hash_code;
 
   std::string comments;
-
-  // This annotation is generated from merging two other incomplete annotations.
-  bool is_merged;
 };
 
 // Holds an instance of calling a function that might have a network traffic

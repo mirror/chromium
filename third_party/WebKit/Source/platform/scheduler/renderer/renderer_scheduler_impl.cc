@@ -2263,6 +2263,12 @@ void RendererSchedulerImpl::OnQueueingTimeForWindowEstimated(
   }
 }
 
+void RendererSchedulerImpl::OnReportSplitExpectedQueueingTime(
+    const char* split_description,
+    base::TimeDelta queueing_time) {
+  base::UmaHistogramTimes(split_description, queueing_time);
+}
+
 void RendererSchedulerImpl::OnReportFineGrainedExpectedQueueingTime(
     const char* split_description,
     base::TimeDelta queueing_time) {

@@ -37,15 +37,14 @@ class ArcTtsServiceFactory
 }  // namespace
 
 // static
-ArcTtsService* ArcTtsService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcTtsServiceFactory::GetForBrowserContext(context);
+BrowserContextKeyedServiceFactory* ArcTtsService::GetFactory() {
+  return ArcTtsServiceFactory::GetInstance();
 }
 
 // static
-ArcTtsService* ArcTtsService::GetForBrowserContextForTesting(
+ArcTtsService* ArcTtsService::GetForBrowserContext(
     content::BrowserContext* context) {
-  return ArcTtsServiceFactory::GetForBrowserContextForTesting(context);
+  return ArcTtsServiceFactory::GetForBrowserContext(context);
 }
 
 ArcTtsService::ArcTtsService(content::BrowserContext* context,

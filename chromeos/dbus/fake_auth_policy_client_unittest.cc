@@ -17,11 +17,9 @@
 namespace chromeos {
 namespace {
 
-constexpr char kCorrectMachineName[] = "machine_name";
-constexpr char kCorrectUserName[] = "user@domain.com";
-constexpr char kCorrectUserDomain[] = "domain.com";
-constexpr char kAccountId[] = "user-account-id";
-constexpr char kMachineDomain[] = "machine.domain";
+const char kCorrectMachineName[] = "machine_name";
+const char kCorrectUserName[] = "user@realm.com";
+const char kAccountId[] = "user-account-id";
 
 }  // namespace
 
@@ -30,7 +28,7 @@ class FakeAuthPolicyClientTest : public ::testing::Test {
   FakeAuthPolicyClientTest() = default;
 
  protected:
-  FakeAuthPolicyClient* authpolicy_client() { return auth_policy_client_ptr_; }
+  FakeAuthPolicyClient* authpolicy_client() { return &client_; }
 
   void SetUp() override {
     ::testing::Test::SetUp();
@@ -38,11 +36,6 @@ class FakeAuthPolicyClientTest : public ::testing::Test {
         std::make_unique<FakeSessionManagerClient>());
     DBusThreadManager::GetSetterForTesting()->SetCryptohomeClient(
         std::make_unique<FakeCryptohomeClient>());
-    auto auth_policy_client = std::make_unique<FakeAuthPolicyClient>();
-    auth_policy_client_ptr_ = auth_policy_client.get();
-    DBusThreadManager::GetSetterForTesting()->SetAuthPolicyClient(
-        std::move(auth_policy_client));
-    authpolicy_client()->DisableOperationDelayForTesting();
   }
 
   void JoinAdDomain(const std::string& machine_name,
@@ -51,18 +44,6 @@ class FakeAuthPolicyClientTest : public ::testing::Test {
     authpolicy::JoinDomainRequest request;
     request.set_machine_name(machine_name);
     request.set_user_principal_name(username);
-    authpolicy_client()->JoinAdDomain(request, /* password_fd */ -1,
-                                      std::move(callback));
-  }
-
-  void JoinAdDomainWithMachineDomain(const std::string& machine_name,
-                                     const std::string& machine_domain,
-                                     const std::string& username,
-                                     AuthPolicyClient::JoinCallback callback) {
-    authpolicy::JoinDomainRequest request;
-    request.set_machine_name(machine_name);
-    request.set_user_principal_name(username);
-    request.set_machine_domain(machine_domain);
     authpolicy_client()->JoinAdDomain(request, /* password_fd */ -1,
                                       std::move(callback));
   }
@@ -83,7 +64,7 @@ class FakeAuthPolicyClientTest : public ::testing::Test {
   }
 
  private:
-  FakeAuthPolicyClient* auth_policy_client_ptr_;  // not owned.
+  FakeAuthPolicyClient client_;
   base::MessageLoop loop_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeAuthPolicyClientTest);
@@ -92,111 +73,61 @@ class FakeAuthPolicyClientTest : public ::testing::Test {
 // Tests parsing machine name.
 TEST_F(FakeAuthPolicyClientTest, JoinAdDomain_ParseMachineName) {
   authpolicy_client()->set_started(true);
+  LockDeviceActiveDirectory();
   JoinAdDomain("correct_length1", kCorrectUserName,
-               base::BindOnce(
-                   [](authpolicy::ErrorType error, const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_NONE, error);
-                     EXPECT_EQ(kCorrectUserDomain, domain);
-                   }));
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_NONE, error);
+               }));
   JoinAdDomain("", kCorrectUserName,
-               base::BindOnce(
-                   [](authpolicy::ErrorType error, const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_INVALID_MACHINE_NAME, error);
-                     EXPECT_TRUE(domain.empty());
-                   }));
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_INVALID_MACHINE_NAME, error);
+               }));
   JoinAdDomain("too_long_machine_name", kCorrectUserName,
-               base::BindOnce(
-                   [](authpolicy::ErrorType error, const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_MACHINE_NAME_TOO_LONG, error);
-                     EXPECT_TRUE(domain.empty());
-                   }));
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_MACHINE_NAME_TOO_LONG, error);
+               }));
   JoinAdDomain("invalid:name", kCorrectUserName,
-               base::BindOnce(
-                   [](authpolicy::ErrorType error, const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_INVALID_MACHINE_NAME, error);
-                     EXPECT_TRUE(domain.empty());
-                   }));
-  base::RunLoop loop;
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_INVALID_MACHINE_NAME, error);
+               }));
   JoinAdDomain(">nvalidname", kCorrectUserName,
-               base::BindOnce(
-                   [](base::OnceClosure closure, authpolicy::ErrorType error,
-                      const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_INVALID_MACHINE_NAME, error);
-                     EXPECT_TRUE(domain.empty());
-                     std::move(closure).Run();
-                   },
-                   loop.QuitClosure()));
-  loop.Run();
-}
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_INVALID_MACHINE_NAME, error);
+               }));
 
-// Tests join to a different machine domain.
-TEST_F(FakeAuthPolicyClientTest, JoinAdDomain_MachineDomain) {
-  authpolicy_client()->set_started(true);
-  JoinAdDomainWithMachineDomain(kCorrectMachineName, kMachineDomain,
-                                kCorrectUserName,
-                                base::BindOnce([](authpolicy::ErrorType error,
-                                                  const std::string& domain) {
-                                  EXPECT_EQ(authpolicy::ERROR_NONE, error);
-                                  EXPECT_EQ(kMachineDomain, domain);
-                                }));
-  base::RunLoop loop;
-  JoinAdDomainWithMachineDomain(
-      kCorrectMachineName, "", kCorrectUserName,
-      base::BindOnce(
-          [](base::OnceClosure closure, authpolicy::ErrorType error,
-             const std::string& domain) {
-            EXPECT_EQ(authpolicy::ERROR_NONE, error);
-            EXPECT_EQ(kCorrectUserDomain, domain);
-            std::move(closure).Run();
-          },
-          loop.QuitClosure()));
-  loop.Run();
+  base::RunLoop().RunUntilIdle();
 }
 
 // Tests parsing user name.
 TEST_F(FakeAuthPolicyClientTest, JoinAdDomain_ParseUPN) {
   authpolicy_client()->set_started(true);
-  JoinAdDomain(kCorrectMachineName, kCorrectUserName,
-               base::BindOnce(
-                   [](authpolicy::ErrorType error, const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_NONE, error);
-                     EXPECT_EQ(kCorrectUserDomain, domain);
-                   }));
+  LockDeviceActiveDirectory();
+  JoinAdDomain(kCorrectMachineName, "user@realm.com",
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_NONE, error);
+               }));
   JoinAdDomain(kCorrectMachineName, "user",
-               base::BindOnce(
-                   [](authpolicy::ErrorType error, const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_PARSE_UPN_FAILED, error);
-                     EXPECT_TRUE(domain.empty());
-                   }));
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_PARSE_UPN_FAILED, error);
+               }));
   JoinAdDomain(kCorrectMachineName, "",
-               base::BindOnce(
-                   [](authpolicy::ErrorType error, const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_PARSE_UPN_FAILED, error);
-                     EXPECT_TRUE(domain.empty());
-                   }));
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_PARSE_UPN_FAILED, error);
+               }));
   JoinAdDomain(kCorrectMachineName, "user@",
-               base::BindOnce(
-                   [](authpolicy::ErrorType error, const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_PARSE_UPN_FAILED, error);
-                     EXPECT_TRUE(domain.empty());
-                   }));
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_PARSE_UPN_FAILED, error);
+               }));
   JoinAdDomain(kCorrectMachineName, "@realm",
-               base::BindOnce(
-                   [](authpolicy::ErrorType error, const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_PARSE_UPN_FAILED, error);
-                     EXPECT_TRUE(domain.empty());
-                   }));
-  base::RunLoop loop;
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_PARSE_UPN_FAILED, error);
+               }));
   JoinAdDomain(kCorrectMachineName, "user@realm@com",
-               base::BindOnce(
-                   [](base::OnceClosure closure, authpolicy::ErrorType error,
-                      const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_PARSE_UPN_FAILED, error);
-                     EXPECT_TRUE(domain.empty());
-                     std::move(closure).Run();
-                   },
-                   loop.QuitClosure()));
-  loop.Run();
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_PARSE_UPN_FAILED, error);
+               }));
+
+  base::RunLoop().RunUntilIdle();
 }
 
 // Test AuthenticateUser.
@@ -216,13 +147,11 @@ TEST_F(FakeAuthPolicyClientTest, AuthenticateUser_ByAccountId) {
 
 // Tests calls to not started authpolicyd fails.
 TEST_F(FakeAuthPolicyClientTest, NotStartedAuthPolicyService) {
-  JoinAdDomain(kCorrectMachineName, kCorrectUserName,
-               base::BindOnce(
-                   [](authpolicy::ErrorType error, const std::string& domain) {
-                     EXPECT_EQ(authpolicy::ERROR_DBUS_FAILURE, error);
-                     EXPECT_TRUE(domain.empty());
-                   }));
   LockDeviceActiveDirectory();
+  JoinAdDomain(kCorrectMachineName, kCorrectUserName,
+               base::BindOnce([](authpolicy::ErrorType error) {
+                 EXPECT_EQ(authpolicy::ERROR_DBUS_FAILURE, error);
+               }));
   AuthenticateUser(
       kCorrectUserName, std::string() /* account_id */,
       base::BindOnce([](authpolicy::ErrorType error,
@@ -233,16 +162,13 @@ TEST_F(FakeAuthPolicyClientTest, NotStartedAuthPolicyService) {
       base::BindOnce([](authpolicy::ErrorType error) {
         EXPECT_EQ(authpolicy::ERROR_DBUS_FAILURE, error);
       }));
-  base::RunLoop loop;
   authpolicy_client()->RefreshUserPolicy(
       AccountId::FromUserEmail(kCorrectUserName),
-      base::BindOnce(
-          [](base::OnceClosure closure, authpolicy::ErrorType error) {
-            EXPECT_EQ(authpolicy::ERROR_DBUS_FAILURE, error);
-            std::move(closure).Run();
-          },
-          loop.QuitClosure()));
-  loop.Run();
+      base::BindOnce([](authpolicy::ErrorType error) {
+        EXPECT_EQ(authpolicy::ERROR_DBUS_FAILURE, error);
+      }));
+
+  base::RunLoop().RunUntilIdle();
 }
 
 // Tests RefreshDevicePolicy. On a not locked device it should cache policy. On
@@ -254,14 +180,12 @@ TEST_F(FakeAuthPolicyClientTest, NotLockedDeviceCachesPolicy) {
         EXPECT_EQ(authpolicy::ERROR_DEVICE_POLICY_CACHED_BUT_NOT_SENT, error);
       }));
   LockDeviceActiveDirectory();
-  base::RunLoop loop;
-  authpolicy_client()->RefreshDevicePolicy(base::BindOnce(
-      [](base::OnceClosure closure, authpolicy::ErrorType error) {
+  authpolicy_client()->RefreshDevicePolicy(
+      base::BindOnce([](authpolicy::ErrorType error) {
         EXPECT_EQ(authpolicy::ERROR_NONE, error);
-        std::move(closure).Run();
-      },
-      loop.QuitClosure()));
-  loop.Run();
+      }));
+
+  base::RunLoop().RunUntilIdle();
 }
 
 }  // namespace chromeos

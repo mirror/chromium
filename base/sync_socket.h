@@ -110,7 +110,7 @@ class BASE_EXPORT CancelableSyncSocket : public SyncSocket {
  public:
   CancelableSyncSocket();
   explicit CancelableSyncSocket(Handle handle);
-  ~CancelableSyncSocket() override = default;
+  ~CancelableSyncSocket() override {}
 
   // Initializes a pair of cancelable sockets.  See documentation for
   // SyncSocket::CreatePair for more details.

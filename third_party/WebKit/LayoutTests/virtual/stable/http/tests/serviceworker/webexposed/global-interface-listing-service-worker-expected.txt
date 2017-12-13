@@ -694,7 +694,6 @@ interface PerformanceResourceTiming : PerformanceEntry
     getter transferSize
     getter workerStart
     method constructor
-    method toJSON
 interface PermissionStatus : EventTarget
     attribute @@toStringTag
     getter onchange

@@ -27,7 +27,6 @@
 #define CompositedLayerMapping_h
 
 #include <memory>
-#include "base/macros.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintLayerPaintingInfo.h"
 #include "core/paint/compositing/GraphicsLayerUpdater.h"
@@ -85,6 +84,7 @@ enum GraphicsLayerUpdateScope {
 // - Otherwise the PaintLayer doesn't own or directly reference any
 //   CompositedLayerMapping.
 class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
+  WTF_MAKE_NONCOPYABLE(CompositedLayerMapping);
   USING_FAST_MALLOC(CompositedLayerMapping);
 
  public:
@@ -93,8 +93,7 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
 
   PaintLayer& OwningLayer() const { return owning_layer_; }
 
-  bool UpdateGraphicsLayerConfiguration(
-      const PaintLayer* compositing_container);
+  bool UpdateGraphicsLayerConfiguration();
   void UpdateGraphicsLayerGeometry(
       const PaintLayer* compositing_container,
       const PaintLayer* compositing_stacking_context,
@@ -312,15 +311,6 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
     return draws_background_onto_content_layer_;
   }
 
-  // Returns the PaintLayer which establishes the clip state that
-  // MainGraphicsLayer will inherit from the composited layer hierarchy, after
-  // taking scroll parent and clip parent into consideration. The clip state can
-  // be different from the inherited clip state as defined by CSS spec.
-  // Those differences then need to be applied by AncestorClippingLayer.
-  const PaintLayer* ClipInheritanceAncestor() const {
-    return clip_inheritance_ancestor_;
-  }
-
  private:
   IntRect RecomputeInterestRect(const GraphicsLayer*) const;
   static bool InterestRectChangedEnoughToRepaint(
@@ -514,7 +504,8 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   // (apply mask layer when not strictly needed), but never false negative,
   // as its purpose is only for optimization.
   bool AncestorRoundedCornersWillClip(
-      const FloatRect& bounds_in_ancestor_space) const;
+      const FloatRect& bounds_in_ancestor_space,
+      const PaintLayer* clip_inheritance_ancestor);
 
   // Return true in |owningLayerIsClipped| iff there is any clip in between
   // the current layer and the inherited clip state. The inherited clip state
@@ -523,12 +514,14 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   // Return true in |owningLayerIsMasked| iff |owningLayerIsClipped| is true
   // and any of the clip needs to be applied as a painted mask.
   void OwningLayerClippedOrMaskedByLayerNotAboveCompositedAncestor(
+      const PaintLayer* scroll_parent,
       bool& owning_layer_is_clipped,
-      bool& owning_layer_is_masked) const;
+      bool& owning_layer_is_masked);
 
   const PaintLayer* ScrollParent() const;
   const PaintLayer* CompositedClipParent() const;
-  void UpdateClipInheritanceAncestor(const PaintLayer* compositing_container);
+  const PaintLayer* ClipInheritanceAncestor(
+      const PaintLayer* compositing_container) const;
 
   // Clear the groupedMapping entry on the layer at the given index, only if
   // that layer does not appear earlier in the set of layers for this object.
@@ -716,8 +709,6 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   // updates to the compositor.
   DoubleSize scrolling_contents_offset_;
 
-  const PaintLayer* clip_inheritance_ancestor_;
-
   unsigned content_offset_in_compositing_layer_dirty_ : 1;
 
   unsigned pending_update_scope_ : 2;
@@ -738,7 +729,6 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   bool draws_background_onto_content_layer_;
 
   friend class CompositedLayerMappingTest;
-  DISALLOW_COPY_AND_ASSIGN(CompositedLayerMapping);
 };
 
 }  // namespace blink

@@ -68,15 +68,14 @@ class ArcMetricsServiceFactory
 }  // namespace
 
 // static
-ArcMetricsService* ArcMetricsService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcMetricsServiceFactory::GetForBrowserContext(context);
+BrowserContextKeyedServiceFactory* ArcMetricsService::GetFactory() {
+  return ArcMetricsServiceFactory::GetInstance();
 }
 
 // static
-ArcMetricsService* ArcMetricsService::GetForBrowserContextForTesting(
+ArcMetricsService* ArcMetricsService::GetForBrowserContext(
     content::BrowserContext* context) {
-  return ArcMetricsServiceFactory::GetForBrowserContextForTesting(context);
+  return ArcMetricsServiceFactory::GetForBrowserContext(context);
 }
 
 ArcMetricsService::ArcMetricsService(content::BrowserContext* context,

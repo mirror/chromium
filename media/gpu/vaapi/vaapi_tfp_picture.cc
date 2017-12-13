@@ -20,16 +20,14 @@ VaapiTFPPicture::VaapiTFPPicture(
     int32_t picture_buffer_id,
     const gfx::Size& size,
     uint32_t texture_id,
-    uint32_t client_texture_id,
-    uint32_t texture_target)
+    uint32_t client_texture_id)
     : VaapiPicture(vaapi_wrapper,
                    make_context_current_cb,
                    bind_image_cb,
                    picture_buffer_id,
                    size,
                    texture_id,
-                   client_texture_id,
-                   texture_target),
+                   client_texture_id),
       x_display_(gfx::GetXDisplay()),
       x_pixmap_(0) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -38,7 +36,7 @@ VaapiTFPPicture::VaapiTFPPicture(
 VaapiTFPPicture::~VaapiTFPPicture() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (glx_image_.get() && make_context_current_cb_.Run()) {
-    glx_image_->ReleaseTexImage(texture_target_);
+    glx_image_->ReleaseTexImage(GL_TEXTURE_2D);
     DCHECK_EQ(glGetError(), static_cast<GLenum>(GL_NO_ERROR));
   }
 
@@ -61,8 +59,8 @@ bool VaapiTFPPicture::Initialize() {
       return false;
     }
 
-    gl::ScopedTextureBinder texture_binder(texture_target_, texture_id_);
-    if (!glx_image_->BindTexImage(texture_target_)) {
+    gl::ScopedTextureBinder texture_binder(GL_TEXTURE_2D, texture_id_);
+    if (!glx_image_->BindTexImage(GL_TEXTURE_2D)) {
       DLOG(ERROR) << "Failed to bind texture to glx image";
       return false;
     }

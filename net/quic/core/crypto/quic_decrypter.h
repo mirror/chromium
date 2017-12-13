@@ -7,7 +7,6 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <memory>
 
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/platform/api/quic_export.h"
@@ -19,12 +18,7 @@ class QUIC_EXPORT_PRIVATE QuicDecrypter {
  public:
   virtual ~QuicDecrypter() {}
 
-  static std::unique_ptr<QuicDecrypter> Create(QuicTag algorithm);
-
-  // Creates an IETF QuicDecrypter based on |cipher_suite| which must be an id
-  // returned by SSL_CIPHER_get_id. The caller is responsible for taking
-  // ownership of the new QuicDecrypter.
-  static QuicDecrypter* CreateFromCipherSuite(uint32_t cipher_suite);
+  static QuicDecrypter* Create(QuicTag algorithm);
 
   // Sets the encryption key. Returns true on success, false on failure.
   //
@@ -107,11 +101,6 @@ class QUIC_EXPORT_PRIVATE QuicDecrypter {
                              char* output,
                              size_t* output_length,
                              size_t max_output_length) = 0;
-
-  // Returns the size in bytes of a key for the algorithm.
-  virtual size_t GetKeySize() const = 0;
-  // Returns the size in bytes of an IV to use with the algorithm.
-  virtual size_t GetIVSize() const = 0;
 
   // The ID of the cipher. Return 0x03000000 ORed with the 'cryptographic suite
   // selector'.

@@ -393,40 +393,26 @@ class WebContentsImpl::DestructionObserver : public WebContentsObserver {
   DISALLOW_COPY_AND_ASSIGN(DestructionObserver);
 };
 
-// WebContentsImpl::ColorChooser ----------------------------------------------
-class WebContentsImpl::ColorChooser : public mojom::ColorChooser {
- public:
-  ColorChooser(content::ColorChooser* chooser,
-               mojom::ColorChooserRequest request,
-               mojom::ColorChooserClientPtr client)
-      : chooser_(chooser),
-        binding_(this, std::move(request)),
-        client_(std::move(client)) {
-    binding_.set_connection_error_handler(
-        base::BindOnce([](content::ColorChooser* chooser) { chooser->End(); },
-                       base::Unretained(chooser)));
-  }
+WebContentsImpl::ColorChooserInfo::ColorChooserInfo(int render_process_id,
+                                                    int render_frame_id,
+                                                    ColorChooser* chooser,
+                                                    int identifier)
+    : render_process_id(render_process_id),
+      render_frame_id(render_frame_id),
+      chooser(chooser),
+      identifier(identifier) {
+}
 
-  ~ColorChooser() override { chooser_->End(); }
+WebContentsImpl::ColorChooserInfo::~ColorChooserInfo() {
+}
 
-  void SetSelectedColor(SkColor color) override {
-    chooser_->SetSelectedColor(color);
-  }
-
-  void DidChooseColorInColorChooser(SkColor color) {
-    client_->DidChooseColor(color);
-  }
-
- private:
-  // Color chooser that was opened by this tab.
-  std::unique_ptr<content::ColorChooser> chooser_;
-
-  // mojo bindings.
-  mojo::Binding<mojom::ColorChooser> binding_;
-
-  // mojo renderer client.
-  content::mojom::ColorChooserClientPtr client_;
-};
+bool WebContentsImpl::ColorChooserInfo::Matches(
+    RenderFrameHostImpl* render_frame_host,
+    int color_chooser_id) {
+  return this->render_process_id == render_frame_host->GetProcess()->GetID() &&
+         this->render_frame_id == render_frame_host->GetRoutingID() &&
+         this->identifier == color_chooser_id;
+}
 
 // WebContentsImpl::WebContentsTreeNode ----------------------------------------
 WebContentsImpl::WebContentsTreeNode::WebContentsTreeNode(
@@ -583,9 +569,6 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
 #if !defined(OS_ANDROID)
   host_zoom_map_observer_.reset(new HostZoomMapObserver(this));
 #endif  // !defined(OS_ANDROID)
-
-  registry_.AddInterface(base::BindRepeating(
-      &WebContentsImpl::OnColorChooserFactoryRequest, base::Unretained(this)));
 }
 
 WebContentsImpl::~WebContentsImpl() {
@@ -629,7 +612,8 @@ WebContentsImpl::~WebContentsImpl() {
     dialog_manager_->CancelDialogs(this, /*reset_state=*/true);
   }
 
-  color_chooser_.reset();
+  if (color_chooser_info_.get())
+    color_chooser_info_->chooser->End();
 
   NotifyDisconnected();
 
@@ -853,6 +837,10 @@ bool WebContentsImpl::OnMessageReceived(RenderFrameHostImpl* render_frame_host,
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidFinishDocumentLoad,
                         OnDocumentLoadedInFrame)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidFinishLoad, OnDidFinishLoad)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_OpenColorChooser, OnOpenColorChooser)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_EndColorChooser, OnEndColorChooser)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_SetSelectedColorInColorChooser,
+                        OnSetSelectedColorInColorChooser)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidLoadResourceFromMemoryCache,
                         OnDidLoadResourceFromMemoryCache)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidDisplayInsecureContent,
@@ -1379,7 +1367,7 @@ void WebContentsImpl::DecrementCapturerCount() {
   if (is_being_destroyed_)
     return;
 
-  if (!IsBeingCaptured()) {
+  if (capturer_count_ == 0) {
     const gfx::Size old_size = preferred_size_for_capture_;
     preferred_size_for_capture_ = gfx::Size();
     OnPreferredSizeChanged(old_size);
@@ -1394,8 +1382,8 @@ void WebContentsImpl::DecrementCapturerCount() {
   }
 }
 
-bool WebContentsImpl::IsBeingCaptured() const {
-  return capturer_count_ > 0;
+int WebContentsImpl::GetCapturerCount() const {
+  return capturer_count_;
 }
 
 bool WebContentsImpl::IsAudioMuted() const {
@@ -1530,7 +1518,7 @@ void WebContentsImpl::WasShown() {
 void WebContentsImpl::WasHidden() {
   // If there are entities capturing screenshots or video (e.g., mirroring),
   // don't activate the "disable rendering" optimization.
-  if (!IsBeingCaptured()) {
+  if (capturer_count_ == 0) {
     // |GetRenderViewHost()| can be NULL if the user middle clicks a link to
     // open a tab in the background, then closes the tab before selecting it.
     // This is because closing the tab calls WebContentsImpl::Destroy(), which
@@ -1588,7 +1576,7 @@ bool WebContentsImpl::IsVisible() const {
 }
 
 void WebContentsImpl::WasOccluded() {
-  if (!IsBeingCaptured()) {
+  if (capturer_count_ == 0) {
     for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
       view->WasOccluded();
   }
@@ -1597,7 +1585,7 @@ void WebContentsImpl::WasOccluded() {
 }
 
 void WebContentsImpl::WasUnOccluded() {
-  if (!IsBeingCaptured())
+  if (capturer_count_ == 0)
     DoWasUnOccluded();
 
   should_normally_be_occluded_ = false;
@@ -2589,7 +2577,7 @@ void WebContentsImpl::ShowCreatedWidget(int process_id,
   }
 
   RenderWidgetHostImpl* render_widget_host_impl =
-      widget_host_view->GetRenderWidgetHostImpl();
+      RenderWidgetHostImpl::From(widget_host_view->GetRenderWidgetHost());
   render_widget_host_impl->Init();
   // Only allow privileged mouse lock for fullscreen render widget, which is
   // used to implement Pepper Flash fullscreen.
@@ -3479,7 +3467,7 @@ void WebContentsImpl::SetPageScale(float page_scale_factor) {
 }
 
 gfx::Size WebContentsImpl::GetPreferredSize() const {
-  return IsBeingCaptured() ? preferred_size_for_capture_ : preferred_size_;
+  return capturer_count_ == 0 ? preferred_size_ : preferred_size_for_capture_;
 }
 
 bool WebContentsImpl::GotResponseToLockMouseRequest(bool allowed) {
@@ -3525,11 +3513,30 @@ RenderFrameHostImpl* WebContentsImpl::GetOriginalOpener() const {
 }
 
 void WebContentsImpl::DidChooseColorInColorChooser(SkColor color) {
-  color_chooser_->DidChooseColorInColorChooser(color);
+  if (!color_chooser_info_.get())
+    return;
+  RenderFrameHost* rfh = RenderFrameHost::FromID(
+      color_chooser_info_->render_process_id,
+      color_chooser_info_->render_frame_id);
+  if (!rfh)
+    return;
+
+  rfh->Send(new FrameMsg_DidChooseColorResponse(
+      rfh->GetRoutingID(), color_chooser_info_->identifier, color));
 }
 
 void WebContentsImpl::DidEndColorChooser() {
-  color_chooser_.reset();
+  if (!color_chooser_info_.get())
+    return;
+  RenderFrameHost* rfh = RenderFrameHost::FromID(
+      color_chooser_info_->render_process_id,
+      color_chooser_info_->render_frame_id);
+  if (!rfh)
+    return;
+
+  rfh->Send(new FrameMsg_DidEndColorChooser(
+      rfh->GetRoutingID(), color_chooser_info_->identifier));
+  color_chooser_info_.reset();
 }
 
 int WebContentsImpl::DownloadImage(
@@ -4205,25 +4212,38 @@ void WebContentsImpl::OnAppCacheAccessed(RenderViewHostImpl* source,
     observer.AppCacheAccessed(manifest_url, blocked_by_policy);
 }
 
-void WebContentsImpl::OnColorChooserFactoryRequest(
-    mojom::ColorChooserFactoryRequest request) {
-  color_chooser_factory_bindings_.AddBinding(this, std::move(request));
-}
-
-void WebContentsImpl::OpenColorChooser(
-    mojom::ColorChooserRequest chooser_request,
-    mojom::ColorChooserClientPtr client,
+void WebContentsImpl::OnOpenColorChooser(
+    RenderFrameHostImpl* source,
+    int color_chooser_id,
     SkColor color,
-    std::vector<mojom::ColorSuggestionPtr> suggestions) {
-  content::ColorChooser* new_color_chooser =
+    const std::vector<ColorSuggestion>& suggestions) {
+  ColorChooser* new_color_chooser =
       delegate_ ? delegate_->OpenColorChooser(this, color, suggestions)
                 : nullptr;
   if (!new_color_chooser)
     return;
+  if (color_chooser_info_.get())
+    color_chooser_info_->chooser->End();
 
-  color_chooser_.reset();
-  color_chooser_ = std::make_unique<ColorChooser>(
-      new_color_chooser, std::move(chooser_request), std::move(client));
+  color_chooser_info_.reset(new ColorChooserInfo(
+      source->GetProcess()->GetID(), source->GetRoutingID(), new_color_chooser,
+      color_chooser_id));
+}
+
+void WebContentsImpl::OnEndColorChooser(RenderFrameHostImpl* source,
+                                        int color_chooser_id) {
+  if (color_chooser_info_ &&
+      color_chooser_info_->Matches(source, color_chooser_id))
+    color_chooser_info_->chooser->End();
+}
+
+void WebContentsImpl::OnSetSelectedColorInColorChooser(
+    RenderFrameHostImpl* source,
+    int color_chooser_id,
+    SkColor color) {
+  if (color_chooser_info_ &&
+      color_chooser_info_->Matches(source, color_chooser_id))
+    color_chooser_info_->chooser->SetSelectedColor(color);
 }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
@@ -4543,7 +4563,6 @@ void WebContentsImpl::OnInterfaceRequest(
     RenderFrameHost* render_frame_host,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle* interface_pipe) {
-  registry_.TryBindInterface(interface_name, interface_pipe);
   for (auto& observer : observers_) {
     observer.OnInterfaceRequestFromFrame(render_frame_host, interface_name,
                                          interface_pipe);
@@ -5728,7 +5747,7 @@ void WebContentsImpl::SetEncoding(const std::string& encoding) {
 }
 
 bool WebContentsImpl::IsHidden() {
-  return !IsBeingCaptured() && !should_normally_be_visible_;
+  return capturer_count_ == 0 && !should_normally_be_visible_;
 }
 
 int WebContentsImpl::GetOuterDelegateFrameTreeNodeId() {

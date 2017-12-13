@@ -7,7 +7,6 @@
 #include <memory>
 #include <set>
 #include <string>
-#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -338,6 +337,7 @@ void ChromeSpeechRecognitionManagerDelegate::CheckRenderViewType(
 
   if (view_type == extensions::VIEW_TYPE_TAB_CONTENTS ||
       view_type == extensions::VIEW_TYPE_APP_WINDOW ||
+      view_type == extensions::VIEW_TYPE_LAUNCHER_PAGE ||
       view_type == extensions::VIEW_TYPE_COMPONENT ||
       view_type == extensions::VIEW_TYPE_EXTENSION_POPUP ||
       view_type == extensions::VIEW_TYPE_EXTENSION_BACKGROUND_PAGE) {

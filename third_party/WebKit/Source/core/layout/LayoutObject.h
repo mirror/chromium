@@ -27,7 +27,6 @@
 #ifndef LayoutObject_h
 #define LayoutObject_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentLifecycle.h"
@@ -45,6 +44,7 @@
 #include "core/paint/FragmentData.h"
 #include "core/paint/LayerHitTestRects.h"
 #include "core/paint/PaintPhase.h"
+#include "core/paint/RarePaintData.h"
 #include "core/paint/compositing/CompositingState.h"
 #include "core/style/ComputedStyle.h"
 #include "core/style/StyleDifference.h"
@@ -207,6 +207,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   FRIEND_TEST_ALL_PREFIXES(LayoutObjectTest,
                            LocationInBackingAndSelectionVisualRect);
   friend class VisualRectMappingTest;
+  WTF_MAKE_NONCOPYABLE(LayoutObject);
 
  public:
   // Anonymous objects should pass the document as their node, and they will
@@ -421,7 +422,12 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // Sets the parent of this object but doesn't add it as a child of the parent.
   void SetDangerousOneWayParent(LayoutObject*);
 
-  UniqueObjectId UniqueId() const { return fragment_.UniqueId(); }
+  UniqueObjectId UniqueId() const {
+    DCHECK(fragment_.GetRarePaintData());
+    return fragment_.GetRarePaintData()
+               ? fragment_.GetRarePaintData()->UniqueId()
+               : 0;
+  }
 
  private:
   //////////////////////////////////////////
@@ -1776,7 +1782,10 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     }
 
     void SetSelectionVisualRect(const LayoutRect& r) {
-      layout_object_.fragment_.SetSelectionVisualRect(r);
+      if (layout_object_.fragment_.GetRarePaintData() || !r.IsEmpty()) {
+        layout_object_.fragment_.EnsureRarePaintData().SetSelectionVisualRect(
+            r);
+      }
     }
 
     void SetPreviousBackgroundObscured(bool b) {
@@ -1912,10 +1921,14 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   }
 
   LayoutRect SelectionVisualRect() const {
-    return fragment_.SelectionVisualRect();
+    return fragment_.GetRarePaintData()
+               ? fragment_.GetRarePaintData()->SelectionVisualRect()
+               : LayoutRect();
   }
   LayoutRect PartialInvalidationRect() const {
-    return fragment_.PartialInvalidationRect();
+    return fragment_.GetRarePaintData()
+               ? fragment_.GetRarePaintData()->PartialInvalidationRect()
+               : LayoutRect();
   }
 
   void InvalidateIfControlStateChanged(ControlState);
@@ -2053,7 +2066,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
                                        const LayoutPoint& layer_offset) const {}
 
   void SetPartialInvalidationRect(const LayoutRect& rect) {
-    fragment_.SetPartialInvalidationRect(rect);
+    if (fragment_.GetRarePaintData() || !rect.IsEmpty())
+      fragment_.EnsureRarePaintData().SetPartialInvalidationRect(rect);
   }
 
 #if DCHECK_IS_ON()
@@ -2062,7 +2076,8 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
            ShouldCheckForPaintInvalidation() || ShouldInvalidateSelection() ||
            NeedsPaintOffsetAndVisualRectUpdate() ||
            (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
-            !fragment_.PartialInvalidationRect().IsEmpty());
+            fragment_.GetRarePaintData() &&
+            !fragment_.GetRarePaintData()->PartialInvalidationRect().IsEmpty());
   }
 #endif
 
@@ -2593,13 +2608,13 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   static bool affects_parent_block_;
 
   FragmentData fragment_;
-  DISALLOW_COPY_AND_ASSIGN(LayoutObject);
 };
 
 // FIXME: remove this once the layout object lifecycle ASSERTS are no longer
 // hit.
 class DeprecatedDisableModifyLayoutTreeStructureAsserts {
   STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(DeprecatedDisableModifyLayoutTreeStructureAsserts);
 
  public:
   DeprecatedDisableModifyLayoutTreeStructureAsserts();
@@ -2608,7 +2623,6 @@ class DeprecatedDisableModifyLayoutTreeStructureAsserts {
 
  private:
   AutoReset<bool> disabler_;
-  DISALLOW_COPY_AND_ASSIGN(DeprecatedDisableModifyLayoutTreeStructureAsserts);
 };
 
 // Allow equality comparisons of LayoutObjects by reference or pointer,

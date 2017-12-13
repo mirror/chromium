@@ -30,7 +30,6 @@ import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.parameter.SkipCommandLineParameterization;
-import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.net.test.util.TestWebServer;
 import org.chromium.ui.display.DisplayAndroid;
@@ -743,10 +742,8 @@ public class AndroidScrollIntegrationTest {
                 + "</div>");
 
         InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                ()
-                        -> GestureListenerManager
-                                   .fromWebContents(testContainerView.getWebContents())
-                                   .addListener(testGestureStateListener));
+                () -> testContainerView.getContentViewCore().addGestureStateListener(
+                        testGestureStateListener));
         final CallbackHelper onScrollUpdateGestureConsumedHelper =
                 testGestureStateListener.getOnScrollUpdateGestureConsumedHelper();
 

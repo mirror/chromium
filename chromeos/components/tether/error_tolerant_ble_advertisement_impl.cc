@@ -4,10 +4,9 @@
 
 #include "chromeos/components/tether/error_tolerant_ble_advertisement_impl.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "chromeos/components/tether/ble_constants.h"
 #include "chromeos/components/tether/ble_synchronizer.h"
@@ -52,7 +51,7 @@ ErrorTolerantBleAdvertisementImpl::Factory::BuildInstance(
     const std::string& device_id,
     std::unique_ptr<cryptauth::DataWithTimestamp> advertisement_data,
     BleSynchronizerBase* ble_synchronizer) {
-  return std::make_unique<ErrorTolerantBleAdvertisementImpl>(
+  return base::MakeUnique<ErrorTolerantBleAdvertisementImpl>(
       device_id, std::move(advertisement_data), ble_synchronizer);
 }
 
@@ -119,7 +118,7 @@ void ErrorTolerantBleAdvertisementImpl::AttemptRegistration() {
   registration_in_progress_ = true;
 
   std::unique_ptr<device::BluetoothAdvertisement::Data> advertisement_data =
-      std::make_unique<device::BluetoothAdvertisement::Data>(
+      base::MakeUnique<device::BluetoothAdvertisement::Data>(
           device::BluetoothAdvertisement::AdvertisementType::
               ADVERTISEMENT_TYPE_BROADCAST);
   advertisement_data->set_service_uuids(CreateServiceUuids());
@@ -159,7 +158,7 @@ void ErrorTolerantBleAdvertisementImpl::AttemptUnregistration() {
 std::unique_ptr<device::BluetoothAdvertisement::UUIDList>
 ErrorTolerantBleAdvertisementImpl::CreateServiceUuids() const {
   std::unique_ptr<device::BluetoothAdvertisement::UUIDList> list =
-      std::make_unique<device::BluetoothAdvertisement::UUIDList>();
+      base::MakeUnique<device::BluetoothAdvertisement::UUIDList>();
   list->push_back(kAdvertisingServiceUuid);
   return list;
 }
@@ -177,7 +176,7 @@ ErrorTolerantBleAdvertisementImpl::CreateServiceData() const {
   data_as_vector.push_back(kInvertedConnectionFlag);
 
   std::unique_ptr<device::BluetoothAdvertisement::ServiceData> service_data =
-      std::make_unique<device::BluetoothAdvertisement::ServiceData>();
+      base::MakeUnique<device::BluetoothAdvertisement::ServiceData>();
   service_data->insert(std::pair<std::string, std::vector<uint8_t>>(
       kAdvertisingServiceUuid, data_as_vector));
   return service_data;

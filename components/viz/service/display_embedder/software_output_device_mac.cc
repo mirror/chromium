@@ -216,14 +216,4 @@ void SoftwareOutputDeviceMac::GetVSyncParameters(
   update_vsync_callback_ = callback;
 }
 
-bool SoftwareOutputDeviceMac::GetVSyncParametersIfAvailable(
-    base::TimeTicks* timebase,
-    base::TimeDelta* interval) {
-  return false;
-}
-
-bool SoftwareOutputDeviceMac::SupportGetVSyncParametersIfAvailable() {
-  return false;
-}
-
 }  // namespace viz

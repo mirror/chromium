@@ -75,7 +75,8 @@ bool SharedWorkerServiceImpl::TerminateWorker(
       storage_partition_impl->GetIndexedDBContext(),
       storage_partition_impl->GetServiceWorkerContext()));
 
-  for (auto& host : worker_hosts_) {
+  for (const auto& iter : worker_hosts_) {
+    SharedWorkerHost* host = iter.second.get();
     if (host->IsAvailable() &&
         host->instance()->Matches(url, name, constructor_origin, partition_id,
                                   resource_context)) {
@@ -96,8 +97,8 @@ void SharedWorkerServiceImpl::TerminateAllWorkersForTesting(
                                                   std::move(callback));
   } else {
     terminate_all_workers_callback_ = std::move(callback);
-    for (auto& host : worker_hosts_)
-      host->TerminateWorker();
+    for (auto& iter : worker_hosts_)
+      iter.second->TerminateWorker();
     // Monitor for actual termination in DestroyHost.
   }
 }
@@ -159,22 +160,21 @@ void SharedWorkerServiceImpl::ConnectToWorker(
     // instances. This host would likely be observing the destruction of the
     // child process shortly, but we can clean this up now to avoid some
     // complexity.
-    DestroyHost(host);
+    DestroyHost(host->process_id(), host->route_id());
   }
 
   CreateWorker(std::move(instance), std::move(client), process_id, frame_id,
                message_port);
 }
 
-void SharedWorkerServiceImpl::DestroyHost(SharedWorkerHost* host) {
-  RenderProcessHost* process_host =
-      RenderProcessHost::FromID(host->process_id());
-  worker_hosts_.erase(worker_hosts_.find(host));
+void SharedWorkerServiceImpl::DestroyHost(int process_id, int route_id) {
+  worker_hosts_.erase(WorkerID(process_id, route_id));
 
   // Complete the call to TerminateAllWorkersForTesting if no more workers.
   if (worker_hosts_.empty() && terminate_all_workers_callback_)
     std::move(terminate_all_workers_callback_).Run();
 
+  RenderProcessHost* process_host = RenderProcessHost::FromID(process_id);
   if (!IsShuttingDown(process_host))
     process_host->DecrementKeepAliveRefCount();
 }
@@ -218,14 +218,23 @@ void SharedWorkerServiceImpl::CreateWorker(
   const GURL url = host->instance()->url();
   const std::string name = host->instance()->name();
 
-  worker_hosts_.insert(std::move(host));
+  worker_hosts_[WorkerID(worker_process_id, worker_route_id)] = std::move(host);
+}
+
+SharedWorkerHost* SharedWorkerServiceImpl::FindSharedWorkerHost(int process_id,
+                                                                int route_id) {
+  auto iter = worker_hosts_.find(WorkerID(process_id, route_id));
+  if (iter == worker_hosts_.end())
+    return nullptr;
+  return iter->second.get();
 }
 
 SharedWorkerHost* SharedWorkerServiceImpl::FindAvailableSharedWorkerHost(
     const SharedWorkerInstance& instance) {
-  for (auto& host : worker_hosts_) {
+  for (const auto& iter : worker_hosts_) {
+    SharedWorkerHost* host = iter.second.get();
     if (host->IsAvailable() && host->instance()->Matches(instance))
-      return host.get();
+      return host;
   }
   return nullptr;
 }

@@ -28,7 +28,6 @@
 #define XPathParser_h
 
 #include <memory>
-#include "base/macros.h"
 #include "core/xml/XPathPredicate.h"
 #include "core/xml/XPathStep.h"
 #include "platform/wtf/Allocator.h"
@@ -60,6 +59,7 @@ struct Token {
 };
 
 class Parser {
+  WTF_MAKE_NONCOPYABLE(Parser);
   STACK_ALLOCATED();
 
  public:
@@ -113,7 +113,6 @@ class Parser {
   Member<XPathNSResolver> resolver_;
 
   HashSet<std::unique_ptr<String>> strings_;
-  DISALLOW_COPY_AND_ASSIGN(Parser);
 };
 
 }  // namespace XPath

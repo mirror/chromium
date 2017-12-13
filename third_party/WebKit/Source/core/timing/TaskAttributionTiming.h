@@ -59,8 +59,6 @@ class TaskAttributionTiming final : public PerformanceEntry {
                         double start_time,
                         double finish_time,
                         String script_url);
-  void BuildJSONValue(V8ObjectBuilder&) const override;
-
   String container_type_;
   String container_src_;
   String container_id_;

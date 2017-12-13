@@ -194,7 +194,10 @@ bool ArcNotificationView::OnKeyPressed(const ui::KeyEvent& event) {
 }
 
 void ArcNotificationView::ChildPreferredSizeChanged(View* child) {
-  PreferredSizeChanged();
+  // Notify MessageViewDelegate when the custom content changes size,
+  // as it may need to relayout.
+  if (delegate())
+    delegate()->UpdateNotificationSize(notification_id());
 }
 
 bool ArcNotificationView::HandleAccessibleAction(

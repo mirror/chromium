@@ -1824,6 +1824,9 @@ external/wpt/css/css-color/t425-hsla-parsing-f.xht [ WontFix ]
 external/wpt/css/mediaqueries/device-aspect-ratio-001.html [ WontFix ]
 external/wpt/css/mediaqueries/device-aspect-ratio-005.html [ WontFix ]
 
+# https://github.com/w3c/web-platform-tests/pull/8631
+external/wpt/css/css-style-attr/style-attr-urls-003.xht [ WontFix ]
+
 # https://github.com/w3c/web-platform-tests/issues/8633
 external/wpt/css/css-style-attr/style-attr-braces-002-quirks.htm [ WontFix ]
 
@@ -1842,7 +1845,3 @@ http/tests/ManualTests/ [ WontFix ]
 # in testing, whereas otherwise we do not do so if the composited layer has a
 # direct compositing reason (for performance). Only applies to SPv1.
 paint/invalidation/compositing/subpixel-offset-scaled-transform-composited.html [ WontFix ]
-
-# These tests should always fail because the modern media controls are not yet enabled
-crbug.com/761305 media/controls/modern/ [ WontFix ]
-crbug.com/761306 virtual/new-remote-playback-pipeline/media/controls/modern/ [ WontFix ]

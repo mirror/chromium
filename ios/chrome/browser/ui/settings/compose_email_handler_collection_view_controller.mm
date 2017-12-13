@@ -8,7 +8,7 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_switch_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
 #import "ios/chrome/browser/web/mailto_handler.h"
-#import "ios/chrome/browser/web/mailto_handler_manager.h"
+#import "ios/chrome/browser/web/mailto_url_rewriter.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MDCPalettes.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -33,9 +33,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 }  // namespace
 
 @interface ComposeEmailHandlerCollectionViewController () {
-  // Object that manages a set of MailtoHandler objects which can handle
-  // mailto:// URLs.
-  MailtoHandlerManager* _manager;
+  MailtoURLRewriter* _rewriter;
   // When this switch is ON, the user wants to be prompted for which Mail
   // client app to use, so the list of available Mail client apps should be
   // disabled (grayed out).
@@ -59,12 +57,12 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 @implementation ComposeEmailHandlerCollectionViewController
 
-- (instancetype)initWithManager:(MailtoHandlerManager*)manager {
+- (instancetype)initWithRewriter:(MailtoURLRewriter*)rewriter {
   UICollectionViewLayout* layout = [[MDCCollectionViewFlowLayout alloc] init];
   self =
       [super initWithLayout:layout style:CollectionViewControllerStyleAppBar];
   if (self) {
-    _manager = manager;
+    _rewriter = rewriter;
   }
   return self;
 }
@@ -88,8 +86,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
   [model addSectionWithIdentifier:SectionIdentifierMailtoHandlers];
 
   // Finds the default Mail client app.
-  NSArray<MailtoHandler*>* handlers = [_manager defaultHandlers];
-  NSString* currentHandlerID = [_manager defaultHandlerID];
+  NSArray<MailtoHandler*>* handlers = [_rewriter defaultHandlers];
+  NSString* currentHandlerID = [_rewriter defaultHandlerID];
 
   // Populates the toggle "Always Ask" toggle switch row first because the
   // state of of the Mail client apps selection list is dependent on the value
@@ -166,7 +164,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   // Sets the Mail client app that will handle mailto:// URLs.
   MailtoHandler* handler = [self handlerAtIndexPath:indexPath];
   DCHECK([handler isAvailable]);
-  [_manager setDefaultHandlerID:[handler appStoreID]];
+  [_rewriter setDefaultHandlerID:[handler appStoreID]];
 
   [self reconfigureCellsForItems:modifiedItems];
 }
@@ -204,14 +202,14 @@ typedef NS_ENUM(NSInteger, ItemType) {
 - (void)didToggleAlwaysAskSwitch:(id)sender {
   BOOL isOn = [sender isOn];
   [_alwaysAskItem setOn:isOn];
-  [_manager setDefaultHandlerID:nil];
+  [_rewriter setDefaultHandlerID:nil];
 
   // Clear all sections by iterating through the rows. Text color of each
   // row is changed to reflect whether selection is enabled.
   NSMutableArray* modifiedItems = [NSMutableArray array];
   NSArray<CollectionViewItem*>* itemsInSection = [self.collectionViewModel
       itemsInSectionWithIdentifier:SectionIdentifierMailtoHandlers];
-  NSArray<MailtoHandler*>* handlers = [_manager defaultHandlers];
+  NSArray<MailtoHandler*>* handlers = [_rewriter defaultHandlers];
   for (NSUInteger index = 0; index < [itemsInSection count]; ++index) {
     CollectionViewTextItem* textItem =
         base::mac::ObjCCastStrict<CollectionViewTextItem>(
@@ -244,7 +242,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   if (itemType != ItemTypeMailtoHandlers)
     return nil;
   NSUInteger handlerIndex = [model indexInItemTypeForIndexPath:indexPath];
-  return [[_manager defaultHandlers] objectAtIndex:handlerIndex];
+  return [[_rewriter defaultHandlers] objectAtIndex:handlerIndex];
 }
 
 @end

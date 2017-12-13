@@ -24,7 +24,6 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
-#include "gpu/command_buffer/client/raster_interface.h"
 #include "ui/gfx/buffer_format_util.h"
 
 namespace cc {
@@ -202,7 +201,7 @@ void OneCopyRasterBufferProvider::Shutdown() {
 
 void OneCopyRasterBufferProvider::PlaybackAndCopyOnWorkerThread(
     const Resource* resource,
-    ResourceProvider::ScopedWriteLockRaster* resource_lock,
+    ResourceProvider::ScopedWriteLockGL* resource_lock,
     const gpu::SyncToken& sync_token,
     const RasterSource* raster_source,
     const gfx::Rect& raster_full_rect,
@@ -231,10 +230,10 @@ void OneCopyRasterBufferProvider::WaitSyncToken(
     const gpu::SyncToken& sync_token) {
   viz::ContextProvider::ScopedContextLock scoped_context(
       worker_context_provider_);
-  gpu::raster::RasterInterface* ri = scoped_context.RasterContext();
-  DCHECK(ri);
+  gpu::gles2::GLES2Interface* gl = scoped_context.ContextGL();
+  DCHECK(gl);
   // Synchronize with compositor. Nop if sync token is empty.
-  ri->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
+  gl->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
 }
 
 void OneCopyRasterBufferProvider::PlaybackToStagingBuffer(
@@ -301,65 +300,65 @@ void OneCopyRasterBufferProvider::PlaybackToStagingBuffer(
 
 void OneCopyRasterBufferProvider::CopyOnWorkerThread(
     StagingBuffer* staging_buffer,
-    ResourceProvider::ScopedWriteLockRaster* resource_lock,
+    ResourceProvider::ScopedWriteLockGL* resource_lock,
     const RasterSource* raster_source,
     const gfx::Rect& rect_to_copy) {
   viz::ContextProvider::ScopedContextLock scoped_context(
       worker_context_provider_);
-  gpu::raster::RasterInterface* ri = scoped_context.RasterContext();
-  DCHECK(ri);
+  gpu::gles2::GLES2Interface* gl = scoped_context.ContextGL();
+  DCHECK(gl);
 
-  GLuint texture_id = resource_lock->ConsumeTexture(ri);
+  GLuint texture_id = resource_lock->ConsumeTexture(gl);
 
   GLenum image_target = resource_provider_->GetImageTextureTarget(
       StagingBufferUsage(), staging_buffer->format);
 
   // Create and bind staging texture.
   if (!staging_buffer->texture_id) {
-    ri->GenTextures(1, &staging_buffer->texture_id);
-    ri->BindTexture(image_target, staging_buffer->texture_id);
-    ri->TexParameteri(image_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    ri->TexParameteri(image_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    ri->TexParameteri(image_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    ri->TexParameteri(image_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    gl->GenTextures(1, &staging_buffer->texture_id);
+    gl->BindTexture(image_target, staging_buffer->texture_id);
+    gl->TexParameteri(image_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    gl->TexParameteri(image_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    gl->TexParameteri(image_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    gl->TexParameteri(image_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
   } else {
-    ri->BindTexture(image_target, staging_buffer->texture_id);
+    gl->BindTexture(image_target, staging_buffer->texture_id);
   }
 
   // Create and bind image.
   if (!staging_buffer->image_id) {
     if (staging_buffer->gpu_memory_buffer) {
-      staging_buffer->image_id = ri->CreateImageCHROMIUM(
+      staging_buffer->image_id = gl->CreateImageCHROMIUM(
           staging_buffer->gpu_memory_buffer->AsClientBuffer(),
           staging_buffer->size.width(), staging_buffer->size.height(),
           GLInternalFormat(resource_lock->format()));
-      ri->BindTexImage2DCHROMIUM(image_target, staging_buffer->image_id);
+      gl->BindTexImage2DCHROMIUM(image_target, staging_buffer->image_id);
     }
   } else {
-    ri->ReleaseTexImage2DCHROMIUM(image_target, staging_buffer->image_id);
-    ri->BindTexImage2DCHROMIUM(image_target, staging_buffer->image_id);
+    gl->ReleaseTexImage2DCHROMIUM(image_target, staging_buffer->image_id);
+    gl->BindTexImage2DCHROMIUM(image_target, staging_buffer->image_id);
   }
 
   // Unbind staging texture.
-  ri->BindTexture(image_target, 0);
+  gl->BindTexture(image_target, 0);
 
   if (resource_provider_->use_sync_query()) {
     if (!staging_buffer->query_id)
-      ri->GenQueriesEXT(1, &staging_buffer->query_id);
+      gl->GenQueriesEXT(1, &staging_buffer->query_id);
 
 #if defined(OS_CHROMEOS) && defined(ARCH_CPU_ARM_FAMILY)
     // TODO(reveman): This avoids a performance problem on ARM ChromeOS
     // devices. crbug.com/580166
-    ri->BeginQueryEXT(GL_COMMANDS_ISSUED_CHROMIUM, staging_buffer->query_id);
+    gl->BeginQueryEXT(GL_COMMANDS_ISSUED_CHROMIUM, staging_buffer->query_id);
 #else
-    ri->BeginQueryEXT(GL_COMMANDS_COMPLETED_CHROMIUM, staging_buffer->query_id);
+    gl->BeginQueryEXT(GL_COMMANDS_COMPLETED_CHROMIUM, staging_buffer->query_id);
 #endif
   }
 
   // Since compressed texture's cannot be pre-allocated we might have an
   // unallocated resource in which case we need to perform a full size copy.
   if (IsResourceFormatCompressed(resource_lock->format())) {
-    ri->CompressedCopyTextureCHROMIUM(staging_buffer->texture_id, texture_id);
+    gl->CompressedCopyTextureCHROMIUM(staging_buffer->texture_id, texture_id);
   } else {
     int bytes_per_row = ResourceUtil::UncheckedWidthInBytes<int>(
         rect_to_copy.width(), resource_lock->format());
@@ -374,7 +373,7 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
       int rows_to_copy = std::min(chunk_size_in_rows, height - y);
       DCHECK_GT(rows_to_copy, 0);
 
-      ri->CopySubTextureCHROMIUM(
+      gl->CopySubTextureCHROMIUM(
           staging_buffer->texture_id, 0, GL_TEXTURE_2D, texture_id, 0, 0, y, 0,
           y, rect_to_copy.width(), rows_to_copy, false, false, false);
       y += rows_to_copy;
@@ -384,7 +383,7 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
       bytes_scheduled_since_last_flush_ += rows_to_copy * bytes_per_row;
 
       if (bytes_scheduled_since_last_flush_ >= max_bytes_per_copy_operation_) {
-        ri->ShallowFlushCHROMIUM();
+        gl->ShallowFlushCHROMIUM();
         bytes_scheduled_since_last_flush_ = 0;
       }
     }
@@ -392,16 +391,16 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
 
   if (resource_provider_->use_sync_query()) {
 #if defined(OS_CHROMEOS) && defined(ARCH_CPU_ARM_FAMILY)
-    ri->EndQueryEXT(GL_COMMANDS_ISSUED_CHROMIUM);
+    gl->EndQueryEXT(GL_COMMANDS_ISSUED_CHROMIUM);
 #else
-    ri->EndQueryEXT(GL_COMMANDS_COMPLETED_CHROMIUM);
+    gl->EndQueryEXT(GL_COMMANDS_COMPLETED_CHROMIUM);
 #endif
   }
 
-  ri->DeleteTextures(1, &texture_id);
+  gl->DeleteTextures(1, &texture_id);
 
   // Generate sync token for cross context synchronization.
-  resource_lock->set_sync_token(ResourceProvider::GenerateSyncTokenHelper(ri));
+  resource_lock->set_sync_token(ResourceProvider::GenerateSyncTokenHelper(gl));
 
   // Mark resource as synchronized when worker and compositor are in same stream
   // to prevent extra wait sync token calls.

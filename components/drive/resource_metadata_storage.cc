@@ -17,7 +17,6 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/metrics/histogram.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
 #include "base/threading/thread_restrictions.h"
@@ -530,8 +529,8 @@ bool ResourceMetadataStorage::UpgradeOldDB(
                          &serialized_header).ok() ||
       !header.ParseFromString(serialized_header))
     return false;
-  base::UmaHistogramSparse("Drive.MetadataDBVersionBeforeUpgradeCheck",
-                           header.version());
+  UMA_HISTOGRAM_SPARSE_SLOWLY("Drive.MetadataDBVersionBeforeUpgradeCheck",
+                              header.version());
 
   switch (header.version()) {
     case 1:

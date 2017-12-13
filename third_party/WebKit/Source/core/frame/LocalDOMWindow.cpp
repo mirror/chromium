@@ -30,7 +30,6 @@
 #include <string>
 #include <utility>
 
-#include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WindowProxy.h"
@@ -1538,27 +1537,6 @@ void LocalDOMWindow::PrintErrorMessage(const String& message) const {
       ConsoleMessage::Create(kJSMessageSource, kErrorMessageLevel, message));
 }
 
-DOMWindow* LocalDOMWindow::open(ExecutionContext* executionContext,
-                                LocalDOMWindow* current_window,
-                                LocalDOMWindow* entered_window,
-                                const String& url,
-                                const AtomicString& target,
-                                const String& features,
-                                ExceptionState& exception_state) {
-  // If the bindings implementation is 100% correct, the current realm and the
-  // entered realm should be same origin-domain. However, to be on the safe
-  // side and add some defense in depth, we'll check against the entered realm
-  // as well here.
-  if (!BindingSecurity::ShouldAllowAccessTo(entered_window, this,
-                                            exception_state)) {
-    UseCounter::Count(executionContext, WebFeature::kWindowOpenRealmMismatch);
-    return nullptr;
-  }
-  DCHECK(!target.IsNull());
-  return open(url, target, features, current_window, entered_window,
-              exception_state);
-}
-
 DOMWindow* LocalDOMWindow::open(const String& url_string,
                                 const AtomicString& frame_name,
                                 const String& window_features_string,
@@ -1649,7 +1627,6 @@ void LocalDOMWindow::TraceWrappers(
   visitor->TraceWrappers(modulator_);
   visitor->TraceWrappers(navigator_);
   DOMWindow::TraceWrappers(visitor);
-  Supplementable<LocalDOMWindow>::TraceWrappers(visitor);
 }
 
 }  // namespace blink

@@ -4,7 +4,6 @@
 
 #include "content/browser/webauth/authenticator_impl.h"
 
-#include <string>
 #include <utility>
 
 #include "base/logging.h"
@@ -141,8 +140,8 @@ void AuthenticatorImpl::MakeCredential(
     connector_ = ServiceManagerConnection::GetForProcess()->GetConnector();
   }
 
-  DCHECK(!u2f_discovery_);
-  u2f_discovery_ = std::make_unique<device::U2fHidDiscovery>(connector_);
+  std::vector<std::unique_ptr<device::U2fDiscovery>> discoveries;
+  discoveries.push_back(std::make_unique<device::U2fHidDiscovery>(connector_));
 
   // Per fido-u2f-raw-message-formats:
   // The challenge parameter is the SHA-256 hash of the Client Data,
@@ -161,7 +160,7 @@ void AuthenticatorImpl::MakeCredential(
   // http://crbug.com/785955.
   u2f_request_ = device::U2fRegister::TryRegistration(
       registered_keys, client_data_hash, application_parameter,
-      {u2f_discovery_.get()}, response_callback);
+      std::move(discoveries), response_callback);
 }
 
 // Callback to handle the async response from a U2fDevice.
@@ -197,13 +196,11 @@ void AuthenticatorImpl::OnDeviceResponse(
   }
 
   u2f_request_.reset();
-  u2f_discovery_.reset();
 }
 
 void AuthenticatorImpl::OnTimeout() {
   DCHECK(make_credential_response_callback_);
   u2f_request_.reset();
-  u2f_discovery_.reset();
   client_data_.reset();
   std::move(make_credential_response_callback_)
       .Run(webauth::mojom::AuthenticatorStatus::NOT_ALLOWED_ERROR, nullptr);

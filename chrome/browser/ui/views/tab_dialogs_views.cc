@@ -68,21 +68,21 @@ void TabDialogsViews::ShowProfileSigninConfirmation(
 }
 
 void TabDialogsViews::ShowManagePasswordsBubble(bool user_action) {
-  if (ManagePasswordsBubbleDelegateViewBase::manage_password_bubble()) {
+  if (ManagePasswordsBubbleView::manage_password_bubble()) {
     // The bubble is currently shown for some other tab. We should close it now
     // and open for |web_contents_|.
     ManagePasswordsBubbleView::CloseCurrentBubble();
   }
   ManagePasswordsBubbleView::ShowBubble(
-      web_contents_, user_action ? LocationBarBubbleDelegateView::USER_GESTURE
-                                 : LocationBarBubbleDelegateView::AUTOMATIC);
+      web_contents_, user_action ? ManagePasswordsBubbleView::USER_GESTURE
+                                 : ManagePasswordsBubbleView::AUTOMATIC);
 }
 
 void TabDialogsViews::HideManagePasswordsBubble() {
-  ManagePasswordsBubbleDelegateViewBase* bubble =
-      ManagePasswordsBubbleDelegateViewBase::manage_password_bubble();
-  if (!bubble)
+  if (!ManagePasswordsBubbleView::manage_password_bubble())
     return;
-  if (bubble->GetWebContents() == web_contents_)
+  content::WebContents* bubble_web_contents =
+      ManagePasswordsBubbleView::manage_password_bubble()->web_contents();
+  if (web_contents_ == bubble_web_contents)
     ManagePasswordsBubbleView::CloseCurrentBubble();
 }

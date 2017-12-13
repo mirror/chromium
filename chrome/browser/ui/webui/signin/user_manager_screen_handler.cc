@@ -148,14 +148,14 @@ bool IsAddPersonEnabled() {
 
 // Executes the action specified by the URL's Hash parameter, if any. Deletes
 // itself after the action would be performed.
-class UrlHashHelper : public BrowserListObserver {
+class UrlHashHelper : public chrome::BrowserListObserver {
  public:
   UrlHashHelper(Browser* browser, const std::string& hash);
   ~UrlHashHelper() override;
 
   void ExecuteUrlHash();
 
-  // BrowserListObserver overrides:
+  // chrome::BrowserListObserver overrides:
   void OnBrowserRemoved(Browser* browser) override;
 
  private:

@@ -180,14 +180,13 @@ var SerializedPaymentResponse;
    */
   __gCrWeb['paymentRequestManager'].validatePaymentCurrencyAmount = function(
       amount, amountName) {
-    // Convert the value to String if it isn't already one.
-    amount.value = String(amount.value);
-    if (amount.value > __gCrWeb['paymentRequestManager'].MAX_STRING_LENGTH) {
+    var value = String(amount.value);
+    if (value > __gCrWeb['paymentRequestManager'].MAX_STRING_LENGTH) {
       throw new TypeError(
           amountName + ' value cannot be longer than ' +
           __gCrWeb['paymentRequestManager'].MAX_STRING_LENGTH + ' characters');
     }
-    if (!/^-?[0-9]+(\.[0-9]+)?$/.test(amount.value)) {
+    if (!/^-?[0-9]+(\.[0-9]+)?$/.test(value)) {
       throw new TypeError(
           amountName + ' value is not a valid decimal monetary value');
     }

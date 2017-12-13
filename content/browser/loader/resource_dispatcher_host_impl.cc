@@ -212,17 +212,16 @@ bool IsValidatedSCT(
   return sct_status.status == net::ct::SCT_STATUS_OK;
 }
 
-// Returns the PreviewsState for enabled previews after requesting it from
-// the delegate. The PreviewsState is a bitmask of potentially several
-// Previews optimizations that are initially enabled for a navigation.
+// Returns the PreviewsState after requesting it from the delegate. The
+// PreviewsState is a bitmask of potentially several Previews optimizations.
 // If previews_to_allow is set to anything other than PREVIEWS_UNSPECIFIED,
 // it is either the values passed in for a sub-frame to use, or if this is
 // the main frame, it is a limitation on which previews to allow.
-PreviewsState DetermineEnabledPreviews(PreviewsState previews_to_allow,
-                                       ResourceDispatcherHostDelegate* delegate,
-                                       net::URLRequest* request,
-                                       ResourceContext* resource_context,
-                                       bool is_main_frame) {
+PreviewsState DeterminePreviewsState(PreviewsState previews_to_allow,
+                                     ResourceDispatcherHostDelegate* delegate,
+                                     net::URLRequest* request,
+                                     ResourceContext* resource_context,
+                                     bool is_main_frame) {
   // If previews have already been turned off, or we are inheriting values on a
   // sub-frame, don't check any further.
   if (previews_to_allow & PREVIEWS_OFF ||
@@ -232,7 +231,7 @@ PreviewsState DetermineEnabledPreviews(PreviewsState previews_to_allow,
   }
 
   // Get the mask of previews we could apply to the current navigation.
-  PreviewsState previews_state = delegate->DetermineEnabledPreviews(
+  PreviewsState previews_state = delegate->DeterminePreviewsState(
       request, resource_context, previews_to_allow);
 
   return previews_state;
@@ -1279,17 +1278,6 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
       report_raw_headers = false;
     }
 
-    // Do not report raw headers if the request's site needs to be isolated
-    // from the current process.
-    if (report_raw_headers) {
-      bool is_isolated =
-          SiteIsolationPolicy::UseDedicatedProcessesForAllSites() ||
-          policy->IsIsolatedOrigin(url::Origin::Create(request_data.url));
-      if (is_isolated &&
-          !policy->CanAccessDataForOrigin(child_id, request_data.url))
-        report_raw_headers = false;
-    }
-
     if (request_data.resource_type == RESOURCE_TYPE_PREFETCH ||
         request_data.resource_type == RESOURCE_TYPE_FAVICON) {
       do_not_prompt_for_login = true;
@@ -1325,7 +1313,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
   // Update the previews state, but only if this is not using PlzNavigate.
   PreviewsState previews_state = request_data.previews_state;
   if (!IsBrowserSideNavigationEnabled()) {
-    previews_state = DetermineEnabledPreviews(
+    previews_state = DeterminePreviewsState(
         request_data.previews_state, delegate_, new_request.get(),
         resource_context,
         request_data.resource_type == RESOURCE_TYPE_MAIN_FRAME);
@@ -1461,7 +1449,7 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
   }
 
   return AddStandardHandlers(request, request_data.resource_type,
-                             resource_context, request_data.fetch_request_mode,
+                             resource_context,
                              request_data.fetch_request_context_type,
                              request_data.fetch_mixed_content_context_type,
                              requester_info->appcache_service(), child_id,
@@ -1490,7 +1478,6 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
     net::URLRequest* request,
     ResourceType resource_type,
     ResourceContext* resource_context,
-    network::mojom::FetchRequestMode fetch_request_mode,
     RequestContextType fetch_request_context_type,
     blink::WebMixedContentContextType fetch_mixed_content_context_type,
     AppCacheService* appcache_service,
@@ -1559,8 +1546,7 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
   handler.reset(new ThrottlingResourceHandler(
       std::move(handler), request, std::move(post_mime_sniffing_throttles)));
 
-  if (IsBrowserSideNavigationEnabled() && IsResourceTypeFrame(resource_type) &&
-      !IsNavigationMojoResponseEnabled()) {
+  if (IsBrowserSideNavigationEnabled() && IsResourceTypeFrame(resource_type)) {
     DCHECK(navigation_loader_core);
     DCHECK(stream_handle);
     // PlzNavigate
@@ -1594,11 +1580,8 @@ ResourceDispatcherHostImpl::AddStandardHandlers(
     // Add a handler to block cross-site documents from the renderer process.
     // This should be pre mime-sniffing, since it affects whether the response
     // will be read, and since it looks at the original mime type.
-    bool is_nocors_plugin_request =
-        resource_type == RESOURCE_TYPE_PLUGIN_RESOURCE &&
-        fetch_request_mode == network::mojom::FetchRequestMode::kNoCORS;
-    handler.reset(new CrossSiteDocumentResourceHandler(
-        std::move(handler), request, is_nocors_plugin_request));
+    handler.reset(
+        new CrossSiteDocumentResourceHandler(std::move(handler), request));
   }
 
   return handler;
@@ -2001,17 +1984,11 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
     const NavigationRequestInfo& info,
     std::unique_ptr<NavigationUIData> navigation_ui_data,
     NavigationURLLoaderImplCore* loader,
-    mojom::URLLoaderClientPtr url_loader_client,
-    mojom::URLLoaderRequest url_loader_request,
     ServiceWorkerNavigationHandleCore* service_worker_handle_core,
     AppCacheNavigationHandleCore* appcache_handle_core) {
   // PlzNavigate: BeginNavigationRequest currently should only be used for the
   // browser-side navigations project.
   CHECK(IsBrowserSideNavigationEnabled());
-
-  DCHECK_EQ(IsNavigationMojoResponseEnabled(), !loader);
-  DCHECK_EQ(IsNavigationMojoResponseEnabled(), url_loader_client.is_bound());
-  DCHECK_EQ(IsNavigationMojoResponseEnabled(), url_loader_request.is_pending());
 
   ResourceType resource_type = info.is_main_frame ?
       RESOURCE_TYPE_MAIN_FRAME : RESOURCE_TYPE_SUB_FRAME;
@@ -2037,12 +2014,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
           info.common_params.url,
           resource_type,
           resource_context))) {
-    if (IsNavigationMojoResponseEnabled()) {
-      url_loader_client->OnComplete(
-          network::URLLoaderCompletionStatus(net::ERR_ABORTED));
-    } else {
-      loader->NotifyRequestFailed(false, net::ERR_ABORTED, base::nullopt);
-    }
+    loader->NotifyRequestFailed(false, net::ERR_ABORTED, base::nullopt);
     return;
   }
 
@@ -2088,12 +2060,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
   if (body) {
     if (!GetBodyBlobDataHandles(body, resource_context, &blob_handles)) {
       new_request->CancelWithError(net::ERR_INSUFFICIENT_RESOURCES);
-      if (IsNavigationMojoResponseEnabled()) {
-        url_loader_client->OnComplete(
-            network::URLLoaderCompletionStatus(net::ERR_ABORTED));
-      } else {
-        loader->NotifyRequestFailed(false, net::ERR_ABORTED, base::nullopt);
-      }
+      loader->NotifyRequestFailed(false, net::ERR_ABORTED, base::nullopt);
       return;
     }
     new_request->set_upload(UploadDataStreamBuilder::Build(
@@ -2103,7 +2070,7 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
             .get()));
   }
 
-  PreviewsState previews_state = DetermineEnabledPreviews(
+  PreviewsState previews_state = DeterminePreviewsState(
       info.common_params.previews_state, delegate_, new_request.get(),
       resource_context, info.is_main_frame);
 
@@ -2171,33 +2138,24 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
         new_request.get(), appcache_handle_core->host(), resource_type, false);
   }
 
-  std::unique_ptr<ResourceHandler> handler;
-  std::unique_ptr<StreamHandle> stream_handle;
-  if (IsNavigationMojoResponseEnabled()) {
-    handler = std::make_unique<MojoAsyncResourceHandler>(
-        new_request.get(), this, std::move(url_loader_request),
-        std::move(url_loader_client), resource_type);
-  } else {
-    StreamContext* stream_context =
-        GetStreamContextForResourceContext(resource_context);
-    // Note: the stream should be created with immediate mode set to true to
-    // ensure that data read will be flushed to the reader as soon as it's
-    // available. Otherwise, we risk delaying transmitting the body of the
-    // resource to the renderer, which will delay parsing accordingly.
-    handler = std::make_unique<StreamResourceHandler>(
-        new_request.get(), stream_context->registry(),
-        new_request->url().GetOrigin(), true);
-    stream_handle = static_cast<StreamResourceHandler*>(handler.get())
-                        ->stream()
-                        ->CreateHandle();
-  }
+  StreamContext* stream_context =
+      GetStreamContextForResourceContext(resource_context);
+  // Note: the stream should be created with immediate mode set to true to
+  // ensure that data read will be flushed to the reader as soon as it's
+  // available. Otherwise, we risk delaying transmitting the body of the
+  // resource to the renderer, which will delay parsing accordingly.
+  std::unique_ptr<ResourceHandler> handler(
+      new StreamResourceHandler(new_request.get(), stream_context->registry(),
+                                new_request->url().GetOrigin(), true));
+  std::unique_ptr<StreamHandle> stream_handle =
+      static_cast<StreamResourceHandler*>(handler.get())
+          ->stream()
+          ->CreateHandle();
 
-  // Safe to consider navigations as kNoCORS.
   // TODO(davidben): Fix the dependency on child_id/route_id. Those are used
   // by the ResourceScheduler. currently it's a no-op.
   handler = AddStandardHandlers(
       new_request.get(), resource_type, resource_context,
-      network::mojom::FetchRequestMode::kNoCORS,
       info.begin_params->request_context_type,
       info.begin_params->mixed_content_context_type,
       appcache_handle_core ? appcache_handle_core->GetAppCacheService()

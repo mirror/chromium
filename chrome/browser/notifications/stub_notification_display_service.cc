@@ -21,7 +21,7 @@ std::unique_ptr<KeyedService> StubNotificationDisplayService::FactoryForTests(
 }
 
 StubNotificationDisplayService::StubNotificationDisplayService(Profile* profile)
-    : NotificationDisplayServiceImpl(profile), profile_(profile) {}
+    : NotificationDisplayService(profile), profile_(profile) {}
 
 StubNotificationDisplayService::~StubNotificationDisplayService() = default;
 

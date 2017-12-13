@@ -8,6 +8,7 @@
 
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/sparse_histogram.h"
 #include "base/strings/stringprintf.h"
 #include "components/rappor/public/rappor_utils.h"
 
@@ -83,7 +84,7 @@ const char* GetTileTypeSuffix(TileVisualType type) {
 }  // namespace
 
 void RecordPageImpression(int number_of_tiles) {
-  base::UmaHistogramSparse("NewTabPage.NumberOfTiles", number_of_tiles);
+  UMA_HISTOGRAM_SPARSE_SLOWLY("NewTabPage.NumberOfTiles", number_of_tiles);
 }
 
 void RecordTileImpression(const NTPTileImpression& impression,

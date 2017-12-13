@@ -14,9 +14,8 @@
 #include "content/public/browser/render_process_host.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
-BudgetServiceImpl::BudgetServiceImpl(int render_process_id,
-                                     const url::Origin& origin)
-    : render_process_id_(render_process_id), origin_(origin) {}
+BudgetServiceImpl::BudgetServiceImpl(int render_process_id)
+    : render_process_id_(render_process_id) {}
 
 BudgetServiceImpl::~BudgetServiceImpl() = default;
 
@@ -24,9 +23,8 @@ BudgetServiceImpl::~BudgetServiceImpl() = default;
 void BudgetServiceImpl::Create(blink::mojom::BudgetServiceRequest request,
                                content::RenderProcessHost* host,
                                const url::Origin& origin) {
-  mojo::MakeStrongBinding(
-      base::MakeUnique<BudgetServiceImpl>(host->GetID(), origin),
-      std::move(request));
+  mojo::MakeStrongBinding(base::MakeUnique<BudgetServiceImpl>(host->GetID()),
+                          std::move(request));
 }
 
 void BudgetServiceImpl::GetCost(blink::mojom::BudgetOperationType type,
@@ -44,7 +42,8 @@ void BudgetServiceImpl::GetCost(blink::mojom::BudgetOperationType type,
   std::move(callback).Run(cost);
 }
 
-void BudgetServiceImpl::GetBudget(GetBudgetCallback callback) {
+void BudgetServiceImpl::GetBudget(const url::Origin& origin,
+                                  GetBudgetCallback callback) {
   // The RenderProcessHost should still be alive as long as any connections are
   // alive, and if the BudgetService mojo connection is down, the
   // BudgetServiceImpl should have been destroyed.
@@ -63,8 +62,8 @@ void BudgetServiceImpl::GetBudget(GetBudgetCallback callback) {
   // something the impact of which has to be reconsidered when the feature is
   // ready to ship for real. See https://crbug.com/710809 for context.
   if (permission_manager->GetPermissionStatus(
-          content::PermissionType::NOTIFICATIONS, origin_.GetURL(),
-          origin_.GetURL()) != blink::mojom::PermissionStatus::GRANTED) {
+          content::PermissionType::NOTIFICATIONS, origin.GetURL(),
+          origin.GetURL()) != blink::mojom::PermissionStatus::GRANTED) {
     blink::mojom::BudgetStatePtr empty_state(blink::mojom::BudgetState::New());
     empty_state->budget_at = 0;
     empty_state->time =
@@ -79,11 +78,12 @@ void BudgetServiceImpl::GetBudget(GetBudgetCallback callback) {
   }
 
   // Query the BudgetManager for the budget.
-  BudgetManagerFactory::GetForProfile(profile)->GetBudget(origin_,
+  BudgetManagerFactory::GetForProfile(profile)->GetBudget(origin,
                                                           std::move(callback));
 }
 
-void BudgetServiceImpl::Reserve(blink::mojom::BudgetOperationType operation,
+void BudgetServiceImpl::Reserve(const url::Origin& origin,
+                                blink::mojom::BudgetOperationType operation,
                                 ReserveCallback callback) {
   // The RenderProcessHost should still be alive as long as any connections are
   // alive, and if the BudgetService mojo connection is down, the
@@ -94,6 +94,6 @@ void BudgetServiceImpl::Reserve(blink::mojom::BudgetOperationType operation,
 
   // Request a reservation from the BudgetManager.
   content::BrowserContext* context = host->GetBrowserContext();
-  BudgetManagerFactory::GetForProfile(context)->Reserve(origin_, operation,
+  BudgetManagerFactory::GetForProfile(context)->Reserve(origin, operation,
                                                         std::move(callback));
 }

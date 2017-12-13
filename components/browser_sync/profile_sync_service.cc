@@ -2270,6 +2270,12 @@ ProfileSyncService::GetEncryptionObserverForTest() const {
   return crypto_.get();
 }
 
+void ProfileSyncService::RefreshTypesForTest(syncer::ModelTypeSet types) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  if (engine_initialized_)
+    engine_->RefreshTypesForTest(types);
+}
+
 void ProfileSyncService::RemoveClientFromServer() const {
   if (!engine_initialized_)
     return;

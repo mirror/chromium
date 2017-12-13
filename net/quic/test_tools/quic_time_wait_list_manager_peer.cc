@@ -22,8 +22,7 @@ QuicTransportVersion
 QuicTimeWaitListManagerPeer::GetQuicVersionFromConnectionId(
     QuicTimeWaitListManager* manager,
     QuicConnectionId connection_id) {
-  return manager->GetQuicVersionFromConnectionId(connection_id)
-      .transport_version;
+  return manager->GetQuicVersionFromConnectionId(connection_id);
 }
 
 QuicAlarm* QuicTimeWaitListManagerPeer::expiration_alarm(

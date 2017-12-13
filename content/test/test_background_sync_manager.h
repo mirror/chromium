@@ -80,7 +80,9 @@ class TestBackgroundSyncManager : public BackgroundSyncManager {
 
   // Accessors to internal state
   base::TimeDelta delayed_task_delta() const { return delayed_task_delta_; }
-  bool last_chance() const { return last_chance_; }
+  blink::mojom::BackgroundSyncEventLastChance last_chance() const {
+    return last_chance_;
+  }
   const BackgroundSyncParameters* background_sync_parameters() const {
     return parameters_.get();
   }
@@ -105,7 +107,7 @@ class TestBackgroundSyncManager : public BackgroundSyncManager {
   void DispatchSyncEvent(
       const std::string& tag,
       scoped_refptr<ServiceWorkerVersion> active_version,
-      bool last_chance,
+      blink::mojom::BackgroundSyncEventLastChance last_chance,
       const ServiceWorkerVersion::LegacyStatusCallback& callback) override;
 
   // Override to just store delayed task, and allow tests to control the clock
@@ -137,7 +139,8 @@ class TestBackgroundSyncManager : public BackgroundSyncManager {
   bool corrupt_backend_ = false;
   bool delay_backend_ = false;
   bool has_main_frame_provider_host_ = true;
-  bool last_chance_ = false;
+  blink::mojom::BackgroundSyncEventLastChance last_chance_ =
+      blink::mojom::BackgroundSyncEventLastChance::IS_NOT_LAST_CHANCE;
   base::OnceClosure continuation_;
   DispatchSyncCallback dispatch_sync_callback_;
   base::OnceClosure delayed_task_;

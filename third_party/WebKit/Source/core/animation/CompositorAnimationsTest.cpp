@@ -1286,12 +1286,12 @@ TEST_F(AnimationCompositorAnimationsTest,
   ScopedSlimmingPaintV2ForTest enable_s_pv2(true);
   auto& properties = layout_object->GetMutableForPainting()
                          .FirstFragment()
+                         .EnsureRarePaintData()
                          .EnsurePaintProperties();
 
   // Add a transform with a compositing reason, which should allow starting
   // animation.
-  UpdateDummyTransformNode(properties,
-                           CompositingReason::kActiveTransformAnimation);
+  UpdateDummyTransformNode(properties, CompositingReason::kActiveAnimation);
   EXPECT_TRUE(
       CompositorAnimations::CheckCanStartElementOnCompositor(*element).Ok());
 
@@ -1318,12 +1318,12 @@ TEST_F(AnimationCompositorAnimationsTest,
   ScopedSlimmingPaintV2ForTest enable_s_pv2(true);
   auto& properties = layout_object->GetMutableForPainting()
                          .FirstFragment()
+                         .EnsureRarePaintData()
                          .EnsurePaintProperties();
 
   // Add an effect with a compositing reason, which should allow starting
   // animation.
-  UpdateDummyEffectNode(properties,
-                        CompositingReason::kActiveTransformAnimation);
+  UpdateDummyEffectNode(properties, CompositingReason::kActiveAnimation);
   EXPECT_TRUE(
       CompositorAnimations::CheckCanStartElementOnCompositor(*element).Ok());
 

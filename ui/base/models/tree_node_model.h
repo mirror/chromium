@@ -63,12 +63,6 @@ namespace ui {
 
 // TreeNode -------------------------------------------------------------------
 
-// See above for documentation. Example:
-//
-//   class MyNode : public ui::TreeNode<MyNode> {
-//     ...<custom class logic>...
-//   };
-//   using MyModel = ui::TreeNodeModel<MyNode>;
 template <class NodeType>
 class TreeNode : public TreeModelNode {
  public:
@@ -81,7 +75,7 @@ class TreeNode : public TreeModelNode {
 
   // Adds |node| as a child of this node, at |index|. Returns a raw pointer to
   // the node.
-  NodeType* Add(std::unique_ptr<NodeType> node, int index) {
+  virtual NodeType* Add(std::unique_ptr<NodeType> node, int index) {
     DCHECK(node);
     DCHECK_GE(index, 0);
     DCHECK_LE(index, child_count());
@@ -92,24 +86,17 @@ class TreeNode : public TreeModelNode {
     return node_ptr;
   }
 
-  // Removes the node at the given index. Returns the removed node.
-  std::unique_ptr<NodeType> Remove(int index) {
-    DCHECK(index >= 0 && index < child_count());
-    children_[index]->parent_ = nullptr;
-    std::unique_ptr<NodeType> ptr = std::move(children_[index]);
-    children_.erase(children_.begin() + index);
-    return ptr;
-  }
-
-  // Removes the given node. Prefer to remove by index if you know it to avoid
-  // the search for the node to remove.
-  std::unique_ptr<NodeType> Remove(NodeType* node) {
+  // Removes |node| from this node and returns it.
+  virtual std::unique_ptr<NodeType> Remove(NodeType* node) {
     auto i = std::find_if(children_.begin(), children_.end(),
                           [node](const std::unique_ptr<NodeType>& ptr) {
                             return ptr.get() == node;
                           });
     DCHECK(i != children_.end());
-    return Remove(i - children_.begin());
+    node->parent_ = nullptr;
+    std::unique_ptr<NodeType> ptr = std::move(*i);
+    children_.erase(i);
+    return ptr;
   }
 
   // Removes all the children from this node.
@@ -192,10 +179,6 @@ class TreeNode : public TreeModelNode {
 
 // TreeNodeWithValue ----------------------------------------------------------
 
-// See top of file for documentation. Example:
-//
-//  using MyNode = ui::TreeNodeWithValue<MyData>;
-//  using MyModel = ui::TreeNodeModel<MyNode>;
 template <class ValueType>
 class TreeNodeWithValue : public TreeNode<TreeNodeWithValue<ValueType>> {
  public:
@@ -237,16 +220,12 @@ class TreeNodeModel : public TreeModel {
     return node_ptr;
   }
 
-  std::unique_ptr<NodeType> Remove(NodeType* parent, int index) {
-    DCHECK(parent);
-    std::unique_ptr<NodeType> owned_node = parent->Remove(index);
-    NotifyObserverTreeNodesRemoved(parent, index, 1);
-    return owned_node;
-  }
-
   std::unique_ptr<NodeType> Remove(NodeType* parent, NodeType* node) {
     DCHECK(parent);
-    return Remove(parent, parent->GetIndexOf(node));
+    int index = parent->GetIndexOf(node);
+    std::unique_ptr<NodeType> owned_node = parent->Remove(node);
+    NotifyObserverTreeNodesRemoved(parent, index, 1);
+    return owned_node;
   }
 
   void NotifyObserverTreeNodesAdded(NodeType* parent, int start, int count) {
@@ -265,15 +244,6 @@ class TreeNodeModel : public TreeModel {
   }
 
   // TreeModel:
-
-  // C++ allows one to override a base class' virtual function with one that
-  // returns a different type, as long as that type implements the base class'
-  // return type. This is convenient because it allows callers with references
-  // to the specific TreeNodeModel to get the proper return type without
-  // casting.
-  //
-  // However, this does require that the NodeType be defined when this is
-  // parsed (normally one could forward define this).
   NodeType* GetRoot() override {
     return root_.get();
   }

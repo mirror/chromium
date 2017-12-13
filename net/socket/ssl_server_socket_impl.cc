@@ -76,8 +76,6 @@ class SSLServerContextImpl::SocketImpl : public SSLServerSocket,
   void ClearConnectionAttempts() override {}
   void AddConnectionAttempts(const ConnectionAttempts& attempts) override {}
   int64_t GetTotalReceivedBytes() const override;
-  void ApplySocketTag(const SocketTag& tag) override;
-
   static ssl_verify_result_t CertVerifyCallback(SSL* ssl, uint8_t* out_alert);
   ssl_verify_result_t CertVerifyCallbackImpl(uint8_t* out_alert);
 
@@ -359,10 +357,6 @@ void SSLServerContextImpl::SocketImpl::GetConnectionAttempts(
 
 int64_t SSLServerContextImpl::SocketImpl::GetTotalReceivedBytes() const {
   return transport_socket_->GetTotalReceivedBytes();
-}
-
-void SSLServerContextImpl::SocketImpl::ApplySocketTag(const SocketTag& tag) {
-  NOTIMPLEMENTED();
 }
 
 void SSLServerContextImpl::SocketImpl::OnReadReady() {

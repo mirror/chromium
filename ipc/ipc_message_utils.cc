@@ -332,34 +332,34 @@ bool ParamTraits<unsigned short>::Read(const base::Pickle* m,
 }
 
 void ParamTraits<unsigned short>::Log(const param_type& p, std::string* l) {
-  l->append(base::NumberToString(p));
+  l->append(base::UintToString(p));
 }
 
 void ParamTraits<int>::Log(const param_type& p, std::string* l) {
-  l->append(base::NumberToString(p));
+  l->append(base::IntToString(p));
 }
 
 void ParamTraits<unsigned int>::Log(const param_type& p, std::string* l) {
-  l->append(base::NumberToString(p));
+  l->append(base::UintToString(p));
 }
 
 #if defined(OS_WIN) || defined(OS_LINUX) || defined(OS_FUCHSIA) || \
     (defined(OS_ANDROID) && defined(ARCH_CPU_64_BITS))
 void ParamTraits<long>::Log(const param_type& p, std::string* l) {
-  l->append(base::NumberToString(p));
+  l->append(base::Int64ToString(static_cast<int64_t>(p)));
 }
 
 void ParamTraits<unsigned long>::Log(const param_type& p, std::string* l) {
-  l->append(base::NumberToString(p));
+  l->append(base::Uint64ToString(static_cast<uint64_t>(p)));
 }
 #endif
 
 void ParamTraits<long long>::Log(const param_type& p, std::string* l) {
-  l->append(base::NumberToString(p));
+  l->append(base::Int64ToString(static_cast<int64_t>(p)));
 }
 
 void ParamTraits<unsigned long long>::Log(const param_type& p, std::string* l) {
-  l->append(base::NumberToString(p));
+  l->append(base::Uint64ToString(p));
 }
 
 void ParamTraits<float>::Log(const param_type& p, std::string* l) {

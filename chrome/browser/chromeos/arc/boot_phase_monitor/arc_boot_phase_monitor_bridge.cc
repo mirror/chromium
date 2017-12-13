@@ -83,17 +83,14 @@ class ArcBootPhaseMonitorBridgeFactory
 }  // namespace
 
 // static
-ArcBootPhaseMonitorBridge* ArcBootPhaseMonitorBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcBootPhaseMonitorBridgeFactory::GetForBrowserContext(context);
+BrowserContextKeyedServiceFactory* ArcBootPhaseMonitorBridge::GetFactory() {
+  return ArcBootPhaseMonitorBridgeFactory::GetInstance();
 }
 
 // static
-ArcBootPhaseMonitorBridge*
-ArcBootPhaseMonitorBridge::GetForBrowserContextForTesting(
+ArcBootPhaseMonitorBridge* ArcBootPhaseMonitorBridge::GetForBrowserContext(
     content::BrowserContext* context) {
-  return ArcBootPhaseMonitorBridgeFactory::GetForBrowserContextForTesting(
-      context);
+  return ArcBootPhaseMonitorBridgeFactory::GetForBrowserContext(context);
 }
 
 // static

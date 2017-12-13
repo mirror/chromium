@@ -92,16 +92,6 @@ const base::Feature kCompositorImageAnimation{
 const base::Feature kCompositorTouchAction{"CompositorTouchAction",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Enables blocking cross-site document responses (not paying attention to
-// whether a site isolation mode is also enabled).
-const base::Feature kCrossSiteDocumentBlockingAlways{
-    "CrossSiteDocumentBlockingAlways", base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Enables blocking cross-site document responses if one of site isolation modes
-// is (e.g. site-per-process or isolate-origins) is enabled.
-const base::Feature kCrossSiteDocumentBlockingIfIsolating{
-    "CrossSiteDocumentBlockingIfIsolating", base::FEATURE_ENABLED_BY_DEFAULT};
-
 // Enables exposing back/forward mouse buttons to the renderer and the web.
 const base::Feature kExtendedMouseButtons{"ExtendedMouseButtons",
                                           base::FEATURE_DISABLED_BY_DEFAULT};
@@ -153,12 +143,16 @@ const base::Feature kLazyInitializeMediaControls{
 const base::Feature kLazyParseCSS{"LazyParseCSS",
                                   base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Use Mojo IPC for resource loading.
+const base::Feature kLoadingWithMojo{"LoadingWithMojo",
+                                     base::FEATURE_ENABLED_BY_DEFAULT};
+
 // If this feature is enabled, media-device enumerations use a cache that is
 // invalidated upon notifications sent by base::SystemMonitor. If disabled, the
 // cache is considered invalid on every enumeration request.
 const base::Feature kMediaDevicesSystemMonitorCache{
   "MediaDevicesSystemMonitorCaching",
-#if defined(OS_MACOSX) || defined(OS_WIN)
+#if defined(OS_MACOSX)
       base::FEATURE_ENABLED_BY_DEFAULT
 #else
       base::FEATURE_DISABLED_BY_DEFAULT
@@ -234,13 +228,7 @@ const base::Feature kOutOfBlinkCORS{"OutOfBlinkCORS",
 
 // Whether a download can be handled by parallel jobs.
 const base::Feature kParallelDownloading{
-  "ParallelDownloading",
-#if defined(OS_ANDROID)
-      base::FEATURE_ENABLED_BY_DEFAULT
-#else
-      base::FEATURE_DISABLED_BY_DEFAULT
-#endif
-};
+    "ParallelDownloading", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Whether document level event listeners should default 'passive' to true.
 const base::Feature kPassiveDocumentEventListeners{
@@ -282,7 +270,7 @@ const base::Feature kPWAFullCodeCache{"PWAFullCodeCache",
 
 // Port some content::ResourceScheduler functionalities to renderer.
 const base::Feature kRendererSideResourceScheduler{
-    "RendererSideResourceScheduler", base::FEATURE_DISABLED_BY_DEFAULT};
+    "RendererSideResourceSchduler", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Throttle Blink's rendering pipeline based on frame visibility.
 const base::Feature kRenderingPipelineThrottling{
@@ -468,9 +456,6 @@ const base::Feature kWebVrExperimentalRendering{
 const base::Feature kWebVrVsyncAlign{"WebVrVsyncAlign",
                                      base::FEATURE_ENABLED_BY_DEFAULT};
 
-// Controls whether the WebXR Device API is enabled.
-const base::Feature kWebXr{"WebXR", base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Enabled "work stealing" in the script runner.
 const base::Feature kWorkStealingInScriptRunner{
     "WorkStealingInScriptRunner", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -500,10 +485,6 @@ const base::Feature kDeviceMonitorMac{"DeviceMonitorMac",
 const base::Feature kMacV2Sandbox{"MacV2Sandbox",
                                   base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_MACOSX)
-
-// Enables V8 background compilation
-const base::Feature kV8BackgroundCompile{"V8BackgroundCompile",
-                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables to use a snapshot file in creating V8 contexts.
 const base::Feature kV8ContextSnapshot{"V8ContextSnapshot",

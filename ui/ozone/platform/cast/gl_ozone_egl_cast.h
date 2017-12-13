@@ -38,17 +38,23 @@ class GLOzoneEglCast : public GLOzoneEGL {
 
   intptr_t GetNativeWindow();
   bool ResizeDisplay(gfx::Size viewport_size);
+  void ChildDestroyed();
   void TerminateDisplay();
+  void ShutdownHardware();
 
   // API for keeping track of overlays per frame for logging purposes
   void OnSwapBuffers();
   void OnOverlayScheduled(const gfx::Rect& display_bounds);
 
  private:
-  void CreateDisplayTypeAndWindowIfNeeded();
-  void InitializeHardwareIfNeeded();
+  enum HardwareState { kUninitialized, kInitialized, kFailed };
 
-  bool hardware_initialized_ = false;
+  void CreateDisplayTypeAndWindowIfNeeded();
+  void DestroyDisplayTypeAndWindow();
+  void DestroyWindow();
+  void InitializeHardware();
+
+  HardwareState state_ = kUninitialized;
   void* display_type_ = 0;
   bool have_display_type_ = false;
   void* window_ = 0;

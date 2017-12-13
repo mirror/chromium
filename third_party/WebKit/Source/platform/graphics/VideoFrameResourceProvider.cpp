@@ -34,7 +34,6 @@ VideoFrameResourceProvider::VideoFrameResourceProvider(
 
 VideoFrameResourceProvider::~VideoFrameResourceProvider() {
   viz::ContextProvider::ScopedContextLock lock(context_provider_);
-  resource_updater_ = nullptr;
   resource_provider_ = nullptr;
 }
 

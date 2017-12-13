@@ -13,22 +13,20 @@ namespace {
 
 CSSScale* FromScale(const CSSFunctionValue& value) {
   DCHECK(value.length() == 1U || value.length() == 2U);
-  CSSNumericValue* x =
-      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(0)));
+  double x = ToCSSPrimitiveValue(value.Item(0)).GetDoubleValue();
   if (value.length() == 1U) {
-    return CSSScale::Create(x, x);
+    return CSSScale::Create(CSSUnitValue::Create(x), CSSUnitValue::Create(x));
   }
 
-  CSSNumericValue* y =
-      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(1)));
-  return CSSScale::Create(x, y);
+  double y = ToCSSPrimitiveValue(value.Item(1)).GetDoubleValue();
+  return CSSScale::Create(CSSUnitValue::Create(x), CSSUnitValue::Create(y));
 }
 
 CSSScale* FromScaleXYZ(const CSSFunctionValue& value) {
   DCHECK_EQ(value.length(), 1U);
 
   CSSNumericValue* numeric_value =
-      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(0)));
+      CSSUnitValue::Create(ToCSSPrimitiveValue(value.Item(0)).GetDoubleValue());
   CSSUnitValue* default_value = CSSUnitValue::Create(1);
   switch (value.FunctionType()) {
     case CSSValueScaleX:
@@ -45,15 +43,12 @@ CSSScale* FromScaleXYZ(const CSSFunctionValue& value) {
 
 CSSScale* FromScale3d(const CSSFunctionValue& value) {
   DCHECK_EQ(value.length(), 3U);
+  double x = ToCSSPrimitiveValue(value.Item(0)).GetDoubleValue();
+  double y = ToCSSPrimitiveValue(value.Item(1)).GetDoubleValue();
+  double z = ToCSSPrimitiveValue(value.Item(2)).GetDoubleValue();
 
-  CSSNumericValue* x =
-      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(0)));
-  CSSNumericValue* y =
-      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(1)));
-  CSSNumericValue* z =
-      CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(2)));
-
-  return CSSScale::Create(x, y, z);
+  return CSSScale::Create(CSSUnitValue::Create(x), CSSUnitValue::Create(y),
+                          CSSUnitValue::Create(z));
 }
 
 }  // namespace
@@ -64,12 +59,12 @@ CSSScale* CSSScale::Create(const CSSNumberish& x,
   CSSNumericValue* x_value = CSSNumericValue::FromNumberish(x);
   CSSNumericValue* y_value = CSSNumericValue::FromNumberish(y);
 
-  if (!IsValidCoordinate(x_value) || !IsValidCoordinate(y_value)) {
+  if (!isCoordValid(x_value) || !isCoordValid(y_value)) {
     exception_state.ThrowTypeError("Must specify an number unit");
     return nullptr;
   }
 
-  return CSSScale::Create(x_value, y_value);
+  return new CSSScale(x_value, y_value);
 }
 
 CSSScale* CSSScale::Create(const CSSNumberish& x,
@@ -80,13 +75,13 @@ CSSScale* CSSScale::Create(const CSSNumberish& x,
   CSSNumericValue* y_value = CSSNumericValue::FromNumberish(y);
   CSSNumericValue* z_value = CSSNumericValue::FromNumberish(z);
 
-  if (!IsValidCoordinate(x_value) || !IsValidCoordinate(y_value) ||
-      !IsValidCoordinate(z_value)) {
-    exception_state.ThrowTypeError("Must specify a number for X, Y and Z");
+  if (!isCoordValid(x_value) || !isCoordValid(y_value) ||
+      !isCoordValid(z_value)) {
+    exception_state.ThrowTypeError("Must specify a number unit");
     return nullptr;
   }
 
-  return CSSScale::Create(x_value, y_value, z_value);
+  return new CSSScale(x_value, y_value, z_value);
 }
 
 CSSScale* CSSScale::FromCSSValue(const CSSFunctionValue& value) {
@@ -108,34 +103,45 @@ CSSScale* CSSScale::FromCSSValue(const CSSFunctionValue& value) {
 void CSSScale::setX(const CSSNumberish& x, ExceptionState& exception_state) {
   CSSNumericValue* value = CSSNumericValue::FromNumberish(x);
 
-  if (!IsValidCoordinate(value)) {
+  if (!isCoordValid(value)) {
     exception_state.ThrowTypeError("Must specify a number unit");
     return;
   }
 
   x_ = value;
 }
-
 void CSSScale::setY(const CSSNumberish& y, ExceptionState& exception_state) {
   CSSNumericValue* value = CSSNumericValue::FromNumberish(y);
 
-  if (!IsValidCoordinate(value)) {
+  if (!isCoordValid(value)) {
     exception_state.ThrowTypeError("Must specify a number unit");
     return;
   }
 
   y_ = value;
 }
-
 void CSSScale::setZ(const CSSNumberish& z, ExceptionState& exception_state) {
   CSSNumericValue* value = CSSNumericValue::FromNumberish(z);
 
-  if (!IsValidCoordinate(value)) {
+  if (!isCoordValid(value)) {
     exception_state.ThrowTypeError("Must specify a number unit");
     return;
   }
 
   z_ = value;
+}
+
+bool CSSScale::isCoordValid(CSSNumericValue* value) {
+  // TODO: CSSMathValue are not supported yet
+  if (!value->IsUnitValue()) {
+    return false;
+  }
+
+  if (value->GetType() != CSSStyleValue::StyleValueType::kNumberType) {
+    return false;
+  }
+
+  return true;
 }
 
 const DOMMatrix* CSSScale::AsMatrix(ExceptionState& exception_state) const {
@@ -145,7 +151,7 @@ const DOMMatrix* CSSScale::AsMatrix(ExceptionState& exception_state) const {
 
   if (!x || !y || !z) {
     exception_state.ThrowTypeError(
-        "Cannot create matrix if values are not numbers");
+        "Cannot create matrix if valuse are not convert to CSSUnitValue");
     return nullptr;
   }
 
@@ -163,21 +169,6 @@ const CSSFunctionValue* CSSScale::ToCSSValue(
     result->Append(*z_->ToCSSValue(secure_context_mode));
   }
   return result;
-}
-
-CSSScale::CSSScale(CSSNumericValue* x,
-                   CSSNumericValue* y,
-                   CSSNumericValue* z,
-                   bool is2D)
-    : CSSTransformComponent(is2D), x_(x), y_(y), z_(z) {
-  DCHECK(IsValidCoordinate(x));
-  DCHECK(IsValidCoordinate(y));
-  DCHECK(IsValidCoordinate(z));
-}
-
-// static
-bool CSSScale::IsValidCoordinate(CSSNumericValue* coord) {
-  return coord && coord->Type().MatchesNumber();
 }
 
 }  // namespace blink

@@ -102,9 +102,7 @@ int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
       return kHarmonyLayoutUnit;
     case DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE:
       return kHarmonyLayoutUnit;
-    case DISTANCE_BUBBLE_PREFERRED_WIDTH:
-      return kSmallSnapPoint;
-    case DISTANCE_MODAL_DIALOG_PREFERRED_WIDTH:
+    case DISTANCE_MODAL_DIALOG_WIDTH_CONTAINING_MULTILINE_TEXT:
       return kMediumSnapPoint;
     default:
       return ChromeLayoutProvider::GetDistanceMetric(metric);

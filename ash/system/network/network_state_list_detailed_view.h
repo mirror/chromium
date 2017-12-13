@@ -13,6 +13,8 @@
 #include "base/memory/weak_ptr.h"
 
 namespace views {
+class BubbleDialogDelegateView;
+class Button;
 class Button;
 }
 
@@ -85,7 +87,7 @@ class ASH_EXPORT NetworkStateListDetailedView
   views::Button* settings_button_;
 
   // A small bubble for displaying network info.
-  InfoBubble* info_bubble_;
+  views::BubbleDialogDelegateView* info_bubble_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkStateListDetailedView);
 };

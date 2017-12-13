@@ -429,6 +429,10 @@ class ExistingUserControllerPublicSessionTest
     WizardController* controller = WizardController::default_controller();
     if (controller && controller->current_screen())
       controller->current_screen()->Hide();
+
+    if (LoginDisplayHost::default_host())
+      LoginDisplayHost::default_host()->Finalize(base::OnceClosure());
+    base::RunLoop().RunUntilIdle();
   }
 
   void ExpectSuccessfulLogin(const UserContext& user_context) {

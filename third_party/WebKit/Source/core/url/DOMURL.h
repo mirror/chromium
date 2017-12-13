@@ -56,7 +56,10 @@ class DOMURL final : public ScriptWrappable, public DOMURLUtils {
   }
   ~DOMURL();
 
-  CORE_EXPORT static String CreatePublicURL(ExecutionContext*, URLRegistrable*);
+  CORE_EXPORT static String CreatePublicURL(ExecutionContext*,
+                                            URLRegistrable*,
+                                            const String& uuid = String());
+  static void RevokeObjectUUID(ExecutionContext*, const String&);
 
   KURL Url() const override { return url_; }
   void SetURL(const KURL& url) override { url_ = url; }

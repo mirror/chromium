@@ -56,10 +56,6 @@ class TypedURLSyncBridge : public syncer::ModelTypeSyncBridge,
   // Must be called after creation and before any operations.
   void Init();
 
-  // Called by HistoryBackend when database error is reported through
-  // DatabaseErrorCallback.
-  void OnDatabaseError();
-
   // Returns the percentage of DB accesses that have resulted in an error.
   int GetErrorPercentage() const;
 
@@ -227,7 +223,7 @@ class TypedURLSyncBridge : public syncer::ModelTypeSyncBridge,
 
   // A non-owning pointer to the database, which is for storing typed urls sync
   // metadata and state.
-  TypedURLSyncMetadataDatabase* sync_metadata_database_;
+  TypedURLSyncMetadataDatabase* const sync_metadata_database_;
 
   // Statistics for the purposes of tracking the percentage of DB accesses that
   // fail for each client via UMA.

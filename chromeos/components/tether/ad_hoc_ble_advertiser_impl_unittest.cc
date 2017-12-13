@@ -136,7 +136,7 @@ class AdHocBleAdvertiserImplTest : public testing::Test {
 
   void SetUp() override {
     fake_generator_ =
-        std::make_unique<cryptauth::FakeBleAdvertisementGenerator>();
+        base::MakeUnique<cryptauth::FakeBleAdvertisementGenerator>();
     cryptauth::BleAdvertisementGenerator::SetInstanceForTesting(
         fake_generator_.get());
 
@@ -146,12 +146,12 @@ class AdHocBleAdvertiserImplTest : public testing::Test {
         fake_advertisement_factory_.get());
 
     mock_seed_fetcher_ =
-        std::make_unique<cryptauth::MockRemoteBeaconSeedFetcher>();
+        base::MakeUnique<cryptauth::MockRemoteBeaconSeedFetcher>();
     mock_local_data_provider_ =
-        std::make_unique<cryptauth::MockLocalDeviceDataProvider>();
-    fake_ble_synchronizer_ = std::make_unique<FakeBleSynchronizer>();
+        base::MakeUnique<cryptauth::MockLocalDeviceDataProvider>();
+    fake_ble_synchronizer_ = base::MakeUnique<FakeBleSynchronizer>();
 
-    workaround_ = std::make_unique<AdHocBleAdvertiserImpl>(
+    workaround_ = base::MakeUnique<AdHocBleAdvertiserImpl>(
         mock_local_data_provider_.get(), mock_seed_fetcher_.get(),
         fake_ble_synchronizer_.get());
 
@@ -170,7 +170,7 @@ class AdHocBleAdvertiserImplTest : public testing::Test {
 
   void SetAdvertisement(size_t index) {
     fake_generator_->set_advertisement(
-        std::make_unique<cryptauth::DataWithTimestamp>(
+        base::MakeUnique<cryptauth::DataWithTimestamp>(
             fake_advertisements_[0]));
   }
 

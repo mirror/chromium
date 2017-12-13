@@ -1693,7 +1693,8 @@ void PaintLayer::CollectFragmentsForPaint(
             offset_from_root_can_be_used ? offset_from_root : nullptr);
 
     fragment.fragment_data = fragment_data;
-    fragment.pagination_offset = fragment_data->PaginationOffset();
+    fragment.pagination_offset =
+        fragment_data->GetRarePaintData()->PaginationOffset();
 
     fragments.push_back(fragment);
   }

@@ -17,7 +17,7 @@ class LazySysInfoValue {
   LazySysInfoValue()
       : value_(F()) { }
 
-  ~LazySysInfoValue() = default;
+  ~LazySysInfoValue() { }
 
   T value() { return value_; }
 

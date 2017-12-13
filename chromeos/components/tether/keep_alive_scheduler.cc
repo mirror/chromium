@@ -24,7 +24,7 @@ KeepAliveScheduler::KeepAliveScheduler(
                          connection_manager,
                          host_scan_cache,
                          device_id_tether_network_guid_map,
-                         std::make_unique<base::RepeatingTimer>()) {}
+                         base::MakeUnique<base::RepeatingTimer>()) {}
 
 KeepAliveScheduler::KeepAliveScheduler(
     ActiveHost* active_host,

@@ -33,7 +33,6 @@
 #include "net/test/cert_test_util.h"
 #include "net/test/gtest_util.h"
 #include "net/test/test_data_directory.h"
-#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
@@ -287,8 +286,8 @@ void SpdyProxyClientSocketTest::AssertWriteReturns(const char* data,
                                                    int len,
                                                    int rv) {
   scoped_refptr<IOBufferWithSize> buf(CreateBuffer(data, len));
-  EXPECT_EQ(rv, sock_->Write(buf.get(), buf->size(), write_callback_.callback(),
-                             TRAFFIC_ANNOTATION_FOR_TESTS));
+  EXPECT_EQ(rv,
+            sock_->Write(buf.get(), buf->size(), write_callback_.callback()));
 }
 
 void SpdyProxyClientSocketTest::AssertWriteLength(int len) {
@@ -591,8 +590,7 @@ TEST_F(SpdyProxyClientSocketTest, WriteSplitsLargeDataIntoMultipleFrames) {
                                                    big_data.length()));
 
   EXPECT_EQ(ERR_IO_PENDING,
-            sock_->Write(buf.get(), buf->size(), write_callback_.callback(),
-                         TRAFFIC_ANNOTATION_FOR_TESTS));
+            sock_->Write(buf.get(), buf->size(), write_callback_.callback()));
   EXPECT_EQ(buf->size(), write_callback_.WaitForResult());
 }
 
@@ -1057,8 +1055,7 @@ TEST_F(SpdyProxyClientSocketTest, WriteOnClosedStream) {
   ResumeAndRun();
   scoped_refptr<IOBufferWithSize> buf(CreateBuffer(kMsg1, kLen1));
   EXPECT_EQ(ERR_SOCKET_NOT_CONNECTED,
-            sock_->Write(buf.get(), buf->size(), CompletionCallback(),
-                         TRAFFIC_ANNOTATION_FOR_TESTS));
+            sock_->Write(buf.get(), buf->size(), CompletionCallback()));
 }
 
 // Calling Write() on a disconnected socket is an error.
@@ -1084,8 +1081,7 @@ TEST_F(SpdyProxyClientSocketTest, WriteOnDisconnectedSocket) {
 
   scoped_refptr<IOBufferWithSize> buf(CreateBuffer(kMsg1, kLen1));
   EXPECT_EQ(ERR_SOCKET_NOT_CONNECTED,
-            sock_->Write(buf.get(), buf->size(), CompletionCallback(),
-                         TRAFFIC_ANNOTATION_FOR_TESTS));
+            sock_->Write(buf.get(), buf->size(), CompletionCallback()));
 
   // Let the RST_STREAM write while |rst| is in-scope.
   base::RunLoop().RunUntilIdle();
@@ -1113,8 +1109,7 @@ TEST_F(SpdyProxyClientSocketTest, WritePendingOnClose) {
 
   scoped_refptr<IOBufferWithSize> buf(CreateBuffer(kMsg1, kLen1));
   EXPECT_EQ(ERR_IO_PENDING,
-            sock_->Write(buf.get(), buf->size(), write_callback_.callback(),
-                         TRAFFIC_ANNOTATION_FOR_TESTS));
+            sock_->Write(buf.get(), buf->size(), write_callback_.callback()));
   // Make sure the write actually starts.
   base::RunLoop().RunUntilIdle();
 
@@ -1146,8 +1141,7 @@ TEST_F(SpdyProxyClientSocketTest, DisconnectWithWritePending) {
 
   scoped_refptr<IOBufferWithSize> buf(CreateBuffer(kMsg1, kLen1));
   EXPECT_EQ(ERR_IO_PENDING,
-            sock_->Write(buf.get(), buf->size(), write_callback_.callback(),
-                         TRAFFIC_ANNOTATION_FOR_TESTS));
+            sock_->Write(buf.get(), buf->size(), write_callback_.callback()));
 
   sock_->Disconnect();
 
@@ -1219,9 +1213,10 @@ TEST_F(SpdyProxyClientSocketTest, RstWithReadAndWritePending) {
             sock_->Read(read_buf.get(), kLen1, read_callback_.callback()));
 
   scoped_refptr<IOBufferWithSize> write_buf(CreateBuffer(kMsg1, kLen1));
-  EXPECT_EQ(ERR_IO_PENDING, sock_->Write(write_buf.get(), write_buf->size(),
-                                         write_callback_.callback(),
-                                         TRAFFIC_ANNOTATION_FOR_TESTS));
+  EXPECT_EQ(
+      ERR_IO_PENDING,
+      sock_->Write(
+          write_buf.get(), write_buf->size(), write_callback_.callback()));
 
   ResumeAndRun();
 
@@ -1350,9 +1345,10 @@ TEST_F(SpdyProxyClientSocketTest, RstWithReadAndWritePendingDelete) {
             sock_->Read(read_buf.get(), kLen1, read_callback.callback()));
 
   scoped_refptr<IOBufferWithSize> write_buf(CreateBuffer(kMsg1, kLen1));
-  EXPECT_EQ(ERR_IO_PENDING, sock_->Write(write_buf.get(), write_buf->size(),
-                                         write_callback_.callback(),
-                                         TRAFFIC_ANNOTATION_FOR_TESTS));
+  EXPECT_EQ(
+      ERR_IO_PENDING,
+      sock_->Write(
+          write_buf.get(), write_buf->size(), write_callback_.callback()));
 
   ResumeAndRun();
 

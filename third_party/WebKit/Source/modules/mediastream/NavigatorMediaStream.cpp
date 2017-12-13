@@ -25,8 +25,6 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/modules/v8/v8_navigator_user_media_error_callback.h"
-#include "bindings/modules/v8/v8_navigator_user_media_success_callback.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/frame/LocalFrame.h"
@@ -35,6 +33,8 @@
 #include "core/page/Page.h"
 #include "modules/mediastream/MediaErrorState.h"
 #include "modules/mediastream/MediaStreamConstraints.h"
+#include "modules/mediastream/NavigatorUserMediaErrorCallback.h"
+#include "modules/mediastream/NavigatorUserMediaSuccessCallback.h"
 #include "modules/mediastream/UserMediaController.h"
 #include "modules/mediastream/UserMediaRequest.h"
 
@@ -43,11 +43,11 @@ namespace blink {
 void NavigatorMediaStream::getUserMedia(
     Navigator& navigator,
     const MediaStreamConstraints& options,
-    V8NavigatorUserMediaSuccessCallback* success_callback,
-    V8NavigatorUserMediaErrorCallback* error_callback,
+    NavigatorUserMediaSuccessCallback* success_callback,
+    NavigatorUserMediaErrorCallback* error_callback,
     ExceptionState& exception_state) {
-  DCHECK(success_callback);
-  DCHECK(error_callback);
+  if (!success_callback)
+    return;
 
   UserMediaController* user_media =
       UserMediaController::From(navigator.GetFrame());
@@ -67,8 +67,7 @@ void NavigatorMediaStream::getUserMedia(
     if (error_state.CanGenerateException()) {
       error_state.RaiseException(exception_state);
     } else {
-      error_callback->InvokeAndReportException(nullptr,
-                                               error_state.CreateError());
+      error_callback->handleEvent(error_state.CreateError());
     }
     return;
   }

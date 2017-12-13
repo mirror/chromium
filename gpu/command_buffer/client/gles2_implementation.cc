@@ -413,60 +413,6 @@ void GLES2Implementation::SignalQuery(uint32_t query,
                  weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
 
-GLuint GLES2Implementation::CreateGpuFenceCHROMIUM() {
-  GLuint client_id = GetIdAllocator(IdNamespaces::kGpuFences)
-                         ->AllocateIDAtOrAbove(last_gpu_fence_id_ + 1);
-  // Out of paranoia, don't allow IDs to wrap around to avoid potential
-  // collisions on reuse. The space of 2^32 IDs is enough for over a year of
-  // allocating two per frame at 60fps. TODO(crbug.com/790550): Revisit if this
-  // is an issue, for example by deferring ID release if they would be reissued
-  // too soon.
-  CHECK(client_id > last_gpu_fence_id_) << "ID wrap prevented";
-  last_gpu_fence_id_ = client_id;
-  helper_->CreateGpuFenceINTERNAL(client_id);
-  GPU_CLIENT_LOG("returned " << client_id);
-  CheckGLError();
-  return client_id;
-}
-
-GLuint GLES2Implementation::CreateClientGpuFenceCHROMIUM(
-    ClientGpuFence source) {
-  GLuint client_id = GetIdAllocator(IdNamespaces::kGpuFences)
-                         ->AllocateIDAtOrAbove(last_gpu_fence_id_ + 1);
-  // See CreateGpuFenceCHROMIUM comment re wraparound.
-  CHECK(client_id > last_gpu_fence_id_) << "ID wrap prevented";
-  last_gpu_fence_id_ = client_id;
-
-  // Create the service-side GpuFenceEntry via gpu_control. This is guaranteed
-  // to arrive before any future GL helper_ commands on this stream, so it's
-  // safe to use the client_id generated here in following commands such as
-  // WaitGpuFenceCHROMIUM without explicit flushing.
-  gpu_control_->CreateGpuFence(client_id, source);
-
-  GPU_CLIENT_LOG("returned " << client_id);
-  CheckGLError();
-  return client_id;
-}
-
-void GLES2Implementation::GetGpuFence(
-    uint32_t gpu_fence_id,
-    base::OnceCallback<void(std::unique_ptr<gfx::GpuFence>)> callback) {
-  // This ShallowFlush is required to ensure that the GetGpuFence
-  // call is processed after the preceding CreateGpuFenceCHROMIUM call.
-  ShallowFlushCHROMIUM();
-  gpu_control_->GetGpuFence(gpu_fence_id, std::move(callback));
-}
-
-void GLES2Implementation::DestroyGpuFenceCHROMIUMHelper(GLuint client_id) {
-  if (GetIdAllocator(IdNamespaces::kGpuFences)->InUse(client_id)) {
-    GetIdAllocator(IdNamespaces::kGpuFences)->FreeID(client_id);
-    helper_->DestroyGpuFenceCHROMIUM(client_id);
-  } else {
-    SetGLError(GL_INVALID_VALUE, "glDestroyGpuFenceCHROMIUM",
-               "id not created by this context.");
-  }
-}
-
 void GLES2Implementation::SetAggressivelyFreeResources(
     bool aggressively_free_resources) {
   TRACE_EVENT1("gpu", "GLES2Implementation::SetAggressivelyFreeResources",
@@ -6149,28 +6095,25 @@ void GLES2Implementation::CompleteLockDiscardableTexureOnContextThread(
   helper_->LockDiscardableTextureCHROMIUM(texture_id);
 }
 
-void GLES2Implementation::CreateTransferCacheEntry(
+gpu::TransferCacheEntryId GLES2Implementation::CreateTransferCacheEntry(
     const cc::ClientTransferCacheEntry& entry) {
-  share_group()->transfer_cache()->CreateCacheEntry(
+  return share_group()->transfer_cache()->CreateCacheEntry(
       helper_, mapped_memory_.get(), entry);
 }
 
 bool GLES2Implementation::ThreadsafeLockTransferCacheEntry(
-    cc::TransferCacheEntryType type,
-    uint32_t id) {
-  return share_group()->transfer_cache()->LockTransferCacheEntry(type, id);
+    gpu::TransferCacheEntryId id) {
+  return share_group()->transfer_cache()->LockTransferCacheEntry(id);
 }
 
 void GLES2Implementation::UnlockTransferCacheEntry(
-    cc::TransferCacheEntryType type,
-    uint32_t id) {
-  share_group()->transfer_cache()->UnlockTransferCacheEntry(helper_, type, id);
+    gpu::TransferCacheEntryId id) {
+  share_group()->transfer_cache()->UnlockTransferCacheEntry(helper_, id);
 }
 
 void GLES2Implementation::DeleteTransferCacheEntry(
-    cc::TransferCacheEntryType type,
-    uint32_t id) {
-  share_group()->transfer_cache()->DeleteTransferCacheEntry(helper_, type, id);
+    gpu::TransferCacheEntryId id) {
+  share_group()->transfer_cache()->DeleteTransferCacheEntry(helper_, id);
 }
 
 void GLES2Implementation::SetLostContextCallback(

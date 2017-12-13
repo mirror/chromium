@@ -30,8 +30,7 @@ class APP_LIST_EXPORT SearchResultAnswerCardView
   void UpdateSelectedIndex(int old_selected, int new_selected) override;
   bool OnKeyPressed(const ui::KeyEvent& event) override;
   views::View* GetSelectedView() const override;
-  views::View* GetFirstResultView() override;
-  void SetFirstResultSelected(bool selected) override;
+  views::View* SetFirstResultSelected(bool selected) override;
 
   views::View* GetSearchAnswerContainerViewForTest() const;
 

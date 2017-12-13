@@ -782,9 +782,10 @@ void PaintLayerScrollableArea::UpdateScrollOrigin() {
   // that.
   if (OverflowRect().IsEmpty())
     return;
-  LayoutRect scrollable_overflow(overflow_rect_);
-  scrollable_overflow.Move(-Box().BorderLeft(), -Box().BorderTop());
-  SetScrollOrigin(-scrollable_overflow.PixelSnappedLocation() +
+  LayoutPoint scrollable_overflow =
+      overflow_rect_.Location() -
+      LayoutSize(Box().BorderLeft(), Box().BorderTop());
+  SetScrollOrigin(FlooredIntPoint(-scrollable_overflow) +
                   Box().OriginAdjustmentForScrollbars());
 }
 
@@ -2082,6 +2083,11 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
     needs_composited_scrolling = false;
   }
 
+  if (layer->GetLayoutObject().Style()->HasBorderRadius()) {
+    non_composited_main_thread_scrolling_reasons_ |=
+        MainThreadScrollingReason::kHasBorderRadius;
+    needs_composited_scrolling = false;
+  }
   if (layer->GetLayoutObject().HasClip() ||
       layer->HasDescendantWithClipPath() || layer->HasAncestorWithClipPath()) {
     non_composited_main_thread_scrolling_reasons_ |=

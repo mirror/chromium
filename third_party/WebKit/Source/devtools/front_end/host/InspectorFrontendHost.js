@@ -561,11 +561,3 @@ Host.isUnderTest = function(prefs) {
     return prefs['isUnderTest'] === 'true';
   return Common.settings.createSetting('isUnderTest', false).get();
 };
-
-/**
- * @return {boolean}
- */
-Host.isStartupTest = function() {
-  var test = Runtime.queryParam('test');
-  return !!(test && test.includes('/startup/'));
-};

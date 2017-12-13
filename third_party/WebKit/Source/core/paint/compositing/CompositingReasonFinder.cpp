@@ -82,7 +82,8 @@ CompositingReasonFinder::PotentialCompositingReasonsFromStyle(
   if (style.BackfaceVisibility() == EBackfaceVisibility::kHidden)
     reasons |= CompositingReason::kBackfaceVisibilityHidden;
 
-  reasons |= CompositingReasonsForAnimation(style);
+  if (RequiresCompositingForAnimation(style))
+    reasons |= CompositingReason::kActiveAnimation;
 
   if (style.HasWillChangeCompositingHint() &&
       !style.SubtreeWillChangeContents())
@@ -176,18 +177,12 @@ CompositingReasons CompositingReasonFinder::NonStyleDeterminedDirectReasons(
   return direct_reasons;
 }
 
-CompositingReasons CompositingReasonFinder::CompositingReasonsForAnimation(
+bool CompositingReasonFinder::RequiresCompositingForAnimation(
     const ComputedStyle& style) {
-  CompositingReasons reasons = CompositingReason::kNone;
-  if (RequiresCompositingForTransformAnimation(style))
-    reasons |= CompositingReason::kActiveTransformAnimation;
-  if (RequiresCompositingForOpacityAnimation(style))
-    reasons |= CompositingReason::kActiveOpacityAnimation;
-  if (RequiresCompositingForFilterAnimation(style))
-    reasons |= CompositingReason::kActiveFilterAnimation;
-  if (RequiresCompositingForBackdropFilterAnimation(style))
-    reasons |= CompositingReason::kActiveBackdropFilterAnimation;
-  return reasons;
+  if (style.SubtreeWillChangeContents())
+    return style.IsRunningAnimationOnCompositor();
+
+  return style.ShouldCompositeForCurrentAnimations();
 }
 
 bool CompositingReasonFinder::RequiresCompositingForOpacityAnimation(
@@ -209,6 +204,13 @@ bool CompositingReasonFinder::RequiresCompositingForBackdropFilterAnimation(
   return style.SubtreeWillChangeContents()
              ? style.IsRunningBackdropFilterAnimationOnCompositor()
              : style.HasCurrentBackdropFilterAnimation();
+}
+
+bool CompositingReasonFinder::RequiresCompositingForEffectAnimation(
+    const ComputedStyle& style) {
+  return RequiresCompositingForOpacityAnimation(style) ||
+         RequiresCompositingForFilterAnimation(style) ||
+         RequiresCompositingForBackdropFilterAnimation(style);
 }
 
 bool CompositingReasonFinder::RequiresCompositingForTransformAnimation(

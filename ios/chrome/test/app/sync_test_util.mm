@@ -97,7 +97,8 @@ void TriggerSyncCycle(syncer::ModelType type) {
       chrome_test_util::GetOriginalBrowserState();
   browser_sync::ProfileSyncService* profile_sync_service =
       IOSChromeProfileSyncServiceFactory::GetForBrowserState(browser_state);
-  profile_sync_service->TriggerRefresh({type});
+  const syncer::ModelTypeSet types(type);
+  profile_sync_service->RefreshTypesForTest(types);
 }
 
 void ClearSyncServerData() {

@@ -29,6 +29,8 @@ const char kZeroEncodeDetails[] = "zero-encode-details";
 
 size_t RegisterWebViewCrashKeys() {
   base::debug::CrashKey fixed_keys[] = {
+      {"AW_WHITELISTED_DEBUG_KEY", kSmallSize},
+      {"AW_NONWHITELISTED_DEBUG_KEY", kSmallSize},
       {kClientId, kSmallSize},
       {kChannel, kSmallSize},
       {kActiveURL, kLargeSize},
@@ -36,7 +38,15 @@ size_t RegisterWebViewCrashKeys() {
       {kVariations, kHugeSize},
       {kShutdownType, kSmallSize},
       {kBrowserUnpinTrace, kMediumSize},
+      {kAppPackageName, kSmallSize},
+      {kAppPackageVersionCode, kSmallSize},
+      {kAndroidSdkInt, kSmallSize},
 
+      // content/:
+      {"discardable-memory-allocated", kSmallSize},
+      {"discardable-memory-free", kSmallSize},
+      {"subresource_url", kLargeSize},
+      {"total-discardable-memory-allocated", kSmallSize},
       {kViewCount, kSmallSize},
 
       // media/:
@@ -44,6 +54,13 @@ size_t RegisterWebViewCrashKeys() {
 
       // sandbox/:
       {"seccomp-sigsys", kMediumSize},
+
+      // Site isolation.  These keys help debug renderer kills such as
+      // https://crbug.com/773140.
+      {"requested_site_url", kSmallSize},
+      {"requested_origin", kSmallSize},
+      {"killed_process_origin_lock", kSmallSize},
+      {"site_isolation_mode", kSmallSize},
 
       // Temporary for https://crbug.com/685996.
       {"user-cloud-policy-manager-connect-trace", kMediumSize},
@@ -74,18 +91,16 @@ const char* const kWebViewCrashKeyWhiteList[] = {
     "gpu-psver",
     "gpu-vsver",
     "gpu-gl-vendor",
-    "gpu-gl-vendor__1",
-    "gpu-gl-vendor__2",
     "gpu-gl-renderer",
 
     // content/:
     "bad_message_reason",
     "discardable-memory-allocated",
     "discardable-memory-free",
-    "mojo-message-error__1",
-    "mojo-message-error__2",
-    "mojo-message-error__3",
-    "mojo-message-error__4",
+    "mojo-message-error-1",
+    "mojo-message-error-2",
+    "mojo-message-error-3",
+    "mojo-message-error-4",
     "total-discardable-memory-allocated",
     nullptr};
 // clang-format on

@@ -10,14 +10,12 @@
 #include <utility>
 #include <vector>
 
-#include "base/base64.h"
 #include "base/base_switches.h"
 #include "base/build_time.h"
 #include "base/command_line.h"
-#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/sparse_histogram.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/sys_info.h"
@@ -29,9 +27,6 @@
 #include "base/version.h"
 #include "build/build_config.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
-#include "components/encrypted_messages/encrypted_message.pb.h"
-#include "components/encrypted_messages/message_encrypter.h"
-#include "components/metrics/clean_exit_beacon.h"
 #include "components/metrics/metrics_state_manager.h"
 #include "components/network_time/network_time_tracker.h"
 #include "components/pref_registry/pref_registry_syncable.h"
@@ -39,6 +34,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/variations/pref_names.h"
 #include "components/variations/proto/variations_seed.pb.h"
+#include "components/variations/service/variations_field_trial_creator.h"
 #include "components/variations/variations_seed_processor.h"
 #include "components/variations/variations_seed_simulator.h"
 #include "components/variations/variations_switches.h"
@@ -59,25 +55,6 @@
 
 namespace variations {
 namespace {
-
-const base::Feature kHttpRetryFeature{"VariationsHttpRetry",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Constants used for encrypting the if-none-match header if we are retrieving a
-// seed over http.
-const char kEncryptedMessageLabel[] = "chrome variations";
-
-// TODO(crbug.com/792239): Change this key to a unique VariationsService one,
-// once the matching private key is changed server side.
-// Key is used to encrypt headers in seed retrieval requests that happen over
-// HTTP connections (when retrying after an unsuccessful HTTPS retrieval
-// attempt).
-const uint8_t kServerPublicKey[] = {
-    0x51, 0xcc, 0x52, 0x67, 0x42, 0x47, 0x3b, 0x10, 0xe8, 0x63, 0x18,
-    0x3c, 0x61, 0xa7, 0x96, 0x76, 0x86, 0x91, 0x40, 0x71, 0x39, 0x5f,
-    0x31, 0x1a, 0x39, 0x5b, 0x76, 0xb1, 0x6b, 0x3d, 0x6a, 0x2b};
-
-const uint32_t kServerPublicKeyVersion = 1;
 
 // TODO(mad): To be removed when we stop updating the NetworkTimeTracker.
 // For the HTTP date headers, the resolution of the server time is 1 second.
@@ -251,14 +228,44 @@ VariationsService::VariationsService(
       disable_deltas_for_next_request_(false),
       resource_request_allowed_notifier_(std::move(notifier)),
       request_count_(0),
-      safe_seed_manager_(state_manager->clean_exit_beacon()->exited_cleanly(),
-                         local_state),
       field_trial_creator_(local_state, client_.get(), ui_string_overrider),
       weak_ptr_factory_(this) {
   DCHECK(client_.get());
   DCHECK(resource_request_allowed_notifier_.get());
 
   resource_request_allowed_notifier_->Init(this);
+
+  // Increment the crash streak if the previous session crashed.
+  // Note that the streak is not cleared if the previous run didn’t crash.
+  // Instead, it’s incremented on each crash until Chrome is able to
+  // successfully fetch a new seed. This way, a seed update that mostly
+  // destabilizes Chrome will still result in a fallback to safe mode.
+  int num_crashes = local_state->GetInteger(prefs::kVariationsCrashStreak);
+  if (!state_manager_->clean_exit_beacon()->exited_cleanly()) {
+    ++num_crashes;
+    local_state->SetInteger(prefs::kVariationsCrashStreak, num_crashes);
+  }
+
+  // After three failures in a row -- either consistent crashes or consistent
+  // failures to fetch the seed -- assume that the current seed is bad, and fall
+  // back to the safe seed. However, ignore any number of failures if the
+  // --force-fieldtrials flag is set, as this flag is only used by developers,
+  // and there's no need to make the development process flakier.
+  const int kMaxFailuresBeforeRevertingToSafeSeed = 3;
+  int num_failures_to_fetch =
+      local_state->GetInteger(prefs::kVariationsFailedToFetchSeedStreak);
+  bool fall_back_to_safe_mode =
+      (num_crashes >= kMaxFailuresBeforeRevertingToSafeSeed ||
+       num_failures_to_fetch >= kMaxFailuresBeforeRevertingToSafeSeed) &&
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ::switches::kForceFieldTrials);
+  UMA_HISTOGRAM_BOOLEAN("Variations.SafeMode.FellBackToSafeMode",
+                        fall_back_to_safe_mode);
+  UMA_HISTOGRAM_SPARSE_SLOWLY("Variations.SafeMode.Streak.Crashes",
+                              std::min(std::max(num_crashes, 0), 100));
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
+      "Variations.SafeMode.Streak.FetchFailures",
+      std::min(std::max(num_failures_to_fetch, 0), 100));
 }
 
 VariationsService::~VariationsService() {
@@ -278,18 +285,6 @@ std::string VariationsService::LoadPermanentConsistencyCountry(
     const std::string& latest_country) {
   return field_trial_creator_.LoadPermanentConsistencyCountry(version,
                                                               latest_country);
-}
-
-bool VariationsService::EncryptString(const std::string& plaintext,
-                                      std::string* encrypted) {
-  encrypted_messages::EncryptedMessage encrypted_message;
-  if (!encrypted_messages::EncryptSerializedMessage(
-          kServerPublicKey, kServerPublicKeyVersion, kEncryptedMessageLabel,
-          plaintext, &encrypted_message) ||
-      !encrypted_message.SerializeToString(encrypted)) {
-    return false;
-  }
-  return true;
 }
 
 void VariationsService::AddObserver(Observer* observer) {
@@ -330,26 +325,24 @@ void VariationsService::SetCreateTrialsFromSeedCalledForTesting(bool called) {
 
 GURL VariationsService::GetVariationsServerURL(
     PrefService* policy_pref_service,
-    const std::string& restrict_mode_override,
-    HttpOptions http_options) {
-  bool secure = http_options == USE_HTTPS;
+    const std::string& restrict_mode_override) {
   std::string server_url_string(
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          secure ? switches::kVariationsServerURL
-                 : switches::kVariationsInsecureServerURL));
+          switches::kVariationsServerURL));
   if (server_url_string.empty())
-    server_url_string = secure ? kDefaultServerUrl : kDefaultInsecureServerUrl;
+    server_url_string = kDefaultServerUrl;
   GURL server_url = GURL(server_url_string);
-  if (secure) {
-    const std::string restrict_param =
-        !restrict_mode_override.empty()
-            ? restrict_mode_override
-            : GetRestrictParameterPref(client_.get(), policy_pref_service);
-    if (!restrict_param.empty()) {
-      server_url = net::AppendOrReplaceQueryParameter(server_url, "restrict",
-                                                      restrict_param);
-    }
+
+  const std::string restrict_param =
+      !restrict_mode_override.empty()
+          ? restrict_mode_override
+          : GetRestrictParameterPref(client_.get(), policy_pref_service);
+  if (!restrict_param.empty()) {
+    server_url = net::AppendOrReplaceQueryParameter(server_url,
+                                                    "restrict",
+                                                    restrict_param);
   }
+
   server_url = net::AppendOrReplaceQueryParameter(server_url, "osname",
                                                   GetPlatformString());
 
@@ -368,7 +361,6 @@ GURL VariationsService::GetVariationsServerURL(
     server_url = net::AppendOrReplaceQueryParameter(server_url, "milestone",
                                                     version_parts[0]);
   }
-
   DCHECK(server_url.is_valid());
   return server_url;
 }
@@ -380,9 +372,7 @@ std::string VariationsService::GetDefaultVariationsServerURLForTesting() {
 
 // static
 void VariationsService::RegisterPrefs(PrefRegistrySimple* registry) {
-  SafeSeedManager::RegisterPrefs(registry);
   VariationsSeedStore::RegisterPrefs(registry);
-
   registry->RegisterInt64Pref(prefs::kVariationsLastFetchTime, 0);
   // This preference will only be written by the policy service, which will fill
   // it according to a value stored in the User Policy.
@@ -391,6 +381,11 @@ void VariationsService::RegisterPrefs(PrefRegistrySimple* registry) {
   // This preference keeps track of the country code used to filter
   // permanent-consistency studies.
   registry->RegisterListPref(prefs::kVariationsPermanentConsistencyCountry);
+
+  // Prefs tracking failures along the way to fetching a seed, used to implement
+  // Safe Mode.
+  registry->RegisterIntegerPref(prefs::kVariationsCrashStreak, 0);
+  registry->RegisterIntegerPref(prefs::kVariationsFailedToFetchSeedStreak, 0);
 }
 
 // static
@@ -424,13 +419,87 @@ void VariationsService::EnableForTesting() {
 }
 
 void VariationsService::DoActualFetch() {
-  DoFetchFromURL(variations_server_url_);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(IsFetchingEnabled());
+
+  // Pessimistically assume the fetch will fail. The failure streak will be
+  // reset upon success.
+  int num_failures_to_fetch =
+      local_state_->GetInteger(prefs::kVariationsFailedToFetchSeedStreak);
+  local_state_->SetInteger(prefs::kVariationsFailedToFetchSeedStreak,
+                           num_failures_to_fetch + 1);
+
+  // Normally, there shouldn't be a |pending_request_| when this fires. However
+  // it's not impossible - for example if Chrome was paused (e.g. in a debugger
+  // or if the machine was suspended) and OnURLFetchComplete() hasn't had a
+  // chance to run yet from the previous request. In this case, don't start a
+  // new request and just let the previous one finish.
+  if (pending_seed_request_)
+    return;
+
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("chrome_variations_service", R"(
+        semantics {
+          sender: "Chrome Variations Service"
+          description:
+            "Retrieves the list of Google Chrome's Variations from the server, "
+            "which will apply to the next Chrome session upon a restart."
+          trigger:
+            "Requests are made periodically while Google Chrome is running."
+          data: "The operating system name."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: NO
+          setting: "This feature cannot be disabled by settings."
+          policy_exception_justification:
+            "Not implemented, considered not required."
+        })");
+  pending_seed_request_ =
+      net::URLFetcher::Create(0, variations_server_url_, net::URLFetcher::GET,
+                              this, traffic_annotation);
+  data_use_measurement::DataUseUserData::AttachToFetcher(
+      pending_seed_request_.get(),
+      data_use_measurement::DataUseUserData::VARIATIONS);
+  pending_seed_request_->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
+                                      net::LOAD_DO_NOT_SEND_AUTH_DATA |
+                                      net::LOAD_DO_NOT_SAVE_COOKIES);
+  pending_seed_request_->SetRequestContext(client_->GetURLRequestContext());
+  bool enable_deltas = false;
+  if (!field_trial_creator_.seed_store().variations_serial_number().empty() &&
+      !disable_deltas_for_next_request_) {
+    // Tell the server that delta-compressed seeds are supported.
+    enable_deltas = true;
+
+    // Get the seed only if its serial number doesn't match what we have.
+    pending_seed_request_->AddExtraRequestHeader(
+        "If-None-Match:" +
+        field_trial_creator_.seed_store().variations_serial_number());
+  }
+  // Tell the server that delta-compressed and gzipped seeds are supported.
+  const char* supported_im = enable_deltas ? "A-IM:x-bm,gzip" : "A-IM:gzip";
+  pending_seed_request_->AddExtraRequestHeader(supported_im);
+
+  pending_seed_request_->Start();
+
+  const base::TimeTicks now = base::TimeTicks::Now();
+  base::TimeDelta time_since_last_fetch;
+  // Record a time delta of 0 (default value) if there was no previous fetch.
+  if (!last_request_started_time_.is_null())
+    time_since_last_fetch = now - last_request_started_time_;
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Variations.TimeSinceLastFetchAttempt",
+                              time_since_last_fetch.InMinutes(), 1,
+                              base::TimeDelta::FromDays(7).InMinutes(), 50);
+  UMA_HISTOGRAM_COUNTS_100("Variations.RequestCount", request_count_);
+  ++request_count_;
+  last_request_started_time_ = now;
+  disable_deltas_for_next_request_ = false;
 }
 
 bool VariationsService::StoreSeed(const std::string& seed_data,
                                   const std::string& seed_signature,
                                   const std::string& country_code,
-                                  base::Time date_fetched,
+                                  const base::Time& date_fetched,
                                   bool is_delta_compressed,
                                   bool is_gzip_compressed) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -457,105 +526,12 @@ VariationsService::CreateLowEntropyProvider() {
   return state_manager_->CreateLowEntropyProvider();
 }
 
-bool VariationsService::DoFetchFromURL(const GURL& url) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(IsFetchingEnabled());
-
-  safe_seed_manager_.RecordFetchStarted();
-
-  // Normally, there shouldn't be a |pending_request_| when this fires. However
-  // it's not impossible - for example if Chrome was paused (e.g. in a debugger
-  // or if the machine was suspended) and OnURLFetchComplete() hasn't had a
-  // chance to run yet from the previous request. In this case, don't start a
-  // new request and just let the previous one finish.
-  if (pending_seed_request_)
-    return false;
-
-  net::NetworkTrafficAnnotationTag traffic_annotation =
-      net::DefineNetworkTrafficAnnotation("chrome_variations_service", R"(
-        semantics {
-          sender: "Chrome Variations Service"
-          description:
-            "Retrieves the list of Google Chrome's Variations from the server, "
-            "which will apply to the next Chrome session upon a restart."
-          trigger:
-            "Requests are made periodically while Google Chrome is running."
-          data: "The operating system name."
-          destination: GOOGLE_OWNED_SERVICE
-        }
-        policy {
-          cookies_allowed: NO
-          setting: "This feature cannot be disabled by settings."
-          policy_exception_justification:
-            "Not implemented, considered not required."
-        })");
-  pending_seed_request_ = net::URLFetcher::Create(0, url, net::URLFetcher::GET,
-                                                  this, traffic_annotation);
-  data_use_measurement::DataUseUserData::AttachToFetcher(
-      pending_seed_request_.get(),
-      data_use_measurement::DataUseUserData::VARIATIONS);
-  pending_seed_request_->SetLoadFlags(net::LOAD_DO_NOT_SEND_COOKIES |
-                                      net::LOAD_DO_NOT_SEND_AUTH_DATA |
-                                      net::LOAD_DO_NOT_SAVE_COOKIES);
-  pending_seed_request_->SetRequestContext(client_->GetURLRequestContext());
-  bool enable_deltas = false;
-  if (!field_trial_creator_.seed_store().variations_serial_number().empty() &&
-      !disable_deltas_for_next_request_) {
-    // Tell the server that delta-compressed seeds are supported.
-    enable_deltas = true;
-    // Get the seed only if its serial number doesn't match what we have.
-    // If the fetch is being done over HTTP, encrypt the If-None-Match header.
-    const std::string& original_sn =
-        field_trial_creator_.seed_store().variations_serial_number();
-    if (!url.SchemeIs(url::kHttpsScheme) &&
-        base::FeatureList::IsEnabled(kHttpRetryFeature)) {
-      std::string encrypted_sn;
-      std::string encoded_sn;
-      if (!EncryptString(original_sn, &encrypted_sn)) {
-        pending_seed_request_.reset();
-        return false;
-      }
-      base::Base64Encode(encrypted_sn, &encoded_sn);
-      pending_seed_request_->AddExtraRequestHeader("If-None-Match:" +
-                                                   encoded_sn);
-    } else {
-      pending_seed_request_->AddExtraRequestHeader("If-None-Match:" +
-                                                   original_sn);
-    }
-  }
-  // Tell the server that delta-compressed and gzipped seeds are supported.
-  const char* supported_im = enable_deltas ? "A-IM:x-bm,gzip" : "A-IM:gzip";
-  pending_seed_request_->AddExtraRequestHeader(supported_im);
-
-  pending_seed_request_->Start();
-
-  const base::TimeTicks now = base::TimeTicks::Now();
-  base::TimeDelta time_since_last_fetch;
-  // Record a time delta of 0 (default value) if there was no previous fetch.
-  if (!last_request_started_time_.is_null())
-    time_since_last_fetch = now - last_request_started_time_;
-  UMA_HISTOGRAM_CUSTOM_COUNTS("Variations.TimeSinceLastFetchAttempt",
-                              time_since_last_fetch.InMinutes(), 1,
-                              base::TimeDelta::FromDays(7).InMinutes(), 50);
-  UMA_HISTOGRAM_COUNTS_100("Variations.RequestCount", request_count_);
-  ++request_count_;
-  last_request_started_time_ = now;
-  disable_deltas_for_next_request_ = false;
-  return true;
-}
-
 void VariationsService::StartRepeatedVariationsSeedFetch() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   // Initialize the Variations server URL.
   variations_server_url_ =
-      GetVariationsServerURL(policy_pref_service_, restrict_mode_, USE_HTTPS);
-
-  // Initialize the fallback HTTP URL if the HTTP retry feature is enabled.
-  if (base::FeatureList::IsEnabled(kHttpRetryFeature)) {
-    insecure_variations_server_url_ =
-        GetVariationsServerURL(policy_pref_service_, restrict_mode_, USE_HTTP);
-  }
+      GetVariationsServerURL(policy_pref_service_, restrict_mode_);
 
   // Check that |CreateTrialsFromSeed| was called, which is necessary to
   // retrieve the serial number that will be sent to the server.
@@ -610,29 +586,13 @@ void VariationsService::OnURLFetchComplete(const net::URLFetcher* source) {
       pending_seed_request_.release());
   const net::URLRequestStatus& status = request->GetStatus();
   const int response_code = request->GetResponseCode();
-  bool was_https = request->GetURL().SchemeIs(url::kHttpsScheme);
-  if (was_https) {
-    base::UmaHistogramSparse(
-        "Variations.SeedFetchResponseOrErrorCode",
-        status.is_success() ? response_code : status.error());
-  } else {
-    base::UmaHistogramSparse(
-        "Variations.SeedFetchResponseOrErrorCode.HTTP",
-        status.is_success() ? response_code : status.error());
-  }
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
+      "Variations.SeedFetchResponseOrErrorCode",
+      status.is_success() ? response_code : status.error());
+
   if (status.status() != net::URLRequestStatus::SUCCESS) {
     DVLOG(1) << "Variations server request failed with error: "
              << status.error() << ": " << net::ErrorToString(status.error());
-    // If the current fetch attempt was over an HTTPS connection, retry the
-    // fetch immediately over an HTTP connection.
-    // Currently we only do this if if the 'VariationsHttpRetry' feature is
-    // enabled.
-    if (was_https && !insecure_variations_server_url_.is_empty()) {
-      // When re-trying via HTTP, return immediately. OnURLFetchComplete() will
-      // be called with the result of that retry.
-      if (DoFetchFromURL(insecure_variations_server_url_))
-        return;
-    }
     // It's common for the very first fetch attempt to fail (e.g. the network
     // may not yet be available). In such a case, try again soon, rather than
     // waiting the full time interval.
@@ -751,7 +711,13 @@ void VariationsService::PerformSimulationWithVersion(
 
 void VariationsService::RecordSuccessfulFetch() {
   field_trial_creator_.RecordLastFetchTime();
-  safe_seed_manager_.RecordSuccessfulFetch();
+
+  // Note: It's important to clear the crash streak as well as the fetch
+  // failures streak. Crashes that occur after a successful seed fetch do not
+  // prevent updating to a new seed, and therefore do not necessitate falling
+  // back to a safe seed.
+  local_state_->SetInteger(prefs::kVariationsCrashStreak, 0);
+  local_state_->SetInteger(prefs::kVariationsFailedToFetchSeedStreak, 0);
 }
 
 void VariationsService::GetClientFilterableStateForVersionCalledForTesting() {

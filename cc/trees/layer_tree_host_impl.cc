@@ -87,7 +87,6 @@
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
-#include "gpu/command_buffer/client/raster_interface.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "ui/gfx/geometry/point_conversions.h"
@@ -2187,15 +2186,9 @@ void LayerTreeHostImpl::SynchronouslyInitializeAllTiles() {
 }
 
 void LayerTreeHostImpl::DidLoseLayerTreeFrameSink() {
-  // Check that we haven't already detected context loss because we get it via
-  // two paths: compositor context loss on the compositor thread and worker
-  // context loss posted from main thread to compositor thread. We do not want
-  // to reset the context recovery state in the scheduler.
-  if (!has_valid_layer_tree_frame_sink_)
-    return;
-  has_valid_layer_tree_frame_sink_ = false;
   if (resource_provider_)
     resource_provider_->DidLoseContextProvider();
+  has_valid_layer_tree_frame_sink_ = false;
   client_->DidLoseLayerTreeFrameSinkOnImplThread();
 }
 
@@ -2674,7 +2667,7 @@ void LayerTreeHostImpl::CleanUpTileManagerResources() {
     if (auto* worker_context =
             layer_tree_frame_sink_->worker_context_provider()) {
       viz::ContextProvider::ScopedContextLock hold(worker_context);
-      worker_context->RasterContext()->ShallowFlushCHROMIUM();
+      worker_context->ContextGL()->ShallowFlushCHROMIUM();
     }
   }
 }

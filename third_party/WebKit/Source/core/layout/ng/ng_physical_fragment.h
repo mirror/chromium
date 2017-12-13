@@ -53,6 +53,7 @@ class CORE_EXPORT NGPhysicalFragment
     kInlineBlock,
     kFloating,
     kOutOfFlowPositioned,
+    kOldLayoutRoot,
     // When adding new values, make sure the bit size of |box_type_| is large
     // enough to store.
 
@@ -74,8 +75,6 @@ class CORE_EXPORT NGPhysicalFragment
 
   // Returns the box type of this fragment.
   NGBoxType BoxType() const { return static_cast<NGBoxType>(box_type_); }
-  // Returns whether the fragment is old layout root.
-  bool IsOldLayoutRoot() const { return is_old_layout_root_; }
   // An inline block is represented as a kFragmentBox.
   // TODO(eae): This isn't true for replaces elements at the moment.
   bool IsInlineBlock() const { return BoxType() == NGBoxType::kInlineBlock; }
@@ -87,10 +86,10 @@ class CORE_EXPORT NGPhysicalFragment
   // co-owned by other fragments.
   bool IsAnonymousBox() const { return BoxType() == NGBoxType::kAnonymousBox; }
   // A block sub-layout starts on this fragment. Inline blocks, floats, out of
-  // flow positioned objects are such examples. This is also true on NG/legacy
+  // flow positioned objects are such examples. This may be false on NG/legacy
   // boundary.
   bool IsBlockLayoutRoot() const {
-    return BoxType() >= NGBoxType::kMinimumBlockLayoutRoot || IsOldLayoutRoot();
+    return BoxType() >= NGBoxType::kMinimumBlockLayoutRoot;
   }
 
   // |Offset()| is reliable only when this fragment was placed by LayoutNG
@@ -179,7 +178,6 @@ class CORE_EXPORT NGPhysicalFragment
 
   unsigned type_ : 2;  // NGFragmentType
   unsigned box_type_ : 3;  // NGBoxType
-  unsigned is_old_layout_root_ : 1;
   unsigned is_placed_ : 1;
   unsigned border_edge_ : 4;  // NGBorderEdges::Physical
 

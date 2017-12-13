@@ -29,7 +29,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -112,7 +112,7 @@ public class FakeAccountManagerDelegate implements AccountManagerDelegate {
     /** Use {@link FakeProfileDataSource}. */
     public static final int ENABLE_PROFILE_DATA_SOURCE = 1;
 
-    private final Set<AccountHolder> mAccounts = new LinkedHashSet<>();
+    private final Set<AccountHolder> mAccounts = new HashSet<>();
     private final ObserverList<AccountsChangeObserver> mObservers = new ObserverList<>();
     private boolean mRegisterObserversCalled;
     private FakeProfileDataSource mFakeProfileDataSource;
@@ -231,16 +231,27 @@ public class FakeAccountManagerDelegate implements AccountManagerDelegate {
     public void addAccountHolderBlocking(AccountHolder accountHolder) {
         ThreadUtils.assertOnBackgroundThread();
 
-        final CountDownLatch cacheUpdated = new CountDownLatch(1);
+        CountDownLatch cacheUpdated = new CountDownLatch(1);
+        AccountsChangeObserver observer = () -> {
+            // Observers are invoked asynchronously, so this call may be unrelated to accountHolder,
+            // hereby this check that account is in AccountManagerFacade cache.
+            if (AccountManagerFacade.get().hasAccountForName(accountHolder.getAccount().name)) {
+                cacheUpdated.countDown();
+            }
+        };
+
         try {
             ThreadUtils.runOnUiThreadBlocking(() -> {
+                AccountManagerFacade.get().addObserver(observer);
                 addAccountHolderExplicitly(accountHolder);
-                AccountManagerFacade.get().waitForPendingUpdates(cacheUpdated::countDown);
             });
 
             cacheUpdated.await();
         } catch (InterruptedException e) {
-            throw new RuntimeException("Exception occurred while waiting for updates", e);
+            throw new RuntimeException("Exception occurred while waiting for future", e);
+        } finally {
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> AccountManagerFacade.get().removeObserver(observer));
         }
     }
 
@@ -254,15 +265,26 @@ public class FakeAccountManagerDelegate implements AccountManagerDelegate {
         ThreadUtils.assertOnBackgroundThread();
 
         CountDownLatch cacheUpdated = new CountDownLatch(1);
+        AccountsChangeObserver observer = () -> {
+            // Observers are invoked asynchronously, so this call may be unrelated to accountHolder,
+            // hereby this check that account isn't in AccountManagerFacade cache.
+            if (!AccountManagerFacade.get().hasAccountForName(accountHolder.getAccount().name)) {
+                cacheUpdated.countDown();
+            }
+        };
+
         try {
             ThreadUtils.runOnUiThreadBlocking(() -> {
+                AccountManagerFacade.get().addObserver(observer);
                 removeAccountHolderExplicitly(accountHolder);
-                AccountManagerFacade.get().waitForPendingUpdates(cacheUpdated::countDown);
             });
 
             cacheUpdated.await();
         } catch (InterruptedException e) {
-            throw new RuntimeException("Exception occurred while waiting for updates", e);
+            throw new RuntimeException("Exception occurred while waiting for future", e);
+        } finally {
+            ThreadUtils.runOnUiThreadBlocking(
+                    () -> AccountManagerFacade.get().removeObserver(observer));
         }
     }
 

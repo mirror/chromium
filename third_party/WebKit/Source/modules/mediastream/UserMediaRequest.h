@@ -31,10 +31,10 @@
 #ifndef UserMediaRequest_h
 #define UserMediaRequest_h
 
-#include "bindings/modules/v8/v8_navigator_user_media_error_callback.h"
-#include "bindings/modules/v8/v8_navigator_user_media_success_callback.h"
 #include "core/dom/PausableObject.h"
 #include "modules/ModulesExport.h"
+#include "modules/mediastream/NavigatorUserMediaErrorCallback.h"
+#include "modules/mediastream/NavigatorUserMediaSuccessCallback.h"
 #include "platform/mediastream/MediaStreamSource.h"
 #include "platform/wtf/Forward.h"
 #include "public/platform/WebMediaConstraints.h"
@@ -54,38 +54,22 @@ class MODULES_EXPORT UserMediaRequest final
   USING_GARBAGE_COLLECTED_MIXIN(UserMediaRequest);
 
  public:
-  class Callbacks : public GarbageCollectedFinalized<Callbacks> {
-   public:
-    virtual ~Callbacks() = default;
-
-    virtual void OnSuccess(ScriptWrappable* callback_this_value,
-                           MediaStream*) = 0;
-    virtual void OnError(ScriptWrappable* callback_this_value,
-                         DOMExceptionOrOverconstrainedError) = 0;
-
-    virtual void Trace(blink::Visitor*) {}
-
-   protected:
-    Callbacks() = default;
-  };
-
-  class V8Callbacks;
-
   static UserMediaRequest* Create(ExecutionContext*,
                                   UserMediaController*,
                                   const MediaStreamConstraints& options,
-                                  Callbacks*,
-                                  MediaErrorState&);
-  static UserMediaRequest* Create(ExecutionContext*,
-                                  UserMediaController*,
-                                  const MediaStreamConstraints& options,
-                                  V8NavigatorUserMediaSuccessCallback*,
-                                  V8NavigatorUserMediaErrorCallback*,
+                                  NavigatorUserMediaSuccessCallback*,
+                                  NavigatorUserMediaErrorCallback*,
                                   MediaErrorState&);
   static UserMediaRequest* CreateForTesting(const WebMediaConstraints& audio,
                                             const WebMediaConstraints& video);
   virtual ~UserMediaRequest();
 
+  NavigatorUserMediaSuccessCallback* SuccessCallback() const {
+    return success_callback_.Get();
+  }
+  NavigatorUserMediaErrorCallback* ErrorCallback() const {
+    return error_callback_.Get();
+  }
   Document* OwnerDocument();
 
   void Start();
@@ -117,7 +101,8 @@ class MODULES_EXPORT UserMediaRequest final
                    UserMediaController*,
                    WebMediaConstraints audio,
                    WebMediaConstraints video,
-                   Callbacks*);
+                   NavigatorUserMediaSuccessCallback*,
+                   NavigatorUserMediaErrorCallback*);
 
   WebMediaConstraints audio_;
   WebMediaConstraints video_;
@@ -125,7 +110,8 @@ class MODULES_EXPORT UserMediaRequest final
 
   Member<UserMediaController> controller_;
 
-  Member<Callbacks> callbacks_;
+  Member<NavigatorUserMediaSuccessCallback> success_callback_;
+  Member<NavigatorUserMediaErrorCallback> error_callback_;
 };
 
 }  // namespace blink

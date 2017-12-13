@@ -14,21 +14,23 @@ namespace blink {
 
 namespace {
 
-bool IsValidXYCoordinate(const CSSNumericValue* value) {
-  return value && value->Type().MatchesBaseTypePercentage(
-                      CSSNumericValueType::BaseType::kLength);
+bool IsLengthOrPercent(const CSSNumericValue* value) {
+  return (value->GetType() == CSSStyleValue::StyleValueType::kLengthType ||
+          value->GetType() == CSSStyleValue::StyleValueType::kPercentType);
 }
 
-bool IsValidZCoordinate(const CSSNumericValue* value) {
-  return value &&
-         value->Type().MatchesBaseType(CSSNumericValueType::BaseType::kLength);
+bool IsLengthValue(const CSSValue& value) {
+  return value.IsPrimitiveValue() && ToCSSPrimitiveValue(value).IsLength();
 }
 
 CSSTranslation* FromCSSTranslate(const CSSFunctionValue& value) {
   DCHECK_GT(value.length(), 0UL);
+  DCHECK(IsLengthValue(value.Item(0)));
 
   CSSNumericValue* x =
       CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(0)));
+  if (!x)
+    return nullptr;
 
   if (value.length() == 1) {
     return CSSTranslation::Create(
@@ -36,18 +38,23 @@ CSSTranslation* FromCSSTranslate(const CSSFunctionValue& value) {
   }
 
   DCHECK_EQ(value.length(), 2UL);
+  DCHECK(IsLengthValue(value.Item(1)));
 
   CSSNumericValue* y =
       CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(1)));
-
+  if (!y)
+    return nullptr;
   return CSSTranslation::Create(x, y);
 }
 
 CSSTranslation* FromCSSTranslateXYZ(const CSSFunctionValue& value) {
   DCHECK_EQ(value.length(), 1UL);
+  DCHECK(IsLengthValue(value.Item(0)));
 
   CSSNumericValue* length =
       CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(0)));
+  if (!length)
+    return nullptr;
 
   switch (value.FunctionType()) {
     case CSSValueTranslateX:
@@ -71,6 +78,9 @@ CSSTranslation* FromCSSTranslateXYZ(const CSSFunctionValue& value) {
 
 CSSTranslation* FromCSSTranslate3D(const CSSFunctionValue& value) {
   DCHECK_EQ(value.length(), 3UL);
+  DCHECK(IsLengthValue(value.Item(0)));
+  DCHECK(IsLengthValue(value.Item(1)));
+  DCHECK(IsLengthValue(value.Item(2)));
 
   CSSNumericValue* x =
       CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(0)));
@@ -78,6 +88,8 @@ CSSTranslation* FromCSSTranslate3D(const CSSFunctionValue& value) {
       CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(1)));
   CSSNumericValue* z =
       CSSNumericValue::FromCSSValue(ToCSSPrimitiveValue(value.Item(2)));
+  if (!x || !y || !z)
+    return nullptr;
 
   return CSSTranslation::Create(x, y, z);
 }
@@ -87,7 +99,7 @@ CSSTranslation* FromCSSTranslate3D(const CSSFunctionValue& value) {
 CSSTranslation* CSSTranslation::Create(CSSNumericValue* x,
                                        CSSNumericValue* y,
                                        ExceptionState& exception_state) {
-  if (!IsValidXYCoordinate(x) || !IsValidXYCoordinate(y)) {
+  if (!IsLengthOrPercent(x) || !IsLengthOrPercent(y)) {
     exception_state.ThrowTypeError(
         "Must pass length or percentage to X and Y of CSSTranslation");
     return nullptr;
@@ -101,16 +113,26 @@ CSSTranslation* CSSTranslation::Create(CSSNumericValue* x,
                                        CSSNumericValue* y,
                                        CSSNumericValue* z,
                                        ExceptionState& exception_state) {
-  if (!IsValidXYCoordinate(x) || !IsValidXYCoordinate(y) ||
-      !IsValidZCoordinate(z)) {
+  if (!IsLengthOrPercent(x) || !IsLengthOrPercent(y)) {
     exception_state.ThrowTypeError(
-        "Must pass length or percentage to X, Y and Z of CSSTranslation");
+        "Must pass length or percentage to X and Y of CSSTranslation");
+    return nullptr;
+  }
+  if (z && z->GetType() != CSSStyleValue::StyleValueType::kLengthType) {
+    exception_state.ThrowTypeError("Must pass length to Z of CSSTranslation");
+    return nullptr;
+  }
+  if (z && z->ContainsPercent()) {
+    exception_state.ThrowTypeError(
+        "CSSTranslation does not support z CSSNumericValue with percent units");
     return nullptr;
   }
   return new CSSTranslation(x, y, z, false /* is2D */);
 }
 
 CSSTranslation* CSSTranslation::Create(CSSNumericValue* x, CSSNumericValue* y) {
+  DCHECK(IsLengthOrPercent(x));
+  DCHECK(IsLengthOrPercent(y));
   return new CSSTranslation(
       x, y, CSSUnitValue::Create(0, CSSPrimitiveValue::UnitType::kPixels),
       true /* is2D */);
@@ -119,6 +141,10 @@ CSSTranslation* CSSTranslation::Create(CSSNumericValue* x, CSSNumericValue* y) {
 CSSTranslation* CSSTranslation::Create(CSSNumericValue* x,
                                        CSSNumericValue* y,
                                        CSSNumericValue* z) {
+  DCHECK(IsLengthOrPercent(x));
+  DCHECK(IsLengthOrPercent(y));
+  DCHECK_EQ(z->GetType(), CSSStyleValue::StyleValueType::kLengthType);
+  DCHECK(!z->ContainsPercent());
   return new CSSTranslation(x, y, z, false /* is2D */);
 }
 
@@ -139,7 +165,8 @@ CSSTranslation* CSSTranslation::FromCSSValue(const CSSFunctionValue& value) {
 }
 
 void CSSTranslation::setX(CSSNumericValue* x, ExceptionState& exception_state) {
-  if (!IsValidXYCoordinate(x)) {
+  if (x->GetType() != CSSStyleValue::StyleValueType::kLengthType &&
+      x->GetType() != CSSStyleValue::StyleValueType::kPercentType) {
     exception_state.ThrowTypeError(
         "Must pass length or percentage to X of CSSTranslation");
     return;
@@ -148,7 +175,8 @@ void CSSTranslation::setX(CSSNumericValue* x, ExceptionState& exception_state) {
 }
 
 void CSSTranslation::setY(CSSNumericValue* y, ExceptionState& exception_state) {
-  if (!IsValidXYCoordinate(y)) {
+  if (y->GetType() != CSSStyleValue::StyleValueType::kLengthType &&
+      y->GetType() != CSSStyleValue::StyleValueType::kPercentType) {
     exception_state.ThrowTypeError(
         "Must pass length or percent to Y of CSSTranslation");
     return;
@@ -157,8 +185,13 @@ void CSSTranslation::setY(CSSNumericValue* y, ExceptionState& exception_state) {
 }
 
 void CSSTranslation::setZ(CSSNumericValue* z, ExceptionState& exception_state) {
-  if (!IsValidZCoordinate(z)) {
+  if (z->GetType() != CSSStyleValue::StyleValueType::kLengthType) {
     exception_state.ThrowTypeError("Must pass length to Z of CSSTranslation");
+    return;
+  }
+  if (z->ContainsPercent()) {
+    exception_state.ThrowTypeError(
+        "CSSTranslation does not support z CSSNumericValue with percent units");
     return;
   }
   z_ = z;
@@ -189,16 +222,6 @@ const CSSFunctionValue* CSSTranslation::ToCSSValue(
   if (!is2D())
     result->Append(*z_->ToCSSValue(secure_context_mode));
   return result;
-}
-
-CSSTranslation::CSSTranslation(CSSNumericValue* x,
-                               CSSNumericValue* y,
-                               CSSNumericValue* z,
-                               bool is2D)
-    : CSSTransformComponent(is2D), x_(x), y_(y), z_(z) {
-  DCHECK(IsValidXYCoordinate(x));
-  DCHECK(IsValidXYCoordinate(y));
-  DCHECK(IsValidZCoordinate(z));
 }
 
 }  // namespace blink

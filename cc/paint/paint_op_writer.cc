@@ -6,7 +6,6 @@
 
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_shader.h"
-#include "cc/paint/paint_typeface_transfer_cache_entry.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkTextBlob.h"
 
@@ -145,26 +144,36 @@ void PaintOpWriter::Write(const std::vector<PaintTypeface>& typefaces) {
   WriteSimple(static_cast<uint32_t>(typefaces.size()));
   for (const auto& typeface : typefaces) {
     DCHECK(typeface);
-    // TODO(vmpstr): This is meant to be sent via a transfer cache, but for now
-    // just use the serialization of the client transfer cache entry.
-    ClientPaintTypefaceTransferCacheEntry entry(typeface);
-    size_t size = entry.SerializedSize();
-    if (size > remaining_bytes_) {
-      valid_ = false;
-      return;
+    WriteSimple(typeface.sk_id());
+    WriteSimple(static_cast<uint8_t>(typeface.type()));
+    switch (typeface.type()) {
+      case PaintTypeface::Type::kTestTypeface:
+        // Nothing to serialize here.
+        break;
+      case PaintTypeface::Type::kSkTypeface:
+        // Nothing to do here. This should never be the case when everything is
+        // implemented. This should be a NOTREACHED() eventually.
+        break;
+      case PaintTypeface::Type::kFontConfigInterfaceIdAndTtcIndex:
+        WriteSimple(typeface.font_config_interface_id());
+        WriteSimple(typeface.ttc_index());
+        break;
+      case PaintTypeface::Type::kFilenameAndTtcIndex:
+        WriteSimple(typeface.filename().size());
+        WriteData(typeface.filename().size(), typeface.filename().data());
+        WriteSimple(typeface.ttc_index());
+        break;
+      case PaintTypeface::Type::kFamilyNameAndFontStyle:
+        WriteSimple(typeface.family_name().size());
+        WriteData(typeface.family_name().size(), typeface.family_name().data());
+        WriteSimple(typeface.font_style().weight());
+        WriteSimple(typeface.font_style().width());
+        WriteSimple(typeface.font_style().slant());
+        break;
     }
-    bool success = entry.Serialize(
-        base::make_span(reinterpret_cast<uint8_t*>(memory_), size));
-    if (!success) {
-      valid_ = false;
-      return;
-    }
-
-    memory_ += size;
-    remaining_bytes_ -= size;
-
 #if DCHECK_IS_ON()
-    last_serialized_typeface_ids_.insert(typeface.sk_id());
+    if (typeface)
+      last_serialized_typeface_ids_.insert(typeface.sk_id());
 #endif
   }
 }
@@ -186,8 +195,6 @@ void PaintOpWriter::Write(const sk_sp<SkTextBlob>& blob) {
 
 void PaintOpWriter::Write(const scoped_refptr<PaintTextBlob>& blob) {
   Write(blob->typefaces());
-  if (!valid_)
-    return;
   Write(blob->ToSkTextBlob());
 }
 

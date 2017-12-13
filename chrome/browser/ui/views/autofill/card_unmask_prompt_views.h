@@ -10,6 +10,8 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/autofill/autofill_dialog_models.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_view.h"
+#include "ui/gfx/animation/animation_delegate.h"
+#include "ui/gfx/animation/slide_animation.h"
 #include "ui/views/controls/combobox/combobox_listener.h"
 #include "ui/views/controls/link_listener.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
@@ -36,7 +38,8 @@ class CardUnmaskPromptViews : public CardUnmaskPromptView,
                               public views::ComboboxListener,
                               public views::DialogDelegateView,
                               public views::TextfieldController,
-                              public views::LinkListener {
+                              public views::LinkListener,
+                              public gfx::AnimationDelegate {
  public:
   CardUnmaskPromptViews(CardUnmaskPromptController* controller,
                         content::WebContents* web_contents);
@@ -76,6 +79,9 @@ class CardUnmaskPromptViews : public CardUnmaskPromptView,
   // views::LinkListener
   void LinkClicked(views::Link* source, int event_flags) override;
 
+  // gfx::AnimationDelegate
+  void AnimationProgressed(const gfx::Animation* animation) override;
+
  private:
   friend class CardUnmaskPromptViewTesterViews;
 
@@ -109,14 +115,16 @@ class CardUnmaskPromptViews : public CardUnmaskPromptView,
   // The error label for permanent errors (where the user can't retry).
   views::Label* permanent_error_label_ = nullptr;
 
-  views::View* controls_container_ = nullptr;
-  views::View* storage_row_ = nullptr;
+  class FadeOutView;
+  FadeOutView* storage_row_ = nullptr;
   views::Checkbox* storage_checkbox_ = nullptr;
 
   // Elements related to progress when the request is being made.
-  views::View* progress_overlay_ = nullptr;
+  FadeOutView* progress_overlay_ = nullptr;
   views::Throbber* progress_throbber_ = nullptr;
   views::Label* progress_label_ = nullptr;
+
+  gfx::SlideAnimation overlay_animation_;
 
   base::WeakPtrFactory<CardUnmaskPromptViews> weak_ptr_factory_;
 

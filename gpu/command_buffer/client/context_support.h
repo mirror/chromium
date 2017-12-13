@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "base/callback.h"
-#include "cc/paint/transfer_cache_entry.h"
+#include "gpu/command_buffer/common/transfer_cache_entry_id.h"
 #include "ui/gfx/overlay_transform.h"
 
 namespace cc {
@@ -17,7 +17,6 @@ class ClientTransferCacheEntry;
 }
 
 namespace gfx {
-class GpuFence;
 class Rect;
 class RectF;
 }
@@ -43,12 +42,6 @@ class ContextSupport {
   // Runs |callback| when a query created via glCreateQueryEXT() has cleared
   // passed the glEndQueryEXT() point.
   virtual void SignalQuery(uint32_t query, base::OnceClosure callback) = 0;
-
-  // Fetches a GpuFenceHandle for a GpuFence that was previously created by
-  // glInsertGpuFenceCHROMIUM on this context.
-  virtual void GetGpuFence(
-      uint32_t gpu_fence_id,
-      base::OnceCallback<void(std::unique_ptr<gfx::GpuFence>)> callback) = 0;
 
   // Indicates whether the context should aggressively free allocated resources.
   // If set to true, the context will purge all temporary resources when
@@ -94,14 +87,12 @@ class ContextSupport {
   // Access to transfer cache functionality for OOP raster. Only
   // ThreadsafeLockTransferCacheEntry can be accessed without holding the
   // context lock.
-  virtual void CreateTransferCacheEntry(
+  virtual gpu::TransferCacheEntryId CreateTransferCacheEntry(
       const cc::ClientTransferCacheEntry& entry) = 0;
-  virtual bool ThreadsafeLockTransferCacheEntry(cc::TransferCacheEntryType type,
-                                                uint32_t id) = 0;
-  virtual void UnlockTransferCacheEntry(cc::TransferCacheEntryType type,
-                                        uint32_t id) = 0;
-  virtual void DeleteTransferCacheEntry(cc::TransferCacheEntryType type,
-                                        uint32_t id) = 0;
+  virtual bool ThreadsafeLockTransferCacheEntry(
+      gpu::TransferCacheEntryId id) = 0;
+  virtual void UnlockTransferCacheEntry(gpu::TransferCacheEntryId id) = 0;
+  virtual void DeleteTransferCacheEntry(gpu::TransferCacheEntryId id) = 0;
 
  protected:
   ContextSupport() = default;

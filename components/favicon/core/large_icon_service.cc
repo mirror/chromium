@@ -18,7 +18,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/singleton.h"
 #include "base/metrics/field_trial_params.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_runner.h"
@@ -188,8 +187,8 @@ void ProcessIconOnBackgroundThread(
     DCHECK_GT(fallback_icon_size, 0);
     fallback_icon_size = std::min(fallback_icon_size, 128);
   }
-  base::UmaHistogramSparse("Favicons.LargeIconService.FallbackSize",
-                           fallback_icon_size);
+  UMA_HISTOGRAM_SPARSE_SLOWLY("Favicons.LargeIconService.FallbackSize",
+                              fallback_icon_size);
 }
 
 void FinishServerRequestAsynchronously(

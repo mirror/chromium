@@ -4,8 +4,6 @@
 
 #include "chromeos/components/tether/message_transfer_operation.h"
 
-#include <memory>
-
 #include "base/timer/mock_timer.h"
 #include "chromeos/components/tether/fake_ble_connection_manager.h"
 #include "chromeos/components/tether/message_wrapper.h"
@@ -162,7 +160,7 @@ class MessageTransferOperationTest : public testing::Test {
   }
 
   void SetUp() override {
-    fake_ble_connection_manager_ = std::make_unique<FakeBleConnectionManager>();
+    fake_ble_connection_manager_ = base::MakeUnique<FakeBleConnectionManager>();
   }
 
   void ConstructOperation(std::vector<cryptauth::RemoteDevice> remote_devices) {

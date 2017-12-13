@@ -5,19 +5,21 @@
 #include "ash/wm/splitview/split_view_overview_overlay.h"
 
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
-#include "ash/wm/overview/rounded_rect_view.h"
 #include "ash/wm/root_window_finder.h"
-#include "ash/wm/splitview/split_view_constants.h"
 #include "ash/wm/splitview/split_view_controller.h"
-#include "ash/wm/splitview/split_view_utils.h"
 #include "base/i18n/rtl.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/aura/window.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display_observer.h"
+#include "ui/gfx/canvas.h"
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/views/border.h"
+#include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/view.h"
@@ -28,11 +30,29 @@ namespace ash {
 
 namespace {
 
-// The amount of round applied to the corners of the highlight views.
-constexpr int kHighlightScreenRoundRectRadiusDp = 4;
+// Width in DIP of each highlight view.
+constexpr int kHighlightScreenWidth = 200;
 
 // An alpha value for the highlight views.
-constexpr SkColor kHighlightBackgroundAlpha = 0x4D;
+constexpr SkColor kHighlightBackgroundAlpha = 0x80;
+
+// Color of the labels' background/text.
+constexpr SkColor kLabelBackgroundColor = SK_ColorBLACK;
+constexpr SkColor kLabelEnabledColor = SK_ColorWHITE;
+
+// The size of the warning icon in the when a window incompatible with
+// splitscreen is dragged.
+constexpr int kWarningIconSizeDp = 24;
+
+// The amount of inset to be applied on a rotated image label view.
+constexpr int kRotatedViewInsetDp = 8;
+
+// The amount of round applied to the corners of a rotated image label view.
+constexpr int kRotatedViewVerticalRoundRectRadius = 20;
+
+// The color for the rotated image label views.
+constexpr SkColor kRotatedViewBackgroundColor =
+    SkColorSetA(SK_ColorBLACK, 0xB0);
 
 // Creates the widget responsible for displaying the indicators.
 std::unique_ptr<views::Widget> CreateWidget() {
@@ -65,31 +85,59 @@ gfx::Transform ComputeRotateAroundCenterTransform(const gfx::Rect& bounds,
 
 }  // namespace
 
-// View which contains a label and can be rotated. Used by and rotated by
+// View which contains a label and an optional icon. Used by and rotated by
 // SplitViewOverviewOverlayView.
-class SplitViewOverviewOverlay::RotatedImageLabelView : public RoundedRectView {
+class SplitViewOverviewOverlay::RotatedImageLabelView : public views::View {
  public:
-  RotatedImageLabelView()
-      : RoundedRectView(kSplitviewLabelRoundRectRadiusDp,
-                        kSplitviewLabelBackgroundColor) {
+  RotatedImageLabelView() {
+    icon_ = new views::ImageView();
+    icon_->SetPaintToLayer();
+    icon_->layer()->SetFillsBoundsOpaquely(false);
+    icon_->SetPreferredSize(gfx::Size(kWarningIconSizeDp, kWarningIconSizeDp));
+    icon_->SetImage(
+        gfx::CreateVectorIcon(kSplitviewNosnapWarningIcon, SK_ColorWHITE));
+    icon_->SetVisible(false);
+
     label_ = new views::Label(base::string16(), views::style::CONTEXT_LABEL);
     label_->SetPaintToLayer();
     label_->layer()->SetFillsBoundsOpaquely(false);
-    label_->SetEnabledColor(kSplitviewLabelEnabledColor);
-    label_->SetBackgroundColor(kSplitviewLabelBackgroundColor);
+    label_->SetEnabledColor(kLabelEnabledColor);
+    label_->SetBackgroundColor(kLabelBackgroundColor);
 
-    SetLayoutManager(
-        new views::BoxLayout(views::BoxLayout::kVertical,
-                             gfx::Insets(kSplitviewLabelVerticalInsetDp,
-                                         kSplitviewLabelHorizontalInsetDp)));
+    auto* layout = new views::BoxLayout(views::BoxLayout::kVertical);
+    SetLayoutManager(layout);
     SetPaintToLayer();
     layer()->SetFillsBoundsOpaquely(false);
+    AddChildView(icon_);
     AddChildView(label_);
+    layout->SetFlexForView(label_, 1);
+    SetBorder(views::CreateEmptyBorder(
+        gfx::Insets(kRotatedViewInsetDp, kRotatedViewInsetDp)));
   }
 
   ~RotatedImageLabelView() override = default;
 
+  // views::View:
+  void OnPaint(gfx::Canvas* canvas) override {
+    views::View::OnPaint(canvas);
+
+    // Clip into a rounded rectangle.
+    constexpr SkScalar radius =
+        SkIntToScalar(kRotatedViewVerticalRoundRectRadius);
+    constexpr SkScalar kRadius[8] = {radius, radius, radius, radius,
+                                     radius, radius, radius, radius};
+    SkPath path;
+    path.addRoundRect(gfx::RectToSkRect(gfx::Rect(size())), kRadius);
+    canvas->ClipPath(path, true);
+
+    canvas->DrawColor(kRotatedViewBackgroundColor);
+  }
+
   void SetLabelText(const base::string16& text) { label_->SetText(text); }
+
+  bool icon_visible() const { return icon_->visible(); }
+
+  void SetIconVisible(bool visible) { icon_->SetVisible(visible); }
 
   // Called when the view's bounds are altered. Rotates the view by |angle|
   // degrees.
@@ -99,6 +147,7 @@ class SplitViewOverviewOverlay::RotatedImageLabelView : public RoundedRectView {
   }
 
  private:
+  views::ImageView* icon_ = nullptr;
   views::Label* label_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(RotatedImageLabelView);
@@ -113,11 +162,15 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
     : public views::View {
  public:
   SplitViewOverviewOverlayView() {
-    left_hightlight_view_ =
-        new RoundedRectView(kHighlightScreenRoundRectRadiusDp, SK_ColorWHITE);
-    right_hightlight_view_ =
-        new RoundedRectView(kHighlightScreenRoundRectRadiusDp, SK_ColorWHITE);
+    left_hightlight_view_ = new views::View();
+    left_hightlight_view_->SetPaintToLayer(ui::LAYER_SOLID_COLOR);
+    left_hightlight_view_->layer()->SetColor(
+        SkColorSetA(SK_ColorWHITE, kHighlightBackgroundAlpha));
 
+    right_hightlight_view_ = new views::View();
+    right_hightlight_view_->SetPaintToLayer(ui::LAYER_SOLID_COLOR);
+    right_hightlight_view_->layer()->SetColor(
+        SkColorSetA(SK_ColorWHITE, kHighlightBackgroundAlpha));
     AddChildView(left_hightlight_view_);
     AddChildView(right_hightlight_view_);
 
@@ -137,9 +190,12 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
     indicator_type_ = indicator_type;
     switch (indicator_type) {
       case IndicatorType::NONE:
+        SetHighlightsVisible(false);
         return;
       case IndicatorType::DRAG_AREA:
       case IndicatorType::CANNOT_SNAP:
+        SetHighlightsVisible(true);
+        SetIconsVisible(indicator_type == IndicatorType::CANNOT_SNAP);
         SetLabelsText(l10n_util::GetStringUTF16(
             indicator_type == IndicatorType::CANNOT_SNAP
                 ? IDS_ASH_SPLIT_VIEW_CANNOT_SNAP
@@ -147,9 +203,9 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
         const SkColor color = indicator_type == IndicatorType::CANNOT_SNAP
                                   ? SK_ColorBLACK
                                   : SK_ColorWHITE;
-        left_hightlight_view_->SetBackgroundColor(
+        left_hightlight_view_->layer()->SetColor(
             SkColorSetA(color, kHighlightBackgroundAlpha));
-        right_hightlight_view_->SetBackgroundColor(
+        right_hightlight_view_->layer()->SetColor(
             SkColorSetA(color, kHighlightBackgroundAlpha));
         return;
     }
@@ -164,33 +220,19 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
                                ->IsCurrentScreenOrientationLandscape();
 
     // Calculate the bounds of the two highlight regions.
-    const int highlight_width =
-        landscape ? width() * kHighlightScreenPrimaryAxisRatio
-                  : width() - 2 * kHighlightScreenEdgePaddingDp;
-    const int highlight_height =
-        landscape ? height() - 2 * kHighlightScreenEdgePaddingDp
-                  : height() * kHighlightScreenPrimaryAxisRatio;
-    // The origin of the right highlight view in landscape, or the bottom
-    // highlight view in portrait.
+    const int highlight_width = landscape ? kHighlightScreenWidth : width();
+    const int highlight_height = landscape ? height() : kHighlightScreenWidth;
     const gfx::Point right_bottom_origin(
-        landscape ? width() - highlight_width - kHighlightScreenEdgePaddingDp
-                  : kHighlightScreenEdgePaddingDp,
-        landscape
-            ? kHighlightScreenEdgePaddingDp
-            : height() - highlight_height - kHighlightScreenEdgePaddingDp);
-    left_hightlight_view_->SetBounds(kHighlightScreenEdgePaddingDp,
-                                     kHighlightScreenEdgePaddingDp,
-                                     highlight_width, highlight_height);
+        landscape ? width() - kHighlightScreenWidth : 0,
+        landscape ? 0 : height() - kHighlightScreenWidth);
+    left_hightlight_view_->SetBounds(0, 0, highlight_width, highlight_height);
     right_hightlight_view_->SetBounds(right_bottom_origin.x(),
                                       right_bottom_origin.y(), highlight_width,
                                       highlight_height);
 
     // Calculate the bounds of the views which contain the guidance text and
     // icon. Rotate the two views in landscape mode.
-    const gfx::Size size(
-        left_rotated_view_->GetPreferredSize().width(),
-        std::max(kSplitviewLabelPreferredHeightDp,
-                 left_rotated_view_->GetPreferredSize().height()));
+    const gfx::Size size = left_rotated_view_->GetPreferredSize();
     const gfx::Rect rotated_bounds(highlight_width / 2 - size.width() / 2,
                                    highlight_height / 2 - size.height() / 2,
                                    size.width(), size.height());
@@ -209,14 +251,25 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
   }
 
  private:
+  void SetHighlightsVisible(bool visible) {
+    left_hightlight_view_->SetVisible(visible);
+    right_hightlight_view_->SetVisible(visible);
+  }
+
   void SetLabelsText(const base::string16& text) {
     left_rotated_view_->SetLabelText(text);
     right_rotated_view_->SetLabelText(text);
     Layout();
   }
 
-  RoundedRectView* left_hightlight_view_ = nullptr;
-  RoundedRectView* right_hightlight_view_ = nullptr;
+  void SetIconsVisible(bool visible) {
+    left_rotated_view_->SetIconVisible(visible);
+    right_rotated_view_->SetIconVisible(visible);
+    Layout();
+  }
+
+  views::View* left_hightlight_view_ = nullptr;
+  views::View* right_hightlight_view_ = nullptr;
   RotatedImageLabelView* left_rotated_view_ = nullptr;
   RotatedImageLabelView* right_rotated_view_ = nullptr;
 
@@ -229,8 +282,6 @@ SplitViewOverviewOverlay::SplitViewOverviewOverlay() {
   overlay_view_ = new SplitViewOverviewOverlayView();
   widget_ = CreateWidget();
   widget_->SetContentsView(overlay_view_);
-  widget_->Show();
-  widget_->GetLayer()->SetOpacity(0.f);
 }
 
 SplitViewOverviewOverlay::~SplitViewOverviewOverlay() = default;
@@ -249,7 +300,7 @@ void SplitViewOverviewOverlay::SetIndicatorType(
   }
   const bool visible = current_indicator_type_ != IndicatorType::NONE;
   if (!visible) {
-    AnimateSplitviewLabelOpacity(widget_->GetLayer(), visible);
+    widget_->Hide();
     return;
   }
 
@@ -266,7 +317,7 @@ void SplitViewOverviewOverlay::SetIndicatorType(
       root_window->GetChildById(kShellWindowId_OverlayContainer));
   ::wm::ConvertRectToScreen(root_window, &bounds);
   widget_->SetBounds(bounds);
-  AnimateSplitviewLabelOpacity(widget_->GetLayer(), visible);
+  widget_->Show();
   overlay_view_->OnIndicatorTypeChanged(current_indicator_type_);
 }
 

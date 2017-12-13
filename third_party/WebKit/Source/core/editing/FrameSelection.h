@@ -49,7 +49,6 @@ class LocalFrame;
 class FrameCaret;
 class GranularityStrategy;
 class GraphicsContext;
-class NGPhysicalTextFragment;
 class Range;
 class SelectionEditor;
 class LayoutSelection;
@@ -227,8 +226,6 @@ class CORE_EXPORT FrameSelection final
   WTF::Optional<unsigned> LayoutSelectionStart() const;
   WTF::Optional<unsigned> LayoutSelectionEnd() const;
   void ClearLayoutSelection();
-  std::pair<unsigned, unsigned> LayoutSelectionStartEndForNG(
-      const NGPhysicalTextFragment&);
 
   void Trace(blink::Visitor*);
 

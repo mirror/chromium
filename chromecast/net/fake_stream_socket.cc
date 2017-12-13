@@ -183,6 +183,4 @@ int64_t FakeStreamSocket::GetTotalReceivedBytes() const {
   return 0;
 }
 
-void FakeStreamSocket::ApplySocketTag(const net::SocketTag& tag) {}
-
 }  // namespace chromecast

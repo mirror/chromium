@@ -28,9 +28,7 @@ class MediaSessionBrowserTest : public ContentBrowserTest {
   MediaSessionBrowserTest() = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(
-        switches::kAutoplayPolicy,
-        switches::autoplay::kNoUserGestureRequiredPolicy);
+    command_line->AppendSwitch(switches::kIgnoreAutoplayRestrictionsForTests);
   }
 
   void EnableInternalMediaSesion() {

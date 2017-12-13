@@ -31,7 +31,6 @@ class ShellDevToolsFrontend : public ShellDevToolsDelegate,
 
  private:
   // WebContentsObserver overrides
-  void DocumentAvailableInMainFrame() override;
   void WebContentsDestroyed() override;
 
   ShellDevToolsFrontend(Shell* frontend_shell, WebContents* inspected_contents);

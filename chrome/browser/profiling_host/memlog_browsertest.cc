@@ -173,6 +173,13 @@ class MemlogBrowserTest : public InProcessBrowserTest,
   }
 
   void SetUp() override {
+    // Force the renderer to be sampled in RendererSampling mode for
+    // deterministic tests.
+    if (GetParam() == switches::kMemlogModeRendererSampling) {
+      profiling::ProfilingProcessHost::GetInstance()
+          ->SetRendererSamplingAlwaysProfileForTest();
+    }
+
     partition_allocator_.init();
     InProcessBrowserTest::SetUp();
   }
@@ -244,7 +251,7 @@ class MemlogBrowserTest : public InProcessBrowserTest,
                                                        ->GetHandle());
     base::Value* heaps_v2 = FindHeapsV2(renderer_pid, dump_json);
     if (GetParam() == switches::kMemlogModeAll ||
-        GetParam() == switches::kMemlogModeAllRenderers) {
+        GetParam() == switches::kMemlogModeRendererSampling) {
       ASSERT_TRUE(heaps_v2);
 
       // ValidateDump doesn't always succeed for the renderer, since we don't do
@@ -257,8 +264,9 @@ class MemlogBrowserTest : public InProcessBrowserTest,
           << "There should be no heap dump for the renderer.";
     }
 
-    if (GetParam() == switches::kMemlogModeAllRenderers) {
-      EXPECT_GE(1, NumProcessesWithName(dump_json, "Renderer"));
+    // RendererSampling guarantees only 1 renderer is ever sampled at a time.
+    if (GetParam() == switches::kMemlogModeRendererSampling) {
+      EXPECT_EQ(1, NumProcessesWithName(dump_json, "Renderer"));
     } else {
       EXPECT_GT(NumProcessesWithName(dump_json, "Renderer"), 0);
     }
@@ -383,7 +391,7 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, EndToEnd) {
         ReadDumpFile(renderer_dumpfile_path);
 
     if (GetParam() == switches::kMemlogModeAll ||
-        GetParam() == switches::kMemlogModeAllRenderers) {
+        GetParam() == switches::kMemlogModeRendererSampling) {
       ASSERT_TRUE(dump_json);
       ValidateRendererAllocations(dump_json.get());
     }
@@ -425,9 +433,10 @@ INSTANTIATE_TEST_CASE_P(BrowserOnly,
 INSTANTIATE_TEST_CASE_P(GpuOnly,
                         MemlogBrowserTest,
                         ::testing::Values(switches::kMemlogModeGpu));
-INSTANTIATE_TEST_CASE_P(AllRenderers,
-                        MemlogBrowserTest,
-                        ::testing::Values(switches::kMemlogModeAllRenderers));
+INSTANTIATE_TEST_CASE_P(
+    RendererSampling,
+    MemlogBrowserTest,
+    ::testing::Values(switches::kMemlogModeRendererSampling));
 
 }  // namespace profiling
 

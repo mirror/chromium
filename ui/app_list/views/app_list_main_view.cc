@@ -16,7 +16,6 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/metrics/user_metrics.h"
 #include "base/strings/string_util.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
@@ -149,7 +148,6 @@ void AppListMainView::ActivateApp(AppListItem* item, int event_flags) {
                               ? kAppListAppLaunchedFullscreen
                               : kAppListAppLaunched,
                           false /*not a suggested app*/);
-    base::RecordAction(base::UserMetricsAction("AppList_ClickOnApp"));
   }
 }
 

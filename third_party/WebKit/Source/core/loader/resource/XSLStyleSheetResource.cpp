@@ -51,21 +51,19 @@ XSLStyleSheetResource* XSLStyleSheetResource::FetchSynchronously(
     ResourceFetcher* fetcher) {
   ApplyXSLRequestProperties(params);
   params.MakeSynchronous();
-  XSLStyleSheetResource* resource =
-      ToXSLStyleSheetResource(fetcher->RequestResource(
-          params, XSLStyleSheetResourceFactory(), nullptr));
+  XSLStyleSheetResource* resource = ToXSLStyleSheetResource(
+      fetcher->RequestResource(params, XSLStyleSheetResourceFactory()));
   if (resource && resource->Data())
     resource->sheet_ = resource->DecodedText();
   return resource;
 }
 
 XSLStyleSheetResource* XSLStyleSheetResource::Fetch(FetchParameters& params,
-                                                    ResourceFetcher* fetcher,
-                                                    ResourceClient* client) {
+                                                    ResourceFetcher* fetcher) {
   DCHECK(RuntimeEnabledFeatures::XSLTEnabled());
   ApplyXSLRequestProperties(params);
   return ToXSLStyleSheetResource(
-      fetcher->RequestResource(params, XSLStyleSheetResourceFactory(), client));
+      fetcher->RequestResource(params, XSLStyleSheetResourceFactory()));
 }
 
 XSLStyleSheetResource::XSLStyleSheetResource(

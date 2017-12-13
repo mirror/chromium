@@ -181,7 +181,7 @@ NSString* const kDoneTouchBarId = @"DONE";
 
 - (void)onManageClicked:(id)sender {
   if (self.model)
-    self.model->OnManageClicked();
+    self.model->OnManageLinkClicked();
   [self.delegate viewShouldDismiss];
 }
 

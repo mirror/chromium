@@ -132,11 +132,14 @@ ProfileImplIOData::Handle::~Handle() {
 }
 
 void ProfileImplIOData::Handle::Init(
+    const base::FilePath& cookie_path,
+    const base::FilePath& channel_id_path,
     const base::FilePath& media_cache_path,
     int media_cache_max_size,
     const base::FilePath& extensions_cookie_path,
     const base::FilePath& profile_path,
     chrome_browser_net::Predictor* predictor,
+    content::CookieStoreConfig::SessionCookieMode session_cookie_mode,
     storage::SpecialStoragePolicy* special_storage_policy,
     std::unique_ptr<domain_reliability::DomainReliabilityMonitor>
         domain_reliability_monitor) {
@@ -146,13 +149,12 @@ void ProfileImplIOData::Handle::Init(
 
   LazyParams* lazy_params = new LazyParams();
 
+  lazy_params->cookie_path = cookie_path;
+  lazy_params->channel_id_path = channel_id_path;
   lazy_params->media_cache_path = media_cache_path;
   lazy_params->media_cache_max_size = media_cache_max_size;
   lazy_params->extensions_cookie_path = extensions_cookie_path;
-  lazy_params->restore_old_session_cookies =
-      profile_->ShouldRestoreOldSessionCookies();
-  lazy_params->persist_session_cookies =
-      profile_->ShouldPersistSessionCookies();
+  lazy_params->session_cookie_mode = session_cookie_mode;
   lazy_params->special_storage_policy = special_storage_policy;
   lazy_params->domain_reliability_monitor =
       std::move(domain_reliability_monitor);
@@ -371,8 +373,8 @@ ProfileImplIOData::Handle::GetAllContextGetters() {
 
 ProfileImplIOData::LazyParams::LazyParams()
     : media_cache_max_size(0),
-      restore_old_session_cookies(false),
-      persist_session_cookies(false) {}
+      session_cookie_mode(
+          content::CookieStoreConfig::EPHEMERAL_SESSION_COOKIES) {}
 
 ProfileImplIOData::LazyParams::~LazyParams() {}
 
@@ -416,48 +418,38 @@ void ProfileImplIOData::InitializeInternal(
   builder->set_network_quality_estimator(
       io_thread_globals->network_quality_estimator.get());
 
-  // This check is needed because with the network service the cookies are used
-  // in a different process. See the bottom of
-  // ProfileNetworkContextService::SetUpProfileIODataMainContext.
-  if (profile_params->main_network_context_params->cookie_path) {
-    // Create a single task runner to use with the CookieStore and
-    // ChannelIDStore.
-    scoped_refptr<base::SequencedTaskRunner> cookie_background_task_runner =
-        base::CreateSequencedTaskRunnerWithTraits(
-            {base::MayBlock(), base::TaskPriority::BACKGROUND,
-             base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+  // Create a single task runner to use with the CookieStore and ChannelIDStore.
+  scoped_refptr<base::SequencedTaskRunner> cookie_background_task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
-    // Set up server bound cert service.
-    DCHECK(!profile_params->main_network_context_params->channel_id_path.value()
-                .empty());
-    scoped_refptr<QuotaPolicyChannelIDStore> channel_id_db =
-        new QuotaPolicyChannelIDStore(
-            profile_params->main_network_context_params->channel_id_path
-                .value(),
-            cookie_background_task_runner,
-            lazy_params_->special_storage_policy.get());
-    std::unique_ptr<net::ChannelIDService> channel_id_service(
-        base::MakeUnique<net::ChannelIDService>(
-            new net::DefaultChannelIDStore(channel_id_db.get())));
+  // Set up server bound cert service.
+  DCHECK(!lazy_params_->channel_id_path.empty());
+  scoped_refptr<QuotaPolicyChannelIDStore> channel_id_db =
+      new QuotaPolicyChannelIDStore(lazy_params_->channel_id_path,
+                                    cookie_background_task_runner,
+                                    lazy_params_->special_storage_policy.get());
+  std::unique_ptr<net::ChannelIDService> channel_id_service(
+      base::MakeUnique<net::ChannelIDService>(
+          new net::DefaultChannelIDStore(channel_id_db.get())));
 
-    // Set up cookie store.
-    content::CookieStoreConfig cookie_config(
-        profile_params->main_network_context_params->cookie_path.value(),
-        profile_params->main_network_context_params
-            ->restore_old_session_cookies,
-        profile_params->main_network_context_params->persist_session_cookies,
-        lazy_params_->special_storage_policy.get());
-    cookie_config.crypto_delegate = cookie_config::GetCookieCryptoDelegate();
-    cookie_config.channel_id_service = channel_id_service.get();
-    cookie_config.background_task_runner = cookie_background_task_runner;
-    std::unique_ptr<net::CookieStore> cookie_store(
-        content::CreateCookieStore(cookie_config));
+  // Set up cookie store.
+  DCHECK(!lazy_params_->cookie_path.empty());
 
-    cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
+  content::CookieStoreConfig cookie_config(
+      lazy_params_->cookie_path, lazy_params_->session_cookie_mode,
+      lazy_params_->special_storage_policy.get());
+  cookie_config.crypto_delegate = cookie_config::GetCookieCryptoDelegate();
+  cookie_config.channel_id_service = channel_id_service.get();
+  cookie_config.background_task_runner = cookie_background_task_runner;
+  std::unique_ptr<net::CookieStore> cookie_store(
+      content::CreateCookieStore(cookie_config));
 
-    builder->SetCookieAndChannelIdStores(std::move(cookie_store),
-                                         std::move(channel_id_service));
-  }
+  cookie_store->SetChannelIDServiceID(channel_id_service->GetUniqueID());
+
+  builder->SetCookieAndChannelIdStores(std::move(cookie_store),
+                                       std::move(channel_id_service));
 
   AddProtocolHandlersToBuilder(builder, protocol_handlers);
 
@@ -505,10 +497,9 @@ void ProfileImplIOData::
   // store.
   net::URLRequestContext* extensions_context = extensions_request_context();
 
-  content::CookieStoreConfig cookie_config(
-      lazy_params_->extensions_cookie_path,
-      lazy_params_->restore_old_session_cookies,
-      lazy_params_->persist_session_cookies, NULL);
+  content::CookieStoreConfig cookie_config(lazy_params_->extensions_cookie_path,
+                                           lazy_params_->session_cookie_mode,
+                                           NULL);
   cookie_config.crypto_delegate = cookie_config::GetCookieCryptoDelegate();
   // Enable cookies for chrome-extension URLs.
   cookie_config.cookieable_schemes.push_back(extensions::kExtensionScheme);
@@ -556,7 +547,9 @@ net::URLRequestContext* ProfileImplIOData::InitializeAppRequestContext(
   if (partition_descriptor.in_memory) {
     cookie_path = base::FilePath();
   }
-  content::CookieStoreConfig cookie_config(cookie_path, false, false, nullptr);
+  content::CookieStoreConfig cookie_config(
+      cookie_path, content::CookieStoreConfig::EPHEMERAL_SESSION_COOKIES,
+      nullptr);
   if (!partition_descriptor.in_memory) {
     // Use an app-specific cookie store.
     DCHECK(!cookie_path.empty());

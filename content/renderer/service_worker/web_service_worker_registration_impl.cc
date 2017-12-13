@@ -24,13 +24,12 @@ namespace content {
 
 namespace {
 
-class ServiceWorkerRegistrationHandleImpl
-    : public blink::WebServiceWorkerRegistration::Handle {
+class HandleImpl : public blink::WebServiceWorkerRegistration::Handle {
  public:
-  explicit ServiceWorkerRegistrationHandleImpl(
+  explicit HandleImpl(
       scoped_refptr<WebServiceWorkerRegistrationImpl> registration)
       : registration_(std::move(registration)) {}
-  ~ServiceWorkerRegistrationHandleImpl() override {}
+  ~HandleImpl() override {}
 
   blink::WebServiceWorkerRegistration* Registration() override {
     return registration_.get();
@@ -39,7 +38,7 @@ class ServiceWorkerRegistrationHandleImpl
  private:
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration_;
 
-  DISALLOW_COPY_AND_ASSIGN(ServiceWorkerRegistrationHandleImpl);
+  DISALLOW_COPY_AND_ASSIGN(HandleImpl);
 };
 
 }  // namespace
@@ -381,8 +380,7 @@ WebServiceWorkerRegistrationImpl::CreateHandle(
     scoped_refptr<WebServiceWorkerRegistrationImpl> registration) {
   if (!registration)
     return nullptr;
-  return std::make_unique<ServiceWorkerRegistrationHandleImpl>(
-      std::move(registration));
+  return std::make_unique<HandleImpl>(std::move(registration));
 }
 
 // static

@@ -399,8 +399,7 @@ class AppWindow : public content::WebContentsDelegate,
   content::ColorChooser* OpenColorChooser(
       content::WebContents* web_contents,
       SkColor color,
-      const std::vector<content::mojom::ColorSuggestionPtr>& suggestions)
-      override;
+      const std::vector<content::ColorSuggestion>& suggestions) override;
   void RunFileChooser(content::RenderFrameHost* render_frame_host,
                       const content::FileChooserParams& params) override;
   bool IsPopupOrPanel(const content::WebContents* source) const override;

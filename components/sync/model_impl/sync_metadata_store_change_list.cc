@@ -15,9 +15,7 @@ SyncMetadataStoreChangeList::SyncMetadataStoreChangeList(
     SyncMetadataStore* store,
     syncer::ModelType type)
     : store_(store), type_(type) {
-  if (!store_) {
-    error_ = ModelError(FROM_HERE, "Invalid SyncMetadataStore");
-  }
+  DCHECK(store_);
 }
 
 SyncMetadataStoreChangeList::~SyncMetadataStoreChangeList() {

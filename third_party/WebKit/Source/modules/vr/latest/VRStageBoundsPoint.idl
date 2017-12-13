@@ -5,7 +5,7 @@
 // https://w3c.github.io/webvr/spec/latest/#vrstageboundspoint-interface
 [
     SecureContext,
-    RuntimeEnabled=WebXR
+    RuntimeEnabled=WebVR2
 ] interface VRStageBoundsPoint {
   readonly attribute double x;
   readonly attribute double z;

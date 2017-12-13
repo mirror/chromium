@@ -9,8 +9,6 @@ namespace variations {
 
 extern const char kDefaultServerUrl[];
 
-extern const char kDefaultInsecureServerUrl[];
-
 }  // namespace variations
 
 #endif  // COMPONENTS_VARIATIONS_VARIATIONS_URL_CONSTANTS_H_

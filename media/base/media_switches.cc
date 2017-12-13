@@ -142,6 +142,12 @@ const char kForceVideoOverlays[] = "force-video-overlays";
 const char kMSEAudioBufferSizeLimit[] = "mse-audio-buffer-size-limit";
 const char kMSEVideoBufferSizeLimit[] = "mse-video-buffer-size-limit";
 
+// Ignores all autoplay restrictions. It will ignore the current autoplay policy
+// and all restrictions such as playback in a background tab. It should only be
+// enabled for testing.
+const char kIgnoreAutoplayRestrictionsForTests[] =
+    "ignore-autoplay-restrictions";
+
 // Specifies the path to the Clear Key CDM for testing, which is necessary to
 // support External Clear Key key system when library CDM is enabled. Note that
 // External Clear Key key system support is also controlled by feature
@@ -334,6 +340,10 @@ const base::Feature kMediaFoundationH264Encoding{
 #endif  // defined(OS_WIN)
 
 std::string GetEffectiveAutoplayPolicy(const base::CommandLine& command_line) {
+  // |kIgnoreAutoplayRestrictionsForTests| overrides all other settings.
+  if (command_line.HasSwitch(switches::kIgnoreAutoplayRestrictionsForTests))
+    return switches::autoplay::kNoUserGestureRequiredPolicy;
+
   // Return the autoplay policy set in the command line, if any.
   if (command_line.HasSwitch(switches::kAutoplayPolicy))
     return command_line.GetSwitchValueASCII(switches::kAutoplayPolicy);
@@ -365,10 +375,5 @@ const base::Feature kOverflowIconsForMediaControls{
 // Enables the new redesigned media controls.
 const base::Feature kUseModernMediaControls{"UseModernMediaControls",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Allows Media Engagement to use preloaded data to decide whether an origin has
-// a high media engagement.
-const base::Feature kPreloadMediaEngagementData{
-    "PreloadMediaEngagementData", base::FEATURE_DISABLED_BY_DEFAULT};
 
 }  // namespace media

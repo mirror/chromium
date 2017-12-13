@@ -292,9 +292,10 @@ class EmbeddedWorkerTestHelper::MockServiceWorkerEventDispatcher
     helper_->OnPushEventStub(payload, std::move(callback));
   }
 
-  void DispatchSyncEvent(const std::string& tag,
-                         bool last_chance,
-                         DispatchSyncEventCallback callback) override {
+  void DispatchSyncEvent(
+      const std::string& tag,
+      blink::mojom::BackgroundSyncEventLastChance last_chance,
+      DispatchSyncEventCallback callback) override {
     NOTIMPLEMENTED();
   }
 

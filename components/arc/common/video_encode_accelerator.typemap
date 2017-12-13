@@ -15,5 +15,6 @@ sources = [
 type_mappings = [
   "arc.mojom.VideoEncodeAccelerator.Error=media::VideoEncodeAccelerator::Error",
   "arc.mojom.VideoPixelFormat=media::VideoPixelFormat",
+  "arc.mojom.VideoCodecProfile=media::VideoCodecProfile",
   "arc.mojom.VideoEncodeProfile=media::VideoEncodeAccelerator::SupportedProfile",
 ]

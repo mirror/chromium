@@ -14,6 +14,8 @@
   <template>
     <style include="md-select cr-shared-style">
       :host {
+        --card-max-width: 928px;
+        --card-min-width: 600px;
         height: 100%;
       }
 
@@ -21,10 +23,11 @@
         @apply --cr-primary-text;
         @apply --shadow-elevation-2dp;
         background-color: white;
-        border-radius: 2px;
         margin: 0 auto 16px auto;
+        max-width: var(--card-max-width);
+        min-width: var(--card-min-width);
         padding-bottom: 8px;
-        width: var(--cr-toolbar-field-width);
+        width: 90%;
       }
 
       .shortcut-card:last-of-type {

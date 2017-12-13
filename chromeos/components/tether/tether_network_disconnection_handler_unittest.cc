@@ -64,9 +64,9 @@ class TetherNetworkDisconnectionHandlerTest : public NetworkStateTest {
     wifi_service_path_ =
         ConfigureService(CreateConnectedWifiConfigurationJsonString());
 
-    fake_active_host_ = std::make_unique<FakeActiveHost>();
+    fake_active_host_ = base::MakeUnique<FakeActiveHost>();
     fake_disconnect_tethering_request_sender_ =
-        std::make_unique<FakeDisconnectTetheringRequestSender>();
+        base::MakeUnique<FakeDisconnectTetheringRequestSender>();
     mock_network_configuration_remover_ =
         base::WrapUnique(new NiceMock<MockNetworkConfigurationRemover>);
 

@@ -355,7 +355,6 @@ test("browser_tests") {
 
   data_deps = [
     "//testing/buildbot/filters:browser_tests_filters",
-    "//tools/media_engagement_preload:generator",
   ]
 
   data = []
@@ -1170,7 +1169,6 @@ test("browser_tests") {
         "../browser/extensions/app_background_page_apitest.cc",
         "../browser/extensions/app_process_apitest.cc",
         "../browser/extensions/app_window_overrides_browsertest.cc",
-        "../browser/extensions/autoplay_browsertest.cc",
         "../browser/extensions/background_app_browsertest.cc",
         "../browser/extensions/background_page_apitest.cc",
         "../browser/extensions/background_scripts_apitest.cc",
@@ -1603,7 +1601,6 @@ test("browser_tests") {
         "../browser/ui/sort_windows_by_z_index_browsertest.cc",
         "../browser/ui/views/apps/chrome_native_app_window_views_aura_ash_browsertest.cc",
         "../browser/ui/views/arc_app_dialog_view_browsertest.cc",
-        "../browser/ui/views/ash/time_to_first_present_recorder_browsertest.cc",
         "../browser/ui/views/frame/browser_frame_ash_browsertest.cc",
         "../browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "../browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
@@ -1982,10 +1979,6 @@ test("browser_tests") {
     if (is_chromeos || (is_linux && use_dbus)) {
       sources += [ "../browser/extensions/api/bluetooth_low_energy/bluetooth_low_energy_apitest.cc" ]
     }
-
-    if (!is_android && !is_mac) {
-      data_deps += [ "//chrome/browser/resources/media/mei_preload:component" ]
-    }
   }
 }
 
@@ -2254,7 +2247,6 @@ test("unit_tests") {
     "../browser/media/android/router/media_router_android_unittest.cc",
     "../browser/media/cast_remoting_connector_unittest.cc",
     "../browser/media/media_engagement_contents_observer_unittest.cc",
-    "../browser/media/media_engagement_preloaded_list_unittest.cc",
     "../browser/media/media_engagement_score_unittest.cc",
     "../browser/media/media_engagement_service_unittest.cc",
     "../browser/media/media_engagement_session_unittest.cc",
@@ -2556,8 +2548,6 @@ test("unit_tests") {
 
   data_deps = [
     "//testing/buildbot/filters:unit_tests_filters",
-    "//chrome/test/data/media/engagement/preload:generate_preload_list",
-    "//chrome/test/data/media/engagement/preload:test_data",
   ]
 
   data = [
@@ -2674,7 +2664,6 @@ test("unit_tests") {
     sources += [
       "../browser/signin/dice_response_handler_unittest.cc",
       "../browser/signin/dice_tab_helper_unittest.cc",
-      "../browser/signin/process_dice_header_delegate_impl_unittest.cc",
     ]
   }
 
@@ -3366,6 +3355,7 @@ test("unit_tests") {
       "../common/extensions/manifest_tests/extension_manifests_isolatedapp_unittest.cc",
       "../common/extensions/manifest_tests/extension_manifests_kiosk_unittest.cc",
       "../common/extensions/manifest_tests/extension_manifests_launch_unittest.cc",
+      "../common/extensions/manifest_tests/extension_manifests_launcher_page_unittest.cc",
       "../common/extensions/manifest_tests/extension_manifests_manifest_version_unittest.cc",
       "../common/extensions/manifest_tests/extension_manifests_offline_unittest.cc",
       "../common/extensions/manifest_tests/extension_manifests_old_unittest.cc",
@@ -4902,8 +4892,6 @@ if (!is_android && !is_fuchsia) {
       "../browser/sync/test/integration/await_match_status_change_checker.h",
       "../browser/sync/test/integration/bookmarks_helper.cc",
       "../browser/sync/test/integration/bookmarks_helper.h",
-      "../browser/sync/test/integration/configuration_refresher.cc",
-      "../browser/sync/test/integration/configuration_refresher.h",
       "../browser/sync/test/integration/dictionary_helper.cc",
       "../browser/sync/test/integration/dictionary_helper.h",
       "../browser/sync/test/integration/dictionary_load_observer.cc",

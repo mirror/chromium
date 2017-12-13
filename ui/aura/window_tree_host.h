@@ -252,11 +252,6 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   void OnDisplayMetricsChanged(const display::Display& display,
                                uint32_t metrics) override;
 
- protected:
-  const base::ObserverList<WindowTreeHostObserver>& observers() const {
-    return observers_;
-  }
-
  private:
   friend class test::WindowTreeHostTestApi;
 
@@ -301,6 +296,9 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   bool owned_input_method_;
 
   gfx::Insets output_surface_padding_in_pixels_;
+
+  // Set to true if the next CompositorFrame will block on a new child surface.
+  bool synchronizing_with_child_on_next_frame_ = false;
 
   // Set to the time the synchronization event began.
   base::TimeTicks synchronization_start_time_;

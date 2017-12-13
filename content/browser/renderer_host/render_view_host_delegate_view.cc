@@ -25,8 +25,4 @@ bool RenderViewHostDelegateView::DoBrowserControlsShrinkBlinkSize() const {
   return false;
 }
 
-void RenderViewHostDelegateView::GestureEventAck(
-    const blink::WebGestureEvent& event,
-    InputEventAckState ack_result) {}
-
 }  //  namespace content

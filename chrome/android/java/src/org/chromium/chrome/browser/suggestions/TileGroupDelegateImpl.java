@@ -10,6 +10,7 @@ import org.chromium.base.Callback;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.NewTabPageUma;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.snackbar.Snackbar;
@@ -83,9 +84,11 @@ public class TileGroupDelegateImpl implements TileGroup.Delegate {
 
         mMostVisitedSites.recordPageImpression(tiles.size());
 
-        for (Tile tile : tiles) {
-            if (tile.isOfflineAvailable()) {
-                SuggestionsMetrics.recordTileOfflineAvailability(tile.getIndex());
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME)) {
+            for (Tile tile : tiles) {
+                if (tile.isOfflineAvailable()) {
+                    SuggestionsMetrics.recordTileOfflineAvailability(tile.getIndex());
+                }
             }
         }
     }

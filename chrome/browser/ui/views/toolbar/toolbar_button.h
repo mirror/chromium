@@ -36,11 +36,11 @@ class ToolbarButton : public views::ImageButton,
   // Padding inside the border (around the image).
   static constexpr int kInteriorPadding = 6;
 
-  // The profile and listener pointers must outlive this class. The model can
-  // be null if no menu is to be shown.
+  // Takes ownership of the |model|, which can be null if no menu
+  // is to be shown.
   ToolbarButton(Profile* profile,
                 views::ButtonListener* listener,
-                std::unique_ptr<ui::MenuModel> model);
+                ui::MenuModel* model);
   ~ToolbarButton() override;
 
   // Set up basic mouseover border behavior.
@@ -93,10 +93,10 @@ class ToolbarButton : public views::ImageButton,
   std::unique_ptr<ui::MenuModel> model_;
 
   // Indicates if menu is currently showing.
-  bool menu_showing_ = false;
+  bool menu_showing_;
 
   // Y position of mouse when left mouse button is pressed.
-  int y_position_on_lbuttondown_ = 0;
+  int y_position_on_lbuttondown_;
 
   // The model adapter for the drop down menu.
   std::unique_ptr<views::MenuModelAdapter> menu_model_adapter_;

@@ -105,6 +105,11 @@ void RecordEngagementMetric(const std::vector<PermissionRequest*>& requests,
   if (requests.size() > 1)
     type = PermissionRequestType::MULTIPLE;
 
+  // This is only hit if kUsePermissionManagerForMediaRequests is off, since it
+  // is now on by default we'll just silenty drop this.
+  if (type == PermissionRequestType::MEDIA_STREAM)
+    return;
+
   DCHECK(action == "Accepted" || action == "Denied" || action == "Dismissed" ||
          action == "Ignored");
   std::string name = "Permissions.Engagement." + action + '.' +

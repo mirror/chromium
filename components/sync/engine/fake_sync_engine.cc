@@ -78,6 +78,8 @@ void FakeSyncEngine::GetModelSafeRoutingInfo(ModelSafeRoutingInfo* out) const {}
 
 void FakeSyncEngine::FlushDirectory() const {}
 
+void FakeSyncEngine::RefreshTypesForTest(ModelTypeSet types) {}
+
 void FakeSyncEngine::RequestBufferedProtocolEventsAndEnableForwarding() {}
 
 void FakeSyncEngine::DisableProtocolEventForwarding() {}

@@ -122,7 +122,7 @@ Output.SPACE = ' ';
 Output.ROLE_INFO_ = {
   alert: {msgId: 'role_alert'},
   alertDialog: {msgId: 'role_alertdialog', outputContextFirst: true},
-  article: {msgId: 'role_article', inherits: 'abstractItem'},
+  article: {msgId: 'role_article', inherits: 'abstractContainer'},
   application: {msgId: 'role_application', inherits: 'abstractContainer'},
   banner: {msgId: 'role_banner', inherits: 'abstractContainer'},
   button: {msgId: 'role_button', earconId: 'BUTTON'},
@@ -152,8 +152,7 @@ Output.ROLE_INFO_ = {
   list: {msgId: 'role_list'},
   listBox: {msgId: 'role_listbox', earconId: 'LISTBOX'},
   listBoxOption: {msgId: 'role_listitem', earconId: 'LIST_ITEM'},
-  listItem:
-      {msgId: 'role_listitem', earconId: 'LIST_ITEM', inherits: 'abstractItem'},
+  listItem: {msgId: 'role_listitem', earconId: 'LIST_ITEM'},
   log: {
     msgId: 'role_log',
   },
@@ -287,16 +286,6 @@ Output.RULES = {
       enter: `$nameFromNode $role $state $description`,
       leave: `@exited_container($role)`
     },
-    abstractItem: {
-      // Note that ChromeVox generally does not output position/count. Only for
-      // some roles (see sub-output rules) or when explicitly provided by an
-      // author (via posInSet), do we include them in the output.
-      enter: `$nameFromNode $role $state $restriction $description
-          $if($posInSet, @describe_index($posInSet, $setSize))`,
-      speak: `$state $name= $role
-          $if($posInSet, @describe_index($posInSet, $setSize))
-          $description $restriction`
-    },
     abstractRange: {
       speak: `$if($valueForRange, $valueForRange, $value)
           $if($minValueForRange, @aria_value_min($minValueForRange))
@@ -315,13 +304,25 @@ Output.RULES = {
     },
     cell: {
       enter: {
-        speak: `$cellIndexText $node(tableColumnHeader) $state`,
-        braille: `$state $cellIndexText $node(tableColumnHeader)`,
+        speak: `@cell_summary($if($ariaCellRowIndex, $ariaCellRowIndex,
+            $tableCellRowIndex),
+            $if($ariaCellColumnIndex, $ariaCellColumnIndex,
+            $tableCellColumnIndex)) $node(tableColumnHeader) $state`,
+        braille: `$state @cell_summary($if($ariaCellRowIndex, $ariaCellRowIndex,
+            $tableCellRowIndex),
+            $if($ariaCellColumnIndex, $ariaCellColumnIndex,
+            $tableCellColumnIndex)) $node(tableColumnHeader)`,
       },
-      speak: `$name $cellIndexText $node(tableColumnHeader)
+      speak: `$name @cell_summary($if($ariaCellRowIndex, $ariaCellRowIndex,
+          $tableCellRowIndex),
+          $if($ariaCellColumnIndex, $ariaCellColumnIndex,
+          $tableCellColumnIndex)) $node(tableColumnHeader)
           $state $description`,
       braille: `$state
-          $name $cellIndexText $node(tableColumnHeader) $description`
+          $name @cell_summary($if($ariaCellRowIndex, $ariaCellRowIndex,
+          $tableCellRowIndex),
+          $if($ariaCellColumnIndex, $ariaCellColumnIndex,
+          $tableCellColumnIndex)) $node(tableColumnHeader) $description`
     },
     checkBox: {
       speak: `$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF))
@@ -364,9 +365,6 @@ Output.RULES = {
     },
     inlineTextBox: {speak: `$name=`},
     inputTime: {enter: `$nameFromNode $role $state $restriction $description`},
-    labelText: {
-      speak: `$name $value $state $restriction $description`,
-    },
     lineBreak: {speak: `$name=`},
     link: {
       enter: `$nameFromNode= $role $state $restriction`,
@@ -387,6 +385,7 @@ Output.RULES = {
       speak: `$state $name $role @describe_index($posInSet, $setSize)
           $description $restriction`
     },
+    listItem: {enter: `$name= $role $state $description`},
     listMarker: {speak: `$name`},
     menu: {
       enter: `$name $role`,
@@ -422,9 +421,8 @@ Output.RULES = {
     radioButton: {
       speak: `$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF))
           $if($checked, @describe_radio_selected($name),
-          @describe_radio_unselected($name))
-          @describe_index($posInSet, $setSize)
-          $description $state $restriction`
+          @describe_radio_unselected($name)) $description $state
+          $restriction`
     },
     rootWebArea: {enter: `$name`, speak: `$if($name, $name, $docUrl)`},
     region: {speak: `$state $nameOrTextContent $description`},
@@ -605,12 +603,6 @@ Output.isTruthy = function(node, attrib) {
   switch (attrib) {
     case 'checked':
       return node.checked && node.checked !== 'false';
-
-    // Chrome automatically calculates these attributes.
-    case 'posInSet':
-      return node.htmlAttributes['aria-posinset'];
-    case 'setSize':
-      return node.htmlAttributes['aria-setsize'];
     default:
       return node[attrib] !== undefined || node.state[attrib];
   }
@@ -1175,24 +1167,6 @@ Output.prototype = {
           value = String(value + 1);
           options.annotation.push(token);
           this.append_(buff, value, options);
-        } else if (token == 'cellIndexText') {
-          if (node.htmlAttributes['aria-coltext']) {
-            var value = node.htmlAttributes['aria-coltext'];
-            var row = node;
-            while (row && row.role != RoleType.ROW)
-              row = row.parent;
-            if (!row || !row.htmlAttributes['aria-rowtext'])
-              return;
-            value += row.htmlAttributes['aria-rowtext'];
-            this.append_(buff, value, options);
-          } else {
-            this.format_(
-                node, ` @cell_summary($if($ariaCellRowIndex, $ariaCellRowIndex,
-                    $tableCellRowIndex),
-                $if($ariaCellColumnIndex, $ariaCellColumnIndex,
-                     $tableCellColumnIndex))`,
-                buff);
-          }
         } else if (token == 'node') {
           if (!tree.firstChild || !node[tree.firstChild.value])
             return;

@@ -17,26 +17,29 @@ namespace web_resource {
 class TestNetworkChangeNotifier : public net::NetworkChangeNotifier {
  public:
   TestNetworkChangeNotifier()
-      : connection_type_(net::NetworkChangeNotifier::CONNECTION_UNKNOWN) {}
+      : net::NetworkChangeNotifier(),
+        connection_type_to_return_(
+            net::NetworkChangeNotifier::CONNECTION_UNKNOWN) {
+  }
 
   // Simulates a change of the connection type to |type|. This will notify any
   // objects that are NetworkChangeNotifiers.
   void SimulateNetworkConnectionChange(
       net::NetworkChangeNotifier::ConnectionType type) {
-    connection_type_ = type;
+    connection_type_to_return_ = type;
     net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
-        connection_type_);
+        connection_type_to_return_);
     base::RunLoop().RunUntilIdle();
   }
 
  private:
   ConnectionType GetCurrentConnectionType() const override {
-    return connection_type_;
+    return connection_type_to_return_;
   }
 
   // The currently simulated network connection type. If this is set to
   // CONNECTION_NONE, then NetworkChangeNotifier::IsOffline will return true.
-  net::NetworkChangeNotifier::ConnectionType connection_type_;
+  net::NetworkChangeNotifier::ConnectionType connection_type_to_return_;
 
   DISALLOW_COPY_AND_ASSIGN(TestNetworkChangeNotifier);
 };
@@ -88,6 +91,11 @@ class ResourceRequestAllowedNotifierTest
   // ResourceRequestAllowedNotifier::Observer override:
   void OnResourceRequestsAllowed() override { was_notified_ = true; }
 
+  // Network manipulation methods:
+  void SetWaitingForNetwork(bool waiting) {
+    resource_request_allowed_notifier_.SetWaitingForNetworkForTesting(waiting);
+  }
+
   void SimulateNetworkConnectionChange(
       net::NetworkChangeNotifier::ConnectionType type) {
     network_notifier.SimulateNetworkConnectionChange(type);
@@ -116,6 +124,7 @@ class ResourceRequestAllowedNotifierTest
   // Used in tests involving the EULA. Disables both the EULA accepted state
   // and the network.
   void DisableEulaAndNetwork() {
+    SetWaitingForNetwork(true);
     SimulateNetworkConnectionChange(
         net::NetworkChangeNotifier::CONNECTION_NONE);
     SetWaitingForEula(true);
@@ -143,35 +152,31 @@ class ResourceRequestAllowedNotifierTest
 };
 
 TEST_F(ResourceRequestAllowedNotifierTest, DoNotNotifyIfOffline) {
-  SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_NONE);
+  SetWaitingForNetwork(true);
   EXPECT_FALSE(SimulateResourceRequest());
-
   SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_NONE);
   EXPECT_FALSE(was_notified());
 }
 
 TEST_F(ResourceRequestAllowedNotifierTest, DoNotNotifyIfOnlineToOnline) {
-  SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_WIFI);
+  SetWaitingForNetwork(false);
   EXPECT_TRUE(SimulateResourceRequest());
-
   SimulateNetworkConnectionChange(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
   EXPECT_FALSE(was_notified());
 }
 
 TEST_F(ResourceRequestAllowedNotifierTest, NotifyOnReconnect) {
-  SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_NONE);
+  SetWaitingForNetwork(true);
   EXPECT_FALSE(SimulateResourceRequest());
-
   SimulateNetworkConnectionChange(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
   EXPECT_TRUE(was_notified());
 }
 
 TEST_F(ResourceRequestAllowedNotifierTest, NoNotifyOnWardriving) {
-  SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_WIFI);
+  SetWaitingForNetwork(false);
   EXPECT_TRUE(SimulateResourceRequest());
-
   SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_WIFI);
   EXPECT_FALSE(was_notified());
   SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_3G);
@@ -183,9 +188,10 @@ TEST_F(ResourceRequestAllowedNotifierTest, NoNotifyOnWardriving) {
 }
 
 TEST_F(ResourceRequestAllowedNotifierTest, NoNotifyOnFlakyConnection) {
-  SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_WIFI);
+  // SimulateResourceRequest() returns true because network is online.
+  SetWaitingForNetwork(false);
   EXPECT_TRUE(SimulateResourceRequest());
-
+  // The callback is nerver invoked whatever happens on network connection.
   SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_WIFI);
   EXPECT_FALSE(was_notified());
   SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_NONE);
@@ -195,18 +201,16 @@ TEST_F(ResourceRequestAllowedNotifierTest, NoNotifyOnFlakyConnection) {
 }
 
 TEST_F(ResourceRequestAllowedNotifierTest, NotifyOnFlakyConnection) {
-  // First, the observer queries the state while the network is connected.
-  SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_WIFI);
+  SetWaitingForNetwork(false);
   EXPECT_TRUE(SimulateResourceRequest());
-
+  // Network goes online, but not notified because SimulateResourceRequest()
+  // returns true before.
   SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_WIFI);
   EXPECT_FALSE(was_notified());
   SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_NONE);
-  EXPECT_FALSE(was_notified());
-
-  // Now, the observer queries the state while the network is disconnected.
   EXPECT_FALSE(SimulateResourceRequest());
-
+  // Now, SimulateResourceRequest() returns false and will be notified later.
+  EXPECT_FALSE(was_notified());
   SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_WIFI);
   EXPECT_TRUE(was_notified());
 }
@@ -225,9 +229,9 @@ TEST_F(ResourceRequestAllowedNotifierTest, NoNotifyOnEulaAfterGoOffline) {
 
 TEST_F(ResourceRequestAllowedNotifierTest, NoRequestNoNotify) {
   // Ensure that if the observing service does not request access, it does not
-  // get notified, even if the criteria are met. Note that this is done by not
+  // get notified, even if the criteria is met. Note that this is done by not
   // calling SimulateResourceRequest here.
-  SimulateNetworkConnectionChange(net::NetworkChangeNotifier::CONNECTION_NONE);
+  SetWaitingForNetwork(true);
   SimulateNetworkConnectionChange(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
   EXPECT_FALSE(was_notified());
@@ -265,7 +269,7 @@ TEST_F(ResourceRequestAllowedNotifierTest, NetworkFirst) {
 
 TEST_F(ResourceRequestAllowedNotifierTest, NoRequestNoNotifyEula) {
   // Ensure that if the observing service does not request access, it does not
-  // get notified, even if the criteria are met. Note that this is done by not
+  // get notified, even if the criteria is met. Note that this is done by not
   // calling SimulateResourceRequest here.
   DisableEulaAndNetwork();
 

@@ -128,7 +128,6 @@ mojom("mojo_platform_bindings") {
 
   public_deps = [
     "//mojo/common:common_custom_types",
-    "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
   ]
@@ -153,6 +152,9 @@ mojom("mojo_bindings") {
   public_deps = [
     ":mojo_platform_bindings",
   ]
+
+  overridden_deps = [ ":mojo_platform_bindings" ]
+  component_deps = []
 
   overridden_deps_blink = [ ":mojo_platform_bindings" ]
   component_deps_blink = [ "//third_party/WebKit/Source/platform" ]

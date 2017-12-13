@@ -62,7 +62,6 @@ SaveCardBubbleViews::SaveCardBubbleViews(views::View* anchor_view,
     : LocationBarBubbleDelegateView(anchor_view, anchor_point, web_contents),
       controller_(controller) {
   DCHECK(controller);
-  mouse_handler_ = std::make_unique<WebContentMouseHandler>(this, web_contents);
   chrome::RecordDialogCreation(chrome::DialogIdentifier::SAVE_CARD);
 }
 
@@ -72,14 +71,15 @@ void SaveCardBubbleViews::Show(DisplayReason reason) {
 
 void SaveCardBubbleViews::Hide() {
   controller_ = nullptr;
-  mouse_handler_ = nullptr;
   CloseBubble();
 }
 
 views::View* SaveCardBubbleViews::CreateExtraView() {
-  if (GetCurrentFlowStep() != LOCAL_SAVE_ONLY_STEP)
+  if (GetCurrentFlowStep() != LOCAL_SAVE_ONLY_STEP &&
+      IsAutofillUpstreamShowNewUiExperimentEnabled())
     return nullptr;
-  // Learn More link is only shown on local save bubble.
+  // Learn More link is only shown on local save bubble or when the new UI
+  // experiment is disabled.
   DCHECK(!learn_more_link_);
   learn_more_link_ = new views::Link(l10n_util::GetStringUTF16(IDS_LEARN_MORE));
   learn_more_link_->SetUnderline(false);
@@ -219,16 +219,15 @@ gfx::ImageSkia SaveCardBubbleViews::GetWindowIcon() {
 }
 
 bool SaveCardBubbleViews::ShouldShowWindowIcon() const {
-  // We show the window icon (Google "G") in non-local save scenarios.
-  return GetCurrentFlowStep() != LOCAL_SAVE_ONLY_STEP;
+  // We show the window icon (Google "G") in non-local save scenarios where the
+  // new UI is enabled.
+  return GetCurrentFlowStep() != LOCAL_SAVE_ONLY_STEP &&
+         IsAutofillUpstreamShowGoogleLogoExperimentEnabled();
 }
 
 void SaveCardBubbleViews::WindowClosing() {
-  if (controller_) {
+  if (controller_)
     controller_->OnBubbleClosed();
-    controller_ = nullptr;
-    mouse_handler_ = nullptr;
-  }
 }
 
 void SaveCardBubbleViews::LinkClicked(views::Link* source, int event_flags) {
@@ -295,9 +294,9 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateMainContentView() {
       provider->GetDistanceMetric(views::DISTANCE_UNRELATED_CONTROL_VERTICAL)));
 
   // If applicable, add the upload explanation label.  Appears above the card
-  // info.
+  // info when new UI experiment is enabled.
   base::string16 explanation = controller_->GetExplanatoryMessage();
-  if (!explanation.empty()) {
+  if (!explanation.empty() && IsAutofillUpstreamShowNewUiExperimentEnabled()) {
     views::Label* explanation_label = new views::Label(explanation);
     explanation_label->SetMultiLine(true);
     explanation_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
@@ -322,10 +321,26 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateMainContentView() {
       views::CreateSolidBorder(1, SkColorSetA(SK_ColorBLACK, 10)));
   description_view->AddChildView(card_type_icon);
 
-  description_view->AddChildView(
-      new views::Label(card.NetworkAndLastFourDigits()));
+  // Old UI shows last four digits and expiration.  New UI shows network, last
+  // four digits, and expiration.
+  if (IsAutofillUpstreamShowNewUiExperimentEnabled()) {
+    description_view->AddChildView(
+        new views::Label(card.NetworkAndLastFourDigits()));
+  } else {
+    description_view->AddChildView(new views::Label(
+        base::string16(kMidlineEllipsis) + card.LastFourDigits()));
+  }
   description_view->AddChildView(
       new views::Label(card.AbbreviatedExpirationDateForDisplay()));
+
+  // If applicable, add the upload explanation label.  Appears below the card
+  // info when new UI experiment is disabled.
+  if (!explanation.empty() && !IsAutofillUpstreamShowNewUiExperimentEnabled()) {
+    views::Label* explanation_label = new views::Label(explanation);
+    explanation_label->SetMultiLine(true);
+    explanation_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    view->AddChildView(explanation_label);
+  }
 
   return view;
 }

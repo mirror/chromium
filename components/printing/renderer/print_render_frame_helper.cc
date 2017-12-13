@@ -584,7 +584,8 @@ void PrintRenderFrameHelper::PrintHeaderAndFooter(
                                page_layout.content_height);
 
   blink::WebView* web_view = blink::WebView::Create(
-      nullptr, blink::mojom::PageVisibilityState::kVisible);
+      /* client = */ nullptr, blink::mojom::PageVisibilityState::kVisible,
+      /* opener = */ nullptr);
   web_view->GetSettings()->SetJavaScriptEnabled(true);
 
   class HeaderAndFooterClient final : public blink::WebFrameClient {
@@ -618,8 +619,9 @@ void PrintRenderFrameHelper::PrintHeaderAndFooter(
   options->SetDouble("height", page_size.height);
   options->SetDouble("topMargin", page_layout.margin_top);
   options->SetDouble("bottomMargin", page_layout.margin_bottom);
-  options->SetInteger("pageNumber", page_number);
-  options->SetInteger("totalPages", total_pages);
+  options->SetString("pageNumber",
+                     base::StringPrintf("%d/%d", page_number, total_pages));
+
   options->SetString("url", params.url);
   base::string16 title = source_frame.GetDocument().Title().Utf16();
   options->SetString("title", title.empty() ? params.title : title);
@@ -825,8 +827,9 @@ void PrepareFrameAndViewForPrint::CopySelection(
   WebPreferences prefs = preferences;
   prefs.javascript_enabled = false;
 
-  blink::WebView* web_view =
-      blink::WebView::Create(this, blink::mojom::PageVisibilityState::kVisible);
+  blink::WebView* web_view = blink::WebView::Create(
+      /* client = */ this, blink::mojom::PageVisibilityState::kVisible,
+      /* opener = */ nullptr);
   owns_web_view_ = true;
   content::RenderView::ApplyWebPreferences(prefs, web_view);
   blink::WebLocalFrame* main_frame =

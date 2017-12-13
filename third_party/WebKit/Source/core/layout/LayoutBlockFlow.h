@@ -37,7 +37,6 @@
 #define LayoutBlockFlow_h
 
 #include <memory>
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/layout/FloatingObjects.h"
 #include "core/layout/LayoutBlock.h"
@@ -761,6 +760,7 @@ class CORE_EXPORT LayoutBlockFlow : public LayoutBlock {
 
   // Allocated only when some of these fields have non-default values
   struct LayoutBlockFlowRareData {
+    WTF_MAKE_NONCOPYABLE(LayoutBlockFlowRareData);
     USING_FAST_MALLOC(LayoutBlockFlowRareData);
 
    public:
@@ -805,7 +805,6 @@ class CORE_EXPORT LayoutBlockFlow : public LayoutBlock {
     bool did_break_at_line_to_avoid_widow_ : 1;
     bool discard_margin_before_ : 1;
     bool discard_margin_after_ : 1;
-    DISALLOW_COPY_AND_ASSIGN(LayoutBlockFlowRareData);
   };
 
   const FloatingObjects* GetFloatingObjects() const {

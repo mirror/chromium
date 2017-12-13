@@ -586,7 +586,6 @@ def CreateMetadata(map_path, elf_path, apk_path, tool_prefix, output_directory):
 
       if apk_path:
         metadata[models.METADATA_APK_FILENAME] = relative_to_out(apk_path)
-        metadata[models.METADATA_APK_SIZE] = os.path.getsize(apk_path)
   return metadata
 
 
@@ -692,8 +691,8 @@ def _ParseElfInfo(map_path, elf_path, tool_prefix, output_directory,
 
 
 def _ComputePakFileSymbols(
-    file_name, contents, res_info, symbols_by_id, expected_size,
-    compression_ratio=1):
+    file_name, file_size, contents, res_info, symbols_by_id):
+  total = 12 + 6  # Header size plus extra offset
   id_map = {id(v): k
             for k, v in sorted(contents.resources.items(), reverse=True)}
   alias_map = {k: id_map[id(v)] for k, v in contents.resources.iteritems()
@@ -703,10 +702,6 @@ def _ComputePakFileSymbols(
     section_name = models.SECTION_PAK_TRANSLATIONS
   else:
     section_name = models.SECTION_PAK_NONTRANSLATED
-  overhead = (12 + 6) * compression_ratio  # Header size plus extra offset
-  symbols_by_id[file_name] = models.Symbol(
-      section_name, overhead, full_name='{}: overhead'.format(file_name))
-  total = overhead
   for resource_id in sorted(contents.resources):
     if resource_id in alias_map:
       # 4 extra bytes of metadata (2 16-bit ints)
@@ -720,12 +715,10 @@ def _ComputePakFileSymbols(
         full_name = '{}: {}'.format(source_path, name)
         symbols_by_id[resource_id] = models.Symbol(
             section_name, 0, address=resource_id, full_name=full_name)
-    size *= compression_ratio
     symbols_by_id[resource_id].size += size
     total += size
-  total = int(round(total))
-  assert expected_size == total, (
-      '{} bytes in pak file not accounted for'.format(expected_size - total))
+  assert file_size == total, (
+      '{} bytes in pak file not accounted for'.format(file_size - total))
 
 
 def _ParsePakInfoFile(pak_info_path):
@@ -737,8 +730,7 @@ def _ParsePakInfoFile(pak_info_path):
   return res_info
 
 
-def _ParsePakSymbols(
-    section_sizes, object_paths, output_directory, symbols_by_id):
+def _ParsePakSymbols(object_paths, output_directory, symbols_by_id):
   for path in object_paths:
     whitelist_path = os.path.join(output_directory, path + '.whitelist')
     if (not os.path.exists(whitelist_path)
@@ -757,26 +749,14 @@ def _ParsePakSymbols(
 
   raw_symbols = sorted(symbols_by_id.values(),
                        key=lambda s: (s.section_name, s.address))
-  raw_total = 0.0
-  int_total = 0
-  for symbol in raw_symbols:
-    raw_total += symbol.size
-    # We truncate rather than round to ensure that we do not over attribute. It
-    # is easier to add another symbol to make up the difference.
-    symbol.size = int(symbol.size)
-    int_total += symbol.size
-  # Attribute excess to translations since only those are compressed.
-  raw_symbols.append(models.Symbol(
-      models.SECTION_PAK_TRANSLATIONS, int(round(raw_total - int_total)),
-      full_name='Pak compression leftover artifacts'))
-
+  section_sizes = {}
   for symbol in raw_symbols:
     prev = section_sizes.setdefault(symbol.section_name, 0)
     section_sizes[symbol.section_name] = prev + symbol.size
-  return raw_symbols
+  return section_sizes, raw_symbols
 
 
-def _ParseApkElfSectionSize(section_sizes, metadata, apk_elf_result):
+def _ParseApkSectionSizes(section_sizes, metadata, apk_elf_result):
   if metadata:
     logging.debug('Extracting section sizes from .so within .apk')
     apk_build_id, apk_section_sizes = apk_elf_result.get()
@@ -801,22 +781,6 @@ def _ParseApkElfSectionSize(section_sizes, metadata, apk_elf_result):
   return apk_section_sizes
 
 
-def _ParseApkOtherSymbols(section_sizes, apk_path):
-  apk_symbols = []
-  with zipfile.ZipFile(apk_path) as z:
-    for zip_info in z.infolist():
-      # Skip shared library and pak files as they are already accounted for.
-      if (zip_info.filename.endswith('.so')
-          or zip_info.filename.endswith('.pak')):
-        continue
-      apk_symbols.append(models.Symbol(
-            models.SECTION_OTHER, zip_info.compress_size,
-            full_name=zip_info.filename))
-  prev = section_sizes.setdefault(models.SECTION_OTHER, 0)
-  section_sizes[models.SECTION_OTHER] = prev + sum(s.size for s in apk_symbols)
-  return apk_symbols
-
-
 def _FindPakSymbolsFromApk(apk_path, output_directory):
   with zipfile.ZipFile(apk_path) as z:
     pak_zip_infos = (f for f in z.infolist() if f.filename.endswith('.pak'))
@@ -824,17 +788,15 @@ def _FindPakSymbolsFromApk(apk_path, output_directory):
     pak_info_path = os.path.join(output_directory, 'size-info', apk_info_name)
     res_info = _ParsePakInfoFile(pak_info_path)
     symbols_by_id = {}
-    for zip_info in pak_zip_infos:
-      contents = data_pack.ReadDataPackFromString(z.read(zip_info))
-      compression_ratio = float(zip_info.compress_size) / zip_info.file_size
+    for pak_zip_info in pak_zip_infos:
+      contents = data_pack.ReadDataPackFromString(z.read(pak_zip_info))
       _ComputePakFileSymbols(
-          os.path.relpath(zip_info.filename, output_directory), contents,
-          res_info, symbols_by_id, expected_size=zip_info.compress_size,
-          compression_ratio=compression_ratio)
+          pak_zip_info.filename, pak_zip_info.file_size, contents, res_info,
+          symbols_by_id)
   return symbols_by_id
 
 
-def _FindPakSymbolsFromFiles(pak_files, pak_info_path, output_directory):
+def _FindPakSymbolsFromFiles(pak_files, pak_info_path):
   """Uses files from args to find and add pak symbols."""
   res_info = _ParsePakInfoFile(pak_info_path)
   symbols_by_id = {}
@@ -842,8 +804,8 @@ def _FindPakSymbolsFromFiles(pak_files, pak_info_path, output_directory):
     with open(pak_file_path, 'r') as f:
       contents = data_pack.ReadDataPackFromString(f.read())
       _ComputePakFileSymbols(
-          os.path.relpath(pak_file_path, output_directory), contents, res_info,
-          symbols_by_id, expected_size=os.path.getsize(pak_file_path))
+          pak_file_path, os.path.getsize(pak_file_path), contents, res_info,
+          symbols_by_id)
   return symbols_by_id
 
 
@@ -882,18 +844,17 @@ def CreateSectionSizesAndSymbols(
 
   pak_symbols_by_id = None
   if apk_path:
+    section_sizes = _ParseApkSectionSizes(section_sizes, metadata,
+                                          apk_elf_result)
     pak_symbols_by_id = _FindPakSymbolsFromApk(apk_path, output_directory)
-    section_sizes = _ParseApkElfSectionSize(
-        section_sizes, metadata, apk_elf_result)
-    raw_symbols.extend(_ParseApkOtherSymbols(section_sizes, apk_path))
   elif pak_files and pak_info_file:
-    pak_symbols_by_id = _FindPakSymbolsFromFiles(
-        pak_files, pak_info_file, output_directory)
+    pak_symbols_by_id = _FindPakSymbolsFromFiles(pak_files, pak_info_file)
 
   if pak_symbols_by_id:
     object_paths = (p for p in source_mapper.IterAllPaths() if p.endswith('.o'))
-    pak_raw_symbols = _ParsePakSymbols(
-        section_sizes, object_paths, output_directory, pak_symbols_by_id)
+    pak_section_sizes, pak_raw_symbols = _ParsePakSymbols(
+        object_paths, output_directory, pak_symbols_by_id)
+    section_sizes.update(pak_section_sizes)
     raw_symbols.extend(pak_raw_symbols)
 
   _ExtractSourcePathsAndNormalizeObjectPaths(raw_symbols, source_mapper)

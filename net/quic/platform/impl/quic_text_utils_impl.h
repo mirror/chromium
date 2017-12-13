@@ -70,7 +70,7 @@ class QuicTextUtilsImpl {
 
   // Returns a new std::string representing |in|.
   static std::string Uint64ToString(uint64_t in) {
-    return base::NumberToString(in);
+    return base::Uint64ToString(in);
   }
 
   // This converts |length| bytes of binary to a 2*|length|-character

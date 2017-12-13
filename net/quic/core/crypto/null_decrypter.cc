@@ -69,14 +69,6 @@ bool NullDecrypter::DecryptPacket(QuicTransportVersion version,
   return true;
 }
 
-size_t NullDecrypter::GetKeySize() const {
-  return 0;
-}
-
-size_t NullDecrypter::GetIVSize() const {
-  return 0;
-}
-
 QuicStringPiece NullDecrypter::GetKey() const {
   return QuicStringPiece();
 }

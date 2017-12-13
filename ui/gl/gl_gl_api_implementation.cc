@@ -60,9 +60,6 @@ static inline GLenum GetTexInternalFormat(const GLVersionInfo* version,
         case GL_UNSIGNED_BYTE:
           gl_internal_format = GL_R8_EXT;
           break;
-        case GL_UNSIGNED_SHORT:
-          gl_internal_format = GL_R16_EXT;
-          break;
         case GL_HALF_FLOAT_OES:
           gl_internal_format = GL_R16F_EXT;
           break;

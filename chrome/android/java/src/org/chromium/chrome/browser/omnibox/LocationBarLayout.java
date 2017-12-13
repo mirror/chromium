@@ -237,7 +237,7 @@ public class LocationBarLayout extends FrameLayout
 
     private DeferredOnSelectionRunnable mDeferredOnSelection;
 
-    private static abstract class DeferredOnSelectionRunnable implements Runnable {
+    private abstract class DeferredOnSelectionRunnable implements Runnable {
         protected final OmniboxSuggestion mSuggestion;
         protected final int mPosition;
         protected boolean mShouldLog;
@@ -1125,12 +1125,10 @@ public class LocationBarLayout extends FrameLayout
         // now count as a new session.
         mHasStartedNewOmniboxEditSession = false;
         mNewOmniboxEditSessionTimestamp = -1;
-        if (mNativeInitialized && mUrlHasFocus
-                && (mToolbarDataProvider.hasTab()
-                           || (mBottomSheet != null && mBottomSheet.isShowingNewTab()))) {
+        if (mNativeInitialized && mUrlHasFocus && mToolbarDataProvider.hasTab()) {
             mAutocomplete.startZeroSuggest(mToolbarDataProvider.getProfile(),
                     mUrlBar.getTextWithAutocomplete(), mToolbarDataProvider.getCurrentUrl(),
-                    mToolbarDataProvider.getTitle(), mUrlFocusedFromFakebox);
+                    getCurrentTab().getTitle(), mUrlFocusedFromFakebox);
         }
     }
 
@@ -2370,9 +2368,12 @@ public class LocationBarLayout extends FrameLayout
         // If the bottom sheet is managing the display of the suggestions, view visibility does not
         // need to be set here.
         if (mBottomSheet != null && mUrlBar != null) {
+            // If the NTP is shown, only show the suggestions if there is content in the URL bar.
+            boolean blockForNTP =
+                    mBottomSheet.isShowingNewTab() && TextUtils.isEmpty(mUrlBar.getText());
             boolean showingOmniboxSuggestions =
                     mBottomSheet.getCurrentSheetContent() == mOmniboxSuggestionsSheetContent;
-            if (visible && !showingOmniboxSuggestions) {
+            if (visible && !showingOmniboxSuggestions && !blockForNTP) {
                 mBottomSheet.showContent(mOmniboxSuggestionsSheetContent);
             }
         } else {

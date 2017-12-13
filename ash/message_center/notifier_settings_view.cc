@@ -109,7 +109,7 @@ constexpr gfx::Insets kQuietModeTogglePadding(0, 14, 0, 14);
 constexpr SkColor kTopLabelColor = SkColorSetRGB(0x42, 0x85, 0xF4);
 constexpr SkColor kLabelColor = SkColorSetARGB(0xDE, 0x0, 0x0, 0x0);
 constexpr SkColor kTopBorderColor = SkColorSetARGB(0x1F, 0x0, 0x0, 0x0);
-const int kLabelFontSizeDelta = 1;
+const int kLabelFontSize = 13;
 
 // EntryView ------------------------------------------------------------------
 
@@ -246,8 +246,8 @@ class EmptyNotifierView : public views::View {
         l10n_util::GetStringUTF16(IDS_ASH_MESSAGE_CENTER_NO_NOTIFIERS));
     label->SetEnabledColor(message_center_style::kEmptyViewColor);
     // "Roboto-Medium, 12sp" is specified in the mock.
-    label->SetFontList(
-        gfx::FontList().DeriveWithWeight(gfx::Font::Weight::MEDIUM));
+    label->SetFontList(message_center_style::GetFontListForSizeAndWeight(
+        message_center_style::kEmptyLabelSize, gfx::Font::Weight::MEDIUM));
     AddChildView(label);
   }
 
@@ -273,8 +273,8 @@ NotifierSettingsView::NotifierButton::NotifierButton(
   name_view_->SetAutoColorReadabilityEnabled(false);
   name_view_->SetEnabledColor(kLabelColor);
   // "Roboto-Regular, 13sp" is specified in the mock.
-  name_view_->SetFontList(
-      gfx::FontList().DeriveWithSizeDelta(kLabelFontSizeDelta));
+  name_view_->SetFontList(message_center_style::GetFontListForSizeAndWeight(
+      kLabelFontSize, gfx::Font::Weight::NORMAL));
 
   checkbox_->SetChecked(notifier_ui_data.enabled);
   checkbox_->set_listener(this);
@@ -448,7 +448,8 @@ NotifierSettingsView::NotifierSettingsView()
   quiet_mode_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   // "Roboto-Regular, 13sp" is specified in the mock.
   quiet_mode_label->SetFontList(
-      gfx::FontList().DeriveWithSizeDelta(kLabelFontSizeDelta));
+      message_center_style::GetFontListForSizeAndWeight(
+          kLabelFontSize, gfx::Font::Weight::NORMAL));
   quiet_mode_label->SetAutoColorReadabilityEnabled(false);
   quiet_mode_label->SetEnabledColor(kLabelColor);
   quiet_mode_label->SetBorder(views::CreateEmptyBorder(kQuietModeLabelPadding));
@@ -469,8 +470,8 @@ NotifierSettingsView::NotifierSettingsView()
       IDS_ASH_MESSAGE_CENTER_SETTINGS_DIALOG_DESCRIPTION));
   top_label_->SetBorder(views::CreateEmptyBorder(kTopLabelPadding));
   // "Roboto-Medium, 13sp" is specified in the mock.
-  top_label_->SetFontList(gfx::FontList().Derive(
-      kLabelFontSizeDelta, gfx::Font::NORMAL, gfx::Font::Weight::MEDIUM));
+  top_label_->SetFontList(message_center_style::GetFontListForSizeAndWeight(
+      kLabelFontSize, gfx::Font::Weight::MEDIUM));
   top_label_->SetAutoColorReadabilityEnabled(false);
   top_label_->SetEnabledColor(kTopLabelColor);
   top_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);

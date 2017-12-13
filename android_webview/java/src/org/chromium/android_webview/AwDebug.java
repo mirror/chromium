@@ -46,16 +46,11 @@ public class AwDebug {
         nativeInitCrashKeysForWebViewTesting();
     }
 
-    public static void setWhiteListedKeyForTesting() {
-        nativeSetWhiteListedKeyForTesting();
-    }
-
-    public static void setNonWhiteListedKeyForTesting() {
-        nativeSetNonWhiteListedKeyForTesting();
+    public static void setCrashKeyValue(String key, String value) {
+        nativeSetCrashKeyValue(key, value);
     }
 
     private static native boolean nativeDumpWithoutCrashing(String dumpPath);
     private static native void nativeInitCrashKeysForWebViewTesting();
-    private static native void nativeSetWhiteListedKeyForTesting();
-    private static native void nativeSetNonWhiteListedKeyForTesting();
+    private static native void nativeSetCrashKeyValue(String key, String value);
 }

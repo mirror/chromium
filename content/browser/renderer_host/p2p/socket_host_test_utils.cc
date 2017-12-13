@@ -80,7 +80,8 @@ int FakeSocket::Write(
     net::IOBuffer* buf,
     int buf_len,
     const net::CompletionCallback& callback,
-    const net::NetworkTrafficAnnotationTag& /*traffic_annotation*/) {
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+  // TODO(crbug.com/656607): Handle traffic annotation.
   DCHECK(buf);
   DCHECK(!write_pending_);
 

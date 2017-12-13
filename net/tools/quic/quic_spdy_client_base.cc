@@ -32,7 +32,7 @@ QuicSpdyClientBase::QuicDataToResend::~QuicDataToResend() = default;
 
 QuicSpdyClientBase::QuicSpdyClientBase(
     const QuicServerId& server_id,
-    const ParsedQuicVersionVector& supported_versions,
+    const QuicTransportVersionVector& supported_versions,
     const QuicConfig& config,
     QuicConnectionHelperInterface* helper,
     QuicAlarmFactory* alarm_factory,
@@ -170,7 +170,7 @@ int QuicSpdyClientBase::GetNumReceivedServerConfigUpdatesFromSession() {
 void QuicSpdyClientBase::MaybeAddDataToResend(const SpdyHeaderBlock& headers,
                                               QuicStringPiece body,
                                               bool fin) {
-  if (!GetQuicReloadableFlag(enable_quic_stateless_reject_support)) {
+  if (!FLAGS_quic_reloadable_flag_enable_quic_stateless_reject_support) {
     return;
   }
 

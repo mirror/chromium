@@ -196,12 +196,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
         switches::kTouchEventFeatureDetectionEnabled);
     if (!command_line.HasSwitch(switches::kForceDeviceScaleFactor))
       command_line.AppendSwitchASCII(switches::kForceDeviceScaleFactor, "1.0");
-
-    if (!command_line.HasSwitch(switches::kAutoplayPolicy)) {
-      command_line.AppendSwitchASCII(
-          switches::kAutoplayPolicy,
-          switches::autoplay::kNoUserGestureRequiredPolicy);
-    }
+    command_line.AppendSwitch(switches::kIgnoreAutoplayRestrictionsForTests);
 
     if (!command_line.HasSwitch(switches::kStableReleaseMode)) {
       command_line.AppendSwitch(

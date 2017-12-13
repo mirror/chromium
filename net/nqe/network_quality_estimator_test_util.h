@@ -237,7 +237,6 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
   using NetworkQualityEstimator::OnUpdatedTransportRTTAvailable;
   using NetworkQualityEstimator::AddAndNotifyObserversOfRTT;
   using NetworkQualityEstimator::AddAndNotifyObserversOfThroughput;
-  using NetworkQualityEstimator::IsHangingRequest;
 
  private:
   class LocalHttpTestServer : public EmbeddedTestServer {

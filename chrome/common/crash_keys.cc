@@ -33,6 +33,15 @@ const char kNumExtensionsCount[] = "num-extensions";
 const char kShutdownType[] = "shutdown-type";
 const char kBrowserUnpinTrace[] = "browser-unpin-trace";
 
+#if defined(OS_WIN)
+const char kIsEnterpriseManaged[] = "is-enterprise-managed";
+
+// Registry values used to determine Chrome's update channel; see
+// https://crbug.com/579504.
+const char kApValue[] = "ap";
+const char kCohortName[] = "cohort-name";
+#endif
+
 const char kPrinterInfo[] = "prn-info-%" PRIuS;
 
 const char kViewCount[] = "view-count";
@@ -62,13 +71,32 @@ size_t RegisterChromeCrashKeys() {
     {kNumExtensionsCount, kSmallSize},
     {kShutdownType, kSmallSize},
     {kBrowserUnpinTrace, kMediumSize},
+#if defined(OS_WIN)
+    {kApValue, kSmallSize},
+    {kCohortName, kSmallSize},
+#endif  // defined(OS_WIN)
 
+    // content/:
+    {"discardable-memory-allocated", kSmallSize},
+    {"discardable-memory-free", kSmallSize},
+    {"subresource_url", kLargeSize},
+    {"total-discardable-memory-allocated", kSmallSize},
+#if defined(OS_WIN)
+    {kIsEnterpriseManaged, kSmallSize},
+#endif
     {kViewCount, kSmallSize},
 
     // sandbox/:
 #if defined(OS_LINUX)
     {"seccomp-sigsys", kMediumSize},
 #endif
+
+    // Site isolation.  These keys help debug renderer kills such as
+    // https://crbug.com/773140.
+    {"requested_site_url", kSmallSize},
+    {"requested_origin", kSmallSize},
+    {"killed_process_origin_lock", kSmallSize},
+    {"site_isolation_mode", kSmallSize},
 
     // Temporary for https://crbug.com/685996.
     {kUserCloudPolicyManagerConnectTrace, kMediumSize},

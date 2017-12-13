@@ -8,16 +8,15 @@
 #include <string>
 #include <vector>
 
-#include "content/common/appcache.mojom.h"
 #include "content/common/appcache_interfaces.h"
+#include "ipc/ipc_sender.h"
 
 namespace content {
 
 // Sends appcache related messages to a child process.
 class AppCacheFrontendProxy : public AppCacheFrontend {
  public:
-  explicit AppCacheFrontendProxy(int process_id);
-  ~AppCacheFrontendProxy() override;
+  explicit AppCacheFrontendProxy(IPC::Sender* sender);
 
   // AppCacheFrontend methods
   void OnCacheSelected(int host_id, const AppCacheInfo& info) override;
@@ -37,13 +36,10 @@ class AppCacheFrontendProxy : public AppCacheFrontend {
   void OnContentBlocked(int host_id, const GURL& manifest_url) override;
   void OnSetSubresourceFactory(
       int host_id,
-      mojom::URLLoaderFactoryPtr url_loader_factory) override;
+      mojo::MessagePipeHandle loader_factory_pipe_handle) override;
 
  private:
-  mojom::AppCacheFrontend* GetAppCacheFrontend();
-
-  const int process_id_;
-  mojom::AppCacheFrontendPtr app_cache_renderer_ptr_;
+  IPC::Sender* sender_;
 };
 
 }  // namespace content

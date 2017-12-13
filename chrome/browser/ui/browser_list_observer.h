@@ -7,6 +7,8 @@
 
 class Browser;
 
+namespace chrome {
+
 class BrowserListObserver {
   public:
   // Called immediately after a browser is added to the list
@@ -28,5 +30,7 @@ class BrowserListObserver {
  protected:
   virtual ~BrowserListObserver() {}
 };
+
+}  // namespace chrome
 
 #endif  // CHROME_BROWSER_UI_BROWSER_LIST_OBSERVER_H_

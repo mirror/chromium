@@ -758,6 +758,8 @@ TEST_F(LayerWithDelegateTest, Cloning) {
   layer->SetTransform(transform);
   layer->SetColor(SK_ColorRED);
   layer->SetLayerInverted(true);
+  const float temperature = 0.8f;
+  layer->SetLayerTemperature(temperature);
   layer->AddCacheRenderSurfaceRequest();
   layer->AddTrilinearFilteringRequest();
 
@@ -768,6 +770,7 @@ TEST_F(LayerWithDelegateTest, Cloning) {
   EXPECT_EQ(SK_ColorRED, clone->background_color());
   EXPECT_EQ(SK_ColorRED, clone->GetTargetColor());
   EXPECT_TRUE(clone->layer_inverted());
+  EXPECT_FLOAT_EQ(temperature, clone->GetTargetTemperature());
   // Cloning should not preserve cache_render_surface flag.
   EXPECT_NE(layer->cc_layer_for_testing()->cache_render_surface(),
             clone->cc_layer_for_testing()->cache_render_surface());
@@ -950,7 +953,7 @@ TEST_F(LayerWithNullDelegateTest, EscapedDebugNames) {
   base::JSONReader json_reader;
   std::unique_ptr<base::Value> debug_info_value(json_reader.ReadToValue(json));
   EXPECT_TRUE(debug_info_value);
-  EXPECT_TRUE(debug_info_value->is_dict());
+  EXPECT_TRUE(debug_info_value->IsType(base::Value::Type::DICTIONARY));
   base::DictionaryValue* dictionary = 0;
   EXPECT_TRUE(debug_info_value->GetAsDictionary(&dictionary));
   std::string roundtrip;

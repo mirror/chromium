@@ -170,7 +170,7 @@ class APP_LIST_EXPORT SearchBoxView : public views::WidgetDelegateView,
 
  private:
   // Updates model text and selection model with current Textfield info.
-  void UpdateModel(bool initiated_by_user);
+  void UpdateModel();
 
   // Fires query change notification.
   void NotifyQueryChanged();

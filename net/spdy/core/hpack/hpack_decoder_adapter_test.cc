@@ -144,11 +144,11 @@ class HpackDecoderAdapterTest
     if (randomly_split_input_buffer_) {
       do {
         // Decode some fragment of the remaining bytes.
-        size_t bytes = str.size();
+        size_t bytes = str.length();
         if (!str.empty()) {
-          bytes = random_.Uniform(str.size()) + 1;
+          bytes = random_.Uniform(str.length()) + 1;
         }
-        EXPECT_LE(bytes, str.size());
+        EXPECT_LE(bytes, str.length());
         if (!HandleControlFrameHeadersData(str.substr(0, bytes))) {
           decode_has_failed_ = true;
           return false;

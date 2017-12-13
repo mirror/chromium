@@ -121,11 +121,6 @@ gpu::gles2::GLES2Interface* AwRenderThreadContextProvider::ContextGL() {
   return context_->GetImplementation();
 }
 
-gpu::raster::RasterInterface* AwRenderThreadContextProvider::RasterContext() {
-  NOTIMPLEMENTED();
-  return nullptr;
-}
-
 gpu::ContextSupport* AwRenderThreadContextProvider::ContextSupport() {
   DCHECK(main_thread_checker_.CalledOnValidThread());
 
@@ -140,7 +135,9 @@ class GrContext* AwRenderThreadContextProvider::GrContext() {
 
   sk_sp<GrGLInterface> interface(
       skia_bindings::CreateGLES2InterfaceBindings(ContextGL()));
-  gr_context_ = GrContext::MakeGL(std::move(interface));
+  gr_context_ = sk_sp<::GrContext>(GrContext::Create(
+      // GrContext takes ownership of |interface|.
+      kOpenGL_GrBackend, reinterpret_cast<GrBackendContext>(interface.get())));
   cache_controller_->SetGrContext(gr_context_.get());
   return gr_context_.get();
 }

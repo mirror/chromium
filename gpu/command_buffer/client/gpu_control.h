@@ -19,14 +19,9 @@
 #include "gpu/gpu_export.h"
 
 extern "C" typedef struct _ClientBuffer* ClientBuffer;
-extern "C" typedef struct _ClientGpuFence* ClientGpuFence;
 
 namespace base {
 class Lock;
-}
-
-namespace gfx {
-class GpuFence;
 }
 
 namespace gpu {
@@ -56,11 +51,6 @@ class GPU_EXPORT GpuControl {
   // Runs |callback| when a query created via glCreateQueryEXT() has cleared
   // passed the glEndQueryEXT() point.
   virtual void SignalQuery(uint32_t query, const base::Closure& callback) = 0;
-
-  virtual void CreateGpuFence(uint32_t gpu_fence_id, ClientGpuFence source) = 0;
-  virtual void GetGpuFence(
-      uint32_t gpu_fence_id,
-      base::OnceCallback<void(std::unique_ptr<gfx::GpuFence>)> callback) = 0;
 
   // Sets a lock this will be held on every callback from the GPU
   // implementation. This lock must be set and must be held on every call into

@@ -82,7 +82,7 @@ void CoordinatorImpl::BindCoordinatorRequest(
 }
 
 void CoordinatorImpl::RequestGlobalMemoryDump(
-    mojom::GlobalRequestArgsPtr args_in,
+    const base::trace_event::GlobalMemoryDumpRequestArgs& args_in,
     const RequestGlobalMemoryDumpCallback& callback) {
   // This merely strips out the |dump_guid| argument.
   auto callback_adapter = [](const RequestGlobalMemoryDumpCallback& callback,
@@ -90,28 +90,29 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
                              mojom::GlobalMemoryDumpPtr global_memory_dump) {
     callback.Run(success, std::move(global_memory_dump));
   };
-  RequestGlobalMemoryDumpInternal(*args_in, false,
+  RequestGlobalMemoryDumpInternal(args_in, false,
                                   base::Bind(callback_adapter, callback));
 }
 
 void CoordinatorImpl::RequestGlobalMemoryDumpAndAppendToTrace(
-    mojom::GlobalRequestArgsPtr args_in,
+    const base::trace_event::GlobalMemoryDumpRequestArgs& args_in,
     const RequestGlobalMemoryDumpAndAppendToTraceCallback& callback) {
   // This merely strips out the |dump_ptr| argument.
   auto callback_adapter =
       [](const RequestGlobalMemoryDumpAndAppendToTraceCallback& callback,
          bool success, uint64_t dump_guid,
          mojom::GlobalMemoryDumpPtr) { callback.Run(success, dump_guid); };
-  RequestGlobalMemoryDumpInternal(*args_in, true,
+  RequestGlobalMemoryDumpInternal(args_in, true,
                                   base::Bind(callback_adapter, callback));
 }
 
 void CoordinatorImpl::GetVmRegionsForHeapProfiler(
     const GetVmRegionsForHeapProfilerCallback& callback) {
-  mojom::GlobalRequestArgsPtr args(mojom::GlobalRequestArgs::New(
-      MemoryDumpType::EXPLICITLY_TRIGGERED,
-      MemoryDumpLevelOfDetail::VM_REGIONS_ONLY_FOR_HEAP_PROFILER));
-  RequestGlobalMemoryDump(std::move(args), callback);
+  base::trace_event::GlobalMemoryDumpRequestArgs args{
+      base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
+      base::trace_event::MemoryDumpLevelOfDetail::
+          VM_REGIONS_ONLY_FOR_HEAP_PROFILER};
+  RequestGlobalMemoryDump(args, callback);
 }
 
 void CoordinatorImpl::RegisterClientProcess(
@@ -154,7 +155,7 @@ void CoordinatorImpl::UnregisterClientProcess(
 }
 
 void CoordinatorImpl::RequestGlobalMemoryDumpInternal(
-    const mojom::GlobalRequestArgs& args_in,
+    const base::trace_event::GlobalMemoryDumpRequestArgs& args_in,
     bool add_to_trace,
     const RequestGlobalMemoryDumpInternalCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);

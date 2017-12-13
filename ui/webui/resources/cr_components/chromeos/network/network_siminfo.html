@@ -10,8 +10,8 @@
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-icon/iron-icon.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-button/paper-button.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-input/paper-input.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-toggle-button/paper-toggle-button.html">
-<link rel="import" href="network_config_input.html">
 <link rel="import" href="network_shared_css.html">
 
 <dom-module id="network-siminfo">
@@ -31,6 +31,14 @@
       .error {
         color: red;
         font-weight: 500;
+      }
+
+      .pin {
+        min-width: 100px;
+      }
+
+      .puk {
+        min-width: 200px;
       }
 
       .separator {
@@ -90,11 +98,11 @@
         on-close="onEnterPinDialogClose_">
       <div slot="title">[[i18n('networkSimEnterPinTitle')]]</div>
       <div slot="body">
-        <network-config-input id="enterPin" password autofocus
+        <paper-input id="enterPin" class="pin" no-label-float autofocus
             label="[[i18n('networkSimEnterPin')]]">
           <iron-a11y-keys keys="enter" on-keys-pressed="sendEnterPin_">
           </iron-a11y-keys>
-        </network-config-input>
+        </paper-input>
         <div class="dialog-error">
           [[getErrorMsg_(error_, networkProperties)]]
         </div>
@@ -111,17 +119,17 @@
         on-close="onChangePinDialogClose_">
       <div slot="title">[[i18n('networkSimChangePinTitle')]]</div>
       <div slot="body">
-        <network-config-input id="changePinOld" password autofocus
+        <paper-input id="changePinOld" class="pin" no-label-float autofocus
             label="[[i18n('networkSimEnterOldPin')]]">
-        </network-config-input>
-        <network-config-input id="changePinNew1" password
+        </paper-input>
+        <paper-input id="changePinNew1" class="pin" no-label-float
             label="[[i18n('networkSimEnterNewPin')]]">
-        </network-config-input>
-        <network-config-input id="changePinNew2" password
+        </paper-input>
+        <paper-input id="changePinNew2" class="pin" no-label-float
             label="[[i18n('networkSimReEnterNewPin')]]">
           <iron-a11y-keys keys="enter" on-keys-pressed="sendChangePin_">
           </iron-a11y-keys>
-        </network-config-input>
+        </paper-input>
         <div class="dialog-error">
           [[getErrorMsg_(error_, networkProperties)]]
         </div>
@@ -138,11 +146,11 @@
         on-close="onUnlockPinDialogClose_">
       <div slot="title">[[i18n('networkSimLockedTitle')]]</div>
       <div slot="body">
-        <network-config-input id="unlockPin" password autofocus
+        <paper-input id="unlockPin" class="pin" no-label-float autofocus
             label="[[i18n('networkSimEnterPin')]]">
           <iron-a11y-keys keys="enter" on-keys-pressed="sendUnlockPin_">
           </iron-a11y-keys>
-        </network-config-input>
+        </paper-input>
         <div class="dialog-error">
           [[getErrorMsg_(error_, networkProperties)]]
         </div>
@@ -162,17 +170,17 @@
         <div>
           Enter the 8-digit PIN Unblocking Key provided by your carrier
         </div>
-        <network-config-input id="unlockPuk" password autofocus
+        <paper-input id="unlockPuk" class="puk" no-label-float autofocus
             label="[[i18n('networkSimEnterPuk')]]">
-        </network-config-input>
-        <network-config-input id="unlockPin1" password
+        </paper-input>
+        <paper-input id="unlockPin1" class="pin" no-label-float
             label="[[i18n('networkSimEnterNewPin')]]">
-        </network-config-input>
-        <network-config-input id="unlockPin2" password
+        </paper-input>
+        <paper-input id="unlockPin2" class="pin" no-label-float
             label="[[i18n('networkSimReEnterNewPin')]]">
           <iron-a11y-keys keys="enter" on-keys-pressed="sendUnlockPuk_">
           </iron-a11y-keys>
-        </network-config-input>
+        </paper-input>
         <div class="dialog-error">
           [[i18n('networkSimLockedWarning')]]
         </div>

@@ -193,9 +193,7 @@ void Pointer::OnMouseEvent(ui::MouseEvent* event) {
   if (!focus_surface_)
     return;
 
-  if (event->IsMouseEvent() &&
-      event->type() != ui::ET_MOUSE_EXITED &&
-      event->type() != ui::ET_MOUSE_CAPTURE_CHANGED) {
+  if (event->IsMouseEvent() && event->type() != ui::ET_MOUSE_EXITED) {
     // Generate motion event if location changed. We need to check location
     // here as mouse movement can generate both "moved" and "entered" events
     // but OnPointerMotion should only be called if location changed since

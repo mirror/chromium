@@ -22,10 +22,6 @@
 
 namespace {
 const CGFloat kLeadingButtonEdgeOffset = 9;
-// Offset from the leading edge to the textfield when no image is shown.
-const CGFloat kTextFieldLeadingOffsetNoImage = 16;
-// Space between the leading button and the textfield when a button is shown.
-const CGFloat kTextFieldLeadingOffsetImage = 6;
 }  // namespace
 
 @interface OmniboxTextFieldIOS ()
@@ -100,9 +96,8 @@ const CGFloat kTextFieldLeadingOffsetImage = 6;
                                                   tintColor:tintColor];
     [self addSubview:_textField];
 
-    _leadingTextfieldConstraint = [_textField.leadingAnchor
-        constraintEqualToAnchor:self.leadingAnchor
-                       constant:kTextFieldLeadingOffsetNoImage];
+    _leadingTextfieldConstraint =
+        [_textField.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
 
     [NSLayoutConstraint activateConstraints:@[
       [_textField.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
@@ -134,8 +129,7 @@ const CGFloat kTextFieldLeadingOffsetImage = 6;
       [_leadingButton.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
       self.leadingButtonLeadingConstraint,
       [self.leadingButton.trailingAnchor
-          constraintEqualToAnchor:self.textField.leadingAnchor
-                         constant:-kTextFieldLeadingOffsetImage],
+          constraintEqualToAnchor:self.textField.leadingAnchor],
     ]];
   }
 }

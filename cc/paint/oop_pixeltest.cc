@@ -199,13 +199,8 @@ class OopPixelTest : public testing::Test {
     }
     gpu::Capabilities capabilities;
     gpu::gles2::GLES2Interface* gl = context_->GetImplementation();
-    size_t max_resource_cache_bytes;
-    size_t max_glyph_cache_texture_bytes;
-    skia_bindings::GrContextForGLES2Interface::DefaultCacheLimitsForTests(
-        &max_resource_cache_bytes, &max_glyph_cache_texture_bytes);
-    skia_bindings::GrContextForGLES2Interface scoped_grcontext(
-        gl, capabilities, max_resource_cache_bytes,
-        max_glyph_cache_texture_bytes);
+    skia_bindings::GrContextForGLES2Interface scoped_grcontext(gl,
+                                                               capabilities);
     SkImageInfo image_info = SkImageInfo::MakeN32Premul(
         options.bitmap_rect.width(), options.bitmap_rect.height());
     auto surface = SkSurface::MakeRenderTarget(scoped_grcontext.get(),

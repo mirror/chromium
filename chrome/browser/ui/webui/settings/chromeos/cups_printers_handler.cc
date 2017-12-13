@@ -83,7 +83,7 @@ void RecordIppQuerySuccess(bool success) {
   UMA_HISTOGRAM_BOOLEAN("Printing.CUPS.IppAttributesSuccess", success);
 }
 
-// Parses |printer_uri| into its components and written into |uri|.  Returns
+// Parsees |printer_uri| into its components and written into |uri|.  Returns
 // true if the uri was parsed successfully, returns false otherwise.  No changes
 // are made to |uri| if this function returns false.
 bool ParseUri(const std::string& printer_uri, PrinterUri* uri) {
@@ -181,9 +181,9 @@ std::string PrinterAddress(const std::string& host, int port) {
   return host;
 }
 
-// Returns a JSON representation of |printer| as a CupsPrinterInfo. If the
-// printer uri cannot be parsed, the relevant fields are populated with default
-// values.
+// Returns a JSON representation of |printer| as a CupsPrinterInfo. Note it's
+// possible that this function returns a nullptr if the printer url is not in
+// the right format.
 std::unique_ptr<base::DictionaryValue> GetPrinterInfo(const Printer& printer) {
   std::unique_ptr<base::DictionaryValue> printer_info =
       CreateEmptyPrinterInfo();
@@ -196,13 +196,7 @@ std::unique_ptr<base::DictionaryValue> GetPrinterInfo(const Printer& printer) {
 
   PrinterUri uri;
   if (!ParseUri(printer.uri(), &uri)) {
-    // Uri is invalid so we set default values.
-    LOG(WARNING) << "Could not parse uri.  Defaulting values";
-    printer_info->SetString("printerAddress", "");
-    printer_info->SetString("printerQueue", "");
-    printer_info->SetString("printerProtocol",
-                            "ipp");  // IPP is our default protocol.
-    return printer_info;
+    return nullptr;
   }
 
   if (base::ToLowerASCII(uri.scheme) == "usb") {
@@ -369,9 +363,11 @@ void CupsPrintersHandler::HandleGetCupsPrintersList(
 
   auto printers_list = base::MakeUnique<base::ListValue>();
   for (const Printer& printer : printers) {
-    // Some of these printers could be invalid but we want to allow the user
-    // to edit them. crbug.com/778383
-    printers_list->Append(GetPrinterInfo(printer));
+    // TODO(skau): Theoretically |printer_info| should not be a nullptr as we
+    // should not allow adding an invalid configured printer to PrinterManager.
+    auto printer_info = GetPrinterInfo(printer);
+    if (printer_info)
+      printers_list->Append(std::move(printer_info));
   }
 
   auto response = base::MakeUnique<base::DictionaryValue>();
@@ -571,8 +567,8 @@ void CupsPrintersHandler::HandleAddCupsPrinter(const base::ListValue* args) {
     // model.
     bool found = false;
     for (const auto& resolved_printer : resolved_printers_[ppd_manufacturer]) {
-      if (resolved_printer.first == ppd_model) {
-        *printer->mutable_ppd_reference() = resolved_printer.second;
+      if (resolved_printer.name == ppd_model) {
+        *(printer->mutable_ppd_reference()) = resolved_printer.ppd_ref;
         found = true;
         break;
       }
@@ -749,7 +745,7 @@ void CupsPrintersHandler::ResolvePrintersDone(
   if (result_code == PpdProvider::SUCCESS) {
     resolved_printers_[manufacturer] = printers;
     for (const auto& printer : printers) {
-      printers_value->AppendString(printer.first);
+      printers_value->AppendString(printer.name);
     }
   }
   base::DictionaryValue response;
@@ -820,10 +816,14 @@ void CupsPrintersHandler::OnPrintersChanged(
   std::unique_ptr<base::ListValue> printers_list =
       base::MakeUnique<base::ListValue>();
   for (const Printer& printer : automatic_printers_) {
-    printers_list->Append(GetPrinterInfo(printer));
+    auto printer_info = GetPrinterInfo(printer);
+    if (printer_info)
+      printers_list->Append(std::move(printer_info));
   }
   for (const Printer& printer : discovered_printers_) {
-    printers_list->Append(GetPrinterInfo(printer));
+    auto printer_info = GetPrinterInfo(printer);
+    if (printer_info)
+      printers_list->Append(std::move(printer_info));
   }
 
   FireWebUIListener("on-printer-discovered", *printers_list);

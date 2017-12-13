@@ -73,9 +73,7 @@ class GPU_EXPORT GpuProcessHostActivityFlags : public ActivityFlagsBase {
   GpuProcessHostActivityFlags();
 
   bool IsFlagSet(Flag flag);
-  mojo::ScopedSharedBufferHandle CloneHandle() {
-    return handle().Clone(mojo::SharedBufferHandle::AccessMode::READ_WRITE);
-  }
+  mojo::ScopedSharedBufferHandle CloneHandle() { return handle().Clone(); }
 };
 
 }  // namespace gpu

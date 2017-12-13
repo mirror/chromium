@@ -469,6 +469,7 @@ class MESSAGE_CENTER_EXPORT Notification {
   void SetSystemPriority();
 
   // Delegate actions.
+  void Display() const { delegate()->Display(); }
   void Click() const { delegate()->Click(); }
   void ButtonClick(int index) const { delegate()->ButtonClick(index); }
   void Close(bool by_user) const { delegate()->Close(by_user); }

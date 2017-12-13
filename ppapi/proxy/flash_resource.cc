@@ -96,10 +96,7 @@ PP_Bool FlashResource::SetCrashData(PP_Instance instance,
       return PP_TRUE;
     }
     case PP_FLASHCRASHKEY_RESOURCE_URL: {
-      static base::debug::CrashKeyString* subresource_url =
-          base::debug::AllocateCrashKeyString(
-              "subresource_url", base::debug::CrashKeySize::Size256);
-      base::debug::SetCrashKeyString(subresource_url, url_string_var->value());
+      base::debug::SetCrashKeyValue("subresource_url", url_string_var->value());
       return PP_TRUE;
     }
   }

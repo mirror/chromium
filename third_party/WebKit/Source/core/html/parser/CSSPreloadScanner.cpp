@@ -257,13 +257,16 @@ void CSSPreloadScanner::EmitRule(const SegmentedString& source) {
 }
 
 CSSPreloaderResourceClient::CSSPreloaderResourceClient(
+    Resource* resource,
     HTMLResourcePreloader* preloader)
     : policy_(preloader->GetDocument()
                       ->GetSettings()
                       ->GetCSSExternalScannerPreload()
                   ? kScanAndPreload
                   : kScanOnly),
-      preloader_(preloader) {}
+      preloader_(preloader) {
+  SetResource(resource);
+}
 
 CSSPreloaderResourceClient::~CSSPreloaderResourceClient() {}
 

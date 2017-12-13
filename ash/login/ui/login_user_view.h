@@ -20,7 +20,7 @@ class LoginButton;
 
 // Display the user's profile icon, name, and a menu icon in various layout
 // styles.
-class ASH_EXPORT LoginUserView : public views::View,
+class ASH_EXPORT LoginUserView : public views::Button,
                                  public views::ButtonListener {
  public:
   // TestApi is used for tests to get internal implementation details.
@@ -34,7 +34,6 @@ class ASH_EXPORT LoginUserView : public views::View,
     const base::string16& displayed_name() const;
 
     views::View* user_label() const;
-    views::View* tap_button() const;
 
     bool is_opaque() const;
 
@@ -58,24 +57,18 @@ class ASH_EXPORT LoginUserView : public views::View,
   // Set if the view must be opaque.
   void SetForceOpaque(bool force_opaque);
 
-  // Enables or disables tapping the view.
-  void SetTapEnabled(bool enabled);
-
   const mojom::LoginUserInfoPtr& current_user() const { return current_user_; }
 
-  // views::View:
+  // views::Button:
   const char* GetClassName() const override;
   gfx::Size CalculatePreferredSize() const override;
-  void Layout() override;
+  void OnFocus() override;
+  void OnBlur() override;
 
   // views::ButtonListener:
-  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+  void ButtonPressed(Button* sender, const ui::Event& event) override;
 
  private:
-  class UserImage;
-  class UserLabel;
-  class TapButton;
-
   // Called when hover state changes.
   void OnHover(bool has_hover);
 
@@ -86,6 +79,9 @@ class ASH_EXPORT LoginUserView : public views::View,
 
   void SetLargeLayout();
   void SetSmallishLayout();
+
+  class UserImage;
+  class UserLabel;
 
   // Executed when the user view is pressed.
   OnTap on_tap_;
@@ -101,7 +97,6 @@ class ASH_EXPORT LoginUserView : public views::View,
   UserImage* user_image_ = nullptr;
   UserLabel* user_label_ = nullptr;
   LoginButton* user_dropdown_ = nullptr;
-  TapButton* tap_button_ = nullptr;
   std::unique_ptr<LoginBubble> user_menu_;
 
   // True iff the view is currently opaque (ie, opacity = 1).

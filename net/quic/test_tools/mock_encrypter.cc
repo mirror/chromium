@@ -46,10 +46,6 @@ size_t MockEncrypter::GetNoncePrefixSize() const {
   return 0;
 }
 
-size_t MockEncrypter::GetIVSize() const {
-  return 0;
-}
-
 size_t MockEncrypter::GetMaxPlaintextSize(size_t ciphertext_size) const {
   return ciphertext_size;
 }

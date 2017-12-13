@@ -4,7 +4,6 @@
 
 #include "core/timing/TaskAttributionTiming.h"
 
-#include "bindings/core/v8/V8ObjectBuilder.h"
 #include "core/frame/DOMWindow.h"
 
 namespace blink {
@@ -44,14 +43,6 @@ String TaskAttributionTiming::containerId() const {
 
 String TaskAttributionTiming::containerName() const {
   return container_name_;
-}
-
-void TaskAttributionTiming::BuildJSONValue(V8ObjectBuilder& builder) const {
-  PerformanceEntry::BuildJSONValue(builder);
-  builder.AddString("containerType", containerType());
-  builder.AddString("containerSrc", containerSrc());
-  builder.AddString("containerId", containerId());
-  builder.AddString("containerName", containerName());
 }
 
 void TaskAttributionTiming::Trace(blink::Visitor* visitor) {

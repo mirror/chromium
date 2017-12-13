@@ -96,6 +96,9 @@
 -SAMLPolicyTest.TransferCookiesAffiliated
 -SmartSessionRestoreTest.*
 
+# Flaky JS test failures: AndroidAppsPageTests SubPage HideOnDisable
+-CrSettingsAndroidAppsPageTest.*
+
 # ash::Shell access in test for wallpaper images.
 -CustomizationWallpaperDownloaderBrowserTest.*
 -WallpaperManagerPolicyTest.*

@@ -48,9 +48,7 @@ class MediaSourceTest : public content::MediaBrowserTest {
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(
-        switches::kAutoplayPolicy,
-        switches::autoplay::kNoUserGestureRequiredPolicy);
+    command_line->AppendSwitch(switches::kIgnoreAutoplayRestrictionsForTests);
     scoped_feature_list_.InitAndDisableFeature(media::kMseFlacInIsobmff);
   }
 
@@ -140,9 +138,7 @@ IN_PROC_BROWSER_TEST_F(MediaSourceTest, Playback_AudioVideo_Mp2t) {
 class MediaSourceFlacInIsobmffTest : public content::MediaSourceTest {
  public:
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(
-        switches::kAutoplayPolicy,
-        switches::autoplay::kNoUserGestureRequiredPolicy);
+    command_line->AppendSwitch(switches::kIgnoreAutoplayRestrictionsForTests);
 
     // Enable MSE FLAC-in-MP4 feature.
     scoped_feature_list_.InitAndEnableFeature(media::kMseFlacInIsobmff);

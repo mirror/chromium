@@ -33,6 +33,7 @@ import android.view.inputmethod.InputConnection;
 import android.view.textclassifier.TextClassifier;
 
 import org.chromium.base.ObserverList;
+import org.chromium.base.ObserverList.RewindableIterator;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
@@ -54,7 +55,6 @@ import org.chromium.content.browser.webcontents.WebContentsImpl;
 import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
 import org.chromium.content_public.browser.AccessibilitySnapshotNode;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
-import org.chromium.content_public.browser.GestureListenerManager;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
 import org.chromium.content_public.browser.SelectionClient;
@@ -123,43 +123,6 @@ public class ContentViewCoreImpl
         }
     }
 
-    /**
-     * A {@link GestureStateListener} updating input/selection UI upon various
-     * gesture events notification.
-     */
-    private class ContentGestureStateListener implements GestureStateListener {
-        @Override
-        public void onFlingStartGesture(int scrollOffsetY, int scrollExtentY) {
-            mPotentiallyActiveFlingCount++;
-            setTouchScrollInProgress(false);
-        }
-
-        @Override
-        public void onScrollStarted(int scrollOffsetY, int scrollExtentY) {
-            setTouchScrollInProgress(true);
-        }
-
-        @Override
-        public void onScrollUpdateGestureConsumed() {
-            destroyPastePopup();
-        }
-
-        @Override
-        public void onScrollEnded(int scrollOffsetY, int scrollExtentY) {
-            setTouchScrollInProgress(false);
-        }
-
-        @Override
-        public void onSingleTap(boolean consumed) {
-            destroyPastePopup();
-        }
-
-        @Override
-        public void onLongPress() {
-            mContainerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-        }
-    }
-
     private final Context mContext;
     private final String mProductVersion;
     private ViewGroup mContainerView;
@@ -171,7 +134,8 @@ public class ContentViewCoreImpl
     private long mNativeContentViewCore;
 
     private boolean mAttachedToWindow;
-    private GestureListenerManagerImpl mGestureListenerManager;
+    private final ObserverList<GestureStateListener> mGestureStateListeners;
+    private final RewindableIterator<GestureStateListener> mGestureStateListenersIterator;
 
     private PopupZoomer mPopupZoomer;
     private SelectPopup mSelectPopup;
@@ -275,6 +239,8 @@ public class ContentViewCoreImpl
         mAccessibilityManager =
                 (AccessibilityManager) getContext().getSystemService(Context.ACCESSIBILITY_SERVICE);
         mSystemCaptioningBridge = CaptioningBridgeFactory.getSystemCaptioningBridge(mContext);
+        mGestureStateListeners = new ObserverList<GestureStateListener>();
+        mGestureStateListenersIterator = mGestureStateListeners.rewindableIterator();
 
         mWindowAndroidChangedObservers = new ObserverList<WindowAndroidChangedObserver>();
     }
@@ -395,9 +361,6 @@ public class ContentViewCoreImpl
         mShouldRequestUnbufferedDispatch = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                 && ContentFeatureList.isEnabled(ContentFeatureList.REQUEST_UNBUFFERED_DISPATCH)
                 && !nativeUsingSynchronousCompositing(mNativeContentViewCore);
-        mGestureListenerManager =
-                (GestureListenerManagerImpl) GestureListenerManager.fromWebContents(mWebContents);
-        mGestureListenerManager.addListener(new ContentGestureStateListener());
     }
 
     @Override
@@ -503,6 +466,10 @@ public class ContentViewCoreImpl
         mImeAdapter.resetAndHideKeyboard();
         mWebContents = null;
         mNativeContentViewCore = 0;
+        for (mGestureStateListenersIterator.rewind(); mGestureStateListenersIterator.hasNext();) {
+            mGestureStateListenersIterator.next().onDestroyed();
+        }
+        mGestureStateListeners.clear();
         hidePopupsAndPreserveSelection();
         destroyPastePopup();
 
@@ -568,6 +535,67 @@ public class ContentViewCoreImpl
         mSelectionPopupController.setScrollInProgress(inProgress, isScrollInProgress());
     }
 
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void onFlingStartEventConsumed() {
+        mPotentiallyActiveFlingCount++;
+        setTouchScrollInProgress(false);
+        for (mGestureStateListenersIterator.rewind(); mGestureStateListenersIterator.hasNext();) {
+            mGestureStateListenersIterator.next().onFlingStartGesture(
+                    computeVerticalScrollOffset(), computeVerticalScrollExtent());
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void onFlingCancelEventAck() {
+        updateGestureStateListener(GestureEventType.FLING_CANCEL);
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void onScrollBeginEventAck() {
+        setTouchScrollInProgress(true);
+        updateGestureStateListener(GestureEventType.SCROLL_START);
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void onScrollUpdateGestureConsumed() {
+        for (mGestureStateListenersIterator.rewind(); mGestureStateListenersIterator.hasNext();) {
+            mGestureStateListenersIterator.next().onScrollUpdateGestureConsumed();
+        }
+        destroyPastePopup();
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void onScrollEndEventAck() {
+        setTouchScrollInProgress(false);
+        updateGestureStateListener(GestureEventType.SCROLL_END);
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void onPinchBeginEventAck() {
+        updateGestureStateListener(GestureEventType.PINCH_BEGIN);
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void onPinchEndEventAck() {
+        updateGestureStateListener(GestureEventType.PINCH_END);
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void onSingleTapEventAck(boolean consumed) {
+        for (mGestureStateListenersIterator.rewind(); mGestureStateListenersIterator.hasNext();) {
+            mGestureStateListenersIterator.next().onSingleTap(consumed);
+        }
+        destroyPastePopup();
+    }
+
     /**
      * Called just prior to a tap or press gesture being forwarded to the renderer.
      */
@@ -605,6 +633,44 @@ public class ContentViewCoreImpl
     public void cancelFling(long timeMs) {
         if (mNativeContentViewCore == 0) return;
         nativeFlingCancel(mNativeContentViewCore, timeMs, false);
+    }
+
+    @Override
+    public void addGestureStateListener(GestureStateListener listener) {
+        mGestureStateListeners.addObserver(listener);
+    }
+
+    @Override
+    public void removeGestureStateListener(GestureStateListener listener) {
+        mGestureStateListeners.removeObserver(listener);
+    }
+
+    private void updateGestureStateListener(int gestureType) {
+        for (mGestureStateListenersIterator.rewind(); mGestureStateListenersIterator.hasNext();) {
+            GestureStateListener listener = mGestureStateListenersIterator.next();
+            switch (gestureType) {
+                case GestureEventType.PINCH_BEGIN:
+                    listener.onPinchStarted();
+                    break;
+                case GestureEventType.PINCH_END:
+                    listener.onPinchEnded();
+                    break;
+                case GestureEventType.FLING_END:
+                    listener.onFlingEndGesture(
+                            computeVerticalScrollOffset(), computeVerticalScrollExtent());
+                    break;
+                case GestureEventType.SCROLL_START:
+                    listener.onScrollStarted(
+                            computeVerticalScrollOffset(), computeVerticalScrollExtent());
+                    break;
+                case GestureEventType.SCROLL_END:
+                    listener.onScrollEnded(
+                            computeVerticalScrollOffset(), computeVerticalScrollExtent());
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     @Override
@@ -747,7 +813,9 @@ public class ContentViewCoreImpl
     private void onTouchDown(MotionEvent event) {
         if (mShouldRequestUnbufferedDispatch) requestUnbufferedDispatch(event);
         cancelRequestToScrollFocusedEditableNodeIntoView();
-        mGestureListenerManager.updateOnTouchDown();
+        for (mGestureStateListenersIterator.rewind(); mGestureStateListenersIterator.hasNext();) {
+            mGestureStateListenersIterator.next().onTouchDown();
+        }
     }
 
     private void updateAfterSizeChanged() {
@@ -791,7 +859,9 @@ public class ContentViewCoreImpl
         mImeAdapter.onWindowFocusChanged(hasWindowFocus);
         if (!hasWindowFocus) resetGestureDetection();
         mSelectionPopupController.onWindowFocusChanged(hasWindowFocus);
-        mGestureListenerManager.updateOnWindowFocusChanged(hasWindowFocus);
+        for (mGestureStateListenersIterator.rewind(); mGestureStateListenersIterator.hasNext();) {
+            mGestureStateListenersIterator.next().onWindowFocusChanged(hasWindowFocus);
+        }
     }
 
     @Override
@@ -1083,12 +1153,19 @@ public class ContentViewCoreImpl
                 maxPageScaleFactor, topBarShownPix);
 
         if (scrollChanged || topBarChanged) {
-            mGestureListenerManager.updateOnScrollChanged(
-                    computeVerticalScrollOffset(), computeVerticalScrollExtent());
+            for (mGestureStateListenersIterator.rewind();
+                    mGestureStateListenersIterator.hasNext();) {
+                mGestureStateListenersIterator.next().onScrollOffsetOrExtentChanged(
+                        computeVerticalScrollOffset(), computeVerticalScrollExtent());
+            }
         }
+
         if (scaleLimitsChanged) {
-            mGestureListenerManager.updateOnScaleLimitsChanged(
-                    minPageScaleFactor, maxPageScaleFactor);
+            for (mGestureStateListenersIterator.rewind();
+                    mGestureStateListenersIterator.hasNext();) {
+                mGestureStateListenersIterator.next().onScaleLimitsChanged(
+                        minPageScaleFactor, maxPageScaleFactor);
+            }
         }
 
         TraceEvent.end("ContentViewCore:updateFrameInfo");
@@ -1177,6 +1254,12 @@ public class ContentViewCoreImpl
     @Override
     public SelectPopup getSelectPopupForTest() {
         return mSelectPopup;
+    }
+
+    @SuppressWarnings("unused")
+    @CalledByNative
+    private void performLongPressHapticFeedback() {
+        mContainerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
     }
 
     private void destroyPastePopup() {
@@ -1388,15 +1471,15 @@ public class ContentViewCoreImpl
 
         mPotentiallyActiveFlingCount = 0;
         setTouchScrollInProgress(false);
-        if (touchScrollInProgress) mGestureListenerManager.updateOnScrollEnd();
-        if (potentiallyActiveFlingCount > 0) mGestureListenerManager.updateOnFlingEnd();
+        if (touchScrollInProgress) updateGestureStateListener(GestureEventType.SCROLL_END);
+        if (potentiallyActiveFlingCount > 0) updateGestureStateListener(GestureEventType.FLING_END);
     }
 
     @CalledByNative
     private void onNativeFlingStopped() {
         if (mPotentiallyActiveFlingCount > 0) {
             mPotentiallyActiveFlingCount--;
-            mGestureListenerManager.updateOnFlingEnd();
+            updateGestureStateListener(GestureEventType.FLING_END);
         }
         // Note that mTouchScrollInProgress should normally be false at this
         // point, but we reset it anyway as another failsafe.

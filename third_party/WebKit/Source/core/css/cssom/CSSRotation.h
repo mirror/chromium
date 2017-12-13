@@ -66,7 +66,8 @@ class CORE_EXPORT CSSRotation final : public CSSTransformComponent {
               CSSNumericValue* y,
               CSSNumericValue* z,
               CSSNumericValue* angle,
-              bool is2D);
+              bool is2D)
+      : CSSTransformComponent(is2D), angle_(angle), x_(x), y_(y), z_(z) {}
 
   Member<CSSNumericValue> angle_;
   Member<CSSNumericValue> x_;

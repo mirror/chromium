@@ -16,31 +16,29 @@ enum class FileStatus {
   kSuccess = 0,
   kUserDataDirFail = 1,
   kFileNotFound = 2,
-  kFileAccessDenied = 3,
-  kFileUnexpectedFailure = 4,
-  kMetadataReadFail = 5,
-  kInvalidFormatVersion = 6,
-  kArraySizeZero = 7,
-  kArrayTooBig = 8,
-  kArrayReadFail = 9,
-  kArrayNotSorted = 10,
+  kMetadataReadFail = 3,
+  kInvalidFormatVersion = 4,
+  kArraySizeZero = 5,
+  kArrayTooBig = 6,
+  kArrayReadFail = 7,
+  kArrayNotSorted = 8,
   COUNT
 };
 
 // Look up a binary based on the required data points.
-// - Returns true if match found in the blacklist.  I.E. Block if true.
-bool IsModuleListed(const std::string& basename,
-                    DWORD image_size,
-                    DWORD time_date_stamp);
+// - Returns true if match found in whitelist.  I.E. Allow module load.
+bool IsModuleWhitelisted(const std::string& basename,
+                         DWORD image_size,
+                         DWORD time_date_stamp);
 
-// Get the full path of the blacklist file used.
-std::wstring GetBlFilePathUsed();
+// Get the full path of the whitelist file used.
+std::wstring GetFilePathUsed();
 
 // Initialize internal whitelist from file.
 FileStatus InitFromFile();
 
-// Overrides the blacklist path for use by tests.
-void OverrideFilePathForTesting(const std::wstring& new_bl_path);
+// Sets the path to the whitelist file for use by tests.
+void OverrideFilePathForTesting(const std::wstring& new_path);
 
 }  // namespace whitelist
 

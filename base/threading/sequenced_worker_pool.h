@@ -121,7 +121,7 @@ class BASE_EXPORT SequencedWorkerPool : public TaskRunner {
   class BASE_EXPORT SequenceToken {
    public:
     SequenceToken() : id_(0) {}
-    ~SequenceToken() = default;
+    ~SequenceToken() {}
 
     bool Equals(const SequenceToken& other) const {
       return id_ == other.id_;
@@ -147,7 +147,7 @@ class BASE_EXPORT SequencedWorkerPool : public TaskRunner {
   // Allows tests to perform certain actions.
   class TestingObserver {
    public:
-    virtual ~TestingObserver() = default;
+    virtual ~TestingObserver() {}
     virtual void OnHasWork() = 0;
     virtual void WillWaitForShutdown() = 0;
     virtual void OnDestruct() = 0;

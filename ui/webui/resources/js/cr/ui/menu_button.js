@@ -48,7 +48,6 @@ cr.define('cr.ui', function() {
       this.addEventListener('mousedown', this);
       this.addEventListener('keydown', this);
       this.addEventListener('dblclick', this);
-      this.addEventListener('blur', this);
 
       // Adding the 'custom-appearance' class prevents widgets.css from changing
       // the appearance of this element.
@@ -120,19 +119,19 @@ cr.define('cr.ui', function() {
           // Touch on the menu button itself is ignored to avoid that the menu
           // opened again by the mousedown event following the touch events.
           if (this.shouldDismissMenu_(e)) {
-            this.hideMenuWithoutTakingFocus_();
+            this.hideMenu();
           }
           break;
         case 'mousedown':
           if (e.currentTarget == this.ownerDocument) {
             if (this.shouldDismissMenu_(e)) {
-              this.hideMenuWithoutTakingFocus_();
+              this.hideMenu();
             } else {
               e.preventDefault();
             }
           } else {
             if (this.isMenuShown()) {
-              this.hideMenuWithoutTakingFocus_();
+              this.hideMenu();
             } else if (e.button == 0) {  // Only show the menu when using left
                                          // mouse button.
               this.showMenu(false, {x: e.screenX, y: e.screenY});
@@ -166,21 +165,10 @@ cr.define('cr.ui', function() {
             this.classList.remove('using-mouse');
           }
           break;
-        case 'blur':
-          // No need to hide the focus ring anymore, without having focus.
-          this.classList.remove('using-mouse');
-          break;
         case 'activate':
           var hideDelayed =
               e.target instanceof cr.ui.MenuItem && e.target.checkable;
-          var hideType = hideDelayed ? HideType.DELAYED : HideType.INSTANT;
-          if (e.originalEvent instanceof MouseEvent ||
-              e.originalEvent instanceof TouchEvent) {
-            this.hideMenuWithoutTakingFocus_(hideType);
-          } else {
-            // Keyboard. Take focus to continue keyboard operation.
-            this.hideMenu(hideType);
-          }
+          this.hideMenu(hideDelayed ? HideType.DELAYED : HideType.INSTANT);
           break;
         case 'scroll':
           if (!(e.target == this.menu || this.menu.contains(e.target)))
@@ -251,27 +239,6 @@ cr.define('cr.ui', function() {
      *     default: cr.ui.HideType.INSTANT.
      */
     hideMenu: function(opt_hideType) {
-      this.hideMenuInternal_(true, opt_hideType);
-    },
-
-    /**
-     * Hides the menu. If your menu can go out of scope, make sure to call this
-     * first.
-     * @param {cr.ui.HideType=} opt_hideType Type of hide.
-     *     default: cr.ui.HideType.INSTANT.
-     */
-    hideMenuWithoutTakingFocus_: function(opt_hideType) {
-      this.hideMenuInternal_(false, opt_hideType);
-    },
-
-    /**
-     * Hides the menu. If your menu can go out of scope, make sure to call this
-     * first.
-     * @param {boolean} shouldTakeFocus Moves the focus to the button if true.
-     * @param {cr.ui.HideType=} opt_hideType Type of hide.
-     *     default: cr.ui.HideType.INSTANT.
-     */
-    hideMenuInternal_: function(shouldTakeFocus, opt_hideType) {
       if (!this.isMenuShown())
         return;
 
@@ -283,8 +250,7 @@ cr.define('cr.ui', function() {
       this.menu.hide();
 
       this.showingEvents_.removeAll();
-      if (shouldTakeFocus)
-        this.focus();
+      this.focus();
 
       var event = new UIEvent(
           'menuhide', {bubbles: true, cancelable: false, view: window});

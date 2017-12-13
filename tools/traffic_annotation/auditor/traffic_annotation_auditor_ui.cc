@@ -415,7 +415,7 @@ int main(int argc, char* argv[]) {
     TrafficAnnotationExporter exporter(source_path);
     if (!exporter.UpdateAnnotations(
             auditor.extracted_annotations(),
-            TrafficAnnotationAuditor::GetReservedIDsMap())) {
+            TrafficAnnotationAuditor::GetReservedUniqueIDs())) {
       return 1;
     }
     if (exporter.modified()) {

@@ -542,9 +542,14 @@ void RenderViewImpl::Initialize(
 #endif
   display_mode_ = params->initial_size.display_mode;
 
-  webview_ = WebView::Create(
-      this, is_hidden() ? blink::mojom::PageVisibilityState::kHidden
-                        : blink::mojom::PageVisibilityState::kVisible);
+  WebFrame* opener_frame =
+      RenderFrameImpl::ResolveOpener(params->opener_frame_route_id);
+
+  webview_ =
+      WebView::Create(this,
+                      is_hidden() ? blink::mojom::PageVisibilityState::kHidden
+                                  : blink::mojom::PageVisibilityState::kVisible,
+                      opener_frame ? opener_frame->View() : nullptr);
   RenderWidget::Init(show_callback, webview_->GetWidget());
 
   g_view_map.Get().insert(std::make_pair(webview(), this));
@@ -594,9 +599,6 @@ void RenderViewImpl::Initialize(
   }
 
   ApplyBlinkSettings(command_line, webview()->GetSettings());
-
-  WebFrame* opener_frame =
-      RenderFrameImpl::ResolveOpener(params->opener_frame_route_id);
 
   if (params->main_frame_routing_id != MSG_ROUTING_NONE) {
     CHECK(params->main_frame_interface_provider.is_valid());
@@ -1086,13 +1088,9 @@ bool RenderViewImpl::RenderWidgetWillHandleMouseEvent(
 
 bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
   WebFrame* main_frame = webview() ? webview()->MainFrame() : nullptr;
-  if (main_frame) {
-    GURL active_url;
-    if (main_frame->IsWebLocalFrame())
-      active_url = main_frame->ToWebLocalFrame()->GetDocument().Url();
+  if (main_frame && main_frame->IsWebLocalFrame())
     GetContentClient()->SetActiveURL(
-        active_url, main_frame->Top()->GetSecurityOrigin().ToString().Utf8());
-  }
+        main_frame->ToWebLocalFrame()->GetDocument().Url());
 
   // Input IPC messages must not be processed if the RenderView is in
   // swapped out state.
@@ -2173,9 +2171,8 @@ void RenderViewImpl::OnUpdateScreenInfo(const ScreenInfo& screen_info) {
 
 GURL RenderViewImpl::GetURLForGraphicsContext3D() {
   DCHECK(webview());
-  WebFrame* main_frame = webview()->MainFrame();
-  if (main_frame && main_frame->IsWebLocalFrame())
-    return GURL(main_frame->ToWebLocalFrame()->GetDocument().Url());
+  if (webview()->MainFrame()->IsWebLocalFrame())
+    return GURL(webview()->MainFrame()->ToWebLocalFrame()->GetDocument().Url());
   else
     return GURL("chrome://gpu/RenderViewImpl::CreateGraphicsContext3D");
 }

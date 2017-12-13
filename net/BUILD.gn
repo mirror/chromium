@@ -85,6 +85,10 @@ net_configs = [
   "//build/config/compiler:wexit_time_destructors",
 ]
 
+if (use_glib && use_gconf && !is_chromeos) {
+  net_configs += [ "//build/config/linux/gconf" ]
+}
+
 if (is_linux) {
   net_configs += [ "//build/config/linux:libresolv" ]
 }
@@ -1045,7 +1049,6 @@ component("net") {
       "proxy/multi_threaded_proxy_resolver.h",
       "proxy/network_delegate_error_observer.cc",
       "proxy/network_delegate_error_observer.h",
-      "proxy/pac_js_library.h",
       "proxy/polling_proxy_config_service.cc",
       "proxy/polling_proxy_config_service.h",
       "proxy/proxy_bypass_rules.cc",
@@ -1077,6 +1080,7 @@ component("net") {
       "proxy/proxy_resolver_factory.h",
       "proxy/proxy_resolver_mac.cc",
       "proxy/proxy_resolver_mac.h",
+      "proxy/proxy_resolver_script.h",
       "proxy/proxy_resolver_script_data.cc",
       "proxy/proxy_resolver_script_data.h",
       "proxy/proxy_resolver_winhttp.cc",
@@ -1142,6 +1146,8 @@ component("net") {
       "quic/core/congestion_control/bandwidth_sampler.h",
       "quic/core/congestion_control/bbr_sender.cc",
       "quic/core/congestion_control/bbr_sender.h",
+      "quic/core/congestion_control/cubic.cc",
+      "quic/core/congestion_control/cubic.h",
       "quic/core/congestion_control/cubic_bytes.cc",
       "quic/core/congestion_control/cubic_bytes.h",
       "quic/core/congestion_control/general_loss_algorithm.cc",
@@ -4854,7 +4860,6 @@ test("net_unittests") {
     "http/http_network_transaction_ssl_unittest.cc",
     "http/http_network_transaction_unittest.cc",
     "http/http_proxy_client_socket_pool_unittest.cc",
-    "http/http_proxy_client_socket_unittest.cc",
     "http/http_proxy_client_socket_wrapper_unittest.cc",
     "http/http_request_headers_unittest.cc",
     "http/http_response_body_drainer_unittest.cc",
@@ -5027,6 +5032,7 @@ test("net_unittests") {
     "quic/core/congestion_control/bandwidth_sampler_test.cc",
     "quic/core/congestion_control/bbr_sender_test.cc",
     "quic/core/congestion_control/cubic_bytes_test.cc",
+    "quic/core/congestion_control/cubic_test.cc",
     "quic/core/congestion_control/general_loss_algorithm_test.cc",
     "quic/core/congestion_control/hybrid_slow_start_test.cc",
     "quic/core/congestion_control/pacing_sender_test.cc",

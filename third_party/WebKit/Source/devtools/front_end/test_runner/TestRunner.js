@@ -9,49 +9,8 @@
 
 /* eslint-disable no-console */
 
-/** @type {!{logToStderr: function(), navigateSecondaryWindow: function(string), notifyDone: function()}|undefined} */
+/** @type {!{logToStderr: function(), notifyDone: function()}|undefined} */
 self.testRunner;
-
-/**
- * Only tests in /LayoutTests/http/tests/devtools/startup/ need to call
- * this method because these tests need certain activities to be exercised
- * in the inspected page prior to the DevTools session.
- * @param {string} path
- * @return {!Promise<undefined>}
- */
-TestRunner.setupStartupTest = function(path) {
-  var absoluteURL = TestRunner.url(path);
-  self.testRunner.navigateSecondaryWindow(absoluteURL);
-  return new Promise(f => TestRunner._startupTestSetupFinished = () => {
-    Main.Main._instanceForTest._initializeTarget();
-    delete TestRunner._startupTestSetupFinished;
-    f();
-  });
-};
-
-/**
- * @param {!Common.Event} event
- */
-TestRunner._evaluateForTestInFrontend = function(event) {
-  var callId = /** @type {number} */ (event.data['callId']);
-  var script = /** @type {number} */ (event.data['script']);
-
-  function invokeMethod() {
-    try {
-      script = script + '//# sourceURL=TestRunner' + callId + '.js';
-      self.eval(script);
-    } catch (e) {
-      console.error(e.stack);
-    }
-  }
-
-  // For startup tests, the first evaluateForTestInFrontend is called
-  // before target has been initialized.
-  if (Protocol.InspectorBackend.deprecatedRunAfterPendingDispatches)
-    Protocol.InspectorBackend.deprecatedRunAfterPendingDispatches(invokeMethod);
-  else
-    invokeMethod();
-};
 
 TestRunner._executeTestScript = function() {
   var testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
@@ -1400,17 +1359,9 @@ TestRunner._TestObserver = class {
     if (TestRunner._startedTest)
       return;
     TestRunner._startedTest = true;
+    TestRunner._printDevToolsConsole();
     TestRunner._setupTestHelpers(target);
-    if (Host.isStartupTest())
-      return;
-    TestRunner
-        .loadHTML(`
-      <head>
-        <base href="${TestRunner.url()}">
-      </head>
-      <body>
-      </body>
-    `).then(() => TestRunner._executeTestScript());
+    TestRunner._runTest();
   }
 
   /**
@@ -1419,6 +1370,18 @@ TestRunner._TestObserver = class {
    */
   targetRemoved(target) {
   }
+};
+
+TestRunner._runTest = async function() {
+  var testPath = TestRunner.url();
+  await TestRunner.loadHTML(`
+    <head>
+      <base href="${testPath}">
+    </head>
+    <body>
+    </body>
+  `);
+  TestRunner._executeTestScript();
 };
 
 /**
@@ -1446,12 +1409,4 @@ function completeTestOnError(message, source, lineno, colno, error) {
 }
 
 self['onerror'] = completeTestOnError;
-InspectorFrontendHost.events.addEventListener(
-    InspectorFrontendHostAPI.Events.EvaluateForTestInFrontend, TestRunner._evaluateForTestInFrontend, TestRunner);
-// TODO(chenwilliam): remove check for legacy test when test migration is done.
-if (!Runtime.queryParam('test'))
-  return;
-TestRunner._printDevToolsConsole();
-if (Host.isStartupTest())
-  TestRunner._executeTestScript();
 })();

@@ -463,7 +463,8 @@ bool SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
   // Let the content embedder enable site isolation for specific URLs. Use the
   // canonical site url for this check, so that schemes with nested origins
   // (blob and filesystem) work properly.
-  if (GetContentClient()->browser()->DoesSiteRequireDedicatedProcess(
+  if (GetContentClient()->IsSupplementarySiteIsolationModeEnabled() &&
+      GetContentClient()->browser()->DoesSiteRequireDedicatedProcess(
           browser_context, site_url)) {
     return true;
   }
@@ -565,10 +566,9 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
           HAS_WRONG_LOCK:
         // We should never attempt to reassign a different origin lock to a
         // process.
-        base::debug::SetCrashKeyString(bad_message::GetRequestedSiteURLKey(),
-                                       site_.spec());
-        base::debug::SetCrashKeyString(
-            bad_message::GetKilledProcessOriginLockKey(),
+        base::debug::SetCrashKeyValue("requested_site_url", site_.spec());
+        base::debug::SetCrashKeyValue(
+            "killed_process_origin_lock",
             policy->GetOriginLock(process_->GetID()).spec());
         CHECK(false) << "Trying to lock a process to " << site_
                      << " but the process is already locked to "
@@ -586,10 +586,9 @@ void SiteInstanceImpl::LockToOriginIfNeeded() {
     // If the site that we've just committed doesn't require a dedicated
     // process, make sure we aren't putting it in a process for a site that
     // does.
-    base::debug::SetCrashKeyString(bad_message::GetRequestedSiteURLKey(),
-                                   site_.spec());
-    base::debug::SetCrashKeyString(
-        bad_message::GetKilledProcessOriginLockKey(),
+    base::debug::SetCrashKeyValue("requested_site_url", site_.spec());
+    base::debug::SetCrashKeyValue(
+        "killed_process_origin_lock",
         policy->GetOriginLock(process_->GetID()).spec());
     CHECK_EQ(lock_state,
              ChildProcessSecurityPolicyImpl::CheckOriginLockResult::NO_LOCK)

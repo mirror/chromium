@@ -121,6 +121,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // Playback controls.
   void Play() override;
   void Pause() override;
+  bool SupportsSave() const override;
   void Seek(double seconds) override;
   void SetRate(double rate) override;
   void SetVolume(double volume) override;
@@ -638,6 +639,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   // Routes audio playback to either AudioRendererSink or WebAudio.
   scoped_refptr<WebAudioSourceProviderImpl> audio_source_provider_;
+
+  bool supports_save_;
 
   // These two are mutually exclusive:
   //   |data_source_| is used for regular resource loads.

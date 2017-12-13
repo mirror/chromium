@@ -26,7 +26,6 @@ NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
       node_(node),
       layout_object_(node.GetLayoutObject()),
       box_type_(NGPhysicalFragment::NGBoxType::kNormalBox),
-      is_old_layout_root_(false),
       did_break_(false) {}
 
 NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
@@ -37,7 +36,6 @@ NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
       node_(nullptr),
       layout_object_(layout_object),
       box_type_(NGPhysicalFragment::NGBoxType::kNormalBox),
-      is_old_layout_root_(false),
       did_break_(false) {}
 
 NGFragmentBuilder::~NGFragmentBuilder() {}
@@ -161,11 +159,6 @@ NGFragmentBuilder& NGFragmentBuilder::SetBoxType(
   return *this;
 }
 
-NGFragmentBuilder& NGFragmentBuilder::SetIsOldLayoutRoot() {
-  is_old_layout_root_ = true;
-  return *this;
-}
-
 void NGFragmentBuilder::AddBaseline(NGBaselineRequest request,
                                     LayoutUnit offset) {
 #if DCHECK_IS_ON()
@@ -205,7 +198,7 @@ scoped_refptr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
   scoped_refptr<NGPhysicalBoxFragment> fragment =
       base::AdoptRef(new NGPhysicalBoxFragment(
           layout_object_, Style(), physical_size, children_,
-          contents_visual_rect, baselines_, BoxType(), is_old_layout_root_,
+          contents_visual_rect, baselines_, BoxType(),
           border_edges_.ToPhysical(GetWritingMode()), std::move(break_token)));
 
   Vector<NGPositionedFloat> positioned_floats;

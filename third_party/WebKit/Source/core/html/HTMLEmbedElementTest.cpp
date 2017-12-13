@@ -9,12 +9,36 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLObjectElement.h"
 #include "core/style/ComputedStyle.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class HTMLEmbedElementTest : public PageTestBase {};
+class HTMLEmbedElementTest : public ::testing::Test {
+ protected:
+  HTMLEmbedElementTest() {}
+
+  void SetUp() override;
+
+  Document& GetDocument() const { return *document_; }
+
+  void SetHtmlInnerHTML(const char* html_content);
+
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
+  Persistent<Document> document_;
+};
+
+void HTMLEmbedElementTest::SetUp() {
+  dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
+  document_ = &dummy_page_holder_->GetDocument();
+  DCHECK(document_);
+}
+
+void HTMLEmbedElementTest::SetHtmlInnerHTML(const char* html_content) {
+  GetDocument().documentElement()->SetInnerHTMLFromString(
+      String::FromUTF8(html_content));
+  GetDocument().View()->UpdateAllLifecyclePhases();
+}
 
 TEST_F(HTMLEmbedElementTest, FallbackState) {
   // Load <object> element with a <embed> child.
@@ -31,7 +55,7 @@ TEST_F(HTMLEmbedElementTest, FallbackState) {
     </object></div>
   )HTML");
 
-  auto* object_element = GetElementById("fco");
+  auto* object_element = GetDocument().getElementById("fco");
   ASSERT_TRUE(object_element);
   HTMLObjectElement* object = ToHTMLObjectElement(object_element);
 
@@ -42,11 +66,11 @@ TEST_F(HTMLEmbedElementTest, FallbackState) {
   EXPECT_FALSE(object->UseFallbackContent());
   EXPECT_TRUE(object->WillUseFallbackContentAtLayout());
 
-  auto* embed_element = GetElementById("fce");
+  auto* embed_element = GetDocument().getElementById("fce");
   ASSERT_TRUE(embed_element);
   HTMLEmbedElement* embed = ToHTMLEmbedElement(embed_element);
 
-  UpdateAllLifecyclePhases();
+  GetDocument().View()->UpdateAllLifecyclePhases();
 
   // We should get |true| as a result and don't trigger a DCHECK.
   EXPECT_TRUE(static_cast<Element*>(embed)->LayoutObjectIsNeeded(
@@ -59,7 +83,7 @@ TEST_F(HTMLEmbedElementTest, FallbackState) {
   EXPECT_TRUE(object->UseFallbackContent());
   EXPECT_TRUE(object->WillUseFallbackContentAtLayout());
 
-  UpdateAllLifecyclePhases();
+  GetDocument().View()->UpdateAllLifecyclePhases();
   EXPECT_TRUE(static_cast<Element*>(embed)->LayoutObjectIsNeeded(
       ComputedStyle::InitialStyle()));
 }

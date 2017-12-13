@@ -208,9 +208,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableWebVRExperimentalRendering(
       base::FeatureList::IsEnabled(features::kWebVrExperimentalRendering));
 
-  WebRuntimeFeatures::EnableWebXR(
-      base::FeatureList::IsEnabled(features::kWebXr));
-
   if (command_line.HasSwitch(switches::kDisablePresentationAPI))
     WebRuntimeFeatures::EnablePresentationAPI(false);
 
@@ -315,6 +312,10 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
     if (base::FeatureList::IsEnabled(features::kGenericSensorExtraClasses))
       WebRuntimeFeatures::EnableGenericSensorExtraClasses(true);
   }
+
+  if (base::FeatureList::IsEnabled(features::kLoadingWithMojo) ||
+      base::FeatureList::IsEnabled(features::kNetworkService))
+    WebRuntimeFeatures::EnableLoadingWithMojo(true);
 
   if (base::FeatureList::IsEnabled(features::kNotificationsWithMojo))
     WebRuntimeFeatures::EnableNotificationsWithMojo(true);

@@ -25,7 +25,7 @@ Persistence.Automapping = class {
     this._fileSystemUISourceCodes = new Map();
     this._sweepThrottler = new Common.Throttler(100);
 
-    var pathEncoder = new Persistence.PathEncoder();
+    var pathEncoder = new Persistence.Automapping.PathEncoder();
     this._filesIndex = new Persistence.Automapping.FilePathIndex(pathEncoder);
     this._projectFoldersIndex = new Persistence.Automapping.FolderIndex(pathEncoder);
     this._activeFoldersIndex = new Persistence.Automapping.FolderIndex(pathEncoder);
@@ -338,9 +338,35 @@ Persistence.Automapping._metadata = Symbol('Automapping.Metadata');
 /**
  * @unrestricted
  */
+Persistence.Automapping.PathEncoder = class {
+  constructor() {
+    /** @type {!Common.CharacterIdMap<string>} */
+    this._encoder = new Common.CharacterIdMap();
+  }
+
+  /**
+   * @param {string} path
+   * @return {string}
+   */
+  encode(path) {
+    return path.split('/').map(token => this._encoder.toChar(token)).join('');
+  }
+
+  /**
+   * @param {string} path
+   * @return {string}
+   */
+  decode(path) {
+    return path.split('').map(token => this._encoder.fromChar(token)).join('/');
+  }
+};
+
+/**
+ * @unrestricted
+ */
 Persistence.Automapping.FilePathIndex = class {
   /**
-   * @param {!Persistence.PathEncoder} encoder
+   * @param {!Persistence.Automapping.PathEncoder} encoder
    */
   constructor(encoder) {
     this._encoder = encoder;
@@ -382,7 +408,7 @@ Persistence.Automapping.FilePathIndex = class {
  */
 Persistence.Automapping.FolderIndex = class {
   /**
-   * @param {!Persistence.PathEncoder} encoder
+   * @param {!Persistence.Automapping.PathEncoder} encoder
    */
   constructor(encoder) {
     this._encoder = encoder;

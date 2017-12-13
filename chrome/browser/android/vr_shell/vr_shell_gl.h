@@ -91,7 +91,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
   void OnTriggerEvent();
   void OnPause();
   void OnResume();
-  void OnExitPresent();
 
   base::WeakPtr<vr::BrowserUiInterface> GetBrowserUiWeakPtr();
 

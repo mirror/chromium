@@ -142,7 +142,6 @@ void SearchPermissionsService::Factory::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
   registry->RegisterDictionaryPref(prefs::kDSEGeolocationSettingDeprecated);
   registry->RegisterDictionaryPref(prefs::kDSEPermissionsSettings);
-  registry->RegisterBooleanPref(prefs::kDSEWasDisabledByPolicy, false);
 }
 
 SearchPermissionsService::SearchPermissionsService(Profile* profile)
@@ -157,15 +156,7 @@ SearchPermissionsService::SearchPermissionsService(Profile* profile)
   delegate_->SetDSEChangedCallback(base::Bind(
       &SearchPermissionsService::OnDSEChanged, base::Unretained(this)));
 
-  // Under normal circumstances we wouldn't need to call OnDSEChanged here, just
-  // InitializeSettingsIfNeeded but it's possible that somehow the underlying
-  // pref became out of sync with what the current DSE is (e.g. if Chrome
-  // crashed between changing DSE and updating the pref). These cases could
-  // result in granting permission unintentionally so it's important to call
-  // OnDSEChanged to keep state consistent. If the current DSE and stored DSE
-  // are the same, OnDSEChanged will not do anything. OnDSEChanged will also
-  // initialize the pref correctly if needed.
-  OnDSEChanged();
+  InitializeSettingsIfNeeded();
 }
 
 bool SearchPermissionsService::IsPermissionControlledByDSE(
@@ -321,11 +312,11 @@ void SearchPermissionsService::InitializeSettingsIfNeeded() {
   GURL dse_origin = delegate_->GetDSEOrigin().GetURL();
 
   // This can happen in tests or if the DSE is disabled by policy. If that's
-  // the case, we restore the old settings and erase the pref.
+  // the case, we restore the old settings and erase the pref. This means that
+  // things will be re-initialized to defaults when the DSE is no longer under
+  // enterprise policy.
   if (!dse_origin.is_valid()) {
     if (pref_service_->HasPrefPath(prefs::kDSEPermissionsSettings)) {
-      pref_service_->SetBoolean(prefs::kDSEWasDisabledByPolicy, true);
-
       PrefValue pref = GetDSEPref();
       GURL old_dse_origin(pref.dse_origin);
       RestoreOldSettingAndReturnPrevious(old_dse_origin,
@@ -343,19 +334,11 @@ void SearchPermissionsService::InitializeSettingsIfNeeded() {
     return;
   }
 
-  // If we get to here, the DSE is not disabled by enterprise policy. If it was
-  // previously enterprise controlled, we initialize the setting to BLOCK since
-  // we don't know what the user's setting was previously.
-  bool was_enterprise_controlled =
-      pref_service_->GetBoolean(prefs::kDSEWasDisabledByPolicy);
-  pref_service_->ClearPref(prefs::kDSEWasDisabledByPolicy);
-
   // Initialize the pref for geolocation if it hasn't been initialized yet.
   if (!pref_service_->HasPrefPath(prefs::kDSEPermissionsSettings)) {
     ContentSetting geolocation_setting_to_restore =
         GetContentSetting(dse_origin, CONTENT_SETTINGS_TYPE_GEOLOCATION);
     ContentSetting dse_geolocation_setting = geolocation_setting_to_restore;
-
     bool reset_disclosure = true;
     // Migrate the old geolocation pref if it exists.
     if (pref_service_->HasPrefPath(prefs::kDSEGeolocationSettingDeprecated)) {
@@ -381,9 +364,7 @@ void SearchPermissionsService::InitializeSettingsIfNeeded() {
     } else if (dse_geolocation_setting == CONTENT_SETTING_ASK) {
       // If the user hasn't explicitly allowed or blocked geolocation for the
       // DSE, initialize it to allowed.
-      dse_geolocation_setting = was_enterprise_controlled
-                                    ? CONTENT_SETTING_BLOCK
-                                    : CONTENT_SETTING_ALLOW;
+      dse_geolocation_setting = CONTENT_SETTING_ALLOW;
     }
 
     // Update the content setting with the auto-grants for the DSE.
@@ -410,11 +391,8 @@ void SearchPermissionsService::InitializeSettingsIfNeeded() {
     ContentSetting dse_notifications_setting = notifications_setting_to_restore;
     // If the user hasn't explicitly allowed or blocked notifications for the
     // DSE, initialize it to allowed.
-    if (dse_notifications_setting == CONTENT_SETTING_ASK) {
-      dse_notifications_setting = was_enterprise_controlled
-                                      ? CONTENT_SETTING_BLOCK
-                                      : CONTENT_SETTING_ALLOW;
-    }
+    if (dse_notifications_setting == CONTENT_SETTING_ASK)
+      dse_notifications_setting = CONTENT_SETTING_ALLOW;
 
     // Update the content setting with the auto-grants for the DSE.
     SetContentSetting(dse_origin, CONTENT_SETTINGS_TYPE_NOTIFICATIONS,

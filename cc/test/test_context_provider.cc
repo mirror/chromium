@@ -18,7 +18,6 @@
 #include "cc/test/test_gles2_interface.h"
 #include "cc/test/test_web_graphics_context_3d.h"
 #include "components/viz/common/gpu/context_cache_controller.h"
-#include "gpu/command_buffer/client/raster_implementation_gles.h"
 #include "gpu/skia_bindings/grcontext_for_gles2_interface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLInterface.h"
@@ -68,12 +67,6 @@ class TestGLES2InterfaceForContextProvider : public TestGLES2Interface {
       case GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS:
         *params = 8;
         return;
-      case GL_MAX_TEXTURE_SIZE:
-        *params = 2048;
-        break;
-      case GL_MAX_RENDERBUFFER_SIZE:
-        *params = 2048;
-        break;
       default:
         break;
     }
@@ -190,8 +183,6 @@ TestContextProvider::TestContextProvider(
   context_thread_checker_.DetachFromThread();
   context_gl_->set_test_context(context3d_.get());
   context3d_->set_test_support(support_.get());
-  raster_context_ = std::make_unique<gpu::raster::RasterImplementationGLES>(
-      context_gl_.get(), context3d_->test_capabilities());
   // Just pass nullptr to the viz::ContextCacheController for its task runner.
   // Idle handling is tested directly in viz::ContextCacheController's
   // unittests, and isn't needed here.
@@ -239,10 +230,6 @@ gpu::gles2::GLES2Interface* TestContextProvider::ContextGL() {
   return context_gl_.get();
 }
 
-gpu::raster::RasterInterface* TestContextProvider::RasterContext() {
-  return raster_context_.get();
-}
-
 gpu::ContextSupport* TestContextProvider::ContextSupport() {
   return support();
 }
@@ -254,13 +241,8 @@ class GrContext* TestContextProvider::GrContext() {
   if (gr_context_)
     return gr_context_->get();
 
-  size_t max_resource_cache_bytes;
-  size_t max_glyph_cache_texture_bytes;
-  skia_bindings::GrContextForGLES2Interface::DefaultCacheLimitsForTests(
-      &max_resource_cache_bytes, &max_glyph_cache_texture_bytes);
   gr_context_ = std::make_unique<skia_bindings::GrContextForGLES2Interface>(
-      context_gl_.get(), context3d_->test_capabilities(),
-      max_resource_cache_bytes, max_glyph_cache_texture_bytes);
+      context_gl_.get(), context3d_->test_capabilities());
   cache_controller_->SetGrContext(gr_context_->get());
 
   // If GlContext is already lost, also abandon the new GrContext.

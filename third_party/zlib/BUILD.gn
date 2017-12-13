@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//testing/libfuzzer/fuzzer_test.gni")
+
 if (current_cpu == "arm" || current_cpu == "arm64") {
   import("//build/config/arm.gni")
 }
@@ -94,13 +96,11 @@ source_set("zlib_inflate_chunk_simd") {
         "contrib/optimizations/inflate.c",
       ]
 
-      # TODO(772870) back off from -O3 while investigating Android
-      # One perf bot PNG decode regression.
-      # if (!is_debug) {
-      #  # Use optimize_speed (-O3) to output the _smallest_ code.
-      #  configs -= [ "//build/config/compiler:default_optimization" ]
-      #  configs += [ "//build/config/compiler:optimize_speed" ]
-      # }
+      if (!is_debug) {
+        # Use optimize_speed (-O3) to output the _smallest_ code.
+        configs -= [ "//build/config/compiler:default_optimization" ]
+        configs += [ "//build/config/compiler:optimize_speed" ]
+      }
     }
   }
 
@@ -206,6 +206,42 @@ static_library("zlib") {
   public_configs = [ ":zlib_config" ]
 
   deps += [ ":zlib_x86_simd" ]
+}
+
+fuzzer_test("zlib_uncompress_fuzzer") {
+  sources = [
+    "contrib/tests/fuzzers/uncompress_fuzzer.cc",
+  ]
+  deps = [
+    ":zlib",
+  ]
+}
+
+fuzzer_test("zlib_inflate_fuzzer") {
+  sources = [
+    "contrib/tests/fuzzers/inflate_fuzzer.cc",
+  ]
+  deps = [
+    ":zlib",
+  ]
+}
+
+fuzzer_test("zlib_deflate_set_dictionary_fuzzer") {
+  sources = [
+    "contrib/tests/fuzzers/deflate_set_dictionary_fuzzer.cc",
+  ]
+  deps = [
+    ":zlib",
+  ]
+}
+
+fuzzer_test("zlib_deflate_fuzzer") {
+  sources = [
+    "contrib/tests/fuzzers/deflate_fuzzer.cc",
+  ]
+  deps = [
+    ":zlib",
+  ]
 }
 
 config("minizip_warnings") {

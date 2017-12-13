@@ -21,7 +21,6 @@
 #define SVGTextLayoutEngine_h
 
 #include <memory>
-#include "base/macros.h"
 #include "core/layout/api/LineLayoutSVGInlineText.h"
 #include "core/layout/svg/LayoutSVGInlineText.h"
 #include "core/layout/svg/SVGTextFragment.h"
@@ -48,6 +47,7 @@ class SVGTextMetrics;
 
 class SVGTextLayoutEngine {
   STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(SVGTextLayoutEngine);
 
  public:
   SVGTextLayoutEngine(const Vector<LayoutSVGInlineText*>&);
@@ -98,7 +98,6 @@ class SVGTextLayoutEngine {
   float text_path_displacement_;
   float text_path_spacing_;
   float text_path_scaling_;
-  DISALLOW_COPY_AND_ASSIGN(SVGTextLayoutEngine);
 };
 
 }  // namespace blink

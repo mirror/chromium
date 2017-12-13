@@ -93,6 +93,7 @@ class ExtensionStorageMonitor : public KeyedService,
   void StopMonitoringAll();
 
   void RemoveNotificationForExtension(const std::string& extension_id);
+  void RemoveAllNotifications();
 
   // Displays the prompt for uninstalling the extension.
   void ShowUninstallPrompt(const std::string& extension_id);

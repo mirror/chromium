@@ -32,6 +32,7 @@
 #include "core/exported/LocalFrameClientImpl.h"
 
 #include <memory>
+#include <utility>
 
 #include "bindings/core/v8/ScriptController.h"
 #include "core/CoreInitializer.h"
@@ -1079,11 +1080,6 @@ void LocalFrameClientImpl::SetHasReceivedUserGesture(bool received_previously) {
     autofill_client->UserGestureObserved();
 }
 
-void LocalFrameClientImpl::SetHasReceivedUserGestureBeforeNavigation(
-    bool value) {
-  web_frame_->Client()->SetHasReceivedUserGestureBeforeNavigation(value);
-}
-
 void LocalFrameClientImpl::AbortClientNavigation() {
   if (web_frame_->Client())
     web_frame_->Client()->AbortClientNavigation();
@@ -1135,6 +1131,11 @@ void LocalFrameClientImpl::ScrollRectToVisibleInParentFrame(
 void LocalFrameClientImpl::SetVirtualTimePauser(
     WebScopedVirtualTimePauser virtual_time_pauser) {
   virtual_time_pauser_ = std::move(virtual_time_pauser);
+}
+
+Frame* LocalFrameClientImpl::FindFrame(const AtomicString& name) const {
+  DCHECK(web_frame_->Client());
+  return ToCoreFrame(web_frame_->Client()->FindFrame(name));
 }
 
 }  // namespace blink

@@ -4,14 +4,15 @@
 
 #include "components/data_reduction_proxy/core/browser/warmup_url_fetcher.h"
 
+#include "base/callback.h"
 #include "base/guid.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_util.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "net/base/load_flags.h"
+#include "net/http/http_status_code.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -21,8 +22,10 @@ namespace data_reduction_proxy {
 
 WarmupURLFetcher::WarmupURLFetcher(
     const scoped_refptr<net::URLRequestContextGetter>&
-        url_request_context_getter)
-    : url_request_context_getter_(url_request_context_getter) {
+        url_request_context_getter,
+    WarmupURLFetcherCallback callback)
+    : url_request_context_getter_(url_request_context_getter),
+      callback_(callback) {
   DCHECK(url_request_context_getter_);
 }
 
@@ -96,11 +99,11 @@ void WarmupURLFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
       "DataReductionProxy.WarmupURL.FetchSuccessful",
       source->GetStatus().status() == net::URLRequestStatus::SUCCESS);
 
-  base::UmaHistogramSparse("DataReductionProxy.WarmupURL.NetError",
-                           std::abs(source->GetStatus().error()));
+  UMA_HISTOGRAM_SPARSE_SLOWLY("DataReductionProxy.WarmupURL.NetError",
+                              std::abs(source->GetStatus().error()));
 
-  base::UmaHistogramSparse("DataReductionProxy.WarmupURL.HttpResponseCode",
-                           std::abs(source->GetResponseCode()));
+  UMA_HISTOGRAM_SPARSE_SLOWLY("DataReductionProxy.WarmupURL.HttpResponseCode",
+                              std::abs(source->GetResponseCode()));
 
   if (source->GetResponseHeaders()) {
     UMA_HISTOGRAM_BOOLEAN(
@@ -112,7 +115,23 @@ void WarmupURLFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
                               util::ConvertNetProxySchemeToProxyScheme(
                                   source->ProxyServerUsed().scheme()),
                               PROXY_SCHEME_MAX);
+
+    if (!source->GetStatus().is_success() &&
+        source->GetStatus().error() == net::ERR_INTERNET_DISCONNECTED) {
+      // Fetching failed due to Internet unavailability, and not due to some
+      // error. Set the proxy server to unknown.
+      callback_.Run(net::ProxyServer(), true);
+      return;
+    }
   }
+
+  bool success_response =
+      source->GetStatus().status() == net::URLRequestStatus::SUCCESS &&
+      source->GetResponseCode() == net::HTTP_NO_CONTENT &&
+      source->GetResponseHeaders() &&
+      HasDataReductionProxyViaHeader(*(source->GetResponseHeaders()),
+                                     nullptr /* has_intermediary */);
+  callback_.Run(source->ProxyServerUsed(), success_response);
 }
 
 }  // namespace data_reduction_proxy

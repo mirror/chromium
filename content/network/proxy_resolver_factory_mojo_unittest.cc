@@ -497,12 +497,6 @@ class MockHostResolver : public net::HostResolver {
 
   net::HostCache* GetHostCache() override { return nullptr; }
 
-  bool HasCached(base::StringPiece hostname,
-                 net::HostCache::Entry::Source* source_out,
-                 net::HostCache::EntryStaleness* stale_out) const override {
-    return false;
-  }
-
   net::EventWaiter<Event>& waiter() { return waiter_; }
 
  private:

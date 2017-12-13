@@ -12,11 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This is a forwarding target to match the location that Chromium uses.
+# TODO(GN): This is a placeholder that matches the name of Chromium's location
+# for this file. It will need to be filled out to cause a gtest dependency.
 
 group("gtest") {
-  public_configs = [ "//third_party/gtest:gtest_public_config" ]
-  public_deps = [
-    "//third_party/gtest:gtest",
-  ]
 }

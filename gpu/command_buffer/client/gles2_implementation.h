@@ -195,9 +195,6 @@ class GLES2_IMPL_EXPORT GLES2Implementation
                        base::OnceClosure callback) override;
   bool IsSyncTokenSignaled(const gpu::SyncToken& sync_token) override;
   void SignalQuery(uint32_t query, base::OnceClosure callback) override;
-  void GetGpuFence(uint32_t gpu_fence_id,
-                   base::OnceCallback<void(std::unique_ptr<gfx::GpuFence>)>
-                       callback) override;
   void SetAggressivelyFreeResources(bool aggressively_free_resources) override;
   void Swap() override;
   void SwapWithBounds(const std::vector<gfx::Rect>& rects) override;
@@ -215,14 +212,11 @@ class GLES2_IMPL_EXPORT GLES2Implementation
   bool ThreadSafeShallowLockDiscardableTexture(uint32_t texture_id) override;
   void CompleteLockDiscardableTexureOnContextThread(
       uint32_t texture_id) override;
-  void CreateTransferCacheEntry(
+  TransferCacheEntryId CreateTransferCacheEntry(
       const cc::ClientTransferCacheEntry& entry) override;
-  bool ThreadsafeLockTransferCacheEntry(cc::TransferCacheEntryType type,
-                                        uint32_t id) override;
-  void UnlockTransferCacheEntry(cc::TransferCacheEntryType type,
-                                uint32_t id) override;
-  void DeleteTransferCacheEntry(cc::TransferCacheEntryType type,
-                                uint32_t id) override;
+  bool ThreadsafeLockTransferCacheEntry(gpu::TransferCacheEntryId id) override;
+  void UnlockTransferCacheEntry(gpu::TransferCacheEntryId id) override;
+  void DeleteTransferCacheEntry(gpu::TransferCacheEntryId id) override;
 
   // TODO(danakj): Move to ContextSupport once ContextProvider doesn't need to
   // intercept it.
@@ -535,7 +529,6 @@ class GLES2_IMPL_EXPORT GLES2Implementation
   void DeleteShaderStub(GLsizei n, const GLuint* shaders);
   void DeleteSamplersStub(GLsizei n, const GLuint* samplers);
   void DeleteSyncStub(GLsizei n, const GLuint* syncs);
-  void DestroyGpuFenceCHROMIUMHelper(GLuint client_id);
 
   void BufferDataHelper(
       GLenum target, GLsizeiptr size, const void* data, GLenum usage);
@@ -790,12 +783,6 @@ class GLES2_IMPL_EXPORT GLES2Implementation
 
   // Changed every time a flush or finish occurs.
   uint32_t flush_id_;
-
-  // Avoid recycling of client-allocated GpuFence IDs by saving the
-  // last-allocated one and requesting the next one to be higher than that.
-  // This will wrap around as needed, but the space should be plenty big enough
-  // to avoid collisions.
-  uint32_t last_gpu_fence_id_ = 0;
 
   // Maximum amount of extra memory from the mapped memory pool to use when
   // needing to transfer something exceeding the default transfer buffer.

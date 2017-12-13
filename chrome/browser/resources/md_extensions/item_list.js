@@ -92,12 +92,6 @@ cr.define('extensions', function() {
     },
 
     /** @private */
-    onNoExtensionsTap_: function(e) {
-      if (e.target.tagName == 'A')
-        chrome.metricsPrivate.recordUserAction('Options_GetMoreExtensions');
-    },
-
-    /** @private */
     announceSearchResults_: function() {
       if (this.computedFilter_) {
         Polymer.IronA11yAnnouncer.requestAvailability();

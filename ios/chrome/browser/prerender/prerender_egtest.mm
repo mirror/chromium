@@ -102,17 +102,13 @@ std::unique_ptr<net::test_server::HttpResponse> StandardResponse(
                                           nil)]
       assertWithMatcher:grey_sufficientlyVisible()];
 
-  // Open the suggestion. The suggestion needs to be the first suggestion to
-  // have the prerenderer activated.
+  // Open the suggestion.
   [[EarlGrey
       selectElementWithMatcher:grey_allOf(
                                    grey_accessibilityLabel(pageString),
                                    grey_kindOfClass(
                                        [OmniboxPopupTruncatingLabel class]),
-                                   grey_ancestor(grey_accessibilityID(
-                                       @"omnibox suggestion 0")),
-                                   grey_sufficientlyVisible(), nil)]
-      performAction:grey_tap()];
+                                   nil)] performAction:grey_tap()];
 }
 
 @end

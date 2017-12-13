@@ -8,14 +8,23 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/ShadowRootInit.h"
 #include "core/html/HTMLElement.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class FocusControllerTest : public PageTestBase {
+class FocusControllerTest : public ::testing::Test {
+ public:
+  Document& GetDocument() const { return page_holder_->GetDocument(); }
+  FocusController& GetFocusController() const {
+    return GetDocument().GetPage()->GetFocusController();
+  }
+  DummyPageHolder* PageHolder() const { return page_holder_.get(); }
+
  private:
-  void SetUp() override { PageTestBase::SetUp(IntSize()); }
+  void SetUp() override { page_holder_ = DummyPageHolder::Create(); }
+
+  std::unique_ptr<DummyPageHolder> page_holder_;
 };
 
 TEST_F(FocusControllerTest, SetInitialFocus) {
@@ -82,7 +91,7 @@ TEST_F(FocusControllerTest, SetActiveOnInactiveDocument) {
   // Document::shutdown() detaches document from its frame, and thus
   // document().page() becomes nullptr.
   // Use DummyPageHolder's page to retrieve FocusController.
-  GetPage().GetFocusController().SetActive(true);
+  PageHolder()->GetPage().GetFocusController().SetActive(true);
 }
 
 // This test is for crbug.com/733218

@@ -4,7 +4,7 @@
 
 #include "chromeos/components/tether/ble_synchronizer_base.h"
 
-#include <memory>
+#include "base/memory/ptr_util.h"
 
 namespace chromeos {
 
@@ -79,7 +79,7 @@ void BleSynchronizerBase::RegisterAdvertisement(
     const device::BluetoothAdapter::AdvertisementErrorCallback&
         error_callback) {
   command_queue_.emplace_back(
-      std::make_unique<Command>(std::make_unique<RegisterArgs>(
+      base::MakeUnique<Command>(base::MakeUnique<RegisterArgs>(
           std::move(advertisement_data), callback, error_callback)));
   ProcessQueue();
 }
@@ -89,7 +89,7 @@ void BleSynchronizerBase::UnregisterAdvertisement(
     const device::BluetoothAdvertisement::SuccessCallback& callback,
     const device::BluetoothAdvertisement::ErrorCallback& error_callback) {
   command_queue_.emplace_back(
-      std::make_unique<Command>(std::make_unique<UnregisterArgs>(
+      base::MakeUnique<Command>(base::MakeUnique<UnregisterArgs>(
           std::move(advertisement), callback, error_callback)));
   ProcessQueue();
 }
@@ -97,8 +97,8 @@ void BleSynchronizerBase::UnregisterAdvertisement(
 void BleSynchronizerBase::StartDiscoverySession(
     const device::BluetoothAdapter::DiscoverySessionCallback& callback,
     const device::BluetoothAdapter::ErrorCallback& error_callback) {
-  command_queue_.emplace_back(std::make_unique<Command>(
-      std::make_unique<StartDiscoveryArgs>(callback, error_callback)));
+  command_queue_.emplace_back(base::MakeUnique<Command>(
+      base::MakeUnique<StartDiscoveryArgs>(callback, error_callback)));
   ProcessQueue();
 }
 
@@ -107,7 +107,7 @@ void BleSynchronizerBase::StopDiscoverySession(
     const base::Closure& callback,
     const device::BluetoothDiscoverySession::ErrorCallback& error_callback) {
   command_queue_.emplace_back(
-      std::make_unique<Command>(std::make_unique<StopDiscoveryArgs>(
+      base::MakeUnique<Command>(base::MakeUnique<StopDiscoveryArgs>(
           discovery_session, callback, error_callback)));
   ProcessQueue();
 }

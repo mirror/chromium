@@ -6,7 +6,7 @@
 
 #include "core/paint/PaintEvent.h"
 #include "core/paint/PaintTiming.h"
-#include "core/testing/PageTestBase.h"
+#include "core/testing/DummyPageHolder.h"
 #include "platform/testing/TestingPlatformSupportWithMockScheduler.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/WebLayerTreeView.h"
@@ -14,11 +14,11 @@
 
 namespace blink {
 
-class FirstMeaningfulPaintDetectorTest : public PageTestBase {
+class FirstMeaningfulPaintDetectorTest : public ::testing::Test {
  protected:
   void SetUp() override {
     platform_->AdvanceClockSeconds(1);
-    PageTestBase::SetUp();
+    dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
   }
 
   double AdvanceClockAndGetTime() {
@@ -26,6 +26,7 @@ class FirstMeaningfulPaintDetectorTest : public PageTestBase {
     return MonotonicallyIncreasingTime();
   }
 
+  Document& GetDocument() { return dummy_page_holder_->GetDocument(); }
   PaintTiming& GetPaintTiming() { return PaintTiming::From(GetDocument()); }
   FirstMeaningfulPaintDetector& Detector() {
     return GetPaintTiming().GetFirstMeaningfulPaintDetector();
@@ -122,6 +123,9 @@ class FirstMeaningfulPaintDetectorTest : public PageTestBase {
       FirstMeaningfulPaintDetector::kNetwork0QuietWindowSeconds;
   static constexpr double kNetwork2QuietWindowSeconds =
       FirstMeaningfulPaintDetector::kNetwork2QuietWindowSeconds;
+
+ private:
+  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
 };
 
 TEST_F(FirstMeaningfulPaintDetectorTest, NoFirstPaint) {

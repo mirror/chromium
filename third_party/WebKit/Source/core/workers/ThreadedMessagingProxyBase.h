@@ -78,14 +78,13 @@ class CORE_EXPORT ThreadedMessagingProxyBase
       const KURL& script_url,
       const v8_inspector::V8StackTraceId&,
       const String& source_code = String());
+  virtual void WorkerThreadCreated();
 
   ThreadableLoadingContext* CreateThreadableLoadingContext() const;
 
   ExecutionContext* GetExecutionContext() const;
   ParentFrameTaskRunners* GetParentFrameTaskRunners() const;
   WorkerInspectorProxy* GetWorkerInspectorProxy() const;
-
-  // May return nullptr after termination is requested.
   WorkerThread* GetWorkerThread() const;
 
   bool AskedToTerminate() const { return asked_to_terminate_; }

@@ -26,7 +26,7 @@ typedef struct _GtkWidget GtkWidget;
 namespace libgtkui {
 class Gtk2KeyBindingsHandler;
 class DeviceScaleFactorObserver;
-class SettingsProvider;
+class NavButtonLayoutManager;
 
 // Interface to GTK2 desktop features.
 //
@@ -38,13 +38,11 @@ class GtkUi : public views::LinuxUI {
   typedef base::Callback<ui::NativeTheme*(aura::Window* window)>
       NativeThemeGetter;
 
-  // Setters used by SettingsProvider:
+  // Setters used by NavButtonLayoutManager:
   void SetWindowButtonOrdering(
       const std::vector<views::FrameButton>& leading_buttons,
       const std::vector<views::FrameButton>& trailing_buttons);
-  void SetNonClientWindowFrameAction(
-      NonClientWindowFrameActionSourceType source,
-      NonClientWindowFrameAction action);
+  void SetNonClientMiddleClickAction(NonClientMiddleClickAction action);
 
   // Called when gtk style changes
   void ResetStyle();
@@ -99,8 +97,7 @@ class GtkUi : public views::LinuxUI {
       views::WindowButtonOrderObserver* observer) override;
   void RemoveWindowButtonOrderObserver(
       views::WindowButtonOrderObserver* observer) override;
-  NonClientWindowFrameAction GetNonClientWindowFrameAction(
-      NonClientWindowFrameActionSourceType source) override;
+  NonClientMiddleClickAction GetNonClientMiddleClickAction() override;
   void NotifyWindowManagerStartupComplete() override;
   void UpdateDeviceScaleFactor() override;
   float GetDeviceScaleFactor() const override;
@@ -177,7 +174,7 @@ class GtkUi : public views::LinuxUI {
   gfx::Font::Weight default_font_weight_ = gfx::Font::Weight::NORMAL;
   gfx::FontRenderParams default_font_render_params_;
 
-  std::unique_ptr<SettingsProvider> settings_provider_;
+  std::unique_ptr<NavButtonLayoutManager> nav_button_layout_manager_;
 
   // Frame button layout state.  If |nav_buttons_set_| is false, then
   // |leading_buttons_| and |trailing_buttons_| are meaningless.
@@ -195,9 +192,9 @@ class GtkUi : public views::LinuxUI {
   base::ObserverList<views::DeviceScaleFactorObserver>
       device_scale_factor_observer_list_;
 
-  // The action to take when middle, double, or right clicking the titlebar.
-  NonClientWindowFrameAction
-      window_frame_actions_[WINDOW_FRAME_ACTION_SOURCE_LAST];
+  // Whether we should lower the window on a middle click to the non client
+  // area.
+  NonClientMiddleClickAction middle_click_action_;
 
   // Used to override the native theme for a window. If no override is provided
   // or the callback returns nullptr, GtkUi will default to a NativeThemeGtk2

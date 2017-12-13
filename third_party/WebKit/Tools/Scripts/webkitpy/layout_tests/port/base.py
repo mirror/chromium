@@ -1483,8 +1483,8 @@ class Port(object):
         if self.host.platform.is_linux():
             distribution = self.host.platform.linux_distribution()
 
-            custom_configurations = ['arch', 'debian', 'fedora', 'redhat']
-            if distribution in custom_configurations:
+            custom_configuration_distributions = ['arch', 'debian', 'redhat']
+            if distribution in custom_configuration_distributions:
                 return '%s-httpd-%s.conf' % (distribution, self._apache_version())
 
         return 'apache2-httpd-' + self._apache_version() + '.conf'

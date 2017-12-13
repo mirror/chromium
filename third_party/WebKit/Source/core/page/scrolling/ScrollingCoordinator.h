@@ -27,7 +27,6 @@
 #define ScrollingCoordinator_h
 
 #include <memory>
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/paint/LayerHitTestRects.h"
 #include "platform/geometry/IntRect.h"
@@ -35,6 +34,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/scroll/MainThreadScrollingReason.h"
 #include "platform/scroll/ScrollTypes.h"
+#include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebLayerScrollClient.h"
 
@@ -67,6 +67,8 @@ using ScrollbarId = uint64_t;
 class CORE_EXPORT ScrollingCoordinator final
     : public GarbageCollectedFinalized<ScrollingCoordinator>,
       public WebLayerScrollClient {
+  WTF_MAKE_NONCOPYABLE(ScrollingCoordinator);
+
  public:
   static ScrollingCoordinator* Create(Page*);
 
@@ -194,7 +196,6 @@ class CORE_EXPORT ScrollingCoordinator final
   bool was_frame_scrollable_;
 
   MainThreadScrollingReasons last_main_thread_scrolling_reasons_;
-  DISALLOW_COPY_AND_ASSIGN(ScrollingCoordinator);
 };
 
 }  // namespace blink

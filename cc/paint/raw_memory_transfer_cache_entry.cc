@@ -10,19 +10,16 @@ namespace cc {
 
 ClientRawMemoryTransferCacheEntry::ClientRawMemoryTransferCacheEntry(
     std::vector<uint8_t> data)
-    : id_(s_next_id_.GetNext()), data_(std::move(data)) {}
+    : data_(std::move(data)) {}
 ClientRawMemoryTransferCacheEntry::~ClientRawMemoryTransferCacheEntry() =
     default;
 
-// static
-base::AtomicSequenceNumber ClientRawMemoryTransferCacheEntry::s_next_id_;
+TransferCacheEntryType ClientRawMemoryTransferCacheEntry::Type() const {
+  return TransferCacheEntryType::kRawMemory;
+}
 
 size_t ClientRawMemoryTransferCacheEntry::SerializedSize() const {
   return data_.size();
-}
-
-uint32_t ClientRawMemoryTransferCacheEntry::Id() const {
-  return id_;
 }
 
 bool ClientRawMemoryTransferCacheEntry::Serialize(
@@ -38,6 +35,10 @@ ServiceRawMemoryTransferCacheEntry::ServiceRawMemoryTransferCacheEntry() =
     default;
 ServiceRawMemoryTransferCacheEntry::~ServiceRawMemoryTransferCacheEntry() =
     default;
+
+TransferCacheEntryType ServiceRawMemoryTransferCacheEntry::Type() const {
+  return TransferCacheEntryType::kRawMemory;
+}
 
 size_t ServiceRawMemoryTransferCacheEntry::CachedSize() const {
   return data_.size();

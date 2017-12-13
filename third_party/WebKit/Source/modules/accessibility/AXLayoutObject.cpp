@@ -2120,7 +2120,7 @@ void AXLayoutObject::HandleActiveDescendantChanged() {
     return;
 
   AXObject* focused_object = AXObjectCache().FocusedObject();
-  if (focused_object == this && SupportsARIAActiveDescendant()) {
+  if (focused_object == this && SupportsActiveDescendant()) {
     AXObjectCache().PostNotification(
         GetLayoutObject(), AXObjectCacheImpl::kAXActiveDescendantChanged);
   }

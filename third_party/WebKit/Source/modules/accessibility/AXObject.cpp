@@ -1063,7 +1063,7 @@ bool AXObject::ComputeAncestorExposesActiveDescendant() const {
   if (!parent)
     return false;
 
-  if (parent->SupportsARIAActiveDescendant() &&
+  if (parent->SupportsActiveDescendant() &&
       parent->GetAOMPropertyOrARIAAttribute(
           AOMRelationProperty::kActiveDescendant)) {
     return true;
@@ -1095,7 +1095,7 @@ bool AXObject::IsSubWidget(AccessibilityRole role) {
   return false;
 }
 
-bool AXObject::SupportsARIASetSizeAndPosInSet() const {
+bool AXObject::SupportsSetSizeAndPosInSet() const {
   switch (RoleValue()) {
     case kListBoxOptionRole:
     case kListItemRole:
@@ -1469,7 +1469,7 @@ bool AXObject::AriaCheckedIsPresent() const {
   return HasAOMPropertyOrARIAAttribute(AOMStringProperty::kChecked, result);
 }
 
-bool AXObject::SupportsARIAActiveDescendant() const {
+bool AXObject::SupportsActiveDescendant() const {
   // According to the ARIA Spec, all ARIA composite widgets, ARIA text boxes,
   // ARIA groups and ARIA application should be able to expose an active descendant.
   // Implicitly, <input> and <textarea> elements should also have this ability.
@@ -1545,7 +1545,7 @@ AXRestriction AXObject::Restriction() const {
 
   // Check aria-readonly if supported by current role.
   bool is_read_only;
-  if (SupportsARIAReadOnly() &&
+  if (CanSupportAriaReadOnly() &&
       HasAOMPropertyOrARIAAttribute(AOMBooleanProperty::kReadOnly,
                                     is_read_only)) {
     // ARIA overrides other readonly state markup.
@@ -2467,7 +2467,7 @@ bool AXObject::NameFromContents(bool recursive) const {
   return result;
 }
 
-bool AXObject::SupportsARIAReadOnly() const {
+bool AXObject::CanSupportAriaReadOnly() const {
   switch (RoleValue()) {
     case kCellRole:
     case kCheckBoxRole:

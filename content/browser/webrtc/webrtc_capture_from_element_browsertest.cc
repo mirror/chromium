@@ -66,9 +66,8 @@ class WebRtcCaptureFromElementBrowserTest
         switches::kEnableBlinkFeatures, "MediaCaptureFromVideo");
 
     // Allow <video>/<audio>.play() when not initiated by user gesture.
-    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-        switches::kAutoplayPolicy,
-        switches::autoplay::kNoUserGestureRequiredPolicy);
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        switches::kIgnoreAutoplayRestrictionsForTests);
     // Allow experimental canvas features.
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kEnableExperimentalCanvasFeatures);

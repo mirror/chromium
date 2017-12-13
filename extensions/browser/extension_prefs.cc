@@ -801,7 +801,7 @@ std::set<std::string> ExtensionPrefs::GetBlacklistedExtensions() const {
 
   for (base::DictionaryValue::Iterator it(*extensions);
        !it.IsAtEnd(); it.Advance()) {
-    if (!it.value().is_dict()) {
+    if (!it.value().IsType(base::Value::Type::DICTIONARY)) {
       NOTREACHED() << "Invalid pref for extension " << it.key();
       continue;
     }
@@ -1561,6 +1561,32 @@ void ExtensionPrefs::GetExtensions(ExtensionIdList* out) const {
     ExtensionInfo* info = extensions_info->at(i).get();
     out->push_back(info->extension_id);
   }
+}
+
+// static
+ExtensionIdList ExtensionPrefs::GetExtensionsFrom(
+    const PrefService* pref_service) {
+  ExtensionIdList result;
+
+  const base::DictionaryValue* extension_prefs = NULL;
+  const base::Value* extension_prefs_value =
+      pref_service->GetUserPrefValue(pref_names::kExtensions);
+  if (!extension_prefs_value ||
+      !extension_prefs_value->GetAsDictionary(&extension_prefs)) {
+    return result;  // Empty set
+  }
+
+  for (base::DictionaryValue::Iterator it(*extension_prefs); !it.IsAtEnd();
+       it.Advance()) {
+    const base::DictionaryValue* ext = NULL;
+    if (!it.value().GetAsDictionary(&ext)) {
+      NOTREACHED() << "Invalid pref for extension " << it.key();
+      continue;
+    }
+    if (!IsBlacklistBitSet(ext))
+      result.push_back(it.key());
+  }
+  return result;
 }
 
 void ExtensionPrefs::AddObserver(ExtensionPrefsObserver* observer) {

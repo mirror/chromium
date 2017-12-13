@@ -11,20 +11,11 @@
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/CSSPropertyValueSet.h"
 #include "core/css/MutableCSSPropertyValueSet.h"
-#include "core/css/cssom/CSSUnparsedValue.h"
+#include "core/css/cssom/CSSUnsupportedStyleValue.h"
 #include "core/css/cssom/StyleValueFactory.h"
 #include "core/css/properties/CSSProperty.h"
 
 namespace blink {
-
-namespace {
-bool CompareProperties(const StylePropertyMap::StylePropertyMapEntry a,
-                       const StylePropertyMap::StylePropertyMapEntry b) {
-  if (a.first.StartsWith("--") == b.first.StartsWith("--"))
-    return WTF::CodePointCompareLessThan(a.first, b.first);
-  return b.first.StartsWith("--");
-}
-};  // namespace
 
 const CSSValue* InlineStylePropertyMap::GetProperty(CSSPropertyID property_id) {
   return owner_element_->EnsureMutableInlineStyle().GetPropertyCSSValue(
@@ -67,6 +58,7 @@ void InlineStylePropertyMap::RemoveProperty(CSSPropertyID property_id) {
 
 HeapVector<StylePropertyMap::StylePropertyMapEntry>
 InlineStylePropertyMap::GetIterationEntries() {
+  // TODO(779841): Needs to be sorted.
   HeapVector<StylePropertyMap::StylePropertyMapEntry> result;
   CSSPropertyValueSet& inline_style_set =
       owner_element_->EnsureMutableInlineStyle();
@@ -77,11 +69,15 @@ InlineStylePropertyMap::GetIterationEntries() {
     String name;
     CSSStyleValueOrCSSStyleValueSequence value;
     if (property_id == CSSPropertyVariable) {
-      const CSSCustomPropertyDeclaration& decl =
+      const CSSCustomPropertyDeclaration& custom_declaration =
           ToCSSCustomPropertyDeclaration(property_reference.Value());
-      name = decl.GetName();
-      DCHECK(decl.Value());
-      value.SetCSSStyleValue(CSSUnparsedValue::FromCSSValue(*decl.Value()));
+      name = custom_declaration.GetName();
+      // TODO(meade): Eventually custom properties will support other types, so
+      // actually return them instead of always returning a
+      // CSSUnsupportedStyleValue.
+      // TODO(779477): Should these return CSSUnparsedValues?
+      value.SetCSSStyleValue(
+          CSSUnsupportedStyleValue::Create(custom_declaration.CustomCSSText()));
     } else {
       name = getPropertyNameString(property_id);
       CSSStyleValueVector style_value_vector =
@@ -94,7 +90,6 @@ InlineStylePropertyMap::GetIterationEntries() {
     }
     result.push_back(std::make_pair(name, value));
   }
-  std::sort(result.begin(), result.end(), CompareProperties);
   return result;
 }
 

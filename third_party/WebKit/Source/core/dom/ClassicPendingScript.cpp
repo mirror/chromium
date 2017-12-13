@@ -54,6 +54,18 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
   return pending_script;
 }
 
+ClassicPendingScript* ClassicPendingScript::CreateExternalForTest(
+    ScriptElementBase* element,
+    ScriptResource* resource) {
+  DCHECK(resource);
+  ClassicPendingScript* pending_script = new ClassicPendingScript(
+      element, TextPosition(), ScriptSourceLocationType::kExternalFile,
+      ScriptFetchOptions(), true /* is_external */);
+  pending_script->SetResource(resource);
+  pending_script->CheckState();
+  return pending_script;
+}
+
 ClassicPendingScript* ClassicPendingScript::CreateInline(
     ScriptElementBase* element,
     const TextPosition& starting_position,
@@ -91,6 +103,7 @@ NOINLINE void ClassicPendingScript::CheckState() const {
   CHECK(GetElement());
   CHECK_EQ(is_external_, !!GetResource());
   CHECK(GetResource() || !streamer_);
+  CHECK(!streamer_ || streamer_->GetResource() == GetResource());
 }
 
 void ClassicPendingScript::Prefinalize() {
@@ -102,7 +115,7 @@ void ClassicPendingScript::Prefinalize() {
 
 void ClassicPendingScript::DisposeInternal() {
   MemoryCoordinator::Instance().UnregisterClient(this);
-  ClearResource();
+  SetResource(nullptr);
   integrity_failure_ = false;
   CancelStreaming();
 }
@@ -197,7 +210,7 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
   // If there is no script streamer, this step completes immediately.
   AdvanceReadyState(kWaitingForStreaming);
   if (streamer_)
-    streamer_->NotifyFinished();
+    streamer_->NotifyFinished(resource);
   else
     FinishWaitingForStreaming();
 }

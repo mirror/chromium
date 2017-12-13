@@ -8,6 +8,7 @@
 #include <string>
 #include <utility>
 
+#include "base/command_line.h"
 #include "base/format_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -71,9 +72,18 @@ std::unique_ptr<net::test_server::HttpResponse> HandlePostAndRedirectURLs(
 #else
 #define MAYBE_AsyncResourceHandlerBrowserTest AsyncResourceHandlerBrowserTest
 #endif  // defined(OS_ANDROID) && defined(ADDRESS_SANITIZER)
-class MAYBE_AsyncResourceHandlerBrowserTest : public ContentBrowserTest {};
+class MAYBE_AsyncResourceHandlerBrowserTest
+    : public ContentBrowserTest,
+      public testing::WithParamInterface<bool> {
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    if (GetParam()) {
+      command_line->AppendSwitchASCII("--enable-blink-features",
+                                      "LoadingWithMojo");
+    }
+  }
+};
 
-IN_PROC_BROWSER_TEST_F(MAYBE_AsyncResourceHandlerBrowserTest, UploadProgress) {
+IN_PROC_BROWSER_TEST_P(MAYBE_AsyncResourceHandlerBrowserTest, UploadProgress) {
   net::EmbeddedTestServer* test_server = embedded_test_server();
   test_server->RegisterRequestHandler(
       base::Bind(&HandlePostAndRedirectURLs, kPostPath));
@@ -90,7 +100,7 @@ IN_PROC_BROWSER_TEST_F(MAYBE_AsyncResourceHandlerBrowserTest, UploadProgress) {
   EXPECT_EQ(js_result, "success");
 }
 
-IN_PROC_BROWSER_TEST_F(MAYBE_AsyncResourceHandlerBrowserTest,
+IN_PROC_BROWSER_TEST_P(MAYBE_AsyncResourceHandlerBrowserTest,
                        UploadProgressRedirect) {
   net::EmbeddedTestServer* test_server = embedded_test_server();
   test_server->RegisterRequestHandler(
@@ -107,5 +117,9 @@ IN_PROC_BROWSER_TEST_F(MAYBE_AsyncResourceHandlerBrowserTest,
       &js_result));
   EXPECT_EQ(js_result, "success");
 }
+
+INSTANTIATE_TEST_CASE_P(MAYBE_AsyncResourceHandlerBrowserTest,
+                        MAYBE_AsyncResourceHandlerBrowserTest,
+                        ::testing::Values(false, true));
 
 }  // namespace content

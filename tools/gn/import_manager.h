@@ -7,7 +7,6 @@
 
 #include <map>
 #include <memory>
-#include <unordered_set>
 #include <vector>
 
 #include "base/macros.h"
@@ -37,15 +36,12 @@ class ImportManager {
  private:
   struct ImportInfo;
 
-  // Protects access to imports_ and imports_in_progress_. Do not hold when
-  // actually executing imports.
+  // Protects access to imports_. Do not hold when actually executing imports.
   base::Lock imports_lock_;
 
   // Owning pointers to the scopes.
   typedef std::map<SourceFile, std::unique_ptr<ImportInfo>> ImportMap;
   ImportMap imports_;
-
-  std::unordered_set<std::string> imports_in_progress_;
 
   DISALLOW_COPY_AND_ASSIGN(ImportManager);
 };

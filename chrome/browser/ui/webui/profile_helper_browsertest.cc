@@ -44,7 +44,7 @@ Profile* CreateProfile() {
 
 // An observer returns back to test code after brower window associated with
 // the profile is activated.
-class ExpectBrowserActivationForProfile : public BrowserListObserver {
+class ExpectBrowserActivationForProfile : public chrome::BrowserListObserver {
  public:
   explicit ExpectBrowserActivationForProfile(Profile* profile)
       : profile_(profile), scoped_observer_(this) {
@@ -64,7 +64,7 @@ class ExpectBrowserActivationForProfile : public BrowserListObserver {
  private:
   Profile* profile_;
   base::RunLoop loop_;
-  ScopedObserver<BrowserList, BrowserListObserver> scoped_observer_;
+  ScopedObserver<BrowserList, chrome::BrowserListObserver> scoped_observer_;
 };
 
 }  // namespace

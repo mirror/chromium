@@ -139,8 +139,7 @@ int UDPSocket::WriteImpl(net::IOBuffer* io_buffer,
   if (!socket_.is_connected())
     return net::ERR_SOCKET_NOT_CONNECTED;
   else
-    return socket_.Write(io_buffer, io_buffer_size, callback,
-                         Socket::GetNetworkTrafficAnnotationTag());
+    return socket_.Write(io_buffer, io_buffer_size, callback);
 }
 
 void UDPSocket::RecvFrom(int count,

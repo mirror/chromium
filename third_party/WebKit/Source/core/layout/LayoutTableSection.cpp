@@ -144,8 +144,7 @@ void LayoutTableSection::AddChild(LayoutObject* child,
     LayoutObject* last = before_child;
     if (!last)
       last = LastRow();
-    if (last && last->IsAnonymous() && last->IsTablePart() &&
-        !last->IsBeforeOrAfterContent()) {
+    if (last && last->IsAnonymous() && !last->IsBeforeOrAfterContent()) {
       if (before_child == last)
         before_child = last->SlowFirstChild();
       last->AddChild(child, before_child);
@@ -1647,7 +1646,6 @@ void LayoutTableSection::RecalcCells() {
   c_row_ = 0;
   grid_.clear();
 
-  bool resized_grid = false;
   for (LayoutTableRow* row = FirstRow(); row; row = row->NextRow()) {
     unsigned insertion_row = c_row_;
     ++c_row_;
@@ -1659,21 +1657,8 @@ void LayoutTableSection::RecalcCells() {
     grid_[insertion_row].SetRowLogicalHeightToRowStyleLogicalHeight();
 
     for (LayoutTableCell* cell = row->FirstCell(); cell;
-         cell = cell->NextCell()) {
-      // For rowspan, "the value zero means that the cell is to span all the
-      // remaining rows in the row group." Calculate the size of the full
-      // row grid now so that we can use it to count the remaining rows in
-      // RowSpan().
-      if (!cell->ParsedRowSpan() && !resized_grid) {
-        unsigned c_row = row->RowIndex() + 1;
-        for (LayoutTableRow* remaining_row = row; remaining_row;
-             remaining_row = remaining_row->NextRow())
-          c_row++;
-        EnsureRows(c_row);
-        resized_grid = true;
-      }
+         cell = cell->NextCell())
       AddCell(cell, row);
-    }
   }
 
   grid_.ShrinkToFit();

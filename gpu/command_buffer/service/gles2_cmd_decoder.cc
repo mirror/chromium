@@ -50,7 +50,6 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 #include "gpu/command_buffer/service/gles2_cmd_srgb_converter.h"
 #include "gpu/command_buffer/service/gles2_cmd_validation.h"
-#include "gpu/command_buffer/service/gpu_fence_manager.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/gpu_state_tracer.h"
 #include "gpu/command_buffer/service/gpu_tracer.h"
@@ -86,7 +85,6 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size.h"
-#include "ui/gfx/gpu_fence.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/ipc/color/gfx_param_traits.h"
 #include "ui/gfx/overlay_transform.h"
@@ -616,9 +614,6 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void RestoreAllAttributes() const override;
 
   QueryManager* GetQueryManager() override { return query_manager_.get(); }
-  GpuFenceManager* GetGpuFenceManager() override {
-    return gpu_fence_manager_.get();
-  }
   FramebufferManager* GetFramebufferManager() override {
     return framebuffer_manager_.get();
   }
@@ -1988,15 +1983,15 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
                              GLint pixel_config);
   void DoEndRasterCHROMIUM();
 
-  void DoCreateTransferCacheEntryINTERNAL(GLuint entry_type,
-                                          GLuint entry_id,
+  void DoCreateTransferCacheEntryINTERNAL(GLuint64 handle_id,
                                           GLuint handle_shm_id,
                                           GLuint handle_shm_offset,
+                                          GLuint type,
                                           GLuint data_shm_id,
                                           GLuint data_shm_offset,
                                           GLuint data_size);
-  void DoUnlockTransferCacheEntryINTERNAL(GLuint entry_type, GLuint entry_id);
-  void DoDeleteTransferCacheEntryINTERNAL(GLuint entry_type, GLuint entry_id);
+  void DoUnlockTransferCacheEntryINTERNAL(GLuint64 id);
+  void DoDeleteTransferCacheEntryINTERNAL(GLuint64 id);
 
   void DoWindowRectanglesEXT(GLenum mode, GLsizei n, const volatile GLint* box);
 
@@ -2416,8 +2411,6 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   std::unique_ptr<FramebufferManager> framebuffer_manager_;
 
   std::unique_ptr<QueryManager> query_manager_;
-
-  std::unique_ptr<GpuFenceManager> gpu_fence_manager_;
 
   std::unique_ptr<VertexArrayManager> vertex_array_manager_;
 
@@ -3391,8 +3384,6 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
 
   query_manager_.reset(new QueryManager(this, feature_info_.get()));
 
-  gpu_fence_manager_.reset(new GpuFenceManager());
-
   util_.set_num_compressed_texture_formats(
       validators_->compressed_texture_format.GetValues().size());
 
@@ -3810,7 +3801,9 @@ gpu::ContextResult GLES2DecoderImpl::Initialize(
     }
 
     if (supports_oop_raster_) {
-      gr_context_ = GrContext::MakeGL(std::move(interface));
+      gr_context_ = sk_sp<GrContext>(GrContext::Create(
+          kOpenGL_GrBackend,
+          reinterpret_cast<GrBackendContext>(interface.get())));
       if (gr_context_) {
         // TODO(enne): this cache is for this decoder only and each decoder has
         // its own cache.  This is pretty unfortunate.  This really needs to be
@@ -4032,7 +4025,6 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
   caps.texture_storage_image =
       feature_info_->feature_flags().chromium_texture_storage_image;
   caps.supports_oop_raster = supports_oop_raster_;
-  caps.chromium_gpu_fence = feature_info_->feature_flags().chromium_gpu_fence;
 
   return caps;
 }
@@ -5045,11 +5037,6 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
     query_manager_.reset();
   }
 
-  if (gpu_fence_manager_.get()) {
-    gpu_fence_manager_->Destroy(have_context);
-    gpu_fence_manager_.reset();
-  }
-
   if (vertex_array_manager_ .get()) {
     vertex_array_manager_->Destroy(have_context);
     vertex_array_manager_.reset();
@@ -5062,6 +5049,9 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
     transform_feedback_manager_->Destroy();
     transform_feedback_manager_.reset();
   }
+
+  // Record this value before resetting the frame buffer below.
+  bool is_offscreen = !!offscreen_target_frame_buffer_;
 
   offscreen_target_frame_buffer_.reset();
   offscreen_target_color_texture_.reset();
@@ -5090,6 +5080,13 @@ void GLES2DecoderImpl::Destroy(bool have_context) {
   if (group_.get()) {
     group_->Destroy(this, have_context);
     group_ = NULL;
+  }
+
+  // If this is not an offscreen surface then it shouldn't be shared and we
+  // should have the only remaining ref. Logging to debug crbug.com/787086
+  if (!is_offscreen && surface_ && !surface_->HasOneRef()) {
+    LOG(ERROR) << "crbug.com/787086: Decoder is not the sole owner of "
+                  "|surface_| at destruction time";
   }
 
   // Destroy the surface before the context, some surface destructors make GL
@@ -5172,50 +5169,6 @@ void GLES2DecoderImpl::ReturnFrontBuffer(const Mailbox& mailbox, bool is_lost) {
   }
 
   DLOG(ERROR) << "Attempting to return a frontbuffer that was not saved.";
-}
-
-error::Error GLES2DecoderImpl::HandleCreateGpuFenceINTERNAL(
-    uint32_t immediate_data_size,
-    const volatile void* cmd_data) {
-  const volatile gles2::cmds::CreateGpuFenceINTERNAL& c =
-      *static_cast<const volatile gles2::cmds::CreateGpuFenceINTERNAL*>(
-          cmd_data);
-  if (!features().chromium_gpu_fence) {
-    return error::kUnknownCommand;
-  }
-  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
-  if (!GetGpuFenceManager()->CreateGpuFence(gpu_fence_id))
-    return error::kInvalidArguments;
-  return error::kNoError;
-}
-
-error::Error GLES2DecoderImpl::HandleWaitGpuFenceCHROMIUM(
-    uint32_t immediate_data_size,
-    const volatile void* cmd_data) {
-  const volatile gles2::cmds::WaitGpuFenceCHROMIUM& c =
-      *static_cast<const volatile gles2::cmds::WaitGpuFenceCHROMIUM*>(cmd_data);
-  if (!features().chromium_gpu_fence) {
-    return error::kUnknownCommand;
-  }
-  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
-  if (!GetGpuFenceManager()->GpuFenceServerWait(gpu_fence_id))
-    return error::kInvalidArguments;
-  return error::kNoError;
-}
-
-error::Error GLES2DecoderImpl::HandleDestroyGpuFenceCHROMIUM(
-    uint32_t immediate_data_size,
-    const volatile void* cmd_data) {
-  const volatile gles2::cmds::DestroyGpuFenceCHROMIUM& c =
-      *static_cast<const volatile gles2::cmds::DestroyGpuFenceCHROMIUM*>(
-          cmd_data);
-  if (!features().chromium_gpu_fence) {
-    return error::kUnknownCommand;
-  }
-  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
-  if (!GetGpuFenceManager()->RemoveGpuFence(gpu_fence_id))
-    return error::kInvalidArguments;
-  return error::kNoError;
 }
 
 void GLES2DecoderImpl::CreateBackTexture() {
@@ -20356,25 +20309,6 @@ void GLES2DecoderImpl::DoBeginRasterCHROMIUM(GLuint texture_id,
   texture_manager()->SetLevelCleared(texture_ref, texture->target(), 0, true);
 }
 
-class TransferCacheDeserializeHelperImpl
-    : public cc::TransferCacheDeserializeHelper {
- public:
-  explicit TransferCacheDeserializeHelperImpl(
-      ServiceTransferCache* transfer_cache)
-      : transfer_cache_(transfer_cache) {
-    DCHECK(transfer_cache_);
-  }
-  ~TransferCacheDeserializeHelperImpl() override = default;
-
- private:
-  cc::ServiceTransferCacheEntry* GetEntryInternal(
-      cc::TransferCacheEntryType entry_type,
-      uint32_t entry_id) override {
-    return transfer_cache_->GetEntry(entry_type, entry_id);
-  }
-  ServiceTransferCache* transfer_cache_;
-};
-
 error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
     uint32_t immediate_data_size,
     const volatile void* cmd_data) {
@@ -20396,8 +20330,6 @@ error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
   SkMatrix original_ctm;
   cc::PlaybackParams playback_params(nullptr, original_ctm);
   cc::PaintOp::DeserializeOptions options;
-  TransferCacheDeserializeHelperImpl impl(GetContextGroup()->transfer_cache());
-  options.transfer_cache = &impl;
 
   int op_idx = 0;
   while (size > 4) {
@@ -20455,13 +20387,16 @@ void GLES2DecoderImpl::DoWindowRectanglesEXT(GLenum mode,
 }
 
 void GLES2DecoderImpl::DoCreateTransferCacheEntryINTERNAL(
-    GLuint raw_entry_type,
-    GLuint entry_id,
+    GLuint64 raw_handle_id,
     GLuint handle_shm_id,
     GLuint handle_shm_offset,
+    GLuint raw_type,
     GLuint data_shm_id,
     GLuint data_shm_offset,
     GLuint data_size) {
+  TransferCacheEntryId handle_id =
+      TransferCacheEntryId::FromUnsafeValue(raw_handle_id);
+
   if (!supports_oop_raster_) {
     LOCAL_SET_GL_ERROR(
         GL_INVALID_VALUE, "glCreateTransferCacheEntryINTERNAL",
@@ -20471,9 +20406,8 @@ void GLES2DecoderImpl::DoCreateTransferCacheEntryINTERNAL(
   DCHECK(gr_context_);
 
   // Validate the type we are about to create.
-  cc::TransferCacheEntryType entry_type;
-  if (!cc::ServiceTransferCacheEntry::SafeConvertToType(raw_entry_type,
-                                                        &entry_type)) {
+  cc::TransferCacheEntryType type;
+  if (!cc::ServiceTransferCacheEntry::SafeConvertToType(raw_type, &type)) {
     LOCAL_SET_GL_ERROR(
         GL_INVALID_VALUE, "glCreateTransferCacheEntryINTERNAL",
         "Attempt to use OOP transfer cache with an invalid cache entry type.");
@@ -20500,7 +20434,7 @@ void GLES2DecoderImpl::DoCreateTransferCacheEntryINTERNAL(
                                   handle_shm_id);
 
   if (!GetContextGroup()->transfer_cache()->CreateLockedEntry(
-          entry_type, entry_id, handle, gr_context_.get(),
+          handle_id, handle, type, gr_context_.get(),
           base::make_span(data_memory, data_size))) {
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glCreateTransferCacheEntryINTERNAL",
                        "Failure to deserialize transfer cache entry.");
@@ -20508,35 +20442,21 @@ void GLES2DecoderImpl::DoCreateTransferCacheEntryINTERNAL(
   }
 }
 
-void GLES2DecoderImpl::DoUnlockTransferCacheEntryINTERNAL(GLuint raw_entry_type,
-                                                          GLuint entry_id) {
-  cc::TransferCacheEntryType entry_type;
-  if (!cc::ServiceTransferCacheEntry::SafeConvertToType(raw_entry_type,
-                                                        &entry_type)) {
-    LOCAL_SET_GL_ERROR(
-        GL_INVALID_VALUE, "glUnlockTransferCacheEntryINTERNAL",
-        "Attempt to use OOP transfer cache with an invalid cache entry type.");
-    return;
-  }
-
-  if (!GetContextGroup()->transfer_cache()->UnlockEntry(entry_type, entry_id)) {
+void GLES2DecoderImpl::DoUnlockTransferCacheEntryINTERNAL(
+    GLuint64 raw_handle_id) {
+  TransferCacheEntryId handle_id =
+      TransferCacheEntryId::FromUnsafeValue(raw_handle_id);
+  if (!GetContextGroup()->transfer_cache()->UnlockEntry(handle_id)) {
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glUnlockTransferCacheEntryINTERNAL",
                        "Attempt to unlock an invalid ID");
   }
 }
 
-void GLES2DecoderImpl::DoDeleteTransferCacheEntryINTERNAL(GLuint raw_entry_type,
-                                                          GLuint entry_id) {
-  cc::TransferCacheEntryType entry_type;
-  if (!cc::ServiceTransferCacheEntry::SafeConvertToType(raw_entry_type,
-                                                        &entry_type)) {
-    LOCAL_SET_GL_ERROR(
-        GL_INVALID_VALUE, "glDeleteTransferCacheEntryINTERNAL",
-        "Attempt to use OOP transfer cache with an invalid cache entry type.");
-    return;
-  }
-
-  if (!GetContextGroup()->transfer_cache()->DeleteEntry(entry_type, entry_id)) {
+void GLES2DecoderImpl::DoDeleteTransferCacheEntryINTERNAL(
+    GLuint64 raw_handle_id) {
+  TransferCacheEntryId handle_id =
+      TransferCacheEntryId::FromUnsafeValue(raw_handle_id);
+  if (!GetContextGroup()->transfer_cache()->DeleteEntry(handle_id)) {
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glDeleteTransferCacheEntryINTERNAL",
                        "Attempt to delete an invalid ID");
   }

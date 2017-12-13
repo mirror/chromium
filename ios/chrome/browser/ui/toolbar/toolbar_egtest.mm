@@ -277,8 +277,7 @@ void SelectNewTabPagePanel(ntp_home::PanelIdentifier panel_type) {
   }];
 
   std::map<GURL, std::string> responses;
-  // The URL needs to be long enough so the tap to the omnibox selects it.
-  const GURL URL = web::test::HttpServer::MakeUrl("http://veryLongURLTestPage");
+  const GURL URL = web::test::HttpServer::MakeUrl("http://testPage");
   const GURL secondURL = web::test::HttpServer::MakeUrl("http://pastePage");
 
   [ChromeEarlGrey loadURL:URL];
@@ -292,10 +291,7 @@ void SelectNewTabPagePanel(ntp_home::PanelIdentifier panel_type) {
     [[EarlGrey selectElementWithMatcher:chrome_test_util::Omnibox()]
         performAction:grey_tap()];
     // Tap twice to get the pre-edit label callout bar copy button.
-    [[EarlGrey
-        selectElementWithMatcher:grey_allOf(
-                                     grey_ancestor(chrome_test_util::Omnibox()),
-                                     grey_kindOfClass([UILabel class]), nil)]
+    [[EarlGrey selectElementWithMatcher:chrome_test_util::Omnibox()]
         performAction:grey_tap()];
 
     [[[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(@"Copy")]

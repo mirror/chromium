@@ -964,8 +964,7 @@ void VrShellGl::DrawIntoAcquiredFrame(int16_t frame_index,
   if (ShouldDrawWebVr() && surfaceless_rendering_) {
     // Continue with submit once a GL fence signals that current drawing
     // operations have completed.
-    std::unique_ptr<gl::GLFenceEGL> fence = gl::GLFenceEGL::Create();
-    DCHECK(fence);
+    std::unique_ptr<gl::GLFenceEGL> fence = base::MakeUnique<gl::GLFenceEGL>();
     webvr_delayed_frame_submit_.Reset(base::Bind(
         &VrShellGl::DrawFrameSubmitWhenReady, base::Unretained(this)));
     task_runner_->PostTask(
@@ -1082,11 +1081,6 @@ void VrShellGl::OnResume() {
   OnVSync(base::TimeTicks::Now());
   if (web_vr_mode_ && submit_client_)
     ScheduleOrCancelWebVrFrameTimeout();
-}
-
-void VrShellGl::OnExitPresent() {
-  webvr_frame_timeout_.Cancel();
-  webvr_spinner_timeout_.Cancel();
 }
 
 void VrShellGl::SetWebVrMode(bool enabled) {

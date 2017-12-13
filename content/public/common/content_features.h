@@ -32,8 +32,6 @@ CONTENT_EXPORT extern const base::Feature kCompositeOpaqueFixedPosition;
 CONTENT_EXPORT extern const base::Feature kCompositeOpaqueScrollers;
 CONTENT_EXPORT extern const base::Feature kCompositorImageAnimation;
 CONTENT_EXPORT extern const base::Feature kCompositorTouchAction;
-CONTENT_EXPORT extern const base::Feature kCrossSiteDocumentBlockingAlways;
-CONTENT_EXPORT extern const base::Feature kCrossSiteDocumentBlockingIfIsolating;
 CONTENT_EXPORT extern const base::Feature kExtendedMouseButtons;
 CONTENT_EXPORT extern const base::Feature kExpensiveBackgroundTimerThrottling;
 CONTENT_EXPORT extern const base::Feature kFeaturePolicy;
@@ -51,6 +49,7 @@ CONTENT_EXPORT extern const base::Feature
     kKeepAliveRendererForKeepaliveRequests;
 CONTENT_EXPORT extern const base::Feature kLazyInitializeMediaControls;
 CONTENT_EXPORT extern const base::Feature kLazyParseCSS;
+CONTENT_EXPORT extern const base::Feature kLoadingWithMojo;
 CONTENT_EXPORT extern const base::Feature kMediaDevicesSystemMonitorCache;
 CONTENT_EXPORT extern const base::Feature kMemoryCoordinator;
 CONTENT_EXPORT extern const base::Feature kNetworkService;
@@ -98,7 +97,6 @@ CONTENT_EXPORT extern const base::Feature kUseFeaturePolicyForPermissions;
 CONTENT_EXPORT extern const base::Feature kUseMojoAudioOutputStreamFactory;
 CONTENT_EXPORT extern const base::Feature kUserActivationV2;
 CONTENT_EXPORT extern const base::Feature kV8ContextSnapshot;
-CONTENT_EXPORT extern const base::Feature kV8BackgroundCompile;
 CONTENT_EXPORT extern const base::Feature kV8VmFuture;
 CONTENT_EXPORT extern const base::Feature kVibrateRequiresUserGesture;
 CONTENT_EXPORT extern const base::Feature kWebAssembly;
@@ -116,7 +114,6 @@ CONTENT_EXPORT extern const base::Feature kWebRtcUseGpuMemoryBufferVideoFrames;
 CONTENT_EXPORT extern const base::Feature kWebUsb;
 CONTENT_EXPORT extern const base::Feature kWebVrExperimentalRendering;
 CONTENT_EXPORT extern const base::Feature kWebVrVsyncAlign;
-CONTENT_EXPORT extern const base::Feature kWebXr;
 CONTENT_EXPORT extern const base::Feature kWorkStealingInScriptRunner;
 
 #if defined(OS_ANDROID)

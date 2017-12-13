@@ -4,8 +4,6 @@
 
 #include "chromeos/components/tether/disconnect_tethering_request_sender_impl.h"
 
-#include <memory>
-
 #include "chromeos/components/tether/disconnect_tethering_operation.h"
 #include "chromeos/components/tether/disconnect_tethering_request_sender.h"
 #include "chromeos/components/tether/fake_ble_connection_manager.h"
@@ -94,22 +92,22 @@ class DisconnectTetheringRequestSenderTest : public testing::Test {
   ~DisconnectTetheringRequestSenderTest() override = default;
 
   void SetUp() override {
-    fake_ble_connection_manager_ = std::make_unique<FakeBleConnectionManager>();
+    fake_ble_connection_manager_ = base::MakeUnique<FakeBleConnectionManager>();
     fake_tether_host_fetcher_ =
-        std::make_unique<FakeTetherHostFetcher>(test_devices_);
+        base::MakeUnique<FakeTetherHostFetcher>(test_devices_);
 
     fake_operation_factory_ =
-        std::make_unique<FakeDisconnectTetheringOperationFactory>();
+        base::MakeUnique<FakeDisconnectTetheringOperationFactory>();
     DisconnectTetheringOperation::Factory::SetInstanceForTesting(
         fake_operation_factory_.get());
 
     disconnect_tethering_request_sender_ =
-        std::make_unique<DisconnectTetheringRequestSenderImpl>(
+        base::MakeUnique<DisconnectTetheringRequestSenderImpl>(
             fake_ble_connection_manager_.get(),
             fake_tether_host_fetcher_.get());
 
     fake_disconnect_tethering_request_sender_observer_ =
-        std::make_unique<FakeDisconnectTetheringRequestSenderObserver>();
+        base::MakeUnique<FakeDisconnectTetheringRequestSenderObserver>();
     disconnect_tethering_request_sender_->AddObserver(
         fake_disconnect_tethering_request_sender_observer_.get());
   }

@@ -10,7 +10,6 @@
 #include "ash/message_center/message_center_button_bar.h"
 #include "ash/message_center/message_center_style.h"
 #include "ash/message_center/notifier_settings_view.h"
-#include "ash/public/cpp/ash_switches.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
@@ -96,8 +95,8 @@ class EmptyNotificationView : public views::View {
         l10n_util::GetStringUTF16(IDS_ASH_MESSAGE_CENTER_NO_MESSAGES));
     label->SetEnabledColor(message_center_style::kEmptyViewColor);
     // "Roboto-Medium, 12sp" is specified in the mock.
-    label->SetFontList(
-        gfx::FontList().DeriveWithWeight(gfx::Font::Weight::MEDIUM));
+    label->SetFontList(message_center_style::GetFontListForSizeAndWeight(
+        message_center_style::kEmptyLabelSize, gfx::Font::Weight::MEDIUM));
     label->SetHorizontalAlignment(gfx::ALIGN_CENTER);
     AddChildView(label);
   }
@@ -145,8 +144,7 @@ MessageCenterView::MessageCenterView(
 
   message_center_->AddObserver(this);
   set_notify_enter_exit_on_child(true);
-  if (!switches::IsSidebarEnabled())
-    SetBackground(views::CreateSolidBackground(kBackgroundColor));
+  SetBackground(views::CreateSolidBackground(kBackgroundColor));
   SetFocusBehavior(views::View::FocusBehavior::NEVER);
 
   button_bar_ = new MessageCenterButtonBar(
@@ -156,13 +154,7 @@ MessageCenterView::MessageCenterView(
   const int button_height = button_bar_->GetPreferredSize().height();
 
   scroller_ = new MessageCenterScrollView(this);
-  if (!switches::IsSidebarEnabled()) {
-    scroller_->SetBackgroundColor(kBackgroundColor);
-  } else {
-    // Need to set the transparent background explicitly, since ScrollView has
-    // set the default opaque background color.
-    scroller_->SetBackgroundColor(SK_ColorTRANSPARENT);
-  }
+  scroller_->SetBackgroundColor(kBackgroundColor);
   scroller_->ClipHeightTo(kMinScrollViewHeight, max_height - button_height);
   scroller_->SetVerticalScrollBar(new views::OverlayScrollBar(false));
   scroller_->SetHorizontalScrollBar(new views::OverlayScrollBar(true));
@@ -267,7 +259,8 @@ void MessageCenterView::OnAllNotificationsCleared() {
 
   // Action by user.
   message_center_->RemoveAllNotifications(
-      true /* by_user */, MessageCenter::RemoveType::NON_PINNED);
+      true /* by_user */,
+      message_center::MessageCenter::RemoveType::NON_PINNED);
   is_clearing_all_notifications_ = false;
 }
 
@@ -502,6 +495,18 @@ void MessageCenterView::ClickOnSettingsButton(
   message_center_->ClickOnSettingsButton(notification_id);
 }
 
+void MessageCenterView::UpdateNotificationSize(
+    const std::string& notification_id) {
+  // TODO(edcourtney, yoshiki): We don't call OnNotificationUpdated directly
+  // because it resets the reposition session, which can end up deleting
+  // notification items when it cancels animations. This causes problems for
+  // ARC notifications. See crbug.com/714493. OnNotificationUpdated should not
+  // have to consider the reposition session, but OnMouseEntered and
+  // OnMouseExited don't work properly for ARC notifications at the moment.
+  // See crbug.com/714587.
+  UpdateNotification(notification_id);
+}
+
 void MessageCenterView::AnimationEnded(const gfx::Animation* animation) {
   DCHECK_EQ(animation, settings_transition_animation_.get());
 
@@ -539,18 +544,10 @@ void MessageCenterView::AnimationCanceled(const gfx::Animation* animation) {
   AnimationEnded(animation);
 }
 
-void MessageCenterView::OnViewPreferredSizeChanged(views::View* observed_view) {
-  DCHECK_EQ(std::string(MessageView::kViewClassName),
-            observed_view->GetClassName());
-  UpdateNotification(
-      static_cast<MessageView*>(observed_view)->notification_id());
-}
-
 void MessageCenterView::AddNotificationAt(const Notification& notification,
                                           int index) {
   MessageView* view = message_center::MessageViewFactory::Create(
       this, notification, false);  // Not top-level.
-  view->AddObserver(this);
 
   // TODO(yoshiki): Temporarily disable context menu on custom (arc)
   // notifications. See crbug.com/750307 for details.

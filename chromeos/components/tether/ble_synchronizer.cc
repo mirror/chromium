@@ -4,8 +4,7 @@
 
 #include "chromeos/components/tether/ble_synchronizer.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/default_clock.h"
@@ -24,8 +23,8 @@ const int64_t kTimeBetweenEachCommandMs = 200;
 BleSynchronizer::BleSynchronizer(
     scoped_refptr<device::BluetoothAdapter> bluetooth_adapter)
     : bluetooth_adapter_(bluetooth_adapter),
-      timer_(std::make_unique<base::OneShotTimer>()),
-      clock_(std::make_unique<base::DefaultClock>()),
+      timer_(base::MakeUnique<base::OneShotTimer>()),
+      clock_(base::MakeUnique<base::DefaultClock>()),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       weak_ptr_factory_(this) {}
 

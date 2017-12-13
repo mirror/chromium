@@ -52,6 +52,7 @@ class ContentViewCore;
 class ImeAdapterAndroid;
 class OverscrollControllerAndroid;
 class PopupZoomer;
+class RenderWidgetHost;
 class RenderWidgetHostImpl;
 class SelectionPopupController;
 class SynchronousCompositorHost;
@@ -105,6 +106,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void InitAsPopup(RenderWidgetHostView* parent_host_view,
                    const gfx::Rect& pos) override;
   void InitAsFullscreen(RenderWidgetHostView* reference_host_view) override;
+  RenderWidgetHost* GetRenderWidgetHost() const override;
   void SetSize(const gfx::Size& size) override;
   void SetBounds(const gfx::Rect& rect) override;
   gfx::Vector2dF GetLastScrollOffset() const override;
@@ -170,7 +172,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       override;
   void OnDidNavigateMainFrameToNewPage() override;
   void SetNeedsBeginFrames(bool needs_begin_frames) override;
-  RenderWidgetHostImpl* GetRenderWidgetHostImpl() const override;
   viz::FrameSinkId GetFrameSinkId() override;
   viz::FrameSinkId FrameSinkIdAtPoint(viz::SurfaceHittestDelegate* delegate,
                                       const gfx::PointF& point,
@@ -388,7 +389,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
                         float mouse_down_y);
 
   WebContentsAccessibilityAndroid* GetWebContentsAccessibilityAndroid() const;
-  RenderViewHostDelegateView* GetRenderViewHostDelegateView() const;
 
   void OnFocusInternal();
   void LostFocusInternal();

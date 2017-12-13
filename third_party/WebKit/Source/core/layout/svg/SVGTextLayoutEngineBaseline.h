@@ -20,10 +20,10 @@
 #ifndef SVGTextLayoutEngineBaseline_h
 #define SVGTextLayoutEngineBaseline_h
 
-#include "base/macros.h"
 #include "core/layout/api/LineLayoutItem.h"
 #include "core/style/SVGComputedStyleDefs.h"
 #include "platform/wtf/Allocator.h"
+#include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/text/Unicode.h"
 
 namespace blink {
@@ -35,6 +35,7 @@ class ComputedStyle;
 // 'dominant-baseline' and 'baseline-shift'.
 class SVGTextLayoutEngineBaseline {
   STACK_ALLOCATED();
+  WTF_MAKE_NONCOPYABLE(SVGTextLayoutEngineBaseline);
 
  public:
   SVGTextLayoutEngineBaseline(const Font&, float effective_zoom);
@@ -54,7 +55,6 @@ class SVGTextLayoutEngineBaseline {
   // layout inside SVG takes place in unzoomed coordinates we have to compensate
   // for zoom when reading values from the font descriptor.
   float effective_zoom_;
-  DISALLOW_COPY_AND_ASSIGN(SVGTextLayoutEngineBaseline);
 };
 
 }  // namespace blink

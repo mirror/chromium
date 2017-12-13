@@ -423,14 +423,15 @@ void ServiceWorkerGlobalScopeProxy::DispatchPushEvent(int event_id,
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
 }
 
-void ServiceWorkerGlobalScopeProxy::DispatchSyncEvent(int event_id,
-                                                      const WebString& id,
-                                                      bool last_chance) {
+void ServiceWorkerGlobalScopeProxy::DispatchSyncEvent(
+    int event_id,
+    const WebString& id,
+    LastChanceOption last_chance) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
       WorkerGlobalScope(), WaitUntilObserver::kSync, event_id);
-  Event* event =
-      SyncEvent::Create(EventTypeNames::sync, id, last_chance, observer);
+  Event* event = SyncEvent::Create(EventTypeNames::sync, id,
+                                   last_chance == kIsLastChance, observer);
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
 }
 

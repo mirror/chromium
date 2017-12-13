@@ -40,7 +40,7 @@ class BASE_EXPORT SystemMonitor {
     virtual void OnDevicesChanged(DeviceType device_type) {}
 
    protected:
-    virtual ~DevicesChangedObserver() = default;
+    virtual ~DevicesChangedObserver() {}
   };
 
   // Add a new observer.

@@ -215,8 +215,7 @@ void LayoutTable::AddChild(LayoutObject* child, LayoutObject* before_child) {
   while (last_box && last_box->Parent()->IsAnonymous() &&
          !last_box->IsTableSection() && NeedsTableSection(last_box))
     last_box = last_box->Parent();
-  if (last_box && last_box->IsAnonymous() && last_box->IsTablePart() &&
-      !IsAfterContent(last_box)) {
+  if (last_box && last_box->IsAnonymous() && !IsAfterContent(last_box)) {
     if (before_child == last_box)
       before_child = last_box->SlowFirstChild();
     last_box->AddChild(child, before_child);
@@ -1476,14 +1475,6 @@ LayoutUnit LayoutTable::FirstLineBoxBaseline() const {
 LayoutRect LayoutTable::OverflowClipRect(
     const LayoutPoint& location,
     OverlayScrollbarClipBehavior overlay_scrollbar_clip_behavior) const {
-  if (ShouldCollapseBorders()) {
-    // Though the outer halves of the collapsed borders are considered as the
-    // the border area of the table by means of the box model, they are actually
-    // contents of the table and should not be clipped off. The overflow clip
-    // rect is BorderBoxRect() + location.
-    return LayoutRect(location, Size());
-  }
-
   LayoutRect rect =
       LayoutBlock::OverflowClipRect(location, overlay_scrollbar_clip_behavior);
 

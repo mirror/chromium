@@ -260,15 +260,9 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
   const ComputedStyle* container_style = snap_container.Style();
   const ComputedStyle* area_style = snap_area.Style();
   SnapAreaData snap_area_data;
-
-  // Scroll-padding represents inward offsets from the corresponding edge of the
-  // scrollport. https://drafts.csswg.org/css-scroll-snap-1/#scroll-padding
-  // Scrollport is the visual vieport of the scroll container (through which the
-  // scrollable overflow region can be viewed) coincides with its padding box.
-  // https://drafts.csswg.org/css-scroll-snap-1/#scroll-padding
-  // So we use the size of the padding box here.
-  LayoutRect container(LayoutPoint(), snap_container.PaddingBoxRect().Size());
-
+  LayoutRect container(
+      LayoutPoint(),
+      LayoutSize(snap_container.OffsetWidth(), snap_container.OffsetHeight()));
   // We assume that the snap_container is the snap_area's ancestor in layout
   // tree, as the snap_container is found by walking up the layout tree in
   // FindSnapContainer(). Under this assumption,
@@ -308,8 +302,16 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
       MinimumValueForLength(container_style->ScrollPaddingLeft(),
                             container.Width()));
   LayoutRectOutsets area_margin(
-      area_style->ScrollSnapMarginTop(), area_style->ScrollSnapMarginRight(),
-      area_style->ScrollSnapMarginBottom(), area_style->ScrollSnapMarginLeft());
+      // According to spec
+      // https://www.w3.org/TR/css-scroll-snap-1/#scroll-snap-margin
+      // Only fixed values are valid inputs. So we would return 0 for percentage
+      // values.
+      // TODO(sunyunjia): Update CSS parser to reject percentage and auto values
+      // for scroll-snap-margin, and reject auto values for scroll-padding.
+      MinimumValueForLength(area_style->ScrollSnapMarginTop(), LayoutUnit()),
+      MinimumValueForLength(area_style->ScrollSnapMarginRight(), LayoutUnit()),
+      MinimumValueForLength(area_style->ScrollSnapMarginBottom(), LayoutUnit()),
+      MinimumValueForLength(area_style->ScrollSnapMarginLeft(), LayoutUnit()));
   container.Contract(container_padding);
   area.Expand(area_margin);
 

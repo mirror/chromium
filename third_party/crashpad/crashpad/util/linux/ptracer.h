@@ -35,16 +35,13 @@ class Ptracer {
   //! \brief Constructs this object with a pre-determined bitness.
   //!
   //! \param[in] is_64_bit `true` if this object is to be configured for 64-bit.
-  //! \param[in] can_log Whether methods in this class can log error messages.
-  Ptracer(bool is_64_bit, bool can_log);
+  explicit Ptracer(bool is_64_bit);
 
   //! \brief Constructs this object without a pre-determined bitness.
   //!
   //! Initialize() must be successfully called before making any other calls on
   //! this object.
-  //!
-  //! \param[in] can_log Whether methods in this class can log error messages.
-  explicit Ptracer(bool can_log);
+  Ptracer();
 
   ~Ptracer();
 
@@ -52,8 +49,7 @@ class Ptracer {
   //!     ID is \a pid.
   //!
   //! \param[in] pid The process ID of the process to initialize with.
-  //! \return `true` on success. `false` on failure with a message logged, if
-  //!     enabled.
+  //! \return `true` on success. `false` on failure with a message logged.
   bool Initialize(pid_t pid);
 
   //! \brief Return `true` if this object is configured for 64-bit.
@@ -67,27 +63,11 @@ class Ptracer {
   //!
   //! \param[in] tid The thread ID of the thread to collect information for.
   //! \param[out] info A ThreadInfo for the thread.
-  //! \return `true` on success. `false` on failure with a message logged, if
-  //!     enabled.
+  //! \return `true` on success. `false` on failure with a message logged.
   bool GetThreadInfo(pid_t tid, ThreadInfo* info);
-
-  //! \brief Uses `ptrace` to read memory from the process with process ID \a
-  //!     pid.
-  //!
-  //! The target process should already be attached before calling this method.
-  //! \see ScopedPtraceAttach
-  //!
-  //! \param[in] pid The process ID whose memory to read.
-  //! \param[in] address The base address of the region to read.
-  //! \param[in] size The size of the memory region to read.
-  //! \param[out] buffer The buffer to fill with the data read.
-  //! \return `true` on success. `false` on failure with a message logged, if
-  //!     enabled.
-  bool ReadMemory(pid_t pid, LinuxVMAddress address, size_t size, char* buffer);
 
  private:
   bool is_64_bit_;
-  bool can_log_;
   InitializationStateDcheck initialized_;
 
   DISALLOW_COPY_AND_ASSIGN(Ptracer);

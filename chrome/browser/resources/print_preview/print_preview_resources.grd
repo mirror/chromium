@@ -65,12 +65,6 @@
       <structure name="IDR_PRINT_PREVIEW_DATA_COORDINATE2D_JS"
                  file="data/coordinate2d.js"
                  type="chrome_html" />
-      <structure name="IDR_PRINT_PREVIEW_DATA_MEASUREMENT_SYSTEM_HTML"
-                 file="data/measurement_system.html"
-                 type="chrome_html" />
-      <structure name="IDR_PRINT_PREVIEW_DATA_MEASUREMENT_SYSTEM_JS"
-                 file="data/measurement_system.js"
-                 type="chrome_html" />
       <structure name="IDR_PRINT_PREVIEW_DATA_PRINTABLE_AREA_HTML"
                  file="data/printable_area.html"
                  type="chrome_html" />
@@ -94,12 +88,6 @@
                  type="chrome_html" />
       <structure name="IDR_PRINT_PREVIEW_NEW_SETTINGS_SECTION_JS"
                  file="new/settings_section.js"
-                 type="chrome_html" />
-      <structure name="IDR_PRINT_PREVIEW_NEW_SETTINGS_SELECT_HTML"
-                 file="new/settings_select.html"
-                 type="chrome_html" />
-      <structure name="IDR_PRINT_PREVIEW_NEW_SETTINGS_SELECT_JS"
-                 file="new/settings_select.js"
                  type="chrome_html" />
       <structure name="IDR_PRINT_PREVIEW_NEW_DESTINATION_SETTINGS_HTML"
                  file="new/destination_settings.html"

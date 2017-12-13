@@ -44,27 +44,52 @@ PublicURLManager::PublicURLManager(ExecutionContext* context)
     : ContextLifecycleObserver(context), is_stopped_(false) {}
 
 String PublicURLManager::RegisterURL(ExecutionContext* context,
-                                     URLRegistrable* registrable) {
+                                     URLRegistrable* registrable,
+                                     const String& uuid) {
   SecurityOrigin* origin = context->GetMutableSecurityOrigin();
   const KURL& url = BlobURL::CreatePublicURL(origin);
   DCHECK(!url.IsEmpty());
   const String& url_string = url.GetString();
 
   if (!is_stopped_) {
-    URLRegistry* registry = &registrable->Registry();
-    registry->RegisterURL(origin, url, registrable);
-    url_to_registry_.insert(url_string, registry);
+    RegistryURLMap::ValueType* found =
+        registry_to_url_.insert(&registrable->Registry(), URLMap())
+            .stored_value;
+    found->key->RegisterURL(origin, url, registrable);
+    found->value.insert(url_string, uuid);
   }
 
   return url_string;
 }
 
 void PublicURLManager::Revoke(const KURL& url) {
-  auto it = url_to_registry_.find(url.GetString());
-  if (it == url_to_registry_.end())
-    return;
-  it->value->UnregisterURL(url);
-  url_to_registry_.erase(it);
+  for (auto& registry_url : registry_to_url_) {
+    if (registry_url.value.Contains(url.GetString())) {
+      registry_url.key->UnregisterURL(url);
+      registry_url.value.erase(url.GetString());
+      break;
+    }
+  }
+}
+
+void PublicURLManager::Revoke(const String& uuid) {
+  // A linear scan; revoking by UUID is assumed rare.
+  Vector<String> urls_to_remove;
+  for (auto& registry_url : registry_to_url_) {
+    URLRegistry* registry = registry_url.key;
+    URLMap& registered_urls = registry_url.value;
+    for (auto& registered_url : registered_urls) {
+      if (uuid == registered_url.value) {
+        KURL url(registered_url.key);
+        GetExecutionContext()->RemoveURLFromMemoryCache(url);
+        registry->UnregisterURL(url);
+        urls_to_remove.push_back(registered_url.key);
+      }
+    }
+    for (const auto& url : urls_to_remove)
+      registered_urls.erase(url);
+    urls_to_remove.clear();
+  }
 }
 
 void PublicURLManager::ContextDestroyed(ExecutionContext*) {
@@ -72,10 +97,12 @@ void PublicURLManager::ContextDestroyed(ExecutionContext*) {
     return;
 
   is_stopped_ = true;
-  for (auto& url_registry : url_to_registry_)
-    url_registry.value->UnregisterURL(KURL(url_registry.key));
+  for (auto& registry_url : registry_to_url_) {
+    for (auto& url : registry_url.value)
+      registry_url.key->UnregisterURL(KURL(url.key));
+  }
 
-  url_to_registry_.clear();
+  registry_to_url_.clear();
 }
 
 void PublicURLManager::Trace(blink::Visitor* visitor) {

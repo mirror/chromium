@@ -11,7 +11,7 @@
 
   var timeline = UI.panels.timeline;
   timeline._onModeChanged();
-  timeline._flameChart._automaticallySizeWindow = true;
+  timeline._currentView._automaticallySizeWindow = true;
 
   function requestWindowTimesHook(startTime, endTime) {
     if (startTime)

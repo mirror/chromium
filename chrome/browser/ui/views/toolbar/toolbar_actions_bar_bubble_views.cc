@@ -29,6 +29,9 @@ ToolbarActionsBarBubbleViews::ToolbarActionsBarBubbleViews(
     : views::BubbleDialogDelegateView(anchor_view,
                                       views::BubbleBorder::TOP_RIGHT),
       delegate_(std::move(delegate)),
+      delegate_notified_of_close_(false),
+      item_list_(nullptr),
+      link_(nullptr),
       anchored_to_action_(anchored_to_action) {
   set_close_on_deactivate(delegate_->ShouldCloseOnDeactivate());
   if (!anchor_view)
@@ -59,7 +62,7 @@ views::View* ToolbarActionsBarBubbleViews::CreateExtraView() {
 
   std::unique_ptr<views::ImageView> icon;
   if (extra_view_info->resource) {
-    icon = std::make_unique<views::ImageView>();
+    icon.reset(new views::ImageView);
     icon->SetImage(gfx::CreateVectorIcon(*extra_view_info->resource, kIconSize,
                                          gfx::kChromeIconGrey));
   }
@@ -72,7 +75,7 @@ views::View* ToolbarActionsBarBubbleViews::CreateExtraView() {
       link_->set_listener(this);
       label.reset(link_);
     } else {
-      label = std::make_unique<views::Label>(text);
+      label.reset(new views::Label(text));
     }
   }
 

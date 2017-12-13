@@ -45,6 +45,7 @@
 #include "content/common/accessibility_messages.h"
 #include "content/common/associated_interface_provider_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
+#include "content/common/clipboard.mojom.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/content_security_policy/csp_context.h"
 #include "content/common/content_security_policy_header.h"
@@ -302,6 +303,10 @@ using blink::mojom::SelectionMenuBehavior;
 using blink::WebFloatPoint;
 using blink::WebFloatRect;
 #endif
+
+#define STATIC_ASSERT_ENUM(a, b)                            \
+  static_assert(static_cast<int>(a) == static_cast<int>(b), \
+                "mismatching enums: " #a)
 
 namespace content {
 
@@ -1699,9 +1704,7 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
 
   DCHECK(!frame_->GetDocument().IsNull());
 
-  GetContentClient()->SetActiveURL(
-      frame_->GetDocument().Url(),
-      frame_->Top()->GetSecurityOrigin().ToString().Utf8());
+  GetContentClient()->SetActiveURL(frame_->GetDocument().Url());
 
   {
     SCOPED_UMA_HISTOGRAM_TIMER("RenderFrameObservers.OnMessageReceived");
@@ -2089,13 +2092,10 @@ void RenderFrameImpl::OnCopyToFindPboard() {
   // Since the find pasteboard supports only plain text, this can be simpler
   // than the |OnCopy()| case.
   if (frame_->HasSelection()) {
-    if (!clipboard_host_) {
-      auto* platform = RenderThreadImpl::current_blink_platform_impl();
-      platform->GetConnector()->BindInterface(platform->GetBrowserServiceName(),
-                                              &clipboard_host_);
-    }
     base::string16 selection = frame_->SelectionAsText().Utf16();
-    clipboard_host_->WriteStringToFindPboard(selection);
+    RenderThreadImpl::current_blink_platform_impl()
+        ->GetClipboardHost()
+        .WriteStringToFindPboard(selection);
   }
 }
 #endif
@@ -3029,6 +3029,13 @@ void RenderFrameImpl::SetEngagementLevel(const url::Origin& origin,
 // blink::mojom::MediaEngagementClient implementation --------------------------
 
 void RenderFrameImpl::SetHasHighMediaEngagement(const url::Origin& origin) {
+  // Set the HasHighMediaEngagement bit on |frame| if the origin matches
+  // the one we were provided.
+  if (frame_ && url::Origin(frame_->GetSecurityOrigin()) == origin) {
+    frame_->SetHasHighMediaEngagement(true);
+    return;
+  }
+
   high_media_engagement_origin_ = origin;
 }
 
@@ -3447,6 +3454,11 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   return web_frame;
 }
 
+blink::WebFrame* RenderFrameImpl::FindFrame(const blink::WebString& name) {
+  return GetContentClient()->renderer()->FindFrame(this->GetWebFrame(),
+                                                   name.Utf8());
+}
+
 void RenderFrameImpl::DidChangeOpener(blink::WebFrame* opener) {
   // Only a local frame should be able to update another frame's opener.
   DCHECK(!opener || opener->IsWebLocalFrame());
@@ -3583,11 +3595,6 @@ void RenderFrameImpl::DidMatchCSS(
 
 void RenderFrameImpl::SetHasReceivedUserGesture() {
   Send(new FrameHostMsg_SetHasReceivedUserGesture(routing_id_));
-}
-
-void RenderFrameImpl::SetHasReceivedUserGestureBeforeNavigation(bool value) {
-  Send(new FrameHostMsg_SetHasReceivedUserGestureBeforeNavigation(routing_id_,
-                                                                  value));
 }
 
 bool RenderFrameImpl::ShouldReportDetailedMessageForSource(
@@ -4420,14 +4427,12 @@ blink::WebColorChooser* RenderFrameImpl::CreateColorChooser(
     const blink::WebVector<blink::WebColorSuggestion>& suggestions) {
   RendererWebColorChooserImpl* color_chooser =
       new RendererWebColorChooserImpl(this, client);
-  std::vector<mojom::ColorSuggestionPtr> color_suggestions;
-  color_suggestions.reserve(suggestions.size());
-  for (const auto& suggestion : suggestions) {
-    color_suggestions.emplace_back(base::in_place, suggestion.color,
-                                   suggestion.label.Utf8());
+  std::vector<ColorSuggestion> color_suggestions;
+  for (size_t i = 0; i < suggestions.size(); i++) {
+    color_suggestions.push_back(
+        ColorSuggestion(suggestions[i].color, suggestions[i].label.Utf16()));
   }
-  color_chooser->Open(static_cast<SkColor>(initial_color),
-                      std::move(color_suggestions));
+  color_chooser->Open(static_cast<SkColor>(initial_color), color_suggestions);
   return color_chooser;
 }
 
@@ -5505,8 +5510,7 @@ void RenderFrameImpl::OnFailedNavigation(
   RenderFrameImpl::PrepareRenderViewForNavigation(
       common_params.url, request_params);
 
-  GetContentClient()->SetActiveURL(
-      common_params.url, frame_->Top()->GetSecurityOrigin().ToString().Utf8());
+  GetContentClient()->SetActiveURL(common_params.url);
 
   // If this frame is navigating cross-process, it may naively assume that this
   // is the first navigation in the frame, but this may not actually be the
@@ -6020,10 +6024,6 @@ void RenderFrameImpl::OnClearActiveFindMatch() {
   frame_->ClearActiveFindMatch();
 }
 
-#define STATIC_ASSERT_ENUM(a, b)                            \
-  static_assert(static_cast<int>(a) == static_cast<int>(b), \
-                "mismatching enums: " #a)
-
 // Ensure that content::StopFindAction and blink::WebLocalFrame::StopFindAction
 // are kept in sync.
 STATIC_ASSERT_ENUM(STOP_FIND_ACTION_CLEAR_SELECTION,
@@ -6032,8 +6032,6 @@ STATIC_ASSERT_ENUM(STOP_FIND_ACTION_KEEP_SELECTION,
                    WebLocalFrame::kStopFindActionKeepSelection);
 STATIC_ASSERT_ENUM(STOP_FIND_ACTION_ACTIVATE_SELECTION,
                    WebLocalFrame::kStopFindActionActivateSelection);
-
-#undef STATIC_ASSERT_ENUM
 
 void RenderFrameImpl::OnStopFinding(StopFindAction action) {
   blink::WebPlugin* plugin = GetWebPluginForFind();
@@ -6306,8 +6304,7 @@ void RenderFrameImpl::NavigateInternal(
   RenderFrameImpl::PrepareRenderViewForNavigation(
       common_params.url, request_params);
 
-  GetContentClient()->SetActiveURL(
-      common_params.url, frame_->Top()->GetSecurityOrigin().ToString().Utf8());
+  GetContentClient()->SetActiveURL(common_params.url);
 
   // If this frame is navigating cross-process, it may naively assume that this
   // is the first navigation in the frame, but this may not actually be the

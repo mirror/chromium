@@ -577,10 +577,10 @@
   function getTreeView(type) {
     if (timeline._tabbedPane) {
       timeline._tabbedPane.selectTab(type, true);
-      return timeline._flameChart._treeView;
+      return timeline._currentView._treeView;
     }
-    timeline._flameChart._detailsView._tabbedPane.selectTab(type, true);
-    return timeline._flameChart._detailsView._tabbedPane.visibleView;
+    timeline._currentView._detailsView._tabbedPane.selectTab(type, true);
+    return timeline._currentView._detailsView._tabbedPane.visibleView;
   }
 
   function testEventTree(type, grouping) {

@@ -440,10 +440,18 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, DownloadFile) {
   }
 
   // Checks strings.
-  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_COMPLETE_TITLE),
-            GetNotification(notification_id())->title());
-  EXPECT_EQ(download_item()->GetFileNameToReportUser().LossyDisplayName(),
-            GetNotification(notification_id())->message());
+  if (message_center::IsNewStyleNotificationEnabled()) {
+    EXPECT_EQ(l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_COMPLETE_TITLE),
+              GetNotification(notification_id())->title());
+    EXPECT_EQ(download_item()->GetFileNameToReportUser().LossyDisplayName(),
+              GetNotification(notification_id())->message());
+  } else {
+    EXPECT_EQ(
+        l10n_util::GetStringFUTF16(
+            IDS_DOWNLOAD_STATUS_DOWNLOADED_TITLE,
+            download_item()->GetFileNameToReportUser().LossyDisplayName()),
+        GetNotification(notification_id())->title());
+  }
   EXPECT_EQ(message_center::NOTIFICATION_TYPE_BASE_FORMAT,
             GetNotification(notification_id())->type());
 
@@ -1048,10 +1056,18 @@ IN_PROC_BROWSER_TEST_F(DownloadNotificationTest, IncognitoDownloadFile) {
     download_change_notification_observer.Reset();
   }
 
-  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_COMPLETE_TITLE),
-            GetNotification(notification_id())->title());
-  EXPECT_EQ(download_item()->GetFileNameToReportUser().LossyDisplayName(),
-            GetNotification(notification_id())->message());
+  if (message_center::IsNewStyleNotificationEnabled()) {
+    EXPECT_EQ(l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_COMPLETE_TITLE),
+              GetNotification(notification_id())->title());
+    EXPECT_EQ(download_item()->GetFileNameToReportUser().LossyDisplayName(),
+              GetNotification(notification_id())->message());
+  } else {
+    EXPECT_EQ(
+        l10n_util::GetStringFUTF16(
+            IDS_DOWNLOAD_STATUS_DOWNLOADED_TITLE,
+            download_item()->GetFileNameToReportUser().LossyDisplayName()),
+        GetNotification(notification_id())->title());
+  }
   EXPECT_EQ(message_center::NOTIFICATION_TYPE_BASE_FORMAT,
             GetNotification(notification_id())->type());
 

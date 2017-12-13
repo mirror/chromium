@@ -46,6 +46,8 @@ int GetAccessFlags(PageAccessibilityConfiguration page_accessibility) {
       return PROT_READ | PROT_WRITE;
     case PageReadExecute:
       return PROT_READ | PROT_EXEC;
+    case PageReadWriteExecute:
+      return PROT_READ | PROT_WRITE | PROT_EXEC;
     default:
       NOTREACHED();
     // Fall through.
@@ -72,6 +74,8 @@ int GetAccessFlags(PageAccessibilityConfiguration page_accessibility) {
       return PAGE_READWRITE;
     case PageReadExecute:
       return PAGE_EXECUTE_READ;
+    case PageReadWriteExecute:
+      return PAGE_EXECUTE_READWRITE;
     default:
       NOTREACHED();
     // Fall through.

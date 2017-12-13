@@ -4,8 +4,6 @@
 
 #include "chromeos/components/tether/disconnect_tethering_request_sender_impl.h"
 
-#include <memory>
-
 #include "chromeos/components/tether/ble_connection_manager.h"
 #include "chromeos/components/tether/tether_host_fetcher.h"
 #include "components/proximity_auth/logging/logging.h"
@@ -40,7 +38,7 @@ std::unique_ptr<DisconnectTetheringRequestSender>
 DisconnectTetheringRequestSenderImpl::Factory::BuildInstance(
     BleConnectionManager* ble_connection_manager,
     TetherHostFetcher* tether_host_fetcher) {
-  return std::make_unique<DisconnectTetheringRequestSenderImpl>(
+  return base::MakeUnique<DisconnectTetheringRequestSenderImpl>(
       ble_connection_manager, tether_host_fetcher);
 }
 

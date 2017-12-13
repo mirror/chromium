@@ -30,7 +30,6 @@
 #include "net/socket/socket_descriptor.h"
 #include "net/socket/socket_net_log_params.h"
 #include "net/socket/socket_options.h"
-#include "net/socket/socket_tag.h"
 
 namespace net {
 
@@ -518,11 +517,11 @@ int TCPSocketWin::ReadIfReady(IOBuffer* buf,
   return ERR_IO_PENDING;
 }
 
-int TCPSocketWin::Write(
-    IOBuffer* buf,
-    int buf_len,
-    const CompletionCallback& callback,
-    const NetworkTrafficAnnotationTag& /* traffic_annotation */) {
+int TCPSocketWin::Write(IOBuffer* buf,
+                        int buf_len,
+                        const CompletionCallback& callback,
+                        const NetworkTrafficAnnotationTag& traffic_annotation) {
+  // TODO(crbug.com/656607): Handle traffic annotation.
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_NE(socket_, INVALID_SOCKET);
   DCHECK(!waiting_write_);
@@ -1017,12 +1016,6 @@ bool TCPSocketWin::GetEstimatedRoundTripTime(base::TimeDelta* out_rtt) const {
   // TODO(bmcquade): Consider implementing using
   // GetPerTcpConnectionEStats/GetPerTcp6ConnectionEStats.
   return false;
-}
-
-void TCPSocketWin::ApplySocketTag(const SocketTag& tag) {
-  // Windows does not support any specific SocketTags so fail if any non-default
-  // tag is applied.
-  CHECK(tag == SocketTag());
 }
 
 }  // namespace net

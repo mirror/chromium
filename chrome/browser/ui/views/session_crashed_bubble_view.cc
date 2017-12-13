@@ -82,7 +82,7 @@ bool DoesSupportConsentCheck() {
 
 // A helper class that listens to browser removal event.
 class SessionCrashedBubbleView::BrowserRemovalObserver
-    : public BrowserListObserver {
+    : public chrome::BrowserListObserver {
  public:
   explicit BrowserRemovalObserver(Browser* browser) : browser_(browser) {
     DCHECK(browser_);
@@ -91,7 +91,7 @@ class SessionCrashedBubbleView::BrowserRemovalObserver
 
   ~BrowserRemovalObserver() override { BrowserList::RemoveObserver(this); }
 
-  // Overridden from BrowserListObserver.
+  // Overridden from chrome::BrowserListObserver.
   void OnBrowserRemoved(Browser* browser) override {
     if (browser == browser_)
       browser_ = NULL;

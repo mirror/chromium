@@ -9,7 +9,6 @@
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/system/system_notifier.h"
 #include "ash/system/tray/tray_constants.h"
-#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chromeos/network/network_event_log.h"
 #include "chromeos/network/network_handler.h"
@@ -39,9 +38,7 @@ void ShowNotification(const base::DictionaryValue* message,
   notification = system_notifier::CreateSystemNotification(
       message_center::NOTIFICATION_TYPE_SIMPLE,
       kNotificationId + std::to_string(message_id),
-      base::ASCIIToUTF16(message_number),
-      base::CollapseWhitespace(base::UTF8ToUTF16(message_text),
-                               false /* trim_sequences_with_line_breaks */),
+      base::ASCIIToUTF16(message_number), base::UTF8ToUTF16(message_text),
       gfx::Image(gfx::CreateVectorIcon(kSystemMenuSmsIcon, kMenuIconSize,
                                        kMenuIconColor)),
       base::string16(), GURL(),

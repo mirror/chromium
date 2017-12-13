@@ -27,7 +27,6 @@
 #ifndef XPathPredicate_h
 #define XPathPredicate_h
 
-#include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/xml/XPathExpressionNode.h"
 #include "core/xml/XPathValue.h"
@@ -118,6 +117,8 @@ class Union final : public Expression {
 };
 
 class Predicate final : public GarbageCollected<Predicate> {
+  WTF_MAKE_NONCOPYABLE(Predicate);
+
  public:
   explicit Predicate(Expression*);
   void Trace(blink::Visitor*);
@@ -133,7 +134,6 @@ class Predicate final : public GarbageCollected<Predicate> {
 
  private:
   Member<Expression> expr_;
-  DISALLOW_COPY_AND_ASSIGN(Predicate);
 };
 
 }  // namespace XPath

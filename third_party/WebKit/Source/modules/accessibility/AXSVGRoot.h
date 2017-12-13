@@ -29,7 +29,6 @@
 #ifndef AXSVGRoot_h
 #define AXSVGRoot_h
 
-#include "base/macros.h"
 #include "modules/accessibility/AXLayoutObject.h"
 
 namespace blink {
@@ -37,6 +36,8 @@ namespace blink {
 class AXObjectCacheImpl;
 
 class AXSVGRoot final : public AXLayoutObject {
+  WTF_MAKE_NONCOPYABLE(AXSVGRoot);
+
  protected:
   AXSVGRoot(LayoutObject*, AXObjectCacheImpl&);
 
@@ -52,8 +53,6 @@ class AXSVGRoot final : public AXLayoutObject {
  private:
   AXObject* ComputeParent() const override;
   bool IsAXSVGRoot() const override { return true; }
-
-  DISALLOW_COPY_AND_ASSIGN(AXSVGRoot);
 };
 
 }  // namespace blink

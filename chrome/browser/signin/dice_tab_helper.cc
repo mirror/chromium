@@ -5,7 +5,6 @@
 #include "chrome/browser/signin/dice_tab_helper.h"
 
 #include "base/logging.h"
-#include "base/metrics/user_metrics.h"
 #include "chrome/browser/signin/dice_tab_helper.h"
 #include "chrome/browser/signin/signin_util.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -16,9 +15,13 @@
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(DiceTabHelper);
 
 DiceTabHelper::DiceTabHelper(content::WebContents* web_contents)
-    : content::WebContentsObserver(web_contents) {}
+    : content::WebContentsObserver(web_contents),
+      signin_access_point_(signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN),
+      signin_reason_(signin_metrics::Reason::REASON_UNKNOWN_REASON),
+      should_start_sync_after_web_signin_(true) {
+}
 
-DiceTabHelper::~DiceTabHelper() = default;
+DiceTabHelper::~DiceTabHelper() {}
 
 void DiceTabHelper::InitializeSigninFlow(
     signin_metrics::AccessPoint access_point,
@@ -26,13 +29,6 @@ void DiceTabHelper::InitializeSigninFlow(
   signin_access_point_ = access_point;
   signin_reason_ = reason;
   should_start_sync_after_web_signin_ = true;
-  did_finish_loading_signin_page_ = false;
-
-  if (signin_reason_ == signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT) {
-    signin_metrics::LogSigninAccessPointStarted(access_point);
-    signin_metrics::RecordSigninUserActionForAccessPoint(access_point);
-    base::RecordAction(base::UserMetricsAction("Signin_SigninPage_Loading"));
-  }
 }
 
 void DiceTabHelper::DidStartNavigation(
@@ -60,16 +56,11 @@ void DiceTabHelper::DidStartNavigation(
     should_start_sync_after_web_signin_ = false;
     return;
   }
-}
 
-void DiceTabHelper::DidFinishLoad(content::RenderFrameHost* render_frame_host,
-                                  const GURL& validated_url) {
-  if (!should_start_sync_after_web_signin_ || did_finish_loading_signin_page_)
-    return;
-
-  if (validated_url.GetOrigin() == GaiaUrls::GetInstance()->gaia_url()) {
-    VLOG(1) << "Finished loading sign-in page: " << validated_url.spec();
-    did_finish_loading_signin_page_ = true;
-    base::RecordAction(base::UserMetricsAction("Signin_SigninPage_Shown"));
-  }
+  // TODO(msarda): Figure out if this condition can be restricted even more
+  // (e.g. avoid starting sync after a browser initiated navigation).
+  // if (!navigation_handle->IsRendererInitiated()) {
+  //  // Avoid starting sync if the navigations comes from the browser.
+  //  should_start_sync_after_web_signin_ = false;
+  //}
 }

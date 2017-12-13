@@ -42,6 +42,9 @@
 
 namespace blink {
 
+class ScriptState;
+class ScriptValue;
+
 class CORE_EXPORT Performance final : public PerformanceBase,
                                       public PerformanceMonitor::Client,
                                       public DOMWindowClient {
@@ -63,8 +66,9 @@ class CORE_EXPORT Performance final : public PerformanceBase,
 
   void UpdateLongTaskInstrumentation() override;
 
-  void Trace(blink::Visitor*) override;
-  using PerformanceBase::TraceWrappers;
+  ScriptValue toJSONForBinding(ScriptState*) const;
+
+  virtual void Trace(blink::Visitor*);
 
  private:
   explicit Performance(LocalDOMWindow*);
@@ -83,8 +87,6 @@ class CORE_EXPORT Performance final : public PerformanceBase,
       ExecutionContext* task_context,
       bool has_multiple_contexts,
       const SubTaskAttribution::EntriesVector& sub_task_attributions) override;
-
-  void BuildJSONValue(V8ObjectBuilder&) const override;
 
   mutable Member<PerformanceNavigation> navigation_;
   mutable Member<PerformanceTiming> timing_;

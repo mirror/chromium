@@ -49,9 +49,8 @@ void TestWallpaperController::SetOnlineWallpaper(
 
 void TestWallpaperController::SetDefaultWallpaper(
     ash::mojom::WallpaperUserInfoPtr user_info,
-    const std::string& wallpaper_files_id,
     bool show_wallpaper) {
-  set_default_wallpaper_count_++;
+  NOTIMPLEMENTED();
 }
 
 void TestWallpaperController::SetCustomizedDefaultWallpaper(

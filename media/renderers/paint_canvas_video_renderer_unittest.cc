@@ -630,7 +630,9 @@ void MailboxHoldersReleased(const gpu::SyncToken& sync_token) {}
 // abandoned.
 TEST_F(PaintCanvasVideoRendererTest, ContextLost) {
   sk_sp<const GrGLInterface> null_interface(GrGLCreateNullInterface());
-  sk_sp<GrContext> gr_context = GrContext::MakeGL(std::move(null_interface));
+  sk_sp<GrContext> gr_context(GrContext::Create(
+      kOpenGL_GrBackend,
+      reinterpret_cast<GrBackendContext>(null_interface.get())));
   gr_context->abandonContext();
 
   cc::SkiaPaintCanvas canvas(AllocBitmap(kWidth, kHeight));
@@ -658,7 +660,9 @@ TEST_F(PaintCanvasVideoRendererTest, CorrectFrameSizeToVisibleRect) {
       SkImageInfo::MakeN32(fWidth, fHeight, kOpaque_SkAlphaType);
 
   sk_sp<const GrGLInterface> glInterface(GrGLCreateNullInterface());
-  sk_sp<GrContext> grContext = GrContext::MakeGL(std::move(glInterface));
+  sk_sp<GrContext> grContext(
+      GrContext::Create(kOpenGL_GrBackend,
+                        reinterpret_cast<GrBackendContext>(glInterface.get())));
 
   sk_sp<SkSurface> surface =
       SkSurface::MakeRenderTarget(grContext.get(), SkBudgeted::kYes, imInfo);

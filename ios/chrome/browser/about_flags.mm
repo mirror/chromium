@@ -181,9 +181,6 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"slim-navigation-manager", flag_descriptions::kSlimNavigationManagerName,
      flag_descriptions::kSlimNavigationManagerDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(web::features::kSlimNavigationManager)},
-    {"new-pass-kit-download", flag_descriptions::kNewPassKitDownloadName,
-     flag_descriptions::kNewPassKitDownloadDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(web::features::kNewPassKitDownload)},
     {"ios-share-canonical-url", flag_descriptions::kShareCanonicalURLName,
      flag_descriptions::kShareCanonicalURLDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(activity_services::kShareCanonicalURL)},
@@ -198,11 +195,7 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(kBookmarkNewEditPage)},
     {"password-export", flag_descriptions::kPasswordExportName,
      flag_descriptions::kPasswordExportDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(password_manager::features::kPasswordExport)},
-    {"wk-http-system-cookie-store",
-     flag_descriptions::kWKHTTPSystemCookieStoreName,
-     flag_descriptions::kWKHTTPSystemCookieStoreName, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(web::features::kWKHTTPSystemCookieStore)}};
+     FEATURE_VALUE_TYPE(password_manager::features::kPasswordExport)}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {

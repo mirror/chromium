@@ -142,8 +142,7 @@ void SVGElementProxy::Resolve(Document& document) {
   ResourceLoaderOptions options;
   options.initiator_info.name = FetchInitiatorTypeNames::css;
   FetchParameters params(ResourceRequest(url_), options);
-  document_ =
-      DocumentResource::FetchSVGDocument(params, document.Fetcher(), nullptr);
+  document_ = DocumentResource::FetchSVGDocument(params, document.Fetcher());
   url_ = String();
 }
 

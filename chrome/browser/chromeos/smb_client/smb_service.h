@@ -18,10 +18,6 @@
 #include "chromeos/dbus/smb_provider_client.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-namespace base {
-class FilePath;
-}  // namespace base
-
 namespace chromeos {
 namespace smb_client {
 
@@ -33,7 +29,7 @@ using file_system_provider::ProviderInterface;
 using file_system_provider::Service;
 
 // Creates and manages an smb file system.
-class SmbService : public KeyedService {
+class SmbService : public KeyedService, public ProviderInterface {
  public:
   using MountResponse = base::OnceCallback<void(base::File::Error error)>;
 
@@ -46,7 +42,7 @@ class SmbService : public KeyedService {
   // Starts the process of mounting an SMB file system.
   // Calls SmbProviderClient::Mount().
   void Mount(const file_system_provider::MountOptions& options,
-             const base::FilePath& share_path,
+             const std::string& share_path,
              MountResponse callback);
 
   // Completes the mounting of an SMB file system, passing |options| on to
@@ -57,10 +53,21 @@ class SmbService : public KeyedService {
                        smbprovider::ErrorType error,
                        int32_t mount_id);
 
+  // ProviderInterface overrides.
+  std::unique_ptr<ProvidedFileSystemInterface> CreateProvidedFileSystem(
+      Profile* profile,
+      const ProvidedFileSystemInfo& file_system_info) override;
+  const Capabilities& GetCapabilities() const override;
+  const ProviderId& GetId() const override;
+  const std::string& GetName() const override;
+
  private:
   Service* GetProviderService() const;
 
   Profile* profile_;
+  ProviderId provider_id_;
+  Capabilities capabilities_;
+  std::string name_;
 
   base::WeakPtrFactory<SmbService> weak_ptr_factory_;
 

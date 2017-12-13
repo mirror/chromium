@@ -21,12 +21,12 @@ namespace net {
 class AuthChallengeInfo;
 class HttpRequestHeaders;
 class HttpResponseHeaders;
+class URLRequest;
 }  // namespace net
 
 namespace extensions {
 
 class InfoMap;
-struct WebRequestInfo;
 
 // This helper class is used to construct the details for a webRequest event
 // dictionary. Some keys are present on every event, others are only relevant
@@ -52,13 +52,12 @@ class WebRequestEventDetails {
   // - timeStamp
   // - type
   // - url
-  WebRequestEventDetails(const WebRequestInfo& request, int extra_info_spec);
+  WebRequestEventDetails(const net::URLRequest* request, int extra_info_spec);
   ~WebRequestEventDetails();
 
   // Sets the following key:
   // - requestBody (on demand)
-  // Takes ownership of |request_body_data| in |*request|.
-  void SetRequestBody(WebRequestInfo* request);
+  void SetRequestBody(const net::URLRequest* request);
 
   // Sets the following key:
   // - requestHeaders (on demand)
@@ -75,13 +74,13 @@ class WebRequestEventDetails {
   // - responseHeaders (on demand)
   // - statusCode
   // - statusLine
-  void SetResponseHeaders(const WebRequestInfo& request,
+  void SetResponseHeaders(const net::URLRequest* request,
                           const net::HttpResponseHeaders* response_headers);
 
   // Sets the following key:
   // - fromCache
   // - ip
-  void SetResponseSource(const WebRequestInfo& request);
+  void SetResponseSource(const net::URLRequest* request);
 
   void SetBoolean(const std::string& key, bool value) {
     dict_.SetBoolean(key, value);

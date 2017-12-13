@@ -70,13 +70,11 @@ TEST(VideoDecoderConfigTest, Invalid_AspectRatioNumeratorTooLarge) {
   EXPECT_FALSE(config.IsValidConfig());
 }
 
-TEST(VideoDecoderConfigTest, Invalid_AspectRatioDenominatorVeryLarge) {
-  // This test makes sure that highly skewed pixel ratios arent counted as valid
-  // configurations.
+TEST(VideoDecoderConfigTest, Invalid_AspectRatioDenominatorTooLarge) {
+  // Denominator is large enough that the natural size height will be zero.
   int den = 2 * kVisibleRect.size().width() + 1;
   gfx::Size natural_size = GetNaturalSize(kVisibleRect.size(), 1, den);
-  EXPECT_EQ(320, natural_size.width());
-  EXPECT_EQ(240 * 641, natural_size.height());
+  EXPECT_EQ(0, natural_size.width());
   VideoDecoderConfig config(kCodecVP8, VP8PROFILE_ANY, kVideoFormat,
                             COLOR_SPACE_UNSPECIFIED, VIDEO_ROTATION_0,
                             kCodedSize, kVisibleRect, natural_size,

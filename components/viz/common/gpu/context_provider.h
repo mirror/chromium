@@ -26,12 +26,8 @@ class Lock;
 namespace gpu {
 class ContextSupport;
 struct GpuFeatureInfo;
-
 namespace gles2 {
 class GLES2Interface;
-}
-namespace raster {
-class RasterInterface;
 }
 }  // namespace gpu
 
@@ -54,10 +50,6 @@ class VIZ_COMMON_EXPORT ContextProvider
       return context_provider_->ContextGL();
     }
 
-    gpu::raster::RasterInterface* RasterContext() {
-      return context_provider_->RasterContext();
-    }
-
    private:
     ContextProvider* const context_provider_;
     base::AutoLock context_lock_;
@@ -72,27 +64,9 @@ class VIZ_COMMON_EXPORT ContextProvider
   // can be used to provide access from multiple threads.
   virtual gpu::ContextResult BindToCurrentThread() = 0;
 
-  // Get a GLES2 interface to the 3d context.  Returns nullptr if the context
-  // provider was not bound to a thread, or if the GLES2 interface is not
-  // supported by this context.
   virtual gpu::gles2::GLES2Interface* ContextGL() = 0;
-
-  // Get a Raster interface to the 3d context.  Returns nullptr if the context
-  // provider was not bound to a thread, or if the Raster interface is not
-  // supported by this context.
-  virtual gpu::raster::RasterInterface* RasterContext() = 0;
-
-  // Get a ContextSupport interface to the 3d context.  Returns nullptr if the
-  // context provider was not bound to a thread.
   virtual gpu::ContextSupport* ContextSupport() = 0;
-
-  // Get a Raster interface to the 3d context.  Returns nullptr if the context
-  // provider was not bound to a thread, or if a GrContext fails to initialize
-  // on this context.
   virtual class GrContext* GrContext() = 0;
-
-  // Get a CacheController interface to the 3d context.  Returns nullptr if the
-  // context provider was not bound to a thread.
   virtual ContextCacheController* CacheController() = 0;
 
   // Invalidates the cached OpenGL state in GrContext.
@@ -105,19 +79,22 @@ class VIZ_COMMON_EXPORT ContextProvider
   // Returns feature blacklist decisions and driver bug workarounds info.
   virtual const gpu::GpuFeatureInfo& GetGpuFeatureInfo() const = 0;
 
-  // Adds/removes an observer to be called when the context is lost. AddObserver
-  // should be called before BindToCurrentThread from the same thread that the
-  // context is bound to, or any time while the lock is acquired after checking
-  // for context loss.
-  // NOTE: Implementations must avoid post-tasking the to the observer directly
-  // as the observer may remove itself before the task runs.
+  // Adds/removes an observer to be called when the context is lost. This should
+  // be called from the same thread that the context is bound to. To avoid
+  // races, it should be called before BindToCurrentThread().
+  // Implementation note: Implementations must avoid post-tasking the to the
+  // observer directly as the observer may remove itself before the task runs.
   virtual void AddObserver(ContextLostObserver* obs) = 0;
   virtual void RemoveObserver(ContextLostObserver* obs) = 0;
 
+  // Below are helper methods for ScopedContextLock. Use that instead of calling
+  // these directly.
+  //
+  // Detaches debugging thread checkers to allow use of the provider from the
+  // current thread. This can be called on any thread.
+  virtual void DetachFromThread() {}
   // Returns the lock that should be held if using this context from multiple
   // threads. This can be called on any thread.
-  // NOTE: Helper method for ScopedContextLock. Use that instead of calling this
-  // directly.
   virtual base::Lock* GetLock() = 0;
 
  protected:

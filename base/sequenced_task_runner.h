@@ -141,7 +141,7 @@ class BASE_EXPORT SequencedTaskRunner : public TaskRunner {
   }
 
  protected:
-  ~SequencedTaskRunner() override = default;
+  ~SequencedTaskRunner() override {}
 
  private:
   bool DeleteOrReleaseSoonInternal(const Location& from_here,

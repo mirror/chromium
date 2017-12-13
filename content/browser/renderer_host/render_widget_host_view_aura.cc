@@ -11,7 +11,6 @@
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
-#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -21,7 +20,6 @@
 #include "build/build_config.h"
 #include "cc/layers/layer.h"
 #include "cc/trees/layer_tree_settings.h"
-#include "components/viz/common/features.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
 #include "components/viz/common/frame_sinks/copy_output_result.h"
 #include "components/viz/common/gl_helper.h"
@@ -391,8 +389,10 @@ class RenderWidgetHostViewAura::WindowAncestorObserver
 RenderWidgetHostViewAura::RenderWidgetHostViewAura(
     RenderWidgetHost* host,
     bool is_guest_view_hack,
+    bool enable_surface_synchronization,
     bool is_mus_browser_plugin_guest)
     : host_(RenderWidgetHostImpl::From(host)),
+      enable_surface_synchronization_(enable_surface_synchronization),
       is_mus_browser_plugin_guest_(is_mus_browser_plugin_guest),
       window_(nullptr),
       in_shutdown_(false),
@@ -538,6 +538,10 @@ void RenderWidgetHostViewAura::InitAsFullscreen(
   Focus();
 
   device_scale_factor_ = ui::GetScaleFactorForNativeView(window_);
+}
+
+RenderWidgetHost* RenderWidgetHostViewAura::GetRenderWidgetHost() const {
+  return host_;
 }
 
 void RenderWidgetHostViewAura::Show() {
@@ -1942,8 +1946,6 @@ void RenderWidgetHostViewAura::CreateAuraWindow(aura::client::WindowType type) {
   DCHECK(!window_);
   DCHECK(!is_mus_browser_plugin_guest_);
   window_ = new aura::Window(this);
-  if (frame_sink_id_.is_valid())
-    window_->set_embed_frame_sink_id(frame_sink_id_);
   window_->SetName("RenderWidgetHostViewAura");
   window_->SetProperty(aura::client::kEmbedType,
                        aura::client::WindowEmbedType::EMBED_IN_OWNER);
@@ -1986,7 +1988,7 @@ void RenderWidgetHostViewAura::CreateDelegatedFrameHostClient() {
       base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz);
   delegated_frame_host_ = std::make_unique<DelegatedFrameHost>(
       frame_sink_id_, delegated_frame_host_client_.get(),
-      features::IsSurfaceSynchronizationEnabled(), enable_viz);
+      enable_surface_synchronization_, enable_viz);
 
   if (renderer_compositor_frame_sink_) {
     delegated_frame_host_->DidCreateNewRendererCompositorFrameSink(
@@ -2346,11 +2348,6 @@ void RenderWidgetHostViewAura::OnDidNavigateMainFrameToNewPage() {
   ui::GestureRecognizer::Get()->CancelActiveTouches(window_);
 }
 
-RenderWidgetHostImpl* RenderWidgetHostViewAura::GetRenderWidgetHostImpl()
-    const {
-  return host_;
-}
-
 viz::FrameSinkId RenderWidgetHostViewAura::GetFrameSinkId() {
   return frame_sink_id_;
 }
@@ -2382,7 +2379,8 @@ void RenderWidgetHostViewAura::OnUpdateTextInputStateCalled(
     GetInputMethod()->ShowImeIfNeeded();
   }
 
-  if (auto* render_widget_host = updated_view->GetRenderWidgetHostImpl()) {
+  if (auto* render_widget_host =
+          RenderWidgetHostImpl::From(updated_view->GetRenderWidgetHost())) {
     // Monitor the composition information if there is a focused editable node.
     render_widget_host->RequestCompositionUpdates(
         false /* immediate_request */,

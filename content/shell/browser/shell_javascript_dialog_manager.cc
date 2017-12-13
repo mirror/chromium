@@ -9,7 +9,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "components/url_formatter/url_formatter.h"
-#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
 #include "content/shell/browser/shell_javascript_dialog.h"
 #include "content/shell/common/shell_switches.h"
@@ -17,7 +16,7 @@
 namespace content {
 
 ShellJavaScriptDialogManager::ShellJavaScriptDialogManager()
-    : should_proceed_on_beforeunload_(true), beforeunload_success_(true) {}
+    : should_proceed_on_beforeunload_(true) {}
 
 ShellJavaScriptDialogManager::~ShellJavaScriptDialogManager() {
 }
@@ -70,9 +69,8 @@ void ShellJavaScriptDialogManager::RunBeforeUnloadDialog(
   // the callback and return.
   if (!dialog_request_callback_.is_null()) {
     dialog_request_callback_.Run();
-
     if (should_proceed_on_beforeunload_)
-      std::move(callback).Run(beforeunload_success_, base::string16());
+      std::move(callback).Run(true, base::string16());
     else
       before_unload_callback_ = std::move(callback);
     dialog_request_callback_.Reset();

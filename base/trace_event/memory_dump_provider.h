@@ -40,7 +40,7 @@ class BASE_EXPORT MemoryDumpProvider {
     bool supports_heap_profiling;
   };
 
-  virtual ~MemoryDumpProvider() = default;
+  virtual ~MemoryDumpProvider() {}
 
   // Called by the MemoryDumpManager when generating memory dumps.
   // The |args| specify if the embedder should generate light/heavy dumps on
@@ -70,7 +70,7 @@ class BASE_EXPORT MemoryDumpProvider {
   virtual void SuspendFastMemoryPolling() {}
 
  protected:
-  MemoryDumpProvider() = default;
+  MemoryDumpProvider() {}
 
   DISALLOW_COPY_AND_ASSIGN(MemoryDumpProvider);
 };

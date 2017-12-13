@@ -15,7 +15,6 @@
 #include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/sys_info.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "gin/debug_impl.h"
 #include "gin/function_template.h"
@@ -58,9 +57,7 @@ IsolateHolder::IsolateHolder(
   params.external_references = g_reference_table;
   isolate_ = v8::Isolate::New(params);
 
-  // TODO(ssid): Make sure the task runner is never null here, crbug.com/762723.
-  SetUp(task_runner ? std::move(task_runner)
-                    : base::ThreadTaskRunnerHandle::Get());
+  SetUp(std::move(task_runner));
 }
 
 IsolateHolder::IsolateHolder(v8::StartupData* existing_blob)
@@ -77,7 +74,7 @@ IsolateHolder::IsolateHolder(v8::StartupData* existing_blob)
       new v8::SnapshotCreator(g_reference_table, existing_blob));
   isolate_ = snapshot_creator_->GetIsolate();
 
-  SetUp(base::ThreadTaskRunnerHandle::Get());
+  SetUp(nullptr);
 }
 
 IsolateHolder::~IsolateHolder() {
@@ -131,13 +128,11 @@ void IsolateHolder::EnableIdleTasks(
 
 void IsolateHolder::SetUp(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  DCHECK(task_runner);
   v8::ArrayBuffer::Allocator* allocator = g_array_buffer_allocator;
   CHECK(allocator) << "You need to invoke gin::IsolateHolder::Initialize first";
   isolate_data_.reset(
       new PerIsolateData(isolate_, allocator, access_mode_, task_runner));
-  isolate_memory_dump_provider_.reset(
-      new V8IsolateMemoryDumpProvider(this, task_runner));
+  isolate_memory_dump_provider_.reset(new V8IsolateMemoryDumpProvider(this));
 #if defined(OS_WIN)
   {
     void* code_range;

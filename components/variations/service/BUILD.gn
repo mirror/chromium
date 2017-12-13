@@ -4,8 +4,6 @@
 
 static_library("service") {
   sources = [
-    "safe_seed_manager.cc",
-    "safe_seed_manager.h",
     "ui_string_overrider.cc",
     "ui_string_overrider.h",
     "variations_field_trial_creator.cc",
@@ -18,7 +16,6 @@ static_library("service") {
   deps = [
     "//base",
     "//components/data_use_measurement/core",
-    "//components/encrypted_messages",
     "//components/metrics",
     "//components/network_time",
     "//components/pref_registry",

@@ -14,7 +14,7 @@ namespace cc {
 ClientImageTransferCacheEntry::ClientImageTransferCacheEntry(
     const SkPixmap* pixmap,
     const SkColorSpace* target_color_space)
-    : id_(s_next_id_.GetNext()), pixmap_(pixmap) {
+    : pixmap_(pixmap) {
   // Compute and cache the size of the data.
   // We write the following:
   // - Image color type (uint32_t)
@@ -34,15 +34,12 @@ ClientImageTransferCacheEntry::ClientImageTransferCacheEntry(
 }
 ClientImageTransferCacheEntry::~ClientImageTransferCacheEntry() = default;
 
-// static
-base::AtomicSequenceNumber ClientImageTransferCacheEntry::s_next_id_;
+TransferCacheEntryType ClientImageTransferCacheEntry::Type() const {
+  return TransferCacheEntryType::kImage;
+}
 
 size_t ClientImageTransferCacheEntry::SerializedSize() const {
   return size_;
-}
-
-uint32_t ClientImageTransferCacheEntry::Id() const {
-  return id_;
 }
 
 bool ClientImageTransferCacheEntry::Serialize(base::span<uint8_t> data) const {
@@ -65,6 +62,10 @@ bool ClientImageTransferCacheEntry::Serialize(base::span<uint8_t> data) const {
 
 ServiceImageTransferCacheEntry::ServiceImageTransferCacheEntry() = default;
 ServiceImageTransferCacheEntry::~ServiceImageTransferCacheEntry() = default;
+
+TransferCacheEntryType ServiceImageTransferCacheEntry::Type() const {
+  return TransferCacheEntryType::kImage;
+}
 
 size_t ServiceImageTransferCacheEntry::CachedSize() const {
   return size_;

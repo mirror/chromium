@@ -191,9 +191,7 @@ void FlagsDOMHandler::HandleEnableExperimentalFeatureMessage(
 }
 
 void FlagsDOMHandler::HandleRestartBrowser(const base::ListValue* args) {
-#if CHROMIUM_BUILD
-  CHECK(false);
-#endif  // CHROMIUM_BUILD
+  NOTREACHED();
 }
 
 void FlagsDOMHandler::HandleResetAllFlags(const base::ListValue* args) {

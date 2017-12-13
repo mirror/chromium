@@ -579,7 +579,6 @@ class MockStreamSocket : public StreamSocket {
     NOTIMPLEMENTED();
     return 0;
   }
-  void ApplySocketTag(const SocketTag& tag) override {}
 
   // Socket
   int Read(IOBuffer* buf,

@@ -73,7 +73,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kChromeHomePromo,
     &kChromeHomePromoInfoOnly,
     &kChromeHomePromoOnStartup,
-    &kChromeHomePullToRefreshIphAtTop,
     &kChromeHomeOptOutSnackbar,
     &kChromeHomeShowGoogleGWhenUrlCleared,
     &kChromeHomeSurvey,
@@ -103,6 +102,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kNTPCondensedTileLayoutFeature,
     &kNTPModernLayoutFeature,
     &kNTPLaunchAfterInactivity,
+    &kNTPOfflinePagesFeature,
     &NTPShowGoogleGInOmniboxFeature,
     &kOmniboxSpareRenderer,
     &kPayWithGoogleV1,
@@ -214,9 +214,6 @@ const base::Feature kChromeHomePromoInfoOnly{"ChromeHomePromoInfoOnly",
 const base::Feature kChromeHomePromoOnStartup{"ChromeHomePromoOnStartup",
                                               base::FEATURE_ENABLED_BY_DEFAULT};
 
-const base::Feature kChromeHomePullToRefreshIphAtTop{
-    "ChromeHomePullToRefreshIphAtTop", base::FEATURE_DISABLED_BY_DEFAULT};
-
 const base::Feature kChromeHomeOptOutSnackbar{
     "ChromeHomeOptOutSnackbar", base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -311,6 +308,9 @@ const base::Feature kNTPModernLayoutFeature{"NTPModernLayout",
 
 const base::Feature kNTPLaunchAfterInactivity{
     "NTPLaunchAfterInactivity", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kNTPOfflinePagesFeature{"NTPOfflinePages",
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature NTPShowGoogleGInOmniboxFeature{
     "NTPShowGoogleGInOmnibox", base::FEATURE_DISABLED_BY_DEFAULT};

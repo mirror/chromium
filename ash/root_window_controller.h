@@ -36,6 +36,7 @@ class WindowTreeHost;
 }
 
 namespace views {
+class MenuModelAdapter;
 class MenuRunner;
 class Widget;
 }
@@ -282,7 +283,7 @@ class ASH_EXPORT RootWindowController {
   // this.
   void ResetRootForNewWindowsIfNecessary();
 
-  // Callback for MenuRunner.
+  // Callback for MenuModelAdapter.
   void OnMenuClosed();
 
   std::unique_ptr<AshWindowTreeHost> ash_host_;
@@ -303,6 +304,7 @@ class ASH_EXPORT RootWindowController {
 
   // Manages the context menu.
   std::unique_ptr<ui::MenuModel> menu_model_;
+  std::unique_ptr<views::MenuModelAdapter> menu_model_adapter_;
   std::unique_ptr<views::MenuRunner> menu_runner_;
 
   std::unique_ptr<StackingController> stacking_controller_;

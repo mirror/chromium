@@ -1,0 +1,14 @@
+{
+  "name": "chrome_printing",
+  "display_name": "Printing",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "converter": [ "printing::mojom::PdfToPwgRasterConverter" ]
+       },
+       "requires": {
+         "service_manager": [ "service_manager:all_users" ]
+       }
+     }
+  }
+}

@@ -155,6 +155,11 @@ void SigninViewController::ShowDiceSigninTab(
   DiceTabHelper::CreateForWebContents(active_contents);
   DiceTabHelper* tab_helper = DiceTabHelper::FromWebContents(active_contents);
   tab_helper->InitializeSigninFlow(access_point, signin_reason);
+
+  if (signin_reason == signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT) {
+    signin_metrics::LogSigninAccessPointStarted(access_point);
+    signin_metrics::RecordSigninUserActionForAccessPoint(access_point);
+  }
 }
 
 content::WebContents*

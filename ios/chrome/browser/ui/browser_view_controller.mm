@@ -63,7 +63,6 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/chrome_url_util.h"
-#import "ios/chrome/browser/download/pass_kit_tab_helper.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/favicon/favicon_loader.h"
 #include "ios/chrome/browser/favicon/ios_chrome_favicon_loader_factory.h"
@@ -140,7 +139,6 @@
 #import "ios/chrome/browser/ui/dialogs/dialog_presenter.h"
 #import "ios/chrome/browser/ui/dialogs/java_script_dialog_presenter_impl.h"
 #import "ios/chrome/browser/ui/download/legacy_download_manager_controller.h"
-#import "ios/chrome/browser/ui/download/pass_kit_coordinator.h"
 #import "ios/chrome/browser/ui/elements/activity_overlay_coordinator.h"
 #import "ios/chrome/browser/ui/external_file_controller.h"
 #import "ios/chrome/browser/ui/external_search/external_search_coordinator.h"
@@ -603,9 +601,6 @@ NSString* const kBrowserViewControllerSnackbarCategory =
   // Coordinator for the language selection UI.
   LanguageSelectionCoordinator* _languageSelectionCoordinator;
 
-  // Coordinator for the PassKit UI presentation.
-  PassKitCoordinator* _passKitCoordinator;
-
   // Fake status bar view used to blend the toolbar into the status bar.
   UIView* _fakeStatusBarView;
 
@@ -756,6 +751,9 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 // Returns the view to use when animating a page in or out, positioning it to
 // fill the content area but not actually adding it to the view hierarchy.
 - (UIImageView*)pageOpenCloseAnimationView;
+// Returns the view to use when animating full screen NTP paper in, filling the
+// entire screen but not actually adding it to the view hierarchy.
+- (UIImageView*)pageFullScreenOpenCloseAnimationView;
 // Updates the toolbar display based on the current tab.
 - (void)updateToolbar;
 // Starts or stops broadcasting the toolbar UI and main content UI depending on
@@ -991,9 +989,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
         [[LanguageSelectionCoordinator alloc] initWithBaseViewController:self];
     _languageSelectionCoordinator.presenter =
         [[VerticalAnimationContainer alloc] init];
-
-    _passKitCoordinator =
-        [[PassKitCoordinator alloc] initWithBaseViewController:self];
 
     _javaScriptDialogPresenter.reset(
         new JavaScriptDialogPresenterImpl(_dialogPresenter));
@@ -1741,40 +1736,26 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   self.inNewTabAnimation = YES;
   if (!inBackground) {
     UIView* animationParentView = _contentArea;
-    // Create the new page image, and load with the new tab snapshot except if
-    // it is the NTP.
+    // Create the new page image, and load with the new tab page snapshot.
     CGFloat newPageOffset = 0;
-    UIView* newPage;
-    CGFloat offset = 0;
+    UIImageView* newPage;
     if (tab.webState->GetLastCommittedURL() == kChromeUINewTabURL &&
         !_isOffTheRecord && !IsIPadIdiom()) {
-      offset = 0;
       animationParentView = self.view;
-      newPage = tab.view;
-      newPage.userInteractionEnabled = NO;
-      // Compute a frame for the new page by removing the status bar height from
-      // the bounds of |self.view|.
-      CGRect viewBounds, remainder;
-      CGRectDivide(self.view.bounds, &remainder, &viewBounds, StatusBarHeight(),
-                   CGRectMinYEdge);
-      newPage.frame = viewBounds;
+      newPage = [self pageFullScreenOpenCloseAnimationView];
     } else {
-      UIImageView* pageScreenshot = [self pageOpenCloseAnimationView];
-      tab.view.frame = _contentArea.bounds;
-      pageScreenshot.image =
-          [tab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
-      newPage = pageScreenshot;
-      offset =
-          pageScreenshot.frame.size.height - pageScreenshot.image.size.height;
+      newPage = [self pageOpenCloseAnimationView];
     }
     newPageOffset = newPage.frame.origin.y;
 
+    [tab view].frame = _contentArea.bounds;
+    newPage.image = [tab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
     [animationParentView addSubview:newPage];
     CGPoint origin = [self lastTapPoint];
     page_animation_util::AnimateInPaperWithAnimationAndCompletion(
-        newPage, -newPageOffset, offset, origin, _isOffTheRecord, NULL, ^{
-          [tab view].frame = _contentArea.bounds;
-          newPage.userInteractionEnabled = YES;
+        newPage, -newPageOffset,
+        newPage.frame.size.height - newPage.image.size.height, origin,
+        _isOffTheRecord, NULL, ^{
           [newPage removeFromSuperview];
           self.inNewTabAnimation = NO;
           // Use the model's currentTab here because it is possible that it can
@@ -1799,12 +1780,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     Tab* topTab = [_model currentTab];
     UIImage* image = [topTab updateSnapshotWithOverlay:YES
                                       visibleFrameOnly:self.isToolbarOnScreen];
-    // The size of the |image| above can be wrong if the snapshot fails, grab
-    // the correct size here.
-    CGRect imageFrame = self.isToolbarOnScreen
-                            ? [topTab snapshotContentArea]
-                            : [topTab.webController.view bounds];
-
     // Add three layers in order on top of the contentArea for the animation:
     // 1. The black "background" screen.
     UIView* background = [[UIView alloc] initWithFrame:[_contentArea bounds]];
@@ -1831,7 +1806,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     // 3. A new, blank CardView to represent the new tab being added.
     // Launch the new background tab animation.
     page_animation_util::AnimateNewBackgroundPageWithCompletion(
-        topCard, [_contentArea frame], imageFrame, IsPortrait(), ^{
+        topCard, [_contentArea frame], IsPortrait(), ^{
           [background removeFromSuperview];
           [topCard removeFromSuperview];
           self.inNewTabAnimation = NO;
@@ -2293,17 +2268,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)presentNewTabTipBubble {
   DCHECK(self.browserState);
-  // If the BVC is not visible, do not present the bubble.
-  if (!self.viewVisible)
-    return;
-  // Do not present the bubble if there is no current or if the current tab is
-  // the NTP.
-  Tab* currentTab = [self.tabModel currentTab];
-  if (!currentTab)
-    return;
-  if (currentTab.webState->GetVisibleURL() == kChromeUINewTabURL)
-    return;
-
   NSString* text =
       l10n_util::GetNSStringWithFixup(IDS_IOS_NEW_TAB_IPH_PROMOTION_TEXT);
   CGPoint tabSwitcherAnchor;
@@ -2353,10 +2317,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
   DCHECK(self.browserState);
   DCHECK([_toolbarCoordinator
       respondsToSelector:@selector(anchorPointForToolsMenuButton:)]);
-  // If the BVC is not visible, do not present the bubble.
-  if (!self.viewVisible)
-    return;
-
   NSString* text = l10n_util::GetNSStringWithFixup(
       IDS_IOS_NEW_INCOGNITO_TAB_IPH_PROMOTION_TEXT);
   CGPoint toolsButtonAnchor = [_toolbarCoordinator
@@ -2521,6 +2481,13 @@ bubblePresenterForFeature:(const base::Feature&)feature
   _expectingForegroundTab = YES;
 }
 
+- (UIImageView*)pageFullScreenOpenCloseAnimationView {
+  CGRect viewBounds, remainder;
+  CGRectDivide(self.view.bounds, &remainder, &viewBounds, StatusBarHeight(),
+               CGRectMinYEdge);
+  return [[UIImageView alloc] initWithFrame:viewBounds];
+}
+
 - (UIImageView*)pageOpenCloseAnimationView {
   CGRect frame = [_contentArea bounds];
 
@@ -2581,7 +2548,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
   RepostFormTabHelper::CreateForWebState(tab.webState, self);
   NetExportTabHelper::CreateForWebState(tab.webState, self);
   CaptivePortalDetectorTabHelper::CreateForWebState(tab.webState, self);
-  PassKitTabHelper::CreateForWebState(tab.webState, _passKitCoordinator);
 
   // The language detection helper accepts a callback from the translate
   // client, so must be created after it.
@@ -3295,8 +3261,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     // TODO(crbug.com/778822): This can be cleaned up when the new fullscreen
     // is enabled.
     if (IsSafeAreaCompatibleToolbarEnabled() &&
-        header.view == _toolbarCoordinator.toolbarViewController.view &&
-        !IsIPadIdiom()) {
+        header.view == _toolbarCoordinator.toolbarViewController.view) {
       self.toolbarOffsetConstraint.constant = yOrigin;
     }
     CGRect frame = [header.view frame];

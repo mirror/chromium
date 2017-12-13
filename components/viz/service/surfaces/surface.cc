@@ -41,11 +41,8 @@ Surface::~Surface() {
   deadline_.Cancel();
 }
 
-void Surface::Reset(base::WeakPtr<SurfaceClient> client) {
+void Surface::ResetSeenFirstFrameActivation() {
   seen_first_frame_activation_ = false;
-  pending_frame_data_.reset();
-  active_frame_data_.reset();
-  surface_client_ = client;
 }
 
 bool Surface::InheritActivationDeadlineFrom(
@@ -81,8 +78,11 @@ void Surface::UnrefResources(const std::vector<ReturnedResource>& resources) {
 }
 
 void Surface::RejectCompositorFramesToFallbackSurfaces() {
-  const std::vector<SurfaceId>& activation_dependencies =
-      GetPendingFrame().metadata.activation_dependencies;
+  std::vector<FrameSinkId> frame_sink_ids_for_dependencies;
+  for (const SurfaceId& surface_id :
+       GetPendingFrame().metadata.activation_dependencies) {
+    frame_sink_ids_for_dependencies.push_back(surface_id.frame_sink_id());
+  }
 
   for (const SurfaceId& surface_id :
        GetPendingFrame().metadata.referenced_surfaces) {
@@ -90,23 +90,19 @@ void Surface::RejectCompositorFramesToFallbackSurfaces() {
     // ID in |activation_dependencies| with the same frame sink ID is said to
     // be a fallback surface that can be used in place of the primary surface
     // if the deadline passes before the dependency becomes available.
-    auto it = std::find_if(
-        activation_dependencies.begin(), activation_dependencies.end(),
-        [surface_id](const SurfaceId& dependency) {
-          return dependency.frame_sink_id() == surface_id.frame_sink_id();
-        });
-    bool is_fallback_surface = it != activation_dependencies.end();
+    auto it = std::find(frame_sink_ids_for_dependencies.begin(),
+                        frame_sink_ids_for_dependencies.end(),
+                        surface_id.frame_sink_id());
+    bool is_fallback_surface = it != frame_sink_ids_for_dependencies.end();
     if (!is_fallback_surface)
       continue;
 
-    Surface* fallback_surface =
-        surface_manager_->GetLatestInFlightSurface(*it, surface_id);
-
+    Surface* surface = surface_manager_->GetSurfaceForId(surface_id);
     // A misbehaving client may report a non-existent surface ID as a
     // |referenced_surface|. In that case, |surface| would be nullptr, and
     // there is nothing to do here.
-    if (fallback_surface)
-      fallback_surface->Close();
+    if (surface)
+      surface->Close();
   }
 }
 

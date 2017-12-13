@@ -66,8 +66,6 @@ bool ShouldRoundMessageViewCorners() {
 
 namespace message_center {
 
-const char MessageView::kViewClassName[] = "MessageView";
-
 MessageView::MessageView(MessageViewDelegate* delegate,
                          const Notification& notification)
     : delegate_(delegate),
@@ -213,10 +211,6 @@ void MessageView::Layout() {
                       kCornerRadius, kCornerRadius);
     background_view_->set_clip_path(path);
   }
-}
-
-const char* MessageView::GetClassName() const {
-  return kViewClassName;
 }
 
 void MessageView::OnGestureEvent(ui::GestureEvent* event) {

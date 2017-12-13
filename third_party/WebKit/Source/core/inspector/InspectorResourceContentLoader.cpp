@@ -37,6 +37,8 @@ class InspectorResourceContentLoader::ResourceClient final
   explicit ResourceClient(InspectorResourceContentLoader* loader)
       : loader_(loader) {}
 
+  void WaitForResource(Resource* resource) { SetResource(resource); }
+
   void Trace(blink::Visitor* visitor) override {
     visitor->Trace(loader_);
     RawResourceClient::Trace(visitor);
@@ -119,17 +121,15 @@ void InspectorResourceContentLoader::Start() {
       ResourceLoaderOptions options;
       options.initiator_info.name = FetchInitiatorTypeNames::internal;
       FetchParameters params(resource_request, options);
-      ResourceClient* resource_client = new ResourceClient(this);
-      Resource* resource = CSSStyleSheetResource::Fetch(
-          params, document->Fetcher(), resource_client);
+      Resource* resource =
+          CSSStyleSheetResource::Fetch(params, document->Fetcher());
       if (!resource)
         continue;
       // Prevent garbage collection by holding a reference to this resource.
       resources_.push_back(resource);
-      // A cache hit for a css stylesheet will complete synchronously. Don't
-      // mark the client as pending if it already finished.
-      if (resource_client->GetResource())
-        pending_resource_clients_.insert(resource_client);
+      ResourceClient* resource_client = new ResourceClient(this);
+      pending_resource_clients_.insert(resource_client);
+      resource_client->WaitForResource(resource);
     }
   }
 

@@ -13,7 +13,7 @@
 #include "base/trace_event/memory_dump_manager.h"
 #include "cc/base/container_util.h"
 #include "cc/resources/scoped_resource.h"
-#include "gpu/command_buffer/client/raster_interface.h"
+#include "gpu/command_buffer/client/gles2_interface.h"
 
 using base::trace_event::MemoryAllocatorDump;
 using base::trace_event::MemoryAllocatorDumpGuid;
@@ -32,30 +32,30 @@ const int kMaxCheckForQueryResultAvailableAttempts = 256;
 // Delay before a staging buffer might be released.
 const int kStagingBufferExpirationDelayMs = 1000;
 
-bool CheckForQueryResult(gpu::raster::RasterInterface* ri, unsigned query_id) {
+bool CheckForQueryResult(gpu::gles2::GLES2Interface* gl, unsigned query_id) {
   unsigned complete = 1;
-  ri->GetQueryObjectuivEXT(query_id, GL_QUERY_RESULT_AVAILABLE_EXT, &complete);
+  gl->GetQueryObjectuivEXT(query_id, GL_QUERY_RESULT_AVAILABLE_EXT, &complete);
   return !!complete;
 }
 
-void WaitForQueryResult(gpu::raster::RasterInterface* ri, unsigned query_id) {
+void WaitForQueryResult(gpu::gles2::GLES2Interface* gl, unsigned query_id) {
   TRACE_EVENT0("cc", "WaitForQueryResult");
 
   int attempts_left = kMaxCheckForQueryResultAvailableAttempts;
   while (attempts_left--) {
-    if (CheckForQueryResult(ri, query_id))
+    if (CheckForQueryResult(gl, query_id))
       break;
 
     // We have to flush the context to be guaranteed that a query result will
     // be available in a finite amount of time.
-    ri->ShallowFlushCHROMIUM();
+    gl->ShallowFlushCHROMIUM();
 
     base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(
         kCheckForQueryResultAvailableTickRateMs));
   }
 
   unsigned result = 0;
-  ri->GetQueryObjectuivEXT(query_id, GL_QUERY_RESULT_EXT, &result);
+  gl->GetQueryObjectuivEXT(query_id, GL_QUERY_RESULT_EXT, &result);
 }
 
 }  // namespace
@@ -74,17 +74,17 @@ StagingBuffer::~StagingBuffer() {
   DCHECK_EQ(query_id, 0u);
 }
 
-void StagingBuffer::DestroyGLResources(gpu::raster::RasterInterface* ri) {
+void StagingBuffer::DestroyGLResources(gpu::gles2::GLES2Interface* gl) {
   if (query_id) {
-    ri->DeleteQueriesEXT(1, &query_id);
+    gl->DeleteQueriesEXT(1, &query_id);
     query_id = 0;
   }
   if (image_id) {
-    ri->DestroyImageCHROMIUM(image_id);
+    gl->DestroyImageCHROMIUM(image_id);
     image_id = 0;
   }
   if (texture_id) {
-    ri->DeleteTextures(1, &texture_id);
+    gl->DeleteTextures(1, &texture_id);
     texture_id = 0;
   }
 }
@@ -254,13 +254,13 @@ std::unique_ptr<StagingBuffer> StagingBufferPool::AcquireStagingBuffer(
   viz::ContextProvider::ScopedContextLock scoped_context(
       worker_context_provider_);
 
-  gpu::raster::RasterInterface* ri = scoped_context.RasterContext();
-  DCHECK(ri);
+  gpu::gles2::GLES2Interface* gl = scoped_context.ContextGL();
+  DCHECK(gl);
 
   // Check if any busy buffers have become available.
   if (resource_provider_->use_sync_query()) {
     while (!busy_buffers_.empty()) {
-      if (!CheckForQueryResult(ri, busy_buffers_.front()->query_id))
+      if (!CheckForQueryResult(gl, busy_buffers_.front()->query_id))
         break;
 
       MarkStagingBufferAsFree(busy_buffers_.front().get());
@@ -277,12 +277,12 @@ std::unique_ptr<StagingBuffer> StagingBufferPool::AcquireStagingBuffer(
       break;
 
     if (resource_provider_->use_sync_query()) {
-      WaitForQueryResult(ri, busy_buffers_.front()->query_id);
+      WaitForQueryResult(gl, busy_buffers_.front()->query_id);
       MarkStagingBufferAsFree(busy_buffers_.front().get());
       free_buffers_.push_back(PopFront(&busy_buffers_));
     } else {
       // Fall-back to glFinish if CHROMIUM_sync_query is not available.
-      ri->Finish();
+      gl->Finish();
       while (!busy_buffers_.empty()) {
         MarkStagingBufferAsFree(busy_buffers_.front().get());
         free_buffers_.push_back(PopFront(&busy_buffers_));
@@ -332,7 +332,7 @@ std::unique_ptr<StagingBuffer> StagingBufferPool::AcquireStagingBuffer(
     if (free_buffers_.empty())
       break;
 
-    free_buffers_.front()->DestroyGLResources(ri);
+    free_buffers_.front()->DestroyGLResources(gl);
     MarkStagingBufferAsBusy(free_buffers_.front().get());
     RemoveStagingBuffer(free_buffers_.front().get());
     free_buffers_.pop_front();
@@ -401,8 +401,8 @@ void StagingBufferPool::ReleaseBuffersNotUsedSince(base::TimeTicks time) {
     viz::ContextProvider::ScopedContextLock scoped_context(
         worker_context_provider_);
 
-    gpu::raster::RasterInterface* ri = scoped_context.RasterContext();
-    DCHECK(ri);
+    gpu::gles2::GLES2Interface* gl = scoped_context.ContextGL();
+    DCHECK(gl);
 
     // Note: Front buffer is guaranteed to be LRU so we can stop releasing
     // buffers as soon as we find a buffer that has been used since |time|.
@@ -410,7 +410,7 @@ void StagingBufferPool::ReleaseBuffersNotUsedSince(base::TimeTicks time) {
       if (free_buffers_.front()->last_usage > time)
         return;
 
-      free_buffers_.front()->DestroyGLResources(ri);
+      free_buffers_.front()->DestroyGLResources(gl);
       MarkStagingBufferAsBusy(free_buffers_.front().get());
       RemoveStagingBuffer(free_buffers_.front().get());
       free_buffers_.pop_front();
@@ -420,7 +420,7 @@ void StagingBufferPool::ReleaseBuffersNotUsedSince(base::TimeTicks time) {
       if (busy_buffers_.front()->last_usage > time)
         return;
 
-      busy_buffers_.front()->DestroyGLResources(ri);
+      busy_buffers_.front()->DestroyGLResources(gl);
       RemoveStagingBuffer(busy_buffers_.front().get());
       busy_buffers_.pop_front();
     }

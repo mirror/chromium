@@ -235,6 +235,11 @@ class BLINK_EXPORT WebFrameClient {
     return nullptr;
   }
 
+  // Called when Blink cannot find a frame with the given name in the frame's
+  // browsing instance.  This gives the embedder a chance to return a frame
+  // from outside of the browsing instance.
+  virtual WebFrame* FindFrame(const WebString& name) { return nullptr; }
+
   // This frame has set its opener to another frame, or disowned the opener
   // if opener is null. See http://html.spec.whatwg.org/#dom-opener.
   virtual void DidChangeOpener(WebFrame*) {}
@@ -293,10 +298,6 @@ class BLINK_EXPORT WebFrameClient {
 
   // Called the first time this frame is the target of a user gesture.
   virtual void SetHasReceivedUserGesture() {}
-
-  // Called if the previous document had a user gesture and is on the same
-  // eTLD+1 as the current document.
-  virtual void SetHasReceivedUserGestureBeforeNavigation(bool value) {}
 
   // Console messages ----------------------------------------------------
 

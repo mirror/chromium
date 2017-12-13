@@ -31,6 +31,7 @@ using testing::AnyNumber;
 using testing::Invoke;
 using testing::Return;
 
+using base::trace_event::GlobalMemoryDumpRequestArgs;
 using base::trace_event::MemoryAllocatorDump;
 using base::trace_event::MemoryDumpArgs;
 using base::trace_event::MemoryDumpLevelOfDetail;
@@ -115,11 +116,11 @@ class MockCoordinator : public Coordinator, public mojom::Coordinator {
   void RegisterClientProcess(mojom::ClientProcessPtr,
                              mojom::ProcessType) override {}
 
-  void RequestGlobalMemoryDump(mojom::GlobalRequestArgsPtr args,
+  void RequestGlobalMemoryDump(const GlobalMemoryDumpRequestArgs& args,
                                const RequestGlobalMemoryDumpCallback&) override;
 
   void RequestGlobalMemoryDumpAndAppendToTrace(
-      mojom::GlobalRequestArgsPtr args,
+      const GlobalMemoryDumpRequestArgs& args,
       const RequestGlobalMemoryDumpAndAppendToTraceCallback&) override;
 
   void GetVmRegionsForHeapProfiler(
@@ -239,16 +240,16 @@ class MemoryTracingIntegrationTest : public testing::Test {
 };
 
 void MockCoordinator::RequestGlobalMemoryDump(
-    mojom::GlobalRequestArgsPtr args,
+    const GlobalMemoryDumpRequestArgs& args,
     const RequestGlobalMemoryDumpCallback& callback) {
-  client_->RequestChromeDump(args->dump_type, args->level_of_detail);
+  client_->RequestChromeDump(args.dump_type, args.level_of_detail);
   callback.Run(true, mojom::GlobalMemoryDumpPtr());
 }
 
 void MockCoordinator::RequestGlobalMemoryDumpAndAppendToTrace(
-    mojom::GlobalRequestArgsPtr args,
+    const GlobalMemoryDumpRequestArgs& args,
     const RequestGlobalMemoryDumpAndAppendToTraceCallback& callback) {
-  client_->RequestChromeDump(args->dump_type, args->level_of_detail);
+  client_->RequestChromeDump(args.dump_type, args.level_of_detail);
   callback.Run(1, true);
 }
 

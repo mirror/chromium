@@ -19,9 +19,6 @@ extern const base::Feature kNewPassKitDownload;
 // Used to enable new Download Manager UI and backend.
 extern const base::Feature kNewFileDownload;
 
-// Used to enable using WKHTTPSystemCookieStore in main context URL requests.
-extern const base::Feature kWKHTTPSystemCookieStore;
-
 }  // namespace features
 }  // namespace web
 

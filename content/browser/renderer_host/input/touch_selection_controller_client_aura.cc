@@ -340,7 +340,7 @@ void TouchSelectionControllerClientAura::MoveCaret(
 void TouchSelectionControllerClientAura::InternalClient::MoveCaret(
     const gfx::PointF& position) {
   RenderWidgetHostDelegate* host_delegate =
-      rwhva_->GetRenderWidgetHostImpl()->delegate();
+      RenderWidgetHostImpl::From(rwhva_->GetRenderWidgetHost())->delegate();
   if (host_delegate)
     host_delegate->MoveCaret(gfx::ToRoundedPoint(position));
 }
@@ -353,7 +353,7 @@ void TouchSelectionControllerClientAura::MoveRangeSelectionExtent(
 void TouchSelectionControllerClientAura::InternalClient::
     MoveRangeSelectionExtent(const gfx::PointF& extent) {
   RenderWidgetHostDelegate* host_delegate =
-      rwhva_->GetRenderWidgetHostImpl()->delegate();
+      RenderWidgetHostImpl::From(rwhva_->GetRenderWidgetHost())->delegate();
   if (host_delegate)
     host_delegate->MoveRangeSelectionExtent(gfx::ToRoundedPoint(extent));
 }
@@ -368,7 +368,7 @@ void TouchSelectionControllerClientAura::InternalClient::
     SelectBetweenCoordinates(const gfx::PointF& base,
                              const gfx::PointF& extent) {
   RenderWidgetHostDelegate* host_delegate =
-      rwhva_->GetRenderWidgetHostImpl()->delegate();
+      RenderWidgetHostImpl::From(rwhva_->GetRenderWidgetHost())->delegate();
   if (host_delegate) {
     host_delegate->SelectRange(gfx::ToRoundedPoint(base),
                                gfx::ToRoundedPoint(extent));
@@ -470,7 +470,7 @@ void TouchSelectionControllerClientAura::ExecuteCommand(int command_id,
                                                         int event_flags) {
   rwhva_->selection_controller()->HideAndDisallowShowingAutomatically();
   RenderWidgetHostDelegate* host_delegate =
-      rwhva_->GetRenderWidgetHostImpl()->delegate();
+      RenderWidgetHostImpl::From(rwhva_->GetRenderWidgetHost())->delegate();
   if (!host_delegate)
     return;
 
@@ -495,7 +495,8 @@ void TouchSelectionControllerClientAura::RunContextMenu() {
       rwhva_->selection_controller()->GetRectBetweenBounds();
   gfx::PointF anchor_point =
       gfx::PointF(anchor_rect.CenterPoint().x(), anchor_rect.y());
-  RenderWidgetHostImpl* host = rwhva_->GetRenderWidgetHostImpl();
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(rwhva_->GetRenderWidgetHost());
   host->ShowContextMenuAtPoint(gfx::ToRoundedPoint(anchor_point),
                                ui::MENU_SOURCE_TOUCH_EDIT_MENU);
 

@@ -4,8 +4,7 @@
 
 #include "chromeos/components/tether/tether_host_fetcher_impl.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "components/cryptauth/remote_device_provider.h"
 
 namespace chromeos {
@@ -33,7 +32,7 @@ void TetherHostFetcherImpl::Factory::SetInstanceForTesting(Factory* factory) {
 std::unique_ptr<TetherHostFetcher>
 TetherHostFetcherImpl::Factory::BuildInstance(
     cryptauth::RemoteDeviceProvider* remote_device_provider) {
-  return std::make_unique<TetherHostFetcherImpl>(remote_device_provider);
+  return base::MakeUnique<TetherHostFetcherImpl>(remote_device_provider);
 }
 
 TetherHostFetcherImpl::TetherHostFetcherImpl(

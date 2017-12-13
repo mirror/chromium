@@ -65,14 +65,16 @@ RenderWidgetHostViewBase::~RenderWidgetHostViewBase() {
 }
 
 RenderWidgetHostImpl* RenderWidgetHostViewBase::GetFocusedWidget() const {
-  RenderWidgetHostImpl* host = GetRenderWidgetHostImpl();
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
+
   return host && host->delegate()
              ? host->delegate()->GetFocusedRenderWidgetHost(host)
              : nullptr;
 }
 
 RenderWidgetHost* RenderWidgetHostViewBase::GetRenderWidgetHost() const {
-  return GetRenderWidgetHostImpl();
+  return nullptr;
 }
 
 void RenderWidgetHostViewBase::NotifyObserversAboutShutdown() {
@@ -220,7 +222,10 @@ RenderWidgetHostViewBase::CreateBrowserAccessibilityManager(
 }
 
 void RenderWidgetHostViewBase::AccessibilityShowMenu(const gfx::Point& point) {
-  RenderWidgetHostImpl* impl = GetRenderWidgetHostImpl();
+  RenderWidgetHostImpl* impl = nullptr;
+  if (GetRenderWidgetHost())
+    impl = RenderWidgetHostImpl::From(GetRenderWidgetHost());
+
   if (impl)
     impl->ShowContextMenuAtPoint(point, ui::MENU_SOURCE_NONE);
 }
@@ -241,7 +246,9 @@ gfx::NativeViewAccessible
 }
 
 void RenderWidgetHostViewBase::UpdateScreenInfo(gfx::NativeView view) {
-  RenderWidgetHostImpl* impl = GetRenderWidgetHostImpl();
+  RenderWidgetHostImpl* impl = nullptr;
+  if (GetRenderWidgetHost())
+    impl = RenderWidgetHostImpl::From(GetRenderWidgetHost());
 
   if (impl && impl->delegate())
     impl->delegate()->SendScreenRects();
@@ -276,7 +283,8 @@ void RenderWidgetHostViewBase::DidUnregisterFromTextInputManager(
 
 void RenderWidgetHostViewBase::ResizeDueToAutoResize(const gfx::Size& new_size,
                                                      uint64_t sequence_number) {
-  RenderWidgetHostImpl* host = GetRenderWidgetHostImpl();
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
   host->DidAllocateLocalSurfaceIdForAutoResize(sequence_number);
 }
 
@@ -286,7 +294,8 @@ base::WeakPtr<RenderWidgetHostViewBase> RenderWidgetHostViewBase::GetWeakPtr() {
 
 std::unique_ptr<SyntheticGestureTarget>
 RenderWidgetHostViewBase::CreateSyntheticGestureTarget() {
-  RenderWidgetHostImpl* host = GetRenderWidgetHostImpl();
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
   return std::unique_ptr<SyntheticGestureTarget>(
       new SyntheticGestureTargetBase(host));
 }
@@ -308,7 +317,8 @@ void RenderWidgetHostViewBase::FocusedNodeTouched(
 }
 
 void RenderWidgetHostViewBase::GetScreenInfo(ScreenInfo* screen_info) {
-  RenderWidgetHostImpl* host = GetRenderWidgetHostImpl();
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
   if (!host || !host->delegate()) {
     *screen_info = ScreenInfo();
     return;
@@ -408,14 +418,10 @@ ScreenOrientationValues RenderWidgetHostViewBase::GetOrientationTypeForDesktop(
 void RenderWidgetHostViewBase::OnDidNavigateMainFrameToNewPage() {
 }
 
-RenderWidgetHostImpl* RenderWidgetHostViewBase::GetRenderWidgetHostImpl()
-    const {
-  return nullptr;
-}
-
 void RenderWidgetHostViewBase::OnFrameTokenChangedForView(
     uint32_t frame_token) {
-  RenderWidgetHostImpl* host = GetRenderWidgetHostImpl();
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
   if (host)
     host->DidProcessFrame(frame_token);
 }
@@ -494,7 +500,8 @@ TextInputManager* RenderWidgetHostViewBase::GetTextInputManager() {
   if (text_input_manager_)
     return text_input_manager_;
 
-  RenderWidgetHostImpl* host = GetRenderWidgetHostImpl();
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
   if (!host || !host->delegate())
     return nullptr;
 

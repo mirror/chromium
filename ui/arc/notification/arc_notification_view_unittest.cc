@@ -129,6 +129,8 @@ class TestMessageViewDelegate : public message_center::MessageViewDelegate {
     NOTREACHED();
   }
 
+  void UpdateNotificationSize(const std::string& notification_id) override {}
+
   bool IsRemoved(const std::string& notification_id) const {
     return (removed_ids_.find(notification_id) != removed_ids_.end());
   }

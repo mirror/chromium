@@ -180,7 +180,7 @@ void LayoutTableRow::AddChild(LayoutObject* child, LayoutObject* before_child) {
     }
   }
 
-  if (before_child || NextRow() || !cell->ParsedRowSpan())
+  if (before_child || NextRow())
     Section()->SetNeedsCellRecalc();
 }
 

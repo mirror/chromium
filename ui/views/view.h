@@ -1098,10 +1098,6 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   void NotifyAccessibilityEvent(ui::AXEvent event_type,
                                 bool send_native_event);
 
-  // Views may override this function to know when an accessibility
-  // event is fired. This will be called by NotifyAccessibilityEvent.
-  virtual void OnAccessibilityEvent(ui::AXEvent event_type);
-
   // Scrolling -----------------------------------------------------------------
   // TODO(beng): Figure out if this can live somewhere other than View, i.e.
   //             closer to ScrollView.

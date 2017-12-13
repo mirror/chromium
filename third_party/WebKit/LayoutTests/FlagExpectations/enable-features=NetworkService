@@ -28,6 +28,7 @@ Bug(none) external/wpt/service-workers/service-worker/claim-shared-worker-fetch.
 Bug(none) external/wpt/service-workers/service-worker/clients-get-client-types.https.html [ Failure ]
 Bug(none) external/wpt/service-workers/service-worker/clients-get.https.html [ Failure ]
 Bug(none) external/wpt/service-workers/service-worker/fetch-event-respond-with-response-body-with-invalid-chunk.https.html [ Failure ]
+Bug(none) external/wpt/service-workers/service-worker/fetch-event-respond-with-stops-propagation.https.html [ Timeout ]
 Bug(none) external/wpt/service-workers/service-worker/fetch-request-resources.https.html [ Pass Failure Crash ]
 Bug(none) external/wpt/service-workers/service-worker/fetch-request-xhr-sync.https.html [ Timeout ]
 Bug(none) external/wpt/service-workers/service-worker/fetch-request-xhr.https.html [ Timeout ]
@@ -162,6 +163,7 @@ Bug(none) http/tests/serviceworker/chromium.fetch-event-headers.html [ Failure ]
 Bug(none) http/tests/serviceworker/chromium.update-served-from-cache.html [ Failure ]
 Bug(none) http/tests/serviceworker/chromium/register-error-messages.html [ Failure ]
 Bug(none) http/tests/serviceworker/chromium/request-body-blob-crash.html [ Crash Failure ]
+Bug(none) http/tests/serviceworker/chromium/stop-worker-with-pending-fetch.html [ Timeout ]
 Bug(none) http/tests/websocket/cookie-document-to-ws.html [ Failure ]
 Bug(none) http/tests/websocket/cookie-http-to-ws.pl [ Failure ]
 Bug(none) http/tests/websocket/httponly-cookie.pl [ Failure ]
@@ -182,8 +184,8 @@ crbug.com/764474 fast/loader/reload-zero-byte-plugin.html [ Failure ]
 crbug.com/764474 plugins/plugin-document-back-forward.html [ Crash Failure Timeout ]
 
 # DevTools crbug.com/783982
-crbug.com/783982 http/tests/devtools/startup/console/console-uncaught-promise-no-inspector.js [ Failure ]
-crbug.com/783982 http/tests/devtools/elements/styles-2/property-ui-location.js [ Failure ]
+crbug.com/783982 http/tests/devtools/startup/console/console-uncaught-promise-no-inspector.html [ Failure ]
+crbug.com/783982 http/tests/devtools/elements/styles-2/property-ui-location.html [ Failure ]
 crbug.com/783982 http/tests/devtools/elements/styles-1/empty-background-url.js [ Failure ]
 
 # http/tests/fetch

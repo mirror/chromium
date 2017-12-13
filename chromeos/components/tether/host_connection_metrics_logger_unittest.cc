@@ -4,8 +4,7 @@
 
 #include "chromeos/components/tether/host_connection_metrics_logger.h"
 
-#include <memory>
-
+#include "base/memory/ptr_util.h"
 #include "base/test/histogram_tester.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -18,7 +17,7 @@ class HostConnectionMetricsLoggerTest : public testing::Test {
   HostConnectionMetricsLoggerTest() = default;
 
   void SetUp() override {
-    metrics_logger_ = std::make_unique<HostConnectionMetricsLogger>();
+    metrics_logger_ = base::MakeUnique<HostConnectionMetricsLogger>();
   }
 
   void VerifyProvisioningFailure(

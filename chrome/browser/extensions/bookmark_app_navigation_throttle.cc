@@ -39,10 +39,33 @@ using content::BrowserThread;
 
 namespace extensions {
 
-using ProcessNavigationResult =
-    BookmarkAppNavigationThrottle::ProcessNavigationResult;
-
 namespace {
+
+enum class ProcessNavigationResult {
+  kProceedStartedFromContextMenu,
+  kProceedTransitionTyped,
+  kProceedTransitionAutoBookmark,
+  kProceedTransitionAutoSubframe,
+  kProceedTransitionManualSubframe,
+  kProceedTransitionGenerated,
+  kProceedTransitionAutoToplevel,
+  kProceedTransitionReload,
+  kProceedTransitionKeyword,
+  kProceedTransitionKeywordGenerated,
+  kProceedTransitionForwardBack,
+  kProceedTransitionFromAddressBar,
+  kOpenInChromeProceedOutOfScopeLaunch,
+  kProceedInAppSameScope,
+  kProceedInBrowserFormSubmission,
+  kProceedInBrowserSameScope,
+  kCancelPrerenderContents,
+  kDeferOpenAppCloseEmptyWebContents,
+  kCancelOpenedApp,
+  kDeferOpenNewTabInAppOutOfScope,
+  // Add ProcessNavigation results immediately above this line. Also
+  // update the enum list in tools/metrics/enums.xml accordingly.
+  kCount,
+};
 
 // Non-app site navigations: The majority of navigations will be in-browser to
 // sites for which there is no app installed. These navigations offer no insight

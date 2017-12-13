@@ -10,7 +10,6 @@
 #include "base/command_line.h"
 #include "base/cpu.h"
 #include "base/macros.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/sys_info.h"
@@ -72,52 +71,26 @@ namespace {
 // enums must never be renumbered or deleted and reused.
 enum UMALinuxDistro {
   UMA_LINUX_DISTRO_UNKNOWN = 0,
-  UMA_LINUX_DISTRO_UBUNTU_OTHER_DEPRECATED = 1,
-  UMA_LINUX_DISTRO_UBUNTU_14_04_DEPRECATED = 2,
-  UMA_LINUX_DISTRO_UBUNTU_16_04_DEPRECATED = 3,
-  UMA_LINUX_DISTRO_UBUNTU_16_10_DEPRECATED = 4,
-  UMA_LINUX_DISTRO_UBUNTU_17_04_DEPRECATED = 5,
-  UMA_LINUX_DISTRO_DEBIAN_OTHER_DEPRECATED = 6,
-  UMA_LINUX_DISTRO_DEBIAN_8_DEPRECATED = 7,
-  UMA_LINUX_DISTRO_OPENSUSE_OTHER_DEPRECATED = 8,
-  UMA_LINUX_DISTRO_OPENSUSE_LEAP_42_2_DEPRECATED = 9,
-  UMA_LINUX_DISTRO_FEDORA_OTHER_DEPRECATED = 10,
-  UMA_LINUX_DISTRO_FEDORA_24_DEPRECATED = 11,
-  UMA_LINUX_DISTRO_FEDORA_25_DEPRECATED = 12,
-  UMA_LINUX_DISTRO_FEDORA_26_DEPRECATED = 13,
-  UMA_LINUX_DISTRO_DEBIAN_9_DEPRECATED = 14,
+  UMA_LINUX_DISTRO_UBUNTU_OTHER = 1,
+  UMA_LINUX_DISTRO_UBUNTU_14_04 = 2,
+  UMA_LINUX_DISTRO_UBUNTU_16_04 = 3,
+  UMA_LINUX_DISTRO_UBUNTU_16_10 = 4,
+  UMA_LINUX_DISTRO_UBUNTU_17_04 = 5,
+  UMA_LINUX_DISTRO_DEBIAN_OTHER = 6,
+  UMA_LINUX_DISTRO_DEBIAN_8 = 7,
+  UMA_LINUX_DISTRO_OPENSUSE_OTHER = 8,
+  UMA_LINUX_DISTRO_OPENSUSE_LEAP_42_2 = 9,
+  UMA_LINUX_DISTRO_FEDORA_OTHER = 10,
+  UMA_LINUX_DISTRO_FEDORA_24 = 11,
+  UMA_LINUX_DISTRO_FEDORA_25 = 12,
+  UMA_LINUX_DISTRO_FEDORA_26 = 13,
+  UMA_LINUX_DISTRO_DEBIAN_9 = 14,
   UMA_LINUX_DISTRO_ARCH = 15,
   UMA_LINUX_DISTRO_CENTOS = 16,
   UMA_LINUX_DISTRO_ELEMENTARY = 17,
   UMA_LINUX_DISTRO_MINT = 18,
   UMA_LINUX_DISTRO_RHEL = 19,
   UMA_LINUX_DISTRO_SUSE_ENTERPRISE = 20,
-  // Debian
-  UMA_LINUX_DISTRO_DEBIAN_OTHER = 50,
-  UMA_LINUX_DISTRO_DEBIAN_8 = 51,
-  UMA_LINUX_DISTRO_DEBIAN_9 = 52,
-  UMA_LINUX_DISTRO_DEBIAN_10 = 53,
-  // Fedora
-  UMA_LINUX_DISTRO_FEDORA_OTHER = 100,
-  UMA_LINUX_DISTRO_FEDORA_24 = 101,
-  UMA_LINUX_DISTRO_FEDORA_25 = 102,
-  UMA_LINUX_DISTRO_FEDORA_26 = 103,
-  UMA_LINUX_DISTRO_FEDORA_27 = 104,
-  UMA_LINUX_DISTRO_FEDORA_28 = 105,
-  // openSUSE
-  UMA_LINUX_DISTRO_OPENSUSE_OTHER = 150,
-  UMA_LINUX_DISTRO_OPENSUSE_LEAP_42_2 = 151,
-  UMA_LINUX_DISTRO_OPENSUSE_LEAP_42_3 = 152,
-  UMA_LINUX_DISTRO_OPENSUSE_LEAP_15 = 153,
-  // Ubuntu
-  UMA_LINUX_DISTRO_UBUNTU_OTHER = 200,
-  UMA_LINUX_DISTRO_UBUNTU_14_04 = 201,
-  UMA_LINUX_DISTRO_UBUNTU_16_04 = 202,
-  UMA_LINUX_DISTRO_UBUNTU_16_10 = 203,
-  UMA_LINUX_DISTRO_UBUNTU_17_04 = 204,
-  UMA_LINUX_DISTRO_UBUNTU_17_10 = 205,
-  UMA_LINUX_DISTRO_UBUNTU_18_04 = 206,
-  UMA_LINUX_DISTRO_UBUNTU_18_10 = 207,
   // Note: Add new distros to the list above this line, and update LinuxDistro
   // in tools/metrics/histograms/enums.xml accordingly.
   UMA_LINUX_DISTRO_MAX
@@ -200,8 +173,8 @@ void RecordMicroArchitectureStats() {
                               UMA_ANDROID_ARM_FPU_COUNT);
   }
 #endif  // defined(OS_ANDROID) && defined(__arm__)
-  base::UmaHistogramSparse("Platform.LogicalCpuCount",
-                           base::SysInfo::NumberOfProcessors());
+  UMA_HISTOGRAM_SPARSE_SLOWLY("Platform.LogicalCpuCount",
+                              base::SysInfo::NumberOfProcessors());
 }
 
 // Called on a background thread, with low priority to avoid slowing down
@@ -258,26 +231,15 @@ void RecordLinuxDistro() {
             distro_result = UMA_LINUX_DISTRO_UBUNTU_16_10;
           } else if (version.CompareToWildcardString("17.04.*") == 0) {
             distro_result = UMA_LINUX_DISTRO_UBUNTU_17_04;
-          } else if (version.CompareToWildcardString("17.10.*") == 0) {
-            distro_result = UMA_LINUX_DISTRO_UBUNTU_17_10;
-          } else if (version.CompareToWildcardString("18.04.*") == 0) {
-            distro_result = UMA_LINUX_DISTRO_UBUNTU_18_04;
-          } else if (version.CompareToWildcardString("18.10.*") == 0) {
-            distro_result = UMA_LINUX_DISTRO_UBUNTU_18_10;
           }
         }
       }
     } else if (distro_tokens[0] == "openSUSE") {
       // Format: openSUSE Leap RR.R
       distro_result = UMA_LINUX_DISTRO_OPENSUSE_OTHER;
-      if (distro_tokens.size() >= 3 && distro_tokens[1] == "Leap") {
-        if (distro_tokens[2] == "42.2") {
-          distro_result = UMA_LINUX_DISTRO_OPENSUSE_LEAP_42_2;
-        } else if (distro_tokens[2] == "42.3") {
-          distro_result = UMA_LINUX_DISTRO_OPENSUSE_LEAP_42_3;
-        } else if (distro_tokens[2] == "15") {
-          distro_result = UMA_LINUX_DISTRO_OPENSUSE_LEAP_15;
-        }
+      if (distro_tokens.size() >= 3 && distro_tokens[1] == "Leap" &&
+          distro_tokens[2] == "42.2") {
+        distro_result = UMA_LINUX_DISTRO_OPENSUSE_LEAP_42_2;
       }
     } else if (distro_tokens[0] == "Debian") {
       // Format: Debian GNU/Linux R.P (<codename>)
@@ -290,8 +252,6 @@ void RecordLinuxDistro() {
             distro_result = UMA_LINUX_DISTRO_DEBIAN_8;
           } else if (version.CompareToWildcardString("9.*")) {
             distro_result = UMA_LINUX_DISTRO_DEBIAN_9;
-          } else if (version.CompareToWildcardString("10.*")) {
-            distro_result = UMA_LINUX_DISTRO_DEBIAN_10;
           }
         }
       }
@@ -305,10 +265,6 @@ void RecordLinuxDistro() {
           distro_result = UMA_LINUX_DISTRO_FEDORA_25;
         } else if (distro_tokens[2] == "26") {
           distro_result = UMA_LINUX_DISTRO_FEDORA_26;
-        } else if (distro_tokens[2] == "27") {
-          distro_result = UMA_LINUX_DISTRO_FEDORA_27;
-        } else if (distro_tokens[2] == "28") {
-          distro_result = UMA_LINUX_DISTRO_FEDORA_28;
         }
       }
     } else if (distro_tokens[0] == "Arch") {
@@ -336,7 +292,8 @@ void RecordLinuxDistro() {
     }
   }
 
-  base::UmaHistogramSparse("Linux.Distro", distro_result);
+  UMA_HISTOGRAM_ENUMERATION("Linux.Distro", distro_result,
+                            UMA_LINUX_DISTRO_MAX);
 }
 #endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
 
@@ -361,7 +318,7 @@ void RecordLinuxGlibcVersion() {
       }
     }
   }
-  base::UmaHistogramSparse("Linux.GlibcVersion", glibc_version_result);
+  UMA_HISTOGRAM_SPARSE_SLOWLY("Linux.GlibcVersion", glibc_version_result);
 #endif
 }
 

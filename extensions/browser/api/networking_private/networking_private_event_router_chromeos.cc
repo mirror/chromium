@@ -223,9 +223,6 @@ void NetworkingPrivateEventRouterImpl::NetworkPropertiesUpdated(
 
 void NetworkingPrivateEventRouterImpl::DevicePropertiesUpdated(
     const DeviceState* device) {
-  // networkingPrivate uses a single event for device changes.
-  DeviceListChanged();
-
   // DeviceState changes may affect Cellular networks.
   if (device->type() != shill::kTypeCellular)
     return;

@@ -10,7 +10,4 @@ namespace variations {
 const char kDefaultServerUrl[] =
     "https://clientservices.googleapis.com/chrome-variations/seed";
 
-const char kDefaultInsecureServerUrl[] =
-    "http://clientservices.googleapis.com/chrome-variations/seed";
-
 }  // namespace variations

@@ -5,7 +5,6 @@
 #include "chrome/browser/vr/metrics_helper.h"
 
 #include "base/memory/ptr_util.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/version.h"
 #include "net/base/network_change_notifier.h"
@@ -178,7 +177,7 @@ void MetricsHelper::OnComponentUpdated(
     AssetsComponentUpdateStatus status,
     const base::Optional<base::Version>& version) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  base::UmaHistogramSparse(
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
       kComponentUpdateStatus,
       EncodeVersionStatus(version, static_cast<int>(status)));
 }
@@ -186,7 +185,7 @@ void MetricsHelper::OnComponentUpdated(
 void MetricsHelper::OnAssetsLoaded(AssetsLoadStatus status,
                                    const base::Version& component_version) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  base::UmaHistogramSparse(
+  UMA_HISTOGRAM_SPARSE_SLOWLY(
       kAssetsLoadStatus,
       EncodeVersionStatus(component_version, static_cast<int>(status)));
 }

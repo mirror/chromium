@@ -395,7 +395,6 @@ public class WebappInfo {
     public boolean isLaunchedFromHomescreen() {
         int source = source();
         return source != ShortcutSource.NOTIFICATION && source != ShortcutSource.EXTERNAL_INTENT
-                && source != ShortcutSource.EXTERNAL_INTENT_FROM_CHROME
                 && source != ShortcutSource.WEBAPK_SHARE_TARGET;
     }
 }

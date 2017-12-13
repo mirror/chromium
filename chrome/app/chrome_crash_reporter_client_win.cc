@@ -46,6 +46,13 @@ constexpr char kExtensionID[] = "extension-%" PRIuS;
 constexpr char kShutdownType[] = "shutdown-type";
 constexpr char kBrowserUnpinTrace[] = "browser-unpin-trace";
 
+// Registry values used to determine Chrome's update channel; see
+// https://crbug.com/579504.
+constexpr char kApValue[] = "ap";
+constexpr char kCohortName[] = "cohort-name";
+
+constexpr char kIsEnterpriseManaged[] = "is-enterprise-managed";
+
 constexpr char kViewCount[] = "view-count";
 constexpr char kZeroEncodeDetails[] = "zero-encode-details";
 
@@ -82,11 +89,28 @@ size_t RegisterCrashKeysHelper() {
       {kNumExtensionsCount, kSmallSize},
       {kShutdownType, kSmallSize},
       {kBrowserUnpinTrace, kMediumSize},
+      {kApValue, kSmallSize},
+      {kCohortName, kSmallSize},
 
+      // browser/:
+      {kIsEnterpriseManaged, kSmallSize},
+
+      // content/:
+      {"discardable-memory-allocated", kSmallSize},
+      {"discardable-memory-free", kSmallSize},
+      {"subresource_url", kLargeSize},
+      {"total-discardable-memory-allocated", kSmallSize},
       {kViewCount, kSmallSize},
 
       // media/:
       {kZeroEncodeDetails, kSmallSize},
+
+      // Site isolation.  These keys help debug renderer kills such as
+      // https://crbug.com/773140.
+      {"requested_site_url", kSmallSize},
+      {"requested_origin", kSmallSize},
+      {"killed_process_origin_lock", kSmallSize},
+      {"site_isolation_mode", kSmallSize},
 
       // Temporary for https://crbug.com/685996.
       {"user-cloud-policy-manager-connect-trace", kMediumSize},

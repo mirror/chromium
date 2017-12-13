@@ -23,8 +23,8 @@ class BASE_EXPORT HistogramFlattener {
                            const HistogramSamples& snapshot) = 0;
 
  protected:
-  HistogramFlattener() = default;
-  virtual ~HistogramFlattener() = default;
+  HistogramFlattener() {}
+  virtual ~HistogramFlattener() {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(HistogramFlattener);

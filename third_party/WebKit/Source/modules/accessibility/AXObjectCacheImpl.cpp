@@ -1079,7 +1079,7 @@ void AXObjectCacheImpl::HandleFocusedUIElementChanged(Node* old_focused_node,
 }
 
 void AXObjectCacheImpl::HandleInitialFocus() {
-  PostNotification(document_, kAXFocusedUIElementChanged);
+  PostNotification(document_, AXObjectCache::kAXFocusedUIElementChanged);
 }
 
 void AXObjectCacheImpl::HandleEditableTextContentChanged(Node* node) {
@@ -1097,7 +1097,7 @@ void AXObjectCacheImpl::HandleEditableTextContentChanged(Node* node) {
 
   while (obj && !obj->IsNativeTextControl() && !obj->IsNonNativeTextControl())
     obj = obj->ParentObject();
-  PostNotification(obj, kAXValueChanged);
+  PostNotification(obj, AXObjectCache::kAXValueChanged);
 }
 
 void AXObjectCacheImpl::HandleTextFormControlChanged(Node* node) {
@@ -1116,7 +1116,7 @@ void AXObjectCacheImpl::HandleTextMarkerDataAdded(Node* start, Node* end) {
 }
 
 void AXObjectCacheImpl::HandleValueChanged(Node* node) {
-  PostNotification(node, kAXValueChanged);
+  PostNotification(node, AXObjectCache::kAXValueChanged);
 }
 
 void AXObjectCacheImpl::HandleUpdateActiveMenuOption(LayoutMenuList* menu_list,
@@ -1145,12 +1145,12 @@ void AXObjectCacheImpl::DidHideMenuListPopup(LayoutMenuList* menu_list) {
 }
 
 void AXObjectCacheImpl::HandleLoadComplete(Document* document) {
-  PostNotification(GetOrCreate(document), kAXLoadComplete);
+  PostNotification(GetOrCreate(document), AXObjectCache::kAXLoadComplete);
   AddPermissionStatusListener();
 }
 
 void AXObjectCacheImpl::HandleLayoutComplete(Document* document) {
-  PostNotification(GetOrCreate(document), kAXLayoutComplete);
+  PostNotification(GetOrCreate(document), AXObjectCache::kAXLayoutComplete);
 }
 
 void AXObjectCacheImpl::HandleScrolledToAnchor(const Node* anchor_node) {
@@ -1247,6 +1247,7 @@ void AXObjectCacheImpl::AddPermissionStatusListener() {
   permission_service_->AddPermissionObserver(
       CreatePermissionDescriptor(
           mojom::blink::PermissionName::ACCESSIBILITY_EVENTS),
+      document_->GetExecutionContext()->GetSecurityOrigin(),
       accessibility_event_permission_, std::move(observer));
 }
 
@@ -1269,6 +1270,7 @@ void AXObjectCacheImpl::RequestAOMEventListenerPermission() {
   permission_service_->RequestPermission(
       CreatePermissionDescriptor(
           mojom::blink::PermissionName::ACCESSIBILITY_EVENTS),
+      document_->GetExecutionContext()->GetSecurityOrigin(),
       Frame::HasTransientUserActivation(document_->GetFrame()),
       WTF::Bind(&AXObjectCacheImpl::OnPermissionStatusChange,
                 WrapPersistent(this)));
@@ -1289,59 +1291,5 @@ void AXObjectCacheImpl::Trace(blink::Visitor* visitor) {
 
   AXObjectCache::Trace(visitor);
 }
-
-STATIC_ASSERT_ENUM(kWebAXEventActiveDescendantChanged,
-                   AXObjectCacheImpl::kAXActiveDescendantChanged);
-STATIC_ASSERT_ENUM(kWebAXEventAlert, AXObjectCacheImpl::kAXAlert);
-STATIC_ASSERT_ENUM(kWebAXEventAriaAttributeChanged,
-                   AXObjectCacheImpl::kAXAriaAttributeChanged);
-STATIC_ASSERT_ENUM(kWebAXEventAutocorrectionOccured,
-                   AXObjectCacheImpl::kAXAutocorrectionOccured);
-STATIC_ASSERT_ENUM(kWebAXEventBlur, AXObjectCacheImpl::kAXBlur);
-STATIC_ASSERT_ENUM(kWebAXEventCheckedStateChanged,
-                   AXObjectCacheImpl::kAXCheckedStateChanged);
-STATIC_ASSERT_ENUM(kWebAXEventChildrenChanged,
-                   AXObjectCacheImpl::kAXChildrenChanged);
-STATIC_ASSERT_ENUM(kWebAXEventClicked, AXObjectCacheImpl::kAXClicked);
-STATIC_ASSERT_ENUM(kWebAXEventDocumentSelectionChanged,
-                   AXObjectCacheImpl::kAXDocumentSelectionChanged);
-STATIC_ASSERT_ENUM(kWebAXEventExpandedChanged,
-                   AXObjectCacheImpl::kAXExpandedChanged);
-STATIC_ASSERT_ENUM(kWebAXEventFocus,
-                   AXObjectCacheImpl::kAXFocusedUIElementChanged);
-STATIC_ASSERT_ENUM(kWebAXEventHide, AXObjectCacheImpl::kAXHide);
-STATIC_ASSERT_ENUM(kWebAXEventHover, AXObjectCacheImpl::kAXHover);
-STATIC_ASSERT_ENUM(kWebAXEventInvalidStatusChanged,
-                   AXObjectCacheImpl::kAXInvalidStatusChanged);
-STATIC_ASSERT_ENUM(kWebAXEventLayoutComplete,
-                   AXObjectCacheImpl::kAXLayoutComplete);
-STATIC_ASSERT_ENUM(kWebAXEventLiveRegionChanged,
-                   AXObjectCacheImpl::kAXLiveRegionChanged);
-STATIC_ASSERT_ENUM(kWebAXEventLoadComplete, AXObjectCacheImpl::kAXLoadComplete);
-STATIC_ASSERT_ENUM(kWebAXEventLocationChanged,
-                   AXObjectCacheImpl::kAXLocationChanged);
-STATIC_ASSERT_ENUM(kWebAXEventMenuListItemSelected,
-                   AXObjectCacheImpl::kAXMenuListItemSelected);
-STATIC_ASSERT_ENUM(kWebAXEventMenuListItemUnselected,
-                   AXObjectCacheImpl::kAXMenuListItemUnselected);
-STATIC_ASSERT_ENUM(kWebAXEventMenuListValueChanged,
-                   AXObjectCacheImpl::kAXMenuListValueChanged);
-STATIC_ASSERT_ENUM(kWebAXEventRowCollapsed, AXObjectCacheImpl::kAXRowCollapsed);
-STATIC_ASSERT_ENUM(kWebAXEventRowCountChanged,
-                   AXObjectCacheImpl::kAXRowCountChanged);
-STATIC_ASSERT_ENUM(kWebAXEventRowExpanded, AXObjectCacheImpl::kAXRowExpanded);
-STATIC_ASSERT_ENUM(kWebAXEventScrollPositionChanged,
-                   AXObjectCacheImpl::kAXScrollPositionChanged);
-STATIC_ASSERT_ENUM(kWebAXEventScrolledToAnchor,
-                   AXObjectCacheImpl::kAXScrolledToAnchor);
-STATIC_ASSERT_ENUM(kWebAXEventSelectedChildrenChanged,
-                   AXObjectCacheImpl::kAXSelectedChildrenChanged);
-STATIC_ASSERT_ENUM(kWebAXEventSelectedTextChanged,
-                   AXObjectCacheImpl::kAXSelectedTextChanged);
-STATIC_ASSERT_ENUM(kWebAXEventShow, AXObjectCacheImpl::kAXShow);
-STATIC_ASSERT_ENUM(kWebAXEventTextChanged, AXObjectCacheImpl::kAXTextChanged);
-STATIC_ASSERT_ENUM(kWebAXEventTextInserted, AXObjectCacheImpl::kAXTextInserted);
-STATIC_ASSERT_ENUM(kWebAXEventTextRemoved, AXObjectCacheImpl::kAXTextRemoved);
-STATIC_ASSERT_ENUM(kWebAXEventValueChanged, AXObjectCacheImpl::kAXValueChanged);
 
 }  // namespace blink

@@ -136,7 +136,6 @@ StreamMixer::StreamMixer()
       check_close_timeout_(kDefaultCheckCloseTimeoutMs),
       check_close_timer_(new base::Timer(false, false)),
       filter_frame_alignment_(kDefaultFilterFrameAlignment) {
-  VLOG(1) << __func__;
   if (single_threaded_for_test_) {
     mixer_task_runner_ = base::ThreadTaskRunnerHandle::Get();
   } else {
@@ -266,14 +265,12 @@ void StreamMixer::ResetPostProcessorsForTest(
 }
 
 StreamMixer::~StreamMixer() {
-  VLOG(1) << __func__;
   FinalizeOnMixerThread();
   mixer_thread_->Stop();
   mixer_task_runner_ = nullptr;
 }
 
 void StreamMixer::FinalizeOnMixerThread() {
-  VLOG(1) << __func__;
   RUN_ON_MIXER_THREAD(&StreamMixer::FinalizeOnMixerThread);
   Close();
 
@@ -282,7 +279,6 @@ void StreamMixer::FinalizeOnMixerThread() {
 }
 
 void StreamMixer::FinishFinalize() {
-  VLOG(1) << __func__;
   retry_write_frames_timer_.reset();
   check_close_timer_.reset();
   inputs_.clear();
@@ -290,7 +286,6 @@ void StreamMixer::FinishFinalize() {
 }
 
 bool StreamMixer::Start() {
-  VLOG(1) << __func__;
   DCHECK(mixer_task_runner_->BelongsToCurrentThread());
 
   if (!output_)
@@ -327,21 +322,17 @@ bool StreamMixer::Start() {
 }
 
 void StreamMixer::Stop() {
-  VLOG(1) << __func__;
   for (auto* observer : loopback_observers_) {
     observer->OnLoopbackInterrupted();
   }
 
-  if (output_) {
-    output_->Stop();
-  }
+  output_->Stop();
 
   state_ = kStateUninitialized;
   output_samples_per_second_ = MixerOutputStream::kInvalidSampleRate;
 }
 
 void StreamMixer::Close() {
-  VLOG(1) << __func__;
   Stop();
 }
 
@@ -686,7 +677,6 @@ void StreamMixer::WriteMixedPcm(int frames) {
 
 void StreamMixer::AddLoopbackAudioObserver(
     CastMediaShlib::LoopbackAudioObserver* observer) {
-  VLOG(1) << __func__;
   RUN_ON_MIXER_THREAD(&StreamMixer::AddLoopbackAudioObserver, observer);
   DCHECK(observer);
   DCHECK(!base::ContainsValue(loopback_observers_, observer));
@@ -695,7 +685,6 @@ void StreamMixer::AddLoopbackAudioObserver(
 
 void StreamMixer::RemoveLoopbackAudioObserver(
     CastMediaShlib::LoopbackAudioObserver* observer) {
-  VLOG(1) << __func__;
   RUN_ON_MIXER_THREAD(&StreamMixer::RemoveLoopbackAudioObserver, observer);
   DCHECK(base::ContainsValue(loopback_observers_, observer));
   loopback_observers_.erase(std::remove(loopback_observers_.begin(),

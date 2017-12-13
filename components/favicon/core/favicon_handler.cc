@@ -13,7 +13,6 @@
 #include "base/bind_helpers.h"
 #include "base/feature_list.h"
 #include "base/memory/ref_counted_memory.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "build/build_config.h"
 #include "components/favicon/core/favicon_service.h"
@@ -54,15 +53,16 @@ void RecordDownloadAttemptsForHandlerType(
   attempts = std::max(0, std::min(attempts, 16));
   switch (handler_type) {
     case FaviconDriverObserver::NON_TOUCH_16_DIP:
-      base::UmaHistogramSparse("Favicons.DownloadAttempts.Favicons", attempts);
+      UMA_HISTOGRAM_SPARSE_SLOWLY("Favicons.DownloadAttempts.Favicons",
+                                  attempts);
       return;
     case FaviconDriverObserver::NON_TOUCH_LARGEST:
-      base::UmaHistogramSparse("Favicons.DownloadAttempts.LargeIcons",
-                               attempts);
+      UMA_HISTOGRAM_SPARSE_SLOWLY("Favicons.DownloadAttempts.LargeIcons",
+                                  attempts);
       return;
     case FaviconDriverObserver::TOUCH_LARGEST:
-      base::UmaHistogramSparse("Favicons.DownloadAttempts.TouchIcons",
-                               attempts);
+      UMA_HISTOGRAM_SPARSE_SLOWLY("Favicons.DownloadAttempts.TouchIcons",
+                                  attempts);
       return;
   }
   NOTREACHED();

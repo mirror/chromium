@@ -17,7 +17,7 @@
 #include "base/i18n/base_i18n_switches.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
-#include "base/metrics/histogram_functions.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/metrics_hashes.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -1059,12 +1059,7 @@ const FeatureEntry::Choice kEnableOutOfProcessHeapProfilingChoices[] = {
     {flag_descriptions::kEnableOutOfProcessHeapProfilingModeGpu,
      switches::kMemlog, switches::kMemlogModeGpu},
     {flag_descriptions::kEnableOutOfProcessHeapProfilingModeRendererSampling,
-     switches::kMemlog, switches::kMemlogModeRendererSampling},
-    {flag_descriptions::kEnableOutOfProcessHeapProfilingModeAllRenderers,
-     switches::kMemlog, switches::kMemlogModeAllRenderers},
-    {flag_descriptions::kEnableOutOfProcessHeapProfilingModeManual,
-     switches::kMemlog, switches::kMemlogModeManual},
-};
+     switches::kMemlog, switches::kMemlogModeRendererSampling}};
 
 const FeatureEntry::FeatureParam kOmniboxUIMaxAutocompleteMatches4[] = {
     {OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam, "4"}};
@@ -1907,10 +1902,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kChromeHomePersistentIphName,
      flag_descriptions::kChromeHomePersistentIphDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeHomePersistentIph)},
-    {"enable-chrome-home-pull-to-refresh-iph-at-top",
-     flag_descriptions::kChromeHomePullToRefreshIphAtTopName,
-     flag_descriptions::kChromeHomePullToRefreshIphAtTopDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kChromeHomePullToRefreshIphAtTop)},
     {"enable-chrome-memex", flag_descriptions::kChromeMemexName,
      flag_descriptions::kChromeMemexDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kChromeMemexFeature)},
@@ -2217,6 +2208,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-gamepad-extensions", flag_descriptions::kGamepadExtensionsName,
      flag_descriptions::kGamepadExtensionsDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kGamepadExtensions)},
+    // TODO(bajones): When adding a flag for the "2.0" API (crbug.com/670510),
+    // use FEATURE_VALUE_TYPE, just use "webvr" without "enable-", and update
+    // the description to indicate this is the older version of the API ("1.1").
     {"enable-webvr", flag_descriptions::kWebvrName,
      flag_descriptions::kWebvrDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebVR)},
@@ -2224,9 +2218,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebVrExperimentalRenderingName,
      flag_descriptions::kWebVrExperimentalRenderingDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kWebVrExperimentalRendering)},
-    {"webxr", flag_descriptions::kWebXrName,
-     flag_descriptions::kWebXrDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kWebXr)},
 #if BUILDFLAG(ENABLE_VR)
     {"webvr-vsync-align", flag_descriptions::kWebVrVsyncAlignName,
      flag_descriptions::kWebVrVsyncAlignDescription, kOsAndroid,
@@ -2315,12 +2306,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kOfflinePagesPrefetchingUIName,
      flag_descriptions::kOfflinePagesPrefetchingUIDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(offline_pages::kOfflinePagesPrefetchingUIFeature)},
-    {"offline-pages-limitless-prefetching",
-     flag_descriptions::kOfflinePagesLimitlessPrefetchingName,
-     flag_descriptions::kOfflinePagesLimitlessPrefetchingDescription,
-     kOsAndroid,
-     FEATURE_VALUE_TYPE(
-         offline_pages::kOfflinePagesLimitlessPrefetchingFeature)},
     {"background-loader-for-downloads",
      flag_descriptions::kBackgroundLoaderForDownloadsName,
      flag_descriptions::kBackgroundLoaderForDownloadsDescription, kOsAndroid,
@@ -2611,6 +2596,9 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(content::kWebRtcH264WithOpenH264FFmpeg)},
 #endif  // ENABLE_WEBRTC && BUILDFLAG(RTC_USE_H264) && !MEDIA_DISABLE_FFMPEG
 #if defined(OS_ANDROID)
+    {"offline-pages-ntp", flag_descriptions::kNtpOfflinePagesName,
+     flag_descriptions::kNtpOfflinePagesDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kNTPOfflinePagesFeature)},
     {"offlining-recent-pages", flag_descriptions::kOffliningRecentPagesName,
      flag_descriptions::kOffliningRecentPagesDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(offline_pages::kOffliningRecentPagesFeature)},
@@ -2632,7 +2620,7 @@ const FeatureEntry kFeatureEntries[] = {
     {"password-export", flag_descriptions::kPasswordExportName,
      flag_descriptions::kPasswordExportDescription, kOsAll,
      FEATURE_VALUE_TYPE(password_manager::features::kPasswordExport)},
-    {"PasswordImport", flag_descriptions::kPasswordImportName,
+    {"password-import", flag_descriptions::kPasswordImportName,
      flag_descriptions::kPasswordImportDescription, kOsAll,
      FEATURE_VALUE_TYPE(password_manager::features::kPasswordImport)},
 #if defined(OS_CHROMEOS)
@@ -2911,15 +2899,6 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(ui_devtools::kEnableUiDevTools)},
 #endif  // defined(OS_CHROMEOS)
 
-    {"enable-autofill-credit-card-ablation-experiment",
-     flag_descriptions::kEnableAutofillCreditCardAblationExperimentDisplayName,
-     flag_descriptions::kEnableAutofillCreditCardAblationExperimentDescription,
-     kOsAll,
-     FEATURE_VALUE_TYPE(autofill::kAutofillCreditCardAblationExperiment)},
-    {"enable-autofill-credit-card-bank-name-display",
-     flag_descriptions::kEnableAutofillCreditCardBankNameDisplayName,
-     flag_descriptions::kEnableAutofillCreditCardBankNameDisplayDescription,
-     kOsAll, FEATURE_VALUE_TYPE(autofill::kAutofillCreditCardBankNameDisplay)},
     {"enable-autofill-credit-card-last-used-date-display",
      flag_descriptions::kEnableAutofillCreditCardLastUsedDateDisplayName,
      flag_descriptions::kEnableAutofillCreditCardLastUsedDateDisplayDescription,
@@ -2935,11 +2914,23 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableAutofillCreditCardUploadCvcPromptDescription,
      kOsDesktop,
      FEATURE_VALUE_TYPE(autofill::kAutofillUpstreamRequestCvcIfMissing)},
-    {"enable-autofill-credit-card-upload-send-pan-first-six",
-     flag_descriptions::kEnableAutofillCreditCardUploadSendPanFirstSixName,
-     flag_descriptions::
-         kEnableAutofillCreditCardUploadSendPanFirstSixDescription,
-     kOsAll, FEATURE_VALUE_TYPE(autofill::kAutofillUpstreamSendPanFirstSix)},
+    {"enable-autofill-credit-card-upload-google-logo",
+     flag_descriptions::kEnableAutofillCreditCardUploadGoogleLogoName,
+     flag_descriptions::kEnableAutofillCreditCardUploadGoogleLogoDescription,
+     kOsDesktop, FEATURE_VALUE_TYPE(autofill::kAutofillUpstreamShowGoogleLogo)},
+    {"enable-autofill-credit-card-upload-new-ui",
+     flag_descriptions::kEnableAutofillCreditCardUploadNewUiName,
+     flag_descriptions::kEnableAutofillCreditCardUploadNewUiDescription,
+     kOsDesktop, FEATURE_VALUE_TYPE(autofill::kAutofillUpstreamShowNewUi)},
+    {"enable-autofill-credit-card-ablation-experiment",
+     flag_descriptions::kEnableAutofillCreditCardAblationExperimentDisplayName,
+     flag_descriptions::kEnableAutofillCreditCardAblationExperimentDescription,
+     kOsAll,
+     FEATURE_VALUE_TYPE(autofill::kAutofillCreditCardAblationExperiment)},
+    {"enable-autofill-credit-card-bank-name-display",
+     flag_descriptions::kEnableAutofillCreditCardBankNameDisplayName,
+     flag_descriptions::kEnableAutofillCreditCardBankNameDisplayDescription,
+     kOsAll, FEATURE_VALUE_TYPE(autofill::kAutofillCreditCardBankNameDisplay)},
     {"enable-autofill-send-billing-customer-number",
      flag_descriptions::kEnableAutofillSendBillingCustomerNumberName,
      flag_descriptions::kEnableAutofillSendBillingCustomerNumberDescription,
@@ -3076,6 +3067,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableChromevoxArcSupportDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(chromeos::switches::kEnableChromeVoxArcSupport)},
 #endif  // defined(OS_CHROMEOS)
+
+    {"enable-mojo-loading", flag_descriptions::kMojoLoadingName,
+     flag_descriptions::kMojoLoadingDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kLoadingWithMojo)},
 
     {"enable-fetch-keepalive-timeout-setting",
      flag_descriptions::kFetchKeepaliveTimeoutSettingName,
@@ -3660,13 +3655,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableTouchpadAndWheelScrollLatchingDescription,
      kOsAll, FEATURE_VALUE_TYPE(features::kTouchpadAndWheelScrollLatching)},
 
-#if defined(OS_ANDROID)
-    {"grant-notifications-to-dse",
-     flag_descriptions::kGrantNotificationsToDSEName,
-     flag_descriptions::kGrantNotificationsToDSENameDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(features::kGrantNotificationsToDSE)},
-#endif
-
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
@@ -3753,7 +3741,10 @@ void ReportAboutFlagsHistogramSwitches(const std::string& uma_histogram_name,
     }
     DVLOG(1) << "ReportAboutFlagsHistogram(): histogram='" << uma_histogram_name
              << "' '" << flag << "', uma_id=" << uma_id;
-    base::UmaHistogramSparse(uma_histogram_name, uma_id);
+
+    // Sparse histogram macro does not cache the histogram, so it's safe
+    // to use macro with non-static histogram name here.
+    UMA_HISTOGRAM_SPARSE_SLOWLY(uma_histogram_name, uma_id);
   }
 }
 
@@ -3765,7 +3756,10 @@ void ReportAboutFlagsHistogramFeatures(const std::string& uma_histogram_name,
     int uma_id = GetSwitchUMAId(feature);
     DVLOG(1) << "ReportAboutFlagsHistogram(): histogram='" << uma_histogram_name
              << "' '" << feature << "', uma_id=" << uma_id;
-    base::UmaHistogramSparse(uma_histogram_name, uma_id);
+
+    // Sparse histogram macro does not cache the histogram, so it's safe
+    // to use macro with non-static histogram name here.
+    UMA_HISTOGRAM_SPARSE_SLOWLY(uma_histogram_name, uma_id);
   }
 }
 

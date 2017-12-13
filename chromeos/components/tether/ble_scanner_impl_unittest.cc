@@ -4,8 +4,6 @@
 
 #include "chromeos/components/tether/ble_scanner_impl.h"
 
-#include <memory>
-
 #include "base/callback_forward.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/test/test_simple_task_runner.h"
@@ -141,10 +139,10 @@ CreateFakeBackgroundScanFilter() {
                                        current_eid_end_ms);
 
   std::unique_ptr<cryptauth::DataWithTimestamp> adjacent =
-      std::make_unique<cryptauth::DataWithTimestamp>(
+      base::MakeUnique<cryptauth::DataWithTimestamp>(
           adjacent_eid_data, adjacent_eid_start_ms, adjacent_eid_end_ms);
 
-  return std::make_unique<cryptauth::ForegroundEidGenerator::EidData>(
+  return base::MakeUnique<cryptauth::ForegroundEidGenerator::EidData>(
       current, std::move(adjacent));
 }
 
@@ -192,16 +190,16 @@ class BleScannerImplTest : public testing::Test {
     should_discovery_session_be_active_ = true;
 
     mock_local_device_data_provider_ =
-        std::make_unique<cryptauth::MockLocalDeviceDataProvider>();
+        base::MakeUnique<cryptauth::MockLocalDeviceDataProvider>();
     mock_local_device_data_provider_->SetPublicKey(
-        std::make_unique<std::string>(fake_local_public_key));
+        base::MakeUnique<std::string>(fake_local_public_key));
     mock_local_device_data_provider_->SetBeaconSeeds(
-        std::make_unique<std::vector<cryptauth::BeaconSeed>>(
+        base::MakeUnique<std::vector<cryptauth::BeaconSeed>>(
             test_beacon_seeds_));
 
-    fake_ble_synchronizer_ = std::make_unique<FakeBleSynchronizer>();
+    fake_ble_synchronizer_ = base::MakeUnique<FakeBleSynchronizer>();
     fake_tether_host_fetcher_ =
-        std::make_unique<FakeTetherHostFetcher>(test_devices_);
+        base::MakeUnique<FakeTetherHostFetcher>(test_devices_);
 
     mock_adapter_ =
         base::MakeRefCounted<NiceMock<device::MockBluetoothAdapter>>();
@@ -209,7 +207,7 @@ class BleScannerImplTest : public testing::Test {
 
     mock_discovery_session_ = nullptr;
 
-    ble_scanner_ = std::make_unique<BleScannerImpl>(
+    ble_scanner_ = base::MakeUnique<BleScannerImpl>(
         mock_adapter_, mock_local_device_data_provider_.get(),
         fake_ble_synchronizer_.get(), fake_tether_host_fetcher_.get());
 
@@ -222,7 +220,7 @@ class BleScannerImplTest : public testing::Test {
                                  base::WrapUnique(mock_eid_generator_),
                                  test_task_runner_);
 
-    test_observer_ = std::make_unique<TestBleScannerObserver>();
+    test_observer_ = base::MakeUnique<TestBleScannerObserver>();
     ble_scanner_->AddObserver(test_observer_.get());
   }
 
@@ -423,9 +421,9 @@ TEST_F(BleScannerImplTest, TestDiscovery_ScanSuccessfulButNoRegisteredDevice) {
   // Device with valid service data connected, but there was no registered
   // device corresponding to the one that just connected.
   mock_local_device_data_provider_->SetPublicKey(
-      std::make_unique<std::string>(fake_local_public_key));
+      base::MakeUnique<std::string>(fake_local_public_key));
   mock_local_device_data_provider_->SetBeaconSeeds(
-      std::make_unique<std::vector<cryptauth::BeaconSeed>>(test_beacon_seeds_));
+      base::MakeUnique<std::vector<cryptauth::BeaconSeed>>(test_beacon_seeds_));
   MockBluetoothDeviceWithServiceData device(
       mock_adapter_.get(), kDefaultBluetoothAddress,
       valid_service_data_for_other_device);

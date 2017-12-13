@@ -26,7 +26,6 @@
       'target_name': 'header',
       'dependencies': [
         '../data/compiled_resources2.gyp:destination',
-        'model',
         'settings_behavior',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
       ],
@@ -72,7 +71,6 @@
     {
       'target_name': 'media_size_settings',
       'dependencies': [
-        'settings_select',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -85,8 +83,6 @@
     {
       'target_name': 'dpi_settings',
       'dependencies': [
-        'settings_select',
-        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -119,30 +115,20 @@
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
-      'target_name': 'settings_select',
-      'dependencies': [
-        '../compiled_resources2.gyp:print_preview_utils',
-        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
-      ],
-      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
-    },
-    {
       'target_name': 'settings_behavior',
       'dependencies': [
+        'model',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:assert',
-        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
       'target_name': 'model',
       'dependencies': [
-        'settings_behavior',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
         '../compiled_resources2.gyp:native_layer',
         '../data/compiled_resources2.gyp:destination',
         '../data/compiled_resources2.gyp:document_info',
-        '../data/compiled_resources2.gyp:measurement_system',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     }

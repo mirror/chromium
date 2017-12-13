@@ -4,9 +4,8 @@
 
 #include "chromeos/components/tether/wifi_hotspot_disconnector_impl.h"
 
-#include <memory>
-
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "chromeos/components/tether/fake_network_configuration_remover.h"
@@ -110,12 +109,12 @@ class WifiHotspotDisconnectorImplTest : public NetworkStateTest {
                            OnNetworkConnectionManagerDisconnect,
                        base::Unretained(this))));
     fake_configuration_remover_ =
-        std::make_unique<FakeNetworkConfigurationRemover>();
+        base::MakeUnique<FakeNetworkConfigurationRemover>();
     test_pref_service_ =
-        std::make_unique<sync_preferences::TestingPrefServiceSyncable>();
+        base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
 
     WifiHotspotDisconnectorImpl::RegisterPrefs(test_pref_service_->registry());
-    wifi_hotspot_disconnector_ = std::make_unique<WifiHotspotDisconnectorImpl>(
+    wifi_hotspot_disconnector_ = base::MakeUnique<WifiHotspotDisconnectorImpl>(
         test_network_connection_handler_.get(), network_state_handler(),
         test_pref_service_.get(), fake_configuration_remover_.get());
   }

@@ -8,7 +8,6 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
-#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/persisted_logs_metrics_impl.h"
@@ -77,11 +76,13 @@ void MetricsReportingService::LogResponseOrErrorCode(int response_code,
                                                      int error_code,
                                                      bool was_https) {
   if (was_https) {
-    base::UmaHistogramSparse("UMA.LogUpload.ResponseOrErrorCode",
-                             response_code >= 0 ? response_code : error_code);
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
+        "UMA.LogUpload.ResponseOrErrorCode",
+        response_code >= 0 ? response_code : error_code);
   } else {
-    base::UmaHistogramSparse("UMA.LogUpload.ResponseOrErrorCode.HTTP",
-                             response_code >= 0 ? response_code : error_code);
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
+        "UMA.LogUpload.ResponseOrErrorCode.HTTP",
+        response_code >= 0 ? response_code : error_code);
   }
 }
 

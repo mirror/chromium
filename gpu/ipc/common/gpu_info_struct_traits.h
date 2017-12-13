@@ -240,10 +240,6 @@ struct StructTraits<gpu::mojom::GpuInfoDataView, gpu::GPUInfo> {
     return input.passthrough_cmd_decoder;
   }
 
-  static bool direct_composition(const gpu::GPUInfo& input) {
-    return input.direct_composition;
-  }
-
   static bool supports_overlays(const gpu::GPUInfo& input) {
     return input.supports_overlays;
   }

@@ -159,17 +159,19 @@ void CreditCardSaveManager::AttemptToOfferCardUploadSave(
     return;
   }
 
-  if (IsAutofillUpstreamSendPanFirstSixExperimentEnabled()) {
+  if (IsAutofillUpstreamShowNewUiExperimentEnabled()) {
     upload_request_.active_experiments.push_back(
-        kAutofillUpstreamSendPanFirstSix.name);
+        kAutofillUpstreamShowNewUi.name);
+  }
+  if (IsAutofillUpstreamShowGoogleLogoExperimentEnabled()) {
+    upload_request_.active_experiments.push_back(
+        kAutofillUpstreamShowGoogleLogo.name);
   }
 
   // All required data is available, start the upload process.
-  payments_client_->GetUploadDetails(
-      upload_request_.profiles,
-      base::UTF16ToASCII(CreditCard::StripSeparators(card.number()))
-          .substr(0, 6),
-      upload_request_.active_experiments, app_locale_);
+  payments_client_->GetUploadDetails(upload_request_.profiles,
+                                     upload_request_.active_experiments,
+                                     app_locale_);
 }
 
 bool CreditCardSaveManager::IsCreditCardUploadEnabled() {

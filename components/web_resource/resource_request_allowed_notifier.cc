@@ -14,6 +14,7 @@ ResourceRequestAllowedNotifier::ResourceRequestAllowedNotifier(
     : disable_network_switch_(disable_network_switch),
       local_state_(local_state),
       observer_requested_permission_(false),
+      waiting_for_network_(false),
       waiting_for_user_to_accept_eula_(false),
       observer_(nullptr) {
 }
@@ -24,11 +25,14 @@ ResourceRequestAllowedNotifier::~ResourceRequestAllowedNotifier() {
 }
 
 void ResourceRequestAllowedNotifier::Init(Observer* observer) {
-  DCHECK(!observer_);
-  DCHECK(observer);
+  DCHECK(!observer_ && observer);
   observer_ = observer;
 
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+
+  // Check this state during initialization. It is not expected to change until
+  // the corresponding notification is received.
+  waiting_for_network_ = net::NetworkChangeNotifier::IsOffline();
 
   eula_notifier_.reset(CreateEulaNotifier());
   if (eula_notifier_) {
@@ -49,7 +53,7 @@ ResourceRequestAllowedNotifier::GetResourceRequestsAllowedState() {
   // set a flag to remind this class to notify the observer once the criteria
   // is met.
   observer_requested_permission_ = waiting_for_user_to_accept_eula_ ||
-                                   net::NetworkChangeNotifier::IsOffline();
+                                   waiting_for_network_;
   if (!observer_requested_permission_)
     return ALLOWED;
   return waiting_for_user_to_accept_eula_ ? DISALLOWED_EULA_NOT_ACCEPTED :
@@ -58,6 +62,11 @@ ResourceRequestAllowedNotifier::GetResourceRequestsAllowedState() {
 
 bool ResourceRequestAllowedNotifier::ResourceRequestsAllowed() {
   return GetResourceRequestsAllowedState() == ALLOWED;
+}
+
+void ResourceRequestAllowedNotifier::SetWaitingForNetworkForTesting(
+    bool waiting) {
+  waiting_for_network_ = waiting;
 }
 
 void ResourceRequestAllowedNotifier::SetWaitingForEulaForTesting(bool waiting) {
@@ -95,11 +104,21 @@ void ResourceRequestAllowedNotifier::OnEulaAccepted() {
 
 void ResourceRequestAllowedNotifier::OnNetworkChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
-  if (type != net::NetworkChangeNotifier::CONNECTION_NONE) {
-    DVLOG(1) << "Network came online.";
-    // MaybeNotifyObserver() internally guarantees that it will only notify the
-    // observer if it's currently waiting for the network to come online.
+  // Only attempt to notify observers if this was previously waiting for the
+  // network to reconnect, and new network state is actually available. This
+  // prevents the notifier from notifying the observer if the notifier was never
+  // waiting on the network, or if the network changes from one online state
+  // to another (for example, Wifi to 3G, or Wifi to Wifi, if the network were
+  // flaky).
+  if (waiting_for_network_ &&
+      type != net::NetworkChangeNotifier::CONNECTION_NONE) {
+    waiting_for_network_ = false;
+    DVLOG(1) << "Network came back online.";
     MaybeNotifyObserver();
+  } else if (!waiting_for_network_ &&
+             type == net::NetworkChangeNotifier::CONNECTION_NONE) {
+    waiting_for_network_ = true;
+    DVLOG(1) << "Network went offline.";
   }
 }
 

@@ -171,18 +171,14 @@ views::View* SearchResultListView::GetSelectedView() const {
              : nullptr;
 }
 
-views::View* SearchResultListView::GetFirstResultView() {
-  DCHECK(results_container_->has_children());
-  return num_results() <= 0 ? nullptr : results_container_->child_at(0);
-}
-
-void SearchResultListView::SetFirstResultSelected(bool selected) {
+views::View* SearchResultListView::SetFirstResultSelected(bool selected) {
   DCHECK(results_container_->has_children());
   if (num_results() <= 0)
-    return;
+    return nullptr;
   SearchResultView* search_result_view =
       static_cast<SearchResultView*>(results_container_->child_at(0));
   search_result_view->SetSelected(selected);
+  return search_result_view;
 }
 
 int SearchResultListView::DoUpdate() {

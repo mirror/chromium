@@ -5,7 +5,7 @@
 #include "chrome/browser/chromeos/login/enrollment/enrollment_uma.h"
 
 #include "base/logging.h"
-#include "base/metrics/histogram_functions.h"
+#include "base/metrics/histogram_macros.h"
 
 namespace {
 
@@ -25,16 +25,16 @@ void EnrollmentUMA(policy::MetricEnrollment sample,
     case policy::EnrollmentConfig::MODE_LOCAL_ADVERTISED:
     case policy::EnrollmentConfig::MODE_SERVER_ADVERTISED:
     case policy::EnrollmentConfig::MODE_ATTESTATION:
-      base::UmaHistogramSparse(kMetricEnrollment, sample);
+      UMA_HISTOGRAM_SPARSE_SLOWLY(kMetricEnrollment, sample);
       break;
     case policy::EnrollmentConfig::MODE_LOCAL_FORCED:
     case policy::EnrollmentConfig::MODE_SERVER_FORCED:
     case policy::EnrollmentConfig::MODE_ATTESTATION_LOCAL_FORCED:
     case policy::EnrollmentConfig::MODE_ATTESTATION_SERVER_FORCED:
-      base::UmaHistogramSparse(kMetricEnrollmentForced, sample);
+      UMA_HISTOGRAM_SPARSE_SLOWLY(kMetricEnrollmentForced, sample);
       break;
     case policy::EnrollmentConfig::MODE_RECOVERY:
-      base::UmaHistogramSparse(kMetricEnrollmentRecovery, sample);
+      UMA_HISTOGRAM_SPARSE_SLOWLY(kMetricEnrollmentRecovery, sample);
       break;
     case policy::EnrollmentConfig::MODE_NONE:
       NOTREACHED();

@@ -15,11 +15,13 @@ class CORE_EXPORT InsertIncrementalTextCommand final
   static InsertIncrementalTextCommand* Create(
       Document&,
       const String&,
+      bool select_inserted_text = false,
       RebalanceType = kRebalanceLeadingAndTrailingWhitespaces);
 
  private:
   InsertIncrementalTextCommand(Document&,
                                const String& text,
+                               bool select_inserted_text,
                                RebalanceType);
   void DoApply(EditingState*) override;
 };

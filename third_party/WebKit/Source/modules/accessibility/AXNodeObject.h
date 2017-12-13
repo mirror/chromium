@@ -29,9 +29,9 @@
 #ifndef AXNodeObject_h
 #define AXNodeObject_h
 
-#include "base/macros.h"
 #include "modules/ModulesExport.h"
 #include "modules/accessibility/AXObject.h"
+#include "platform/wtf/Forward.h"
 
 namespace blink {
 
@@ -41,6 +41,8 @@ class HTMLLabelElement;
 class Node;
 
 class MODULES_EXPORT AXNodeObject : public AXObject {
+  WTF_MAKE_NONCOPYABLE(AXNodeObject);
+
  protected:
   AXNodeObject(Node*, AXObjectCacheImpl&);
 
@@ -234,8 +236,6 @@ class MODULES_EXPORT AXNodeObject : public AXObject {
                                bool* found_text_alternative) const;
   bool IsDescendantOfElementType(HashSet<QualifiedName>& tag_names) const;
   String PlaceholderFromNativeAttribute() const;
-
-  DISALLOW_COPY_AND_ASSIGN(AXNodeObject);
 };
 
 }  // namespace blink

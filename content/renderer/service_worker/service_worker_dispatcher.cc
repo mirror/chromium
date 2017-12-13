@@ -38,8 +38,7 @@ namespace {
 base::LazyInstance<ThreadLocalPointer<void>>::Leaky g_dispatcher_tls =
     LAZY_INSTANCE_INITIALIZER;
 
-void* const kDeletedServiceWorkerDispatcherMarker =
-    reinterpret_cast<void*>(0x1);
+void* const kHasBeenDeleted = reinterpret_cast<void*>(0x1);
 
 }  // namespace
 
@@ -56,7 +55,7 @@ ServiceWorkerDispatcher::~ServiceWorkerDispatcher() {
     g_dispatcher_tls.Pointer()->Set(nullptr);
     return;
   }
-  g_dispatcher_tls.Pointer()->Set(kDeletedServiceWorkerDispatcherMarker);
+  g_dispatcher_tls.Pointer()->Set(kHasBeenDeleted);
 }
 
 void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
@@ -77,8 +76,7 @@ ServiceWorkerDispatcher*
 ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
     scoped_refptr<ThreadSafeSender> thread_safe_sender,
     scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner) {
-  if (g_dispatcher_tls.Pointer()->Get() ==
-      kDeletedServiceWorkerDispatcherMarker) {
+  if (g_dispatcher_tls.Pointer()->Get() == kHasBeenDeleted) {
     NOTREACHED() << "Re-instantiating TLS ServiceWorkerDispatcher.";
     g_dispatcher_tls.Pointer()->Set(nullptr);
   }
@@ -94,8 +92,7 @@ ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
 }
 
 ServiceWorkerDispatcher* ServiceWorkerDispatcher::GetThreadSpecificInstance() {
-  if (g_dispatcher_tls.Pointer()->Get() ==
-      kDeletedServiceWorkerDispatcherMarker)
+  if (g_dispatcher_tls.Pointer()->Get() == kHasBeenDeleted)
     return nullptr;
   return static_cast<ServiceWorkerDispatcher*>(
       g_dispatcher_tls.Pointer()->Get());

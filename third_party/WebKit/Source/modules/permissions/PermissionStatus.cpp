@@ -93,8 +93,9 @@ void PermissionStatus::StartListening() {
   mojom::blink::PermissionServicePtr service;
   ConnectToPermissionService(GetExecutionContext(),
                              mojo::MakeRequest(&service));
-  service->AddPermissionObserver(descriptor_->Clone(), status_,
-                                 std::move(observer));
+  service->AddPermissionObserver(descriptor_->Clone(),
+                                 GetExecutionContext()->GetSecurityOrigin(),
+                                 status_, std::move(observer));
 }
 
 void PermissionStatus::StopListening() {
