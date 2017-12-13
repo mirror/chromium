@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "fa32a1a0_30e013a4",
+        "filename": "components/web_contents_delegate_android/color_chooser_android.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T02:23:44Z",
+      "side": 1,
+      "message": "Sam, do you have a suggestion about how the ColorSuggestion struct and ColorChooser interfaces should be organized?",
+      "parentUuid": "82755715_5ee0d5fb",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79baa8bf_042135cb",
         "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserPopupUIController.cpp",
         "patchSetId": 4
@@ -174,6 +192,24 @@
       "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5805fa14_ea963d7a",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserPopupUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T02:23:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79baa8bf_042135cb",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "5b0ce8d3_7f2a34c2",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserPopupUIController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T02:23:44Z",
+      "side": 1,
+      "message": "Sam helped me out here.  Since this class extends blink::mojom::blink::ColorChooserClient, then it comes higher in the precedence for resolving namespaces.",
+      "parentUuid": "4902ffa1_c4dcdb12",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33f98f2a_b13c94ae",
         "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
         "patchSetId": 4
@@ -261,6 +315,24 @@
       "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9563f541_027b58e6",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T02:23:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33f98f2a_b13c94ae",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "fa8fa24f_2f5ceadc",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T02:23:44Z",
+      "side": 1,
+      "message": "I don\u0027t think so.",
+      "parentUuid": "218250cf_a2f90093",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6a1169a_9777be30",
         "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
         "patchSetId": 4
@@ -295,6 +385,24 @@
       "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301ac601_a2befebc",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T02:23:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6a1169a_9777be30",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -321,6 +429,30 @@
     },
     {
       "key": {
+        "uuid": "303c0f8b_3a7516da",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T02:23:44Z",
+      "side": 1,
+      "message": "Only after this object is destructed.",
+      "parentUuid": "08ad1d28_e5c618db",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 13
+      },
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0a9fdf5_d27b33b6",
         "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
         "patchSetId": 4
@@ -344,6 +476,30 @@
     },
     {
       "key": {
+        "uuid": "1fbf7e7d_c7ff9685",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T02:23:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0a9fdf5_d27b33b6",
+      "range": {
+        "startLine": 91,
+        "startChar": 63,
+        "endLine": 91,
+        "endChar": 69
+      },
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd0abe8f_a71aa248",
         "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.h",
         "patchSetId": 4
@@ -361,6 +517,24 @@
     },
     {
       "key": {
+        "uuid": "28166607_d6c62cd7",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T02:23:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd0abe8f_a71aa248",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01ff51db_ce9b6e41",
         "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.h",
         "patchSetId": 4
@@ -375,6 +549,24 @@
       "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1ea484_739ab001",
+        "filename": "third_party/WebKit/Source/core/html/forms/ColorChooserUIController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T02:23:44Z",
+      "side": 1,
+      "message": "These fields are used by the subclass",
+      "parentUuid": "01ff51db_ce9b6e41",
+      "revId": "222cb66fc7f2e4a50ee2d2195b3f7646931bb7c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
