@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "750ce742_62065046",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-13T01:29:37Z",
+      "side": 1,
+      "message": "For a potential follow-up: should we introduce a bulk unlock API? To avoid the taking the lock (see https://chromium-review.googlesource.com/c/chromium/src/+/823232) repeatedly, and to have more efficient commands (the per-command overhead probably dominates the command execution itself in most cases).",
+      "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
