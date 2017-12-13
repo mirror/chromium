@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c38863b3_b51c3503",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T18:06:32Z",
+      "side": 1,
+      "message": "Isn\u0027t this more accurately a preferred_view_width, in that it\u0027s not binding and is only used in GetPreferredSize?\n\n(Without knowing the graphics stack, can Layout fail if the size of the host is too small for the buttons? What happens in that case?)",
+      "range": {
+        "startLine": 17,
+        "startChar": 49,
+        "endLine": 17,
+        "endChar": 59
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ef8300_d2713999",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T18:06:32Z",
+      "side": 1,
+      "message": "Really? Naked pointers in this API? What decade are we living in?",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e43b104_bb0492fd",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T18:06:32Z",
+      "side": 1,
+      "message": "Do you need another DCHECK here to validate child_count?",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 26
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af16414a_16bfbfab",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T18:06:32Z",
+      "side": 1,
+      "message": "What if the button is wider than the host? Should the host be stretched, or do we clip? Document what and why, or DCHECK on assumptions?",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19e42cc_ce7fb975",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T18:06:32Z",
+      "side": 1,
+      "message": "Maybe the preferred width should be max(view_width_, max_child_size.width())?\n\nThis doesn\u0027t take into account the fact that the button can overflow the provided view_width_ (on both of the code paths)?",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 21
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ad475f_dc5813d6",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T18:06:32Z",
+      "side": 1,
+      "message": "Or if it\u0027s assumed that the buttons be smaller than the host width, also DCHECK on that and document it in the header?",
+      "range": {
+        "startLine": 78,
+        "startChar": 23,
+        "endLine": 78,
+        "endChar": 25
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c6d78c_375b4433",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog_win/button_layout.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T18:06:32Z",
+      "side": 1,
+      "message": "Document that |view| is expected to have exactly 1 or 2 children, corresponding to the buttons? Wasn\u0027t obvious to me that all children would be considered as buttons...",
+      "range": {
+        "startLine": 32,
+        "startChar": 47,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "0f4bfe9991cbfd037a6b0fa4670fb2198ca5a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
