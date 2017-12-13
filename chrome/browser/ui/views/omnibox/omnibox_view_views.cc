@@ -53,6 +53,7 @@
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/selection_model.h"
 #include "ui/strings/grit/ui_strings.h"
+#include "ui/views/accessibility/native_view_accessibility.h"
 #include "ui/views/border.h"
 #include "ui/views/button_drag_utils.h"
 #include "ui/views/controls/textfield/textfield.h"
@@ -761,6 +762,17 @@ void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
     node_data->SetValue(friendly_suggestion_text_);
   }
   node_data->html_attributes.push_back(std::make_pair("type", "url"));
+
+  // The text field controls the popup, which has a selection.
+  // A screen reader can choose to announce value changes on this field or
+  // the selection changes in the popup.
+  views::NativeViewAccessibility* accessible =
+      popup_view_->GetNativeViewAccessibility();
+  int32_t popup_view_id = accessible ? accessible->GetId() : -1;
+  if (popup_view_id >= 0) {
+    std::vector<int32_t> controlled_ids{popup_view_id};
+    node_data->AddIntListAttribute(ui::AX_ATTR_CONTROLS_IDS, controlled_ids);
+  }
 
   base::string16::size_type entry_start;
   base::string16::size_type entry_end;

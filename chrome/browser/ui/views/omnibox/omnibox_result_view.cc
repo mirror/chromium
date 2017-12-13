@@ -305,8 +305,7 @@ void OmniboxResultView::OnSelected() {
   // selected. The non-answer text is already accessible as a consequence of
   // updating the text in the omnibox but this alert and GetAccessibleNodeData
   // below make the answer contents accessible.
-  if (match_.answer)
-    NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
+  NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
 }
 
 OmniboxResultView::ResultViewState OmniboxResultView::GetState() const {
@@ -372,11 +371,24 @@ void OmniboxResultView::OnMouseExited(const ui::MouseEvent& event) {
 }
 
 void OmniboxResultView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
-  node_data->SetName(match_.answer
-                         ? l10n_util::GetStringFUTF16(
-                               IDS_OMNIBOX_ACCESSIBLE_ANSWER, match_.contents,
-                               match_.answer->second_line().AccessibleText())
-                         : match_.contents);
+  node_data->SetName(
+      AutocompleteMatchType::ToAccessibilityLabel(match_, match_.contents));
+
+  node_data->role = ui::AX_ROLE_LIST_BOX_OPTION;
+  node_data->AddIntAttribute(ui::AX_ATTR_POS_IN_SET, model_index_ + 1);
+  node_data->AddIntAttribute(ui::AX_ATTR_SET_SIZE, model_->child_count());
+
+  node_data->AddState(ui::AX_STATE_SELECTABLE);
+  switch (GetState()) {
+    case SELECTED:
+      node_data->AddState(ui::AX_STATE_SELECTED);
+      break;
+    case HOVERED:
+      node_data->AddState(ui::AX_STATE_HOVERED);
+      break;
+    default:
+      break;
+  }
 }
 
 gfx::Size OmniboxResultView::CalculatePreferredSize() const {
