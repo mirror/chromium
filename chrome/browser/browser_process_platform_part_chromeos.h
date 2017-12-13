@@ -40,6 +40,10 @@ namespace ui {
 class InputDeviceControllerClient;
 }
 
+namespace component_updater {
+class CrOSComponent;
+}
+
 class ScopedKeepAlive;
 
 class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
@@ -58,6 +62,9 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
 
   void InitializeSessionManager();
   void ShutdownSessionManager();
+
+  void InitializeCrosComponent();
+  void ShutdownCrosComponent();
 
   // Disable the offline interstitial easter egg if the device is enterprise
   // enrolled.
@@ -90,6 +97,10 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
     return device_disabling_manager_.get();
   }
 
+  component_updater::CrOSComponent* cros_component() {
+    return cros_component_.get();
+  }
+
   chromeos::system::TimeZoneResolverManager* GetTimezoneResolverManager();
 
   chromeos::TimeZoneResolver* GetTimezoneResolver();
@@ -103,21 +114,6 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
 
   chromeos::system::SystemClock* GetSystemClock();
   void DestroySystemClock();
-
-  // Saves the name and install path of a compatible component.
-  void RegisterCompatibleCrosComponentPath(const std::string& name,
-                                           const base::FilePath& path);
-
-  // Removes the name and install path entry of a component.
-  void UnregisterCompatibleCrosComponentPath(const std::string& name);
-
-  // Checks if the current installed component is compatible given a component
-  // |name|. If compatible, sets |path| to be its installed path.
-  bool IsCompatibleCrosComponent(const std::string& name) const;
-
-  // Returns installed path of a compatible component given |name|. Returns an
-  // empty path if the component isn't compatible.
-  base::FilePath GetCompatibleCrosComponentPath(const std::string& name) const;
 
   ui::InputDeviceControllerClient* GetInputDeviceControllerClient();
 
@@ -148,7 +144,7 @@ class BrowserProcessPlatformPart : public BrowserProcessPlatformPartBase {
   std::unique_ptr<ScopedKeepAlive> keep_alive_;
 
   // Maps from a compatible component name to its installed path.
-  base::flat_map<std::string, base::FilePath> compatible_cros_components_;
+  std::unique_ptr<component_updater::CrOSComponent> cros_component_;
 
 #if defined(USE_OZONE)
   std::unique_ptr<ui::InputDeviceControllerClient>

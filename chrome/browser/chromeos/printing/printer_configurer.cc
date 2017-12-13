@@ -214,7 +214,7 @@ class PrinterConfigurerImpl : public PrinterConfigurer {
       if (components_requested.size() == 1) {
         // Only allow one filter request in ppd file.
         auto& component_name = *components_requested.begin();
-        component_updater::CrOSComponent::LoadComponent(
+        g_browser_process->platform_part()->cros_component()->LoadComponent(
             component_name,
             base::BindOnce(&PrinterConfigurerImpl::OnComponentLoad,
                            weak_factory_.GetWeakPtr(), printer, ppd_contents,

@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "chrome/browser/browser_process.h"
 #include "chromeos/dbus/dbus_method_call_status.h"
 #include "components/component_updater/component_installer.h"
 #include "components/component_updater/component_updater_service.h"
@@ -83,30 +84,68 @@ class CrOSComponentInstallerPolicy : public ComponentInstallerPolicy {
 // This class contains functions used to register and install a component.
 class CrOSComponent {
  public:
+  CrOSComponent();
+  ~CrOSComponent();
   // Installs a component and keeps it up-to-date.
-  static void LoadComponent(
+  void LoadComponent(
       const std::string& name,
       base::OnceCallback<void(const std::string&)> load_callback);
 
   // Stops updating and removes a component.
   // Returns true if the component was successfully unloaded
   // or false if it couldn't be unloaded or already wasn't loaded.
-  static bool UnloadComponent(const std::string& name);
+  bool UnloadComponent(const std::string& name);
 
   // Returns all installed components.
-  static std::vector<ComponentConfig> GetInstalledComponents();
+  std::vector<ComponentConfig> GetInstalledComponents();
 
   // Registers component |configs| to be updated.
-  static void RegisterComponents(const std::vector<ComponentConfig>& configs);
+  void RegisterComponents(const std::vector<ComponentConfig>& configs);
+
+  // Saves the name and install path of a compatible component.
+  void RegisterCompatibleCrosComponentPath(const std::string& name,
+                                           const base::FilePath& path);
+
+  // Removes the name and install path entry of a component.
+  void UnregisterCompatibleCrosComponentPath(const std::string& name);
+
+  // Checks if the current installed component is compatible given a component
+  // |name|. If compatible, sets |path| to be its installed path.
+  bool IsCompatibleCrosComponent(const std::string& name) const;
+
+  // Returns installed path of a compatible component given |name|. Returns an
+  // empty path if the component isn't compatible.
+  base::FilePath GetCompatibleCrosComponentPath(const std::string& name) const;
 
  private:
-  static void RegisterResult(ComponentUpdateService* cus,
-                             const std::string& id,
-                             update_client::Callback install_callback);
-  static void InstallComponent(
+  // Maps from a compatible component name to its installed path.
+  base::flat_map<std::string, base::FilePath> compatible_components_;
+
+  void RegisterComponent(ComponentUpdateService* cus,
+                         const ComponentConfig& config,
+                         base::OnceClosure register_callback);
+
+  void InstallComponent(
       ComponentUpdateService* cus,
       const std::string& name,
       base::OnceCallback<void(const std::string&)> load_callback);
+
+  void StartInstall(ComponentUpdateService* cus,
+                    const std::string& id,
+                    update_client::Callback install_callback);
+
+  void FinishInstall(const std::string& name,
+                     base::OnceCallback<void(const std::string&)> load_callback,
+                     update_client::Error error);
+
+  void LoadComponentInternal(
+      const std::string& name,
+      base::OnceCallback<void(const std::string&)> load_callback);
+
+  void FinishLoad(base::OnceCallback<void(const std::string&)> load_callback,
+                  base::Optional<std::string> result);
+
+  DISALLOW_COPY_AND_ASSIGN(CrOSComponent);
 };
 
 }  // namespace component_updater

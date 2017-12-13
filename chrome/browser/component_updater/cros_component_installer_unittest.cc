@@ -32,7 +32,10 @@ class CrOSMockComponentUpdateService
 class CrOSComponentInstallerTest : public PlatformTest {
  public:
   CrOSComponentInstallerTest() {}
-  void SetUp() override { PlatformTest::SetUp(); }
+  void SetUp() override {
+    PlatformTest::SetUp();
+    cros_component_ = base::MakeUnique<component_updater::CrOSComponent>();
+  }
 
  protected:
   void RunUntilIdle() {
@@ -41,6 +44,8 @@ class CrOSComponentInstallerTest : public PlatformTest {
   }
 
  private:
+  std::unique_ptr<component_updater::CrOSComponent> cros_component_;
+
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   DISALLOW_COPY_AND_ASSIGN(CrOSComponentInstallerTest);
 };
@@ -58,17 +63,16 @@ void load_callback(const std::string& result) {}
 
 TEST_F(CrOSComponentInstallerTest, BPPPCompatibleCrOSComponent) {
   const std::string kComponent = "a";
-  BrowserProcessPlatformPart bppp;
-  EXPECT_FALSE(bppp.IsCompatibleCrosComponent(kComponent));
-  EXPECT_EQ(bppp.GetCompatibleCrosComponentPath(kComponent).value(),
+  EXPECT_FALSE(cros_component_->IsCompatibleCrosComponent(kComponent));
+  EXPECT_EQ(cros_component_->GetCompatibleCrosComponentPath(kComponent).value(),
             std::string());
 
   const base::FilePath kPath("/component/path/v0");
-  bppp.RegisterCompatibleCrosComponentPath(kComponent, kPath);
-  EXPECT_TRUE(bppp.IsCompatibleCrosComponent(kComponent));
-  EXPECT_EQ(bppp.GetCompatibleCrosComponentPath(kComponent), kPath);
-  bppp.UnregisterCompatibleCrosComponentPath(kComponent);
-  EXPECT_FALSE(bppp.IsCompatibleCrosComponent(kComponent));
+  cros_component_->RegisterCompatibleCrosComponentPath(kComponent, kPath);
+  EXPECT_TRUE(cros_component_->IsCompatibleCrosComponent(kComponent));
+  EXPECT_EQ(cros_component_->GetCompatibleCrosComponentPath(kComponent), kPath);
+  cros_component_->UnregisterCompatibleCrosComponentPath(kComponent);
+  EXPECT_FALSE(cros_component_->IsCompatibleCrosComponent(kComponent));
 }
 
 TEST_F(CrOSComponentInstallerTest, ComponentReadyCorrectManifest) {

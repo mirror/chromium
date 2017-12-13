@@ -887,10 +887,16 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
       l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_OS_NAME));
 
   // Register all installed components for regular update.
+  g_browser_process->platform_part()->InitializeCrosComponent();
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock()},
-      base::BindOnce(component_updater::CrOSComponent::GetInstalledComponents),
-      base::BindOnce(component_updater::CrOSComponent::RegisterComponents));
+      base::BindOnce(&component_updater::CrOSComponent::GetInstalledComponents,
+                     base::Unretained(
+                         g_browser_process->platform_part()->cros_component())),
+      base::BindOnce(
+          &component_updater::CrOSComponent::RegisterComponents,
+          base::Unretained(
+              g_browser_process->platform_part()->cros_component())));
 }
 
 class GuestLanguageSetCallbackData {
@@ -1240,6 +1246,8 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   g_browser_process->platform_part()->ShutdownSessionManager();
   // Ash needs to be closed before UserManager is destroyed.
   g_browser_process->platform_part()->DestroyChromeUserManager();
+
+  g_browser_process->platform_part()->ShutdownCrosComponent();
 }
 
 void ChromeBrowserMainPartsChromeos::PostDestroyThreads() {
