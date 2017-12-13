@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf91fb1a_576cb699",
+        "filename": "chrome/browser/media_galleries/chromeos/mtp_device_object_enumerator_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2017-12-13T12:57:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fcc4687_3a1dd901",
+      "revId": "c1c35121c61b0341ecc73fb196408b1ac2aec471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ea81dfc_e270d3b4",
         "filename": "chrome/browser/media_galleries/chromeos/mtp_device_task_helper.h",
         "patchSetId": 11
