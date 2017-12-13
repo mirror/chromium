@@ -8,12 +8,14 @@ import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.RetryOnFailure;
@@ -37,19 +39,49 @@ public class StartupLoadingMetricsTest {
     private static final String TEST_PAGE_2 = "/chrome/test/data/android/test.html";
     private static final String FIRST_COMMIT_HISTOGRAM =
             "Startup.Android.Experimental.Cold.TimeToFirstNavigationCommit";
+    private static final String FIRST_CONTENTFUL_PAINT_HISTOGRAM =
+            "Startup.Android.Experimental.Cold.TimeToFirstContentfulPaint";
 
     private String mTestPage;
     private String mTestPage2;
     private EmbeddedTestServer mTestServer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws InterruptedException {
         Context appContext = InstrumentationRegistry.getInstrumentation()
                                      .getTargetContext()
                                      .getApplicationContext();
         mTestServer = EmbeddedTestServer.createAndStartServer(appContext);
         mTestPage = mTestServer.getURL(TEST_PAGE);
         mTestPage2 = mTestServer.getURL(TEST_PAGE_2);
+    }
+
+    @After
+    public void tearDown() {
+        mTestServer.stopAndDestroyServer();
+    }
+
+    private interface InterruptibleRunnable { void run() throws InterruptedException; }
+
+    private void loadUrlAndWaitForPageLoadMetricsRecorded(InterruptibleRunnable loader)
+            throws InterruptedException {
+        PageLoadMetricsTest.PageLoadMetricsTestObserver testObserver =
+                new PageLoadMetricsTest.PageLoadMetricsTestObserver();
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> PageLoadMetrics.addObserver(testObserver));
+        loader.run();
+        // First Contentful Paint may be recorded asynchronously after a page load is finished, we
+        // have to wait the event to occur.
+        testObserver.waitForFirstContentfulPaintEvent();
+        ThreadUtils.runOnUiThreadBlocking(
+                (Runnable) () -> PageLoadMetrics.removeObserver(testObserver));
+    }
+
+    private void assertHistogramsRecorded(int expected) throws InterruptedException {
+        Assert.assertEquals(
+                expected, RecordHistogram.getHistogramTotalCountForTesting(FIRST_COMMIT_HISTOGRAM));
+        Assert.assertEquals(expected,
+                RecordHistogram.getHistogramTotalCountForTesting(FIRST_CONTENTFUL_PAINT_HISTOGRAM));
     }
 
     /**
@@ -60,12 +92,11 @@ public class StartupLoadingMetricsTest {
     @LargeTest
     @RetryOnFailure
     public void testNavigationCommitUmaRecorded() throws InterruptedException {
-        mActivityTestRule.startMainActivityWithURL(mTestPage);
-        Assert.assertEquals(
-                1, RecordHistogram.getHistogramTotalCountForTesting(FIRST_COMMIT_HISTOGRAM));
-        mActivityTestRule.loadUrl(mTestPage2);
-        Assert.assertEquals(
-                1, RecordHistogram.getHistogramTotalCountForTesting(FIRST_COMMIT_HISTOGRAM));
+        loadUrlAndWaitForPageLoadMetricsRecorded(
+                () -> mActivityTestRule.startMainActivityWithURL(mTestPage));
+        assertHistogramsRecorded(1);
+        loadUrlAndWaitForPageLoadMetricsRecorded(() -> mActivityTestRule.loadUrl(mTestPage2));
+        assertHistogramsRecorded(1);
     }
 
     /**
@@ -76,12 +107,11 @@ public class StartupLoadingMetricsTest {
     @LargeTest
     @RetryOnFailure
     public void testNavigationCommitUmaFromExternalAppRecorded() throws InterruptedException {
-        mActivityTestRule.startMainActivityFromExternalApp(mTestPage, null);
-        Assert.assertEquals(
-                1, RecordHistogram.getHistogramTotalCountForTesting(FIRST_COMMIT_HISTOGRAM));
-        mActivityTestRule.loadUrl(mTestPage2);
-        Assert.assertEquals(
-                1, RecordHistogram.getHistogramTotalCountForTesting(FIRST_COMMIT_HISTOGRAM));
+        loadUrlAndWaitForPageLoadMetricsRecorded(
+                () -> mActivityTestRule.startMainActivityFromExternalApp(mTestPage, null));
+        assertHistogramsRecorded(1);
+        loadUrlAndWaitForPageLoadMetricsRecorded(() -> mActivityTestRule.loadUrl(mTestPage2));
+        assertHistogramsRecorded(1);
     }
 
     /**
@@ -92,12 +122,11 @@ public class StartupLoadingMetricsTest {
     @LargeTest
     @RetryOnFailure
     public void testNavigationCommitUmaNTPNotRecorded() throws InterruptedException {
-        mActivityTestRule.startMainActivityFromLauncher();
-        Assert.assertEquals(
-                0, RecordHistogram.getHistogramTotalCountForTesting(FIRST_COMMIT_HISTOGRAM));
-        mActivityTestRule.loadUrl(mTestPage2);
-        Assert.assertEquals(
-                0, RecordHistogram.getHistogramTotalCountForTesting(FIRST_COMMIT_HISTOGRAM));
+        loadUrlAndWaitForPageLoadMetricsRecorded(
+                () -> mActivityTestRule.startMainActivityFromLauncher());
+        assertHistogramsRecorded(0);
+        loadUrlAndWaitForPageLoadMetricsRecorded(() -> mActivityTestRule.loadUrl(mTestPage2));
+        assertHistogramsRecorded(0);
     }
 
     /**
@@ -108,11 +137,10 @@ public class StartupLoadingMetricsTest {
     @LargeTest
     @RetryOnFailure
     public void testNavigationCommitUmaBlankPageNotRecorded() throws InterruptedException {
-        mActivityTestRule.startMainActivityOnBlankPage();
-        Assert.assertEquals(
-                0, RecordHistogram.getHistogramTotalCountForTesting(FIRST_COMMIT_HISTOGRAM));
-        mActivityTestRule.loadUrl(mTestPage2);
-        Assert.assertEquals(
-                0, RecordHistogram.getHistogramTotalCountForTesting(FIRST_COMMIT_HISTOGRAM));
+        loadUrlAndWaitForPageLoadMetricsRecorded(
+                () -> mActivityTestRule.startMainActivityOnBlankPage());
+        assertHistogramsRecorded(0);
+        loadUrlAndWaitForPageLoadMetricsRecorded(() -> mActivityTestRule.loadUrl(mTestPage2));
+        assertHistogramsRecorded(0);
     }
 }
