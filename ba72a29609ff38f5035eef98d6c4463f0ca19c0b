@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95ef5d34_9d69b2af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-13T14:21:23Z",
+      "side": 1,
+      "message": "I2S",
+      "revId": "ba72a29609ff38f5035eef98d6c4463f0ca19c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd235da_99349858",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 16867,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-13T14:21:23Z",
+      "side": 1,
+      "message": "no need to update those either",
+      "revId": "ba72a29609ff38f5035eef98d6c4463f0ca19c0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
