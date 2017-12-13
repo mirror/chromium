@@ -526,6 +526,7 @@ void WebMediaPlayerImpl::DoLoad(LoadType load_type,
   SetNetworkState(WebMediaPlayer::kNetworkStateLoading);
   SetReadyState(WebMediaPlayer::kReadyStateHaveNothing);
   media_log_->AddEvent(media_log_->CreateLoadEvent(url.GetString().Utf8()));
+  load_start_time_ = base::TimeTicks::Now();
 
   // URL is used for UKM reporting. Privacy requires we only report origin of
   // the top frame. |is_top_frame| signals how to interpret the origin.
@@ -1451,6 +1452,9 @@ void WebMediaPlayerImpl::OnEnded() {
 void WebMediaPlayerImpl::OnMetadata(PipelineMetadata metadata) {
   DVLOG(1) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
+  const base::TimeTicks now = base::TimeTicks::Now();
+  media_metrics_provider_->SetTimeToMetadata(now - load_start_time_);
+  UMA_HISTOGRAM_MEDIUM_TIMES("Media.TimeToMetadata", now - load_start_time_);
 
   pipeline_metadata_ = metadata;
 
@@ -1585,6 +1589,13 @@ void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
                  media_log_->id());
     SetReadyState(CanPlayThrough() ? WebMediaPlayer::kReadyStateHaveEnoughData
                                    : WebMediaPlayer::kReadyStateHaveFutureData);
+    if (!have_reported_time_to_play_ready_) {
+      have_reported_time_to_play_ready_ = true;
+      const base::TimeTicks now = base::TimeTicks::Now();
+      media_metrics_provider_->SetTimeToPlayReady(now - load_start_time_);
+      UMA_HISTOGRAM_MEDIUM_TIMES("Media.TimeToPlayReady",
+                                 now - load_start_time_);
+    }
 
     // Let the DataSource know we have enough data. It may use this information
     // to release unused network connections.
@@ -1839,14 +1850,14 @@ void WebMediaPlayerImpl::OnFrameShown() {
   // for.
   if ((!paused_ && IsBackgroundOptimizationCandidate()) ||
       paused_when_hidden_) {
-    frame_time_report_cb_.Reset(
-        base::Bind(&WebMediaPlayerImpl::ReportTimeFromForegroundToFirstFrame,
-                   AsWeakPtr(), base::TimeTicks::Now()));
+    frame_time_report_cb_.Reset(base::BindOnce(
+        &WebMediaPlayerImpl::ReportTimeFromForegroundToFirstFrame, AsWeakPtr(),
+        base::TimeTicks::Now()));
     vfc_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&VideoFrameCompositor::SetOnNewProcessedFrameCallback,
-                   base::Unretained(compositor_.get()),
-                   BindToCurrentLoop(frame_time_report_cb_.callback())));
+        base::BindOnce(&VideoFrameCompositor::SetOnNewProcessedFrameCallback,
+                       base::Unretained(compositor_.get()),
+                       BindToCurrentLoop(frame_time_report_cb_.callback())));
   }
 
   UpdateBackgroundVideoOptimizationState();
@@ -2150,6 +2161,13 @@ void WebMediaPlayerImpl::StartPipeline() {
   Demuxer::EncryptedMediaInitDataCB encrypted_media_init_data_cb =
       BindToCurrentLoop(base::Bind(
           &WebMediaPlayerImpl::OnEncryptedMediaInitData, AsWeakPtr()));
+
+  vfc_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&VideoFrameCompositor::SetOnNewProcessedFrameCallback,
+                     base::Unretained(compositor_.get()),
+                     BindToCurrentLoop(base::BindOnce(
+                         &WebMediaPlayerImpl::OnFirstFrame, AsWeakPtr()))));
 
   if (renderer_factory_selector_->GetCurrentFactory()
           ->GetRequiredMediaResourceType() == MediaResource::Type::URL) {
@@ -2898,6 +2916,13 @@ void WebMediaPlayerImpl::RecordVideoNaturalSize(const gfx::Size& natural_size) {
 void WebMediaPlayerImpl::SetTickClockForTest(base::TickClock* tick_clock) {
   tick_clock_ = tick_clock;
   buffered_data_source_host_.SetTickClockForTest(tick_clock);
+}
+
+void WebMediaPlayerImpl::OnFirstFrame(base::TimeTicks frame_time) {
+  DCHECK(!load_start_time_.is_null());
+  media_metrics_provider_->SetTimeToFirstFrame(frame_time - load_start_time_);
+  UMA_HISTOGRAM_MEDIUM_TIMES("Media.TimeToFirstFrame",
+                             frame_time - load_start_time_);
 }
 
 }  // namespace media

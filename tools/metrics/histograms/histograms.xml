@@ -35098,6 +35098,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.TimeToFirstFrame" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Time in milliseconds from when WebMediaPlayerImpl starts loading until the
+    first video frame has been shown.
+  </summary>
+</histogram>
+
+<histogram name="Media.TimeToMetadata" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Time in milliseconds from when WebMediaPlayerImpl starts loading until
+    metadata is known.
+  </summary>
+</histogram>
+
 <histogram name="Media.TimeToPipelineStarted" units="ms">
   <obsolete>
     Removed from code 2014/6/18.
@@ -35105,6 +35123,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>scherkus@chromium.org</owner>
   <summary>
     Time in milliseconds from HTML5 media pipeline creation to playing event.
+  </summary>
+</histogram>
+
+<histogram name="Media.TimeToPlayReady" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Time in milliseconds from when WebMediaPlayer starts loading until it has
+    buffered enough to start playback.
   </summary>
 </histogram>
 

@@ -525,6 +525,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // http://crbug.com/645998, and http://crbug.com/751823 for reasons why.
   base::TimeDelta GetCurrentTimeInternal() const;
 
+  // Called by the compositor the very first time a frame is received.
+  void OnFirstFrame(base::TimeTicks frame_time);
+
   blink::WebLocalFrame* frame_;
 
   // The playback state last reported to |delegate_|, to avoid setting duplicate
@@ -749,6 +752,10 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   std::string audio_decoder_name_;
   std::string video_decoder_name_;
 
+  // The time at which DoLoad() is executed.
+  base::TimeTicks load_start_time_;
+  bool have_reported_time_to_play_ready_ = false;
+
   // Records pipeline statistics for describing media capabilities.
   std::unique_ptr<VideoDecodeStatsReporter> video_decode_stats_reporter_;
 
@@ -808,7 +815,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // Whether the use of a surface layer instead of a video layer is enabled.
   bool surface_layer_for_video_enabled_ = false;
 
-  base::CancelableCallback<void(base::TimeTicks)> frame_time_report_cb_;
+  base::CancelableOnceCallback<void(base::TimeTicks)> frame_time_report_cb_;
 
   bool initial_video_height_recorded_ = false;
 
