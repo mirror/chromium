@@ -39,6 +39,13 @@ class MESSAGE_CENTER_EXPORT MessageView
  public:
   static const char kViewClassName[];
 
+  // Notify this notification view is in the sidebar. This is necessary until
+  // removing the experimental flag for Sidebar, since the flag exists in Ash,
+  // so we don't refer the flag directly. Some layout and behavior may change by
+  // this flag.
+  // TODO(yoshiki, tetsui): Remove this after removing the flag for Sidebar.
+  static void SetSidebarEnabled();
+
   MessageView(MessageViewDelegate* delegate, const Notification& notification);
   ~MessageView() override;
 
@@ -109,6 +116,10 @@ class MESSAGE_CENTER_EXPORT MessageView
   MessageViewDelegate* delegate() { return delegate_; }
 
  private:
+  // True if the view exists in Sidebar. False if it's in the normal bubble
+  // message center. This flag is set by SetInSidebar() method.
+  static bool sidebar_enabled_;
+
   MessageViewDelegate* delegate_;
   std::string notification_id_;
   views::View* background_view_ = nullptr;  // Owned by views hierarchy.
