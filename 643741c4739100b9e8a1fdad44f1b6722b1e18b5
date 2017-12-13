@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9f2dd7c9_63a51e52",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "Actually, only w.val[3] needs to be initialised (0, 1, 2 are overwritten), I will likely change it to\n\n    uint8x8x4_t w;\n    w.val[3] \u003d vdup_n_u8(0xff);\n\nin the next patchset.",
+      "parentUuid": "69c00e21_43fb4c93",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f457a950_d32c3684",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -60,6 +84,30 @@
       "writtenOn": "2017-12-13T00:29:52Z",
       "side": 1,
       "message": "I really like these comments. It makes the whole function much easier to follow.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b7d6aa2_1f17e9bd",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f457a950_d32c3684",
       "range": {
         "startLine": 37,
         "startChar": 3,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "95e23027_f9e55277",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fca7e4b4_c4aabdac",
+      "range": {
+        "startLine": 64,
+        "startChar": 69,
+        "endLine": 64,
+        "endChar": 70
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a2f59da_a54fe089",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -106,6 +178,30 @@
       "writtenOn": "2017-12-13T00:29:52Z",
       "side": 1,
       "message": "Just double checking...the comment says 16 but this value is 15. Is this a typo? If not, should the comment explain why?",
+      "range": {
+        "startLine": 68,
+        "startChar": 20,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7132bdfe_d1eb3641",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "Yeah, the weird corrections are mostly because the original code (in pngrtran.c) processes the PNG row backwards. This is (presumably) to save memory (because the output can then overwrite the input in the same buffer). However, for NEON, we have to write things out forwards in chunks of 16 bytes, so it needs to seek back a little to get started. The original code also computes the dp pointer as the last valid offset in the buffer (so for example, if the row was 16 bytes long, this method would receive the value 15).",
+      "parentUuid": "4a2f59da_a54fe089",
       "range": {
         "startLine": 68,
         "startChar": 20,
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "fbdfa02f_2ad9b785",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2af56cc1_2e72eeb2",
+      "range": {
+        "startLine": 79,
+        "startChar": 47,
+        "endLine": 79,
+        "endChar": 49
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d02a5ba_364a517c",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -164,6 +284,53 @@
     },
     {
       "key": {
+        "uuid": "ff696927_51ccbd4f",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "That\u0027s a good point, this is missing a return 0 case for when the row has \u003c 4 pixels in it, but it happens to work because the destination buffer is the source buffer, which (which, because the output must be 4x the size of the input) will have space for the result. What this will mean in practise is that one or more of the cur \u003d vld1q loads above will read a random 0-255 indexed value from the 8-bit palette, which is then fixed up by the code used to process the tail elements.",
+      "parentUuid": "8d02a5ba_364a517c",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 84,
+        "endChar": 4
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67138c49_da0a4921",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "Also needs an additional return case.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 102,
+        "endChar": 24
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "661c78c4_b47a21fa",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -175,6 +342,30 @@
       "writtenOn": "2017-12-13T00:29:52Z",
       "side": 1,
       "message": "Same here. We go back 23 bytes instead of 24. So I assume this is intentional.",
+      "range": {
+        "startLine": 104,
+        "startChar": 20,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69209bd_511a1349",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "As above, the dp pointer is originally calculated as `dp \u003d row + (png_size_t)(row_width * 3) - 1;`",
+      "parentUuid": "661c78c4_b47a21fa",
       "range": {
         "startLine": 104,
         "startChar": 20,
@@ -210,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "caeebab3_695d9a9f",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "\u003e The dup line will fill the 3-element array of 8x 8-bit vectors with one palette color.\n\u003e Then the lane lines fill the other lanes with the other palette colors.\n\u003e \n\u003e So right before the vst3 line, we have a 3-element array filled with the same palette colors.\n\u003e \n\nYeah, I admit NEON\u0027s presentation is a bit confusing, I can attempt an explanation of what this loop does:\n\n    cur \u003d vld3_dup_u8(palette + sizeof(png_color) * (*(sp - 7)));\n\nIf the sp - 7 contains an index pointing to a palette value R\u003d0xDE, G\u003d0xAD, B\u003d0xBE, then you\u0027ll end up with 3 registers for R, G and B. \n\n   r1 \u003d 0xDE DE DE DE DE DE DE DE\n   r2 \u003d 0xAD AD AD AD AD AD AD AD\n   r3 \u003d 0xBE BE BE BE BE BE BE BE\n\nThe vst3_u8 then re-interleaves them, so if I stored the three registers above, I\u0027d end up with this in memory:\n\n   0xDEADBE 0xDEADBE ...\n\nEach vld3_lane_u8 operation changes one column, across the three three registers, so the loop eventually loads the palette information for 8 pixels. \n\nWhat should then happen after the store is dp goes down by 24 bytes and sp (which is holding the input), goes down by 8 bytes.",
+      "parentUuid": "203b4271_573ca2d5",
+      "range": {
+        "startLine": 107,
+        "startChar": 3,
+        "endLine": 119,
+        "endChar": 4
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9efa5b4_89f2865c",
         "filename": "third_party/libpng/patches/README",
         "patchSetId": 4
@@ -233,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "d1cade2e_41bad1fb",
+        "filename": "third_party/libpng/patches/README",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c9efa5b4_89f2865c",
+      "range": {
+        "startLine": 2,
+        "startChar": 39,
+        "endLine": 2,
+        "endChar": 41
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44fd203a_d4013931",
         "filename": "third_party/libpng/pngrtran.c",
         "patchSetId": 4
@@ -244,6 +483,30 @@
       "writtenOn": "2017-12-13T00:29:52Z",
       "side": 1,
       "message": "Just to help me understand, ...\n\nElsewhere--before we get here--we\u0027re checking whether or not to use the new riffling code. And that riffling code would have correctly allocated png_ptr-\u003erow_tmp_palette.\n\nMaybe between where the riffling happens and here png_ptr-\u003ebit_depth is changed to 8?\n\nMy question is really whether or not there is a better check available here. It seems to depend on far off behavior.",
+      "range": {
+        "startLine": 4321,
+        "startChar": 18,
+        "endLine": 4323,
+        "endChar": 72
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bf5155_843acd7d",
+        "filename": "third_party/libpng/pngrtran.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 4323,
+      "author": {
+        "id": 1177474
+      },
+      "writtenOn": "2017-12-13T19:30:55Z",
+      "side": 1,
+      "message": "Ack - the ultimate check is whether a riffled palette is available, but because png_ptr is now available, you could (in theory) substitute png_ptr-\u003ebit_depth \u003d\u003d 8. I chose not to do so because of png_free (which sets the palette to NULL), just in case there are other call routes into this function.",
+      "parentUuid": "44fd203a_d4013931",
       "range": {
         "startLine": 4321,
         "startChar": 18,
