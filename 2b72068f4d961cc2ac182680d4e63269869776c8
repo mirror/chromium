@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "1befc6f7_aab8ff47",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-13T01:43:45Z",
+      "side": 1,
+      "message": "The following scenario:\n- open network panel and console drawer\n- in console: for(let i \u003d 0; i \u003c 1000; ++i) console.log(i);\n- make sure log #125 is the first one in the console drawer\n- click on VM: link next to \"125\" console.log\n- click on console panel\n\u003d\u003d\u003d Up to this point works perfectly; scroll is saved. However:\n- click back on network panel\n\nThis last step shows the drawer with the scroll position reset to 0. A bug somewhere?",
+      "range": {
+        "startLine": 360,
+        "startChar": 4,
+        "endLine": 360,
+        "endChar": 8
+      },
+      "revId": "2b72068f4d961cc2ac182680d4e63269869776c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edc1a965_15934d99",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 1
