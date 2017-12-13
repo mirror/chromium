@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9a58ed6_04cd4470",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T23:54:30Z",
+      "side": 1,
+      "message": "Still need braces. Like line 208 above.",
+      "revId": "5126378280c9a803038304b1f57ea457b8c5ce96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
