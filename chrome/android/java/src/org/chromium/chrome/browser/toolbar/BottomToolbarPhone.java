@@ -214,6 +214,9 @@ public class BottomToolbarPhone extends ToolbarPhone {
     /** A handle to the {@link ChromeActivity} this toolbar exists in. */
     private ChromeActivity mActivity;
 
+    /** Whether the toolbar is currently being shown in the NTP. */
+    private boolean mShownInNtp;
+
     /**
      * Constructs a BottomToolbarPhone object.
      * @param context The Context in which this View object is created.
@@ -901,6 +904,16 @@ public class BottomToolbarPhone extends ToolbarPhone {
                 ApiCompatibilityUtils.getPaddingEnd(otherToolbar), otherToolbar.getPaddingBottom());
     }
 
+    /**
+     * @param shownInNtp Whether the toolbar is currently being shown in the NTP.
+     */
+    public void setShownInNtp(boolean shownInNtp) {
+        if (shownInNtp == mShownInNtp) return;
+
+        mShownInNtp = shownInNtp;
+        updateToolbarBackground(mVisualState);
+    }
+
     @Override
     protected void onAccessibilityStatusChanged(boolean enabled) {
         setUseExpandButton();
@@ -1037,6 +1050,13 @@ public class BottomToolbarPhone extends ToolbarPhone {
                                                                    : R.color.modern_primary_color);
         } else if (visualState == VisualState.NORMAL
                 || visualState == VisualState.TAB_SWITCHER_NORMAL) {
+            // TODO(twellington): Ideally the VisualState would be set to NEW_TAB_NORMAL and that
+            // would be used to set the toolbar background. The VisualState is used for some toolbar
+            // animations that we don't run on BottomToolbarPhone. Those animations need to be
+            // reworked before the VisualState can be set to NEW_TAB_NORMAL when the Chrome Home NTP
+            // is showing.
+            if (visualState == VisualState.NORMAL && mShownInNtp) return Color.TRANSPARENT;
+
             return ApiCompatibilityUtils.getColor(getResources(), R.color.modern_primary_color);
         }
 
