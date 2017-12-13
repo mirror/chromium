@@ -996,42 +996,16 @@ TEST_F(DataReductionProxyConfigTest, ShouldAcceptServerPreview) {
   // Verify false for kill switch.
   base::CommandLine::ForCurrentProcess()->InitFromArgv(0, nullptr);
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kDataReductionProxyLoFi,
-      switches::kDataReductionProxyLoFiValueDisabled);
+      switches::kDataReductionProxyServerPreviews,
+      switches::kDataReductionProxyServerPreviewsDisabled);
   EXPECT_FALSE(test_config()->ShouldAcceptServerPreview(
       *request.get(), *previews_decider.get()));
   histogram_tester.ExpectBucketCount(
       "DataReductionProxy.Protocol.NotAcceptingTransform",
       0 /* NOT_ACCEPTING_TRANSFORM_DISABLED */, 1);
 
-  // Verify true for Slow Connection flag.
-  base::CommandLine::ForCurrentProcess()->InitFromArgv(0, nullptr);
-  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kDataReductionProxyLoFi,
-      switches::kDataReductionProxyLoFiValueSlowConnectionsOnly);
-  EXPECT_TRUE(test_config()->ShouldAcceptServerPreview(
-      *request.get(), *previews_decider.get()));
-
-  // Verify false for Cellular Only flag and WIFI connection.
-  base::CommandLine::ForCurrentProcess()->InitFromArgv(0, nullptr);
-  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kDataReductionProxyLoFi,
-      switches::kDataReductionProxyLoFiValueCellularOnly);
-  test_config()->SetConnectionTypeForTesting(
-      net::NetworkChangeNotifier::ConnectionType::CONNECTION_WIFI);
-  EXPECT_FALSE(test_config()->ShouldAcceptServerPreview(
-      *request.get(), *previews_decider.get()));
-  histogram_tester.ExpectBucketCount(
-      "DataReductionProxy.Protocol.NotAcceptingTransform",
-      2 /* NOT_ACCEPTING_TRANSFORM_CELLULAR_ONLY */, 1);
-
-  // Verify true for Cellular Only flag and 3G connection.
-  test_config()->SetConnectionTypeForTesting(
-      net::NetworkChangeNotifier::ConnectionType::CONNECTION_3G);
-  EXPECT_TRUE(test_config()->ShouldAcceptServerPreview(
-      *request.get(), *previews_decider.get()));
-
   // Verify PreviewsDecider check.
+  base::CommandLine::ForCurrentProcess()->InitFromArgv(0, nullptr);
   previews_decider = base::MakeUnique<TestPreviewsDecider>(false);
   EXPECT_FALSE(test_config()->ShouldAcceptServerPreview(
       *request.get(), *previews_decider.get()));
@@ -1043,8 +1017,8 @@ TEST_F(DataReductionProxyConfigTest, ShouldAcceptServerPreview) {
   // Verfiy true for always on.
   base::CommandLine::ForCurrentProcess()->InitFromArgv(0, nullptr);
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-      switches::kDataReductionProxyLoFi,
-      switches::kDataReductionProxyLoFiValueAlwaysOn);
+      switches::kDataReductionProxyServerPreviews,
+      switches::kDataReductionProxyServerPreviewsLoFi);
   EXPECT_TRUE(test_config()->ShouldAcceptServerPreview(
       *request.get(), *previews_decider.get()));
 }

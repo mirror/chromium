@@ -595,10 +595,6 @@ bool DataReductionProxyConfig::ShouldAcceptServerPreview(
     return false;
   }
 
-  // AlwaysOn skips blacklist or disabled checks.
-  if (params::IsLoFiAlwaysOnViaFlags())
-    return true;
-
   if (IsBlackListedOrDisabled(request, previews_decider,
                               previews::PreviewsType::LITE_PAGE) ||
       IsBlackListedOrDisabled(request, previews_decider,
@@ -606,15 +602,6 @@ bool DataReductionProxyConfig::ShouldAcceptServerPreview(
     UMA_HISTOGRAM_ENUMERATION(
         "DataReductionProxy.Protocol.NotAcceptingTransform",
         NOT_ACCEPTING_TRANSFORM_BLACKLISTED,
-        NOT_ACCEPTING_TRANSFORM_REASON_BOUNDARY);
-    return false;
-  }
-
-  if (params::IsLoFiCellularOnlyViaFlags() &&
-      !net::NetworkChangeNotifier::IsConnectionCellular(connection_type_)) {
-    UMA_HISTOGRAM_ENUMERATION(
-        "DataReductionProxy.Protocol.NotAcceptingTransform",
-        NOT_ACCEPTING_TRANSFORM_CELLULAR_ONLY,
         NOT_ACCEPTING_TRANSFORM_REASON_BOUNDARY);
     return false;
   }

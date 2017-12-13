@@ -37,8 +37,7 @@ bool IsPreviewsTypeEnabled(previews::PreviewsType type) {
              data_reduction_proxy::params::IsLoFiOnViaFlags();
     case previews::PreviewsType::LITE_PAGE:
       return server_previews_enabled ||
-             (data_reduction_proxy::params::IsLoFiOnViaFlags() &&
-              data_reduction_proxy::params::AreLitePagesEnabledViaFlags());
+             data_reduction_proxy::params::AreLitePagesEnabledViaFlags();
     case previews::PreviewsType::AMP_REDIRECTION:
       return previews::params::IsAMPRedirectionPreviewEnabled();
     case previews::PreviewsType::NOSCRIPT:

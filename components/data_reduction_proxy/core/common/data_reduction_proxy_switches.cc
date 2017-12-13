@@ -31,6 +31,12 @@ const char kDataReductionProxyServerAlternative8[] = "alt8";
 const char kDataReductionProxyServerAlternative9[] = "alt9";
 const char kDataReductionProxyServerAlternative10[] = "alt10";
 
+const char kDataReductionProxyServerPreviews[] = "data-saver-server-previews";
+const char kDataReductionProxyServerPreviewsLoFi[] = "lofi-preview";
+const char kDataReductionProxyServerPreviewsPreferLitePage[] =
+    "prefer-lite-page";
+const char kDataReductionProxyServerPreviewsDisabled[] = "disabled";
+
 // The origin of the data reduction proxy fallback.
 const char kDataReductionProxyFallback[] = "spdy-proxy-auth-fallback";
 
@@ -46,15 +52,6 @@ const char kDataReductionProxyHttpProxies[] =
 
 // A test key for data reduction proxy authentication.
 const char kDataReductionProxyKey[] = "spdy-proxy-auth-value";
-
-// The mode for Data Reduction Proxy Lo-Fi. The various modes are always-on,
-// cellular-only, slow connections only and disabled.
-const char kDataReductionProxyLoFi[] = "data-reduction-proxy-lo-fi";
-const char kDataReductionProxyLoFiValueAlwaysOn[] = "always-on";
-const char kDataReductionProxyLoFiValueCellularOnly[] = "cellular-only";
-const char kDataReductionProxyLoFiValueDisabled[] = "disabled";
-const char kDataReductionProxyLoFiValueSlowConnectionsOnly[] =
-    "slow-connections-only";
 
 const char kDataReductionPingbackURL[] = "data-reduction-proxy-pingback-url";
 
@@ -74,12 +71,6 @@ const char kEnableDataReductionProxy[] = "enable-spdy-proxy-auth";
 // Enable the data reduction proxy bypass warning.
 const char kEnableDataReductionProxyBypassWarning[] =
     "enable-data-reduction-proxy-bypass-warning";
-
-// Enables lite page from the data reduction proxy. This means a lite page
-// should be requested instead of placeholders whenever Lo-Fi mode is on. Lo-fi
-// must also be enabled via a flag or field trial.
-const char kEnableDataReductionProxyLitePage[] =
-    "enable-data-reduction-proxy-lite-page";
 
 // Enables sending a pageload metrics pingback after every page load.
 const char kEnableDataReductionProxyForcePingback[] =

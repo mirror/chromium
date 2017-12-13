@@ -255,21 +255,19 @@ const FeatureEntry::Choice kMarkHttpAsChoices[] = {
      security_state::switches::kMarkHttpAs,
      security_state::switches::kMarkHttpAsDangerous}};
 
-const FeatureEntry::Choice kDataReductionProxyLoFiChoices[] = {
+const FeatureEntry::Choice kDataSaverServerPreviewsChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kDataReductionProxyLoFiAlwaysOn,
-     data_reduction_proxy::switches::kDataReductionProxyLoFi,
-     data_reduction_proxy::switches::kDataReductionProxyLoFiValueAlwaysOn},
-    {flag_descriptions::kDataReductionProxyLoFiCellularOnly,
-     data_reduction_proxy::switches::kDataReductionProxyLoFi,
-     data_reduction_proxy::switches::kDataReductionProxyLoFiValueCellularOnly},
-    {flag_descriptions::kDataReductionProxyLoFiDisabled,
-     data_reduction_proxy::switches::kDataReductionProxyLoFi,
-     data_reduction_proxy::switches::kDataReductionProxyLoFiValueDisabled},
-    {flag_descriptions::kDataReductionProxyLoFiSlowConnectionsOnly,
-     data_reduction_proxy::switches::kDataReductionProxyLoFi,
+    {flags_ui::kGenericExperimentChoiceEnabled,
+     data_reduction_proxy::switches::kDataReductionProxyServerPreviews,
+     data_reduction_proxy::switches::kDataReductionProxyServerPreviewsLoFi},
+    {flag_descriptions::kDataSaverServerPreviewsPreferLitePage,
+     data_reduction_proxy::switches::kDataReductionProxyServerPreviews,
      data_reduction_proxy::switches::
-         kDataReductionProxyLoFiValueSlowConnectionsOnly}};
+         kDataReductionProxyServerPreviewsPreferLitePage},
+    {flags_ui::kGenericExperimentChoiceDisabled,
+     data_reduction_proxy::switches::kDataReductionProxyServerPreviews,
+     data_reduction_proxy::switches::kDataReductionProxyServerPreviewsDisabled},
+};
 
 const FeatureEntry::Choice kDataReductionProxyServerExperiment[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
@@ -830,6 +828,9 @@ const FeatureEntry::Choice kForceEffectiveConnectionTypeChoices[] = {
     {flag_descriptions::kEffectiveConnectionTypeSlow2GDescription,
      switches::kForceEffectiveConnectionType,
      net::kEffectiveConnectionTypeSlow2G},
+    {flag_descriptions::kEffectiveConnectionTypeSlow2GOnCellularDescription,
+     switches::kForceEffectiveConnectionType,
+     net::kEffectiveConnectionTypeSlow2GOnCellular},
     {flag_descriptions::kEffectiveConnectionType2GDescription,
      switches::kForceEffectiveConnectionType, net::kEffectiveConnectionType2G},
     {flag_descriptions::kEffectiveConnectionType3GDescription,
@@ -840,7 +841,7 @@ const FeatureEntry::Choice kForceEffectiveConnectionTypeChoices[] = {
 
 // Ensure that all effective connection types returned by Network Quality
 // Estimator (NQE) are also exposed via flags.
-static_assert(net::EFFECTIVE_CONNECTION_TYPE_LAST + 1 ==
+static_assert(net::EFFECTIVE_CONNECTION_TYPE_LAST + 2 ==
                   arraysize(kForceEffectiveConnectionTypeChoices),
               "ECT enum value is not handled.");
 static_assert(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN == 0,
@@ -2065,15 +2066,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kHarfbuzzRendertextDescription, kOsMac,
      SINGLE_VALUE_TYPE(switches::kEnableHarfBuzzRenderText)},
 #endif  // OS_MACOSX
-    {"data-reduction-proxy-lo-fi",
-     flag_descriptions::kDataReductionProxyLoFiName,
-     flag_descriptions::kDataReductionProxyLoFiDescription, kOsAll,
-     MULTI_VALUE_TYPE(kDataReductionProxyLoFiChoices)},
-    {"enable-data-reduction-proxy-lite-page",
-     flag_descriptions::kEnableDataReductionProxyLitePageName,
-     flag_descriptions::kEnableDataReductionProxyLitePageDescription, kOsAll,
-     SINGLE_VALUE_TYPE(
-         data_reduction_proxy::switches::kEnableDataReductionProxyLitePage)},
+    {"data-saver-server-previews",
+     flag_descriptions::kDataSaverServerPreviewsName,
+     flag_descriptions::kDataSaverServerPreviewsDescription, kOsAll,
+     MULTI_VALUE_TYPE(kDataSaverServerPreviewsChoices)},
     {"enable-data-reduction-proxy-server-experiment",
      flag_descriptions::kEnableDataReductionProxyServerExperimentName,
      flag_descriptions::kEnableDataReductionProxyServerExperimentDescription,
