@@ -115,6 +115,9 @@ bool ProcessorEntityTracker::RequiresCommitRequest() const {
 }
 
 bool ProcessorEntityTracker::RequiresCommitData() const {
+  LOG(WARNING) << "RequiresCommitRequest():" << RequiresCommitRequest()
+               << " HasCommitData():" << HasCommitData()
+               << " metadata_.is_deleted():" << metadata_.is_deleted();
   return RequiresCommitRequest() && !HasCommitData() && !metadata_.is_deleted();
 }
 

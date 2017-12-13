@@ -330,7 +330,6 @@ TEST_F(SharedModelTypeProcessorTest, InitialSync) {
 
   // Local write before initial sync.
   bridge()->WriteItem(kKey1, kValue1);
-
   // Has data, but no metadata, entity in the processor, or commit request.
   EXPECT_EQ(1U, db().data_count());
   EXPECT_EQ(0U, db().metadata_count());
