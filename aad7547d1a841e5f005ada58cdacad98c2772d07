@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a91e095_022f3401",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-13T06:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5de19d8_9cc32070",
+      "revId": "aad7547d1a841e5f005ada58cdacad98c2772d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23cb29d6_4deea78e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "63b93f9a_24ee6b77",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-13T06:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23cb29d6_4deea78e",
+      "revId": "aad7547d1a841e5f005ada58cdacad98c2772d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "298a7b96_6968685b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials.py",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-13T05:19:23Z",
       "side": 1,
       "message": "what\u0027s the diff between having the third param as \"\" vs not defined?",
+      "revId": "aad7547d1a841e5f005ada58cdacad98c2772d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b236aa2b_be1cf025",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-13T06:54:24Z",
+      "side": 1,
+      "message": "The third param is a response body. For 200, it\u0027s required. For 404, it\u0027s not necessary because the body is not read, IIUC.",
+      "parentUuid": "298a7b96_6968685b",
       "revId": "aad7547d1a841e5f005ada58cdacad98c2772d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
