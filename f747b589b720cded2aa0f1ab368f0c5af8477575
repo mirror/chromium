@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "fb8f58a2_4cb559d4",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-13T16:27:19Z",
+      "side": 1,
+      "message": "So an alternative to thinking so hard would be to revive this ---\nhttps://chromium-review.googlesource.com/c/chromium/src/+/695762/5..6\nWDYT?\n(with some comments revisions, also DCHECKs that Create/Open aren\u0027t called on an entry in doomed state).",
+      "parentUuid": "4d6931a8_0f8d1dd7",
+      "range": {
+        "startLine": 1240,
+        "startChar": 7,
+        "endLine": 1240,
+        "endChar": 77
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04054ea2_7fd71b9d",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
         "patchSetId": 18
