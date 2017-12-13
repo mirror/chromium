@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb9e8735_0981652f",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-13T18:21:06Z",
+      "side": 1,
+      "message": "nit: Don\u0027t think we should paste the instructions into multiple READMEs, or else risk them getting out of sync.",
+      "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5158779_3abbe11d",
+        "filename": "tools/android/roll/android_deps/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-13T18:21:06Z",
+      "side": 1,
+      "message": "this is a bit round-about. If gradlew doesn\u0027t need to be in PATH, then just call it directly.\nOtherwise:\n\nPATH\u003d$PATH:$PWD/third_party/gradle_wrapper gradlew -b \\\n    tools/android/roll/android_deps/build.gradle setUpRepository\n\nMight even be worth adding a short python script to do that for you, so that the instructions can just be:\nrun: tools/android/roll/android_deps/fetch_all.py",
+      "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01805c32_7304d9d8",
+        "filename": "tools/android/roll/android_deps/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-13T18:21:06Z",
+      "side": 1,
+      "message": "Might go better in third_party/android_deps/README.chromium?",
+      "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74adde70_13544d3e",
+        "filename": "tools/android/roll/android_deps/buildSrc/src/main/groovy/ChromiumDepGraph.groovy",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-13T18:21:06Z",
+      "side": 1,
+      "message": "Add copyright headers?",
+      "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
