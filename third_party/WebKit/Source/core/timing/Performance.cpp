@@ -161,7 +161,8 @@ PerformanceNavigationTiming* Performance::CreateNavigationTimingInstance() {
 }
 
 void Performance::UpdateLongTaskInstrumentation() {
-  DCHECK(GetFrame());
+  if (!GetFrame())
+    return;
   if (!GetFrame()->GetDocument())
     return;
 
