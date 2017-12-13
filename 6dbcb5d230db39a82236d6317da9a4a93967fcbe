@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "5360d5d6_4f07f84e",
+        "filename": "ios/web/web_state/js/form_inttest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T01:24:49Z",
+      "side": 1,
+      "message": "Was this a part of another CL?",
+      "range": {
+        "startLine": 60,
+        "startChar": 31,
+        "endLine": 60,
+        "endChar": 35
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8859d2f_6858752f",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T01:24:49Z",
+      "side": 1,
+      "message": "Is there a reason for this change? Please explain in CL description",
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9b1eee_994d6514",
+        "filename": "ios/web/web_state/js/resources/message.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T01:24:49Z",
+      "side": 1,
+      "message": "This will throw an exception if called from cross origin iframe. I remember web developers complained about chrome exceptions. Can we handle this case gracefully?",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 25
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c352138_1fb60c41",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 8
@@ -18,6 +81,145 @@
         "startChar": 26,
         "endLine": 2233,
         "endChar": 37
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a51f0e1_ed4b01c4",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T01:24:49Z",
+      "side": 1,
+      "message": "@YES",
+      "parentUuid": "6c352138_1fb60c41",
+      "range": {
+        "startLine": 2233,
+        "startChar": 26,
+        "endLine": 2233,
+        "endChar": 37
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1766cbf1_20c74f38",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2289,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T01:24:49Z",
+      "side": 1,
+      "message": "[_webView URL] returns pending URL if there is one. I think you want to use _documentURL",
+      "range": {
+        "startLine": 2289,
+        "startChar": 44,
+        "endLine": 2289,
+        "endChar": 52
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83d77b4_85b84ef9",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2332,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T01:24:49Z",
+      "side": 1,
+      "message": "|!context[kIsMainFrame]| will never return false. You want this: if (![context[kIsMainFrame] boolValue])",
+      "range": {
+        "startLine": 2332,
+        "startChar": 15,
+        "endLine": 2332,
+        "endChar": 27
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "148b575d_8b9c213d",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2463,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T01:24:49Z",
+      "side": 1,
+      "message": "Is there guarantee that WebStateObserver clients will handle callbacks from iframes gracefully? I think it would be safer to enable these callbacks in a separate CL.",
+      "range": {
+        "startLine": 2463,
+        "startChar": 19,
+        "endLine": 2463,
+        "endChar": 0
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f92465_8cf2793c",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2510,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T01:24:49Z",
+      "side": 1,
+      "message": "We should ignore iframe message here.",
+      "range": {
+        "startLine": 2510,
+        "startChar": 17,
+        "endLine": 2510,
+        "endChar": 0
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dda9c0b_d79bedc1",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2552,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T01:24:49Z",
+      "side": 1,
+      "message": "And here",
+      "range": {
+        "startLine": 2552,
+        "startChar": 2,
+        "endLine": 2552,
+        "endChar": 23
       },
       "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
