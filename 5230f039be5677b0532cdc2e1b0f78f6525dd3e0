@@ -70,6 +70,30 @@
       "revId": "5230f039be5677b0532cdc2e1b0f78f6525dd3e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed7869a_2b53591c",
+        "filename": "remoting/client/chromoting_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-12-13T19:36:22Z",
+      "side": 1,
+      "message": "\u003e I see InvalidateWeakPtrs has a DCHECK(ptr_); is that the problem?\nYes\n\n\u003e If so, then I think your proposed solution is much cleaner--check the safety of the risky operation rather than something that (for now) has the same lifetime.\nDone. Looks like |weak_factory_| doesn\u0027t have IsValid() but checking the validity of |weak_ptr_| should be the same.\n\n\u003e A comment explaining why the weak factory might not be valid is probably worthwhile as well.\nDone.",
+      "parentUuid": "7839da27_3c638a8c",
+      "range": {
+        "startLine": 503,
+        "startChar": 17,
+        "endLine": 503,
+        "endChar": 0
+      },
+      "revId": "5230f039be5677b0532cdc2e1b0f78f6525dd3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
