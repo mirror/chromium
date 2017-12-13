@@ -7,38 +7,40 @@
 
 #include "base/memory/ptr_util.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/views/widget/widget.h"
 
 namespace gfx {
 class Rect;
+class Size;
 }
 
 namespace ui {
 class Layer;
 }
 
+class PictureInPictureWindowController;
+
 // This window will always float above other windows. The intention is to show
 // content perpetually while the user is still interacting with the other
 // browser windows.
-class OverlayWindow {
+class OverlayWindow : public views::Widget {
  public:
-  OverlayWindow() = default;
-  virtual ~OverlayWindow() = default;
+  // TODO: move to cc file.
+  explicit OverlayWindow(PictureInPictureWindowController* controller)
+    : controller_(controller) {}
+  ~OverlayWindow() override = default;
 
   // Returns a created OverlayWindow. This is defined in the platform-specific
   // implementation for the class.
-  static std::unique_ptr<OverlayWindow> Create();
+  static std::unique_ptr<OverlayWindow> Create(PictureInPictureWindowController* controller); 
+  
+  // TODO: probably wrap into ::Create() or something.
+  virtual void Init(const gfx::Size& size) = 0;
 
-  virtual void Init() = 0;
-  virtual bool IsActive() const = 0;
-  virtual void Show() = 0;
-  virtual void Hide() = 0;
-  virtual void Close() = 0;
-  virtual void Activate() = 0;
-  virtual bool IsAlwaysOnTop() const = 0;
-  virtual ui::Layer* GetLayer() = 0;
-  virtual gfx::NativeWindow GetNativeWindow() const = 0;
-  // Retrieves the window's current bounds, including its window.
-  virtual gfx::Rect GetBounds() const = 0;
+ protected:
+    // Weak pointer because |controller_| owns |this|.
+    // TODO: we could have an "observer" interface if we think it's cleaner.
+    PictureInPictureWindowController* controller_;  
 
  private:
   DISALLOW_COPY_AND_ASSIGN(OverlayWindow);

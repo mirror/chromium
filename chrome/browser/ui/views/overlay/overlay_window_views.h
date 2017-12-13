@@ -14,20 +14,12 @@ class Widget;
 // The Views implementation of OverlayWindow.
 class OverlayWindowViews : public OverlayWindow {
  public:
-  OverlayWindowViews();
+  explicit OverlayWindowViews(PictureInPictureWindowController* controller);
   ~OverlayWindowViews() override;
 
   // OverlayWindow:
-  void Init() override;
-  bool IsActive() const override;
-  void Show() override;
-  void Hide() override;
-  void Close() override;
-  void Activate() override;
-  bool IsAlwaysOnTop() const override;
-  ui::Layer* GetLayer() override;
-  gfx::NativeWindow GetNativeWindow() const override;
-  gfx::Rect GetBounds() const override;
+  void Init(const gfx::Size& size) override;
+  void OnMouseEvent(ui::MouseEvent* event) override;
 
  private:
   std::unique_ptr<views::Widget> widget_;

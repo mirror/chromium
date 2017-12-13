@@ -61,6 +61,7 @@ class LocationProvider;
 
 namespace gfx {
 class ImageSkia;
+class Size;
 }
 
 namespace media {
@@ -111,6 +112,11 @@ class Origin;
 namespace storage {
 class FileSystemBackend;
 }
+
+namespace viz {
+class FrameSinkId;
+class SurfaceId;
+}  // namespace viz
 
 namespace content {
 
@@ -984,6 +990,16 @@ class CONTENT_EXPORT ContentBrowserClient {
   // render MHTML page from http/https URLs.
   virtual bool ShouldForceDownloadResource(const GURL& url,
                                            const std::string& mime_type);
+
+  virtual void PictureInPicture(RenderFrameHost* frame_host,
+                                viz::FrameSinkId frame_sink_id,
+                                const gfx::Size& size);
+
+  virtual void UpdatePictureInPictureSurfaceId(RenderFrameHost* frame_host,
+                                               viz::FrameSinkId frame_sink_id,
+                                               uint32_t parent_id,
+                                               base::UnguessableToken nonce,
+                                               const gfx::Size& size);
 };
 
 }  // namespace content

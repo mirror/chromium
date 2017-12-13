@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
@@ -357,10 +358,23 @@ void FrameSinkManagerImpl::OnSurfaceCreated(const SurfaceId& surface_id) {
 
 void FrameSinkManagerImpl::OnFirstSurfaceActivation(
     const SurfaceInfo& surface_info) {
+  // LOG(ERROR) << "FrameSinkManagerImpl::OnFirstSurfaceActivation";
+  // LOG(ERROR) << "______________________________________________start";
+  // LOG(ERROR) << surface_manager_.SurfaceReferencesToString();
+  // LOG(ERROR) << "______________________________________________end";
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_GT(surface_info.device_scale_factor(), 0.0f);
 
-  if (client_)
+  // TODO(kylechar): |client_| will try to find an owner for the temporary
+  // reference to the new surface. With surface synchronization this might not
+  // be necessary, because a surface reference might already exist and no
+  // temporary reference was created. It could be useful to let |client_| know
+  // if it should find an owner.
+  //
+  //
+  // blink::mojom::blink::OffscreenCanvasSurfaceClient
+  if (client_)  // This is the (Web)SurfaceLayerBridge.
+
     client_->OnFirstSurfaceActivation(surface_info);
 }
 
