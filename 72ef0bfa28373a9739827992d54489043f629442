@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a406d9aa_4ca35dea",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T07:58:44Z",
+      "side": 1,
+      "message": "Add:\n\n///////////////////////////////////////\n// Speced tasks should use one of the following task types\n///////////////////////////////////////",
+      "revId": "72ef0bfa28373a9739827992d54489043f629442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced9e32c_7a0ce667",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T07:58:44Z",
+      "side": 1,
+      "message": "Add:\n\n///////////////////////////////////////\n// The following task types are DEPRECATED! Use kInternal* instead.\n///////////////////////////////////////",
+      "revId": "72ef0bfa28373a9739827992d54489043f629442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df2d31b_998fbcc1",
+        "filename": "third_party/WebKit/public/platform/TaskType.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-12-13T07:58:44Z",
+      "side": 1,
+      "message": "Add:\n\n///////////////////////////////////////\n// Not-speced tasks should use one of the following task types\n///////////////////////////////////////",
+      "revId": "72ef0bfa28373a9739827992d54489043f629442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
