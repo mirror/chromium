@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a2bd56d_37a0fe46",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-12-13T00:30:58Z",
+      "side": 1,
+      "message": "Do you also need to change how PROTECTED_MEMORY_ENABLED is defined?",
+      "revId": "5b0aacb858bafb3d4d8161a9f33aea5494b3d3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
