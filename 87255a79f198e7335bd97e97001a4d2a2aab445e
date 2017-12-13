@@ -79,6 +79,23 @@
       "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e6aad0_087fff72",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-13T21:38:29Z",
+      "side": 1,
+      "message": "Put this to a separate file. See content/public/common/browser_side_navigation_policy.h as an example.",
+      "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
