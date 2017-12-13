@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c06c5c6_75b88d75",
+        "filename": "chrome/browser/plugins/chrome_plugin_service_filter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-12-13T00:56:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6fa5fc9_2acca05c",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 59
+      },
+      "revId": "90cf7e4375044ae0d322b5a69854dceee619062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e919f12_0878945b",
         "filename": "chrome/browser/plugins/chrome_plugin_service_filter_unittest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "90cf7e4375044ae0d322b5a69854dceee619062d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f81cc3c_d8376ab5",
+        "filename": "chrome/browser/plugins/chrome_plugin_service_filter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-12-13T00:56:05Z",
+      "side": 1,
+      "message": "It should remain on Detect, as we do want it to block.\n\nThis test verifies that by default it\u0027s blocked, but the FlashTemporaryPermissionTracker can allow it through.\n\nActually based on your comment I just removed those blocks of code because it just confuses the reader without actually being necessary to the test.",
+      "parentUuid": "9e919f12_0878945b",
+      "range": {
+        "startLine": 200,
+        "startChar": 32,
+        "endLine": 200,
+        "endChar": 72
+      },
+      "revId": "90cf7e4375044ae0d322b5a69854dceee619062d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
