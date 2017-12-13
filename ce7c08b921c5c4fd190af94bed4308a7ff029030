@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b7ba8d0_d1b8e500",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T05:49:49Z",
+      "side": 1,
+      "message": "Do this inside CheckIfBadRenderViewId(). StartRequest need not be the first message sent by a renderer.",
+      "revId": "ce7c08b921c5c4fd190af94bed4308a7ff029030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa50f9f_44b115d4",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T05:49:49Z",
+      "side": 1,
+      "message": "Is this really the expected ID?",
+      "range": {
+        "startLine": 232,
+        "startChar": 8,
+        "endLine": 232,
+        "endChar": 31
+      },
+      "revId": "ce7c08b921c5c4fd190af94bed4308a7ff029030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b7cf74_b4f626d0",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T05:49:49Z",
+      "side": 1,
+      "message": "I think these were OK as DCHECKs. |context| is browser-supplied.",
+      "revId": "ce7c08b921c5c4fd190af94bed4308a7ff029030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b4e69e_b1898714",
+        "filename": "content/public/test/fake_speech_recognition_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-13T05:49:49Z",
+      "side": 1,
+      "message": "Can we delete it entirely?",
+      "revId": "ce7c08b921c5c4fd190af94bed4308a7ff029030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
