@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff6d9d74_3e70b7ca",
+        "filename": "third_party/zlib/crc32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-13T23:48:59Z",
+      "side": 1,
+      "message": "I wonder if it would make sense to fallback to the pure C version for len \u003c 8?",
+      "revId": "3fa03e0f3d9ce5de8198764b6714048d2ccd9c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
