@@ -116,14 +116,6 @@ namespace {
 // and not taken from HW documentation.
 const int kMaxEncoderFramerate = 30;
 
-// Attributes required for encode. This only applies to video encode, not JPEG
-// encode.
-static const VAConfigAttrib kVideoEncodeVAConfigAttribs[] = {
-    {VAConfigAttribRateControl, VA_RC_CBR},
-    {VAConfigAttribEncPackedHeaders,
-     VA_ENC_PACKED_HEADER_SEQUENCE | VA_ENC_PACKED_HEADER_PICTURE},
-};
-
 // A map between VideoCodecProfile and VAProfile.
 static const struct {
   VideoCodecProfile profile;
@@ -326,10 +318,15 @@ static std::vector<VAConfigAttrib> GetRequiredAttribs(
   } else {
     required_attribs.push_back({VAConfigAttribRTFormat, VA_RT_FORMAT_YUV420});
   }
-  if (mode == VaapiWrapper::kEncode && profile != VAProfileJPEGBaseline) {
-    required_attribs.insert(
-        required_attribs.end(), kVideoEncodeVAConfigAttribs,
-        kVideoEncodeVAConfigAttribs + arraysize(kVideoEncodeVAConfigAttribs));
+  if (mode != VaapiWrapper::kEncode || profile == VAProfileJPEGBaseline)
+    return required_attribs;
+
+  required_attribs.push_back({VAConfigAttribRateControl, VA_RC_CBR});
+
+  if (profile == VAProfileH264High) {
+    required_attribs.push_back(
+        {VAConfigAttribEncPackedHeaders,
+         VA_ENC_PACKED_HEADER_SEQUENCE | VA_ENC_PACKED_HEADER_PICTURE});
   }
   return required_attribs;
 }
