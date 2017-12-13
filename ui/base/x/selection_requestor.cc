@@ -20,16 +20,15 @@ namespace ui {
 namespace {
 
 const char kChromeSelection[] = "CHROME_SELECTION";
-const char kIncr[] = "INCR";
 
 // The period of |abort_timer_|. Arbitrary but must be <= than
 // kRequestTimeoutMs.
-const int kTimerPeriodMs = 100;
+const int KSelectionRequestorTimerPeriodMs = 100;
 
 // The amount of time to wait for a request to complete before aborting it.
 const int kRequestTimeoutMs = 10000;
 
-static_assert(kTimerPeriodMs <= kRequestTimeoutMs,
+static_assert(KSelectionRequestorTimerPeriodMs <= kRequestTimeoutMs,
               "timer period must be <= request timeout");
 
 // Combines |data| into a single RefCountedMemory object.
@@ -256,10 +255,10 @@ void SelectionRequestor::ConvertSelectionForCurrentRequest() {
 void SelectionRequestor::BlockTillSelectionNotifyForRequest(Request* request) {
   if (PlatformEventSource::GetInstance()) {
     if (!abort_timer_.IsRunning()) {
-      abort_timer_.Start(FROM_HERE,
-                         base::TimeDelta::FromMilliseconds(kTimerPeriodMs),
-                         this,
-                         &SelectionRequestor::AbortStaleRequests);
+      abort_timer_.Start(
+          FROM_HERE,
+          base::TimeDelta::FromMilliseconds(KSelectionRequestorTimerPeriodMs),
+          this, &SelectionRequestor::AbortStaleRequests);
     }
 
     base::RunLoop run_loop(base::RunLoop::Type::kNestableTasksAllowed);
