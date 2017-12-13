@@ -100,9 +100,7 @@ ChromotingSession::ChromotingSession(
 
 ChromotingSession::~ChromotingSession() {
   DCHECK(runtime_->network_task_runner()->BelongsToCurrentThread());
-  if (client_) {
-    ReleaseResources();
-  }
+  ReleaseResources();
 }
 
 void ChromotingSession::Connect() {
@@ -335,6 +333,11 @@ void ChromotingSession::OnConnectionState(
   runtime_->ui_task_runner()->PostTask(
       FROM_HERE, base::Bind(&ChromotingSession::Delegate::OnConnectionState,
                             delegate_, state, error));
+
+  if (state == protocol::ConnectionToHost::CLOSED ||
+      state == protocol::ConnectionToHost::FAILED) {
+    ReleaseResources();
+  }
 }
 
 void ChromotingSession::OnConnectionReady(bool ready) {
@@ -497,6 +500,10 @@ void ChromotingSession::LogPerfStats() {
 }
 
 void ChromotingSession::ReleaseResources() {
+  if (!client_) {
+    return;
+  }
+
   logger_.reset();
 
   // |client_| must be torn down before |signaling_|.
