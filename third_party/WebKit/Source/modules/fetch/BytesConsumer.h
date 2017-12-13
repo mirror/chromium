@@ -85,11 +85,11 @@ class MODULES_EXPORT BytesConsumer
   // Returns ShouldWait when it's waiting.
   // Returns Done when it's closed.
   // Returns Error when errored.
-  // When not readable, the caller don't have to (and must not) call
-  // endRead, because the read session implicitly ends in that case.
+  // When not readable, the caller doesn't have to (and must not) call
+  // EndRead, because the read session implicitly ends in that case.
   //
   // |*buffer| will become invalid when this object becomes unreachable,
-  // even if endRead is not called.
+  // even if EndRead is not called.
   //
   // |*buffer| will be set to null and |*available| will be set to 0 if not
   // readable.
