@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3dff4fe_6ae04252",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-13T15:49:29Z",
+      "side": 1,
+      "message": "Whether, and below.",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d62d2a_0b16d224",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-13T15:49:29Z",
+      "side": 1,
+      "message": "What is the default value, why do you have to call this once?",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93e9cd8_6298afb5",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-13T15:49:29Z",
+      "side": 1,
+      "message": "s to `autolayout is not supported.`",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c278cd_8d3cb1e9",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_mask_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-13T15:49:29Z",
+      "side": 1,
+      "message": "Why do widths \u003d\u003d height?",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b13529_6dd305d6",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-13T15:49:29Z",
+      "side": 1,
+      "message": "I\u0027m confused why this is necessary.  I guess this encompasses more than simply using UITextFieldDelegate ?",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e244fc_72606cbc",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield_container.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-13T15:49:29Z",
+      "side": 1,
+      "message": "s/spelled/displayed.",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95267e31_8f2d3b07",
+        "filename": "ios/chrome/browser/ui/omnibox/location_bar_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-13T15:49:29Z",
+      "side": 1,
+      "message": "same here?",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb88d657_6c7db873",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-12-13T15:49:29Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "revId": "04e123f9b2d24e3f41b2fd796261eea40e5c3f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
