@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "affff280_8f82ad7f",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-13T00:54:37Z",
+      "side": 1,
+      "message": "nit: rm this.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "50bf1f2053d1d397e9eb6f8e27a1379972cb0545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
