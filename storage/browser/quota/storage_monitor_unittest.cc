@@ -21,13 +21,10 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using storage::HostStorageObservers;
-using storage::kQuotaErrorNotSupported;
-using storage::kQuotaStatusOk;
 using storage::kStorageTypePersistent;
 using storage::kStorageTypeTemporary;
 using storage::QuotaClient;
 using storage::QuotaManager;
-using storage::QuotaStatusCode;
 using storage::SpecialStoragePolicy;
 using storage::StorageMonitor;
 using storage::StorageObserver;
@@ -73,10 +70,12 @@ class UsageMockQuotaManager : public QuotaManager {
                      storage::GetQuotaSettingsFunc()),
         callback_usage_(0),
         callback_quota_(0),
-        callback_status_(kQuotaStatusOk),
+        callback_status_(blink::QuotaStatusCode::kOk),
         initialized_(false) {}
 
-  void SetCallbackParams(int64_t usage, int64_t quota, QuotaStatusCode status) {
+  void SetCallbackParams(int64_t usage,
+                         int64_t quota,
+                         blink::QuotaStatusCode status) {
     initialized_ = true;
     callback_quota_ = quota;
     callback_usage_ = usage;
@@ -103,7 +102,7 @@ class UsageMockQuotaManager : public QuotaManager {
  private:
   int64_t callback_usage_;
   int64_t callback_quota_;
-  QuotaStatusCode callback_status_;
+  blink::QuotaStatusCode callback_status_;
   bool initialized_;
   UsageAndQuotaCallback delayed_callback_;
 };
@@ -432,7 +431,8 @@ TEST_F(HostStorageObserversTest, RecoverFromBadUsageInit) {
   // Set up the quota manager to return an error status.
   const int64_t kUsage = 6656;
   const int64_t kQuota = 99585556;
-  quota_manager_->SetCallbackParams(kUsage, kQuota, kQuotaErrorNotSupported);
+  quota_manager_->SetCallbackParams(kUsage, kQuota,
+                                    blink::QuotaStatusCode::kErrorNotSupported);
 
   // Verify that |host_observers| is not initialized and an event has not been
   // dispatched.
