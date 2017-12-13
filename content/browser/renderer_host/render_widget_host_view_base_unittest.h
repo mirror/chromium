@@ -9,14 +9,22 @@
 
 namespace content {
 
+class MockRenderWidgetHostDelegate;
 class RenderWidgetHostViewBase;
 
 using SetIsOccludedCallback = base::RepeatingCallback<void(bool is_occluded)>;
 
 // Tests for implementations of RenderWidgetHostViewBase.
 void RenderWidgetHostViewBase_TestShowHide(RenderWidgetHostViewBase* view);
+void RenderWidgetHostViewBase_TestShowHideAndCapture(
+    RenderWidgetHostViewBase* view,
+    MockRenderWidgetHostDelegate* delegate);
 void RenderWidgetHostViewBase_TestOcclusion(
     RenderWidgetHostViewBase* view,
+    const SetIsOccludedCallback& set_is_occluded);
+void RenderWidgetHostViewBase_TestOcclusionAndCapture(
+    RenderWidgetHostViewBase* view,
+    MockRenderWidgetHostDelegate* delegate,
     const SetIsOccludedCallback& set_is_occluded);
 
 }  // namespace content

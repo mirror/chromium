@@ -288,6 +288,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // Returns true if the RenderWidget is hidden.
   bool is_hidden() const { return is_hidden_; }
 
+  // Returns true if the RenderWidget is being captured (e.g. for screenshots or
+  // mirroring).
+  bool IsBeingCaptured() const;
+
   // Called to notify the RenderWidget that its associated native window
   // got/lost focused.
   void GotFocus();

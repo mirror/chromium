@@ -537,7 +537,6 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       did_first_visually_non_empty_paint_(false),
       capturer_count_(0),
       should_normally_be_visible_(true),
-      should_normally_be_occluded_(false),
       did_first_set_visible_(false),
       is_being_destroyed_(false),
       is_notifying_observers_(false),
@@ -1371,9 +1370,6 @@ void WebContentsImpl::IncrementCapturerCount(const gfx::Size& capture_size) {
     for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
       view->CaptureStateChanged();
   }
-
-  // Ensure that all views are un-occluded before capture begins.
-  DoWasUnOccluded();
 }
 
 void WebContentsImpl::DecrementCapturerCount() {
@@ -1397,9 +1393,6 @@ void WebContentsImpl::DecrementCapturerCount() {
 
     for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
       view->CaptureStateChanged();
-
-    if (should_normally_be_occluded_)
-      WasOccluded();
   }
 }
 
@@ -1594,28 +1587,6 @@ void WebContentsImpl::SetImportance(ChildProcessImportance importance) {
 
 bool WebContentsImpl::IsVisible() const {
   return should_normally_be_visible_;
-}
-
-void WebContentsImpl::WasOccluded() {
-  if (!IsBeingCaptured()) {
-    for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
-      view->WasOccluded();
-  }
-
-  should_normally_be_occluded_ = true;
-}
-
-void WebContentsImpl::WasUnOccluded() {
-  if (!IsBeingCaptured())
-    DoWasUnOccluded();
-
-  should_normally_be_occluded_ = false;
-}
-
-void WebContentsImpl::DoWasUnOccluded() {
-  // TODO(fdoray): Only call WasUnOccluded on frames in the active viewport.
-  for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
-    view->WasUnOccluded();
 }
 
 bool WebContentsImpl::NeedToFireBeforeUnload() {

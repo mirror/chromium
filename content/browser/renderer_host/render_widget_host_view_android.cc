@@ -650,19 +650,13 @@ bool RenderWidgetHostViewAndroid::IsSurfaceAvailableForCopy() const {
 }
 
 void RenderWidgetHostViewAndroid::Show() {
-  if (is_showing_)
-    return;
-
   is_showing_ = true;
-  ShowInternal();
+  VisibilityChanged();
 }
 
-void RenderWidgetHostViewAndroid::Hide() {
-  if (!is_showing_)
-    return;
-
+void RenderWidgetHostViewAndroid::DoHide() {
   is_showing_ = false;
-  HideInternal();
+  VisibilityChanged();
 }
 
 Visibility RenderWidgetHostViewAndroid::GetVisibility() const {
@@ -1612,11 +1606,7 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   EvictFrameIfNecessary();
 }
 
-void RenderWidgetHostViewAndroid::ShowInternal() {
-  bool show = is_showing_ && is_window_activity_started_ && is_window_visible_;
-  if (!show)
-    return;
-
+void RenderWidgetHostViewAndroid::WasShown() {
   if (!host_ || !host_->is_hidden())
     return;
 
@@ -1635,8 +1625,8 @@ void RenderWidgetHostViewAndroid::ShowInternal() {
   }
 }
 
-void RenderWidgetHostViewAndroid::HideInternal() {
-  DCHECK(!is_showing_ || !is_window_activity_started_ || !is_window_visible_)
+void RenderWidgetHostViewAndroid::WasHidden() {
+  DCHECK_EQ(GetVisibility(), Visibility::HIDDEN)
       << "Hide called when the widget should be shown.";
 
   // Only preserve the frontbuffer if the activity was stopped while the
@@ -2182,6 +2172,8 @@ void RenderWidgetHostViewAndroid::SetContentViewCore(
   if (is_showing_ && view_.GetWindowAndroid())
     StartObservingRootWindow();
 
+  VisibilityChanged();
+
   if (resize)
     WasResized();
 
@@ -2265,11 +2257,7 @@ void RenderWidgetHostViewAndroid::OnRootWindowVisibilityChanged(bool visible) {
     return;
 
   is_window_visible_ = visible;
-
-  if (visible)
-    ShowInternal();
-  else
-    HideInternal();
+  VisibilityChanged();
 }
 
 void RenderWidgetHostViewAndroid::OnAttachedToWindow() {
@@ -2373,14 +2361,14 @@ void RenderWidgetHostViewAndroid::OnActivityStopped() {
   TRACE_EVENT0("browser", "RenderWidgetHostViewAndroid::OnActivityStopped");
   DCHECK(observing_root_window_);
   is_window_activity_started_ = false;
-  HideInternal();
+  VisibilityChanged();
 }
 
 void RenderWidgetHostViewAndroid::OnActivityStarted() {
   TRACE_EVENT0("browser", "RenderWidgetHostViewAndroid::OnActivityStarted");
   DCHECK(observing_root_window_);
   is_window_activity_started_ = true;
-  ShowInternal();
+  VisibilityChanged();
 }
 
 void RenderWidgetHostViewAndroid::OnLostResources() {

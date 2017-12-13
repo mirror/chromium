@@ -453,11 +453,29 @@ class RenderWidgetHostViewMacTest : public RenderViewHostImplTestHarness {
 TEST_F(RenderWidgetHostViewMacTest, Basic) {
 }
 
+TEST_F(RenderWidgetHostViewMacTest, AddToHiddenParent) {
+  base::scoped_nsobject<CocoaTestHelperWindow> window(
+      [[CocoaTestHelperWindow alloc] init]);
+  [window setIsVisible:NO];
+  [[window contentView] addSubview:rwhv_cocoa_];
+
+  // The host shouldn't be hidden when the view is added to an hidden parent
+  // before having been shown once.
+  EXPECT_FALSE(rwhv_mac_->GetRenderWidgetHostImpl()->is_hidden());
+}
+
 TEST_F(RenderWidgetHostViewMacTest, ShowHide) {
   base::scoped_nsobject<CocoaTestHelperWindow> window(
       [[CocoaTestHelperWindow alloc] init]);
   [[window contentView] addSubview:rwhv_cocoa_];
   RenderWidgetHostViewBase_TestShowHide(rwhv_mac_);
+}
+
+TEST_F(RenderWidgetHostViewMacTest, ShowHideAndCapture) {
+  base::scoped_nsobject<CocoaTestHelperWindow> window(
+      [[CocoaTestHelperWindow alloc] init]);
+  [[window contentView] addSubview:rwhv_cocoa_];
+  RenderWidgetHostViewDesktopBase_TestShowHideAndCapture(rwhv_mac_, &delegate_);
 }
 
 TEST_F(RenderWidgetHostViewMacTest, Occlusion) {
@@ -472,6 +490,20 @@ TEST_F(RenderWidgetHostViewMacTest, Occlusion) {
                            setPretendIsOccluded:(view_is_occluded ? YES : NO)];
                      },
                      base::Unretained(&window)));
+}
+
+TEST_F(RenderWidgetHostViewMacTest, OcclusionAndCapture) {
+  base::scoped_nsobject<CocoaTestHelperWindow> window(
+      [[CocoaTestHelperWindow alloc] init]);
+  [[window contentView] addSubview:rwhv_cocoa_];
+  RenderWidgetHostViewDesktopBase_TestOcclusionAndCapture(
+      rwhv_mac_, &delegate_,
+      base::BindRepeating(
+          [](base::scoped_nsobject<CocoaTestHelperWindow>* window,
+             bool view_is_occluded) {
+            [*window setPretendIsOccluded:(view_is_occluded ? YES : NO)];
+          },
+          base::Unretained(&window)));
 }
 
 TEST_F(RenderWidgetHostViewMacTest, AcceptsFirstResponder) {

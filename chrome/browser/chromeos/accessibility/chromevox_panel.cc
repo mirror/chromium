@@ -97,6 +97,10 @@ ChromeVoxPanel::ChromeVoxPanel(content::BrowserContext* browser_context,
   web_view->LoadInitialURL(GURL(url));
   web_view_ = web_view;
 
+  // Force rendering even though |contents| is not visible. Without this,
+  // DidFirstVisuallyNonEmptyPaint() would never be called.
+  contents->IncrementCapturerCount(gfx::Size());
+
   widget_ = new views::Widget();
   views::Widget::InitParams params(
       views::Widget::InitParams::TYPE_WINDOW_FRAMELESS);
@@ -128,6 +132,7 @@ void ChromeVoxPanel::Close() {
 void ChromeVoxPanel::DidFirstVisuallyNonEmptyPaint() {
   widget_->Show();
   UpdatePanelHeight();
+  web_contents_observer_->web_contents()->DecrementCapturerCount();
 }
 
 void ChromeVoxPanel::UpdatePanelHeight() {
