@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd6050a2_4d123c0d",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-12-13T11:26:08Z",
+      "side": 1,
+      "message": "Maybe define kNoLogging \u003d 0x00 to avoid the constants zero elsewhere in the code?",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "7c8fcc4ca813e650d69e3807e65cb4f51e96dd70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
