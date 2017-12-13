@@ -66,6 +66,7 @@ class HoverButton : public views::LabelButton {
   // views::LabelButton:
   void StateChanged(ButtonState old_state) override;
   bool ShouldUseFloodFillInkDrop() const override;
+  KeyClickAction GetKeyClickActionForEvent(const ui::KeyEvent& event) override;
 
   // views::InkDropHostView:
   SkColor GetInkDropBaseColor() const override;
