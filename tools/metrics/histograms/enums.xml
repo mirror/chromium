@@ -16863,7 +16863,8 @@ Called by update_net_error_codes.py.-->
   <int value="1907" label="MagnetometerConstructor"/>
   <int value="1908" label="OrientationSensorPopulateMatrix"/>
   <int value="1909" label="WindowOpenWithInvalidURL"/>
-  <int value="1910" label="CrossOriginMainFrameNulledNameAccessed"/>
+  <int value="1910"
+      label="CrossOriginMainFrameNulledNameAccessed (obsolete as of M65)"/>
   <int value="1911" label="MenuItemElementIconAttribute"/>
   <int value="1912" label="WebkitCSSMatrixSetMatrixValue"/>
   <int value="1913" label="WebkitCSSMatrixConstructFromString"/>
@@ -16987,7 +16988,9 @@ Called by update_net_error_codes.py.-->
   <int value="2020" label="SmoothScrollJSInterventionActivated"/>
   <int value="2021" label="BudgetAPIGetCost"/>
   <int value="2022" label="BudgetAPIGetBudget"/>
-  <int value="2023" label="CrossOriginMainFrameNulledNonEmptyNameAccessed"/>
+  <int value="2023"
+      label="CrossOriginMainFrameNulledNonEmptyNameAccessed (obsolete as of
+             M65)"/>
   <int value="2024" label="DeprecatedTimingFunctionStepMiddle"/>
   <int value="2025" label="DocumentDomainSetWithNonDefaultPort"/>
   <int value="2026" label="DocumentDomainSetWithDefaultPort"/>

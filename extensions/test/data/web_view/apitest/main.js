@@ -1781,6 +1781,20 @@ function testCaptureVisibleRegion() {
   document.body.appendChild(webview);
 }
 
+// This verifies that setting a webview's name attribute sets the name
+// of the webview correctly
+function testNameAttributeInitialization() {
+  var webview = document.createElement('webview');
+  webview.setAttribute('src', 'data:text/html,webview test');
+  webview.setAttribute('name', 'test_name');
+
+  webview.addEventListener('loadstop', function(e) {
+    embedder.test.assertEq(webview.name, 'test_name');
+    embedder.test.succeed();
+  });
+  document.body.appendChild(webview);
+}
+
 function captureVisibleRegionDoCapture() {}
 
 // Tests end.
@@ -1855,7 +1869,8 @@ embedder.test.testList = {
   'testWebRequestAPIWithHeaders': testWebRequestAPIWithHeaders,
   'testWebRequestAPIExistence': testWebRequestAPIExistence,
   'testWebRequestAPIGoogleProperty': testWebRequestAPIGoogleProperty,
-  'testCaptureVisibleRegion': testCaptureVisibleRegion
+  'testCaptureVisibleRegion': testCaptureVisibleRegion,
+  'testNameAttributeInitialization': testNameAttributeInitialization
 };
 
 onload = function() {
