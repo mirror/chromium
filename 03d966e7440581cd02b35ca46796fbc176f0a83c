@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9746b68_2db33ced",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T15:54:16Z",
+      "side": 1,
+      "message": "See my comment/question in views_pixel_test.h about this...",
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcdfa2c7_62cb4b8b",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T15:54:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand the point of trying fallbacks (besides \u0027common\u0027 and unversioned same-platform). ie. Why bother even comparing windows output against the linux reference image if tests are then going to allow that comparison to fail? Does this follow a pattern from other pixel tests?\n\nMy alternative thought is: Fail anytime a comparable reference image isn\u0027t found  or doesn\u0027t pass (ie. Platform tries p\u003cv\u003e, tries p*, tries common, fails), and tests are expected to fail if there\u0027s no comparable fallback (it\u0027s pretty easy to disable a test on a specific platform/version until a reference image is updated or made available, though I suppose some sheriffs/devs might just disable the fixture everywhere...).\n\nPerhaps someone more familiar with pixel testing patterns should take a look. Feel free to split this test update out from the removal of DrawFadedText; you can leave that specific test as-is (with a comment explaining that it\u0027s useless) or remove it.",
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cab0dec_a7d0c3d2",
+        "filename": "ui/views/test/views_pixel_test.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T15:54:16Z",
+      "side": 1,
+      "message": "optional nit: It might simplify logic to not include \"common\" in this list, and just inline \"common\" at line 87",
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07db09f_17cfc6fa",
+        "filename": "ui/views/test/views_pixel_test.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T15:54:16Z",
+      "side": 1,
+      "message": "This bit is a little confusing... I\u0027m not sure why tests should ever be allowed to fail this check on certain platforms. Shouldn\u0027t that just mean that we need a new reference image for that platform, or the test isn\u0027t applicable and should be disabled on that platform?",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9fd2ab5_5fc52059",
+        "filename": "ui/views/test/views_pixel_test.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T15:54:16Z",
+      "side": 1,
+      "message": "nit: \"to disk\" used twice in this sentence",
+      "revId": "03d966e7440581cd02b35ca46796fbc176f0a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
