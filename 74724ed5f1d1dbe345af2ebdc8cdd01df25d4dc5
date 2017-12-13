@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "943138f7_2935977a",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-13T21:50:46Z",
+      "side": 1,
+      "message": "I\u0027d be curious for Matt\u0027s feedback, but perhaps an UnsafeCreateOptions parameters to these wouldn\u0027t be worse, and at least signal a cleaner deprecation path.",
+      "parentUuid": "91db4697_8db0a412",
+      "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0dfbaab_13ab516a",
         "filename": "chromeos/network/client_cert_resolver_unittest.cc",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Oh, that\u0027s good to know in general! I tried to adhere to the style of this unittest (i.e. doing almost everything in helpers...) though I agree that I\u0027ve taken it to the next level by having two layers of setup helpers now.\n\nWould you be fine with leaving this as it is for now so we get the actual fix to M-63, and then refactoring this test as a second step in a separate CL on ToT only?\nFiled crbug.com/794668 so I don\u0027t forget to do this.",
       "parentUuid": "b0dfbaab_13ab516a",
+      "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dae7f16_251201f7",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-13T21:50:46Z",
+      "side": 1,
+      "message": "I think what I\u0027d recommend for this CL is simply don\u0027t use the \"SetupClientCertPatternPolicy\" as an indirected helper - that is, duplicating kTestOncPattern (which naming doesn\u0027t follow the style guide, unless it\u0027s static) in each of these three methods you have, so that it\u0027s clear what the \"Setup\" assertions are (and without the sprintfs)\n\nThen, in your follow-up, you\u0027d remove the single-use helpers and move it into the unit test directly. That is, each unit test would setup their own ONC pattern for use.\n\nDoes that seem reasonable?",
+      "parentUuid": "1bd0f882_c7d9415f",
       "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

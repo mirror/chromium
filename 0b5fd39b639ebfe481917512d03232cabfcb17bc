@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35751484_6bae47e2",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-12-13T21:50:46Z",
+      "side": 1,
+      "message": "These are all used exactly once, so should not be at file level. Even two or three times, I\u0027d push back. I\u0027d rather push for these things in the tests themselves :)",
+      "revId": "0b5fd39b639ebfe481917512d03232cabfcb17bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
