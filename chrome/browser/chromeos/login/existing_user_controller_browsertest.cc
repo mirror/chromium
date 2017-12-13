@@ -43,6 +43,7 @@
 #include "chromeos/login/auth/user_context.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "chromeos/settings/cros_settings_provider.h"
+#include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/policy/core/common/cloud/cloud_policy_core.h"
 #include "components/policy/core/common/cloud/cloud_policy_store.h"
@@ -442,6 +443,13 @@ class ExistingUserControllerPublicSessionTest
     EXPECT_CALL(*mock_login_display_, SetUIEnabled(true)).Times(AnyNumber());
   }
 
+  void VerifySyncPasswordPrefs() {
+    EXPECT_TRUE(browser()->profile()->GetPrefs()->HasPrefPath(
+          password_manager::prefs::kSyncPasswordHash));
+    EXPECT_TRUE(browser()->profile()->GetPrefs()->HasPrefPath(
+      password_manager::prefs::kSyncPasswordLengthAndHashSalt));
+  }
+
   void SetAutoLoginPolicy(const std::string& user_email, int delay) {
     // Wait until ExistingUserController has finished auto-login
     // configuration by observing the same settings that trigger
@@ -672,6 +680,7 @@ IN_PROC_BROWSER_TEST_F(ExistingUserControllerPublicSessionTest,
 
   // Wait for login tasks to complete.
   content::RunAllPendingInMessageLoop();
+  VerifySyncPasswordPrefs();
 
   // Timer should still be stopped after login completes.
   ASSERT_TRUE(auto_login_timer());
@@ -707,6 +716,7 @@ IN_PROC_BROWSER_TEST_F(ExistingUserControllerPublicSessionTest,
 
   // Wait for login tasks to complete.
   content::RunAllPendingInMessageLoop();
+  VerifySyncPasswordPrefs();
 
   // Timer should still be stopped after login completes.
   ASSERT_TRUE(auto_login_timer());
