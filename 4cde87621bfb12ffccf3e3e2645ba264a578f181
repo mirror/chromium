@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e33c7c5c_4040eae7",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-13T01:03:32Z",
+      "side": 1,
+      "message": "I would not want to change any of the semantics here, padding-* were used, I\u0027d like to keep it that way.",
+      "parentUuid": "748462bc_b8f8d472",
+      "range": {
+        "startLine": 45,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "4cde87621bfb12ffccf3e3e2645ba264a578f181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfc8d11c_8d0178f6",
         "filename": "components/printing/resources/print_preview_page.html",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-07T22:21:28Z",
       "side": 1,
       "message": "CSS properties should be in alphabetical order (per styleguide). I believe there is a PRESUBMIT script that should catch this.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "4cde87621bfb12ffccf3e3e2645ba264a578f181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f521f4_495f40da",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-13T01:03:32Z",
+      "side": 1,
+      "message": "Done. It did not catch me, probably it only works for webui/",
+      "parentUuid": "dfc8d11c_8d0178f6",
       "range": {
         "startLine": 51,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "447a7f99_d9ffe312",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-13T01:03:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f8c2fc4f_01fc0930",
+      "range": {
+        "startLine": 63,
+        "startChar": 21,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "4cde87621bfb12ffccf3e3e2645ba264a578f181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c68f71b_29c68609",
         "filename": "components/printing/resources/print_preview_page.html",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-07T22:21:28Z",
       "side": 1,
       "message": "Nit (optional): Is this temporary variable needed at all? How about directly assigning to header.innerHTML here?\n\nheader.innerHTML \u003d options[\u0027headerTemplate\u0027] ...",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "4cde87621bfb12ffccf3e3e2645ba264a578f181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570aa4fc_fa08cd72",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-13T01:03:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "5c68f71b_29c68609",
       "range": {
         "startLine": 68,
         "startChar": 2,
@@ -128,6 +224,24 @@
       "writtenOn": "2017-12-07T22:21:28Z",
       "side": 1,
       "message": "Per Google styleguide (inherited by Chromium styleguide), double quotes should be used in HTML, see [1] and [2].\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/styleguide/web/web.md#HTML\n[2] https://google.github.io/styleguide/htmlcssguide.html#HTML_Quotation_Marks",
+      "revId": "4cde87621bfb12ffccf3e3e2645ba264a578f181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d89c636_d4f527b6",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-13T01:03:32Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "69596bc7_489da5a1",
       "revId": "4cde87621bfb12ffccf3e3e2645ba264a578f181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
