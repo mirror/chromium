@@ -14,6 +14,7 @@ namespace net {
 NET_EXPORT extern const char kEffectiveConnectionTypeUnknown[];
 NET_EXPORT extern const char kEffectiveConnectionTypeOffline[];
 NET_EXPORT extern const char kEffectiveConnectionTypeSlow2G[];
+NET_EXPORT extern const char kEffectiveConnectionTypeSlow2GOnCellular[];
 NET_EXPORT extern const char kEffectiveConnectionType2G[];
 NET_EXPORT extern const char kEffectiveConnectionType3G[];
 NET_EXPORT extern const char kEffectiveConnectionType4G[];
