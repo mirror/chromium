@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be948a8f_4af580e7",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T17:02:41Z",
+      "side": 1,
+      "message": "extern is redundant in here. remove since there isn\u0027t a single instance of this in content/.",
+      "range": {
+        "startLine": 14,
+        "startChar": 60,
+        "endLine": 14,
+        "endChar": 61
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7d0cd8_62696096",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T17:02:41Z",
+      "side": 1,
+      "message": "remove hyphen",
+      "range": {
+        "startLine": 234,
+        "startChar": 29,
+        "endLine": 234,
+        "endChar": 30
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ffa819_45b2e35d",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T17:02:41Z",
+      "side": 1,
+      "message": "remove extern in all these cases. see comment above.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 6
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdb493a_b30a9975",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T17:02:41Z",
+      "side": 1,
+      "message": "Convenience alias are allowed in the private section, but not here.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 7
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
