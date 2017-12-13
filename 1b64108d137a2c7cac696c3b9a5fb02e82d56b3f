@@ -264,6 +264,24 @@
       "revId": "1b64108d137a2c7cac696c3b9a5fb02e82d56b3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f82294_fa2c1cbb",
+        "filename": "chrome/browser/ui/tabs/tab_metrics_logger_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-12-13T06:27:47Z",
+      "side": 1,
+      "message": "I\u0027ve added some more comments. I agree we probably do want to log \"all of the handlers that the site offers, whether they have been accepted by the user or not\" but we can\u0027t do this yet:\n\n1. ProtocolHandlerRegistry only records protocol handlers that the user reacts to (whether they allow, block or ignore them).\n2. We got privacy approval to log enabled protocol handlers (which we can do), and to log \"all advertised protocol handlers\" (which we don\u0027t exactly store due to 1). Logging *the set of protocol handlers the user has responded to* gives us more information than that (what the user clicked Block/Ignore for), so I want to send that thru another round of privacy review. I don\u0027t think it will matter in the end, but it *is* an extra bit of entropy we hadn\u0027t accounted for in the original UKM review.",
+      "parentUuid": "47f9bd06_51fedd60",
+      "revId": "1b64108d137a2c7cac696c3b9a5fb02e82d56b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
