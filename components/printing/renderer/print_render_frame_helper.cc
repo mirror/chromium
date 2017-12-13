@@ -1056,6 +1056,7 @@ bool PrintRenderFrameHelper::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(PrintMsg_ClosePrintPreviewDialog,
                         OnClosePrintPreviewDialog)
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
+    IPC_MESSAGE_HANDLER(PrintMsg_PrintFrameContent, OnPrintFrameContent)
     IPC_MESSAGE_HANDLER(PrintMsg_SetPrintingEnabled, OnSetPrintingEnabled)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -1428,14 +1429,12 @@ bool PrintRenderFrameHelper::FinalizePrintReadyDocument() {
   PdfMetafileSkia* metafile = print_preview_context_.metafile();
   PrintHostMsg_DidPreviewDocument_Params preview_params;
 
-  if (!CopyMetafileDataToSharedMem(*metafile,
-                                   &preview_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(*metafile, &preview_params.content)) {
     LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
     print_preview_context_.set_error(PREVIEW_ERROR_METAFILE_COPY_FAILED);
     return false;
   }
 
-  preview_params.data_size = metafile->GetDataSize();
   preview_params.document_cookie = print_pages_params_->params.document_cookie;
   preview_params.expected_pages_count =
       print_preview_context_.total_page_count();
@@ -1487,6 +1486,11 @@ void PrintRenderFrameHelper::OnClosePrintPreviewDialog() {
   print_preview_context_.source_frame()->DispatchAfterPrintEvent();
 }
 #endif
+
+void PrintRenderFrameHelper::OnPrintFrameContent(const gfx::Rect& rect,
+                                                 uint32_t content_id) {
+  // TODO(weili): Implement this function.
+}
 
 bool PrintRenderFrameHelper::IsPrintingEnabled() const {
   return is_printing_enabled_;
@@ -1692,12 +1696,10 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
   metafile.FinishDocument();
 
   PrintHostMsg_DidPrintPage_Params page_params;
-  if (!CopyMetafileDataToSharedMem(metafile,
-                                   &page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(metafile, &page_params.content)) {
     return false;
   }
 
-  page_params.data_size = metafile.GetDataSize();
   page_params.document_cookie = print_params.document_cookie;
 #if defined(OS_WIN)
   page_params.physical_offsets = printer_printable_area_.origin();
@@ -1709,9 +1711,9 @@ bool PrintRenderFrameHelper::PrintPagesNative(blink::WebLocalFrame* frame,
     Send(new PrintHostMsg_DidPrintPage(routing_id(), page_params));
     // Send the rest of the pages with an invalid metafile handle.
     // TODO(erikchen): Fix semantics. See https://crbug.com/640840
-    if (page_params.metafile_data_handle.IsValid()) {
-      page_params.metafile_data_handle = base::SharedMemoryHandle();
-      page_params.data_size = 0;
+    if (page_params.content.metafile_data_handle.IsValid()) {
+      page_params.content.metafile_data_handle = base::SharedMemoryHandle();
+      page_params.content.data_size = 0;
     }
   }
   return true;
@@ -2039,7 +2041,7 @@ void PrintRenderFrameHelper::PrintPageInternal(
 
 bool PrintRenderFrameHelper::CopyMetafileDataToSharedMem(
     const PdfMetafileSkia& metafile,
-    base::SharedMemoryHandle* shared_mem_handle) {
+    PrintHostMsg_DidPrintContent_Params* params) {
   uint32_t buf_size = metafile.GetDataSize();
   if (buf_size == 0)
     return false;
@@ -2055,8 +2057,10 @@ bool PrintRenderFrameHelper::CopyMetafileDataToSharedMem(
   if (!metafile.GetData(shared_buf->memory(), buf_size))
     return false;
 
-  *shared_mem_handle =
+  params->metafile_data_handle =
       base::SharedMemory::DuplicateHandle(shared_buf->handle());
+  params->data_size = metafile.GetDataSize();
+  params->subframe_content_ids = std::vector<uint32_t>();
   return true;
 }
 
@@ -2180,14 +2184,12 @@ bool PrintRenderFrameHelper::PreviewPageRendered(int page_number,
   }
 
   PrintHostMsg_DidPreviewPage_Params preview_page_params;
-  if (!CopyMetafileDataToSharedMem(*metafile,
-                                   &preview_page_params.metafile_data_handle)) {
+  if (!CopyMetafileDataToSharedMem(*metafile, &preview_page_params.content)) {
     LOG(ERROR) << "CopyMetafileDataToSharedMem failed";
     print_preview_context_.set_error(PREVIEW_ERROR_METAFILE_COPY_FAILED);
     return false;
   }
 
-  preview_page_params.data_size = metafile->GetDataSize();
   preview_page_params.page_number = page_number;
   preview_page_params.preview_request_id =
       print_pages_params_->params.preview_request_id;
