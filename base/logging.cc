@@ -123,7 +123,7 @@ int g_min_log_level = 0;
 LoggingDestination g_logging_destination = LOG_DEFAULT;
 
 // For LOG_ERROR and above, always print to stderr.
-const int kAlwaysPrintErrorLevel = LOG_ERROR;
+const int kAlwaysPrintErrorLevel = LOG_INFO;
 
 // Which log file to use? This is initialized by InitLogging or
 // will be lazily initialized to the default value when it is
