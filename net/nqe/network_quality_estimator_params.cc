@@ -354,14 +354,10 @@ void ObtainConnectionThresholds(
   }
 }
 
-base::Optional<EffectiveConnectionType> GetForcedEffectiveConnectionType(
+std::string GetForcedEffectiveConnectionTypeString(
     const std::map<std::string, std::string>& params) {
-  std::string forced_value = GetStringValueForVariationParamWithDefaultValue(
+  return GetStringValueForVariationParamWithDefaultValue(
       params, kForceEffectiveConnectionType, "");
-  base::Optional<EffectiveConnectionType> ect =
-      GetEffectiveConnectionTypeForName(forced_value);
-  DCHECK(forced_value.empty() || ect);
-  return ect;
 }
 
 }  // namespace
@@ -393,8 +389,7 @@ NetworkQualityEstimatorParams::NetworkQualityEstimatorParams(
               params_,
               "correlation_logging_probability",
               0.01)),
-      forced_effective_connection_type_(
-          GetForcedEffectiveConnectionType(params_)),
+      forced_effective_connection_type_(base::nullopt),
       persistent_cache_reading_enabled_(
           GetPersistentCacheReadingEnabled(params_)),
       min_socket_watcher_notification_interval_(
@@ -514,6 +509,27 @@ bool NetworkQualityEstimatorParams::use_small_responses() const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return use_small_responses_;
 };
+
+base::Optional<EffectiveConnectionType>
+NetworkQualityEstimatorParams::forced_effective_connection_type(
+    NetworkChangeNotifier::ConnectionType connection_type) const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (forced_effective_connection_type_) {
+    return forced_effective_connection_type_;
+  }
+
+  std::string forced_value = GetForcedEffectiveConnectionTypeString(params_);
+  if (forced_value == net::kEffectiveConnectionTypeSlow2GOnCellular) {
+    forced_value =
+        net::NetworkChangeNotifier::IsConnectionCellular(connection_type)
+            ? net::kEffectiveConnectionTypeSlow2G
+            : "";
+  }
+  base::Optional<EffectiveConnectionType> ect =
+      GetEffectiveConnectionTypeForName(forced_value);
+  DCHECK(forced_value.empty() || ect);
+  return ect;
+}
 
 // static
 NetworkQualityEstimatorParams::EffectiveConnectionTypeAlgorithm
