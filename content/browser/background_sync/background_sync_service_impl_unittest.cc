@@ -30,7 +30,8 @@
 #include "third_party/WebKit/common/service_worker/service_worker_registration.mojom.h"
 
 namespace content {
-namespace background_sync_service_impl_unittest {
+
+namespace {
 
 using ::testing::_;
 
@@ -80,6 +81,8 @@ void ErrorAndRegistrationListCallback(
   if (error == blink::mojom::BackgroundSyncError::NONE)
     *out_array_size = registrations.size();
 }
+
+}  // namespace
 
 class BackgroundSyncServiceImplTest : public testing::Test {
  public:
@@ -262,5 +265,4 @@ TEST_F(BackgroundSyncServiceImplTest, GetRegistrationsWithRegisteredSync) {
   EXPECT_EQ(1UL, array_size);
 }
 
-}  // namespace background_sync_service_impl_unittest
 }  // namespace content

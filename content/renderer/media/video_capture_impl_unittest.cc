@@ -22,7 +22,6 @@ using ::testing::SaveArg;
 using ::testing::WithArgs;
 
 namespace content {
-namespace video_capture_impl_unittest {
 
 const int kSessionId = 11;
 
@@ -396,5 +395,4 @@ TEST_F(VideoCaptureImplTest, BufferReceivedBeforeOnStarted) {
   StopCapture(0);
 }
 
-}  // namespace video_capture_impl_unittest
 }  // namespace content

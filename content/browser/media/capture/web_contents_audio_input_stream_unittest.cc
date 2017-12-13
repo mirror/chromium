@@ -45,7 +45,8 @@ using media::SineWaveAudioSource;
 using media::VirtualAudioInputStream;
 
 namespace content {
-namespace web_contents_audio_input_stream_unittest {
+
+namespace {
 
 const int kRenderProcessId = 123;
 const int kRenderFrameId = 456;
@@ -176,6 +177,8 @@ class MockAudioInputCallback : public AudioInputStream::AudioInputCallback {
  private:
   DISALLOW_COPY_AND_ASSIGN(MockAudioInputCallback);
 };
+
+}  // namespace
 
 class WebContentsAudioInputStreamTest : public testing::TestWithParam<bool> {
  public:
@@ -541,5 +544,4 @@ TEST_P(WebContentsAudioInputStreamTest, MirroringMultipleStreamsAndTargets) {
 
 INSTANTIATE_TEST_CASE_P(, WebContentsAudioInputStreamTest, ::testing::Bool());
 
-}  // namespace web_contents_audio_input_stream_unittest
 }  // namespace content

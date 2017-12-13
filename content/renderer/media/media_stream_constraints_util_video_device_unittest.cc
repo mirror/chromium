@@ -15,7 +15,8 @@
 #include "third_party/WebKit/public/platform/WebMediaConstraints.h"
 
 namespace content {
-namespace media_stream_constraints_util_video_device_unittest {
+
+namespace {
 
 const char kDeviceID1[] = "fake_device_1";
 const char kDeviceID2[] = "fake_device_2";
@@ -62,6 +63,8 @@ VideoCaptureSettings SelectSettingsVideoDeviceCapture(
       MediaStreamVideoSource::kDefaultHeight,
       MediaStreamVideoSource::kDefaultFrameRate);
 }
+
+}  // namespace
 
 class MediaStreamConstraintsUtilVideoDeviceTest : public testing::Test {
  public:
@@ -2303,5 +2306,4 @@ TEST_F(MediaStreamConstraintsUtilVideoDeviceTest, InvertedDefaultResolution) {
   EXPECT_EQ(result.Height(), MediaStreamVideoSource::kDefaultHeight);
 }
 
-}  // namespace media_stream_constraints_util_video_device_unittest
 }  // namespace content

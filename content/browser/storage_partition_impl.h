@@ -47,10 +47,6 @@ namespace content {
 class BackgroundFetchContext;
 class BlobRegistryWrapper;
 class BlobURLLoaderFactory;
-namespace background_sync_service_impl_unittest {
-//  class BackgroundSyncManagerTest;
-class BackgroundSyncServiceImplTest;
-}  // namespace background_sync_service_impl_unittest
 
 class CONTENT_EXPORT StoragePartitionImpl
     : public StoragePartition,
@@ -162,8 +158,7 @@ class CONTENT_EXPORT StoragePartitionImpl
   class NetworkContextOwner;
 
   friend class BackgroundSyncManagerTest;
-  friend class background_sync_service_impl_unittest::
-      BackgroundSyncServiceImplTest;
+  friend class BackgroundSyncServiceImplTest;
   friend class PaymentAppContentUnitTestBase;
   friend class StoragePartitionImplMap;
   FRIEND_TEST_ALL_PREFIXES(StoragePartitionShaderClearTest, ClearShaderCache);

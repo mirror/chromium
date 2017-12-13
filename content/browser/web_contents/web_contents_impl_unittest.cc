@@ -61,7 +61,7 @@
 #include "url/url_constants.h"
 
 namespace content {
-namespace web_contents_impl_unittest {
+namespace {
 
 class TestInterstitialPage;
 
@@ -356,6 +356,8 @@ class FakeWebContentsDelegate : public WebContentsDelegate {
 
   DISALLOW_COPY_AND_ASSIGN(FakeWebContentsDelegate);
 };
+
+}  // namespace
 
 TEST_F(WebContentsImplTest, UpdateTitle) {
   FakeWebContentsDelegate fake_delegate;
@@ -3586,5 +3588,4 @@ TEST_F(WebContentsImplTest, StartingSandboxFlags) {
   EXPECT_EQ(effective_flags, expected_flags);
 }
 
-}  // namespace web_contents_impl_unittest
 }  // namespace content

@@ -57,7 +57,8 @@
 #include "url/origin.h"
 
 namespace content {
-namespace url_loader_factory_impl_unittest {
+
+namespace {
 
 constexpr int kChildId = 99;
 
@@ -567,5 +568,6 @@ INSTANTIATE_TEST_CASE_P(URLLoaderFactoryImplTest,
                         URLLoaderFactoryImplTest,
                         ::testing::Values(128, 32 * 1024));
 
-}  // namespace url_loader_factory_impl_unittest
+}  // namespace
+
 }  // namespace content

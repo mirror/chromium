@@ -29,11 +29,6 @@ class BrowserContext;
 class BrowsingDataFilterBuilder;
 class StoragePartition;
 
-namespace browsing_data_remover_impl_unittest {
-class BrowsingDataRemoverImplTest;
-FORWARD_DECLARE_TEST(BrowsingDataRemoverImplTest, MultipleTasks);
-}  // namespace browsing_data_remover_impl_unittest
-
 class CONTENT_EXPORT BrowsingDataRemoverImpl
     : public BrowsingDataRemover,
       public base::SupportsUserData::Data {
@@ -127,9 +122,7 @@ class CONTENT_EXPORT BrowsingDataRemoverImpl
 
  private:
   // Testing the private RemovalTask.
-  FRIEND_TEST_ALL_PREFIXES(
-      browsing_data_remover_impl_unittest::BrowsingDataRemoverImplTest,
-      MultipleTasks);
+  FRIEND_TEST_ALL_PREFIXES(BrowsingDataRemoverImplTest, MultipleTasks);
 
   // Represents a single removal task. Contains all parameters needed to execute
   // it and a pointer to the observer that added it. CONTENT_EXPORTed to be

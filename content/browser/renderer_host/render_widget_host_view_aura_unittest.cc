@@ -118,9 +118,6 @@
 #include "ui/base/ime/input_method.h"
 #endif
 
-namespace content {
-namespace render_widget_host_view_aura_unittest {
-
 using testing::_;
 
 using blink::WebGestureEvent;
@@ -132,9 +129,13 @@ using blink::WebTouchPoint;
 using ui::WebInputEventTraits;
 using viz::FrameEvictionManager;
 
+namespace content {
+
 void InstallDelegatedFrameHostClient(
     RenderWidgetHostViewAura* render_widget_host_view,
     std::unique_ptr<DelegatedFrameHostClient> delegated_frame_host_client);
+
+namespace {
 
 constexpr uint64_t kFrameIndexStart =
     viz::CompositorFrameSinkSupport::kFrameIndexStart;
@@ -693,6 +694,8 @@ enum WheelScrollingMode {
   kWheelScrollLatching,
   kAsyncWheelEvents,
 };
+
+}  // namespace
 
 class RenderWidgetHostViewAuraTest : public testing::Test {
  public:
@@ -6657,5 +6660,4 @@ TEST_F(InputMethodStateAuraTest, ImeFocusedNodeChanged) {
   EXPECT_FALSE(has_composition_text());
 }
 
-}  // namespace render_widget_host_view_aura_unittest
 }  // namespace content

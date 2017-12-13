@@ -30,10 +30,6 @@ class VideoCaptureManager;
 using MediaDeviceEnumeration =
     std::array<MediaDeviceInfoArray, NUM_MEDIA_DEVICE_TYPES>;
 
-namespace media_devices_manager_unittest {
-class MediaDevicesManagerTest;
-}
-
 // MediaDeviceChangeSubscriber is an interface to be implemented by classes
 // that can register with MediaDevicesManager to get notifications about changes
 // in the set of media devices.
@@ -117,7 +113,7 @@ class CONTENT_EXPORT MediaDevicesManager
   MediaDeviceInfoArray GetCachedDeviceInfo(MediaDeviceType type);
 
  private:
-  friend class media_devices_manager_unittest::MediaDevicesManagerTest;
+  friend class MediaDevicesManagerTest;
   struct EnumerationRequest;
 
   // The NO_CACHE policy is such that no previous results are used when

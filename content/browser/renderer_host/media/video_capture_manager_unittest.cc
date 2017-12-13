@@ -38,7 +38,8 @@ using ::testing::Return;
 using ::testing::SaveArg;
 
 namespace content {
-namespace video_capture_manager_unittest {
+
+namespace {
 
 const auto kIgnoreLogMessageCB = base::BindRepeating([](const std::string&) {});
 
@@ -175,6 +176,8 @@ class MockVideoCaptureObserver : public media::VideoCaptureObserver {
   MOCK_METHOD1(OnVideoCaptureStarted, void(media::VideoFacingMode));
   MOCK_METHOD1(OnVideoCaptureStopped, void(media::VideoFacingMode));
 };
+
+}  // namespace
 
 // Test class
 class VideoCaptureManagerTest : public testing::Test {
@@ -791,5 +794,4 @@ TEST_F(VideoCaptureManagerTest, PauseAndResumeDevice) {
 // TODO(mcasas): Add a test to check consolidation of the supported formats
 // provided by the device when http://crbug.com/323913 is closed.
 
-}  // namespace video_capture_manager_unittest
 }  // namespace content

@@ -34,8 +34,7 @@ using ::testing::TestWithParam;
 using ::testing::ValuesIn;
 using base::TimeTicks;
 
-namespace content {
-namespace audio_track_recorder_unittest {
+namespace {
 
 const int kDefaultBitsPerSample = 16;
 const int kDefaultSampleRate = 48000;
@@ -50,6 +49,10 @@ const int kRatioInputToOutputFrames =
     kOpusBufferDurationMs / kMediaStreamAudioTrackBufferDurationMs;
 
 const int kFramesPerBuffer = kOpusBufferDurationMs * kDefaultSampleRate / 1000;
+
+}  // namespace
+
+namespace content {
 
 ACTION_P(RunClosure, closure) {
   closure.Run();
@@ -369,6 +372,4 @@ TEST_P(AudioTrackRecorderTest, PauseResume) {
 }
 
 INSTANTIATE_TEST_CASE_P(, AudioTrackRecorderTest, ValuesIn(kATRTestParams));
-
-}  // namespace audio_track_recorder_unittest
 }  // namespace content

@@ -18,9 +18,6 @@ namespace content {
 class BackgroundSyncManager;
 class BackgroundSyncServiceImpl;
 class ServiceWorkerContextWrapper;
-namespace background_sync_service_impl_unittest {
-class BackgroundSyncServiceImplTest;
-}
 
 // One instance of this exists per StoragePartition, and services multiple child
 // processes/origins. Most logic is delegated to the owned BackgroundSyncManager
@@ -56,8 +53,7 @@ class CONTENT_EXPORT BackgroundSyncContext
       std::unique_ptr<BackgroundSyncManager> manager);
 
  private:
-  friend class background_sync_service_impl_unittest::
-      BackgroundSyncServiceImplTest;
+  friend class BackgroundSyncServiceImplTest;
 
   virtual void CreateBackgroundSyncManager(
       scoped_refptr<ServiceWorkerContextWrapper> context);

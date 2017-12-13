@@ -23,7 +23,6 @@
 #include "third_party/webrtc/api/video/i420_buffer.h"
 
 namespace content {
-namespace media_stream_remote_video_source_unittest {
 
 ACTION_P(RunClosure, closure) {
   closure.Run();
@@ -195,5 +194,4 @@ TEST_F(MediaStreamRemoteVideoSourceTest, RemoteTrackStop) {
   track->RemoveSink(&sink);
 }
 
-}  // namespace media_stream_remote_video_source_unittest
 }  // namespace content

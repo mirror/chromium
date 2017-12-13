@@ -32,10 +32,6 @@ namespace mojom {
 class URLLoaderFactory;
 }
 
-namespace service_worker_provider_context_unittest {
-class ServiceWorkerProviderContextTest;
-}
-
 class ServiceWorkerHandleReference;
 class WebServiceWorkerRegistrationImpl;
 struct ServiceWorkerProviderContextDeleter;
@@ -177,8 +173,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   friend class base::DeleteHelper<ServiceWorkerProviderContext>;
   friend class base::RefCountedThreadSafe<ServiceWorkerProviderContext,
                                           ServiceWorkerProviderContextDeleter>;
-  friend class service_worker_provider_context_unittest::
-      ServiceWorkerProviderContextTest;
+  friend class ServiceWorkerProviderContextTest;
   friend class WebServiceWorkerRegistrationImpl;
   friend struct ServiceWorkerProviderContextDeleter;
   struct ProviderStateForClient;

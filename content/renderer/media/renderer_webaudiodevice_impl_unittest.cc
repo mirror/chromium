@@ -18,7 +18,8 @@
 using testing::_;
 
 namespace content {
-namespace renderer_webaudiodevice_impl_unittest {
+
+namespace {
 
 const int kHardwareSampleRate = 44100;
 const int kHardwareBufferSize = 128;
@@ -57,6 +58,8 @@ class RendererWebAudioDeviceImplUnderTest : public RendererWebAudioDeviceImpl {
                                    base::Bind(&MockFrameIdFromCurrentContext)) {
   }
 };
+
+}  // namespace
 
 class RendererWebAudioDeviceImplTest
     : public blink::WebAudioDevice::RenderCallback,
@@ -219,5 +222,4 @@ TEST_F(RendererWebAudioDeviceImplTest, TestLatencyHintValues) {
 #endif
 }
 
-}  // namespace renderer_webaudiodevice_impl_unittest
 }  // namespace content

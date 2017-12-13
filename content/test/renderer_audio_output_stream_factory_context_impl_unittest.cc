@@ -37,7 +37,8 @@
 #include "url/origin.h"
 
 namespace content {
-namespace renderer_audio_output_stream_factory_context_impl_unittest {
+
+namespace {
 
 using testing::_;
 using testing::StrictMock;
@@ -174,6 +175,8 @@ class TestRenderCallback : public media::AudioRendererSink::RenderCallback {
   std::unique_ptr<media::AudioOutputStream::AudioSourceCallback> source_;
 };
 
+}  // namespace
+
 // TODO(maxmorin): Add test for play, pause and set volume.
 class RendererAudioOutputStreamFactoryIntegrationTest : public Test {
  public:
@@ -286,5 +289,4 @@ TEST_F(RendererAudioOutputStreamFactoryIntegrationTest, StreamIntegrationTest) {
   SyncWithAllThreads();
 }
 
-}  // namespace renderer_audio_output_stream_factory_context_impl_unittest
 }  // namespace content

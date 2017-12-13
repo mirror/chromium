@@ -40,12 +40,6 @@ class CacheStorageIndex;
 class CacheStorageManager;
 class CacheStorageScheduler;
 
-namespace cache_storage_manager_unittest {
-class CacheStorageManagerTest;
-FORWARD_DECLARE_TEST(CacheStorageManagerTest, PersistedCacheKeyUsed);
-FORWARD_DECLARE_TEST(CacheStorageManagerTest, TestErrorInitializingCache);
-}  // namespace cache_storage_manager_unittest
-
 // TODO(jkarlin): Constrain the total bytes used per origin.
 
 // CacheStorage holds the set of caches for a given origin. It is
@@ -137,13 +131,9 @@ class CONTENT_EXPORT CacheStorage : public CacheStorageCacheObserver {
  private:
   friend class CacheStorageCacheHandle;
   friend class CacheStorageCache;
-  friend class cache_storage_manager_unittest::CacheStorageManagerTest;
-  FRIEND_TEST_ALL_PREFIXES(
-      cache_storage_manager_unittest::CacheStorageManagerTest,
-      PersistedCacheKeyUsed);
-  FRIEND_TEST_ALL_PREFIXES(
-      cache_storage_manager_unittest::CacheStorageManagerTest,
-      TestErrorInitializingCache);
+  friend class CacheStorageManagerTest;
+  FRIEND_TEST_ALL_PREFIXES(CacheStorageManagerTest, PersistedCacheKeyUsed);
+  FRIEND_TEST_ALL_PREFIXES(CacheStorageManagerTest, TestErrorInitializingCache);
   class CacheLoader;
   class MemoryLoader;
   class SimpleCacheLoader;

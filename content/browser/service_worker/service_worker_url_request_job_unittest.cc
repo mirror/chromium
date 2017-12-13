@@ -69,7 +69,8 @@
 #include "third_party/WebKit/common/service_worker/service_worker_registration.mojom.h"
 
 namespace content {
-namespace service_worker_url_request_job_unittest {
+
+namespace {
 
 const int kProviderID = 100;
 const char kTestData[] = "Here is sample text for the blob.";
@@ -166,6 +167,8 @@ void SaveStatusCallback(ServiceWorkerStatusCode* out_status,
                         ServiceWorkerStatusCode status) {
   *out_status = status;
 }
+
+}  // namespace
 
 // ServiceWorkerURLRequestJobTest is for testing the handling of URL requests by
 // a service worker.
@@ -1488,5 +1491,4 @@ TEST_F(ServiceWorkerURLRequestJobTest, CancelRequest) {
 // TODO(kinuko): Add more tests with different response data and also for
 // FallbackToNetwork case.
 
-}  // namespace service_worker_url_request_job_unittest
 }  // namespace content

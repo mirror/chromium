@@ -28,7 +28,8 @@ using ::testing::ReturnRef;
 using ::testing::StrictMock;
 
 namespace content {
-namespace parallel_download_job_unittest {
+
+namespace {
 
 class MockDownloadRequestHandle : public DownloadRequestHandleInterface {
  public:
@@ -64,6 +65,8 @@ class MockByteStreamReader : public ByteStreamReader {
   MOCK_CONST_METHOD0(GetStatus, int());
   MOCK_METHOD1(RegisterCallback, void(const base::Closure&));
 };
+
+}  // namespace
 
 class ParallelDownloadJobForTest : public ParallelDownloadJob {
  public:
@@ -493,5 +496,4 @@ TEST_F(ParallelDownloadJobTest, InterruptOnStartup) {
   DestroyParallelJob();
 }
 
-}  // namespace parallel_download_job_unittest
 }  // namespace content

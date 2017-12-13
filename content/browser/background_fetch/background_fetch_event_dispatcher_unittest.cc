@@ -18,7 +18,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-namespace background_fetch_event_dispatcher_unittest {
+namespace {
 
 const char kExampleDeveloperId[] = "my-id";
 const char kExampleDeveloperId2[] = "my-second-id";
@@ -317,5 +317,5 @@ TEST_F(BackgroundFetchEventDispatcherTest, DispatchFetchedEvent) {
       SERVICE_WORKER_ERROR_EVENT_WAITUNTIL_REJECTED, 1);
 }
 
-}  // namespace background_fetch_event_dispatcher_unittest
+}  // namespace
 }  // namespace content

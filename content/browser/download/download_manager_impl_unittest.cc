@@ -69,7 +69,7 @@ ACTION_TEMPLATE(RunCallback,
 namespace content {
 class ByteStreamReader;
 
-namespace download_manager_impl_unittest {
+namespace {
 
 // Matches a DownloadCreateInfo* that points to the same object as |info| and
 // has a |default_download_directory| that matches |download_directory|.
@@ -385,6 +385,8 @@ class MockByteStreamReader : public ByteStreamReader {
   MOCK_METHOD1(RegisterCallback, void(const base::Closure&));
 };
 
+}  // namespace
+
 class DownloadManagerTest : public testing::Test {
  public:
   static const char* kTestData;
@@ -645,10 +647,14 @@ TEST_F(DownloadManagerTest, GetDownloadByGuid) {
   ASSERT_EQ(persisted_item, download_manager_->GetDownloadByGuid(kGuid));
 }
 
+namespace {
+
 base::Callback<bool(const GURL&)> GetSingleURLFilter(const GURL& url) {
-  return base::Bind(
-      static_cast<bool (*)(const GURL&, const GURL&)>(::operator==), GURL(url));
+  return base::Bind(static_cast<bool (*)(const GURL&, const GURL&)>(operator==),
+                    GURL(url));
 }
+
+}  // namespace
 
 // Confirm that only downloads with the specified URL are removed.
 TEST_F(DownloadManagerTest, RemoveDownloadsByURL) {
@@ -670,5 +676,4 @@ TEST_F(DownloadManagerTest, RemoveDownloadsByURL) {
   EXPECT_EQ(remove_count, 1);
 }
 
-}  // namespace download_manager_impl_unittest
 }  // namespace content

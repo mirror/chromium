@@ -39,7 +39,8 @@
 using blink::MessagePortChannel;
 
 namespace content {
-namespace service_worker_dispatcher_host_unittest {
+
+namespace {
 
 static void SaveStatusCallback(bool* called,
                                ServiceWorkerStatusCode* out,
@@ -95,6 +96,8 @@ std::unique_ptr<ServiceWorkerNavigationHandleCore> CreateNavigationHandleCore(
   base::RunLoop().RunUntilIdle();
   return navigation_handle_core;
 }
+
+}  // namespace
 
 static const int kRenderFrameId = 1;
 
@@ -477,5 +480,4 @@ TEST_F(ServiceWorkerDispatcherHostTest, DispatchExtendableMessageEvent_Fail) {
   EXPECT_EQ(SERVICE_WORKER_ERROR_START_WORKER_FAILED, status);
 }
 
-}  // namespace service_worker_dispatcher_host_unittest
 }  // namespace content

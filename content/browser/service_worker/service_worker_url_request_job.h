@@ -56,16 +56,6 @@ class ServiceWorkerBlobReader;
 class ServiceWorkerDataPipeReader;
 class ServiceWorkerVersion;
 
-namespace service_worker_controllee_request_handler_unittest {
-class ServiceWorkerControlleeRequestHandlerTest;
-FORWARD_DECLARE_TEST(ServiceWorkerControlleeRequestHandlerTest,
-                     LostActiveVersion);
-}  // namespace service_worker_controllee_request_handler_unittest
-
-namespace service_worker_url_request_job_unittest {
-class DelayHelper;
-}
-
 class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
  public:
   using Delegate = ServiceWorkerURLJobWrapper::Delegate;
@@ -149,10 +139,9 @@ class CONTENT_EXPORT ServiceWorkerURLRequestJob : public net::URLRequestJob {
  private:
   class FileSizeResolver;
   class NavigationPreloadMetrics;
-  friend class service_worker_url_request_job_unittest::DelayHelper;
+  friend class DelayHelper;
   friend class ServiceWorkerURLRequestJobTest;
-  FRIEND_TEST_ALL_PREFIXES(service_worker_controllee_request_handler_unittest::
-                               ServiceWorkerControlleeRequestHandlerTest,
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerControlleeRequestHandlerTest,
                            LostActiveVersion);
 
   enum ResponseBodyType {

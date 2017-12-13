@@ -68,49 +68,6 @@ namespace content {
 class LegacyRenderWidgetHostHWND;
 #endif
 
-namespace render_widget_host_view_aura_unittest {
-class InputMethodAuraTestBase;
-class RenderWidgetHostViewAuraTest;
-class RenderWidgetHostViewAuraCopyRequestTest;
-class RenderWidgetHostViewAuraSurfaceSynchronizationTest;
-FORWARD_DECLARE_TEST(InputMethodResultAuraTest, FinishImeCompositionSession);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest,
-                     PopupRetainsCaptureAfterMouseRelease);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, SetCompositionText);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, FocusedNodeChanged);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, TouchEventState);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest,
-                     TouchEventPositionsArentRounded);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, TouchEventSyncAsync);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, Resize);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, SwapNotifiesWindow);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, MirrorLayers);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, SkippedDelegatedFrames);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, ResizeAfterReceivingFrame);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, MissingFramesDontLock);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, OutputSurfaceIdChange);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, DiscardDelegatedFrames);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest,
-                     DiscardDelegatedFramesWithLocking);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, SoftwareDPIChange);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, UpdateCursorIfOverSelf);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, VisibleViewportTest);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, OverscrollResetsOnBlur);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, FinishCompositionByMouse);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, ForwardsBeginFrameAcks);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest,
-                     VirtualKeyboardFocusEnsureCaretInRect);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraTest, HitTestRegionListSubmitted);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-                     DropFallbackWhenHidden);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-                     CompositorFrameSinkChange);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-                     SurfaceChanges);
-FORWARD_DECLARE_TEST(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-                     DeviceScaleFactorChanges);
-}  // namespace render_widget_host_view_aura_unittest
-
 class CursorManager;
 class DelegatedFrameHost;
 class DelegatedFrameHostClient;
@@ -404,104 +361,58 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
 
  private:
   friend class DelegatedFrameHostClientAura;
-  friend class render_widget_host_view_aura_unittest::InputMethodAuraTestBase;
-  friend class render_widget_host_view_aura_unittest::
-      RenderWidgetHostViewAuraTest;
-  friend class render_widget_host_view_aura_unittest::
-      RenderWidgetHostViewAuraCopyRequestTest;
+  friend class InputMethodAuraTestBase;
+  friend class RenderWidgetHostViewAuraTest;
+  friend class RenderWidgetHostViewAuraCopyRequestTest;
   friend class TestInputMethodObserver;
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::InputMethodResultAuraTest,
-      FinishImeCompositionSession);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      PopupRetainsCaptureAfterMouseRelease);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      SetCompositionText);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      FocusedNodeChanged);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      TouchEventState);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      TouchEventPositionsArentRounded);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      TouchEventSyncAsync);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      Resize);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      SwapNotifiesWindow);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      MirrorLayers);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      SkippedDelegatedFrames);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      ResizeAfterReceivingFrame);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      MissingFramesDontLock);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      OutputSurfaceIdChange);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      DiscardDelegatedFrames);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      DiscardDelegatedFramesWithLocking);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      SoftwareDPIChange);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      UpdateCursorIfOverSelf);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      VisibleViewportTest);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      OverscrollResetsOnBlur);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      FinishCompositionByMouse);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      ForwardsBeginFrameAcks);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      VirtualKeyboardFocusEnsureCaretInRect);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::RenderWidgetHostViewAuraTest,
-      HitTestRegionListSubmitted);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::
-          RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-      DropFallbackWhenHidden);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::
-          RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-      CompositorFrameSinkChange);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::
-          RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-      SurfaceChanges);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::
-          RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-      DeviceScaleFactorChanges);
-  FRIEND_TEST_ALL_PREFIXES(
-      render_widget_host_view_aura_unittest::
-          RenderWidgetHostViewAuraSurfaceSynchronizationTest,
-      HideThenShow);
+  FRIEND_TEST_ALL_PREFIXES(InputMethodResultAuraTest,
+                           FinishImeCompositionSession);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           PopupRetainsCaptureAfterMouseRelease);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, SetCompositionText);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, FocusedNodeChanged);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, TouchEventState);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           TouchEventPositionsArentRounded);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, TouchEventSyncAsync);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, Resize);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, SwapNotifiesWindow);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, MirrorLayers);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           SkippedDelegatedFrames);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           ResizeAfterReceivingFrame);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, MissingFramesDontLock);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, OutputSurfaceIdChange);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           DiscardDelegatedFrames);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           DiscardDelegatedFramesWithLocking);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest, SoftwareDPIChange);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           UpdateCursorIfOverSelf);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           VisibleViewportTest);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           OverscrollResetsOnBlur);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           FinishCompositionByMouse);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           ForwardsBeginFrameAcks);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           VirtualKeyboardFocusEnsureCaretInRect);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraTest,
+                           HitTestRegionListSubmitted);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
+                           DropFallbackWhenHidden);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
+                           CompositorFrameSinkChange);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
+                           SurfaceChanges);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
+                           DeviceScaleFactorChanges);
+  FRIEND_TEST_ALL_PREFIXES(RenderWidgetHostViewAuraSurfaceSynchronizationTest,
+                           HideThenShow);
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessBrowserTest, PopupMenuTest);
   FRIEND_TEST_ALL_PREFIXES(WebContentsViewAuraTest,
                            WebContentsViewReparent);

@@ -51,11 +51,6 @@ class CacheMetadata;
 class CacheResponse;
 }
 
-namespace cache_storage_cache_unittest {
-class TestCacheStorageCache;
-class CacheStorageCacheTest;
-}  // namespace cache_storage_cache_unittest
-
 // Represents a ServiceWorker Cache as seen in
 // https://slightlyoff.github.io/ServiceWorker/spec/service_worker/ The
 // asynchronous methods are executed serially. Callbacks to the public functions
@@ -229,8 +224,8 @@ class CONTENT_EXPORT CacheStorageCache {
   };
 
   friend class base::RefCounted<CacheStorageCache>;
-  friend class cache_storage_cache_unittest::TestCacheStorageCache;
-  friend class cache_storage_cache_unittest::CacheStorageCacheTest;
+  friend class TestCacheStorageCache;
+  friend class CacheStorageCacheTest;
 
   struct PutContext;
   struct QueryCacheContext;

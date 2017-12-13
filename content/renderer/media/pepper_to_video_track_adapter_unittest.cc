@@ -23,7 +23,6 @@
 using ::testing::_;
 
 namespace content {
-namespace pepper_to_video_track_adapter_unittest {
 
 ACTION_P(RunClosure, closure) {
   closure.Run();
@@ -108,5 +107,4 @@ TEST_F(PepperToVideoTrackAdapterTest, PutFrame) {
   delete frame_writer;
 }
 
-}  // namespace pepper_to_video_track_adapter_unittest
 }  // namespace content

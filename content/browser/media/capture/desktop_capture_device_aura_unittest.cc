@@ -37,7 +37,7 @@ class VideoFrame;
 }  // namespace media
 
 namespace content {
-namespace desktop_capture_device_aura_unittest {
+namespace {
 
 const int kFrameRate = 30;
 
@@ -168,5 +168,5 @@ TEST_F(DesktopCaptureDeviceAuraTest, StartAndStop) {
   capture_device->StopAndDeAllocate();
 }
 
-}  // namespace desktop_capture_device_aura_unittest
+}  // namespace
 }  // namespace content

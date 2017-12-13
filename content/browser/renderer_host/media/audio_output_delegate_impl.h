@@ -28,9 +28,6 @@ class AudioParameters;
 }
 
 namespace content {
-namespace audio_output_delegate_impl_unittest {
-class AudioOutputDelegateTest;
-}
 
 // This class, except for the AudioOutputDelegateImpl::EventHandler
 // implementation, is operated on the IO thread.
@@ -75,7 +72,7 @@ class CONTENT_EXPORT AudioOutputDelegateImpl
 
  private:
   class ControllerEventHandler;
-  friend class audio_output_delegate_impl_unittest::AudioOutputDelegateTest;
+  friend class AudioOutputDelegateTest;
 
   void SendCreatedNotification();
   void OnError();

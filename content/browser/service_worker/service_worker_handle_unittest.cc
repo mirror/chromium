@@ -27,7 +27,8 @@
 #include "third_party/WebKit/common/service_worker/service_worker_state.mojom.h"
 
 namespace content {
-namespace service_worker_handle_unittest {
+
+namespace {
 
 const int kRenderFrameId = 44;  // A dummy ID for testing.
 
@@ -41,6 +42,8 @@ void VerifyStateChangedMessage(int expected_handle_id,
   EXPECT_EQ(expected_handle_id, std::get<1>(param));
   EXPECT_EQ(expected_state, std::get<2>(param));
 }
+
+}  // namespace
 
 class TestingServiceWorkerDispatcherHost : public ServiceWorkerDispatcherHost {
  public:
@@ -167,5 +170,4 @@ TEST_F(ServiceWorkerHandleTest, OnVersionStateChanged) {
                             message);
 }
 
-}  // namespace service_worker_handle_unittest
 }  // namespace content

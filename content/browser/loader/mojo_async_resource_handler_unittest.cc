@@ -59,7 +59,7 @@
 #include "ui/base/page_transition_types.h"
 
 namespace content {
-namespace mojo_async_resource_handler_unittest {
+namespace {
 
 constexpr int kSizeMimeSnifferRequiresForFirstOnWillRead = 2048;
 
@@ -1338,5 +1338,5 @@ TEST_P(
 INSTANTIATE_TEST_CASE_P(MojoAsyncResourceHandlerWithAllocationSizeTest,
                         MojoAsyncResourceHandlerWithAllocationSizeTest,
                         ::testing::Values(8, 32 * 2014));
-}  // namespace mojo_async_resource_handler_unittest
+}  // namespace
 }  // namespace content

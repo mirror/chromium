@@ -23,8 +23,8 @@
 #include "url/gurl.h"
 
 namespace content {
-namespace audio_renderer_mixer_manager_unittest {
 
+namespace {
 const int kBitsPerChannel = 16;
 const int kSampleRate = 48000;
 const int kBufferSize = 8192;
@@ -40,6 +40,7 @@ const char kNonexistentDeviceId[] = "nonexistent-device-id";
 
 const int kRenderFrameId = 124;
 const int kAnotherRenderFrameId = 678;
+}  // namespace;
 
 using media::AudioParameters;
 using media::AudioLatency;
@@ -861,5 +862,4 @@ TEST_F(AudioRendererMixerManagerTest, MixerParamsBitstreamFormat) {
   ReturnMixer(mixer);
 }
 
-}  // namespace audio_renderer_mixer_manager_unittest
 }  // namespace content

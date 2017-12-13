@@ -13,9 +13,7 @@
 
 namespace content {
 
-namespace render_widget_host_view_aura_unittest {
 class RenderWidgetHostViewAuraOverscrollTest;
-}
 class OverscrollControllerDelegate;
 
 // Indicates the direction that the scroll is heading in relative to the screen,
@@ -75,8 +73,7 @@ class CONTENT_EXPORT OverscrollController {
   void Cancel();
 
  private:
-  friend class render_widget_host_view_aura_unittest::
-      RenderWidgetHostViewAuraOverscrollTest;
+  friend class RenderWidgetHostViewAuraOverscrollTest;
 
   // Different scrolling states.
   enum ScrollState {

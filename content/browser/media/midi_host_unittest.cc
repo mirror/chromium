@@ -18,7 +18,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
-namespace midi_host_unittest {
+namespace {
 
 using midi::mojom::PortState;
 
@@ -169,6 +169,8 @@ class MidiHostTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(MidiHostTest);
 };
 
+}  // namespace
+
 // Test if sending data to out of range port is ignored.
 TEST_F(MidiHostTest, OutputPortCheck) {
   // Only one output port is available.
@@ -199,5 +201,4 @@ TEST_F(MidiHostTest, OutputPortCheck) {
   CheckSendEventAt(2, port1);
 }
 
-}  // namespace midi_host_unittest
 }  // namespace conent

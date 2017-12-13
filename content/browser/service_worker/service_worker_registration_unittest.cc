@@ -33,7 +33,8 @@
 #include "url/gurl.h"
 
 namespace content {
-namespace service_worker_registration_unittest {
+
+namespace {
 
 // From service_worker_registration.cc.
 constexpr base::TimeDelta kMaxLameDuckTime = base::TimeDelta::FromMinutes(5);
@@ -115,6 +116,8 @@ class MockServiceWorkerRegistrationObject
   mojo::AssociatedBinding<blink::mojom::ServiceWorkerRegistrationObject>
       binding_;
 };
+
+}  // namespace
 
 class ServiceWorkerRegistrationTest : public testing::Test {
  public:
@@ -1056,5 +1059,4 @@ TEST_F(ServiceWorkerRegistrationObjectHostTest, UpdateFound) {
   EXPECT_EQ(1, mock_registration_object->update_found_called_count());
 }
 
-}  // namespace service_worker_registration_unittest
 }  // namespace content

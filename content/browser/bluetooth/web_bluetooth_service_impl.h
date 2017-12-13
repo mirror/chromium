@@ -36,10 +36,6 @@ struct GATTNotifySessionAndCharacteristicClient;
 class RenderFrameHost;
 class RenderProcessHost;
 
-namespace frame_connected_bluetooth_devices_unittest {
-class FrameConnectedBluetoothDevicesTest;
-}
-
 // Implementation of Mojo WebBluetoothService located in
 // third_party/WebKit/public/platform/modules/bluetooth.
 // It handles Web Bluetooth API requests coming from Blink / renderer
@@ -71,8 +67,7 @@ class CONTENT_EXPORT WebBluetoothServiceImpl
   bool IsDevicePaired(const std::string& device_address);
 
  private:
-  friend class frame_connected_bluetooth_devices_unittest::
-      FrameConnectedBluetoothDevicesTest;
+  friend class FrameConnectedBluetoothDevicesTest;
   using PrimaryServicesRequestCallback =
       base::OnceCallback<void(device::BluetoothDevice*)>;
 

@@ -34,8 +34,6 @@ base::LazyInstance<ParametersMap>::Leaky g_parameters_map =
 
 const char* kTestDownloadPath = "/download/";
 
-namespace test_download_http_response {
-
 // Xorshift* PRNG from https://en.wikipedia.org/wiki/Xorshift
 uint64_t XorShift64StarWithIndex(uint64_t seed, uint64_t index) {
   const uint64_t kMultiplier = UINT64_C(2685821657736338717);
@@ -45,8 +43,6 @@ uint64_t XorShift64StarWithIndex(uint64_t seed, uint64_t index) {
   x ^= x >> 27;
   return x * kMultiplier;
 }
-
-}  // namespace test_download_http_response
 
 // Called when the response is sent to the client.
 void OnResponseBodySent(const base::Closure& request_completed_cb,
@@ -275,8 +271,7 @@ std::string TestDownloadHttpResponse::GetPatternBytes(int seed,
   int64_t first_byte_position = starting_offset % sizeof(int64_t);
   std::string output;
   while (length > 0) {
-    uint64_t data =
-        test_download_http_response::XorShift64StarWithIndex(seed, seed_offset);
+    uint64_t data = XorShift64StarWithIndex(seed, seed_offset);
     int length_to_copy =
         std::min(length, static_cast<int>(sizeof(data) - first_byte_position));
     char* start_pos = reinterpret_cast<char*>(&data) + first_byte_position;
