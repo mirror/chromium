@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85de9a20_6809c085",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T07:50:33Z",
+      "side": 1,
+      "message": "(doesn\u0027t need to happen in this change, but ScopedObserver might be better for all of these)",
+      "revId": "42455e377603b4c126dceb86c4ec72cb6a6192e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
