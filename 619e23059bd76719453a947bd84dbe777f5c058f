@@ -51,6 +51,24 @@
       "revId": "619e23059bd76719453a947bd84dbe777f5c058f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908a2170_66a4e7a2",
+        "filename": "content/public/test/test_navigation_throttle_inserter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-13T14:24:53Z",
+      "side": 1,
+      "message": "I\u0027m ok with that code if it temporarily moves to the test itself. My concern is that if this becomes part of the public interface and people start relying on it, we might have issues down the road when we want to make changes to NavigationHandle.",
+      "parentUuid": "c99bb478_8c44e088",
+      "revId": "619e23059bd76719453a947bd84dbe777f5c058f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
