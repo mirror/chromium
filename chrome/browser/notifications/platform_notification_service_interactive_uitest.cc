@@ -260,6 +260,87 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
+                       NonPersistentWebNotificationOptionsReflection) {
+  ASSERT_NO_FATAL_FAILURE(GrantNotificationPermissionForTest());
+
+  // First, test the default values.
+
+  std::string script_result;
+  ASSERT_TRUE(RunScript("DisplayNonPersistentNotification('Title', {})",
+                        &script_result));
+  EXPECT_EQ("ok", script_result);
+
+  std::vector<message_center::Notification> notifications =
+      GetDisplayedNotifications(false /* is_persistent */);
+  ASSERT_EQ(1u, notifications.size());
+
+  // We don't use or check the notification's direction and language.
+  const message_center::Notification& default_notification = notifications[0];
+  EXPECT_EQ("Title", base::UTF16ToUTF8(default_notification.title()));
+  EXPECT_EQ("", base::UTF16ToUTF8(default_notification.message()));
+  EXPECT_TRUE(default_notification.image().IsEmpty());
+  EXPECT_TRUE(default_notification.icon().IsEmpty());
+  EXPECT_TRUE(default_notification.small_image().IsEmpty());
+  EXPECT_FALSE(default_notification.renotify());
+  EXPECT_FALSE(default_notification.silent());
+  EXPECT_FALSE(default_notification.never_timeout());
+  EXPECT_EQ(0u, default_notification.buttons().size());
+
+  // Verifies that the notification's default timestamp is set in the last 30
+  // seconds. This number has no significance, but it needs to be significantly
+  // high to avoid flakiness in the test.
+  EXPECT_NEAR(default_notification.timestamp().ToJsTime(),
+              base::Time::Now().ToJsTime(), 30 * 1000);
+
+  // Now, test the non-default values.
+
+  ASSERT_TRUE(RunScript(R"(DisplayNonPersistentNotification('Title', {
+          body: 'Contents',
+          tag: 'replace-id',
+          dir: 'rtl',
+          lang: 'nl-NL',
+          image: 'icon.png',
+          icon: 'icon.png',
+          badge: 'icon.png',
+          timestamp: 621046800000,
+          renotify: true,
+          silent: true,
+          requireInteraction: true,
+          data: [
+            { property: 'value' }
+          ]
+        }))",
+                        &script_result));
+  EXPECT_EQ("ok", script_result);
+
+  notifications = GetDisplayedNotifications(false /* is_persistent */);
+  ASSERT_EQ(2u, notifications.size());
+
+  // We don't use or check the notification's direction and language.
+  const message_center::Notification& all_options_notification =
+      notifications[1];
+  EXPECT_EQ("Title", base::UTF16ToUTF8(all_options_notification.title()));
+  EXPECT_EQ("Contents", base::UTF16ToUTF8(all_options_notification.message()));
+  // The js-provided tag should be part of the id.
+  EXPECT_FALSE(all_options_notification.id().find("replace-id") ==
+               std::string::npos);
+#if !defined(OS_MACOSX)
+  EXPECT_FALSE(all_options_notification.image().IsEmpty());
+  EXPECT_EQ(kIconWidth, all_options_notification.image().Width());
+  EXPECT_EQ(kIconHeight, all_options_notification.image().Height());
+#endif
+  EXPECT_FALSE(all_options_notification.icon().IsEmpty());
+  EXPECT_EQ(kIconWidth, all_options_notification.icon().Width());
+  EXPECT_EQ(kIconHeight, all_options_notification.icon().Height());
+  EXPECT_TRUE(all_options_notification.small_image().IsEmpty());
+  EXPECT_TRUE(all_options_notification.renotify());
+  EXPECT_TRUE(all_options_notification.silent());
+  EXPECT_TRUE(all_options_notification.never_timeout());
+  EXPECT_DOUBLE_EQ(kNotificationTimestamp,
+                   all_options_notification.timestamp().ToJsTime());
+}
+
+IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
                        WebNotificationOptionsReflection) {
   ASSERT_NO_FATAL_FAILURE(GrantNotificationPermissionForTest());
 
@@ -876,4 +957,117 @@ IN_PROC_BROWSER_TEST_F(
   // Since the kNotificationContentImage kill switch has disabled images, the
   // notification should be shown without an image.
   EXPECT_TRUE(notifications[0].image().IsEmpty());
+}
+
+class PlatformNotificationServiceMojoEnabledBrowserTest
+    : public PlatformNotificationServiceBrowserTest {
+ public:
+  // InProcessBrowserTest overrides.
+  void SetUpInProcessBrowserTestFixture() override {
+    scoped_feature_list_.InitWithFeatures({features::kNotificationsWithMojo},
+                                          {});
+  }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+};
+
+IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceMojoEnabledBrowserTest,
+                       NonPersistentWebNotificationOptionsReflection) {
+  ASSERT_NO_FATAL_FAILURE(GrantNotificationPermissionForTest());
+  LOG(WARNING) << "ANITA: " << __FUNCTION__;
+
+  // First, test the default values.
+
+  std::string script_result;
+  {
+    base::RunLoop run_loop;
+    display_service_tester_->SetNotificationAddedClosure(
+        run_loop.QuitClosure());
+
+    ASSERT_TRUE(RunScript(
+        "DisplayNonPersistentNotificationWithoutWaitingForEvent('Title')",
+        &script_result));
+    EXPECT_EQ("sync-ok", script_result);
+
+    run_loop.Run();
+  }
+
+  std::vector<message_center::Notification> notifications =
+      GetDisplayedNotifications(false /* is_persistent */);
+  ASSERT_EQ(1u, notifications.size());
+
+  // We don't use or check the notification's direction and language.
+  const message_center::Notification& default_notification = notifications[0];
+  EXPECT_EQ("Title", base::UTF16ToUTF8(default_notification.title()));
+  EXPECT_EQ("", base::UTF16ToUTF8(default_notification.message()));
+  EXPECT_TRUE(default_notification.image().IsEmpty());
+  EXPECT_TRUE(default_notification.icon().IsEmpty());
+  EXPECT_TRUE(default_notification.small_image().IsEmpty());
+  EXPECT_FALSE(default_notification.renotify());
+  EXPECT_FALSE(default_notification.silent());
+  EXPECT_FALSE(default_notification.never_timeout());
+  EXPECT_EQ(0u, default_notification.buttons().size());
+
+  // Verifies that the notification's default timestamp is set in the last 30
+  // seconds. This number has no significance, but it needs to be significantly
+  // high to avoid flakiness in the test.
+  EXPECT_NEAR(default_notification.timestamp().ToJsTime(),
+              base::Time::Now().ToJsTime(), 30 * 1000);
+
+  // Now, test the non-default values.
+
+  {
+    base::RunLoop run_loop;
+    display_service_tester_->SetNotificationAddedClosure(
+        run_loop.QuitClosure());
+    ASSERT_TRUE(RunScript(
+        R"(DisplayNonPersistentNotificationWithoutWaitingForEvent('Title2', {
+          body: 'Contents',
+          tag: 'replace-id',
+          dir: 'rtl',
+          lang: 'nl-NL',
+          image: 'icon.png',
+          icon: 'icon.png',
+          badge: 'icon.png',
+          timestamp: 621046800000,
+          renotify: true,
+          silent: true,
+          requireInteraction: true,
+          data: [
+            { property: 'value' }
+          ]
+        }))",
+        &script_result));
+    EXPECT_EQ("sync-ok", script_result);
+
+    run_loop.Run();
+  }
+
+  notifications = GetDisplayedNotifications(false /* is_persistent */);
+  ASSERT_EQ(2u, notifications.size());
+
+  // We don't use or check the notification's direction and language.
+  const message_center::Notification& all_options_notification =
+      notifications[1];
+  EXPECT_EQ("Title2", base::UTF16ToUTF8(all_options_notification.title()));
+  EXPECT_EQ("Contents", base::UTF16ToUTF8(all_options_notification.message()));
+  // The js-provided tag should be part of the id.
+  EXPECT_FALSE(all_options_notification.id().find("replace-id") ==
+               std::string::npos);
+#if !defined(OS_MACOSX)
+  EXPECT_FALSE(all_options_notification.image().IsEmpty());
+  EXPECT_EQ(kIconWidth, all_options_notification.image().Width());
+  EXPECT_EQ(kIconHeight, all_options_notification.image().Height());
+#endif
+  EXPECT_FALSE(all_options_notification.icon().IsEmpty());
+  EXPECT_EQ(kIconWidth, all_options_notification.icon().Width());
+  EXPECT_EQ(kIconHeight, all_options_notification.icon().Height());
+  EXPECT_TRUE(all_options_notification.small_image().IsEmpty());
+  EXPECT_TRUE(all_options_notification.renotify());
+  EXPECT_TRUE(all_options_notification.silent());
+  EXPECT_TRUE(all_options_notification.never_timeout());
+  EXPECT_DOUBLE_EQ(kNotificationTimestamp,
+                   all_options_notification.timestamp().ToJsTime());
+  EXPECT_EQ(true, false);
 }
