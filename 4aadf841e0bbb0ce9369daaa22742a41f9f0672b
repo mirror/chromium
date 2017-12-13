@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e34b4b2e_68f88cd9",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerInstalledScriptsManagerTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:39:47Z",
+      "side": 1,
+      "message": "Added new tests for |encoding| and |headers|, which were invisible to //content but now we\u0027re inside Blink.",
+      "range": {
+        "startLine": 257,
+        "startChar": 4,
+        "endLine": 259,
+        "endChar": 45
+      },
+      "revId": "4aadf841e0bbb0ce9369daaa22742a41f9f0672b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc91d28_fa165783",
+        "filename": "third_party/WebKit/Tools/Scripts/audit-non-blink-usage.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-13T07:39:47Z",
+      "side": 1,
+      "message": "I don\u0027t know how to restrict this for Test files..",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "4aadf841e0bbb0ce9369daaa22742a41f9f0672b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
