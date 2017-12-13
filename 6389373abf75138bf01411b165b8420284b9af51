@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "8c3ffb65_0a172064",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-13T20:24:38Z",
+      "side": 1,
+      "message": "Ideally yes, done in unit tests where we have better infrastructure (creating ARC window).",
+      "parentUuid": "da0bc21e_9c8aa0c5",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9687d5b_9bc13f58",
         "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
         "patchSetId": 6
