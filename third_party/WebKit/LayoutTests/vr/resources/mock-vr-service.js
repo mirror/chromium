@@ -12,9 +12,12 @@ class MockVRDisplay {
     }
   }
 
-  requestPresent(submitFrameClient, request) {
-    this.presentation_provider_.bind(submitFrameClient, request);
-    return Promise.resolve({success: true});
+  requestPresent(submitFrameClient, request, present_options) {
+    this.presentation_provider_.bind(submitFrameClient, request, present_options);
+    return Promise.resolve({success: true, transportOptions: {
+      waitForTransferNotification: true,
+      waitForRenderNotification: true,
+      waitForGpuFence: false}});
   }
 
   setPose(pose) {
