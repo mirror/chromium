@@ -1,0 +1,283 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0753c1ea_8e484c92",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "I\u0027d recommend simply removing this comment, it does not add much value (and it is already slightly incorrect).",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3ecf01_91eebf1b",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "nit: Plus, byte string keys are also not supported, right?",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da52b964_4b7ade9a",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "Please also add a test for keys (0x18, 0x17) and (0x17) to document if we should get \"out of order key\" or \"non-minimal encoding\" error.\n\nIt would also be nice to add a similar test as for the writer, to expect that a map with integers 0, 23, 24, 255, 256 ... minimally encoded are accepted.",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b279fec8_e8eeb701",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "Please add a test for keys 0x17 and 0x18, 0x17 to document if we should get \"duplicate key\" or \"non-minimal encoding\" error.",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869ea215_c1c7975e",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "nit: For simplicity, let\u0027s make this a fixed sized C-style array of std::vector\u0027s. Same in all tests touched by this CL in this file.",
+      "range": {
+        "startLine": 550,
+        "startChar": 15,
+        "endLine": 550,
+        "endChar": 48
+      },
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07767a5_60349288",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "nit: I know that Jeffrey asked for an explicit comment, but this is saying the same as the next line. :)\n\nHow about:\n\nTHE CTAP SORT ORDER IMPLEMENTED HERE DIFFERS FROM THE CANONICAL CBOR ORDER defined in https://tools.ietf.org/html/rfc7049#section-3.9, in that the latter sorts purely ...",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0d7835_0974e9bc",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "I think it\u0027s really non-intuitive that as per the current implementation of this comparator and CBORWriter, we will actually be able to serialize keys of other types correctly without any warnings. But only as long as there is at most one key of each respective other type. Once the second key of a given \"other\" type is added, NOTREACHED is reached below, but for the user of this class, it will be totally non-intuitive what the problem is.\n\nLet\u0027s make this more specific by adding a DCHECK on the types at the very beginning of this function.\n\nAlso, make sure that CBORValue or CBORWriter documents that we only support unsigned and string keys.",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e091e73_62723b40",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "nit: const auto\u0026, same below",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 27
+      },
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a728fdc2_a3a85a3a",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "nit: const size_t, same below",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e57de5_048a6e98",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "ASSERT_EQ, so that the next line won\u0027t crash the test if the expectation fails. Same below.",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 13
+      },
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d27fb0e_159598d8",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "nit: Let\u0027s name this something else, now that we have unsigned values as keys, calling a string key `unsigned` is quite misleading :-)",
+      "range": {
+        "startLine": 169,
+        "startChar": 12,
+        "endLine": 169,
+        "endChar": 24
+      },
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe946d52_a6e733e6",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "nit: Same here.",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb652534_c373db46",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "... and here.",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c36d04e_32fb51d0",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "nit: s/first/first among the strings/",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8692565d_b4a01577",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-12-13T19:55:48Z",
+      "side": 1,
+      "message": "It is not entirely obvious that comparing the actual integer values (which is what we do) results in the ordering as described in the comment above.\n\nCan you please add more integer keys? For each integer width (0, ... 8 additional bytes), I\u0027d like to have the two extreme values from the respective representable range, i.e., 0, 23, 24, 255, 256...",
+      "revId": "b2bda25285db7a6b67b9b26f5cd6f8b4e10da558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
