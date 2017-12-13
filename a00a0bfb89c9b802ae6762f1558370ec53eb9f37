@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "681a1d5f_e932a0ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:27:44Z",
+      "side": 1,
+      "message": "Mostly done (\"s/unpacked extension directories/dropped directories\" so that it fits in the char limit).",
+      "parentUuid": "4a85da32_e6795174",
+      "range": {
+        "startLine": 7,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3a797f5_20aca40e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffd6ec9_ca962ffc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:27:44Z",
+      "side": 1,
+      "message": "Wordsmith\u0027d a bit, but mostly done.  Lemme know if the new version LGTY.",
+      "parentUuid": "d3a797f5_20aca40e",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 61
+      },
+      "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ded582e1_8db4cd38",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:27:44Z",
+      "side": 1,
+      "message": "I think probably so.  The JS validates that it\u0027s a directory, which should protect us from the typical case of a user trying to e.g. drag and drop a random file.  In the case of an exploited renderer, trying to load the unpacked extension will fail appropriately.  I\u0027ve added a unittest for this, and added a comment here as well.",
+      "parentUuid": "efef4aa6_76aed3b6",
+      "range": {
+        "startLine": 1008,
+        "startChar": 12,
+        "endLine": 1008,
+        "endChar": 27
+      },
+      "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d3696d_cbf4506a",
         "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "00d81add_d85d1544",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:27:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42d3696d_cbf4506a",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7057982a_9ab7a21f",
         "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
         "patchSetId": 12
@@ -114,6 +210,30 @@
       "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a4fd71_d1be09ac",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:27:44Z",
+      "side": 1,
+      "message": "We actually can\u0027t. :(  The drop data isn\u0027t populated (I don\u0027t know enough about drag-entered APIs to know much more than that)",
+      "parentUuid": "7057982a_9ab7a21f",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 28
+      },
+      "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
