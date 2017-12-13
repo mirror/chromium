@@ -16,6 +16,24 @@
       "revId": "bbf3ed7c9f8b5bb255ba7e151f0ff977200161bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e008dc42_c965a378",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-13T06:42:38Z",
+      "side": 1,
+      "message": "Good catch. I guess it\u0027s an oversight. |queued_task.message| is scoped_refptr\u003c\u003e object and copyable, so this is compilable. I think this is not a problem because copy cost is very low, but add WTF::Passed() for code consistency.",
+      "parentUuid": "91933345_4b5d5d66",
+      "revId": "bbf3ed7c9f8b5bb255ba7e151f0ff977200161bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
