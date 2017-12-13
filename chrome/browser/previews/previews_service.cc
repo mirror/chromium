@@ -34,11 +34,10 @@ bool IsPreviewsTypeEnabled(previews::PreviewsType type) {
     case previews::PreviewsType::LOFI:
       return server_previews_enabled ||
              previews::params::IsClientLoFiEnabled() ||
-             data_reduction_proxy::params::IsLoFiOnViaFlags();
+             data_reduction_proxy::params::IsServerPreviewsEnabledViaFlags();
     case previews::PreviewsType::LITE_PAGE:
       return server_previews_enabled ||
-             (data_reduction_proxy::params::IsLoFiOnViaFlags() &&
-              data_reduction_proxy::params::AreLitePagesEnabledViaFlags());
+             data_reduction_proxy::params::AreLitePagesPreferedViaFlags();
     case previews::PreviewsType::AMP_REDIRECTION:
       return previews::params::IsAMPRedirectionPreviewEnabled();
     case previews::PreviewsType::NOSCRIPT:
