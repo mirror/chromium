@@ -22,6 +22,30 @@
       "revId": "993f4d704caa95743821e213aace346d4edc92b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa8907c_5670a2df",
+        "filename": "services/device/hid/hid_connection_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-13T21:58:20Z",
+      "side": 0,
+      "message": "The new buffer is zero-initialized by default (it is an std::vector internally).",
+      "parentUuid": "ae695b77_5cf7e3fd",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 63
+      },
+      "revId": "993f4d704caa95743821e213aace346d4edc92b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
