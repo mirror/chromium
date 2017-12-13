@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "19970c5c_356c59e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-13T18:19:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11267f26_0b00d85a",
+      "revId": "1f86f5d5b5b758a1cce921c894e179981881a565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23986df0_6526f3c5",
         "filename": "chrome/common/extensions/docs/templates/articles/hosting.html",
         "patchSetId": 7
