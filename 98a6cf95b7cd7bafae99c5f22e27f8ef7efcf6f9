@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1a1b423_43f788f1",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T17:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fcc26e3_3eccd741",
+      "range": {
+        "startLine": 163,
+        "startChar": 21,
+        "endLine": 163,
+        "endChar": 25
+      },
+      "revId": "98a6cf95b7cd7bafae99c5f22e27f8ef7efcf6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebde1906_3919a51d",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "94d5d737_8796a978",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T17:49:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebde1906_3919a51d",
+      "range": {
+        "startLine": 455,
+        "startChar": 57,
+        "endLine": 455,
+        "endChar": 71
+      },
+      "revId": "98a6cf95b7cd7bafae99c5f22e27f8ef7efcf6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5de16218_012fe733",
         "filename": "services/service_manager/tests/connect/connect_unittest.cc",
         "patchSetId": 5
@@ -62,6 +110,24 @@
       "revId": "98a6cf95b7cd7bafae99c5f22e27f8ef7efcf6f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a95e092_3461768b",
+        "filename": "services/service_manager/tests/connect/connect_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T17:49:24Z",
+      "side": 1,
+      "message": "In theory we might be able to support death tests, but we\u0027d have to make the entire test suite single-threaded. I don\u0027t think it\u0027s worth doing.",
+      "parentUuid": "5de16218_012fe733",
+      "revId": "98a6cf95b7cd7bafae99c5f22e27f8ef7efcf6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
