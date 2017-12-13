@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "e8c22116_375d762b",
+        "filename": "ios/web/web_state/js/resources/message.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-13T19:00:38Z",
+      "side": 1,
+      "message": "Unless I miss something, formActivity_ is Chrome JS function, which will be called from cross origin iframes.",
+      "parentUuid": "13e08e34_6f078374",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 25
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c352138_1fb60c41",
         "filename": "ios/web/web_state/ui/crw_web_controller.mm",
         "patchSetId": 8
