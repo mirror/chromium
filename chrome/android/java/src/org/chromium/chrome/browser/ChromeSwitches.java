@@ -184,6 +184,9 @@ public abstract class ChromeSwitches {
     /** Switch for enabling the Chrome Home Survey. */
     public static final String CHROME_HOME_FORCE_ENABLE_SURVEY = "force-enable-chrome-home-survey";
 
+    /** Switch to enable incognito tabs to be seen in Android Recents. */
+    public static final String ENABLE_INCOGNITO_SNAPSHOTS = "enable-incognito-snapshots";
+
     // Prevent instantiation.
     private ChromeSwitches() {}
 }
