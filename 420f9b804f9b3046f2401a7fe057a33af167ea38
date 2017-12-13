@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c721f702_876a4202",
+        "filename": "components/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-12-13T18:21:30Z",
+      "side": 1,
+      "message": "Shouldn\u0027t std::move() leave it in that state already?\n\nhttps://stackoverflow.com/questions/7930105/does-moving-leave-the-object-in-a-usable-state",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 39
+      },
+      "revId": "420f9b804f9b3046f2401a7fe057a33af167ea38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
