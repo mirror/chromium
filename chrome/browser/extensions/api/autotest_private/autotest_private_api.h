@@ -209,6 +209,17 @@ class AutotestPrivateSetPlayStoreEnabledFunction
   ResponseAction Run() override;
 };
 
+class AutotestPrivateGetPrinterListFunction
+    : public UIThreadExtensionFunction {
+ public:
+  DECLARE_EXTENSION_FUNCTION("autotestPrivate.getPrinterList",
+                             AUTOTESTPRIVATE_GETPRINTERLIST)
+
+ private:
+  ~AutotestPrivateGetPrinterListFunction() override = default;
+  ResponseAction Run() override;
+};
+
 // Don't kill the browser when we're in a browser test.
 void SetAutotestPrivateTest();
 
