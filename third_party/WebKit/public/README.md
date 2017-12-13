@@ -40,6 +40,21 @@ exploring the API.
 
 Note that public/platform should not depend on public/web.
 
+Notes
+-----
+
+As mentioned above, conceptually public/platform/ and public/web/ are supposed to
+be used as follows:
+
+  - public/platform/ is implemented by the underlying functionalities and used by Blink
+  - public/web/ is implemented by Blink and used by Chromium
+
+In reality, however, they are sometimes abused. Due to the dependency constraint
+(public/web/ => controller/ => modules/ => core/ => platform/ => public/platform/),
+people sometimes define classes in public/platform/ or public/web/ just because
+that place is more convenient. This is already happening in many places but keep
+the concept in mind.
+
 Basic Types
 -----------
 
