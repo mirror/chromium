@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "731a5c9e_6af14b51",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T08:13:01Z",
+      "side": 1,
+      "message": "not sure if this is the right terminology: \"StoragePartition for guests\" ?",
+      "range": {
+        "startLine": 1255,
+        "startChar": 21,
+        "endLine": 1255,
+        "endChar": 48
+      },
+      "revId": "1377c3753ce1368d41aace2ae2ad70189b50c457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
