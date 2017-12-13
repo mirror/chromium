@@ -28,6 +28,7 @@ class HashPasswordManager {
   ~HashPasswordManager() = default;
 
   bool SavePasswordHash(const base::string16& password);
+  bool SavePasswordHash(const SyncPasswordData& sync_password_data);
   void ClearSavedPasswordHash();
 
   // Returns empty if no hash is available.
@@ -37,9 +38,9 @@ class HashPasswordManager {
 
   void set_prefs(PrefService* prefs) { prefs_ = prefs; }
 
- private:
   std::string CreateRandomSalt();
 
+ private:
   // Packs |salt| and |password_length| to a string.
   std::string LengthAndSaltToString(const std::string& salt,
                                     size_t password_length);

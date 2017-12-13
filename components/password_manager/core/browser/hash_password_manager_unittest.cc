@@ -39,6 +39,8 @@ TEST_F(HashPasswordManagerTest, Saving) {
   ASSERT_FALSE(prefs_.HasPrefPath(prefs::kSyncPasswordHash));
   HashPasswordManager hash_password_manager;
   hash_password_manager.set_prefs(&prefs_);
+
+  // Verify SavePasswordHash(const base::string16&).
   hash_password_manager.SavePasswordHash(base::ASCIIToUTF16("sync_password"));
   EXPECT_TRUE(prefs_.HasPrefPath(prefs::kSyncPasswordHash));
 
@@ -50,6 +52,17 @@ TEST_F(HashPasswordManagerTest, Saving) {
   EXPECT_EQ(current_hash, prefs_.GetString(prefs::kSyncPasswordHash));
   EXPECT_EQ(current_length_and_salt,
             prefs_.GetString(prefs::kSyncPasswordLengthAndHashSalt));
+
+  // Verify SavePasswordHash(const SyncPasswordData&).
+  prefs_.ClearPref(prefs::kSyncPasswordHash);
+  ASSERT_FALSE(prefs_.HasPrefPath(prefs::kSyncPasswordHash));
+  SyncPasswordData sync_password_data;
+  sync_password_data.length = 4;
+  sync_password_data.salt = "salt";
+  sync_password_data.hash = password_manager_util::CalculateSyncPasswordHash(
+      base::ASCIIToUTF16("sync_password"), sync_password_data.salt);
+  hash_password_manager.SavePasswordHash(sync_password_data);
+  EXPECT_TRUE(prefs_.HasPrefPath(prefs::kSyncPasswordHash));
 }
 
 TEST_F(HashPasswordManagerTest, Clearing) {
