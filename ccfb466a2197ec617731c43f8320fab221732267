@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c807d66_53b12e50",
+        "filename": "ash/wm/overview/window_grid.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-13T23:58:28Z",
+      "side": 1,
+      "message": "Sees the new style now is /*animate\u003d*/",
+      "revId": "ccfb466a2197ec617731c43f8320fab221732267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5c9e16_cb5330c7",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-13T23:58:28Z",
+      "side": 1,
+      "message": "why add the window to every grid? Seems it\u0027s only needed to add to the grid that has the same root window with |window|?",
+      "revId": "ccfb466a2197ec617731c43f8320fab221732267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25e124f_9050d2f2",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-13T23:58:28Z",
+      "side": 1,
+      "message": "Seems this number doesn\u0027t need to be updated? Seems it maintains the number of the items when entering overview mode and is used for stats purpose only.",
+      "revId": "ccfb466a2197ec617731c43f8320fab221732267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da88212_7ac5268d",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-13T23:58:28Z",
+      "side": 1,
+      "message": "What kind of stuff the user can do on the transform window?",
+      "revId": "ccfb466a2197ec617731c43f8320fab221732267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5360b296_8baf4976",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-13T23:58:28Z",
+      "side": 1,
+      "message": "The naming |current_active_window| doesn\u0027t seem right to me. It\u0027s actually the window that\u0027s pushed against the edge of the screen, it\u0027s more like current inactive window. And it might not be the active window. Other windows other than the snapped window or the windows in the overview can be active at the moment. It might be better to rename it to |insert_overview_window|? \nyou may be able to get it simply:\nif (Shell::Get()-\u003ewindow_selector_controller()-\u003eIsSelecting())\n  insert_overview_window \u003d GetDefaultSnappedWindow();\n\nOr you can combine the logic into GetActiveWindowAfterResizingUponExit()? Rename this function to something like GetWindowsAfterResizingUponExit(aura::Window** active_window, aura::Window** inactive_window), and then in line 342, modify it to:\n} else if (Shell::Get()-\u003ewindow_selector_controller()-\u003eIsSelecting()) {\n  Shell::Get()-\u003ewindow_selector_controller()-\u003ewindow_selector()-\u003eAddItem(\n          inactive_window);\n}\n\nWhat do you think?",
+      "revId": "ccfb466a2197ec617731c43f8320fab221732267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
