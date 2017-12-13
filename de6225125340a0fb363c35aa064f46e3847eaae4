@@ -116,6 +116,24 @@
       "revId": "de6225125340a0fb363c35aa064f46e3847eaae4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b1a770_c06d5e4b",
+        "filename": "url/scheme_host_port.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-13T10:32:27Z",
+      "side": 1,
+      "message": "Hmm, it may also return PORT_INVALID when the GURL is invalid. Maybe changing it would complicate the interface.",
+      "parentUuid": "d00bab80_e1abd55e",
+      "revId": "de6225125340a0fb363c35aa064f46e3847eaae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
