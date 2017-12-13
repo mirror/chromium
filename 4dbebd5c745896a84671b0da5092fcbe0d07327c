@@ -16,6 +16,24 @@
       "revId": "4dbebd5c745896a84671b0da5092fcbe0d07327c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c86084_14aa4be3",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-13T16:54:52Z",
+      "side": 1,
+      "message": "Hum right I didn\u0027t think about the wrapper itself as a 3p dependency...\n\nI updated the layout:\n\n    src\n      +--- third_party\n      |       +--- gradle_wrapper \u003c- for the wrapper by itself\n      |       +--- android_deps\n      |             +--- repository \u003c- for the dependencies to eventually pull from CIPD\n      |             +--- BUILD.gn\n      |             +--- additional_readme_paths.json\n      +--- tools/android/roll/android_deps  \u003c- for the gradle roll tool itself",
+      "parentUuid": "c82fa05d_dbdb2dd6",
+      "revId": "4dbebd5c745896a84671b0da5092fcbe0d07327c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

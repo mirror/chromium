@@ -91,6 +91,24 @@
       "revId": "7af26cc44adbc249dea273b4352b13f5b22ee93a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d82c7524_777c8938",
+        "filename": "third_party/android_deps/generate_gn.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-13T16:54:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12638fcf_049ec300",
+      "revId": "7af26cc44adbc249dea273b4352b13f5b22ee93a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
