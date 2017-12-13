@@ -16,6 +16,24 @@
       "revId": "f8ed7cae17c2f6dc45faf099fca6b465ff6ede6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3fcc8e_25f35f86",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-12-13T21:08:21Z",
+      "side": 1,
+      "message": "This functionality is used by vmmare and crossover for apps emulation mainly.\nAssume we have app emulator which is entry point for all apps running under it.\nFor example we might have emulator-\u003estart_word, emulator-\u003estart_excel, emulator-\u003estart_excel. Without shelf grouping it would go into one shelf item \"emulator\". Shelf grouping allows to split into different groups. \nFor example it may set in launch intent emulator;shelf_group_id\u003dexcel;sheet1. emulator;shelf_group_id\u003dexcel;sheet2. emulator;shelf_group_id\u003dword;word1. Thus we have 2 app groups. \n\nOne for excel and second for word.\nThere is bit tricky how to extract name/icon for group. In this case name/title for group. It is taken from the existing shortcut in app launcher that contains the same group id. Or as fallback from the referenced app (emulator in example below). Icon is taken from the currently active task.\n\nso in shelf we have\nExcel       Word\n   Sheet 1     Word 1\n   Sheet 2    \n\nPlease refer to my test app screenshot also.\nhttps://drive.google.com/open?id\u003d1kwHwcHxYmF3LOhy1i9IoY2qycVBy7m4P\n\n\nHope this explains.",
+      "parentUuid": "bc11d795_f969ef1f",
+      "revId": "f8ed7cae17c2f6dc45faf099fca6b465ff6ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
