@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abeebfa9_aa25ef23",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-offset-overflow.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-13T21:04:22Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary, since you always do math on relative offsetTop values?",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "c6df65017dfe3fa87abb9c40b1642f5679f68086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
