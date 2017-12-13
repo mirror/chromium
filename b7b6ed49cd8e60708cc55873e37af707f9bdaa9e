@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aae3d22_7fa9c641",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyleConstants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-12-13T03:09:26Z",
+      "side": 1,
+      "message": "nit: Not a big deal, but this could be { kNonLegacy, kLegacy }.",
+      "revId": "b7b6ed49cd8e60708cc55873e37af707f9bdaa9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
