@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b440e455_fec3ac94",
+        "filename": "base/memory/ref_counted_memory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T22:39:58Z",
+      "side": 1,
+      "message": "Can we discuss the pros/cons of final keyword usage? The thread that allowed it didn\u0027t give clear guidance, and final usage in //base is rare.",
+      "range": {
+        "startLine": 71,
+        "startChar": 34,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "993f4d704caa95743821e213aace346d4edc92b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
