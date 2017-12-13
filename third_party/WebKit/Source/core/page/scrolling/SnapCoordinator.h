@@ -13,10 +13,6 @@
 namespace blink {
 
 class LayoutBox;
-struct ScrollSnapType;
-struct ScrollSnapAlign;
-struct SnapAreaData;
-struct SnapContainerData;
 
 // Snap Coordinator keeps track of snap containers and all of their associated
 // snap areas. It also contains the logic to generate the list of valid snap
