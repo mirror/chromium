@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "59a4142b_9a768d1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-13T20:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2db5ee1c_d46324e1",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 56
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1476e75_ffd878f0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeSwitches.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a062082e_59e1936c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeSwitches.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-13T20:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1476e75_ffd878f0",
+      "range": {
+        "startLine": 188,
+        "startChar": 78,
+        "endLine": 188,
+        "endChar": 87
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0e524e24_c136c268",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-13T20:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "056889ab_ebdeb640",
+      "range": {
+        "startLine": 19,
+        "startChar": 14,
+        "endLine": 19,
+        "endChar": 41
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f679e567_bc770c3b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043d3739_1a6dbf88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-13T20:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f679e567_bc770c3b",
+      "range": {
+        "startLine": 67,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 46
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "067c9001_fff94442",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-13T20:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91bf1c68_44227bef",
+      "range": {
+        "startLine": 93,
+        "startChar": 23,
+        "endLine": 93,
+        "endChar": 42
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9feb4772_92a7aec7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
         "patchSetId": 7
@@ -128,6 +248,30 @@
       "writtenOn": "2017-12-13T15:08:20Z",
       "side": 1,
       "message": "Can these be registered in the constructor rather than this method?",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 47
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f993ef6_2dff1d35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserver.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-13T20:59:29Z",
+      "side": 1,
+      "message": "It seems weird to pass in the layout manager into the constructor if its only purpose is to have an observer added to it.\nWhat\u0027re the benefits of registering the in the constructor as opposed to here?",
+      "parentUuid": "9feb4772_92a7aec7",
       "range": {
         "startLine": 97,
         "startChar": 8,
@@ -160,6 +304,30 @@
       "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774d349c_0f36c29b",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotObserverTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-13T20:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1322f78f_063f1723",
+      "range": {
+        "startLine": 106,
+        "startChar": 27,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "428a9093ea6d31fdb076b35b5cc23aa056e0e248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
