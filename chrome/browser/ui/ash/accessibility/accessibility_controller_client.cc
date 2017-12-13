@@ -45,6 +45,10 @@ void AccessibilityControllerClient::InitForTesting(
   BindAndSetClient();
 }
 
+void AccessibilityControllerClient::UpdateSpokenFeedback(bool enabled) {
+  chromeos::AccessibilityManager::Get()->UpdateSpokenFeedback(enabled);
+}
+
 void AccessibilityControllerClient::TriggerAccessibilityAlert(
     ash::mojom::AccessibilityAlert alert) {
   Profile* profile = ProfileManager::GetActiveUserProfile();
