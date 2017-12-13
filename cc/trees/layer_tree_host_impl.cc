@@ -1158,6 +1158,11 @@ void LayerTreeHostImpl::InvalidateContentOnImplSide() {
   UpdateSyncTreeAfterCommitOrImplSideInvalidation();
 }
 
+void LayerTreeHostImpl::InvalidateLayerTreeFrameSink() {
+  DCHECK(layer_tree_frame_sink());
+  layer_tree_frame_sink()->Invalidate();
+}
+
 DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
   TRACE_EVENT1("cc", "LayerTreeHostImpl::PrepareToDraw", "SourceFrameNumber",
                active_tree_->source_frame_number());

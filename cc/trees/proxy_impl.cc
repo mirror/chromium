@@ -636,8 +636,7 @@ void ProxyImpl::ScheduledActionPrepareTiles() {
 void ProxyImpl::ScheduledActionInvalidateLayerTreeFrameSink() {
   TRACE_EVENT0("cc", "ProxyImpl::ScheduledActionInvalidateLayerTreeFrameSink");
   DCHECK(IsImplThread());
-  DCHECK(host_impl_->layer_tree_frame_sink());
-  host_impl_->layer_tree_frame_sink()->Invalidate();
+  host_impl_->InvalidateLayerTreeFrameSink();
 }
 
 void ProxyImpl::ScheduledActionPerformImplSideInvalidation() {
