@@ -6,13 +6,20 @@
 #define CHROME_BROWSER_PICTURE_IN_PICTURE_PICTURE_IN_PICTURE_WINDOW_CONTROLLER_H_
 
 #include "base/memory/weak_ptr.h"
+#include "components/viz/common/surfaces/parent_local_surface_id_allocator.h"
 #include "content/public/browser/web_contents_user_data.h"
 
 namespace content {
 class WebContents;
 }
 
+namespace viz {
+class FrameSinkId;
+class SurfaceId;
+}  // namespace viz
+
 class OverlayWindow;
+class OverlaySurfaceEmbedder;
 
 // Class for Picture in Picture window controllers. This is currently tied to a
 // WebContents |initiator| and created when a Picture in Picture window is to
@@ -30,8 +37,14 @@ class PictureInPictureWindowController
   static PictureInPictureWindowController* GetOrCreateForWebContents(
       content::WebContents* initiator);
 
-  void Show();
+  void Init(const gfx::Size& size);
+  void Show(const gfx::Size& size);
   void Close();
+  void SetFrameSinkId(viz::FrameSinkId frame_sink_id);
+  void EmbedSurface(viz::FrameSinkId frame_sink_id,
+                    uint32_t parent_id,
+                    base::UnguessableToken nonce);
+  void TogglePlayPause();
 
  private:
   friend class content::WebContentsUserData<PictureInPictureWindowController>;
@@ -42,6 +55,11 @@ class PictureInPictureWindowController
 
   content::WebContents* const initiator_;
   std::unique_ptr<OverlayWindow> window_;
+  std::unique_ptr<OverlaySurfaceEmbedder> embedder_;
+  viz::ParentLocalSurfaceIdAllocator local_surface_id_allocator_;
+
+  viz::FrameSinkId frame_sink_id_;
+  viz::SurfaceId surface_id_;
 
   DISALLOW_COPY_AND_ASSIGN(PictureInPictureWindowController);
 };

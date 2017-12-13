@@ -7,10 +7,13 @@
 #include <memory>
 
 #include "build/build_config.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "content/browser/media/audible_metrics.h"
 #include "content/browser/media/audio_stream_monitor.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/media/media_player_delegate_messages.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "ipc/ipc_message_macros.h"
@@ -82,19 +85,18 @@ bool MediaWebContentsObserver::HasActiveEffectivelyFullscreenVideo() const {
     return false;
 
   // Check that the player is active.
-  const auto& players = active_video_players_.find(fullscreen_player_->first);
-  if (players == active_video_players_.end())
-    return false;
-  if (players->second.find(fullscreen_player_->second) == players->second.end())
-    return false;
-
-  return true;
+  return FindMediaPlayerEntry(*fullscreen_player_, active_video_players_);
 }
 
 const base::Optional<WebContentsObserver::MediaPlayerId>&
 MediaWebContentsObserver::GetFullscreenVideoMediaPlayerId() const {
   CheckFullscreenDetectionEnabled(web_contents_impl());
   return fullscreen_player_;
+}
+
+const base::Optional<WebContentsObserver::MediaPlayerId>&
+MediaWebContentsObserver::GetPictureInPictureVideoMediaPlayerId() const {
+  return pip_player_;
 }
 
 bool MediaWebContentsObserver::OnMessageReceived(
@@ -110,6 +112,11 @@ bool MediaWebContentsObserver::OnMessageReceived(
                         OnMediaPlaying)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMutedStatusChanged,
                         OnMediaMutedStatusChanged)
+    IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnPictureInPicture,
+                        OnPictureInPicture)
+    IPC_MESSAGE_HANDLER(
+        MediaPlayerDelegateHostMsg_OnUpdatePictureInPictureSurfaceId,
+        OnUpdatePictureInPictureSurfaceId)
     IPC_MESSAGE_HANDLER(
         MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChanged,
         OnMediaEffectivelyFullscreenChanged)
@@ -147,10 +154,22 @@ void MediaWebContentsObserver::RequestPersistentVideo(bool value) {
       target_frame->GetRoutingID(), delegate_id, value));
 }
 
+bool MediaWebContentsObserver::IsActivePlayer(const MediaPlayerId& player) const {
+  if (FindMediaPlayerEntry(player, active_video_players_))
+    return true;
+
+  return FindMediaPlayerEntry(player, active_audio_players_);
+}
+
 void MediaWebContentsObserver::OnMediaDestroyed(
     RenderFrameHost* render_frame_host,
     int delegate_id) {
   OnMediaPaused(render_frame_host, delegate_id, true);
+
+  if (pip_player_ &&
+      pip_player_ == MediaPlayerId(render_frame_host, delegate_id)) {
+    pip_player_.reset();
+  }
 }
 
 void MediaWebContentsObserver::OnMediaPaused(RenderFrameHost* render_frame_host,
@@ -336,6 +355,37 @@ void MediaWebContentsObserver::OnMediaMutedStatusChanged(
   web_contents_impl()->MediaMutedStatusChanged(id, muted);
 }
 
+void MediaWebContentsObserver::OnPictureInPicture(
+    RenderFrameHost* render_frame_host,
+    int delegate_id,
+    viz::FrameSinkId frame_sink_id,
+    const gfx::Size& size) {
+  const MediaPlayerId player_id(render_frame_host, delegate_id);
+  DCHECK(!pip_player_.has_value());
+
+  pip_player_ = player_id;
+
+  ContentBrowserClient* browser_client = GetContentClient()->browser();
+  browser_client->PictureInPicture(render_frame_host, frame_sink_id, size);
+}
+
+void MediaWebContentsObserver::OnUpdatePictureInPictureSurfaceId(
+    RenderFrameHost* render_frame_host,
+    int delegate_id,
+    viz::FrameSinkId frame_sink_id,
+    uint32_t parent_id,
+    base::UnguessableToken nonce,
+    const gfx::Size& size) {
+  // TODO: did this because we actually don't seem to call the method above, so
+  // not sure if this one was meant to be a full replacement or just WIP.
+  if (!pip_player_)
+    pip_player_ = MediaPlayerId(render_frame_host, delegate_id);
+
+  ContentBrowserClient* browser_client = GetContentClient()->browser();
+  browser_client->UpdatePictureInPictureSurfaceId(
+      render_frame_host, frame_sink_id, parent_id, nonce, size);
+}
+
 void MediaWebContentsObserver::AddMediaPlayerEntry(
     const MediaPlayerId& id,
     ActiveMediaPlayerMap* player_map) {
@@ -373,6 +423,16 @@ void MediaWebContentsObserver::RemoveAllMediaPlayerEntries(
     removed_players->insert(MediaPlayerId(render_frame_host, delegate_id));
 
   player_map->erase(it);
+}
+
+bool MediaWebContentsObserver::FindMediaPlayerEntry(
+    const MediaPlayerId& id,
+    const ActiveMediaPlayerMap& player_map) const {
+  const auto& players = player_map.find(id.first);
+  if (players == player_map.end())
+    return false;
+
+  return players->second.find(id.second) != players->second.end();
 }
 
 WebContentsImpl* MediaWebContentsObserver::web_contents_impl() const {

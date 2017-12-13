@@ -113,6 +113,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void OnWebLayerUpdated() override;
   void RegisterContentsLayer(blink::WebLayer* web_layer) override;
   void UnregisterContentsLayer(blink::WebLayer* web_layer) override;
+  void OnSurfaceIdUpdated(viz::FrameSinkId frame_sink_id,
+                          uint32_t parent_id,
+                          base::UnguessableToken nonce) override;
 
   void Load(LoadType load_type,
             const blink::WebMediaPlayerSource& source,
@@ -125,6 +128,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void Seek(double seconds) override;
   void SetRate(double rate) override;
   void SetVolume(double volume) override;
+  void PictureInPicture() override;
   void SetSinkId(const blink::WebString& sink_id,
                  const blink::WebSecurityOrigin& security_origin,
                  blink::WebSetSinkIdCallbacks* web_callback) override;
@@ -844,6 +848,13 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   base::Callback<mojom::VideoDecodeStatsRecorderPtr()>
       create_decode_stats_recorder_cb_;
+
+  blink::WebLayerTreeView* layer_tree_view_;
+
+  bool in_picture_in_picture_mode_ = false;
+  viz::FrameSinkId frame_sink_id_;
+  uint32_t parent_id_;
+  base::UnguessableToken nonce_;
 
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImpl);
 };
