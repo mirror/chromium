@@ -407,8 +407,9 @@ void ServiceWorkerSubresourceLoader::StartResponse(
   if (!response.blob_uuid.empty()) {
     GURL blob_url =
         GURL("blob:" + controller_origin_.spec() + "/" + response.blob_uuid);
-    blob_registry_->data->RegisterURL(std::move(body_as_blob), blob_url,
-                                      &blob_url_handle_);
+    blob_registry_->data->URLStoreForOrigin(
+        url::Origin::Create(controller_origin_), MakeRequest(&blob_store_));
+    blob_store_->Register(std::move(body_as_blob), blob_url);
     resource_request_.url = blob_url;
 
     mojom::URLLoaderClientPtr blob_loader_client;

@@ -31,6 +31,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/text/WTFString.h"
+#include "third_party/WebKit/common/blob/blob_url_store.mojom-blink.h"
 
 namespace blink {
 
@@ -68,6 +69,8 @@ class PublicURLManager final
   URLToRegistryMap url_to_registry_;
 
   bool is_stopped_;
+
+  mojom::blink::BlobURLStoreAssociatedPtr url_store_;
 };
 
 }  // namespace blink
