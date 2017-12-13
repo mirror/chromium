@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9fde9217_ea80d7f1",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-13T17:47:15Z",
+      "side": 1,
+      "message": "I think this is okay. It is possible to have the browser coordinate all the frames that need to print, but my feeling is that it is simpler to propagate the print request downward like this, because all the rect information is available here. It might be faster to have the browser process do this because it could send out the print requests in parallel, but I\u0027m not sure how much that matters for printing, and also does the CullRect complicate that approach?",
+      "parentUuid": "e0d5e36e_c9c6e8e7",
+      "revId": "dbc8cd4dcf151494c86dafbce7d9758a590fc5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b66c24f6_7f7ef77f",
         "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
         "patchSetId": 3

@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0d74d90_96ad8f4e",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-13T17:47:15Z",
+      "side": 1,
+      "message": "nit: \u0027RemoteFrame\u0027 tends to be a term used only inside of Blink, since the content layer sees frames in terms of RenderFrame and RenderFrameProxy. \u0027PrintChildFrame\u0027 would be a more consistent name.",
+      "range": {
+        "startLine": 1682,
+        "startChar": 38,
+        "endLine": 1682,
+        "endChar": 49
+      },
+      "revId": "b9d928ec88a6079ecb4617078fdef6f747e08c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7398386_55394792",
+        "filename": "third_party/WebKit/Source/core/paint/RemoteFramePainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-13T17:47:15Z",
+      "side": 1,
+      "message": "What\u0027s the rationale for adding this class, rather than just adding this code directly into RemoteFrameView::Paint()? Is there something going in here that doesn\u0027t belong in RemoteFrameView?",
+      "revId": "b9d928ec88a6079ecb4617078fdef6f747e08c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e044c0_2ccda071",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-12-13T17:47:15Z",
+      "side": 1,
+      "message": "What coordinate space is |rect| in? The immediate parent frame or the browser viewport?",
+      "revId": "b9d928ec88a6079ecb4617078fdef6f747e08c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
