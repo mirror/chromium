@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51e85b39_bf563761",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-13T16:30:26Z",
+      "side": 1,
+      "message": "not important but you could skip this temporary variable too if you like",
+      "range": {
+        "startLine": 196,
+        "startChar": 20,
+        "endLine": 196,
+        "endChar": 41
+      },
+      "revId": "db974c5b3164d75a3ef1621aa84f184768df508a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
