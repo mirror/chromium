@@ -48,9 +48,6 @@ size_t RegisterWebViewCrashKeys() {
       // media/:
       {kZeroEncodeDetails, kSmallSize},
 
-      // sandbox/:
-      {"seccomp-sigsys", kMediumSize},
-
       // Temporary for https://crbug.com/685996.
       {"user-cloud-policy-manager-connect-trace", kMediumSize},
 

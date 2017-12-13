@@ -69,11 +69,6 @@ size_t RegisterChromeCrashKeys() {
     {"total-discardable-memory-allocated", kSmallSize},
     {kViewCount, kSmallSize},
 
-    // sandbox/:
-#if defined(OS_LINUX)
-    {"seccomp-sigsys", kMediumSize},
-#endif
-
     // Temporary for https://crbug.com/685996.
     {kUserCloudPolicyManagerConnectTrace, kMediumSize},
 
