@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5033da42_68f15d44",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1875,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-13T23:31:49Z",
+      "side": 1,
+      "message": "Callee is a posted task, so it couldn\u0027t enforce that contract...",
+      "parentUuid": "5e6d4879_fe599bbd",
+      "range": {
+        "startLine": 1875,
+        "startChar": 23,
+        "endLine": 1875,
+        "endChar": 40
+      },
+      "revId": "50facff30e24e5f79d0400564cbf3b00e1add0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e1e871c_a32b6e04",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cced98e3_7637401f",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2938,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-13T23:31:49Z",
+      "side": 1,
+      "message": "We always render the first frame regardless of playing, so that wouldn\u0027t make sense. Also (as noted in description) this is impossible since Blink doesn\u0027t tell when play() truly happens currently.",
+      "parentUuid": "7e1e871c_a32b6e04",
+      "range": {
+        "startLine": 2938,
+        "startChar": 47,
+        "endLine": 2938,
+        "endChar": 63
+      },
+      "revId": "50facff30e24e5f79d0400564cbf3b00e1add0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c70acbb_a941a4b2",
         "filename": "media/blink/webmediaplayer_impl.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-13T21:55:36Z",
       "side": 1,
       "message": "Looking at the paths from HTMLme, it looks like this can be executed both in response to setting a \u003csource\u003e as well as things like playing. And then there are cases where the load is deferred. Basically, are you confident that you\u0027re measuring what you think you\u0027re measuring? Do you want to add bits to take into account the path to load (e.g. was deferred? was triggered by play()?)? \n\nAlso, for MSE, it looks like this will fire as soon as they set a blob URL which may be distant from the time they start appending media.",
+      "range": {
+        "startLine": 755,
+        "startChar": 23,
+        "endLine": 755,
+        "endChar": 29
+      },
+      "revId": "50facff30e24e5f79d0400564cbf3b00e1add0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f563eaae_b4b5e039",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-13T23:31:49Z",
+      "side": 1,
+      "message": "100% confident I\u0027m measuring what I think I\u0027m measuring, 50% confident on whether I\u0027ve explained that well :) I don\u0027t want to add anything else here, nor do I think we should. We really don\u0027t care how long the load was deferred for. It might be 0 or it might be forever when opened in a background tab and chrome is closed before using./\n\nAs written it\u0027s 100% true that this is when DoLoad() is executed, why it\u0027s executed I don\u0027t care in the context of this CL. I\u0027ve been careful to signal that this is not going to measure \"time-to-play\" but only time until ready for playback. \n\nNo event is logged for the time at which DoLoad() is executed, we just use this time as a baseline for the metrics actually recorded in this CL.",
+      "parentUuid": "0c70acbb_a941a4b2",
       "range": {
         "startLine": 755,
         "startChar": 23,
