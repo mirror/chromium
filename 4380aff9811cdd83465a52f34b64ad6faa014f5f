@@ -16,6 +16,24 @@
       "revId": "4380aff9811cdd83465a52f34b64ad6faa014f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe1d3f2_62467027",
+        "filename": "net/data/cert_issuer_source_aia_unittest/generate-certs.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-12-13T17:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef68770_0d6f6afc",
+      "revId": "4380aff9811cdd83465a52f34b64ad6faa014f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
