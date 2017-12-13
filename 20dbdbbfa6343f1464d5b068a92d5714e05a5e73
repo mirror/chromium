@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e30e44e2_7386bf13",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T05:27:28Z",
+      "side": 0,
+      "message": "Can use_gconf be removed from everywhere now?",
+      "range": {
+        "startLine": 1991,
+        "startChar": 8,
+        "endLine": 1991,
+        "endChar": 17
+      },
+      "revId": "20dbdbbfa6343f1464d5b068a92d5714e05a5e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
