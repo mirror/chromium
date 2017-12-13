@@ -59,7 +59,7 @@ TEST_F(FormJsTest, FormSubmitMainFrame) {
 
 // Tests that focus event from same-origin iframe correctly delivered to
 // WebStateObserver.
-TEST_F(FormJsTest, FocusSameOriginIFrame) {
+TEST_F(FormJsTest, DISABLED_FocusSameOriginIFrame) {
   TestWebStateObserver observer(web_state());
   LoadHtml(@"<iframe id='frame1'></iframe>");
   ExecuteJavaScript(
@@ -80,7 +80,7 @@ TEST_F(FormJsTest, FocusSameOriginIFrame) {
 
 // Tests that submit event from same-origin iframe correctly delivered to
 // WebStateObserver.
-TEST_F(FormJsTest, FormSameOriginIFrame) {
+TEST_F(FormJsTest, DISABLED_FormSameOriginIFrame) {
   TestWebStateObserver observer(web_state());
   LoadHtml(@"<iframe id='frame1'></iframe>");
   ExecuteJavaScript(
