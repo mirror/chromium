@@ -65,9 +65,9 @@ class LitePage(IntegrationTest):
       histogram = test_driver.GetHistogram('Previews.InfoBarAction.LitePage', 5)
       self.assertEqual(1, histogram['count'])
 
-  # Checks that a Lite Page is served and the force_lite_page experiment
+  # Checks that a Lite Page is served and the prefer_lite_page experiment
   # directive is provided when always-on.
-  # Note: this test is only on M-60+ which supports exp=force_lite_page
+  # Note: this test is only on M-60+ which supports exp=prefer_lite_page
   @ChromeVersionEqualOrAfterM(60)
   def testLitePageForcedExperiment(self):
     # If it was attempted to run with another experiment, skip this test.
@@ -78,8 +78,7 @@ class LitePage(IntegrationTest):
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
       test_driver.AddChromeArg('--enable-features='
                                'DataReductionProxyDecidesTransform')
-      test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
-      test_driver.AddChromeArg('--enable-data-reduction-proxy-lite-page')
+      test_driver.AddChromeArg('--data-saver-server-previews=prefer-lite-page')
 
       # Force ECT to be 4G to confirm that we get Lite Page even for fast
       # conneciton.
@@ -94,7 +93,7 @@ class LitePage(IntegrationTest):
       lite_page_responses = 0
       for response in test_driver.GetHTTPResponses():
         # Verify client sends force directive on every request for session.
-        self.assertIn('exp=force_lite_page',
+        self.assertIn('exp=prefer_lite_page',
           response.request_headers['chrome-proxy'])
         self.assertEqual('4G', response.request_headers['chrome-proxy-ect'])
         # Skip CSI requests when validating Lite Page headers. CSI requests
@@ -116,7 +115,7 @@ class LitePage(IntegrationTest):
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
       test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=cellular-only')
-      test_driver.AddChromeArg('--enable-data-reduction-proxy-lite-page')
+      test_driver.AddChromeArg('--data-saver-server-previews=prefer-lite-page')
 
       test_driver.LoadURL('http://check.googlezip.net/test.html')
 
@@ -128,13 +127,13 @@ class LitePage(IntegrationTest):
           self.assertNotIn('chrome-proxy-content-transform',
                            response.response_headers)
           non_lite_page_responses = non_lite_page_responses + 1
-          # Note that the client will still send exp=force_lite_page (if not
+          # Note that the client will still send exp=prefer_lite_page (if not
           # using the exp paramter to specify other experiments).
           if common.ParseFlags().browser_args:
             if ('--data-reduction-proxy-experiment'
                 not in common.ParseFlags().browser_args):
               # Verify force directive present.
-              self.assertIn('exp=force_lite_page',
+              self.assertIn('exp=prefer_lite_page',
                 response.request_headers['chrome-proxy'])
 
       # Verify that a main frame without Lite Page was seen.
@@ -152,8 +151,7 @@ class LitePage(IntegrationTest):
     with TestDriver() as test_driver:
       test_driver.AddChromeArg('--enable-spdy-proxy-auth')
       # Need to force lite page so target page doesn't fallback to Lo-Fi
-      test_driver.AddChromeArg('--data-reduction-proxy-lo-fi=always-on')
-      test_driver.AddChromeArg('--enable-data-reduction-proxy-lite-page')
+      test_driver.AddChromeArg('--data-saver-server-previews=prefer-lite-page')
 
       # This page is long and has many media resources.
       test_driver.LoadURL('http://check.googlezip.net/metrics/index.html')

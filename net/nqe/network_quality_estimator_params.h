@@ -96,11 +96,8 @@ class NET_EXPORT NetworkQualityEstimatorParams {
   // Returns an unset value if the effective connection type has not been forced
   // via the |params| provided to this class. Otherwise, returns a value set to
   // the effective connection type that has been forced.
-  base::Optional<EffectiveConnectionType> forced_effective_connection_type()
-      const {
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-    return forced_effective_connection_type_;
-  }
+  base::Optional<EffectiveConnectionType> forced_effective_connection_type(
+      NetworkChangeNotifier::ConnectionType connectione_type) const;
 
   void SetForcedEffectiveConnectionType(
       EffectiveConnectionType forced_effective_connection_type) {

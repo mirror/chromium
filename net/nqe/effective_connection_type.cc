@@ -17,6 +17,7 @@ namespace net {
 const char kEffectiveConnectionTypeUnknown[] = "Unknown";
 const char kEffectiveConnectionTypeOffline[] = "Offline";
 const char kEffectiveConnectionTypeSlow2G[] = "Slow-2G";
+const char kEffectiveConnectionTypeSlow2GOnCellular[] = "Slow-2G-On-Cellular";
 const char kEffectiveConnectionType2G[] = "2G";
 const char kEffectiveConnectionType3G[] = "3G";
 const char kEffectiveConnectionType4G[] = "4G";
