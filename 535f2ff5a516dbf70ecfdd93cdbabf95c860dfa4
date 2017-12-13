@@ -22,6 +22,30 @@
       "revId": "535f2ff5a516dbf70ecfdd93cdbabf95c860dfa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c4878c_7fda978c",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T09:09:14Z",
+      "side": 1,
+      "message": "I see. So actually after this CL, SetCustomWallpaper is guaranteed to be successful as long as CanSetWallpaper and account_id.is_active are both true (and image is not null). The only other early return is WallpaperController::WallpaperIsAlreadyLoaded within WallpaperController::SetWallpaperImage, but as you mentioned, the image will have different image id, so it\u0027s always false. So I believe we can remove the OnWallpaperDataChanged override and directly call NotifyWallpaperChanged(android_id) right after SetCustomWallpaper, and we can even remove |id_pairs_|.\n\n(AFAIK OnWallpaperDataChanged is part of the legacy code, and it doesn\u0027t really indicate the final state of wallpaper, since the wallpaper may still go through resizing, color calculation, painting, animation...), so waiting for OnWallpaperDataChanged is no different than directly calling NotifyWallpaperChanged(android_id).",
+      "parentUuid": "b629d656_0b44b73d",
+      "range": {
+        "startLine": 152,
+        "startChar": 10,
+        "endLine": 152,
+        "endChar": 15
+      },
+      "revId": "535f2ff5a516dbf70ecfdd93cdbabf95c860dfa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
