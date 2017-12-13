@@ -486,4 +486,49 @@ bool ThemePainterDefault::PaintSearchFieldCancelButton(
   return false;
 }
 
+bool ThemePainterDefault::PaintPasswordFieldAssistButton(
+    const LayoutObject& assist_button_object,
+    const PaintInfo& paint_info,
+    const IntRect& r) {
+  // Get the layoutObject of <input> element.
+  if (!assist_button_object.GetNode())
+    return false;
+  Node* input = assist_button_object.GetNode()->OwnerShadowHost();
+  const LayoutObject& base_layout_object = input && input->GetLayoutObject()
+                                               ? *input->GetLayoutObject()
+                                               : assist_button_object;
+  if (!base_layout_object.IsBox())
+    return false;
+  const LayoutBox& input_layout_box = ToLayoutBox(base_layout_object);
+  LayoutRect input_content_box = input_layout_box.ContentBoxRect();
+
+  // Make sure the scaled button stays square and will fit in its parent's box.
+  LayoutUnit password_assist_button_size =
+      std::min(input_content_box.Width(),
+               std::min(input_content_box.Height(), LayoutUnit(r.Height())));
+  // Calculate cancel button's coordinates relative to the input element.
+  // Center the button vertically.  Round up though, so if it has to be one
+  // pixel off-center, it will be one pixel closer to the bottom of the field.
+  // This tends to look better with the text.
+  LayoutRect password_assist_button_rect(
+      assist_button_object.OffsetFromAncestorContainer(&input_layout_box)
+          .Width(),
+      input_content_box.Y() +
+          (input_content_box.Height() - password_assist_button_size + 1) / 2,
+      password_assist_button_size, password_assist_button_size);
+  IntRect painting_rect = ConvertToPaintingRect(
+      input_layout_box, assist_button_object, password_assist_button_rect, r);
+
+  DEFINE_STATIC_REF(Image, assistant_image,
+                    (Image::LoadPlatformResource("passwordAssistant")));
+  DEFINE_STATIC_REF(Image, assistant_pressed_image,
+                    (Image::LoadPlatformResource("passwordAssistantPressed")));
+  paint_info.context.DrawImage(
+      LayoutTheme::IsPressed(assist_button_object.GetNode())
+          ? assistant_pressed_image
+          : assistant_image,
+      Image::kSyncDecode, painting_rect);
+  return false;
+}
+
 }  // namespace blink

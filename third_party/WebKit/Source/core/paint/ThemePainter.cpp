@@ -143,6 +143,8 @@ bool ThemePainter::Paint(const LayoutObject& o,
       return PaintSearchField(node, style, paint_info, r);
     case kSearchFieldCancelButtonPart:
       return PaintSearchFieldCancelButton(o, paint_info, r);
+    case kPasswordFieldAssistButtonPart:
+      return PaintPasswordFieldAssistButton(o, paint_info, r);
     default:
       break;
   }
@@ -193,6 +195,7 @@ bool ThemePainter::PaintBorderOnly(const Node* node,
     case kSliderThumbHorizontalPart:
     case kSliderThumbVerticalPart:
     case kSearchFieldCancelButtonPart:
+    case kPasswordFieldAssistButtonPart:
     default:
       break;
   }
@@ -225,6 +228,7 @@ bool ThemePainter::PaintDecorations(const Node* node,
     case kSliderThumbVerticalPart:
     case kSearchFieldPart:
     case kSearchFieldCancelButtonPart:
+    case kPasswordFieldAssistButtonPart:
     default:
       break;
   }

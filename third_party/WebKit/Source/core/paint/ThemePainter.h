@@ -144,6 +144,11 @@ class ThemePainter {
                                             const IntRect&) {
     return true;
   }
+  virtual bool PaintPasswordFieldAssistButton(const LayoutObject&,
+                                              const PaintInfo&,
+                                              const IntRect&) {
+    return true;
+  }
 
   bool PaintUsingFallbackTheme(const Node*,
                                const ComputedStyle&,

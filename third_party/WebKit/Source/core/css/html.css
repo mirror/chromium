@@ -470,6 +470,22 @@ input[type="search" i]:enabled:read-write:-webkit-any(:focus,:hover)::-webkit-se
     pointer-events: auto;
 }
 
+input[type="password" i]::-webkit-password-assist-button {
+    -webkit-appearance: passwordfield-assist-button;
+    display: block;
+    cursor: default;
+    flex: none;
+    -webkit-user-modify: read-only !important;
+    -webkit-margin-start: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+input[type="password" i]:enabled:read-write:-webkit-any(:focus,:hover)::-webkit-password-assist-button {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 input::-webkit-inner-spin-button {
     -webkit-appearance: inner-spin-button;
     display: inline-block;

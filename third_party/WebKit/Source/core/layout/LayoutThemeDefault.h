@@ -95,6 +95,8 @@ class CORE_EXPORT LayoutThemeDefault : public LayoutTheme {
   void AdjustSearchFieldStyle(ComputedStyle&) const override;
   void AdjustSearchFieldCancelButtonStyle(ComputedStyle&) const override;
 
+  void AdjustPasswordButtonStyle(ComputedStyle&) const override;
+
   // MenuList refers to an unstyled menulist (meaning a menulist without
   // background-color or border set) and MenuListButton refers to a styled
   // menulist (a menulist with background-color or border set). They have

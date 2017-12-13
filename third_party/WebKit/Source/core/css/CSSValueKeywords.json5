@@ -688,6 +688,7 @@
     "caret",
     "searchfield",
     "searchfield-cancel-button",
+    "passwordfield-assist-button",
     "textfield",
     "textarea",
     // An appearance value that should not be accepted by the parser:
