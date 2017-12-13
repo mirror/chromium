@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1177eec_19e06b39",
+        "filename": "remoting/client/chromoting_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-12-13T03:32:19Z",
+      "side": 1,
+      "message": "This still seems odd. Under what circumstances can client_ be null, and why would it be bad to execute the rest of this function if it is? I\u0027m concerned that adding a null check here is just papering over the cracks of a more fundamental architectural problem.",
+      "range": {
+        "startLine": 503,
+        "startChar": 17,
+        "endLine": 503,
+        "endChar": 0
+      },
+      "revId": "5230f039be5677b0532cdc2e1b0f78f6525dd3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
