@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee4b097e_8e1be601",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-12-13T14:25:34Z",
+      "side": 1,
+      "message": "nit. please added a spaces around traffic_annotation, i.e. /* traffic_anotation */ (here and everywhere)",
+      "revId": "9d0aa1a971d1a485a929e2b1b5613d8b3ce283f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
