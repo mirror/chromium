@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fd93585_441fede2",
+        "filename": "third_party/WebKit/Source/core/html/HTMLDialogElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1251514
+      },
+      "writtenOn": "2017-12-13T13:09:33Z",
+      "side": 1,
+      "message": "I don\u0027t know anything about the accessibility cache. The crbug issue is about having an up-to-date shadow distribution (DCHECK fails) and not layout?\n\nInterestingly enough, HTMLElement::OnInertAttrChanged updates distribution, not layout.\n\nShould this be done as part of the lifecycle update instead? Marking inertness dirty here. e.g.?",
+      "revId": "bf0ec7d5e3efd3596aa9d7f0c9d965faa325736d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
