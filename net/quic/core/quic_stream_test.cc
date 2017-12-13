@@ -10,6 +10,7 @@
 #include "net/quic/core/quic_utils.h"
 #include "net/quic/core/quic_write_blocked_list.h"
 #include "net/quic/core/spdy_utils.h"
+#include "net/quic/platform/api/quic_arraysize.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_logging.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
@@ -928,8 +929,8 @@ TEST_F(QuicStreamTest, WriteMemSlices) {
   }
   char data[1024];
   std::vector<std::pair<char*, int>> buffers;
-  buffers.push_back(std::make_pair(data, arraysize(data)));
-  buffers.push_back(std::make_pair(data, arraysize(data)));
+  buffers.push_back(std::make_pair(data, QUIC_ARRAYSIZE(data)));
+  buffers.push_back(std::make_pair(data, QUIC_ARRAYSIZE(data)));
   QuicTestMemSliceVector vector1(buffers);
   QuicTestMemSliceVector vector2(buffers);
   QuicMemSliceSpan span1 = vector1.span();
@@ -941,7 +942,7 @@ TEST_F(QuicStreamTest, WriteMemSlices) {
   QuicConsumedData consumed = stream_->WriteMemSlices(span1, false);
   EXPECT_EQ(2048u, consumed.bytes_consumed);
   EXPECT_FALSE(consumed.fin_consumed);
-  EXPECT_EQ(2 * arraysize(data) - 100, stream_->BufferedDataBytes());
+  EXPECT_EQ(2 * QUIC_ARRAYSIZE(data) - 100, stream_->BufferedDataBytes());
   EXPECT_FALSE(stream_->fin_buffered());
 
   EXPECT_CALL(*session_, WritevData(_, _, _, _, _)).Times(0);
@@ -949,12 +950,12 @@ TEST_F(QuicStreamTest, WriteMemSlices) {
   consumed = stream_->WriteMemSlices(span2, true);
   EXPECT_EQ(0u, consumed.bytes_consumed);
   EXPECT_FALSE(consumed.fin_consumed);
-  EXPECT_EQ(2 * arraysize(data) - 100, stream_->BufferedDataBytes());
+  EXPECT_EQ(2 * QUIC_ARRAYSIZE(data) - 100, stream_->BufferedDataBytes());
   EXPECT_FALSE(stream_->fin_buffered());
 
   EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
       .WillOnce(Return(QuicConsumedData(
-          2 * arraysize(data) - 100 -
+          2 * QUIC_ARRAYSIZE(data) - 100 -
               GetQuicFlag(FLAGS_quic_buffered_data_threshold) + 1,
           false)));
   EXPECT_CALL(*stream_, OnCanWriteNewData()).Times(1);
@@ -966,9 +967,9 @@ TEST_F(QuicStreamTest, WriteMemSlices) {
   consumed = stream_->WriteMemSlices(span2, true);
   EXPECT_EQ(2048u, consumed.bytes_consumed);
   EXPECT_TRUE(consumed.fin_consumed);
-  EXPECT_EQ(
-      2 * arraysize(data) + GetQuicFlag(FLAGS_quic_buffered_data_threshold) - 1,
-      stream_->BufferedDataBytes());
+  EXPECT_EQ(2 * QUIC_ARRAYSIZE(data) +
+                GetQuicFlag(FLAGS_quic_buffered_data_threshold) - 1,
+            stream_->BufferedDataBytes());
   EXPECT_TRUE(stream_->fin_buffered());
 
   // Flush all buffered data.
@@ -989,7 +990,7 @@ TEST_F(QuicStreamTest, WriteMemSlicesReachStreamLimit) {
   QuicStreamPeer::SetStreamBytesWritten(kMaxStreamLength - 5u, stream_);
   char data[5];
   std::vector<std::pair<char*, int>> buffers;
-  buffers.push_back(std::make_pair(data, arraysize(data)));
+  buffers.push_back(std::make_pair(data, QUIC_ARRAYSIZE(data)));
   QuicTestMemSliceVector vector1(buffers);
   QuicMemSliceSpan span1 = vector1.span();
   EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
