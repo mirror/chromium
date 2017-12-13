@@ -631,13 +631,17 @@ LayoutManager* View::GetLayoutManager() const {
   return layout_manager_.get();
 }
 
-void View::SetLayoutManager(LayoutManager* layout_manager) {
-  if (layout_manager == layout_manager_.get())
+void View::SetLayoutManager(std::unique_ptr<LayoutManager> layout_manager) {
+  if (layout_manager == layout_manager_)
     return;
 
-  layout_manager_.reset(layout_manager);
+  layout_manager_ = std::move(layout_manager);
   if (layout_manager_)
     layout_manager_->Installed(this);
+}
+
+void View::SetLayoutManager(LayoutManager* layout) {
+  SetLayoutManager(std::unique_ptr<LayoutManager>(layout));
 }
 
 // Attributes ------------------------------------------------------------------
