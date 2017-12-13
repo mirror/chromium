@@ -70,6 +70,24 @@
       "revId": "0ae8c91382032003d705f98ebb5ff42c7a06fd21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52de0eb9_1a75910b",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3096,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-13T01:57:11Z",
+      "side": 1,
+      "message": "That sounds a safer or scalable option than we have to maintain this if conditions\nin the future.\n\nProbably \"not optimize\" is the default safer option, so you could write\n\nclass BaseElement {\n  virtual bool IsOptimizable() { return false; }  // default\n}\n\nand\n\nclass OptimizableElement : BaseElement {\n  bool IsOptimizable() override { return true; }\n}\n\nBut Mozilla\u0027s approach is opposite, probably because elements that cannot be optimized\nis fewer and exceptional than optimizable elements.  But having an outstanding name\n(\"Weird\" in the function name) can draw the reader\u0027s attention, which compensates the\nrisk of overlooking.",
+      "parentUuid": "2fcecdbe_75ea0999",
+      "revId": "0ae8c91382032003d705f98ebb5ff42c7a06fd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
