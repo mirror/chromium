@@ -2482,8 +2482,17 @@ void LayerTreeHostImpl::CreateTileManagerResources() {
                                         &resource_pool_);
 
   if (use_gpu_rasterization_) {
+    // The worker context must support oop raster to enable oop rasterization.
+    bool oop_raster_enabled = settings_.enable_oop_rasterization;
+    if (oop_raster_enabled) {
+      viz::ContextProvider::ScopedContextLock hold(
+          layer_tree_frame_sink_->worker_context_provider());
+      oop_raster_enabled &= layer_tree_frame_sink_->worker_context_provider()
+                                ->ContextCapabilities()
+                                .supports_oop_raster;
+    }
     image_decode_cache_ = std::make_unique<GpuImageDecodeCache>(
-        layer_tree_frame_sink_->worker_context_provider(),
+        layer_tree_frame_sink_->worker_context_provider(), oop_raster_enabled,
         viz::ResourceFormatToClosestSkColorType(
             settings_.preferred_tile_format),
         settings_.decoded_image_working_set_budget_bytes);

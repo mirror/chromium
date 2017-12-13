@@ -22,6 +22,9 @@ class DecodeStashingImageProvider : public ImageProvider {
   ScopedDecodedDrawImage GetDecodedDrawImage(
       const DrawImage& draw_image) override;
 
+  // Releases all stashed images.
+  void Flush();
+
  private:
   ImageProvider* source_provider_;
   base::StackVector<ScopedDecodedDrawImage, 1> decoded_images_;
