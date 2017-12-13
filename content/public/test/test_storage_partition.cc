@@ -68,6 +68,11 @@ TestStoragePartition::GetPlatformNotificationContext() {
   return nullptr;
 }
 
+void TestStoragePartition::AddNetworkServiceObserver(NetworkServiceObserver*) {}
+
+void TestStoragePartition::RemoveNetworkServiceObserver(
+    const NetworkServiceObserver*) {}
+
 #if !defined(OS_ANDROID)
 HostZoomMap* TestStoragePartition::GetHostZoomMap() {
   return host_zoom_map_;

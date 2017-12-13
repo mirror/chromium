@@ -109,6 +109,9 @@ class TestStoragePartition : public StoragePartition {
   }
   PlatformNotificationContext* GetPlatformNotificationContext() override;
 
+  void AddNetworkServiceObserver(NetworkServiceObserver*) override;
+  void RemoveNetworkServiceObserver(const NetworkServiceObserver*) override;
+
 #if !defined(OS_ANDROID)
   void set_host_zoom_map(HostZoomMap* map) { host_zoom_map_ = map; }
   HostZoomMap* GetHostZoomMap() override;

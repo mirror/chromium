@@ -630,6 +630,9 @@ mojom::NetworkContext* StoragePartitionImpl::GetNetworkContext() {
   if (!network_context_.is_bound() || network_context_.encountered_error()) {
     network_context_ = GetContentClient()->browser()->CreateNetworkContext(
         browser_context_, is_in_memory_, relative_partition_path_);
+    network_context_.set_connection_error_handler(base::BindOnce(
+        &StoragePartitionImpl::NotifyNetworkServiceConnectionError,
+        weak_factory_.GetWeakPtr()));
   }
   return network_context_.get();
 }
@@ -700,6 +703,24 @@ ZoomLevelDelegate* StoragePartitionImpl::GetZoomLevelDelegate() {
 PlatformNotificationContextImpl*
 StoragePartitionImpl::GetPlatformNotificationContext() {
   return platform_notification_context_.get();
+}
+
+void StoragePartitionImpl::AddNetworkServiceObserver(
+    NetworkServiceObserver* observer) {
+  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  network_service_observers_.AddObserver(observer);
+}
+
+void StoragePartitionImpl::RemoveNetworkServiceObserver(
+    const NetworkServiceObserver* observer) {
+  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  network_service_observers_.RemoveObserver(observer);
+}
+
+void StoragePartitionImpl::NotifyNetworkServiceConnectionError() {
+  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  for (auto& observer : network_service_observers_)
+    observer.OnConnectionError();
 }
 
 BackgroundFetchContext* StoragePartitionImpl::GetBackgroundFetchContext() {

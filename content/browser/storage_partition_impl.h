@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "base/process/process_handle.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
 #include "content/browser/background_sync/background_sync_context.h"
@@ -93,6 +94,8 @@ class CONTENT_EXPORT StoragePartitionImpl
   ZoomLevelDelegate* GetZoomLevelDelegate() override;
 #endif  // !defined(OS_ANDROID)
   PlatformNotificationContextImpl* GetPlatformNotificationContext() override;
+  void AddNetworkServiceObserver(NetworkServiceObserver*) override;
+  void RemoveNetworkServiceObserver(const NetworkServiceObserver*) override;
   void ClearDataForOrigin(uint32_t remove_mask,
                           uint32_t quota_storage_remove_mask,
                           const GURL& storage_origin) override;
@@ -240,6 +243,9 @@ class CONTENT_EXPORT StoragePartitionImpl
   // storage configuration info.
   void GetQuotaSettings(storage::OptionalQuotaSettingsCallback callback);
 
+  // Notify observers when |network_context_| has encountered connection error.
+  void NotifyNetworkServiceConnectionError();
+
   // |is_in_memory_| and |relative_partition_path_| are cached from
   // |StoragePartitionImpl::Create()| in order to re-create |NetworkContext|.
   bool is_in_memory_;
@@ -283,6 +289,9 @@ class CONTENT_EXPORT StoragePartitionImpl
   // provided by the embedder, or is created by the StoragePartition and owned
   // by |network_context_owner_|.
   mojom::NetworkContextPtr network_context_;
+
+  // Observers for Network Service connection error.
+  base::ObserverList<NetworkServiceObserver> network_service_observers_;
 
   // URLLoaderFactory for use in the browser process only. See the method
   // comment for StoragePartition::GetURLLoaderFactoryForBrowserProcess() for
