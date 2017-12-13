@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d5097f68_2bb7ffd5",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-13T18:48:10Z",
+      "side": 1,
+      "message": "So doing some print debugging I was able to find that the tab URL is the one that is saved in history (ie. https://www.debian.org/distrib/netinst vs https://debian.org/ and https://www.google.com/search?q\u003dcats\u0026oq\u003dcats\u0026aqs\u003dchrome..69i57j5l2.693j0j7\u0026sourceid\u003dchrome-mobile\u0026ie\u003dUTF-8 vs https://google.com/), see https://paste.googleplex.com/5016537547145216.\n\nI have updated the cases that have tab_urls to record those.",
+      "parentUuid": "6dd48e3c_299a9ca0",
+      "range": {
+        "startLine": 422,
+        "startChar": 40,
+        "endLine": 422,
+        "endChar": 43
+      },
+      "revId": "f3488ce17d261330273754d46739f88951e1a2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e431d58_319d9dd2",
         "filename": "content/browser/download/download_ukm.cc",
         "patchSetId": 13
@@ -69,6 +93,30 @@
       "revId": "f3488ce17d261330273754d46739f88951e1a2ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7d299b_1493a4c7",
+        "filename": "content/browser/download/download_ukm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-12-13T18:48:10Z",
+      "side": 1,
+      "message": "Thanks! Didn\u0027t realize that was possible.",
+      "parentUuid": "3e431d58_319d9dd2",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 3
+      },
+      "revId": "f3488ce17d261330273754d46739f88951e1a2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
