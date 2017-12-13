@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "166d84c6_af0288c2",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-13T18:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0f0d2b0_623ba0fc",
+      "range": {
+        "startLine": 189,
+        "startChar": 25,
+        "endLine": 189,
+        "endChar": 46
+      },
+      "revId": "f0997154dac9887d4fbd7aca43855b664a0cc4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17294436_00b8ee0b",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 12
@@ -65,6 +89,48 @@
     },
     {
       "key": {
+        "uuid": "c02ff8be_67520790",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-13T18:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17294436_00b8ee0b",
+      "revId": "f0997154dac9887d4fbd7aca43855b664a0cc4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5708353_95f96961",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-13T18:24:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e038855_51859faa",
+      "range": {
+        "startLine": 208,
+        "startChar": 42,
+        "endLine": 208,
+        "endChar": 57
+      },
+      "revId": "f0997154dac9887d4fbd7aca43855b664a0cc4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "747bbd4e_2c1c26df",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 12
@@ -76,6 +142,30 @@
       "writtenOn": "2017-12-13T17:00:54Z",
       "side": 1,
       "message": "Is the \"though ...\" a bug? Should you file a bug about this?",
+      "range": {
+        "startLine": 1113,
+        "startChar": 60,
+        "endLine": 1113,
+        "endChar": 66
+      },
+      "revId": "f0997154dac9887d4fbd7aca43855b664a0cc4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691b9212_891e2280",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1246408
+      },
+      "writtenOn": "2017-12-13T18:24:32Z",
+      "side": 1,
+      "message": "Yes, I think I should. But I\u0027ll wait what Trent has to say about that.",
+      "parentUuid": "747bbd4e_2c1c26df",
       "range": {
         "startLine": 1113,
         "startChar": 60,
