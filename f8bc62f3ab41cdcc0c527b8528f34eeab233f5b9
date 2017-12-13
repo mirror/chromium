@@ -33,6 +33,69 @@
       "revId": "f8bc62f3ab41cdcc0c527b8528f34eeab233f5b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b42f5f_4a03a28d",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-13T08:07:29Z",
+      "side": 1,
+      "message": "Looks like it\u0027s not needed anymore.",
+      "range": {
+        "startLine": 22,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 8
+      },
+      "revId": "f8bc62f3ab41cdcc0c527b8528f34eeab233f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5cd7691_d09ab359",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-13T08:07:29Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "revId": "f8bc62f3ab41cdcc0c527b8528f34eeab233f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fe61eb_37f78939",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-12-13T08:07:29Z",
+      "side": 1,
+      "message": "I still have been wondering if using EventTimeForNow is the right thing to do. I remember we have had some problems with with latencies.\nThe bt was something like\n\n[31563:31589:0928/135435.065324:FATAL:latency_tracker.cc(136)] Check failed: !latency.coalesced().\n#0 0x7f6c1d91ff67 base::debug::StackTrace::StackTrace()\n#1 0x7f6c1d9471d1 logging::LogMessage::~LogMessage()\n#2 0x7f6c13bc080c ui::LatencyTracker::ComputeEndToEndLatencyHistograms()\n#3 0x7f6c13bc02b7 ui::LatencyTracker::OnGpuSwapBuffersCompleted()\n#4 0x7f6c13b8b3f5 viz::DisplayOutputSurface::OnGpuSwapBuffersCompleted()",
+      "range": {
+        "startLine": 99,
+        "startChar": 58,
+        "endLine": 99,
+        "endChar": 73
+      },
+      "revId": "f8bc62f3ab41cdcc0c527b8528f34eeab233f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
