@@ -11,6 +11,7 @@
 #include "chrome/browser/chromeos/mobile_config.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/system/device_disabling_manager.h"
+#include "chrome/browser/ui/webui/chromeos/internet_detail_dialog.h"
 
 namespace chromeos {
 namespace {
@@ -28,6 +29,10 @@ LoginDisplayHost* LoginDisplayHost::default_host_ = nullptr;
 LoginDisplayHost::LoginDisplayHost() : weak_factory_(this) {}
 
 LoginDisplayHost::~LoginDisplayHost() = default;
+
+void LoginDisplayHost::OpenInternetDetailDialog(const std::string& network_id) {
+  InternetDetailDialog::ShowDialog(network_id);
+}
 
 AppLaunchController* LoginDisplayHost::GetAppLaunchController() {
   return app_launch_controller_.get();
