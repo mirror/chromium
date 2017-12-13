@@ -22,6 +22,30 @@
       "revId": "1f3326bcd35fadbe2618f79ee81294f388414335",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622286dd_6060d57b",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/sigsys_handlers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-13T21:16:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2954af2e_6f330b40",
+      "range": {
+        "startLine": 71,
+        "startChar": 33,
+        "endLine": 71,
+        "endChar": 40
+      },
+      "revId": "1f3326bcd35fadbe2618f79ee81294f388414335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
