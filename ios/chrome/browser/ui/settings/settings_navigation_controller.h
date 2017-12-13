@@ -138,10 +138,6 @@ initWithRootViewController:(UIViewController*)rootViewController
 // Returns the current main browser state.
 - (ios::ChromeBrowserState*)mainBrowserState;
 
-// Notifies this |SettingsNavigationController| that it will be dismissed such
-// that it has a possibility to do necessary clean up.
-- (void)settingsWillBeDismissed;
-
 // Closes this |SettingsNavigationController| by asking its delegate.
 - (void)closeSettings;
 
