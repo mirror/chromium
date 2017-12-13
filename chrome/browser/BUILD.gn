@@ -3141,6 +3141,25 @@ split_static_library("browser") {
   }
 
   if (toolkit_views) {
+    sources += [
+      "history/nav_jaunt.cc",
+      "history/nav_jaunt.h",
+      "history/nav_tree.cc",
+      "history/nav_tree.h",
+      "history/nav_tree_factory.cc",
+      "history/nav_tree_factory.h",
+      "history/nav_tree_node.cc",
+      "history/nav_tree_node.h",
+      "history/nav_tree_page.cc",
+      "history/nav_tree_page.h",
+      "history/nav_tree_tab_strip_model_observer.cc",
+      "history/nav_tree_tab_strip_model_observer.h",
+      "history/nav_tree_web_contents_observer.cc",
+      "history/nav_tree_web_contents_observer.h",
+      "history/nav_waypoint.cc",
+      "history/nav_waypoint.h",
+    ]
+
     deps += [ "//ui/views" ]
   }
 

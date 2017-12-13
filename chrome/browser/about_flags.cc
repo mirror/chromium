@@ -157,6 +157,7 @@
 #endif  // OS_WIN
 
 #if defined(TOOLKIT_VIEWS)
+#include "chrome/browser/history/nav_tree.h"
 #include "chrome/browser/ui/tabs/tab_features.h"
 #endif
 
@@ -3603,6 +3604,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kExperimentalTabControllerName,
      flag_descriptions::kExperimentalTabControllerDescription,
      kOsWin | kOsLinux, FEATURE_VALUE_TYPE(kExperimentalTabControllerFeature)},
+
+    {"debug-nav-tree", flag_descriptions::kDebugNavTreeName,
+     flag_descriptions::kDebugNavTreeDescription, kOsWin | kOsLinux,
+     FEATURE_VALUE_TYPE(NavTree::kFeature)},
 #endif  // defined(OS_WIN)
 
 #if defined(OS_CHROMEOS)
