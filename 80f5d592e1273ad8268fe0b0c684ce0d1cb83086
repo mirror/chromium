@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "9ca80c5c_984f847e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T17:33:15Z",
+      "side": 1,
+      "message": "convenience alias not allowed here.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 7
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b9f151_29ebcb44",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T17:33:15Z",
+      "side": 1,
+      "message": "file_task_runner_ no longer exists.",
+      "range": {
+        "startLine": 163,
+        "startChar": 59,
+        "endLine": 163,
+        "endChar": 76
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8ffa819_45b2e35d",
         "filename": "content/browser/webrtc/webrtc_local_event_log_manager.cc",
         "patchSetId": 8
