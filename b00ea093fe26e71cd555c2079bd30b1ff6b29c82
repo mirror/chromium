@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "f833a74a_092bd303",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-13T17:46:31Z",
+      "side": 1,
+      "message": "I have no idea what this means, maybe elaborate?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 79
+      },
+      "revId": "b00ea093fe26e71cd555c2079bd30b1ff6b29c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73573c5_394fae99",
+        "filename": "components/printing/common/print_messages.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-13T17:46:31Z",
+      "side": 1,
+      "message": "nit: maybe header_html_template to indicate that it will be interpreted as such?",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 33
+      },
+      "revId": "b00ea093fe26e71cd555c2079bd30b1ff6b29c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eec01d1f_d360bf94",
         "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
         "patchSetId": 3
@@ -13,6 +59,52 @@
       "writtenOn": "2017-12-13T03:47:20Z",
       "side": 1,
       "message": "nit: need braces.",
+      "revId": "b00ea093fe26e71cd555c2079bd30b1ff6b29c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a11596a_ea761587",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9824,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-13T17:46:31Z",
+      "side": 1,
+      "message": "nit: do you mean tag or elements?  I didn\u0027t think HTML had classes.",
+      "range": {
+        "startLine": 9824,
+        "startChar": 123,
+        "endLine": 9824,
+        "endChar": 130
+      },
+      "revId": "b00ea093fe26e71cd555c2079bd30b1ff6b29c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd8bd67_88376bdb",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 3
+      },
+      "lineNbr": 4495,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-12-13T17:46:31Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 4495,
+        "startChar": 8,
+        "endLine": 4495,
+        "endChar": 16
+      },
       "revId": "b00ea093fe26e71cd555c2079bd30b1ff6b29c82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
