@@ -22,6 +22,30 @@
       "revId": "c41901f2a1b183be3b8611e666d8798ad554fe93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7581750e_b794c003",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-12-13T19:05:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af45b4a3_f48cbc80",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "c41901f2a1b183be3b8611e666d8798ad554fe93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
