@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f18f67e9_b23a720c",
+        "filename": "net/quic/platform/api/quic_arraysize.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-12-13T21:04:10Z",
+      "side": 1,
+      "message": "I don\u0027t see quic_arraysize.h in the internal repo. Does that need to be created?",
+      "range": {
+        "startLine": 8,
+        "startChar": 55,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "785874c55208ec26254ea9860688fc5a97b56d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
