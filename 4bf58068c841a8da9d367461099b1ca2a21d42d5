@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "064c9be4_9bbd86c1",
+        "filename": "cc/paint/paint_op_buffer_eq_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-13T01:33:51Z",
+      "side": 1,
+      "message": "As discussed offline, we should probably fuzz the cache. Filed crbug.com/794391",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39cd7371_855555aa",
+        "filename": "cc/paint/transfer_cache_serialize_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-13T01:33:51Z",
+      "side": 1,
+      "message": "nit: given that we have to clear afterwards anyway (as std::move leaves the set in an unspecified state), why not just pass this in as a const\u0026, avoiding a copy. Seems equally clear/performant to pass by const\u0026 and then clear the set below, and avoids questions about the state std:move leaves things in.",
+      "range": {
+        "startLine": 38,
+        "startChar": 28,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9271081d_0338009c",
+        "filename": "cc/paint/transfer_cache_serialize_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-13T01:33:51Z",
+      "side": 1,
+      "message": "Given that we\u0027ve gone with an array of maps in your refactor of clienttransfercache, is there a reason we use std::pair here, rather than an array of sets? I guess I could see this, given that the helper is more likely to deal with a single type of entry, while the cache will frequently have all types?",
+      "range": {
+        "startLine": 27,
+        "startChar": 24,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "750ce742_62065046",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 4
@@ -13,6 +82,29 @@
       "writtenOn": "2017-12-13T01:29:37Z",
       "side": 1,
       "message": "For a potential follow-up: should we introduce a bulk unlock API? To avoid the taking the lock (see https://chromium-review.googlesource.com/c/chromium/src/+/823232) repeatedly, and to have more efficient commands (the per-command overhead probably dominates the command execution itself in most cases).",
+      "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41826de6_991d1314",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7345,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-13T01:33:51Z",
+      "side": 1,
+      "message": "nit: Why not just do this in SendSerializedData?",
+      "range": {
+        "startLine": 7345,
+        "startChar": 2,
+        "endLine": 7345,
+        "endChar": 33
+      },
       "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
