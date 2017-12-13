@@ -46,6 +46,30 @@
       "revId": "6e12b1f710df7fed8ea387a90361da7007cecc0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3269a6_7b9d9932",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-13T00:01:25Z",
+      "side": 1,
+      "message": "+haraken@\n\nHm, completely missed that it is the browser process. :(\n\nHowever, it is possible to whitelist certain files in blink and include them from content/browser: https://cs.chromium.org/chromium/src/content/browser/DEPS?type\u003dcs\u0026q\u003df:content/browser+blink+package:%5Echromium$\u0026l\u003d127\n\nKentaro-san, do you think it is reasonable to add public/platform/scheduler/common/initial_process_visibility.h? Or should it go somewhere else?",
+      "parentUuid": "fe8ab669_ef8e055d",
+      "range": {
+        "startLine": 282,
+        "startChar": 15,
+        "endLine": 282,
+        "endChar": 46
+      },
+      "revId": "6e12b1f710df7fed8ea387a90361da7007cecc0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
