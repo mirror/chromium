@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "081b8dbf_8d8481a0",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-13T08:23:57Z",
+      "side": 1,
+      "message": "Fixed in patch set 3.",
+      "parentUuid": "92bbb85c_23eb85bc",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 25
+      },
+      "revId": "e1767bbc922a74f02024d8b4fa7cb2e074383a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75de3ccb_4c0f4fff",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "e1767bbc922a74f02024d8b4fa7cb2e074383a7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b04a86_bcada77a",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-12-13T08:23:57Z",
+      "side": 1,
+      "message": "Fixed in patch set 3.",
+      "parentUuid": "75de3ccb_4c0f4fff",
+      "range": {
+        "startLine": 154,
+        "startChar": 22,
+        "endLine": 154,
+        "endChar": 37
+      },
+      "revId": "e1767bbc922a74f02024d8b4fa7cb2e074383a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
