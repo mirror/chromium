@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da8d8544_ec7ce7f1",
+        "filename": "android_webview/browser/aw_contents.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-13T18:14:50Z",
+      "side": 1,
+      "message": "px generally means physical pixel, not DIP..\n\nalso scrollContainerViewTo should take physical pixel afaict, not DIP, so suffix looks correct, but the division below doesn\u0027t make sense to me.",
+      "range": {
+        "startLine": 1095,
+        "startChar": 10,
+        "endLine": 1095,
+        "endChar": 12
+      },
+      "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3910b006_528b0771",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2975,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-13T18:14:50Z",
+      "side": 1,
+      "message": "ditto the suffix here",
+      "range": {
+        "startLine": 2975,
+        "startChar": 44,
+        "endLine": 2975,
+        "endChar": 46
+      },
+      "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534ca350_525425e1",
+        "filename": "content/common/content_switches_internal.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-13T18:14:50Z",
+      "side": 1,
+      "message": "we should have a follow up CL to clean this up",
+      "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a59037_68fd60c9",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-13T18:14:50Z",
+      "side": 1,
+      "message": "put this and sUseZoomForDSFEnabledByDefault in anonymous namespace",
+      "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
