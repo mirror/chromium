@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2c41ce63_93a76f5b",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T16:52:44Z",
+      "side": 1,
+      "message": "Should we deprecate and kill needs_reload then, once TabLoader logic is in LifecycleManager as well? The only client is session restore now, IIRC. Maybe add a comment with a TODO and a bug for this?",
+      "parentUuid": "60d64655_be8deba7",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 52
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23394509_21ff422d",
         "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
         "patchSetId": 5
@@ -237,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "042b094c_37cd7bee",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T16:52:44Z",
+      "side": 1,
+      "message": "Ack. Blimey I\u0027m blind.",
+      "parentUuid": "c42e8bef_9bb17ca7",
+      "range": {
+        "startLine": 187,
+        "startChar": 20,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99e4c804_1fe00088",
         "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
         "patchSetId": 5
@@ -319,6 +367,30 @@
       "side": 1,
       "message": "I planned to use it externally to implement memory purge. I\u0027ll make it private for now, and move to public if/when I need it for memory purge.",
       "parentUuid": "2fe05bd0_048fb5fd",
+      "range": {
+        "startLine": 75,
+        "startChar": 30,
+        "endLine": 75,
+        "endChar": 50
+      },
+      "revId": "f47478ae3f3d75d89896615f1f9ad3e94bb664cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "533370eb_c305d93c",
+        "filename": "chrome/browser/resource_coordinator/tab_lifecycle_unit.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-12-13T16:52:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "650faeac_65167539",
       "range": {
         "startLine": 75,
         "startChar": 30,
