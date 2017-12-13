@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12410e9f_febd9291",
+        "filename": "cc/layers/viewport.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-12-13T17:10:51Z",
+      "side": 1,
+      "message": "Just quick question, is the innerviewportscolllayer check for when we are on main thread or not? Or check for OOPIF?",
+      "revId": "bfc23ac4d739c0e11118bc698b0fc0a4757b73c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
