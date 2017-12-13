@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a4ddb4e_09416446",
+        "filename": "ios/chrome/browser/ui/settings/accounts_collection_egtest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-12-13T17:47:46Z",
+      "side": 1,
+      "message": "Can you make this a string instead, and just passing the email in? This would be more explicit.",
+      "range": {
+        "startLine": 46,
+        "startChar": 47,
+        "endLine": 46,
+        "endChar": 71
+      },
+      "revId": "99a1a76503a7b89b150d603fc9a118b4dd40b429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
