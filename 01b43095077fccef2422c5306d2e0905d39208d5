@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "ea326176_ff380fc6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-13T10:35:59Z",
+      "side": 1,
+      "message": "Could also be added after native is loaded, and remove some more mNativeInitialised checks. The logo is not visible until the recycler view is shown anyway",
+      "range": {
+        "startLine": 218,
+        "startChar": 49,
+        "endLine": 218,
+        "endChar": 76
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06a5e40e_ae82df96",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
