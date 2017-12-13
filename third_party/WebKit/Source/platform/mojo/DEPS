@@ -9,4 +9,5 @@ include_rules = [
     "+mojo/common/string16.mojom-blink.h",
     "+mojo/common/test_common_custom_types.mojom-blink.h",
     "+services/network/public/interfaces/fetch_api.mojom-blink.h"
+    "+services/network/public/interfaces/request_context_frame_type.mojom-blink.h"
 ]
