@@ -34,6 +34,24 @@
       "revId": "5b0aacb858bafb3d4d8161a9f33aea5494b3d3bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a0e681_5188ea8c",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-12-13T01:07:44Z",
+      "side": 1,
+      "message": "Oh, right.",
+      "parentUuid": "f357b4e9_65504472",
+      "revId": "5b0aacb858bafb3d4d8161a9f33aea5494b3d3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
