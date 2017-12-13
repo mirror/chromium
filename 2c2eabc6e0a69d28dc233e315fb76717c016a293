@@ -16,6 +16,24 @@
       "revId": "2c2eabc6e0a69d28dc233e315fb76717c016a293",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdaa5a04_ef0308ed",
+        "filename": "chrome/browser/media/router/media_router_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-12-13T01:58:07Z",
+      "side": 1,
+      "message": "Right, this assumes that an icon type is not shared by multiple MRPs/sink types. That is why I added a WIRED_DISPLAY icon type, although WebUI maps both WIRED_DISPLAY and GENERIC to the generic icon.\n\nPerhaps we could rename the enum to SinkType, and allow the UI to map multiple sink types to one icon if necessary (which this CL already does with WIRED_DISPLAY and GENERIC).",
+      "parentUuid": "10817e56_819638c4",
+      "revId": "2c2eabc6e0a69d28dc233e315fb76717c016a293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
