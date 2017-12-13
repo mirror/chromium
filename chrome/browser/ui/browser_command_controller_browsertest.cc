@@ -105,8 +105,7 @@ IN_PROC_BROWSER_TEST_F(BrowserCommandControllerBrowserTest,
   // on to a CallbackList::Subscription forever.
   TemplateURLServiceFactory::GetForProfile(guest)->set_loaded(true);
 
-  const CommandUpdater* command_updater =
-      browser->command_controller()->command_updater();
+  const CommandUpdater* command_updater = browser->command_controller();
   #if defined(OS_CHROMEOS)
     // Chrome OS uses system tray menu to handle multi-profiles.
     EXPECT_FALSE(command_updater->IsCommandEnabled(IDC_SHOW_AVATAR_MENU));
