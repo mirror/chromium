@@ -24,7 +24,6 @@
 #include "content/browser/loader/resource_request_info_impl.h"
 #include "content/browser/loader/resource_scheduler.h"
 #include "content/public/browser/appcache_service.h"
-#include "content/public/browser/navigation_data.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/browser/resource_throttle.h"
@@ -182,9 +181,9 @@ class TestResourceDispatcherHostDelegate final
     return PREVIEWS_UNSPECIFIED;
   }
 
-  NavigationData* GetNavigationData(net::URLRequest* request) const override {
+  base::Value GetNavigationData(net::URLRequest* request) const override {
     ADD_FAILURE() << "GetNavigationData should not be called.";
-    return nullptr;
+    return base::Value();
   }
 
   std::unique_ptr<net::ClientCertStore> CreateClientCertStore(

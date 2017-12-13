@@ -45,7 +45,6 @@
 #include "components/signin/core/browser/signin_pref_names.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/navigation_data.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/resource_dispatcher_host.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
@@ -125,8 +124,7 @@ class TestDispatcherHostDelegate : public ChromeResourceDispatcherHostDelegate {
     request_headers_.MergeFrom(request->extra_request_headers());
   }
 
-  content::NavigationData* GetNavigationData(
-      net::URLRequest* request) const override {
+  base::Value GetNavigationData(net::URLRequest* request) const override {
     if (request && should_add_data_reduction_proxy_data_) {
       data_reduction_proxy::DataReductionProxyData* data =
           data_reduction_proxy::DataReductionProxyData::
@@ -174,8 +172,8 @@ class TestDispatcherHostDelegate : public ChromeResourceDispatcherHostDelegate {
   DISALLOW_COPY_AND_ASSIGN(TestDispatcherHostDelegate);
 };
 
-// Helper class to track DidFinishNavigation and verify that NavigationData is
-// added to NavigationHandle and pause/resume execution of the test.
+// Helper class to track DidFinishNavigation and verify that the navigation_data
+// is added to NavigationHandle and pause/resume execution of the test.
 class DidFinishNavigationObserver : public content::WebContentsObserver {
  public:
   DidFinishNavigationObserver(content::WebContents* web_contents,
@@ -186,14 +184,14 @@ class DidFinishNavigationObserver : public content::WebContentsObserver {
 
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override {
-    ChromeNavigationData* data = static_cast<ChromeNavigationData*>(
-        navigation_handle->GetNavigationData());
+    const base::Value& navigation_data = navigation_handle->GetNavigationData();
+    ChromeNavigationData chrome_navigation_data(navigation_data);
     if (add_data_reduction_proxy_data_) {
-      EXPECT_TRUE(data->GetDataReductionProxyData());
-      EXPECT_TRUE(
-          data->GetDataReductionProxyData()->used_data_reduction_proxy());
+      EXPECT_TRUE(chrome_navigation_data.GetDataReductionProxyData());
+      EXPECT_TRUE(chrome_navigation_data.GetDataReductionProxyData()
+                      ->used_data_reduction_proxy());
     } else {
-      EXPECT_FALSE(data->GetDataReductionProxyData());
+      EXPECT_FALSE(chrome_navigation_data.GetDataReductionProxyData());
     }
   }
 

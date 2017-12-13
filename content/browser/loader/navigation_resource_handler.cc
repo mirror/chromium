@@ -16,7 +16,6 @@
 #include "content/browser/resource_context_impl.h"
 #include "content/browser/streams/stream.h"
 #include "content/browser/streams/stream_context.h"
-#include "content/public/browser/navigation_data.h"
 #include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/resource_response.h"
@@ -115,21 +114,17 @@ void NavigationResourceHandler::OnResponseStarted(
 
   response->head.encoded_data_length = request()->raw_header_size();
 
-  std::unique_ptr<NavigationData> cloned_data;
+  base::Value navigation_data;
   if (resource_dispatcher_host_delegate_) {
     // Ask the embedder for a NavigationData instance.
-    NavigationData* navigation_data =
+    navigation_data =
         resource_dispatcher_host_delegate_->GetNavigationData(request());
-
-    // Clone the embedder's NavigationData before moving it to the UI thread.
-    if (navigation_data)
-      cloned_data = navigation_data->Clone();
   }
 
-  core_->NotifyResponseStarted(response, std::move(stream_handle_),
-                               request()->ssl_info(), std::move(cloned_data),
-                               info->GetGlobalRequestID(), info->IsDownload(),
-                               info->is_stream());
+  core_->NotifyResponseStarted(
+      response, std::move(stream_handle_), request()->ssl_info(),
+      std::move(navigation_data), info->GetGlobalRequestID(),
+      info->IsDownload(), info->is_stream());
   HoldController(std::move(controller));
   response_ = response;
 }

@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/supports_user_data.h"
+#include "base/values.h"
 #include "net/nqe/effective_connection_type.h"
 #include "url/gurl.h"
 
@@ -28,6 +29,10 @@ class DataReductionProxyData : public base::SupportsUserData::Data {
  public:
   DataReductionProxyData();
   ~DataReductionProxyData() override;
+
+  // Convert from/to a base::Value.
+  base::Value ToValue();
+  explicit DataReductionProxyData(const base::Value& value);
 
   // Whether the DataReductionProxy was used for this request or navigation.
   // Also true if the user is the holdback experiment, and the request would

@@ -63,7 +63,6 @@
 #include "components/previews/core/previews_user_data.h"
 #include "components/variations/net/variations_http_headers.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/navigation_data.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/plugin_service_filter.h"
@@ -956,29 +955,33 @@ void ChromeResourceDispatcherHostDelegate::
   g_external_protocol_handler_delegate = delegate;
 }
 
-content::NavigationData*
-ChromeResourceDispatcherHostDelegate::GetNavigationData(
+base::Value ChromeResourceDispatcherHostDelegate::GetNavigationData(
     net::URLRequest* request) const {
-  ChromeNavigationData* data =
-      ChromeNavigationData::GetDataAndCreateIfNecessary(request);
   if (!request)
-    return data;
+    return base::Value();
+
+  ChromeNavigationData* chrome_navigation_data =
+      ChromeNavigationData::GetDataAndCreateIfNecessary(request);
 
   data_reduction_proxy::DataReductionProxyData* data_reduction_proxy_data =
       data_reduction_proxy::DataReductionProxyData::GetData(*request);
   // DeepCopy the DataReductionProxyData from the URLRequest to prevent the
   // URLRequest and DataReductionProxyData from both having ownership of the
-  // same object. This copy will be shortlived as it will be deep copied again
-  // when content makes a clone of NavigationData for the UI thread.
-  if (data_reduction_proxy_data)
-    data->SetDataReductionProxyData(data_reduction_proxy_data->DeepCopy());
+  // same object. This copy will be shortlived as it will be deleted at the end
+  // of this function in ChromeNavigationData's destructor.
+  if (data_reduction_proxy_data) {
+    chrome_navigation_data->SetDataReductionProxyData(
+        data_reduction_proxy_data->DeepCopy());
+  }
 
   previews::PreviewsUserData* previews_user_data =
       previews::PreviewsUserData::GetData(*request);
-  if (previews_user_data)
-    data->set_previews_user_data(previews_user_data->DeepCopy());
+  if (previews_user_data) {
+    chrome_navigation_data->set_previews_user_data(
+        previews_user_data->DeepCopy());
+  }
 
-  return data;
+  return chrome_navigation_data->ToValue();
 }
 
 std::unique_ptr<net::ClientCertStore>

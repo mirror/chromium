@@ -16,6 +16,15 @@ PreviewsUserData::PreviewsUserData(uint64_t page_id)
 
 PreviewsUserData::~PreviewsUserData() {}
 
+base::Value PreviewsUserData::ToValue() {
+  // Store |page_id_| as a string because base::Value can't store a 64 bits
+  // integer.
+  return base::Value(std::to_string(page_id_));
+}
+
+PreviewsUserData::PreviewsUserData(const base::Value& value)
+    : page_id_(std::stoll(value.GetString())) {}
+
 std::unique_ptr<PreviewsUserData> PreviewsUserData::DeepCopy() const {
   std::unique_ptr<PreviewsUserData> copy(new PreviewsUserData(page_id_));
   copy->SetCommittedPreviewsType(committed_previews_type_);

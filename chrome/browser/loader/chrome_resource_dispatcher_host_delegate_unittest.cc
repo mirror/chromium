@@ -11,7 +11,6 @@
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h"
-#include "content/public/browser/navigation_data.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/base/request_priority.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
@@ -55,20 +54,18 @@ TEST_F(ChromeResourceDispatcherHostDelegateTest,
       data_reduction_proxy::DataReductionProxyData::GetDataAndCreateIfNecessary(
           fake_request.get());
   data_reduction_proxy_data->set_used_data_reduction_proxy(true);
+
+  // Take it back from the ResourceDispatcherHostDelegate.
   std::unique_ptr<ChromeResourceDispatcherHostDelegate> delegate =
       std::make_unique<ChromeResourceDispatcherHostDelegate>();
-  ChromeNavigationData* chrome_navigation_data =
-      static_cast<ChromeNavigationData*>(
-          delegate->GetNavigationData(fake_request.get()));
-  data_reduction_proxy::DataReductionProxyData* data_reduction_proxy_data_copy =
-      chrome_navigation_data->GetDataReductionProxyData();
-  // The DataReductionProxyData should be a copy of the one on URLRequest
-  EXPECT_NE(data_reduction_proxy_data_copy, data_reduction_proxy_data);
+  base::Value navigation_data = delegate->GetNavigationData(fake_request.get());
+  EXPECT_FALSE(navigation_data.is_none());
+  ChromeNavigationData chrome_navigation_data(navigation_data);
+
   // Make sure DataReductionProxyData was copied.
+  data_reduction_proxy::DataReductionProxyData* data_reduction_proxy_data_copy =
+      chrome_navigation_data.GetDataReductionProxyData();
   EXPECT_TRUE(data_reduction_proxy_data_copy->used_data_reduction_proxy());
-  EXPECT_EQ(
-      chrome_navigation_data,
-      ChromeNavigationData::GetDataAndCreateIfNecessary(fake_request.get()));
 }
 
 TEST_F(ChromeResourceDispatcherHostDelegateTest,
@@ -80,10 +77,10 @@ TEST_F(ChromeResourceDispatcherHostDelegateTest,
                              nullptr, TRAFFIC_ANNOTATION_FOR_TESTS));
   std::unique_ptr<ChromeResourceDispatcherHostDelegate> delegate =
       std::make_unique<ChromeResourceDispatcherHostDelegate>();
-  ChromeNavigationData* chrome_navigation_data =
-      static_cast<ChromeNavigationData*>(
-          delegate->GetNavigationData(fake_request.get()));
-  EXPECT_FALSE(chrome_navigation_data->GetDataReductionProxyData());
+  base::Value navigation_data = delegate->GetNavigationData(fake_request.get());
+  EXPECT_FALSE(navigation_data.is_none());
+  ChromeNavigationData chrome_navigation_data(navigation_data);
+  EXPECT_FALSE(chrome_navigation_data.GetDataReductionProxyData());
 }
 
 TEST_F(ChromeResourceDispatcherHostDelegateTest,
