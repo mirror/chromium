@@ -39,6 +39,40 @@
       "revId": "375e3f4d1efe82618f62bbe5ee0a6ff9a31c3564",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34721a9b_cb0abecd",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2166,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-13T11:41:55Z",
+      "side": 1,
+      "message": "We should probably put this into a struct at some point. It\u0027s grown a bit absurd over time. :(",
+      "revId": "375e3f4d1efe82618f62bbe5ee0a6ff9a31c3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b28360_1e3722ab",
+        "filename": "third_party/WebKit/public/platform/WebContentSecurityPolicyStruct.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-13T11:41:55Z",
+      "side": 1,
+      "message": "It might be worth calling these out as strings representing either URLs or reporting groups, based on the value of |use_reporting_api|.",
+      "revId": "375e3f4d1efe82618f62bbe5ee0a6ff9a31c3564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
