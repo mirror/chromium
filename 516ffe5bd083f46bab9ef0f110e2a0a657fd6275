@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce77580f_16986c8b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-13T15:11:44Z",
+      "side": 0,
+      "message": "TRACE_TASK_EXECUTION macro creates a trace event containing location information and invoking special trace magic (heap profiler and such), so I don\u0027t think we can replace it with a simple trace event. Shall we add a new trace event with \"benchmark\" category and keep TRACE_TASK_EXECUTION intact?",
+      "range": {
+        "startLine": 498,
+        "startChar": 2,
+        "endLine": 498,
+        "endChar": 22
+      },
+      "revId": "516ffe5bd083f46bab9ef0f110e2a0a657fd6275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
