@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "33e53280_91ed5105",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-13T00:11:33Z",
+      "side": 1,
+      "message": "Fair enough. In that case, I hope we can get some suggestions from holte@ to put this somewhere in //base/metrics.",
+      "parentUuid": "036533c3_34113d08",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0db624c9_7f21d657",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h",
         "patchSetId": 3
