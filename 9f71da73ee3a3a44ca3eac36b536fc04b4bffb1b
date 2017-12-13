@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f03d839_dd8aca56",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-13T13:08:40Z",
+      "side": 1,
+      "message": "Are we really rounding up?",
+      "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a3cd34_bfbfcdcc",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-13T13:08:40Z",
+      "side": 1,
+      "message": "Sorry I\u0027m very confused here and cannot really process the sequence of formulas.\nLet\u0027s say requested_buffer_size is r, minimum_buffer_size is m and [] is ceil operation.\nThen substituting output_buffer_size \u003d [r/m]*m formula above into the formula below we get\nrounded_buffer_size \u003d [r/([r/m]/m)]*[r/m]*m \u003d [(r/m)/[r/m]]*[r/m]*m\n- correct?\nWhich is effectively [r/m]*m? Correct?\nThen why do we need the second formula? Or am I missing something?",
+      "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
