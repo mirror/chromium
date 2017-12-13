@@ -5,7 +5,8 @@
 var allTests = [
   function testHitTestInDesktop() {
     var url = 'data:text/html,<!doctype html>' +
-        encodeURI('<button>Click Me</button>');
+        encodeURI('<button>Don\'t Click Me</button>' +
+                  '<button>Click Me</button>');
     var didHitTest = false;
     chrome.automation.getDesktop(function(desktop) {
       chrome.tabs.create({url: url});
@@ -20,8 +21,11 @@ var allTests = [
             button.addEventListener(EventType.ALERT, function() {
               chrome.test.succeed();
             }, true);
-            var cx = button.location.left + button.location.width / 2;
-            var cy = button.location.top + button.location.height / 2;
+            // Click just barely on the second button, very close
+            // to the first button. This tests that we are converting
+            // coordinate properly.
+            var cx = button.location.left + 10;
+            var cy = button.location.top + 10;
             desktop.hitTest(cx, cy, EventType.ALERT);
           }
         }
