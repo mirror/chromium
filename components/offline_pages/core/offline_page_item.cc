@@ -12,7 +12,8 @@ OfflinePageItem::OfflinePageItem()
       access_count(0),
       flags(NO_FLAG),
       system_download_id(0),
-      upgrade_attempt(0) {}
+      upgrade_attempt(0),
+      is_trusted(false) {}
 
 OfflinePageItem::OfflinePageItem(const GURL& url,
                                  int64_t offline_id,
@@ -27,7 +28,8 @@ OfflinePageItem::OfflinePageItem(const GURL& url,
       access_count(0),
       flags(NO_FLAG),
       system_download_id(0),
-      upgrade_attempt(0) {}
+      upgrade_attempt(0),
+      is_trusted(true) {}
 
 OfflinePageItem::OfflinePageItem(const GURL& url,
                                  int64_t offline_id,
@@ -45,7 +47,8 @@ OfflinePageItem::OfflinePageItem(const GURL& url,
       access_count(0),
       flags(NO_FLAG),
       system_download_id(0),
-      upgrade_attempt(0) {}
+      upgrade_attempt(0),
+      is_trusted(true) {}
 
 OfflinePageItem::OfflinePageItem(const GURL& url,
                                  int64_t offline_id,
@@ -65,7 +68,8 @@ OfflinePageItem::OfflinePageItem(const GURL& url,
       flags(NO_FLAG),
       request_origin(request_origin),
       system_download_id(0),
-      upgrade_attempt(0) {}
+      upgrade_attempt(0),
+      is_trusted(true) {}
 
 OfflinePageItem::OfflinePageItem(const OfflinePageItem& other) = default;
 
@@ -81,7 +85,8 @@ bool OfflinePageItem::operator==(const OfflinePageItem& other) const {
          request_origin == other.request_origin &&
          system_download_id == other.system_download_id &&
          file_missing_time == other.file_missing_time &&
-         upgrade_attempt == other.upgrade_attempt && digest == digest;
+         upgrade_attempt == other.upgrade_attempt && digest == other.digest &&
+         is_trusted == other.is_trusted;
 }
 
 bool OfflinePageItem::operator<(const OfflinePageItem& other) const {
