@@ -172,8 +172,6 @@ int ShelfBackgroundAnimator::GetBackgroundAlphaValue(
   return GetTargetColorAlphaValues(background_type).first;
 }
 
-void ShelfBackgroundAnimator::OnWallpaperDataChanged() {}
-
 void ShelfBackgroundAnimator::OnWallpaperColorsChanged() {
   AnimateBackground(target_background_type_, AnimationChangeType::ANIMATE);
 }
