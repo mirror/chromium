@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6469a480_05223101",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/webthread_impl_for_worker_scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-13T16:01:44Z",
+      "side": 1,
+      "message": "Please return web_task_runner_ here.",
+      "range": {
+        "startLine": 112,
+        "startChar": 9,
+        "endLine": 112,
+        "endChar": 20
+      },
+      "revId": "7b83f08a57a02200853d5b5767fa3e1db824c0aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff25554_9201301a",
+        "filename": "third_party/WebKit/public/platform/WebThread.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-13T16:01:44Z",
+      "side": 1,
+      "message": "Should it return nullptr inline to match GetWebTaskRunner?\n\nAlso it should remain deprecated - the proper way is to go through WebScheduler.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "7b83f08a57a02200853d5b5767fa3e1db824c0aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
