@@ -70,6 +70,24 @@
       "revId": "b3d70943ac2d586707257c5c32b80c3a6575e7b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4313ec_8a170f28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T01:23:51Z",
+      "side": 1,
+      "message": "s/while the toolbar is closed/while the toolbar is translated.",
+      "parentUuid": "96e40c32_80ed1b2c",
+      "revId": "b3d70943ac2d586707257c5c32b80c3a6575e7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
