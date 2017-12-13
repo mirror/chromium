@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "91db4697_8db0a412",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-13T20:20:05Z",
+      "side": 1,
+      "message": "The other option would have been using ImportClientCertAndKeyFromFile, and wiring up UnsafeCreateOptions through it. I\u0027ve taken this approach from ClientCertStoreNSSTest.SubjectPrintableStringContainingUTF8 from CL:701930.\nBut I\u0027m fine with either choice :) (or something different)",
+      "parentUuid": "8a0f97da_ec3af595",
+      "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0dfbaab_13ab516a",
         "filename": "chromeos/network/client_cert_resolver_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-13T17:05:40Z",
       "side": 1,
       "message": "These sorts of helpers are discouraged.\n\nFor internal documentation, see http://go/unit-test-practices#assertions-examples\n\nTo summarize that externally, avoid helpers that are used to set assertions across multiple tests - those can make the tests themselves more difficult to read.\n\nIf the assertion matters, or the setup state matters, express that in the unittest itself.",
+      "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd0f882_c7d9415f",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-13T20:20:05Z",
+      "side": 1,
+      "message": "Oh, that\u0027s good to know in general! I tried to adhere to the style of this unittest (i.e. doing almost everything in helpers...) though I agree that I\u0027ve taken it to the next level by having two layers of setup helpers now.\n\nWould you be fine with leaving this as it is for now so we get the actual fix to M-63, and then refactoring this test as a second step in a separate CL on ToT only?\nFiled crbug.com/794668 so I don\u0027t forget to do this.",
+      "parentUuid": "b0dfbaab_13ab516a",
       "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6a8036fa_a1f4678e",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-13T20:20:05Z",
+      "side": 1,
+      "message": "Understood - and same question as above :)",
+      "parentUuid": "35c0eea0_f8f9e7c5",
+      "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5883857_72a7ea0f",
         "filename": "chromeos/network/client_cert_resolver_unittest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0263ec40_de473e5c",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-13T20:20:05Z",
+      "side": 1,
+      "message": "Oh, good point! This is a remnant of trying to find the actual bug through a unittest. We originally thought that resolving with the invalid cert may fail in the async version and succeed in the sync version.\nThis turned out to be wrong (which is consistent with the code, as both use the same logic), so I\u0027m removing this part.",
+      "parentUuid": "a5883857_72a7ea0f",
+      "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
