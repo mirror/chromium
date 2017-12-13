@@ -92,8 +92,10 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
                                            SecurityOrigin::Create(script_url)));
 
   InitializeWorkerThread(std::move(global_scope_creation_params),
-                         CreateBackingThreadStartupData(ToIsolate(document)),
-                         script_url, stack_id, source_code);
+                         CreateBackingThreadStartupData(ToIsolate(document)));
+
+  GetWorkerThread()->RequestToEvaluateClassicScript(
+      script_url, source_code, nullptr /* cached_meta_data */, stack_id);
 
   // Post all queued tasks to the worker.
   for (auto& queued_task : queued_early_tasks_) {
