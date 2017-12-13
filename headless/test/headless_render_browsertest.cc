@@ -5,6 +5,7 @@
 #include <functional>
 #include <strstream>
 
+#include "base/base64.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "content/public/test/browser_test.h"
@@ -16,6 +17,8 @@
 #include "net/test/embedded_test_server/http_response.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/gfx/image/image.h"
+#include "ui/gfx/image/image_skia.h"
 
 #define HEADLESS_RENDER_BROWSERTEST(clazz)                  \
   class HeadlessRenderBrowserTest##clazz : public clazz {}; \
@@ -45,7 +48,12 @@ using testing::ElementsAre;
 using testing::UnorderedElementsAre;
 using testing::Eq;
 using testing::Ne;
+using testing::Ge;
+using testing::Gt;
+using testing::Le;
+using testing::Lt;
 using testing::StartsWith;
+using testing::Property;
 
 template <typename T, typename V>
 std::vector<T> ElementsView(const std::vector<std::unique_ptr<V>>& elements,
@@ -164,6 +172,42 @@ TestInMemoryProtocolHandler::Response HttpRedirect(
 
 TestInMemoryProtocolHandler::Response HttpOk(const std::string& html) {
   return TestInMemoryProtocolHandler::Response(html, TEXT_HTML);
+}
+
+bool ImageCompare(const SkBitmap* lhs,
+                  const SkIRect& lhs_rect,
+                  const SkBitmap* rhs,
+                  const SkIRect& rhs_rect) {
+  CHECK_EQ(lhs_rect.width(), rhs_rect.width());
+  CHECK_EQ(lhs_rect.height(), rhs_rect.height());
+  CHECK(lhs->bounds().contains(lhs_rect));
+  CHECK(rhs->bounds().contains(rhs_rect));
+
+  SkImageInfo info = SkImageInfo::Make(lhs_rect.width(), lhs_rect.height(),
+                                       SkColorType::kRGBA_8888_SkColorType,
+                                       SkAlphaType::kOpaque_SkAlphaType);
+
+  std::vector<unsigned char> buffer1, buffer2;
+  buffer1.resize(info.computeMinByteSize());
+  buffer2.resize(buffer1.size());
+  size_t bytesPerRow = buffer1.size() / lhs_rect.height();
+
+  lhs->readPixels(info, &buffer1[0], bytesPerRow, lhs_rect.left(),
+                  lhs_rect.top());
+  rhs->readPixels(info, &buffer2[0], bytesPerRow, rhs_rect.left(),
+                  rhs_rect.top());
+  if (memcmp(&buffer1[0], &buffer2[0], buffer1.size()) == 0)
+    return true;
+  const int32_t* l = reinterpret_cast<const int32_t*>(&buffer1[0]);
+  const int32_t* r = reinterpret_cast<const int32_t*>(&buffer2[0]);
+  const size_t len = buffer1.size() / 4;
+  for (size_t i = 0; i < len; ++i) {
+    if (l[i] != r[i]) {
+      ADD_FAILURE() << "Pixel " << i << " differs: " << std::setfill('0')
+                    << std::setw(8) << std::hex << l[i] << " vs " << r[i];
+    }
+  }
+  return false;
 }
 
 }  // namespace
@@ -1173,5 +1217,145 @@ document.cookie = x + 'baz';
   }
 };
 HEADLESS_RENDER_BROWSERTEST(CookieUpdatedFromJs);
+
+class ViewportTiling : public HeadlessRenderTest {
+ private:
+  std::vector<gfx::Image> screenshots_;
+
+  GURL GetPageUrl(HeadlessDevToolsClient* client) override {
+    GetProtocolHandler()->InsertResponse("http://www.example.com/", HttpOk(R"|(
+<html>
+ <head><style>
+  iframe { border: 0px; position: absolute; width: 100px;
+           height: 100px; top: 50px; left: 50px; }
+  div { border: 0px; position: absolute; width: 100px; height: 100px; }
+ </style></head>
+ <body>
+  <div style="top:  0px; left:  0px; background: #F00"></div>
+  <div style="top:  0px; left:100px; background: #0F0"></div>
+  <div style="top:100px; left:  0px; background: #00F"></div>
+  <div style="top:100px; left:100px; background: #FF0"></div>
+  <iframe src="iframe.html" style="border: 0px;"></iframe>
+ </body>
+</html>
+)|"));
+    GetProtocolHandler()->InsertResponse("http://www.example.com/iframe.html",
+                                         HttpOk(R"|(
+<html>
+ <head><style>
+  div { border: 0px; position: absolute; width: 25px; height: 25px; }
+ </style></head>
+ <body>
+  <div style="top: 25px; left: 25px; background: #FF8"></div>
+  <div style="top: 25px; left: 50px; background: #8FF"></div>
+  <div style="top: 50px; left: 25px; background: #F8F"></div>
+  <div style="top: 50px; left: 50px; background: #888"></div>
+ </body>
+</html>
+)|"));
+    return GURL("http://www.example.com/");
+  }
+
+  void OnPageRenderCompleted() override {
+    std::unique_ptr<page::Viewport> viewport;
+    switch (screenshots_.size()) {
+      case 0:
+        break;
+      case 1:
+        viewport = page::Viewport::Builder()
+                       .SetScale(1)
+                       .SetX(0)
+                       .SetY(0)
+                       .SetWidth(100)
+                       .SetHeight(100)
+                       .Build();
+        break;
+      case 2:
+        viewport = page::Viewport::Builder()
+                       .SetScale(1)
+                       .SetX(100)
+                       .SetY(0)
+                       .SetWidth(100)
+                       .SetHeight(100)
+                       .Build();
+        break;
+      case 3:
+        viewport = page::Viewport::Builder()
+                       .SetScale(1)
+                       .SetX(0)
+                       .SetY(100)
+                       .SetWidth(100)
+                       .SetHeight(100)
+                       .Build();
+        break;
+      case 4:
+        viewport = page::Viewport::Builder()
+                       .SetScale(1)
+                       .SetX(100)
+                       .SetY(100)
+                       .SetWidth(100)
+                       .SetHeight(100)
+                       .Build();
+        break;
+      default:
+        HeadlessRenderTest::OnPageRenderCompleted();
+        return;
+    }
+    CaptureScreenshot(std::move(viewport));
+  }
+
+  void CaptureScreenshot(std::unique_ptr<page::Viewport> viewport) {
+    auto builder = page::CaptureScreenshotParams::Builder();
+    builder.SetFormat(page::CaptureScreenshotFormat::PNG).SetQuality(100);
+    if (viewport)
+      builder.SetClip(std::move(viewport));
+    devtools_client_->GetPage()->CaptureScreenshot(
+        builder.Build(),
+        base::Bind(&ViewportTiling::OnScreenshot, base::Unretained(this)));
+  }
+
+  void OnScreenshot(std::unique_ptr<page::CaptureScreenshotResult> result) {
+    std::string png;
+    ASSERT_TRUE(base::Base64Decode(result->GetData(), &png));
+    std::stringstream str;
+    str << screenshots_.size() << ".png";
+    FILE* f = fopen(str.str().c_str(), "wb");
+    CHECK(f);
+    fwrite(png.c_str(), png.size(), 1, f);
+    fclose(f);
+    screenshots_.push_back(gfx::Image::CreateFrom1xPNGBytes(
+        reinterpret_cast<const unsigned char*>(png.c_str()), png.size()));
+    OnPageRenderCompleted();
+  }
+
+  void VerifyDom(GetSnapshotResult* dom_snapshot) override {
+    ASSERT_THAT(screenshots_.size(), Eq(5u));
+    EXPECT_THAT(screenshots_,
+                ElementsAre(AllOf(Property(&gfx::Image::Width, Ge(200)),
+                                  Property(&gfx::Image::Height, Ge(200))),
+                            AllOf(Property(&gfx::Image::Width, Eq(100)),
+                                  Property(&gfx::Image::Height, Eq(100))),
+                            AllOf(Property(&gfx::Image::Width, Eq(100)),
+                                  Property(&gfx::Image::Height, Eq(100))),
+                            AllOf(Property(&gfx::Image::Width, Eq(100)),
+                                  Property(&gfx::Image::Height, Eq(100))),
+                            AllOf(Property(&gfx::Image::Width, Eq(100)),
+                                  Property(&gfx::Image::Height, Eq(100)))));
+    EXPECT_TRUE(PageContainsTile(screenshots_[1], 0, 0));
+    EXPECT_TRUE(PageContainsTile(screenshots_[2], 100, 0));
+    EXPECT_TRUE(PageContainsTile(screenshots_[3], 0, 100));
+    EXPECT_TRUE(PageContainsTile(screenshots_[4], 100, 100));
+  }
+
+  bool PageContainsTile(const gfx::Image& subimage, int offsetX, int offsetY) {
+    const SkBitmap* big = screenshots_[0].ToSkBitmap();
+    const SkBitmap* small = subimage.ToSkBitmap();
+    SkIRect small_rect = small->bounds();
+    SkIRect big_rect = small_rect;
+    big_rect.offsetTo(offsetX, offsetY);
+    return ImageCompare(big, big_rect, small, small_rect);
+  }
+};
+HEADLESS_RENDER_BROWSERTEST(ViewportTiling);
 
 }  // namespace headless
