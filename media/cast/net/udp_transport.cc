@@ -17,6 +17,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/rand_callback.h"
 #include "net/log/net_log_source.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace media {
 namespace cast {
@@ -258,13 +259,34 @@ bool UdpTransport::SendPacket(PacketRef packet, const base::Closure& cb) {
     // If we called Connect() before we must call Write() instead of
     // SendTo(). Otherwise on some platforms we might get
     // ERR_SOCKET_IS_CONNECTED.
-    result = udp_socket_->Write(
-        buf.get(), static_cast<int>(packet->data.size()), callback);
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("cast_udp_transport", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
+
+    result =
+        udp_socket_->Write(buf.get(), static_cast<int>(packet->data.size()),
+                           callback, traffic_annotation);
   } else if (!IsEmpty(remote_addr_)) {
-    result = udp_socket_->SendTo(buf.get(),
-                                 static_cast<int>(packet->data.size()),
-                                 remote_addr_,
-                                 callback);
+    result =
+        udp_socket_->SendTo(buf.get(), static_cast<int>(packet->data.size()),
+                            remote_addr_, callback);
   } else {
     VLOG(1) << "Failed to send packet; socket is neither bound nor "
             << "connected.";
