@@ -34,6 +34,24 @@
       "revId": "23832c3a1639c00bb424f27ee368bda173101f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18836bf3_1d9e39e3",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 2
+      },
+      "lineNbr": 4917,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-13T21:33:06Z",
+      "side": 1,
+      "message": "Well, it was added for headless - see crbug.com/659662, filed by you :). If you don\u0027t need it, let\u0027s make it \"ignore\" vs \"not ignore\".",
+      "parentUuid": "0995ebc3_32b2b40c",
+      "revId": "23832c3a1639c00bb424f27ee368bda173101f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
