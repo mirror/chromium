@@ -31,6 +31,7 @@
 #include <utility>
 
 #include "bindings/core/v8/ScriptController.h"
+#include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/WindowProxy.h"
 #include "core/css/CSSComputedStyleDeclaration.h"
@@ -40,6 +41,7 @@
 #include "core/css/MediaQueryMatcher.h"
 #include "core/css/StyleMedia.h"
 #include "core/css/resolver/StyleResolver.h"
+#include "core/dom/ComputedAccessibleNode.h"
 #include "core/dom/DOMImplementation.h"
 #include "core/dom/FrameRequestCallbackCollection.h"
 #include "core/dom/Modulator.h"
@@ -97,6 +99,18 @@
 #include "public/platform/TaskType.h"
 #include "public/platform/WebScreenInfo.h"
 #include "public/platform/site_engagement.mojom-blink.h"
+
+namespace {
+
+// Scoped AXObjectCache (look at getComputedName/Role again)
+//
+void CreateComputedAccessibleNode(ScriptPromiseResolver resolver,
+                                  Element* elt) {
+  ComputedAccessibleNode* node = new ComputedAccessibleNode(elt);
+  resolver.resolve(node);
+}
+
+}  // namespace
 
 namespace blink {
 
@@ -1102,6 +1116,17 @@ CSSStyleDeclaration* LocalDOMWindow::getComputedStyle(
   return CSSComputedStyleDeclaration::Create(elt, false, pseudo_elt);
 }
 
+ScriptPromise LocalDOMWindow::getComputedAccessibleNode(
+    ScriptState* script_state,
+    Element* elt) const {
+  ScriptPromiseResolver* resolver = ScriptPromiseresolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+  computed_accessible_node_runner_ = AsyncMethodRunner<LocalDOMWindow>::Create(
+      this, &CreateComputedAccessibleNode);
+  computed_accessible_node_runner_->RunAsync();
+  return promise;
+}
+
 CSSRuleList* LocalDOMWindow::getMatchedCSSRules(
     Element* element,
     const String& pseudo_element) const {
@@ -1615,6 +1640,7 @@ void LocalDOMWindow::Trace(blink::Visitor* visitor) {
   visitor->Trace(post_message_timers_);
   visitor->Trace(visualViewport_);
   visitor->Trace(event_listener_observers_);
+  visitor->Trace(computed_accessible_node_runner_);
   DOMWindow::Trace(visitor);
   Supplementable<LocalDOMWindow>::Trace(visitor);
 }

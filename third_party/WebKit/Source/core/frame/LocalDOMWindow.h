@@ -31,6 +31,7 @@
 #include "core/dom/events/EventTarget.h"
 #include "core/frame/DOMWindow.h"
 #include "core/frame/LocalFrame.h"
+#include "platform/AsyncMethodRunner.h"
 #include "platform/Supplementable.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
@@ -65,6 +66,7 @@ class Modulator;
 class Navigator;
 class PostMessageTimer;
 class Screen;
+class ScriptPromise;
 class ScriptState;
 class ScrollToOptions;
 class SecurityOrigin;
@@ -217,6 +219,9 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
       Element*,
       const String& pseudo_elt = String()) const;
 
+  // Acessibility Object Model
+  ScriptPromise getComputedAccessibleNode(ScriptState*, Element*) const;
+
   // WebKit extension
   CSSRuleList* getMatchedCSSRules(Element*, const String& pseudo_elt) const;
 
@@ -345,6 +350,7 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   TraceWrapperMember<Document> document_;
   Member<DOMVisualViewport> visualViewport_;
   TaskRunnerTimer<LocalDOMWindow> unused_preloads_timer_;
+  Member<AsyncMethodRunner<LocalDOMWindow>> computed_accessible_node_runner_;
 
   bool should_print_when_finished_loading_;
   bool has_load_event_fired_ = false;
