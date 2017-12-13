@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "595644c3_6991db85",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T03:37:37Z",
+      "side": 1,
+      "message": "Instead of RefCountedBytes, can we use RefCountedMemory everywhere? Then the individual call sites can pick the most convenient sub-class. e.g. This can be RefCountedString.",
+      "revId": "b30ea1b0a47c140d34053b93ba1f73ab474701b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee9127e_436d363c",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T03:37:37Z",
+      "side": 1,
+      "message": "And this can be RefCountedStaticMemory().",
+      "revId": "b30ea1b0a47c140d34053b93ba1f73ab474701b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
