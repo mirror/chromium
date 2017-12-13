@@ -22,17 +22,37 @@ constexpr gfx::Insets kBubbleInsets(1, 1, 0, 1);
 
 ProfileChooserViewBridge::ProfileChooserViewBridge(
     AvatarBaseController* controller,
-    views::Widget* bubble_widget)
-    : scoped_observer_(this), controller_(controller) {
-  scoped_observer_.Add(bubble_widget);
+    views::Widget* bubble_widget,
+    Browser* browser)
+    : bubble_observer_(this),
+      tab_strip_observer_(this),
+      controller_(controller),
+      bubble_widget_(bubble_widget),
+      browser_(browser) {
+  DCHECK(bubble_widget_);
+  DCHECK(browser_);
+  bubble_observer_.Add(bubble_widget_);
+  tab_strip_observer_.Add(browser_->tab_strip_model());
 }
 
 ProfileChooserViewBridge::~ProfileChooserViewBridge() = default;
 
 void ProfileChooserViewBridge::OnWidgetDestroying(
     views::Widget* bubble_widget) {
+  bubble_widget_ = nullptr;
   [controller_ bubbleWillClose];
   // Note: |this| is deleted here.
+}
+
+void ProfileChooserViewBridge::ActiveTabChanged(
+    content::WebContents* old_contents,
+    content::WebContents* new_contents,
+    int index,
+    int reason) {
+  // On macOS, the profile chooser bubble must be closed every time the user
+  // adds, closes or changes the active tab usingh keyboard accelarators.
+  if (bubble_widget_)
+    bubble_widget_->Close();
 }
 
 std::unique_ptr<ProfileChooserViewBridge> ShowProfileChooserViews(
@@ -57,6 +77,7 @@ std::unique_ptr<ProfileChooserViewBridge> ShowProfileChooserViews(
       anchor_window, anchor_rect, browser, is_source_keyboard);
   ProfileMetrics::LogProfileOpenMethod(ProfileMetrics::ICON_AVATAR_BUBBLE);
   std::unique_ptr<ProfileChooserViewBridge> bridge(new ProfileChooserViewBridge(
-      avatar_base_controller, ProfileChooserView::GetCurrentBubbleWidget()));
+      avatar_base_controller, ProfileChooserView::GetCurrentBubbleWidget(),
+      browser));
   return bridge;
 }

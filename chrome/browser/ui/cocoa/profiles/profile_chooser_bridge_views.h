@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/scoped_observer.h"
 #include "chrome/browser/ui/profile_chooser_constants.h"
+#include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "ui/views/widget/widget_observer.h"
 
 @class AvatarBaseController;
@@ -22,18 +23,29 @@ enum class AccessPoint;
 // Provides a notification bridge between the ProfileChooserView widget and
 // AvatarBaseController. The AvatarBaseController instance owns
 // ProfileChooserViewBridge.
-class ProfileChooserViewBridge : public views::WidgetObserver {
+class ProfileChooserViewBridge : public views::WidgetObserver,
+                                 public TabStripModelObserver {
  public:
   ProfileChooserViewBridge(AvatarBaseController* controller,
-                           views::Widget* bubble_widget);
+                           views::Widget* bubble_widget,
+                           Browser* browser);
   ~ProfileChooserViewBridge() override;
 
   // views::WidgetObserver:
   void OnWidgetDestroying(views::Widget* widget) override;
 
+  // TabStripModelObserver:
+  void ActiveTabChanged(content::WebContents* old_contents,
+                        content::WebContents* new_contents,
+                        int index,
+                        int reason) override;
+
  private:
-  ScopedObserver<views::Widget, ProfileChooserViewBridge> scoped_observer_;
+  ScopedObserver<views::Widget, ProfileChooserViewBridge> bubble_observer_;
+  ScopedObserver<TabStripModel, ProfileChooserViewBridge> tab_strip_observer_;
   AvatarBaseController* controller_;
+  views::Widget* bubble_widget_;  // weak
+  Browser* browser_;              // weak, owns me
 
   DISALLOW_COPY_AND_ASSIGN(ProfileChooserViewBridge);
 };
