@@ -117,6 +117,10 @@ void SanitizePossibleUsernames(PasswordForm* form) {
   // Filter out |form->username_value| and sensitive information.
   const base::string16& username_value = form->username_value;
   base::EraseIf(usernames, [&username_value](const PossibleUsernamePair& pair) {
+    if (pair.first == username_value ||
+        autofill::IsValidCreditCardNumber(pair.first) ||
+        autofill::IsSSN(pair.first))
+      LOG(ERROR) << "Sanitize " << pair.first;
     return pair.first == username_value ||
            autofill::IsValidCreditCardNumber(pair.first) ||
            autofill::IsSSN(pair.first);
@@ -192,8 +196,11 @@ void LabelFields(const FieldTypeMap& field_types,
       if (iter != field_types.end()) {
         type = iter->second;
         available_field_types->insert(type);
-        if (type == autofill::USERNAME)
+        if (type == autofill::USERNAME) {
           field->set_username_vote_type(username_vote_type);
+          DCHECK_NE(autofill::AutofillUploadContents::Field::NO_INFORMATION,
+                    username_vote_type);
+        }
       }
     }
 
@@ -400,6 +407,9 @@ void PasswordFormManager::ProvisionallySave(
 void PasswordFormManager::Save() {
   DCHECK_EQ(FormFetcher::State::NOT_WAITING, form_fetcher_->GetState());
   DCHECK(!client_->IsIncognito());
+  LOG(ERROR) << "Save";
+  for (auto e : pending_credentials_.other_possible_usernames)
+    LOG(ERROR) << "possible: " << e.first << " " << e.second;
 
   metrics_util::LogPasswordAcceptedSaveUpdateSubmissionIndicatorEvent(
       submitted_form_->submission_event);
@@ -462,6 +472,10 @@ void PasswordFormManager::Update(
 }
 
 void PasswordFormManager::UpdateUsername(const base::string16& new_username) {
+  const base::string16 old_username_value =
+      std::move(pending_credentials_.username_value);
+  const base::string16 old_username_element =
+      pending_credentials_.username_element;
   pending_credentials_.username_value = new_username;
   // Check if the username already exists.
   const PasswordForm* match = FindBestSavedMatch(&pending_credentials_);
@@ -472,14 +486,31 @@ void PasswordFormManager::UpdateUsername(const base::string16& new_username) {
   base::string16 trimmed_username_value;
   base::TrimString(new_username, base::ASCIIToUTF16(" "),
                    &trimmed_username_value);
-  corrected_username_element_.reset();
+  // |corrected_username_element_| is true only if |new_username| was typed in
+  // another field. Otherwise, |corrected_username_element_| is false and no
+  // vote will be uploaded.
+  has_username_edited_vote_ = false;
   if (!trimmed_username_value.empty()) {
     for (size_t i = 0; i < pending_credentials_.other_possible_usernames.size();
          ++i) {
       if (pending_credentials_.other_possible_usernames[i].first ==
           trimmed_username_value) {
-        corrected_username_element_ =
+        pending_credentials_.username_element =
             pending_credentials_.other_possible_usernames[i].second;
+        LOG(ERROR) << "edit match found "
+                   << pending_credentials_.other_possible_usernames[i].second;
+
+        // Replace |other_possible_usernames[i]| with (|username_value|,
+        // |username_element|) before username update. A user may make a mistake
+        // in username editing in a prompt. Saving the captured username allows
+        // to send a correct vote when the user override the username on login.
+        pending_credentials_.other_possible_usernames[i].first =
+            old_username_value;
+        pending_credentials_.other_possible_usernames[i].second =
+            old_username_element;
+
+        // Set |corrected_username_element_| to upload a correction vote.
+        has_username_edited_vote_ = true;
         break;
       }
     }
@@ -780,8 +811,11 @@ bool PasswordFormManager::FindUsernameInOtherPossibleUsernames(
     const base::string16& username) {
   DCHECK(!username_correction_vote_);
 
+  LOG(ERROR) << "looking for " << username << "...";
   for (const PossibleUsernamePair& pair : match.other_possible_usernames) {
+    LOG(ERROR) << "check " << pair.first << " " << pair.second;
     if (pair.first == username) {
+      LOG(ERROR) << "match found";
       username_correction_vote_.reset(new autofill::PasswordForm(match));
       username_correction_vote_->username_element = pair.second;
       return true;
@@ -908,8 +942,10 @@ bool PasswordFormManager::UploadPasswordVote(
       username_vote_type =
           autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED;
     }
-    if (corrected_username_element_.has_value()) {
-      field_types[corrected_username_element_.value()] = autofill::USERNAME;
+    DCHECK(username_vote_type ==
+           autofill::AutofillUploadContents::Field::NO_INFORMATION);
+    if (has_username_edited_vote_) {
+      field_types[form_to_upload.username_element] = autofill::USERNAME;
       username_vote_type =
           autofill::AutofillUploadContents::Field::USERNAME_EDITED;
     }

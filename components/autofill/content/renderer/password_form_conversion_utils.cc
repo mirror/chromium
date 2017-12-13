@@ -763,6 +763,9 @@ bool GetPasswordForm(
   // Convert |all_possible_usernames| to PossibleUsernamesVector.
   autofill::PossibleUsernamesVector other_possible_usernames;
   for (WebInputElement possible_username : all_possible_usernames) {
+    //    LOG(ERROR) << "add " << possible_username.NameForAutofill().Utf8() <<
+    //    " "
+    //               << possible_username.Value().Utf8();
     other_possible_usernames.push_back(
         MakePossibleUsernamePair(possible_username));
   }
