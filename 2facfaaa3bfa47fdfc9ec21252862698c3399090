@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cbef887_da93eedc",
+        "filename": "third_party/WebKit/LayoutTests/performance/performance-observer-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T17:58:13Z",
+      "side": 1,
+      "message": "Why does this need to go through the fetch API instead of just calling p.disconnect() directly?",
+      "revId": "2facfaaa3bfa47fdfc9ec21252862698c3399090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f944a0a7_30b7867d",
+        "filename": "third_party/WebKit/LayoutTests/performance/performance-observer-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T17:58:13Z",
+      "side": 1,
+      "message": "Nit: use testRunner.dumpAsText() to avoid generating an expected image file at all",
+      "revId": "2facfaaa3bfa47fdfc9ec21252862698c3399090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
