@@ -15,8 +15,8 @@
 #endif
 
 namespace {
-// Preferred image size in points.
-const CGFloat kBookmarkTableCellDefaultImageSize = 16.0;
+// Image size, in points.
+const CGFloat kBookmarkTableCellImageSize = 16.0;
 
 // Padding in table cell.
 const CGFloat kBookmarkTableCellImagePadding = 16.0;
@@ -65,10 +65,10 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
     _iconView = iconView;
     [_iconView setHidden:NO];
     [_iconView.widthAnchor
-        constraintEqualToConstant:kBookmarkTableCellDefaultImageSize]
+        constraintEqualToConstant:kBookmarkTableCellImageSize]
         .active = YES;
     [_iconView.heightAnchor
-        constraintEqualToConstant:kBookmarkTableCellDefaultImageSize]
+        constraintEqualToConstant:kBookmarkTableCellImageSize]
         .active = YES;
 
     // Create placeholder label.
@@ -77,10 +77,10 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
     _placeholderLabel.font = [MDCTypography captionFont];
     [_placeholderLabel setHidden:YES];
     [_placeholderLabel.widthAnchor
-        constraintEqualToConstant:kBookmarkTableCellDefaultImageSize]
+        constraintEqualToConstant:kBookmarkTableCellImageSize]
         .active = YES;
     [_placeholderLabel.heightAnchor
-        constraintEqualToConstant:kBookmarkTableCellDefaultImageSize]
+        constraintEqualToConstant:kBookmarkTableCellImageSize]
         .active = YES;
 
     // Create stack view.
@@ -178,10 +178,6 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
   return @"BookmarkTableCellIdentifier";
 }
 
-+ (CGFloat)preferredImageSize {
-  return kBookmarkTableCellDefaultImageSize;
-}
-
 - (void)setImage:(UIImage*)image {
   [self.iconView setHidden:NO];
   [self.placeholderLabel setHidden:YES];
@@ -198,7 +194,6 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
   self.placeholderLabel.backgroundColor = backgroundColor;
   self.placeholderLabel.textColor = textColor;
   self.placeholderLabel.text = text;
-  [self.placeholderLabel sizeToFit];
 }
 
 #pragma mark - Layout
