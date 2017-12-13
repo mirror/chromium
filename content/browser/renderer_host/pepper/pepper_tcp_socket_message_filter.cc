@@ -685,12 +685,45 @@ void PepperTCPSocketMessageFilter::DoWrite(
   int net_result = net::ERR_FAILED;
   if (socket_) {
     DCHECK_EQ(state_.state(), TCPSocketState::CONNECTED);
-    // TODO(crbug.com/656607): Add proper annotation.
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("pepper_tcp_socket", R"(
+        semantics {
+          sender: "Pepper TCP Socket"
+          description:
+            "Pepper plugins use this API to send and receive data over the "
+            "network using TCP connections. Currently only Flash and PDF "
+            "viewer use a pepper plugin interface."
+          trigger:
+            "A request from a Pepper plugin."
+          data: "Any data that the plugin sends."
+          destination: OTHER
+          destination_other:
+            "Data can be sent to any destination."
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "These requests cannot be disabled, but will not happen if user "
+            "does not use Flash or internal PDF Viewer."
+          chrome_policy {
+            DefaultPluginsSetting {
+              DefaultPluginsSetting: 2
+            }
+          }
+          chrome_policy {
+            AlwaysOpenPdfExternally {
+              AlwaysOpenPdfExternally: true
+            }
+          }
+        }
+        comments:
+          "Both policies should be used togehter to fully prevent this request."
+        )");
     net_result = socket_->Write(
         write_buffer_.get(), write_buffer_->BytesRemaining(),
         base::Bind(&PepperTCPSocketMessageFilter::OnWriteCompleted,
                    base::Unretained(this), context),
-        NO_TRAFFIC_ANNOTATION_BUG_656607);
+        traffic_annotation);
   } else if (ssl_socket_) {
     DCHECK_EQ(state_.state(), TCPSocketState::SSL_CONNECTED);
     net_result = ssl_socket_->Write(
