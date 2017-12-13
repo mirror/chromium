@@ -387,6 +387,30 @@
     },
     {
       "key": {
+        "uuid": "7ec637be_fa9affda",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-13T14:49:09Z",
+      "side": 1,
+      "message": "As I see, these browser tests use fake devices by appending kUseFakeDeviceForMediaStream switch. Therefore, AudioInputDeviceManager sets empty value for |input| at [1].\nI think we need to set some fake audio parameters(UnavailableDeviceParams() ?) for |input| at [1]. Then, we don\u0027t have to do anything here. WDYT?\n\n[1] https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/audio_input_device_manager.cc?l\u003d94",
+      "parentUuid": "7c7b33e4_ceaec00d",
+      "range": {
+        "startLine": 577,
+        "startChar": 73,
+        "endLine": 577,
+        "endChar": 0
+      },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a4b0e4b_66012eb2",
         "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
         "patchSetId": 4
