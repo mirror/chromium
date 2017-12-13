@@ -70,6 +70,30 @@
       "revId": "9643e2a6166742f1a818ccf1ce7b0f828b53d411",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8b2a5a_2d4c5c61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/AsyncInitializationActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-13T14:48:33Z",
+      "side": 1,
+      "message": "When switching in/out of DeX mode, it appears as though our Activity is being restarted already (it re-inflates). So tabs appear when DeX is entered, and tabs disappear when going back to phone.\n\nThe odd thing (the bug) is that when leaving DeX, and after having rotated, the Activity\u0027s configuration thinks it\u0027s still in tablet mode, but the Application\u0027s configuration correctly reports that it\u0027s back in phone mode.\n\nBefore my previous change, we were setting the global state based on the most recently inflated activity\u0027s context, so if we went back to that behavior, we\u0027d be getting a tabstrip on the phone after leaving DeX. So, instead, I\u0027m having the activity take the value reported from the application\u0027s configuration.",
+      "parentUuid": "a0c0aeb8_50dfe74c",
+      "range": {
+        "startLine": 113,
+        "startChar": 51,
+        "endLine": 113,
+        "endChar": 67
+      },
+      "revId": "9643e2a6166742f1a818ccf1ce7b0f828b53d411",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
