@@ -218,6 +218,14 @@ void WallpaperControllerClient::OpenWallpaperPicker() {
   chromeos::WallpaperManager::Get()->OpenWallpaperPicker();
 }
 
+void WallpaperControllerClient::OnDeviceWallpaperChanged() {
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(true /*enforced=*/);
+}
+
+void WallpaperControllerClient::OnDeviceWallpaperPolicyCleared() {
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(false /*enforced=*/);
+}
+
 void WallpaperControllerClient::FlushForTesting() {
   wallpaper_controller_.FlushForTesting();
 }
@@ -239,4 +247,6 @@ void WallpaperControllerClient::BindAndSetClient() {
   wallpaper_controller_->SetClientAndPaths(std::move(client), user_data_path,
                                            chromeos_wallpapers_path,
                                            chromeos_custom_wallpapers_path);
+  // TODO(xdai): Get current device policy enforced flag from
+  // WallpaperPolicyHandler::IsDeviceWallpaperPolicyEnforced() and set here.
 }
