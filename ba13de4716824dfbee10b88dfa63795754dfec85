@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f142c4b6_86270ba0",
+        "filename": "chrome/browser/plugins/chrome_plugin_service_filter_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-13T01:32:21Z",
+      "side": 1,
+      "message": "Whoops, this one too sorry.",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 16
+      },
+      "revId": "ba13de4716824dfbee10b88dfa63795754dfec85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
