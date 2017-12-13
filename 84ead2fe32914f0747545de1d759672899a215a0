@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8601acd_98667bee",
+        "filename": "chrome/browser/ui/cocoa/spinner_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-12-13T17:44:42Z",
+      "side": 1,
+      "message": "These ivars are declared here so that subclassers have access to them. Are you saying they should not have direct access to them?",
+      "parentUuid": "08f2fc20_fabd8f10",
+      "revId": "84ead2fe32914f0747545de1d759672899a215a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04128e1a_2dadd174",
         "filename": "chrome/browser/ui/cocoa/spinner_view.mm",
         "patchSetId": 11
