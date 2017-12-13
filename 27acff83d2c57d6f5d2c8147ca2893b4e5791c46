@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1860b722_f6dd1f8d",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-13T22:51:00Z",
+      "side": 1,
+      "message": "This line was missing.",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "27acff83d2c57d6f5d2c8147ca2893b4e5791c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06fcb16_9a3c3057",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-13T22:51:00Z",
+      "side": 1,
+      "message": "These two lines were before invoking read_callback_, which was the bug I ran into when working on streaming strings to the network service.",
+      "range": {
+        "startLine": 100,
+        "startChar": 13,
+        "endLine": 100,
+        "endChar": 14
+      },
+      "revId": "27acff83d2c57d6f5d2c8147ca2893b4e5791c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d2774f_0b57c58f",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-13T22:51:00Z",
+      "side": 1,
+      "message": "The old code didn\u0027t handle this case, which I think can never happen anyways, but I\u0027m paranoid.",
+      "range": {
+        "startLine": 102,
+        "startChar": 6,
+        "endLine": 102,
+        "endChar": 18
+      },
+      "revId": "27acff83d2c57d6f5d2c8147ca2893b4e5791c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
