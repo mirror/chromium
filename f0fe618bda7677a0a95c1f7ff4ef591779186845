@@ -22,6 +22,30 @@
       "revId": "f0fe618bda7677a0a95c1f7ff4ef591779186845",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827e7595_2eb49cf0",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-13T23:04:33Z",
+      "side": 1,
+      "message": "I think you can follow what we do for lld, which is to copy over the files (see line 687 and forward).",
+      "parentUuid": "41f601b3_c49caf41",
+      "range": {
+        "startLine": 656,
+        "startChar": 2,
+        "endLine": 656,
+        "endChar": 12
+      },
+      "revId": "f0fe618bda7677a0a95c1f7ff4ef591779186845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
