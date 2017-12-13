@@ -133,6 +133,9 @@ enum {
 #if defined(OS_CHROMEOS)
   FILE_CHROME_OS_COMPONENT_FLASH,  // The location of component updated Flash on
                                    // Chrome OS.
+  FILE_CHROME_OS_TPM_FIRMWARE_UPDATE,  // Location of the file containing the
+                                       // path of the updated TPM firmware
+                                       // binary.
 #endif  // defined(OS_CHROMEOS)
   PATH_END
 };

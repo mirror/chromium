@@ -217,7 +217,8 @@ void CoreOobeHandler::ShowDeviceResetScreen() {
                 prefs::kFactoryResetTPMFirmwareUpdateRequested, true);
             LaunchResetScreen();
           }
-        }));
+        }),
+        base::TimeDelta::FromSeconds(0));
     return;
   }
 
