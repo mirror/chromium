@@ -42,8 +42,7 @@ class CSSPropertyWriter(json5_generator.Writer):
         for property_ in self._css_properties.longhands:
             property_class = self.get_class(property_)
             self._property_classes_by_id.append(property_class)
-            if property_class.classname != 'Longhand':
-                self._longhand_property_classes.add(property_class.classname)
+            self._longhand_property_classes.add(property_class.classname)
         for property_ in self._css_properties.shorthands:
             property_class = self.get_class(property_)
             self._property_classes_by_id.append(property_class)
@@ -53,7 +52,7 @@ class CSSPropertyWriter(json5_generator.Writer):
             self._alias_classes_by_id.append(property_class)
             if property_['longhands']:
                 self._shorthand_property_classes.add(property_class.classname)
-            elif property_class.classname != 'Longhand':
+            else:
                 self._longhand_property_classes.add(property_class.classname)
 
         # Sort by enum value.
@@ -68,11 +67,12 @@ class CSSPropertyWriter(json5_generator.Writer):
         Returns:
             The name to use for the property class.
         """
+        classname = property_['upper_camel_name']
         namespace_group = 'Shorthand' if property_['longhands'] else 'Longhand'
         return PropertyClassData(
             enum_value=property_['enum_value'],
             property_id=property_['property_id'],
-            classname=property_['upper_camel_name'],
+            classname=classname,
             namespace_group=namespace_group)
 
     @property
