@@ -4,6 +4,9 @@
 
 #include "chrome/browser/plugins/flash_download_interception.h"
 
+#include <memory>
+
+#include "base/macros.h"
 #include "base/test/scoped_feature_list.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/common/chrome_features.h"
@@ -11,11 +14,60 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/navigation_throttle.h"
+#include "content/public/test/navigation_simulator.h"
+#include "content/public/test/test_navigation_throttle_inserter.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
 using content::NavigationHandle;
 using content::NavigationThrottle;
+
+namespace {
+
+// This class just forwards relevant throttle methods to the
+// InterceptNavigationThrottle, which it optionally creates at WillStartRequest
+// time.
+// TODO(csharrison): This is temporary until the non-PlzNavigate code path goes
+// away, and MaybeCreateThrottleFor can be run before WillStartRequest.
+class InterceptFlashShadowThrottle : public content::NavigationThrottle {
+ public:
+  explicit InterceptFlashShadowThrottle(content::NavigationHandle* handle)
+      : content::NavigationThrottle(handle) {}
+  ~InterceptFlashShadowThrottle() override = default;
+
+  // content::NavigationThrottle:
+  content::NavigationThrottle::ThrottleCheckResult WillStartRequest() override {
+    intercept_throttle_ =
+        FlashDownloadInterception::MaybeCreateThrottleFor(navigation_handle());
+    return intercept_throttle_ ? intercept_throttle_->WillStartRequest()
+                               : content::NavigationThrottle::PROCEED;
+  }
+  content::NavigationThrottle::ThrottleCheckResult WillRedirectRequest()
+      override {
+    return intercept_throttle_ ? intercept_throttle_->WillRedirectRequest()
+                               : content::NavigationThrottle::PROCEED;
+  }
+  content::NavigationThrottle::ThrottleCheckResult WillProcessResponse()
+      override {
+    return intercept_throttle_ ? intercept_throttle_->WillProcessResponse()
+                               : content::NavigationThrottle::PROCEED;
+  }
+  const char* GetNameForLogging() override {
+    return "InterceptFlashShadowThrottle";
+  }
+
+  static std::unique_ptr<content::NavigationThrottle> Create(
+      content::NavigationHandle* handle) {
+    return std::make_unique<InterceptFlashShadowThrottle>(handle);
+  }
+
+ private:
+  std::unique_ptr<NavigationThrottle> intercept_throttle_;
+  DISALLOW_COPY_AND_ASSIGN(InterceptFlashShadowThrottle);
+};
+
+}  // namespace
 
 class FlashDownloadInterceptionTest : public ChromeRenderViewHostTestHarness {
  public:
@@ -102,17 +154,18 @@ TEST_F(FlashDownloadInterceptionTest, NavigationThrottleCancelsNavigation) {
   // Set the source URL to an HTTP source.
   NavigateAndCommit(GURL("http://example.com"));
 
-  std::unique_ptr<NavigationHandle> handle =
-      NavigationHandle::CreateNavigationHandleForTesting(
-          GURL("https://get.adobe.com/flashplayer"), main_rfh());
+  content::TestNavigationThrottleInserter throttle_inserter(
+      web_contents(),
+      base::BindRepeating(&InterceptFlashShadowThrottle::Create));
 
-  handle->CallWillStartRequestForTesting(true, content::Referrer(), true,
-                                         ui::PAGE_TRANSITION_LINK, false);
-  std::unique_ptr<NavigationThrottle> throttle =
-      FlashDownloadInterception::MaybeCreateThrottleFor(handle.get());
-  EXPECT_NE(nullptr, throttle);
-  ASSERT_EQ(NavigationThrottle::CANCEL_AND_IGNORE,
-            throttle->WillStartRequest());
+  std::unique_ptr<content::NavigationSimulator> simulator =
+      content::NavigationSimulator::CreateRendererInitiated(
+          GURL("https://get.adobe.com/flashplayer"), main_rfh());
+  simulator->SetMethod("POST");
+  simulator->SetHasUserGesture(false);
+  simulator->Commit();
+  EXPECT_EQ(content::NavigationThrottle::CANCEL_AND_IGNORE,
+            simulator->GetLastThrottleCheckResult());
 }
 
 TEST_F(FlashDownloadInterceptionTest, OnlyInterceptOnDetectContentSetting) {
