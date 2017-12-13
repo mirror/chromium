@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86664eb6_d22570ce",
+        "filename": "services/proxy_resolver/proxy_resolver_factory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-13T21:44:46Z",
+      "side": 0,
+      "message": "Matt + Randy: I can\u0027t move this file to //content/network, because //services/proxy_resolver can\u0027t depend on //content.\n\nThis mojo_proxy_resolver_v8_tracing_bindings depends on host_resolver_mojo.h, which I want to move out side of //net.",
+      "revId": "0a2853de28e6c164e166093b104cc21f7515ef69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
