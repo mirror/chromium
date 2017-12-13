@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e310cb3_0f0f5387",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-13T17:22:45Z",
+      "side": 1,
+      "message": "nit typo \"would\"",
+      "revId": "63818c743dd052601c7742930b31b9f49335e69d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081aafa6_208f2227",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-12-13T17:22:45Z",
+      "side": 1,
+      "message": "This now says \"A request is already pending.\", since it could also be for a create(publickeycredential) request, not just a get() request.",
+      "revId": "63818c743dd052601c7742930b31b9f49335e69d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
