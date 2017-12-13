@@ -25,6 +25,7 @@ void InitializeColorSchemes() {
     return;
 
   ColorScheme& normal_scheme = g_normal_scheme.Get();
+  normal_scheme.background_brightness = 1.0f;
   normal_scheme.world_background = 0xFF999999;
   normal_scheme.world_background_text = 0xFF363636;
   normal_scheme.floor = 0xFF8C8C8C;
@@ -32,8 +33,8 @@ void InitializeColorSchemes() {
   normal_scheme.floor_grid = 0x26FFFFFF;
   normal_scheme.element_foreground = 0xFF333333;
   normal_scheme.element_background = 0xCCB3B3B3;
-  normal_scheme.element_background_hover = 0xFFCCCCCC;
-  normal_scheme.element_background_down = 0xFFF3F3F3;
+  normal_scheme.element_background_hover = 0xCCE3E3E3;
+  normal_scheme.element_background_down = 0xCCF3F3F3;
   normal_scheme.button_colors.foreground = 0x87000000;
   normal_scheme.button_colors.background = normal_scheme.element_background;
   normal_scheme.button_colors.background_hover =
@@ -121,6 +122,7 @@ void InitializeColorSchemes() {
 
   g_fullscreen_scheme.Get() = normal_scheme;
   ColorScheme& fullscreen_scheme = g_fullscreen_scheme.Get();
+  fullscreen_scheme.background_brightness = 0.3f;
   fullscreen_scheme.world_background = 0xFF000714;
   fullscreen_scheme.floor = 0xFF070F1C;
   fullscreen_scheme.ceiling = 0xFF04080F;
@@ -143,6 +145,7 @@ void InitializeColorSchemes() {
 
   g_incognito_scheme.Get() = normal_scheme;
   ColorScheme& incognito_scheme = g_incognito_scheme.Get();
+  incognito_scheme.background_brightness = 0.5f;
   incognito_scheme.world_background = 0xFF2E2E2E;
   incognito_scheme.world_background_text = 0xFF878787;
   incognito_scheme.floor = 0xFF282828;
