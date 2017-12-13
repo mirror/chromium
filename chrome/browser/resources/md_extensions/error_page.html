@@ -100,7 +100,7 @@
         padding: 0 var(--cr-section-padding);
       }
 
-      #stack-trace-heading {
+      .details-heading {
         @apply(--cr-title-text);
         align-items: center;
         display: flex;
@@ -198,7 +198,14 @@
                 <template is="dom-if" if="[[computeIsRuntimeError_(item)]]">
                   <iron-collapse opened="[[isOpened_(index, selectedEntry_)]]">
                     <div id="devtools-controls">
-                      <div id="stack-trace-heading">
+                      <div class="details-heading">
+                        $i18n{context}
+                      </div>
+                      <span>
+                        [[getContextUrl_(
+                            item.contextUrl, item, '$i18nPolymer{unknown}')]]
+                      </span>
+                      <div class="details-heading">
                         $i18n{stackTrace}
                       </div>
                       <ul id="stack-trace-container">

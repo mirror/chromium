@@ -152,6 +152,9 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_ERROR_PAGE_HEADING);
   source->AddLocalizedString("anonymousFunction",
                              IDS_MD_EXTENSIONS_ERROR_ANONYMOUS_FUNCTION);
+  source->AddLocalizedString("context", IDS_MD_EXTENSIONS_ERROR_CONTEXT);
+  source->AddLocalizedString("unknown",
+                             IDS_MD_EXTENSIONS_ERROR_CONTEXT_UNKNOWN);
   source->AddLocalizedString("openInDevtool",
                              IDS_MD_EXTENSIONS_ERROR_LAUNCH_DEVTOOLS);
   source->AddLocalizedString("stackTrace", IDS_MD_EXTENSIONS_ERROR_STACK_TRACE);
