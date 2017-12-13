@@ -95,6 +95,10 @@ class MockFrameHost : public mojom::FrameHost {
       blink::WebSandboxFlags sandbox_flags,
       const blink::ParsedFeaturePolicy& parsed_header) override {}
 
+  void OnSmartClipDataExtracted(uint32_t callback_id,
+                                const base::string16& text,
+                                const base::string16& html) override;
+
  private:
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
       last_commit_params_;
