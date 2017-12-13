@@ -2203,9 +2203,13 @@ void RenderWidgetHostImpl::OnShowDisambiguationPopup(
   DCHECK(!rect_pixels.IsEmpty());
   DCHECK(!size.IsEmpty());
 
+  // TODO(crbug.com/790807): This won't work when display compositing and the
+  // ServerSharedBitmapManager move to the viz process. Don't use a
+  // SharedBitmapId for this, use other shared memory mechanisms?
+  viz::ServerSharedBitmapManager* manager =
+      BrowserMainLoop::GetInstance()->GetServerSharedBitmapManager();
   std::unique_ptr<viz::SharedBitmap> bitmap =
-      viz::ServerSharedBitmapManager::current()->GetSharedBitmapFromId(size,
-                                                                       id);
+      manager->GetSharedBitmapFromId(size, id);
   if (!bitmap) {
     bad_message::ReceivedBadMessage(GetProcess(),
                                     bad_message::RWH_SHARED_BITMAP);

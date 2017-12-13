@@ -24,6 +24,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/web_contents_tester.h"
+#include "content/test/test_render_view_host.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/shell_dialogs/select_file_dialog_factory.h"
@@ -170,6 +171,7 @@ class PasswordManagerPorterTest : public testing::Test {
  private:
   // TODO(crbug.com/689520) This is needed for mojo not to crash on destruction.
   content::TestBrowserThreadBundle thread_bundle_;
+  content::RenderViewHostTestEnabler rvh_test_enabler_;
   std::unique_ptr<TestPasswordManagerPorter> password_manager_porter_;
   std::unique_ptr<TestingProfile> profile_;
   std::unique_ptr<content::WebContents> web_contents_;

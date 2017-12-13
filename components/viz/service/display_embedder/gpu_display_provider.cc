@@ -65,6 +65,7 @@ GpuDisplayProvider::GpuDisplayProvider(
     uint32_t restart_id,
     scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_service,
     gpu::GpuChannelManager* gpu_channel_manager,
+    ServerSharedBitmapManager* server_shared_bitmap_manager,
     CompositingModeReporterImpl* compositing_mode_reporter)
     : restart_id_(restart_id),
       gpu_service_(std::move(gpu_service)),
@@ -73,6 +74,7 @@ GpuDisplayProvider::GpuDisplayProvider(
           base::MakeUnique<InProcessGpuMemoryBufferManager>(
               gpu_channel_manager)),
       image_factory_(GetImageFactory(gpu_channel_manager)),
+      server_shared_bitmap_manager_(server_shared_bitmap_manager),
       compositing_mode_reporter_(compositing_mode_reporter),
       task_runner_(base::ThreadTaskRunnerHandle::Get()) {
   DCHECK_NE(restart_id_, BeginFrameSource::kNotRestartableId);
@@ -153,7 +155,7 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
   *out_begin_frame_source = std::move(synthetic_begin_frame_source);
 
   return base::MakeUnique<Display>(
-      ServerSharedBitmapManager::current(), gpu_memory_buffer_manager_.get(),
+      server_shared_bitmap_manager_, gpu_memory_buffer_manager_.get(),
       renderer_settings, frame_sink_id, std::move(output_surface),
       std::move(scheduler), task_runner_);
 }

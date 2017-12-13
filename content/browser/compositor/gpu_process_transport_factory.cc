@@ -187,6 +187,7 @@ struct GpuProcessTransportFactory::PerCompositorData {
 GpuProcessTransportFactory::GpuProcessTransportFactory(
     gpu::GpuChannelEstablishFactory* gpu_channel_factory,
     viz::CompositingModeReporterImpl* compositing_mode_reporter,
+    viz::ServerSharedBitmapManager* server_shared_bitmap_manager,
     scoped_refptr<base::SingleThreadTaskRunner> resize_task_runner)
     : frame_sink_id_allocator_(kDefaultClientId),
       renderer_settings_(viz::CreateRendererSettings(
@@ -195,6 +196,7 @@ GpuProcessTransportFactory::GpuProcessTransportFactory(
       task_graph_runner_(new cc::SingleThreadTaskGraphRunner),
       gpu_channel_factory_(gpu_channel_factory),
       compositing_mode_reporter_(compositing_mode_reporter),
+      server_shared_bitmap_manager_(server_shared_bitmap_manager),
       callback_factory_(this) {
   DCHECK(gpu_channel_factory_);
   cc::SetClientNameForMetrics("Browser");
@@ -625,7 +627,7 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
 
   // The Display owns and uses the |display_output_surface| created above.
   data->display = std::make_unique<viz::Display>(
-      viz::ServerSharedBitmapManager::current(), GetGpuMemoryBufferManager(),
+      server_shared_bitmap_manager_, GetGpuMemoryBufferManager(),
       renderer_settings_, compositor->frame_sink_id(),
       std::move(display_output_surface), std::move(scheduler),
       compositor->task_runner());
@@ -655,8 +657,7 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
                 compositor->frame_sink_id(), GetHostFrameSinkManager(),
                 GetFrameSinkManager(), data->display.get(), context_provider,
                 shared_worker_context_provider_, compositor->task_runner(),
-                GetGpuMemoryBufferManager(),
-                viz::ServerSharedBitmapManager::current());
+                GetGpuMemoryBufferManager(), server_shared_bitmap_manager_);
   data->display->Resize(compositor->size());
   data->display->SetOutputIsSecure(data->output_is_secure);
   compositor->SetLayerTreeFrameSink(std::move(layer_tree_frame_sink));

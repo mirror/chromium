@@ -54,6 +54,7 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "content/public/test/web_contents_tester.h"
+#include "content/test/test_render_view_host.h"
 #include "net/base/url_util.h"
 #include "net/cert/x509_certificate.h"
 #include "net/cert/x509_util.h"
@@ -2473,6 +2474,8 @@ TEST_F(DownloadProtectionServiceTest,
 
 TEST_F(DownloadProtectionServiceTest,
        VerifyReferrerChainWithEmptyNavigationHistory) {
+  content::RenderViewHostTestEnabler rvh_test_enabler;
+
   // Setup a web_contents with "http://example.com" as its last committed url.
   content::WebContents* web_contents =
       content::WebContentsTester::CreateTestWebContents(profile_.get(),
