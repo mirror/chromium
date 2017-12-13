@@ -1367,6 +1367,7 @@ void MediaStreamManager::Opened(MediaStreamType stream_type,
             const MediaStreamDevice* opened_device =
                 audio_input_device_manager_->GetOpenedDeviceById(
                     device.session_id);
+
             device.input = opened_device->input;
 
             // Since the audio input device manager will set the input
@@ -1377,8 +1378,6 @@ void MediaStreamManager::Opened(MediaStreamType stream_type,
             FilterAudioEffects(request->controls, &effects);
             EnableHotwordEffect(request->controls, &effects);
             device.input.set_effects(effects);
-
-            device.matched_output = opened_device->matched_output;
           }
         }
         if (RequestDone(*request))

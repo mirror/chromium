@@ -785,6 +785,10 @@ MediaStreamAudioSource* UserMediaProcessor::CreateAudioSource(
   ProcessedLocalAudioSource* source = new ProcessedLocalAudioSource(
       render_frame_id_, device, audio_processing_properties, source_ready,
       dependency_factory_);
+  source->set_render_to_associated_sink(
+      current_request_info_->audio_capture_settings().HasValue() &&
+      current_request_info_->audio_capture_settings()
+          .render_to_associated_sink());
   *has_sw_echo_cancellation =
       audio_processing_properties.enable_sw_echo_cancellation;
   return source;
@@ -832,14 +836,10 @@ void UserMediaProcessor::CreateAudioTracks(
           .render_to_associated_sink();
   if (!render_to_associated_sink) {
     // If the GetUserMedia request did not explicitly set the constraint
-    // kMediaStreamRenderToAssociatedSink, the output device parameters must
+    // kMediaStreamRenderToAssociatedSink, the output device id must
     // be removed.
-    for (auto& device : overridden_audio_devices) {
-      device.matched_output_device_id = "";
-      // Audio parameters must be invalid in order to ensure that the matched
-      // output device will not be used.
-      device.matched_output = media::AudioParameters();
-    }
+    for (auto& device : overridden_audio_devices)
+      device.matched_output_device_id.clear();
   }
 
   for (size_t i = 0; i < overridden_audio_devices.size(); ++i) {

@@ -97,13 +97,6 @@ void AudioOutputAuthorizationHandler::RequestDeviceAuthorization(
         media_stream_manager_->audio_input_device_manager()
             ->GetOpenedDeviceById(session_id);
     if (device && !device->matched_output_device_id.empty()) {
-      media::AudioParameters params(
-          media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
-          device->matched_output.channel_layout(),
-          device->matched_output.sample_rate(), 16,
-          device->matched_output.frames_per_buffer());
-      params.set_effects(device->matched_output.effects());
-
       // We don't need the origin for authorization in this case, but it's used
       // for hashing the device id before sending it back to the renderer.
       BrowserThread::PostTaskAndReplyWithResult(
@@ -112,7 +105,7 @@ void AudioOutputAuthorizationHandler::RequestDeviceAuthorization(
                          render_frame_id),
           base::BindOnce(&AudioOutputAuthorizationHandler::HashDeviceId,
                          weak_factory_.GetWeakPtr(), std::move(cb),
-                         device->matched_output_device_id, params));
+                         device->matched_output_device_id));
       return;
     }
     // Otherwise, the default device is used.
@@ -154,12 +147,14 @@ void AudioOutputAuthorizationHandler::UMALogDeviceAuthorizationTime(
 void AudioOutputAuthorizationHandler::HashDeviceId(
     AuthorizationCompletedCallback cb,
     const std::string& raw_device_id,
-    const media::AudioParameters& params,
     const std::pair<std::string, url::Origin>& salt_and_origin) const {
   std::string hashed_device_id = GetHMACForMediaDeviceID(
       salt_and_origin.first, salt_and_origin.second, raw_device_id);
-  DeviceParametersReceived(std::move(cb), hashed_device_id, raw_device_id,
-                           params);
+  audio_system_->GetOutputStreamParameters(
+      raw_device_id,
+      base::BindOnce(&AudioOutputAuthorizationHandler::OutputParametersReceived,
+                     weak_factory_.GetWeakPtr(), std::move(cb),
+                     hashed_device_id, raw_device_id));
 }
 
 void AudioOutputAuthorizationHandler::AccessChecked(
@@ -231,6 +226,28 @@ void AudioOutputAuthorizationHandler::DeviceParametersReceived(
       media::OUTPUT_DEVICE_STATUS_OK,
       params.value_or(media::AudioParameters::UnavailableDeviceParams()),
       raw_device_id, id_for_renderer);
+}
+
+void AudioOutputAuthorizationHandler::OutputParametersReceived(
+    AuthorizationCompletedCallback cb,
+    const std::string& id_for_renderer,
+    const std::string& raw_device_id,
+    const base::Optional<media::AudioParameters>& params) const {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(!raw_device_id.empty());
+  DCHECK(!params || params->IsValid());
+  media::AudioParameters output_params;
+  if (params) {
+    output_params = media::AudioParameters(
+        media::AudioParameters::AUDIO_PCM_LOW_LATENCY, params->channel_layout(),
+        params->sample_rate(), 16, params->frames_per_buffer());
+    output_params.set_effects(params->effects());
+  } else {
+    output_params = media::AudioParameters::UnavailableDeviceParams();
+  }
+  DCHECK(output_params.IsValid());
+  std::move(cb).Run(media::OUTPUT_DEVICE_STATUS_OK, output_params,
+                    raw_device_id, id_for_renderer);
 }
 
 }  // namespace content

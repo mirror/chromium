@@ -76,6 +76,11 @@ class CONTENT_EXPORT ProcessedLocalAudioSource final
   int Volume() const;
   int MaxVolume() const;
 
+  void set_render_to_associated_sink(bool render_to_associated_sink) {
+    render_to_associated_sink_ = render_to_associated_sink;
+  }
+  bool render_to_associated_sink() const { return render_to_associated_sink_; }
+
   // Audio parameters utilized by the source of the audio capturer.
   // TODO(phoglund): Think over the implications of this accessor and if we can
   // remove it.
@@ -133,6 +138,8 @@ class CONTENT_EXPORT ProcessedLocalAudioSource final
 
   // Used to calculate the signal level that shows in the UI.
   MediaStreamAudioLevelCalculator level_calculator_;
+
+  bool render_to_associated_sink_ = false;
 
   bool allow_invalid_render_frame_id_for_testing_;
 
