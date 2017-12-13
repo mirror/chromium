@@ -783,4 +783,8 @@ IN_PROC_BROWSER_TEST_F(WebViewAPITest, TestCaptureVisibleRegion) {
   RunTest("testCaptureVisibleRegion", "web_view/apitest");
 }
 
+IN_PROC_BROWSER_TEST_F(WebViewAPITest, TestNameAttributeInitialization) {
+  RunTest("testNameAttributeInitialization", "web_view/apitest");
+}
+
 }  // namespace extensions
