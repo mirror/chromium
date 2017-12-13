@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3120829_51f21a40",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-13T04:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c4620b0_bf917cb2",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "186780d6_ab219bcf",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 11
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "56af2453_b82e8e94",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-13T04:30:53Z",
+      "side": 1,
+      "message": "The reason is: I didn\u0027t realize that NamedTemporaryFile is much better here...\n\nThanks for the hint. Changed!",
+      "parentUuid": "e0322c35_465322e6",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28fa6eee_f0dcd9e4",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 11
@@ -67,6 +103,24 @@
       "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99741404_11274600",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-13T04:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28fa6eee_f0dcd9e4",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "f0925b80_2d39ba98",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-13T04:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57d82524_cebb31dc",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e040c567_b3561025",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 11
@@ -168,6 +240,24 @@
       "writtenOn": "2017-12-13T00:35:52Z",
       "side": 1,
       "message": "I think this can just look for everything between common and \\.jar and take that as the suffix -- something like \u0027^common(.*)\\.jar$\u0027",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3039cb_8f32c69d",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-13T04:30:53Z",
+      "side": 1,
+      "message": "Just tried that way and found it not that reliable: there are jar files like \u0027commons-codec-1.6.jar\u0027, and the version would become \u0027s-codec-1.6\u0027 by capturing group. I think it is better to remain the old way.",
+      "parentUuid": "e040c567_b3561025",
       "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -205,6 +295,24 @@
       "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cb6fdc_9c1ab77b",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-12-13T04:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8616a0a_b7752e04",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
