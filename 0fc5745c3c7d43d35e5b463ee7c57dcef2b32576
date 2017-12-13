@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68101dcc_40195605",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T17:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a13b51a_990c4a79",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 118
+      },
+      "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45c9fb99_cc1d7a35",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2549a73_e5858e6b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T17:10:41Z",
+      "side": 1,
+      "message": "That\u0027d be _STRING_FIELDS and _STRING_LIST_FIELDS.\n\nAlso added a comment to make it clear.",
+      "parentUuid": "45c9fb99_cc1d7a35",
+      "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "7ffcb322_dc131162",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T17:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4719462_c5f2524c",
+      "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3115905e_69748f25",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbf5cfea_5c0a017d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T17:10:41Z",
+      "side": 1,
+      "message": "The doc doesn\u0027t say which fields in the \"body\" are required. And if you do not provide the required fields, no issues are created and the responses are cryptic (and somewhat different depending on which field you are missing), so I\u0027m trying to make the errors clearer.\n\nAs for the capitalization, it\u0027s just for a nicer looking and more consistency.",
+      "parentUuid": "3115905e_69748f25",
+      "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "3ce2770f_cadd64c6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T17:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00d432b0_245b7a46",
+      "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fd7d8a6_feb33e37",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e09775f_3f742eae",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T17:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd7d8a6_feb33e37",
+      "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "c5f1dd4c_c79664d8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T17:10:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b53452a9_63aed4ab",
+      "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52147193_de657837",
         "filename": "third_party/WebKit/Tools/Scripts/wpt-import.vpython",
         "patchSetId": 3
@@ -141,6 +273,24 @@
       "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19623b1b_8c3a7b5a",
+        "filename": "third_party/WebKit/Tools/Scripts/wpt-import.vpython",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T17:10:41Z",
+      "side": 1,
+      "message": "Yes. All dependencies, recursively. We have to explicitly list them out because vpython does not support dependency resolution.",
+      "parentUuid": "52147193_de657837",
+      "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
