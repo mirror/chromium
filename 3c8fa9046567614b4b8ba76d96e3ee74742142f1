@@ -22,6 +22,30 @@
       "revId": "3c8fa9046567614b4b8ba76d96e3ee74742142f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f18de0_3c9671ca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-12-13T06:18:29Z",
+      "side": 1,
+      "message": "public/web/WebFrameClient::CreateColorChooser method is deleted, so content/shell/test_runner/web_frame_test_client no longer implements that method to construct MockColorChooser.\n\nI don\u0027t see that anything was ever constructing or calling methods on MockColorChooser in any case.",
+      "parentUuid": "74e36152_c13839b2",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "3c8fa9046567614b4b8ba76d96e3ee74742142f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
