@@ -22,6 +22,30 @@
       "revId": "e13b4e4207dbca71593b666d32e9663ef940361f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edfef4cb_1baaf10d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-12-13T19:58:30Z",
+      "side": 1,
+      "message": "Thanks for the pointer! Although I used TextUtils.join(), since String.join() is 26+.\nAs for values - I think they are not needed for understanding intent origin plus they can raise privacy questions (since we\u0027re asking to post them into a bug).",
+      "parentUuid": "9663bb0d_521ccf56",
+      "range": {
+        "startLine": 462,
+        "startChar": 35,
+        "endLine": 462,
+        "endChar": 41
+      },
+      "revId": "e13b4e4207dbca71593b666d32e9663ef940361f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
