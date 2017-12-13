@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03a02584_c6d2513a",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-13T02:04:28Z",
+      "side": 1,
+      "message": "Style guide: Always favour comprehensions to map():\n\nwhitelisted_resources \u003d set(\n    _GetQualifiedEntryName(x) for x in all_resources.itervalues())\n\nThat said... I think whitelisted_resources might warrant a custom class so that it can encapsulate the None\u003d\u003eall and _GetQualifiedEntryName() logic.\n\n\nclass _ResourceWhitelist(object):  \n  def __init__(self, entries\u003dNone):\n    self._entries \u003d None\n    if entries:\n      self._entries \u003d set(self._Key(x) for x in entries)\n\n  def __contains__(self, entry):\n    return self._entries is None or ...\n\n  @staticmethod\n  def _Key(entry):\n    return (entry.java_type, entry.resource_type, entry.name)",
+      "revId": "20d2142177caaf80c70309ca3ac94be725029649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543293aa_72a8d19a",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-13T02:04:28Z",
+      "side": 1,
+      "message": "Should be a set I think? (only use is for checking if things are in it)\n\nThat said... I think it might not be necessary to create this per-package map anyways. The whitelist is the same for all packages, so it should be enough to pass whitelisted_resources straight through to _CreateRJavaFile().",
+      "range": {
+        "startLine": 274,
+        "startChar": 62,
+        "endLine": 274,
+        "endChar": 66
+      },
+      "revId": "20d2142177caaf80c70309ca3ac94be725029649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44516a7_f1870e1e",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-13T02:04:28Z",
+      "side": 1,
+      "message": "I think we\u0027d still want these as non-final when generating for library targets in case a parent library decides to clobber the value.\n\nAlso - maybe move this logic out of the template (put them in final_resources) so that it can have a comment.",
+      "revId": "20d2142177caaf80c70309ca3ac94be725029649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81fd637d_e0be80a0",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-13T02:04:28Z",
+      "side": 1,
+      "message": "Comment is a bit unclear. Suggestion:\n\n# Resource whitelist used when generating R.java files and causes\n# only the webview subset of resources to be marked as non-final.",
+      "revId": "20d2142177caaf80c70309ca3ac94be725029649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
