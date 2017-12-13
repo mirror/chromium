@@ -823,6 +823,8 @@ class WebContents : public PageNavigator,
 
   // Returns true if the WebContents has completed its first meaningful paint.
   virtual bool CompletedFirstVisuallyNonEmptyPaint() const = 0;
+
+  virtual std::string GetTextForSuggestions() = 0;
 #endif  // OS_ANDROID
 
  private:

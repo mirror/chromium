@@ -56,6 +56,9 @@ struct CONTENT_EXPORT TextInputState {
 
   // Whether or not this is a reply to a request from IME.
   bool reply_to_request;
+
+  // Mac only.
+  std::string text_for_suggestions;
 };
 
 }  // namespace content

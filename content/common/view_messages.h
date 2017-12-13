@@ -256,6 +256,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::TextInputState)
   IPC_STRUCT_TRAITS_MEMBER(can_compose_inline)
   IPC_STRUCT_TRAITS_MEMBER(show_ime_if_needed)
   IPC_STRUCT_TRAITS_MEMBER(reply_to_request)
+  IPC_STRUCT_TRAITS_MEMBER(text_for_suggestions)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_BEGIN(ViewHostMsg_DateTimeDialogValue_Params)
@@ -790,6 +791,8 @@ IPC_MESSAGE_ROUTED2(ViewHostMsg_ShowUnhandledTapUIIfNeeded,
 #elif defined(OS_MACOSX)
 // Receives content of a web page as plain text.
 IPC_MESSAGE_ROUTED1(ViewMsg_GetRenderedTextCompleted, std::string)
+
+IPC_MESSAGE_ROUTED1(ViewMsg_DidEditingTextEditChanged, std::string)
 #endif
 
 // Adding a new message? Stick to the sort order above: first platform

@@ -33,6 +33,9 @@ UI_BASE_EXPORT void LogTouchBarUMA(TouchBarAction command);
 // Returns the NSTouchBar Class.
 UI_BASE_EXPORT Class NSTouchBar();
 
+// Returns the NSCandidateListTouchBarItem Class.
+UI_BASE_EXPORT Class NSCandidateListTouchBarItem();
+
 // Returns the NSCustomTouchBarItem Class.
 UI_BASE_EXPORT Class NSCustomTouchBarItem();
 

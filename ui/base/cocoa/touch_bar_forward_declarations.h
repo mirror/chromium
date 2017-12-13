@@ -78,6 +78,14 @@ typedef NSString* NSTouchBarCustomizationIdentifier;
 
 @end
 
+@interface NSCandidateListTouchBarItem : NSTouchBarItem
+
+- (void)setCandidates:(NSArray<CandidateType>*)candidates
+     forSelectedRange:(NSRange)selectedRange
+             inString:(NSString*)originalString;
+
+@end
+
 @interface NSCustomTouchBarItem : NSTouchBarItem
 
 @property(readwrite, strong) __kindof NSView* view;
