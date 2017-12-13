@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f2f20a6_a220c6b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-13T18:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65650904_0aa160a3",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "88394eb155e72e410e002453e449af8cfa9f331f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdb00abc_ce702836",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconCache.java",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "88394eb155e72e410e002453e449af8cfa9f331f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f00011_5a0ca15b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconCache.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-12-13T18:44:53Z",
+      "side": 1,
+      "message": "Yea, I didn\u0027t notice that GURLifying it added a /, so I fixed the glitch.",
+      "parentUuid": "fdb00abc_ce702836",
+      "revId": "88394eb155e72e410e002453e449af8cfa9f331f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
