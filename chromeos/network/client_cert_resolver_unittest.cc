@@ -144,6 +144,17 @@ class ClientCertResolverTest : public testing::Test,
     ASSERT_TRUE(test_client_cert_.get());
   }
 
+  void SetupBadPrintableStringTestCert() {
+    // Import a client cert signed by that CA.
+    net::ImportClientCertAndKeyFromFile(
+        net::GetTestNetDataDirectory(),
+        "parse_certificate_unittest/"
+        "subject_printable_string_containing_utf8_client_cert.pem",
+        "parse_certificate_unittest/v3_certificate_template.pk8",
+        test_nssdb_.slot(), &test_client_cert_);
+    ASSERT_TRUE(test_client_cert_.get());
+  }
+
   void SetupNetworkHandlers() {
     network_state_handler_ = NetworkStateHandler::InitializeForTest();
     network_profile_handler_.reset(new NetworkProfileHandler());
@@ -227,6 +238,64 @@ class ClientCertResolverTest : public testing::Test,
         base::DictionaryValue() /* no global network config */);
   }
 
+  void SetupPolicyMatchingBadPrintableStringCertIssuerCN(
+      onc::ONCSource onc_source) {
+    const char* kTestPolicy =
+        "[ { \"GUID\": \"wifi_stub\","
+        "    \"Name\": \"wifi_stub\","
+        "    \"Type\": \"WiFi\","
+        "    \"WiFi\": {"
+        "      \"Security\": \"WPA-EAP\","
+        "      \"SSID\": \"wifi_ssid\","
+        "      \"EAP\": {"
+        "        \"Outer\": \"EAP-TLS\","
+        "        \"ClientCertType\": \"Pattern\","
+        "        \"ClientCertPattern\": {"
+        "          \"Issuer\": {"
+        "            \"Organization\": \"Internet Widgits Pty Ltd\""
+        "          }"
+        "        }"
+        "      }"
+        "    }"
+        "} ]";
+
+    std::string error;
+    std::unique_ptr<base::Value> policy_value =
+        base::JSONReader::ReadAndReturnError(
+            kTestPolicy, base::JSON_ALLOW_TRAILING_COMMAS, nullptr, &error);
+    ASSERT_TRUE(policy_value) << error;
+
+    base::ListValue* policy = nullptr;
+    ASSERT_TRUE(policy_value->GetAsList(&policy));
+
+    std::string user_hash =
+        onc_source == onc::ONC_SOURCE_USER_POLICY ? kUserHash : "";
+    managed_config_handler_->SetPolicy(
+        onc_source, user_hash, *policy,
+        base::DictionaryValue() /* no global network config */);
+  }
+
+  void SetupCertificateConfigMatchingIssuerCNForBPSCert(
+      onc::ONCSource onc_source,
+      client_cert::ClientCertConfig* client_cert_config) {
+    const char* kTestOncPattern =
+        "{"
+        "  \"Issuer\": {"
+        "    \"Organization\": \"Internet Widgits Pty Ltd\""
+        "  }"
+        "}";
+    std::string error;
+    std::unique_ptr<base::Value> onc_pattern_value =
+        base::JSONReader::ReadAndReturnError(
+            kTestOncPattern, base::JSON_ALLOW_TRAILING_COMMAS, nullptr, &error);
+    ASSERT_TRUE(onc_pattern_value) << error;
+
+    base::DictionaryValue* onc_pattern_dict;
+    onc_pattern_value->GetAsDictionary(&onc_pattern_dict);
+
+    client_cert_config->onc_source = onc_source;
+    client_cert_config->pattern.ReadFromONCDictionary(*onc_pattern_dict);
+  }
   void SetupCertificateConfigMatchingIssuerCN(
       onc::ONCSource onc_source,
       client_cert::ClientCertConfig* client_cert_config) {
@@ -372,6 +441,42 @@ TEST_F(ClientCertResolverTest, MatchIssuerCNWithoutIssuerInstalled) {
   GetServiceProperty(shill::kEapCertIdProperty, &pkcs11_id);
   EXPECT_EQ(test_cert_id_, pkcs11_id);
   EXPECT_EQ(1, network_properties_changed_count_);
+}
+
+TEST_F(ClientCertResolverTest,
+       MatchIssuerCNWithoutIssuerInstalledBadPrintableString) {
+  SetupBadPrintableStringTestCert();
+
+  SetupWifi();
+  scoped_task_environment_.RunUntilIdle();
+
+  SetupNetworkHandlers();
+  SetupPolicyMatchingBadPrintableStringCertIssuerCN(
+      onc::ONC_SOURCE_USER_POLICY);
+  scoped_task_environment_.RunUntilIdle();
+
+  network_properties_changed_count_ = 0;
+  StartCertLoader();
+  scoped_task_environment_.RunUntilIdle();
+
+  // Verify that the resolver positively matched the pattern in the policy with
+  // the test client cert and configured the network.
+  std::string pkcs11_id;
+  GetServiceProperty(shill::kEapCertIdProperty, &pkcs11_id);
+  EXPECT_EQ(test_cert_id_, pkcs11_id);
+  EXPECT_EQ(1, network_properties_changed_count_);
+
+  // Try sync version
+  client_cert::ClientCertConfig client_cert_config;
+  SetupCertificateConfigMatchingIssuerCNForBPSCert(onc::ONC_SOURCE_USER_POLICY,
+                                                   &client_cert_config);
+  base::DictionaryValue shill_properties;
+  ClientCertResolver::ResolveCertificatePatternSync(
+      client_cert::CONFIG_TYPE_EAP, client_cert_config, &shill_properties);
+  std::string pkcs11_id_sync;
+  shill_properties.GetStringWithoutPathExpansion(shill::kEapCertIdProperty,
+                                                 &pkcs11_id_sync);
+  EXPECT_EQ(test_cert_id_, pkcs11_id_sync);
 }
 
 TEST_F(ClientCertResolverTest, ResolveOnCertificatesLoaded) {

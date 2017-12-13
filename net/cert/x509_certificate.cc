@@ -334,7 +334,10 @@ CertificateList X509Certificate::CreateCertificateListFromBytes(
     return results;
 
   for (auto& it : certificates) {
-    scoped_refptr<X509Certificate> cert = CreateFromBuffer(std::move(it), {});
+    X509Certificate::UnsafeCreateOptions options;
+    options.printable_string_is_utf8 = true;
+    scoped_refptr<X509Certificate> cert =
+        CreateFromBufferUnsafeOptions(std::move(it), {}, options);
     if (cert)
       results.push_back(std::move(cert));
   }

@@ -123,11 +123,17 @@ struct MatchCertWithPattern {
 
   bool operator()(const CertAndIssuer& cert_and_issuer) {
     if (!pattern.issuer().Empty() || !pattern.subject().Empty()) {
+      printf("Expecting: %s\n", pattern.issuer().organization().c_str());
+      net::X509Certificate::UnsafeCreateOptions options;
+      options.printable_string_is_utf8 = false;
       scoped_refptr<net::X509Certificate> x509_cert =
           net::x509_util::CreateX509CertificateFromCERTCertificate(
-              cert_and_issuer.cert.get());
-      if (!x509_cert)
+              cert_and_issuer.cert.get(), {}, options);
+      if (!x509_cert) {
+        printf("Bailing out\n");
         return false;
+      }
+      printf("Have: %s\n", x509_cert->issuer().organization_names[0].c_str());
       if (!pattern.issuer().Empty() &&
           !client_cert::CertPrincipalMatches(pattern.issuer(),
                                              x509_cert->issuer())) {
