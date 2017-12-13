@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95fae8a8_c5bf8430",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-12-13T15:55:27Z",
+      "side": 1,
+      "message": "nit: \"view source and new-tab pages\"",
+      "revId": "407d44a6e6f54a8473e8eb55f84669fc991f095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46add00a_d840b5e5",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-12-13T15:55:27Z",
+      "side": 1,
+      "message": "Nice, thanks for adding this!",
+      "revId": "407d44a6e6f54a8473e8eb55f84669fc991f095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8e5519d_31beb652",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-12-13T15:55:27Z",
+      "side": 1,
+      "message": "Nit, while you\u0027re hear would you mind moving this TODO down just below this GetUseCounter line?  This line is the ONE that we HAVE made correctly handle SVGImage cases ;-)",
+      "range": {
+        "startLine": 646,
+        "startChar": 23,
+        "endLine": 646,
+        "endChar": 24
+      },
+      "revId": "407d44a6e6f54a8473e8eb55f84669fc991f095c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
