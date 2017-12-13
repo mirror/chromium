@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf85a12b_7b61d927",
+        "filename": "content/renderer/push_messaging/push_messaging_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-13T19:02:26Z",
+      "side": 1,
+      "message": "dcheng/haraken:\n\nThe |manifest_manager_| is the implementation of the blink::mojom::ManifestManager interface, which lives in the renderer process.\n\nI don\u0027t seem to be able to connect to it from Blink, so need all the plumbing to //content to call this method directly. That\u0027s super unfortunate. Is there a way to connect to *local* services?",
+      "revId": "7d1086824b4634fa5f7617ea4c4f9fbf470166cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcfd40b_371e9c11",
+        "filename": "third_party/WebKit/Source/modules/push_messaging/PushMessagingBridge.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-12-13T19:02:26Z",
+      "side": 1,
+      "message": "slangley/haraken:\n\nThis method supersedes all plumbing in ModuleInitializer.cpp and PushController.h/.cpp. The DEPS warning was added in August[1], has anything changed since? Should we perhaps just have an accessor on LocalFrame to get the WebFrameClient?\n\n[1] https://chromium.googlesource.com/chromium/src/+/4aeb8cb25eb41bef8a80e03be0b05bd5a8050384",
+      "revId": "7d1086824b4634fa5f7617ea4c4f9fbf470166cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
