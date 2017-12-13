@@ -70,7 +70,7 @@ NSString* const kSessionStorageKey = @"sessionStorage";
   //      deallocated above, causing crash.
   //
   // See crbug.com/712556 for the full stack trace.
-  CWVWebViewConfiguration* _configuration;
+  __weak CWVWebViewConfiguration* _configuration;
   std::unique_ptr<web::WebState> _webState;
   std::unique_ptr<web::WebStateDelegateBridge> _webStateDelegate;
   std::unique_ptr<web::WebStateObserverBridge> _webStateObserver;
@@ -99,7 +99,7 @@ NSString* const kSessionStorageKey = @"sessionStorage";
 - (void)updateCurrentURLs;
 // Updates |title| property.
 - (void)updateTitle;
-// Returns a new CWVAutofillController created from |webState_|.
+// Returns a new CWVAutofillController created from |_webState|.
 - (CWVAutofillController*)newAutofillController;
 
 @end
@@ -158,6 +158,7 @@ static NSString* gUserAgentProduct = nil;
   self = [super initWithFrame:frame];
   if (self) {
     _configuration = configuration;
+    [_configuration addWebView:self];
     _scrollView = [[CWVScrollView alloc] init];
     [self resetWebStateWithSessionStorage:nil];
   }
@@ -216,8 +217,18 @@ static NSString* gUserAgentProduct = nil;
   _javaScriptDialogPresenter->SetUIDelegate(_UIDelegate);
 }
 
-// -----------------------------------------------------------------------
-// WebStateObserver implementation.
+- (void)shutDown {
+  _autofillController = nil;
+  _translationController = nil;
+  _webState.reset();
+}
+
+#pragma mark - CRWWebStateObserver
+
+- (void)webStateDestroyed:(web::WebState*)webState {
+  webState->RemoveObserver(_webStateObserver.get());
+  _webStateObserver.reset();
+}
 
 - (void)webState:(web::WebState*)webState
     navigationItemsPruned:(size_t)pruned_item_count {

@@ -138,6 +138,8 @@ CWV_EXPORT
 - (void)evaluateJavaScript:(NSString*)javaScriptString
          completionHandler:(void (^)(id, NSError*))completionHandler;
 
+- (void)shutDown;
+
 @end
 
 #endif  // IOS_WEB_VIEW_PUBLIC_CWV_WEB_VIEW_H_
