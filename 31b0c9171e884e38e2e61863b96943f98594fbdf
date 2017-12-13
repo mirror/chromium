@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f8f20d6_ce41fb52",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/performance-tojson.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-13T18:16:44Z",
+      "side": 1,
+      "message": "Can we tighten the naming a bit here?\n\nMaybe \nperformanceJSON \u003d performance.toJSON()\ntimingJSONFromPerformance \u003d performanceJSON.timing;\ntimingJSON \u003d performance.timing.toJSON();\n\nOr something like that?",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "31b0c9171e884e38e2e61863b96943f98594fbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116bece3_0c1ed37a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/performance-tojson.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-13T18:16:44Z",
+      "side": 1,
+      "message": "Can we stick each of these on a separate line, to make diffs nicer in the future?",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "31b0c9171e884e38e2e61863b96943f98594fbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a736b623_1a896f2c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/performance-tojson.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-13T18:16:44Z",
+      "side": 1,
+      "message": "jsonNavigationFromPerformance?",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "31b0c9171e884e38e2e61863b96943f98594fbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b5b377_6939c708",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/performance-tojson.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-13T18:16:44Z",
+      "side": 1,
+      "message": "navigationJSON?",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "31b0c9171e884e38e2e61863b96943f98594fbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
