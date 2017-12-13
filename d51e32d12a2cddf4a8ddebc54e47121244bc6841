@@ -16,6 +16,24 @@
       "revId": "d51e32d12a2cddf4a8ddebc54e47121244bc6841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec86d05d_6292d140",
+        "filename": "content/browser/appcache/appcache_update_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-12-13T19:58:33Z",
+      "side": 1,
+      "message": "I don\u0027t think it had an opinion. I\u0027ll try to make sure it looks reasonably similar.",
+      "parentUuid": "7150f2b8_8b2f66cc",
+      "revId": "d51e32d12a2cddf4a8ddebc54e47121244bc6841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
