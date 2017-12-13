@@ -232,6 +232,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
         boolean isShownInBottomSheet = mBottomSheet != null && !mBottomSheet.isShowingNewTab()
                 && mBottomSheet.isSheetOpen() && TextUtils.isEmpty(urlBarText)
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+                && ChromeFeatureList.isInitialized()
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_CLEAR_URL_ON_OPEN)
                 && ChromeFeatureList.isEnabled(
                            ChromeFeatureList.CHROME_HOME_SHOW_GOOGLE_G_WHEN_URL_CLEARED);
@@ -304,6 +305,7 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
         return mBottomSheet != null && mBottomSheet.isSheetOpen()
                 && mBottomSheet.getTargetSheetState() != BottomSheet.SHEET_STATE_PEEK
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+                && ChromeFeatureList.isInitialized()
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_CLEAR_URL_ON_OPEN);
     }
 }

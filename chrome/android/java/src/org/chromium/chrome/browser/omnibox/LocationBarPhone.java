@@ -345,7 +345,7 @@ public class LocationBarPhone extends LocationBarLayout {
             public void onSheetOpened(@StateChangeReason int reason) {
                 if (reason == StateChangeReason.OMNIBOX_FOCUS) mCloseSheetOnBackButton = true;
 
-                updateGoogleG();
+                if (mNativeInitialized) updateGoogleG();
             }
 
             @Override
@@ -362,6 +362,11 @@ public class LocationBarPhone extends LocationBarLayout {
                 if (type != BottomSheetContentController.TYPE_AUXILIARY_CONTENT) {
                     mCloseSheetOnBackButton = false;
                 }
+            }
+
+            @Override
+            public void onNativeLibraryReady() {
+                updateGoogleG();
             }
         });
 

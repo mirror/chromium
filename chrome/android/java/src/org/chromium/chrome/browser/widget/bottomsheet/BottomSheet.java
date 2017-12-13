@@ -270,6 +270,9 @@ public class BottomSheet
     /** The in-product help bubble controller used to display various help bubbles. */
     private ChromeHomeIphBubbleController mIPHBubbleController;
 
+    /** Whether native library is ready. */
+    private boolean mNativeInitialized;
+
     /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
      * Home.
@@ -391,8 +394,9 @@ public class BottomSheet
             startX = mVisibleViewportRect.left + (mContainerWidth - allowedSwipeWidth) / 2;
             endX = startX + allowedSwipeWidth;
         } else if (ChromeSwitches.CHROME_HOME_SWIPE_LOGIC_VELOCITY.equals(logicType)
-                || ChromeFeatureList.isEnabled(
-                           ChromeFeatureList.CHROME_HOME_SWIPE_VELOCITY_FEATURE)) {
+                || (ChromeFeatureList.isInitialized()
+                           && ChromeFeatureList.isEnabled(
+                                      ChromeFeatureList.CHROME_HOME_SWIPE_VELOCITY_FEATURE))) {
             if (mVelocityLogicBlockSwipe) return false;
 
             double dpPerMs = scrollDistanceDp / (double) timeDeltaMs;
@@ -445,12 +449,14 @@ public class BottomSheet
         addObserver(mMetrics);
 
         mGestureDetector = new BottomSheetSwipeDetector(context, this);
+        mIsTouchEnabled = true;
 
         BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                 .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
                     @Override
                     public void onSuccess(boolean alreadyStarted) {
-                        mIsTouchEnabled = true;
+                        mNativeInitialized = true;
+                        for (BottomSheetObserver o : mObservers) o.onNativeLibraryReady();
                     }
 
                     @Override
@@ -1061,6 +1067,13 @@ public class BottomSheet
                 || SysUtils.isLowEndDevice()) {
             mContentSwapAnimatorSet.end();
         }
+    }
+
+    /**
+     * @return Whether native library is ready.
+     */
+    public boolean isNativeLibraryReady() {
+        return mNativeInitialized;
     }
 
     /**

@@ -71,6 +71,7 @@ public class ChromeHomeIphBubbleController {
             @Override
             public void onSheetOpened(@StateChangeReason int reason) {
                 dismissHelpBubble();
+                if (!mBottomSheet.isNativeLibraryReady()) return;
 
                 Tracker tracker = TrackerFactory.getTrackerForProfile(Profile.getLastUsedProfile());
                 tracker.notifyEvent(EventConstants.BOTTOM_SHEET_EXPANDED);
@@ -110,6 +111,7 @@ public class ChromeHomeIphBubbleController {
      * This method must be called after the toolbar has had at least one layout pass.
      */
     public void showColdStartHelpBubble() {
+        if (!mBottomSheet.isNativeLibraryReady()) return;
         // If FRE is not complete, the FRE screen is likely covering ChromeTabbedActivity so the
         // help bubble should not be shown.
         if (!FirstRunStatus.getFirstRunFlowComplete()) return;
