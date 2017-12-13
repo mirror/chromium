@@ -397,6 +397,8 @@ class CONTENT_EXPORT BrowserPluginGuest : public GuestHost,
   void OnWillAttachComplete(WebContentsImpl* embedder_web_contents,
                             const BrowserPluginHostMsg_Attach_Params& params);
 
+  void OnWasEvicted(int browser_plugin_instance_id);
+
   // Returns identical message with current browser_plugin_instance_id() if
   // the input was created with browser_plugin::kInstanceIdNone, else it returns
   // the input message unmodified. If no current browser_plugin_instance_id()

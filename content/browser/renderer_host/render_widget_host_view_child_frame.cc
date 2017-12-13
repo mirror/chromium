@@ -1103,4 +1103,8 @@ bool RenderWidgetHostViewChildFrame::CanBecomeVisible() {
       ->CanBecomeVisible();
 }
 
+void RenderWidgetHostViewChildFrame::WasEvicted() {
+  host_->WasEvicted();
+}
+
 }  // namespace content
