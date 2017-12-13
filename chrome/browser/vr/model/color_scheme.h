@@ -50,6 +50,7 @@ struct ColorScheme {
 
   // These colors should be named generically, if possible, so that they can be
   // meaningfully reused by multiple elements.
+  float background_brightness;
   SkColor world_background;
   SkColor world_background_text;
   SkColor floor;
@@ -109,6 +110,7 @@ struct ColorScheme {
   SkColor omnibox_hint;
   SkColor omnibox_suggestion_content;
   SkColor omnibox_suggestion_description;
+  ButtonColors suggestion_button_colors;
 
   SkColor cursor;
 };

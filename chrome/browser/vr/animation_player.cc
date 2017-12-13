@@ -176,6 +176,10 @@ void AnimationPlayer::Tick(base::TimeTicks monotonic_time) {
   for (auto& animation : animations_) {
     cc::AnimationTicker::TickAnimation(monotonic_time, animation.get(),
                                        target_);
+    if (!animation->is_finished() && animation->IsFinishedAt(monotonic_time) &&
+        animation_completed_callback_) {
+      animation_completed_callback_.Run(animation->target_property_id());
+    }
   }
 
   // Remove finished animations.

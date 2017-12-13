@@ -14,6 +14,7 @@
       <include name="IDR_VR_SHELL_DDCONTROLLER_APP_PATCH" file="vr_shell\tex\ddcontroller_app.png" type="BINDATA" />
       <include name="IDR_VR_SHELL_DDCONTROLLER_TOUCHPAD_PATCH" file="vr_shell\tex\ddcontroller_touchpad.png" type="BINDATA" />
       <include name="IDR_VR_SHELL_DDCONTROLLER_SYSTEM_PATCH" file="vr_shell\tex\ddcontroller_system.png" type="BINDATA" />
+      <include name="IDR_VR_SHELL_STEREO_BACKGROUND" file="vr_shell\tex\background.jpg" type="BINDATA" />
     </includes>
   </release>
 </grit>
