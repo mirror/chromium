@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "5b1bf07c_30a4320f",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-13T23:29:38Z",
+      "side": 1,
+      "message": "Sadly we don\u0027t have a WebContents when we resume a download after a process restart.  We\u0027re now considering just persisting the source id and reusing it across restarts, that way we could pass the source id in as a parameter to the download system and use GetSourceIdForWebContentsDocument to generate it when we start the download itself.  wdyt?\n\nThere are also some cases where we don\u0027t actually have a WebContents when we start a download, so we may have to generate one for something like chrome://download-internals or something instead.  jming@ has a thread going on about that question right now though.",
+      "parentUuid": "a1350b82_a8095dd7",
+      "range": {
+        "startLine": 422,
+        "startChar": 40,
+        "endLine": 422,
+        "endChar": 43
+      },
+      "revId": "f3488ce17d261330273754d46739f88951e1a2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e431d58_319d9dd2",
         "filename": "content/browser/download/download_ukm.cc",
         "patchSetId": 13
