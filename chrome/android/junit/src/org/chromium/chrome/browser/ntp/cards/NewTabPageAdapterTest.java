@@ -98,8 +98,7 @@ import java.util.List;
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 @DisableFeatures({ChromeFeatureList.NTP_CONDENSED_LAYOUT, ChromeFeatureList.CHROME_HOME,
-        ChromeFeatureList.CONTENT_SUGGESTIONS_SCROLL_TO_LOAD,
-        ChromeFeatureList.ANDROID_SIGNIN_PROMOS})
+        ChromeFeatureList.CONTENT_SUGGESTIONS_SCROLL_TO_LOAD})
 public class NewTabPageAdapterTest {
     @Rule
     public DisableHistogramsRule mDisableHistogramsRule = new DisableHistogramsRule();
