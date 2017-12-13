@@ -164,6 +164,30 @@
     },
     {
       "key": {
+        "uuid": "72b38a04_22dcc3d5",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-12-13T23:35:38Z",
+      "side": 1,
+      "message": "Actually, beverloo@ also mentioned we could implement a move constructor and using base::Optional should be ok.  That works for me as well :).",
+      "parentUuid": "e572c657_b8c8a1a2",
+      "range": {
+        "startLine": 129,
+        "startChar": 50,
+        "endLine": 129,
+        "endChar": 58
+      },
+      "revId": "01ab313537ebe27da41897f04bd414c9218ae292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69ceaf73_6f1d5160",
         "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
         "patchSetId": 10
