@@ -204,6 +204,24 @@
       "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8aab355_14214fed",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T02:25:29Z",
+      "side": 1,
+      "message": "Checks out on Mac too. I\u0027m guessing because this is PrintPagesNative(), \"Save as PDF\" is never a possibility, so the page size has to come from a printer. Therefore it is uniform between pages. Maybe we can work out some way of simplifying this another day.",
+      "parentUuid": "a89c2790_f820d69b",
+      "revId": "e3c117c9a32423001d9ede8eed93a2b2ffc8a473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
