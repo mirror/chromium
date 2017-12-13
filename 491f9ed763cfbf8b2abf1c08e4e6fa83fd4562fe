@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "036533c3_34113d08",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T00:04:09Z",
+      "side": 1,
+      "message": "It\u0027s intentionally generic. I don\u0027t plan on us being the only consumer of this, and I don\u0027t believe it\u0027s been taken. FWIW, this will use the same field trial as the only way to detect Dogfood.",
+      "parentUuid": "9c450f1d_0635a5eb",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0db624c9_7f21d657",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50d8fac5_7872284b",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0db624c9_7f21d657",
+      "range": {
+        "startLine": 19,
+        "startChar": 27,
+        "endLine": 19,
+        "endChar": 35
+      },
+      "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "26f825a4_23911a2a",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82bf6c74_4468292e",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 11
+      },
+      "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd1d210a_43a0a42b",
         "filename": "components/data_reduction_proxy/proto/client_config.proto",
         "patchSetId": 3
@@ -115,6 +187,30 @@
       "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32873e0_a09eb9d1",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T00:04:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd1d210a_43a0a42b",
+      "range": {
+        "startLine": 139,
+        "startChar": 24,
+        "endLine": 139,
+        "endChar": 38
+      },
+      "revId": "491f9ed763cfbf8b2abf1c08e4e6fa83fd4562fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
