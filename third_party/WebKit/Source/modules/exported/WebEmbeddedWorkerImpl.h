@@ -39,6 +39,7 @@
 #include "modules/serviceworkers/ServiceWorkerContentSettingsProxy.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/heap/Handle.h"
+#include "public/platform/WebVector.h"
 #include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebEmbeddedWorker.h"
 #include "public/web/WebEmbeddedWorkerStartData.h"
@@ -49,6 +50,7 @@ namespace blink {
 
 class ContentSecurityPolicy;
 class ServiceWorkerInstalledScriptsManager;
+class WebURL;
 class WorkerInspectorProxy;
 class WorkerScriptLoader;
 class WorkerThread;
@@ -61,7 +63,9 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
  public:
   WebEmbeddedWorkerImpl(
       std::unique_ptr<WebServiceWorkerContextClient>,
-      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
+      WebVector<WebURL> installed_scripts_urls,
+      mojo::ScopedMessagePipeHandle installed_scripts_manager_request,
+      mojo::ScopedMessagePipeHandle installed_scripts_manager_host_ptr,
       std::unique_ptr<ServiceWorkerContentSettingsProxy>,
       service_manager::mojom::blink::InterfaceProviderPtrInfo);
   ~WebEmbeddedWorkerImpl() override;
@@ -92,6 +96,15 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   std::unique_ptr<WebApplicationCacheHost> CreateApplicationCacheHost(
       WebApplicationCacheHostClient*) override;
   void OnShadowPageInitialized() override;
+
+  static std::unique_ptr<WebEmbeddedWorkerImpl> CreateForTesting(
+      std::unique_ptr<WebServiceWorkerContextClient>,
+      std::unique_ptr<ServiceWorkerInstalledScriptsManager>,
+      mojo::ScopedMessagePipeHandle,
+      /* mojom::blink::WorkerContentSettingsProxyPtrInfo */
+      mojo::ScopedMessagePipeHandle
+      /* service_manager::mojom::blink::InterfaceProviderPtrInfo */
+      );
 
  private:
   // WebDevToolsAgentClient overrides.
