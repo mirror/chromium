@@ -491,6 +491,7 @@ namespace developerPrivate {
   callback RequestFileSourceCallback =
       void (RequestFileSourceResponse response);
   callback LoadErrorCallback = void (optional LoadError error);
+  callback DragInstallInProgressCallback = void (DOMString loadGuid);
 
   interface Functions {
     // Runs auto update for extensions and apps immediately.
@@ -551,6 +552,15 @@ namespace developerPrivate {
     // |options| : Additional configuration parameters.
     static void loadUnpacked(optional LoadUnpackedOptions options,
                              optional LoadErrorCallback callback);
+
+    // Notifies the browser that a user began a drag in order to install an
+    // extension.
+    // |callback|: A callback invoked with a GUID used for loading the folder
+    //     from the drop. The callback is invoked as soon as a GUID is ready,
+    //     and the GUID should then be supplied to loadUnpacked() when/if the
+    //     item is dropped.
+    static void notifyDragInstallInProgress(
+        DragInstallInProgressCallback callback);
 
     // Loads an extension / app.
     // |directory| : The directory to load the extension from.
