@@ -16,6 +16,42 @@
       "revId": "23c796836002b6b90af94a304251ac8a118150aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491d7db9_128221fa",
+        "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-13T00:37:28Z",
+      "side": 1,
+      "message": "Remember how VR reparents all tabs into a fake DisplayAndroid that changes the dip scale and size?\n\nThis code isn\u0027t equivalent because by using getNonMultiDisplay it\u0027s pulling the real default DisplayAndroid for the activity. Is this the part that you\u0027re concerned about? getNonMultiDisplay not returning the fake display when in VR?\n\nMaybe we need to think of some other way of sizing the web contents that doesn\u0027t involve a virtual display? Maybe we can decouple the web contents dpr/size from the display altogether, but then we would have to do the correct conversion at all of the boundaries, and things like content offsets would get even more complicated than they already are.",
+      "parentUuid": "b8a21655_b74e7918",
+      "revId": "23c796836002b6b90af94a304251ac8a118150aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac6feab_fbb7394a",
+        "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-13T00:37:28Z",
+      "side": 1,
+      "message": "Remember how VR reparents all tabs into a fake DisplayAndroid that changes the dip scale and size?\n\nThis code isn\u0027t equivalent because by using getNonMultiDisplay it\u0027s pulling the real default DisplayAndroid for the activity. Is this the part that you\u0027re concerned about? getNonMultiDisplay not returning the fake display when in VR?\n\nMaybe we need to think of some other way of sizing the web contents that doesn\u0027t involve a virtual display? Maybe we can decouple the web contents dpr/size from the display altogether, but then we would have to do the correct conversion at all of the boundaries, and things like content offsets would get even more complicated than they already are.",
+      "parentUuid": "b8a21655_b74e7918",
+      "revId": "23c796836002b6b90af94a304251ac8a118150aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
