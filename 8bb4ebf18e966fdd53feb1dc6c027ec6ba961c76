@@ -355,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "1b2e4146_308c6459",
+        "filename": "chrome/browser/ui/app_list/app_list_syncable_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-13T18:04:42Z",
+      "side": 1,
+      "message": "Added comments to remove this in the future.",
+      "parentUuid": "ec8da359_210c2fea",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 18
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50aefa81_3c211c0a",
         "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
         "patchSetId": 1
@@ -769,6 +793,30 @@
       "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7872c0_627b3187",
+        "filename": "chrome/browser/ui/app_list/chrome_app_list_model_updater.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-12-13T18:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc86a5e9_cb01943e",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "8bb4ebf18e966fdd53feb1dc6c027ec6ba961c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
