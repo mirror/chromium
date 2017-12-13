@@ -12,6 +12,9 @@ namespace blink {
 enum class TaskType : unsigned {
   // Speced tasks and related internal tasks should be posted to one of
   // the following task runners. These task runners may be throttled.
+  //
+  // The values starting with 'Internal' are indicated for internal usages that
+  // are not related to the spec.
 
   // 0 is reserved to represent that TaskType is not specified.
 
@@ -108,6 +111,9 @@ enum class TaskType : unsigned {
   // The task runner may be throttled.
   kMiscPlatformAPI = 22,
 
+  // DEPRECATED: Use appropriate kInternal* task type for internal usages if
+  // possible.
+  //
   // Other internal tasks that cannot fit any of the above task runners
   // can be posted here, but the usage is not encouraged. The task runner
   // may be throttled.
@@ -117,11 +123,17 @@ enum class TaskType : unsigned {
   kUnspecedTimer = 23,
   kUnspecedLoading = 24,
 
+  // DEPRECATED: Use appropriate kInternal* task type for internal usages if
+  // possible.
+  //
   // Tasks that must not be throttled should be posted here, but the usage
   // should be very limited.
   kUnthrottled = 25,
 
-  kCount = 26,
+  // Tasks for tests or mock objects.
+  kInternalTest = 26,
+
+  kCount = 27,
 };
 
 }  // namespace blink
