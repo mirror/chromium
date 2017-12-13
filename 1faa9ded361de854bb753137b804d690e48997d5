@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e0ad7e5_08803f04",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_phase_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-13T15:36:03Z",
+      "side": 1,
+      "message": "This will only be valid in some situations, right?}\nShould we DCHECK that we\u0027re in an appropriate state?",
+      "range": {
+        "startLine": 155,
+        "startChar": 50,
+        "endLine": 155,
+        "endChar": 0
+      },
+      "revId": "1faa9ded361de854bb753137b804d690e48997d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af3bbec_cc6a17db",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_phase_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-13T15:36:03Z",
+      "side": 1,
+      "message": "I think timer_timeout -\u003e timeout is a bit clearer.",
+      "range": {
+        "startLine": 59,
+        "startChar": 36,
+        "endLine": 59,
+        "endChar": 49
+      },
+      "revId": "1faa9ded361de854bb753137b804d690e48997d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec50094_64e1f8b6",
+        "filename": "content/browser/renderer_host/input/mouse_wheel_phase_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-13T15:36:03Z",
+      "side": 1,
+      "message": "This will only be valid in some situations, right?\nMaybe add a comment indicating when this is valid.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 39
+      },
+      "revId": "1faa9ded361de854bb753137b804d690e48997d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa380c2_fe8f45fe",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1999,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-12-13T15:36:03Z",
+      "side": 1,
+      "message": "Can we also test the case where we\u0027re within the slop region?",
+      "range": {
+        "startLine": 1999,
+        "startChar": 14,
+        "endLine": 1999,
+        "endChar": 59
+      },
+      "revId": "1faa9ded361de854bb753137b804d690e48997d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
