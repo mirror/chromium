@@ -18,10 +18,6 @@
 #include "ui/ozone/platform/wayland/wayland_connection.h"
 #include "ui/ozone/platform/wayland/wayland_window.h"
 
-#if BUILDFLAG(USE_XKBCOMMON)
-#include "ui/ozone/platform/wayland/wayland_xkb_keyboard_layout_engine.h"
-#endif
-
 namespace ui {
 
 WaylandKeyboard::WaylandKeyboard(wl_keyboard* keyboard,
