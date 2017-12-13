@@ -29,7 +29,11 @@
 #include "content/public/test/test_utils.h"
 
 #if defined(OS_CHROMEOS)
+#include "ash/public/cpp/window_pin_type.h"
+#include "ash/public/cpp/window_properties.h"
+#include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "chromeos/chromeos_switches.h"
+#include "ui/aura/window.h"
 #endif
 
 class BrowserCommandControllerBrowserTest: public InProcessBrowserTest {
@@ -105,8 +109,7 @@ IN_PROC_BROWSER_TEST_F(BrowserCommandControllerBrowserTest,
   // on to a CallbackList::Subscription forever.
   TemplateURLServiceFactory::GetForProfile(guest)->set_loaded(true);
 
-  const CommandUpdater* command_updater =
-      browser->command_controller()->command_updater();
+  const CommandUpdater* command_updater = browser->command_controller();
   #if defined(OS_CHROMEOS)
     // Chrome OS uses system tray menu to handle multi-profiles.
     EXPECT_FALSE(command_updater->IsCommandEnabled(IDC_SHOW_AVATAR_MENU));
@@ -114,3 +117,19 @@ IN_PROC_BROWSER_TEST_F(BrowserCommandControllerBrowserTest,
     EXPECT_TRUE(command_updater->IsCommandEnabled(IDC_SHOW_AVATAR_MENU));
   #endif
 }
+
+#if defined(OS_CHROMEOS)
+IN_PROC_BROWSER_TEST_F(BrowserCommandControllerBrowserTest, LockedFullscreen) {
+  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_EXIT));
+  // Set locked fullscreen mode.
+  browser()->window()->GetNativeWindow()->SetProperty(
+      ash::kWindowPinTypeKey, ash::mojom::WindowPinType::TRUSTED_PINNED);
+  // Update command_controller state.
+  browser()->command_controller()->LockedFullscreenStateChanged();
+  EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_EXIT));
+
+  // Verify some whitelisted commands.
+  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_COPY));
+  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_PASTE));
+}
+#endif

@@ -42,8 +42,10 @@
 #if defined(OS_CHROMEOS)
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/extensions/window_controller.h"
 #include "chrome/browser/extensions/window_controller_list.h"
+#include "chrome/browser/ui/browser_command_controller.h"
 #include "ui/aura/window.h"
 #endif
 
@@ -442,6 +444,23 @@ IN_PROC_BROWSER_TEST_F(WindowOpenApiTest, RemoveLockedFullscreenFromWindow) {
 
   // Make sure the current window is removed from locked-fullscreen state.
   EXPECT_EQ(ash::mojom::WindowPinType::NONE, GetCurrentWindowPinType());
+}
+
+// Make sure that commands disabling code works in locked fullscreen mode.
+IN_PROC_BROWSER_TEST_F(WindowOpenApiTest, VerifyCommandsInLockedFullscreen) {
+  // IDC_EXIT is always enabled in regular mode so it's a perfect candidate for
+  // testing.
+  EXPECT_TRUE(browser()->command_controller()->IsCommandEnabled(IDC_EXIT));
+  ASSERT_TRUE(RunExtensionTestWithArg("locked_fullscreen/with_permission",
+                                      "updateWindowToLockedFullscreen"))
+      << message_;
+
+  // IDC_EXIT is not enabled in locked fullscreen.
+  EXPECT_FALSE(browser()->command_controller()->IsCommandEnabled(IDC_EXIT));
+
+  // Verify some whitelisted commands.
+  EXPECT_TRUE(browser()->command_controller()->IsCommandEnabled(IDC_FIND));
+  EXPECT_TRUE(browser()->command_controller()->IsCommandEnabled(IDC_ZOOM_PLUS));
 }
 
 IN_PROC_BROWSER_TEST_F(WindowOpenApiTest,
