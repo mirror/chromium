@@ -1951,9 +1951,13 @@ void NavigationControllerImpl::NavigateToPendingEntry(ReloadType reload_type) {
   }
 
   // The last navigation is the last pending navigation which hasn't been
-  // committed yet, or the last committed navigation.
+  // committed yet (if it was browser-initiated), or the last committed
+  // navigation. Non-committed renderer-initiated should be excluded because
+  // their URLs would not be shown in the omnibox.
   NavigationEntryImpl* last_navigation =
-      last_pending_entry_ ? last_pending_entry_ : GetLastCommittedEntry();
+      last_pending_entry_ && !last_pending_entry_->is_renderer_initiated()
+          ? last_pending_entry_
+          : GetLastCommittedEntry();
 
   // Convert Enter-in-omnibox to a reload. This is what Blink does in
   // FrameLoader, but we want to handle it here so that if the navigation is
