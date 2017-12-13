@@ -1,0 +1,23 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+interface PeerConnectionTrackerHost{
+  // TODO(vm.arjun): Migrate rest of the messages,
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=792801
+
+  // Remove peer connection for the id
+  RemovePeerConnection(int32 lid);
+
+  // Update peer connection
+  UpdatePeerConnection(int32 lid, string type, string value);
+
+  // Initiates GetUserMedia with constrains
+  GetUserMedia(string origin, bool audio, bool video, string
+  audio_constraints, string video_constraints);
+
+  //Logs WebRtc log for the connection id
+  WebRtcEventLogWrite(int32 lid, string output);
+};

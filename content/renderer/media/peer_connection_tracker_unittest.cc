@@ -5,7 +5,9 @@
 #include "content/renderer/media/peer_connection_tracker.h"
 
 #include "base/message_loop/message_loop.h"
+#include "content/common/media/peer_connection_tracker.mojom.h"
 #include "content/common/media/peer_connection_tracker_messages.h"
+//#include "content/public/browser/browser_associated_interface.h"
 #include "content/public/test/mock_render_thread.h"
 #include "content/renderer/media/mock_web_rtc_peer_connection_handler_client.h"
 #include "content/renderer/media/rtc_peer_connection_handler.h"
@@ -20,11 +22,26 @@ using ::testing::_;
 
 namespace content {
 
-namespace {
+class MockPeerConnectionTrackerHostHost
+    : public mojom::PeerConnectionTrackerHost {
+ public:
+  MockPeerConnectionTrackerHostHost() {}
+  MOCK_METHOD3(UpdatePeerConnection,
+               void(int, const std::string&, const std::string&));
+  MOCK_METHOD1(RemovePeerConnection, void(int));
+  MOCK_METHOD5(GetUserMedia,
+               void(const std::string&,
+                    bool,
+                    bool,
+                    const std::string&,
+                    const std::string&));
+  MOCK_METHOD2(WebRtcEventLogWrite, void(int, const std::string&));
+};
 
+namespace {
 class MockSendTargetThread : public MockRenderThread {
  public:
-  MOCK_METHOD3(OnUpdatePeerConnection, void(int, std::string, std::string));
+  // MOCK_METHOD3(OnUpdatePeerConnection, void(int, std::string, std::string));
   MOCK_METHOD1(OnAddPeerConnection, void(PeerConnectionInfo));
 
  private:
@@ -34,8 +51,6 @@ class MockSendTargetThread : public MockRenderThread {
 bool MockSendTargetThread::OnMessageReceived(const IPC::Message& msg) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(MockSendTargetThread, msg)
-    IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_UpdatePeerConnection,
-                        OnUpdatePeerConnection)
     IPC_MESSAGE_HANDLER(PeerConnectionTrackerHost_AddPeerConnection,
                         OnAddPeerConnection)
     IPC_MESSAGE_UNHANDLED(handled = false)
@@ -69,6 +84,9 @@ TEST_F(PeerConnectionTrackerTest, CreatingObject) {
 
 TEST_F(PeerConnectionTrackerTest, TrackCreateOffer) {
   PeerConnectionTracker tracker;
+
+  MockPeerConnectionTrackerHostHost mock_peer_connection_tracker_host;
+  tracker.SetPeerConnectionTrackerHost(&mock_peer_connection_tracker_host);
   // Note: blink::WebRTCOfferOptions is not mockable. So we can't write
   // tests for anything but a null options parameter.
   blink::WebRTCOfferOptions options(0, 0, false, false);
@@ -81,11 +99,6 @@ TEST_F(PeerConnectionTrackerTest, TrackCreateOffer) {
   EXPECT_CALL(target_thread, OnAddPeerConnection(_));
   tracker.RegisterPeerConnection(&pc_handler, config, constraints, nullptr);
   // Back to the test.
-  EXPECT_CALL(target_thread,
-              OnUpdatePeerConnection(
-                  _, "createOffer",
-                  "options: {offerToReceiveVideo: 0, offerToReceiveAudio: 0, "
-                  "voiceActivityDetection: false, iceRestart: false}"));
   tracker.TrackCreateOffer(&pc_handler, options);
 }
 
