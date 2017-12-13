@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62ab9446_58783bce",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:32:18Z",
+      "side": 1,
+      "message": "You could add some context to the comment about _why_ we have this contract (i.e. why we want to force finalization when these change). FWIW I\u0027ve started taking notes from our conversations here.\n\nhttps://docs.google.com/document/d/1Cnx5hQN20S6hSgKrdHp8S-jD6c2Clfgmc2sxhfny38g/edit?usp\u003dsharing",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 75
+      },
+      "revId": "f9fc1f2a0cb85f29e57d1f26e5dd2ad4f2ba1049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7705ede9_0f129ed3",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:32:18Z",
+      "side": 1,
+      "message": "Given that we no longer wait for an *All metric above, I expect in the case of fallback-on-first-frame, we will see ukm reports with 0 watch time and the initial (abandoned) decoder selection. perhaps thats what you want, but just checking.",
+      "range": {
+        "startLine": 328,
+        "startChar": 10,
+        "endLine": 328,
+        "endChar": 33
+      },
+      "revId": "f9fc1f2a0cb85f29e57d1f26e5dd2ad4f2ba1049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b042ccd9_ec30db3c",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:32:18Z",
+      "side": 1,
+      "message": "You could mention that the unknown cases include cast/remoting/hls",
+      "range": {
+        "startLine": 855,
+        "startChar": 63,
+        "endLine": 855,
+        "endChar": 73
+      },
+      "revId": "f9fc1f2a0cb85f29e57d1f26e5dd2ad4f2ba1049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
