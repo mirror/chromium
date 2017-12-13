@@ -170,11 +170,12 @@ Polymer({
     },
   },
 
-  observers:
-      ['updateSettingsAvailable_(' +
-       'destination.id, destination.capabilities, ' +
-       'documentInfo.isModifiable, documentInfo.hasCssMediaStyles,' +
-       'documentInfo.hasSelection)'],
+  observers: [
+    'updateSettingsAvailable_(' +
+        'destination.id, destination.capabilities, ' +
+        'documentInfo.isModifiable, documentInfo.hasCssMediaStyles,' +
+        'documentInfo.hasSelection)',
+  ],
   /**
    * @private {!Array<string>} List of capability types considered color.
    * @const
