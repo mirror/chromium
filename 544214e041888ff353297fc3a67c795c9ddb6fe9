@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "296e3d62_24f08545",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T17:38:49Z",
+      "side": 1,
+      "message": "FWIW that sounds like exactly what we debugged yesterday: a utility process (probably started for a service) dying immediately",
+      "parentUuid": "c9294c73_b9b08bd5",
+      "revId": "544214e041888ff353297fc3a67c795c9ddb6fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af9621e0_366dc869",
         "filename": "chrome/utility/mus_service_factory.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-13T17:25:03Z",
       "side": 1,
       "message": "Splitting this out and renaming the file might be bogus. AFAICT there\u0027s an entirely different code path for starting the UI service under --mus, see https://cs.chromium.org/chromium/src/content/browser/service_manager/service_manager_context.cc?q\u003dservice_manager_context.cc\u0026sq\u003dpackage:chromium\u0026l\u003d281\n\nLemme know what you think.",
+      "revId": "544214e041888ff353297fc3a67c795c9ddb6fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7ef9be_ec3f5032",
+        "filename": "chrome/utility/mus_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T17:38:49Z",
+      "side": 1,
+      "message": "Seems reasonable to me as you have it.",
+      "parentUuid": "af9621e0_366dc869",
       "revId": "544214e041888ff353297fc3a67c795c9ddb6fe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
