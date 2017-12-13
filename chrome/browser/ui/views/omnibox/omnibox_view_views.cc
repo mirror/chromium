@@ -762,6 +762,15 @@ void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   }
   node_data->html_attributes.push_back(std::make_pair("type", "url"));
 
+  // The text field controls the popup, which has a selection.
+  // A screen reader can choose to announce value changes on this field or
+  // the selection changes in the popup.
+  int32_t popup_view_id = popup_view_->GetAccessibilityId();
+  if (popup_view_id > 0) {
+    std::vector<int32_t> controlled_ids{popup_view_id};
+    node_data->AddIntListAttribute(ui::AX_ATTR_CONTROLS_IDS, controlled_ids);
+  }
+
   base::string16::size_type entry_start;
   base::string16::size_type entry_end;
   // Selection information is saved separately when focus is moved off the

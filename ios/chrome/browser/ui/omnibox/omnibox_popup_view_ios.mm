@@ -74,6 +74,10 @@ OmniboxPopupViewIOS::~OmniboxPopupViewIOS() {
   model_.reset();
 }
 
+int32_t OmniboxPopupViewIOS::GetAccessibilityId() {
+  return -1;  // No accessibility id as accessibility API is not supported.
+}
+
 // Set left image to globe or magnifying glass depending on which autocomplete
 // option comes first.
 void OmniboxPopupViewIOS::UpdateEditViewIcon() {
