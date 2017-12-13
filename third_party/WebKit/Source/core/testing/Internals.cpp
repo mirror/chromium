@@ -266,12 +266,6 @@ void Internals::ResetToConsistentState(Page* page) {
       ->LayoutViewportScrollableArea()
       ->SetScrollOffset(ScrollOffset(), kProgrammaticScroll);
   OverrideUserPreferredLanguagesForTesting(Vector<AtomicString>());
-  if (!page->DeprecatedLocalMainFrame()
-           ->GetSpellChecker()
-           .IsSpellCheckingEnabled())
-    page->DeprecatedLocalMainFrame()
-        ->GetSpellChecker()
-        .ToggleSpellCheckingEnabled();
   if (page->DeprecatedLocalMainFrame()->GetEditor().IsOverwriteModeEnabled())
     page->DeprecatedLocalMainFrame()->GetEditor().ToggleOverwriteModeEnabled();
 
@@ -2151,19 +2145,6 @@ bool Internals::hasSpellingMarker(Document* document,
   document->UpdateStyleAndLayoutIgnorePendingStylesheets();
   return document->GetFrame()->GetSpellChecker().SelectionStartHasMarkerFor(
       DocumentMarker::kSpelling, from, length);
-}
-
-void Internals::setSpellCheckingEnabled(bool enabled,
-                                        ExceptionState& exception_state) {
-  if (!GetFrame()) {
-    exception_state.ThrowDOMException(
-        kInvalidAccessError,
-        "No frame can be obtained from the provided document.");
-    return;
-  }
-
-  if (enabled != GetFrame()->GetSpellChecker().IsSpellCheckingEnabled())
-    GetFrame()->GetSpellChecker().ToggleSpellCheckingEnabled();
 }
 
 void Internals::replaceMisspelled(Document* document,
