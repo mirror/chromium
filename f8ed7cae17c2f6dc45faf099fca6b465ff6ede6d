@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc11d795_f969ef1f",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T20:53:28Z",
+      "side": 1,
+      "message": "I\u0027m still slightly confused, is it possible for the group to contain 2+ apps with different names? How does the shelf item\u0027s title/tooltip decide what name to show? (ie. if the first app in the group is named \"foo\" and the second app in the group is named \"bar\", does the shelf item for the group show a title/tooltip that says \"foo\", \"bar\", or something else?). It\u0027s a bit discouraging that I can\u0027t read through this test to discern the answer.\n\nI think maybe my use of \u0027app\u0027 doesn\u0027t match Android/Arc\u0027s definition of \u0027app\u0027 and really, a group only runs multiple windows/tasks/activities/whatever from the same \u0027app\u0027 (so the windows might have different titles, but the app title used for the shelf item\u0027s title/tooltip is always the same for all items in the group). This is similar to the behavior for titles/tooltips of the browser shortcut item (or Chrome app items) when there are multiple browser windows (or Chrome app windows) listed in the application list menu. \n\nThat makes me worry that \u0027group\u0027 just means \u0027app\u0027 in the sense that I\u0027m thinking about and we\u0027re building a redundant grouping mechanism on the shelf when we should be leveraging the existing group-windows-of-the-same-app behavior. It\u0027s possible that ARC\u0027s Launcher[Item]Controller does enough differently from Chrome apps and browser windows already that we\u0027re past the point of being able to share code in the way I\u0027d imagine... :-/",
+      "revId": "f8ed7cae17c2f6dc45faf099fca6b465ff6ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
