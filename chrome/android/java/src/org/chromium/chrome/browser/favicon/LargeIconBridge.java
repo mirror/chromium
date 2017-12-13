@@ -12,6 +12,8 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.profiles.Profile;
 
+import java.util.Set;
+
 /**
  * A Java API for using the C++ LargeIconService.
  *
@@ -37,6 +39,10 @@ public class LargeIconBridge {
             isFallbackColorDefault = newIsFallbackColorDefault;
             iconType = newIconType;
         }
+    }
+
+    public Set<String> entries() {
+        return mFaviconCache.snapshot().keySet();
     }
 
     /**
@@ -148,6 +154,13 @@ public class LargeIconBridge {
             return nativeGetLargeIconForURL(mNativeLargeIconBridge, mProfile, pageUrl,
                     desiredSizePx, callbackWrapper);
         }
+    }
+
+    /**
+     * Clears the favicon cache.
+     */
+    public void clearFavicon(String url) {
+        mFaviconCache.remove(url);
     }
 
     private static native long nativeInit();
