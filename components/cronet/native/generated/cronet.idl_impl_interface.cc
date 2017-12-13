@@ -8,6 +8,98 @@
 
 #include "base/logging.h"
 
+// C functions of Cronet_Buffer that forward calls to C++ implementation.
+void Cronet_Buffer_Destroy(Cronet_BufferPtr self) {
+  DCHECK(self);
+  return delete self;
+}
+
+void Cronet_Buffer_SetContext(Cronet_BufferPtr self,
+                              Cronet_BufferContext context) {
+  DCHECK(self);
+  return self->SetContext(context);
+}
+
+Cronet_BufferContext Cronet_Buffer_GetContext(Cronet_BufferPtr self) {
+  DCHECK(self);
+  return self->GetContext();
+}
+
+void Cronet_Buffer_InitWithDataAndCallback(Cronet_BufferPtr self,
+                                           RawDataPtr data,
+                                           uint64_t size,
+                                           Cronet_BufferCallbackPtr callback) {
+  DCHECK(self);
+  self->InitWithDataAndCallback(data, size, callback);
+}
+
+void Cronet_Buffer_InitWithAlloc(Cronet_BufferPtr self, uint64_t size) {
+  DCHECK(self);
+  self->InitWithAlloc(size);
+}
+
+uint64_t Cronet_Buffer_GetSize(Cronet_BufferPtr self) {
+  DCHECK(self);
+  return self->GetSize();
+}
+
+RawDataPtr Cronet_Buffer_GetData(Cronet_BufferPtr self) {
+  DCHECK(self);
+  return self->GetData();
+}
+
+// Implementation of Cronet_Buffer that forwards calls to C functions
+// implemented by the app.
+class Cronet_BufferStub : public Cronet_Buffer {
+ public:
+  Cronet_BufferStub(
+      Cronet_Buffer_InitWithDataAndCallbackFunc InitWithDataAndCallbackFunc,
+      Cronet_Buffer_InitWithAllocFunc InitWithAllocFunc,
+      Cronet_Buffer_GetSizeFunc GetSizeFunc,
+      Cronet_Buffer_GetDataFunc GetDataFunc)
+      : InitWithDataAndCallbackFunc_(InitWithDataAndCallbackFunc),
+        InitWithAllocFunc_(InitWithAllocFunc),
+        GetSizeFunc_(GetSizeFunc),
+        GetDataFunc_(GetDataFunc) {}
+
+  ~Cronet_BufferStub() override {}
+
+  void SetContext(Cronet_BufferContext context) override { context_ = context; }
+
+  Cronet_BufferContext GetContext() override { return context_; }
+
+ protected:
+  void InitWithDataAndCallback(RawDataPtr data,
+                               uint64_t size,
+                               Cronet_BufferCallbackPtr callback) override {
+    InitWithDataAndCallbackFunc_(this, data, size, callback);
+  }
+
+  void InitWithAlloc(uint64_t size) override { InitWithAllocFunc_(this, size); }
+
+  uint64_t GetSize() override { return GetSizeFunc_(this); }
+
+  RawDataPtr GetData() override { return GetDataFunc_(this); }
+
+ private:
+  Cronet_BufferContext context_ = nullptr;
+  Cronet_Buffer_InitWithDataAndCallbackFunc InitWithDataAndCallbackFunc_;
+  Cronet_Buffer_InitWithAllocFunc InitWithAllocFunc_;
+  Cronet_Buffer_GetSizeFunc GetSizeFunc_;
+  Cronet_Buffer_GetDataFunc GetDataFunc_;
+
+  DISALLOW_COPY_AND_ASSIGN(Cronet_BufferStub);
+};
+
+Cronet_BufferPtr Cronet_Buffer_CreateStub(
+    Cronet_Buffer_InitWithDataAndCallbackFunc InitWithDataAndCallbackFunc,
+    Cronet_Buffer_InitWithAllocFunc InitWithAllocFunc,
+    Cronet_Buffer_GetSizeFunc GetSizeFunc,
+    Cronet_Buffer_GetDataFunc GetDataFunc) {
+  return new Cronet_BufferStub(InitWithDataAndCallbackFunc, InitWithAllocFunc,
+                               GetSizeFunc, GetDataFunc);
+}
+
 // C functions of Cronet_BufferCallback that forward calls to C++
 // implementation.
 void Cronet_BufferCallback_Destroy(Cronet_BufferCallbackPtr self) {
