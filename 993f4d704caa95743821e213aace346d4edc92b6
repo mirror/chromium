@@ -22,6 +22,30 @@
       "revId": "993f4d704caa95743821e213aace346d4edc92b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d910ca_2c77477e",
+        "filename": "base/memory/ref_counted_memory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-13T23:27:03Z",
+      "side": 1,
+      "message": "I\u0027m not particularly wedded to using it here but my thoughts are that it does no harm and offers the compiler a small opportunity for optimization. If a subclass appears the keyword can be removed.",
+      "parentUuid": "b440e455_fec3ac94",
+      "range": {
+        "startLine": 71,
+        "startChar": 34,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "993f4d704caa95743821e213aace346d4edc92b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
