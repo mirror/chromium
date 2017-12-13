@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7150f2b8_8b2f66cc",
+        "filename": "content/browser/appcache/appcache_update_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-12-13T19:22:42Z",
+      "side": 1,
+      "message": "Spacing before/after these namespace blocks seems inconsistent in this change. But I defer to clang-format if it applied the spacing.",
+      "revId": "d51e32d12a2cddf4a8ddebc54e47121244bc6841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
