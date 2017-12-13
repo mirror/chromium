@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3976534d_3a343fa2",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T23:04:25Z",
+      "side": 1,
+      "message": "It seems like:\n\n(a) We should handle this in BubbleIconView, since this isn\u0027t really specific to the star, except that I\u0027m not sure any of the other icons currently can be triggered by keyboard shortcuts -- but if they can this would hit them too\n(b) We should try to make this happen automatically when the bubble is opened?  BubbleIconView::IsBubbleShowing() has some concept of whether the bubble is open, so it seems reasonable that when the bubble is opened the class should automatically highlight.  I can think of a couple ways to do this:\n1. Ensure the icon is some kind of observer/listener that gets notified when the bubble opens (or have the bubble notify it explicitly when it opens)\n2. Instead of opening the bubble by asking the bubble to show, open it by asking the icon to show its bubble",
+      "revId": "2f89744b5d5135ac2c796e995485b9357a7a28be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "116fc920_b84bc100",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T23:04:25Z",
+      "side": 1,
+      "message": "Nit: Seems like SetHighlighted() or SetActive() or something might be better as this sounds like we\u0027re enabling highlighting, not forcing the highlight state on.",
+      "revId": "2f89744b5d5135ac2c796e995485b9357a7a28be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
