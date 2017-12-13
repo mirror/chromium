@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f500416b_d7e3d464",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3753,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-13T00:24:40Z",
+      "side": 1,
+      "message": "Good call, these comments aren\u0027t necessary at all anymore, since all of the base::UmaHistogram*-named functions behave this way.  (Thus the name change.)  Updated.",
+      "parentUuid": "f151f212_a2d3b318",
+      "range": {
+        "startLine": 3753,
+        "startChar": 24,
+        "endLine": 3753,
+        "endChar": 30
+      },
+      "revId": "2dc43c80c958bc6771feb9818b14371db9d3e800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a0f0292_a6c1013c",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c8afffb9_0a705f4e",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3768,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-13T00:24:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0f0292_a6c1013c",
+      "range": {
+        "startLine": 3768,
+        "startChar": 24,
+        "endLine": 3768,
+        "endChar": 30
+      },
+      "revId": "2dc43c80c958bc6771feb9818b14371db9d3e800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2102e318_30d9266b",
         "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "2dc43c80c958bc6771feb9818b14371db9d3e800",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0778da3c_9a0fbc2f",
+        "filename": "chrome/browser/chromeos/arc/arc_optin_uma.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-13T00:24:40Z",
+      "side": 1,
+      "message": "Whoops, \"git cl format\" experiment gone wrong.  Good catch!  Fixed.",
+      "parentUuid": "2102e318_30d9266b",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 45
+      },
+      "revId": "2dc43c80c958bc6771feb9818b14371db9d3e800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
