@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a7df10c_7137c1f6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-13T03:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b1360be_a9d4acaa",
+      "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "465bb181_c4fac694",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-13T01:37:50Z",
       "side": 1,
       "message": "Is there a difference between \"omit\" in line 72 and \"not include\" in line 80?",
+      "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcb75e7_93b9d5ca",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-13T03:49:31Z",
+      "side": 1,
+      "message": "Ah, good point. They mean the same thing. I replaced \"should omit\" and \"should not include\" to \"should not send\" because \"omit\" and \"include\" are confusing.",
+      "parentUuid": "465bb181_c4fac694",
       "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8ece1309_f4760ae5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-13T03:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c31764_f3465e8a",
+      "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e14acea5_11561b0e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials.py",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a7b9e4c7_35fb6385",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-13T03:49:31Z",
+      "side": 1,
+      "message": "\"include\" indicates an option on fetch() in credentials-tests.js, and \"*\" is typically specified for \"Access-Control-Allow-Origin\" in tests but not in this test because of the comment.\n\nHm... this comment doesn\u0027t make sense by itself. Removed.",
+      "parentUuid": "e14acea5_11561b0e",
+      "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd22e3af_07d46b50",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials.py",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-12-13T01:37:50Z",
       "side": 1,
       "message": "Do the response_headers make sense with 404? The original code only has them on 200.",
+      "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102444a0_a2b89ce3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-13T03:49:31Z",
+      "side": 1,
+      "message": "The header is required, but unfortunately it wasn\u0027t specified before this CL and test-timeout happened instead of a network error. I updated the CL description.",
+      "parentUuid": "dd22e3af_07d46b50",
       "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
