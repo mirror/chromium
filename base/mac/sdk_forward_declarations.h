@@ -254,6 +254,7 @@ BASE_EXPORT extern NSString* const CIDetectorTypeText;
 @interface NSTextField (SierraPointOneSDK)
 + (instancetype)labelWithAttributedString:
     (NSAttributedString*)attributedStringValue;
++ (instancetype)labelWithString:(NSString*)stringValue;
 @end
 
 #endif  // MAC_OS_X_VERSION_10_12_1

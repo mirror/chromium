@@ -1231,6 +1231,15 @@ void RenderWidget::UpdateTextInputStateInternal(bool show_virtual_keyboard,
     // show_virtual_keyboard.
     params.show_ime_if_needed = show_virtual_keyboard;
     params.reply_to_request = reply_to_request;
+
+    if (new_info.selection_end - new_info.selection_start > 0) {
+      params.text_for_suggestions = new_info.value.Utf8().substr(
+          new_info.selection_start, new_info.selection_end);
+    } else {
+      if (auto* controller = GetInputMethodController())
+        params.text_for_suggestions = controller->WordBeforeCaret().Utf8();
+    }
+
     Send(new ViewHostMsg_TextInputStateChanged(routing_id(), params));
 
     text_input_info_ = new_info;

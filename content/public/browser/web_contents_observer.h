@@ -484,6 +484,8 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) {}
 
+  virtual void OnTextSelectionChanged() {}
+
   // IPC::Listener implementation.
   // DEPRECATED: Use (i.e. override) the other overload instead:
   //     virtual bool OnMessageReceived(const IPC::Message& message,
