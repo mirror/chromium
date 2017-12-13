@@ -1,0 +1,17 @@
+[
+    "repository/javax_inject_javax_inject_1",
+    "repository/com_android_support_support-annotations_25_0_0",
+    "repository/com_google_errorprone_javac-shaded_9-dev-r4023-3",
+    "repository/javax_annotation_jsr250-api_1_0",
+    "repository/com_google_code_findbugs_jsr305_3_0_1",
+    "repository/com_squareup_javapoet_1_8_0",
+    "repository/com_google_dagger_dagger-producers_2_13",
+    "repository/com_google_googlejavaformat_google-java-format_1_4",
+    "repository/com_google_dagger_dagger-android_2_13",
+    "repository/com_google_dagger_dagger_2_13",
+    "repository/com_google_dagger_dagger-compiler_2_13",
+    "repository/com_google_dagger_dagger-android-processor_2_13",
+    "repository/com_google_dagger_dagger-android-jarimpl_2_13",
+    "repository/com_google_guava_guava_21_0",
+    "repository/com_google_dagger_dagger-android-support-jarimpl_2_13"
+]
