@@ -53,6 +53,11 @@ if (use_bundled_fontconfig) {
       "HAVE_CONFIG_H",
       "FC_CACHEDIR=\"/var/cache/fontconfig\"",
       "FONTCONFIG_PATH=\"/etc/fonts\"",
+
+      # This is a hack to remove visibility("default") annotations.  Fontconfig
+      # symbols should not be exported from chrome, nacl_helper, or anything
+      # else.
+      "visibility(x)=",
     ]
 
     deps = [
