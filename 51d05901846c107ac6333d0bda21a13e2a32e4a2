@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "593a4eb1_022b06bf",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2158,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-13T22:46:04Z",
+      "side": 1,
+      "message": "Noticed I might as well stop passing the ClientSharedBitmapManager at all, since it won\u0027t be used now. So removed it from the constructor.",
+      "revId": "51d05901846c107ac6333d0bda21a13e2a32e4a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
