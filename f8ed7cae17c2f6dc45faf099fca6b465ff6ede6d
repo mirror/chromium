@@ -34,6 +34,24 @@
       "revId": "f8ed7cae17c2f6dc45faf099fca6b465ff6ede6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29eb762a_775a85bf",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T21:14:05Z",
+      "side": 1,
+      "message": "That definitely does help explain! It\u0027s not quite intended to group multiple \u0027apps\u0027 into the same shelf item, but actually split windows with different intents into separate shelf items. Thanks for explaining so clearly! I hope there\u0027s a similar explanation in code somewhere related to grouping.",
+      "parentUuid": "2b3fcc8e_25f35f86",
+      "revId": "f8ed7cae17c2f6dc45faf099fca6b465ff6ede6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
