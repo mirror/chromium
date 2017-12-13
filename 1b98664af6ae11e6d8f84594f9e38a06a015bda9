@@ -16,6 +16,24 @@
       "revId": "1b98664af6ae11e6d8f84594f9e38a06a015bda9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fc41c7_aa25bef7",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSPositionValue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-12-13T09:38:47Z",
+      "side": 1,
+      "message": "I only changed this because the presubmit script complained that \"value\" and \"v\" where poor names.  But somehow \"coord\" was OK *shrug*.",
+      "parentUuid": "7bd8bdf3_8ed7f40a",
+      "revId": "1b98664af6ae11e6d8f84594f9e38a06a015bda9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
