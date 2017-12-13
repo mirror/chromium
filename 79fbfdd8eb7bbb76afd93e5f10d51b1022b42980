@@ -91,6 +91,29 @@
       "revId": "79fbfdd8eb7bbb76afd93e5f10d51b1022b42980",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad417278_232d50f8",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1191289
+      },
+      "writtenOn": "2017-12-13T09:33:51Z",
+      "side": 1,
+      "message": "Don\u0027t understand what \"orderly\" means here. How about \n\"Close all active logs\"?",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 23
+      },
+      "revId": "79fbfdd8eb7bbb76afd93e5f10d51b1022b42980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
