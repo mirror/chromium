@@ -99,18 +99,20 @@ class WorkerThreadForTest : public WorkerThread {
                                      kContentSecurityPolicyHeaderTypeReport);
     headers->push_back(header_and_type);
 
+    KURL script_url("http://fake.url/");
     auto creation_params = std::make_unique<GlobalScopeCreationParams>(
-        KURL("http://fake.url/"), "fake user agent", headers.get(),
-        kReferrerPolicyDefault, security_origin, worker_clients,
-        kWebAddressSpaceLocal, nullptr,
+        script_url, "fake user agent", headers.get(), kReferrerPolicyDefault,
+        security_origin, worker_clients, kWebAddressSpaceLocal, nullptr,
         std::make_unique<WorkerSettings>(Settings::Create().get()),
         kV8CacheOptionsDefault);
 
     Start(std::move(creation_params),
           WorkerBackingThreadStartupData::CreateDefault(),
-          std::make_unique<GlobalScopeInspectorCreationParams>(
-              WorkerInspectorProxy::PauseOnWorkerStart::kDontPause),
-          parent_frame_task_runners, source);
+          WorkerInspectorProxy::PauseOnWorkerStart::kDontPause,
+          parent_frame_task_runners);
+    RequestToEvaluateClassicScript(script_url, source,
+                                   nullptr /* cached_meta_data */,
+                                   v8_inspector::V8StackTraceId());
   }
 
   void WaitForInit() {
