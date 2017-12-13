@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "402772e0_3c7a4cc4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-13T21:59:30Z",
+      "side": 1,
+      "message": "Could you please reference the appropriate bug(s).",
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d58e26_a2b614e8",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-13T21:59:30Z",
+      "side": 1,
+      "message": "Is this needed since we are calling shutdown on the configuration and not relying on them being deallocated?",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 8
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2941e464_a5e6ac43",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-13T21:59:30Z",
+      "side": 1,
+      "message": "Please add comment.",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17555cfa_e50f5f7e",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-13T21:59:30Z",
+      "side": 1,
+      "message": "I think this comment should say that it \"Shuts down |defaultConfiguration| and |incognitoConfiguration|.\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79104bf0_ff9bf16d",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-13T21:59:30Z",
+      "side": 1,
+      "message": "Please add comment and specify that only a weak reference is held so it doesn\u0027t need to be removed.",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21f3379_8e195224",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-13T21:59:30Z",
+      "side": 1,
+      "message": "I think this can be less specific as destroying the browserState is an implementation detail. Maybe saying this must be called before dealloc or something would be beneficial information though.",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 25
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8426ec85_79fb2b78",
+        "filename": "ios/web_view/public/cwv_web_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-12-13T21:59:30Z",
+      "side": 1,
+      "message": "Please add comment.",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 16
+      },
+      "revId": "7ce064bf66678096dcc15f279275e54ad89e6b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
