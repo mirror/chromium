@@ -93,6 +93,30 @@
       "revId": "6ef04865775fcd55eed044b9c23fcdf569a4ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93caa7e4_e70dee77",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceMotionEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-13T16:46:22Z",
+      "side": 1,
+      "message": "In one of those cases the const_cast is unnecessary because it is saving the value into a Member\u003cconst T\u003e and in the other there\u0027s a comment explaining that it should be removed once Member\u003c\u003e supports const types, which it does now.\n\nCan you fix both of these to remove the const_cast?",
+      "parentUuid": "b7e30f61_23e1c98e",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 55
+      },
+      "revId": "6ef04865775fcd55eed044b9c23fcdf569a4ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
