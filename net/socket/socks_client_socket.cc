@@ -360,9 +360,27 @@ int SOCKSClientSocket::DoHandshakeWrite() {
   handshake_buf_ = new IOBuffer(handshake_buf_len);
   memcpy(handshake_buf_->data(), &buffer_[bytes_sent_],
          handshake_buf_len);
+
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("socks_client_socket_handshake", R"(
+        semantics {
+          sender: "Socks Client Socket"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "None, without this requests Chrome cannot ..."
+          policy_exception_justification:
+            "Essential for Chrome's navigation."
+        })");
   return transport_->socket()->Write(
       handshake_buf_.get(), handshake_buf_len,
-      base::Bind(&SOCKSClientSocket::OnIOComplete, base::Unretained(this)));
+      base::Bind(&SOCKSClientSocket::OnIOComplete, base::Unretained(this)),
+      traffic_annotation);
 }
 
 int SOCKSClientSocket::DoHandshakeWriteComplete(int result) {

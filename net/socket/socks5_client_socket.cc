@@ -18,6 +18,27 @@
 #include "net/socket/client_socket_handle.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
+namespace {
+
+constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("socks5_client_socket_...", R"(
+        semantics {
+          sender: "Socks5 Client Socket"
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "None, without these requests Chrome cannot ..."
+          policy_exception_justification:
+            "Essential for Chrome's navigation."
+        })");
+
+}  // namespace
+
 namespace net {
 
 const unsigned int SOCKS5ClientSocket::kGreetReadHeaderSize = 2;
@@ -305,7 +326,7 @@ int SOCKS5ClientSocket::DoGreetWrite() {
   memcpy(handshake_buf_->data(), &buffer_.data()[bytes_sent_],
          handshake_buf_len);
   return transport_->socket()->Write(handshake_buf_.get(), handshake_buf_len,
-                                     io_callback_);
+                                     io_callback_, kTrafficAnnotation);
 }
 
 int SOCKS5ClientSocket::DoGreetWriteComplete(int result) {
@@ -404,7 +425,7 @@ int SOCKS5ClientSocket::DoHandshakeWrite() {
   memcpy(handshake_buf_->data(), &buffer_[bytes_sent_],
          handshake_buf_len);
   return transport_->socket()->Write(handshake_buf_.get(), handshake_buf_len,
-                                     io_callback_);
+                                     io_callback_, kTrafficAnnotation);
 }
 
 int SOCKS5ClientSocket::DoHandshakeWriteComplete(int result) {
