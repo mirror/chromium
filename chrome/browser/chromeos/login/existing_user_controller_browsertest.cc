@@ -32,6 +32,7 @@
 #include "chrome/browser/chromeos/policy/device_policy_cros_browser_test.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
+#include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/ui/webui/chromeos/login/supervised_user_creation_screen_handler.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/testing_browser_process.h"
@@ -440,6 +441,9 @@ class ExistingUserControllerPublicSessionTest
         .Times(0);
     EXPECT_CALL(*mock_login_display_, SetUIEnabled(false)).Times(AnyNumber());
     EXPECT_CALL(*mock_login_display_, SetUIEnabled(true)).Times(AnyNumber());
+    safe_browsing::SafeBrowsingService* sb_service =
+        g_browser_process->safe_browsing_service()
+    EXPECT_TRUE(sb_service->HasSyncPasswordData(user_context.GetAccountId()));
   }
 
   void SetAutoLoginPolicy(const std::string& user_email, int delay) {
