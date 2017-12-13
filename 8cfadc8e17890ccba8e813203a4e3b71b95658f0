@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeb3ec1d_8e22871b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-13T19:54:47Z",
+      "side": 1,
+      "message": "If the size increase is a problem, then we can reduce the size (672 -\u003e 664) by moving this\nafter did_service_worker_navigation_preload_.",
+      "revId": "8cfadc8e17890ccba8e813203a4e3b71b95658f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
