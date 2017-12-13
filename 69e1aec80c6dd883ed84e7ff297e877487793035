@@ -22,6 +22,30 @@
       "revId": "69e1aec80c6dd883ed84e7ff297e877487793035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9721ba0_0b33fdbf",
+        "filename": "chrome/android/java/res/layout/list_menu_item.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-13T23:18:08Z",
+      "side": 0,
+      "message": "Attributes (PaddingStart and PaddingEnd) works for all versions because we are using AppCompat***View. \nThe value listPreferredItemPaddingStart/End are not defined in API 16 and is ignored by 17.\n\nBut listPreferredItemPaddingLeft/Right exist in all versions.",
+      "parentUuid": "43c0c988_de196348",
+      "range": {
+        "startLine": 9,
+        "startChar": 63,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "69e1aec80c6dd883ed84e7ff297e877487793035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
