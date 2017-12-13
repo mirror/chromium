@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4d81cd02_7b55a3e0",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1240289
+      },
+      "writtenOn": "2017-12-13T11:24:03Z",
+      "side": 1,
+      "message": "What do You think about allowing the embedder to decide whether it should terminate app via crash or just exit it gracefully by returning the error code?\n\nThen code would look like this\nreturn HandleFatalErrorDuringInitialization();",
+      "parentUuid": "836136b4_8926f362",
+      "revId": "936a1f577df82f97d3c59470f1a406f88a6465a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c9b9a8f_61b95187",
         "filename": "content/public/app/content_main_delegate.h",
         "patchSetId": 1
