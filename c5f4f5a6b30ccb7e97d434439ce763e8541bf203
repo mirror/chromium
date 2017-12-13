@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "a1455958_eee848f1",
+        "filename": "chrome/browser/chromeos/login/ui/simple_web_view_dialog.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-13T18:46:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4db13940_59968743",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 368,
+        "endChar": 1
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "678df0b7_7c637380",
         "filename": "chrome/browser/command_updater.h",
         "patchSetId": 27
@@ -235,6 +259,30 @@
       "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7caef1_eb99793d",
+        "filename": "chrome/browser/command_updater_delegate.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-13T18:46:25Z",
+      "side": 1,
+      "message": "\u003e Alternatively you could make BrowserCommandController\u0027s implementation of the execute functions not delegate to the CommandUpdater. There really isn\u0027t a need to use the delegate in this case.\n\nThanks for the suggestions, went with this approach.",
+      "parentUuid": "83cff071_5a42dca8",
+      "range": {
+        "startLine": 16,
+        "startChar": 44,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
