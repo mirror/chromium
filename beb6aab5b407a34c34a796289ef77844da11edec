@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fdfec8d_5432782b",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-12-13T23:06:31Z",
+      "side": 1,
+      "message": "The point of this test is to check elision, so we should modify these testcases to still elide while testing what you want.",
+      "revId": "beb6aab5b407a34c34a796289ef77844da11edec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
