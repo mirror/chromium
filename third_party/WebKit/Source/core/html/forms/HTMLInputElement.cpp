@@ -126,7 +126,7 @@ HTMLInputElement* HTMLInputElement::Create(Document& document,
       new HTMLInputElement(document, created_by_parser);
   if (!created_by_parser) {
     DCHECK(input_element->input_type_view_->NeedsShadowSubtree());
-    input_element->CreateUserAgentShadowRoot();
+    input_element->CreateLegacyUserAgentShadowRootV0();
     input_element->CreateShadowSubtree();
   }
   return input_element;
@@ -375,7 +375,7 @@ void HTMLInputElement::InitializeTypeInParsing() {
   if (input_type_->GetValueMode() == ValueMode::kValue)
     non_attribute_value_ = SanitizeValue(default_value);
   if (input_type_view_->NeedsShadowSubtree()) {
-    CreateUserAgentShadowRoot();
+    CreateLegacyUserAgentShadowRootV0();
     CreateShadowSubtree();
   }
 
@@ -432,7 +432,7 @@ void HTMLInputElement::UpdateType() {
   input_type_ = new_type;
   input_type_view_ = input_type_->CreateView();
   if (input_type_view_->NeedsShadowSubtree()) {
-    EnsureUserAgentShadowRoot();
+    EnsureLegacyUserAgentShadowRootV0();
     CreateShadowSubtree();
   }
 
