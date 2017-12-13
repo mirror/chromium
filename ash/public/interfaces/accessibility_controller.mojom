@@ -47,6 +47,10 @@ interface AccessibilityController {
 // Interface for ash to request accessibility service from its client (e.g.
 // Chrome).
 interface AccessibilityControllerClient {
+  // Controls chrome side spoken feedback on/off state including ChromeVox Load/Unload,
+  // braille IME state and ChromeVox focus highlight, based on |enabled|.
+  UpdateSpokenFeedback(bool enabled);
+
   // Triggers an accessibility alert to give the user feedback.
   TriggerAccessibilityAlert(AccessibilityAlert alert);
 
