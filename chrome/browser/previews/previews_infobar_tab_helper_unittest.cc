@@ -263,6 +263,13 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
                 ->compression_stats()
                 ->GetHttpOriginalContentLength());
 
+  EXPECT_EQ(expected_file_size,
+            data_reduction_proxy_settings->data_reduction_proxy_service()
+                ->compression_stats()
+                ->DataUsageMapForTesting()
+                .find(kTestUrl)
+                ->second->data_used())
+
   EXPECT_FALSE(infobar_tab_helper->displayed_preview_infobar());
 }
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
