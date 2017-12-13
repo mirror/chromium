@@ -435,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "9ec7b32f_f4a22c3a",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:09:07Z",
+      "side": 1,
+      "message": "The issue with at least some of the failed tests is in MSM, but you should use UnavailableDeviceParams() in both places and do nothing here.\nAlso make sure to DCHECK that input has a value in all important places where it is assumed/required so that we more easily detect any bugs that might result from this change.\nThis applies to most places that use |input|.",
+      "parentUuid": "e6d22204_3655cbd5",
+      "range": {
+        "startLine": 577,
+        "startChar": 73,
+        "endLine": 577,
+        "endChar": 0
+      },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a4b0e4b_66012eb2",
         "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
         "patchSetId": 4
