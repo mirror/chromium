@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "218ae1a3_a2fa0dee",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/startup/console-exception-while-no-inspector.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-12-13T18:58:40Z",
+      "side": 1,
+      "message": "added a waitForEvent b/c there\u0027s a race.",
+      "revId": "5e00e40edbc68e108c1cc8ba87786c032a03391c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
