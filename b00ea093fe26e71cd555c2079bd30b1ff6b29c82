@@ -112,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "7efe8730_92b482de",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9824,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-13T23:35:11Z",
+      "side": 1,
+      "message": "This one is generated, please refer to browser_protocol.pdl for the source. I added the example there.",
+      "parentUuid": "3eb82321_31fe3fd8",
+      "range": {
+        "startLine": 9824,
+        "startChar": 123,
+        "endLine": 9824,
+        "endChar": 130
+      },
+      "revId": "b00ea093fe26e71cd555c2079bd30b1ff6b29c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cd8bd67_88376bdb",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
         "patchSetId": 3
