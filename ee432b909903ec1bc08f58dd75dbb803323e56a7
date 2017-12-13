@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b04e4887_16eed475",
+        "filename": "chrome/browser/previews/previews_infobar_tab_helper_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-13T23:39:46Z",
+      "side": 1,
+      "message": "Can this check be a bit tighter?",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 14
+      },
+      "revId": "ee432b909903ec1bc08f58dd75dbb803323e56a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
