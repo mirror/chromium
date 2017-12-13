@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a85da32_e6795174",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-13T21:44:21Z",
+      "side": 1,
+      "message": "s/errors/errors for unpacked extension directories.",
+      "range": {
+        "startLine": 7,
+        "startChar": 38,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a797f5_20aca40e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-13T21:44:21Z",
+      "side": 1,
+      "message": "This can probably be described in more detail. My terminology might be a bit off. Something like:\nDuring dragEnter, use the developerPrivate API to whitelist the extension path and retrieve a unique ID for it which is cached in the renderer\u0027s JS context. Use this unique ID during onDrop to trigger developerPrivate.loadUnpacked. Using the loadUnpacked flow has the advantage of showcasing load errors. We don\u0027t use the webui installDroppedDirectory flow used by the normal extensions page since ...",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 61
+      },
+      "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efef4aa6_76aed3b6",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-13T21:44:21Z",
+      "side": 1,
+      "message": "We haven\u0027t yet validated that this is an unpacked directory. Still ok to call AddUnpackedPath?",
+      "range": {
+        "startLine": 1008,
+        "startChar": 12,
+        "endLine": 1008,
+        "endChar": 27
+      },
+      "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d3696d_cbf4506a",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-13T21:44:21Z",
+      "side": 1,
+      "message": "s/different/\"different for dropped directories\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7057982a_9ab7a21f",
+        "filename": "chrome/browser/resources/md_extensions/drag_and_drop_handler.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-12-13T21:44:21Z",
+      "side": 1,
+      "message": "Just confirming, we can\u0027t detect that the dropped thing is a directory during dragEnter? Because there is some redundancy that can be avoided if we can.",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 28
+      },
+      "revId": "a00a0bfb89c9b802ae6762f1558370ec53eb9f37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
