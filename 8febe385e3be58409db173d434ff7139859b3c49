@@ -22,6 +22,30 @@
       "revId": "8febe385e3be58409db173d434ff7139859b3c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8409522_8436366c",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-13T00:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d978bc8_f66fb69d",
+      "range": {
+        "startLine": 106,
+        "startChar": 77,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "8febe385e3be58409db173d434ff7139859b3c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
