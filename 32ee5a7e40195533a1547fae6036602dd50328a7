@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2bd0dacc_e8cfd3cd",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-13T00:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec6757c7_a51b2197",
+      "range": {
+        "startLine": 31,
+        "startChar": 19,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "32ee5a7e40195533a1547fae6036602dd50328a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57b01689_09bbad43",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "32ee5a7e40195533a1547fae6036602dd50328a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97caa744_1efc7e7b",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-13T00:08:45Z",
+      "side": 1,
+      "message": "code-section is initialized and attached with an undefined code property. It gets set after-the-fact when an error is selected.\n\nThis also happens when it\u0027s being unset while in the background.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/error_page.js?q\u003derror_page.js\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d151",
+      "parentUuid": "57b01689_09bbad43",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 63,
+        "endChar": 18
+      },
+      "revId": "32ee5a7e40195533a1547fae6036602dd50328a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
