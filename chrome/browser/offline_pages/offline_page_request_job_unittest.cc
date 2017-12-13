@@ -124,8 +124,12 @@ class OfflinePageRequestJobTestDelegate
     : public OfflinePageRequestJob::Delegate {
  public:
   OfflinePageRequestJobTestDelegate(content::WebContents* web_content,
-                                    int tab_id)
-      : web_content_(web_content), tab_id_(tab_id) {}
+                                    int tab_id,
+                                    bool skip_file_validation_before_reading)
+      : web_content_(web_content),
+        tab_id_(tab_id),
+        skip_file_validation_before_reading_(
+            skip_file_validation_before_reading) {}
 
   content::ResourceRequestInfo::WebContentsGetter GetWebContentsGetter(
       net::URLRequest* request) const override {
@@ -135,6 +139,10 @@ class OfflinePageRequestJobTestDelegate
 
   OfflinePageRequestJob::Delegate::TabIdGetter GetTabIdGetter() const override {
     return base::Bind(&OfflinePageRequestJobTestDelegate::GetTabId, tab_id_);
+  }
+
+  bool SkipFileValidationBeforeReading() const override {
+    return skip_file_validation_before_reading_;
   }
 
  private:
@@ -152,6 +160,7 @@ class OfflinePageRequestJobTestDelegate
 
   content::WebContents* web_content_;
   int tab_id_;
+  bool skip_file_validation_before_reading_;
 
   DISALLOW_COPY_AND_ASSIGN(OfflinePageRequestJobTestDelegate);
 };
@@ -192,10 +201,13 @@ class TestURLRequestInterceptingJobFactory
   TestURLRequestInterceptingJobFactory(
       std::unique_ptr<net::URLRequestJobFactory> job_factory,
       std::unique_ptr<net::URLRequestInterceptor> interceptor,
-      content::WebContents* web_contents)
+      content::WebContents* web_contents,
+      bool skip_file_validation_before_reading)
       : net::URLRequestInterceptingJobFactory(std::move(job_factory),
                                               std::move(interceptor)),
-        web_contents_(web_contents) {}
+        web_contents_(web_contents),
+        skip_file_validation_before_reading_(
+            skip_file_validation_before_reading) {}
   ~TestURLRequestInterceptingJobFactory() override {}
 
   net::URLRequestJob* MaybeCreateJobWithProtocolHandler(
@@ -206,14 +218,15 @@ class TestURLRequestInterceptingJobFactory
         MaybeCreateJobWithProtocolHandler(scheme, request, network_delegate);
     if (job) {
       static_cast<OfflinePageRequestJob*>(job)->SetDelegateForTesting(
-          base::MakeUnique<OfflinePageRequestJobTestDelegate>(web_contents_,
-                                                              kTabId));
+          base::MakeUnique<OfflinePageRequestJobTestDelegate>(
+              web_contents_, kTabId, skip_file_validation_before_reading_));
     }
     return job;
   }
 
  private:
   content::WebContents* web_contents_;
+  bool skip_file_validation_before_reading_;
 
   DISALLOW_COPY_AND_ASSIGN(TestURLRequestInterceptingJobFactory);
 };
@@ -374,6 +387,10 @@ class OfflinePageRequestJobTest : public testing::Test {
     return test_previews_decider_.get();
   }
 
+  void set_skip_file_validation_before_reading(bool skip) {
+    skip_file_validation_before_reading_ = skip;
+  }
+
  private:
   void OnSavePageDone(SavePageResult result, int64_t offline_id);
   std::unique_ptr<net::URLRequest> CreateRequest(
@@ -385,13 +402,14 @@ class OfflinePageRequestJobTest : public testing::Test {
                      bool is_offline_page_set_in_navigation_data);
 
   // Runs on IO thread.
-  void SetUpNetworkObjectsOnIO();
+  void SetUpNetworkObjectsOnIO(bool skip_file_validation_before_reading);
   void TearDownNetworkObjectsOnIO();
   void InterceptRequestOnIO(const GURL& url,
                             const std::string& method,
                             const std::string& extra_header_name,
                             const std::string& extra_header_value,
-                            content::ResourceType resource_type);
+                            content::ResourceType resource_type,
+                            bool skip_file_validation_before_reading);
   void ReadCompletedOnIO(int bytes_read);
   void TearDownOnReadCompletedOnIO(int bytes_read,
                                    bool is_offline_page_set_in_navigation_data);
@@ -413,6 +431,7 @@ class OfflinePageRequestJobTest : public testing::Test {
   // can be from any other thread later.
   std::unique_ptr<TestNetworkChangeNotifier> network_change_notifier_;
   std::unique_ptr<TestPreviewsDecider> test_previews_decider_;
+  bool skip_file_validation_before_reading_ = false;
 
   // These should only be accessed purely from IO thread.
   std::unique_ptr<net::TestURLRequestContext> test_url_request_context_;
@@ -605,7 +624,8 @@ void OfflinePageRequestJobTest::WaitForAsyncOperation() {
   run_loop.Run();
 }
 
-void OfflinePageRequestJobTest::SetUpNetworkObjectsOnIO() {
+void OfflinePageRequestJobTest::SetUpNetworkObjectsOnIO(
+    bool skip_file_validation_before_reading) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   if (test_url_request_context_.get())
@@ -622,8 +642,8 @@ void OfflinePageRequestJobTest::SetUpNetworkObjectsOnIO() {
   std::unique_ptr<net::URLRequestJobFactoryImpl> job_factory_impl(
       new net::URLRequestJobFactoryImpl());
   intercepting_job_factory_.reset(new TestURLRequestInterceptingJobFactory(
-      std::move(job_factory_impl), std::move(interceptor),
-      web_contents_.get()));
+      std::move(job_factory_impl), std::move(interceptor), web_contents_.get(),
+      skip_file_validation_before_reading));
 
   test_url_request_context_->set_job_factory(intercepting_job_factory_.get());
   test_url_request_context_->Init();
@@ -804,10 +824,11 @@ void OfflinePageRequestJobTest::InterceptRequestOnIO(
     const std::string& method,
     const std::string& extra_header_name,
     const std::string& extra_header_value,
-    content::ResourceType resource_type) {
+    content::ResourceType resource_type,
+    bool skip_file_validation_before_reading) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
-  SetUpNetworkObjectsOnIO();
+  SetUpNetworkObjectsOnIO(skip_file_validation_before_reading);
 
   request_ = CreateRequest(url, method, resource_type);
   if (!extra_header_name.empty()) {
@@ -829,7 +850,8 @@ void OfflinePageRequestJobTest::InterceptRequest(
       content::BrowserThread::IO, FROM_HERE,
       base::Bind(&OfflinePageRequestJobTest::InterceptRequestOnIO,
                  base::Unretained(this), url, method, extra_header_name,
-                 extra_header_value, resource_type));
+                 extra_header_value, resource_type,
+                 skip_file_validation_before_reading_));
 }
 
 void OfflinePageRequestJobTest::ReadCompletedOnIO(int bytes_read) {
@@ -1525,6 +1547,31 @@ TEST_F(OfflinePageRequestJobTest, LoadOtherPageOnDigestMismatch) {
   ExpectAccessEntryPoint(kTestClientId9,
                          OfflinePageRequestJob::AccessEntryPoint::LINK);
   ExpectOfflinePageSizeUniqueSample(kTestClientId9, 0, 1);
+  ExpectOnlinePageSizeTotalSuffixCount(0);
+}
+
+TEST_F(OfflinePageRequestJobTest, FileReadDataDigestMismatch) {
+  SimulateHasNetworkConnectivity(false);
+  // Skip the file validaton done before reading the file in order to test
+  // the scenario that the read file data are also validated.
+  set_skip_file_validation_before_reading(true);
+
+  InterceptRequest(kTestUrl7, "GET", "", "", content::RESOURCE_TYPE_MAIN_FRAME);
+  base::RunLoop().Run();
+
+  // The file reading should fail.
+  EXPECT_EQ(net::ERR_FAILED, bytes_read());
+  // The cached info about offline page should be cleared.
+  EXPECT_FALSE(is_offline_page_set_in_navigation_data());
+  EXPECT_FALSE(offline_page_tab_helper()->GetOfflinePageForTest());
+  // The offline histograms should have already been reported and they can't
+  // be reverted.
+  ExpectOneUniqueSampleForAggregatedRequestResult(
+      OfflinePageRequestJob::AggregatedRequestResult::
+          SHOW_OFFLINE_ON_DISCONNECTED_NETWORK);
+  ExpectAccessEntryPoint(kTestClientId7,
+                         OfflinePageRequestJob::AccessEntryPoint::LINK);
+  ExpectOfflinePageSizeUniqueSample(kTestClientId7, 0, 1);
   ExpectOnlinePageSizeTotalSuffixCount(0);
 }
 
