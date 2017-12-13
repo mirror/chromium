@@ -95,9 +95,10 @@ NetworkContext::NetworkContext(
       std::make_unique<CookieManager>(url_request_context_->cookie_store());
 }
 
-NetworkContext::NetworkContext(mojom::NetworkContextRequest request,
+NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
+                               mojom::NetworkContextRequest request,
                                net::URLRequestContext* url_request_context)
-    : network_service_(nullptr),
+    : network_service_(network_service),
       binding_(this, std::move(request)),
       cookie_manager_(std::make_unique<CookieManager>(
           url_request_context->cookie_store())) {

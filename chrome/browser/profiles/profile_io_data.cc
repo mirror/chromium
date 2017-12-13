@@ -78,6 +78,7 @@
 #include "content/public/browser/devtools_network_transaction_factory.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/resource_context.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/proxy_config_traits.h"
 #include "content/public/network/ignore_errors_cert_verifier.h"
@@ -1221,11 +1222,13 @@ void ProfileIOData::Init(
   builder->SetCreateHttpTransactionFactoryCallback(
       base::BindOnce(&content::CreateDevToolsNetworkTransactionFactory));
 
-  main_network_context_ =
-      io_thread_globals->network_service->CreateNetworkContextWithBuilder(
-          std::move(profile_params_->main_network_context_request),
-          std::move(profile_params_->main_network_context_params),
-          std::move(builder), &main_request_context_);
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    main_network_context_ =
+        io_thread_globals->network_service->CreateNetworkContextWithBuilder(
+            std::move(profile_params_->main_network_context_request),
+            std::move(profile_params_->main_network_context_params),
+            std::move(builder), &main_request_context_);
+  }
 
   if (chrome_network_delegate_unowned->domain_reliability_monitor()) {
     // Save a pointer to shut down Domain Reliability cleanly before the
