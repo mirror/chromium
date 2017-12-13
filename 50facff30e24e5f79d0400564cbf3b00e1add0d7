@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e6d4879_fe599bbd",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1875,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:55:36Z",
+      "side": 1,
+      "message": "weird that we do it at the caller instead of callee? i would expect the callee\u0027s contract should be to call callbacks on the same thread they came in on.",
+      "range": {
+        "startLine": 1875,
+        "startChar": 23,
+        "endLine": 1875,
+        "endChar": 40
+      },
+      "revId": "50facff30e24e5f79d0400564cbf3b00e1add0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1e871c_a32b6e04",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2938,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:55:36Z",
+      "side": 1,
+      "message": "would this measurement be more meaningful if instead of basing from load_start_time_ you based from play() start time? Or maybe even from first buffering state has_enough? As is, your probably mostly measuring network stuff (on top of any deferred loading time from my other comment).",
+      "range": {
+        "startLine": 2938,
+        "startChar": 47,
+        "endLine": 2938,
+        "endChar": 63
+      },
+      "revId": "50facff30e24e5f79d0400564cbf3b00e1add0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c70acbb_a941a4b2",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:55:36Z",
+      "side": 1,
+      "message": "Looking at the paths from HTMLme, it looks like this can be executed both in response to setting a \u003csource\u003e as well as things like playing. And then there are cases where the load is deferred. Basically, are you confident that you\u0027re measuring what you think you\u0027re measuring? Do you want to add bits to take into account the path to load (e.g. was deferred? was triggered by play()?)? \n\nAlso, for MSE, it looks like this will fire as soon as they set a blob URL which may be distant from the time they start appending media.",
+      "range": {
+        "startLine": 755,
+        "startChar": 23,
+        "endLine": 755,
+        "endChar": 29
+      },
+      "revId": "50facff30e24e5f79d0400564cbf3b00e1add0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
