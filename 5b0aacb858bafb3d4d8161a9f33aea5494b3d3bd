@@ -16,6 +16,24 @@
       "revId": "5b0aacb858bafb3d4d8161a9f33aea5494b3d3bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f357b4e9_65504472",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1238767
+      },
+      "writtenOn": "2017-12-13T01:03:23Z",
+      "side": 1,
+      "message": "OS_LINUX \u0026\u0026 !USE_LLD will fall through to the #else case below which will #undef PROTECTED_MEMORY_ENABLED and set it to 0.",
+      "parentUuid": "1a2bd56d_37a0fe46",
+      "revId": "5b0aacb858bafb3d4d8161a9f33aea5494b3d3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
