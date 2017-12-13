@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "776d19aa_ea513198",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-13T12:50:37Z",
+      "side": 1,
+      "message": "780785 is specifically for IPC tasks, right? 786332 seems like a relevant thing, though.",
+      "parentUuid": "4c01657e_a9ad320a",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "223822f0948c5d49aa221ade9440b93f2cbe1213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67f50ce0_456944e1",
         "filename": "third_party/WebKit/Source/core/css/FontFaceSet.h",
         "patchSetId": 1
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "68f7b4f2_0cfa124d",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-13T12:50:37Z",
+      "side": 1,
+      "message": "Yes, the intention is to stop throttling these things for now -- see the linked bug for details.\n\nWe don\u0027t have a big difference between kUnthrottled and kUnspecedTimer for now and it doesn\u0027t matter provided that we\u0027re replacing them with kInternal tasks.",
+      "parentUuid": "b72585fa_eb276e3c",
+      "revId": "223822f0948c5d49aa221ade9440b93f2cbe1213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e467a8d8_cc70d992",
         "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
         "patchSetId": 1
@@ -98,6 +140,24 @@
       "revId": "223822f0948c5d49aa221ade9440b93f2cbe1213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0457889_8206d376",
+        "filename": "third_party/WebKit/Source/modules/mediastream/MediaDevices.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-12-13T12:50:37Z",
+      "side": 1,
+      "message": "The spec for MediaRecorder explicitly specifies DOMManipulation task source. MediaStream spec does not do it (we should fix it) but it references MediaElement spec, which gives a blanket \"all tasks mentioned here should use media element event task source\".",
+      "parentUuid": "e467a8d8_cc70d992",
+      "revId": "223822f0948c5d49aa221ade9440b93f2cbe1213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
