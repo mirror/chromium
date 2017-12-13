@@ -179,7 +179,6 @@ class MetaBuildWrapper(object):
         '    --test-launcher-retry-limit=0'
         '\n'
     )
-
     AddCommonOptions(subp)
     subp.add_argument('-j', '--jobs', dest='jobs', type=int,
                       help='Number of jobs to pass to ninja')
@@ -191,6 +190,11 @@ class MetaBuildWrapper(object):
                             ' This can be either a regular path or a '
                             'GN-style source-relative path like '
                             '//out/Default.'))
+    subp.add_argument('-s', '--swarmed', action='store_true',
+                      help='Run under swarming with the default dimensions')
+    subp.add_argument('-d', '--dimension', default=[], action='append', nargs=2,
+                      dest='dimensions', metavar='FOO bar',
+                      help='dimension to filter on')
     subp.add_argument('target', nargs=1,
                       help='ninja target to build and run')
     subp.add_argument('extra_args', nargs='*',
@@ -313,17 +317,38 @@ class MetaBuildWrapper(object):
     if ret:
       return ret
 
-    cmd = [
-        self.executable,
-        self.PathJoin('tools', 'swarming_client', 'isolate.py'),
-        'run',
-        '-s',
-        self.ToSrcRelPath('%s/%s.isolated' % (build_dir, target)),
-    ]
-    if self.args.extra_args:
-        cmd += ['--'] + self.args.extra_args
+    if self.args.swarmed:
+      dimensions = ['-d', 'os', 'Mac-10.12.6', '-d', 'pool', 'Chrome']
+      cmd = [
+          self.executable,
+          self.PathJoin('tools', 'swarming_client', 'isolate.py'),
+          'archive',
+          '-s',
+          self.ToSrcRelPath('%s/%s.isolated' % (build_dir, target)),
+          '-I', 'isolateserver.appspot.com',
+      ]
+      ret, out, err = self.Run(cmd, force_verbose=True)
+      isolated_hash = out.splitlines()[0].split()[0]
+      cmd = [
+          self.executable,
+          self.PathJoin('tools', 'swarming_client', 'swarming.py'),
+            'run',
+            '-s', isolated_hash,
+            '-I', 'isolateserver.appspot.com',
+            '-S', 'chromium-swarm.appspot.com',
+        ] + dimensions
+    else:
+      cmd = [
+          self.executable,
+          self.PathJoin('tools', 'swarming_client', 'isolate.py'),
+          'run',
+          '-s',
+          self.ToSrcRelPath('%s/%s.isolated' % (build_dir, target)),
+        ]
 
-    ret, _, _ = self.Run(cmd, force_verbose=False, buffer_output=False)
+    if self.args.extra_args:
+      cmd += ['--'] + self.args.extra_args
+    ret, _, _ = self.Run(cmd, force_verbose=True, buffer_output=False)
 
     return ret
 
