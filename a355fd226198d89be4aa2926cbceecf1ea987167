@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83f3ac3f_cbc7511f",
+        "filename": "extensions/shell/installer/linux/common/installer.include",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-12-13T11:20:31Z",
+      "side": 1,
+      "message": "Is this a TODO? Looks like you are already doing it :).",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 36
+      },
+      "revId": "a355fd226198d89be4aa2926cbceecf1ea987167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
