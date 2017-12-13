@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95ef4772_361f71bc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:37:49Z",
+      "side": 1,
+      "message": "typo: message -\u003e messages",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 28
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b18680_c860e139",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:37:49Z",
+      "side": 1,
+      "message": "Are the mojo messages not received on the UI thread?\nIf they are, just keep the DCHECK_CURRENTLY_ON.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 4
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c7e465_16bb27c9",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:37:49Z",
+      "side": 1,
+      "message": "Why did you not use \"if(!BrowserThread::CurrentlyOn(BrowserThread::UI)\" here?\nIf all calls are on the UI thread, use DCHECK everywhere.",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 21
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc9eb41_27b2ef98",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:37:49Z",
+      "side": 1,
+      "message": "In this comment, replace \"peer connection\" with IPC",
+      "range": {
+        "startLine": 50,
+        "startChar": 33,
+        "endLine": 50,
+        "endChar": 34
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d32b637_3915994a",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:37:49Z",
+      "side": 1,
+      "message": "Add a separate section for the ones that are Mojo and use the comment\n// mojom::PeerConnectionTrackerHost implementation.",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 27
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3846cf7e_2dc9a3fb",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:37:49Z",
+      "side": 1,
+      "message": "In general, use a period at the end of the comments.\nThis comment, though, does not say anything the method name does not already say. Remove it.",
+      "range": {
+        "startLine": 11,
+        "startChar": 17,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c328c89_eed667d3",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:37:49Z",
+      "side": 1,
+      "message": "Remove this comment too.",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 14,
+        "endChar": 16
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d407c0a_644836be",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:37:49Z",
+      "side": 1,
+      "message": "typo: constrains -\u003e constraints.\nAlso, add the following to the comment:\n // The constraint strings are for display only and should\n // not be parsed.",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322615f7_2c1bb378",
+        "filename": "content/renderer/media/peer_connection_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:37:49Z",
+      "side": 1,
+      "message": "If this is only for testing, rename to SetPeerConnectionTrackerHostForTesting",
+      "range": {
+        "startLine": 177,
+        "startChar": 7,
+        "endLine": 177,
+        "endChar": 35
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7aca9b_dad38ab0",
+        "filename": "content/renderer/media/peer_connection_tracker_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T15:37:49Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you have EXPECT_CALLs for this object?\nIn particular, one to replace the one you removed?",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 35
+      },
+      "revId": "bf2f360ea77f5b0afe5c9203c756b52c5742166f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
