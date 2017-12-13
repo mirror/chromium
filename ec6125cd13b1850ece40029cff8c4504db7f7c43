@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9b26626_7e045076",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_web_contents.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-13T23:17:39Z",
+      "side": 0,
+      "message": "Looks like you can remove:\n#include \"ui/app_list/app_list_features.h\"",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "ec6125cd13b1850ece40029cff8c4504db7f7c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377b16c0_1f559ff4",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-13T23:17:39Z",
+      "side": 0,
+      "message": "nit: delete header include if no longer needed.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 40
+      },
+      "revId": "ec6125cd13b1850ece40029cff8c4504db7f7c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41a0cc2_892ca34a",
+        "filename": "ui/app_list/views/expand_arrow_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-13T23:17:39Z",
+      "side": 0,
+      "message": "nit: header needed?",
+      "range": {
+        "startLine": 71,
+        "startChar": 14,
+        "endLine": 71,
+        "endChar": 15
+      },
+      "revId": "ec6125cd13b1850ece40029cff8c4504db7f7c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70db4e3_d15329aa",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-13T23:17:39Z",
+      "side": 0,
+      "message": "nit: header needed?",
+      "revId": "ec6125cd13b1850ece40029cff8c4504db7f7c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0b9632_fa53ab90",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-12-13T23:17:39Z",
+      "side": 0,
+      "message": "nit: header needed?",
+      "revId": "ec6125cd13b1850ece40029cff8c4504db7f7c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
