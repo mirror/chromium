@@ -776,9 +776,11 @@ void Layer::SetShowPrimarySurface(
     const viz::SurfaceId& surface_id,
     const gfx::Size& frame_size_in_dip,
     scoped_refptr<viz::SurfaceReferenceFactory> ref_factory) {
+  LOG(ERROR) << "SetShowPrimarySurface: " << surface_id;
   DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
 
   if (!surface_layer_) {
+    LOG(ERROR) << "new layer";
     scoped_refptr<cc::SurfaceLayer> new_layer =
         cc::SurfaceLayer::Create(ref_factory);
     SwitchToLayer(new_layer);

@@ -10,6 +10,7 @@
 
 namespace gfx {
 class Rect;
+class Size;
 }
 
 namespace ui {
@@ -28,7 +29,7 @@ class OverlayWindow {
   // implementation for the class.
   static std::unique_ptr<OverlayWindow> Create();
 
-  virtual void Init() = 0;
+  virtual void Init(const gfx::Size& size) = 0;
   virtual bool IsActive() const = 0;
   virtual void Show() = 0;
   virtual void Hide() = 0;

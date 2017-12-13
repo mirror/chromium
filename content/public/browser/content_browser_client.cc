@@ -11,6 +11,8 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "build/build_config.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/surface_id.h"
 #include "content/public/browser/client_certificate_delegate.h"
 #include "content/public/browser/memory_coordinator_delegate.h"
 #include "content/public/browser/navigation_ui_data.h"
@@ -599,5 +601,16 @@ bool ContentBrowserClient::ShouldForceDownloadResource(
     const std::string& mime_type) {
   return false;
 }
+
+void ContentBrowserClient::PictureInPicture(RenderFrameHost* frame_host,
+                                            viz::FrameSinkId frame_sink_id,
+                                            const gfx::Size& size) {}
+
+void ContentBrowserClient::UpdatePictureInPictureSurfaceId(
+    RenderFrameHost* frame_host,
+    viz::FrameSinkId frame_sink_id,
+    uint32_t parent_id,
+    base::UnguessableToken nonce,
+    const gfx::Size& size) {}
 
 }  // namespace content

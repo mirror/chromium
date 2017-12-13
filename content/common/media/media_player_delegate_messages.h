@@ -71,6 +71,17 @@ IPC_MESSAGE_ROUTED2(MediaPlayerDelegateHostMsg_OnMutedStatusChanged,
                     int /* delegate_id, distinguishes instances */,
                     bool /* the new muted status */)
 
+IPC_MESSAGE_ROUTED2(MediaPlayerDelegateHostMsg_OnPictureInPicture,
+                    viz::FrameSinkId /* the frame sink id */,
+                    gfx::Size /* frame size */)
+
+IPC_MESSAGE_ROUTED4(
+    MediaPlayerDelegateHostMsg_OnUpdatePictureInPictureSurfaceId,
+    viz::FrameSinkId /* the frame sink id */,
+    uint32_t /* the parent id of the surface id */,
+    base::UnguessableToken /* the nonce of the surface id */,
+    gfx::Size /* frame size */)
+
 IPC_MESSAGE_ROUTED2(
     MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChanged,
     int /* delegate_id, distinguishes instances */,

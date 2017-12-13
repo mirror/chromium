@@ -11,6 +11,7 @@
 
 // static
 std::unique_ptr<OverlayWindow> OverlayWindow::Create() {
+  // LOG(ERROR) << "OverlayWindow::Create";
   return base::WrapUnique(new OverlayWindowViews());
 }
 
@@ -24,7 +25,7 @@ class OverlayWindowWidgetDelegate : public views::WidgetDelegate {
   ~OverlayWindowWidgetDelegate() override = default;
 
   // WidgetDelegate:
-  bool CanResize() const override { return true; }
+  bool CanResize() const override { return false; }
   ui::ModalType GetModalType() const override { return ui::MODAL_TYPE_SYSTEM; }
   base::string16 GetWindowTitle() const override {
     return l10n_util::GetStringUTF16(IDS_PICTURE_IN_PICTURE_TITLE_TEXT);
@@ -40,19 +41,22 @@ class OverlayWindowWidgetDelegate : public views::WidgetDelegate {
 };
 
 OverlayWindowViews::OverlayWindowViews() {
+  // LOG(ERROR) << "OverlayWindowViews::OverlayWindowViews";
   widget_.reset(new views::Widget());
 }
 
 OverlayWindowViews::~OverlayWindowViews() = default;
 
-void OverlayWindowViews::Init() {
+void OverlayWindowViews::Init(const gfx::Size& size) {
+  // LOG(ERROR) << "OverlayWindowViews::Init";
   // TODO(apacible): Finalize the type of widget. http://crbug/726621
-  views::Widget::InitParams params(views::Widget::InitParams::TYPE_WINDOW);
+  views::Widget::InitParams params(views::Widget::InitParams::TYPE_WINDOW_FRAMELESS);
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
 
   // TODO(apacible): Update preferred sizing and positioning.
   // http://crbug/726621
-  params.bounds = gfx::Rect(200, 200, 700, 500);
+  // params.bounds = gfx::Rect(200, 200, 700, 500);
+  params.bounds = gfx::Rect(gfx::Point(200, 200), size);
   params.keep_on_top = true;
   params.visible_on_all_workspaces = true;
 
@@ -88,6 +92,7 @@ bool OverlayWindowViews::IsAlwaysOnTop() const {
 }
 
 ui::Layer* OverlayWindowViews::GetLayer() {
+  // LOG(ERROR) << "OverlayWindowViews::GetLayer";
   return widget_->GetLayer();
 }
 
