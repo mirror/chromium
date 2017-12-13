@@ -97,6 +97,19 @@ static constexpr base::TimeDelta kWebVRFenceCheckTimeout =
 static constexpr int kWebVrInitialFrameTimeoutSeconds = 5;
 static constexpr int kWebVrSpinnerTimeoutSeconds = 2;
 
+// Heuristic time limit to detect overstuffed GVR buffers for a
+// >60fps capable web app.
+static constexpr base::TimeDelta kWebVrSlowAcquireThreshold =
+    base::TimeDelta::FromMilliseconds(2.0f);
+
+// If running too fast, allow dropping frames occasionally to let GVR catch up.
+// Drop at most one frame in MaxDropRate.
+static constexpr int kWebVrUnstuffMaxDropRate = 11;
+
+// If GVR submit isn't blocking, we don't know how long rendering actually took.
+// Use a decay factor to assume it's a bit less than the current average.
+static constexpr float kWebVrSlowSubmitDecayFactor = 0.95f;
+
 static constexpr int kNumSamplesPerPixelBrowserUi = 2;
 static constexpr int kNumSamplesPerPixelWebVr = 1;
 
@@ -247,6 +260,19 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
   content_surface_texture_->SetDefaultBufferSize(
       content_tex_physical_size_.width(), content_tex_physical_size_.height());
 
+  webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
+  webvr_experimental_rendering_ =
+      base::FeatureList::IsEnabled(features::kWebVrExperimentalRendering);
+
+  // TODO(klausw): force this on for S8 via whitelist?
+  if (gl::GLFence::IsGpuFenceSupported() && webvr_experimental_rendering_) {
+    webvr_use_pre_submit_client_wait_ = false;
+  }
+
+  // InitializeRenderer calls GvrDelegateReady which triggers actions such as
+  // responding to RequestPresent. Any member assignments or other
+  // initialization actions which affect this, i.e. feature checks, must happen
+  // before this point.
   if (!reinitializing)
     InitializeRenderer();
 
@@ -255,8 +281,6 @@ void VrShellGl::InitializeGl(gfx::AcceleratedWidget window) {
 
   vr::Assets::GetInstance()->LoadWhenComponentReady(base::BindOnce(
       &VrShellGl::OnAssetsLoaded, weak_ptr_factory_.GetWeakPtr()));
-
-  webvr_vsync_align_ = base::FeatureList::IsEnabled(features::kWebVrVsyncAlign);
 
   if (daydream_support_ && !reinitializing) {
     base::PostTaskWithTraits(
@@ -373,7 +397,8 @@ void VrShellGl::SubmitFrameWithTextureHandle(
 void VrShellGl::ConnectPresentingService(
     device::mojom::VRSubmitFrameClientPtrInfo submit_client_info,
     device::mojom::VRPresentationProviderRequest request,
-    device::mojom::VRDisplayInfoPtr display_info) {
+    device::mojom::VRDisplayInfoPtr display_info,
+    device::mojom::VRRequestPresentOptionsPtr present_options) {
   ClosePresentationBindings();
   submit_client_.Bind(std::move(submit_client_info));
   binding_.Bind(std::move(request));
@@ -385,6 +410,9 @@ void VrShellGl::ConnectPresentingService(
 
   CreateOrResizeWebVRSurface(webvr_size);
   ScheduleOrCancelWebVrFrameTimeout();
+
+  // TODO(klausw): handle present_options, specifically preserveDrawingBuffer
+  // if applicable.
 }
 
 void VrShellGl::OnSwapContents(int new_content_id) {
@@ -541,7 +569,24 @@ void VrShellGl::InitializeRenderer() {
                                            webvr_right_viewport_.get());
   webvr_right_viewport_->SetSourceBufferIndex(kFramePrimaryBuffer);
 
-  browser_->GvrDelegateReady(gvr_api_->GetViewerType());
+  device::mojom::VRDisplayFrameTransportOptionsPtr transport_options =
+      device::mojom::VRDisplayFrameTransportOptions::New();
+  transport_options->transportMethod =
+      device::mojom::VRDisplayFrameTransportMethod::SUBMIT_AS_MAILBOX_HOLDER;
+  transport_options->waitForTransferNotification = true;
+  // See comment in InitializeGl, any member assignments that affect render
+  // path selections must be complete before this function executes via
+  // GvrDelegateReady.
+  if (WebVrUsePreSubmitClientWait()) {
+    transport_options->waitForRenderNotification = true;
+    transport_options->waitForGpuFence = false;
+  } else {
+    transport_options->waitForRenderNotification = false;
+    transport_options->waitForGpuFence = true;
+  }
+
+  browser_->GvrDelegateReady(gvr_api_->GetViewerType(),
+                             std::move(transport_options));
 }
 
 void VrShellGl::UpdateController(const gfx::Transform& head_pose,
@@ -961,7 +1006,8 @@ void VrShellGl::DrawIntoAcquiredFrame(int16_t frame_index,
     acquired_frame_.Unbind();
   }
 
-  if (ShouldDrawWebVr() && surfaceless_rendering_) {
+  if (ShouldDrawWebVr() && surfaceless_rendering_ &&
+      WebVrUsePreSubmitClientWait()) {
     // Continue with submit once a GL fence signals that current drawing
     // operations have completed.
     std::unique_ptr<gl::GLFenceEGL> fence = gl::GLFenceEGL::Create();
@@ -1000,6 +1046,35 @@ void VrShellGl::DrawFrameSubmitWhenReady(
   DrawFrameSubmitNow(frame_index, head_pose);
 }
 
+void VrShellGl::AddWebVrRenderTimeEstimate(int16_t frame_index,
+                                           base::TimeTicks submit_start,
+                                           base::TimeTicks submit_done) {
+  base::TimeDelta submit_elapsed = submit_done - submit_start;
+
+  int16_t prev_idx =
+      (frame_index + kPoseRingBufferSize - 1) % kPoseRingBufferSize;
+  base::TimeTicks prev_js_submit = webvr_time_js_submit_[prev_idx];
+  if (!WebVrUsePreSubmitClientWait() && !prev_js_submit.is_null()) {
+    // Estimate render time for the *previous* frame.
+    if (submit_elapsed > base::TimeDelta::FromMilliseconds(2)) {
+      // Submit was slow, assume this is the true render time.
+      base::TimeDelta prev_render_delta = submit_done - prev_js_submit;
+      webvr_render_time_.AddSample(prev_render_delta);
+    } else {
+      // Submit didn't block. True completion time could have been anywhere
+      // between the last GVR submit and now. Just decay the average down a
+      // bit. We could try to estimate based on the difference between
+      // submit_start and prev_js_submit, but that tends to be an
+      // underestimate.
+      base::TimeDelta prev_render_delta =
+          webvr_render_time_.GetAverageOrDefault(
+              vsync_helper_.DisplayVSyncInterval()) *
+          kWebVrSlowSubmitDecayFactor;
+      webvr_render_time_.AddSample(prev_render_delta);
+    }
+  }
+}
+
 void VrShellGl::DrawFrameSubmitNow(int16_t frame_index,
                                    const gfx::Transform& head_pose) {
   TRACE_EVENT1("gpu", "VrShellGl::DrawFrameSubmitNow", "frame", frame_index);
@@ -1010,7 +1085,9 @@ void VrShellGl::DrawFrameSubmitNow(int16_t frame_index,
     TRACE_EVENT0("gpu", "VrShellGl::SubmitToGvr");
     base::TimeTicks submit_start = base::TimeTicks::Now();
     acquired_frame_.Submit(*buffer_viewport_list_, mat);
-    webvr_submit_time_.AddSample(base::TimeTicks::Now() - submit_start);
+    base::TimeTicks submit_done = base::TimeTicks::Now();
+    webvr_submit_time_.AddSample(submit_done - submit_start);
+    AddWebVrRenderTimeEstimate(frame_index, submit_start, submit_done);
     CHECK(!acquired_frame_);
   }
 
@@ -1026,17 +1103,27 @@ void VrShellGl::DrawFrameSubmitNow(int16_t frame_index,
   // off the transfer surface, but that appears to result in overstuffed
   // buffers.
   if (submit_client_) {
-    submit_client_->OnSubmitFrameRendered();
+    if (WebVrUsePreSubmitClientWait()) {
+      submit_client_->OnSubmitFrameRendered();
+    } else {
+      // Make a GpuFence and pass it to the Renderer for sequencing.
+      std::unique_ptr<gl::GLFence> gl_fence = gl::GLFence::CreateForGpuFence();
+      std::unique_ptr<gfx::GpuFence> gpu_fence = gl_fence->GetGpuFence();
+      submit_client_->OnSubmitFrameGpuFence(
+          gfx::CloneHandleForIPC(gpu_fence->GetGpuFenceHandle()));
+    }
   }
 
   if (ShouldDrawWebVr()) {
-    base::TimeTicks now = base::TimeTicks::Now();
     base::TimeTicks pose_time =
         webvr_time_pose_[frame_index % kPoseRingBufferSize];
     base::TimeTicks js_submit_time =
         webvr_time_js_submit_[frame_index % kPoseRingBufferSize];
     webvr_js_time_.AddSample(js_submit_time - pose_time);
-    webvr_render_time_.AddSample(now - js_submit_time);
+    if (WebVrUsePreSubmitClientWait()) {
+      base::TimeTicks now = base::TimeTicks::Now();
+      webvr_render_time_.AddSample(now - js_submit_time);
+    }
   }
 
   // After saving the timestamp, fps will be available via GetFPS().
@@ -1261,7 +1348,53 @@ base::TimeDelta VrShellGl::GetPredictedFrameTime() {
   return expected_frame_time;
 }
 
+bool VrShellGl::ShouldSkipVSync() {
+  // Disable heuristic for traditional render path where we submit completed
+  // frames. TODO(klausw): enabling the SlowAcquireThreshold could be helpful
+  // there too.
+  if (WebVrUsePreSubmitClientWait())
+    return false;
+
+  int16_t prev_idx =
+      (frame_index_ + kPoseRingBufferSize - 1) % kPoseRingBufferSize;
+  base::TimeTicks prev_js_submit = webvr_time_js_submit_[prev_idx];
+  if (prev_js_submit.is_null())
+    return false;
+
+  base::TimeDelta frame_interval = vsync_helper_.DisplayVSyncInterval();
+  base::TimeDelta mean_render_time =
+      webvr_render_time_.GetAverageOrDefault(frame_interval);
+  base::TimeDelta prev_render_time_left =
+      mean_render_time - (base::TimeTicks::Now() - prev_js_submit);
+  base::TimeDelta mean_js_time = webvr_js_time_.GetAverage();
+  base::TimeDelta mean_js_wait = webvr_js_wait_time_.GetAverage();
+  base::TimeDelta mean_gvr_wait = webvr_submit_time_.GetAverage();
+  // We don't want the next frame to arrive too early. Estimated
+  // time-to-new-frame is the net JavaScript time (not counting time spent
+  // waiting) plus the net render time (not counting time blocked in submit).
+  // Ideally we'd want the new frame to be ready one vsync interval after the
+  // current frame finishes rendering, but allow being a half vsync early.
+  if (mean_js_time - mean_js_wait + mean_render_time - mean_gvr_wait <
+      prev_render_time_left + frame_interval / 2) {
+    return true;
+  }
+
+  if (webvr_unstuff_ratelimit_frames_ > 0) {
+    --webvr_unstuff_ratelimit_frames_;
+  } else if (webvr_acquire_time_.GetAverage() >= kWebVrSlowAcquireThreshold &&
+             mean_render_time < frame_interval) {
+    webvr_unstuff_ratelimit_frames_ = kWebVrUnstuffMaxDropRate;
+    return true;
+  }
+  return false;
+}
+
 void VrShellGl::SendVSync(base::TimeTicks time, GetVSyncCallback callback) {
+  if (ShouldSkipVSync()) {
+    callback_ = std::move(callback);
+    return;
+  }
+
   uint8_t frame_index = frame_index_++;
 
   TRACE_EVENT1("input", "VrShellGl::SendVSync", "frame", frame_index);
