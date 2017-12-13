@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40f07a0a_2218f287",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4448,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-13T00:39:41Z",
+      "side": 1,
+      "message": "Seb: Please double-check that this makes sense to you.\n\nIn this CL I changed SaveImportedProfile to directly call PersonalDataManager::SaveImportedProfile instead of just adding the profile.  The real PDM calls MergeProfile in that function:\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/personal_data_manager.cc?l\u003d1409\u0026rcl\u003d76c7e1e4d89b8675041c6c8f4c16266682e25c4b\n\nAs such, this test and a CreditCardSaveManagerTest test had to be updated.  In this one, I assume that submitting the same address twice and not creating a duplicate is intended behavior. :)",
+      "revId": "7edb85b526b3bfa1550b19a86a77e5d370b872ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
