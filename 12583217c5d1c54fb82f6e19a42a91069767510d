@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00245535_1d314414",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-allowed-by-feature-policy.https.sub.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-13T10:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0093cddc_a4aaf338",
+      "revId": "12583217c5d1c54fb82f6e19a42a91069767510d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "063fed13_6680d28a",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-disabled-by-feature-policy.https.sub.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "12583217c5d1c54fb82f6e19a42a91069767510d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a0b904_3cfee4ef",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/autoplay-disabled-by-feature-policy.https.sub.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-12-13T10:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063fed13_6680d28a",
+      "revId": "12583217c5d1c54fb82f6e19a42a91069767510d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
