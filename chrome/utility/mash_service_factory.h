@@ -7,7 +7,7 @@
 
 #include "content/public/utility/content_utility_client.h"
 
-// Registers the services provided by mash.
+// Registers the out-of-process services for --mash.
 void RegisterMashServices(
     content::ContentUtilityClient::StaticServiceMap* services);
 
