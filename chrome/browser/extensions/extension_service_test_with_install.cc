@@ -322,18 +322,12 @@ void ExtensionServiceTestWithInstall::UpdateExtension(
 
 void ExtensionServiceTestWithInstall::UninstallExtension(
     const std::string& id) {
-  UninstallExtension(id, Extension::ENABLED);
-}
-
-void ExtensionServiceTestWithInstall::UninstallExtension(
-    const std::string& id,
-    Extension::State expected_state) {
   // Verify that the extension is installed.
+  ASSERT_TRUE(registry()->GetExtensionById(id, ExtensionRegistry::EVERYTHING));
   base::FilePath extension_path = extensions_install_dir().AppendASCII(id);
   EXPECT_TRUE(base::PathExists(extension_path));
-  size_t pref_key_count = GetPrefKeyCount();
-  EXPECT_GT(pref_key_count, 0u);
-  ValidateIntegerPref(id, "state", expected_state);
+  ExtensionPrefs* prefs = ExtensionPrefs::Get(profile());
+  EXPECT_TRUE(prefs->GetInstalledExtensionInfo(id));
 
   // We make a copy of the extension's id since the extension can be deleted
   // once it's uninstalled.
@@ -347,17 +341,9 @@ void ExtensionServiceTestWithInstall::UninstallExtension(
   EXPECT_FALSE(unloaded_id_.empty());
   EXPECT_EQ(extension_id, unloaded_id_);
 
-  // Verify uninstalled state.
-  size_t new_pref_key_count = GetPrefKeyCount();
-  if (new_pref_key_count == pref_key_count) {
-    ValidateIntegerPref(id, "state",
-                        Extension::EXTERNAL_EXTENSION_UNINSTALLED);
-  } else {
-    EXPECT_EQ(new_pref_key_count, pref_key_count - 1);
-  }
-
   // The extension should not be in the service anymore.
   EXPECT_FALSE(service()->GetInstalledExtension(extension_id));
+  EXPECT_FALSE(prefs->GetInstalledExtensionInfo(id));
   content::RunAllTasksUntilIdle();
 
   // The directory should be gone.
