@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd20423e_ae853e5b",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-12-13T22:46:08Z",
+      "side": 1,
+      "message": "nit: Just wondering if this condition fails in your tests?",
+      "range": {
+        "startLine": 464,
+        "startChar": 2,
+        "endLine": 464,
+        "endChar": 4
+      },
+      "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8680488f_feed1560",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-12-13T22:46:08Z",
+      "side": 1,
+      "message": "nit: NotifyPageLoadFinish ?\nNotifyDataUseCompleted could also be NotifyPageLoadCompleted ?",
+      "range": {
+        "startLine": 175,
+        "startChar": 7,
+        "endLine": 175,
+        "endChar": 26
+      },
+      "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c211cc_b2b1f9ab",
+        "filename": "components/data_use_measurement/core/data_use_ascriber.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-12-13T22:46:08Z",
+      "side": 1,
+      "message": "OnPageDidFinishLoad and OnPageLoadComplete are confusing. I don\u0027t have a better name either.\nAll of them could have OnPageLoad*.. For example, OnPageLoadCommit, OnPageLoadFinish, OnPageLoadFinallyComplete.",
+      "range": {
+        "startLine": 54,
+        "startChar": 17,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
