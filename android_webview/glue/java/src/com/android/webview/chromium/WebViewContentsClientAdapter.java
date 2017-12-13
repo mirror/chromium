@@ -29,8 +29,6 @@ import android.webkit.JsDialogHelper;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.PermissionRequest;
-import android.webkit.RenderProcessGoneDetail;
-import android.webkit.SafeBrowsingResponse;
 import android.webkit.SslErrorHandler;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -645,31 +643,9 @@ class WebViewContentsClientAdapter extends AwContentsClient {
     @Override
     public void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
             final Callback<AwSafeBrowsingResponse> callback) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O_MR1) {
-            callback.onResult(new AwSafeBrowsingResponse(SafeBrowsingAction.SHOW_INTERSTITIAL,
-                    /* reporting */ true));
-            return;
-        }
-        mWebViewClient.onSafeBrowsingHit(mWebView, new WebResourceRequestImpl(request), threatType,
-                new SafeBrowsingResponse() {
-                    @Override
-                    public void showInterstitial(boolean allowReporting) {
-                        callback.onResult(new AwSafeBrowsingResponse(
-                                SafeBrowsingAction.SHOW_INTERSTITIAL, allowReporting));
-                    }
-
-                    @Override
-                    public void proceed(boolean report) {
-                        callback.onResult(
-                                new AwSafeBrowsingResponse(SafeBrowsingAction.PROCEED, report));
-                    }
-
-                    @Override
-                    public void backToSafety(boolean report) {
-                        callback.onResult(new AwSafeBrowsingResponse(
-                                SafeBrowsingAction.BACK_TO_SAFETY, report));
-                    }
-                });
+        // WebViewClient#onSafeBrowsingHit was added in O_MR1.
+        callback.onResult(new AwSafeBrowsingResponse(SafeBrowsingAction.SHOW_INTERSTITIAL,
+                /* reporting */ true));
     }
 
     @Override
@@ -1257,27 +1233,9 @@ class WebViewContentsClientAdapter extends AwContentsClient {
     }
 
     @Override
-    @TargetApi(Build.VERSION_CODES.O)
     public boolean onRenderProcessGone(final AwRenderProcessGoneDetail detail) {
         // WebViewClient.onRenderProcessGone was added in O.
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return false;
-
-        try {
-            TraceEvent.begin("WebViewContentsClientAdapter.onRenderProcessGone");
-            return mWebViewClient.onRenderProcessGone(mWebView, new RenderProcessGoneDetail() {
-                @Override
-                public boolean didCrash() {
-                    return detail.didCrash();
-                }
-
-                @Override
-                public int rendererPriorityAtExit() {
-                    return detail.rendererPriority();
-                }
-            });
-        } finally {
-            TraceEvent.end("WebViewContentsClientAdapter.onRenderProcessGone");
-        }
+        return false;
     }
 
     // TODO: Move to upstream.
