@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13233359_edaa7343",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-12-13T00:30:45Z",
+      "side": 0,
+      "message": "What is the throbber\u0027s size and location in the new code?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 61
+      },
+      "revId": "7ebb368b6d47a235e50889e87d29b78b40d480c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c815661b_65ab68bf",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-12-13T00:30:45Z",
+      "side": 0,
+      "message": "Why these lines are removed?",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 20
+      },
+      "revId": "7ebb368b6d47a235e50889e87d29b78b40d480c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8573981a_ece929f1",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-12-13T00:30:45Z",
+      "side": 1,
+      "message": "debugging code?",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "d1560a9e8b735deb631fef6d0ba2c552b87f21b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48103e00_cdc37c67",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-12-13T00:30:45Z",
+      "side": 1,
+      "message": "Add some comments about this variable.",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 18
+      },
+      "revId": "d1560a9e8b735deb631fef6d0ba2c552b87f21b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589ef5a9_a6b9c506",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-12-13T00:30:45Z",
+      "side": 1,
+      "message": "Add more details in this comment, such as who owns these views as children, etc.",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 39
+      },
+      "revId": "d1560a9e8b735deb631fef6d0ba2c552b87f21b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce533c4a_3a9e8c11",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-12-13T00:30:45Z",
+      "side": 1,
+      "message": "debugging code?",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 63
+      },
+      "revId": "d1560a9e8b735deb631fef6d0ba2c552b87f21b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
