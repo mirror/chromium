@@ -229,6 +229,7 @@ public class Tab
 
     private boolean mIsClosing;
     private boolean mIsShowingErrorPage;
+    private boolean mIsShowingTabModalDialog;
 
     private Bitmap mFavicon;
 
@@ -798,6 +799,10 @@ public class Tab
      */
     public boolean isShowingInterstitialPage() {
         return getWebContents() != null && getWebContents().isShowingInterstitialPage();
+    }
+
+    public boolean isShowingTabModalDialog() {
+        return mIsShowingTabModalDialog;
     }
 
     /**
@@ -3252,7 +3257,7 @@ public class Tab
         if (mFullscreenManager == null) return;
 
         mFullscreenManager.setPositionsForTabToNonFullscreen();
-        updateBrowserControlsState(BrowserControlsState.SHOWN, false);
+        updateBrowserControlsState(BrowserControlsState.BOTH, false);
     }
 
     void handleRendererResponsive() {
@@ -3334,6 +3339,16 @@ public class Tab
      */
     public void onOrientationChange() {
         hideMediaDownloadInProductHelp();
+    }
+
+    /**
+     * Handle browser controls when a tab modal dialog is shown.
+     */
+    public void onTabModalDialogStateChanged(boolean isShowing) {
+        mIsShowingTabModalDialog = isShowing;
+        if (mFullscreenManager == null) return;
+        mFullscreenManager.setPositionsForTabToNonFullscreen();
+        updateBrowserControlsState(BrowserControlsState.SHOWN, false);
     }
 
     @CalledByNative
