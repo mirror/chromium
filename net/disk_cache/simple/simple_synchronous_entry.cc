@@ -127,9 +127,13 @@ const base::Feature kSimpleCachePrefetchExperiment = {
     "SimpleCachePrefetchExperiment", base::FEATURE_DISABLED_BY_DEFAULT};
 const char kSimplePrefetchBytesParam[] = "Bytes";
 
-int GetSimpleCachePrefetchSize() {
-  return base::GetFieldTrialParamByFeatureAsInt(kSimpleCachePrefetchExperiment,
-                                                kSimplePrefetchBytesParam, 0);
+int GetSimpleCachePrefetchSize(net::CacheType cache_type) {
+/*  if (cache_type == net::DISK_CACHE || cache_type == net::MEDIA_CACHE) {
+    return base::GetFieldTrialParamByFeatureAsInt(
+        kSimpleCachePrefetchExperiment, kSimplePrefetchBytesParam, 0);
+  } else {*/
+    return 0;
+  //}
 }
 
 SimpleEntryStat::SimpleEntryStat(base::Time last_used,
@@ -1308,9 +1312,10 @@ int SimpleSynchronousEntry::ReadAndValidateStream0AndMaybe1(
   std::unique_ptr<char[]> prefetch_buf;
   base::StringPiece file_0_prefetch;
 
-  if (file_size > GetSimpleCachePrefetchSize()) {
+  if (file_size > GetSimpleCachePrefetchSize(cache_type_)) {
     RecordWhetherOpenDidPrefetch(cache_type_, false);
   } else {
+    LOG(ERROR) << "file_size:" << file_size;
     RecordWhetherOpenDidPrefetch(cache_type_, true);
     prefetch_buf = std::make_unique<char[]>(file_size);
     if (file->Read(0, prefetch_buf.get(), file_size) != file_size)
