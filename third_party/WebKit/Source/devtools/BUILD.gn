@@ -712,6 +712,7 @@ all_devtools_files = [
   "front_end/toolbox.json",
   "front_end/ui/ActionRegistry.js",
   "front_end/ui/ARIAUtils.js",
+  "front_end/ui/BaseElement.js",
   "front_end/ui/checkboxTextLabel.css",
   "front_end/ui/closeButton.css",
   "front_end/ui/confirmDialog.css",

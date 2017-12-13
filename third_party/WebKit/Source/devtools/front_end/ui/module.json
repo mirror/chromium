@@ -6,6 +6,7 @@
         "host"
     ],
     "scripts": [
+        "BaseElement.js",
         "Widget.js",
         "View.js",
         "treeoutline.js",
