@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "043b5363_05f8f59c",
+        "filename": "content/renderer/loader/web_url_request_util.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-13T07:15:24Z",
+      "side": 1,
+      "message": "Hm, probably good to have a similar, but shorter comment here?\n\nAppend the cloned data pipe to the |http_body| (so that the data pipe can be retrieved multiple times if necessary, e.g. during redirects).",
+      "revId": "2c42911b2c9cba2079b8a8e5c86ab82235c7b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db37cdd_e2305edb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium.fetch-event-request-body.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-13T07:15:24Z",
+      "side": 1,
+      "message": "nit: indent is off?",
+      "revId": "2c42911b2c9cba2079b8a8e5c86ab82235c7b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
