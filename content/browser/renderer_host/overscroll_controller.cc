@@ -142,6 +142,12 @@ bool OverscrollController::WillHandleEvent(const blink::WebInputEvent& event) {
           event.GetType() == blink::WebInputEvent::kGestureFlingStart);
 }
 
+void OverscrollController::OnDidOverscroll(
+    const ui::DidOverscrollParams& params) {
+  if (delegate_)
+    delegate_->OnOverscrollBehaviorUpdate(params.overscroll_behavior);
+}
+
 void OverscrollController::ReceivedEventACK(const blink::WebInputEvent& event,
                                             bool processed) {
   if (!ShouldProcessEvent(event))
