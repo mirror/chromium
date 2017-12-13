@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dca1afaa_813b72e7",
+        "filename": "third_party/WebKit/Source/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T17:56:00Z",
+      "side": 1,
+      "message": "I would suggest adding a pre-emptive OWNERS rule in Source/ to cover this so an API owner doesn\u0027t need to review this every time we want to change it.",
+      "revId": "0846a03d09a71953549202294edcee70e1c3e7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95199763_ec6d6bc3",
+        "filename": "third_party/WebKit/Source/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T17:56:00Z",
+      "side": 1,
+      "message": "nit: dependencies",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "0846a03d09a71953549202294edcee70e1c3e7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2584fe61_32a8b515",
+        "filename": "third_party/WebKit/Source/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T17:56:00Z",
+      "side": 1,
+      "message": "How about expressing this as a list instead and mentioning that dependencies may only flow downwards?\n\n- public/web/\n- controller/\n- bindings/modules/, modules/\n- bindings/core/, core/\n- platform/\n- public/platform/\n- //base, //v8, et cetera",
+      "revId": "0846a03d09a71953549202294edcee70e1c3e7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f659ed77_80dcff9c",
+        "filename": "third_party/WebKit/Source/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T17:56:00Z",
+      "side": 1,
+      "message": "nit: no need to say \"all of\"",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 7
+      },
+      "revId": "0846a03d09a71953549202294edcee70e1c3e7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6501b54_d73611af",
+        "filename": "third_party/WebKit/Source/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T17:56:00Z",
+      "side": 1,
+      "message": "Nit: remove \"All of\"",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 7
+      },
+      "revId": "0846a03d09a71953549202294edcee70e1c3e7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c34cb01_8ad3a20b",
+        "filename": "third_party/WebKit/Source/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T17:56:00Z",
+      "side": 1,
+      "message": "super nit: \"allows removal\"",
+      "range": {
+        "startLine": 96,
+        "startChar": 45,
+        "endLine": 96,
+        "endChar": 62
+      },
+      "revId": "0846a03d09a71953549202294edcee70e1c3e7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bdb0b64_67b13948",
+        "filename": "third_party/WebKit/Source/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T17:56:00Z",
+      "side": 1,
+      "message": "super nit: \"is\"",
+      "range": {
+        "startLine": 97,
+        "startChar": 39,
+        "endLine": 97,
+        "endChar": 43
+      },
+      "revId": "0846a03d09a71953549202294edcee70e1c3e7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66330bc_c94f3aa4",
+        "filename": "third_party/WebKit/public/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T17:56:00Z",
+      "side": 1,
+      "message": "nit: \"should\" would be a shorter way to express this.",
+      "range": {
+        "startLine": 46,
+        "startChar": 66,
+        "endLine": 46,
+        "endChar": 81
+      },
+      "revId": "0846a03d09a71953549202294edcee70e1c3e7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
