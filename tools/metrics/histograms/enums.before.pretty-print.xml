@@ -7780,7 +7780,6 @@ Called by update_net_error_codes.py.-->
   <int value="0" label="Obtained valid inclusion proof"/>
   <int value="1" label="Failed getting inclusion proof"/>
   <int value="2" label="Obtained inclusion proof is invalid"/>
-  <int value="3" label="DNS configuration is invalid"/>
 </enum>
 
 <enum name="CTRequirementCompliance">
@@ -17238,7 +17237,6 @@ Called by update_net_error_codes.py.-->
   <int value="2262" label="AudioWorkletGlobalScopeRegisterProcessor"/>
   <int value="2263" label="AudioWorkletNodeConstructor"/>
   <int value="2264" label="HTMLMediaElementEmptyLoadWithFutureData"/>
-  <int value="2265" label="CSSValueDisplayContents"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -18181,20 +18179,6 @@ Called by update_net_error_codes.py.-->
       label="File used fallback because no embedded profile was found."/>
   <int value="3"
       label="File was dropped because no embedded profile was found."/>
-</enum>
-
-<enum name="FileMetricsProviderHappening">
-  <int value="0" label="OnDidCreateMetricsLog"/>
-  <int value="1" label="ScheduleSourcesCheck"/>
-  <int value="2" label="CheckAndMergeMetricSources"/>
-  <int value="3" label="RecordSourcesChecked"/>
-  <int value="4" label="CheckAndMapSource"/>
-  <int value="5" label="FinishedWithSource"/>
-  <int value="6" label="RecordSourceAsRead"/>
-  <int value="7" label="DeleteFileAsync"/>
-  <int value="8" label="MergeHistogramDeltasFromSource"/>
-  <int value="9" label="RecordHistogramSnapshotsFromSource"/>
-  <int value="10" label="ProvideIndependentMetrics"/>
 </enum>
 
 <enum name="FileReaderSyncWorkerType">
@@ -24710,7 +24694,6 @@ from previous Chrome versions.
   <int value="-1861814223" label="MidiManagerDynamicInstantiation:enabled"/>
   <int value="-1860481724" label="ChromeHomeExpandButton:enabled"/>
   <int value="-1856902397" label="LoadingWithMojo:enabled"/>
-  <int value="-1854432127" label="ChromeHomePullToRefreshIphAtTop:disabled"/>
   <int value="-1854372227" label="VrBrowsingExperimentalFeatures:enabled"/>
   <int value="-1849706663" label="enable-password-force-saving:disabled"/>
   <int value="-1847888049" label="AutofillSendBillingCustomerNumber:enabled"/>
@@ -24815,7 +24798,6 @@ from previous Chrome versions.
   <int value="-1571841513" label="enable-devtools-experiments"/>
   <int value="-1559789642" label="RunAllFlashInAllowMode:enabled"/>
   <int value="-1557527869" label="LoadingWithMojo:disabled"/>
-  <int value="-1555510175" label="PasswordImport:enabled"/>
   <int value="-1553477903" label="ash-disable-text-filtering-in-overview-mode"/>
   <int value="-1549871007" label="OneGoogleBarOnLocalNtp:disabled"/>
   <int value="-1546903171" label="enable-touch-drag-drop"/>
@@ -24914,7 +24896,6 @@ from previous Chrome versions.
   <int value="-1322882747" label="disable-datasaver-prompt"/>
   <int value="-1319688939" label="ignore-gpu-blacklist"/>
   <int value="-1318914924" label="OverflowIconsForMediaControls:enabled"/>
-  <int value="-1314603238" label="ChromeHomePullToRefreshIphAtTop:enabled"/>
   <int value="-1310737697" label="MaterialDesignSettings:enabled"/>
   <int value="-1302904242" label="enable-navigation-tracing"/>
   <int value="-1294050129" label="ContentFullscreen:disabled"/>
@@ -25118,7 +25099,6 @@ from previous Chrome versions.
   <int value="-776686417" label="SiteExplorationUi:disabled"/>
   <int value="-775321548" label="UseNewDoodleApi:disabled"/>
   <int value="-772679248" label="MojoVideoEncodeAccelerator:enabled"/>
-  <int value="-771080109" label="GrantNotificationsToDSE:disabled"/>
   <int value="-770319039" label="enable-touch-editing"/>
   <int value="-763759697" label="enable-audio-support-for-desktop-share"/>
   <int value="-759830869" label="enable-tab-discarding"/>
@@ -25502,7 +25482,6 @@ from previous Chrome versions.
   <int value="360391863" label="NTPOfflineBadge:enabled"/>
   <int value="360599302" label="enable-gpu-rasterization"/>
   <int value="365467768" label="prefetch-search-results"/>
-  <int value="367063319" label="PasswordImport:disabled"/>
   <int value="368854020" label="ash-screen-rotation-animation"/>
   <int value="369352033" label="GenericSensorExtraClasses:enabled"/>
   <int value="370486304" label="enable-origin-chip-on-srp"/>
@@ -25976,7 +25955,6 @@ from previous Chrome versions.
   <int value="1612446645" label="enable-weak-memorycache"/>
   <int value="1612871297" label="WebPayments:disabled"/>
   <int value="1612974229" label="allow-insecure-localhost"/>
-  <int value="1615988672" label="GrantNotificationsToDSE:enabled"/>
   <int value="1617187093" label="enable-improved-a2hs"/>
   <int value="1621298798" label="VrBrowserKeyboard:enabled"/>
   <int value="1622131033" label="ozone-test-single-overlay-support"/>
@@ -34371,8 +34349,8 @@ Called by update_net_trust_anchors.py.-->
 
 <enum name="PresentAddPassesDialogResult">
   <summary>
-    Defines the result of Add Passes dialog presentation. The presentation can
-    be successful or unsuccessful if another view controller is currently
+    Defines the result of Add Passes dialog presentation. The presentation
+    can be successful or unsuccessful if another view controller is currently
     presented. If number is unsuccessful presentations is high, it means that
     Chrome has to queue the dialogs to present those dialogs for every
     downloaded pkpass.
@@ -37399,7 +37377,6 @@ Called by update_net_trust_anchors.py.-->
   <int value="1" label="Requires newer STH"/>
   <int value="2" label="Can be checked for inclusion"/>
   <int value="3" label="Queue is full"/>
-  <int value="4" label="No DNS lookup performed"/>
 </enum>
 
 <enum name="SCTOrigin">
