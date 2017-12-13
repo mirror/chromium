@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48417e33_860ba1a3",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-13T16:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a422c36_389ca0c2",
+      "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cdc4b6b_bf48c7a0",
         "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f531622_85e9e72e",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-13T16:46:49Z",
+      "side": 1,
+      "message": "I did that to match grab frame behaviour of DirectShow implementation.\nWe may have consumers checking the step value to know if the photo resolution can be different from the video resolution.\n\nBut I can rollback to step valued at 1 if you want. Just tell me.",
+      "parentUuid": "6cdc4b6b_bf48c7a0",
+      "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,24 @@
       "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe8d82e_c3ea9994",
+        "filename": "media/capture/video/win/video_capture_device_mf_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1213761
+      },
+      "writtenOn": "2017-12-13T16:46:49Z",
+      "side": 1,
+      "message": "Yes it is possible. \nAdded an AutoLock on TakePhoto().",
+      "parentUuid": "346cfbec_9ed98ff7",
+      "revId": "d61e18041bf7da54a73eee45463a232d7ec716b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
