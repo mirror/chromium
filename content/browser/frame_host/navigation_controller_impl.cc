@@ -1969,6 +1969,8 @@ void NavigationControllerImpl::NavigateToPendingEntry(ReloadType reload_type) {
       // the last committed or pending entry via the address bar, clicking on
       // a link, etc would be treated as reloads.
       ShouldTreatNavigationAsReload(pending_entry_) &&
+      // Skip entries initiated by external applications.
+      !(pending_entry_->GetTransitionType() & ui::PAGE_TRANSITION_FROM_API) &&
       // Skip entries with SSL errors.
       !last_navigation->ssl_error() &&
       // Ignore interstitial pages
