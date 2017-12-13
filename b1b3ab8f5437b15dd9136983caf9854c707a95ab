@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a088bd3_4856e3c8",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T21:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "255753a5_dc317699",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29043ae7_505f4d67",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7b1b6b_1c88c3fd",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T21:45:28Z",
+      "side": 1,
+      "message": "Good catch. My connection was so slow that I spent a lot of time using ed commands and missed moving that line :)",
+      "parentUuid": "29043ae7_505f4d67",
+      "range": {
+        "startLine": 182,
+        "startChar": 6,
+        "endLine": 182,
+        "endChar": 51
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "27de7066_f64dc3c9",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T21:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65c38bc_33e1a1bd",
+      "range": {
+        "startLine": 187,
+        "startChar": 46,
+        "endLine": 187,
+        "endChar": 69
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bea5b46_593100c6",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5be37f_032bbbc2",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T21:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bea5b46_593100c6",
+      "range": {
+        "startLine": 195,
+        "startChar": 5,
+        "endLine": 196,
+        "endChar": 62
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d8e3cac9_0e66aed0",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T21:45:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34ba98e0_2d3fda0d",
+      "range": {
+        "startLine": 233,
+        "startChar": 5,
+        "endLine": 233,
+        "endChar": 37
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09bc6c1c_f43804a5",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b4a9cd_521d2855",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T21:45:28Z",
+      "side": 1,
+      "message": "I don\u0027t think this warrants an extra upgrade step.\nAlso there s compatibility issue.",
+      "parentUuid": "09bc6c1c_f43804a5",
+      "range": {
+        "startLine": 240,
+        "startChar": 35,
+        "endLine": 240,
+        "endChar": 50
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "88ad03f6_0cd4d75a",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T21:45:28Z",
+      "side": 1,
+      "message": "No. Why? And how would your recommend that be done in this step?",
+      "parentUuid": "eb944868_5d76c024",
+      "range": {
+        "startLine": 241,
+        "startChar": 31,
+        "endLine": 241,
+        "endChar": 36
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3087aeb5_19832fbd",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 1
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "703c53dc_c9d1cfe1",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T21:45:28Z",
+      "side": 1,
+      "message": "consts won\u0027t work.\nAlso per our discussion this is addressing everything pre-65 and that list won\u0027t change.",
+      "parentUuid": "3087aeb5_19832fbd",
+      "range": {
+        "startLine": 244,
+        "startChar": 54,
+        "endLine": 244,
+        "endChar": 69
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77c45848_9bb6ea9b",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 1
@@ -206,6 +398,30 @@
       "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b7c913_3371cd7d",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-12-13T21:45:28Z",
+      "side": 1,
+      "message": "This method is not used by taskified model. We will adjust a task in a separate work item, but thanks for calling it out.",
+      "parentUuid": "77c45848_9bb6ea9b",
+      "range": {
+        "startLine": 322,
+        "startChar": 17,
+        "endLine": 322,
+        "endChar": 35
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
