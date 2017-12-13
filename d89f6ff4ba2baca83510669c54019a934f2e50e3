@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "253cb1a8_c0b995e3",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-12-13T20:58:45Z",
+      "side": 0,
+      "message": "Without the timer, can we end up with double tap showing then hiding the controls? Do we even want double top to show the controls?",
+      "revId": "d89f6ff4ba2baca83510669c54019a934f2e50e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
