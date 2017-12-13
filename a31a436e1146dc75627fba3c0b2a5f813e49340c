@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7dae7c_8d33d7a8",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-13T10:54:58Z",
+      "side": 1,
+      "message": "nit: Please always comment on unobvious constants (i.e. why two directories up).",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 151,
+        "endChar": 55
+      },
+      "revId": "a31a436e1146dc75627fba3c0b2a5f813e49340c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49558c2a_0d91c58d",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-12-13T10:54:58Z",
+      "side": 1,
+      "message": "style: offset",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 30
+      },
+      "revId": "a31a436e1146dc75627fba3c0b2a5f813e49340c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
