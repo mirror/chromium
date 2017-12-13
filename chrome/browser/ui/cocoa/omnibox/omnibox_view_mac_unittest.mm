@@ -19,6 +19,7 @@
 #include "components/toolbar/toolbar_model_impl.h"
 #include "content/public/common/content_constants.h"
 #include "testing/platform_test.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image.h"
@@ -64,6 +65,7 @@ class MockOmniboxPopupView : public OmniboxPopupView {
   gfx::Rect GetTargetBounds() override { return gfx::Rect(); }
   void PaintUpdatesNow() override {}
   void OnDragCanceled() override {}
+  int32_t GetAccessibilityId() override { return 1; }
 
   void set_is_open(bool is_open) { is_open_ = is_open; }
 

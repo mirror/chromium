@@ -52,6 +52,10 @@ class OmniboxPopupView {
   // action (e.g. releasing mouse capture).  Note that this can be called when
   // no drag is in progress.
   virtual void OnDragCanceled() = 0;
+
+  // Get the unique accessibility id, used to mark this object as being
+  // controlled by the omnibox textfield.
+  virtual int32_t GetAccessibilityId() = 0;
 };
 
 #endif  // COMPONENTS_OMNIBOX_BROWSER_OMNIBOX_POPUP_VIEW_H_
