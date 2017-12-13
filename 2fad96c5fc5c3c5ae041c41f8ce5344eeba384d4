@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "451a8c9c_3b990f49",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-13T23:57:59Z",
+      "side": 1,
+      "message": "Do you want to actually remove the project from the workspace instead?",
+      "revId": "2fad96c5fc5c3c5ae041c41f8ce5344eeba384d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58404f86_a2a9bcdf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/NetworkPersistenceManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-13T23:57:59Z",
+      "side": 1,
+      "message": "Use different listeners for different branches?",
+      "revId": "2fad96c5fc5c3c5ae041c41f8ce5344eeba384d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
