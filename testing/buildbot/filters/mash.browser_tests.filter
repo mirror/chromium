@@ -45,7 +45,7 @@ SystemTrayClientTest.*
 VolumeControllerTest.*
 
 # Tests from elsewhere.
-BrowserDialogTest.*
+BrowserUITest.*
 CastSessionBrowserTest.*
 ChromeContentBrowserClientMashTest.*
 ChromeContentRendererClientSearchBoxTest.*

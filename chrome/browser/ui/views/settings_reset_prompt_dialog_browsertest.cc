@@ -148,7 +148,7 @@ class MockSettingsResetPromptModel
 
 class SettingsResetPromptDialogTest : public DialogBrowserTest {
  public:
-  void ShowDialog(const std::string& name) override {
+  void ShowUI(const std::string& name) override {
     const std::map<std::string, ModelParams> name_to_model_params = {
         {"DefaultSearchEngineChanged",
          {SettingType::DEFAULT_SEARCH_ENGINE, 0, 0}},
@@ -183,55 +183,54 @@ class SettingsResetPromptDialogTest : public DialogBrowserTest {
 };
 
 IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_DefaultSearchEngineChanged) {
-  RunDialog();
+                       InvokeUI_DefaultSearchEngineChanged) {
+  ShowAndVerifyUI();
 }
 IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_SingleStartupPageChanged) {
-  RunDialog();
+                       InvokeUI_SingleStartupPageChanged) {
+  ShowAndVerifyUI();
 }
 IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_MultipleStartupPagesChanged) {
-  RunDialog();
+                       InvokeUI_MultipleStartupPagesChanged) {
+  ShowAndVerifyUI();
 }
 IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_HomePageChanged) {
-  RunDialog();
+                       InvokeUI_HomePageChanged) {
+  ShowAndVerifyUI();
 }
 IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_DefaultSearchEngineChangedByExtension) {
-  RunDialog();
+                       InvokeUI_DefaultSearchEngineChangedByExtension) {
+  ShowAndVerifyUI();
 }
 IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_SingleStartupPageChangedByExtension) {
-  RunDialog();
+                       InvokeUI_SingleStartupPageChangedByExtension) {
+  ShowAndVerifyUI();
 }
 IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_MultipleStartupPagesChangedByExtension) {
-  RunDialog();
+                       InvokeUI_MultipleStartupPagesChangedByExtension) {
+  ShowAndVerifyUI();
 }
 IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_HomePageChangedByExtension) {
-  RunDialog();
+                       InvokeUI_HomePageChangedByExtension) {
+  ShowAndVerifyUI();
 }
 IN_PROC_BROWSER_TEST_F(
     SettingsResetPromptDialogTest,
-    InvokeDialog_DefaultSearchEngineChangedByMultipleExtensions) {
-  RunDialog();
-}
-IN_PROC_BROWSER_TEST_F(
-    SettingsResetPromptDialogTest,
-    InvokeDialog_SingleStartupPageChangedByMultipleExtensions) {
-  RunDialog();
-}
-IN_PROC_BROWSER_TEST_F(
-    SettingsResetPromptDialogTest,
-    InvokeDialog_MultipleStartupPagesChangedByMultipleExtensions) {
-  RunDialog();
+    InvokeUI_DefaultSearchEngineChangedByMultipleExtensions) {
+  ShowAndVerifyUI();
 }
 IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
-                       InvokeDialog_HomePageChangedByMultipleExtensions) {
-  RunDialog();
+                       InvokeUI_SingleStartupPageChangedByMultipleExtensions) {
+  ShowAndVerifyUI();
+}
+IN_PROC_BROWSER_TEST_F(
+    SettingsResetPromptDialogTest,
+    InvokeUI_MultipleStartupPagesChangedByMultipleExtensions) {
+  ShowAndVerifyUI();
+}
+IN_PROC_BROWSER_TEST_F(SettingsResetPromptDialogTest,
+                       InvokeUI_HomePageChangedByMultipleExtensions) {
+  ShowAndVerifyUI();
 }
 
 }  // namespace

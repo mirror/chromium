@@ -16,7 +16,7 @@ class ManagePasswordsBubbleDialogViewTest
   ManagePasswordsBubbleDialogViewTest() {}
   ~ManagePasswordsBubbleDialogViewTest() override {}
 
-  void ShowDialog(const std::string& name) override {
+  void ShowUI(const std::string& name) override {
     if (name == "PendingPasswordBubble") {
       SetupPendingPassword();
     } else if (name == "AutomaticPasswordBubble") {
@@ -40,12 +40,12 @@ class ManagePasswordsBubbleDialogViewTest
     }
   }
 
-  // SupportsTestDialog:
+  // SupportsTestUI:
   void SetUp() override {
 #if defined(OS_MACOSX)
     UseMdOnly();  // This needs to be called during SetUp() on Mac.
 #endif
-    SupportsTestDialog::SetUp();
+    SupportsTestUI::SetUp();
   }
 
  private:
@@ -53,23 +53,23 @@ class ManagePasswordsBubbleDialogViewTest
 };
 
 IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleDialogViewTest,
-                       InvokeDialog_PendingPasswordBubble) {
-  RunDialog();
+                       InvokeUI_PendingPasswordBubble) {
+  ShowAndVerifyUI();
 }
 
 IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleDialogViewTest,
-                       InvokeDialog_AutomaticPasswordBubble) {
-  RunDialog();
+                       InvokeUI_AutomaticPasswordBubble) {
+  ShowAndVerifyUI();
 }
 
 // Disabled: ExecuteManagePasswordsCommand() spins a runloop which will be flaky
 // in a browser test. See http://crbug.com/716681.
 IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleDialogViewTest,
-                       DISABLED_InvokeDialog_ManagePasswordBubble) {
-  RunDialog();
+                       DISABLED_InvokeUI_ManagePasswordBubble) {
+  ShowAndVerifyUI();
 }
 
 IN_PROC_BROWSER_TEST_F(ManagePasswordsBubbleDialogViewTest,
-                       InvokeDialog_AutoSignin) {
-  RunDialog();
+                       InvokeUI_AutoSignin) {
+  ShowAndVerifyUI();
 }

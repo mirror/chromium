@@ -15,10 +15,13 @@
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/themes/theme_service_factory.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/startup/default_browser_infobar_delegate.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/test/test_browser_ui.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/infobars/core/infobar.h"
 #include "content/public/browser/notification_service.h"
 #include "extensions/browser/extension_dialog_auto_confirm.h"
 #include "extensions/browser/extension_registry.h"
@@ -92,4 +95,101 @@ IN_PROC_BROWSER_TEST_F(InfoBarsTest, TestInfoBarsCloseOnNewTheme) {
             InfoBarService::FromWebContents(
                 browser()->tab_strip_model()->GetActiveWebContents())->
                 infobar_count());
+}
+
+namespace {
+
+// Helper to return when an InfoBar has been removed or replaced.
+class InfoBarObserver : public infobars::InfoBarManager::Observer {
+ public:
+  InfoBarObserver(infobars::InfoBarManager* manager, infobars::InfoBar* infobar)
+      : manager_(manager), infobar_(infobar) {
+    manager_->AddObserver(this);
+  }
+
+  // infobars::InfoBarManager::Observer:
+  void OnInfoBarRemoved(infobars::InfoBar* infobar, bool animate) override {
+    if (infobar != infobar_)
+      return;
+    manager_->RemoveObserver(this);
+    run_loop_.Quit();
+  }
+  void OnInfoBarReplaced(infobars::InfoBar* old_infobar,
+                         infobars::InfoBar* new_infobar) override {
+    OnInfoBarRemoved(old_infobar, false);
+  }
+
+  void WaitForRemoval() { run_loop_.Run(); }
+
+ private:
+  infobars::InfoBarManager* manager_;
+  infobars::InfoBar* infobar_;
+  base::RunLoop run_loop_;
+
+  DISALLOW_COPY_AND_ASSIGN(InfoBarObserver);
+};
+
+}  // namespace
+
+class InfoBarUITest : public UIBrowserTest {
+ public:
+  InfoBarUITest() = default;
+
+  // TestBrowserUI:
+  void PreShow() override;
+  void ShowUI(const std::string& name) override;
+  bool VerifyUI() override;
+  void WaitForUserDismissal() override;
+
+ private:
+  // Returns the InfoBarService associated with the active tab.
+  InfoBarService* GetInfoBarService();
+
+  // Sets |infobars_| to a sorted (by pointer value) list of all infobars from
+  // the active tab.
+  void UpdateInfoBars();
+
+  infobars::InfoBarManager::InfoBars infobars_;
+
+  DISALLOW_COPY_AND_ASSIGN(InfoBarUITest);
+};
+
+void InfoBarUITest::PreShow() {
+  UpdateInfoBars();
+}
+
+void InfoBarUITest::ShowUI(const std::string& name) {
+  // TODO(pkasting): Add other infobars, and check in VerifyUI() that the
+  // correct one was shown.
+  chrome::DefaultBrowserInfoBarDelegate::Create(GetInfoBarService(),
+                                                browser()->profile());
+}
+
+bool InfoBarUITest::VerifyUI() {
+  infobars::InfoBarManager::InfoBars old_infobars = infobars_;
+  UpdateInfoBars();
+  auto added = base::STLSetDifference<infobars::InfoBarManager::InfoBars>(
+      infobars_, old_infobars);
+  return (added.size() == 1) &&
+         (added[0]->delegate()->GetIdentifier() ==
+          infobars::InfoBarDelegate::DEFAULT_BROWSER_INFOBAR_DELEGATE);
+}
+
+void InfoBarUITest::WaitForUserDismissal() {
+  InfoBarObserver observer(GetInfoBarService(), infobars_.front());
+  observer.WaitForRemoval();
+}
+
+InfoBarService* InfoBarUITest::GetInfoBarService() {
+  return InfoBarService::FromWebContents(
+      browser()->tab_strip_model()->GetActiveWebContents());
+}
+
+void InfoBarUITest::UpdateInfoBars() {
+  infobars_ = GetInfoBarService()->infobars_;
+  std::sort(infobars_.begin(), infobars_.end());
+}
+
+IN_PROC_BROWSER_TEST_F(InfoBarUITest, InvokeUI_default_browser) {
+  ShowAndVerifyUI();
 }

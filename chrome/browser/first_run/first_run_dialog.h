@@ -21,7 +21,8 @@ namespace first_run {
 // reporting, and may initiate the flow to set the default browser.
 void ShowFirstRunDialog(Profile* profile);
 
-// Returns a Closure invoked before calling ShowFirstRunDialog(). For testing.
+// Returns a Closure invoked before calling ShowFirstRunDialog(). For
+// testing.
 base::OnceClosure& GetBeforeShowFirstRunDialogHookForTesting();
 
 }  // namespace first_run

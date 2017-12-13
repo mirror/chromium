@@ -434,9 +434,7 @@ class PaymentsRequestVisualTest
   PaymentsRequestVisualTest() {}
 
   // TestBrowserDialog:
-  void ShowDialog(const std::string& name) override {
-    InvokePaymentRequestUI();
-  }
+  void ShowUI(const std::string& name) override { InvokePaymentRequestUI(); }
 
   bool AlwaysCloseAsynchronously() override {
     // Bypassing Widget::CanClose() causes payments::JourneyLogger to see the
@@ -448,9 +446,9 @@ class PaymentsRequestVisualTest
   DISALLOW_COPY_AND_ASSIGN(PaymentsRequestVisualTest);
 };
 
-IN_PROC_BROWSER_TEST_F(PaymentsRequestVisualTest, InvokeDialog_NoShipping) {
+IN_PROC_BROWSER_TEST_F(PaymentsRequestVisualTest, InvokeUI_NoShipping) {
   NavigateTo("/payment_request_no_shipping_test.html");
-  RunDialog();
+  ShowAndVerifyUI();
 }
 
 class PaymentRequestSettingsLinkTest : public PaymentRequestBrowserTestBase {

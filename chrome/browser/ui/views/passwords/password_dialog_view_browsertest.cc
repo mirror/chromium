@@ -99,7 +99,7 @@ class PasswordDialogViewTest : public DialogBrowserTest {
  public:
   // DialogBrowserTest:
   void SetUpOnMainThread() override;
-  void ShowDialog(const std::string& name) override;
+  void ShowUI(const std::string& name) override;
 
   void SetupChooseCredentials(
       std::vector<std::unique_ptr<autofill::PasswordForm>> local_credentials,
@@ -435,7 +435,7 @@ IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest,
 }
 
 // DialogBrowserTest methods for interactive dialog invocation.
-void PasswordDialogViewTest::ShowDialog(const std::string& name) {
+void PasswordDialogViewTest::ShowUI(const std::string& name) {
   if (name == "AutoSigninFirstRun") {
     controller()->OnPromptEnableAutoSignin();
     return;
@@ -489,26 +489,24 @@ void PasswordDialogViewTest::ShowDialog(const std::string& name) {
   }
 }
 
-IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest,
-                       InvokeDialog_PopupAutoSigninPrompt) {
-  RunDialog();
+IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest, InvokeUI_PopupAutoSigninPrompt) {
+  ShowAndVerifyUI();
 }
 
 IN_PROC_BROWSER_TEST_F(
     PasswordDialogViewTest,
-    InvokeDialog_PopupAccountChooserWithSingleCredentialClickSignIn) {
-  RunDialog();
+    InvokeUI_PopupAccountChooserWithSingleCredentialClickSignIn) {
+  ShowAndVerifyUI();
 }
 
 IN_PROC_BROWSER_TEST_F(
     PasswordDialogViewTest,
-    InvokeDialog_PopupAccountChooserWithMultipleCredentialClickSignIn) {
-  RunDialog();
+    InvokeUI_PopupAccountChooserWithMultipleCredentialClickSignIn) {
+  ShowAndVerifyUI();
 }
 
-IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest,
-                       InvokeDialog_AutoSigninFirstRun) {
-  RunDialog();
+IN_PROC_BROWSER_TEST_F(PasswordDialogViewTest, InvokeUI_AutoSigninFirstRun) {
+  ShowAndVerifyUI();
 }
 
 }  // namespace

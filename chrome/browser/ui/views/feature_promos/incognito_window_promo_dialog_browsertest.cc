@@ -16,7 +16,7 @@ class IncognitoWindowPromoDialogTest : public DialogBrowserTest {
   IncognitoWindowPromoDialogTest() = default;
 
   // DialogBrowserTest:
-  void ShowDialog(const std::string& name) override {
+  void ShowUI(const std::string& name) override {
     feature_engagement::IncognitoWindowTrackerFactory::GetInstance()
         ->GetForProfile(browser()->profile())
         ->ShowPromo();
@@ -28,13 +28,10 @@ class IncognitoWindowPromoDialogTest : public DialogBrowserTest {
 
 }  // namespace
 
-// Test that calls ShowDialog("default"). Interactive when run via
-// ../browser_tests --gtest_filter=BrowserDialogTest.Invoke
-// --interactive
-// --dialog=IncognitoWindowPromoDialogTest.InvokeDialog_IncognitoWindowPromo
+// Test that calls ShowUI("default").
 IN_PROC_BROWSER_TEST_F(IncognitoWindowPromoDialogTest,
-                       InvokeDialog_IncognitoWindowPromo) {
-  RunDialog();
+                       InvokeUI_IncognitoWindowPromo) {
+  ShowAndVerifyUI();
 }
 
 }  // namespace feature_engagement
