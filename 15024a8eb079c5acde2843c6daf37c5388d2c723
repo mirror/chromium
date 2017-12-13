@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "957490d0_ee30a74b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-13T01:34:54Z",
+      "side": 1,
+      "message": "curlies here",
+      "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c2e9fc_3b2e5257",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-13T01:34:54Z",
+      "side": 1,
+      "message": "nit: run_loop_ \u003d std::make_unique\u003cbase::RunLoop\u003e();",
+      "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb92299d_b453dab3",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-13T01:34:54Z",
+      "side": 1,
+      "message": "nit: \u003d true; here",
+      "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81548941_94d890d0",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-13T01:34:54Z",
+      "side": 1,
+      "message": "nit: \u003d false here and below",
+      "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3dbff69_cf126c0f",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-12-13T01:34:54Z",
+      "side": 1,
+      "message": "I don\u0027t really like passing pointers around the real constructors. Can we have a fixit item that would have constructors accept std::unique_ptr, that we would simply move around? go/autofill-fix-it for instructions how to create an item.",
+      "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
