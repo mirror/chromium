@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6eb27ff4_b899426e",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T09:19:48Z",
+      "side": 1,
+      "message": "huge nit: https",
+      "range": {
+        "startLine": 1008,
+        "startChar": 54,
+        "endLine": 1008,
+        "endChar": 58
+      },
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e9bbb77_3086b709",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
         "patchSetId": 1
@@ -19,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "71ef4724_94984492",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T09:19:48Z",
+      "side": 1,
+      "message": "if this is something that\u0027s possible to do, i\u0027d prefer that it happen now. less password exposure is always a good thing. (the security team will agree, i think.) :-)",
+      "parentUuid": "0e9bbb77_3086b709",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da6dd6d5_6d7af7fa",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 1
@@ -30,6 +71,29 @@
       "writtenOn": "2017-12-12T19:38:25Z",
       "side": 1,
       "message": "What\u0027s the reason to duplicate this? Are there cases where Key is not the password?\n\nie. Why can\u0027t we use reuse wherever SetKey stores the password?",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72f292c_5c80ee3b",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T09:19:48Z",
+      "side": 1,
+      "message": "nit: CreatePasswordPipe? (i usually interpret \"get\" methods as returning some already-existing resource or object.)",
+      "range": {
+        "startLine": 170,
+        "startChar": 15,
+        "endLine": 170,
+        "endChar": 30
+      },
       "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +134,41 @@
     },
     {
       "key": {
+        "uuid": "02defc31_497d3945",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T09:19:48Z",
+      "side": 1,
+      "message": "also reinterpret_cast\u003cconst char*\u003e",
+      "parentUuid": "5e91ba1e_78271bde",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344d69d1_f6d7f058",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T09:19:48Z",
+      "side": 1,
+      "message": "sizeof(data_size)\n\n(reduces the chances of a bug being introduced in the future)",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f5f2822_d18b5c7c",
         "filename": "chromeos/dbus/session_manager_client.cc",
         "patchSetId": 1
@@ -81,6 +180,23 @@
       "writtenOn": "2017-12-12T19:38:25Z",
       "side": 1,
       "message": "I think you need to check the fd here against whatever the default value is return in the error case.",
+      "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98b2b6a_f874ab7f",
+        "filename": "chromeos/dbus/session_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T09:19:48Z",
+      "side": 1,
+      "message": "nit: add trailing period to match other comments",
       "revId": "06afc7ec46f16ee5c67e4bb3c8945ea7383891d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
