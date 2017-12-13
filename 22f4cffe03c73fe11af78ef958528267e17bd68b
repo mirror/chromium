@@ -16,6 +16,24 @@
       "revId": "22f4cffe03c73fe11af78ef958528267e17bd68b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5683a340_2d44c969",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol-1.2.json",
+        "patchSetId": 16
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-13T22:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "913a1544_49d97d1c",
+      "revId": "22f4cffe03c73fe11af78ef958528267e17bd68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
