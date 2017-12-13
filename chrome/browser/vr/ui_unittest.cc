@@ -9,7 +9,7 @@
 #include "base/numerics/ranges.h"
 #include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/browser/vr/elements/button.h"
+#include "chrome/browser/vr/elements/disc_button.h"
 #include "chrome/browser/vr/elements/content_element.h"
 #include "chrome/browser/vr/elements/exit_prompt.h"
 #include "chrome/browser/vr/elements/rect.h"
