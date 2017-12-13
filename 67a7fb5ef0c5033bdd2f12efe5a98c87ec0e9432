@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ae7a0d2_e2e3d1f8",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-from-2-characteristics.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-13T01:11:56Z",
+      "side": 1,
+      "message": "You don\u0027t need the curlies.",
+      "revId": "67a7fb5ef0c5033bdd2f12efe5a98c87ec0e9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2617d5a7_6638dd2d",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/characteristic/service-same-from-2-characteristics.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-12-13T01:11:56Z",
+      "side": 1,
+      "message": "this should be indented 4 characters.",
+      "revId": "67a7fb5ef0c5033bdd2f12efe5a98c87ec0e9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
