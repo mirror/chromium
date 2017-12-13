@@ -64,6 +64,11 @@ class PermissionSelectorRow {
   // Sets the minimum width for |combobox_|.
   void SetMinComboboxWidth(int width);
 
+  // Resizes the permission secondary text, if any, to take up the width of the
+  // row, wrapping to the next line if necessary. This should be called after
+  // the |PermissionSelectorRow| size has been determined.
+  void SizeSecondaryText(int row_width);
+
  private:
   friend class test::PageInfoBubbleViewTestApi;
 
@@ -87,6 +92,7 @@ class PermissionSelectorRow {
   views::Label* label_;
   internal::PermissionMenuButton* menu_button_;
   internal::PermissionCombobox* combobox_;
+  views::Label* secondary_label_;
 
   base::ObserverList<PermissionSelectorRowObserver, false> observer_list_;
 
