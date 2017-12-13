@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "10c6634d_514adcb7",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T11:23:08Z",
+      "side": 1,
+      "message": "Correct.",
+      "parentUuid": "07f9f4de_8eb6aef4",
+      "range": {
+        "startLine": 1549,
+        "startChar": 8,
+        "endLine": 1549,
+        "endChar": 14
+      },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1cdfbd7_24672896",
         "filename": "content/public/common/media_stream_request.cc",
         "patchSetId": 4
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "c9ed0dd3_cbd36751",
+        "filename": "content/public/common/media_stream_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T11:23:08Z",
+      "side": 1,
+      "message": "That one looks quite good.",
+      "parentUuid": "3307d497_96d9aacf",
+      "range": {
+        "startLine": 86,
+        "startChar": 23,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d5509ae_dece38de",
         "filename": "content/renderer/media/local_media_stream_audio_source.cc",
         "patchSetId": 4
@@ -196,6 +244,24 @@
       "side": 1,
       "message": "DCHECK before SetDevice() ?",
       "parentUuid": "7d5509ae_dece38de",
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873c4db2_a27de645",
+        "filename": "content/renderer/media/local_media_stream_audio_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T11:23:08Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "49faa849_33b446d1",
       "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -273,6 +339,30 @@
     },
     {
       "key": {
+        "uuid": "456bab81_a7cdf143",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T11:23:08Z",
+      "side": 1,
+      "message": "What if you don\u0027t do anything?\nI would expect audio devices to have a value and video devices to not have a value.\nIf we need video devices to have a value then we should fix that instead since it should not have a value in that case.",
+      "parentUuid": "23be94e4_21c64528",
+      "range": {
+        "startLine": 577,
+        "startChar": 73,
+        "endLine": 577,
+        "endChar": 0
+      },
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a4b0e4b_66012eb2",
         "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
         "patchSetId": 4
@@ -302,6 +392,24 @@
       "side": 1,
       "message": "May be this DCHECK in the ctor before SetDevice() ?",
       "parentUuid": "8a4b0e4b_66012eb2",
+      "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebaa1323_d60bfb50",
+        "filename": "content/renderer/media/webrtc/processed_local_audio_source.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-13T11:23:08Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "3878e469_2b3d932d",
       "revId": "825bd415d7db8000ae128a3c67abe00fab779434",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
