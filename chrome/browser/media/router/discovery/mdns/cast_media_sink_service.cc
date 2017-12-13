@@ -89,10 +89,12 @@ ErrorType CreateCastMediaSink(const DnsSdService& service,
 const char CastMediaSinkService::kCastServiceType[] = "_googlecast._tcp.local";
 
 CastMediaSinkService::CastMediaSinkService(
-    content::BrowserContext* browser_context)
+    const scoped_refptr<net::URLRequestContextGetter>& request_context)
     : impl_(nullptr, base::OnTaskRunnerDeleter(nullptr)),
-      browser_context_(browser_context) {
+      request_context_(request_context),
+      weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(request_context_);
 }
 
 CastMediaSinkService::~CastMediaSinkService() {
@@ -110,9 +112,14 @@ void CastMediaSinkService::Start(
   DCHECK(!impl_);
 
   // |sinks_discovered_cb| should only be invoked on the current sequence.
-  impl_ = CreateImpl(base::BindRepeating(&RunSinksDiscoveredCallbackOnSequence,
-                                         base::SequencedTaskRunnerHandle::Get(),
-                                         sinks_discovered_cb));
+  // We wrap |sinks_discovered_cb| in a member function bound with WeakPtr to
+  // ensure it will only be invoked while |this| is still valid.
+  impl_ = CreateImpl(base::BindRepeating(
+      &RunSinksDiscoveredCallbackOnSequence,
+      base::SequencedTaskRunnerHandle::Get(),
+      base::BindRepeating(&CastMediaSinkService::RunSinksDiscoveredCallback,
+                          weak_ptr_factory_.GetWeakPtr(),
+                          sinks_discovered_cb)));
   impl_->task_runner()->PostTask(
       FROM_HERE, base::BindOnce(&CastMediaSinkServiceImpl::Start,
                                 base::Unretained(impl_.get())));
@@ -135,19 +142,10 @@ CastMediaSinkService::CreateImpl(
   scoped_refptr<base::SequencedTaskRunner> task_runner =
       cast_socket_service->task_runner();
   return std::unique_ptr<CastMediaSinkServiceImpl, base::OnTaskRunnerDeleter>(
-      new CastMediaSinkServiceImpl(
-          sinks_discovered_cb, cast_socket_service,
-          DiscoveryNetworkMonitor::GetInstance(),
-          Profile::FromBrowserContext(browser_context_)->GetRequestContext()),
+      new CastMediaSinkServiceImpl(sinks_discovered_cb, cast_socket_service,
+                                   DiscoveryNetworkMonitor::GetInstance(),
+                                   request_context_),
       base::OnTaskRunnerDeleter(task_runner));
-}
-
-void CastMediaSinkService::ForceSinkDiscoveryCallback() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  impl_->task_runner()->PostTask(
-      FROM_HERE,
-      base::BindOnce(&CastMediaSinkServiceImpl::ForceSinkDiscoveryCallback,
-                     base::Unretained(impl_.get())));
 }
 
 void CastMediaSinkService::OnUserGesture() {
@@ -202,16 +200,17 @@ OnDialSinkAddedCallback CastMediaSinkService::GetDialSinkAddedCallback() {
   return impl_->GetDialSinkAddedCallback();
 }
 
-scoped_refptr<base::SequencedTaskRunner>
-CastMediaSinkService::GetImplTaskRunner() {
-  return impl_->task_runner();
-}
-
 void CastMediaSinkService::OnDialSinkAdded(const MediaSinkInternal& sink) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   impl_->task_runner()->PostTask(
       FROM_HERE, base::BindOnce(&CastMediaSinkServiceImpl::OnDialSinkAdded,
                                 base::Unretained(impl_.get()), sink));
+}
+
+void CastMediaSinkService::RunSinksDiscoveredCallback(
+    const OnSinksDiscoveredCallback& sinks_discovered_cb,
+    std::vector<MediaSinkInternal> sinks) {
+  sinks_discovered_cb.Run(std::move(sinks));
 }
 
 }  // namespace media_router
