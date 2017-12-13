@@ -53,6 +53,20 @@ const double kDefaultCookieExpiryTime = 20*365*24*60*60;
 // for pointer actions
 enum class PointerActionType { NOT_INITIALIZED, PRESS, MOVE, RELEASE, IDLE };
 
+Status IntToStringButton(int button, std::string& out) {
+  if (button == 0) {
+    out = "left";
+  } else if (button == 1) {
+    out = "middle";
+  } else if (button == 2) {
+    out = "right";
+  } else {
+    return Status(kUnknownError,
+                  "'button' must be an integer between 0 and 2 inclusive");
+  }
+  return Status(kOk);
+}
+
 Status GetMouseButton(const base::DictionaryValue& params,
                       MouseButton* button) {
   int button_num;
@@ -785,6 +799,7 @@ Status ProcessInputActionSequence(Session* session,
 
     std::string source_id;
     source->GetString("id", &source_id);
+
     if (source_id == id) {
       found = true;
       if (type == "pointer") {
@@ -807,19 +822,19 @@ Status ProcessInputActionSequence(Session* session,
   }
 
   // if we found no matching active input source
-  base::DictionaryValue tmp_source;
+  std::unique_ptr<base::DictionaryValue> tmp_source(new base::DictionaryValue);
   if (!found) {
     // create input source
-    tmp_source.SetString("id", id);
-    tmp_source.SetString("type", type);
+    tmp_source->SetString("id", id);
+    tmp_source->SetString("type", type);
     if (type == "pointer") {
-      tmp_source.SetString("pointerType", pointer_type);
+      tmp_source->SetString("pointerType", pointer_type);
     }
 
-    session->active_input_sources->Append(
-        base::MakeUnique<base::DictionaryValue>(std::move(tmp_source)));
+    session->active_input_sources->Append(std::move(tmp_source));
 
     base::DictionaryValue tmp_state;
+    tmp_state.SetString("id", id);
     if (type == "key") {
       std::unique_ptr<base::ListValue> pressed(new base::ListValue);
       bool alt = false;
@@ -935,22 +950,13 @@ Status ProcessInputActionSequence(Session* session,
       action->SetString("pointerType", pointer_type);
       if (subtype == "pointerUp" || subtype == "pointerDown") {
         int button;
-        if (!action_item->GetInteger("button", &button) || button < 0)
-          return Status(kInvalidArgument,
-                        "'button' must be a non-negative int");
-        action->SetInteger("button", button);
-        if (subtype == "pointerDown") {
-          int x;
-          if (!action_item->GetInteger("x", &x))
-            return Status(kInvalidArgument, "'x' must be an integer");
-          int y;
-          if (!action_item->GetInteger("y", &y))
-            return Status(kInvalidArgument, "'y' must be an integer");
-
-          action->SetInteger("x", x);
-          action->SetInteger("y", y);
+        if (action_item->GetInteger("button", &button)) {
+          if (button < 0)
+            return Status(kInvalidArgument,
+                          "'button' must be a non-negative int");
+          action->SetInteger("button", button);
         }
-      } else {
+      } else if (subtype != "pause") {
         // pointerMove
         int duration;
         if (!action_item->GetInteger("duration", &duration) || duration < 0)
@@ -974,6 +980,7 @@ Status ProcessInputActionSequence(Session* session,
 
         action->SetInteger("x", x);
         action->SetInteger("y", y);
+        action->SetInteger("duration", duration);
       }
     }
     ret->Append(std::move(action));
@@ -1002,6 +1009,7 @@ Status ExecutePerformActions(Session* session,
   // the type of each action list in actions_by_tick
   std::list<std::string> action_list_types;
 
+  // session->active_input_sources->Clear();
   for (size_t i = 0; i < actions->GetSize(); i++) {
     std::unique_ptr<base::ListValue> input_source_actions(
         new base::ListValue());
@@ -1048,16 +1056,13 @@ Status ExecutePerformActions(Session* session,
     std::string type = action_list_types.back();
     action_list_types.pop_back();
 
-    // pause only
-
     // key actions
     if (type == "key") {
       KeyEventBuilder builder;
       std::list<KeyEvent> key_events;
       for (size_t j = 0; j < action_sequence->GetSize(); j++) {
         base::DictionaryValue* action;
-        if (!action_sequence->GetDictionary(j, &action))
-          return Status(kInvalidArgument, "each argument must be a dictionary");
+        action_sequence->GetDictionary(j, &action);
         std::string subtype;
         if (!action->GetString("subtype", &subtype))
           return Status(kInvalidArgument, "'type' must be a string");
@@ -1085,19 +1090,31 @@ Status ExecutePerformActions(Session* session,
           if (!error_msg.empty())
             return Status(kUnknownError, error_msg);
 
+          // set the modifiers
+          int modifiers = 0;
+          bool temp = 0;
+          if (action->GetBoolean("alt", &temp))
+            modifiers |= 1;
+          if (action->GetBoolean("ctl", &temp))
+            modifiers |= 2;
+          if (action->GetBoolean("shift", &temp))
+            modifiers |= 4;
+          if (action->GetBoolean("meta", &temp))
+            modifiers |= 8;
+
           if (subtype == "keyDown")
             key_events.push_back(builder.SetType(kKeyDownEventType)
                                      ->SetText(base::UTF16ToUTF8(raw_key),
                                                base::UTF16ToUTF8(raw_key))
                                      ->SetKeyCode(key_code)
-                                     ->SetModifiers(0)
+                                     ->SetModifiers(modifiers)
                                      ->Build());
           else if (subtype == "keyUp")
             key_events.push_back(builder.SetType(kKeyUpEventType)
                                      ->SetText(base::UTF16ToUTF8(raw_key),
                                                base::UTF16ToUTF8(raw_key))
                                      ->SetKeyCode(key_code)
-                                     ->SetModifiers(0)
+                                     ->SetModifiers(modifiers)
                                      ->Build());
         }
       }
@@ -1105,7 +1122,145 @@ Status ExecutePerformActions(Session* session,
       if (status.IsError())
         return status;
     } else if (type == "pointer") {
-      // TODO:implement this
+      base::ListValue pointer_action_list;
+      for (size_t j = 0; j < action_sequence->GetSize(); j++) {
+        base::DictionaryValue pointer_action;
+        base::DictionaryValue* action;
+        if (!action_sequence->GetDictionary(j, &action))
+          return Status(kInvalidArgument, "each argument must be a dictionary");
+        action->GetInteger("duration", &duration);
+
+        std::string subtype;
+        if (!action->GetString("subtype", &subtype))
+          return Status(kInvalidArgument, "'type' must be a string");
+
+        std::string id;
+        if (!action->GetString("id", &id))
+          return Status(kInvalidArgument, "id");
+
+        // type
+        std::string pointer_type;
+        if (!action->GetString("pointerType", &pointer_type)) {
+          pointer_type = "mouse";
+        }
+        pointer_action.SetString("pointerType", pointer_type);
+
+        // button
+        int button;
+        // no button for pointerMove
+        if (subtype != "pointerMove" && subtype != "pause") {
+          if (!action->GetInteger("button", &button))
+            return Status(kInvalidArgument,
+                          "button not in action object or is not an integer");
+          std::string button_str;
+          Status status = IntToStringButton(button, button_str);
+          if (status.IsError())
+            return status;
+          pointer_action.SetString("button", button_str);
+        }
+
+        // TODO: if input state pressed contains button
+        base::DictionaryValue* state;
+        if (!session->input_state_table->GetDictionary(id, &state))
+          return Status(kInvalidArgument, "state");
+
+        // x and y at zero are the 0, 0 position in the viewport
+        ChromeDesktopImpl* desktop = NULL;
+        Status status = session->chrome->GetAsDesktop(&desktop);
+        if (status.IsError())
+          return status;
+
+        int x;
+        int y;
+        status = desktop->GetWindowPosition(session->window, &x, &y);
+        if (status.IsError())
+          return status;
+
+        if (subtype == "pointerDown") {
+          if (!state->GetInteger("x", &x))
+            return Status(kInvalidArgument,
+                          "input state should exist and have an x value");
+
+          if (!state->GetInteger("y", &y))
+            return Status(kInvalidArgument,
+                          "input state should exist and have an y value");
+
+          // add the button to the pressed list in the state table
+          base::ListValue* pressed;
+          state->GetList("pressed", &pressed);
+          pressed->AppendInteger(button);
+          state->SetList("pressed", pressed->CreateDeepCopy());
+
+          pointer_action.SetInteger("x", x);
+          pointer_action.SetInteger("y", y);
+
+          // TODO: cancel list
+
+        } else if (subtype == "pointerMove") {
+          int start_x;
+          int start_y;
+          state->GetInteger("x", &start_x);
+          state->GetInteger("y", &start_y);
+
+          int x_offset;
+          int y_offset;
+          action->GetInteger("x", &x_offset);
+          action->GetInteger("y", &y_offset);
+
+          std::string origin;
+          action->GetString("origin", &origin);
+          if (origin == "viewport") {
+            x = x_offset;
+            y = y_offset;
+          } else if (origin == "pointer") {
+            x = start_x + x_offset;
+            y = start_y + y_offset;
+          } else {
+            return Status(kInvalidArgument, "only support origin and pointer");
+          }
+
+          // TODO:change this to update input state for afterwards and not
+          // before
+
+          state->SetInteger("x", x);
+          state->SetInteger("y", y);
+
+          pointer_action.SetInteger("initialX", start_x);
+          pointer_action.SetInteger("initialY", start_y);
+          pointer_action.SetInteger("x", x);
+          pointer_action.SetInteger("y", y);
+        }
+        if (subtype == "pointerUp") {
+          // remove button from state table
+          base::DictionaryValue* state_table;
+          session->input_state_table->GetDictionary(id, &state_table);
+
+          base::ListValue* pressed;
+          state->GetList("pressed", &pressed);
+          for (size_t k = 0; k < actions_by_tick.GetSize(); k++) {
+            int state_button;
+            std::unique_ptr<base::Value> temp;
+            pressed->GetInteger(k, &state_button);
+            if (state_button == button) {
+              pressed->Remove(k, &temp);
+              break;
+            }
+          }
+          state->SetList("pressed", pressed->CreateDeepCopy());
+        }
+
+        int duration;
+        if (!action->GetInteger("duration", &duration)) {
+          duration = 0;
+        }
+
+        pointer_action.SetString("type", subtype);
+        pointer_action.SetInteger("duration", duration);
+
+        pointer_action_list.Append(
+            base::MakeUnique<base::DictionaryValue>(std::move(pointer_action)));
+      }
+      web_view->DispatchPointerActions(pointer_action_list);
     }
   }
   return Status(kOk);

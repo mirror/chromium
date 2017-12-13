@@ -87,6 +87,8 @@ _VERSION_SPECIFIC_FILTER['HEAD'] = [
     'MobileEmulationCapabilityTest.testDeviceName',
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabs',
     'MobileEmulationCapabilityTest.testNetworkConnectionTypeIsAppliedToAllTabsImmediately',
+    # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2164
+    'ChromeDriverTest.testSendTextToAlert',
 ]
 
 _VERSION_SPECIFIC_FILTER['64'] = [
@@ -181,8 +183,6 @@ _ANDROID_NEGATIVE_FILTER['chrome'] = (
         'ChromeDriverTest.testCanClickAlertInIframes',
         # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2081
         'ChromeDriverTest.testCloseWindowUsingJavascript',
-        # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2108
-        'ChromeLoggingCapabilityTest.testPerformanceLogger',
     ]
 )
 _ANDROID_NEGATIVE_FILTER['chrome_stable'] = (
@@ -198,6 +198,10 @@ _ANDROID_NEGATIVE_FILTER['chromium'] = (
         'ChromeDriverTest.testHoverOverElement',
         # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1478
         'ChromeDriverTest.testShouldHandleNewWindowLoadingProperly',
+        # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2108
+        'ChromeLoggingCapabilityTest.testPerformanceLogger',
+        # https://bugs.chromium.org/p/chromedriver/issues/detail?id=2164
+        'ChromeDriverTest.testSendTextToAlert',
     ]
 )
 _ANDROID_NEGATIVE_FILTER['chromedriver_webview_shell'] = (
@@ -626,6 +630,232 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
     div.HoverOver()
     self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
 
+  # ACTIONS
+  def testActionsMoveMouse(self):
+    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    div = self._driver.ExecuteScript(
+        'document.body.innerHTML = "<div>old</div>";'
+        'var div = document.getElementsByTagName("div")[0];'
+        'div.style["width"] = "100px";'
+        'div.style["height"] = "100px";'
+        'div.addEventListener("mouseover", function() {'
+        '  var div = document.getElementsByTagName("div")[0];'
+        '  div.innerHTML="new<br>";'
+        '});'
+        'return div;')
+    actions = ({"actions":
+                [
+                    {"type": "pointer", "pointerType": "mouse", "id": "2", "actions":
+                        [
+                         {"id": "1", "type": "pointerDown", "duration": 0, "button": 0},
+                         {"id": "1", "type": "pointerMove", "duration": 0, "x": 10, "y": 10},
+
+                        ]
+                    }
+                ]
+               })
+    self._driver.PerformActions(actions)
+    self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
+
+  def testActionsMovePen(self):
+    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    div = self._driver.ExecuteScript(
+        'document.body.innerHTML = "<div>old</div>";'
+        'var div = document.getElementsByTagName("div")[0];'
+        'div.style["width"] = "100px";'
+        'div.style["height"] = "100px";'
+        'div.addEventListener("mouseover", function() {'
+        '  var div = document.getElementsByTagName("div")[0];'
+        '  div.innerHTML="new<br>";'
+        '});'
+        'return div;')
+    actions = ({"actions":
+                [
+                    {"type": "pointer", "pointerType": "pen", "id": "2", "actions":
+                        [
+                         {"id": "1", "type": "pointerDown", "duration": 0, "button": 0},
+                         {"id": "1", "type": "pointerMove", "duration": 0, "x": 10, "y": 10},
+
+                        ]
+                    }
+                ]
+               })
+    self._driver.PerformActions(actions)
+    self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
+
+  def testActionsMoveTouch(self):
+    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    div = self._driver.ExecuteScript(
+        'document.body.innerHTML = "<div>old</div>";'
+        'var div = document.getElementsByTagName("div")[0];'
+        'div.style["width"] = "100px";'
+        'div.style["height"] = "100px";'
+        'div.addEventListener("mouseover", function() {'
+        '  var div = document.getElementsByTagName("div")[0];'
+        '  div.innerHTML="new<br>";'
+        '});'
+        'return div;')
+    actions = ({"actions":
+                [
+                    {"type": "pointer", "pointerType": "touch", "id": "2", "actions":
+                        [
+                         {"id": "1", "type": "pointerDown", "duration": 0, "button": 0},
+                         {"id": "1", "type": "pointerMove", "duration": 0, "x": 10, "y": 10},
+
+                        ]
+                    }
+                ]
+               })
+    self._driver.PerformActions(actions)
+    self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
+
+  def testActionsDownMouse(self):
+    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    div = self._driver.ExecuteScript(
+        'document.body.innerHTML = "<div>old</div>";'
+        'var div = document.getElementsByTagName("div")[0];'
+        'div.addEventListener("pointerdown", function() {'
+        '  div.innerHTML="new<br>";'
+        '});'
+        'return div;')
+
+    # pointerDown where the element is
+    actions = ({"actions":
+                [
+                    {"type": "pointer", "pointerType": "mouse", "id": "2", "actions":
+                        [
+                         {"id": "1", "type": "pointerMove", "duration": 0, "x": 10, "y": 10},
+                         {"id": "1", "type": "pointerDown", "duration": 0, "button": 0},
+                        ]
+                    }
+                ]
+               })
+    self._driver.PerformActions(actions)
+    self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
+
+  def testActionsDownPen(self):
+    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    div = self._driver.ExecuteScript(
+        'document.body.innerHTML = "<div>old</div>";'
+        'var div = document.getElementsByTagName("div")[0];'
+        'div.addEventListener("pointerdown", function() {'
+        '  div.innerHTML="new<br>";'
+        '});'
+        'return div;')
+
+    # pointerDown where the element is
+    actions = ({"actions":
+                [
+                    {"type": "pointer", "pointerType": "pen", "id": "2", "actions":
+                        [
+                         {"id": "1", "type": "pointerMove", "duration": 0, "x": 10, "y": 10},
+                         {"id": "1", "type": "pointerDown", "duration": 0, "button": 0},
+                        ]
+                    }
+                ]
+               })
+    self._driver.PerformActions(actions)
+    self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
+
+  def testActionsDownTouch(self):
+    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    div = self._driver.ExecuteScript(
+        'document.body.innerHTML = "<div>old</div>";'
+        'var div = document.getElementsByTagName("div")[0];'
+        'div.addEventListener("pointerdown", function() {'
+        '  div.innerHTML="new<br>";'
+        '});'
+        'return div;')
+
+    # pointerDown where the element is
+    actions = ({"actions":
+                [
+                    {"type": "pointer", "pointerType": "touch", "id": "2", "actions":
+                        [
+                         {"id": "1", "type": "pointerMove", "duration": 0, "x": 10, "y": 10},
+                         {"id": "1", "type": "pointerDown", "duration": 0, "button": 0},
+                        ]
+                    }
+                ]
+               })
+    self._driver.PerformActions(actions)
+    self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
+
+  def testActionsUpTouch(self):
+    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    div = self._driver.ExecuteScript(
+        'document.body.innerHTML = "<div>old</div>";'
+        'var div = document.getElementsByTagName("div")[0];'
+        'div.addEventListener("pointerup", function() {'
+        '  div.innerHTML="new<br>";'
+        '});'
+        'return div;')
+
+    # pointerDown where the element is
+    actions = ({"actions":
+                [
+                    {"type": "pointer", "pointerType": "touch", "id": "2", "actions":
+                        [
+                         {"id": "1", "type": "pointerMove", "duration": 0, "x": 10, "y": 10},
+                         {"id": "1", "type": "pointerDown", "duration": 0, "button": 0},
+                         {"id": "1", "type": "pointerUp", "duration": 0, "button": 0},
+                        ]
+                    }
+                ]
+               })
+    self._driver.PerformActions(actions)
+    self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
+
+  def testActionsUpMouse(self):
+    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    div = self._driver.ExecuteScript(
+        'document.body.innerHTML = "<div>old</div>";'
+        'var div = document.getElementsByTagName("div")[0];'
+        'div.addEventListener("pointerup", function() {'
+        '  div.innerHTML="new<br>";'
+        '});'
+        'return div;')
+
+    # pointerDown where the element is
+    actions = ({"actions":
+                [
+                    {"type": "pointer", "pointerType": "mouse", "id": "2", "actions":
+                        [
+                         {"id": "1", "type": "pointerMove", "duration": 0, "x": 10, "y": 10},
+                         {"id": "1", "type": "pointerDown", "duration": 0, "button": 0},
+                         {"id": "1", "type": "pointerUp", "duration": 0, "button": 0},
+                        ]
+                    }
+                ]
+               })
+    self._driver.PerformActions(actions)
+    self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
+
+  def testActionsUpPen(self):
+    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    div = self._driver.ExecuteScript(
+        'document.body.innerHTML = "<div>old</div>";'
+        'var div = document.getElementsByTagName("div")[0];'
+        'div.addEventListener("pointerup", function() {'
+        '  div.innerHTML="new<br>";'
+        '});'
+        'return div;')
+
+    # pointerDown where the element is
+    actions = ({"actions":
+                [
+                    {"type": "pointer", "pointerType": "pen", "id": "2", "actions":
+                        [
+                         {"id": "1", "type": "pointerMove", "duration": 0, "x": 10, "y": 10},
+                         {"id": "1", "type": "pointerDown", "duration": 0, "button": 0},
+                         {"id": "1", "type": "pointerUp", "duration": 0, "button": 0},
+                        ]
+                    }
+                ]
+               })
+    self._driver.PerformActions(actions)
+    self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
+
   def testClickElement(self):
     self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
     div = self._driver.ExecuteScript(
@@ -873,7 +1103,6 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
                       self._driver.ExecuteScript('return window.confirmed'))
 
   def testSendTextToAlert(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
     self._driver.ExecuteScript('prompt = window.prompt()')
     self.assertTrue(self._driver.IsAlertOpen())
     self._driver.HandleAlert(True, 'TextToPrompt')

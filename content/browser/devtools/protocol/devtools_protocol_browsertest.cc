@@ -979,6 +979,62 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, DISABLED_TransparentScreenshots) {
 
 #if defined(OS_ANDROID)
 // Disabled, see http://crbug.com/469947.
+
+IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, DISABLED_DispatchPointerActions) {
+  GURL test_url = GetTestUrl("devtools", "synthetic_gesture_tests.html");
+  NavigateToURLBlockUntilNavigationsComplete(shell(), test_url, 1);
+  Attach();
+
+  int old_x;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      shell(), "domAutomationController.send(event.pageX)", &old_x));
+
+  int old_y;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      shell(), "domAutomationController.send(event.pageY)", &old_y));
+
+  std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+  std::unique_ptr<base::ListValue> list_params(new base::ListValue());
+
+  std::unique_ptr<base::DictionaryValue> down_params(
+      new base::DictionaryValue());
+  down_params->SetInteger("button", 0);
+  down_params->SetInteger("duration", 0);
+  down_params->SetString("pointerType", "mouse");
+  down_params->SetString("type", "pointerDown");
+  list_params->Append(std::move(down_params));
+
+  std::unique_ptr<base::DictionaryValue> move_params(
+      new base::DictionaryValue());
+  move_params->SetInteger("duration", 0);
+  move_params->SetInteger("x", old_x / 2);
+  move_params->SetInteger("y", old_y / 2);
+  move_params->SetInteger("initialX", old_x);
+  move_params->SetInteger("initialY", old_y);
+  move_params->SetString("pointerType", "mouse");
+  move_params->SetString("type", "pointerMove");
+  list_params->Append(std::move(move_params));
+
+  std::unique_ptr<base::DictionaryValue> up_params(new base::DictionaryValue());
+  up_params->SetInteger("button", 0);
+  up_params->SetInteger("duration", 0);
+  up_params->SetString("pointerType", "mouse");
+  up_params->SetString("type", "pointerUp");
+  list_params->Append(std::move(up_params));
+
+  SendCommand("Input.dispatchPointerActions", std::move(params));
+
+  int new_x;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      shell(), "domAutomationController.send(event.pageX)", &new_x));
+  ASSERT_DOUBLE_EQ(2.0, static_cast<double>(old_x) / new_x);
+
+  int new_y;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      shell(), "domAutomationController.send(event.pageY)", &new_y));
+  ASSERT_DOUBLE_EQ(2.0, static_cast<double>(old_y) / new_y);
+}
+
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, DISABLED_SynthesizePinchGesture) {
   GURL test_url = GetTestUrl("devtools", "synthetic_gesture_tests.html");
   NavigateToURLBlockUntilNavigationsComplete(shell(), test_url, 1);

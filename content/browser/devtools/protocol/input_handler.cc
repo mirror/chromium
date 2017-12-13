@@ -17,6 +17,8 @@
 #include "content/browser/renderer_host/input/touch_emulator.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/common/input/synthetic_pinch_gesture_params.h"
+#include "content/common/input/synthetic_pointer_action_list_params.h"
+#include "content/common/input/synthetic_pointer_action_params.h"
 #include "content/common/input/synthetic_smooth_scroll_gesture_params.h"
 #include "content/common/input/synthetic_tap_gesture_params.h"
 #include "content/public/common/content_features.h"
@@ -39,6 +41,54 @@ gfx::Vector2dF CssPixelsToVector2dF(double x,
                                     double y,
                                     float page_scale_factor) {
   return gfx::Vector2dF(x * page_scale_factor, y * page_scale_factor);
+}
+
+bool StringToSyntheticGestureSourceType(
+    std::string source_type,
+    content::SyntheticGestureParams::GestureSourceType& out) {
+  if (source_type == "touch") {
+    out = content::SyntheticGestureParams::GestureSourceType::TOUCH_INPUT;
+  } else if (source_type == "mouse") {
+    out = content::SyntheticGestureParams::GestureSourceType::MOUSE_INPUT;
+  } else if (source_type == "pen")
+    out = content::SyntheticGestureParams::GestureSourceType::PEN_INPUT;
+  else {
+    // out = content::SyntheticGestureParams::DEFAULT_INPUT;
+    return false;
+  }
+  return true;
+}
+
+bool StringToPointerActionType(
+    std::string type,
+    content::SyntheticPointerActionParams::PointerActionType& out) {
+  if (type == "pointerUp") {
+    out = content::SyntheticPointerActionParams::PointerActionType::RELEASE;
+  } else if (type == "pointerDown") {
+    out = content::SyntheticPointerActionParams::PointerActionType::PRESS;
+  } else if (type == "pointerMove") {
+    out = content::SyntheticPointerActionParams::PointerActionType::MOVE;
+  } else if (type == "pause") {
+    out = content::SyntheticPointerActionParams::PointerActionType::IDLE;
+  } else {
+    return false;
+  }
+  return true;
+}
+
+bool StringToSyntheticPointerActionParamsButton(
+    std::string button,
+    content::SyntheticPointerActionParams::Button& out) {
+  if (button == "left") {
+    out = content::SyntheticPointerActionParams::Button::LEFT;
+  } else if (button == "middle") {
+    out = content::SyntheticPointerActionParams::Button::MIDDLE;
+  } else if (button == "right") {
+    out = content::SyntheticPointerActionParams::Button::RIGHT;
+  } else {
+    return false;
+  }
+  return true;
 }
 
 bool StringToGestureSourceType(Maybe<std::string> in,
@@ -202,6 +252,17 @@ void SendSynthesizePinchGestureResponse(
   } else {
     callback->sendFailure(Response::Error(
         base::StringPrintf("Synthetic pinch failed, result was %d", result)));
+  }
+}
+
+void SendDispatchPointerActionsResponse(
+    std::unique_ptr<Input::Backend::DispatchPointerActionsCallback> callback,
+    SyntheticGesture::Result result) {
+  if (result == SyntheticGesture::Result::GESTURE_FINISHED) {
+    callback->sendSuccess();
+  } else {
+    callback->sendFailure(Response::Error(
+        base::StringPrintf("Pointer action failed, result was %d", result)));
   }
 }
 
@@ -737,6 +798,131 @@ Response InputHandler::SetIgnoreInputEvents(bool ignore) {
   if (host_)
     host_->GetRenderWidgetHost()->SetIgnoreInputEvents(ignore);
   return Response::OK();
+}
+
+void InputHandler::DispatchPointerActions(
+    std::unique_ptr<protocol::Array<Input::PointerAction>> pointer_actions,
+    std::unique_ptr<DispatchPointerActionsCallback> callback) {
+  if (!host_ || !host_->GetRenderWidgetHost()) {
+    callback->sendFailure(Response::InternalError());
+    return;
+  }
+
+  SyntheticPointerActionListParams list_params;
+
+  for (size_t i = 0; i < pointer_actions->length(); ++i) {
+    Input::PointerAction* action = pointer_actions->get(i);
+    SyntheticPointerActionParams action_params;
+
+    content::SyntheticGestureParams::GestureSourceType gesture_source;
+    if (!StringToSyntheticGestureSourceType(action->GetPointerType(),
+                                            gesture_source)) {
+      callback->sendFailure(Response::InvalidParams(
+          "pointerType is not pointerUp, pointerDown, pointerMove or pause"));
+      return;
+    }
+    list_params.gesture_source_type = gesture_source;
+
+    // convert action type
+    content::SyntheticPointerActionParams::PointerActionType action_type;
+    if (!StringToPointerActionType(action->GetType(), action_type)) {
+      callback->sendFailure(
+          Response::InvalidParams("type is not mouse, pen or touch"));
+      return;
+    }
+
+    action_params.set_pointer_action_type(action_type);
+
+    if (action_type !=
+        content::SyntheticPointerActionParams::PointerActionType::IDLE) {
+      // convert button
+      if (action->HasButton()) {
+        if (action_type ==
+            content::SyntheticPointerActionParams::PointerActionType::MOVE) {
+          callback->sendFailure(
+              Response::InvalidParams("Cannot pass button for a move"));
+          return;
+        }
+
+        // TODO: string button
+        content::SyntheticPointerActionParams::Button action_button;
+        if (!StringToSyntheticPointerActionParamsButton(
+                action->GetButton("left"), action_button)) {
+          callback->sendFailure(Response::InvalidParams(
+              "button is not a non negative integer less than 3"));
+          return;
+        }
+        action_params.set_button(action_button);
+      }
+
+      if (action->HasX() && action->HasY()) {
+        if (action_type ==
+            content::SyntheticPointerActionParams::PointerActionType::RELEASE) {
+          callback->sendFailure(Response::InvalidParams(
+              "Cannot pass x and y for a release or up action"));
+          return;
+        }
+
+        if (action_type ==
+            content::SyntheticPointerActionParams::PointerActionType::MOVE) {
+          if (!action->HasInitialX() || !action->HasInitialY()) {
+            callback->sendFailure(Response::InvalidParams(
+                "Must provide initialX and initialY for a move action"));
+            return;
+          }
+          int num_frames = static_cast<int>(
+              std::ceil(action->GetDuration(0) /
+                        viz::BeginFrameArgs::DefaultInterval().InSecondsF()));
+
+          // if duration was 0 we still need to add the one frame to move the
+          // mouse to the destination
+          if (num_frames == 0) {
+            action_params.set_position(
+                gfx::PointF(action->GetX(0), action->GetY(0)));
+          }
+          for (int j = 0; j < num_frames; ++j) {
+            int x = static_cast<int>(
+                (j / (double)num_frames) *
+                    (action->GetX(0) - action->GetInitialX(0)) +
+                action->GetInitialX(0));
+            int y = static_cast<int>(
+                (j / (double)num_frames) *
+                    (action->GetY(0) - action->GetInitialY(0)) +
+                action->GetInitialY(0));
+
+            action_params.set_position(gfx::PointF(x, y));
+            action_params.set_index(0);
+            list_params.PushPointerActionParams(action_params);
+          }
+        }
+      }
+    }
+
+    // needed to send one list of actions
+    action_params.set_index(0);
+    if (action_type ==
+        content::SyntheticPointerActionParams::PointerActionType::PRESS) {
+      action_params.set_position(gfx::PointF(action->GetX(0), action->GetY(0)));
+    }
+    list_params.PushPointerActionParams(action_params);
+
+    // convert duration to the number of idle frames
+    if (action_type !=
+        content::SyntheticPointerActionParams::PointerActionType::MOVE) {
+      int num_idle = static_cast<int>(
+          std::ceil(action->GetDuration(0) /
+                    viz::BeginFrameArgs::DefaultInterval().InSecondsF()));
+
+      // pause for the calculated duration of frames
+      for (int count = 1; count < num_idle; ++count)
+        list_params.PushPointerActionParams(action_params);
+    }
+  }
+
+  host_->GetRenderWidgetHost()->QueueSyntheticGesture(
+      SyntheticGesture::Create(list_params),
+      base::BindOnce(&SendDispatchPointerActionsResponse,
+                     base::Passed(std::move(callback))));
 }
 
 void InputHandler::SynthesizePinchGesture(
