@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "913a1544_49d97d1c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol-1.2.json",
+        "patchSetId": 16
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-13T21:55:26Z",
+      "side": 1,
+      "message": "Do not change this file. It\u0027s a snapshot of old protocol.",
+      "revId": "22f4cffe03c73fe11af78ef958528267e17bd68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
