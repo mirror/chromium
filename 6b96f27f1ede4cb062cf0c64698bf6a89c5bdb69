@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2fb48b2_2bb92ba7",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:25:51Z",
+      "side": 1,
+      "message": "Is this really useful? What test case was broken that this actually guards against? It seems like HarfBuzz_BreakRunsByEmojiVariationSelectors performs its own version of this and shouldn\u0027t need to call here; the other new fixtures would probably be fine just checking GetRunListStructureString.\n\nOtherwise, this isn\u0027t really about selection ranges at all, it\u0027s about logical cursor positions and caret/glyph bounds. I think the test name should be something like CheckBoundsForCursorPositions() and the description should be something like: \"Checks left-to-right text, ensuring that the caret moves to the right as the cursor position increments through the logical text. Also ensures that each glyph is to the right of the prior glyph. RenderText automatically updates invalid cursor positions (eg. between a surrogate pair) to a valid neighbor, so the positions may be unchanged for some iterations.\"",
+      "revId": "6b96f27f1ede4cb062cf0c64698bf6a89c5bdb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5940ae7c_064ce6d6",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:25:51Z",
+      "side": 1,
+      "message": "nit: EXPECT_LT(render_text_-\u003eGetContentWidthF(), render_text_-\u003edisplay_rect().width()) after the layout? Or get the width to set the display rect?",
+      "revId": "6b96f27f1ede4cb062cf0c64698bf6a89c5bdb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c99560_574f8c45",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:25:51Z",
+      "side": 1,
+      "message": "nit: \"Cursor position: \" \u003c\u003c i \u003c\u003c \" selection: \" \u003c\u003c render_text_-\u003eselection().ToString()",
+      "revId": "6b96f27f1ede4cb062cf0c64698bf6a89c5bdb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd2c2c3_23691dcb",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:25:51Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ(1, cursor_bounds.width());",
+      "revId": "6b96f27f1ede4cb062cf0c64698bf6a89c5bdb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832c4c24_77a6883f",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3976,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:25:51Z",
+      "side": 1,
+      "message": "Use \\u (or \\U) instead of \\x, please. ditto elsewhere below.",
+      "revId": "6b96f27f1ede4cb062cf0c64698bf6a89c5bdb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b1d79e_ab75aba5",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3977,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:25:51Z",
+      "side": 1,
+      "message": "nit: height seems excessive",
+      "revId": "6b96f27f1ede4cb062cf0c64698bf6a89c5bdb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70f6370_0d2320be",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4009,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:25:51Z",
+      "side": 1,
+      "message": "This seems fairly redundant with the checks above... Maybe comment as to why this extra check is worthwhile?",
+      "revId": "6b96f27f1ede4cb062cf0c64698bf6a89c5bdb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5164263e_00fefacb",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4021,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:25:51Z",
+      "side": 1,
+      "message": "Is this useful?",
+      "revId": "6b96f27f1ede4cb062cf0c64698bf6a89c5bdb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f68dcd_2a04f284",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4029,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:25:51Z",
+      "side": 1,
+      "message": "nit: comma or period?",
+      "revId": "6b96f27f1ede4cb062cf0c64698bf6a89c5bdb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ce4069_d3d26348",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4053,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T17:25:51Z",
+      "side": 1,
+      "message": "nit: \"run, to no effect\" (or describe the expected effect?)",
+      "revId": "6b96f27f1ede4cb062cf0c64698bf6a89c5bdb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
