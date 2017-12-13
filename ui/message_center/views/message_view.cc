@@ -66,7 +66,16 @@ bool ShouldRoundMessageViewCorners() {
 
 namespace message_center {
 
+// static
 const char MessageView::kViewClassName[] = "MessageView";
+
+// static
+bool MessageView::sidebar_enabled_ = false;
+
+// static
+void MessageView::SetSidebarEnabled() {
+  sidebar_enabled_ = true;
+}
 
 MessageView::MessageView(MessageViewDelegate* delegate,
                          const Notification& notification)
@@ -103,19 +112,29 @@ void MessageView::UpdateWithNotification(const Notification& notification) {
 void MessageView::SetIsNested() {
   is_nested_ = true;
 
-  if (ShouldRoundMessageViewCorners()) {
-    SetBorder(views::CreateRoundedRectBorder(
-        kNotificationBorderThickness, kNotificationCornerRadius, kBorderColor));
+  if (sidebar_enabled_) {
+    if (ShouldRoundMessageViewCorners()) {
+      SetBorder(views::CreateRoundedRectBorder(0, kNotificationCornerRadius,
+                                               kBorderColor));
+    } else {
+      SetBorder(views::NullBorder());
+    }
   } else {
-    const auto& shadow =
-        gfx::ShadowDetails::Get(kShadowElevation, kShadowCornerRadius);
-    gfx::Insets ninebox_insets =
-        gfx::ShadowValue::GetBlurRegion(shadow.values) +
-        gfx::Insets(kShadowCornerRadius);
-    SetBorder(views::CreateBorderPainter(
-        std::unique_ptr<views::Painter>(views::Painter::CreateImagePainter(
-            shadow.ninebox_image, ninebox_insets)),
-        -gfx::ShadowValue::GetMargin(shadow.values)));
+    if (ShouldRoundMessageViewCorners()) {
+      SetBorder(views::CreateRoundedRectBorder(kNotificationBorderThickness,
+                                               kNotificationCornerRadius,
+                                               kBorderColor));
+    } else {
+      const auto& shadow =
+          gfx::ShadowDetails::Get(kShadowElevation, kShadowCornerRadius);
+      gfx::Insets ninebox_insets =
+          gfx::ShadowValue::GetBlurRegion(shadow.values) +
+          gfx::Insets(kShadowCornerRadius);
+      SetBorder(views::CreateBorderPainter(
+          std::unique_ptr<views::Painter>(views::Painter::CreateImagePainter(
+              shadow.ninebox_image, ninebox_insets)),
+          -gfx::ShadowValue::GetMargin(shadow.values)));
+    }
   }
 }
 
