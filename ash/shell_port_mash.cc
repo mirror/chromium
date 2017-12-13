@@ -20,6 +20,9 @@
 #include "ash/wm/window_cycle_event_filter.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/workspace/workspace_event_handler_mash.h"
+#include "services/service_manager/public/cpp/connector.h"
+#include "services/ui/public/interfaces/constants.mojom.h"
+#include "services/ui/public/interfaces/video_detector.mojom.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
 #include "ui/views/mus/pointer_watcher_event_router.h"
@@ -163,6 +166,18 @@ ShellPortMash::CreateAcceleratorController() {
           window_manager_, accelerator_namespace_id);
   return std::make_unique<AcceleratorController>(
       accelerator_controller_registrar_.get());
+}
+
+void ShellPortMash::AddVideoDetectorObserver(
+    viz::mojom::VideoDetectorObserverPtr observer) {
+  // We may not have access to the connector in unit tests.
+  if (!window_manager_->connector())
+    return;
+
+  ui::mojom::VideoDetectorPtr video_detector;
+  window_manager_->connector()->BindInterface(ui::mojom::kServiceName,
+                                              &video_detector);
+  video_detector->AddObserver(std::move(observer));
 }
 
 }  // namespace ash
