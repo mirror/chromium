@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c352138_1fb60c41",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T00:36:49Z",
+      "side": 1,
+      "message": "Is it right way to put booleans in NSMutableDictionary?",
+      "range": {
+        "startLine": 2233,
+        "startChar": 26,
+        "endLine": 2233,
+        "endChar": 37
+      },
+      "revId": "6dbcb5d230db39a82236d6317da9a4a93967fcbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
