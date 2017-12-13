@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13a6b9c1_4094f790",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-12-13T15:44:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78df6855_fc9f1342",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 2
+      },
+      "revId": "f16e408fa352eef5e62b548f86a788332f4223b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f81459c_3d6354fb",
         "filename": "components/arc/common/usb_host.mojom",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-13T15:29:05Z",
       "side": 1,
       "message": "The /src/device/usb code uses a mojo interface to expose a USB device. That\u0027s arguably safer as we don\u0027t expose ioctl on the device node directly. What exactly does the Android side require? Can we perhaps expose the mojo interface here as well instead of passing an FD?",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "f16e408fa352eef5e62b548f86a788332f4223b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec79ef06_94eb96ad",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-12-13T15:44:26Z",
+      "side": 1,
+      "message": "I believe we already had an email thread called \"Acceptable design for USB Host in ARC++ container\" on this topic.\nOverall the FD is passed to the Android app to do directly the USB operations.",
+      "parentUuid": "9f81459c_3d6354fb",
       "range": {
         "startLine": 17,
         "startChar": 32,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8bdcd372_13a5b952",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-12-13T15:44:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd18019c_81f7caf4",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "f16e408fa352eef5e62b548f86a788332f4223b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6958e8ad_17007345",
         "filename": "components/arc/common/usb_host.mojom",
         "patchSetId": 18
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-13T15:29:05Z",
       "side": 1,
       "message": "No API to enumerate the currently present devices?",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "f16e408fa352eef5e62b548f86a788332f4223b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b439a47_19d0b2e9",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-12-13T15:44:26Z",
+      "side": 1,
+      "message": "No, after Init, the Android side gets the DeviceAdded events for the prexisting devices and it keeps a list of devices.",
+      "parentUuid": "6958e8ad_17007345",
       "range": {
         "startLine": 31,
         "startChar": 27,
