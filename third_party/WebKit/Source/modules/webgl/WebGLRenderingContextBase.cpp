@@ -824,34 +824,6 @@ scoped_refptr<StaticBitmapImage> WebGLRenderingContextBase::MakeImageSnapshot(
       surface->makeImageSnapshot(), std::move(shared_context_wrapper));
 }
 
-ImageData* WebGLRenderingContextBase::ToImageData(SnapshotReason reason) {
-  ImageData* image_data = nullptr;
-  // TODO(ccameron): WebGL should produce sRGB images.
-  // https://crbug.com/672299
-  if (GetDrawingBuffer()) {
-    // For un-premultiplied data
-    image_data = PaintRenderingResultsToImageData(kBackBuffer);
-    if (image_data) {
-      return image_data;
-    }
-
-    int width = GetDrawingBuffer()->Size().Width();
-    int height = GetDrawingBuffer()->Size().Height();
-    SkImageInfo image_info =
-        SkImageInfo::Make(width, height, kRGBA_8888_SkColorType,
-                          CreationAttributes().alpha() ? kPremul_SkAlphaType
-                                                       : kOpaque_SkAlphaType);
-    scoped_refptr<StaticBitmapImage> snapshot = MakeImageSnapshot(image_info);
-    if (snapshot) {
-      image_data = ImageData::Create(GetDrawingBuffer()->Size());
-      snapshot->PaintImageForCurrentFrame().GetSkImage()->readPixels(
-          image_info, image_data->data()->Data(), image_info.minRowBytes(), 0,
-          0);
-    }
-  }
-  return image_data;
-}
-
 namespace {
 
 // Exposed by GL_ANGLE_depth_texture
@@ -1513,27 +1485,17 @@ bool WebGLRenderingContextBase::PaintRenderingResultsToCanvas(
   return true;
 }
 
-ImageData* WebGLRenderingContextBase::PaintRenderingResultsToImageData(
-    SourceDrawingBuffer source_buffer) {
+scoped_refptr<Uint8Array>
+WebGLRenderingContextBase::PaintRenderingResultsToDataArray(
+    SourceDrawingBuffer source_buffer,
+    IntSize& size) {
   if (isContextLost())
     return nullptr;
-  if (CreationAttributes().premultipliedAlpha())
-    return nullptr;
-
   ClearIfComposited();
   GetDrawingBuffer()->ResolveAndBindForReadAndDraw();
   ScopedFramebufferRestorer restorer(this);
-  int width, height;
-  WTF::ArrayBufferContents contents;
-  if (!GetDrawingBuffer()->PaintRenderingResultsToImageData(
-          width, height, source_buffer, contents))
-    return nullptr;
-  DOMArrayBuffer* image_data_pixels = DOMArrayBuffer::Create(contents);
-
-  return ImageData::Create(
-      IntSize(width, height),
-      NotShared<DOMUint8ClampedArray>(DOMUint8ClampedArray::Create(
-          image_data_pixels, 0, image_data_pixels->ByteLength())));
+  return GetDrawingBuffer()->PaintRenderingResultsToDataArray(source_buffer,
+                                                              size);
 }
 
 void WebGLRenderingContextBase::Reshape(int width, int height) {
@@ -5487,7 +5449,7 @@ void WebGLRenderingContextBase::TexImageHelperImageBitmap(
     pixel_data_ptr = static_cast<uint8_t*>(pixmap.writable_addr());
   } else {
     pixel_data = bitmap->CopyBitmapData(
-        bitmap->IsPremultiplied() ? kPremultiplyAlpha : kDontPremultiplyAlpha);
+        bitmap->IsPremultiplied() ? kPremultiplyAlpha : kUnpremultiplyAlpha);
     pixel_data_ptr = pixel_data->Data();
   }
   Vector<uint8_t> data;
