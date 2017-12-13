@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da4564fb_e7b4036c",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-13T15:28:26Z",
+      "side": 1,
+      "message": "Here and below refers to \"efficient lookup\". Could you document that this lookup is O(logN) in the best case and O(N) in the worst case, where N is the number of all pushed streams?",
+      "revId": "db3b2604cb4e8cf981dccf4d043c3b14fb7861f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9279f5a6_3b7983ad",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-13T15:28:26Z",
+      "side": 1,
+      "message": "I\u0027m assuming that this \"empty GURL\" part is for CountStreamsForSession()? \nCountStreamsForSession() is only used in testing and logging. I think we should try not to build in test-only logic in this comparator.\n\nFor NetLog, this is called to construct the SpdySession tab. We can change that so SpdySessionPool gets push stream info from Http2PushPromiseIndex directly instead of going to SpdySession to get it.",
+      "revId": "db3b2604cb4e8cf981dccf4d043c3b14fb7861f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a186f296_969964d4",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-13T15:28:26Z",
+      "side": 1,
+      "message": "I am not sure about this design. Having two sets of the same contents but with different comparators is hard for me to see what\u0027s going on.  This is probably just my unfamiliarity with this approach.\n\nShould we get one extra reviewer to look this over? I am afraid that I won\u0027t be much of a help here.",
+      "revId": "db3b2604cb4e8cf981dccf4d043c3b14fb7861f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a781940_6fe367e9",
+        "filename": "net/spdy/chromium/http2_push_promise_index_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-13T15:28:26Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 92,
+        "startChar": 29,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "db3b2604cb4e8cf981dccf4d043c3b14fb7861f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
