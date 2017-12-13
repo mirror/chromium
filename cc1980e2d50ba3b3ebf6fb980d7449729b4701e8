@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37a9ff06_49204f2a",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-13T00:30:53Z",
+      "side": 1,
+      "message": "If it is modified, we should detect this earlier and launch a file URL, as in opening download item case.",
+      "parentUuid": "8a947f5b_a4bfd526",
+      "range": {
+        "startLine": 1484,
+        "startChar": 34,
+        "endLine": 1484,
+        "endChar": 71
+      },
+      "revId": "cc1980e2d50ba3b3ebf6fb980d7449729b4701e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cda0e64d_ecaf3e89",
         "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "cc1980e2d50ba3b3ebf6fb980d7449729b4701e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d743b240_1a8d7cd0",
+        "filename": "chrome/browser/offline_pages/offline_page_request_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-13T00:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cda0e64d_ecaf3e89",
+      "range": {
+        "startLine": 1512,
+        "startChar": 62,
+        "endLine": 1512,
+        "endChar": 75
+      },
+      "revId": "cc1980e2d50ba3b3ebf6fb980d7449729b4701e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
