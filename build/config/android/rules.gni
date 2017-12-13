@@ -13,9 +13,17 @@ import("//build/toolchain/toolchain.gni")
 
 assert(is_android)
 
+if (target_cpu == "arm") {
+  sanitizer_arch = "arm"
+} else if (target_cpu == "arm64") {
+  sanitizer_arch = "aarch64"
+} else if (target_cpu == "x86") {
+  sanitizer_arch = "i686"
+}
+
 sanitizer_runtimes = []
 if (use_cfi_diag || is_ubsan || is_ubsan_security || is_ubsan_vptr) {
-  sanitizer_runtimes = [ "$clang_base_path/lib/clang/$clang_version/lib/linux/libclang_rt.ubsan_standalone-arm-android.so" ]
+  sanitizer_runtimes = [ "$clang_base_path/lib/clang/$clang_version/lib/linux/libclang_rt.ubsan_standalone-$sanitizer_arch-android.so" ]
 }
 
 # Creates a dist directory for a native executable.
@@ -1958,8 +1966,8 @@ if (enable_java_templates) {
       action(_ordered_libraries_target) {
         script = "//build/android/gyp/write_ordered_libraries.py"
         deps = [
-          ":${_template_name}__runtime_deps",
           ":$_build_config_target",
+          ":${_template_name}__runtime_deps",
         ]
         inputs = [
           _runtime_deps_file,
