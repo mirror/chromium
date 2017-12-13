@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39f582df_9b242fb4",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32abf539_e5f27bd0",
+      "range": {
+        "startLine": 5,
+        "startChar": 64,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0324bd3_bc2d5d73",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c49301f_2bebe8ea",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0324bd3_bc2d5d73",
+      "range": {
+        "startLine": 15,
+        "startChar": 31,
+        "endLine": 15,
+        "endChar": 60
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9bc1d34d_65deccd4",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf367e67_1373e562",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 47,
+        "endChar": 50
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5659003_7a7f0328",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-12T20:57:42Z",
       "side": 1,
       "message": "Instead of this flag, would it work to just move the GetPageTransition() check here and return early if it\u0027s not PAGE_TRANSITION_TYPED?",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 15
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62829976_ab9dfbaf",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Yes, I think that would work and be a little simpler. Changed.",
+      "parentUuid": "c5659003_7a7f0328",
       "range": {
         "startLine": 50,
         "startChar": 7,
@@ -114,6 +210,30 @@
       "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1688792_8ff150ec",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94561021_95511ba3",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 6
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "caadbad8_e36e3d28",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "619b729b_37dd8291",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9a026e1_ae06001b",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.h",
         "patchSetId": 7
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "013675f5_d5ebca75",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9a026e1_ae06001b",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5108c513_2b6e4480",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.h",
         "patchSetId": 7
@@ -203,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "fd3b3c9e_d95c0842",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5108c513_2b6e4480",
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de9180c2_d21aee22",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
         "patchSetId": 7
@@ -217,6 +403,24 @@
       "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe10530_40e1b59c",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de9180c2_d21aee22",
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "044cebc7_fe532697",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa4b0efe_0aa642cb",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 31
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5265a0b0_e8b1d426",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
         "patchSetId": 7
@@ -263,6 +491,30 @@
       "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d81b07b_397cb53a",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5265a0b0_e8b1d426",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "16ebde74_61ebb6d2",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done. I\u0027ve also added a test that checks that a long chain of redirects only triggers one update to the histogram.",
+      "parentUuid": "1b84b41f_5a2c66b5",
+      "range": {
+        "startLine": 87,
+        "startChar": 1,
+        "endLine": 88,
+        "endChar": 40
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c5948e1_3fa33392",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -309,6 +585,30 @@
       "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22584260_d80920cb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 55869,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-13T17:15:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c5948e1_3fa33392",
+      "range": {
+        "startLine": 55869,
+        "startChar": 31,
+        "endLine": 55869,
+        "endChar": 0
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
