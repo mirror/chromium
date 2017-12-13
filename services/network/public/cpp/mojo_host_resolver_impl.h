@@ -2,20 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_DNS_MOJO_HOST_RESOLVER_IMPL_H_
-#define NET_DNS_MOJO_HOST_RESOLVER_IMPL_H_
+#ifndef SERVICES_NETWORK_PUBLIC_CPP_MOJO_HOST_RESOLVER_IMPL_H_
+#define SERVICES_NETWORK_PUBLIC_CPP_MOJO_HOST_RESOLVER_IMPL_H_
 
 #include <list>
 #include <memory>
 
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
-#include "net/interfaces/host_resolver_service.mojom.h"
 #include "net/log/net_log_with_source.h"
+#include "services/network/public/interfaces/host_resolver_service.mojom.h"
 
 namespace net {
 
 class HostResolver;
+
+}  // namespace net
+
+namespace network {
 
 // MojoHostResolverImpl handles mojo host resolution requests. Inbound Mojo
 // requests are sent to the HostResolver passed into the constructor. When
@@ -26,11 +30,11 @@ class MojoHostResolverImpl {
  public:
   // |resolver| is expected to outlive |this|.
   MojoHostResolverImpl(net::HostResolver* resolver,
-                       const NetLogWithSource& net_log);
+                       const net::NetLogWithSource& net_log);
   ~MojoHostResolverImpl();
 
-  void Resolve(std::unique_ptr<HostResolver::RequestInfo> request_info,
-               interfaces::HostResolverRequestClientPtr client);
+  void Resolve(std::unique_ptr<net::HostResolver::RequestInfo> request_info,
+               mojom::HostResolverRequestClientPtr client);
 
   bool request_in_progress() { return !pending_jobs_.empty(); }
 
@@ -43,8 +47,8 @@ class MojoHostResolverImpl {
   // Resolver for resolving incoming requests. Not owned.
   net::HostResolver* resolver_;
 
-  // The NetLogWithSource to be passed to |resolver_| for all requests.
-  const NetLogWithSource net_log_;
+  // The net::NetLogWithSource to be passed to |resolver_| for all requests.
+  const net::NetLogWithSource net_log_;
 
   // All pending jobs, so they can be cancelled when this service is destroyed.
   std::list<Job> pending_jobs_;
@@ -54,6 +58,6 @@ class MojoHostResolverImpl {
   DISALLOW_COPY_AND_ASSIGN(MojoHostResolverImpl);
 };
 
-}  // namespace net
+}  // namespace network
 
-#endif  // NET_DNS_MOJO_HOST_RESOLVER_IMPL_H_
+#endif  // SERVICES_NETWORK_PUBLIC_CPP_MOJO_HOST_RESOLVER_IMPL_H_

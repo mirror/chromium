@@ -2,27 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_DNS_MOJO_HOST_STRUCT_TRAITS_H_
-#define NET_DNS_MOJO_HOST_STRUCT_TRAITS_H_
+#ifndef SERVICES_NETWORK_PUBLIC_CPP_MOJO_HOST_STRUCT_TRAITS_H_
+#define SERVICES_NETWORK_PUBLIC_CPP_MOJO_HOST_STRUCT_TRAITS_H_
 
 #include "base/strings/string_piece.h"
 #include "mojo/public/cpp/bindings/enum_traits.h"
 #include "mojo/public/cpp/bindings/struct_traits.h"
 #include "net/dns/host_resolver.h"
-#include "net/interfaces/host_resolver_service.mojom.h"
+#include "services/network/public/interfaces/address_family.mojom.h"
+#include "services/network/public/interfaces/host_resolver_service.mojom.h"
 
 namespace mojo {
 
 template <>
-struct EnumTraits<net::interfaces::AddressFamily, net::AddressFamily> {
-  static net::interfaces::AddressFamily ToMojom(
-      net::AddressFamily address_family);
-  static bool FromMojom(net::interfaces::AddressFamily address_family,
-                        net::AddressFamily* out);
-};
-
-template <>
-struct StructTraits<net::interfaces::HostResolverRequestInfoDataView,
+struct StructTraits<network::mojom::HostResolverRequestInfoDataView,
                     std::unique_ptr<net::HostResolver::RequestInfo>> {
   static base::StringPiece host(
       const std::unique_ptr<net::HostResolver::RequestInfo>& obj) {
@@ -44,20 +37,20 @@ struct StructTraits<net::interfaces::HostResolverRequestInfoDataView,
     return obj->is_my_ip_address();
   }
 
-  static bool Read(net::interfaces::HostResolverRequestInfoDataView obj,
+  static bool Read(network::mojom::HostResolverRequestInfoDataView obj,
                    std::unique_ptr<net::HostResolver::RequestInfo>* output);
 };
 
 template <>
-struct StructTraits<net::interfaces::AddressListDataView, net::AddressList> {
+struct StructTraits<network::mojom::AddressListDataView, net::AddressList> {
   static std::vector<net::IPEndPoint> addresses(const net::AddressList& obj) {
     return obj.endpoints();
   }
 
-  static bool Read(net::interfaces::AddressListDataView data,
+  static bool Read(network::mojom::AddressListDataView data,
                    net::AddressList* out);
 };
 
 }  // namespace mojo
 
-#endif  // NET_DNS_MOJO_HOST_STRUCT_TRAITS_H_
+#endif  // SERVICES_NETWORK_PUBLIC_CPP_MOJO_HOST_STRUCT_TRAITS_H_
