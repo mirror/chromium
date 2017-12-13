@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "6c32e8cd_99113fe7",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-13T14:05:47Z",
+      "side": 1,
+      "message": "I don\u0027t think code review is a good place to discuss this topic.\nTo move forward;\n- Could you drop this part from this CL, i.e. keep Start() atm? I think the main focus is dropping \"Start full instance directly\", which is independent from here.\n- Then, let\u0027s continue the discussion on the e-mail thread, instead.",
+      "parentUuid": "488732ad_5847de90",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ff67a02_a7a089d2",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3
@@ -202,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "5fb518ef_916afc81",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-13T14:05:47Z",
+      "side": 1,
+      "message": "Oh, I see. I meant GetSessionManagerClient() in anonymous namespace.",
+      "parentUuid": "54a1b77b_2fc02324",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6f4ca67_e7c4037b",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3
@@ -231,6 +267,24 @@
       "side": 1,
       "message": "Can you clarify the question here? I\u0027m not familiar with the pattern. There isn\u0027t really a change to the previous code besides it being a boolean now and some name changes.",
       "parentUuid": "b6f4ca67_e7c4037b",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdecf1c7_ae2e533c",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-13T14:05:47Z",
+      "side": 1,
+      "message": "\"Setting a global variable, and call a function whose behavior depends on the global var\"\nis a well known pattern to avoid.\n\"Setting a field, and call a method whose behavior depends on the field\"\nis a kind of its variation, so let\u0027s avoid.\n\nSpecifically in this case, I don\u0027t think we expect Upgrade() is called twice or more.\nSo, could you;\n- extract the RUNNING_MINI_INSTANCE switch-case-body block into a method, and\n- call it from here and in Upgrade()?\n- DCHECK(!full_container_requested_) at the beginning of Upgrade()?",
+      "parentUuid": "4fb994af_6b924b40",
       "revId": "556da616e58c21a934d6bc1a17e989648276527d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

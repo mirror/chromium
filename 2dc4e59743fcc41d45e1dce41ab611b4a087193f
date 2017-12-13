@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "827b561a_b68c79ec",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-13T14:05:47Z",
+      "side": 1,
+      "message": "pls update.",
+      "revId": "2dc4e59743fcc41d45e1dce41ab611b4a087193f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fbd070_49fcbfe9",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-13T14:05:47Z",
+      "side": 1,
+      "message": "I overlooked in the last iteration.\nCould you rename to OnUpgraded()? Please also update the comment.",
+      "revId": "2dc4e59743fcc41d45e1dce41ab611b4a087193f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
