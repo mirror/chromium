@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ebbe9228_5c9ba3c4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/import_notifier.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T21:51:12Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "a31fb5c2_57172840",
+      "revId": "eb372ddb81a988866fcde7496cd36ef14c90c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac51edd8_56fa8a0f",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail_unittest.py",
         "patchSetId": 5
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "e52d2a90_4f5592bf",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T21:51:12Z",
+      "side": 1,
+      "message": "It\u0027s a path. I\u0027ll rephrase this help text.",
+      "parentUuid": "99c409d8_da8babbf",
+      "range": {
+        "startLine": 287,
+        "startChar": 18,
+        "endLine": 287,
+        "endChar": 36
+      },
+      "revId": "eb372ddb81a988866fcde7496cd36ef14c90c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "708a7073_5156a714",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
         "patchSetId": 5
@@ -79,6 +121,30 @@
       "revId": "eb372ddb81a988866fcde7496cd36ef14c90c37d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b148eec7_5a0f943c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T21:51:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "708a7073_5156a714",
+      "range": {
+        "startLine": 288,
+        "startChar": 31,
+        "endLine": 288,
+        "endChar": 64
+      },
+      "revId": "eb372ddb81a988866fcde7496cd36ef14c90c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
