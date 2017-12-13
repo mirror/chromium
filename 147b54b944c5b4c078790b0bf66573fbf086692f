@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37ac2ef0_cb410789",
+        "filename": "remoting/client/chromoting_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-12-13T00:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24c9800d_66eec743",
+      "range": {
+        "startLine": 136,
+        "startChar": 16,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "147b54b944c5b4c078790b0bf66573fbf086692f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89f859e8_8a3300b3",
         "filename": "remoting/ios/app/client_connection_view_controller.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "147b54b944c5b4c078790b0bf66573fbf086692f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b166e0d9_d1d7c9ef",
+        "filename": "remoting/ios/app/client_connection_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-12-13T00:50:45Z",
+      "side": 1,
+      "message": "Done. I think for now we only need to go back to the Connection VC if the connection is dropped.",
+      "parentUuid": "89f859e8_8a3300b3",
+      "range": {
+        "startLine": 378,
+        "startChar": 74,
+        "endLine": 378,
+        "endChar": 0
+      },
+      "revId": "147b54b944c5b4c078790b0bf66573fbf086692f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
