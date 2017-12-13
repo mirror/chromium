@@ -1451,7 +1451,8 @@ void RenderWidgetHostViewAndroid::OnSelectionEvent(
     ResetGestureDetection();
   }
   selection_popup_controller_->OnSelectionEvent(
-      event, GetSelectionRect(*touch_selection_controller_));
+      event, GetSelectionRect(*touch_selection_controller_),
+      touch_selection_controller_->GetActiveHandleBoundPoint());
 }
 
 ui::TouchSelectionControllerClient*

@@ -260,6 +260,25 @@ gfx::RectF TouchSelectionController::GetEndHandleRect() const {
   return gfx::RectF();
 }
 
+gfx::PointF TouchSelectionController::GetActiveHandleBoundPoint() const {
+  gfx::SelectionBound empty;
+  gfx::SelectionBound& bound = empty;
+  if (active_status_ == INSERTION_ACTIVE) {
+    bound = start_;
+  }
+  if (active_status_ == SELECTION_ACTIVE) {
+    if (start_selection_handle_->IsActive()) {
+      bound = start_;
+    }
+    if (end_selection_handle_->IsActive()) {
+      bound = end_;
+    }
+  }
+  float x = bound.edge_top().x();
+  float y = (bound.edge_top().y() + bound.edge_bottom().y()) / 2;
+  return gfx::PointF(x, y);
+}
+
 const gfx::PointF& TouchSelectionController::GetStartPosition() const {
   return start_.edge_bottom();
 }
