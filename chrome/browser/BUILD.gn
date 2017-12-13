@@ -1749,7 +1749,6 @@ split_static_library("browser") {
     "//mojo/edk/system",
     "//mojo/public/cpp/bindings",
     "//net:extras",
-    "//net:net_browser_services",
     "//ppapi/features",
     "//printing/features",
     "//rlz/features",
@@ -2298,7 +2297,6 @@ split_static_library("browser") {
     # Android does in-process PAC, so must link against V8 directly. Other
     # platforms use OOP Mojo resolution.
     deps += [
-      "//net:net_utility_services",
       "//net:net_with_v8",
       "//v8",
     ]

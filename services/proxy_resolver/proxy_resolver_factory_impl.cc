@@ -11,9 +11,9 @@
 #include "base/memory/ptr_util.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/net_errors.h"
-#include "net/proxy/mojo_proxy_resolver_v8_tracing_bindings.h"
 #include "net/proxy/proxy_resolver_factory.h"
 #include "net/proxy/proxy_resolver_v8_tracing.h"
+#include "services/proxy_resolver/mojo_proxy_resolver_v8_tracing_bindings.h"
 #include "services/proxy_resolver/proxy_resolver_impl.h"
 
 namespace proxy_resolver {
@@ -62,7 +62,7 @@ ProxyResolverFactoryImpl::Job::Job(
                  base::Unretained(this)));
   factory_->CreateProxyResolverV8Tracing(
       pac_script,
-      std::make_unique<net::MojoProxyResolverV8TracingBindings<
+      std::make_unique<MojoProxyResolverV8TracingBindings<
           mojom::ProxyResolverFactoryRequestClient>>(client_ptr_.get()),
       &proxy_resolver_impl_,
       base::Bind(&ProxyResolverFactoryImpl::Job::OnProxyResolverCreated,
