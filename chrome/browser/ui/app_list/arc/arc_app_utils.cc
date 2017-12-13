@@ -395,11 +395,9 @@ bool ShowPackageInfo(const std::string& package_name,
 bool IsArcItem(content::BrowserContext* context, const std::string& id) {
   DCHECK(context);
 
-  // Some unit tests use empty id; some ids are not valid crx ids.
-  if (id.empty() || !crx_file::id_util::IdIsValid(id)) {
-    DLOG_IF(WARNING, !id.empty()) << "Invalid crx app id: " << id;
+  // Some unit tests use empty id.
+  if (id.empty())
     return false;
-  }
 
   const ArcAppListPrefs* const arc_prefs = ArcAppListPrefs::Get(context);
   if (!arc_prefs)
