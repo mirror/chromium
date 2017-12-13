@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8a5888c_12dd6370",
+        "filename": "media/gpu/windows/d3d11_h264_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-12-13T09:07:23Z",
+      "side": 1,
+      "message": "Would a wait here (with a timeout) and retry before return from this method be possible instead? If I understand correctly, the Decoder would not have to be aware of this then possibly?\n\nIf so, decoder_ should be running in an own (or at least internal to this class) thread then. The threading model of this class is not entirely clear to me, but other VDAs run the Decoders on their own threads (mostly to offload GPU Main).",
+      "revId": "3fc357793d72ba064922d7712fa7eadff67a0668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
