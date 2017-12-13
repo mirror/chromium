@@ -1886,6 +1886,7 @@ InspectorStyleSheetForInlineStyle::InspectorStyleSheetForInlineStyle(
 
 void InspectorStyleSheetForInlineStyle::DidModifyElementAttribute() {
   inspector_style_.Clear();
+  OnStyleSheetTextChanged();
 }
 
 bool InspectorStyleSheetForInlineStyle::SetText(
