@@ -224,7 +224,8 @@ void ShellContentBrowserClient::RegisterInProcessServices(
 
 void ShellContentBrowserClient::RegisterOutOfProcessServices(
     OutOfProcessServiceMap* services) {
-  (*services)[kTestServiceUrl] = base::UTF8ToUTF16("Test Service");
+  (*services)[kTestServiceUrl] = {base::UTF8ToUTF16("Test Service"),
+                                  base::nullopt};
 }
 
 bool ShellContentBrowserClient::ShouldTerminateOnServiceQuit(
