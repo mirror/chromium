@@ -46,6 +46,30 @@
       "revId": "46a84649ef852a10442b4adb9e6b3c031a85624c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a04d454_8ce4cade",
+        "filename": "chrome/browser/ui/network_profile_bubble.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-13T03:58:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a9b4dfb_697b7111",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "46a84649ef852a10442b4adb9e6b3c031a85624c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
