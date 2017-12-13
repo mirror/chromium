@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bd8bdf3_8ed7f40a",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSPositionValue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-12-13T09:33:31Z",
+      "side": 1,
+      "message": "If it turns out *not* to be a valid coordinate, is then |coord| a coordinate? :) Former parameter names were |v| and |value|.",
+      "revId": "1b98664af6ae11e6d8f84594f9e38a06a015bda9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
