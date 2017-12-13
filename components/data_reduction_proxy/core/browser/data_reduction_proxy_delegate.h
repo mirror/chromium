@@ -75,10 +75,9 @@ class DataReductionProxyDelegate
  protected:
   // Protected so that these methods are accessible for testing.
   // net::ProxyDelegate implementation:
-  void GetAlternativeProxy(
-      const GURL& url,
-      const net::ProxyServer& resolved_proxy_server,
-      net::ProxyServer* alternative_proxy_server) const override;
+  void GetAlternativeProxy(const GURL& url,
+                           const net::ProxyServer& resolved_proxy_server,
+                           net::ProxyServer* alternative_proxy_server) const;
   void OnAlternativeProxyBroken(
       const net::ProxyServer& alternative_proxy_server) override;
 
