@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "8324166a_3d9f6530",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-13T23:40:09Z",
+      "side": 1,
+      "message": "Maybe use a const variable/macro to store the value with a descriptive name?",
+      "parentUuid": "7132bdfe_d1eb3641",
+      "range": {
+        "startLine": 68,
+        "startChar": 20,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2af56cc1_2e72eeb2",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -402,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "4c346531_523e8946",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-13T23:40:09Z",
+      "side": 1,
+      "message": "Maybe use a const variable to store the value with a descriptive name?",
+      "parentUuid": "e69209bd_511a1349",
+      "range": {
+        "startLine": 104,
+        "startChar": 20,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "203b4271_573ca2d5",
         "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
         "patchSetId": 4
@@ -470,6 +518,23 @@
       "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83830873_83e84b0e",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-13T23:40:09Z",
+      "side": 1,
+      "message": "Maybe use a const variable to store the value with a descriptive name?",
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
