@@ -22,6 +22,30 @@
       "revId": "ad44f9281dd17f59dcefb5de29a61094be0f38bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ec170d_25f324ef",
+        "filename": "chrome/test/data/webui/extensions/extension_load_error_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-12-13T22:18:31Z",
+      "side": 1,
+      "message": "code-section will always be visible, but it will show either the scroll-container which contains the code, or a no-code message.",
+      "parentUuid": "7aeb7445_7d9be435",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 70,
+        "endChar": 57
+      },
+      "revId": "ad44f9281dd17f59dcefb5de29a61094be0f38bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
