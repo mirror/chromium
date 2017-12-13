@@ -372,33 +372,41 @@ class CupsPrintersManagerImpl : public CupsPrintersManager,
         // else here.
         continue;
       }
-      auto it = detected_printer_ppd_references_.find(detected.printer.id());
-      if (it != detected_printer_ppd_references_.end()) {
-        if (it->second == nullptr) {
-          // We couldn't figure out this printer, so it's in the discovered
-          // class.
-          printers_[kDiscovered].push_back(detected.printer);
-        } else {
-          // We have a ppd reference, so we think we can set this up
-          // automatically.
-          printers_[kAutomatic].push_back(detected.printer);
-          *printers_[kAutomatic].back().mutable_ppd_reference() = *it->second;
-        }
+
+      // Sometimes the detector can flag a printer as IPP-everywhere compatible;
+      // those printers can go directly into the automatic class without further
+      // processing.
+      if (detected.printer.IsIppEverywhere()) {
+        printers_[kAutomatic].push_back(detected.printer);
       } else {
-        // Didn't find an entry for this printer in the PpdReferences cache.
-        // We need to ask PpdProvider whether or not it can determine a
-        // PpdReference.  If there's not already an outstanding request for
-        // one, start one.  When the request comes back, we'll rerun
-        // classification and then should be able to figure out where this
-        // printer belongs.
-        if (!base::ContainsKey(inflight_ppd_reference_resolutions_,
-                               detected.printer.id())) {
-          inflight_ppd_reference_resolutions_.insert(detected.printer.id());
-          ppd_provider_->ResolvePpdReference(
-              detected.ppd_search_data,
-              base::Bind(&CupsPrintersManagerImpl::ResolvePpdReferenceDone,
-                         weak_ptr_factory_.GetWeakPtr(),
-                         detected.printer.id()));
+        auto it = detected_printer_ppd_references_.find(detected.printer.id());
+        if (it != detected_printer_ppd_references_.end()) {
+          if (it->second == nullptr) {
+            // We couldn't figure out this printer, so it's in the discovered
+            // class.
+            printers_[kDiscovered].push_back(detected.printer);
+          } else {
+            // We have a ppd reference, so we think we can set this up
+            // automatically.
+            printers_[kAutomatic].push_back(detected.printer);
+            *printers_[kAutomatic].back().mutable_ppd_reference() = *it->second;
+          }
+        } else {
+          // Didn't find an entry for this printer in the PpdReferences cache.
+          // We need to ask PpdProvider whether or not it can determine a
+          // PpdReference.  If there's not already an outstanding request for
+          // one, start one.  When the request comes back, we'll rerun
+          // classification and then should be able to figure out where this
+          // printer belongs.
+          if (!base::ContainsKey(inflight_ppd_reference_resolutions_,
+                                 detected.printer.id())) {
+            inflight_ppd_reference_resolutions_.insert(detected.printer.id());
+            ppd_provider_->ResolvePpdReference(
+                detected.ppd_search_data,
+                base::Bind(&CupsPrintersManagerImpl::ResolvePpdReferenceDone,
+                           weak_ptr_factory_.GetWeakPtr(),
+                           detected.printer.id()));
+          }
         }
       }
     }
