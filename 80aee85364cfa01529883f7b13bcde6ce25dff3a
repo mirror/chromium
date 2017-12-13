@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e04a9ddf_347fdd64",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-13T17:36:53Z",
+      "side": 1,
+      "message": "Good catch :) Done",
+      "parentUuid": "d3be75c5_3e35497f",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 28
+      },
+      "revId": "80aee85364cfa01529883f7b13bcde6ce25dff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0dbc95a_43a25f97",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.mm",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-13T09:30:26Z",
       "side": 1,
       "message": "Add |\u003d nil|.",
+      "range": {
+        "startLine": 240,
+        "startChar": 41,
+        "endLine": 240,
+        "endChar": 42
+      },
+      "revId": "80aee85364cfa01529883f7b13bcde6ce25dff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07bb979_6af70acc",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-12-13T17:36:53Z",
+      "side": 1,
+      "message": "Every pointer is set to nil on declaration.",
+      "parentUuid": "b0dbc95a_43a25f97",
       "range": {
         "startLine": 240,
         "startChar": 41,
