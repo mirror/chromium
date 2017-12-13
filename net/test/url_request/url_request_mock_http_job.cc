@@ -148,9 +148,10 @@ bool URLRequestMockHTTPJob::IsRedirectResponse(GURL* location,
   return URLRequestJob::IsRedirectResponse(location, http_status_code);
 }
 
-void URLRequestMockHTTPJob::OnReadComplete(net::IOBuffer* buffer, int result) {
+int URLRequestMockHTTPJob::OnReadComplete(net::IOBuffer* buffer, int result) {
   if (result >= 0)
     total_received_bytes_ += result;
+  return result;
 }
 
 // Public virtual version.

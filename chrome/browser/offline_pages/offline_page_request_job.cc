@@ -30,6 +30,9 @@
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/resource_type.h"
+#include "crypto/secure_hash.h"
+#include "crypto/sha2.h"
+#include "net/base/io_buffer.h"
 #include "net/base/network_change_notifier.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_response_headers.h"
@@ -93,6 +96,7 @@ void ValidatePage(
     NetworkState network_state,
     base::WeakPtr<OfflinePageRequestJob> job,
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    bool skip_file_validation_before_reading,
     const std::vector<OfflinePageItem>& offline_pages,
     size_t offline_page_index);
 
@@ -133,6 +137,8 @@ class DefaultDelegate : public OfflinePageRequestJob::Delegate {
   OfflinePageRequestJob::Delegate::TabIdGetter GetTabIdGetter() const override {
     return base::Bind(&DefaultDelegate::GetTabId);
   }
+
+  bool SkipFileValidationBeforeReading() const override { return false; }
 
  private:
   static bool GetTabId(content::WebContents* web_contents, int* tab_id) {
@@ -330,12 +336,13 @@ void ValidateFileOnBackgroundThread(
 
 void NotifyOfflineFilePathOnIO(base::WeakPtr<OfflinePageRequestJob> job,
                                const std::string& name_space,
-                               const base::FilePath& offline_file_path) {
+                               const base::FilePath& offline_file_path,
+                               const std::string& digest) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   if (!job)
     return;
-  job->OnOfflineFilePathAvailable(name_space, offline_file_path);
+  job->OnOfflineFilePathAvailable(name_space, offline_file_path, digest);
 }
 
 void NotifyOfflineRedirectOnIO(base::WeakPtr<OfflinePageRequestJob> job,
@@ -351,14 +358,16 @@ void NotifyOfflineRedirectOnIO(base::WeakPtr<OfflinePageRequestJob> job,
 // file path may be empty if not found or on error.
 void NotifyOfflineFilePathOnUI(base::WeakPtr<OfflinePageRequestJob> job,
                                const std::string& name_space,
-                               const base::FilePath& offline_file_path) {
+                               const base::FilePath& offline_file_path,
+                               const std::string& digest) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   // Delegates to IO thread since OfflinePageRequestJob should only be accessed
   // from IO thread.
-  content::BrowserThread::PostTask(content::BrowserThread::IO, FROM_HERE,
-                                   base::Bind(&NotifyOfflineFilePathOnIO, job,
-                                              name_space, offline_file_path));
+  content::BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::Bind(&NotifyOfflineFilePathOnIO, job, name_space, offline_file_path,
+                 digest));
 }
 
 // Notifies OfflinePageRequestJob about the redirected URL. Note that
@@ -388,7 +397,7 @@ void FailedToFindTrustedOfflinePage(RequestResult request_error_result,
   // Proceed with empty file path in order to notify the OfflinePageRequestJob
   // about the failure.
   base::FilePath empty_file_path;
-  NotifyOfflineFilePathOnUI(job, std::string(), empty_file_path);
+  NotifyOfflineFilePathOnUI(job, std::string(), empty_file_path, std::string());
 }
 
 // Succeeded to find a trusted offline page which can be served.
@@ -447,7 +456,7 @@ void SucceededToFindTrustedOfflinePage(
   // result and empty file path such that OfflinePageRequestJob will be notified
   // on failure.
   NotifyOfflineFilePathOnUI(job, offline_page.client_id.name_space,
-                            offline_page.file_path);
+                            offline_page.file_path, offline_page.digest);
 }
 
 void ValidatePageDone(
@@ -456,6 +465,7 @@ void ValidatePageDone(
     NetworkState network_state,
     base::WeakPtr<OfflinePageRequestJob> job,
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    bool skip_file_validation_before_reading,
     const std::vector<OfflinePageItem>& offline_pages,
     size_t offline_page_index,
     bool successfully_validated) {
@@ -479,7 +489,8 @@ void ValidatePageDone(
 
   // Move to validating next page.
   ValidatePage(url, offline_header, network_state, job, web_contents_getter,
-               offline_pages, offline_page_index);
+               skip_file_validation_before_reading, offline_pages,
+               offline_page_index);
 }
 
 // Validate an offline page at |offline_page_index|.
@@ -489,6 +500,7 @@ void ValidatePage(
     NetworkState network_state,
     base::WeakPtr<OfflinePageRequestJob> job,
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    bool skip_file_validation_before_reading,
     const std::vector<OfflinePageItem>& offline_pages,
     size_t offline_page_index) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -519,7 +531,8 @@ void ValidatePage(
 
   // If the file is in internal directory, the page can be trusted without
   // validation.
-  if (offline_page_model->IsArchiveInInternalDir(offline_page.file_path)) {
+  if (offline_page_model->IsArchiveInInternalDir(offline_page.file_path) ||
+      skip_file_validation_before_reading) {
     can_skip_file_validation = true;
     is_page_trusted = true;
   } else if (offline_page.digest.empty()) {
@@ -532,8 +545,8 @@ void ValidatePage(
 
   if (can_skip_file_validation) {
     ValidatePageDone(url, offline_header, network_state, job,
-                     web_contents_getter, offline_pages, offline_page_index,
-                     is_page_trusted);
+                     web_contents_getter, skip_file_validation_before_reading,
+                     offline_pages, offline_page_index, is_page_trusted);
     return;
   }
 
@@ -541,7 +554,8 @@ void ValidatePage(
   ValidateFileOnBackgroundThread(
       offline_page.file_path, offline_page.file_size, offline_page.digest,
       base::Bind(&ValidatePageDone, url, offline_header, network_state, job,
-                 web_contents_getter, offline_pages, offline_page_index));
+                 web_contents_getter, skip_file_validation_before_reading,
+                 offline_pages, offline_page_index));
 }
 
 // Handles the result of finding matched offline pages.
@@ -551,6 +565,7 @@ void SelectPagesForURLDone(
     NetworkState network_state,
     base::WeakPtr<OfflinePageRequestJob> job,
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    bool skip_file_validation_before_reading,
     const std::vector<OfflinePageItem>& offline_pages) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -563,7 +578,7 @@ void SelectPagesForURLDone(
 
   // Start to validate the first page.
   ValidatePage(url, offline_header, network_state, job, web_contents_getter,
-               offline_pages, 0);
+               skip_file_validation_before_reading, offline_pages, 0);
 }
 
 // Handles the result of finding an offline page with the requested offline ID.
@@ -572,6 +587,7 @@ void GetPageByOfflineIdDone(
     const OfflinePageHeader& offline_header,
     NetworkState network_state,
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
+    bool skip_file_validation_before_reading,
     base::WeakPtr<OfflinePageRequestJob> job,
     const OfflinePageItem* offline_page) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -587,7 +603,8 @@ void GetPageByOfflineIdDone(
   std::vector<OfflinePageItem> offline_pages;
   offline_pages.push_back(*offline_page);
   SelectPagesForURLDone(url, offline_header, network_state, job,
-                        web_contents_getter, offline_pages);
+                        web_contents_getter,
+                        skip_file_validation_before_reading, offline_pages);
 }
 
 // Tries to find the offline page to serve for |url|.
@@ -597,6 +614,7 @@ void GetPageToServeURL(
     NetworkState network_state,
     content::ResourceRequestInfo::WebContentsGetter web_contents_getter,
     OfflinePageRequestJob::Delegate::TabIdGetter tab_id_getter,
+    bool skip_file_validation_before_reading,
     base::WeakPtr<OfflinePageRequestJob> job) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -624,7 +642,8 @@ void GetPageToServeURL(
       DCHECK(offline_page_model);
       offline_page_model->GetPageByOfflineId(
           offline_id, base::Bind(&GetPageByOfflineIdDone, url, offline_header,
-                                 network_state, web_contents_getter, job));
+                                 network_state, web_contents_getter,
+                                 skip_file_validation_before_reading, job));
       return;
     }
   }
@@ -633,7 +652,26 @@ void GetPageToServeURL(
       web_contents->GetBrowserContext(), url, URLSearchMode::SEARCH_BY_ALL_URLS,
       tab_id,
       base::Bind(&SelectPagesForURLDone, url, offline_header, network_state,
-                 job, web_contents_getter));
+                 job, web_contents_getter,
+                 skip_file_validation_before_reading));
+}
+
+void ClearOfflinePageData(
+    content::ResourceRequestInfo::WebContentsGetter web_contents_getter) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  // |web_contents_getter| is passed from IO thread. We need to check if
+  // web contents is still valid.
+  content::WebContents* web_contents = web_contents_getter.Run();
+  if (!web_contents)
+    return;
+
+  // Save an cached copy of OfflinePageItem such that Tab code can get
+  // the loaded offline page immediately.
+  OfflinePageTabHelper* tab_helper =
+      OfflinePageTabHelper::FromWebContents(web_contents);
+  DCHECK(tab_helper);
+  tab_helper->ClearOfflinePage();
 }
 
 void ReportAccessEntryPoint(
@@ -736,7 +774,9 @@ void OfflinePageRequestJob::StartAsync() {
       content::BrowserThread::UI, FROM_HERE,
       base::Bind(&GetPageToServeURL, request()->url(), offline_header,
                  network_state, delegate_->GetWebContentsGetter(request()),
-                 delegate_->GetTabIdGetter(), weak_ptr_factory_.GetWeakPtr()));
+                 delegate_->GetTabIdGetter(),
+                 delegate_->SkipFileValidationBeforeReading(),
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void OfflinePageRequestJob::Kill() {
@@ -780,6 +820,10 @@ bool OfflinePageRequestJob::CopyFragmentOnRedirect(const GURL& location) const {
 void OfflinePageRequestJob::OnOpenComplete(int result) {
   UMA_HISTOGRAM_SPARSE_SLOWLY("OfflinePages.RequestJob.OpenFileErrorCode",
                               -result);
+  if (!expected_digest_.empty()) {
+    actual_secure_hash_ =
+        crypto::SecureHash::Create(crypto::SecureHash::SHA256);
+  }
 }
 
 void OfflinePageRequestJob::OnSeekComplete(int64_t result) {
@@ -789,11 +833,30 @@ void OfflinePageRequestJob::OnSeekComplete(int64_t result) {
   }
 }
 
-void OfflinePageRequestJob::OnReadComplete(net::IOBuffer* buf, int result) {
+int OfflinePageRequestJob::OnReadComplete(net::IOBuffer* buf, int result) {
   if (result < 0) {
     UMA_HISTOGRAM_SPARSE_SLOWLY("OfflinePages.RequestJob.ReadFileErrorCode",
                                 -result);
+    return result;
   }
+
+  if (!expected_digest_.empty()) {
+    actual_secure_hash_->Update(buf->data(), result);
+    if (remaining_bytes() == 0) {
+      std::string actual_digest(crypto::kSHA256Length, 0);
+      actual_secure_hash_->Finish(&(actual_digest[0]), actual_digest.size());
+      if (actual_digest != expected_digest_) {
+        // TODO(jianli): Add UMA.
+        SetOfflinePageNavigationUIData(false /*is_offline_page*/);
+        content::BrowserThread::PostTask(
+            content::BrowserThread::UI, FROM_HERE,
+            base::Bind(&ClearOfflinePageData,
+                       delegate_->GetWebContentsGetter(request())));
+        return net::ERR_FAILED;
+      }
+    }
+  }
+  return result;
 }
 
 void OfflinePageRequestJob::FallbackToDefault() {
@@ -807,7 +870,8 @@ void OfflinePageRequestJob::FallbackToDefault() {
 
 void OfflinePageRequestJob::OnOfflineFilePathAvailable(
     const std::string& name_space,
-    const base::FilePath& offline_file_path) {
+    const base::FilePath& offline_file_path,
+    const std::string& expected_digest) {
   // If offline file path is empty, it means that offline page cannot be found
   // and we want to restart the job to fall back to the default handling.
   if (offline_file_path.empty()) {
@@ -815,18 +879,11 @@ void OfflinePageRequestJob::OnOfflineFilePathAvailable(
     return;
   }
 
+  expected_digest_ = expected_digest;
+
   ReportAccessEntryPoint(name_space, GetAccessEntryPoint());
 
-  const content::ResourceRequestInfo* info =
-      content::ResourceRequestInfo::ForRequest(request());
-  ChromeNavigationUIData* navigation_data =
-      static_cast<ChromeNavigationUIData*>(info->GetNavigationUIData());
-  if (navigation_data) {
-    std::unique_ptr<OfflinePageNavigationUIData> offline_page_data =
-        std::make_unique<OfflinePageNavigationUIData>(true);
-    navigation_data->SetOfflinePageNavigationUIData(
-        std::move(offline_page_data));
-  }
+  SetOfflinePageNavigationUIData(true /*is_offline_page*/);
 
   // Sets the file path and lets URLRequestFileJob start to read from the file.
   file_path_ = offline_file_path;
@@ -862,6 +919,20 @@ void OfflinePageRequestJob::OnOfflineRedirectAvailabe(
 bool OfflinePageRequestJob::CanAccessFile(const base::FilePath& original_path,
                                           const base::FilePath& absolute_path) {
   return true;
+}
+
+void OfflinePageRequestJob::SetOfflinePageNavigationUIData(
+    bool is_offline_page) {
+  const content::ResourceRequestInfo* info =
+      content::ResourceRequestInfo::ForRequest(request());
+  ChromeNavigationUIData* navigation_data =
+      static_cast<ChromeNavigationUIData*>(info->GetNavigationUIData());
+  if (navigation_data) {
+    std::unique_ptr<OfflinePageNavigationUIData> offline_page_data =
+        std::make_unique<OfflinePageNavigationUIData>(is_offline_page);
+    navigation_data->SetOfflinePageNavigationUIData(
+        std::move(offline_page_data));
+  }
 }
 
 void OfflinePageRequestJob::SetDelegateForTesting(

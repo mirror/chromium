@@ -57,8 +57,10 @@ class NET_EXPORT URLRequestFileJob : public URLRequestJob {
   virtual void OnSeekComplete(int64_t result);
   // Called once per read attempt.  |buf| contains the read data, if any.
   // |result| is the number of read bytes.  0 (net::OK) indicates EOF, negative
-  // numbers indicate it's a net::Error code.
-  virtual void OnReadComplete(IOBuffer* buf, int result);
+  // numbers indicate it's a net::Error code. Most of time, same |result| should
+  // be returned. In rare circumstance that you want to fail the reading, you
+  // can return a different result, i.e, a net::Error code.
+  virtual int OnReadComplete(IOBuffer* buf, int result);
 
  protected:
   ~URLRequestFileJob() override;
