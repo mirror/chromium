@@ -470,7 +470,8 @@ IN_PROC_BROWSER_TEST_F(PDFExtensionTest, EnsureInternalPluginDisabled) {
 }
 
 // Ensure cross-origin replies won't work for getSelectedText.
-IN_PROC_BROWSER_TEST_F(PDFExtensionTest, EnsureCrossOriginRepliesBlocked) {
+IN_PROC_BROWSER_TEST_F(PDFExtensionTest,
+                       DISABLED_EnsureCrossOriginRepliesBlocked) {
   std::string url = embedded_test_server()->GetURL("/pdf/test.pdf").spec();
   std::string data_url =
       "data:text/html,"
@@ -563,7 +564,7 @@ IN_PROC_BROWSER_TEST_F(PDFExtensionTest, TabTitleWithTitle) {
 }
 
 // This test ensures that titles are set properly for embedded PDFs with /Title.
-IN_PROC_BROWSER_TEST_F(PDFExtensionTest, TabTitleWithEmbeddedPdf) {
+IN_PROC_BROWSER_TEST_F(PDFExtensionTest, DISABLED_TabTitleWithEmbeddedPdf) {
   std::string url =
       embedded_test_server()->GetURL("/pdf/test-title.pdf").spec();
   std::string data_url =
@@ -1425,7 +1426,7 @@ IN_PROC_BROWSER_TEST_F(PDFExtensionTest, CtrlWheelInvokesCustomZoom) {
 
 #endif  // defined(OS_MACOSX)
 
-IN_PROC_BROWSER_TEST_F(PDFExtensionTest, ContextMenuCoordinates) {
+IN_PROC_BROWSER_TEST_F(PDFExtensionTest, DISABLED_ContextMenuCoordinates) {
   GURL url = embedded_test_server()->GetURL("/pdf/pdf_embed.html");
 
   // Load page with embedded PDF and make sure it succeeds.

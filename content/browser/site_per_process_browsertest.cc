@@ -11271,7 +11271,7 @@ class SitePerProcessAndroidImeTest : public SitePerProcessBrowserTest {
 // This test verifies that committing text will be applied on the focused
 // RenderWidgetHost.
 IN_PROC_BROWSER_TEST_F(SitePerProcessAndroidImeTest,
-                       CommitTextForFocusedWidget) {
+                       DISABLED_CommitTextForFocusedWidget) {
   LoadPage();
   TextSelectionObserver selection_observer(
       web_contents()->GetTextInputManager());

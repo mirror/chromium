@@ -287,59 +287,6 @@ TEST_F('BasicExtensionSettingsWebUITest', 'testNonEmptyExtensionList',
   this.nextStep();
 });
 
-function AutoScrollExtensionSettingsWebUITest() {}
-
-/**
- * A variation for testing auto-scroll when an id query param is passed in the
- * url.
- * @constructor
- * @extends {BasicExtensionSettingsWebUITest}
- */
-AutoScrollExtensionSettingsWebUITest.prototype = {
-  __proto__: BasicExtensionSettingsWebUITest.prototype,
-
-  /** @override */
-  browsePreload: 'chrome://extensions/?id=' + GOOD_EXTENSION_ID,
-
-  /** @override */
-  testGenPreamble: function() {
-    BasicExtensionSettingsWebUITest.prototype.testGenPreamble.call(this);
-    // The window needs to be sufficiently small in order to ensure a scroll bar
-    // is available.
-    GEN('  ShrinkWebContentsView();');
-  },
-};
-
-TEST_F('AutoScrollExtensionSettingsWebUITest', 'testAutoScroll', function() {
-  var checkHasScrollbar = function() {
-    assertGT(document.scrollingElement.scrollHeight,
-             document.body.clientHeight);
-    this.nextStep();
-  };
-  var checkIsScrolled = function() {
-    assertGT(document.scrollingElement.scrollTop, 0);
-    this.nextStep();
-  };
-  var checkScrolledToTop = function() {
-    assertEquals(0, document.scrollingElement.scrollTop);
-    this.nextStep();
-  };
-  var scrollToTop = function() {
-    document.scrollingElement.scrollTop = 0;
-    this.nextStep();
-  };
-  // Test that a) autoscroll works on first page load and b) updating the
-  // page doesn't result in autoscroll triggering again.
-  this.steps = [this.waitForPageLoad,
-                checkHasScrollbar,
-                checkIsScrolled,
-                scrollToTop,
-                this.enableDeveloperMode,
-                checkScrolledToTop,
-                testDone];
-  this.nextStep();
-});
-
 function ErrorConsoleExtensionSettingsWebUITest() {}
 
 ErrorConsoleExtensionSettingsWebUITest.prototype = {

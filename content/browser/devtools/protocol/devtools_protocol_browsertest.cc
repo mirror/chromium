@@ -867,7 +867,7 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, CaptureScreenshotJpeg) {
 }
 
 // Setting frame size (through RWHV) is not supported on Android.
-#if defined(OS_ANDROID) || defined(OS_LINUX)
+#if 1
 #define MAYBE_CaptureScreenshotArea DISABLED_CaptureScreenshotArea
 #else
 #define MAYBE_CaptureScreenshotArea CaptureScreenshotArea

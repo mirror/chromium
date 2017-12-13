@@ -207,7 +207,8 @@ std::unique_ptr<HttpResponse> FormStructureBrowserTest::HandleRequest(
   return std::move(response);
 }
 
-IN_PROC_BROWSER_TEST_P(FormStructureBrowserTest, DataDrivenHeuristics) {
+IN_PROC_BROWSER_TEST_P(FormStructureBrowserTest,
+                       DISABLED_DataDrivenHeuristics) {
   // Prints the path of the test to be executed.
   LOG(INFO) << GetParam().MaybeAsASCII();
   bool is_expected_to_pass =

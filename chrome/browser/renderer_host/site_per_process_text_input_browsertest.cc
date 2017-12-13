@@ -662,7 +662,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
 // The following test verifies that when the active widget changes value, it is
 // always from nullptr to non-null or vice versa.
 IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
-                       ResetTextInputStateOnActiveWidgetChange) {
+                       DISABLED_ResetTextInputStateOnActiveWidgetChange) {
   CreateIframePage("a(b,c(a,b),d)");
   std::vector<content::RenderFrameHost*> frames{
       GetFrame(IndexVector{}),     GetFrame(IndexVector{0}),
@@ -883,7 +883,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
 // This test makes sure browser correctly tracks focused editable element inside
 // each RenderFrameHost.
 // Test is flaky on chromeOS; https://crbug.com/705203.
-#if defined(OS_CHROMEOS)
+#if 1
 #define MAYBE_TrackingFocusedElementForAllFrames \
   DISABLED_TrackingFocusedElementForAllFrames
 #else
@@ -932,7 +932,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
 // in both cases the test verifies that WebContents is aware whether or not a
 // focused editable element exists on the page.
 // Test is flaky on ChromeOS. crbug.com/705289
-#if defined(OS_CHROMEOS)
+#if 1
 #define MAYBE_TrackPageFocusEditableElement \
   DISABLED_TrackPageFocusEditableElement
 #else
@@ -974,7 +974,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessTextInputManagerTest,
 // WebContents to clear focused element and verifies that there is no longer
 // a focused editable element on the page.
 // Test is flaky on ChromeOS; https://crbug.com/705203.
-#if defined(OS_CHROMEOS)
+#if 1
 #define MAYBE_ClearFocusedElementOnPage DISABLED_ClearFocusedElementOnPage
 #else
 #define MAYBE_ClearFocusedElementOnPage ClearFocusedElementOnPage

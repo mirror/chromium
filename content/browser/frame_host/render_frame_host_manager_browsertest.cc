@@ -2970,8 +2970,9 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
 // normally maintain the opener, but loses it due to being placed in a new
 // process and not creating subframe proxies.  The latter might happen when
 // opening the default search provider site.  See https://crbug.com/576204.
-IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
-                       CrossProcessPopupInheritsSandboxFlagsWithNoOpener) {
+IN_PROC_BROWSER_TEST_F(
+    RenderFrameHostManagerTest,
+    DISABLED_CrossProcessPopupInheritsSandboxFlagsWithNoOpener) {
   StartEmbeddedServer();
   FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
                             ->GetFrameTree()

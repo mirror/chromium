@@ -19,24 +19,6 @@ CrElementsFocusTest.prototype = {
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH),
 };
 
-function CrElementsActionMenuTest() {}
-
-CrElementsActionMenuTest.prototype = {
-  __proto__: CrElementsFocusTest.prototype,
-
-  /** @override */
-  browsePreload:
-      'chrome://resources/cr_elements/cr_action_menu/cr_action_menu.html',
-
-  extraLibraries: CrElementsFocusTest.prototype.extraLibraries.concat([
-    'cr_action_menu_test.js',
-  ]),
-};
-
-TEST_F('CrElementsActionMenuTest', 'All', function() {
-  mocha.run();
-});
-
 function CrElementsProfileAvatarSelectorFocusTest() {}
 
 CrElementsProfileAvatarSelectorFocusTest.prototype = {

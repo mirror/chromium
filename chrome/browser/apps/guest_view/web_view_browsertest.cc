@@ -3506,7 +3506,7 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, Shim_TestFocusWhileFocused) {
   TestHelper("testFocusWhileFocused", "web_view/shim", NO_TEST_SERVER);
 }
 
-IN_PROC_BROWSER_TEST_P(WebViewTest, NestedGuestContainerBounds) {
+IN_PROC_BROWSER_TEST_P(WebViewTest, DISABLED_NestedGuestContainerBounds) {
   // TODO(crbug.com/776539): Disabled due to being flaky.
   if (GetParam() == true) {
     DLOG(ERROR) << "Disabled due to flakiness.";
@@ -3537,7 +3537,8 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, NestedGuestContainerBounds) {
 
 // Test that context menu Back/Forward items in a MimeHandlerViewGuest affect
 // the embedder WebContents. See crbug.com/587355.
-IN_PROC_BROWSER_TEST_P(WebViewTest, ContextMenuNavigationInMimeHandlerView) {
+IN_PROC_BROWSER_TEST_P(WebViewTest,
+                       DISABLED_ContextMenuNavigationInMimeHandlerView) {
   TestHelper("testNavigateToPDFInWebview", "web_view/shim", NO_TEST_SERVER);
 
   std::vector<content::WebContents*> guest_web_contents_list;

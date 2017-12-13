@@ -1196,12 +1196,12 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
-                       AccessibilityIframeCoordinates) {
+                       DISABLED_AccessibilityIframeCoordinates) {
   RunHtmlTest(FILE_PATH_LITERAL("iframe-coordinates.html"));
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
-                       AccessibilityIframeCoordinatesCrossProcess) {
+                       DISABLED_AccessibilityIframeCoordinatesCrossProcess) {
   RunHtmlTest(FILE_PATH_LITERAL("iframe-coordinates-cross-process.html"));
 }
 
@@ -1241,7 +1241,7 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityTreeTest,
-                       AccessibilityIframeTransformScrolled) {
+                       DISABLED_AccessibilityIframeTransformScrolled) {
   RunHtmlTest(FILE_PATH_LITERAL("iframe-transform-scrolled.html"));
 }
 

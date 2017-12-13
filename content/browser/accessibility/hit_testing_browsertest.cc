@@ -161,7 +161,7 @@ IN_PROC_BROWSER_TEST_F(AccessibilityHitTestingBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(AccessibilityHitTestingBrowserTest,
-                       CachingAsyncHitTestingInIframes) {
+                       DISABLED_CachingAsyncHitTestingInIframes) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   NavigateToURL(shell(), GURL(url::kAboutBlankURL));
