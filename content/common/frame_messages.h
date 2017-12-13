@@ -1037,6 +1037,9 @@ IPC_MESSAGE_ROUTED2(FrameMsg_SaveImageAt,
 IPC_MESSAGE_ROUTED1(FrameMsg_SetOverlayRoutingToken,
                     base::UnguessableToken /* routing_token */)
 
+// Set the has user gesture flag to true.
+IPC_MESSAGE_ROUTED0(FrameMsg_SetHasUserGestureToken)
+
 #if BUILDFLAG(ENABLE_PLUGINS)
 // Notifies the renderer of updates to the Plugin Power Saver origin whitelist.
 IPC_MESSAGE_ROUTED1(FrameMsg_UpdatePluginContentOriginWhitelist,

@@ -2761,6 +2761,16 @@ void RenderFrameHostImpl::OnFocusedNodeChanged(
                       bounds_in_frame_widget.size()));
 }
 
+void RenderFrameHostImpl::SetHasReceivedUserGesture() {
+  if (base::FeatureList::IsEnabled(media::kUnifiedAutoplay)) {
+    // Avoid IPC if new autoplay policy isn't in effect, since it's covered by
+    // a tab helper.
+    // TODO(thildebr): Remove this check once the new autoplay policy is
+    //                 launched.
+    Send(new FrameMsg_SetHasReceivedUserGesture(routing_id_));
+  }
+}
+
 void RenderFrameHostImpl::OnSetHasReceivedUserGesture() {
   frame_tree_node_->OnSetHasReceivedUserGesture();
 }

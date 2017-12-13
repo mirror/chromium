@@ -337,7 +337,7 @@ void WebRemoteFrameImpl::WillEnterFullscreen() {
 }
 
 void WebRemoteFrameImpl::SetHasReceivedUserGesture() {
-  GetFrame()->UpdateUserActivationInFrameTree();
+  Frame::NotifyUserActivation(GetFrame(), UserGestureToken::kNewGesture);
 }
 
 void WebRemoteFrameImpl::ScrollRectToVisible(

@@ -93,6 +93,7 @@ import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentControll
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetPaddingUtils;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.content_public.browser.LoadUrlParams;
+import org.chromium.content_public.browser.RenderFrameHost;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.ui.UiUtils;
@@ -2263,6 +2264,12 @@ public class LocationBarLayout extends FrameLayout
         // Prevent any upcoming omnibox suggestions from showing. We have to do this after we load
         // the URL as this will hide the suggestions and trigger a cancel of the prerendered page.
         stopAutocomplete(true);
+
+        // If voice was used, we let the frame know that there was a user gesture.
+        RenderFrameHost renderFrameHost = currentTab.getWebContents().getMainFrame();
+        if (renderFrameHost != null) {
+            renderFrameHost.setHasReceivedUserGesture();
+        }
     }
 
     /**
