@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cc0ab2d7_65f23250",
+        "filename": "BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-13T01:10:47Z",
+      "side": 1,
+      "message": "If you declare an \"all\" (and it isn\u0027t a binary) it actually gets called something else in the ninja file.\n\nanyway, let\u0027s just leave this as gn_all for now and call it a day.",
+      "parentUuid": "94c436a8_7466a18d",
+      "revId": "b256fdab617518dc111fe80afe87900fecf202f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "306403d6_770358e4",
         "filename": "BUILD.gn",
         "patchSetId": 2
