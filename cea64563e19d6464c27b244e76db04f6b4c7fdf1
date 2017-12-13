@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6aa72cf_49121784",
+        "filename": "chrome/browser/first_run/first_run_dialog.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T04:35:08Z",
+      "side": 1,
+      "message": "annoying nit: this can go on the previous line do drop this file out of the diff",
+      "revId": "cea64563e19d6464c27b244e76db04f6b4c7fdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

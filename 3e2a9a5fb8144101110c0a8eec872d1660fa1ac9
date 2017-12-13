@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "d8936a62_e0c5cf4f",
+        "filename": "chrome/browser/infobars/infobars_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T04:35:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f8dc9ede_aea36aef",
+      "range": {
+        "startLine": 105,
+        "startChar": 72,
+        "endLine": 105,
+        "endChar": 79
+      },
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f26c3005_caca5475",
         "filename": "chrome/browser/infobars/infobars_browsertest.cc",
         "patchSetId": 6
@@ -458,6 +482,24 @@
     },
     {
       "key": {
+        "uuid": "d8d594a5_61ced154",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T04:35:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "84270b9e_ec08b087",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6e9feb7_1efcea48",
         "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
         "patchSetId": 6
@@ -487,6 +529,24 @@
       "side": 1,
       "message": "Since the #if\u0027d out sections are all just NOTIMPLEMENTEDs, I\u0027m not too worried about rot.  I\u0027m more concerned about trying to make this a compile/link error to build, because I\u0027m not convinced there aren\u0027t non-TOOLKIT_VIEWS platforms today which link in this file but don\u0027t run these tests.  Maybe if this was its own test target and not a part of browser_tests this would be OK, but it seems worrisome to go down this path as-is.",
       "parentUuid": "d6e9feb7_1efcea48",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a2ce8e_8d2e6eef",
+        "filename": "chrome/browser/ui/test/test_browser_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T04:35:08Z",
+      "side": 1,
+      "message": "\u003e Since the #if\u0027d out sections are all just NOTIMPLEMENTEDs, I\u0027m not too worried about rot.  I\u0027m more concerned about trying to make this a compile/link error to build, because I\u0027m not convinced there aren\u0027t non-TOOLKIT_VIEWS platforms today which link in this file but don\u0027t run these tests.  Maybe if this was its own test target and not a part of browser_tests this would be OK, but it seems worrisome to go down this path as-is.\n\nAck. I think there are dragons.. Chromecast intentionally links ui/views but doesn\u0027t define TOOLKIT_VIEWS -- https://cs.chromium.org/chromium/src/chrome/browser/ui/BUILD.gn?q\u003d%22The+Cast+Linux+build+sets+toolkit_views+to+false%22\u0026sq\u003dpackage:chromium\u0026l\u003d2559\n\nI suppose it\u0027s better to fail-if-run there, than silently succeed.\n\nI\u0027m not sure about android.",
+      "parentUuid": "5d1aa312_5861e0a4",
       "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -557,6 +617,24 @@
       "side": 1,
       "message": "I hate all the names of all these, because the core class name, template name, and name of the actual test case used to invoke these are all permutations of each other: TestBrowserUI, UIBrowserTest, BrowserUITest.  These should probably be something like: BrowserUITestSupport, BrowserUITest, InvokeBrowserUI?\n\nBut I\u0027m not sure how much better that really is.",
       "parentUuid": "92960fef_2c3f63b7",
+      "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfd12e21_34df03b9",
+        "filename": "chrome/browser/ui/test/test_browser_ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T04:35:08Z",
+      "side": 1,
+      "message": "\u003e I hate all the names of all these, because the core class name, template name, and name of the actual test case used to invoke these are all permutations of each other: TestBrowserUI, UIBrowserTest, BrowserUITest.  These should probably be something like: BrowserUITestSupport, BrowserUITest, InvokeBrowserUI?\n\u003e \n\u003e But I\u0027m not sure how much better that really is.\n\nAn anecdote from my own experience is that muscle memory always wants to type \"browsertest\". Any string with both \"browser\" and \"test\" in it should have them in that order, and with nothing between them (except maybe an underscore). Then there\u0027s no permutation to worry about.\n\nBut it\u0027s also fine for buried/implementation classes that never have to be typed to break this rule.\n\nAnyway - I can explore this further once it\u0027s irritated me enough :)",
+      "parentUuid": "42bdb052_0204c9dc",
       "revId": "3e2a9a5fb8144101110c0a8eec872d1660fa1ac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
