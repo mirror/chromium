@@ -2287,7 +2287,7 @@ TEST_F(RenderViewImplTest, NavigationStartForCrossProcessHistoryNavigation) {
   EXPECT_EQ(std::get<2>(host_nav_params), common_params.navigation_start);
 }
 
-TEST_F(RenderViewImplTest, PreferredSizeZoomed) {
+TEST_F(RenderViewImplTest, DISABLED_PreferredSizeZoomed) {
   LoadHTML("<body style='margin:0;'><div style='display:inline-block; "
            "width:400px; height:400px;'/></body>");
   view()->webview()->MainFrame()->ToWebLocalFrame()->SetCanHaveScrollbars(
@@ -2302,7 +2302,7 @@ TEST_F(RenderViewImplTest, PreferredSizeZoomed) {
   EXPECT_EQ(gfx::Size(800, 800), size);
 }
 
-TEST_F(RenderViewImplScaleFactorTest, PreferredSizeWithScaleFactor) {
+TEST_F(RenderViewImplScaleFactorTest, DISABLED_PreferredSizeWithScaleFactor) {
   DoSetUp();
   LoadHTML("<body style='margin:0;'><div style='display:inline-block; "
            "width:400px; height:400px;'/></body>");

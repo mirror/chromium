@@ -1388,7 +1388,7 @@ class DomTreeExtractionBrowserTest : public HeadlessAsyncDevTooledBrowserTest,
   }
 };
 
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(DomTreeExtractionBrowserTest);
+// HEADLESS_ASYNC_DEVTOOLED_TEST_F(DomTreeExtractionBrowserTest);
 
 class UrlRequestFailedTest : public HeadlessAsyncDevTooledBrowserTest,
                              public HeadlessBrowserContext::Observer,
