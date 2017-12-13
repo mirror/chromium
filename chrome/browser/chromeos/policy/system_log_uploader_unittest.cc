@@ -117,10 +117,10 @@ class MockSystemLogDelegate : public SystemLogUploader::Delegate {
       : is_upload_error_(is_upload_error), system_logs_(system_logs) {}
   ~MockSystemLogDelegate() override {}
 
-  void LoadSystemLogs(const LogUploadCallback& upload_callback) override {
+  void LoadSystemLogs(LogUploadCallback upload_callback) override {
     EXPECT_TRUE(is_upload_allowed_);
-    upload_callback.Run(
-        base::MakeUnique<SystemLogUploader::SystemLogs>(system_logs_));
+    std::move(upload_callback)
+        .Run(base::MakeUnique<SystemLogUploader::SystemLogs>(system_logs_));
   }
 
   std::unique_ptr<UploadJob> CreateUploadJob(
