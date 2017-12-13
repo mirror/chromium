@@ -34,6 +34,24 @@
       "revId": "8a5b981b7c6d6254a4b13c24ed03d611099207a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f9a952_86450eec",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3859,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-13T03:08:17Z",
+      "side": 1,
+      "message": "\u003e Yep, basically if the group is set to \"Enabled\" (or non-\"Disallow\" I guess), update_process_priority stays true i.e. we background renderer processes on launch.\n\nThat doesn\u0027t look like what the code does.  If the group is set to \"Enabled\", then StartsWith(..., \"Disallow\") is false, so with the ! it\u0027s true, and we get to line 3861 and set update_process_priority to false.\n\nThere\u0027s too many negatives here.  :)\n\nCan you include a test that we do the right thing, maybe using something like ScopedFeatureList?",
+      "parentUuid": "3267da4a_2ef214ef",
+      "revId": "8a5b981b7c6d6254a4b13c24ed03d611099207a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
