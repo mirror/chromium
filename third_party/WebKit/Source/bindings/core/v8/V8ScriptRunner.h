@@ -78,6 +78,15 @@ class CORE_EXPORT V8ScriptRunner final {
   static v8::MaybeLocal<v8::Value> RunCompiledScript(v8::Isolate*,
                                                      v8::Local<v8::Script>,
                                                      ExecutionContext*);
+
+  // ProduceCache only produces cache when a V8 flag
+  // (enable_cache_after_execute) is enabled. When that flag is disabled cache
+  // is produced during compile. This is a temporary flag to enable a trial
+  // and measure the preformance of the cache after execute.
+  static void ProduceCache(v8::Isolate*,
+                           v8::Local<v8::Script>,
+                           const ScriptSourceCode&,
+                           V8CacheOptions);
   static v8::MaybeLocal<v8::Value> CompileAndRunInternalScript(
       ScriptState*,
       const ScriptSourceCode&,

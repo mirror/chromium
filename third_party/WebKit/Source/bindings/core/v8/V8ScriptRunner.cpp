@@ -66,6 +66,9 @@ namespace {
 // This limit was arrived at arbitrarily. crbug.com/449744
 const int kMaxRecursionDepth = 44;
 
+const int kHotHours = 72;
+const int kMinimalCodeLength = 1024;
+
 // In order to make sure all pending messages to be processed in
 // v8::Function::Call, we don't call throwStackOverflowException
 // directly. Instead, we create a v8::Function of
@@ -265,7 +268,6 @@ v8::MaybeLocal<v8::Script> PostStreamCompile(
 
     case kV8CacheOptionsDefault:
     case kV8CacheOptionsCode:
-      V8ScriptRunner::SetCacheTimeStamp(cache_handler);
       break;
 
     case kV8CacheOptionsCodeWithoutHeatCheck:
@@ -292,8 +294,6 @@ static CompileFn SelectCompileFunction(
     CachedMetadataHandler* cache_handler,
     v8::Local<v8::String> code,
     v8::ScriptCompiler::NoCacheReason no_handler_reason) {
-  static const int kMinimalCodeLength = 1024;
-  static const int kHotHours = 72;
 
   // Caching is not available in this case.
   if (!cache_handler) {
@@ -346,7 +346,6 @@ static CompileFn SelectCompileFunction(
       if (cache_options != kV8CacheOptionsCodeWithoutHeatCheck &&
           cache_options != kV8CacheOptionsFullCodeWithoutHeatCheck &&
           !IsResourceHotForCaching(cache_handler, kHotHours)) {
-        V8ScriptRunner::SetCacheTimeStamp(cache_handler);
         return WTF::Bind(CompileWithoutOptions,
                          v8::ScriptCompiler::kNoCacheBecauseCacheTooCold);
       }
@@ -520,6 +519,78 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::RunCompiledScript(
 
   CHECK(!isolate->IsDead());
   return result;
+}
+
+void V8ScriptRunner::ProduceCache(v8::Isolate* isolate,
+                                  v8::Local<v8::Script> script,
+                                  const ScriptSourceCode& source,
+                                  V8CacheOptions cache_options) {
+  TRACE_EVENT0("v8", "v8.run");
+  RuntimeCallStatsScopedTracer rcs_scoped_tracer(isolate);
+  RUNTIME_CALL_TIMER_SCOPE(isolate, RuntimeCallStats::CounterId::kV8);
+
+  // ProduceCache only produces cache when a V8 flag
+  // (enable_cache_after_execute) is enabled. Currently, V8 produces cache
+  // either on compile or when explicitly requested depending on the flag.
+  // This is done to enable a trial and see the efficiency of the cache after
+  // execute. Currently, we collect statistics during compile even when we
+  // produce cache here.
+  // TODO(783124): clean up the statistics collection when we decouple
+  // producing cache from compile.
+
+  // TODO(783124): The code cache heuristics are duplicated both while
+  // selecting the compile function and here. Unify them into one place.
+  CachedMetadataHandler* cache_handler = source.CacheHandler();
+  if (!cache_handler) {
+    return;
+  }
+
+  // Check if cache already exists.
+  uint32_t code_cache_tag = V8ScriptRunner::TagForCodeCache(cache_handler);
+  if (cache_handler->GetCachedMetadata(code_cache_tag)) {
+    return;
+  }
+
+  // If the script is too small then don't cache.
+  if (source.Source().length() < kMinimalCodeLength) {
+    return;
+  }
+
+  switch (cache_options) {
+    case kV8CacheOptionsParse: {
+      // Parse Cache option doesn't change. This option would be soon
+      // removed, so it is not needed to move this to the new explicit API.
+      return;
+    }
+    case kV8CacheOptionsDefault:
+    case kV8CacheOptionsCode: {
+      // Only cache recently seen resources
+      if (!IsResourceHotForCaching(cache_handler, kHotHours)) {
+        V8ScriptRunner::SetCacheTimeStamp(cache_handler);
+        return;
+      }
+      break;
+    }
+    case kV8CacheOptionsCodeWithoutHeatCheck:
+    case kV8CacheOptionsFullCodeWithoutHeatCheck: {
+      break;
+    }
+    case kV8CacheOptionsNone:
+      return;
+    default:
+      NOTREACHED();
+  }
+
+  std::unique_ptr<v8::ScriptCompiler::CachedData> cached_data;
+  cached_data.reset(v8::ScriptCompiler::CreateCodeCache(
+      script->GetUnboundScript(), V8String(isolate, source.Source())));
+  if (cached_data) {
+    const char* data = reinterpret_cast<const char*>(cached_data->data);
+    int length = cached_data->length;
+    cache_handler->ClearCachedMetadata(CachedMetadataHandler::kCacheLocally);
+    cache_handler->SetCachedMetadata(code_cache_tag, data, length,
+                                     CachedMetadataHandler::kSendToPlatform);
+  }
 }
 
 v8::MaybeLocal<v8::Value> V8ScriptRunner::CompileAndRunInternalScript(
