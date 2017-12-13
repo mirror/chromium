@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b1360be_a9d4acaa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T01:37:50Z",
+      "side": 1,
+      "message": "add braces for if () {}",
+      "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465bb181_c4fac694",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T01:37:50Z",
+      "side": 1,
+      "message": "Is there a difference between \"omit\" in line 72 and \"not include\" in line 80?",
+      "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c31764_f3465e8a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials-tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T01:37:50Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14acea5_11561b0e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T01:37:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand how the comment relates to the code. \"include\" and \"*\" don\u0027t appear in the code.",
+      "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd22e3af_07d46b50",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/credentials.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-13T01:37:50Z",
+      "side": 1,
+      "message": "Do the response_headers make sense with 404? The original code only has them on 200.",
+      "revId": "5a5e3d9fbf191f8f9b4a9bcc1f0390d793096ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
