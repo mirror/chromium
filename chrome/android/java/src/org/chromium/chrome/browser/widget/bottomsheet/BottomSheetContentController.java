@@ -29,6 +29,7 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.StrictModeContext;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.chrome.R;
@@ -38,6 +39,7 @@ import org.chromium.chrome.browser.bookmarks.BookmarkSheetContent;
 import org.chromium.chrome.browser.download.DownloadSheetContent;
 import org.chromium.chrome.browser.history.HistorySheetContent;
 import org.chromium.chrome.browser.ntp.IncognitoBottomSheetContent;
+import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.suggestions.SuggestionsBottomSheetContent;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelSelectorObserver;
@@ -51,6 +53,7 @@ import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetCon
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.StateChangeReason;
 import org.chromium.chrome.browser.widget.bottomsheet.base.BottomNavigationView;
 import org.chromium.chrome.browser.widget.bottomsheet.base.BottomNavigationView.OnNavigationItemSelectedListener;
+import org.chromium.chrome.browser.widget.textbubble.ViewAnchoredTextBubble;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.ui.UiUtils;
 
@@ -175,8 +178,12 @@ public class BottomSheetContentController
 
             if (mShouldOpenSheetOnNextContentChange) {
                 mShouldOpenSheetOnNextContentChange = false;
-                if (mBottomSheet.getSheetState() != BottomSheet.SHEET_STATE_FULL) {
-                    mBottomSheet.setSheetState(BottomSheet.SHEET_STATE_FULL, true);
+                @BottomSheet.SheetState
+                int targetState = mShouldOpenSheetToFullOnNextContentChange
+                        ? BottomSheet.SHEET_STATE_FULL
+                        : BottomSheet.SHEET_STATE_HALF;
+                if (mBottomSheet.getSheetState() != targetState) {
+                    mBottomSheet.setSheetState(targetState, true);
                 }
                 return;
             }
@@ -198,6 +205,7 @@ public class BottomSheetContentController
     private int mSelectedItemId;
     private ChromeActivity mActivity;
     private boolean mShouldOpenSheetOnNextContentChange;
+    private boolean mShouldOpenSheetToFullOnNextContentChange;
     private boolean mShouldClearContentsOnNextContentChange;
     private PlaceholderSheetContent mPlaceholderContent;
     private boolean mOmniboxHasFocus;
@@ -746,5 +754,64 @@ public class BottomSheetContentController
 
             animator.start();
         }
+    }
+
+    /**
+     * Record a menu item click and open the bottom sheet to the specified content. This method
+     * assumes that Chrome Home is enabled.
+     * @param navId The bottom sheet navigation id to open.
+     */
+    public void openBottomSheetForMenuItem(int navId) {
+        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
+            ChromePreferenceManager.getInstance().incrementChromeHomeMenuItemClickCount();
+        }
+
+        mShouldOpenSheetToFullOnNextContentChange = false;
+        final View highlightedView = findViewById(navId);
+
+        int stringId = 0;
+        if (navId == R.id.action_bookmarks) {
+            stringId = R.string.chrome_home_menu_bookmarks_help_bubble;
+        } else if (navId == R.id.action_downloads) {
+            stringId = R.string.chrome_home_menu_downloads_help_bubble;
+        } else if (navId == R.id.action_history) {
+            stringId = R.string.chrome_home_menu_history_help_bubble;
+        }
+
+        final ViewAnchoredTextBubble helpBubble =
+                new ViewAnchoredTextBubble(getContext(), mBottomSheet, stringId, stringId);
+        helpBubble.setDismissOnTouchInteraction(true);
+
+        mBottomSheet.addObserver(new EmptyBottomSheetObserver() {
+            /** Whether the help bubble has been shown. */
+            private boolean mHelpBubbleShown;
+
+            @Override
+            public void onSheetContentChanged(BottomSheet.BottomSheetContent newContent) {
+                if (getSheetContentForId(navId) == newContent) return;
+                post(() -> {
+                    ViewHighlighter.turnOffHighlight(highlightedView);
+                    mBottomSheet.removeObserver(this);
+                });
+            }
+
+            @Override
+            public void onSheetOpened(@StateChangeReason int reason) {
+                ViewHighlighter.turnOnHighlight(highlightedView, false);
+                mShouldOpenSheetToFullOnNextContentChange = true;
+            }
+
+            @Override
+            public void onSheetStateChanged(@BottomSheet.SheetState int state) {
+                if (state != BottomSheet.SHEET_STATE_HALF || mHelpBubbleShown) return;
+                int inset = getContext().getResources().getDimensionPixelSize(
+                        R.dimen.bottom_sheet_help_bubble_inset);
+                helpBubble.setInsetPx(0, inset, 0, inset);
+                helpBubble.show();
+                mHelpBubbleShown = true;
+            }
+        });
+
+        showContentAndOpenSheet(navId);
     }
 }
