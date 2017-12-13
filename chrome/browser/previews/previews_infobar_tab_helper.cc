@@ -118,6 +118,11 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
 
     bool data_saver_enabled =
         data_reduction_proxy_settings->IsDataReductionProxyEnabled();
+
+    data_reduction_proxy_settings->data_reduction_proxy_service()
+        ->UpdateDataUseForHost(0, uncached_size,
+                               navigation_handle->GetRedirectChain()[0].host());
+
     data_reduction_proxy_settings->data_reduction_proxy_service()
         ->UpdateContentLengths(0, uncached_size, data_saver_enabled,
                                data_reduction_proxy::HTTPS,
@@ -127,10 +132,10 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
         web_contents(), previews::PreviewsType::OFFLINE,
         base::Time() /* previews_freshness */, false /* is_reload */,
         data_reduction_proxy_settings && data_saver_enabled,
-        base::Bind(&AddPreviewNavigationCallback,
-                   web_contents()->GetBrowserContext(),
-                   navigation_handle->GetRedirectChain()[0],
-                   previews::PreviewsType::OFFLINE, page_id),
+        base::BindOnce(&AddPreviewNavigationCallback,
+                       web_contents()->GetBrowserContext(),
+                       navigation_handle->GetRedirectChain()[0],
+                       previews::PreviewsType::OFFLINE, page_id),
         previews_ui_service);
     // Don't try to show other infobars if this is an offline preview.
     return;
@@ -147,10 +152,10 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
           web_contents(), main_frame_preview,
           base::Time() /* previews_freshness */, true /* is_data_saver_user */,
           is_reload,
-          base::Bind(&AddPreviewNavigationCallback,
-                     web_contents()->GetBrowserContext(),
-                     navigation_handle->GetRedirectChain()[0],
-                     main_frame_preview, page_id),
+          base::BindOnce(&AddPreviewNavigationCallback,
+                         web_contents()->GetBrowserContext(),
+                         navigation_handle->GetRedirectChain()[0],
+                         main_frame_preview, page_id),
           previews_ui_service);
     }
   }
