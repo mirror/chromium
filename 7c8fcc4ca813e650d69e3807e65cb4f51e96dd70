@@ -22,6 +22,30 @@
       "revId": "7c8fcc4ca813e650d69e3807e65cb4f51e96dd70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42926dab_77f432cb",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-13T11:44:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure what I think of this suggestion. The problem with it is that one would not normally compare a bitmap of flags with a specific values. You either bitwise-and with the flags you\u0027re interested in, or you check it for emptiness. When checking for emptiness, logically, I am checking that \"none of the flags are set\" - zero. I am not checking for equality with \"no-logging\".\nWdyt?",
+      "parentUuid": "cd6050a2_4d123c0d",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "7c8fcc4ca813e650d69e3807e65cb4f51e96dd70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
