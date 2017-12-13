@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d923de6_6b1ed585",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-13T23:45:37Z",
+      "side": 1,
+      "message": "Perhaps DCHECK(space_status \u003d\u003d SpaceStatus::NOT_ENOUGH_SPACE || space_status \u003d\u003d SpaceStatus::ENOUGH_SPACE_AFTER_CLEANUP || space_status \u003d\u003d SpaceStatus::ENOUGH_SPACE);",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 4
+      },
+      "revId": "4aa3799077d5bfcc153811ef846f15dc769dafcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5dcc32_62a79f72",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-13T23:45:37Z",
+      "side": 1,
+      "message": "Now that I\u0027ve thought more, this has a potential memory leak.\n\nThe other uses of this pattern (e.g. ShortcutHelper) are static methods calling static methods. That is, they don\u0027t leak unless Chrome crashes. But if the C++ WebApkInstallService goes away before this call finishes, you have a memory leak, since nothing then frees this callback. I can\u0027t seem to find any other use of reinterpret_cast on a weak bound object.\n\nTo properly protect against the case where the C++ WebApkInstallService is destroyed before this call comes back, you should make the C++ side own the Java side, make the Java method a non-static method, create the Java-side in the constructor of this object, and have a destroy() method on the Java side which wipes the native pointer back to this object (and if-guard all calls from Java to C++ back over the JNI on that native pointer). That\u0027s much more common in the codebase.\n\nI won\u0027t block on this since WebApkInstallService currently lives as long as the browser context does (i.e. the profile), but we have a potential leak here if that lifetime changes.",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 67
+      },
+      "revId": "4aa3799077d5bfcc153811ef846f15dc769dafcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1621bf67_d3a5ec50",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-13T23:45:37Z",
+      "side": 1,
+      "message": "a WebAPK",
+      "range": {
+        "startLine": 76,
+        "startChar": 48,
+        "endLine": 76,
+        "endChar": 54
+      },
+      "revId": "4aa3799077d5bfcc153811ef846f15dc769dafcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44137da5_9754b0d0",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-13T23:45:37Z",
+      "side": 1,
+      "message": "a WebAPK",
+      "range": {
+        "startLine": 77,
+        "startChar": 22,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "4aa3799077d5bfcc153811ef846f15dc769dafcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d67886_2e810879",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-13T23:45:37Z",
+      "side": 1,
+      "message": "Please rephrase:\n\nIf there is not enough space to install (even after clearing Chrome\u0027s cache), this falls back to adding a legacy PWA shortcut.",
+      "range": {
+        "startLine": 79,
+        "startChar": 39,
+        "endLine": 80,
+        "endChar": 40
+      },
+      "revId": "4aa3799077d5bfcc153811ef846f15dc769dafcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770f76f0_deef840a",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-13T23:45:37Z",
+      "side": 1,
+      "message": "This renaming is orthogonal to this CL and only affects WebApkInstaller, so I\u0027d prefer it didn\u0027t happen here (it muddies what is happening and you don\u0027t otherwise touch this file aside from renaming the method).",
+      "range": {
+        "startLine": 134,
+        "startChar": 7,
+        "endLine": 134,
+        "endChar": 23
+      },
+      "revId": "4aa3799077d5bfcc153811ef846f15dc769dafcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
