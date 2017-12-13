@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d28e7592_85033b00",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "I would make the directory just ash/keyboard_shortcut_viewer. (This one is a little long.)\n\nAlternately, you could put all this in ash/accelerators so it lives near accelerator_table.cc\n\n(btw, tools/git/move_source_file.py is helpful for moving around/renaming files like this.)",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad66cf0e_0ac3bc12",
+        "filename": "ash/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "nit: alphabetize",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463ce011_9b3d18ee",
+        "filename": "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "Is every accelerator action going to have all this metadata? If so, it seems like this should be built into the master accelerator table.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4675522_07a2779d",
+        "filename": "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "nit: (C) part not needed in new code",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37350e92_e03869a9",
+        "filename": "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_data.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "nit: provide an example in the comment, \"Press \u003cfoo\u003e or \u003cbar\u003e to change resolution up or down\" or whatever it is.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d025206_26373663",
+        "filename": "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_viewer_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "This seems backward. Someday we want to be able to run ash without chrome, which would mean there would be no client.\n\nI think this should check if there\u0027s a client, and if so ask it for additional shortcuts, then either way show the viewer.\n\nThis will require a mojo method with a return value / callback.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7870a6f_dec2c6a6",
+        "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "Document what categories are.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "247e88c6_881e42af",
+        "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "Is this a string id? See below.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cdc135b_0a73b03c",
+        "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "|shortcut| is not a string. Is it a string id? Maybe it should be shortcut_id?\n\nAlternately, maybe it should be a string. Conceptually, chrome is its own binary, which its own resources, so it should provide its own strings.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a630f10d_316f097c",
+        "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "This whole struct could benefit from a comment with an example. Maybe something like \"Allows a shortcut like Ctrl-Shift+Plus to be displayed as \"Press \u003cCtrl-Shift-+ icon\u003e and \u003cCtrl-Shift-Minus\u003e to zoom out\". Or is this not for shortcuts with multiple strings? I can\u0027t actually tell from the docs here *why* the replacements are happening.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfbdb92_5416d1b3",
+        "filename": "ash/public/interfaces/keyboard_shortcut_viewer_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "Why is there both an Update method here and a Get method below? It seems like there should only be one.\n\nIs this mostly a Show() method that happens to take a list of shortcuts for efficiency?\n\nIf it has to be this way, document why.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46bf40dc_c9e14e3f",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/internal",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "I don\u0027t think you want to commit this.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49778c9_8f33ca0f",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "I suggest implementing this entire feature behind a flag, just in case it doesn\u0027t make the next branch cutoff. It\u0027s usually easier to do that from the beginning.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee77f215_7d7037c7",
+        "filename": "components/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "These duplicate strings in https://cs.chromium.org/chromium/src/chrome/app/chromeos_strings.grdp?type\u003dcs\u0026q\u003df:grd+Ctrl\u0026sq\u003dpackage:chromium\u0026l\u003d202\n\nMaybe all those strings could move into ui/strings near here?\n\nhttps://cs.chromium.org/chromium/src/ui/strings/ui_strings.grd?type\u003dcs\u0026q\u003df:grd+Ctrl\u0026sq\u003dpackage:chromium\u0026l\u003d556",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d112c53_445411fb",
+        "filename": "components/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "Do we really need strings for the keys themselves? Is this for icons? If so, explain why. If not, just use the underlying characters for the keys.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84100152_cd71ec30",
+        "filename": "components/keyboard_shortcut_viewer_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-13T16:02:14Z",
+      "side": 1,
+      "message": "Could we just have a couple generic grouped-action descriptions, rather than tying this one to screen resolution in particular? It seems like \"Ctrl-Shift and Plus or Minus\" might be a common pattern used for more than one group.",
+      "revId": "5ae8724840bcce69004bf765ff4b8dee421b51b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
