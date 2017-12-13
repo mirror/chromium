@@ -304,6 +304,12 @@ HacksAndPatchesCommon() {
   cp "${SCRIPT_DIR}/libdbus-1-3-symbols" \
     "${INSTALL_ROOT}/debian/libdbus-1-3/DEBIAN/symbols"
 
+  # Create a missing libGL.so symlink
+  # (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=884261).
+  if [ ! -e "${INSTALL_ROOT}/usr/lib/${arch}-${os}/libGL.so" ]; then
+    ln -s "libGL.so.1.0.0" "${INSTALL_ROOT}/usr/lib/${arch}-${os}/libGL.so"
+  fi
+
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
   SubBanner "Move pkgconfig scripts"
