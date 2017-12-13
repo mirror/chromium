@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea18fe82_d784ff4f",
+        "filename": "ash/shelf/shelf_constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-13T18:13:44Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e9413eb5_565ac28f",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5fd5790_d7a01721",
         "filename": "ui/base/models/simple_menu_model.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805e0575_3bba1115",
+        "filename": "ui/base/models/simple_menu_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-13T18:13:44Z",
+      "side": 1,
+      "message": "We don\u0027t need it, removed and moved this function to the header.",
+      "parentUuid": "e5fd5790_d7a01721",
+      "range": {
+        "startLine": 466,
+        "startChar": 7,
+        "endLine": 466,
+        "endChar": 30
+      },
+      "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c844fa59_dae28ebb",
+        "filename": "ui/base/models/simple_menu_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-13T18:13:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "460c4679_47558dc3",
+      "range": {
+        "startLine": 476,
+        "startChar": 2,
+        "endLine": 476,
+        "endChar": 29
+      },
+      "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abd2936d_31e00298",
         "filename": "ui/base/models/simple_menu_model.h",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0cd78859_22a4f589",
+        "filename": "ui/base/models/simple_menu_model.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-13T18:13:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abd2936d_31e00298",
+      "range": {
+        "startLine": 169,
+        "startChar": 24,
+        "endLine": 169,
+        "endChar": 35
+      },
+      "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57b11a71_cedfcf5f",
         "filename": "ui/base/models/simple_menu_model.h",
         "patchSetId": 6
@@ -114,6 +210,30 @@
       "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f4ca78_4d56f757",
+        "filename": "ui/base/models/simple_menu_model.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-12-13T18:13:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57b11a71_cedfcf5f",
+      "range": {
+        "startLine": 204,
+        "startChar": 14,
+        "endLine": 204,
+        "endChar": 29
+      },
+      "revId": "e64fd50dbc1a0b98cdbbd6e3d12e8b14326112f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
