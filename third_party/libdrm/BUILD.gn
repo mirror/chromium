@@ -22,8 +22,9 @@ if (!use_system_libdrm) {
       "src/include",
       "src/include/drm",
     ]
+    cflags = [ "-Wno-#pragma-messages" ]
     if (is_clang) {
-      cflags = [ "-Wno-enum-conversion" ]
+      cflags += [ "-Wno-enum-conversion" ]
     }
   }
 

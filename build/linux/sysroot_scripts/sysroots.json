@@ -1,4 +1,40 @@
 {
+    "sid_amd64": {
+        "Revision": "48a227c9451dbfd4afbba22f7180772089938ac8",
+        "Sha1Sum": "916f31b29f5daac7f8cf8edef2f4698bdb210d03",
+        "SysrootDir": "debian_sid_amd64-sysroot",
+        "Tarball": "debian_sid_amd64_sysroot.tar.xz"
+    },
+    "sid_arm": {
+        "Revision": "48a227c9451dbfd4afbba22f7180772089938ac8",
+        "Sha1Sum": "7a334b3070911b3e834e0c95b3f4e29b6f5a6d0a",
+        "SysrootDir": "debian_sid_arm-sysroot",
+        "Tarball": "debian_sid_arm_sysroot.tar.xz"
+    },
+    "sid_arm64": {
+        "Revision": "48a227c9451dbfd4afbba22f7180772089938ac8",
+        "Sha1Sum": "bba470e1b993d491f8314996bb86b9fb9b6c68b6",
+        "SysrootDir": "debian_sid_arm64-sysroot",
+        "Tarball": "debian_sid_arm64_sysroot.tar.xz"
+    },
+    "sid_i386": {
+        "Revision": "48a227c9451dbfd4afbba22f7180772089938ac8",
+        "Sha1Sum": "7cc57c8d340a514301c10b72b849c9623bdf52b5",
+        "SysrootDir": "debian_sid_i386-sysroot",
+        "Tarball": "debian_sid_i386_sysroot.tar.xz"
+    },
+    "sid_mips": {
+        "Revision": "48a227c9451dbfd4afbba22f7180772089938ac8",
+        "Sha1Sum": "187f61b4792675c74027f723f374551f11664176",
+        "SysrootDir": "debian_sid_mips-sysroot",
+        "Tarball": "debian_sid_mips_sysroot.tar.xz"
+    },
+    "sid_mips64el": {
+        "Revision": "48a227c9451dbfd4afbba22f7180772089938ac8",
+        "Sha1Sum": "d0fd46bdd5a6fdd7c13958532cc5066b18bd1f7b",
+        "SysrootDir": "debian_sid_mips64el-sysroot",
+        "Tarball": "debian_sid_mips64el_sysroot.tar.xz"
+    },
     "stretch_amd64": {
         "Revision": "2202c161310ffde63729f29d27fe7bb24a0bc540",
         "Sha1Sum": "eb7e2d2c563b6a6f6e32b967d5585a6d33636d35",
