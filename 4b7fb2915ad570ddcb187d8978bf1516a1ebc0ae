@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3dced0e_dae4764b",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-13T17:55:22Z",
+      "side": 1,
+      "message": "Let\u0027s keep this list in alphabetical order and move these below the webusb/ entries",
+      "revId": "4b7fb2915ad570ddcb187d8978bf1516a1ebc0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42285153_2c267b5d",
+        "filename": "third_party/WebKit/Source/modules/modules_idl_files.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-13T17:55:22Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "4b7fb2915ad570ddcb187d8978bf1516a1ebc0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54570341_a9c9e712",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-13T17:55:22Z",
+      "side": 1,
+      "message": "May be worth a TODO here to note that we should eventually move this out into it\u0027s own separate Navigator supplement.",
+      "revId": "4b7fb2915ad570ddcb187d8978bf1516a1ebc0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c947c07f_79bde2a6",
+        "filename": "third_party/WebKit/Source/modules/xr/XR.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-12-13T17:55:22Z",
+      "side": 1,
+      "message": "These URLs have changed in the last couple of days, so we should make sure that they\u0027re accurate. This one is now\nhttps://immersive-web.github.io/webxr/spec/latest/#xr-interface\n\nIn general I think you\u0027ll be safe if you replace all instances of https://w3c.github.io/ with https://immersive-web.github.io/ in this folder",
+      "revId": "4b7fb2915ad570ddcb187d8978bf1516a1ebc0ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
