@@ -34,6 +34,10 @@ namespace content {
 class AudioMirroringManager;
 class WebContentsTracker;
 
+namespace web_contents_audio_input_stream_unittest {
+class WebContentsAudioInputStreamTest;
+}
+
 class CONTENT_EXPORT WebContentsAudioInputStream
     : public media::AudioInputStream {
  public:
@@ -64,7 +68,8 @@ class CONTENT_EXPORT WebContentsAudioInputStream
       AudioMirroringManager* audio_mirroring_manager);
 
  private:
-  friend class WebContentsAudioInputStreamTest;
+  friend class web_contents_audio_input_stream_unittest::
+      WebContentsAudioInputStreamTest;
 
   // Maintain most state and functionality in an internal ref-counted
   // implementation class.  This object must outlive a call to Close(), until

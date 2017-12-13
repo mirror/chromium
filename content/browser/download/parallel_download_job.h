@@ -17,6 +17,10 @@
 
 namespace content {
 
+namespace parallel_download_job_unittest {
+class ParallelDownloadJobTest;
+}
+
 // DownloadJob that can create concurrent range requests to fetch different
 // parts of the file.
 // The original request is hold in base class.
@@ -54,7 +58,7 @@ class CONTENT_EXPORT ParallelDownloadJob : public DownloadJobImpl,
   WorkerMap workers_;
 
  private:
-  friend class ParallelDownloadJobTest;
+  friend class parallel_download_job_unittest::ParallelDownloadJobTest;
 
   // DownloadWorker::Delegate implementation.
   void OnByteStreamReady(

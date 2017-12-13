@@ -40,8 +40,7 @@
 using testing::_;
 
 namespace content {
-
-namespace {
+namespace user_media_client_impl_unittest {
 
 blink::WebMediaConstraints CreateDefaultConstraints() {
   MockConstraintFactory factory;
@@ -430,8 +429,6 @@ class UserMediaClientImplUnderTest : public UserMediaClientImpl {
  private:
   RequestState* state_;
 };
-
-}  // namespace
 
 class UserMediaClientImplTest : public ::testing::Test {
  public:
@@ -1406,4 +1403,5 @@ TEST_F(UserMediaClientImplTest, RenderToAssociatedSinkFalseAudioParams) {
   EXPECT_FALSE(source->device().matched_output.IsValid());
 }
 
+}  // namespace user_media_client_impl_unittest
 }  // namespace content

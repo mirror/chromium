@@ -7,6 +7,7 @@ import("//build/config/chromecast_build.gni")
 import("//build/config/compiler/compiler.gni")
 import("//build/config/crypto.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//media/media_options.gni")
 import("//net/features.gni")
@@ -20,7 +21,7 @@ import("//v8/gni/v8.gni")
 
 # Use a static library here because many test binaries depend on this but don't
 # require many files from it. This makes linking more efficient.
-static_library("test_support") {
+jumbo_static_library("test_support") {
   testonly = true
 
   # See comment at the top of //content/BUILD.gn for why this is disabled in
@@ -466,6 +467,8 @@ static_library("test_support") {
 
   if (is_win) {
     deps += [ "//sandbox" ]
+
+    libs = [ "oleacc.lib" ]
   }
 
   if (v8_use_external_startup_data) {
@@ -1137,6 +1140,32 @@ test("content_browsertests") {
 }
 
 test("content_unittests") {
+  deps = [
+    ":content_unittests_sources",
+  ]
+  if (is_android) {
+    deps += [
+      "//base:base_java_unittest_support",
+      "//content/public/android:content_java",
+      "//device/geolocation:geolocation_java",
+      "//media/capture/content/android",
+      "//media/capture/content/android:screen_capture_java",
+      "//v8:v8_external_startup_data_assets",
+    ]
+  }
+
+  if (is_win) {
+    deps += [ "//third_party/iaccessible2" ]
+    libs = [
+      "dwrite.lib",
+      "oleacc.lib",
+    ]
+  }
+}
+
+jumbo_source_set("content_unittests_sources") {
+  testonly = true
+
   # See comment at the top of //content/BUILD.gn for why this is disabled in
   # component builds.
   if (is_component_build) {
@@ -1595,6 +1624,12 @@ test("content_unittests") {
     "url_request_context_builder_mojo_unittest.cc",
   ]
 
+  jumbo_excluded_sources = [
+    # IPC: IPC does too much magic with macros to automatically handle
+    # that files are merged and new macros appear.
+    "../browser/service_worker/service_worker_version_unittest.cc",
+  ]
+
   # Chromecasts do not have extended attributes enabled; even if it were
   # enabled, the devices use tmpfs which restricts the extended attributes that
   # can be set such that quarantining still would not work. (The platform
@@ -1909,8 +1944,10 @@ test("content_unittests") {
     }
   }
   if (is_win) {
-    deps += [ "//third_party/iaccessible2" ]
-    libs = [ "dwrite.lib" ]
+    defines += [
+      # Must be defined to get access to M_PI and M_PI_2 in VS.
+      "_USE_MATH_DEFINES",
+    ]
   }
   if (is_mac) {
     deps += [
@@ -1944,15 +1981,7 @@ test("content_unittests") {
       "../browser/webui/url_data_manager_backend_unittest.cc",
     ]
 
-    deps += [
-      "//base:base_java_unittest_support",
-      "//content/public/android:content_java",
-      "//device/geolocation:geolocation_java",
-      "//media/capture/content/android",
-      "//media/capture/content/android:screen_capture_java",
-      "//ui/android:android",
-      "//v8:v8_external_startup_data_assets",
-    ]
+    deps += [ "//ui/android:android" ]
 
     defines += [ "APPCACHE_USE_SIMPLE_CACHE" ]
   } else {
