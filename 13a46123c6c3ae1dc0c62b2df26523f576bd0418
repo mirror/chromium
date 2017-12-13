@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "4fb9fa28_70e9b05a",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-12-13T19:14:55Z",
+      "side": 1,
+      "message": "Does this have any weird effects in tests?\n\nI think PostAfterStartupTask is an implementation detail of the reporter runner. ComponentReady should simply notify the observer \"the component is now ready to run\" (by posting the on_component_ready_callback task). If the callback implementation doesn\u0027t want to do anything with this information until after the browser startup is complete, then it should handle that itself.\n\nThis does mean there will always be a chain of two posted tasks instead of just one, which is a bit inefficient. But that shouldn\u0027t matter here because ComponentReady gets called rarely, not in a tight loop.\n\nI don\u0027t feel strongly about it, though. I could see an argument that the exact timing of delivering the on_component_ready_callback notification (immediately vs. after browser startup is complete) is the responsibility of this function. If you do leave PostAfterStartupTask here, please add a comment explaining why it\u0027s used.",
+      "parentUuid": "1534ba3d_dbaa7444",
+      "range": {
+        "startLine": 386,
+        "startChar": 61,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa11961b_897b4d68",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 1
