@@ -673,7 +673,7 @@ TEST_F(QuicStreamTest, StreamWaitsForAcks) {
 
   // kData2 is retransmitted.
   EXPECT_CALL(*mock_ack_listener, OnPacketRetransmitted(9));
-  stream_->OnStreamFrameRetransmitted(9, 9);
+  stream_->OnStreamFrameRetransmitted(9, 9, false);
 
   // kData2 is acked.
   EXPECT_CALL(*mock_ack_listener, OnPacketAcked(9, _));
@@ -1057,6 +1057,90 @@ TEST_F(QuicStreamTest, StreamDataGetAckedMultipleTimes) {
   stream_->OnStreamFrameAcked(10, 17, true, QuicTime::Delta::Zero());
   EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
   EXPECT_FALSE(stream_->IsWaitingForAcks());
+}
+
+TEST_F(QuicStreamTest, OnStreamFrameLost) {
+  if (!FLAGS_quic_reloadable_flag_quic_allow_multiple_acks_for_data2) {
+    return;
+  }
+  Initialize(kShouldProcessData);
+
+  // Send [0, 9).
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Invoke(MockQuicSession::ConsumeAllData));
+  stream_->WriteOrBufferData(kData1, false, nullptr);
+  EXPECT_FALSE(stream_->HasBufferedData());
+
+  // Try to send [9, 27), but connection is blocked.
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Return(QuicConsumedData(0, false)));
+  stream_->WriteOrBufferData(kData2, false, nullptr);
+  stream_->WriteOrBufferData(kData2, false, nullptr);
+  EXPECT_TRUE(stream_->HasBufferedData());
+  EXPECT_FALSE(stream_->HasPendingRetransmission());
+
+  // Lost [0, 9). When stream gets a chance to write, only lost data is
+  // transmitted.
+  stream_->OnStreamFrameLost(0, 9, false);
+  EXPECT_TRUE(stream_->HasPendingRetransmission());
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Invoke(MockQuicSession::ConsumeAllData));
+  stream_->OnCanWrite();
+  EXPECT_FALSE(stream_->HasPendingRetransmission());
+  EXPECT_TRUE(stream_->HasBufferedData());
+
+  // This OnCanWrite causes [9, 27) to be sent.
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Invoke(MockQuicSession::ConsumeAllData));
+  stream_->OnCanWrite();
+  EXPECT_FALSE(stream_->HasBufferedData());
+
+  // Send a fin only frame.
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Invoke(MockQuicSession::ConsumeAllData));
+  stream_->WriteOrBufferData("", true, nullptr);
+
+  // Lost [9, 27) and fin.
+  stream_->OnStreamFrameLost(9, 18, false);
+  stream_->OnStreamFrameLost(27, 0, true);
+  EXPECT_TRUE(stream_->HasPendingRetransmission());
+
+  // Ack [9, 18).
+  stream_->OnStreamFrameAcked(9, 9, false, QuicTime::Delta::Zero());
+  EXPECT_TRUE(stream_->HasPendingRetransmission());
+  // This OnCanWrite causes [18, 27) and fin to be retransmitted. Verify fin can
+  // be bundled with data.
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Return(QuicConsumedData(9, true)));
+  stream_->OnCanWrite();
+  EXPECT_FALSE(stream_->HasPendingRetransmission());
+  // Lost [9, 18) again, but it is not considered as lost because kData2
+  // has been acked.
+  stream_->OnStreamFrameLost(9, 9, false);
+  EXPECT_FALSE(stream_->HasPendingRetransmission());
+}
+
+TEST_F(QuicStreamTest, CannotBundleLostFin) {
+  Initialize(kShouldProcessData);
+
+  // Send [0, 18) and fin.
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillRepeatedly(Invoke(MockQuicSession::ConsumeAllData));
+  stream_->WriteOrBufferData(kData1, false, nullptr);
+  stream_->WriteOrBufferData(kData2, true, nullptr);
+
+  // Lost [0, 9) and fin.
+  stream_->OnStreamFrameLost(0, 9, false);
+  stream_->OnStreamFrameLost(18, 0, true);
+
+  // Retransmit lost data. Verify [0, 9) and fin are retransmitted in two
+  // frames.
+  InSequence s;
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Return(QuicConsumedData(9, false)));
+  EXPECT_CALL(*session_, WritevData(_, _, _, _, _))
+      .WillOnce(Return(QuicConsumedData(0, true)));
+  stream_->OnCanWrite();
 }
 
 }  // namespace
