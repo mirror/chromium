@@ -91,6 +91,34 @@ struct HitTestResult {
   float distance_to_plane;
 };
 
+struct CornerRadii {
+  float upper_left;
+  float upper_right;
+  float lower_left;
+  float lower_right;
+
+  bool IsZero() const {
+    return upper_right == 0.0f && upper_left == 0.0f && lower_right == 0.0f &&
+           lower_left == 0.0f;
+  }
+
+  bool IsSymmetric() const {
+    return upper_left == upper_right && upper_left == lower_right &&
+           upper_left == lower_left;
+  }
+
+  float MaxRadius() const {
+    float m = upper_left;
+    if (upper_right > m)
+      m = upper_right;
+    if (lower_right > m)
+      m = lower_right;
+    if (lower_left > m)
+      m = lower_left;
+    return m;
+  }
+};
+
 class UiElement : public cc::AnimationTarget {
  public:
   UiElement();
@@ -218,7 +246,7 @@ class UiElement : public cc::AnimationTarget {
 
   gfx::SizeF size() const;
   void SetSize(float width, float hight);
-  virtual void OnSetSize(gfx::SizeF size);
+  virtual void OnSetSize(const gfx::SizeF& size);
 
   gfx::PointF local_origin() const { return local_origin_; }
 
@@ -239,9 +267,20 @@ class UiElement : public cc::AnimationTarget {
   float opacity() const { return opacity_; }
   virtual void SetOpacity(float opacity);
 
-  float corner_radius() const { return corner_radius_; }
+  CornerRadii corner_radii() const { return corner_radii_; }
+  void set_corner_radii(const CornerRadii& radii) {
+    corner_radii_ = radii;
+  }
+
+  float corner_radius() const {
+    DCHECK(corner_radii_.IsSymmetric());
+    return corner_radii_.upper_left;
+  }
+
+  // Syntax sugar for setting all corner radii to the same value.
   void set_corner_radius(float corner_radius) {
-    corner_radius_ = corner_radius;
+    set_corner_radii(
+        {corner_radius, corner_radius, corner_radius, corner_radius});
   }
 
   float computed_opacity() const;
@@ -274,6 +313,13 @@ class UiElement : public cc::AnimationTarget {
     bounds_contain_children_ = bounds_contain_children;
   }
 
+  bool contributes_to_parent_bounds() const {
+    return contributes_to_parent_bounds_;
+  }
+  void set_contributes_to_parent_bounds(bool value) {
+    contributes_to_parent_bounds_ = value;
+  }
+
   float x_padding() const { return x_padding_; }
   float y_padding() const { return y_padding_; }
   void set_padding(float x_padding, float y_padding) {
@@ -298,8 +344,8 @@ class UiElement : public cc::AnimationTarget {
 
   // Transformations are applied relative to the parent element, rather than
   // absolutely.
-  void AddChild(std::unique_ptr<UiElement> child);
-  std::unique_ptr<UiElement> RemoveChild(UiElement* to_remove);
+  virtual void AddChild(std::unique_ptr<UiElement> child);
+  virtual std::unique_ptr<UiElement> RemoveChild(UiElement* to_remove);
   UiElement* parent() { return parent_; }
   const UiElement* parent() const { return parent_; }
 
@@ -342,6 +388,8 @@ class UiElement : public cc::AnimationTarget {
 
   void SetTransitionedProperties(const std::set<TargetProperty>& properties);
   void SetTransitionDuration(base::TimeDelta delta);
+  void SetAnimationCompletionCallback(
+      vr::AnimationPlayer::AnimationCompletedCallback callback);
 
   void AddAnimation(std::unique_ptr<cc::Animation> animation);
   void RemoveAnimation(int animation_id);
@@ -459,7 +507,7 @@ class UiElement : public cc::AnimationTarget {
 
   // The corner radius of the object. Analogous to the CSS property,
   // border-radius. This is in meters (same units as |size|).
-  float corner_radius_ = 0.0f;
+  CornerRadii corner_radii_ = { 0, 0, 0, 0 };
 
   // The computed opacity, incorporating opacity of parent objects.
   float computed_opacity_ = 1.0f;
@@ -486,6 +534,7 @@ class UiElement : public cc::AnimationTarget {
   // size to accommodate all descendants, adding in the padding below along the
   // x and y axes.
   bool bounds_contain_children_ = false;
+  bool contributes_to_parent_bounds_ = true;
   float x_padding_ = 0.0f;
   float y_padding_ = 0.0f;
 
