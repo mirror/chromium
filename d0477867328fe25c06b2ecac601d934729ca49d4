@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d8d9eead_2f44108e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T00:21:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3d0b538_93d84254",
+      "range": {
+        "startLine": 1550,
+        "startChar": 32,
+        "endLine": 1550,
+        "endChar": 49
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19f1d99d_bdd99985",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogManager.java",
         "patchSetId": 13
@@ -139,6 +163,30 @@
       "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1bdbea5_f97ab366",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialogView.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T00:21:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65fdf22c_75252d3b",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 20
+      },
+      "revId": "d0477867328fe25c06b2ecac601d934729ca49d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
