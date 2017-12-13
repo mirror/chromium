@@ -114,7 +114,6 @@ struct SiteSettingSourceStringMapping {
 };
 
 const SiteSettingSourceStringMapping kSiteSettingSourceStringMapping[] = {
-    {SiteSettingSource::kAdsBlocked, "ads-blocked"},
     {SiteSettingSource::kAdsFilterBlacklist, "ads-filter-blacklist"},
     {SiteSettingSource::kDefault, "default"},
     {SiteSettingSource::kDrmDisabled, "drm-disabled"},
@@ -180,11 +179,6 @@ SiteSettingSource CalculateSiteSettingSource(
   if (content_type == CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER &&
       !profile->GetPrefs()->GetBoolean(prefs::kEnableDRM)) {
     return SiteSettingSource::kDrmDisabled;  // Source #6.
-  }
-
-  if (content_type == CONTENT_SETTINGS_TYPE_ADS &&
-      result.content_setting == CONTENT_SETTING_BLOCK) {
-    return SiteSettingSource::kAdsBlocked;  // Source #7.
   }
 
   DCHECK_NE(content_settings::SETTING_SOURCE_NONE, info.source);
