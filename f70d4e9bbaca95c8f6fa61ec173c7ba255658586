@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28b72d75_4b3177b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-13T18:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07a4f381_52951d6e",
+      "revId": "f70d4e9bbaca95c8f6fa61ec173c7ba255658586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "523660a9_83c6bdd3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 15
@@ -39,6 +57,30 @@
       "revId": "f70d4e9bbaca95c8f6fa61ec173c7ba255658586",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555d0538_608c2735",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-13T18:59:38Z",
+      "side": 1,
+      "message": "Nah, if we show it again a new observer is created.",
+      "parentUuid": "523660a9_83c6bdd3",
+      "range": {
+        "startLine": 812,
+        "startChar": 20,
+        "endLine": 812,
+        "endChar": 36
+      },
+      "revId": "f70d4e9bbaca95c8f6fa61ec173c7ba255658586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "797e05a0_63abc629",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 3238,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-13T18:59:38Z",
+      "side": 1,
+      "message": "Talked to Shimi, got updated string and description.",
+      "parentUuid": "c0e88e9a_78d17099",
+      "range": {
+        "startLine": 3238,
+        "startChar": 29,
+        "endLine": 3238,
+        "endChar": 63
+      },
+      "revId": "f70d4e9bbaca95c8f6fa61ec173c7ba255658586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29bd35c3_5cbf7353",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 15
@@ -79,6 +145,24 @@
       "revId": "f70d4e9bbaca95c8f6fa61ec173c7ba255658586",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661bcd49_46f16951",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 15
+      },
+      "lineNbr": 3240,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-13T18:59:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29bd35c3_5cbf7353",
+      "revId": "f70d4e9bbaca95c8f6fa61ec173c7ba255658586",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
