@@ -317,7 +317,7 @@ Workspace.ProjectStore = class {
    * @return {?Workspace.UISourceCode}
    */
   uiSourceCodeForURL(url) {
-    var entry = this._uiSourceCodesMap.get(url);
+    var entry = this._uiSourceCodesMap.get(Common.ParsedURL.urlWithoutHash(url));
     return entry ? entry.uiSourceCode : null;
   }
 
