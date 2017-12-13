@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66b57b85_09bffb25",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionControllerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-12-13T23:50:20Z",
+      "side": 1,
+      "message": "Is everything here necessary?\n\nOr just follow this example: FocusControllerTest.SetActiveOnInactiveDocument?",
+      "range": {
+        "startLine": 433,
+        "startChar": 0,
+        "endLine": 447,
+        "endChar": 20
+      },
+      "revId": "3013144becb625b25f3e867284e13689705f3929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
