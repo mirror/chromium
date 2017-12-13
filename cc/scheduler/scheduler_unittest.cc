@@ -3055,6 +3055,110 @@ TEST_F(SchedulerTest, SynchronousCompositorPrepareTilesOnDraw) {
   client_->Reset();
 }
 
+class SchedulerClientThatTracksReentry : public FakeSchedulerClient {
+ public:
+  SchedulerClientThatTracksReentry() : inside_action_(false) {}
+  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::WillBeginImplFrame(args);
+    inside_action_ = false;
+  }
+  void DidFinishImplFrame() override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::DidFinishImplFrame();
+    inside_action_ = false;
+  }
+  void DidNotProduceFrame(const viz::BeginFrameAck& ack) override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::DidNotProduceFrame(ack);
+    inside_action_ = false;
+  }
+  void ScheduledActionSendBeginMainFrame(
+      const viz::BeginFrameArgs& args) override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::ScheduledActionSendBeginMainFrame(args);
+    inside_action_ = false;
+  }
+  DrawResult ScheduledActionDrawIfPossible() override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    DrawResult result = FakeSchedulerClient::ScheduledActionDrawIfPossible();
+    inside_action_ = false;
+    return result;
+  }
+  DrawResult ScheduledActionDrawForced() override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    DrawResult result = FakeSchedulerClient::ScheduledActionDrawForced();
+    inside_action_ = false;
+    return result;
+  }
+  void ScheduledActionCommit() override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::ScheduledActionCommit();
+    inside_action_ = false;
+  }
+  void ScheduledActionActivateSyncTree() override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::ScheduledActionActivateSyncTree();
+    inside_action_ = false;
+  }
+  void ScheduledActionBeginLayerTreeFrameSinkCreation() override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::ScheduledActionBeginLayerTreeFrameSinkCreation();
+    inside_action_ = false;
+  }
+  void ScheduledActionPrepareTiles() override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::ScheduledActionPrepareTiles();
+    inside_action_ = false;
+  }
+  void ScheduledActionInvalidateLayerTreeFrameSink() override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::ScheduledActionInvalidateLayerTreeFrameSink();
+    inside_action_ = false;
+  }
+  void ScheduledActionPerformImplSideInvalidation() override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::ScheduledActionPerformImplSideInvalidation();
+    inside_action_ = false;
+  }
+  void SendBeginMainFrameNotExpectedSoon() override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::SendBeginMainFrameNotExpectedSoon();
+    inside_action_ = false;
+  }
+  void ScheduledActionBeginMainFrameNotExpectedUntil(
+      base::TimeTicks time) override {
+    EXPECT_FALSE(inside_action_);
+    inside_action_ = true;
+    FakeSchedulerClient::ScheduledActionBeginMainFrameNotExpectedUntil(time);
+    inside_action_ = false;
+  }
+
+ private:
+  bool inside_action_;
+};
+
+TEST_F(SchedulerTest, SchedulerDoesNotReenterActions) {
+  SchedulerClientThatTracksReentry* client =
+      new SchedulerClientThatTracksReentry();
+  SetUpScheduler(EXTERNAL_BFS, base::WrapUnique(client));
+  scheduler_->SetNeedsBeginMainFrame();
+  EXPECT_SCOPED(AdvanceFrame());
+}
+
 TEST_F(SchedulerTest, SynchronousCompositorSendBeginMainFrameWhileIdle) {
   scheduler_settings_.using_synchronous_renderer_compositor = true;
   SetUpScheduler(EXTERNAL_BFS);
