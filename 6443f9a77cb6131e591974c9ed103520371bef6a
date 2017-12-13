@@ -52,6 +52,24 @@
       "revId": "6443f9a77cb6131e591974c9ed103520371bef6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79abf6c4_307cc3c6",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-13T06:58:17Z",
+      "side": 1,
+      "message": "Discussed offline and realized both fixing here and fixing IsMessageCenterVisible() might not be correct. I would investigate further.",
+      "parentUuid": "5bfe01c6_001dbd8f",
+      "revId": "6443f9a77cb6131e591974c9ed103520371bef6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
