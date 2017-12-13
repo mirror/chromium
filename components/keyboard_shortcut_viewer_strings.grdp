@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grit-part>
+
+  <!-- Categories -->
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_CATEGORY_POPULAR" desc="The text in the keyboard shortcut viewer to explain the category.">
+    Popular Shortcuts
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_CATEGORY_WINDOW" desc="The text in the keyboard shortcut viewer to explain the category.">
+    Tabs and Windows
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_CATEGORY_BROWSER" desc="The text in the keyboard shortcut viewer to explain the category.">
+    Page and Web Browser
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_CATEGORY_SYSTEM" desc="The text in the keyboard shortcut viewer to explain the category.">
+    System and Display Settings
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_CATEGORY_TEXT" desc="The text in the keyboard shortcut viewer to explain the category.">
+    Text Editing
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_CATEGORY_ACCESIBILITY" desc="The text in the keyboard shortcut viewer to explain the category.">
+    Accesibility
+  </message>
+
+  <!-- Modifiers -->
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_MODIFIER_CTRL" desc="The text of the modifier.">
+    Ctrl
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_MODIFIER_ALT" desc="The text of the modifier.">
+    Alt
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_MODIFIER_SHIFT" desc="The text of the modifier.">
+    Shift
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_MODIFIER_SEARCH" desc="The text of the modifier.">
+    Search
+  </message>
+
+  <!-- Keys -->
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_VKEY_OEM_PLUS" desc="The text of the key.">
+    +
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_VKEY_OEM_MINUS" desc="The text of the key.">
+    -
+  </message>
+
+  <!-- Actions -->
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_DESCRIPTION_LOCK_SCREEN" desc="The text in the keyboard shortcut viewer to explain the description.">
+    Lock your screen
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_SHORTCUT_LOCK_SCREEN" desc="The text in the keyboard shortcut viewer to explain the shortcut.">
+    <ph name="search">$1</ph> + <ph name="key">$2</ph>
+  </message>
+
+  <!-- Grouped Actions -->
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_DESCRIPTION_CHANGE_SCREEN_RESOLUTION" desc="The text in the keyboard shortcut viewer to explain the description.">
+    Change screen resolution
+  </message>
+  <message name="IDS_KEYBOARD_SHORTCUT_VIEWER_SHORTCUT_CHANGE_SCREEN_RESOLUTION" desc="The text in the keyboard shortcut viewer to explain the shortcut.">
+    <ph name="ctrl">$1</ph> + <ph name="shift">$2</ph> and <ph name="key">$3</ph> or <ph name="key">$4</ph>
+  </message>
+
+</grit-part>

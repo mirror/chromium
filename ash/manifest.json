@@ -15,6 +15,7 @@
           "ash::mojom::CastConfig",
           "ash::mojom::HighlighterController",
           "ash::mojom::ImeController",
+          "ash::mojom::KeyboardShortcutViewerController",
           "ash::mojom::LocaleNotificationController",
           "ash::mojom::LoginScreen",
           "ash::mojom::MediaController",

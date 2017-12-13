@@ -63,6 +63,7 @@ component("cpp") {
   defines = [ "ASH_PUBLIC_IMPLEMENTATION" ]
 
   deps = [
+    "//components/keyboard_shortcut_viewer",
     "//components/prefs",
     "//mojo/common:common_custom_types",
     "//skia/public/interfaces",
@@ -91,6 +92,7 @@ mojom("test_interfaces") {
   visibility = [ ":unit_tests" ]
 
   sources = [
+    "keyboard_shortcut_viewer_controller_struct_traits_test_service.mojom",
     "shelf_struct_traits_test_service.mojom",
   ]
 
@@ -102,6 +104,7 @@ mojom("test_interfaces") {
 source_set("unit_tests") {
   testonly = true
   sources = [
+    "keyboard_shortcut_viewer_controller_struct_traits_unittest.cc",
     "shelf_model_unittest.cc",
     "shelf_struct_traits_unittest.cc",
   ]

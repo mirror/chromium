@@ -43,6 +43,7 @@
 #include "ash/host/ash_window_tree_host_init_params.h"
 #include "ash/ime/ime_controller.h"
 #include "ash/keyboard/keyboard_ui.h"
+#include "ash/keyboard_shortcut_viewer_controller/keyboard_shortcut_viewer_controller.h"
 #include "ash/laser/laser_pointer_controller.h"
 #include "ash/login/login_screen_controller.h"
 #include "ash/login_status.h"
@@ -587,6 +588,8 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       immersive_context_(std::make_unique<ImmersiveContextAsh>()),
       keyboard_brightness_control_delegate_(
           std::make_unique<KeyboardBrightnessController>()),
+      keyboard_shortcut_viewer_controller_(
+          std::make_unique<KeyboardShortcutViewerController>()),
       locale_notification_controller_(
           std::make_unique<LocaleNotificationController>()),
       login_screen_controller_(std::make_unique<LoginScreenController>()),

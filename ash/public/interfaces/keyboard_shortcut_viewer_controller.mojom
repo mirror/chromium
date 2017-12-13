@@ -1,0 +1,56 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module ash.mojom;
+
+// This corresponds to keyboard_shortcut_viewer::ShortcutReplacementType.
+enum ShortcutReplacementType {
+  // ui modifier
+  MODIFIER,
+  // ui vkey
+  VKEY,
+  // icon font
+  ICON
+};
+
+// This corresponds to keyboard_shortcut_viewer::ShortcutReplacementInfo.
+struct ShortcutReplacementInfo {
+  // |replacement_id| could be ui modifier, ui vkey, and icon font id.
+  int32 replacement_id;
+  ShortcutReplacementType replacement_type;
+};
+
+// Metadata about a keyboard shortcut.
+// This corresponds to keyboard_shortcut_viewer::KeyboardShortcutItemInfo.
+struct KeyboardShortcutItemInfo {
+  array<int32> categories;
+  int32 description;
+  // The |shortcut| string could be partially replaced by text for modifier,
+  // key, and icon font at the placeholders, which is held in
+  // |shortcut_replacements_info|.
+  int32 shortcut;
+  array<ShortcutReplacementInfo> shortcut_replacements_info;
+};
+
+// Allows a client (e.g. Chrome browser) to push shortcuts metadata to ash and
+// ask ash to show the keyboard shortcut viewer.
+interface KeyboardShortcutViewerController {
+  // Sets the client interface.
+  SetClient(KeyboardShortcutViewerControllerClient client);
+
+  // Pushes the keyboard shortcuts info to ash and ask ash to show the keyboard
+  // shortcut viewer.
+  // |array<KeyboardShortcutItemInfo>|: The array of the client side shortcuts metadata.
+  UpdateKeyboardShortcutsInfo(array<KeyboardShortcutItemInfo> shortcuts_info);
+};
+
+// Allows ash to get a client (e.g. Chrome browser) shortcuts metadata. The
+// client later will push the shortcuts data to ash and ask ash to show the
+// keyboard shortcut viewer with all available shortcuts at both ash and the
+// client sides.
+interface KeyboardShortcutViewerControllerClient {
+  // Invoked when the user uses Alt+Search+k to open keyboard shortcut viewer.
+  // Gets the keyboard shortcuts on the client side.
+  GetKeyboardShortcutsInfo();
+};

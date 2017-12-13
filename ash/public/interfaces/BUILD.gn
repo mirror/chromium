@@ -22,6 +22,7 @@ mojom("interfaces_internal") {
     "highlighter_controller.mojom",
     "ime_controller.mojom",
     "ime_info.mojom",
+    "keyboard_shortcut_viewer_controller.mojom",
     "locale.mojom",
     "login_screen.mojom",
     "login_user_info.mojom",

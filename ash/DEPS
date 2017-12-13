@@ -15,6 +15,7 @@ include_rules = [
   "+components/viz/common",
   "+components/viz/host",
   "+components/wallpaper",
+  "+components/keyboard_shortcut_viewer",
   "+gpu/config",
   "+media",
   "+mash/public/interfaces",

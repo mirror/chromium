@@ -108,6 +108,7 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/task_manager/task_manager_interface.h"
 #include "chrome/browser/ui/ash/ash_util.h"
+#include "chrome/browser/ui/ash/keyboard_shortcut_viewer_controller_client.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/tablet_mode_client.h"
 #include "chrome/browser/ui/ash/wallpaper_controller_client.h"
@@ -1097,12 +1098,17 @@ void ChromeBrowserMainPartsChromeos::PostBrowserStart() {
         std::make_unique<power::ml::UserActivityLoggingController>();
   }
 
+  keyboard_shortcut_viewer_client_ =
+      base::MakeUnique<KeyboardShortcutViewerControllerClient>();
+
   ChromeBrowserMainPartsLinux::PostBrowserStart();
 }
 
 // Shut down services before the browser process, etc are destroyed.
 void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   chromeos::ResourceReporter::GetInstance()->StopMonitoring();
+
+  keyboard_shortcut_viewer_client_.reset();
 
   night_light_client_.reset();
 
