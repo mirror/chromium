@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4daa7a91_f77407b2",
+        "filename": "components/autofill/ios/browser/autofill_agent_unittests.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-13T12:08:06Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "8c16e0d8b4343ffcd94311326fad2cab0216cdaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2dd3ae_d6dbcc42",
+        "filename": "components/autofill/ios/browser/autofill_agent_unittests.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-13T12:08:06Z",
+      "side": 1,
+      "message": "I think you should test interaction instead of checking that the code register itself as an observer. It looks like most of the WebStateObserver events can be sent manually when using a TestWebState, so I would recommend using that:\n\n  // Notifier for tests.\n  void OnPageLoaded(PageLoadCompletionStatus load_completion_status);\n  void OnNavigationStarted(NavigationContext* navigation_context);\n  void OnNavigationFinished(NavigationContext* navigation_context);\n  void OnRenderProcessGone();\n  void OnFormActivity(const FormActivityParams\u0026 params);\n  void OnDocumentSubmitted(const std::string\u0026 form_name, bool user_initiated);\n  void OnVisibleSecurityStateChanged();",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "8c16e0d8b4343ffcd94311326fad2cab0216cdaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
