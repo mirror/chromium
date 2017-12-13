@@ -19,6 +19,8 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "build/build_config.h"
 
+#include <stdio.h>
+
 #if defined(OS_MACOSX)
 #include <malloc/malloc.h>
 #else
@@ -27,6 +29,8 @@
 #if defined(OS_WIN)
 #include <windows.h>
 #endif
+
+///extern "C" int malloc_info(int options, FILE *stream);
 
 namespace base {
 namespace trace_event {
@@ -207,7 +211,9 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
   size_t resident_size = 0;
   size_t allocated_objects_size = 0;
   size_t allocated_objects_count = 0;
+  fprintf(stderr, "MallocDumpProvider::OnMemoryDump\n");
 #if defined(USE_TCMALLOC)
+  fprintf(stderr, "MallocDumpProvider::OnMemoryDump --- tcmalloc path\n");
   bool res =
       allocator::GetNumericProperty("generic.heap_size", &total_virtual_size);
   DCHECK(res);
@@ -253,6 +259,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
 #elif defined(OS_FUCHSIA)
 // TODO(fuchsia): Port, see https://crbug.com/706592.
 #else
+  fprintf(stderr, "MallocDumpProvider::OnMemoryDump --- mallinfo() path\n");
   struct mallinfo info = mallinfo();
   DCHECK_GE(info.arena + info.hblkhd, info.uordblks);
 
@@ -264,7 +271,15 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
 
   // Total allocated space is given by |uordblks|.
   allocated_objects_size = info.uordblks;
+
+  fprintf(stderr, "arena=%d ordblks=%d smblks=%d hblks=%d hblkhd=%d usmblks=%d fsmblks=%d"
+          "uordblks=%d fordblks=%d keepcost=%d\n",
+          info.arena, info.ordblks, info.smblks, info.hblks,
+          info.hblkhd, info.usmblks, info.fsmblks, info.uordblks,
+          info.fordblks, info.keepcost);
+  //malloc_info(0, stderr);
 #endif
+  fflush(stderr);
 
   MemoryAllocatorDump* outer_dump = pmd->CreateAllocatorDump("malloc");
   outer_dump->AddScalar("virtual_size", MemoryAllocatorDump::kUnitsBytes,
