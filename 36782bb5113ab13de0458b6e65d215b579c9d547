@@ -16,6 +16,24 @@
       "revId": "36782bb5113ab13de0458b6e65d215b579c9d547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e0b77b_c13a5b76",
+        "filename": "content/browser/speech/speech_recognition_dispatcher_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-12-13T05:27:30Z",
+      "side": 1,
+      "message": "Done; lmkwyt",
+      "parentUuid": "b6e6e4d5_3565c843",
+      "revId": "36782bb5113ab13de0458b6e65d215b579c9d547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
