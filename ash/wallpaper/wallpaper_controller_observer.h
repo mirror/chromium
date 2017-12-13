@@ -12,7 +12,7 @@ namespace ash {
 class ASH_EXPORT WallpaperControllerObserver {
  public:
   // Invoked when the wallpaper data is changed.
-  virtual void OnWallpaperDataChanged() = 0;
+  virtual void OnWallpaperDataChanged(){};
 
   // Invoked when the colors extracted from the current wallpaper change. May
   // be called as a side effect of changing the wallpaper on the
@@ -21,6 +21,10 @@ class ASH_EXPORT WallpaperControllerObserver {
 
   // Invoked when the blur state of the wallpaper changes.
   virtual void OnWallpaperBlurChanged() {}
+
+  // Invoked when the |PendingWallpaper| list is empty. For testing purpose
+  // only.
+  virtual void OnPendingListEmptyForTesting() {}
 
  protected:
   virtual ~WallpaperControllerObserver() {}
