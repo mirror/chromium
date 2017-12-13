@@ -93,7 +93,7 @@ public class TextSuggestionMenuTest {
 
         DOMUtils.focusNode(webContents, "div");
 
-        SpannableString textToCommit = new SpannableString("hello");
+        SpannableString textToCommit = new SpannableString("zz");
         mRule.commitText(textToCommit, 1);
 
         // Wait for renderer to acknowledge commitText(). ImeActivityTestRule.commitText() blocks
@@ -104,23 +104,23 @@ public class TextSuggestionMenuTest {
             @Override
             public boolean isSatisfied() {
                 try {
-                    return DOMUtils.getNodeContents(webContents, "div").equals("hello");
+                    return DOMUtils.getNodeContents(webContents, "div").equals("zz");
                 } catch (InterruptedException | TimeoutException e) {
                     return false;
                 }
             }
         });
 
-        // Add a spelling marker on "hello".
-        // Note: we disable spell checking first to avoid the spell checker immediately clearing
-        // the added marker.
+        // Add a spelling marker on "zz".
+        // Note: touching triggers spellchecker, which may recheck the word. We enable the mock
+        // spellchecker to ensure that marker won't be removed in rechecking.
         JavaScriptUtils.executeJavaScriptAndWaitForResult(webContents,
-                "internals.setSpellCheckingEnabled(false);"
+                "testRunner.setMockSpellCheckerEnabled(true);"
                         + "const div = document.getElementById('div');"
                         + "const text = div.firstChild;"
                         + "const range = document.createRange();"
                         + "range.setStart(text, 0);"
-                        + "range.setEnd(text, 5);"
+                        + "range.setEnd(text, 2);"
                         + "internals.setMarker(document, range, 'spelling');");
 
         DOMUtils.clickNode(cvc, "div");
