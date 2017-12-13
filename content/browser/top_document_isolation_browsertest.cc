@@ -114,7 +114,7 @@ IN_PROC_BROWSER_TEST_F(TopDocumentIsolationTest, CrossSiteDeeplyNested) {
       DepictFrameTree(root()));
 }
 
-IN_PROC_BROWSER_TEST_F(TopDocumentIsolationTest, ReturnToTopSite) {
+IN_PROC_BROWSER_TEST_F(TopDocumentIsolationTest, DISABLED_ReturnToTopSite) {
   if (content::AreAllSitesIsolatedForTesting())
     return;  // Top Document Isolation is disabled in this mode.
 
