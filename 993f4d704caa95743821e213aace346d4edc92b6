@@ -70,6 +70,23 @@
       "revId": "993f4d704caa95743821e213aace346d4edc92b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3ea4d6_8e7fcdf3",
+        "filename": "base/memory/ref_counted_memory_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T23:41:30Z",
+      "side": 1,
+      "message": "Can we ASSERT_EQ() to be on the safe side and prevent potential out of bounds access?",
+      "revId": "993f4d704caa95743821e213aace346d4edc92b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
