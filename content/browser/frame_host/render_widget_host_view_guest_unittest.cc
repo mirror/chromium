@@ -142,10 +142,6 @@ class RenderWidgetHostViewGuestSurfaceTest
       : widget_host_(nullptr), view_(nullptr) {}
 
   void SetUp() override {
-#if !defined(OS_ANDROID)
-    ImageTransportFactory::SetFactory(
-        std::make_unique<NoTransportImageTransportFactory>());
-#endif
     browser_context_.reset(new TestBrowserContext);
     MockRenderProcessHost* process_host =
         new MockRenderProcessHost(browser_context_.get());
@@ -185,9 +181,6 @@ class RenderWidgetHostViewGuestSurfaceTest
     // we hit the destructor for the TestBrowserThreadBundle, so run the message
     // loop here.
     base::RunLoop().RunUntilIdle();
-#if !defined(OS_ANDROID)
-    ImageTransportFactory::Terminate();
-#endif
   }
 
   viz::SurfaceId GetSurfaceId() const {
@@ -202,6 +195,7 @@ class RenderWidgetHostViewGuestSurfaceTest
 
  protected:
   TestBrowserThreadBundle thread_bundle_;
+  RenderViewHostTestEnabler rvh_test_enabler_;
   std::unique_ptr<BrowserContext> browser_context_;
   DummyRenderWidgetHostDelegate delegate_;
   BrowserPluginGuestDelegate browser_plugin_guest_delegate_;

@@ -12,6 +12,7 @@
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/testing_pref_service.h"
+#include "content/test/test_render_view_host.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -48,6 +49,7 @@ class OfflineMetricsCollectorTest : public testing::Test {
   }
 
  protected:
+  content::RenderViewHostTestEnabler rvh_test_enabler_;
   base::SimpleTestClock test_clock_;
   TestingPrefServiceSimple pref_service_;
   std::unique_ptr<OfflineMetricsCollectorImpl> collector_;

@@ -52,6 +52,7 @@
 #include "components/tracing/common/trace_config_file.h"
 #include "components/tracing/common/trace_to_console.h"
 #include "components/tracing/common/tracing_switches.h"
+#include "components/viz/client/client_shared_bitmap_manager.h"
 #include "components/viz/common/switches.h"
 #include "components/viz/host/forwarding_compositing_mode_reporter_impl.h"
 #include "components/viz/host/host_frame_sink_manager.h"
@@ -812,9 +813,11 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
 
   // Enable memory-infra dump providers.
   InitSkiaEventTracer();
-  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      viz::ServerSharedBitmapManager::current(),
-      "viz::ServerSharedBitmapManager", nullptr);
+  if (server_shared_bitmap_manager_) {
+    base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+        server_shared_bitmap_manager_.get(), "viz::ServerSharedBitmapManager",
+        nullptr);
+  }
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
       skia::SkiaMemoryDumpProvider::GetInstance(), "Skia", nullptr);
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
@@ -1276,7 +1279,9 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
   frame_sink_manager_impl_.reset();
   compositing_mode_reporter_impl_.reset();
   forwarding_compositing_mode_reporter_impl_.reset();
+  client_shared_bitmap_manager_.reset();
 #endif
+  server_shared_bitmap_manager_.reset();
 
 // The device monitors are using |system_monitor_| as dependency, so delete
 // them before |system_monitor_| goes away.
@@ -1416,7 +1421,18 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
 viz::FrameSinkManagerImpl* BrowserMainLoop::GetFrameSinkManager() const {
   return frame_sink_manager_impl_.get();
 }
+
+viz::SharedBitmapManager* BrowserMainLoop::GetSharedBitmapManager() const {
+  if (server_shared_bitmap_manager_)
+    return server_shared_bitmap_manager_.get();
+  return client_shared_bitmap_manager_.get();
+}
 #endif
+
+viz::ServerSharedBitmapManager* BrowserMainLoop::GetServerSharedBitmapManager()
+    const {
+  return server_shared_bitmap_manager_.get();
+}
 
 void BrowserMainLoop::GetCompositingModeReporter(
     viz::mojom::CompositingModeReporterRequest request) {
@@ -1492,6 +1508,8 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   // TODO(crbug.com/439322): This should be set to |true|.
   established_gpu_channel = false;
   always_uses_gpu = ShouldStartGpuProcessOnBrowserStartup();
+  server_shared_bitmap_manager_ =
+      std::make_unique<viz::ServerSharedBitmapManager>();
   BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
 #else
   established_gpu_channel = true;
@@ -1508,6 +1526,10 @@ int BrowserMainLoop::BrowserThreadsStarted() {
     if (parsed_command_line_.HasSwitch(switches::kEnableViz)) {
       forwarding_compositing_mode_reporter_impl_ =
           std::make_unique<viz::ForwardingCompositingModeReporterImpl>();
+      // TODO(crbug.com/730660): Make a ClientSharedBitmapManager for the ui
+      // compositor. Make VizProcessTransportFactory use that.
+      // client_shared_bitmap_manager_ =
+      // std::make_unique<viz::ClientSharedBitmapManager>(...);
 
       auto transport_factory = std::make_unique<VizProcessTransportFactory>(
           BrowserGpuChannelHostFactory::instance(), GetResizeTaskRunner(),
@@ -1528,11 +1550,14 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 
       compositing_mode_reporter_impl_ =
           std::make_unique<viz::CompositingModeReporterImpl>();
+      server_shared_bitmap_manager_ =
+          std::make_unique<viz::ServerSharedBitmapManager>();
 
       ImageTransportFactory::SetFactory(
           std::make_unique<GpuProcessTransportFactory>(
               BrowserGpuChannelHostFactory::instance(),
-              compositing_mode_reporter_impl_.get(), GetResizeTaskRunner()));
+              compositing_mode_reporter_impl_.get(),
+              server_shared_bitmap_manager_.get(), GetResizeTaskRunner()));
     }
   }
 

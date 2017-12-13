@@ -28,6 +28,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/web_contents_tester.h"
+#include "content/test/test_render_view_host.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/test_url_fetcher_factory.h"
@@ -168,6 +169,7 @@ class ChromeOmniboxNavigationObserverTest : public testing::Test {
   void SetUp() override;
 
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
+  content::RenderViewHostTestEnabler rvh_test_enabler_;
   TestingProfile profile_;
   std::unique_ptr<content::WebContents> web_contents_;
 

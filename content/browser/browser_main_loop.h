@@ -92,6 +92,9 @@ class CompositingModeReporterImpl;
 class ForwardingCompositingModeReporterImpl;
 class FrameSinkManagerImpl;
 class HostFrameSinkManager;
+class ClientSharedBitmapManager;
+class ServerSharedBitmapManager;
+class SharedBitmapManager;
 }
 
 namespace content {
@@ -206,7 +209,15 @@ class CONTENT_EXPORT BrowserMainLoop {
   // TODO(crbug.com/657959): This will be removed once there are no users, as
   // SurfaceManager is being moved out of process.
   viz::FrameSinkManagerImpl* GetFrameSinkManager() const;
+
+  viz::SharedBitmapManager* GetSharedBitmapManager() const;
 #endif
+
+  // This returns null when the display compositor is out of process. Prefer to
+  // use GetSharedBitmapManager() unless doing something specific to having the
+  // display compositor in the browser process (ie viz not enabled).
+  // TODO(crbug.com/790807): This shouldn't need to exist on android.
+  viz::ServerSharedBitmapManager* GetServerSharedBitmapManager() const;
 
   // Fulfills a mojo pointer to the singleton CompositingModeReporter.
   void GetCompositingModeReporter(
@@ -377,7 +388,14 @@ class CONTENT_EXPORT BrowserMainLoop {
       discardable_shared_memory_manager_;
   scoped_refptr<SaveFileManager> save_file_manager_;
   std::unique_ptr<content::TracingControllerImpl> tracing_controller_;
+  // A SharedBitmapManager used to sharing and mapping IDs to shared memory
+  // between processes for software compositing. When the display compositor is
+  // in the browser process, then |server_shared_bitmap_manager_| is set, and
+  // when it is in the viz process, then |client_shared_bitmap_manager_| is set.
+  // TODO(crbug.com/790807): This shouldn't need to exist on android.
+  std::unique_ptr<viz::ServerSharedBitmapManager> server_shared_bitmap_manager_;
 #if !defined(OS_ANDROID)
+  std::unique_ptr<viz::ClientSharedBitmapManager> client_shared_bitmap_manager_;
   std::unique_ptr<viz::HostFrameSinkManager> host_frame_sink_manager_;
   // This is owned here so that SurfaceManager will be accessible in process
   // when display is in the same process. Other than using SurfaceManager,

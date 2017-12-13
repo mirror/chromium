@@ -9,6 +9,7 @@
 
 #import "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
 #include "chrome/test/base/testing_profile_manager.h"
+#include "content/test/test_render_view_host.h"
 
 namespace content {
 class TestBrowserThreadBundle;
@@ -67,6 +68,7 @@ class CocoaProfileTest : public CocoaTest {
   }
 
  private:
+  content::RenderViewHostTestEnabler rvh_test_enabler_;
   TestingProfileManager profile_manager_;
   TestingProfile* profile_;  // Weak; owned by profile_manager_.
   TestingProfile::TestingFactories testing_factories_;

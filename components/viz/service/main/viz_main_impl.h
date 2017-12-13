@@ -32,6 +32,7 @@ class CompositingModeReporterImpl;
 class DisplayProvider;
 class FrameSinkManagerImpl;
 class GpuServiceImpl;
+class ServerSharedBitmapManager;
 
 class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
  public:
@@ -134,6 +135,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   // on the compositor thread.
   std::unique_ptr<FrameSinkManagerImpl> frame_sink_manager_;
   std::unique_ptr<CompositingModeReporterImpl> compositing_mode_reporter_;
+  std::unique_ptr<ServerSharedBitmapManager> server_shared_bitmap_manager_;
   std::unique_ptr<DisplayProvider> display_provider_;
 
   std::unique_ptr<gpu::GpuMemoryBufferFactory> gpu_memory_buffer_factory_;

@@ -46,6 +46,7 @@ class ContextProviderCommandBuffer;
 namespace viz {
 class CompositingModeReporterImpl;
 class OutputDeviceBacking;
+class ServerSharedBitmapManager;
 class SoftwareOutputDevice;
 class VulkanInProcessContextProvider;
 }
@@ -60,6 +61,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   GpuProcessTransportFactory(
       gpu::GpuChannelEstablishFactory* gpu_channel_factory,
       viz::CompositingModeReporterImpl* compositing_mode_reporter,
+      viz::ServerSharedBitmapManager* server_shared_bitmap_manager,
       scoped_refptr<base::SingleThreadTaskRunner> resize_task_runner);
 
   ~GpuProcessTransportFactory() override;
@@ -175,6 +177,8 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   // Service-side impl that controls the compositing mode based on what mode the
   // display compositors are using.
   viz::CompositingModeReporterImpl* const compositing_mode_reporter_;
+  // Manages a mapping of SharedBitmapId to shared memory objects.
+  viz::ServerSharedBitmapManager* const server_shared_bitmap_manager_;
 
   base::WeakPtrFactory<GpuProcessTransportFactory> callback_factory_;
 

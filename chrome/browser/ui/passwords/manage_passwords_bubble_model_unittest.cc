@@ -33,6 +33,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/web_contents_tester.h"
+#include "content/test/test_render_view_host.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -57,8 +58,8 @@ constexpr char kSignInPromoDismissalCountMetric[] =
 constexpr char kSignInPromoDismissalReasonMetric[] =
     "PasswordManager.SignInPromo";
 constexpr char kSiteOrigin[] = "http://example.com/login";
-constexpr char kUsername[] = "Admin";
-constexpr char kPassword[] = "AdminPass";
+constexpr char kTestUsername[] = "Admin";
+constexpr char kTestPassword[] = "AdminPass";
 constexpr char kUIDismissalReasonMetric[] = "PasswordManager.UIDismissalReason";
 
 class TestSyncService : public browser_sync::ProfileSyncServiceMock {
@@ -163,6 +164,7 @@ class ManagePasswordsBubbleModelTest : public ::testing::Test {
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
+  content::RenderViewHostTestEnabler rvh_test_enabler_;
   TestingProfile profile_;
   std::unique_ptr<content::WebContents> test_web_contents_;
   std::unique_ptr<ManagePasswordsBubbleModel> model_;
@@ -239,7 +241,7 @@ password_manager::InteractionsStats
 ManagePasswordsBubbleModelTest::GetTestStats() {
   password_manager::InteractionsStats result;
   result.origin_domain = GURL(kSiteOrigin).GetOrigin();
-  result.username_value = base::ASCIIToUTF16(kUsername);
+  result.username_value = base::ASCIIToUTF16(kTestUsername);
   result.dismissal_count = 5;
   result.update_time = base::Time::FromTimeT(1);
   return result;
@@ -250,8 +252,8 @@ autofill::PasswordForm ManagePasswordsBubbleModelTest::GetPendingPassword() {
   autofill::PasswordForm form;
   form.origin = GURL(kSiteOrigin);
   form.signon_realm = kSiteOrigin;
-  form.username_value = base::ASCIIToUTF16(kUsername);
-  form.password_value = base::ASCIIToUTF16(kPassword);
+  form.username_value = base::ASCIIToUTF16(kTestUsername);
+  form.password_value = base::ASCIIToUTF16(kTestPassword);
   return form;
 }
 
