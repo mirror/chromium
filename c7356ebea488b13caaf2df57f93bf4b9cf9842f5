@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d9fca6d_65af42ae",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1961,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-13T21:02:37Z",
+      "side": 0,
+      "message": "Please preserve this part of the comment.  (We can drop \"in PlzNavigate\" if you want, now that it\u0027s on.)  The rest is relevant for removing NAVIGATION_TYPE_SAME_PAGE in https://crbug.com/536102.",
+      "revId": "c7356ebea488b13caaf2df57f93bf4b9cf9842f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

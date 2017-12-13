@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c083921f_6d2bc480",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2227,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-13T21:02:37Z",
+      "side": 1,
+      "message": "Is this part of the bug fix?  Please include a comment about the case where it matters.  (Looks like we\u0027re requiring there to be both a pending entry and a committed entry to count as reload.)",
+      "revId": "d86b1a08976109cd737945cfdc5b312c3b0a90f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d191ed_6e1d24aa",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2237,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-13T21:02:37Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with this.  Is this true in the bug?",
+      "revId": "d86b1a08976109cd737945cfdc5b312c3b0a90f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b0e616_833bf001",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2266,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-13T21:02:37Z",
+      "side": 1,
+      "message": "nit: URLs",
+      "range": {
+        "startLine": 2266,
+        "startChar": 20,
+        "endLine": 2266,
+        "endChar": 23
+      },
+      "revId": "d86b1a08976109cd737945cfdc5b312c3b0a90f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6835a595_a2119613",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2267,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-12-13T21:02:37Z",
+      "side": 1,
+      "message": "This check seems like it would disqualify most navigations as reloads.  Maybe we should do it earlier (e.g., after line 2228?)?  That would avoid unnecessary work for checking interstitials, SSL errors, subframes, etc on the majority of navigations.",
+      "revId": "d86b1a08976109cd737945cfdc5b312c3b0a90f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
