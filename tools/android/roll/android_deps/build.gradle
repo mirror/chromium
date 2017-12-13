@@ -9,9 +9,13 @@ repositories {
 
 dependencies {
     // Note about the configuration names: they are defined in buildSrc/ChromiumPlugin
+    compile 'com.google.dagger:dagger:2.13'
+    compile 'com.google.dagger:dagger-android:2.13'
+    // Uncomment the line below if needed. Not sure what requires it currently.
+    // chromiumCompile 'com.google.dagger:dagger-android-support:2.13'
 
-    // Insert here dependencies that will be added to the APKs.
-    // For example: `compile 'com.google.dagger:dagger:2.13'`
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.13'
 }
 
 task setUpRepository(type: BuildConfigGenerator) {

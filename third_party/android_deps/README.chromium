@@ -22,3 +22,12 @@ See `tools/android/roll/android_deps/README.md` for more information.
 
 The third_party dependencies are under the `repository` directory, and they
 each have their own README. 
+
+
+Missing Information in Readme files (TODO find a way to satisfy the license script)
+- jsr250-api
+  * URL: http://jcp.org/aboutJava/communityprocess/final/jsr250/index ...
+  * License: CDDL 1.0
+- guava
+  * URL: https://github.com/google/guava
+  * License: Apache License 2.0
