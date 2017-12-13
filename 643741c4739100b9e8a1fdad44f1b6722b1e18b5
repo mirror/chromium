@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c656c4ff_966dd2a9",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T00:29:52Z",
+      "side": 1,
+      "message": "Does this only initialize the first vector of the array? Or does it initialize the whole array to that vector?\n\nI seem to recall C copies the last element and continue to initialize using that last element. But it is a bit hazy to me.\n\n\n\nTerminology clarification for those following along:\nuint32x2_t would be a SIMD register that represents 2x 32-bit uints. This is called a vector. That same SIMD register (with the same number of bits) can instead represent 8x 8-bit uints, making uint8x8_t.\nBut you\u0027ll notice the type is uint8x8x4_t. This is an array of vectors. Said another way, it represents multiple SIMD registers. This is useful if you want to do something like \"Fill this vector with the first value in those 4 vectors\". Or it can be useful for what we are doing here: Loading and storing the large chunks.",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f457a950_d32c3684",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T00:29:52Z",
+      "side": 1,
+      "message": "I really like these comments. It makes the whole function much easier to follow.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fca7e4b4_c4aabdac",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T00:29:52Z",
+      "side": 1,
+      "message": "missing period",
+      "range": {
+        "startLine": 64,
+        "startChar": 69,
+        "endLine": 64,
+        "endChar": 70
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2f59da_a54fe089",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T00:29:52Z",
+      "side": 1,
+      "message": "Just double checking...the comment says 16 but this value is 15. Is this a typo? If not, should the comment explain why?",
+      "range": {
+        "startLine": 68,
+        "startChar": 20,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af56cc1_2e72eeb2",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T00:29:52Z",
+      "side": 1,
+      "message": "Below, you have sp - 0 which vertically aligns the code. I like that.\nHere, without the \"- 0\" the code isn\u0027t vertically aligned.\n\nYou can choose which ever method you prefer. Consistency is probably the more important part. But I would like to nudge the \"- 0\" to be here as well. :D",
+      "range": {
+        "startLine": 79,
+        "startChar": 47,
+        "endLine": 79,
+        "endChar": 49
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d02a5ba_364a517c",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T00:29:52Z",
+      "side": 1,
+      "message": "Because this can overshoot, do we know that the destination is allocated to allow this extra padding?",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 84,
+        "endChar": 4
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661c78c4_b47a21fa",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T00:29:52Z",
+      "side": 1,
+      "message": "Same here. We go back 23 bytes instead of 24. So I assume this is intentional.",
+      "range": {
+        "startLine": 104,
+        "startChar": 20,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "203b4271_573ca2d5",
+        "filename": "third_party/libpng/arm/palette_neon_intrinsics.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T00:29:52Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand this.\nThe dup line will fill the 3-element array of 8x 8-bit vectors with one palette color.\nThen the lane lines fill the other lanes with the other palette colors.\n\nSo right before the vst3 line, we have a 3-element array filled with the same palette colors.\n\nIt seems to me that we are operating on 8 pixels at a time and don\u0027t need a 3-element array of 8 pixels. It seems like it writes out 3x 8 pixels, increments 8 pixels, and next iteration overwrites the latter 2x 8 pixel chunks.\n\nSo it seems like this doesn\u0027t need to be an array of vectors. It seems like we could only operate on a vector.",
+      "range": {
+        "startLine": 107,
+        "startChar": 3,
+        "endLine": 119,
+        "endChar": 4
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9efa5b4_89f2865c",
+        "filename": "third_party/libpng/patches/README",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T00:29:52Z",
+      "side": 1,
+      "message": "Can probably drop the word \"at\" here.",
+      "range": {
+        "startLine": 2,
+        "startChar": 39,
+        "endLine": 2,
+        "endChar": 41
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fd203a_d4013931",
+        "filename": "third_party/libpng/pngrtran.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 4323,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-12-13T00:29:52Z",
+      "side": 1,
+      "message": "Just to help me understand, ...\n\nElsewhere--before we get here--we\u0027re checking whether or not to use the new riffling code. And that riffling code would have correctly allocated png_ptr-\u003erow_tmp_palette.\n\nMaybe between where the riffling happens and here png_ptr-\u003ebit_depth is changed to 8?\n\nMy question is really whether or not there is a better check available here. It seems to depend on far off behavior.",
+      "range": {
+        "startLine": 4321,
+        "startChar": 18,
+        "endLine": 4323,
+        "endChar": 72
+      },
+      "revId": "643741c4739100b9e8a1fdad44f1b6722b1e18b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
