@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "8d3773e1_265cb9a8",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-13T01:53:58Z",
+      "side": 1,
+      "message": "nit: Can we write:\n\nTODO(https://crbug.com/764576): Use ...\n\nSince \"BUG(NNN)\" is extremely rare in Chromium code?",
+      "parentUuid": "ca478bf0_536adf38",
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0019361b_7263ceda",
         "filename": "content/shell/BUILD.gn",
         "patchSetId": 4
