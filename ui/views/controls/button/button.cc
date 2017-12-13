@@ -42,15 +42,6 @@ DEFINE_LOCAL_UI_CLASS_PROPERTY_KEY(bool, kIsButtonProperty, false);
 // How long the hover animation takes if uninterrupted.
 const int kHoverFadeDurationMs = 150;
 
-Button::KeyClickAction GetKeyClickActionForEvent(const ui::KeyEvent& event) {
-  if (event.key_code() == ui::VKEY_SPACE)
-    return PlatformStyle::kKeyClickActionOnSpace;
-  if (event.key_code() == ui::VKEY_RETURN &&
-      PlatformStyle::kReturnClicksFocusedControl)
-    return Button::CLICK_ON_KEY_PRESS;
-  return Button::CLICK_NONE;
-}
-
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -341,6 +332,16 @@ void Button::OnGestureEvent(ui::GestureEvent* event) {
   }
   if (!event->handled())
     InkDropHostView::OnGestureEvent(event);
+}
+
+Button::KeyClickAction Button::GetKeyClickActionForEvent(
+    const ui::KeyEvent& event) {
+  if (event.key_code() == ui::VKEY_SPACE)
+    return PlatformStyle::kKeyClickActionOnSpace;
+  if (event.key_code() == ui::VKEY_RETURN &&
+      PlatformStyle::kReturnClicksFocusedControl)
+    return CLICK_ON_KEY_PRESS;
+  return CLICK_NONE;
 }
 
 bool Button::AcceleratorPressed(const ui::Accelerator& accelerator) {
