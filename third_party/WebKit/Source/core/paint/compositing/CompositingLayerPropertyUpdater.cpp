@@ -87,7 +87,7 @@ void CompositingLayerPropertyUpdater::Update(const LayoutObject& object) {
         mapping->ClipInheritanceAncestor()
             ->GetLayoutObject()
             .FirstFragment()
-            .PostOverflowClip(),
+            .PreInnerBorderRadiusClip(),
         // This is a hack to incorporate mask-based clip-path. Really should be
         // nullptr or some dummy.
         fragment_data.PreFilter());
