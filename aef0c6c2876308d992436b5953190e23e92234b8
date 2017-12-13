@@ -51,6 +51,24 @@
       "revId": "aef0c6c2876308d992436b5953190e23e92234b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e5a597_a90a5629",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-13T18:05:10Z",
+      "side": 1,
+      "message": "Ah, true - but it\u0027s constructed as a\nOmniboxPopupContentsView. Maybe popup_view_ should just\nbe of type OmniboxPopupContentsView? I don\u0027t see a good\nreason why it shouldn\u0027t be.\n\nI\u0027d just favor avoiding putting GetAccessibilityId on an abstract\ncross-platform interface when we don\u0027t really need it on any other\nplatform.",
+      "parentUuid": "b5af8375_f2c91e09",
+      "revId": "aef0c6c2876308d992436b5953190e23e92234b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
