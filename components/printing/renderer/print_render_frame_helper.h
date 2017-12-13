@@ -193,7 +193,7 @@ class PrintRenderFrameHelper
   void OnPrintPreview(const base::DictionaryValue& settings);
   void OnClosePrintPreviewDialog();
 #endif  // BUILDFLAG(ENABLE_PRINT_PREVIEW)
-  void OnPrintFrameContent(const gfx::Rect& rect, uint32_t uid);
+  void OnPrintFrameContent(const gfx::Rect& rect, uint32_t content_id);
   void OnPrintingDone(bool success);
 
   // Get |page_size| and |content_area| information from
