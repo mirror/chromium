@@ -27,6 +27,7 @@
 #include "content/browser/renderer_host/frame_connector_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/browser/renderer_host/render_widget_host_view_base_unittest.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/common/content_features.h"
@@ -183,19 +184,17 @@ viz::CompositorFrame CreateDelegatedFrame(float scale_factor,
   return frame;
 }
 
-TEST_F(RenderWidgetHostViewChildFrameTest, VisibilityTest) {
+TEST_F(RenderWidgetHostViewChildFrameTest, ShowHide) {
   // Calling show and hide also needs to be propagated to child frame by the
   // |frame_connector_| which itself requires a |frame_proxy_in_parent_renderer|
   // (set to nullptr for MockFrameConnectorDelegate). To avoid crashing the test
   // |frame_connector_| is to set to nullptr.
   view_->SetFrameConnectorDelegate(nullptr);
-
-  view_->Show();
-  ASSERT_TRUE(view_->IsShowing());
-
-  view_->Hide();
-  ASSERT_FALSE(view_->IsShowing());
+  RenderWidgetHostViewBase_TestShowHide(view_);
 }
+
+// No occlusion test because RenderWidgetHostViewChildFrame doesn't track its
+// occlusion.
 
 // Verify that SubmitCompositorFrame behavior is correct when a delegated
 // frame is received from a renderer process.

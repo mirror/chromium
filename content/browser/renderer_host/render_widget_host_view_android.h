@@ -114,7 +114,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   bool HasFocus() const override;
   void Show() override;
   void Hide() override;
-  bool IsShowing() override;
+  Visibility GetVisibility() const override;
   gfx::Rect GetViewBounds() const override;
   gfx::Size GetVisibleViewportSize() const override;
   gfx::Size GetPhysicalBackingSize() const override;
@@ -336,6 +336,12 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void GotFocus();
   void LostFocus();
 
+  void set_pretend_is_in_visible_parent_for_testing(
+      bool pretend_is_in_visible_parent_for_testing) {
+    pretend_is_in_visible_parent_for_testing_ =
+        pretend_is_in_visible_parent_for_testing;
+  }
+
  private:
   void RunAckCallbacks();
 
@@ -405,6 +411,9 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   uint32_t outstanding_begin_frame_requests_;
 
   bool is_showing_;
+
+  // Pretend that the view is in a visible window.
+  bool pretend_is_in_visible_parent_for_testing_ = false;
 
   // Window-specific bits that affect widget visibility.
   bool is_window_visible_;

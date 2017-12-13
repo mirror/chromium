@@ -10,6 +10,7 @@
 #include <tuple>
 #include <utility>
 
+#include "base/bind.h"
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -52,6 +53,7 @@
 #include "content/browser/renderer_host/render_view_host_factory.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
+#include "content/browser/renderer_host/render_widget_host_view_base_unittest.h"
 #include "content/browser/renderer_host/render_widget_host_view_event_handler.h"
 #include "content/browser/renderer_host/render_widget_host_view_frame_subscriber.h"
 #include "content/browser/renderer_host/text_input_manager.h"
@@ -87,6 +89,7 @@
 #include "ui/aura/test/test_cursor_client.h"
 #include "ui/aura/test/test_screen.h"
 #include "ui/aura/test/test_window_delegate.h"
+#include "ui/aura/test/test_windows.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_observer.h"
@@ -131,6 +134,8 @@ using ui::WebInputEventTraits;
 using viz::FrameEvictionManager;
 
 namespace content {
+
+constexpr gfx::Rect kViewBounds(0, 0, 10, 10);
 
 void InstallDelegatedFrameHostClient(
     RenderWidgetHostViewAura* render_widget_host_view,
@@ -1646,6 +1651,33 @@ TEST_F(RenderWidgetHostViewAuraTest, FinishCompositionByMouse) {
 
   EXPECT_EQ("FinishComposingText MouseDown",
             GetMessageNames(GetAndResetDispatchedMessages()));
+}
+
+TEST_F(RenderWidgetHostViewAuraTest, ShowHide) {
+  view_->InitAsChild(aura_test_helper_->root_window());
+  view_->SetBounds(kViewBounds);
+  RenderWidgetHostViewBase_TestShowHide(view_);
+}
+
+TEST_F(RenderWidgetHostViewAuraTest, Occlusion) {
+  view_->InitAsChild(aura_test_helper_->root_window());
+  view_->SetBounds(kViewBounds);
+
+  std::unique_ptr<aura::Window> other_window(
+      aura::test::CreateTestWindowWithDelegateAndType(
+          nullptr, aura::client::WINDOW_TYPE_NORMAL, 0, kViewBounds,
+          aura_test_helper_->root_window(), false));
+
+  RenderWidgetHostViewBase_TestOcclusion(
+      view_, base::BindRepeating(
+                 [](aura::Window* other_window, bool view_is_occluded) {
+                   // Show/hide another window to occlude |view_|.
+                   if (view_is_occluded)
+                     other_window->Show();
+                   else
+                     other_window->Hide();
+                 },
+                 base::Unretained(other_window.get())));
 }
 
 // Checks that WasOcculded/WasUnOccluded notifies RenderWidgetHostImpl.
