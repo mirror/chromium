@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "365cce14_ef18f715",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-12-13T02:21:49Z",
+      "side": 1,
+      "message": "note: this applies to **all** builders configured in this bucket.",
+      "range": {
+        "startLine": 276,
+        "startChar": 6,
+        "endLine": 276,
+        "endChar": 45
+      },
+      "revId": "296c9b16a30b87891b358f19fcd9a83a02e8f7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
