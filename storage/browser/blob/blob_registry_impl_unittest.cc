@@ -205,23 +205,6 @@ class BlobRegistryImplTest : public testing::Test {
     return registry_impl_->BlobsUnderConstructionForTesting();
   }
 
-  void RegisterURL(blink::mojom::BlobPtr blob,
-                   const GURL& url,
-                   blink::mojom::BlobURLHandlePtr* url_handle_out) {
-    base::RunLoop loop;
-    registry_->RegisterURL(
-        std::move(blob), url,
-        base::Bind(
-            [](base::Closure quit_closure,
-               blink::mojom::BlobURLHandlePtr* url_handle_out,
-               blink::mojom::BlobURLHandlePtr url_handle) {
-              *url_handle_out = std::move(url_handle);
-              quit_closure.Run();
-            },
-            loop.QuitClosure(), url_handle_out));
-    loop.Run();
-  }
-
  protected:
   base::ScopedTempDir data_dir_;
   base::test::ScopedTaskEnvironment scoped_task_environment_;
@@ -1013,44 +996,6 @@ TEST_F(BlobRegistryImplTest,
   scoped_task_environment_.RunUntilIdle();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(0u, BlobsUnderConstruction());
-}
-
-TEST_F(BlobRegistryImplTest, PublicBlobUrls) {
-  const std::string kId = "id";
-  std::unique_ptr<BlobDataHandle> handle =
-      CreateBlobFromString(kId, "hello world");
-
-  blink::mojom::BlobPtr blob;
-  registry_->GetBlobFromUUID(MakeRequest(&blob), kId);
-  EXPECT_EQ(kId, UUIDFromBlob(blob.get()));
-  EXPECT_FALSE(blob.encountered_error());
-
-  // Now register a url for that blob.
-  const GURL kUrl("blob:id");
-  blink::mojom::BlobURLHandlePtr url_handle;
-  RegisterURL(std::move(blob), kUrl, &url_handle);
-
-  std::unique_ptr<BlobDataHandle> blob_data_handle =
-      context_->GetBlobDataFromPublicURL(kUrl);
-  ASSERT_TRUE(blob_data_handle.get());
-  EXPECT_EQ(kId, blob_data_handle->uuid());
-
-  handle.reset();
-  base::RunLoop().RunUntilIdle();
-
-  // The url registration should keep the blob alive even after
-  // explicit references are dropped.
-  blob_data_handle = context_->GetBlobDataFromPublicURL(kUrl);
-  EXPECT_TRUE(blob_data_handle);
-  blob_data_handle.reset();
-
-  // Finally drop the URL handle.
-  url_handle.reset();
-  base::RunLoop().RunUntilIdle();
-
-  blob_data_handle = context_->GetBlobDataFromPublicURL(kUrl);
-  EXPECT_FALSE(blob_data_handle.get());
-  EXPECT_FALSE(context_->registry().HasEntry(kId));
 }
 
 }  // namespace storage
