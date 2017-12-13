@@ -45,6 +45,29 @@
       "revId": "44df80db4b7e399fac1f63bc91138d4ae60702b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4654b62a_0b7aa9c2",
+        "filename": "base/metrics/metrics_features.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-13T22:45:18Z",
+      "side": 1,
+      "message": "Currently, there is no \"namespace metrics\" nested inside \"namespace base\" in src/base:\nhttps://cs.chromium.org/search/?q\u003dnamespace.*base+namespace.*metrics+f:src/base\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nSo, is this nested namespace needed specifically for this file?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "44df80db4b7e399fac1f63bc91138d4ae60702b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
