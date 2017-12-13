@@ -717,10 +717,12 @@ DownloadContent DownloadContentFromMimeType(const std::string& mime_type_string,
 
 }  // namespace
 
-void RecordDownloadMimeType(const std::string& mime_type_string) {
-  UMA_HISTOGRAM_ENUMERATION("Download.Start.ContentType",
-                            DownloadContentFromMimeType(mime_type_string, true),
+int RecordDownloadMimeType(const std::string& mime_type_string) {
+  DownloadContent download_content =
+      DownloadContentFromMimeType(mime_type_string, true);
+  UMA_HISTOGRAM_ENUMERATION("Download.Start.ContentType", download_content,
                             DOWNLOAD_CONTENT_MAX);
+  return static_cast<int>(download_content);
 }
 
 void RecordDownloadMimeTypeForNormalProfile(

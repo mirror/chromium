@@ -235,7 +235,8 @@ void RecordDangerousDownloadDiscard(
     const base::FilePath& file_path);
 
 // Records the mime type of the download.
-void RecordDownloadMimeType(const std::string& mime_type);
+// Returns the int value of the mime type as defined by DownloadContent enum.
+int RecordDownloadMimeType(const std::string& mime_type);
 
 // Records the mime type of the download for normal profile.
 void RecordDownloadMimeTypeForNormalProfile(const std::string& mime_type);
