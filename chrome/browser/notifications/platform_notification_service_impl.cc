@@ -480,7 +480,7 @@ PlatformNotificationServiceImpl::CreateNotificationFromData(
   message_center::RichNotificationData optional_fields;
 #if defined(OS_CHROMEOS)
   optional_fields.settings_button_handler =
-      message_center::SettingsButtonHandler::TRAY;
+      message_center::SettingsButtonHandler::INLINE;
 #else
   optional_fields.settings_button_handler =
       message_center::SettingsButtonHandler::DELEGATE;

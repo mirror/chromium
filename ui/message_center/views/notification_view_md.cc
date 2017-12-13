@@ -34,6 +34,7 @@
 #include "ui/views/animation/ink_drop_highlight.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
+#include "ui/views/controls/button/radio_button.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/progress_bar.h"
@@ -65,6 +66,9 @@ constexpr gfx::Size kLargeImageMaxSize(328, 218);
 constexpr gfx::Insets kLeftContentPadding(2, 4, 0, 4);
 constexpr gfx::Insets kLeftContentPaddingWithIcon(2, 4, 0, 12);
 constexpr gfx::Insets kNotificationInputPadding(0, 16, 0, 16);
+constexpr gfx::Insets kSettingsRowPadding(8, 0, 0, 0);
+constexpr gfx::Insets kSettingsRadioButtonPadding(14, 18, 14, 18);
+constexpr gfx::Insets kSettingsButtonRowPadding(8);
 
 // Background of inline actions area.
 const SkColor kActionsRowBackgroundColor = SkColorSetRGB(0xee, 0xee, 0xee);
@@ -385,6 +389,17 @@ void NotificationInputMD::set_placeholder(const base::string16& placeholder) {
   }
 }
 
+// InlineSettingsRadioButton ///////////////////////////////////////////////////
+
+class InlineSettingsRadioButton : public views::RadioButton {
+ public:
+  InlineSettingsRadioButton(const base::string16& label_text)
+      : views::RadioButton(label_text, 1 /* group */, true /* force_md */) {
+    label()->SetFontList(GetTextFontList());
+    label()->SetEnabledColor(kRegularTextColorMD);
+  }
+};
+
 // ////////////////////////////////////////////////////////////
 // NotificationViewMD
 // ////////////////////////////////////////////////////////////
@@ -411,6 +426,9 @@ views::View* NotificationViewMD::TargetForRect(views::View* root,
   }
   if (inline_reply_->visible())
     buttons.push_back(inline_reply_);
+  buttons.push_back(block_all_button_);
+  buttons.push_back(dont_block_button_);
+  buttons.push_back(settings_done_button_);
 
   for (size_t i = 0; i < buttons.size(); ++i) {
     gfx::Point point_in_child = point;
@@ -437,6 +455,8 @@ void NotificationViewMD::CreateOrUpdateViews(const Notification& notification) {
   // Should be called at the last because SynthesizeMouseMoveEvent() requires
   // everything is in the right location when called.
   CreateOrUpdateActionButtonViews(notification);
+
+  use_inline_settings_ = notification.use_inline_settings();
 }
 
 NotificationViewMD::NotificationViewMD(MessageViewDelegate* controller,
@@ -476,6 +496,41 @@ NotificationViewMD::NotificationViewMD(MessageViewDelegate* controller,
   right_content_ = new views::View();
   right_content_->SetLayoutManager(new views::FillLayout());
   content_row_->AddChildView(right_content_);
+
+  // |settings_row_| contains inline settings.
+  settings_row_ = new views::View();
+  settings_row_->SetLayoutManager(new views::BoxLayout(
+      views::BoxLayout::kVertical, kSettingsRowPadding, 0));
+  settings_row_->SetBackground(
+      views::CreateSolidBackground(kActionsRowBackgroundColor));
+
+  block_all_button_ = new InlineSettingsRadioButton(
+      l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_BLOCK_ALL_NOTIFICATIONS));
+  block_all_button_->set_listener(this);
+  block_all_button_->SetBorder(
+      views::CreateEmptyBorder(kSettingsRadioButtonPadding));
+  settings_row_->AddChildView(block_all_button_);
+
+  dont_block_button_ = new InlineSettingsRadioButton(
+      l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_DONT_BLOCK_NOTIFICATIONS));
+  dont_block_button_->set_listener(this);
+  dont_block_button_->SetBorder(
+      views::CreateEmptyBorder(kSettingsRadioButtonPadding));
+  settings_row_->AddChildView(dont_block_button_);
+  settings_row_->SetVisible(false);
+
+  settings_done_button_ = new NotificationButtonMD(
+      this, false, l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_SETTINGS_DONE),
+      base::EmptyString16());
+  views::View* settings_button_row = new views::View;
+  views::BoxLayout* settings_button_layout = new views::BoxLayout(
+      views::BoxLayout::kHorizontal, kSettingsButtonRowPadding, 0);
+  settings_button_layout->set_main_axis_alignment(
+      views::BoxLayout::MAIN_AXIS_ALIGNMENT_END);
+  settings_button_row->SetLayoutManager(settings_button_layout);
+  settings_button_row->AddChildView(settings_done_button_);
+  settings_row_->AddChildView(settings_button_row);
+  AddChildView(settings_row_);
 
   // |action_row_| contains inline action buttons and inline textfield.
   actions_row_ = new views::View();
@@ -649,6 +704,13 @@ void NotificationViewMD::ButtonPressed(views::Button* sender,
     } else {
       delegate()->ClickOnNotificationButton(id, i);
     }
+    return;
+  }
+
+  if (sender == settings_done_button_) {
+    if (block_all_button_->checked())
+      message_center()->DisableNotification(id);
+    ToggleInlineSettings();
     return;
   }
 }
@@ -1031,6 +1093,33 @@ void NotificationViewMD::UpdateViewForExpandedState(bool expanded) {
   }
 }
 
+void NotificationViewMD::ToggleInlineSettings() {
+  inline_settings_visible_ = !inline_settings_visible_;
+
+  settings_row_->SetVisible(inline_settings_visible_);
+  content_row_->SetVisible(!inline_settings_visible_);
+  actions_row_->SetVisible(expanded_ && !inline_settings_visible_);
+
+  // When inline settings is shown, the background color of the entire
+  // notification should be |kActionsRowBackgroundColor|.
+  header_row_->SetBackground(views::CreateSolidBackground(
+      inline_settings_visible_ ? kActionsRowBackgroundColor
+                               : kNotificationBackgroundColor));
+
+  // Always check "Don't block" when inline settings is shown.
+  // If it's already blocked, users should not see inline settings.
+  // Toggling should reset the state.
+  dont_block_button_->SetChecked(true);
+
+  PreferredSizeChanged();
+}
+
+MessageCenter* NotificationViewMD::message_center() {
+  if (message_center_for_test_)
+    return message_center_for_test_;
+  return MessageCenter::Get();
+}
+
 // TODO(yoshiki): Move this to the parent class (MessageView) and share the code
 // among NotificationView and ArcNotificationView.
 void NotificationViewMD::UpdateControlButtonsVisibility() {
@@ -1058,6 +1147,13 @@ void NotificationViewMD::SetExpanded(bool expanded) {
   UpdateViewForExpandedState(expanded_);
   content_row_->InvalidateLayout();
   PreferredSizeChanged();
+}
+
+void NotificationViewMD::OnSettingsButtonPressed() {
+  if (use_inline_settings_)
+    ToggleInlineSettings();
+  else
+    MessageView::OnSettingsButtonPressed();
 }
 
 void NotificationViewMD::Activate() {

@@ -13,6 +13,7 @@
 #include "ui/events/event_utils.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/gfx/canvas.h"
+#include "ui/message_center/fake_message_center.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 #include "ui/message_center/views/bounded_label.h"
 #include "ui/message_center/views/message_view_delegate.h"
@@ -22,6 +23,7 @@
 #include "ui/message_center/views/proportional_image_view.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/label_button.h"
+#include "ui/views/controls/button/radio_button.h"
 #include "ui/views/test/views_test_base.h"
 #include "ui/views/test/widget_test.h"
 
@@ -31,6 +33,26 @@ namespace message_center {
 
 // Used to fill bitmaps returned by CreateBitmap().
 static const SkColor kBitmapColor = SK_ColorGREEN;
+
+class MockMessageCenter : public FakeMessageCenter {
+ public:
+  MockMessageCenter() = default;
+  ~MockMessageCenter() override = default;
+
+  // Overridden from FakeMessageCenter:
+  void DisableNotification(const std::string& id) override {
+    disabled_notification_id_ = id;
+  }
+
+  const std::string& disabled_notification_id() {
+    return disabled_notification_id_;
+  }
+
+ private:
+  std::string disabled_notification_id_;
+
+  DISALLOW_COPY_AND_ASSIGN(MockMessageCenter);
+};
 
 class NotificationViewMDTest : public views::ViewsTestBase,
                                public MessageViewDelegate,
@@ -712,6 +734,57 @@ TEST_F(NotificationViewMDTest, UseImageAsIcon) {
   notification_view()->ToggleExpanded();
   EXPECT_TRUE(notification_view()->expanded_);
   EXPECT_FALSE(notification_view()->icon_view_->visible());
+}
+
+TEST_F(NotificationViewMDTest, InlineSettings) {
+  std::unique_ptr<MockMessageCenter> message_center =
+      std::make_unique<MockMessageCenter>();
+  notification_view()->set_message_center_for_test(message_center.get());
+
+  notification()->set_type(NOTIFICATION_TYPE_SIMPLE);
+  notification()->set_settings_button_handler(SettingsButtonHandler::INLINE);
+  UpdateNotificationViews();
+
+  // Inline settings will be shown by clicking settings button.
+  EXPECT_FALSE(notification_view()->settings_row_->visible());
+  notification_view()->OnSettingsButtonPressed();
+  EXPECT_TRUE(notification_view()->settings_row_->visible());
+
+  // By clicking settings button again, it will toggle.
+  notification_view()->OnSettingsButtonPressed();
+  EXPECT_FALSE(notification_view()->settings_row_->visible());
+
+  // Show inline settings again.
+  notification_view()->OnSettingsButtonPressed();
+  EXPECT_TRUE(notification_view()->settings_row_->visible());
+
+  // Construct a mouse click event 1 pixel inside the done button.
+  gfx::Point done_cursor_location(1, 1);
+  views::View::ConvertPointToScreen(notification_view()->settings_done_button_,
+                                    &done_cursor_location);
+  ui::test::EventGenerator generator(widget()->GetNativeWindow());
+  generator.MoveMouseTo(done_cursor_location);
+  generator.ClickLeftButton();
+
+  // Just clicking Done button should not change the setting.
+  EXPECT_FALSE(notification_view()->settings_row_->visible());
+  EXPECT_TRUE(message_center->disabled_notification_id().empty());
+
+  notification_view()->OnSettingsButtonPressed();
+  EXPECT_TRUE(notification_view()->settings_row_->visible());
+
+  // Construct a mouse click event 1 pixel inside the block all button.
+  gfx::Point block_cursor_location(1, 1);
+  views::View::ConvertPointToScreen(notification_view()->block_all_button_,
+                                    &block_cursor_location);
+  generator.MoveMouseTo(block_cursor_location);
+  generator.ClickLeftButton();
+  generator.MoveMouseTo(done_cursor_location);
+  generator.ClickLeftButton();
+
+  EXPECT_FALSE(notification_view()->settings_row_->visible());
+  EXPECT_EQ(std::string("notification id"),
+            message_center->disabled_notification_id());
 }
 
 }  // namespace message_center
