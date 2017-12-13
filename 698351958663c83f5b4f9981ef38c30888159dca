@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f096a91_5f3db1e1",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-12-13T21:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b9dab0f_e8f5299b",
+      "range": {
+        "startLine": 197,
+        "startChar": 11,
+        "endLine": 198,
+        "endChar": 14
+      },
+      "revId": "698351958663c83f5b4f9981ef38c30888159dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cd5af39_79b82e61",
         "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "75377b14_e19be345",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-12-13T21:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cd5af39_79b82e61",
+      "range": {
+        "startLine": 225,
+        "startChar": 8,
+        "endLine": 225,
+        "endChar": 66
+      },
+      "revId": "698351958663c83f5b4f9981ef38c30888159dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57456a59_9ec56752",
         "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "698351958663c83f5b4f9981ef38c30888159dca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bcdbc00_54756e30",
+        "filename": "chrome/test/data/webui/settings/cups_printer_page_tests.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-12-13T21:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57456a59_9ec56752",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 71
+      },
+      "revId": "698351958663c83f5b4f9981ef38c30888159dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
