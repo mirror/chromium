@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37501153_6c9798d3",
+        "filename": "base/android/jni_array.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-13T11:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6c729c9_28ab2992",
+      "revId": "47129c31c5ac48e10a50634a141813622941fc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60f648c9_b25906ba",
         "filename": "device/bluetooth/bluetooth_adapter_android.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "74d11a8b_c9d6e018",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-13T11:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f648c9_b25906ba",
+      "range": {
+        "startLine": 217,
+        "startChar": 56,
+        "endLine": 217,
+        "endChar": 69
+      },
+      "revId": "47129c31c5ac48e10a50634a141813622941fc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b212043_a7b87b4f",
         "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "47129c31c5ac48e10a50634a141813622941fc87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a02ec8_7c4cece4",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-13T11:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b212043_a7b87b4f",
+      "revId": "47129c31c5ac48e10a50634a141813622941fc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "47129c31c5ac48e10a50634a141813622941fc87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd640f4_7ebdd0df",
+        "filename": "device/bluetooth/bluetooth_device_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1228829
+      },
+      "writtenOn": "2017-12-13T11:15:13Z",
+      "side": 1,
+      "message": "Tests enabled and they pass. Done.",
+      "parentUuid": "397996d2_ad654eca",
+      "range": {
+        "startLine": 623,
+        "startChar": 22,
+        "endLine": 623,
+        "endChar": 28
+      },
+      "revId": "47129c31c5ac48e10a50634a141813622941fc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
