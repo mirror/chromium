@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43c0c988_de196348",
+        "filename": "chrome/android/java/res/layout/list_menu_item.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T16:10:40Z",
+      "side": 0,
+      "message": "I would prefer to keep using Start/End on API levels that support them since they are more correct for RTL.\n\nYou can define a dimension in java/res/values/dimens.xml and override in java/res/values-v19/dimens.xml. Or you can define a style in values-v##/styles.xml and override values-v##/styles.xml. \n\nWhich API level can you start using PaddingStart and PaddingEnd?",
+      "range": {
+        "startLine": 9,
+        "startChar": 63,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "69e1aec80c6dd883ed84e7ff297e877487793035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
