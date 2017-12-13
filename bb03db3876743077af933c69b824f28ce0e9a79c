@@ -81,6 +81,30 @@
       "revId": "bb03db3876743077af933c69b824f28ce0e9a79c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72895817_88914eaf",
+        "filename": "mojo/edk/embedder/platform_shared_buffer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-13T17:43:55Z",
+      "side": 1,
+      "message": "Ack, makes sense. How about DuplicatePlatformHandleForIPC then, since the docs do say it is duplicating it.",
+      "parentUuid": "cb03fe68_cb3ff2ab",
+      "range": {
+        "startLine": 98,
+        "startChar": 23,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "bb03db3876743077af933c69b824f28ce0e9a79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
