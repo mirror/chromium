@@ -7,7 +7,9 @@
 #include <stddef.h>
 #include <algorithm>
 
+#include "cc/paint/image_transfer_cache_entry.h"
 #include "cc/paint/paint_flags.h"
+#include "cc/paint/paint_image_builder.h"
 #include "cc/paint/paint_op_buffer.h"
 #include "cc/paint/paint_shader.h"
 #include "cc/paint/paint_typeface_transfer_cache_entry.h"
@@ -238,8 +240,21 @@ void PaintOpReader::Read(PaintFlags* flags) {
   Read(&flags->shader_);
 }
 
-void PaintOpReader::Read(PaintImage* image) {
-  // TODO(enne): implement PaintImage serialization: http://crbug.com/737629
+void PaintOpReader::Read(PaintImage* image,
+                         TransferCacheDeserializeHelper* transfer_cache) {
+  uint64_t transfer_cache_entry_id;
+  ReadSimple(&transfer_cache_entry_id);
+  LOG(ERROR) << transfer_cache_entry_id;
+  auto* entry = transfer_cache->GetEntryAs<ServiceImageTransferCacheEntry>(
+      transfer_cache_entry_id);
+  if (entry) {
+    CHECK(entry);
+    CHECK(entry->image()->isTextureBacked());
+    *image = PaintImageBuilder::WithDefault()
+                 .set_id(PaintImage::GetNextId())
+                 .set_image(entry->image())
+                 .TakePaintImage();
+  }
 }
 
 void PaintOpReader::Read(sk_sp<SkData>* data) {

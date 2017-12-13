@@ -923,6 +923,7 @@ virtual void BeginRasterCHROMIUM(GLuint texture_id,
                                  GLboolean use_distance_field_text,
                                  GLint pixel_config) = 0;
 virtual void RasterCHROMIUM(const cc::DisplayItemList* list,
+                            cc::ImageProvider* provider,
                             GLint translate_x,
                             GLint translate_y,
                             GLint clip_x,

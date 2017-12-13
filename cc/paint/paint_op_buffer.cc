@@ -19,6 +19,16 @@
 #include "third_party/skia/include/core/SkWriteBuffer.h"
 
 namespace cc {
+namespace {
+DrawImage CreateDrawImage(const PaintImage& image,
+                          const PaintFlags* flags,
+                          const SkMatrix& matrix) {
+  return DrawImage(image, SkIRect::MakeWH(image.width(), image.height()),
+                   flags ? flags->getFilterQuality() : kNone_SkFilterQuality,
+                   matrix);
+}
+}  // namespace
+
 #define TYPES(M)      \
   M(AnnotateOp)       \
   M(ClipPathOp)       \
@@ -346,8 +356,12 @@ size_t DrawImageOp::Serialize(const PaintOp* base_op,
   if (!serialized_flags)
     serialized_flags = &op->flags;
   helper.Write(*serialized_flags);
-  helper.Write(op->image, options.image_provider);
-  helper.AlignMemory(alignof(SkScalar));
+  CHECK(options.canvas);
+  CHECK(options.image_provider);
+  LOG(ERROR) << "WRITING ID " << op->image.stable_id();
+  helper.Write(CreateDrawImage(op->image, serialized_flags,
+                               options.canvas->getTotalMatrix()),
+               options.image_provider);
   helper.Write(op->left);
   helper.Write(op->top);
   return helper.size();
@@ -363,7 +377,12 @@ size_t DrawImageRectOp::Serialize(const PaintOp* base_op,
   if (!serialized_flags)
     serialized_flags = &op->flags;
   helper.Write(*serialized_flags);
-  helper.Write(op->image, options.image_provider);
+  CHECK(options.canvas);
+  CHECK(options.image_provider);
+  LOG(ERROR) << "WRITING ID " << op->image.stable_id();
+  helper.Write(CreateDrawImage(op->image, serialized_flags,
+                               options.canvas->getTotalMatrix()),
+               options.image_provider);
   helper.Write(op->src);
   helper.Write(op->dst);
   helper.Write(op->constraint);
@@ -696,7 +715,7 @@ PaintOp* DrawImageOp::Deserialize(const volatile void* input,
 
   PaintOpReader helper(input, input_size);
   helper.Read(&op->flags);
-  helper.Read(&op->image);
+  helper.Read(&op->image, options.transfer_cache);
   helper.AlignMemory(alignof(SkScalar));
   helper.Read(&op->left);
   helper.Read(&op->top);
@@ -718,7 +737,7 @@ PaintOp* DrawImageRectOp::Deserialize(const volatile void* input,
 
   PaintOpReader helper(input, input_size);
   helper.Read(&op->flags);
-  helper.Read(&op->image);
+  helper.Read(&op->image, options.transfer_cache);
   helper.Read(&op->src);
   helper.Read(&op->dst);
   helper.Read(&op->constraint);
