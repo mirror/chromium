@@ -208,6 +208,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableWebVRExperimentalRendering(
       base::FeatureList::IsEnabled(features::kWebVrExperimentalRendering));
 
+  WebRuntimeFeatures::EnableWebVROrientationDevice(
+      base::FeatureList::IsEnabled(features::kWebVrOrientationDevice));
+
   WebRuntimeFeatures::EnableWebXR(
       base::FeatureList::IsEnabled(features::kWebXr));
 

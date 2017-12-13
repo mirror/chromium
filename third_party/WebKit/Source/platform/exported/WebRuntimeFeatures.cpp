@@ -356,6 +356,10 @@ void WebRuntimeFeatures::EnableWebVRExperimentalRendering(bool enable) {
   RuntimeEnabledFeatures::SetWebVRExperimentalRenderingEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableWebVROrientationDevice(bool enable) {
+  RuntimeEnabledFeatures::SetWebVROrientationDeviceEnabled(enable);
+}
+
 void WebRuntimeFeatures::EnableWebXR(bool enable) {
   RuntimeEnabledFeatures::SetWebXREnabled(enable);
 }

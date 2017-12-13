@@ -1617,6 +1617,10 @@ const char kWebVrExperimentalRenderingName[] =
 const char kWebVrExperimentalRenderingDescription[] =
     "Experimental rendering path optimizations for WebVR.";
 
+const char kWebVrOrientationDeviceName[] = "WebVR orientation device";
+const char kWebVrOrientationDeviceDescription[] =
+    "Enables a fallback VR mode that uses the device's orientation sensors.";
+
 const char kWebXrName[] = "WebXR Device API";
 const char kWebXrDescription[] =
     "Allow web applications to access experimental APIs to interact with "

@@ -468,6 +468,10 @@ const base::Feature kKeepAliveRendererForKeepaliveRequests{
 const base::Feature kWebVrExperimentalRendering{
     "WebVRExperimentalRendering", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Controls whether the backup device is enabled.
+const base::Feature kWebVrOrientationDevice{"WebVROrientationDevice",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Controls whether WebVR VSync-aligned render loop timing is enabled.
 const base::Feature kWebVrVsyncAlign{"WebVrVsyncAlign",
                                      base::FEATURE_ENABLED_BY_DEFAULT};
