@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7d09db2_b75f7a37",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/router/cast/ChromeCastSessionManagerTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1144414
+      },
+      "writtenOn": "2017-12-13T07:01:19Z",
+      "side": 1,
+      "message": "FYI this scenario and the following scenarios will be handled within CAF. I\u0027ll check if we are handling it correctly.",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 42
+      },
+      "revId": "1ab6a54b8110a50acc7bf377047101bb4ef3f41c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
