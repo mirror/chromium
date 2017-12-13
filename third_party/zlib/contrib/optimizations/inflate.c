@@ -85,6 +85,9 @@
 #include "inflate.h"
 #include "contrib/optimizations/inffast_chunk.h"
 #include "contrib/optimizations/chunkcopy.h"
+
+/* CPU feature detection helpers. */
+#include "contrib/optimizations/arm/arm_features.h"
 #include "x86.h"
 
 #ifdef MAKEFIXED
@@ -203,7 +206,11 @@ int stream_size;
     int ret;
     struct inflate_state FAR *state;
 
+#if defined(USE_ARMV8_CRC32)
+    arm_check_features();
+#else
     x86_check_features();
+#endif
 
     if (version == Z_NULL || version[0] != ZLIB_VERSION[0] ||
         stream_size != (int)(sizeof(z_stream)))
