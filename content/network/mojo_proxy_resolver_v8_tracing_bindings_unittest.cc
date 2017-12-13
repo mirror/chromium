@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "net/proxy/mojo_proxy_resolver_v8_tracing_bindings.h"
+#include "content/network/mojo_proxy_resolver_v8_tracing_bindings.h"
 
 #include <string>
 #include <utility>

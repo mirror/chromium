@@ -9,7 +9,7 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_checker.h"
-#include "net/dns/host_resolver_mojo.h"
+#include "content/network/host_resolver_mojo.h"
 #include "net/log/net_log_with_source.h"
 #include "net/proxy/proxy_resolver_v8_tracing.h"
 

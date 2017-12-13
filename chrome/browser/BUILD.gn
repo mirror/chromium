@@ -1749,7 +1749,6 @@ split_static_library("browser") {
     "//mojo/edk/system",
     "//mojo/public/cpp/bindings",
     "//net:extras",
-    "//net:net_browser_services",
     "//ppapi/features",
     "//printing/features",
     "//rlz/features",
