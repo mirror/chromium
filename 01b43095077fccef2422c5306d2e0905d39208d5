@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "ba569742_469b5381",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T22:45:33Z",
+      "side": 1,
+      "message": "On the current implementation, we need to get the onNativeLibraryReady callback from the BottomSheetObserver, so the observer should be added before native. If we get the callback from somewhere else (for example, BrowserStartupController), or separate out the onNativeLibrary callback from BottomSheetObserver, then we can attach the observer to after mSuggestionsInitialized.",
+      "parentUuid": "7c445be3_73bc2e48",
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd23ec0_bf8c5881",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T22:45:33Z",
+      "side": 1,
+      "message": "Do we want to record on the SuggestionsMetrics as well before native?",
+      "range": {
+        "startLine": 162,
+        "startChar": 39,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea326176_ff380fc6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
@@ -39,6 +80,30 @@
       "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c9b2ad_05e7cdf5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T22:45:33Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "ea326176_ff380fc6",
+      "range": {
+        "startLine": 218,
+        "startChar": 49,
+        "endLine": 218,
+        "endChar": 76
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "bbe7e563_99528ba6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T22:45:33Z",
+      "side": 1,
+      "message": "Good to know. I\u0027m interested. Please send me the doc!",
+      "parentUuid": "06a5e40e_ae82df96",
+      "range": {
+        "startLine": 304,
+        "startChar": 10,
+        "endLine": 304,
+        "endChar": 46
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3367159f_bddf74e7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
         "patchSetId": 2
@@ -85,6 +174,30 @@
       "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94a7471_5f11fc92",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T22:45:33Z",
+      "side": 1,
+      "message": "Hm.. This is actually not needed.",
+      "parentUuid": "3367159f_bddf74e7",
+      "range": {
+        "startLine": 333,
+        "startChar": 12,
+        "endLine": 333,
+        "endChar": 30
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "b2497699_352b4c79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarModelImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T22:45:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4b8e6ae_07f98e0a",
+      "range": {
+        "startLine": 306,
+        "startChar": 32,
+        "endLine": 306,
+        "endChar": 52
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "468a8fce_a152332f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 2
@@ -122,6 +259,24 @@
       "writtenOn": "2017-12-13T02:11:01Z",
       "side": 1,
       "message": "Does it make sense for lasses that need to know about native initialization to rely on BrowserStartupController directly? That would allow this class to remove it\u0027s startup controller observer entirely.",
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9a7fbf_4d3fc442",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T22:45:33Z",
+      "side": 1,
+      "message": "If not getting the notification from BrowserStartupController, we can alternatively setNativeLibraryReady for BottomSheet from ChromeTabbedActivity#initializeUI(). Which way is more preferred?",
+      "parentUuid": "468a8fce_a152332f",
       "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -151,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "d43093ca_4ad0285f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T22:45:33Z",
+      "side": 1,
+      "message": "Sure, let\u0027s disable the menu items. Is there any cases that incognito bottom sheet can show before native loaded?\n\nI\u0027m also wondering if we should disable tab switcher and overflow menu button too before native loaded to be more consistent (maybe as a separate bug)?",
+      "parentUuid": "ca36fe75_35e6924a",
+      "range": {
+        "startLine": 432,
+        "startChar": 8,
+        "endLine": 432,
+        "endChar": 63
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a106241c_33df20e2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetMetrics.java",
         "patchSetId": 2
@@ -168,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "ad27ba01_04b00e5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetMetrics.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T22:45:33Z",
+      "side": 1,
+      "message": "Yes, we can use cached metrics.",
+      "parentUuid": "a106241c_33df20e2",
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae3956de_c9f710a5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphBubbleController.java",
         "patchSetId": 2
@@ -179,6 +376,24 @@
       "writtenOn": "2017-12-13T02:11:01Z",
       "side": 1,
       "message": "Ideally we would still be tracking this events. Can we record the event after native is initialized?",
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340bb8a9_c1620cb0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphBubbleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-13T22:45:33Z",
+      "side": 1,
+      "message": "Hm... I\u0027m not familiar with the Tracker. It seems that we need a profile for getting the Tracker [1], but I don\u0027t think we can get the last used profile before native loaded [2].\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/android/feature_engagement/tracker_factory_android.cc?q\u003dGetTrackerForProfile\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d13\n[2] https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/profiles/Profile.java?q\u003dgetLastUsedProfile\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs",
+      "parentUuid": "ae3956de_c9f710a5",
       "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
