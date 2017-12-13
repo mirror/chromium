@@ -88,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "3eb82321_31fe3fd8",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9824,
+      "author": {
+        "id": 1181784
+      },
+      "writtenOn": "2017-12-13T20:26:04Z",
+      "side": 1,
+      "message": "Replace some of the \u0027-\u0027 to \u0027,\u0027, to make it easier to read, like date - formatted print date, title - document title, ...\n\nGive a simple example? Does \"\u003ctitle\u003e\" give a header, which shows the document title?",
+      "parentUuid": "3a11596a_ea761587",
+      "range": {
+        "startLine": 9824,
+        "startChar": 123,
+        "endLine": 9824,
+        "endChar": 130
+      },
+      "revId": "b00ea093fe26e71cd555c2079bd30b1ff6b29c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cd8bd67_88376bdb",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
         "patchSetId": 3
