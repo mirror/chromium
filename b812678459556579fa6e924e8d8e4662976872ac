@@ -1,0 +1,705 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b7055cd_cff4e6ed",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "DCHECK(!base::ContainsKey(existing_tabs_, web_contents));\n\nTo be sure that edge cases such as dragging a tab from a window to another are handled correctly.",
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53704d6_c641da59",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "DCHECK(base::ContainsKey(existing_tabs_, web_contents));",
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10995236_369897a8",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "base::ContainsKey(existing_tabs_, old_contents)",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 66
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8a2b62_3c7dc53c",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "Since WasRecentlyAudible() is not a trivial method, could you read it once?\n\nif (!web_contents-\u003eWasRecentlyAudible())\n  return;\nfor (auto\u0026 interval_map : interval_maps_) {\n  auto iter \u003d interval_map.second-\u003efind(web_contents);\n  DCHECK(iter !\u003d interval_map.second-\u003eend());\n  iter-\u003esecond.visible_or_audible_during_interval \u003d true;\n}\n\nOr maybe, since this is a \"store\" and not a \"tracker\", the method could be renamed OnTabAudible() and rely on the caller to check if the WebContents is audible? That would be more consistent with other methods (e.g. OnTabVisible).",
+      "range": {
+        "startLine": 124,
+        "startChar": 22,
+        "endLine": 124,
+        "endChar": 42
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4728fa3a_50693a8a",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "std::make_unique https://crbug.com/crbug.com/755727",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 22
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c81ba2e_8f43bcd2",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "DCHECK(interval_map);",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392dfa5b_df5e6335",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "DCHECK(interval_map);",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 34
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d059752_f5ef2e4f",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "DCHECK(web_contents);",
+      "range": {
+        "startLine": 196,
+        "startChar": 2,
+        "endLine": 196,
+        "endChar": 34
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996e87ab_1b77be79",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "using TabsStateDuringIntervalMap \u003d std::map\u003ccontent::WebContents*, TabStateDuringInterval\u003e;\n\nFrom https://chromium-cpp.appspot.com/ -\u003e Type Aliases:\n\"Use instead of typedef, unless the header needs to be compatible with C.\"",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463c206f_fcc28ee9",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "Explain what \"interaction\" means, or refer to another comment that explains it.",
+      "range": {
+        "startLine": 93,
+        "startChar": 5,
+        "endLine": 93,
+        "endChar": 49
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfcec30_e9194a95",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "tab_stats_mutable_for_testing()\n\nA presubmit check verifies that _for_testing() and ForTesting() functions/methods are only called in test code, which is better than just a comment.",
+      "range": {
+        "startLine": 121,
+        "startChar": 13,
+        "endLine": 121,
+        "endChar": 30
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a792858a_61571a89",
+        "filename": "chrome/browser/metrics/tab_stats_data_store.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "Consider using base::flat_map and base::flat_set.\n\nIn base::flat_map and base::flat_set, accesses are O(log n) and \"inserts are better or comparable to other containers even for several dozen items, and efficiently-moved types are unlikely to have performance problems for most cases until you have hundreds of items\".\n\nhttps://chromium.googlesource.com/chromium/src/+/master/base/containers/README.md#base_containers-library-map-and-set-selection-usage-advice",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 79
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122f0b6e_04fca3b7",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "The constructor can be protected.",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 8
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d56b88_eb309582",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(interval_map-\u003eempty());",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a03f476_59794d5f",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "|exists_currently| would be more exact, since it\u0027s not clear that the interval has ended when this is accessed.",
+      "range": {
+        "startLine": 103,
+        "startChar": 33,
+        "endLine": 103,
+        "endChar": 54
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e2bc067_331731d4",
+        "filename": "chrome/browser/metrics/tab_stats_data_store_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d506031_876cf9fc",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "for (base::TimeDelta interval : kTabUsageReportingIntervals) {",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 71
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3523437_c2dd1d7a",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 111,
+        "startChar": 8,
+        "endLine": 111,
+        "endChar": 24
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05868b4d_f1363693",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "TabStatsDataStore doesn\u0027t really need to know about the time deltas associated with intervals.\n\nSuggestion: \n\n1. Change TabStatsDataStore::interval_maps_ to be a vector.\n\n2. Change\nvoid TabStatsDataStore::AddInterval(int)\nto \nTabsStateDuringIntervalMap* TabStatsDataStore::AddInterval().\n\nThe new method creates a TabsStateDuringIntervalMap, adds it to the vector and returns it.\n\n3. Bind the map returned by AddInterval() to the callback here.\n\n4. Remove TabStatsDataStore::GetIntervalMap.",
+      "range": {
+        "startLine": 113,
+        "startChar": 17,
+        "endLine": 114,
+        "endChar": 67
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094783c8_f7665477",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "I believe that dragging a tab from a window to another will trigger\nTabStripModelObserver:TabDetachedAt()\nfollowed by\nTabStripModelObserver::TabInsertedAt()\n\nI\u0027m not 100% sure about that. Did you verify that this code works as expected when a tab is dragged from a window to another?",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 52
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7bb677_75de6511",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "Explain that you\u0027re interested in audio.",
+      "range": {
+        "startLine": 197,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 41
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8de8ce_656da7e0",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "CHECK(interval_map)\n\nWhy not DCHECK?",
+      "range": {
+        "startLine": 219,
+        "startChar": 2,
+        "endLine": 219,
+        "endChar": 34
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef5e000_b89c953f",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "std::make_unique https://crbug.com/755727",
+      "range": {
+        "startLine": 230,
+        "startChar": 20,
+        "endLine": 230,
+        "endChar": 36
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5997c96c_2ac78bd1",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "DCHECK(base::ContainsKey(...));",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 238,
+        "endChar": 46
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6023e464_beffda0c",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "auto\u0026",
+      "range": {
+        "startLine": 277,
+        "startChar": 7,
+        "endLine": 277,
+        "endChar": 11
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb0b4e5_194cb8b3",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(test_harness);",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be6be46_a73637d5",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "Not used.",
+      "range": {
+        "startLine": 50,
+        "startChar": 53,
+        "endLine": 50,
+        "endChar": 65
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e5f44d8_3c138719",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "constexpr\n\n\"Prefer to const for variables where possible.\" https://chromium-cpp.appspot.com/",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 7
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd812441_a9b79186",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "optional: replace this with \"emplace_back\"",
+      "range": {
+        "startLine": 298,
+        "startChar": 19,
+        "endLine": 298,
+        "endChar": 45
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b75c7a_ea8c8d3d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 88982,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "exist",
+      "range": {
+        "startLine": 88982,
+        "startChar": 37,
+        "endLine": 88982,
+        "endChar": 43
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3fa343_84f6bfa0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 21
+      },
+      "lineNbr": 88997,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T21:42:11Z",
+      "side": 1,
+      "message": "mention audio?",
+      "range": {
+        "startLine": 88997,
+        "startChar": 38,
+        "endLine": 88997,
+        "endChar": 64
+      },
+      "revId": "b812678459556579fa6e924e8d8e4662976872ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
