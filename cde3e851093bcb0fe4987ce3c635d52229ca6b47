@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c7f7bf7_064adff7",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T18:53:32Z",
+      "side": 1,
+      "message": "Mention that it sets default values if there is no active field trial.",
+      "revId": "cde3e851093bcb0fe4987ce3c635d52229ca6b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6f086c_3b727bdd",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T18:53:32Z",
+      "side": 1,
+      "message": "Pass both params by value?\nhttps://cs.chromium.org/chromium/src/base/strings/string_piece.h?l\u003d14\u0026rcl\u003d5fc3b9d05fc84e9c7e16905acb6672ede32c9667",
+      "range": {
+        "startLine": 28,
+        "startChar": 16,
+        "endLine": 28,
+        "endChar": 76
+      },
+      "revId": "cde3e851093bcb0fe4987ce3c635d52229ca6b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c299ceb_a542fd50",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_features_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-13T18:53:32Z",
+      "side": 1,
+      "message": "Add \nEnableProactiveTabDiscarding();\n\nOtherwise, GetProactiveTabDiscardParams() doesn\u0027t see the params set here and this test is equivalent to TabManagerFeaturesTest.GetProactiveTabDiscardParamsNoneGoesToDefault.",
+      "revId": "cde3e851093bcb0fe4987ce3c635d52229ca6b47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
