@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5132c78_7e775cd7",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T21:00:24Z",
+      "side": 1,
+      "message": "nit: Maybe this can be simplified to \n\nvoid WallpaperController::SetDeviceWallpaperPolicyEnforced(bool enforced) {\n  is_device_wallpaper_policy_enforced_ \u003d enforced;\n\n  if (ShouldSetDevicePolicyWallpaper())\n    SetDevicePolicyWallpaperIfApplicable();\n\n// else do nothing, so we can move the TODO in ClearDevicePolicyWallpaperIfApplicable to here, and remove the Clear* method for now.\n}",
+      "revId": "0fbede4841cae69b515b60a550bca27576b18604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff87f0c_2d66c108",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T21:00:24Z",
+      "side": 1,
+      "message": "nit: I think in ShowUserWallpaper/ShowSigninWallpaper we want to do:\n\nif (ShouldSetDevicePolicyWallpaper()) {\n  SetDevicePolicyWallpaperIfApplicable();\n  return;\n}\n\nSo here maybe we can do a DCHECK of |ShouldSetDevicePolicyWallpaper()|, and rename this function to SetDevicePolicyWallpaper. (Just hope to avoid checking ShouldSetDevicePolicyWallpaper() twice, I think in ShowUserWallpaper we must check ShouldSetDevicePolicyWallpaper() to get the signal for early return, so we may avoid checking it again here.)",
+      "revId": "0fbede4841cae69b515b60a550bca27576b18604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20be967_a1237031",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T21:00:24Z",
+      "side": 1,
+      "message": "nit: I think we can change this check to ShouldSetDevicePolicyWallpaper() to be consistent. (In the rare case that the value of |is_device_wallpaper_policy_enforced_| also changes.)",
+      "revId": "0fbede4841cae69b515b60a550bca27576b18604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a328f63c_76283e46",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1231,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T21:00:24Z",
+      "side": 1,
+      "message": "nit: pod",
+      "range": {
+        "startLine": 1231,
+        "startChar": 50,
+        "endLine": 1231,
+        "endChar": 54
+      },
+      "revId": "0fbede4841cae69b515b60a550bca27576b18604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
