@@ -1,6 +1,5 @@
--UnifiedMouseWarpControllerTest.BoundaryTestGrid
--UnifiedMouseWarpControllerTest.WarpMouse
--UnifiedMouseWarpControllerTest.BoundaryAndWarpSimpleTest
+# Keep alphabetized. When adding new exclusions file a bug with the reason and
+# include a link. If a test should never run on mus, add an early exit to the
+# code instead of listing here. See Shell::GetAshConfig().
 
-# When adding new exclusions be sure to file bug with reason. Group with the
-# above if applicable.
+# Keep alphabetized. See comment at top of file.
