@@ -1052,14 +1052,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accValue(VARIANT var_id, BSTR* value) {
     return S_OK;
   }
 
-  // After this point, the role based special cases should test for an empty
-  // result.
-
-  result = target->GetString16Attribute(AX_ATTR_VALUE);
-
-  //
-  // RangeValue (Use AX_ATTR_VALUE_FOR_RANGE)
-  //
+  result = GetString16Attribute(AX_ATTR_VALUE);
   if (result.empty() && target->IsRangeValueSupported()) {
     float fval;
     if (target->GetFloatAttribute(AX_ATTR_VALUE_FOR_RANGE, &fval)) {
@@ -1070,7 +1063,6 @@ STDMETHODIMP AXPlatformNodeWin::get_accValue(VARIANT var_id, BSTR* value) {
     }
   }
 
-  // Last resort (Use innerText)
   if (result.empty() && target->IsRichTextField())
     result = target->GetInnerText();
 
