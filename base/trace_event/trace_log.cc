@@ -347,6 +347,7 @@ TraceLog::TraceLog()
       num_traces_recorded_(0),
       dispatching_to_observer_list_(false),
       process_sort_index_(0),
+      process_creation_time_(Time::Now()),
       process_id_hash_(0),
       process_id_(0),
       trace_options_(kInternalRecordUntilFull),
@@ -362,6 +363,11 @@ TraceLog::TraceLog()
 #else
   SetProcessID(static_cast<int>(GetCurrentProcId()));
 #endif
+
+#if defined(OS_MACOSX) || defined(OS_WIN) || defined(OS_LINUX)
+  // Use accurate process creation time when available.
+  process_creation_time_ = CurrentProcessInfo::CreationTime();
+#endif  // defined(OS_MACOSX) || defined(OS_WIN) || defined(OS_LINUX)
 
   logged_events_.reset(CreateTraceBuffer());
 
@@ -1476,17 +1482,10 @@ void TraceLog::AddMetadataEventsWhileLocked() {
         current_thread_id, "process_name", "name", process_name_);
   }
 
-// See https://crbug.com/726484 for Fuchsia.
-#if !defined(OS_NACL) && !defined(OS_IOS) && !defined(OS_FUCHSIA)
-  Time process_creation_time = CurrentProcessInfo::CreationTime();
-  if (!process_creation_time.is_null()) {
-    TimeDelta process_uptime = Time::Now() - process_creation_time;
-    InitializeMetadataEvent(
-        AddEventToThreadSharedChunkWhileLocked(nullptr, false),
-        current_thread_id, "process_uptime_seconds", "uptime",
-        process_uptime.InSeconds());
-  }
-#endif  // !defined(OS_NACL) && !defined(OS_IOS) && !defined(OS_FUCHSIA)
+  TimeDelta process_uptime = Time::Now() - process_creation_time_;
+  InitializeMetadataEvent(
+      AddEventToThreadSharedChunkWhileLocked(nullptr, false), current_thread_id,
+      "process_uptime_seconds", "uptime", process_uptime.InSeconds());
 
   if (!process_labels_.empty()) {
     std::vector<base::StringPiece> labels;
