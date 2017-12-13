@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8645d06c_67d1af78",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-13T23:52:32Z",
+      "side": 1,
+      "message": "I think this CL is small enough to have both in the same CL. And they are modifying a lot of the same files.",
+      "parentUuid": "fe451409_45a8c73f",
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f95b61d6_b3786150",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4505fb57_5c3f6373",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-13T23:52:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95b61d6_b3786150",
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "36b5976f_286b8b0e",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_params.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-13T23:52:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e2c5712_eae656b8",
+      "range": {
+        "startLine": 204,
+        "startChar": 21,
+        "endLine": 204,
+        "endChar": 36
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fe0d3d9_6ded0721",
         "filename": "net/nqe/network_quality_estimator_params.cc",
         "patchSetId": 7
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "427dbccf_4d014f90",
+        "filename": "net/nqe/network_quality_estimator_params.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-13T23:52:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fe0d3d9_6ded0721",
+      "range": {
+        "startLine": 514,
+        "startChar": 31,
+        "endLine": 514,
+        "endChar": 63
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ef03619_39d9f236",
         "filename": "tools/chrome_proxy/webdriver/lofi.py",
         "patchSetId": 7
@@ -93,6 +177,30 @@
       "writtenOn": "2017-12-13T23:22:52Z",
       "side": 1,
       "message": "You need to have a corresponding test for AfterM61 to Before M65. The other option is to put both commandline strings, but I\u0027ll let tbansal decide if that is too hacky. This comment appleis to all tests/",
+      "range": {
+        "startLine": 193,
+        "startChar": 3,
+        "endLine": 193,
+        "endChar": 29
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11fc09f_879d4347",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-12-13T23:52:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ef03619_39d9f236",
       "range": {
         "startLine": 193,
         "startChar": 3,
