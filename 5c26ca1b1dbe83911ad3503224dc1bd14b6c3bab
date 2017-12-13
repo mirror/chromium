@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4543a79e_4647082b",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-13T15:49:00Z",
+      "side": 1,
+      "message": "2%-3% of all memory dumps from the wild will with this timeout if I\u0027m reading UMA correctly: [1] on the other hand to get 99.9% the timeout would have to be like two minutes so not sure what the best thing is here.\n\n\n[1] https://uma.googleplex.com/p/chrome/histograms/?endDate\u003d20171210\u0026dayCount\u003d1\u0026histograms\u003dMemory.Experimental.Debug.GlobalDumpDuration\u0026fixupData\u003dtrue\u0026showMax\u003dtrue\u0026filters\u003dchannel%2Ceq%2C4%2Cisofficial%2Ceq%2CTrue\u0026implicitFilters\u003disofficial",
+      "range": {
+        "startLine": 52,
+        "startChar": 59,
+        "endLine": 52,
+        "endChar": 60
+      },
+      "revId": "5c26ca1b1dbe83911ad3503224dc1bd14b6c3bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5404eb34_3c3c732e",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-13T15:49:00Z",
+      "side": 1,
+      "message": "It would be great to log this somehow so we know how much of a problem this is as we do \nin [1] but don\u0027t block this CL on adding new UMA, maybe just put a todo.\n\n[1]: https://cs.chromium.org/chromium/src/services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc?type\u003dcs\u0026q\u003dQueuedRequestDispatcher::Finalize\u0026sq\u003dpackage:chromium\u0026l\u003d308",
+      "revId": "5c26ca1b1dbe83911ad3503224dc1bd14b6c3bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc90c70_795d93c6",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-13T15:49:00Z",
+      "side": 1,
+      "message": "It might be better to only reduce this for the tests deal with the timeout.",
+      "range": {
+        "startLine": 110,
+        "startChar": 25,
+        "endLine": 110,
+        "endChar": 41
+      },
+      "revId": "5c26ca1b1dbe83911ad3503224dc1bd14b6c3bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b285758_27d0e68f",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-12-13T15:49:00Z",
+      "side": 1,
+      "message": "Are these tests guaranteed to take 100ms each? If so that\u0027s a little unfortunate, it would be nice to find a better way or failing that putting the timeout down a lot (I think we would only run the risk of the test flakily passing when it should have failed instead of the much worse flakily failing when it should be passing).",
+      "revId": "5c26ca1b1dbe83911ad3503224dc1bd14b6c3bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
