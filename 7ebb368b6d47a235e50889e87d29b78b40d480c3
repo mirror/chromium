@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2e47fae_fcb28493",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-13T01:30:07Z",
+      "side": 0,
+      "message": "It\u0027s next to the \"Scanning...\" label, using its default size (16 dips).",
+      "parentUuid": "13233359_edaa7343",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 61
+      },
+      "revId": "7ebb368b6d47a235e50889e87d29b78b40d480c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c815661b_65ab68bf",
         "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "7ebb368b6d47a235e50889e87d29b78b40d480c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c1dec3_f1e4153d",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-13T01:30:07Z",
+      "side": 0,
+      "message": "The throbber doesn\u0027t stop and disappear when an option is added anymore, because it\u0027s not inside the table view. It only stops when scanning is finished.",
+      "parentUuid": "c815661b_65ab68bf",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 194,
+        "endChar": 20
+      },
+      "revId": "7ebb368b6d47a235e50889e87d29b78b40d480c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

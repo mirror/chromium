@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40eec1d7_ab89cc27",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-13T01:30:07Z",
+      "side": 1,
+      "message": "Oops, yes.",
+      "parentUuid": "8573981a_ece929f1",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "d1560a9e8b735deb631fef6d0ba2c552b87f21b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48103e00_cdc37c67",
         "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "d1560a9e8b735deb631fef6d0ba2c552b87f21b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da2b694_30ee7fbd",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-13T01:30:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48103e00_cdc37c67",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 18
+      },
+      "revId": "d1560a9e8b735deb631fef6d0ba2c552b87f21b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "71c20c98_4f655241",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-13T01:30:07Z",
+      "side": 1,
+      "message": "I don\u0027t know that there\u0027s much more to explain... this View owns these because they\u0027re children, it\u0027s just handled by the Views system. It\u0027s a pretty standard pattern; I normally wouldn\u0027t add a comment like this, but I thought it would look odd next to the Views that are owned directly (through unique_ptr, below). I tweaked the comment slightly so maybe it\u0027s clearer.",
+      "parentUuid": "589ef5a9_a6b9c506",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 39
+      },
+      "revId": "d1560a9e8b735deb631fef6d0ba2c552b87f21b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce533c4a_3a9e8c11",
         "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "d1560a9e8b735deb631fef6d0ba2c552b87f21b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a907e477_b6878022",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-13T01:30:07Z",
+      "side": 1,
+      "message": "Yes, removed.",
+      "parentUuid": "ce533c4a_3a9e8c11",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 63
+      },
+      "revId": "d1560a9e8b735deb631fef6d0ba2c552b87f21b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
