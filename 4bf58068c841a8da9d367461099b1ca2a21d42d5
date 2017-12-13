@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a7758a1_69b5c880",
+        "filename": "cc/paint/paint_op_buffer_eq_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-13T18:35:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "064c9be4_9bbd86c1",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 37
+      },
+      "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39cd7371_855555aa",
         "filename": "cc/paint/transfer_cache_serialize_helper.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ca3735f7_2b2855e3",
+        "filename": "cc/paint/transfer_cache_serialize_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-13T18:35:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39cd7371_855555aa",
+      "range": {
+        "startLine": 38,
+        "startChar": 28,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9271081d_0338009c",
         "filename": "cc/paint/transfer_cache_serialize_helper.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-13T01:33:51Z",
       "side": 1,
       "message": "Given that we\u0027ve gone with an array of maps in your refactor of clienttransfercache, is there a reason we use std::pair here, rather than an array of sets? I guess I could see this, given that the helper is more likely to deal with a single type of entry, while the cache will frequently have all types?",
+      "range": {
+        "startLine": 27,
+        "startChar": 24,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36815a3_54eb0830",
+        "filename": "cc/paint/transfer_cache_serialize_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-13T18:35:24Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s a bit inconsistent. I kind of felt that it would be better to pass a single container to FlushEntriesInternal instead of an array of containers...",
+      "parentUuid": "9271081d_0338009c",
       "range": {
         "startLine": 27,
         "startChar": 24,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "532a9174_cc43d90e",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-13T18:35:24Z",
+      "side": 1,
+      "message": "Good idea. I added a TODO for now.",
+      "parentUuid": "750ce742_62065046",
+      "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41826de6_991d1314",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 4
@@ -99,6 +189,30 @@
       "writtenOn": "2017-12-13T01:33:51Z",
       "side": 1,
       "message": "nit: Why not just do this in SendSerializedData?",
+      "range": {
+        "startLine": 7345,
+        "startChar": 2,
+        "endLine": 7345,
+        "endChar": 33
+      },
+      "revId": "4bf58068c841a8da9d367461099b1ca2a21d42d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a115619a_87212ef7",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7345,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-13T18:35:24Z",
+      "side": 1,
+      "message": "Unfortunately here we don\u0027t have options, and just the serialize helper. However, up above we don\u0027t have the serialize helper, just the options. So the lowest common denominator is we pass the serialize helper to SendSerializedData. I think that\u0027s fine for now. I\u0027ll add a TODO.",
+      "parentUuid": "41826de6_991d1314",
       "range": {
         "startLine": 7345,
         "startChar": 2,
