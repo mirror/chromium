@@ -411,7 +411,9 @@ Sources.TabbedEditorContainer = class extends Common.Object {
      * @this {Sources.TabbedEditorContainer}
      */
     function tabIdToURI(tabId) {
-      return this._files[tabId].url();
+      var uiSourceCode = this._files[tabId];
+      var binding = Persistence.persistence.binding(uiSourceCode);
+      return binding ? binding.network.url() : uiSourceCode.url();
     }
 
     this._history.update(tabIds.map(tabIdToURI.bind(this)));
