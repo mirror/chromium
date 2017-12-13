@@ -131,6 +131,7 @@ class CSSPropertyHeadersWriter(CSSPropertyWriter):
                 includes.append("platform/runtime_enabled_features.h")
             if property_['should_implement_apply_functions']:
                 includes.append("core/css/resolver/StyleResolverState.h")
+                includes.append("core/css/CSSPrimitiveValueMappings.h")
                 if property_['converter'] == "CSSPrimitiveValue":
                     includes.append("core/css/CSSPrimitiveValue.h")
                     includes.append("core/css/CSSPrimitiveValueMappings.h")

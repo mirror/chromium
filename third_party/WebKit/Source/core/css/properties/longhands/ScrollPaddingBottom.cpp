@@ -6,6 +6,7 @@
 
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
+#include "core/css/properties/ComputedStyleUtils.h"
 
 namespace blink {
 namespace CSSLonghand {
@@ -16,6 +17,16 @@ const CSSValue* ScrollPaddingBottom::ParseSingleValue(
     const CSSParserLocalContext&) const {
   return ConsumeLength(range, context.Mode(), kValueRangeAll,
                        CSSPropertyParserHelpers::UnitlessQuirk::kAllow);
+}
+
+const CSSValue* ScrollPaddingBottom::CSSValueFromComputedStyleInternal(
+    const ComputedStyle& style,
+    const SVGComputedStyle&,
+    const LayoutObject*,
+    Node*,
+    bool allow_visited_style) const {
+  return ComputedStyleUtils::ZoomAdjustedPixelValueForLength(
+      style.ScrollPaddingBottom(), style);
 }
 
 }  // namespace CSSLonghand
