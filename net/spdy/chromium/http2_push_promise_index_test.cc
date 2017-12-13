@@ -63,6 +63,7 @@ class Http2PushPromiseIndexPeer {
  public:
   using UnclaimedPushedStream = Http2PushPromiseIndex::UnclaimedPushedStream;
   using CompareByUrl = Http2PushPromiseIndex::CompareByUrl;
+  using CompareByDelegate = Http2PushPromiseIndex::CompareByDelegate;
 };
 
 class Http2PushPromiseIndexTest : public testing::Test {
@@ -83,6 +84,139 @@ class Http2PushPromiseIndexTest : public testing::Test {
   const SpdySessionKey key2_;
   Http2PushPromiseIndex index_;
 };
+
+// RegisterUnclaimedPushedStream() returns false
+// if there is already a registered entry with same delegate and URL.
+TEST_F(Http2PushPromiseIndexTest, CannotRegisterSameEntryTwice) {
+  TestDelegate delegate(key1_);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate));
+  EXPECT_FALSE(index_.RegisterUnclaimedPushedStream(url1_, 4, &delegate));
+  // Unregister first entry so that DCHECK() does not fail in destructor.
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate));
+}
+
+// UnregisterUnclaimedPushedStream() returns false
+// if there is no identical entry registered.
+// Case 1: no streams for the given URL.
+TEST_F(Http2PushPromiseIndexTest, CannotUnregisterNonexistingEntry) {
+  TestDelegate delegate(key1_);
+  EXPECT_FALSE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate));
+}
+
+// UnregisterUnclaimedPushedStream() returns false
+// if there is no identical entry registered.
+// Case 2: there is a stream for the given URL with the same Delegate,
+// but the stream ID does not match.
+TEST_F(Http2PushPromiseIndexTest, CannotUnregisterEntryIfStreamIdDoesNotMatch) {
+  TestDelegate delegate(key1_);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate));
+  EXPECT_FALSE(index_.UnregisterUnclaimedPushedStream(url1_, 4, &delegate));
+  // Unregister first entry so that DCHECK() does not fail in destructor.
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate));
+}
+
+// UnregisterUnclaimedPushedStream() returns false
+// if there is no identical entry registered.
+// Case 3: there is a stream for the given URL with the same stream ID,
+// but the delegate does not match.
+TEST_F(Http2PushPromiseIndexTest, CannotUnregisterEntryIfDelegateDoesNotMatch) {
+  TestDelegate delegate1(key1_);
+  TestDelegate delegate2(key2_);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate1));
+  EXPECT_FALSE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate2));
+  // Unregister first entry so that DCHECK() does not fail in destructor.
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate1));
+}
+
+TEST_F(Http2PushPromiseIndexTest, CountStreamsForSession) {
+  TestDelegate delegate1(key1_);
+  TestDelegate delegate2(key2_);
+
+  EXPECT_EQ(0u, index_.CountStreamsForSession(&delegate1));
+  EXPECT_EQ(0u, index_.CountStreamsForSession(&delegate2));
+
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate1));
+
+  EXPECT_EQ(1u, index_.CountStreamsForSession(&delegate1));
+  EXPECT_EQ(0u, index_.CountStreamsForSession(&delegate2));
+
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url2_, 4, &delegate1));
+
+  EXPECT_EQ(2u, index_.CountStreamsForSession(&delegate1));
+  EXPECT_EQ(0u, index_.CountStreamsForSession(&delegate2));
+
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 6, &delegate2));
+
+  EXPECT_EQ(2u, index_.CountStreamsForSession(&delegate1));
+  EXPECT_EQ(1u, index_.CountStreamsForSession(&delegate2));
+
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate1));
+
+  EXPECT_EQ(1u, index_.CountStreamsForSession(&delegate1));
+  EXPECT_EQ(1u, index_.CountStreamsForSession(&delegate2));
+
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url2_, 4, &delegate1));
+
+  EXPECT_EQ(0u, index_.CountStreamsForSession(&delegate1));
+  EXPECT_EQ(1u, index_.CountStreamsForSession(&delegate2));
+
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 6, &delegate2));
+
+  EXPECT_EQ(0u, index_.CountStreamsForSession(&delegate1));
+  EXPECT_EQ(0u, index_.CountStreamsForSession(&delegate2));
+}
+
+TEST_F(Http2PushPromiseIndexTest, FindStream) {
+  TestDelegate delegate1(key1_);
+  TestDelegate delegate2(key2_);
+
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url1_, &delegate1));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate1));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url1_, &delegate2));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate2));
+
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate1));
+
+  EXPECT_EQ(2u, index_.FindStream(url1_, &delegate1));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate1));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url1_, &delegate2));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate2));
+
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url2_, 4, &delegate1));
+
+  EXPECT_EQ(2u, index_.FindStream(url1_, &delegate1));
+  EXPECT_EQ(4u, index_.FindStream(url2_, &delegate1));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url1_, &delegate2));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate2));
+
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 6, &delegate2));
+
+  EXPECT_EQ(2u, index_.FindStream(url1_, &delegate1));
+  EXPECT_EQ(4u, index_.FindStream(url2_, &delegate1));
+  EXPECT_EQ(6u, index_.FindStream(url1_, &delegate2));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate2));
+
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate1));
+
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url1_, &delegate1));
+  EXPECT_EQ(4u, index_.FindStream(url2_, &delegate1));
+  EXPECT_EQ(6u, index_.FindStream(url1_, &delegate2));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate2));
+
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url2_, 4, &delegate1));
+
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url1_, &delegate1));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate1));
+  EXPECT_EQ(6u, index_.FindStream(url1_, &delegate2));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate2));
+
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 6, &delegate2));
+
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url1_, &delegate1));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate1));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url1_, &delegate2));
+  EXPECT_EQ(kNoPushedStreamFound, index_.FindStream(url2_, &delegate2));
+}
 
 // If |index_| is empty, then FindSession() should set its |stream_id| outparam
 // to kNoPushedStreamFound for any values of inparams.
@@ -105,33 +239,13 @@ TEST_F(Http2PushPromiseIndexTest, Empty) {
   EXPECT_EQ(kNoPushedStreamFound, stream_id);
 }
 
-// Trying to unregister a stream not in the index should log to DFATAL.
-// Case 1: no streams for the given URL.
-TEST_F(Http2PushPromiseIndexTest, UnregisterNonexistingEntryCrashes1) {
-  TestDelegate delegate(key1_);
-  EXPECT_DFATAL(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate),
-                "Only a previously registered entry can be unregistered.");
-}
-
-// Trying to unregister a stream not in the index should log to DFATAL.
-// Case 2: there is a stream for the given URL, but not with the same stream ID.
-TEST_F(Http2PushPromiseIndexTest, UnregisterNonexistingEntryCrashes2) {
-  TestDelegate delegate(key1_);
-  index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate);
-  EXPECT_DFATAL(index_.UnregisterUnclaimedPushedStream(url1_, 4, &delegate),
-                "Only a previously registered entry can be unregistered.");
-  // Stream must be unregistered so that Http2PushPromiseIndex destructor
-  // does not crash.
-  index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate);
-}
-
 // Create two entries, both with a delegate that requires |key| to be equal to
 // |key1_|.  Register the two entries with different URLs.  Check that they can
 // be found by their respective URLs.
 TEST_F(Http2PushPromiseIndexTest, FindMultipleStreamsWithDifferentUrl) {
   // Register first entry.
   TestDelegate delegate1(key1_);
-  index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate1);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate1));
 
   // Retrieve first entry by its URL, no entry found for |url2_|.
   base::WeakPtr<SpdySession> session;
@@ -145,7 +259,7 @@ TEST_F(Http2PushPromiseIndexTest, FindMultipleStreamsWithDifferentUrl) {
 
   // Register second entry.
   TestDelegate delegate2(key1_);
-  index_.RegisterUnclaimedPushedStream(url2_, 4, &delegate2);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url2_, 4, &delegate2));
 
   // Retrieve each entry by their respective URLs.
   stream_id = kNoPushedStreamFound;
@@ -157,7 +271,7 @@ TEST_F(Http2PushPromiseIndexTest, FindMultipleStreamsWithDifferentUrl) {
   EXPECT_EQ(4u, stream_id);
 
   // Unregister first entry.
-  index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate1);
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate1));
 
   // No entry found for |url1_|, retrieve second entry by its URL.
   stream_id = 2;
@@ -169,7 +283,7 @@ TEST_F(Http2PushPromiseIndexTest, FindMultipleStreamsWithDifferentUrl) {
   EXPECT_EQ(4u, stream_id);
 
   // Unregister second entry.
-  index_.UnregisterUnclaimedPushedStream(url2_, 4, &delegate2);
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url2_, 4, &delegate2));
 
   // No entries found for either URL.
   stream_id = 2;
@@ -187,7 +301,7 @@ TEST_F(Http2PushPromiseIndexTest, FindMultipleStreamsWithDifferentUrl) {
 TEST_F(Http2PushPromiseIndexTest, MultipleStreamsWithDifferentKeys) {
   // Register first entry.
   TestDelegate delegate1(key1_);
-  index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate1);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate1));
 
   // Retrieve first entry by its SpdySessionKey, no entry found for |key2_|.
   base::WeakPtr<SpdySession> session;
@@ -201,7 +315,7 @@ TEST_F(Http2PushPromiseIndexTest, MultipleStreamsWithDifferentKeys) {
 
   // Register second entry.
   TestDelegate delegate2(key2_);
-  index_.RegisterUnclaimedPushedStream(url1_, 4, &delegate2);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 4, &delegate2));
 
   // Retrieve each entry by their respective SpdySessionKeys.
   stream_id = kNoPushedStreamFound;
@@ -213,7 +327,7 @@ TEST_F(Http2PushPromiseIndexTest, MultipleStreamsWithDifferentKeys) {
   EXPECT_EQ(4u, stream_id);
 
   // Unregister first entry.
-  index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate1);
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate1));
 
   // No entry found for |key1_|, retrieve second entry by its SpdySessionKey.
   stream_id = 2;
@@ -225,7 +339,7 @@ TEST_F(Http2PushPromiseIndexTest, MultipleStreamsWithDifferentKeys) {
   EXPECT_EQ(4u, stream_id);
 
   // Unregister second entry.
-  index_.UnregisterUnclaimedPushedStream(url1_, 4, &delegate2);
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 4, &delegate2));
 
   // No entries found for either SpdySessionKeys.
   stream_id = 2;
@@ -242,8 +356,8 @@ TEST_F(Http2PushPromiseIndexTest, MultipleMatchingStreams) {
   // the same SpdySessionKey.
   TestDelegate delegate1(key1_);
   TestDelegate delegate2(key1_);
-  index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate1);
-  index_.RegisterUnclaimedPushedStream(url1_, 4, &delegate2);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate1));
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 4, &delegate2));
 
   // Test that FindSession() returns one of the two entries.  FindSession()
   // makes no guarantee about which entry it returns if there are multiple
@@ -254,7 +368,7 @@ TEST_F(Http2PushPromiseIndexTest, MultipleMatchingStreams) {
   EXPECT_NE(kNoPushedStreamFound, stream_id);
 
   // Unregister the first entry.
-  index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate1);
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate1));
 
   // Test that the second entry can still be retrieved.
   stream_id = kNoPushedStreamFound;
@@ -262,7 +376,7 @@ TEST_F(Http2PushPromiseIndexTest, MultipleMatchingStreams) {
   EXPECT_EQ(4u, stream_id);
 
   // Unregister the second entry.
-  index_.UnregisterUnclaimedPushedStream(url1_, 4, &delegate2);
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 4, &delegate2));
 
   // Test that no entry is found.
   stream_id = 2;
@@ -278,14 +392,14 @@ TEST_F(Http2PushPromiseIndexTest, MatchCallsOnPushedStreamClaimed) {
   EXPECT_CALL(delegate, ValidatePushedStream(key1_)).WillOnce(Return(true));
   EXPECT_CALL(delegate, OnPushedStreamClaimed(url1_, 2)).Times(1);
 
-  index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate));
 
   base::WeakPtr<SpdySession> session;
   SpdyStreamId stream_id = kNoPushedStreamFound;
   index_.FindSession(key1_, url1_, &session, &stream_id);
   EXPECT_EQ(2u, stream_id);
 
-  index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate);
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate));
 };
 
 // Test that Delegate::ValidatePushedStream() is called by FindSession(), and if
@@ -295,14 +409,14 @@ TEST_F(Http2PushPromiseIndexTest, MismatchDoesNotCallOnPushedStreamClaimed) {
   EXPECT_CALL(delegate, ValidatePushedStream(key1_)).WillOnce(Return(false));
   EXPECT_CALL(delegate, OnPushedStreamClaimed(_, _)).Times(0);
 
-  index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate);
+  EXPECT_TRUE(index_.RegisterUnclaimedPushedStream(url1_, 2, &delegate));
 
   base::WeakPtr<SpdySession> session;
   SpdyStreamId stream_id = 2;
   index_.FindSession(key1_, url1_, &session, &stream_id);
   EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate);
+  EXPECT_TRUE(index_.UnregisterUnclaimedPushedStream(url1_, 2, &delegate));
 };
 
 // Test that an entry is equivalent to itself.
@@ -384,6 +498,109 @@ TEST(Http2PushPromiseIndexCompareByUrlTest, LookupByURL) {
   EXPECT_TRUE(
       entries.lower_bound(Http2PushPromiseIndexPeer::UnclaimedPushedStream{
           url2, kNoPushedStreamFound, nullptr}) == entries.find(entry2));
+};
+
+// Test that an entry is equivalent to itself.
+TEST(Http2PushPromiseIndexCompareByDelegateTest, Reflexivity) {
+  // Test with two entries: with and without a pushed stream.
+  Http2PushPromiseIndexPeer::UnclaimedPushedStream entry1{GURL(), 2, nullptr};
+  Http2PushPromiseIndexPeer::UnclaimedPushedStream entry2{
+      GURL(), kNoPushedStreamFound, nullptr};
+
+  // For "Compare", it is a requirement that comp(A, A) == false, see
+  // http://en.cppreference.com/w/cpp/concept/Compare.  This will in fact imply
+  // that equiv(A, A) == true.
+  EXPECT_FALSE(Http2PushPromiseIndexPeer::CompareByDelegate()(entry1, entry1));
+  EXPECT_FALSE(Http2PushPromiseIndexPeer::CompareByDelegate()(entry2, entry2));
+
+  std::set<Http2PushPromiseIndexPeer::UnclaimedPushedStream,
+           Http2PushPromiseIndexPeer::CompareByDelegate>
+      entries;
+  bool success;
+  std::tie(std::ignore, success) = entries.insert(entry1);
+  EXPECT_TRUE(success);
+
+  // Test that |entry1| is considered equivalent to itself by ensuring that
+  // a second insertion fails.
+  std::tie(std::ignore, success) = entries.insert(entry1);
+  EXPECT_FALSE(success);
+
+  // Test that |entry1| and |entry2| are not equivalent.
+  std::tie(std::ignore, success) = entries.insert(entry2);
+  EXPECT_TRUE(success);
+
+  // Test that |entry2| is equivalent to an existing entry
+  // (which then must be |entry2|).
+  std::tie(std::ignore, success) = entries.insert(entry2);
+  EXPECT_FALSE(success);
+};
+
+TEST(Http2PushPromiseIndexCompareByDelegateTest, LookupByDelegate) {
+  const GURL url1("https://www.example.com");
+  const GURL url2("https://www.example.org");
+
+  char kData[] = "foo";
+
+  Http2PushPromiseIndex::Delegate* delegate1 =
+      reinterpret_cast<Http2PushPromiseIndex::Delegate*>(&kData[0]);
+  Http2PushPromiseIndex::Delegate* delegate2 =
+      reinterpret_cast<Http2PushPromiseIndex::Delegate*>(&kData[1]);
+  Http2PushPromiseIndex::Delegate* delegate3 =
+      reinterpret_cast<Http2PushPromiseIndex::Delegate*>(&kData[2]);
+
+  // This test relies on the order of these Delegates.
+  ASSERT_LT(delegate1, delegate2);
+  ASSERT_LT(delegate2, delegate3);
+
+  // Create four entries, two for the middle Delegate, with distinct stream IDs
+  // not in ascending order.
+  Http2PushPromiseIndexPeer::UnclaimedPushedStream entry1{url1, 8, delegate1};
+  Http2PushPromiseIndexPeer::UnclaimedPushedStream entry2{url1, 4, delegate2};
+  Http2PushPromiseIndexPeer::UnclaimedPushedStream entry3{url2, 6, delegate2};
+  Http2PushPromiseIndexPeer::UnclaimedPushedStream entry4{url1, 2, delegate3};
+
+  // Fill up a set.
+  std::set<Http2PushPromiseIndexPeer::UnclaimedPushedStream,
+           Http2PushPromiseIndexPeer::CompareByDelegate>
+      entries;
+  entries.insert(entry1);
+  entries.insert(entry2);
+  entries.insert(entry3);
+  entries.insert(entry4);
+  ASSERT_EQ(4u, entries.size());
+
+  // Test that entries are ordered by Delegate first, not stream ID.
+  std::set<Http2PushPromiseIndexPeer::UnclaimedPushedStream,
+           Http2PushPromiseIndexPeer::CompareByDelegate>::iterator it =
+      entries.begin();
+  EXPECT_EQ(8u, it->stream_id);
+  ++it;
+  EXPECT_EQ(4u, it->stream_id);
+  ++it;
+  EXPECT_EQ(6u, it->stream_id);
+  ++it;
+  EXPECT_EQ(2u, it->stream_id);
+  ++it;
+  EXPECT_TRUE(it == entries.end());
+
+  // Test that an entry with empty URL and with kNoPushedStreamFound can be used
+  // to look up the first entry for a given Delegate.  In particular, the first
+  // entry for |delegate2| is |entry2|.
+  EXPECT_TRUE(
+      entries.lower_bound(Http2PushPromiseIndexPeer::UnclaimedPushedStream{
+          GURL(), kNoPushedStreamFound, delegate2}) == entries.find(entry2));
+
+  // Test that an entry with kNoPushedStreamFound can be used to look up the
+  // first entry for a given Delegate and URL.  In particular, the first entry
+  // for |delegate2| with |url1| is |entry2|.
+  EXPECT_TRUE(
+      entries.lower_bound(Http2PushPromiseIndexPeer::UnclaimedPushedStream{
+          url1, kNoPushedStreamFound, delegate2}) == entries.find(entry2));
+
+  // And the first entry for |delegate2| with |url2| is |entry3|.
+  EXPECT_TRUE(
+      entries.lower_bound(Http2PushPromiseIndexPeer::UnclaimedPushedStream{
+          url2, kNoPushedStreamFound, delegate2}) == entries.find(entry3));
 };
 
 }  // namespace test
