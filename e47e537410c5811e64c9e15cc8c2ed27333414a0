@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7387dc13_53568cb2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-12-13T12:30:41Z",
+      "side": 1,
+      "message": "Is this still true given the change above runs ProduceCache in both cases?",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 85,
+        "endChar": 60
+      },
+      "revId": "e47e537410c5811e64c9e15cc8c2ed27333414a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecabaf40_3176460b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-12-13T12:30:41Z",
+      "side": 1,
+      "message": "Can pull this code out into a helper somewhere so that it\u0027s shared between worker and main document script loading.",
+      "range": {
+        "startLine": 278,
+        "startChar": 4,
+        "endLine": 289,
+        "endChar": 3
+      },
+      "revId": "e47e537410c5811e64c9e15cc8c2ed27333414a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
