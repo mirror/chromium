@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "7ddf7e93_8c794dfe",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-13T20:07:03Z",
+      "side": 0,
+      "message": "Sorry for my typo. I meant to say \"safe\". It is safe to remove this block of code. \nYour removal of this block of code is totally fine.\nThe desired behavior is when safe browsing service is disabled, we don\u0027t do the client side phishing detection, and we don\u0027t want users to control client side phishing detection separately from other safe browsing service (therefore the removal of this flag). \n\nSince in safe_browsing_tab_observer there is additional check on the availability of client side detection service as well as if safe browsing is enabled, it is OK to remove the check here.",
+      "parentUuid": "7c65c56a_5cf5819f",
+      "revId": "14b6c500d363d53b78cf102e316bc1377dd02a63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15ef1bf7_dddfdfdc",
         "filename": "chrome/browser/safe_browsing/local_database_manager.cc",
         "patchSetId": 2

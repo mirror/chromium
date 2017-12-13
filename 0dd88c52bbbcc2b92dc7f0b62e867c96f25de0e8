@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "239e6563_103b4055",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-13T20:07:03Z",
+      "side": 1,
+      "message": "Am I missing anything here?  After you remove the if statement, |command_line| is no longer used, could you remove it?  Otherwise line 141-142 are basically dead code.",
+      "parentUuid": "cb0252f0_99d73fe7",
+      "revId": "0dd88c52bbbcc2b92dc7f0b62e867c96f25de0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e22cb39_ac0a1533",
         "filename": "chrome/renderer/chrome_render_frame_observer.cc",
         "patchSetId": 4
