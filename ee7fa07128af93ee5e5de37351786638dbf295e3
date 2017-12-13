@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1629bc1d_89f6f42e",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-12-13T23:28:29Z",
+      "side": 1,
+      "message": "iclelland: wdyt?",
+      "parentUuid": "1d91d537_17fca6a4",
+      "revId": "ee7fa07128af93ee5e5de37351786638dbf295e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a16ec176_59057078",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
         "patchSetId": 5
