@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/feature_list.h"
 #include "base/memory/ref_counted.h"
 #include "net/cert/ct_verifier.h"
 #include "net/cert/sth_observer.h"
@@ -30,6 +31,8 @@ struct SignedTreeHead;
 namespace certificate_transparency {
 class LogDnsClient;
 class SingleTreeTracker;
+
+extern const base::Feature kCTLogAuditing;
 
 // This class receives notifications of new Signed Tree Heads (STHs) and
 // verified Signed Certificate Timestamps (SCTs) and delegates them to

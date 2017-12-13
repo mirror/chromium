@@ -34,9 +34,6 @@ using net::ct::GetTestPublicKey;
 using net::ct::kSthRootHashLength;
 using net::ct::GetX509CertSCT;
 
-const base::Feature kCTLogAuditing = {"CertificateTransparencyLogAuditing",
-                                      base::FEATURE_DISABLED_BY_DEFAULT};
-
 constexpr char kHostname[] = "example.test";
 constexpr base::TimeDelta kZeroTTL;
 

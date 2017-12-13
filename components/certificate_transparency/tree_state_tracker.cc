@@ -36,9 +36,6 @@ TreeStateTracker::TreeStateTracker(
     std::vector<scoped_refptr<const CTLogVerifier>> ct_logs,
     net::HostResolver* host_resolver,
     net::NetLog* net_log) {
-  if (!base::FeatureList::IsEnabled(kCTLogAuditing))
-    return;
-
   std::unique_ptr<net::DnsClient> dns_client =
       net::DnsClient::CreateClient(net_log);
   dns_client_ = base::MakeUnique<LogDnsClient>(
@@ -58,6 +55,9 @@ TreeStateTracker::~TreeStateTracker() {}
 void TreeStateTracker::OnSCTVerified(base::StringPiece hostname,
                                      X509Certificate* cert,
                                      const SignedCertificateTimestamp* sct) {
+  if (!base::FeatureList::IsEnabled(kCTLogAuditing))
+    return;
+
   auto it = tree_trackers_.find(sct->log_id);
   // Ignore if the SCT is from an unknown log.
   if (it == tree_trackers_.end())
