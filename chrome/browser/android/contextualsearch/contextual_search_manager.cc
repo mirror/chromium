@@ -204,30 +204,28 @@ void ContextualSearchManager::OnTextSurroundingSelectionAvailable(
       end_offset);
 }
 
-void ContextualSearchManager::EnableContextualSearchJsApiForOverlay(
+void ContextualSearchManager::EnableContextualSearchJsApi(
     JNIEnv* env,
     jobject obj,
-    const JavaParamRef<jobject>& j_overlay_web_contents) {
+    const JavaParamRef<jobject>& j_overlay_web_contents,
+    const base::android::JavaParamRef<jstring>& j_url) {
+  if (!j_url || !j_overlay_web_contents)
+    return;
+
+  // Remember the URL of the Overlay.
+  overlay_url_ = base::android::ConvertJavaStringToUTF8(env, j_url);
+  DVLOG(0) << "ctxs enabled for " << overlay_url_;
   WebContents* overlay_web_contents =
       WebContents::FromJavaWebContents(j_overlay_web_contents);
-  DCHECK(overlay_web_contents);
-  // Tell our Overlay Notifier Service that this is currently a CS page.
-  content::RenderFrameHost* render_frame_host =
-      overlay_web_contents->GetRenderViewHost()->GetMainFrame();
-  DCHECK(render_frame_host);
-  contextual_search::mojom::OverlayPageNotifierServicePtr page_notifier_service;
-  render_frame_host->GetRemoteInterfaces()->GetInterface(
-      &page_notifier_service);
-  DCHECK(page_notifier_service);
-  page_notifier_service->NotifyIsContextualSearchOverlay();
-
   ContextualSearchObserver::EnsureForWebContents(overlay_web_contents, this);
 }
 
-jlong JNI_ContextualSearchManager_Init(JNIEnv* env,
-                                       const JavaParamRef<jobject>& obj) {
-  ContextualSearchManager* manager = new ContextualSearchManager(env, obj);
-  return reinterpret_cast<intptr_t>(manager);
+void ContextualSearchManager::ShouldEnableJsApi(
+    const std::string& url,
+    contextual_search::mojom::ContextualSearchJsApiService::
+        ShouldEnableJsApiCallback callback) {
+  bool should_enable = (url == overlay_url_);
+  std::move(callback).Run(should_enable);
 }
 
 void ContextualSearchManager::SetCaption(std::string caption,
@@ -237,4 +235,11 @@ void ContextualSearchManager::SetCaption(std::string caption,
       base::android::ConvertUTF8ToJavaString(env, caption.c_str());
   Java_ContextualSearchManager_onSetCaption(env, java_manager_, j_caption,
                                             does_answer);
+  DVLOG(0) << "ctxs setCaption: " << caption;
+}
+
+jlong JNI_ContextualSearchManager_Init(JNIEnv* env,
+                                       const JavaParamRef<jobject>& obj) {
+  ContextualSearchManager* manager = new ContextualSearchManager(env, obj);
+  return reinterpret_cast<intptr_t>(manager);
 }
