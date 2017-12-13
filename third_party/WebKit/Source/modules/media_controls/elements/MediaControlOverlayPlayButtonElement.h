@@ -9,7 +9,7 @@
 #include "modules/ModulesExport.h"
 #include "modules/media_controls/elements/MediaControlAnimationEventListener.h"
 #include "modules/media_controls/elements/MediaControlInputElement.h"
-#include "platform/Timer.h"
+#include "platform/wtf/Time.h"
 
 namespace WTF {
 class AtomicString;
@@ -70,17 +70,13 @@ class MODULES_EXPORT MediaControlOverlayPlayButtonElement final
     Member<MediaControlAnimationEventListener> event_listener_;
   };
 
-  void TapTimerFired(TimerBase*);
-
   void DefaultEventHandler(Event*) override;
   bool KeepEventInNode(Event*) override;
 
   void MaybePlayPause();
   void MaybeJump(int);
 
-  void HandlePlayPauseEvent(Event*, WTF::TimeDelta);
-
-  TaskRunnerTimer<MediaControlOverlayPlayButtonElement> tap_timer_;
+  WTF::Time last_tap_time_;
 
   Member<HTMLDivElement> internal_button_;
   Member<AnimatedArrow> left_jump_arrow_;

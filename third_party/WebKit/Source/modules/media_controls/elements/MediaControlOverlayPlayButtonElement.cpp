@@ -35,11 +35,8 @@ bool IsPointInRect(blink::DOMRect& rect, int margin, int x, int y) {
           (y >= (rect.top() - margin)) && (y <= (rect.bottom() + margin)));
 }
 
-// The delay if a touch is outside the internal button.
-constexpr WTF::TimeDelta kOutsideTouchDelay = TimeDelta::FromMilliseconds(300);
-
-// The delay if a touch is inside the internal button.
-constexpr WTF::TimeDelta kInsideTouchDelay = TimeDelta::FromMilliseconds(0);
+// The delay between two taps to be recognized as a double tap gesture.
+constexpr WTF::TimeDelta kDoubleTapDelay = TimeDelta::FromMilliseconds(300);
 
 // The number of seconds to jump when double tapping.
 constexpr int kNumberOfSecondsToJump = 10;
@@ -108,9 +105,6 @@ void MediaControlOverlayPlayButtonElement::AnimatedArrow::Trace(
 MediaControlOverlayPlayButtonElement::MediaControlOverlayPlayButtonElement(
     MediaControlsImpl& media_controls)
     : MediaControlInputElement(media_controls, kMediaOverlayPlayButton),
-      tap_timer_(GetDocument().GetTaskRunner(TaskType::kMediaElementEvent),
-                 this,
-                 &MediaControlOverlayPlayButtonElement::TapTimerFired),
       internal_button_(nullptr),
       left_jump_arrow_(nullptr),
       right_jump_arrow_(nullptr) {
@@ -185,22 +179,13 @@ void MediaControlOverlayPlayButtonElement::MaybeJump(int seconds) {
     left_jump_arrow_->Show();
 }
 
-void MediaControlOverlayPlayButtonElement::HandlePlayPauseEvent(
-    Event* event,
-    WTF::TimeDelta delay) {
-  event->SetDefaultHandled();
-
-  if (tap_timer_.IsActive())
-    return;
-
-  tap_timer_.StartOneShot(delay, BLINK_FROM_HERE);
-}
-
 void MediaControlOverlayPlayButtonElement::DefaultEventHandler(Event* event) {
   if (event->type() == EventTypeNames::click) {
+    event->SetDefaultHandled();
+
     // Double tap to navigate should only be available on modern controls.
     if (!MediaControlsImpl::IsModern() || !event->IsMouseEvent()) {
-      HandlePlayPauseEvent(event, kInsideTouchDelay);
+      MaybePlayPause();
       return;
     }
 
@@ -209,8 +194,14 @@ void MediaControlOverlayPlayButtonElement::DefaultEventHandler(Event* event) {
     // TODO(beccahughes): Move to PointerEvent.
     MouseEvent* mouse_event = ToMouseEvent(event);
     if (!mouse_event->HasPosition()) {
-      HandlePlayPauseEvent(event, kInsideTouchDelay);
+      MaybePlayPause();
       return;
+    }
+
+    // If there was a last tap time then clear it if it is not recent.
+    if (!last_tap_time_.is_null() &&
+        (WTF::Time::Now() - last_tap_time_) > kDoubleTapDelay) {
+      last_tap_time_ = WTF::Time();
     }
 
     // If the click happened on the internal button or a margin around it then
@@ -218,15 +209,15 @@ void MediaControlOverlayPlayButtonElement::DefaultEventHandler(Event* event) {
     if (IsPointInRect(*internal_button_->getBoundingClientRect(),
                       kInnerButtonTouchPaddingSize, mouse_event->clientX(),
                       mouse_event->clientY())) {
-      HandlePlayPauseEvent(event, kInsideTouchDelay);
-    } else if (!tap_timer_.IsActive()) {
+      MaybePlayPause();
+    } else if (last_tap_time_.is_null()) {
       // If there was not a previous touch and this was outside of the button
-      // then we should play/pause but with a small unnoticeable delay to allow
-      // for a secondary tap.
-      HandlePlayPauseEvent(event, kOutsideTouchDelay);
+      // then we should should the controls and record the time to see if there
+      // is another tap soon.
+      last_tap_time_ = WTF::Time::Now();
     } else {
-      // Cancel the play pause event.
-      tap_timer_.Stop();
+      // Erase the time marker.
+      last_tap_time_ = WTF::Time();
 
       if (RuntimeEnabledFeatures::DoubleTapToJumpOnVideoEnabled()) {
         // Jump forwards or backwards based on the position of the tap.
@@ -245,8 +236,6 @@ void MediaControlOverlayPlayButtonElement::DefaultEventHandler(Event* event) {
         else
           GetMediaControls().EnterFullscreen();
       }
-
-      event->SetDefaultHandled();
     }
   }
 
@@ -262,14 +251,6 @@ WebSize MediaControlOverlayPlayButtonElement::GetSizeOrDefault() const {
   // button.
   return MediaControlElementsHelper::GetSizeOrDefault(
       *internal_button_, WebSize(kInnerButtonSize, kInnerButtonSize));
-}
-
-void MediaControlOverlayPlayButtonElement::TapTimerFired(TimerBase*) {
-  std::unique_ptr<UserGestureIndicator> user_gesture_scope =
-      Frame::NotifyUserActivation(GetDocument().GetFrame(),
-                                  UserGestureToken::kNewGesture);
-
-  MaybePlayPause();
 }
 
 void MediaControlOverlayPlayButtonElement::Trace(blink::Visitor* visitor) {
