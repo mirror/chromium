@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b495a291_403d4756",
+        "filename": "chrome/browser/devtools/device/usb/android_usb_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-13T23:16:26Z",
+      "side": 0,
+      "message": "Yes, that would be a nice change to make. I\u0027ve been avoiding doing too much cleanup in this patch to keep the diff easy to reason about.",
+      "parentUuid": "144a1e0a_50ddf888",
+      "revId": "993f4d704caa95743821e213aace346d4edc92b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bb4062c_661d4cf2",
         "filename": "device/usb/usb_device_handle_impl.cc",
         "patchSetId": 4

@@ -67,6 +67,24 @@
       "revId": "b30ea1b0a47c140d34053b93ba1f73ab474701b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8d531b_86f54d00",
+        "filename": "device/usb/usb_device_handle_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-13T23:16:26Z",
+      "side": 1,
+      "message": "I\u0027d like to followup here by replacing this with,\n\nbuffer_-\u003edata().erase(buffer_-\u003edata().begin(),\n                      buffer_-\u003edata().begin() + LIBUSB_CONTROL_SETUP_SIZE_);",
+      "parentUuid": "d5bec6bc_0be160a9",
+      "revId": "b30ea1b0a47c140d34053b93ba1f73ab474701b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
