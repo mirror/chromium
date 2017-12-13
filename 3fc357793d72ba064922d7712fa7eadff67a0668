@@ -16,6 +16,24 @@
       "revId": "3fc357793d72ba064922d7712fa7eadff67a0668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7978810e_e74736b8",
+        "filename": "media/gpu/windows/d3d11_h264_accelerator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-13T16:31:26Z",
+      "side": 1,
+      "message": "at the moment, this will be called on the gpu main thread.  the reason is that sharing d3d11 textures between a video decoder and a d3d11 context on another thread is tricky.  at least, i wasn\u0027t able to make it work reliably.  there may be hardware on which it simply doesn\u0027t work.\n\nif that latter set is small, then maybe we just introduce a texture copy for those cases and can then run the decoder on another thread.  i have no way of figuring that out right now, though.  i also don\u0027t know if texture copies are an option at all for protected content.\n\nwe have some latitude since the d3d11 decoder isn\u0027t close to being ready for production.  for the short term, i can remove kTryAgain, in favor of blocking the main thread.  i can then focus on the performance / correctness questions about a texture copy.  then, either re-introduce kTryAgain or move the decoder to another thread before shipping it, depending on the results.\n\nplease let me know which you\u0027d prefer.",
+      "parentUuid": "f8a5888c_12dd6370",
+      "revId": "3fc357793d72ba064922d7712fa7eadff67a0668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
