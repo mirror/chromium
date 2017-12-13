@@ -16,6 +16,24 @@
       "revId": "e0176b4a932ebf48a8d7f2c711e287eef3504a08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c9be0b_df79aa66",
+        "filename": "third_party/WebKit/Source/platform/audio/VectorMath.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1140189
+      },
+      "writtenOn": "2017-12-13T14:36:54Z",
+      "side": 1,
+      "message": "\u003e Hmm. I was kind of expecting all of the x86-specific implementation code to be in a different file instead of here.\n\nDone.\n \n\u003e Then VectorMath.cpp would be much shorter, just calling the x86 code.  (Need to move the arm and mips code out to make this really clean, but that\u0027s for another day.)\n\nMac: https://crrev.com/c/824047\nArm: https://crrev.com/c/824048\nMips: https://crrev.com/c/824049",
+      "parentUuid": "96de93ce_b3a23b1f",
+      "revId": "e0176b4a932ebf48a8d7f2c711e287eef3504a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
