@@ -140,6 +140,30 @@
       "revId": "6c47519c8e9fb51c8b7d1a08ea7f15a74e6771c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307489c6_02a6f1a0",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 2229,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-13T19:08:09Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "00c74597_855aa5ed",
+      "range": {
+        "startLine": 2229,
+        "startChar": 26,
+        "endLine": 2229,
+        "endChar": 37
+      },
+      "revId": "6c47519c8e9fb51c8b7d1a08ea7f15a74e6771c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
