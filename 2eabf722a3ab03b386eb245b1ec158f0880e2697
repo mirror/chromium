@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "4b380c5a_dabdb3b3",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-13T02:12:04Z",
+      "side": 1,
+      "message": "Ooops. Yes, it is rare, and the coding style recommends TODO(https://crbug.com/1234) style.\nThanks.",
+      "parentUuid": "8d3773e1_265cb9a8",
+      "revId": "2eabf722a3ab03b386eb245b1ec158f0880e2697",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0019361b_7263ceda",
         "filename": "content/shell/BUILD.gn",
         "patchSetId": 4
