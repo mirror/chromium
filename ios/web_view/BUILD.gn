@@ -89,6 +89,7 @@ ios_web_view_sources = [
   "internal/cwv_user_content_controller_internal.h",
   "internal/cwv_user_script.mm",
   "internal/cwv_web_view.mm",
+  "internal/cwv_web_view_internal.h",
   "internal/cwv_web_view_configuration.mm",
   "internal/cwv_web_view_configuration_internal.h",
   "internal/ios_global_state_web_view_configuration.cc",
