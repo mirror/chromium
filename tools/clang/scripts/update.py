@@ -652,6 +652,9 @@ def UpdateClang(args):
              env=deployment_env)
   RunCommand(['ninja', 'lld'], msvc_arch='x64')
 
+  # Build code coverage tools with LLVM_ENABLE_THREADS enabled.
+  RunCommand(['ninja', 'llvm-cov', 'llvm-profdata'], msvc_arch='x64')
+
   # Build clang and other tools.
   CreateChromeToolsShim()
 
