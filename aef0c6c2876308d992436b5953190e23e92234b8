@@ -33,6 +33,24 @@
       "revId": "aef0c6c2876308d992436b5953190e23e92234b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5af8375_f2c91e09",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-13T17:57:52Z",
+      "side": 1,
+      "message": "Because popup_view is an abstract class and does not inherit from View.",
+      "parentUuid": "d20452f7_d535d6dd",
+      "revId": "aef0c6c2876308d992436b5953190e23e92234b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
