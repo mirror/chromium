@@ -666,14 +666,44 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
                          update_rect || update_background_color ||
                          update_ca_edge_aa_mask || update_opacity ||
                          update_ca_filter;
+  gfx::RectF layer_rect(rect);
   if (use_av_layer) {
     if (update_contents) {
+      gfx::RectF av_rect;
       if (cv_pixel_buffer) {
         AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(av_layer,
                                                        cv_pixel_buffer);
+        av_rect = gfx::RectF(CVPixelBufferGetWidth(cv_pixel_buffer),
+                             CVPixelBufferGetHeight(cv_pixel_buffer));
       } else {
         AVSampleBufferDisplayLayerEnqueueIOSurface(av_layer, io_surface);
+        av_rect = gfx::RectF(IOSurfaceGetWidth(io_surface),
+                             IOSurfaceGetHeight(io_surface));
       }
+
+      const CGFloat av_ratio = av_rect.width() / av_rect.height();
+      const CGFloat layer_ratio = layer_rect.width() / layer_rect.height();
+      const CGFloat ratio_error = av_ratio / layer_ratio;
+
+      // If the layer's aspect ratio could be made to match the video's aspect
+      // ratio by expanding either dimension by a fractional pixel, do so. The
+      // mismatch probably resulted from rounding the dimensions to integers.
+      // This works around a macOS 10.13 bug which breaks detached fullscreen
+      // playback of slightly distorted videos (https://crbug.com/792632).
+      if (ratio_error > 1) {
+        const float width_correction =
+            layer_rect.width() * ratio_error - layer_rect.width();
+        if (width_correction < 1)
+          layer_rect.Inset(-width_correction / 2, 0);
+      } else if (ratio_error < 1) {
+        const float height_correction =
+            layer_rect.height() / ratio_error - layer_rect.height();
+        if (height_correction < 1)
+          layer_rect.Inset(0, -height_correction / 2);
+      }
+      if (!update_rect &&
+          layer_rect != ScaleRect(gfx::RectF([ca_layer frame]), scale_factor))
+        update_rect = true;
     }
   } else {
     if (update_contents) {
@@ -690,12 +720,8 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
     if (update_contents_rect)
       [ca_layer setContentsRect:contents_rect.ToCGRect()];
   }
-  if (update_rect) {
-    gfx::RectF dip_rect = gfx::RectF(rect);
-    dip_rect.Scale(1 / scale_factor);
-    [ca_layer setPosition:CGPointMake(dip_rect.x(), dip_rect.y())];
-    [ca_layer setBounds:CGRectMake(0, 0, dip_rect.width(), dip_rect.height())];
-  }
+  if (update_rect)
+    [ca_layer setFrame:ScaleRect(layer_rect, 1 / scale_factor).ToCGRect()];
   if (update_background_color) {
     CGFloat rgba_color_components[4] = {
         SkColorGetR(background_color) / 255.,
