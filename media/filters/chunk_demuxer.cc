@@ -21,6 +21,7 @@
 #include "media/base/media_switches.h"
 #include "media/base/media_tracks.h"
 #include "media/base/mime_util.h"
+#include "media/base/sample_rates.h"
 #include "media/base/stream_parser_buffer.h"
 #include "media/base/timestamp_constants.h"
 #include "media/base/video_codecs.h"
@@ -232,6 +233,20 @@ bool ChunkDemuxerStream::UpdateAudioConfig(const AudioDecoderConfig& config,
   DCHECK(config.IsValidConfig());
   DCHECK_EQ(type_, AUDIO);
   base::AutoLock auto_lock(lock_);
+
+  UMA_HISTOGRAM_ENUMERATION("Media.MSE.AudioSampleFormat",
+                            config.sample_format(), kSampleFormatMax + 1);
+  UMA_HISTOGRAM_ENUMERATION("Media.MSE.AudioChannelLayout",
+                            config.channel_layout(), CHANNEL_LAYOUT_MAX + 1);
+  AudioSampleRate asr;
+  if (ToAudioSampleRate(config.samples_per_second(), &asr)) {
+    UMA_HISTOGRAM_ENUMERATION("Media.MSE.AudioSamplesPerSecond", asr,
+                              kAudioSampleRateMax + 1);
+  } else {
+    UMA_HISTOGRAM_COUNTS("Media.MSE.AudioSamplesPerSecondUnexpected",
+                         config.samples_per_second());
+  }
+
   if (!SBSTREAM_IS_SET) {
     DCHECK_EQ(state_, UNINITIALIZED);
 
