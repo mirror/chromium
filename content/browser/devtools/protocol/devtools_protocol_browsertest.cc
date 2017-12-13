@@ -432,6 +432,7 @@ class DevToolsProtocolTest : public ContentBrowserTest,
   std::vector<std::string> notifications_;
   std::vector<std::string> console_messages_;
   std::vector<std::unique_ptr<base::DictionaryValue>> notification_params_;
+  bool allow_protocol_errors_ = false;
 
  private:
   void DispatchProtocolMessage(DevToolsAgentHost* agent_host,
@@ -443,8 +444,12 @@ class DevToolsProtocolTest : public ContentBrowserTest,
     if (root->GetInteger("id", &id)) {
       result_ids_.push_back(id);
       base::DictionaryValue* result;
-      ASSERT_TRUE(root->GetDictionary("result", &result));
-      result_.reset(result->DeepCopy());
+      bool is_ok = root->GetDictionary("result", &result);
+      ASSERT_TRUE(is_ok || allow_protocol_errors_);
+      if (is_ok)
+        result_.reset(result->DeepCopy());
+      else
+        result_.reset(root->DeepCopy());
       in_dispatch_ = false;
       if (id && id == waiting_for_command_result_id_) {
         waiting_for_command_result_id_ = 0;
@@ -1074,7 +1079,7 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, NavigationPreservesMessages) {
   test_url = GetTestUrl("devtools", "navigation.html");
   params->SetString("url", test_url.spec());
   TestNavigationObserver navigation_observer(shell()->web_contents());
-  SendCommand("Page.navigate", std::move(params), true);
+  SendCommand("Page.navigate", std::move(params), false);
   navigation_observer.Wait();
 
   bool enough_results = result_ids_.size() >= 2u;
@@ -1092,6 +1097,27 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, NavigationPreservesMessages) {
       found_frame_notification = true;
   }
   EXPECT_TRUE(found_frame_notification);
+}
+
+IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, EvaluateWhileNotLoaded) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL test_url = embedded_test_server()->GetURL("/devtools/navigation.html");
+  NavigateToURLBlockUntilNavigationsComplete(shell(), test_url, 1);
+  Attach();
+  SendCommand("Page.enable", nullptr, false);
+
+  std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
+  test_url = GetTestUrl("devtools", "navigation.html");
+  params->SetString("url", test_url.spec());
+  TestNavigationObserver navigation_observer(shell()->web_contents());
+  SendCommand("Page.navigate", std::move(params), false);
+
+  params.reset(new base::DictionaryValue());
+  params->SetString("expression", "document.readyState");
+  allow_protocol_errors_ = true;
+  SendCommand("Runtime.evaluate", std::move(params), true);
+  EXPECT_TRUE(result_->HasKey("error"));
+  navigation_observer.Wait();
 }
 
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, CrossSiteNoDetach) {
