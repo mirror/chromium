@@ -33,6 +33,24 @@
       "revId": "619e23059bd76719453a947bd84dbe777f5c058f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99bb478_8c44e088",
+        "filename": "content/public/test/test_navigation_throttle_inserter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-13T14:08:45Z",
+      "side": 1,
+      "message": "Hm I wonder if we can come up with a solution that isn\u0027t blocked on removing the old code. What if:\n - The ugly code is moved to the intercept test itself so it isn\u0027t part of the public API and no one will accidentally rely on it.\n - Instead of registering a throttle while iterating, we create a \"shadow\" throttle initiatlly which\n  1. Creates and owns the throttle under test at WillStartRequest time.\n  2. Queries the owned throttle at every callback.\n\nObviously this would be temporary until the old code is ripped out, but I think it alleviates most of the problems with the current approach. WDYT?",
+      "parentUuid": "14ccfeb8_58857e01",
+      "revId": "619e23059bd76719453a947bd84dbe777f5c058f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
