@@ -416,6 +416,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   WebRuntimeFeatures::EnableRequireCSSExtensionForFile(
       base::FeatureList::IsEnabled(features::kRequireCSSExtensionForFile));
+
+  WebRuntimeFeatures::EnableCodeCacheAfterExecute(
+      base::FeatureList::IsEnabled(features::kCodeCacheAfterExecute));
 };
 
 }  // namespace content

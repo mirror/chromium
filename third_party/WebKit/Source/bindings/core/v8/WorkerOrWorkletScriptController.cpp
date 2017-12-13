@@ -274,9 +274,19 @@ ScriptValue WorkerOrWorkletScriptController::EvaluateInternal(
   if (V8ScriptRunner::CompileScript(script_state_.get(), source_code,
                                     kSharableCrossOrigin, v8_cache_options,
                                     referrer_info)
-          .ToLocal(&compiled_script))
-    maybe_result = V8ScriptRunner::RunCompiledScript(isolate_, compiled_script,
-                                                     global_scope_);
+          .ToLocal(&compiled_script)) {
+    if (RuntimeEnabledFeatures::CodeCacheAfterExecuteEnabled()) {
+      maybe_result = V8ScriptRunner::RunCompiledScript(
+          isolate_, compiled_script, global_scope_);
+      V8ScriptRunner::ProduceCache(isolate_, compiled_script, source_code,
+                                   v8_cache_options);
+    } else {
+      V8ScriptRunner::ProduceCache(isolate_, compiled_script, source_code,
+                                   v8_cache_options);
+      maybe_result = V8ScriptRunner::RunCompiledScript(
+          isolate_, compiled_script, global_scope_);
+    }
+  }
 
   if (!block.CanContinue()) {
     ForbidExecution();
