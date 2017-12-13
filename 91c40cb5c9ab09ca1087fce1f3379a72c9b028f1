@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "c2e027bd_33344d0e",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-13T01:42:55Z",
+      "side": 1,
+      "message": "Done -- moved the call to onContentLoadStarted (see comment in ContextualSearchManager.java).",
+      "parentUuid": "f9165297_a67cf322",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 1
+      },
+      "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fdd41d4_9c2a4a2e",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-13T01:42:55Z",
+      "side": 1,
+      "message": "Also changed the name of this method because it looks like an alternative way to enable vs with a URL.  Now it\u0027s called AllowContextualSearchJsApiForWebContents.",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "931ad270_5f898ce6",
         "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
         "patchSetId": 1
@@ -45,6 +92,30 @@
       "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9baaae_0991ad69",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-13T01:42:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "931ad270_5f898ce6",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "748ba80c_787badc2",
+        "filename": "components/contextual_search/renderer/overlay_js_render_frame_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-13T01:42:55Z",
+      "side": 1,
+      "message": "Yes, It\u0027s non-blocking (verified).  For future reference this doc https://www.chromium.org/developers/design-documents/mojo/synchronous-calls says to use [Sync] in the mojo interface definition if you don\u0027t want async.",
+      "parentUuid": "56aea10e_727017db",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 54
+      },
+      "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "337438af_68660bf3",
         "filename": "components/contextual_search/renderer/overlay_js_render_frame_observer.cc",
         "patchSetId": 1
@@ -91,6 +186,30 @@
       "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a64220_88d2dd82",
+        "filename": "components/contextual_search/renderer/overlay_js_render_frame_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-13T01:42:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "337438af_68660bf3",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 22
+      },
+      "revId": "91c40cb5c9ab09ca1087fce1f3379a72c9b028f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
