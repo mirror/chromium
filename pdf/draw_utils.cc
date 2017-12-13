@@ -16,6 +16,7 @@
 namespace chrome_pdf {
 
 inline uint8_t GetBlue(const uint32_t& pixel) {
+  // This is a test
   return static_cast<uint8_t>(pixel & 0xFF);
 }
 
