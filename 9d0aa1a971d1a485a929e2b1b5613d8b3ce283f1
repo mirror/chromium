@@ -16,6 +16,24 @@
       "revId": "9d0aa1a971d1a485a929e2b1b5613d8b3ce283f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391a6dfd_f04f9fed",
+        "filename": "net/socket/udp_socket_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-12-13T14:32:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee4b097e_8e1be601",
+      "revId": "9d0aa1a971d1a485a929e2b1b5613d8b3ce283f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
