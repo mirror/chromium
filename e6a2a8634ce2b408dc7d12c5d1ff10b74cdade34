@@ -22,6 +22,30 @@
       "revId": "e6a2a8634ce2b408dc7d12c5d1ff10b74cdade34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94bf9c0c_e4aa95f8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-12-13T15:10:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afe46732_d7af073e",
+      "range": {
+        "startLine": 120,
+        "startChar": 90,
+        "endLine": 120,
+        "endChar": 118
+      },
+      "revId": "e6a2a8634ce2b408dc7d12c5d1ff10b74cdade34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
