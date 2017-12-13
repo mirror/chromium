@@ -52,6 +52,24 @@
       "revId": "dc1c11a8e07392d9869dff04d07d97c881ed678d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291b11ae_7feba11f",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1589,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-13T00:56:55Z",
+      "side": 1,
+      "message": "The bug mentions the fallback rendering path because while this is a pre-existing issue, it isn\u0027t exposed without the fallback rendering path (I could put it under a separate bug if you\u0027d like). What\u0027s happening is that even though the control container is hidden, any infobar-type UI that shows up is offset by the height of the bottom controls. The height of the bottom controls is wrong because of the mismatch in dip scale leading to the bottom_shown_pix value being correct on the native side, but wrong on the java side.\n\nI\u0027m not sure we can guarantee no rounding errors between two clients with different dip scales, but I\u0027m not really concerned about a 1 pixel rounding error in the fallback path - as long as we can guarantee no rounding errors when the dip scales are the same (like in 2D), then I wouldn\u0027t worry about it.\n\nI\u0027m also not sure what the use of sending top_controls_pix would be, as the java code just uses ChromeFullscreenManager#getTopControlsHeight which is set to a matching value.\n\nIf we wanted to guarantee no rounding when the dip scales match, we could pass up the dip scale as a parameter. So what if we passed 3 parameters? top_controls_pix, top_controls_shown_pix, and dip_scale would let us simply use the pix values if the dip_scale matches to avoid rounding. We could do the correct conversion if the dip scales don\u0027t match, but not guarantee no rounding errors.",
+      "parentUuid": "fa5d8e71_17c4d59d",
+      "revId": "dc1c11a8e07392d9869dff04d07d97c881ed678d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
