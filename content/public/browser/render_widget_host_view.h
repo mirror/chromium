@@ -125,6 +125,10 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // Returns the visibility of the view.
   virtual Visibility GetVisibility() const = 0;
 
+  // Must be called when this view starts/stops being captured (e.g. for
+  // screenshots or mirroring).
+  virtual void CaptureStateChanged() = 0;
+
   // Indicates if the view is currently occluded (e.g, not visible because it's
   // covered up by other windows), and as a result the view's renderer may be
   // suspended. If Show() is called on a view then its state should be re-set to

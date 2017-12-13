@@ -2831,6 +2831,23 @@ TEST_F(WebContentsImplTest, CapturerPreventsOcclusion) {
   EXPECT_FALSE(view->is_occluded());
 }
 
+// Verify that RenderWidgetHostViews are notified when the capture state of the
+// WebContents changes.
+TEST_F(WebContentsImplTest, CaptureStateChanged) {
+  TestRenderWidgetHostView* view = static_cast<TestRenderWidgetHostView*>(
+      main_test_rfh()->GetRenderViewHost()->GetWidget()->GetView());
+
+  EXPECT_EQ(0, view->num_capture_state_changed());
+  contents()->IncrementCapturerCount(gfx::Size());
+  EXPECT_EQ(1, view->num_capture_state_changed());
+  contents()->IncrementCapturerCount(gfx::Size());
+  EXPECT_EQ(1, view->num_capture_state_changed());
+  contents()->DecrementCapturerCount();
+  EXPECT_EQ(1, view->num_capture_state_changed());
+  contents()->DecrementCapturerCount();
+  EXPECT_EQ(2, view->num_capture_state_changed());
+}
+
 // Tests that GetLastActiveTime starts with a real, non-zero time and updates
 // on activity.
 TEST_F(WebContentsImplTest, GetLastActiveTime) {

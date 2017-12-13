@@ -61,11 +61,7 @@ void InitNavigateParams(FrameHostMsg_DidCommitProvisionalLoad_Params* params,
 }
 
 TestRenderWidgetHostView::TestRenderWidgetHostView(RenderWidgetHost* rwh)
-    : rwh_(RenderWidgetHostImpl::From(rwh)),
-      is_showing_(false),
-      is_occluded_(false),
-      did_swap_compositor_frame_(false),
-      background_color_(SK_ColorWHITE) {
+    : rwh_(RenderWidgetHostImpl::From(rwh)) {
 #if defined(OS_ANDROID)
   frame_sink_id_ = AllocateFrameSinkId();
   GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
@@ -132,6 +128,10 @@ void TestRenderWidgetHostView::Hide() {
 
 Visibility TestRenderWidgetHostView::GetVisibility() const {
   return is_showing_ ? Visibility::VISIBLE : Visibility::HIDDEN;
+}
+
+void TestRenderWidgetHostView::CaptureStateChanged() {
+  ++num_capture_state_changed_;
 }
 
 void TestRenderWidgetHostView::WasUnOccluded() {
