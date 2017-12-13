@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "510497b2_4c3c655d",
+        "filename": "media/mojo/services/media_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:21:26Z",
+      "side": 1,
+      "message": "Am I right that this kills the render process? And that this is just a guard against rogue renderers, not expected in a well behaved renderer?",
+      "range": {
+        "startLine": 53,
+        "startChar": 10,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "8c739b67962bb826fcc23ba868078c7e952b51d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6f992d_a2820c67",
+        "filename": "media/mojo/services/video_decode_perf_history_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:21:26Z",
+      "side": 1,
+      "message": "thanks for getting it started",
+      "range": {
+        "startLine": 441,
+        "startChar": 12,
+        "endLine": 441,
+        "endChar": 24
+      },
+      "revId": "8c739b67962bb826fcc23ba868078c7e952b51d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b6f3286_984bb735",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:21:26Z",
+      "side": 1,
+      "message": "This isn\u0027t true anymore. You always record, I assume to cover the case where we get a pipeline status error and no additional watch time.",
+      "range": {
+        "startLine": 150,
+        "startChar": 61,
+        "endLine": 151,
+        "endChar": 40
+      },
+      "revId": "8c739b67962bb826fcc23ba868078c7e952b51d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87e77df_9629db74",
+        "filename": "media/mojo/services/watch_time_recorder_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:21:26Z",
+      "side": 1,
+      "message": "Can you do the usual postTask(quitClosure); runloop.run(); here? Is everything you\u0027re waiting on scheduled at the point of wtr_.reset()?\n\nI cant vet that UKM and other test infra wont perpetually push stuff into the scheduler.",
+      "range": {
+        "startLine": 395,
+        "startChar": 18,
+        "endLine": 395,
+        "endChar": 30
+      },
+      "revId": "8c739b67962bb826fcc23ba868078c7e952b51d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a7d9d9_2574da89",
+        "filename": "media/mojo/services/watch_time_recorder_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:21:26Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 454,
+        "startChar": 18,
+        "endLine": 454,
+        "endChar": 30
+      },
+      "revId": "8c739b67962bb826fcc23ba868078c7e952b51d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
