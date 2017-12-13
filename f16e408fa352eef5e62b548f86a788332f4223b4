@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78df6855_fc9f1342",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-13T15:29:05Z",
+      "side": 1,
+      "message": "nit: space after //",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 2
+      },
+      "revId": "f16e408fa352eef5e62b548f86a788332f4223b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f81459c_3d6354fb",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-13T15:29:05Z",
+      "side": 1,
+      "message": "The /src/device/usb code uses a mojo interface to expose a USB device. That\u0027s arguably safer as we don\u0027t expose ioctl on the device node directly. What exactly does the Android side require? Can we perhaps expose the mojo interface here as well instead of passing an FD?",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "f16e408fa352eef5e62b548f86a788332f4223b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd18019c_81f7caf4",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-13T15:29:05Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 29,
+        "startChar": 5,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "f16e408fa352eef5e62b548f86a788332f4223b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6958e8ad_17007345",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-12-13T15:29:05Z",
+      "side": 1,
+      "message": "No API to enumerate the currently present devices?",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "f16e408fa352eef5e62b548f86a788332f4223b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
