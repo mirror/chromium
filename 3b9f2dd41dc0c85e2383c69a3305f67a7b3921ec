@@ -16,6 +16,24 @@
       "revId": "3b9f2dd41dc0c85e2383c69a3305f67a7b3921ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46380280_645887fd",
+        "filename": "tools/perf/core/story_expectation_validator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1239517
+      },
+      "writtenOn": "2017-12-13T15:17:35Z",
+      "side": 1,
+      "message": "The \u0027store_true\u0027 action on the option automatically creates a default of None, but unfortunately any custom arguments added by the benchmark are not picked up here.\n\nI\u0027ve prepared a patch which removes these hard-coded values and instead picks them up from the benchmark, which I\u0027ll upload shortly (pending internal review).",
+      "parentUuid": "04ef850a_facc4cde",
+      "revId": "3b9f2dd41dc0c85e2383c69a3305f67a7b3921ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
