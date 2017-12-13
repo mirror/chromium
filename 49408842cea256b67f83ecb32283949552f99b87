@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "117ce062_13b2aec9",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-13T23:33:34Z",
+      "side": 0,
+      "message": "It\u0027s not clear from the CL description why the pattern itself is changing.",
+      "revId": "49408842cea256b67f83ecb32283949552f99b87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
