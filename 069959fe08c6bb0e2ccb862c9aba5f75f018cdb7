@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "648664b3_1578d4cf",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3655,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-13T20:25:56Z",
+      "side": 1,
+      "message": "My preference is to do nothing. It should be very easy to correlate these with the associated NavigationHandle async traces, and adding that metadata will just bloat the trace file size (navigation ones are already used on all the loading perf bots).\n\nI\u0027m also not sure which other traces have the NavigationHandle* as a param to correlate? A bunch that I see just have the URL + a ftnid.",
+      "parentUuid": "61c08737_6470c516",
+      "revId": "069959fe08c6bb0e2ccb862c9aba5f75f018cdb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09440fc7_8b8790f4",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "069959fe08c6bb0e2ccb862c9aba5f75f018cdb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32fb551e_799a47cb",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3657,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-13T20:25:56Z",
+      "side": 1,
+      "message": "OK, I filed crbug.com/794669. I\u0027ll happily do this if I have some time.",
+      "parentUuid": "09440fc7_8b8790f4",
+      "revId": "069959fe08c6bb0e2ccb862c9aba5f75f018cdb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
