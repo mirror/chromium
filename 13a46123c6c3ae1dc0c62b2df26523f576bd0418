@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "118ad7c7_79137a9f",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-13T21:29:23Z",
+      "side": 1,
+      "message": "Yes, this had weird effects in tests. Moved it back out ComponentReady, now is a lambda in RegisterSwReporterComponent.",
+      "parentUuid": "4fb9fa28_70e9b05a",
+      "range": {
+        "startLine": 386,
+        "startChar": 61,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "13a46123c6c3ae1dc0c62b2df26523f576bd0418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa11961b_897b4d68",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 1
