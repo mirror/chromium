@@ -22,6 +22,30 @@
       "revId": "20dbdbbfa6343f1464d5b068a92d5714e05a5e73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edc1594_ce4118d7",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-13T17:40:02Z",
+      "side": 0,
+      "message": "Yes. This was the last place it was being read. I have another CL prepared to remove the flag completely (which I can roll into this one if you prefer). Then I need to update instrumented libraries and install deps etc to remove the references to gconf completely.",
+      "parentUuid": "e30e44e2_7386bf13",
+      "range": {
+        "startLine": 1991,
+        "startChar": 8,
+        "endLine": 1991,
+        "endChar": 17
+      },
+      "revId": "20dbdbbfa6343f1464d5b068a92d5714e05a5e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
