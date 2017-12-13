@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d23e0f81_1d752c4e",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T19:28:33Z",
+      "side": 1,
+      "message": "This is not equivalent to patchset 3 code. Is this intentional?\n\nPatchset 3 would always call the browserProxy method when itemsToRemoveSectionExpanded_ changed value (false-\u003etrue, and true-\u003efalse), ignoring the 1st time the observer fires.\n\nPatchset 4, will only call the browserProxy method when the value changes from false-\u003etrue.",
+      "range": {
+        "startLine": 350,
+        "startChar": 8,
+        "endLine": 350,
+        "endChar": 25
+      },
+      "revId": "3ab87b7228c2ea3e699bc722f42f2acd68d8b1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a07ab4_79fc40c9",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T19:28:33Z",
+      "side": 1,
+      "message": "Should be either !Array or ?Array, see https://google.github.io/styleguide/jsguide.html#jsdoc-nullability, especially the part that says:\n\n\"all types except primitives and record literals must be annotated explicitly with either ? or ! to indicate whether they are nullable or not.\"",
+      "range": {
+        "startLine": 76,
+        "startChar": 17,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "3ab87b7228c2ea3e699bc722f42f2acd68d8b1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acc382d_f614f1c0",
+        "filename": "chrome/test/data/webui/settings/chrome_cleanup_page_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T19:28:33Z",
+      "side": 1,
+      "message": "@param annotations missing (throughout this file).",
+      "revId": "3ab87b7228c2ea3e699bc722f42f2acd68d8b1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
