@@ -42,6 +42,8 @@ ash::ShelfAction SelectShelfItem(const ash::ShelfID& id,
   base::RunLoop run_loop;
   ash::ShelfAction action = ash::SHELF_ACTION_NONE;
   ash::ShelfModel* model = ChromeLauncherController::instance()->shelf_model();
+  LOG(ERROR) << model->item_count();
+  LOG(ERROR) << id;
   ash::ShelfItemDelegate* delegate = model->GetShelfItemDelegate(id);
   delegate->ItemSelected(
       std::move(event), display_id, ash::LAUNCH_FROM_UNKNOWN,
