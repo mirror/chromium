@@ -36,10 +36,11 @@ class ActionRunner {
                const std::vector<uint8_t>& key_hash);
   ~ActionRunner();
 
-  void Run(Callback run_complete);
+  void Run(Callback run_complete,
+           std::unique_ptr<service_manager::Connector> connector);
 
  private:
-  void Unpack();
+  void Unpack(std::unique_ptr<service_manager::Connector> connector);
   void UnpackComplete(const ComponentUnpacker::Result& result);
 
   void RunCommand(const base::CommandLine& cmdline);
