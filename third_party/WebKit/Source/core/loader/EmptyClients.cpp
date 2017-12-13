@@ -196,7 +196,12 @@ WebRemotePlaybackClient* EmptyLocalFrameClient::CreateWebRemotePlaybackClient(
 }
 
 WebTextCheckClient* EmptyLocalFrameClient::GetTextCheckerClient() const {
-  return nullptr;
+  return text_check_client_;
+}
+
+void EmptyLocalFrameClient::SetTextCheckerClientForTesting(
+    WebTextCheckClient* client) {
+  text_check_client_ = client;
 }
 
 Frame* EmptyLocalFrameClient::FindFrame(const AtomicString& name) const {
