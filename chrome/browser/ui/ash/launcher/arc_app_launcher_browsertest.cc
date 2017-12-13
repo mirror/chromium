@@ -593,6 +593,13 @@ IN_PROC_BROWSER_TEST_F(ArcAppLauncherBrowserTest, ShelfGroup) {
 
   ASSERT_EQ(delegate3, GetShelfItemDelegate(shelf_id3));
 
+  ChromeLauncherController* controller = ChromeLauncherController::instance();
+  const ash::ShelfItem* item1 = controller->GetItem(ash::ShelfID(shelf_id1));
+  ASSERT_TRUE(item1);
+  // Check that item title is set correctly. In case of ARC shelf gpoup, title
+  // is taken from the referenced app.
+  EXPECT_EQ(base::UTF8ToUTF16(kTestAppName), item1->title);
+
   // Destroy task #0, this kills shelf group 1
   app_host()->OnTaskDestroyed(1);
   EXPECT_FALSE(GetShelfItemDelegate(shelf_id1));
