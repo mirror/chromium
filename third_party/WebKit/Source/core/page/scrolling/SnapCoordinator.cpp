@@ -91,14 +91,17 @@ void SnapCoordinator::UpdateSnapContainerData(const LayoutBox& snap_container) {
   ScrollableArea* scrollable_area = ScrollableAreaForSnapping(snap_container);
   if (!scrollable_area)
     return;
-  snap_container_data.min_offset = scrollable_area->MinimumScrollOffset();
-  snap_container_data.max_offset = scrollable_area->MaximumScrollOffset();
+  ScrollOffset min_offset = scrollable_area->MinimumScrollOffset();
+  ScrollOffset max_offset = scrollable_area->MaximumScrollOffset();
+  snap_container_data.min_offset =
+      gfx::ScrollOffset(min_offset.Width(), min_offset.Height());
+  snap_container_data.max_offset =
+      gfx::ScrollOffset(max_offset.Width(), max_offset.Height());
 
   if (SnapAreaSet* snap_areas = snap_container.SnapAreas()) {
     for (const LayoutBox* snap_area : *snap_areas) {
       snap_container_data.AddSnapAreaData(CalculateSnapAreaData(
-          *snap_area, snap_container, snap_container_data.min_offset,
-          snap_container_data.max_offset));
+          *snap_area, snap_container, min_offset, max_offset));
     }
   }
   snap_container_map_.Set(&snap_container, snap_container_data);
@@ -314,9 +317,9 @@ SnapAreaData SnapCoordinator::CalculateSnapAreaData(
   area.Expand(area_margin);
 
   ScrollSnapAlign align = area_style->GetScrollSnapAlign();
-  snap_area_data.snap_offset.SetWidth(CalculateSnapOffset(
+  snap_area_data.snap_offset.set_x(CalculateSnapOffset(
       align.alignmentX, SnapAxis::kX, container, min_offset, max_offset, area));
-  snap_area_data.snap_offset.SetHeight(CalculateSnapOffset(
+  snap_area_data.snap_offset.set_y(CalculateSnapOffset(
       align.alignmentY, SnapAxis::kY, container, min_offset, max_offset, area));
 
   if (align.alignmentX != SnapAlignment::kNone &&
@@ -346,7 +349,7 @@ ScrollOffset SnapCoordinator::FindSnapOffset(const ScrollOffset& current_offset,
     // TODO(sunyunjia): We should consider visiblity when choosing snap offset.
     if (should_snap_on_x && (snap_area_data.snap_axis == SnapAxis::kX ||
                              snap_area_data.snap_axis == SnapAxis::kBoth)) {
-      float offset = snap_area_data.snap_offset.Width();
+      float offset = snap_area_data.snap_offset.x();
       if (offset == SnapAreaData::kInvalidScrollOffset)
         continue;
       float distance = std::abs(current_offset.Width() - offset);
@@ -357,7 +360,7 @@ ScrollOffset SnapCoordinator::FindSnapOffset(const ScrollOffset& current_offset,
     }
     if (should_snap_on_y && (snap_area_data.snap_axis == SnapAxis::kY ||
                              snap_area_data.snap_axis == SnapAxis::kBoth)) {
-      float offset = snap_area_data.snap_offset.Height();
+      float offset = snap_area_data.snap_offset.y();
       if (offset == SnapAreaData::kInvalidScrollOffset)
         continue;
       float distance = std::abs(current_offset.Height() - offset);
