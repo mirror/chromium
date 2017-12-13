@@ -16,6 +16,7 @@
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/extensions/extension_util.h"
+#include "chrome/browser/history/nav_tree.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/bookmarks/bookmark_bubble_sign_in_delegate.h"
@@ -29,6 +30,7 @@
 #include "chrome/browser/ui/global_error/global_error_service_factory.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/ui/toolbar/jaunt_menu_model.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
 #include "chrome/browser/ui/views/extensions/extension_popup.h"
@@ -138,10 +140,17 @@ void ToolbarView::Init() {
     return;
   }
 
-  back_ = new ToolbarButton(
-      browser_->profile(), this,
-      std::make_unique<BackForwardMenuModel>(
-          browser_, BackForwardMenuModel::ModelType::kBackward));
+  if (NavTree::IsEnabled()) {
+    // Experimental "jaunt" menu.
+    back_ = new ToolbarButton(browser_->profile(), this,
+                              std::make_unique<JauntMenuModel>(browser_));
+  } else {
+    // Normal back button
+    back_ = new ToolbarButton(
+        browser_->profile(), this,
+        std::make_unique<BackForwardMenuModel>(
+            browser_, BackForwardMenuModel::ModelType::kBackward));
+  }
   back_->set_hide_ink_drop_when_showing_context_menu(false);
   back_->set_triggerable_event_flags(
       ui::EF_LEFT_MOUSE_BUTTON | ui::EF_MIDDLE_MOUSE_BUTTON);

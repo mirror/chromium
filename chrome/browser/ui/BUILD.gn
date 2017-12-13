@@ -2659,6 +2659,10 @@ split_static_library("ui") {
       "tabs/tab_strip_model_experimental.cc",
       "tabs/tab_strip_model_experimental.h",
 
+      # This model is only views for now because there are no other impls.
+      "toolbar/jaunt_menu_model.cc",
+      "toolbar/jaunt_menu_model.h",
+
       # This test header is included because it contains forward declarations
       # needed for "friend" statements for use in tests.
       "translate/translate_bubble_test_utils.h",
