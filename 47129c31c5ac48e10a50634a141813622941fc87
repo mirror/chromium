@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6c729c9_28ab2992",
+        "filename": "base/android/jni_array.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-13T04:48:56Z",
+      "side": 1,
+      "message": "And array of (pairs of (string, byte arrays)) right?\nSo, in comment is that:\n\n\"is an android.util.Pair\u003cString, byte[]\u003e[]\"\n?\n\n(ditto below)",
+      "revId": "47129c31c5ac48e10a50634a141813622941fc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f648c9_b25906ba",
+        "filename": "device/bluetooth/bluetooth_adapter_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-13T04:48:56Z",
+      "side": 1,
+      "message": "intermediate_map?",
+      "range": {
+        "startLine": 217,
+        "startChar": 56,
+        "endLine": 217,
+        "endChar": 69
+      },
+      "revId": "47129c31c5ac48e10a50634a141813622941fc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b212043_a7b87b4f",
+        "filename": "device/bluetooth/bluetooth_adapter_mac.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-13T04:48:56Z",
+      "side": 1,
+      "message": "Please include the data format description in addition to the citation. In this case I think we can go with just the excerpt from the CSS\n\n\"\"\"\nThe Manufacturer Specific data type is used for manufacturer specific data.\nThe first two data octets shall contain a company identifier code from the\nAssigned Numbers - Company Identifiers document. The interpretation of any\nother octets within the data shall be defined by the manufacturer specified by\nthe company identifier.\n- from Bluetooth Core Specification Supplement (CSS) v7, Part 1.4\n- https://developer.apple.com/documentation/corebluetooth/cbadvertisementdatamanufacturerdatakey\n\"\"\"\n\nor something shorter:\n\"\"\"\nManufacturer Specific Data contains two bytes of the company assigned ID followed\nby a variable number of bytes as a value. \n- Bluetooth Core Specification Supplement (CSS) v7, Part 1.4\n- https://developer.apple.com/documentation/corebluetooth/cbadvertisementdatamanufacturerdatakey\n\"\"\"",
+      "revId": "47129c31c5ac48e10a50634a141813622941fc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397996d2_ad654eca",
+        "filename": "device/bluetooth/bluetooth_device_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-12-13T04:48:56Z",
+      "side": 1,
+      "message": "Can the additonal tests referencing 639408 be brought online?  In this patch or in a patch soon?  If not, let\u0027s get an explanation in the issue and possibly in the comments here.  If it\u0027s possible but needs something additional that is better for a follow up patch that\u0027s OK, just explain.",
+      "range": {
+        "startLine": 623,
+        "startChar": 22,
+        "endLine": 623,
+        "endChar": 28
+      },
+      "revId": "47129c31c5ac48e10a50634a141813622941fc87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
