@@ -38,6 +38,28 @@ class CryptotokenPrivateCanOriginAssertAppIdFunction
     ChromeExtensionFunctionDetails chrome_details_;
 };
 
+// CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction is a API function
+// that the cryptotoken Javascript can call to test whether the hash of an
+// AppId (i.e. origin) should be treated in an “enterprise” manner. If so, the
+// Javascript sets an extra bit in U2F registration messages that indicate to
+// the token that it's acceptable to use an individually-identifying
+// attestation certificate for the registration in question.
+class CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction
+    : public UIThreadExtensionFunction {
+ public:
+  CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction();
+  DECLARE_EXTENSION_FUNCTION(
+      "cryptotokenPrivate.isAppIdHashInEnterpriseContext",
+      CRYPTOTOKENPRIVATE_ISAPPIDHASHINENTERPRISECONTEXT)
+
+ protected:
+  ~CryptotokenPrivateIsAppIdHashInEnterpriseContextFunction() override {}
+  ResponseAction Run() override;
+
+ private:
+  ChromeExtensionFunctionDetails chrome_details_;
+};
+
 }  // namespace api
 }  // namespace extensions
 
