@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b7a74dfa_44380e4d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-13T21:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2edd1595_0d6c88a3",
+      "revId": "f7e9ee37548e515f8bbb24b26377bd567ca97d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d41f0a0_824d0910",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
         "patchSetId": 7
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "5c603b04_ddd9cf17",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-13T21:34:18Z",
+      "side": 1,
+      "message": "Probably. I would like to ignore mock calls unrelated to a test case though (for example, ForceSinkDiscoveryCallback in this test case). Either way, I will be changing this test again with my singleton patch so I will leave it as is for now.",
+      "parentUuid": "49b36191_d97862d5",
+      "revId": "f7e9ee37548e515f8bbb24b26377bd567ca97d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7918005e_43d8af40",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
         "patchSetId": 7
@@ -100,6 +136,24 @@
       "writtenOn": "2017-12-13T20:33:51Z",
       "side": 1,
       "message": "If I remember, all we can do is to prompt the user to change the firewall.  We don\u0027t know for certain if the user accepted or declined so we start discovery anyway.  Does that sound right?\n\nIn that case, there\u0027s no need to add specific test coverage for the case where the firewall blocks mDNS.",
+      "revId": "f7e9ee37548e515f8bbb24b26377bd567ca97d94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99232d5_6f1a1383",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-13T21:34:18Z",
+      "side": 1,
+      "message": "Yeah that\u0027s correct, we only check the firewall rule on MediaRouter startup. This test is to ensure we don\u0027t call EnableMdnsDiscovery to the extension if in-browser cast discovery is enabled.",
+      "parentUuid": "7918005e_43d8af40",
       "revId": "f7e9ee37548e515f8bbb24b26377bd567ca97d94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
