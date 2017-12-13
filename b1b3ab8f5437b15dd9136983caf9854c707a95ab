@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "255753a5_dc317699",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-13T02:00:23Z",
+      "side": 1,
+      "message": "nit: add a comment explaining this constant. Something like:\nThis is the first schema version stored in the meta table once the legacy upgrade process, RunLegacyUpgrade, is run for the last time.",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29043ae7_505f4d67",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-13T02:00:23Z",
+      "side": 1,
+      "message": "nit: this is already checked for before this method is called so it could be removed.",
+      "range": {
+        "startLine": 182,
+        "startChar": 6,
+        "endLine": 182,
+        "endChar": 51
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65c38bc_33e1a1bd",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-13T02:00:23Z",
+      "side": 1,
+      "message": "This parameter is the \"compatible version\" and it might change as the schema evolves and the earliest compatible version ceases to be version 1. So this is not the constant to be used here as this one represents a fixed moment in the schema history and will always be set to 1.",
+      "range": {
+        "startLine": 187,
+        "startChar": 46,
+        "endLine": 187,
+        "endChar": 69
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bea5b46_593100c6",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-13T02:00:23Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think we should repeat this comment everywhere.",
+      "range": {
+        "startLine": 195,
+        "startChar": 5,
+        "endLine": 196,
+        "endChar": 62
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ba98e0_2d3fda0d",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-13T02:00:23Z",
+      "side": 1,
+      "message": "nit/suggestion: drop the \"Run\"; maybe also do the same for the previous method.",
+      "range": {
+        "startLine": 233,
+        "startChar": 5,
+        "endLine": 233,
+        "endChar": 37
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09bc6c1c_f43804a5",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-13T02:00:23Z",
+      "side": 1,
+      "message": "nit: as we are creating this first upgrade step anyway, we could use it to already \"fix\" this column to be \u0027upgrade_attempts\u0027 (note the \"s\" in the end) which more accurately represents its current meaning. But that means the earliest compatible version would not be 1 anymore.",
+      "range": {
+        "startLine": 240,
+        "startChar": 35,
+        "endLine": 240,
+        "endChar": 50
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb944868_5d76c024",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-13T02:00:23Z",
+      "side": 1,
+      "message": "nit: do we want to play it safer and add filters checking the \u0027file_path\u0027 column?",
+      "range": {
+        "startLine": 241,
+        "startChar": 31,
+        "endLine": 241,
+        "endChar": 36
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3087aeb5_19832fbd",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-13T02:00:23Z",
+      "side": 1,
+      "message": "nit: I\u0027m a bit in doubt if these namespace names should be hard coded or be injected using their respective constants.",
+      "range": {
+        "startLine": 244,
+        "startChar": 54,
+        "endLine": 244,
+        "endChar": 69
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c45848_9bb6ea9b",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-13T02:00:23Z",
+      "side": 1,
+      "message": "We also need to change this method (or the taskified version of it if different) to appropriately set the \u0027upgrade_attempt\u0027 column to 5 *for manually downloaded pages* but only *when the P2P/upgrade feature is disabled*.\n\nThis might be a complicated change though so better it be done in a different CL?",
+      "range": {
+        "startLine": 322,
+        "startChar": 17,
+        "endLine": 322,
+        "endChar": 35
+      },
+      "revId": "b1b3ab8f5437b15dd9136983caf9854c707a95ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
