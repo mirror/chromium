@@ -22,6 +22,30 @@
       "revId": "b5175acc06ad6cd981d36d97d3070b357bb0deea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2e0eed_683bf6e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/textbubble/ArrowBubbleDrawable.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T16:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8724abb_f3be696c",
+      "range": {
+        "startLine": 118,
+        "startChar": 4,
+        "endLine": 118,
+        "endChar": 5
+      },
+      "revId": "b5175acc06ad6cd981d36d97d3070b357bb0deea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
