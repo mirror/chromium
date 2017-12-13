@@ -876,10 +876,11 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
       Box().GetDocument().SetAnnotatedRegionsDirty(true);
 
     // Our proprietary overflow: overlay value doesn't trigger a layout.
-    if ((horizontal_scrollbar_should_change &&
-         Box().Style()->OverflowX() != EOverflow::kOverlay) ||
-        (vertical_scrollbar_should_change &&
-         Box().Style()->OverflowY() != EOverflow::kOverlay)) {
+    if (((horizontal_scrollbar_should_change &&
+          Box().Style()->OverflowX() != EOverflow::kOverlay) ||
+         (vertical_scrollbar_should_change &&
+          Box().Style()->OverflowY() != EOverflow::kOverlay)) &&
+        !Box().IsLayoutNGMixin()) {
       if ((vertical_scrollbar_should_change &&
            Box().IsHorizontalWritingMode()) ||
           (horizontal_scrollbar_should_change &&
