@@ -312,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "b0fde3d6_9ccc9ab4",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-13T19:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "424a3e19_a92ff596",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcd00294_fecacd6c",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 6
@@ -346,6 +364,24 @@
     },
     {
       "key": {
+        "uuid": "2f46da11_c80f5230",
+        "filename": "ash/shelf/back_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-13T19:46:52Z",
+      "side": 1,
+      "message": "The overall change seems to have removed the need for that code.",
+      "parentUuid": "b5fe0090_15e67254",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4947bdf3_abbd48f1",
         "filename": "ash/shelf/back_button.cc",
         "patchSetId": 6
@@ -357,6 +393,24 @@
       "writtenOn": "2017-12-06T23:52:17Z",
       "side": 1,
       "message": "This could just be a ui::Event (or EventType), the location is no longer needed. As an aside, I wonder if it\u0027s possible to still select the back button with a key event (from a USB/Bluetooth/virtual-onscreen keyboard etc.)",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4915f184_2b5d2648",
+        "filename": "ash/shelf/back_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-13T19:46:52Z",
+      "side": 1,
+      "message": "Done. Its not possible with a keyboard now. I put a comment to try using NotifyClick instead.",
+      "parentUuid": "4947bdf3_abbd48f1",
       "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -380,6 +434,24 @@
     },
     {
       "key": {
+        "uuid": "9be9a276_0d7a2991",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-13T19:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2e706f7_1f521bfa",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9effb98c_6b3c70e6",
         "filename": "ash/shelf/back_button.h",
         "patchSetId": 6
@@ -397,6 +469,24 @@
     },
     {
       "key": {
+        "uuid": "1a7f9d46_85b23b31",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-13T19:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9effb98c_6b3c70e6",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2036978b_d04c17a7",
         "filename": "ash/shelf/back_button.h",
         "patchSetId": 6
@@ -408,6 +498,24 @@
       "writtenOn": "2017-12-06T23:52:17Z",
       "side": 1,
       "message": "nit: Called by ShelfView (via AppListBackButtonBackgroundView) after it finishes a bounds animation.",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107af4ea_18700054",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-13T19:46:52Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "2036978b_d04c17a7",
       "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -431,6 +539,24 @@
     },
     {
       "key": {
+        "uuid": "c4f56254_443c1f02",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-13T19:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c79ed1b1_966e2a7e",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ebf13ed_0f28d8cc",
         "filename": "ash/shelf/back_button.h",
         "patchSetId": 6
@@ -445,6 +571,24 @@
       "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62942717_666e7d9b",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-13T19:46:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ebf13ed_0f28d8cc",
+      "revId": "2d5f6333146a20a7d78dd9570e513ac2754434ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
