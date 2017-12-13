@@ -28,6 +28,8 @@ struct CC_EXPORT LayerSelectionBound {
 
   bool operator==(const LayerSelectionBound& other) const;
   bool operator!=(const LayerSelectionBound& other) const;
+
+  std::string ToString() const;
 };
 
 using LayerSelection = viz::Selection<LayerSelectionBound>;

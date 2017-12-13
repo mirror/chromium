@@ -85,5 +85,11 @@ base::debug::CrashKeyString* GetRequestedSiteURLKey() {
   return crash_key;
 }
 
+base::debug::CrashKeyString* GetSurfaceSynchronizationKey() {
+  static auto* crash_key = base::debug::AllocateCrashKeyString(
+      "surface-invariants-violation", base::debug::CrashKeySize::Size256);
+  return crash_key;
+}
+
 }  // namespace bad_message
 }  // namespace content
