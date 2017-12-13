@@ -50,6 +50,8 @@ def validate_story_names(benchmarks):
     options.test_path = ''
     # shared_prefs_file required for benchmarks in contrib/vr_benchmarks/
     options.shared_prefs_file = ''
+    # scroll_forever required for top_25_smooth benchmark.
+    options.scroll_forever = False
     story_set = b.CreateStorySet(options)
     failed_stories = b.GetBrokenExpectations(story_set)
     assert not failed_stories, 'Incorrect story names: %s' % str(failed_stories)
