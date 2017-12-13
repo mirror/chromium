@@ -721,6 +721,7 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
                              new_request.GetFetchCredentialsMode(),
                              WebSecurityOrigin(GetSecurityOrigin()));
     if (access_error) {
+      CHECK(false) << "hoge";
       DispatchDidFailAccessControlCheck(
           ResourceError::CancelledDueToAccessCheckError(
               original_url, ResourceRequestBlockedReason::kOther,
