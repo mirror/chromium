@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
+#include "content/common/media/peer_connection_tracker.mojom.h"
 #include "content/public/renderer/render_thread_observer.h"
 #include "ipc/ipc_platform_file.h"
 #include "third_party/WebKit/public/platform/WebMediaStream.h"
@@ -173,6 +174,9 @@ class CONTENT_EXPORT PeerConnectionTracker
 
   // For testing: Override the class that gets posted messages.
   void OverrideSendTargetForTesting(RenderThread* target);
+  void SetPeerConnectionTrackerHost(mojom::PeerConnectionTrackerHost* host) {
+    peer_connection_tracker_host_ = host;
+  }
 
  private:
   // Assign a local ID to a peer connection so that the browser process can
@@ -219,6 +223,7 @@ class CONTENT_EXPORT PeerConnectionTracker
                                 const std::string& value);
 
   RenderThread* SendTarget();
+  mojom::PeerConnectionTrackerHost* GetPeerConnectionTrackerHost();
 
   // This map stores the local ID assigned to each RTCPeerConnectionHandler.
   typedef std::map<RTCPeerConnectionHandler*, int> PeerConnectionIdMap;
@@ -228,6 +233,9 @@ class CONTENT_EXPORT PeerConnectionTracker
   int next_local_id_;
   base::ThreadChecker main_thread_;
   RenderThread* send_target_for_test_;
+  mojom::PeerConnectionTrackerHost* peer_connection_tracker_host_;
+  mojom::PeerConnectionTrackerHostAssociatedPtr
+      peer_connection_tracker_host_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(PeerConnectionTracker);
 };
