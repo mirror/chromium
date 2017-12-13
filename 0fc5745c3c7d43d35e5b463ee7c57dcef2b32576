@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "cdf91d90_cda059ea",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-13T21:40:58Z",
+      "side": 1,
+      "message": "Ah, I see, makes sense. This sounds like an area of potential improvement for Monorail.",
+      "parentUuid": "dbf5cfea_5c0a017d",
+      "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00d432b0_245b7a46",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail.py",
         "patchSetId": 3
@@ -288,6 +306,24 @@
       "side": 1,
       "message": "Yes. All dependencies, recursively. We have to explicitly list them out because vpython does not support dependency resolution.",
       "parentUuid": "52147193_de657837",
+      "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b014e2eb_af79e241",
+        "filename": "third_party/WebKit/Tools/Scripts/wpt-import.vpython",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-13T21:40:58Z",
+      "side": 1,
+      "message": "Got it.\n\nDid you have to manually find and list the dependencies? Next time these dependencies have to be updated, are there any comments that could be added here that would be useful?",
+      "parentUuid": "19623b1b_8c3a7b5a",
       "revId": "0fc5745c3c7d43d35e5b463ee7c57dcef2b32576",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

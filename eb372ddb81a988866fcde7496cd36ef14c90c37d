@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a31fb5c2_57172840",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/import_notifier.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-13T21:40:58Z",
+      "side": 1,
+      "message": "This behavior of getting the path from that env var is a behavior of google api client, not controlled by the wpt importer, right?",
+      "revId": "eb372ddb81a988866fcde7496cd36ef14c90c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac51edd8_56fa8a0f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/monorail_unittest.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-13T21:40:58Z",
+      "side": 1,
+      "message": "or maybe: test_init_string_passed_for_cc_field",
+      "revId": "eb372ddb81a988866fcde7496cd36ef14c90c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c409d8_da8babbf",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-13T21:40:58Z",
+      "side": 1,
+      "message": "Is this a path to a JSON file or a literal JSON blob? Note --credentials-json is a path to a file.",
+      "range": {
+        "startLine": 287,
+        "startChar": 18,
+        "endLine": 287,
+        "endChar": 36
+      },
+      "revId": "eb372ddb81a988866fcde7496cd36ef14c90c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708a7073_5156a714",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-12-13T21:40:58Z",
+      "side": 1,
+      "message": "Could slightly rephrase as:\n\n  \"only needed when --auto-file-bugs is used\" or\n  \"only needed in conjunction with --auto-file-bugs\".",
+      "range": {
+        "startLine": 288,
+        "startChar": 31,
+        "endLine": 288,
+        "endChar": 64
+      },
+      "revId": "eb372ddb81a988866fcde7496cd36ef14c90c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
