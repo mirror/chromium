@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "ca41385f_e328fc5e",
+        "filename": "ios/chrome/browser/browser_state/chrome_browser_state_io_data.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-12-13T17:14:25Z",
+      "side": 1,
+      "message": "Thank you for adding those missing guards.",
+      "revId": "a2e037cc6200bd101c6db3aa259659693c1cdc45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8df510b0_469a3627",
         "filename": "ios/chrome/browser/browser_state/chrome_browser_state_io_data.mm",
         "patchSetId": 5
