@@ -52,6 +52,24 @@
       "revId": "b3d70943ac2d586707257c5c32b80c3a6575e7b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e40c32_80ed1b2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-13T01:23:07Z",
+      "side": 1,
+      "message": "It turns out my recommendation to use NEW_TAB_NORMAL has a lot of pitfalls related to animations.\n\nAdditionally, to answer my own question about why this needs to get set back to white -- when the sheet is closing the toolbar needs a white background or the Doodle sliding beneath it looks really odd. Additionally, when the RecyclerView content is scrolled beneath the toolbar we need the background to be white.\n\nI have a CL out that exposes a new set #setShownInNtp() so that the toolbar bg is only set to transparent while the toolbar is closed.",
+      "parentUuid": "0e746e8e_c10f9507",
+      "revId": "b3d70943ac2d586707257c5c32b80c3a6575e7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
