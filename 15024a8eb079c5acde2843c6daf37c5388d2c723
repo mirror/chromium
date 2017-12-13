@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6b3b24f2_0b88057a",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-13T19:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "957490d0_ee30a74b",
+      "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0c2e9fc_3b2e5257",
         "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c1a6ed_1704ff2b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-13T19:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0c2e9fc_3b2e5257",
+      "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4b9efc29_6f89c03f",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-13T19:32:05Z",
+      "side": 1,
+      "message": "Done; removed from ctor initializer list.",
+      "parentUuid": "bb92299d_b453dab3",
+      "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81548941_94d890d0",
         "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ec8cb952_f205af8b",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-13T19:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81548941_94d890d0",
+      "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3dbff69_cf126c0f",
         "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45956c0d_0e088afa",
+        "filename": "components/autofill/core/browser/credit_card_save_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-12-13T19:32:05Z",
+      "side": 1,
+      "message": "Created crbug.com/794647 and added to the hotlist.",
+      "parentUuid": "d3dbff69_cf126c0f",
+      "revId": "15024a8eb079c5acde2843c6daf37c5388d2c723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
