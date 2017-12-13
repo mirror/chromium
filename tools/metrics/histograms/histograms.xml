@@ -35098,6 +35098,42 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.TimeToFirstFrame.MSE" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Time in milliseconds from when WebMediaPlayerImpl starts loading until the
+    first video frame has been shown for a MSE playback.
+  </summary>
+</histogram>
+
+<histogram name="Media.TimeToFirstFrame.SRC" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Time in milliseconds from when WebMediaPlayerImpl starts loading until the
+    first video frame has been shown for a SRC playback.
+  </summary>
+</histogram>
+
+<histogram name="Media.TimeToMetadata.MSE" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Time in milliseconds from when WebMediaPlayerImpl starts loading until
+    metadata is known for a MSE playback.
+  </summary>
+</histogram>
+
+<histogram name="Media.TimeToMetadata.SRC" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Time in milliseconds from when WebMediaPlayerImpl starts loading until
+    metadata is known for a SRC playback.
+  </summary>
+</histogram>
+
 <histogram name="Media.TimeToPipelineStarted" units="ms">
   <obsolete>
     Removed from code 2014/6/18.
@@ -35105,6 +35141,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>scherkus@chromium.org</owner>
   <summary>
     Time in milliseconds from HTML5 media pipeline creation to playing event.
+  </summary>
+</histogram>
+
+<histogram name="Media.TimeToPlayReady.MSE" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Time in milliseconds from when WebMediaPlayer starts loading until it has
+    buffered enough to start playback for a MSE playback.
+  </summary>
+</histogram>
+
+<histogram name="Media.TimeToPlayReady.SRC" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Time in milliseconds from when WebMediaPlayer starts loading until it has
+    buffered enough to start playback for a SRC playback.
   </summary>
 </histogram>
 

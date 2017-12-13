@@ -831,6 +831,24 @@ be describing additional metrics about the same event.
       with Media.BasicPlayback events to understand a playback more deeply.
     </summary>
   </metric>
+  <metric name="TimeToFirstFrame">
+    <summary>
+      Time in milliseconds from when WebMediaPlayerImpl starts loading until the
+      first video frame has been shown.
+    </summary>
+  </metric>
+  <metric name="TimeToMetadata">
+    <summary>
+      Time in milliseconds from when WebMediaPlayerImpl starts loading until
+      metadata is known.
+    </summary>
+  </metric>
+  <metric name="TimeToPlayReady">
+    <summary>
+      Time in milliseconds from when WebMediaPlayerImpl starts loading until it
+      has buffered enough to start playback.
+    </summary>
+  </metric>
 </event>
 
 <event name="Media.BasicPlayback">
