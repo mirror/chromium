@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a467bd1_cb267eea",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T22:46:31Z",
+      "side": 1,
+      "message": "nit: auto doesn\u0027t add much to readability here",
+      "revId": "b7a7dc9d22844d316899ddc03543fce3bae4936f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0eb1d13_f5597340",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T22:46:31Z",
+      "side": 1,
+      "message": "unique_ptr on views::View always spooks me (and i try to avoid set_owned_by_client() calls). Is this necessary to control lifetime (e.g. are these views not always in the view hierarchy) if so, comment?  (Or.. can the views be hidden instead?)",
+      "revId": "b7a7dc9d22844d316899ddc03543fce3bae4936f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
