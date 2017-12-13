@@ -410,6 +410,30 @@
       "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af30730_7b9ae6ea",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:31:49Z",
+      "side": 1,
+      "message": "Assuming the resources are fetched over https, this shouldn\u0027t make a difference.  Additionally, sometimes *not* fetching them would result in using an outdated version of the library, which might have security vulnerabilities.  However, this is also tricky, because we try to advise people to put resources in their package for reviewability.  On the other hand, that leads to a bunch of fake jquery.js files.  So it\u0027s all rather thorny.\n\nIn short, I\u0027d just remove this section until we have firmer advice in one direction or another. :)",
+      "parentUuid": "d3028731_444938ca",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 4
+      },
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

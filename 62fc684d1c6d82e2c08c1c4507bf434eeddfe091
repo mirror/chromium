@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9d50777_849995a0",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:31:49Z",
+      "side": 1,
+      "message": "I wouldn\u0027t say that this is \"often\" (luckily!).  Maybe just \"can\"?",
+      "range": {
+        "startLine": 19,
+        "startChar": 20,
+        "endLine": 19,
+        "endChar": 31
+      },
+      "revId": "62fc684d1c6d82e2c08c1c4507bf434eeddfe091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3296afb0_1aaf2125",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:31:49Z",
+      "side": 1,
+      "message": "\"... depends on, or through exploiting surprising web standard behavior like named items [link: https://html.spec.whatwg.org/#dom-window-nameditem]\"",
+      "revId": "62fc684d1c6d82e2c08c1c4507bf434eeddfe091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebdfa1f_e3072435",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:31:49Z",
+      "side": 1,
+      "message": "\"... the extension\u0027s dedicated process (such as in it\u0027s background page[link]).\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 50,
+        "endLine": 21,
+        "endChar": 69
+      },
+      "revId": "62fc684d1c6d82e2c08c1c4507bf434eeddfe091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7cc5891_ffdb6b5c",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:31:49Z",
+      "side": 1,
+      "message": "here, if the sender is compromised, the id would match.  Instead, this is more about ensuring that the message is reasonable.  Something like:\n\nif (request.action in allowedActions)\n  performAction(request.action);",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 49
+      },
+      "revId": "62fc684d1c6d82e2c08c1c4507bf434eeddfe091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e638a46_9cc246fa",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:31:49Z",
+      "side": 1,
+      "message": "developer.chrome.com",
+      "range": {
+        "startLine": 112,
+        "startChar": 48,
+        "endLine": 112,
+        "endChar": 64
+      },
+      "revId": "62fc684d1c6d82e2c08c1c4507bf434eeddfe091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee1435e_3b6e3b57",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:31:49Z",
+      "side": 1,
+      "message": "nit: indent + 2",
+      "range": {
+        "startLine": 201,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 28
+      },
+      "revId": "62fc684d1c6d82e2c08c1c4507bf434eeddfe091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815b3eed_7649f321",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-13T22:31:49Z",
+      "side": 1,
+      "message": "more",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 11
+      },
+      "revId": "62fc684d1c6d82e2c08c1c4507bf434eeddfe091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
