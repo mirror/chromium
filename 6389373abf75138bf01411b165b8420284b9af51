@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd4f901a_bb251fcc",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "nit: \"gpoup\" -\u003e \"group\"",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95229e97_a8cbfe9f",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_launcher_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "q: for my own understanding, can a group contain multiple apps? Maybe consider:\n\"The shelf group item\u0027s title should be the title of the ARC app.\"",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9687d5b_9bc13f58",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "optional unrelated nit: \"context menu\"",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c8eec2_d8e0461f",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "nit: |shelf_id|",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362f0c5e_35c14449",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "optional nit: |display_id|",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f271c452_7d105612",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "optional nit: you can remove all the |IsItemPresentInMenu| checks immediately preceding |IsItemEnabledInMenu| checks (when both expect true), since \u0027Enabled\u0027 will check \u0027Present\u0027.",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2476ce51_93590913",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "nit: |shelf_id2|",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975e04ff_4dfd95bc",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "nit: |item_delegate2|",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a7545d_268e5235",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "This should check |item2_delegate| (or |item_delegate2|).",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529bff26_eb1dd866",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "optional nit: |shelf_id3|",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b8146a_9dbf5307",
+        "filename": "chrome/browser/ui/ash/launcher/launcher_context_menu_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-13T18:17:32Z",
+      "side": 1,
+      "message": "nit: |item_delegate3|",
+      "revId": "6389373abf75138bf01411b165b8420284b9af51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
