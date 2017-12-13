@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6e8e53e_0d02f0cc",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T01:49:52Z",
+      "side": 1,
+      "message": "Nit: Can fit in one line.",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 115,
+        "endChar": 12
+      },
+      "revId": "d9c50ffe16dffaf0b23723f471bf5b0c19e389a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97f1e533_75430ffa",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T01:49:52Z",
+      "side": 1,
+      "message": "Can this be a member var of settings-chrome-cleanup-page (similar to browserProxy_), instead of being global?",
+      "range": {
+        "startLine": 110,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 43
+      },
+      "revId": "d9c50ffe16dffaf0b23723f471bf5b0c19e389a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ecc81df_f4794963",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T01:49:52Z",
+      "side": 1,
+      "message": "When can this be false? Is this observer executing before attached()? If so the more common way to ignore such invocation is as follows\n\nnotifyShowDetails_: function(current, previous) {\n  if (previous \u003d\u003d\u003d undefined)\n    return;\n\n  // Do stuff here.\n}\n\nI also suggest renaming notifyShowDetails_ to itemsToRemoveSectionExpandedChanged_.",
+      "range": {
+        "startLine": 354,
+        "startChar": 3,
+        "endLine": 354,
+        "endChar": 29
+      },
+      "revId": "d9c50ffe16dffaf0b23723f471bf5b0c19e389a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8361ab30_29332c20",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T01:49:52Z",
+      "side": 1,
+      "message": "Either add @private, @param annotations, or turn this into a local function within updateShowItemsLinklabel_().\n\nupdateShowItemsLinklabel_: function() {\n  var setShowItemsLabel_ \u003d text \u003d\u003e this.showItemsLinkLabel_ \u003d text;\n\n  ...use it here... no need to call bind(this) anymore either.\n},",
+      "revId": "d9c50ffe16dffaf0b23723f471bf5b0c19e389a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4ad314_885263c1",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T01:49:52Z",
+      "side": 1,
+      "message": "Don\u0027t we need to call cr.exportPath(\u0027settings\u0027) before this line? See examples https://cs.chromium.org/search/?q\u003dcr.exportPath+file:%5Esrc/chrome/browser/resources/settings/+package:%5Echromium$\u0026type\u003dcs.",
+      "revId": "d9c50ffe16dffaf0b23723f471bf5b0c19e389a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def4f1c8_4dcb8c32",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T01:49:52Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary, since visibleItems_ does not participate in any 2-way bindings, see https://www.polymer-project.org/1.0/docs/devguide/data-binding#two-way-bindings.\n\nTherefore this could simply be\n\nvisibleItems_: Array,",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 19
+      },
+      "revId": "d9c50ffe16dffaf0b23723f471bf5b0c19e389a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81430a70_316f10cc",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/items_to_remove_list.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T01:49:52Z",
+      "side": 1,
+      "message": "Not used anymore.",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 22
+      },
+      "revId": "d9c50ffe16dffaf0b23723f471bf5b0c19e389a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
