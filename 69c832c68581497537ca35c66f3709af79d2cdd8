@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7c4620b0_bf917cb2",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-13T00:35:52Z",
+      "side": 1,
+      "message": "nit: remove this",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "186780d6_ab219bcf",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 11
@@ -13,6 +30,40 @@
       "writtenOn": "2017-12-12T20:15:00Z",
       "side": 1,
       "message": "Instead of using fileinput.input which could be unsafe as a re-opened instance, change it to use the temporary file.",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0322c35_465322e6",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-13T00:35:52Z",
+      "side": 1,
+      "message": "Any reason for using tempfile.mkstemp instead of tempfile.NamedTemporaryFile?",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28fa6eee_f0dcd9e4",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-13T00:35:52Z",
+      "side": 1,
+      "message": "As discussed offline: just have dry_run print the command you would run rather than accumulating a list of packages and printing it at the end.",
       "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "2450ca80_e2d615c1",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-13T00:35:52Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not sure what I said makes sense given how you\u0027ve got the .yaml files laid out w/ one top-level directory per package. Ignore my previous comment.",
+      "parentUuid": "fe8c3fea_acd1edaf",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84cc27a3_b99ce76b",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 11
@@ -53,6 +122,58 @@
     },
     {
       "key": {
+        "uuid": "58c60a86_0bce19fb",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-13T00:35:52Z",
+      "side": 1,
+      "message": "This seems fine.",
+      "parentUuid": "84cc27a3_b99ce76b",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "57d82524_cebb31dc",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-13T00:35:52Z",
+      "side": 1,
+      "message": "nit: compile this as a constant at module scope",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e040c567_b3561025",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-13T00:35:52Z",
+      "side": 1,
+      "message": "I think this can just look for everything between common and \\.jar and take that as the suffix -- something like \u0027^common(.*)\\.jar$\u0027",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e8a5588_3c548286",
         "filename": "tools/android/sdk_updater/update_sdk.py",
         "patchSetId": 11
@@ -64,6 +185,23 @@
       "writtenOn": "2017-12-12T20:15:00Z",
       "side": 1,
       "message": "Check if the new version is the same as old version in file first, if it remains the same, skip dry run or replace version.",
+      "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8616a0a_b7752e04",
+        "filename": "tools/android/sdk_updater/update_sdk.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-13T00:35:52Z",
+      "side": 1,
+      "message": "super nit: this should be -n/--dry-run",
       "revId": "69c832c68581497537ca35c66f3709af79d2cdd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
