@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "d3be75c5_3e35497f",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-13T09:30:26Z",
+      "side": 1,
+      "message": "Please add that it can be nil.",
+      "range": {
+        "startLine": 51,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 28
+      },
+      "revId": "80aee85364cfa01529883f7b13bcde6ce25dff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0dbc95a_43a25f97",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-13T09:30:26Z",
+      "side": 1,
+      "message": "Add |\u003d nil|.",
+      "range": {
+        "startLine": 240,
+        "startChar": 41,
+        "endLine": 240,
+        "endChar": 42
+      },
+      "revId": "80aee85364cfa01529883f7b13bcde6ce25dff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d73cb495_7b5141d7",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 5
@@ -25,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "73d11fb8_43eedd88",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-13T09:30:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d73cb495_7b5141d7",
+      "range": {
+        "startLine": 509,
+        "startChar": 5,
+        "endLine": 509,
+        "endChar": 25
+      },
+      "revId": "80aee85364cfa01529883f7b13bcde6ce25dff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b943478d_ad6e9039",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 5
@@ -39,6 +109,24 @@
       "revId": "80aee85364cfa01529883f7b13bcde6ce25dff3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b867b0_4a0c3145",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-13T09:30:26Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "b943478d_ad6e9039",
+      "revId": "80aee85364cfa01529883f7b13bcde6ce25dff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
