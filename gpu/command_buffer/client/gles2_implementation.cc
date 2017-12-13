@@ -51,6 +51,7 @@
 #endif
 
 #if !defined(OS_NACL)
+#include "cc/paint/decode_stashing_image_provider.h"
 #include "cc/paint/display_item_list.h"  // nogncheck
 #include "cc/paint/paint_op_buffer_serializer.h"
 #include "cc/paint/transfer_cache_entry.h"
@@ -7207,9 +7208,11 @@ struct PaintOpSerializer {
  public:
   PaintOpSerializer(size_t initial_size,
                     TransferBufferInterface* transfer_buffer,
-                    GLES2CmdHelper* helper)
+                    GLES2CmdHelper* helper,
+                    cc::DecodeStashingImageProvider* stashing_image_provider)
       : transfer_buffer_(initial_size, helper, transfer_buffer),
         helper_(helper),
+        stashing_image_provider_(stashing_image_provider),
         free_bytes_(initial_size) {
     DCHECK(transfer_buffer_.valid());
   }
@@ -7244,6 +7247,7 @@ struct PaintOpSerializer {
     transfer_buffer_.Shrink(written_bytes_);
     helper_->RasterCHROMIUM(transfer_buffer_.shm_id(),
                             transfer_buffer_.offset(), written_bytes_);
+    stashing_image_provider_->Flush();
     written_bytes_ = 0;
   }
 
@@ -7252,6 +7256,7 @@ struct PaintOpSerializer {
 
   ScopedTransferBufferPtr transfer_buffer_;
   GLES2CmdHelper* helper_;
+  cc::DecodeStashingImageProvider* stashing_image_provider_;
 
   size_t written_bytes_ = 0;
   size_t free_bytes_ = 0;
@@ -7259,6 +7264,7 @@ struct PaintOpSerializer {
 #endif
 
 void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
+                                         cc::ImageProvider* provider,
                                          GLint translate_x,
                                          GLint translate_y,
                                          GLint clip_x,
@@ -7302,12 +7308,18 @@ void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
       gfx::Vector2dF(post_translate_x, post_translate_y);
   preamble.post_scale = post_scale;
 
+  // Wrap the provided provider in a stashing provider so that we can delay
+  // unrefing images until we have serialized dependent commands.
+  cc::DecodeStashingImageProvider stashing_image_provider(provider);
+
   // TODO(enne): need to implement alpha folding optimization from POB.
   // TODO(enne): don't access private members of DisplayItemList.
-  PaintOpSerializer op_serializer(free_size, transfer_buffer_, helper_);
+  PaintOpSerializer op_serializer(free_size, transfer_buffer_, helper_,
+                                  &stashing_image_provider);
   cc::PaintOpBufferSerializer::SerializeCallback serialize_cb = base::Bind(
       &PaintOpSerializer::Serialize, base::Unretained(&op_serializer));
-  cc::PaintOpBufferSerializer serializer(serialize_cb, nullptr);
+  cc::PaintOpBufferSerializer serializer(serialize_cb,
+                                         &stashing_image_provider);
   serializer.Serialize(&list->paint_op_buffer_, &offsets, preamble);
   DCHECK(serializer.valid());
   op_serializer.SendSerializedData();

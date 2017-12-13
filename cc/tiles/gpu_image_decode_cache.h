@@ -19,6 +19,10 @@
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/gpu/gl/GrGLTypes.h"
 
+namespace gpu {
+class ClientTransferCache;
+}
+
 namespace viz {
 class ContextProvider;
 }
@@ -103,6 +107,7 @@ class CC_EXPORT GpuImageDecodeCache
   enum class DecodeTaskType { PART_OF_UPLOAD_TASK, STAND_ALONE_DECODE_TASK };
 
   explicit GpuImageDecodeCache(viz::ContextProvider* context,
+                               bool use_transfer_cache,
                                SkColorType color_type,
                                size_t max_working_set_bytes);
   ~GpuImageDecodeCache() override;
@@ -157,8 +162,11 @@ class CC_EXPORT GpuImageDecodeCache
   bool DiscardableIsLockedForTesting(const DrawImage& image);
   bool IsInInUseCacheForTesting(const DrawImage& image) const;
 
+ protected:
+  class UploadPayload {};
+
  private:
-  enum class DecodedDataMode { GPU, CPU };
+  enum class DecodedDataMode { GPU, CPU, TRANSFER_CACHE };
 
   // Stores stats tracked by both DecodedImageData and UploadedImageData.
   struct ImageDataBase {
@@ -230,19 +238,47 @@ class CC_EXPORT GpuImageDecodeCache
     ~UploadedImageData();
 
     void SetImage(sk_sp<SkImage> image);
-    void ResetImage();
-    const sk_sp<SkImage>& image() const { return image_; }
-    GrGLuint gl_id() const { return gl_id_; }
+    void SetTransferCacheId(gpu::TransferCacheEntryId id);
+    void Reset();
+
+    // If in image mode.
+    const sk_sp<SkImage>& image() const {
+      DCHECK(mode_ == Mode::kSkImage || mode_ == Mode::kNone);
+      return image_;
+    }
+    GrGLuint gl_id() const {
+      DCHECK(mode_ == Mode::kSkImage || mode_ == Mode::kNone);
+      return gl_id_;
+    }
+
+    // If in transfer cache mode.
+    gpu::TransferCacheEntryId transfer_cache_id() {
+      DCHECK(mode_ == Mode::kTransferCache || mode_ == Mode::kNone);
+      return transfer_cache_id_;
+    }
 
     // True if the image is counting against our working set limits.
     bool budgeted = false;
 
    private:
+    // Used for internal DCHECKs only.
+    enum class Mode {
+      kNone,
+      kSkImage,
+      kTransferCache,
+    };
+
     void ReportUsageStats() const;
 
+    Mode mode_ = Mode::kNone;
+
+    // Used if |mode_| == kSkImage.
     // May be null if image not yet uploaded / prepared.
     sk_sp<SkImage> image_;
     GrGLuint gl_id_ = 0;
+
+    // Used if |mode_| == kTransferCache.
+    gpu::TransferCacheEntryId transfer_cache_id_;
   };
 
   struct ImageData : public base::RefCountedThreadSafe<ImageData> {
@@ -251,6 +287,9 @@ class CC_EXPORT GpuImageDecodeCache
               const gfx::ColorSpace& target_color_space,
               SkFilterQuality quality,
               int mip_level);
+
+    bool IsGpuOrTransferCache() const;
+    bool HasUploadedData() const;
 
     const DecodedDataMode mode;
     const size_t size;
@@ -380,6 +419,7 @@ class CC_EXPORT GpuImageDecodeCache
   void RunPendingContextThreadOperations();
 
   const SkColorType color_type_;
+  const bool use_transfer_cache_ = false;
   viz::ContextProvider* context_;
   int max_texture_size_ = 0;
 
@@ -411,6 +451,9 @@ class CC_EXPORT GpuImageDecodeCache
   std::vector<SkImage*> images_pending_complete_lock_;
   std::vector<SkImage*> images_pending_unlock_;
   std::vector<sk_sp<SkImage>> images_pending_deletion_;
+
+  std::vector<gpu::TransferCacheEntryId> ids_pending_unlock_;
+  std::vector<gpu::TransferCacheEntryId> ids_pending_deletion_;
 
   // Records the maximum number of items in the cache over the lifetime of the
   // cache. This is updated anytime we are requested to reduce cache usage.

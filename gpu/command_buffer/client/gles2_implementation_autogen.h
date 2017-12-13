@@ -1243,6 +1243,7 @@ void BeginRasterCHROMIUM(GLuint texture_id,
                          GLint pixel_config) override;
 
 void RasterCHROMIUM(const cc::DisplayItemList* list,
+                    cc::ImageProvider* provider,
                     GLint translate_x,
                     GLint translate_y,
                     GLint clip_x,

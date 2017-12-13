@@ -248,9 +248,9 @@ void StackDumpSignalHandler(int signal, siginfo_t* info, void* void_context) {
 // printing code, in practice it's better to provide meaningful stack traces -
 // and the risk is low given we're likely crashing already.
 #if !defined(OS_MACOSX) || !DCHECK_IS_ON()
-  // Record the fact that we are in the signal handler now, so that the rest
-  // of StackTrace can behave in an async-signal-safe manner.
-  in_signal_handler = 1;
+// Record the fact that we are in the signal handler now, so that the rest
+// of StackTrace can behave in an async-signal-safe manner.
+// in_signal_handler = 1;
 #endif
 
   if (BeingDebugged())

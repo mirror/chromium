@@ -205,7 +205,7 @@ class GpuImageDecodeCacheTest : public ::testing::TestWithParam<SkColorType> {
   }
   std::unique_ptr<GpuImageDecodeCache> CreateCache() {
     return base::WrapUnique(new GpuImageDecodeCache(
-        context_provider_.get(), GetParam(), kGpuMemoryLimitBytes));
+        context_provider_.get(), false, GetParam(), kGpuMemoryLimitBytes));
   }
 
   DiscardableTextureMockContextProvider* context_provider() {

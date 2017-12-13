@@ -92,8 +92,7 @@ void PaintOpBufferSerializer::SerializeBuffer(
 
     // Skip ops outside the current clip if they have images. This saves
     // performing an unnecessary expensive decode.
-    const bool skip_op = PaintOp::OpHasDiscardableImages(op) &&
-                         PaintOp::QuickRejectDraw(op, &canvas_);
+    const bool skip_op = false;
     if (skip_op)
       continue;
 
