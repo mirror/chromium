@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3998f2e1_7bc058b4",
+        "filename": "content/browser/renderer_host/media/audio_input_stream_handle.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-13T10:56:49Z",
+      "side": 1,
+      "message": "|deleter_callback_| is Once, so we couldn\u0027t both pass it in both here and have it available to |stream_| (without some sort of hack).",
+      "parentUuid": "27eed340_4d0d067d",
+      "revId": "6bed62817765f9cb5ff1a59765b2319726f0a012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "595b4c3d_57bc1d75",
         "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.cc",
         "patchSetId": 22
@@ -39,6 +57,30 @@
       "revId": "6bed62817765f9cb5ff1a59765b2319726f0a012",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a0631c_fc891607",
+        "filename": "content/browser/renderer_host/media/render_frame_audio_input_stream_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-13T10:56:49Z",
+      "side": 1,
+      "message": "Done. Also did the corresponding change for the output factory.",
+      "parentUuid": "595b4c3d_57bc1d75",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 19
+      },
+      "revId": "6bed62817765f9cb5ff1a59765b2319726f0a012",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
