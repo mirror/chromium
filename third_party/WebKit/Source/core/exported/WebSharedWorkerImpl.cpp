@@ -293,19 +293,17 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
       worker_clients, std::make_unique<SharedWorkerContentSettingsProxy>(
                           std::move(content_settings_info_)));
 
-  if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
-    std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
-        client_->CreateWorkerFetchContext(
-            shadow_page_->DocumentLoader()->GetServiceWorkerNetworkProvider());
-    DCHECK(web_worker_fetch_context);
-    web_worker_fetch_context->SetApplicationCacheHostID(
-        shadow_page_->GetDocument()
-            ->Fetcher()
-            ->Context()
-            .ApplicationCacheHostID());
-    ProvideWorkerFetchContextToWorker(worker_clients,
-                                      std::move(web_worker_fetch_context));
-  }
+  std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
+      client_->CreateWorkerFetchContext(
+          shadow_page_->DocumentLoader()->GetServiceWorkerNetworkProvider());
+  DCHECK(web_worker_fetch_context);
+  web_worker_fetch_context->SetApplicationCacheHostID(
+      shadow_page_->GetDocument()
+          ->Fetcher()
+          ->Context()
+          .ApplicationCacheHostID());
+  ProvideWorkerFetchContextToWorker(worker_clients,
+                                    std::move(web_worker_fetch_context));
 
   ContentSecurityPolicy* content_security_policy =
       main_script_loader_->ReleaseContentSecurityPolicy();

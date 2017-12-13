@@ -2248,31 +2248,6 @@
             ]
         }
     ],
-    "OffMainThreadFetch": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "OffMainThreadFetch"
-                    ]
-                },
-                {
-                    "name": "Disabled",
-                    "disable_features": [
-                        "OffMainThreadFetch"
-                    ]
-                }
-            ]
-        }
-    ],
     "OfferUploadCreditCards": [
         {
             "platforms": [
