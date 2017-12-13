@@ -137,6 +137,7 @@ public class EditorFieldModel {
     private int mActionIconResourceId;
     private int mActionIconDescriptionForAccessibility;
     private boolean mIsFullLine = true;
+    private boolean mPlusIconIncluded = false;
 
     /**
      * Constructs a label to show in the editor. This can be, for example, description of a server
@@ -410,6 +411,24 @@ public class EditorFieldModel {
             mDropdownKeys.add(mDropdownKeyValues.get(i).getKey());
         }
         assert mDropdownKeyValues.size() == mDropdownKeys.size();
+    }
+
+    /** @return True if the last visible item on the dropdown list, needs a '+' icon on the right.
+     */
+    public boolean isPlusIconIncluded() {
+        assert mInputTypeHint == INPUT_TYPE_HINT_DROPDOWN;
+        return mPlusIconIncluded;
+    }
+
+    /**
+     * Sets whether the last item of the this dropdown list needs a '+' icon on the right. By
+     * default, the item doesn't need that.
+     *
+     * @param plusIconIncluded Whether the last item of the tihs dropdown list needs a '+' icon.
+     */
+    public void setPlusIconIncluded(boolean plusIconIncluded) {
+        assert mInputTypeHint == INPUT_TYPE_HINT_DROPDOWN;
+        mPlusIconIncluded = plusIconIncluded;
     }
 
     /** @return The human-readable label for this field. */
