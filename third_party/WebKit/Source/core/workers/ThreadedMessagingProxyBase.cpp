@@ -75,9 +75,7 @@ void ThreadedMessagingProxyBase::Trace(blink::Visitor* visitor) {
 void ThreadedMessagingProxyBase::InitializeWorkerThread(
     std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params,
     const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data,
-    const KURL& script_url,
-    const v8_inspector::V8StackTraceId& stack_id,
-    const String& source_code) {
+    const KURL& script_url) {
   DCHECK(IsParentContextThread());
 
   Document* document = ToDocument(GetExecutionContext());
@@ -85,10 +83,8 @@ void ThreadedMessagingProxyBase::InitializeWorkerThread(
   worker_thread_ = CreateWorkerThread();
   worker_thread_->Start(
       std::move(global_scope_creation_params), thread_startup_data,
-      std::make_unique<GlobalScopeInspectorCreationParams>(
-          GetWorkerInspectorProxy()->ShouldPauseOnWorkerStart(document),
-          stack_id),
-      GetParentFrameTaskRunners(), source_code);
+      GetWorkerInspectorProxy()->ShouldPauseOnWorkerStart(document),
+      GetParentFrameTaskRunners());
   GetWorkerInspectorProxy()->WorkerThreadCreated(document, GetWorkerThread(),
                                                  script_url);
 }

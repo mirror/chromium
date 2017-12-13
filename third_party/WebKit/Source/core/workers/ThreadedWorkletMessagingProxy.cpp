@@ -50,7 +50,7 @@ void ThreadedWorkletMessagingProxy::Initialize() {
   // Worklets share the pre-initialized backing thread so that we don't have to
   // specify the backing thread startup data.
   InitializeWorkerThread(std::move(global_scope_creation_params), WTF::nullopt,
-                         document->Url(), v8_inspector::V8StackTraceId());
+                         document->Url());
 }
 
 void ThreadedWorkletMessagingProxy::Trace(blink::Visitor* visitor) {
