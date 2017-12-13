@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc5daa4e_f6053878",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T23:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41a38839_6d65cb43",
+      "range": {
+        "startLine": 48,
+        "startChar": 30,
+        "endLine": 48,
+        "endChar": 37
+      },
+      "revId": "9bea5420307bb7e907aef4c46678f3bc2f0cde67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b5f9b58_4e81d78f",
         "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "9bea5420307bb7e907aef4c46678f3bc2f0cde67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43feffd_fece9996",
+        "filename": "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-13T23:30:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7b5f9b58_4e81d78f",
+      "range": {
+        "startLine": 19,
+        "startChar": 27,
+        "endLine": 19,
+        "endChar": 35
+      },
+      "revId": "9bea5420307bb7e907aef4c46678f3bc2f0cde67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
