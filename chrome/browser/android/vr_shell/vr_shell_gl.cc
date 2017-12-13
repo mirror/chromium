@@ -1291,25 +1291,15 @@ void VrShellGl::ClosePresentationBindings() {
   binding_.Close();
 }
 
-void VrShellGl::OnAssetsLoaded(bool success,
-                               std::string environment,
+void VrShellGl::OnAssetsLoaded(vr::AssetsLoadStatus status,
+                               std::unique_ptr<SkBitmap> background_image,
                                const base::Version& component_version) {
-  if (success && environment == "zq7sax8chrtjchxysh7b\n") {
+  if (status == vr::AssetsLoadStatus::kSuccess) {
     VLOG(1) << "Successfully loaded VR assets component";
   } else {
     VLOG(1) << "Failed to load VR assets component";
   }
-  if (!success) {
-    browser_->OnAssetsLoaded(vr::AssetsLoadStatus::kParseFailure,
-                             component_version);
-    return;
-  }
-  if (environment != "zq7sax8chrtjchxysh7b\n") {
-    browser_->OnAssetsLoaded(vr::AssetsLoadStatus::kInvalidContent,
-                             component_version);
-    return;
-  }
-  browser_->OnAssetsLoaded(vr::AssetsLoadStatus::kSuccess, component_version);
+  browser_->OnAssetsLoaded(status, component_version);
 }
 
 }  // namespace vr_shell
