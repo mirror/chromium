@@ -6965,6 +6965,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true"
+    name="Blink.ResourceLoadScheduler.ThrottlingStateChangeCount" units="times">
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Count how many times the scheduler has changed throttling status from the
+    frame creation until network activity quiets.
+  </summary>
+</histogram>
+
 <histogram base="true" name="Blink.ResourceLoadScheduler.TotalDecodedBytes"
     units="bytes">
 <!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
@@ -108284,12 +108293,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram_suffixes name="ResourceLoadScheduler.FrameType" separator=".">
   <suffix name="MainframeThrottled" label="Main frame, throttled"/>
   <suffix name="MainframeNotThrottled" label="Main frame, not throttled"/>
-  <suffix name="MainframePartiallyThrottled"
-      label="Main frame, partially throttled"/>
   <suffix name="SubframeThrottled" label="Sub frame, throttled"/>
   <suffix name="SubframeNotThrottled" label="Sub frame, not throttled"/>
-  <suffix name="SubframePartiallyThrottled"
-      label="Sub frame, partially throttled"/>
   <affected-histogram name="Blink.ResourceLoadScheduler.DecodedBytes"/>
   <affected-histogram name="Blink.ResourceLoadScheduler.PeakRequests"/>
   <affected-histogram name="Blink.ResourceLoadScheduler.TotalDecodedBytes"/>
