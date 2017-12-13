@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29aa3f44_8013aee1",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-13T21:46:59Z",
+      "side": 1,
+      "message": "I think this is the right place for the change -- we can just update rect here, and the rest of the stuff will flow through.\n\n(we\u0027ll need to make rect a RectF instead of a Rect, but that\u0027s fine).",
+      "revId": "6f406a1d6904da7a1ed4fc9a6527c973ebe63776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0106a85c_afac31d7",
+        "filename": "ui/accelerated_widget_mac/ca_renderer_layer_tree.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-12-13T21:46:59Z",
+      "side": 1,
+      "message": "(this stuff would move up), then the\n  update_rect \u003d old_layer-\u003erect !\u003d rect;\nlogic would still be right",
+      "revId": "6f406a1d6904da7a1ed4fc9a6527c973ebe63776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
