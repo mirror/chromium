@@ -31,18 +31,6 @@ cr.define('extensions', function() {
     openDevTools(args) {}
   }
 
-  /**
-   * Get the URL relative to the main extension url. If the url is
-   * unassociated with the extension, this will be the full url.
-   * @param {string} url
-   * @param {?(ManifestError|RuntimeError)} error
-   * @return {string}
-   */
-  function getRelativeUrl(url, error) {
-    const fullUrl = 'chrome-extension://' + error.extensionId + '/';
-    return url.startsWith(fullUrl) ? url.substring(fullUrl.length) : url;
-  }
-
   const ErrorPage = Polymer({
     is: 'extensions-error-page',
 
@@ -88,6 +76,18 @@ cr.define('extensions', function() {
     /** @return {!ManifestError|!RuntimeError} */
     getSelectedError: function() {
       return this.entries_[this.selectedEntry_];
+    },
+
+    /**
+     * Get the URL relative to the main extension url. If the url is
+     * unassociated with the extension, this will be the full url.
+     * @param {string} url
+     * @param {?(ManifestError|RuntimeError)} error
+     * @return {string}
+     */
+    getRelativeUrl(url, error) {
+      const fullUrl = 'chrome-extension://' + error.extensionId + '/';
+      return url.startsWith(fullUrl) ? url.substring(fullUrl.length) : url;
     },
 
     /**
@@ -196,8 +196,9 @@ cr.define('extensions', function() {
      * @private
      */
     getStackTraceLabel_: function(frame) {
-      let description = getRelativeUrl(frame.url, this.getSelectedError()) +
-          ':' + frame.lineNumber;
+      let description =
+          this.getRelativeUrl(frame.url, this.getSelectedError()) + ':' +
+          frame.lineNumber;
 
       if (frame.functionName) {
         const functionName = frame.functionName == '(anonymous function)' ?
@@ -249,7 +250,7 @@ cr.define('extensions', function() {
           .requestFileSource({
             extensionId: selectedError.extensionId,
             message: selectedError.message,
-            pathSuffix: getRelativeUrl(frame.url, selectedError),
+            pathSuffix: this.getRelativeUrl(frame.url, selectedError),
             lineNumber: frame.lineNumber,
           })
           .then(code => {
