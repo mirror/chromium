@@ -388,8 +388,10 @@ void TabWebContentsDelegateAndroid::AddNewContents(
 
   // At this point the |new_contents| is beyond the popup blocker, but we use
   // the same logic for determining if the popup tracker needs to be attached.
-  if (source && PopupBlockerTabHelper::ConsiderForPopupBlocking(disposition))
-    PopupTracker::CreateForWebContents(new_contents, source);
+  if (source && PopupBlockerTabHelper::ConsiderForPopupBlocking(disposition)) {
+    PopupTracker::CreateForWebContents(new_contents, source,
+                                       true /* untrusted */);
+  }
 
   TabHelpers::AttachTabHelpers(new_contents);
 

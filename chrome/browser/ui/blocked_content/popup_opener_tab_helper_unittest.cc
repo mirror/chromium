@@ -99,7 +99,8 @@ class PopupOpenerTabHelperTest : public ChromeRenderViewHostTestHarness {
     content::WebContents* raw_popup = popup.get();
     popups_.push_back(std::move(popup));
 
-    PopupTracker::CreateForWebContents(raw_popup, web_contents() /* opener */);
+    PopupTracker::CreateForWebContents(raw_popup, web_contents() /* opener */,
+                                       true /* untrusted */);
     web_contents()->WasHidden();
     raw_popup->WasShown();
     return raw_popup;

@@ -1465,8 +1465,12 @@ WebContents* Browser::OpenURLFromTab(WebContents* source,
 
   Navigate(&nav_params);
 
-  if (is_popup && nav_params.target_contents)
-    PopupTracker::CreateForWebContents(nav_params.target_contents, source);
+  if (is_popup && nav_params.target_contents) {
+    PopupTracker::CreateForWebContents(
+        nav_params.target_contents, source,
+        params.triggering_event_info ==
+            blink::WebTriggeringEventInfo::kFromUntrustedEvent);
+  }
 
   return nav_params.target_contents;
 }
@@ -1510,8 +1514,10 @@ void Browser::AddNewContents(WebContents* source,
                              bool* was_blocked) {
   // At this point the |new_contents| is beyond the popup blocker, but we use
   // the same logic for determining if the popup tracker needs to be attached.
-  if (source && PopupBlockerTabHelper::ConsiderForPopupBlocking(disposition))
-    PopupTracker::CreateForWebContents(new_contents, source);
+  if (source && PopupBlockerTabHelper::ConsiderForPopupBlocking(disposition)) {
+    PopupTracker::CreateForWebContents(new_contents, source,
+                                       true /* untrusted */);
+  }
   chrome::AddWebContents(this, source, new_contents, disposition, initial_rect,
                          user_gesture);
 }
