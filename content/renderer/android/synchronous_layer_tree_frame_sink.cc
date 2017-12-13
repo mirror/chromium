@@ -128,7 +128,6 @@ SynchronousLayerTreeFrameSink::SynchronousLayerTreeFrameSink(
       routing_id_(routing_id),
       layer_tree_frame_sink_id_(layer_tree_frame_sink_id),
       registry_(registry),
-      shared_bitmap_manager_(shared_bitmap_manager),
       sender_(RenderThreadImpl::current()->sync_compositor_message_filter()),
       memory_policy_(0u),
       frame_swap_message_queue_(frame_swap_message_queue),
@@ -205,7 +204,7 @@ bool SynchronousLayerTreeFrameSink::BindToClient(
   // TODO(crbug.com/692814): The Display never sends its resources out of
   // process so there is no reason for it to use a SharedBitmapManager.
   display_ = std::make_unique<viz::Display>(
-      shared_bitmap_manager_, nullptr /* gpu_memory_buffer_manager */,
+      &shared_bitmap_manager_, nullptr /* gpu_memory_buffer_manager */,
       software_renderer_settings, kRootFrameSinkId, std::move(output_surface),
       nullptr /* scheduler */, nullptr /* current_task_runner */);
   display_->Initialize(&display_client_,
@@ -343,6 +342,23 @@ void SynchronousLayerTreeFrameSink::DidNotProduceFrame(
   DCHECK(!ack.has_damage);
   DCHECK_LE(viz::BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
   Send(new ViewHostMsg_DidNotProduceFrame(routing_id_, ack));
+}
+
+void SynchronousLayerTreeFrameSink::DidAllocateSharedBitmap(
+    mojo::ScopedSharedBufferHandle buffer,
+    const viz::SharedBitmapId& id) {
+  // The synchronous compositor's renderer never generates software resources,
+  // it only makes software frames in the resourceless software mode, which
+  // submits a CompositorFrame without any resources.
+  NOTREACHED();
+}
+
+void SynchronousLayerTreeFrameSink::DidDeleteSharedBitmap(
+    const viz::SharedBitmapId& id) {
+  // The synchronous compositor's renderer never generates software resources,
+  // it only makes software frames in the resourceless software mode, which
+  // submits a CompositorFrame without any resources.
+  NOTREACHED();
 }
 
 void SynchronousLayerTreeFrameSink::CancelFallbackTick() {

@@ -89,6 +89,9 @@ class SynchronousLayerTreeFrameSink
   void SubmitCompositorFrame(viz::CompositorFrame frame) override;
   void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
   void Invalidate() override;
+  void DidAllocateSharedBitmap(mojo::ScopedSharedBufferHandle buffer,
+                               const viz::SharedBitmapId& id) override;
+  void DidDeleteSharedBitmap(const viz::SharedBitmapId& id) override;
 
   // Partial SynchronousCompositor API implementation.
   void DemandDrawHw(const gfx::Size& viewport_size,
@@ -130,11 +133,15 @@ class SynchronousLayerTreeFrameSink
   const int routing_id_;
   const uint32_t layer_tree_frame_sink_id_;
   SynchronousCompositorRegistry* const registry_;         // Not owned.
-  viz::SharedBitmapManager* const shared_bitmap_manager_;  // Not owned.
   IPC::Sender* const sender_;                             // Not owned.
 
   // Not owned.
   SynchronousLayerTreeFrameSinkClient* sync_client_ = nullptr;
+
+  // Used to allocate bitmaps in the software Display.
+  // TODO(crbug.com/692814): The Display never sends its resources out of
+  // process so there is no reason for it to use a SharedBitmapManager.
+  viz::ServerSharedBitmapManager shared_bitmap_manager_;
 
   // Only valid (non-NULL) during a DemandDrawSw() call.
   SkCanvas* current_sw_canvas_ = nullptr;
