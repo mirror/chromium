@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38e38bbe_a0e7095e",
+        "filename": "services/audio/public/cpp/audio_device_description_struct_traits.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T22:09:29Z",
+      "side": 1,
+      "message": "nit: please define out-of-line - you can list the cc file in the sources variable within the typemap",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4700b407_0dc2cb3e",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T22:09:29Z",
+      "side": 1,
+      "message": "Since this is public client library API surface, could you elaborate on this a bit? When, why, how does one use this class?",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369c7351_2b1405fd",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T22:09:29Z",
+      "side": 1,
+      "message": "nit: Can we call it AudioSystemToServiceAdapter? We try to avoid introducing new \"WhateverMojo\" names unless there\u0027s a serious problem with ambiguity.",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde96e22_6ce991e3",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T22:09:29Z",
+      "side": 1,
+      "message": "personal style nit: of course you\u0027ll have your own owners in services/audio and can do whatever you want, but I am generally not a fan of the use of \"cb\" as an abbreviation for \"callback\" and I\u0027d prefer we just write out BindSystemInfoCallback.\n\nI see this kind of abbreviation pretty much exclusively within src/media and nowhere else in the repository; I would prefer not to start introducing it in src/services.\n\n(edit: this comment is no longer relevant given the comment below, but I decided to leave it for posterity) :)",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e906f60_35ca36a1",
+        "filename": "services/audio/public/cpp/audio_system_to_mojo_adapter.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T22:09:29Z",
+      "side": 1,
+      "message": "Please construct this over a service_manager::Connector* (or actually, probably a unique_ptr\u003cConnector\u003e so there are no lifetime/ownership concerns) instead of a callback that binds a single interface. It\u0027s then much clearer what the point of the argument is since this is idiomatic design for a service client library.\n\nNote that you can still test the class fairly easily as we provide ways to override connector behavior. The most reasonable option given your current tests would probably be to use the Connector testing API in your test fixture setup:\n\n\n  service_manager::ConnectorRequest ignored_request;\n  auto connector \u003d service_manager::Connector::Create(\u0026ignored_request);\n  service_manager::Connector::TestApi connector_test_api(\n      connector.get());\n  connector_test_api.OverrideBinderForTesting(\n      audio::mojom::kServiceName,\n      audio::mojom::SystemInfo::Name_,\n      base::Bind(.../* the callback you want to use to handle it*/));\n  ...make_unique\u003cAudioSystemToServiceAdaptor\u003e(std::move(connector))...;\n\n\nNow you have an idiomatic client library API and a test fixture which sufficiently hooks into the system.",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7718df27_4571d357",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T22:09:29Z",
+      "side": 1,
+      "message": "Where does a device id string come from?  Is this the unique_id field in an AudioDeviceDescription returned by GetDeviceDescriptions? Could we make the names congruent?\n\nAlso, is AudioParameters potentially a very large amount of data? Any reason GetDeviceDescriptions AudioDeviceDescription couldn\u0027t just always include any available input/output stream params for a device?",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3457698_6dc2f63d",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T22:09:29Z",
+      "side": 1,
+      "message": "In the spirit of minimizing API surface, couldn\u0027t a user just call GetDeviceDescriptions() and look at the response for empty vs non-empty? Or do these Has*Devices methods need to be called at such high frequency that we would be worried about message overhead from too much GetDeviceDescriptions response data?\n\nOr better yet, will anyone realistically ever call Has*Devices without also immediately calling GetDeviceDescriptions if/when the former responds with true?",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca0c904_6a661d68",
+        "filename": "services/audio/public/interfaces/system_info.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T22:09:29Z",
+      "side": 1,
+      "message": "Is the ID really useful on its own or could this just return the AudioDeviceDescription? Also either way, the response value should probably be nullable so \"none\" be null instead of empty.",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7532de81_d744391c",
+        "filename": "services/audio/service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T22:09:29Z",
+      "side": 1,
+      "message": "As this Service is currently implemented, it will never quit once started. That\u0027s potentially just fine and I wouldn\u0027t consider it a blocking issue for this CL, but I want to make sure it\u0027s clear in case that was not the intent.",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b498e2aa_50c3ab6a",
+        "filename": "services/audio/service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-12-13T22:09:29Z",
+      "side": 1,
+      "message": "optional nit: The thread checking in general is redundant IMHO. The correct behavior is guaranteed by the service manager APIs. Unless you plan on introducing your own explicit direct calls into these methods I might just leave it all out.",
+      "revId": "e4539833286b4f75212c3691f0bc690fe820954a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
