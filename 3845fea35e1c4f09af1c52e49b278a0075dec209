@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e025bc2e_8f4644e7",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T22:14:22Z",
+      "side": 1,
+      "message": "I\u0027ll let xhwang@ speak to the details of this, this doc is a bit sparse on the details I wasn\u0027t too sure of (and some of the other details may very well be wrong)",
+      "parentUuid": "00ac91e9_32ded7b2",
+      "revId": "3845fea35e1c4f09af1c52e49b278a0075dec209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c06ece32_9fd79c24",
         "filename": "media/mojo/README.md",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-13T22:01:52Z",
       "side": 1,
       "message": "Nit: In this kind of documentation — ceremonies and protocols — I find it improves comprehension to center the actors of the verbs. This typically means transforming passive voice constructions to active voice. E.g.:\n\n`content::MediaInterfaceProxy::GetFrameServices()` configures the interfaces that ??? exposes.\n\nand\n\nWhen the renderer `content::MediaInterfaceFactory` class forwards a factory method call, `content::MediaInterfaceProxy` in the browser process handles the request.",
+      "revId": "3845fea35e1c4f09af1c52e49b278a0075dec209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d104181_2195621a",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T22:14:22Z",
+      "side": 1,
+      "message": "Reworded some of the stuff, but passive voice has a bad habit of being written a lot when I\u0027m involved. ;-)",
+      "parentUuid": "c06ece32_9fd79c24",
       "revId": "3845fea35e1c4f09af1c52e49b278a0075dec209",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "3845fea35e1c4f09af1c52e49b278a0075dec209",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e344b3_e43a5b14",
+        "filename": "media/mojo/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-13T22:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f242a932_1247eca4",
+      "revId": "3845fea35e1c4f09af1c52e49b278a0075dec209",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
