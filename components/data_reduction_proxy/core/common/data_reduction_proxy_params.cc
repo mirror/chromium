@@ -184,46 +184,28 @@ GetMissingViaHeaderBypassDurationRange(bool connection_is_cellular) {
   return {bypass_min, bypass_max};
 }
 
-bool IsLoFiOnViaFlags() {
-  return IsLoFiAlwaysOnViaFlags() || IsLoFiCellularOnlyViaFlags() ||
-         IsLoFiSlowConnectionsOnlyViaFlags();
-}
-
-bool IsLoFiAlwaysOnViaFlags() {
+bool IsServerPreviewsEnabledViaFlags() {
   const std::string& lo_fi_value =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          data_reduction_proxy::switches::kDataReductionProxyLoFi);
-  return lo_fi_value ==
-         data_reduction_proxy::switches::kDataReductionProxyLoFiValueAlwaysOn;
-}
-
-bool IsLoFiCellularOnlyViaFlags() {
-  const std::string& lo_fi_value =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          data_reduction_proxy::switches::kDataReductionProxyLoFi);
+          data_reduction_proxy::switches::kDataReductionProxyServerPreviews);
   return lo_fi_value == data_reduction_proxy::switches::
-                            kDataReductionProxyLoFiValueCellularOnly;
+                            kDataReductionProxyServerPreviewsEnabled;
 }
 
-bool IsLoFiSlowConnectionsOnlyViaFlags() {
+bool IsServerPreviewsDisabledViaFlags() {
   const std::string& lo_fi_value =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          data_reduction_proxy::switches::kDataReductionProxyLoFi);
+          data_reduction_proxy::switches::kDataReductionProxyServerPreviews);
   return lo_fi_value == data_reduction_proxy::switches::
-                            kDataReductionProxyLoFiValueSlowConnectionsOnly;
+                            kDataReductionProxyServerPreviewsDisabled;
 }
 
-bool IsLoFiDisabledViaFlags() {
-  const std::string& lo_fi_value =
+bool AreLitePagesPreferedViaFlags() {
+  const std::string& lite_page_value =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          data_reduction_proxy::switches::kDataReductionProxyLoFi);
-  return lo_fi_value ==
-         data_reduction_proxy::switches::kDataReductionProxyLoFiValueDisabled;
-}
-
-bool AreLitePagesEnabledViaFlags() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      data_reduction_proxy::switches::kEnableDataReductionProxyLitePage);
+          data_reduction_proxy::switches::kDataReductionProxyServerPreviews);
+  return lite_page_value == data_reduction_proxy::switches::
+                                kDataReductionProxyServerPreviewsPreferLitePage;
 }
 
 bool IsForcePingbackEnabledViaFlags() {

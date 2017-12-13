@@ -112,9 +112,9 @@ const char* compressed_video_directive();
 // a specific page policy.
 const char* page_policies_directive();
 
-// Gets the Chrome-Proxy experiment ("exp") value to force a lite page preview
+// Gets the Chrome-Proxy experiment ("exp") value to prefer a lite page preview
 // for requests that accept lite pages.
-const char* chrome_proxy_experiment_force_lite_page();
+const char* chrome_proxy_experiment_prefer_lite_page();
 
 // Gets the Chrome-Proxy experiment ("exp") value to force an empty image
 // preview for requests that enable server provided previews.
