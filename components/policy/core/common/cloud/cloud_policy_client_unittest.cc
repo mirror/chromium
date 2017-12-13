@@ -46,6 +46,7 @@ const char kMachineModel[] = "fake-machine-model";
 const char kOAuthToken[] = "fake-oauth-token";
 const char kDMToken[] = "fake-dm-token";
 const char kDeviceCertificate[] = "fake-device-certificate";
+const char kEnrollmentCertificate[] = "fake-enrollment-certificate";
 const char kRequisition[] = "fake-requisition";
 const char kStateKey[] = "fake-state-key";
 const char kPayload[] = "input_payload";
@@ -138,8 +139,14 @@ class CloudPolicyClientTest : public testing::Test {
 
     unregistration_request_.mutable_unregister_request();
     unregistration_response_.mutable_unregister_response();
-    upload_certificate_request_.mutable_cert_upload_request()->
-        set_device_certificate(kDeviceCertificate);
+    upload_device_certificate_request_.mutable_cert_upload_request()
+        ->set_device_certificate(kDeviceCertificate)
+        ->set_certificate_type(
+            em::DeviceCertUploadRequest::ENTERPRISE_MACHINE_CERTIFICATE);
+    upload_device_certificate_request_.mutable_cert_upload_request()
+        ->set_device_certificate(kEnrollmentCertificate)
+        ->set_certificate_type(
+            em::DeviceCertUploadRequest::ENTERPRISE_ENROLLMENT_CERTIFICATE);
     upload_certificate_response_.mutable_cert_upload_response();
 
     upload_status_request_.mutable_device_status_report_request();
@@ -271,15 +278,14 @@ class CloudPolicyClientTest : public testing::Test {
                          MatchProto(unregistration_request_)));
   }
 
-  void ExpectUploadCertificate() {
+  void ExpectUploadCertificate(const em::DeviceManagementRequest& request) {
     EXPECT_CALL(service_,
                 CreateJob(DeviceManagementRequestJob::TYPE_UPLOAD_CERTIFICATE,
                           request_context_))
         .WillOnce(service_.SucceedJob(upload_certificate_response_));
-    EXPECT_CALL(service_,
-                StartJob(dm_protocol::kValueRequestUploadCertificate,
-                         std::string(), std::string(), kDMToken, client_id_,
-                         MatchProto(upload_certificate_request_)));
+    EXPECT_CALL(service_, StartJob(dm_protocol::kValueRequestUploadCertificate,
+                                   std::string(), std::string(), kDMToken,
+                                   client_id_, MatchProto(request)));
   }
 
   void ExpectUploadStatus() {
@@ -371,7 +377,8 @@ class CloudPolicyClientTest : public testing::Test {
   em::DeviceManagementRequest cert_based_registration_request_;
   em::DeviceManagementRequest policy_request_;
   em::DeviceManagementRequest unregistration_request_;
-  em::DeviceManagementRequest upload_certificate_request_;
+  em::DeviceManagementRequest upload_device_certificate_request_;
+  em::DeviceManagementRequest upload_enrollment_certificate_request_;
   em::DeviceManagementRequest upload_status_request_;
   em::DeviceManagementRequest remote_command_request_;
   em::DeviceManagementRequest attribute_update_permission_request_;
@@ -774,28 +781,41 @@ TEST_F(CloudPolicyClientTest, PolicyFetchWithExtensionPolicy) {
   }
 }
 
-TEST_F(CloudPolicyClientTest, UploadCertificate) {
+TEST_F(CloudPolicyClientTest, UploadEnterpriseMachineCertificate) {
   Register();
 
-  ExpectUploadCertificate();
+  ExpectUploadCertificate(upload_device_certificate_request_);
   EXPECT_CALL(callback_observer_, OnCallbackComplete(true)).Times(1);
   CloudPolicyClient::StatusCallback callback = base::Bind(
       &MockStatusCallbackObserver::OnCallbackComplete,
       base::Unretained(&callback_observer_));
-  client_->UploadCertificate(kDeviceCertificate, callback);
+  client_->UploadEnterpriseMachineCertificate(kDeviceCertificate, callback);
   EXPECT_EQ(DM_STATUS_SUCCESS, client_->status());
 }
 
-TEST_F(CloudPolicyClientTest, UploadCertificateEmpty) {
+TEST_F(CloudPolicyClientTest, UploadEnterpriseEnrollmentCertificate) {
+  Register();
+
+  ExpectUploadCertificate(upload_enrollment_certificate_request_);
+  EXPECT_CALL(callback_observer_, OnCallbackComplete(true)).Times(1);
+  CloudPolicyClient::StatusCallback callback =
+      base::BindOnce(&MockStatusCallbackObserver::OnCallbackComplete,
+                     base::Unretained(&callback_observer_));
+  client_->UploadEnterpriseEnrollmentCertificate(kEnrollmentCertificate,
+                                                 callback);
+  EXPECT_EQ(DM_STATUS_SUCCESS, client_->status());
+}
+
+TEST_F(CloudPolicyClientTest, UploadEnterpriseMachineCertificateEmpty) {
   Register();
 
   upload_certificate_response_.clear_cert_upload_response();
-  ExpectUploadCertificate();
+  ExpectUploadCertificate(upload_enrollment_certificate_request_);
   EXPECT_CALL(callback_observer_, OnCallbackComplete(false)).Times(1);
   CloudPolicyClient::StatusCallback callback = base::Bind(
       &MockStatusCallbackObserver::OnCallbackComplete,
       base::Unretained(&callback_observer_));
-  client_->UploadCertificate(kDeviceCertificate, callback);
+  client_->UploadEnterpriseEnrollmentCertificate(kDeviceCertificate, callback);
   EXPECT_EQ(DM_STATUS_SUCCESS, client_->status());
 }
 
