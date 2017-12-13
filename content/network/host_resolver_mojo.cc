@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "net/dns/host_resolver_mojo.h"
+#include "content/network/host_resolver_mojo.h"
 
 #include <memory>
 #include <utility>

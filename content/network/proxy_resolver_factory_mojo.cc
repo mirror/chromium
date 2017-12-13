@@ -19,7 +19,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/base/load_states.h"
 #include "net/base/net_errors.h"
-#include "net/dns/mojo_host_resolver_impl.h"
+#include "content/network/mojo_host_resolver_impl.h"
 #include "net/interfaces/host_resolver_service.mojom.h"
 #include "net/log/net_log.h"
 #include "net/log/net_log_capture_mode.h"
