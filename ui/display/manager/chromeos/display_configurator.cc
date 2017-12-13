@@ -887,7 +887,11 @@ void DisplayConfigurator::SetDisplayPowerInternal(
     return;
   }
 
-  RunPendingConfiguration();
+  // Delay display configuration in case there are displays that are not
+  // detected yet.
+  configure_timer_.Start(FROM_HERE,
+                         base::TimeDelta::FromMilliseconds(kConfigureDelayMs),
+                         this, &DisplayConfigurator::RunPendingConfiguration);
 }
 
 void DisplayConfigurator::SetDisplayPower(
