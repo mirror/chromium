@@ -13,8 +13,8 @@
 
 namespace blink {
 
-DictionaryIterator::DictionaryIterator(v8::Local<v8::Object> iterator,
-                                       v8::Isolate* isolate)
+DictionaryIterator::DictionaryIterator(v8::Isolate* isolate,
+                                       v8::Local<v8::Object> iterator)
     : isolate_(isolate),
       iterator_(iterator),
       next_key_(V8AtomicString(isolate, "next")),
