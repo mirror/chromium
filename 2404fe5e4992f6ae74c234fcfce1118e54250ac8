@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09b694c7_a587aa43",
+        "filename": "ash/public/interfaces/wallpaper.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T08:41:55Z",
+      "side": 1,
+      "message": "nit: policy \u0027controlled\u0027 wallpaper",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686d2379_e136b1bd",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T08:41:55Z",
+      "side": 1,
+      "message": "A suggestion (please ignore if it doesn\u0027t work well): we can leave everything related to device policy wallpaper in //chrome: let wallpaper_policy_handler do the decoding as well (maybe still using the chrome decoder since SetCustomWallpaper is using it anyway), so that the mojo call can be changed to:\n\nSetDevicePolicyWallpaper(image) {\n\nWallpaperInfo info{... DEVICE ...};   // The only reason that WallpaperController should \n                                      // know this is device wallpaper is for removing blur,\n                                      // otherwise it could just be an image even without type.\nSetWallpaperImage(image, info);\n\n}\n\nSince there will be many ShowUserWallpaper() requests at login screen, they should be ignored. So at the beginning of WallpaperController::ShowUserWallpaper(), we can add an early return such as:\n\nif (is_device_wallpaper_policy_enforced_ \u0026\u0026 /*at login screen*/)\n  return;\n\nSo the goal is that if device policy is enforced, WallpaperController will only receive one request (just the SetDevicePolicyWallpaper) during the entire login screen, everything else should be prevented. In this way, we don\u0027t have to call SetDevicePolicyWallpaperIfApplicable in many places. And the GetDeviceFilePath call can be removed.\n\nIf we want to allow removing device policy wallpaper at login screen (but it will remain TODO for some time according to the other reply.), WallpaperControllerClient can choose whichever mojo it wants then.\n\nI think since a lot of device policy wallpaper code has to reside in Chrome anyways, it\u0027s better to put everything in Chrome, instead of splitting it. In addition, no matter which method we choose, I think it depends on that the value of |is_device_wallpaper_policy_enforced_| is properly updated before the first |ShowUserWallpaper| request is called. However with the new views-based login screen (~M66) which is very fast, it may not be the case. Can we try to update |is_device_wallpaper_policy_enforced_| synchronously to prevent the |ShowUserWallpaper| call? Although downloading and decoding may take some time, it seems that a temporary black screen is better than showing a user wallpaper for a second before changing to device policy wallpaper?",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa74e2ad_51eb8362",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T08:41:55Z",
+      "side": 1,
+      "message": "It seems device policy wallpaper is not allowed on lock screen? If so can we just check !SessionController::IsActiveUserSessionStarted()",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e985f0_aabaa984",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T08:41:55Z",
+      "side": 1,
+      "message": "I think this part is tricky. It\u0027s not necessarily the first user in the user list, but should be the user displayed with the \u0027large\u0027 pod (since when we toggle between the large and small pods at login screen, the session controller doesn\u0027t update the order in the user list. In addition, the large pod may also be different from the focused pod, since we disabled showing wallpaper for small focused pods. It may also be the sign in wallpaper since GAIA page may be open at the point) So I think the login screen should provide a getter to return account id of the current large pod. This should be easy once the views-based login screen launches, but with the current web-ui implementation it\u0027s harder to do. So this part may need to remain TODO for some time.\n\nThere may be a solution, which is to use the recorded last selected user account id in ShowUserWallpaper(), but it\u0027s not very safe IMO.",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b785981e_ec1d2ab9",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-13T08:41:55Z",
+      "side": 1,
+      "message": "nit: a blank line between the two?",
+      "revId": "2404fe5e4992f6ae74c234fcfce1118e54250ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
