@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "617902e9_9808953b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-13T13:07:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4fcaf59_9b628175",
+      "revId": "928c9a6415d17b9c85cb6b85e4a6362f6c7118de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8990afba_be346d08",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.h.tmpl",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "928c9a6415d17b9c85cb6b85e4a6362f6c7118de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcc76ce_3f945e3b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSUnresolvedProperty.h.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-12-13T13:07:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8990afba_be346d08",
+      "revId": "928c9a6415d17b9c85cb6b85e4a6362f6c7118de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
