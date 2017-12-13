@@ -121,6 +121,7 @@ class UpdateEngine {
 struct UpdateContext {
   UpdateContext(
       const scoped_refptr<Configurator>& config,
+      bool is_machine_install,
       bool is_foreground,
       const std::vector<std::string>& ids,
       UpdateClient::CrxDataCallback crx_data_callback,
@@ -132,8 +133,11 @@ struct UpdateContext {
 
   scoped_refptr<Configurator> config;
 
+  // True if Chrome is installed per-machine (aka per-system).
+  const bool is_machine_install = false;
+
   // True if this update has been initiated by the user.
-  bool is_foreground = false;
+  const bool is_foreground = false;
 
   // True if the component updates are enabled in this context.
   const bool enabled_component_updates;

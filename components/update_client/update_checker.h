@@ -26,6 +26,7 @@ class UpdateChecker {
       base::OnceCallback<void(int error, int retry_after_sec)>;
 
   using Factory = std::unique_ptr<UpdateChecker> (*)(
+      bool is_machine_install,
       const scoped_refptr<Configurator>& config,
       PersistedData* persistent);
 
@@ -44,6 +45,7 @@ class UpdateChecker {
                                UpdateCheckCallback update_check_callback) = 0;
 
   static std::unique_ptr<UpdateChecker> Create(
+      bool is_machine_install,
       const scoped_refptr<Configurator>& config,
       PersistedData* persistent);
 

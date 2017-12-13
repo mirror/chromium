@@ -65,7 +65,7 @@ void PingManagerTest::RunThreadsUntilIdle() {
 
 std::unique_ptr<UpdateContext> PingManagerTest::MakeFakeUpdateContext() const {
   return base::MakeUnique<UpdateContext>(
-      config_, false, std::vector<std::string>(),
+      config_, false, false, std::vector<std::string>(),
       UpdateClient::CrxDataCallback(), UpdateEngine::NotifyObserversCallback(),
       UpdateEngine::Callback(), nullptr);
 }

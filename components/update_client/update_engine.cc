@@ -27,6 +27,7 @@ namespace update_client {
 
 UpdateContext::UpdateContext(
     const scoped_refptr<Configurator>& config,
+    bool is_machine_install,
     bool is_foreground,
     const std::vector<std::string>& ids,
     UpdateClient::CrxDataCallback crx_data_callback,
@@ -34,6 +35,7 @@ UpdateContext::UpdateContext(
     UpdateEngine::Callback callback,
     CrxDownloader::Factory crx_downloader_factory)
     : config(config),
+      is_machine_install(is_machine_install),
       is_foreground(is_foreground),
       enabled_component_updates(config->EnabledComponentUpdates()),
       ids(ids),
@@ -80,9 +82,9 @@ void UpdateEngine::Update(bool is_foreground,
   }
 
   const auto result = update_contexts_.insert(base::MakeUnique<UpdateContext>(
-      config_, is_foreground, ids, std::move(crx_data_callback),
-      notify_observers_callback_, std::move(callback),
-      crx_downloader_factory_));
+      config_, !config_->IsPerUserInstall(), is_foreground, ids,
+      std::move(crx_data_callback), notify_observers_callback_,
+      std::move(callback), crx_downloader_factory_));
 
   DCHECK(result.second);
 
@@ -154,8 +156,8 @@ void UpdateEngine::DoUpdateCheck(const UpdateContextIterator it) {
   const auto& update_context = *it;
   DCHECK(update_context);
 
-  update_context->update_checker =
-      update_checker_factory_(config_, metadata_.get());
+  update_context->update_checker = update_checker_factory_(
+      update_context->is_machine_install, config_, metadata_.get());
 
   update_context->update_checker->CheckForUpdates(
       update_context->ids, update_context->components,
@@ -346,9 +348,9 @@ void UpdateEngine::SendUninstallPing(const std::string& id,
   DCHECK(thread_checker_.CalledOnValidThread());
 
   const auto result = update_contexts_.insert(base::MakeUnique<UpdateContext>(
-      config_, false, std::vector<std::string>{id},
-      UpdateClient::CrxDataCallback(), UpdateEngine::NotifyObserversCallback(),
-      std::move(callback), nullptr));
+      config_, !config_->IsPerUserInstall(), false,
+      std::vector<std::string>{id}, UpdateClient::CrxDataCallback(),
+      UpdateEngine::NotifyObserversCallback(), std::move(callback), nullptr));
 
   DCHECK(result.second);
 
