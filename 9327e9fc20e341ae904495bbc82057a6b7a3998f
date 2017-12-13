@@ -914,6 +914,24 @@
     },
     {
       "key": {
+        "uuid": "1b0d453e_6aa80421",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-12-13T14:24:07Z",
+      "side": 1,
+      "message": "Sorry if it feels like I\u0027m trying to push back, that\u0027s not the case, I\u0027m only missing a proper name :-)\n\n\u003e \u003e What doesn\u0027t feel right is that we\u0027d rename |url| but not be consistent with the rest of the fields (e.g. timestamp).\n\u003e \n\u003e I\u0027m not opposed to prefixing the others as well (foo_url, foo_timestamp, foo_transition_type), if we come up with a name we\u0027re both happy with.\n\u003e \n\u003e \u003e I think the wrapping struct/proto already provides sufficient context without coining a new term, but I\u0027m open to your naming suggestions since you seem to be feeling quite strongly, \n\u003e \n\u003e The main reason I feel this isn\u0027t sufficient is that \"ReplacedEntryData\" sounds like it tracks what was most recently replaced (e.g., what was the URL/etc just before the current one), and not the \"first\" one.  It\u0027s ambiguous in context, and I feel like readers will always have to come here to figure out what it means.\n\u003e \n\u003e (We\u0027ve also been bitten by people misusing ambiguously named URLs in the past, which is another reason I\u0027m hoping to qualify it.)\n\u003e \n\u003e \u003e but I\u0027d recommend avoiding the term \u0027landing\u0027 since it contradicts an existing concept. Perhaps replaced_url?\n\u003e \n\u003e replaced_url has the same problem, in that it sounds like something that might get updated on every replacement.\n\nWhy does that concern not apply to \u0027landing\u0027?\n\n\u003e \n\u003e What concept is \"landing\" contradicting?  We\u0027re already using that term in the comment of CopyReplacedNavigationEntryDataIfPreviouslyEmpty, and it seems to make sense to me from a server redirect perspective.  It seems like client redirects would be post-landing, but maybe that\u0027s where we\u0027re disagreeing?\n\nI think you\u0027re right, client-side redirects can be interpreted as post-landing.\n\n\u003e \n\u003e I\u0027m not sure if \"original\" or \"first\" would be much better.\n\nBased on what I hear from you, it feels like \u0027first\u0027 is the only proposal that emphasizes the notion of not being overriden repeatedly (\u0027original\u0027 too but the term would be overloaded for URLs).\n\nThen:\nfirst_landing_url\nfirst_timestamp\nfirst_page_transition\n\nWDYT?\n\nDoes this concern not apply to the datatype itself, so it\u0027d become FirstReplacedNavigationEntryData?\n\n\u003e \n\u003e I\u0027d really prefer to have a name for this if we can, but I won\u0027t hold the CL up any longer if we can\u0027t find something to agree on.  Hopefully I\u0027ve conveyed why I\u0027m concerned about it, at any rate.\n\nI\u0027m OK with spending time in converging in this point, no worries about that and thanks for the review.",
+      "parentUuid": "e7009941_231c1d04",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab38e0d3_8176d47b",
         "filename": "content/public/browser/navigation_entry.h",
         "patchSetId": 5
