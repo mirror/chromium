@@ -48,6 +48,7 @@ enum ShelfItemType {
               // - Extension "V2" (platform) apps,
               // - ARC (App Runtime for Chrome - Android Play Store) apps.
   DIALOG,     // An open dialog.
+  BACK_BUTTON,// The back button which is shown in tablet mode.
   UNDEFINED,  // Default value.
 };
 
