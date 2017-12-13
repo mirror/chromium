@@ -128,7 +128,9 @@ void BattOrConnectionImpl::OnOpened(bool success) {
     return;
   }
 
-  Flush();
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(&Listener::OnConnectionOpened,
+                              base::Unretained(listener_), true));
 }
 
 void BattOrConnectionImpl::Close() {
@@ -150,10 +152,8 @@ void BattOrConnectionImpl::SendBytes(BattOrMessageType type,
   data.push_back(type);
 
   for (size_t i = 0; i < bytes_to_send; i++) {
-    if (bytes[i] == BATTOR_CONTROL_BYTE_START ||
-        bytes[i] == BATTOR_CONTROL_BYTE_END) {
+    if (bytes[i] <= BATTOR_CONTROL_BYTE_ESCAPE)
       data.push_back(BATTOR_CONTROL_BYTE_ESCAPE);
-    }
 
     data.push_back(bytes[i]);
   }
@@ -235,17 +235,17 @@ void BattOrConnectionImpl::OnBytesReadForMessage(
 
   // NOTE: Zero bytes may have been read.
 
-  if (pending_read_message_type_ == BATTOR_MESSAGE_TYPE_SAMPLES) {
-    // If we're reading samples, don't log every byte that we receive. This
-    // exacerbates a problem on Mac wherein we can't process sample frames
-    // quickly enough to prevent the serial buffer from overflowing, causing us
-    // to drop frames.
-    LogSerial(StringPrintf("(message) %d more bytes read.", bytes_read));
-  } else {
+  //if (pending_read_message_type_ == BATTOR_MESSAGE_TYPE_SAMPLES) {
+  //  // If we're reading samples, don't log every byte that we receive. This
+  //  // exacerbates a problem on Mac wherein we can't process sample frames
+  //  // quickly enough to prevent the serial buffer from overflowing, causing us
+  //  // to drop frames.
+  //  LogSerial(StringPrintf("(message) %d more bytes read.", bytes_read));
+  //} else {
     LogSerial(StringPrintf(
         "(message) %d more bytes read: %s.", bytes_read,
         CharArrayToString(pending_read_buffer_->data(), bytes_read).c_str()));
-  }
+  //}
 
   already_read_buffer_.insert(already_read_buffer_.end(),
                               pending_read_buffer_->data(),
@@ -345,7 +345,7 @@ void BattOrConnectionImpl::OnBytesReadForFlush(
         static_cast<int>(error)));
     pending_read_buffer_ = nullptr;
     base::SequencedTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&Listener::OnConnectionOpened,
+        FROM_HERE, base::Bind(&Listener::OnConnectionFlushed,
                               base::Unretained(listener_), false));
     return;
   }
@@ -361,7 +361,7 @@ void BattOrConnectionImpl::OnBytesReadForFlush(
       LogSerial("(flush) Quiet period has finished.");
       pending_read_buffer_ = nullptr;
       base::SequencedTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::Bind(&Listener::OnConnectionOpened,
+          FROM_HERE, base::Bind(&Listener::OnConnectionFlushed,
                                 base::Unretained(listener_), true));
       return;
     }

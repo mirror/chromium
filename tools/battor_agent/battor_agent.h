@@ -90,6 +90,7 @@ class BattOrAgent : public BattOrConnection::Listener,
 
   // BattOrConnection::Listener implementation.
   void OnConnectionOpened(bool success) override;
+  void OnConnectionFlushed(bool success) override;
   void OnBytesSent(bool success) override;
   void OnMessageRead(bool success,
                      BattOrMessageType type,
@@ -171,6 +172,9 @@ class BattOrAgent : public BattOrConnection::Listener,
   // Retry the last command.
   void RetryCommand();
 
+  // Retry the last calibration or data frame.
+  void RetryFrame();
+
   // Completes the command with the specified error.
   void CompleteCommand(BattOrError error);
 
@@ -217,6 +221,9 @@ class BattOrAgent : public BattOrConnection::Listener,
 
   // The number of times we've attempted a command.
   uint8_t num_command_attempts_;
+
+  // The number of times we've attempted receiving a frame.
+  uint8_t num_frame_attempts_;
 
   // The timeout that's run when an action times out.
   base::CancelableClosure timeout_callback_;

@@ -187,6 +187,9 @@ class BattOrAgentTest : public testing::Test, public BattOrAgent::Listener {
     GetAgent()->OnConnectionOpened(true);
     GetTaskRunner()->RunUntilIdle();
 
+    GetAgent()->OnConnectionFlushed(true);
+    GetTaskRunner()->RunUntilIdle();
+
     if (end_state == BattOrAgentState::CONNECTED)
       return;
 
@@ -226,6 +229,9 @@ class BattOrAgentTest : public testing::Test, public BattOrAgent::Listener {
     GetTaskRunner()->RunUntilIdle();
 
     GetAgent()->OnConnectionOpened(true);
+    GetTaskRunner()->RunUntilIdle();
+
+    GetAgent()->OnConnectionFlushed(true);
     GetTaskRunner()->RunUntilIdle();
 
     if (end_state == BattOrAgentState::CONNECTED)
@@ -276,6 +282,9 @@ class BattOrAgentTest : public testing::Test, public BattOrAgent::Listener {
     GetAgent()->OnConnectionOpened(true);
     GetTaskRunner()->RunUntilIdle();
 
+    GetAgent()->OnConnectionFlushed(true);
+    GetTaskRunner()->RunUntilIdle();
+
     if (end_state == BattOrAgentState::CONNECTED)
       return;
 
@@ -296,6 +305,9 @@ class BattOrAgentTest : public testing::Test, public BattOrAgent::Listener {
     GetTaskRunner()->RunUntilIdle();
 
     GetAgent()->OnConnectionOpened(true);
+    GetTaskRunner()->RunUntilIdle();
+
+    GetAgent()->OnConnectionFlushed(true);
     GetTaskRunner()->RunUntilIdle();
 
     if (end_state == BattOrAgentState::CONNECTED)
@@ -339,6 +351,7 @@ class BattOrAgentTest : public testing::Test, public BattOrAgent::Listener {
 TEST_F(BattOrAgentTest, StartTracing) {
   testing::InSequence s;
   EXPECT_CALL(*GetAgent()->GetConnection(), Open());
+  EXPECT_CALL(*GetAgent()->GetConnection(), Flush());
 
   BattOrControlMessage init_msg{BATTOR_CONTROL_MESSAGE_TYPE_INIT, 0, 0};
   EXPECT_CALL(
@@ -535,6 +548,8 @@ TEST_F(BattOrAgentTest, StartTracingFailsAfterTooManyCumulativeFailures) {
     RunStartTracingTo(BattOrAgentState::SET_GAIN_SENT);
     OnMessageRead(false, BATTOR_MESSAGE_TYPE_CONTROL_ACK, nullptr);
 
+    std::cerr << "IsCommandComplete(" << IsCommandComplete() << ")" << std::endl;
+
     EXPECT_FALSE(IsCommandComplete());
   }
 
@@ -562,6 +577,7 @@ TEST_F(BattOrAgentTest, StartTracingRestartsConnectionUponRetry) {
 TEST_F(BattOrAgentTest, StopTracing) {
   testing::InSequence s;
   EXPECT_CALL(*GetAgent()->GetConnection(), Open());
+  EXPECT_CALL(*GetAgent()->GetConnection(), Flush());
 
   BattOrControlMessage request_eeprom_msg{
       BATTOR_CONTROL_MESSAGE_TYPE_READ_EEPROM, sizeof(BattOrEEPROM), 0};
@@ -920,6 +936,7 @@ TEST_F(BattOrAgentTest, StopTracingRestartsConnectionUponRetry) {
 TEST_F(BattOrAgentTest, RecordClockSyncMarker) {
   testing::InSequence s;
   EXPECT_CALL(*GetAgent()->GetConnection(), Open());
+  EXPECT_CALL(*GetAgent()->GetConnection(), Flush());
 
   BattOrControlMessage request_current_sample_msg{
       BATTOR_CONTROL_MESSAGE_TYPE_READ_SAMPLE_COUNT, 0, 0};

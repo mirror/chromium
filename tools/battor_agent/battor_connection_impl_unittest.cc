@@ -57,6 +57,10 @@ class BattOrConnectionImplTest : public testing::Test,
     is_open_complete_ = true;
     open_success_ = success;
   };
+  void OnConnectionFlushed(bool success) override {
+    is_flush_complete_ = true;
+    flush_success_ = success;
+  };
   void OnBytesSent(bool success) override { send_success_ = success; }
   void OnMessageRead(bool success,
                      BattOrMessageType type,
@@ -143,6 +147,9 @@ class BattOrConnectionImplTest : public testing::Test,
   // Result from the last connect command.
   bool open_success_;
   bool is_open_complete_;
+  // Result from the last flush command.
+  bool flush_success_;
+  bool is_flush_complete_;
   // Result from the last send command.
   bool send_success_;
   // Results from the last read command.

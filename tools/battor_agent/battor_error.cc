@@ -24,6 +24,8 @@ std::string BattOrErrorToString(BattOrError error) {
       return "UNEXPECTED MESSAGE";
     case BATTOR_ERROR_TOO_MANY_COMMAND_RETRIES:
       return "TOO MANY COMMAND RETRIES";
+    case BATTOR_ERROR_TOO_MANY_FRAME_RETRIES:
+      return "TOO MANY FRAME RETRIES";
   }
 
   NOTREACHED();

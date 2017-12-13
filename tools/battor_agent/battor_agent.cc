@@ -1,3 +1,5 @@
+// TODO If you get a end of frame message at the wrong time indicate an error and drop out
+
 // Copyright 2015 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -6,6 +8,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <vector>
+#include <iostream>
 
 #include "base/bind.h"
 #include "base/strings/stringprintf.h"
@@ -22,6 +25,9 @@ namespace {
 
 // The maximum number of times to retry a command.
 const uint8_t kMaxCommandAttempts = 10;
+
+// The maximum number of times to retry a calibration or data frame.
+const uint8_t kMaxFrameAttempts = 10;
 
 // The amount of time we need to wait after recording a clock sync marker in
 // order to ensure that the sample we synced to doesn't get thrown out.
@@ -91,7 +97,9 @@ BattOrAgent::BattOrAgent(
       listener_(listener),
       last_action_(Action::INVALID),
       command_(Command::INVALID),
-      num_command_attempts_(0) {
+      next_sequence_number_(0),
+      num_command_attempts_(0),
+      num_frame_attempts_(0) {
   // We don't care what sequence the constructor is called on - we only care
   // that all of the other method invocations happen on the same sequence.
   DETACH_FROM_SEQUENCE(sequence_checker_);
@@ -154,27 +162,50 @@ void BattOrAgent::OnConnectionOpened(bool success) {
     return;
   }
 
-  switch (command_) {
-    case Command::START_TRACING:
-      PerformAction(Action::SEND_INIT);
-      return;
-    case Command::STOP_TRACING:
-      PerformAction(Action::SEND_EEPROM_REQUEST);
-      return;
-    case Command::RECORD_CLOCK_SYNC_MARKER:
-      PerformAction(Action::SEND_CURRENT_SAMPLE_REQUEST);
-      return;
-    case Command::GET_FIRMWARE_GIT_HASH:
-      PerformAction(Action::SEND_GIT_HASH_REQUEST);
-      return;
-    case Command::INVALID:
-      NOTREACHED();
-      return;
+  connection_->Flush();
+}
+
+void BattOrAgent::OnConnectionFlushed(bool success) {
+  if (!success) {
+    CompleteCommand(BATTOR_ERROR_CONNECTION_FAILED);
+    return;
   }
+
+  // Flush after opening connection.
+  if (last_action_ == Action::REQUEST_CONNECTION) {
+    switch (command_) {
+      case Command::START_TRACING:
+        PerformAction(Action::SEND_INIT);
+        return;
+      case Command::STOP_TRACING:
+        PerformAction(Action::SEND_EEPROM_REQUEST);
+        return;
+      case Command::RECORD_CLOCK_SYNC_MARKER:
+        PerformAction(Action::SEND_CURRENT_SAMPLE_REQUEST);
+        return;
+      case Command::GET_FIRMWARE_GIT_HASH:
+        PerformAction(Action::SEND_GIT_HASH_REQUEST);
+        return;
+      case Command::INVALID:
+        NOTREACHED();
+        return;
+      }
+    }
+
+    // Flush after error receiving frame.
+    else if (last_action_ == Action::READ_CALIBRATION_FRAME ||
+        last_action_ == Action::READ_DATA_FRAME) {
+      PerformAction(Action::SEND_SAMPLES_REQUEST);
+    }
+
+    else
+      NOTREACHED();
 }
 
 void BattOrAgent::OnBytesSent(bool success) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  std::cerr << "OnBytesSent(action=" << int(last_action_) << ")" << std::endl;
 
   if (!success) {
     CompleteCommand(BATTOR_ERROR_SEND_ERROR);
@@ -195,7 +226,10 @@ void BattOrAgent::OnBytesSent(bool success) {
       PerformAction(Action::READ_EEPROM);
       return;
     case Action::SEND_SAMPLES_REQUEST:
-      PerformAction(Action::READ_CALIBRATION_FRAME);
+      if (next_sequence_number_ == 0)
+        PerformAction(Action::READ_CALIBRATION_FRAME);
+      else
+        PerformAction(Action::READ_DATA_FRAME);
       return;
     case Action::SEND_CURRENT_SAMPLE_REQUEST:
       PerformAction(Action::READ_CURRENT_SAMPLE);
@@ -221,9 +255,13 @@ void BattOrAgent::OnMessageRead(bool success,
       case Action::READ_SET_GAIN_ACK:
       case Action::READ_START_TRACING_ACK:
       case Action::READ_EEPROM:
-      case Action::READ_CALIBRATION_FRAME:
-      case Action::READ_DATA_FRAME:
         RetryCommand();
+        return;
+
+      case Action::READ_DATA_FRAME:
+      case Action::READ_CALIBRATION_FRAME:
+        std::cerr << "--Retry in OnMessageRead" << std::endl;
+        RetryFrame();
         return;
 
       case Action::READ_CURRENT_SAMPLE:
@@ -295,28 +333,32 @@ void BattOrAgent::OnMessageRead(bool success,
     }
     case Action::READ_CALIBRATION_FRAME: {
       BattOrFrameHeader frame_header;
-      if (!ParseSampleFrame(type, *bytes, next_sequence_number_++,
+      if (!ParseSampleFrame(type, *bytes, next_sequence_number_,
                             &frame_header, &calibration_frame_)) {
-        RetryCommand();
+        std::cerr << "--Retry in READ_CALIBRATION_FRAME" << std::endl;
+        RetryFrame();
         return;
       }
 
       // Make sure that the calibration frame has actual samples in it.
       if (calibration_frame_.empty()) {
-        RetryCommand();
+        // TODO Quit with error file not found.
         return;
       }
 
-      PerformAction(Action::READ_DATA_FRAME);
+      next_sequence_number_++;
+      num_frame_attempts_ = 0;
+      PerformAction(Action::SEND_SAMPLES_REQUEST);
       return;
     }
 
     case Action::READ_DATA_FRAME: {
       BattOrFrameHeader frame_header;
       vector<RawBattOrSample> frame;
-      if (!ParseSampleFrame(type, *bytes, next_sequence_number_++,
+      if (!ParseSampleFrame(type, *bytes, next_sequence_number_,
                             &frame_header, &frame)) {
-        RetryCommand();
+        std::cerr << "--Retry in READ_DATA_FRAME" << std::endl;
+        RetryFrame();
         return;
       }
 
@@ -329,7 +371,9 @@ void BattOrAgent::OnMessageRead(bool success,
 
       samples_.insert(samples_.end(), frame.begin(), frame.end());
 
-      PerformAction(Action::READ_DATA_FRAME);
+      next_sequence_number_++;
+      num_frame_attempts_ = 0;
+      PerformAction(Action::SEND_SAMPLES_REQUEST);
       return;
     }
 
@@ -407,7 +451,7 @@ void BattOrAgent::PerformAction(Action action) {
     case Action::SEND_SAMPLES_REQUEST:
       // Send a request to the BattOr to tell it to start streaming the samples
       // that it's stored on its SD card over the serial connection.
-      SendControlMessage(BATTOR_CONTROL_MESSAGE_TYPE_READ_SD_UART, 0, 0);
+      SendControlMessage(BATTOR_CONTROL_MESSAGE_TYPE_READ_SD_UART, 0, next_sequence_number_);
       return;
     case Action::READ_CALIBRATION_FRAME:
       // Data frames are numbered starting at zero and counting up by one each
@@ -544,7 +588,7 @@ bool BattOrAgent::ParseSampleFrame(BattOrMessageType type,
 void BattOrAgent::RetryCommand() {
   if (++num_command_attempts_ >= kMaxCommandAttempts) {
     connection_->LogSerial(StringPrintf(
-        "Exhausted retry attempts (would have been attempt %d of %d).",
+        "Exhausted command retry attempts (would have been attempt %d of %d).",
         num_command_attempts_ + 1, kMaxCommandAttempts));
     CompleteCommand(BATTOR_ERROR_TOO_MANY_COMMAND_RETRIES);
     return;
@@ -577,6 +621,20 @@ void BattOrAgent::RetryCommand() {
   base::SequencedTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, next_command,
       base::TimeDelta::FromSeconds(kCommandRetryDelaySeconds));
+}
+
+void BattOrAgent::RetryFrame() {
+  std::cerr << "RetryFrame()" << std::endl;
+
+  if (++num_frame_attempts_ >= kMaxFrameAttempts) {
+    connection_->LogSerial(StringPrintf(
+        "Exhausted frame retry attempts (would have been attempt %d of %d).",
+        num_frame_attempts_ + 1, kMaxFrameAttempts));
+    CompleteCommand(BATTOR_ERROR_TOO_MANY_FRAME_RETRIES);
+    return;
+  }
+
+  connection_->Flush();
 }
 
 void BattOrAgent::CompleteCommand(BattOrError error) {
