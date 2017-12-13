@@ -2576,6 +2576,7 @@ void GLES2TraceImplementation::BeginRasterCHROMIUM(
 }
 
 void GLES2TraceImplementation::RasterCHROMIUM(const cc::DisplayItemList* list,
+                                              cc::ImageProvider* provider,
                                               GLint translate_x,
                                               GLint translate_y,
                                               GLint clip_x,
@@ -2586,8 +2587,9 @@ void GLES2TraceImplementation::RasterCHROMIUM(const cc::DisplayItemList* list,
                                               GLfloat post_translate_y,
                                               GLfloat post_scale) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "GLES2Trace::RasterCHROMIUM");
-  gl_->RasterCHROMIUM(list, translate_x, translate_y, clip_x, clip_y, clip_w,
-                      clip_h, post_translate_x, post_translate_y, post_scale);
+  gl_->RasterCHROMIUM(list, provider, translate_x, translate_y, clip_x, clip_y,
+                      clip_w, clip_h, post_translate_x, post_translate_y,
+                      post_scale);
 }
 
 void GLES2TraceImplementation::EndRasterCHROMIUM() {
