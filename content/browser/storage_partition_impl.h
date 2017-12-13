@@ -151,6 +151,19 @@ class CONTENT_EXPORT StoragePartitionImpl
 
   auto& bindings_for_testing() { return bindings_; }
 
+  // When this StoragePartition is for guests, the site URL to use when creating
+  // a SiteInstance for a service worker for this StoragePartition. Typically
+  // one would use the script URL of the service worker
+  // (e.g., "https://example.com/sw.js", but if this StoragePartition is for
+  // guests, one must use the "chrome-guest://blahblah" URL. This is an empty
+  // GURL if this StoragePartition is not for guests.
+  void set_site_for_service_worker(const GURL& site_for_service_worker) {
+    site_for_service_worker_ = site_for_service_worker;
+  }
+  const GURL& site_for_service_worker() const {
+    return site_for_service_worker_;
+  }
+
   struct DataDeletionHelper;
   struct QuotaManagedDataDeletionHelper;
 
@@ -297,6 +310,9 @@ class CONTENT_EXPORT StoragePartitionImpl
   // StoragePartitionImplMap which then owns StoragePartitionImpl. When the
   // BrowserContext is destroyed, |this| will be destroyed too.
   BrowserContext* browser_context_;
+
+  // See comments for site_for_service_worker().
+  GURL site_for_service_worker_;
 
   base::WeakPtrFactory<StoragePartitionImpl> weak_factory_;
 
