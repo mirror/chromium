@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d604e761_38fc939d",
+        "filename": "media/mojo/services/media_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-13T23:32:20Z",
+      "side": 1,
+      "message": "Correct. I\u0027m tempted to add a DCHECK here even though it\u0027s against the style guide, but I think the BadMessage log will be sufficient for bug reports.",
+      "parentUuid": "510497b2_4c3c655d",
+      "range": {
+        "startLine": 53,
+        "startChar": 10,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "8c739b67962bb826fcc23ba868078c7e952b51d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a6f992d_a2820c67",
         "filename": "media/mojo/services/video_decode_perf_history_unittest.cc",
         "patchSetId": 4
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "3d942ab0_991ddd07",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-13T23:32:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b6f3286_984bb735",
+      "range": {
+        "startLine": 150,
+        "startChar": 61,
+        "endLine": 151,
+        "endChar": 40
+      },
+      "revId": "8c739b67962bb826fcc23ba868078c7e952b51d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f87e77df_9629db74",
         "filename": "media/mojo/services/watch_time_recorder_unittest.cc",
         "patchSetId": 4
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "d78264ac_84e7313e",
+        "filename": "media/mojo/services/watch_time_recorder_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-13T23:32:20Z",
+      "side": 1,
+      "message": "I could but it\u0027s not necessary. This is how all the other tests in this file work.",
+      "parentUuid": "f87e77df_9629db74",
+      "range": {
+        "startLine": 395,
+        "startChar": 18,
+        "endLine": 395,
+        "endChar": 30
+      },
+      "revId": "8c739b67962bb826fcc23ba868078c7e952b51d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4a7d9d9_2574da89",
         "filename": "media/mojo/services/watch_time_recorder_unittest.cc",
         "patchSetId": 4
@@ -114,6 +186,30 @@
       "revId": "8c739b67962bb826fcc23ba868078c7e952b51d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b0e3c4_81ebaae2",
+        "filename": "media/mojo/services/watch_time_recorder_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-13T23:32:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c4a7d9d9_2574da89",
+      "range": {
+        "startLine": 454,
+        "startChar": 18,
+        "endLine": 454,
+        "endChar": 30
+      },
+      "revId": "8c739b67962bb826fcc23ba868078c7e952b51d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
