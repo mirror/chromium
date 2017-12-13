@@ -13,8 +13,6 @@ namespace device {
 
 namespace {
 
-constexpr double kEpsilon = 1e-8;
-
 class LinearAccelerationFusionAlgorithmUsingAccelerometerTest
     : public DeviceServiceTestBase {
  public:
@@ -66,6 +64,7 @@ class LinearAccelerationFusionAlgorithmUsingAccelerometerTest
     EXPECT_TRUE(fusion_algorithm_->GetFusedData(
         mojom::SensorType::ACCELEROMETER, &fused_reading));
 
+    constexpr double kEpsilon = 1e-8;
     EXPECT_NEAR(expected_linear_acceleration_x, fused_reading.accel.x,
                 kEpsilon);
     EXPECT_NEAR(expected_linear_acceleration_y, fused_reading.accel.y,

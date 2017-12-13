@@ -17,8 +17,6 @@ namespace device {
 
 namespace {
 
-constexpr double kEpsilon = 1e-8;
-
 class
     AbsoluteOrientationEulerAnglesFusionAlgorithmUsingAccelerometerAndMagnetometerTest
     : public DeviceServiceTestBase {
@@ -61,6 +59,7 @@ class
     EXPECT_TRUE(fusion_algorithm_->GetFusedData(
         mojom::SensorType::ACCELEROMETER, &fused_reading));
 
+    constexpr double kEpsilon = 1e-8;
     EXPECT_NEAR(expected_alpha_in_degrees,
                 fused_reading.orientation_euler.z /* alpha */, kEpsilon);
     EXPECT_NEAR(expected_beta_in_degrees,

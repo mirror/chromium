@@ -12,12 +12,6 @@
 
 namespace device {
 
-namespace {
-
-constexpr double kEpsilon = 1e-8;
-
-}  // namespace
-
 class OrientationQuaternionFusionAlgorithmUsingEulerAnglesTest
     : public DeviceServiceTestBase {
  public:
@@ -75,6 +69,7 @@ TEST_F(OrientationQuaternionFusionAlgorithmUsingEulerAnglesTest,
     double z = fused_reading.orientation_quat.z;
     double w = fused_reading.orientation_quat.w;
 
+    constexpr double kEpsilon = 1e-8;
     EXPECT_NEAR(quaternions_test_values[i][0], x, kEpsilon)
         << "on test value " << i;
     EXPECT_NEAR(quaternions_test_values[i][1], y, kEpsilon)
