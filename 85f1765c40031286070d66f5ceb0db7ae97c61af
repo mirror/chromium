@@ -16,6 +16,24 @@
       "revId": "85f1765c40031286070d66f5ceb0db7ae97c61af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e3b576e_083a0822",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-12-13T18:25:51Z",
+      "side": 1,
+      "message": "ahn, I usually have my tests with fonts.ready... which meant I\u0027ve never exercised a part of this code (well, except on the tests, but those are not ready yet), like NotifyFinish (Which records histograms).",
+      "parentUuid": "b3bb6497_64a74b2a",
+      "revId": "85f1765c40031286070d66f5ceb0db7ae97c61af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
