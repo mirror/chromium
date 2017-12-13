@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3373d9c1_7488eb58",
+        "filename": "chrome/browser/chrome_browser_main_posix.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-13T16:24:42Z",
+      "side": 1,
+      "message": "This and related code has a fair number of platform conditionals that makes it hard to reason about. For example, why does this code call a different variant for Chrome OS? Can this code call AttemptExit() everywhere, and the implemention for chrome os does the right thing? Concretely I\u0027m suggesting application_lifetime.h defines the common interface and chromeos specific functionality lives in application_lifetime_chromeos.cc but the calling code doesn\u0027t have conditionals like this.",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 6
+      },
+      "revId": "cef06987ea856b0a089f6c6138807a816ab127d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
