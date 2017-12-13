@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d3d9d8f_4dfb912c",
+        "filename": "base/metrics/metrics_features.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-13T22:41:11Z",
+      "side": 1,
+      "message": "nit: single word?",
+      "range": {
+        "startLine": 14,
+        "startChar": 22,
+        "endLine": 14,
+        "endChar": 33
+      },
+      "revId": "44df80db4b7e399fac1f63bc91138d4ae60702b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70537edb_90f144c4",
+        "filename": "base/metrics/metrics_features.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-13T22:41:11Z",
+      "side": 1,
+      "message": "s/IsDogFoodUser/IsDogfoodUser/\n?",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "44df80db4b7e399fac1f63bc91138d4ae60702b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
