@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6b922ba8_c44f3c09",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T08:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55a5f5ba_eb87ac7a",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb837e58_5c2805fa",
         "filename": "ui/views/DEPS",
         "patchSetId": 8
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b085848d_19740c8e",
+        "filename": "ui/views/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T08:16:55Z",
+      "side": 1,
+      "message": "\u003e Why is it needed in these non-test targets? I don\u0027t see cause for it in this CL.\n\nOh whoops - I totally missed this was already in views/test. I\u0027ve added a wrapper.",
+      "parentUuid": "76937d1a_cdb70314",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5dc17e1_c2194193",
         "filename": "ui/views/controls/label_unittest.cc",
         "patchSetId": 8
@@ -68,6 +104,24 @@
       "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85859af6_0da2a4c0",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T08:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5dc17e1_c2194193",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "eaf3c1ec_75c7e09a",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T08:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f38a5689_00eac631",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cf5646b_65442300",
         "filename": "ui/views/controls/label_unittest.cc",
         "patchSetId": 8
@@ -102,6 +174,24 @@
       "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97b94cc_8afc6695",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-13T08:16:55Z",
+      "side": 1,
+      "message": "Done. Yeah I dunno - I just copied the values o_O. I don\u0027t think there\u0027s a good reason to use this kind of fuzziness -- it\u0027s hard to troubleshoot, and it can \"drift\" when small errors accumulate over a range of commits.\n\nI\u0027ve gone for a different approach. Basic idea is that we don\u0027t really care about platform-specifics for most tests, and on the same platform the same result should always occur.\n\nUntil proven otherwise that is... GPU quirks might get in the way if they get involved..",
+      "parentUuid": "7cf5646b_65442300",
+      "revId": "f48b25c320d735755b95c8a8b2294f9b1031c191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
