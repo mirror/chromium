@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42c9422d_51607c60",
+        "filename": "chromeos/dbus/dbus_clients_browser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T21:27:02Z",
+      "side": 1,
+      "message": "you probably need to create a fake here; initializing this to nullptr (which we use instead of 0) makes it likely that we\u0027ll end up with segfaults when devs run chrome on their workstations.",
+      "revId": "c9d1160c3938801923d002df016e1a81b5daf7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ed6989_90a3394d",
+        "filename": "chromeos/dbus/dbus_thread_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T21:27:02Z",
+      "side": 1,
+      "message": "nit: alphabetize here too",
+      "revId": "c9d1160c3938801923d002df016e1a81b5daf7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd86031a_2d1c8062",
+        "filename": "chromeos/dbus/dbus_thread_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T21:27:02Z",
+      "side": 1,
+      "message": "please keep this list (mostly) alphabetized. (i don\u0027t know what shill is doing up there.)",
+      "revId": "c9d1160c3938801923d002df016e1a81b5daf7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25279018_66508d9e",
+        "filename": "chromeos/dbus/event_logger_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T21:27:02Z",
+      "side": 1,
+      "message": "delete this; it looks like it\u0027s not used anywhere",
+      "revId": "c9d1160c3938801923d002df016e1a81b5daf7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9124e25_bbb531ab",
+        "filename": "chromeos/dbus/event_logger_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T21:27:02Z",
+      "side": 1,
+      "message": "i don\u0027t understand this. why\u0027s it allocating a new object and assigning it to a static variable? i think you can just delete this method entirely, right? it\u0027s expected for EventLoggerClient to not be fully implemented; it\u0027s just an interface.",
+      "revId": "c9d1160c3938801923d002df016e1a81b5daf7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8248398f_0dd7475a",
+        "filename": "chromeos/dbus/event_logger_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-13T21:27:02Z",
+      "side": 1,
+      "message": "please either define enum values in system_api and use those, or define a protobuf there if you need something more complex/structured. arbitrary strings are hard to work with (if i were writing code to consume these signals, i wouldn\u0027t know what values to expect from looking at this header), easy to typo, and result in unnecessary data being passed over the wire.",
+      "revId": "c9d1160c3938801923d002df016e1a81b5daf7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
