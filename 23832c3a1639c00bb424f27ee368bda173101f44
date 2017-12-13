@@ -16,6 +16,24 @@
       "revId": "23832c3a1639c00bb424f27ee368bda173101f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0995ebc3_32b2b40c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 2
+      },
+      "lineNbr": 4917,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-13T09:04:16Z",
+      "side": 1,
+      "message": "Dunno. I believe it was deemed sensible from a security standpoint to provide an option to only selectively ignore errors, i.e. only those expected by the client - avoiding accidentally ignoring \"real\" errors. ChromeDriver wouldn\u0027t use this option and puppeteer doesn\u0027t either currently, but it may make sense to expose it there in the future for this reason?\n\nIf that\u0027s not the case (anymore), let\u0027s get rid of it. wdyt?",
+      "parentUuid": "697e2a44_e77acf26",
+      "revId": "23832c3a1639c00bb424f27ee368bda173101f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
