@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0d976673_6947e742",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-12-13T21:34:20Z",
+      "side": 1,
+      "message": "The documentation here is out of date now that finalize doesn\u0027t apply to UKM",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 19
+      },
+      "revId": "f9fc1f2a0cb85f29e57d1f26e5dd2ad4f2ba1049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62ab9446_58783bce",
         "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
         "patchSetId": 8
