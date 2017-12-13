@@ -73,6 +73,64 @@
     },
     {
       "key": {
+        "uuid": "1fbaff6d_7b2e651d",
+        "filename": "content/browser/renderer_host/media/audio_output_authorization_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-13T12:35:56Z",
+      "side": 1,
+      "message": "I agree we should only need one method. I think it makes more sense to use the parameters we get from AudioSystem, so stick to DeviceParametersReceived.",
+      "parentUuid": "26af6f32_b95f36a8",
+      "range": {
+        "startLine": 155,
+        "startChar": 55,
+        "endLine": 155,
+        "endChar": 79
+      },
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f17428c_5d2695ac",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-13T12:35:56Z",
+      "side": 1,
+      "message": "Is there some reason to not just pass this value in to the constructor instead? Initializing in the constructor is preferable to having getters and setters, all else equal.",
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530516b1_7e2fc4a2",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-12-13T12:35:56Z",
+      "side": 1,
+      "message": "Thinking out loud, I don\u0027t like \"\" meaning \"missing\", here, since it sometimes means \"default\". It might make sense to use Optional for the matched device id and use nullopt instead of \"\" in the future.",
+      "revId": "7a28e8cf58901d51d0978cde500d7c42a851b202",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d89677c9_522c2c29",
         "filename": "content/renderer/media/webrtc/processed_local_audio_source.h",
         "patchSetId": 2
