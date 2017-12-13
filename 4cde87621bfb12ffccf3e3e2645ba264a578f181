@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e7e86f25_6b995ce1",
+        "filename": "components/printing/resources/print_preview_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-13T01:32:24Z",
+      "side": 1,
+      "message": "Can you add a comment to explicitly mention that these purposefully do not account for RTL?",
+      "parentUuid": "e33c7c5c_4040eae7",
+      "range": {
+        "startLine": 45,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "4cde87621bfb12ffccf3e3e2645ba264a578f181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfc8d11c_8d0178f6",
         "filename": "components/printing/resources/print_preview_page.html",
         "patchSetId": 2
