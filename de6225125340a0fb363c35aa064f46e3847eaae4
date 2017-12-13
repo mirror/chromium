@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2641440d_d4d1b8da",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOrigin.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-13T10:05:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79ce20db_a5e056da",
+      "revId": "de6225125340a0fb363c35aa064f46e3847eaae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d448d029_487f9612",
         "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "030442fc_c147fcda",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityOriginTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-13T10:05:40Z",
+      "side": 1,
+      "message": "Replaced with UINT16_MAX!",
+      "parentUuid": "d448d029_487f9612",
+      "range": {
+        "startLine": 48,
+        "startChar": 15,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "de6225125340a0fb363c35aa064f46e3847eaae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e359dabd_78a75481",
         "filename": "url/scheme_host_port.cc",
         "patchSetId": 7
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-30T08:13:53Z",
       "side": 1,
       "message": "It might be worth poking at `IntPort` and `EffectiveIntPort` to return `uint16_t` instead of `int`. That would make `PORT_UNSPECIFIED` a bit hard to check, but that might be better as a separate boolean anyway. Hrm.\n\nNot for this CL, in any event.",
+      "revId": "de6225125340a0fb363c35aa064f46e3847eaae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d00bab80_e1abd55e",
+        "filename": "url/scheme_host_port.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-13T10:05:40Z",
+      "side": 1,
+      "message": "Sounds reasonable. Filing a bug.",
+      "parentUuid": "e359dabd_78a75481",
       "revId": "de6225125340a0fb363c35aa064f46e3847eaae4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
