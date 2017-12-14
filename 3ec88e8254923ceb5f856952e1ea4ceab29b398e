@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8f240a_f02007a3",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T15:24:03Z",
+      "side": 1,
+      "message": "I\u0027m a little unclear on this. Do you care about lock screen or multiprofile user adding screen? IsActiveUserSession will be true then. Or is this a guard for policy being set too late?\n\nThis seems like it might lead to a race condition where ash receiving the policy late could lead to the wallpaper not being applied. Is the policy guaranteed to be loaded before login can happen?",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b13a6b_5af4bdbb",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T15:24:03Z",
+      "side": 1,
+      "message": "For future CL: You might want to do that in SetClientAndPaths() and maybe rename that method to Initialize(). That way it will be atomic with all the other setup.",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c027fa3_b42a646c",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T15:24:03Z",
+      "side": 1,
+      "message": "This won\u0027t work under mash (you can\u0027t call code in //ash from the browser, since it is in another process). This at least needs a TODO. We might need to duplicate the path computation code in the browser. Alternately, you can move the path computation code into WallpaperControllerClient and send the path in the SetClientAndPaths() call.",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f2222d_b317d268",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T15:24:03Z",
+      "side": 1,
+      "message": "super-nit: |exists|",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8280536b_0a24576b",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T15:24:03Z",
+      "side": 1,
+      "message": "Is there existing test coverage for this code somewhere? There\u0027s a lot going on here and no tests in this CL.",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a5820a_94eb6429",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T15:24:03Z",
+      "side": 1,
+      "message": "nit: Code under //chrome should not be in a namespace. (We violate this in a lot of existing code, but that\u0027s the style guidance these days.)",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438bb1b5_c4924183",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T15:24:03Z",
+      "side": 1,
+      "message": "Is this based on a similar class elsewhere?",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
