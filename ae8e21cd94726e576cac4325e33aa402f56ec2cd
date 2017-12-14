@@ -434,6 +434,30 @@
       "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e947b17_13f3ce27",
+        "filename": "chrome/common/extensions/docs/templates/articles/security.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-12-14T21:21:51Z",
+      "side": 1,
+      "message": "Ah, thats all very interesting - makes sense. Thanks :)! Removed.",
+      "parentUuid": "4af30730_7b9ae6ea",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 4
+      },
+      "revId": "ae8e21cd94726e576cac4325e33aa402f56ec2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
