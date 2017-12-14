@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a198d736_3d37bbf6",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-14T19:31:40Z",
+      "side": 1,
+      "message": "IIRC, this was the initial macro for early compilers.\n\nYou should also test for __ARM_NEON.\n\n#if (defined(__ARM_NEON__) || defined(__ARM_NEON))",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35ead9f_0bb1bb80",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-14T19:31:40Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556045bf_9960ea9a",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-14T19:31:40Z",
+      "side": 1,
+      "message": "Could this be const?",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7dd51e2_a3f6a612",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-14T19:31:40Z",
+      "side": 1,
+      "message": "Maybe declare it all in one line...",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48188928_6e8d2478",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-14T19:31:40Z",
+      "side": 1,
+      "message": "I really like this NEON instruction... so handy!\n:-)",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a934e99e_eb5a0970",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-14T19:31:40Z",
+      "side": 1,
+      "message": "Maybe replace the \u0027magical numbers\u0027 for consts/macros with descriptive names?",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e2ce66_5df74543",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-14T19:31:40Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d4db35_96bbebc0",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-14T19:31:40Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dbf4a0c_072bdea7",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/png/PNGImageDecoder.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-12-14T19:31:40Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "5173c996ca0496ef194bf0d0f97a34784ac408e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
