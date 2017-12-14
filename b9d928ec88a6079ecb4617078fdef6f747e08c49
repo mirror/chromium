@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fc86dbe_7bbf6aa0",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T21:09:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0d74d90_96ad8f4e",
+      "range": {
+        "startLine": 1682,
+        "startChar": 38,
+        "endLine": 1682,
+        "endChar": 49
+      },
+      "revId": "b9d928ec88a6079ecb4617078fdef6f747e08c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7398386_55394792",
         "filename": "third_party/WebKit/Source/core/paint/RemoteFramePainter.cpp",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "6c1d4c08_c553ea5c",
+        "filename": "third_party/WebKit/Source/core/paint/RemoteFramePainter.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T21:09:13Z",
+      "side": 1,
+      "message": "The only reason is that I noticed that all the painting was done in some painter classes. Moving the code to View class definitely make the change leaner.",
+      "parentUuid": "a7398386_55394792",
+      "revId": "b9d928ec88a6079ecb4617078fdef6f747e08c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99e044c0_2ccda071",
         "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "b9d928ec88a6079ecb4617078fdef6f747e08c49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010e9cd3_df7a2fc5",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T21:09:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99e044c0_2ccda071",
+      "revId": "b9d928ec88a6079ecb4617078fdef6f747e08c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

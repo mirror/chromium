@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1af48e77_0e59f159",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T21:09:13Z",
+      "side": 1,
+      "message": "I thought about that and chose the current one because although browser has all the frame tree information, it doesn\u0027t have any layout info. In case user just needs to print one or part of the pages, the browser doesn\u0027t have idea about which subframes would be involved. \n\nThat said, it is possible to let browser to notify all subframes for printing. We can use whatever we need. I am not sure whether printing really needs that for performance.",
+      "parentUuid": "9fde9217_ea80d7f1",
+      "revId": "dbc8cd4dcf151494c86dafbce7d9758a590fc5c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b66c24f6_7f7ef77f",
         "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
         "patchSetId": 3
