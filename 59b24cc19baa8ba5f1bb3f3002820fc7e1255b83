@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba51a4b2_7bdd6c74",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-12-14T16:45:59Z",
+      "side": 1,
+      "message": "This is not directly related to this bug. \nI was checking bug[1] and found out that the cause of this problem comes from this function.\nThis function changes the anchor layout if the insertText happens at first or the last VP.\n\nI cross checked the behaviour of one layout test[2] related to this function on Firefox and chrome, the behaviour was different.\nIf Firefox the \"This sentence should not\" is also a part of the link, but in chrome it is not.\n\nFor content like this , \n\u003ca href\u003d\"#\"\u003e\n  \u003cb\u003e this text \u003c/b\u003e\n\u003c/a\u003e\n\nThe below condition in PositionAvoidingSpecialElementBoundary will always hit for insertText in below layouts if we are trying to insert text at first or last position.\n\n// Make sure anchors are pushed down before avoiding them so that we don\u0027t\n// also avoid structural elements like lists and blocks (5142012).\nif (original.AnchorNode() !\u003d enclosing_anchor \u0026\u0026\n    original.AnchorNode()-\u003eparentNode() !\u003d enclosing_anchor) \n\nCould you help me if you have idea how this code helps us, or why chrome behaves differently ?\nWith that reason I can try to fix the bug [1], or else then the bug is as per the chrome behaviour ?\n\n[1] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d588418#c6\n[2] editing/execcommand/5142012-3.html",
+      "range": {
+        "startLine": 243,
+        "startChar": 6,
+        "endLine": 243,
+        "endChar": 44
+      },
+      "revId": "59b24cc19baa8ba5f1bb3f3002820fc7e1255b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
