@@ -56,6 +56,7 @@ enum DesktopEnvironment {
   DESKTOP_ENVIRONMENT_PANTHEON,
   DESKTOP_ENVIRONMENT_UNITY,
   DESKTOP_ENVIRONMENT_XFCE,
+  DESKTOP_ENVIRONMENT_CINNAMON,
 };
 
 // Return an entry from the DesktopEnvironment enum with a best guess
