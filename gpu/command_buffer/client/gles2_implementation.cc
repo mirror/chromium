@@ -3857,9 +3857,11 @@ const GLubyte* GLES2Implementation::GetStringHelper(GLenum name) {
     // Adds extensions implemented on client side only.
     if (name == GL_EXTENSIONS) {
       str += std::string(str.empty() ? "" : " ") +
-             "GL_EXT_unpack_subimage "
+             "GL_CHROMIUM_image "
              "GL_CHROMIUM_map_sub "
-             "GL_CHROMIUM_image";
+             "GL_CHROMIUM_ordering_barrier "
+             "GL_CHROMIUM_sync_point "
+             "GL_EXT_unpack_subimage";
       if (capabilities_.future_sync_points)
         str += " GL_CHROMIUM_future_sync_point";
     }
