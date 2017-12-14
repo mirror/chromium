@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f17cea6e_df55e8a7",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-14T22:59:18Z",
+      "side": 1,
+      "message": "Can you add [type\u003dcheckbox] { vertical-align: middle; } to our CSS? I hate misaligned checkboxes, and I already have vertical-align: middle on the others.",
+      "revId": "44eb61290f5d305b39aed8a3d673aabcd54fd602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e177843d_df25d9d8",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-14T22:59:18Z",
+      "side": 1,
+      "message": "While I like printing title for every div, I am afraid how this affects the speed of generating large lists. In my informal stopwatch testing, displaying all tests took 25s with this change, 20s without.\n\nCan you make sure that the regression (if it exists) is under 10%?",
+      "revId": "44eb61290f5d305b39aed8a3d673aabcd54fd602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503069cb_f68948fa",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/results.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-12-14T22:59:18Z",
+      "side": 1,
+      "message": "Does this get rid of that \"copy path also shows result\" ? Awesome!",
+      "revId": "44eb61290f5d305b39aed8a3d673aabcd54fd602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
