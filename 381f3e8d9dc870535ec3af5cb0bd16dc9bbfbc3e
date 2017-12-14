@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "285e207d_f13841f3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 108292,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-14T00:37:02Z",
+      "side": 0,
+      "message": "Please mark the removed suffixes as \u003cobsolete\u003e rather than removing them from the metadata file.  See the histogram_suffixes element above for an example.",
+      "range": {
+        "startLine": 108291,
+        "startChar": 0,
+        "endLine": 108292,
+        "endChar": 46
+      },
+      "revId": "381f3e8d9dc870535ec3af5cb0bd16dc9bbfbc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -16,6 +16,29 @@
       "revId": "e1db5f79dfd1941a43eac59f76bb6808dcbee1ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831c3a6f_9bd64d17",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6969,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-14T00:37:02Z",
+      "side": 1,
+      "message": "Optional nit: Perhaps \"changes\" would be a clearer unit?",
+      "range": {
+        "startLine": 6969,
+        "startChar": 73,
+        "endLine": 6969,
+        "endChar": 78
+      },
+      "revId": "e1db5f79dfd1941a43eac59f76bb6808dcbee1ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
