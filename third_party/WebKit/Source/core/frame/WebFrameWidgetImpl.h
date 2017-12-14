@@ -195,10 +195,7 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   Member<Node> mouse_capture_node_;
   scoped_refptr<UserGestureToken> mouse_capture_gesture_token_;
 
-  // This is owned by the LayerTreeHostImpl, and should only be used on the
-  // compositor thread. The LayerTreeHostImpl is indirectly owned by this
-  // class so this pointer should be valid until this class is destructed.
-  CrossThreadPersistent<CompositorMutatorImpl> mutator_;
+  CompositorMutatorImpl* mutator_;
 
   WebLayerTreeView* layer_tree_view_;
   WebLayer* root_layer_;
