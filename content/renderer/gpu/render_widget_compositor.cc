@@ -1304,4 +1304,8 @@ void RenderWidgetCompositor::SetURLForUkm(const GURL& url) {
   layer_tree_host_->SetURLForUkm(url);
 }
 
+void RenderWidgetCompositor::SetNeedsRedrawIntoNewSurface() {
+  layer_tree_host_->SetNeedsRedrawIntoNewSurface();
+}
+
 }  // namespace content
