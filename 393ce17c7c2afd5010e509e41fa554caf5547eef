@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62dfdff8_a73985bd",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2364,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:40:40Z",
+      "side": 1,
+      "message": "I think this may impact showing a context menu in some cases.",
+      "range": {
+        "startLine": 2364,
+        "startChar": 24,
+        "endLine": 2364,
+        "endChar": 53
+      },
+      "revId": "393ce17c7c2afd5010e509e41fa554caf5547eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
