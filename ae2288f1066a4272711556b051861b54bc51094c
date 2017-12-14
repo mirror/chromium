@@ -16,6 +16,24 @@
       "revId": "ae2288f1066a4272711556b051861b54bc51094c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d9d19f_158c93e8",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-12-14T16:35:19Z",
+      "side": 1,
+      "message": "Good catch! Removed.",
+      "parentUuid": "8e9e2d7a_b6767887",
+      "revId": "ae2288f1066a4272711556b051861b54bc51094c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
