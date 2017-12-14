@@ -353,6 +353,30 @@
       "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0955cdf_cae7bf5b",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-14T14:19:53Z",
+      "side": 1,
+      "message": "Data members are also not allowed to be protected? I see the sense in this guideline, but have not ran into it yet. I believe I\u0027ve seen a lot of code (in WebRTC) that violated this. I will follow this guideline from now on, though, since it makes sense.",
+      "parentUuid": "2c047547_8bd6499b",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 7
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

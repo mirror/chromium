@@ -16,6 +16,24 @@
       "revId": "0aad04218a8308e01f6aca637d356817659a7190",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6c6665_0fb25b71",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-14T14:19:53Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t think they\u0027re related enough. The first one refers to both local- as well as remote-bound logs, whereas the latter two only refer to local-bound logs. That\u0027s also why definition of those are in separate .cc files (the common one in the manager .cc file, and the local two in the local-manager .cc file).",
+      "parentUuid": "402dd223_86981fb9",
+      "revId": "0aad04218a8308e01f6aca637d356817659a7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
