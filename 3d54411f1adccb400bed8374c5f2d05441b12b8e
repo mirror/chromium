@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b920825_1747dbbc",
+        "filename": "third_party/WebKit/Source/core/css/RemoteFontFaceSource.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-12-14T21:22:48Z",
+      "side": 0,
+      "message": "Alternatively, we might be able to:\n- Move the ShouldTriggerWebFontsIntervention() call in the constructor to e.g.\n  TriggerWebFontsInterventionIfNeeded(), and call TriggerWebFontsInterventionIfNeeded() just after Fetch(). We know whether FontResourceClient is synchronously notified (or FontResource is loaded, in case when we turn the MemoryCache hit async) at that time.\n- Modify ShouldTriggerWebFontsIntervention() like:\n  if (!GetResource() || GetResource()-\u003eIsLoaded()) return false;\n  if (GetResource()-\u003eUrl().ProtocolIsData()) return false;\n\nStill this alternative is non-trivial (deferring the start of the intervention slightly).",
+      "revId": "3d54411f1adccb400bed8374c5f2d05441b12b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
