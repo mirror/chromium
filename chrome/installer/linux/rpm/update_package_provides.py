@@ -36,7 +36,6 @@ PACKAGE_FILTER = [
     "libdconf.so",
     "libdl.so",
     "libexpat.so",
-    "libfontconfig.so",
     "libgcc_s.so",
     "libgconf-2.so",
     "libgdk-3.so",
