@@ -16,6 +16,24 @@
       "revId": "d234c9cd01af592d235e3e83daa1d29e55d00bb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0ec9c8_16badc38",
+        "filename": "android_webview/browser/aw_cookie_access_policy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-14T16:44:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34e0c664_c2f2cc04",
+      "revId": "d234c9cd01af592d235e3e83daa1d29e55d00bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
