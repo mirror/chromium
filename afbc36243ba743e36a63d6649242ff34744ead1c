@@ -87,6 +87,24 @@
       "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9f6d50_bddb06a7",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-12-14T15:22:48Z",
+      "side": 1,
+      "message": "Oops, sorry, didn\u0027t spot this :)\n\nHardcoding them all and picking the right one would work except I don\u0027t think there\u0027s a good way to tell what ABI you are running with from Java that\u0027s a public API..",
+      "parentUuid": "71fa7f84_ef0590b0",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
