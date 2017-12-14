@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "524fdcd1_708b97cb",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-14T16:27:21Z",
+      "side": 1,
+      "message": "The diagram here has too many irrelevant details (margin, padding, etc.).\n\nTBH, in this case the calculation is straightforward enough that\ndoes not need to detailed diagram as such. Comments seems\nsufficient.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 0
+      },
+      "revId": "4c62fffed5dfa814c260d1416a661356d90a6d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca214df_1c67dbf1",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-14T16:27:21Z",
+      "side": 1,
+      "message": "This and FindSecondarySanpY seems to be doing a lot of duplicate work as |FindSnapOffset|.\n\nI think it should be possible to rewrite this as a recursive call to the\nFindSnapOffset with slightly more constraints.\n\nIn particular you can create a FindSnapOffset that takes in a \"target_region\".\nFirst invocation this target_region can be to the whole scrollable area (or maybe null)\nso all offsets are considered. \n\nIf that results in an offset that satisfy both X and Y visibility then then all good.\nOtherwise choose preferred visibility axis, then compute a new target region\n \u003d\u003e recursive call to same function with new target and should_snap_on_{x,y}\n    set appropriately.\n\nthis was some idea to ensure we can do a recursive formulation but happy to \nsee any recursive formulation.",
+      "range": {
+        "startLine": 412,
+        "startChar": 13,
+        "endLine": 412,
+        "endChar": 31
+      },
+      "revId": "4c62fffed5dfa814c260d1416a661356d90a6d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921cb245_e91792cb",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-12-14T16:27:21Z",
+      "side": 1,
+      "message": "nit: given this is more expensive, I think it is best for it to be the last \ncondition on this list. This way it is skipped it if others are true.",
+      "range": {
+        "startLine": 420,
+        "startChar": 8,
+        "endLine": 420,
+        "endChar": 73
+      },
+      "revId": "4c62fffed5dfa814c260d1416a661356d90a6d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
