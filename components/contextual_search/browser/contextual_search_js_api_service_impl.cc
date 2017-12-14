@@ -18,6 +18,14 @@ ContextualSearchJsApiServiceImpl::ContextualSearchJsApiServiceImpl(
 
 ContextualSearchJsApiServiceImpl::~ContextualSearchJsApiServiceImpl() {}
 
+void ContextualSearchJsApiServiceImpl::ShouldEnableJsApi(
+    const std::string& url,
+    contextual_search::mojom::ContextualSearchJsApiService::
+        ShouldEnableJsApiCallback callback) {
+  contextual_search_js_api_handler_->ShouldEnableJsApi(url,
+                                                       std::move(callback));
+}
+
 void ContextualSearchJsApiServiceImpl::HandleSetCaption(
     const std::string& caption,
     bool does_answer) {
