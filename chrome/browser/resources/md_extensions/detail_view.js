@@ -20,11 +20,25 @@ cr.define('extensions', function() {
        */
       data: Object,
 
+      /** @private */
+      size_: String,
+
       /** @type {!extensions.ItemDelegate} */
       delegate: Object,
 
       /** Whether the user has enabled the UI's developer mode. */
       inDevMode: Boolean,
+    },
+
+    observers: [
+      'onItemIdChanged_(data.id, delegate)',
+    ],
+
+    /** @private */
+    onItemIdChanged_: function() {
+      this.delegate.getExtensionSize(this.data.id).then(size => {
+        this.size_ = size;
+      });
     },
 
     /**
