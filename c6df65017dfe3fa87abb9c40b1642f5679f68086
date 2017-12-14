@@ -22,6 +22,30 @@
       "revId": "c6df65017dfe3fa87abb9c40b1642f5679f68086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7519cb70_b95acc50",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position/position-sticky-offset-overflow.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-14T01:37:09Z",
+      "side": 1,
+      "message": "Absolutely correct. I also changed the math to include the scroll offset in the position calculation to make it a little more obvious what it\u0027s calculating for the scrolled case.",
+      "parentUuid": "abeebfa9_aa25ef23",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "c6df65017dfe3fa87abb9c40b1642f5679f68086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
