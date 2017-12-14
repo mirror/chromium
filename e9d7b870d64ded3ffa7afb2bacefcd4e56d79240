@@ -69,6 +69,30 @@
       "revId": "e9d7b870d64ded3ffa7afb2bacefcd4e56d79240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4df57f_5048bf37",
+        "filename": "chrome/browser/extensions/install_verifier_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-14T15:05:22Z",
+      "side": 1,
+      "message": "\u003e And then we have to instantiate each of the test cases (you suggested four) four times each (to account for various combinations of location/update url), leading to 16 opaque (IMO) instantiations that make the assumptions hard to reason about.\n\nI think there\u0027s a way to instantiate the four test cases only once. ::testing::Values(INTERNAL, UNPACKED, EXTERNAL_POLICY_DOWNLOAD) implicitly creates 3 instantiation of the test. The instantiate statements would look like this:\n\nINSTANTIATE_TEST_CASE_P(TestIsFromStore,\n                        InstallVerifierIsFromStoreTest,\n                        ::testing::Combine(\n                          ::testing::Values(INTERNAL, UNPACKED, EXTERNAL_POLICY_DOWNLOAD),\n                          ::testing::Values(GURL(kStoreUrl))));\n\n\nINSTANTIATE_TEST_CASE_P(TestIsNotFromStore,\n                        InstallVerifierIsNotFromStoreTest,\n                        ::testing::Combine(\n                          ::testing::Values(INTERNAL, UNPACKED, EXTERNAL_POLICY_DOWNLOAD),\n                          ::testing::Values(GURL(kNonStoreUrl), base::nullopt)));\n\n\nINSTANTIATE_TEST_CASE_P(TestShouldRemainDisabled,\n                        InstallVerifierMustRemainDisabledTest,\n                        ::testing::Combine(\n                          ::testing::Values(INTERNAL),\n                          ::testing::Values(GURL(kNonStoreUrl), base::nullopt)));\n\n\nINSTANTIATE_TEST_CASE_P(TestCanRemainEnabledNotInternal,\n                        InstallVerifierCanRemainEnabledTest,\n                        ::testing::Combine(\n                          ::testing::Values(UNPACKED, EXTERNAL_POLICY_DOWNLOAD),\n                          ::testing::Values(GURL(kStoreUrl), GURL(kNonStoreUrl), base::nullopt)));\n\nINSTANTIATE_TEST_CASE_P(TestCanRemainEnabledInternal,\n                        InstallVerifierCanRemainEnabledTest,\n                        ::testing::Combine(\n                          ::testing::Values(INTERNAL),\n                          ::testing::Values(GURL(kStoreUrl)));\n\nIt\u0027s indeed quite difficult to spot omitted or missing values. Feel free to keep your existing implementation of the tests.",
+      "parentUuid": "e5dddbc0_e5461c4a",
+      "range": {
+        "startLine": 75,
+        "startChar": 20,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "e9d7b870d64ded3ffa7afb2bacefcd4e56d79240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
