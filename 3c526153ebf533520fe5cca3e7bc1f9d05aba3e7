@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63ba3acb_7f5312ad",
+        "filename": "gpu/command_buffer/service/raster_decoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001248
+      },
+      "writtenOn": "2017-12-14T22:03:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc4efefd_9367dda1",
+      "revId": "3c526153ebf533520fe5cca3e7bc1f9d05aba3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5f261b0_ae6c8a92",
         "filename": "gpu/command_buffer/service/raster_decoder.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T21:21:45Z",
       "side": 1,
       "message": "A very large portion of this public interface will never be used or implemented - it isn\u0027t called by (Raster)CommandBufferStub. It hints that deriving from GLES2Decoder is undesirable long term, and CommandBufferStub should own not a GLES2Decoder, but something more abstract (that both GLES2Decoder and RasterDecoder would implement).\n\nI think this is something we should do sooner rather than later, to avoid having to carry this weight everywhere. Do you think it would be a good idea to do before landing this, or perhaps as a follow-up?",
+      "revId": "3c526153ebf533520fe5cca3e7bc1f9d05aba3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94145313_f3004a3b",
+        "filename": "gpu/command_buffer/service/raster_decoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001248
+      },
+      "writtenOn": "2017-12-14T22:03:29Z",
+      "side": 1,
+      "message": "Absolutely. I\u0027d like to remove as many of the NOTIMPLEMENTED as possible (all I believe).\n\nI would prefer to do this as a series of smaller CLs. \n\nThe approach that I would like to take is to pull a thread: start with a NOTIMPLEMENTED and stop once I get to a functionally correct/complete state. If the CL is tiny (\u003c100 lines), maybe pull another thread so as not to waste everyone\u0027s time (your time swapping in context, my time merging/rebasing).\n\nI think that many of these will be easy. The scheduling/processing related ones will be harder.",
+      "parentUuid": "c5f261b0_ae6c8a92",
       "revId": "3c526153ebf533520fe5cca3e7bc1f9d05aba3e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
