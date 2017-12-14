@@ -105,6 +105,24 @@
       "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c67bccb_3ca0d60f",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T17:00:14Z",
+      "side": 1,
+      "message": "Not a good way, but one way is to look for \"nativeLibraryDirectories\u003d\" within Thread.currentThread().getContextClassLoader().toString() :P.\n\nArguably more promising:\nContextUtils.getApplicationContext().getApplicationInfo().nativeLibraryDir\n\nTested on a N5x running 32-bit chrome, and it returned:\n/data/app/com.google.android.apps.chrome-KP505ypnxxaaYE55Ar9yMg\u003d\u003d/lib/arm\n\nIf all libs are within the APK though, not sure if it returns the correct thing?",
+      "parentUuid": "0a9f6d50_bddb06a7",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
