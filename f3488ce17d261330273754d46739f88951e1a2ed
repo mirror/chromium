@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "62338930_f2894119",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-12-14T00:50:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure that it makes sense to persist the SourceId, since it\u0027s only unique within the context of a session, but it would be preferable to use that where possible.\n\nIf you don\u0027t have a URL in the resumed case, you don\u0027t need to call UpdateSourceURL.",
+      "parentUuid": "58cd4ae1_2783f74a",
+      "range": {
+        "startLine": 422,
+        "startChar": 40,
+        "endLine": 422,
+        "endChar": 43
+      },
+      "revId": "f3488ce17d261330273754d46739f88951e1a2ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e431d58_319d9dd2",
         "filename": "content/browser/download/download_ukm.cc",
         "patchSetId": 13
