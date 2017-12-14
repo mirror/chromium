@@ -48,11 +48,13 @@
       "id": 35
     },
 
+    // Ask and Ask UK have suggestion URLs reachable over HTTPS, but they
+    // throw a certificate error, so those will remain as HTTP for now.
     "ask": {
       "name": "Ask",
       "keyword": "ask.com",
-      "favicon_url": "http://sp.ask.com/sh/i/a16/favicon/favicon.ico",
-      "search_url": "http://www.ask.com/web?q={searchTerms}",
+      "favicon_url": "https://sp.ask.com/sh/i/a16/favicon/favicon.ico",
+      "search_url": "https://www.ask.com/web?q={searchTerms}",
       "suggest_url": "http://ss.ask.com/query?q={searchTerms}&li=ff",
       "type": "SEARCH_ENGINE_ASK",
       "id": 4
@@ -61,8 +63,8 @@
     "ask_br": {
       "name": "Ask Brasil",
       "keyword": "br.ask.com",
-      "favicon_url": "http://sp.br.ask.com/sh/i/a14/favicon/favicon.ico",
-      "search_url": "http://br.ask.com/web?q={searchTerms}",
+      "favicon_url": "https://sp.br.ask.com/sh/i/a14/favicon/favicon.ico",
+      "search_url": "https://br.ask.com/web?q={searchTerms}",
       "type": "SEARCH_ENGINE_ASK",
       "id": 4
     },
@@ -70,13 +72,15 @@
     "ask_uk": {
       "name": "Ask Jeeves",
       "keyword": "uk.ask.com",
-      "favicon_url": "http://sp.uk.ask.com/sh/i/a16/favicon/favicon.ico",
-      "search_url": "http://uk.ask.com/web?q={searchTerms}",
+      "favicon_url": "https://sp.uk.ask.com/sh/i/a16/favicon/favicon.ico",
+      "search_url": "https://uk.ask.com/web?q={searchTerms}",
       "suggest_url": "http://ss.uk.ask.com/query?q={searchTerms}&li=ff",
       "type": "SEARCH_ENGINE_ASK",
       "id": 4
     },
 
+    // Baidu's suggestion URL is not reachable over HTTPS, so it remains as
+    // HTTP for now.
     "baidu": {
       "name": "\u767e\u5ea6",
       "keyword": "baidu.com",
@@ -103,9 +107,9 @@
     "daum": {
       "name": "Daum",
       "keyword": "daum.net",
-      "favicon_url": "http://search.daum.net/favicon.ico",
-      "search_url": "http://search.daum.net/search?ie={inputEncoding}&q={searchTerms}",
-      "suggest_url": "http://sug.search.daum.net/search_nsuggest?mod=fxjson&ie={inputEncoding}&code=utf_in_out&q={searchTerms}",
+      "favicon_url": "https://search.daum.net/favicon.ico",
+      "search_url": "https://search.daum.net/search?ie={inputEncoding}&q={searchTerms}",
+      "suggest_url": "https://sug.search.daum.net/search_nsuggest?mod=fxjson&ie={inputEncoding}&code=utf_in_out&q={searchTerms}",
       "type": "SEARCH_ENGINE_DAUM",
       "id": 68
     },
@@ -173,8 +177,8 @@
     "onet": {
       "name": "Onet.pl",
       "keyword": "onet.pl",
-      "favicon_url": "http://szukaj.onet.pl/favicon.ico",
-      "search_url": "http://szukaj.onet.pl/wyniki.html?qt={searchTerms}",
+      "favicon_url": "https://szukaj.onet.pl/favicon.ico",
+      "search_url": "https://szukaj.onet.pl/wyniki.html?qt={searchTerms}",
       "type": "SEARCH_ENGINE_ONET",
       "id": 75
     },
@@ -661,6 +665,9 @@
     // The following engines are not included in any of the country lists. They
     // are listed in |kAllEngines|, however, so that GetEngineType can find them
     // for UMA reporting purposes.
+    // atlas_cz, atlas_sk, delfi_lt, rambler and zoznam have now migrated to
+    // HTTPS by default, but remain here as HTTP since Chrome does not include
+    // them as defaults.
 
     "atlas_cz": {
       "name": "Atlas.cz",
