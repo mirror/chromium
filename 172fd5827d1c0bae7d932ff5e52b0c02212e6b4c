@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d1405ed_fa0a5d36",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-14T20:40:35Z",
+      "side": 1,
+      "message": "Reasonable to ask that the interface contract implied by the above be added to comments in upload_element_reader.h?",
+      "range": {
+        "startLine": 70,
+        "startChar": 10,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dde9492_12679b3d",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-14T20:40:35Z",
+      "side": 1,
+      "message": "Up to you, since it\u0027s functionally redundant with the use of buf_.get() below, but if I think of DCHECKs at the beginning of functions as assertions around the interface contract for the function, a DCHECK(buf_) would also be appropriate.",
+      "range": {
+        "startLine": 89,
+        "startChar": 9,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee69bbb2_39c69324",
+        "filename": "content/network/data_pipe_element_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-14T20:40:35Z",
+      "side": 1,
+      "message": "Under what circumstances can this not return a valid read result?  There was a DCHECK in the old code that this never returned an error (including ERR_IO_PENDING); what\u0027s the pathway through which you think it might?  It doesn\u0027t seem like either of the bugs you call out in the description would do it.\n\n(Related to the above, I\u0027m trying to figure out when read_result would be ERR_IO_PENDING below.)",
+      "range": {
+        "startLine": 94,
+        "startChar": 18,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a172f978_3dabec5f",
+        "filename": "content/network/data_pipe_element_reader.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-14T20:40:35Z",
+      "side": 1,
+      "message": "nit: Capitalize \"Cleared\"",
+      "range": {
+        "startLine": 69,
+        "startChar": 21,
+        "endLine": 69,
+        "endChar": 28
+      },
+      "revId": "172fd5827d1c0bae7d932ff5e52b0c02212e6b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
