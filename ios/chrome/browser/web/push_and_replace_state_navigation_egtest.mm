@@ -230,10 +230,10 @@ const char* kReplaceStateRootPathSpaceURL = "http://ios/rep lace";
 - (void)testHtml5HistoryPushUnicodeCharacters {
   const GURL pushStateUnicodeURLEncoded = web::test::HttpServer::MakeUrl(
       "http://ios/testing/data/http_server_files/"
-      "history.html#unicode%E1%84%91");
+      "history.html#unicodeᄑ");
   const GURL pushStateUnicode2URLEncoded = web::test::HttpServer::MakeUrl(
       "http://ios/testing/data/http_server_files/"
-      "history.html#unicode2%E2%88%A2");
+      "history.html#unicode∢");
   const char pushStateUnicodeLabel[] = "Action: pushStateUnicodeᄑ";
   NSString* pushStateUnicodeStatus = @"pushStateUnicodeᄑ";
   const char pushStateUnicode2Label[] = "Action: pushStateUnicode2∢";
