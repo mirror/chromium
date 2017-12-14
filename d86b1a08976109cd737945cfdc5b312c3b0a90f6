@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "5cd31d68_078a690c",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2237,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-12-14T09:31:40Z",
+      "side": 1,
+      "message": "Yes, in the bug, the navigation initiated by webview embedders used this page_transition.\n\nThe issue is that the java application cancels any renderer-initiated navigation and immediately replaced it by a new navigation to the same URL (webview-initiated).\nThis block of code classified the navigation as a reload instead of a normal load.",
+      "parentUuid": "95d191ed_6e1d24aa",
+      "revId": "d86b1a08976109cd737945cfdc5b312c3b0a90f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79b0e616_833bf001",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 4
