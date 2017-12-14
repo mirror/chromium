@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "713f667e_ab011d33",
+        "filename": "chrome/test/data/extensions/api_test/automation/tests/desktop/hit_test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-12-14T00:35:40Z",
+      "side": 1,
+      "message": "Suggestion: make this a div to avoid confusion. Then you can search for role: \u0027button\u0027 *and* name: \u0027Click Me\u0027.",
+      "range": {
+        "startLine": 8,
+        "startChar": 20,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "346d4f5e50aee55d6d56fe943538ccc96110b861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
