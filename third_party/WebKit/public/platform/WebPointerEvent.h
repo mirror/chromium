@@ -25,6 +25,13 @@ class WebPointerEvent : public WebInputEvent, public WebPointerProperties {
  public:
   WebPointerEvent()
       : WebInputEvent(sizeof(WebPointerEvent)), WebPointerProperties(0) {}
+  WebPointerEvent(WebPointerProperties web_pointer_properties,
+                  float width,
+                  float height)
+      : WebInputEvent(sizeof(WebPointerEvent)),
+        WebPointerProperties(web_pointer_properties),
+        width(width),
+        height(height) {}
   BLINK_PLATFORM_EXPORT WebPointerEvent(const WebTouchEvent&,
                                         const WebTouchPoint&);
   BLINK_PLATFORM_EXPORT WebPointerEvent(WebInputEvent::Type,

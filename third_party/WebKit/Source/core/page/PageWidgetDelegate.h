@@ -45,7 +45,7 @@ class WebInputEvent;
 class WebKeyboardEvent;
 class WebMouseEvent;
 class WebMouseWheelEvent;
-class WebTouchEvent;
+class WebPointerEvent;
 
 class CORE_EXPORT PageWidgetEventHandler {
  public:
@@ -60,10 +60,11 @@ class CORE_EXPORT PageWidgetEventHandler {
   virtual WebInputEventResult HandleKeyEvent(const WebKeyboardEvent&) = 0;
   virtual WebInputEventResult HandleCharEvent(const WebKeyboardEvent&) = 0;
   virtual WebInputEventResult HandleGestureEvent(const WebGestureEvent&) = 0;
-  virtual WebInputEventResult HandleTouchEvent(
+  virtual WebInputEventResult HandlePointerEvent(
       LocalFrame& main_frame,
-      const WebTouchEvent&,
+      const WebPointerEvent&,
       const std::vector<const WebInputEvent*>&);
+  WebInputEventResult DispatchPendingTouchEvents(LocalFrame& main_frame);
   virtual ~PageWidgetEventHandler() {}
 };
 
@@ -83,7 +84,8 @@ class CORE_EXPORT PageWidgetDelegate {
                                        WebCanvas*,
                                        const WebRect&,
                                        LocalFrame& root);
-
+  static WebInputEventResult DispatchPendingTouchEvents(PageWidgetEventHandler&,
+                                                        LocalFrame* root);
   // See FIXME in the function body about nullptr |root|.
   static WebInputEventResult HandleInputEvent(
       PageWidgetEventHandler&,
