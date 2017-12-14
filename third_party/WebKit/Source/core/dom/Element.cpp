@@ -109,7 +109,10 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/HTMLSlotElement.h"
+#include "core/html/HTMLTableCellElement.h"
+#include "core/html/HTMLTableColElement.h"
 #include "core/html/HTMLTableRowsCollection.h"
+#include "core/html/HTMLTableSectionElement.h"
 #include "core/html/HTMLTemplateElement.h"
 #include "core/html/custom/CustomElement.h"
 #include "core/html/custom/CustomElementRegistry.h"
@@ -3097,12 +3100,16 @@ void Element::outerHTML(StringOrTrustedHTML& result) const {
 void Element::SetInnerHTMLFromString(const String& html,
                                      ExceptionState& exception_state) {
   probe::breakableLocation(&GetDocument(), "Element.setInnerHTML");
-  if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
-          html, this, kAllowScriptingContent, "innerHTML", exception_state)) {
-    ContainerNode* container = this;
-    if (auto* template_element = ToHTMLTemplateElementOrNull(*this))
-      container = template_element->content();
-    ReplaceChildrenWithFragment(container, fragment, exception_state);
+  if (HasNonInBodyInsertionMode() && html.IsEmpty()) {
+    setTextContent(html);
+  } else {
+    if (DocumentFragment* fragment = CreateFragmentForInnerOuterHTML(
+            html, this, kAllowScriptingContent, "innerHTML", exception_state)) {
+      ContainerNode* container = this;
+      if (auto* template_element = ToHTMLTemplateElementOrNull(*this))
+        container = template_element->content();
+      ReplaceChildrenWithFragment(container, fragment, exception_state);
+    }
   }
 }
 

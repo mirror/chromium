@@ -49,6 +49,8 @@ class CORE_EXPORT HTMLTableRowElement final : public HTMLTablePartElement {
 
   HTMLCollection* cells();
 
+  bool HasNonInBodyInsertionMode() const override;
+
  private:
   explicit HTMLTableRowElement(Document&);
 

@@ -60,6 +60,10 @@ void HTMLHtmlElement::InsertedByParser() {
   }
 }
 
+bool HTMLHtmlElement::HasNonInBodyInsertionMode() const {
+  return false;
+}
+
 void HTMLHtmlElement::MaybeSetupApplicationCache() {
   if (!GetDocument().GetFrame())
     return;

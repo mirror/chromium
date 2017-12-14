@@ -170,6 +170,8 @@ class CORE_EXPORT HTMLSelectElement final
 
   void ResetTypeAheadSessionForTesting();
 
+  bool HasNonInBodyInsertionMode() const override;
+
   void Trace(blink::Visitor*) override;
 
  protected:

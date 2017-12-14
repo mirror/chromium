@@ -98,4 +98,8 @@ HTMLCollection* HTMLTableSectionElement::rows() {
   return EnsureCachedCollection<HTMLCollection>(kTSectionRows);
 }
 
+bool HTMLTableSectionElement::HasNonInBodyInsertionMode() const {
+  return false;
+}
+
 }  // namespace blink

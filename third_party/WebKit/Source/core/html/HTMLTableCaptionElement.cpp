@@ -49,4 +49,8 @@ void HTMLTableCaptionElement::CollectStyleForPresentationAttribute(
   }
 }
 
+bool HTMLTableCaptionElement::HasNonInBodyInsertionMode() const {
+  return false;
+}
+
 }  // namespace blink

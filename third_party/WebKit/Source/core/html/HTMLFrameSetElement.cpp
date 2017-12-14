@@ -290,6 +290,10 @@ void HTMLFrameSetElement::WillRecalcStyle(StyleRecalcChange) {
   }
 }
 
+bool HTMLFrameSetElement::HasNonInBodyInsertionMode() const {
+  return false;
+}
+
 LocalDOMWindow* HTMLFrameSetElement::AnonymousNamedGetter(
     const AtomicString& name) {
   Element* frame_element = Children()->namedItem(name);

@@ -737,6 +737,11 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual bool IsClearButtonElement() const { return false; }
   virtual bool IsScriptElement() const { return false; }
 
+  // Elements that may have an insertion mode other than "in body" should
+  // override this and return false.
+  // https://html.spec.whatwg.org/multipage/parsing.html#reset-the-insertion-mode-appropriately
+  virtual bool HasNonInBodyInsertionMode() const { return true; }
+
   bool CanContainRangeEndPoint() const override { return true; }
 
   // Used for disabled form elements; if true, prevents mouse events from being
@@ -1026,6 +1031,8 @@ class CORE_EXPORT Element : public ContainerNode {
   void DetachAttrNodeAtIndex(Attr*, size_t index);
 
   Member<ElementData> element_data_;
+
+  bool IsInnerHTMLStringChangeOptimizable(const String& html);
 };
 
 DEFINE_NODE_TYPE_CASTS(Element, IsElementNode());

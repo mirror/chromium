@@ -41,6 +41,8 @@ class HTMLTableColElement final : public HTMLTablePartElement {
 
   const AtomicString& Width() const;
 
+  bool HasNonInBodyInsertionMode() const override;
+
  private:
   HTMLTableColElement(const QualifiedName& tag_name, Document&);
 
