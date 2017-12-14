@@ -5,7 +5,8 @@
  */
 
 .audits2-view {
-    margin: 7px 20px;
+    --view-horizontal-margin: 20px;
+    margin: 7px var(--view-horizontal-margin);
     flex: auto;
     align-items: center;
 }
@@ -36,33 +37,45 @@ header {
     color: #666;
 }
 
-.audits2-status .icon {
-    width: 64px;
-    height: 64px;
-    margin: 20px;
-    animation: spinner-animation 1200ms linear infinite;
-    transform-origin: 50% 50%;
-    padding: 4px;
+.audits2-status-text {
+    text-align: center;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
-.audits2-status .icon::before {
-    display: inline-block;
-    border: 4px solid #1565C0;
-    border-radius: 28px;
-    width: 56px;
-    height: 56px;
-    content: "";
-    position: absolute;
-    box-sizing: border-box;
+.audits2-progress-wrapper {
+    width: calc(100% + 2 * var(--view-horizontal-margin));
+    height: 2px;
+    background-color: #E1F5FE;
+    position: relative;
+    margin: 10px;
 }
 
-.audits2-status .icon::after {
-    display: inline-block;
-    width: 24px;
-    height: 28px;
-    background: white;
+.audits2-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: #039BE5;
     position: absolute;
-    content: "";
+    transform-origin: left;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+}
+
+.audits2-progress-bar.loading {
+    animation-duration: 45s;
+    animation-name: progressBarLoading;
+}
+
+.audits2-progress-bar.gathering {
+    animation-duration: 12s;
+    animation-name: progressBarGathering;
+}
+
+.audits2-progress-bar.auditing {
+    animation-duration: 5s;
+    animation-name: progressBarAuditing;
 }
 
 .audits2-report-error {
@@ -72,12 +85,6 @@ header {
 
 button {
     margin: 15px 10px;
-}
-
-.audits2-status .icon.error,
-.audits2-status .icon.error::before,
-.audits2-status .icon.error::after {
-    display: none;
 }
 
 .audits2-launcher-row {
@@ -97,6 +104,17 @@ button {
     justify-content: center;
 }
 
-@keyframes spinner-animation {
-    from { transform: rotate(0); }
-    to { transform: rotate(360deg); }
+@keyframes progressBarLoading {
+  0% { width: 0%; }
+  100% { width: 70%; }
+}
+
+@keyframes progressBarGathering {
+  0% { width: 70%; }
+  100% { width: 95%; }
+}
+
+@keyframes progressBarAuditing {
+  0% { width: 95%; }
+  100% { width: 99%; }
+}
