@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ecbc01_34228249",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_boot_error_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-14T05:07:41Z",
+      "side": 1,
+      "message": "nit: s/Bind/BindRepeating/,\nbase::MakeRefCounted\u003cmessage_center::HandleNotificationClickDelegate\u003e(...);",
+      "revId": "c83c4f782aefd6f44ec77a578f83ccd609497291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270f302b_e75a7413",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_boot_error_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-14T05:07:41Z",
+      "side": 1,
+      "message": "Could you add dependency to the factory of NotificationDisplayService?",
+      "revId": "c83c4f782aefd6f44ec77a578f83ccd609497291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
