@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f578d213_d91de110",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-14T01:51:09Z",
+      "side": 1,
+      "message": "I think you don\u0027t need \u0027g\u0027 option due to anchoring to start of line, do you?\n\nAlso, let\u0027s avoid creating a regexp for each character consumed. Can we bring back consumeSpaces() and perhaps just call it once before the character (you don\u0027t want to call it after so as not to skip spaces after consumeChar(\u0027\"\u0027)). \n\nI don\u0027t think (?:\\s*) groups have the effect you expect, as \u0027\\s\u0027 becomes just \u0027s\u0027 because it\u0027s inside `back quotes` and not /re/. So you would have funny effect with ssss\"six\" being interpreted as a valid string with the value of \"ix\" :-)",
+      "revId": "f85e4fdf9a7cd08cd28c2021f691aa7315a61947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361670fa_e1b5baae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-14T01:51:09Z",
+      "side": 1,
+      "message": "as above, \u0027/g\u0027 is perhaps redundant.",
+      "revId": "f85e4fdf9a7cd08cd28c2021f691aa7315a61947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -119,6 +119,24 @@
       "revId": "3edb824ca666ce681360f4186f37bb2eceaecfee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f9ed95_9e64e8ac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServerTiming.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-14T01:51:09Z",
+      "side": 1,
+      "message": "What you want here is Common.console.warn(), this would go to the console of inspected page (console.warn() would only appear in the console of DevTools attached to the front-end, i.e. would not be visible to the regular user).",
+      "parentUuid": "c6c12b19_d69d8309",
+      "revId": "3edb824ca666ce681360f4186f37bb2eceaecfee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
