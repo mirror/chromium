@@ -246,7 +246,8 @@ void OffscreenCanvas::DiscardImageBuffer() {
 
 ImageBuffer* OffscreenCanvas::GetOrCreateImageBuffer() {
   if (!image_buffer_) {
-    bool is_accelerated_2d_canvas_blacklisted = true;
+    bool is_accelerated_2d_canvas_blacklisted =
+        !SharedGpuContext::IsGpuCompositingEnabled();
     base::WeakPtr<WebGraphicsContext3DProviderWrapper>
         context_provider_wrapper = SharedGpuContext::ContextProviderWrapper();
     if (context_provider_wrapper) {
