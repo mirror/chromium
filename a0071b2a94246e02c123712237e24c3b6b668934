@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c1b1bae_0e167154",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/NavigatorView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-12-14T19:47:55Z",
+      "side": 1,
+      "message": "If project.excludeFolder is a part of the project interface, project.canExcludeFolder should be too. Alternatively, excludeFolder should leave that interface and the action should be implemented on the FSWB level.",
+      "revId": "a0071b2a94246e02c123712237e24c3b6b668934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
