@@ -60,9 +60,10 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
                  float device_scale_factor,
                  const gfx::Size& device_viewport_size);
 
+  bool HasAllocatedResourcesForTesting(
+      const RenderPassId& render_pass_id) const;
+
   // Public interface implemented by subclasses.
-  virtual bool HasAllocatedResourcesForTesting(
-      const RenderPassId render_pass_id) const = 0;
   virtual void SwapBuffers(std::vector<ui::LatencyInfo> latency_info) = 0;
   virtual void SwapBuffersComplete() {}
   virtual void DidReceiveTextureInUseResponses(
@@ -164,13 +165,13 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
       const base::flat_map<RenderPassId, RenderPassRequirements>&
           render_passes_in_frame) = 0;
   virtual void AllocateRenderPassResourceIfNeeded(
-      const RenderPassId render_pass_id,
+      const RenderPassId& render_pass_id,
       const gfx::Size& enlarged_size,
       ResourceTextureHint texturehint) = 0;
   virtual bool IsRenderPassResourceAllocated(
-      const RenderPassId render_pass_id) const = 0;
-  virtual const gfx::Size& GetRenderPassTextureSize(
-      const RenderPassId render_pass_id) = 0;
+      const RenderPassId& render_pass_id) const = 0;
+  virtual gfx::Size GetRenderPassTextureSize(
+      const RenderPassId& render_pass_id) = 0;
   virtual void BindFramebufferToOutputSurface() = 0;
   virtual void BindFramebufferToTexture(const RenderPassId render_pass_id) = 0;
   virtual void SetScissorTestRect(const gfx::Rect& scissor_rect) = 0;
