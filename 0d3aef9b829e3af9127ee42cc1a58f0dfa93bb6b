@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2113225_be509590",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T04:04:07Z",
+      "side": 1,
+      "message": "It\u0027s a good practice to explain what the problem/fix was. Added.",
+      "revId": "0d3aef9b829e3af9127ee42cc1a58f0dfa93bb6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
