@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df1505ec_e0d04ffe",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-14T08:46:35Z",
+      "side": 1,
+      "message": "Should we use checked_cast here and below, assuming we\u0027re not supposed to have negative values here?",
+      "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c276f243_14b5e80b",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-14T08:46:35Z",
+      "side": 1,
+      "message": "This TODO comment (here and in the other file) can probably be moved around the corresponding lines in ExtractHttpRange?",
+      "revId": "f57fb467ac134b867c3bb5cc510b8e09ad3147c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
