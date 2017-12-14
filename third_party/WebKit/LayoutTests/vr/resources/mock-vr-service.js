@@ -12,9 +12,15 @@ class MockVRDisplay {
     }
   }
 
-  requestPresent(submitFrameClient, request) {
-    this.presentation_provider_.bind(submitFrameClient, request);
-    return Promise.resolve({success: true});
+  requestPresent(submitFrameClient, request, present_options) {
+    this.presentation_provider_.bind(submitFrameClient, request,
+                                     present_options);
+    return Promise.resolve({success: true, transportOptions: {
+      transportMethod:
+          device.mojom.VRDisplayFrameTransportMethod.SUBMIT_AS_MAILBOX_HOLDER,
+      waitForTransferNotification: true,
+      waitForRenderNotification: true,
+      waitForGpuFence: false}});
   }
 
   setPose(pose) {
@@ -67,16 +73,11 @@ class MockVRPresentationProvider {
 
   submitFrame(frameId, mailboxHolder, timeWaited) {
     // Trigger the submit completion callbacks here. WARNING: The
-    // Javascript-based mojo mocks are *not* re-entrant.  In the current
-    // default implementation, Javascript calls display.submitFrame, and the
-    // corresponding C++ code uses a reentrant mojo call that waits for
-    // onSubmitFrameTransferred to indicate completion. This never finishes
-    // when using the mocks since the incoming calls are queued until the
-    // current execution context finishes. As a workaround, use the alternate
-    // "WebVRExperimentalRendering" mode which works without reentrant calls,
-    // the code only checks for completion on the *next* frame, see the
-    // corresponding option setting in runtime_enabled_features.json5.
-    this.submitFrameClient_.onSubmitFrameTransferred();
+    // Javascript-based mojo mocks are *not* re-entrant. It's OK to
+    // wait for these notifications on the next frame, but waiting
+    // within the current frame would never finish since the incoming
+    // calls would be queued until the current execution context finishes.
+    this.submitFrameClient_.onSubmitFrameTransferred(true);
     this.submitFrameClient_.onSubmitFrameRendered();
   }
 
