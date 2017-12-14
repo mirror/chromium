@@ -73,9 +73,6 @@ class WebDevToolsAgentClient {
     return false;
   }
 
-  virtual void EnableTracing(const WebString& category_filter) {}
-  virtual void DisableTracing() {}
-
   virtual void SetCPUThrottlingRate(double rate) {}
 
  protected:
