@@ -36,10 +36,6 @@ class InstallableManager
   explicit InstallableManager(content::WebContents* web_contents);
   ~InstallableManager() override;
 
-  // Returns true if the overall security state of |web_contents| is sufficient
-  // to be considered installable.
-  static bool IsContentSecure(content::WebContents* web_contents);
-
   // Returns the minimum icon size in pixels for a site to be installable.
   static int GetMinimumIconSizeInPx();
 
@@ -133,6 +129,10 @@ class InstallableManager
     // This class contains a std::unique_ptr and therefore must be move-only.
     DISALLOW_COPY_AND_ASSIGN(IconProperty);
   };
+
+  // Returns true if the overall security state of |web_contents| is sufficient
+  // to be considered installable.
+  static bool IsContentSecure(content::WebContents* web_contents);
 
   // Returns true if |purpose| matches any fetched icon, or false if no icon has
   // been requested yet or there is no match.

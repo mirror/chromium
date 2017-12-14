@@ -147,22 +147,6 @@ InstallableManager::~InstallableManager() {
 }
 
 // static
-bool InstallableManager::IsContentSecure(content::WebContents* web_contents) {
-  if (!web_contents)
-    return false;
-
-  // Whitelist localhost. Check the VisibleURL to match what the
-  // SecurityStateTabHelper looks at.
-  if (net::IsLocalhost(web_contents->GetVisibleURL().HostNoBracketsPiece()))
-    return true;
-
-  security_state::SecurityInfo security_info;
-  SecurityStateTabHelper::FromWebContents(web_contents)
-      ->GetSecurityInfo(&security_info);
-  return security_state::IsSslCertificateValid(security_info.security_level);
-}
-
-// static
 int InstallableManager::GetMinimumIconSizeInPx() {
   return kMinimumPrimaryIconSizeInPx;
 }
@@ -215,6 +199,22 @@ void InstallableManager::RecordAddToHomescreenManifestAndIconTimeout() {
 
 void InstallableManager::RecordAddToHomescreenInstallabilityTimeout() {
   metrics_->RecordAddToHomescreenInstallabilityTimeout();
+}
+
+// static
+bool InstallableManager::IsContentSecure(content::WebContents* web_contents) {
+  if (!web_contents)
+    return false;
+
+  // Whitelist localhost. Check the VisibleURL to match what the
+  // SecurityStateTabHelper looks at.
+  if (net::IsLocalhost(web_contents->GetVisibleURL().HostNoBracketsPiece()))
+    return true;
+
+  security_state::SecurityInfo security_info;
+  SecurityStateTabHelper::FromWebContents(web_contents)
+      ->GetSecurityInfo(&security_info);
+  return security_state::IsSslCertificateValid(security_info.security_level);
 }
 
 bool InstallableManager::IsIconFetched(const IconPurpose purpose) const {
