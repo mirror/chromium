@@ -10,6 +10,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
@@ -139,6 +140,34 @@ bool IsIconURLInsecure(const Credential* credential) {
   return false;
 }
 
+// A context client that owns a ScriptPromiseResolver.
+class PromiseResolverWithContext
+    : public GarbageCollected<PromiseResolverWithContext>,
+      public ContextClient {
+  USING_GARBAGE_COLLECTED_MIXIN(PromiseResolverWithContext);
+
+ public:
+  static PromiseResolverWithContext* Create(ScriptPromiseResolver* resolver) {
+    return new PromiseResolverWithContext(resolver);
+  }
+
+  ScriptPromiseResolver* Resolver() { return resolver_; }
+
+  virtual void Trace(Visitor* visitor) {
+    visitor->Trace(resolver_);
+    ContextClient::Trace(visitor);
+  }
+
+ protected:
+  PromiseResolverWithContext(ScriptPromiseResolver* resolver)
+      : ContextClient(ExecutionContext::From(resolver->GetScriptState())),
+        resolver_(resolver) {}
+  ~PromiseResolverWithContext() = default;
+
+ private:
+  Member<ScriptPromiseResolver> resolver_;
+};
+
 }  // namespace
 
 class NotificationCallbacks
@@ -150,28 +179,30 @@ class NotificationCallbacks
 
   explicit NotificationCallbacks(ScriptPromiseResolver* resolver,
                                  SameOriginRequirement same_origin_requirement)
-      : resolver_(resolver),
+      : resolver_with_context_(PromiseResolverWithContext::Create(resolver)),
         same_origin_requirement_(same_origin_requirement) {}
   ~NotificationCallbacks() override {}
 
   void OnSuccess() override {
-    Frame* frame =
-        ToDocument(ExecutionContext::From(resolver_->GetScriptState()))
-            ->GetFrame();
+    if (!resolver_with_context_->GetExecutionContext())
+      return;
+
+    Frame* frame = resolver_with_context_->GetFrame();
     SECURITY_CHECK(!frame ||
                    same_origin_requirement_ ==
                        SameOriginRequirement::kCanBeCrossOrigin ||
                    IsSameOriginWithAncestors(frame));
 
-    resolver_->Resolve();
+    resolver_with_context_->Resolver()->Resolve();
   }
 
   void OnError(WebCredentialManagerError reason) override {
-    RejectDueToCredentialManagerError(resolver_, reason);
+    RejectDueToCredentialManagerError(resolver_with_context_->Resolver(),
+                                      reason);
   }
 
  private:
-  const Persistent<ScriptPromiseResolver> resolver_;
+  const Persistent<PromiseResolverWithContext> resolver_with_context_;
   const SameOriginRequirement same_origin_requirement_;
 };
 
@@ -180,47 +211,47 @@ class RequestCallbacks : public WebCredentialManagerClient::RequestCallbacks {
 
  public:
   explicit RequestCallbacks(ScriptPromiseResolver* resolver)
-      : resolver_(resolver) {}
+      : resolver_with_context_(PromiseResolverWithContext::Create(resolver)) {}
   ~RequestCallbacks() override {}
 
   void OnSuccess(std::unique_ptr<WebCredential> web_credential) override {
-    ExecutionContext* context =
-        ExecutionContext::From(resolver_->GetScriptState());
-    if (!context)
+    if (!resolver_with_context_->GetExecutionContext())
       return;
-    Frame* frame = ToDocument(context)->GetFrame();
+
+    ScriptPromiseResolver* resolver = resolver_with_context_->Resolver();
+    Frame* frame = resolver_with_context_->GetFrame();
     SECURITY_CHECK(!frame || IsSameOriginWithAncestors(frame));
 
-    std::unique_ptr<WebCredential> credential =
-        WTF::WrapUnique(web_credential.release());
     if (!frame) {
-      resolver_->Resolve();
+      resolver->Resolve();
       return;
     }
 
+    std::unique_ptr<WebCredential> credential =
+        WTF::WrapUnique(web_credential.release());
     if (!credential) {
-      resolver_->Resolve(v8::Null(resolver_->GetScriptState()->GetIsolate()));
+      resolver->Resolve(v8::Null(resolver->GetScriptState()->GetIsolate()));
       return;
     }
 
     DCHECK(credential->IsPasswordCredential() ||
            credential->IsFederatedCredential());
-    UseCounter::Count(ExecutionContext::From(resolver_->GetScriptState()),
+    UseCounter::Count(ExecutionContext::From(resolver->GetScriptState()),
                       WebFeature::kCredentialManagerGetReturnedCredential);
     if (credential->IsPasswordCredential())
-      resolver_->Resolve(PasswordCredential::Create(
+      resolver->Resolve(PasswordCredential::Create(
           static_cast<WebPasswordCredential*>(credential.get())));
     else
-      resolver_->Resolve(FederatedCredential::Create(
+      resolver->Resolve(FederatedCredential::Create(
           static_cast<WebFederatedCredential*>(credential.get())));
   }
 
   void OnError(WebCredentialManagerError reason) override {
-    RejectDueToCredentialManagerError(resolver_, reason);
+    RejectDueToCredentialManagerError(resolver_with_context_->Resolver(),
+                                      reason);
   }
 
- private:
-  const Persistent<ScriptPromiseResolver> resolver_;
+  const Persistent<PromiseResolverWithContext> resolver_with_context_;
 };
 
 class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
@@ -228,28 +259,28 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
 
  public:
   explicit PublicKeyCallbacks(ScriptPromiseResolver* resolver)
-      : resolver_(resolver) {}
+      : resolver_with_context_(PromiseResolverWithContext::Create(resolver)) {}
   ~PublicKeyCallbacks() override {
     OnError(blink::kWebCredentialManagerUnknownError);
   }
 
   void OnSuccess(
       webauth::mojom::blink::PublicKeyCredentialInfoPtr credential) override {
-    ExecutionContext* context =
-        ExecutionContext::From(resolver_->GetScriptState());
-    if (!context)
+    if (!resolver_with_context_->GetExecutionContext())
       return;
-    Frame* frame = ToDocument(context)->GetFrame();
+
+    ScriptPromiseResolver* resolver = resolver_with_context_->Resolver();
+    Frame* frame = resolver_with_context_->GetFrame();
     SECURITY_CHECK(!frame || frame == frame->Tree().Top());
 
     if (!frame) {
-      resolver_->Resolve();
+      resolver->Resolve();
       return;
     }
 
     if (!credential || credential->client_data_json.IsEmpty() ||
         credential->response->attestation_object.IsEmpty()) {
-      resolver_->Resolve(v8::Null(resolver_->GetScriptState()->GetIsolate()));
+      resolver->Resolve(v8::Null(resolver->GetScriptState()->GetIsolate()));
       return;
     }
 
@@ -262,12 +293,13 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
     AuthenticatorAttestationResponse* authenticator_response =
         AuthenticatorAttestationResponse::Create(client_data_buffer,
                                                  attestation_buffer);
-    resolver_->Resolve(PublicKeyCredential::Create(credential->id, raw_id,
-                                                   authenticator_response));
+    resolver->Resolve(PublicKeyCredential::Create(credential->id, raw_id,
+                                                  authenticator_response));
   }
 
   void OnError(WebCredentialManagerError reason) override {
-    RejectDueToCredentialManagerError(resolver_, reason);
+    RejectDueToCredentialManagerError(resolver_with_context_->Resolver(),
+                                      reason);
   }
 
  private:
@@ -276,7 +308,7 @@ class PublicKeyCallbacks : public WebAuthenticationClient::PublicKeyCallbacks {
                                   buffer.size());
   }
 
-  const Persistent<ScriptPromiseResolver> resolver_;
+  const Persistent<PromiseResolverWithContext> resolver_with_context_;
 };
 
 CredentialsContainer* CredentialsContainer::Create() {
