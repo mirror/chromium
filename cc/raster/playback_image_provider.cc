@@ -61,13 +61,16 @@ PlaybackImageProvider::GetDecodedDrawImage(const DrawImage& draw_image) {
 
   // Return an empty decoded image if we are skipping all images during this
   // raster.
-  if (!settings_.has_value())
+  if (!settings_.has_value()) {
+    DCHECK(false);
     return ScopedDecodedDrawImage();
+  }
 
   const PaintImage& paint_image = draw_image.paint_image();
 
   if (settings_->images_to_skip.count(paint_image.stable_id()) != 0) {
     DCHECK(paint_image.GetSkImage()->isLazyGenerated());
+    DCHECK(false);
     return ScopedDecodedDrawImage();
   }
 
