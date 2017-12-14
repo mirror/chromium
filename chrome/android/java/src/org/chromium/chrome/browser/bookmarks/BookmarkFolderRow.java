@@ -13,6 +13,8 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.components.bookmarks.BookmarkId;
 
+import java.util.List;
+
 /**
  * A row view that shows folder info in the bookmarks UI.
  */
@@ -42,7 +44,7 @@ public class BookmarkFolderRow extends BookmarkRow {
     BookmarkItem setBookmarkId(BookmarkId bookmarkId) {
         BookmarkItem item = super.setBookmarkId(bookmarkId);
         mTitleView.setText(item.getTitle());
-        int childCount = mDelegate.getModel().getChildCount(bookmarkId);
+        int childCount = countBookmarks(bookmarkId);
         mDescriptionView.setText((childCount > 0)
                         ? getResources().getQuantityString(
                                   R.plurals.bookmarks_count, childCount, childCount)
@@ -54,5 +56,17 @@ public class BookmarkFolderRow extends BookmarkRow {
     protected ColorStateList getDefaultIconTint() {
         return ApiCompatibilityUtils.getColorStateList(
                 getResources(), BookmarkUtils.getFolderIconTint());
+    }
+
+    /**
+     * @param bookmarkId The {@link BookmarkId} of the specified folder.
+     * @return The total number of bookmarks inside the specified folder and its sub folders.
+     */
+    private int countBookmarks(BookmarkId bookmarkId) {
+        BookmarkModel model = mDelegate.getModel();
+        List<BookmarkId> subFolders = model.getChildIDs(bookmarkId, true, false);
+        int count = model.getChildCount(bookmarkId) - subFolders.size();
+        for (BookmarkId folder : subFolders) count += countBookmarks(folder);
+        return count;
     }
 }
