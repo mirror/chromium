@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24dcf2ce_b67ed74e",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-14T20:14:24Z",
+      "side": 1,
+      "message": "nit: DomCode::ENTER?",
+      "range": {
+        "startLine": 154,
+        "startChar": 56,
+        "endLine": 154,
+        "endChar": 61
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b99a2ad_f3c4356e",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-14T20:14:24Z",
+      "side": 1,
+      "message": "This comment is maybe too telling... just say \"Verify the menu was triggered.\"",
+      "range": {
+        "startLine": 158,
+        "startChar": 10,
+        "endLine": 158,
+        "endChar": 17
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf07346_60f9abeb",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-14T20:14:24Z",
+      "side": 1,
+      "message": "I would change this to EXPECT_GE(0, [etc]). It took me a couple reads to realize you didn\u0027t make a mistake here.",
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e642f8ca_11058ecd",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-14T20:14:24Z",
+      "side": 1,
+      "message": "ditto here",
+      "range": {
+        "startLine": 196,
+        "startChar": 58,
+        "endLine": 196,
+        "endChar": 63
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f020686_e253c7ad",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-14T20:14:24Z",
+      "side": 1,
+      "message": "nit: inline (or make const) (and below)",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 270,
+        "endChar": 11
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629c4344_febba6dd",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-14T20:14:24Z",
+      "side": 1,
+      "message": "I think it\u0027s okay to not add this EXPECT call (since it\u0027s just verifying the mock). If you do add it though, add it to the previous test too.",
+      "range": {
+        "startLine": 280,
+        "startChar": 14,
+        "endLine": 280,
+        "endChar": 25
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf4126c_6d2ef1ae",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-14T20:14:24Z",
+      "side": 1,
+      "message": "Ditto here, though I feel more strongly about leaving this one out (because you just called SetCanBlacklistSite(false)).",
+      "range": {
+        "startLine": 503,
+        "startChar": 15,
+        "endLine": 503,
+        "endChar": 26
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525e87d2_ae7d1234",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-12-14T20:14:24Z",
+      "side": 1,
+      "message": "Same comments as previous file apply here. Though I actually think having this block in both tests is redundant. Delete the browsertest version?",
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
