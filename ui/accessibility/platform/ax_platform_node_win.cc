@@ -2914,7 +2914,11 @@ int AXPlatformNodeWin::MSAARole() {
       return ROLE_SYSTEM_GROUPING;
 
     case AX_ROLE_WINDOW:
-      return ROLE_SYSTEM_WINDOW;
+      // Do not return ROLE_SYSTEM_WINDOW as that is a special MSAA system role
+      // used to indicate a real native window object. It is automatically
+      // created by oleacc.dll as a parent of the root of our hierarchy,
+      // matching the HWND.
+      return ROLE_SYSTEM_CLIENT;
 
     // TODO(dmazzoni): figure out the proper MSAA role for roles listed below.
     case AX_ROLE_BLOCKQUOTE:
@@ -3179,6 +3183,9 @@ int32_t AXPlatformNodeWin::ComputeIA2Role() {
     case AX_ROLE_ABBR:
     case AX_ROLE_TIME:
       ia2_role = IA2_ROLE_TEXT_FRAME;
+      break;
+    case AX_ROLE_WINDOW:
+      ia2_role = IA2_ROLE_FRAME;
       break;
     default:
       break;
