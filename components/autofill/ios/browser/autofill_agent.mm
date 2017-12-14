@@ -647,7 +647,12 @@ void GetFormAndField(autofill::FormData* form,
 
 - (void)webState:(web::WebState*)webState
     didSubmitDocumentWithFormNamed:(const std::string&)formName
-                     userInitiated:(BOOL)userInitiated {
+                     userInitiated:(BOOL)userInitiated
+                       isMainFrame:(BOOL)isMainFrame {
+  if (!isMainFrame) {
+    // Saving from iframes is not implemented.
+    return;
+  }
   DCHECK_EQ(webState_, webState);
   if (!prefService_->GetBoolean(autofill::prefs::kAutofillEnabled))
     return;

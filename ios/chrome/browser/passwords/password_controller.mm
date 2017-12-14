@@ -469,7 +469,8 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
 - (void)webState:(web::WebState*)webState
     didSubmitDocumentWithFormNamed:(const std::string&)formName
-                     userInitiated:(BOOL)userInitiated {
+                     userInitiated:(BOOL)userInitiated
+                       isMainFrame:(BOOL)isMainFrame {
   DCHECK_EQ(webState_, webState);
   __weak PasswordController* weakSelf = self;
   // This code is racing against the new page loading and will not get the
@@ -480,8 +481,13 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     PasswordController* strongSelf = weakSelf;
     if (strongSelf && ![strongSelf isWebStateDestroyed] &&
         strongSelf.passwordManager) {
-      strongSelf.passwordManager->OnPasswordFormSubmitted(
-          strongSelf.passwordManagerDriver, form);
+      if (isMainFrame) {
+        strongSelf.passwordManager->OnPasswordFormSubmitted(
+            strongSelf.passwordManagerDriver, form);
+      } else {
+        strongSelf.passwordManager->OnInPageNavigation(
+            strongSelf.passwordManagerDriver, form);
+      }
     }
   };
   [self extractSubmittedPasswordForm:formName
