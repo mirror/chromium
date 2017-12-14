@@ -8,8 +8,6 @@
 #include "base/single_thread_task_runner.h"
 #include "url/gurl.h"
 
-using storage::kStorageTypeUnknown;
-
 namespace content {
 
 MockQuotaManagerProxy::MockQuotaManagerProxy(
@@ -18,7 +16,7 @@ MockQuotaManagerProxy::MockQuotaManagerProxy(
     : QuotaManagerProxy(quota_manager, task_runner),
       storage_accessed_count_(0),
       storage_modified_count_(0),
-      last_notified_type_(kStorageTypeUnknown),
+      last_notified_type_(StorageType::kUnknown),
       last_notified_delta_(0),
       registered_client_(NULL) {}
 
