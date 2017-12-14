@@ -163,6 +163,7 @@
                                            fieldType:@""
                                                 type:nil
                                           typedValue:@" "
+                                         isMainFrame:YES
                                             webState:_webState
                                    completionHandler:availableHandler];
 }
