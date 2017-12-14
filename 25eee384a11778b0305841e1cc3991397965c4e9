@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa4734d0_ee6f34c7",
+        "filename": "tools/grit/grit/format/resource_map.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T01:22:46Z",
+      "side": 1,
+      "message": "nit: make this uint16_t so that the bool can be packed into the same word?",
+      "revId": "25eee384a11778b0305841e1cc3991397965c4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
