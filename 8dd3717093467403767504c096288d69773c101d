@@ -69,6 +69,24 @@
       "revId": "8dd3717093467403767504c096288d69773c101d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444e553f_b7c36be0",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-14T01:03:15Z",
+      "side": 1,
+      "message": "// When this function returns a non-null value, the returned blob handle\n// contains bytes that would be read through beginRead and\n// endRead functions without calling this function. In such a case, this\n// object becomes closed.\n\nI intended to say that already read data must not be included in the returned form data. If that\u0027s not clear, please feel free to rephrase.",
+      "parentUuid": "938d4d24_a8c9c7dc",
+      "revId": "8dd3717093467403767504c096288d69773c101d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
