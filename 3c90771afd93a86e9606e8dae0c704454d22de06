@@ -16,6 +16,24 @@
       "revId": "3c90771afd93a86e9606e8dae0c704454d22de06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609fe73f_d43243d8",
+        "filename": "third_party/WebKit/Source/platform/testing/wtf/ScopedMockClock.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T23:13:56Z",
+      "side": 1,
+      "message": "I debated that, but advancing by zero is pretty pointless. If there\u0027s a good use case for it, it\u0027s easy enough to review this dcheck down the road.",
+      "parentUuid": "e92230ba_00ce9404",
+      "revId": "3c90771afd93a86e9606e8dae0c704454d22de06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
