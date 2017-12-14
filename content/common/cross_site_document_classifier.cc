@@ -34,19 +34,34 @@ const char kTextJson[] = "text/json";
 const char kTextXjson[] = "text/x-json";
 const char kTextPlain[] = "text/plain";
 
-bool MatchesSignature(StringPiece data,
+void AdvancePastWhitespace(StringPiece* data) {
+  size_t offset = data->find_first_not_of(" \t\r\n");
+  // There is no not-whitespace character in this document.
+  if (offset == base::StringPiece::npos) {
+    data->clear();
+  } else {
+    data->remove_prefix(offset);
+  }
+}
+
+bool MatchesSignature(StringPiece* data,
                       const StringPiece signatures[],
                       size_t arr_size) {
-  size_t offset = data.find_first_not_of(" \t\r\n");
-  // There is no not-whitespace character in this document.
-  if (offset == base::StringPiece::npos)
-    return false;
-
-  data.remove_prefix(offset);
-  for (size_t sig_index = 0; sig_index < arr_size; ++sig_index) {
-    if (base::StartsWith(data, signatures[sig_index],
-                         base::CompareCase::INSENSITIVE_ASCII))
-      return true;
+  for (size_t i = 0; i < arr_size; ++i) {
+    if (signatures[i].length() <= data->length()) {
+      if (base::StartsWith(*data, signatures[i],
+                           base::CompareCase::INSENSITIVE_ASCII)) {
+        data->remove_prefix(signatures[i].length());
+        return true;
+      }
+    } else {
+      // When |data| is a prefix of |signatures[i]| ...
+      if (base::StartsWith(signatures[i], *data,
+                           base::CompareCase::INSENSITIVE_ASCII)) {
+        data->clear();
+        return false;
+      }
+    }
   }
   return false;
 }
@@ -124,19 +139,12 @@ bool CrossSiteDocumentClassifier::IsValidCorsHeaderSet(
   if (access_control_origin == "*" || access_control_origin == "null")
     return true;
 
-  // TODO(dsjang): The CORS spec only treats a fully specified URL, except for
-  // "*", but many websites are using just a domain for access_control_origin,
-  // and this is blocked by Webkit's CORS logic here :
-  // CrossOriginAccessControl::passesAccessControlCheck(). GURL is set
-  // is_valid() to false when it is created from a URL containing * in the
-  // domain part.
-
-  GURL cors_origin(access_control_origin);
-  return IsSameSite(frame_origin, cors_origin);
+  return IsSameSite(frame_origin, GURL(access_control_origin));
 }
 
 // This function is a slight modification of |net::SniffForHTML|.
-bool CrossSiteDocumentClassifier::SniffForHTML(StringPiece data) {
+CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForHTML(
+    StringPiece data) {
   // The content sniffer used by Chrome and Firefox are using "<!--"
   // as one of the HTML signatures, but it also appears in valid
   // JavaScript, considered as well-formed JS by the browser.  Since
@@ -150,48 +158,65 @@ bool CrossSiteDocumentClassifier::SniffForHTML(StringPiece data) {
   // process, we should do single-thread checking here for the static
   // initializer.
   static const StringPiece kHtmlSignatures[] = {
-      StringPiece("<!doctype html"),  // HTML5 spec
-      StringPiece("<script"),         // HTML5 spec, Mozilla
-      StringPiece("<html"),           // HTML5 spec, Mozilla
-      StringPiece("<head"),           // HTML5 spec, Mozilla
-      StringPiece("<iframe"),         // Mozilla
-      StringPiece("<h1"),             // Mozilla
-      StringPiece("<div"),            // Mozilla
-      StringPiece("<font"),           // Mozilla
-      StringPiece("<table"),          // Mozilla
-      StringPiece("<a"),              // Mozilla
-      StringPiece("<style"),          // Mozilla
-      StringPiece("<title"),          // Mozilla
-      StringPiece("<b"),              // Mozilla
+    StringPiece("<!doctype html"),  // HTML5 spec
+    StringPiece("<script"),         // HTML5 spec, Mozilla
+    StringPiece("<html"),           // HTML5 spec, Mozilla
+    StringPiece("<head"),           // HTML5 spec, Mozilla
+    StringPiece("<iframe"),         // Mozilla
+    StringPiece("<h1"),             // Mozilla
+    StringPiece("<div"),            // Mozilla
+    StringPiece("<font"),           // Mozilla
+    StringPiece("<table"),          // Mozilla
+    StringPiece("<a"),              // Mozilla
+    StringPiece("<style"),          // Mozilla
+    StringPiece("<title"),          // Mozilla
+    StringPiece("<b"),              // Mozilla
+#if 0
+      // TODO(nick): These are disabled because <b is a prefix of them.
       StringPiece("<body"),           // Mozilla
       StringPiece("<br"),             // Mozilla
-      StringPiece("<p")               // Mozilla
+#endif
+    StringPiece("<p")  // Mozilla
   };
 
   while (data.length() > 0) {
-    if (MatchesSignature(data, kHtmlSignatures, arraysize(kHtmlSignatures)))
-      return true;
+    AdvancePastWhitespace(&data);
 
-    // If we cannot find "<!--", we fail sniffing this as HTML.
-    static const StringPiece kCommentBegins[] = {StringPiece("<!--")};
-    if (!MatchesSignature(data, kCommentBegins, arraysize(kCommentBegins)))
+    if (MatchesSignature(&data, kHtmlSignatures, arraysize(kHtmlSignatures)))
+      return Result::kYes;  // Found an HTML tag from the signature list.
+
+    if (!data.length()) {
+      // MatchesSignature consumed |data| but returned false, indicating that
+      // the the addition of more bytes could cause a match to occur.
       break;
+    }
 
-    // Search for --> and do SniffForHTML after that. If we can find the
-    // comment's end, we start HTML sniffing from there again.
-    static const char kEndComment[] = "-->";
-    size_t offset = data.find(kEndComment);
-    if (offset == base::StringPiece::npos)
-      break;
-
-    // Proceed to the index next to the ending comment (-->).
-    data.remove_prefix(offset + strlen(kEndComment));
+    // "<!--" (the HTML comment syntax) is an indeterminate case, since it's
+    // valid JS as well. Treat it as whitespace.
+    static const StringPiece kBeginCommentSignature[] = {"<!--"};
+    if (MatchesSignature(&data, kBeginCommentSignature,
+                         arraysize(kBeginCommentSignature)) ||
+        !data.length()) {
+      static const StringPiece kEndComment = "-->";
+      size_t comment_end = data.find(kEndComment);
+      if (comment_end == base::StringPiece::npos) {
+        break;  // Hit end of data with open comment.
+      } else {
+        data.remove_prefix(comment_end + kEndComment.length());
+        continue;
+      }
+    } else {
+      // Whatever this is, it's not HTML.
+      return Result::kNo;
+    }
   }
 
-  return false;
+  // All of |data| was consumed, without a clear determination.
+  return Result::kPossiblyWithMoreData;
 }
 
-bool CrossSiteDocumentClassifier::SniffForXML(base::StringPiece data) {
+CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForXML(
+    base::StringPiece data) {
   // TODO(dsjang): Chrome's mime_sniffer is using strncasecmp() for
   // this signature. However, XML is case-sensitive. Don't we have to
   // be more lenient only to block documents starting with the exact
@@ -199,54 +224,73 @@ bool CrossSiteDocumentClassifier::SniffForXML(base::StringPiece data) {
   // TODO(dsjang): Once CrossSiteDocumentClassifier is moved into the browser
   // process, we should do single-thread checking here for the static
   // initializer.
+  AdvancePastWhitespace(&data);
   static const StringPiece kXmlSignatures[] = {StringPiece("<?xml")};
-  return MatchesSignature(data, kXmlSignatures, arraysize(kXmlSignatures));
+  if (MatchesSignature(&data, kXmlSignatures, arraysize(kXmlSignatures)))
+    return Result::kYes;
+  if (data.empty())
+    return Result::kPossiblyWithMoreData;
+  return Result::kNo;
 }
 
-bool CrossSiteDocumentClassifier::SniffForJSON(base::StringPiece data) {
-  // TODO(dsjang): We have to come up with a better way to sniff
-  // JSON. However, even RE cannot help us that much due to the fact
-  // that we don't do full parsing.  This DFA starts with state 0, and
-  // finds {, "/' and : in that order. We're avoiding adding a
-  // dependency on a regular expression library.
+CrossSiteDocumentClassifier::Result CrossSiteDocumentClassifier::SniffForJSON(
+    base::StringPiece data) {
+  // TODO(dsjang): We have to come up with a better way to sniff JSON. However,
+  // even RE cannot help us that much due to the fact that we don't do full
+  // parsing.  This DFA starts with state 0, and finds {, "/' and : in that
+  // order.  We're avoiding adding a dependency on a regular expression library.
   enum {
     kStartState,
     kLeftBraceState,
     kLeftQuoteState,
-    kColonState,
-    kTerminalState,
+    kEscapeState,
+    kRightQuoteState,
   } state = kStartState;
 
-  size_t length = data.length();
-  for (size_t i = 0; i < length && state < kColonState; ++i) {
+  for (size_t i = 0; i < data.length(); ++i) {
     const char c = data[i];
-    if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
-      continue;
+    if (state != kLeftQuoteState && state != kEscapeState) {
+      // Whitespace is ignored (outside of string literals)
+      if (c == ' ' || c == '\t' || c == '\r' || c == '\n')
+        continue;
+    } else {
+      // Inside string literals, control characters should result in rejection.
+      if ((c >= 0 && c < 32) || c == 127)
+        return Result::kNo;
+    }
 
     switch (state) {
       case kStartState:
         if (c == '{')
           state = kLeftBraceState;
         else
-          state = kTerminalState;
+          return Result::kNo;
         break;
       case kLeftBraceState:
-        if (c == '\"' || c == '\'')
+        if (c == '"' || c == '\'')
           state = kLeftQuoteState;
         else
-          state = kTerminalState;
+          return Result::kNo;
         break;
       case kLeftQuoteState:
-        if (c == ':')
-          state = kColonState;
+        if (c == '"')
+          state = kRightQuoteState;
+        else if (c == '\\')
+          state = kEscapeState;
         break;
-      case kColonState:
-      case kTerminalState:
-        NOTREACHED();
+      case kEscapeState:
+        // Don't bother rejecting hex escapes.
+        state = kLeftQuoteState;
+        break;
+      case kRightQuoteState:
+        if (c == ':')
+          return Result::kYes;
+        else
+          return Result::kNo;
         break;
     }
   }
-  return state == kColonState;
+  return Result::kPossiblyWithMoreData;
 }
 
 }  // namespace content
