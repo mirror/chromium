@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81594a2e_9456d8a4",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T02:58:08Z",
+      "side": 1,
+      "message": "nit: make package-private",
+      "revId": "0fabfdd20b078f4c3577566e98632cc796165631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a98d48_87d04759",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T02:58:08Z",
+      "side": 1,
+      "message": "If this is just for tests, we could use reflection to call it.\n\nE.g.: https://cs.chromium.org/chromium/src/build/android/incremental_install/java/org/chromium/incrementalinstall/ClassLoaderPatcher.java?rcl\u003dc24f6f7d1b280440342a5a80d33ca6a02a395bf2\u0026l\u003d36",
+      "revId": "0fabfdd20b078f4c3577566e98632cc796165631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
