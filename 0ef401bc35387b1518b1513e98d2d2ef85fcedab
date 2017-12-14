@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f9e6299f_0415718d",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T21:18:52Z",
+      "side": 1,
+      "message": "Doing this in follow up sounds good.",
+      "parentUuid": "e83ba4ff_c5a8432d",
+      "range": {
+        "startLine": 566,
+        "startChar": 15,
+        "endLine": 566,
+        "endChar": 17
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a360cca_8133ee17",
         "filename": "components/autofill/ios/browser/autofill_agent.mm",
         "patchSetId": 5
@@ -481,6 +505,30 @@
       "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be1ebde5_5542b29c",
+        "filename": "ios/web/web_state/web_state_observer_bridge_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T21:18:52Z",
+      "side": 1,
+      "message": "s/YES/true\n\nSame comment for the previous variable",
+      "parentUuid": "47d2455c_d97d3c7b",
+      "range": {
+        "startLine": 220,
+        "startChar": 7,
+        "endLine": 220,
+        "endChar": 20
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {

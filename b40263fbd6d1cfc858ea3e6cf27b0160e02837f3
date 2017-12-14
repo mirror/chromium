@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65d7cf7a_3733c015",
+        "filename": "ios/web/public/web_state/form_activity_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T21:18:52Z",
+      "side": 1,
+      "message": "This comment suggests that |is_main_frame| is true if the activity was registered in cross-origin iframe.\n\nAlso s/frame/iframe ?",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "b40263fbd6d1cfc858ea3e6cf27b0160e02837f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
