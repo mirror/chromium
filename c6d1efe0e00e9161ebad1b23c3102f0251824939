@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c644bf70_da1663b4",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T21:17:24Z",
+      "side": 1,
+      "message": "Sure, if that\u0027s your favorite way to click it. SPACE works as a trigger too. :)",
+      "parentUuid": "24dcf2ce_b67ed74e",
+      "range": {
+        "startLine": 154,
+        "startChar": 56,
+        "endLine": 154,
+        "endChar": 61
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b99a2ad_f3c4356e",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a364e8f0_abcbb8e8",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T21:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b99a2ad_f3c4356e",
+      "range": {
+        "startLine": 158,
+        "startChar": 10,
+        "endLine": 158,
+        "endChar": 17
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf07346_60f9abeb",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
         "patchSetId": 7
@@ -62,6 +110,24 @@
       "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64243d5e_ea1a9b8a",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T21:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf07346_60f9abeb",
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "4678aa4d_e693cc31",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T21:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e642f8ca_11058ecd",
+      "range": {
+        "startLine": 196,
+        "startChar": 58,
+        "endLine": 196,
+        "endChar": 63
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f020686_e253c7ad",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
         "patchSetId": 7
@@ -108,6 +198,30 @@
       "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e44c12_3ed1c395",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T21:17:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f020686_e253c7ad",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 270,
+        "endChar": 11
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "c5116401_7d207ed8",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T21:17:24Z",
+      "side": 1,
+      "message": "Because it\u0027s relevant to the test that the site can be blacklisted, I just added a SetCanBlacklistSite(true) call to convey that (with comment). It\u0027s not relevant for NEVER_TRANSLATE_LANGUAGE as that\u0027s not gated (it\u0027s OK to blacklist a language still).",
+      "parentUuid": "629c4344_febba6dd",
+      "range": {
+        "startLine": 280,
+        "startChar": 14,
+        "endLine": 280,
+        "endChar": 25
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bf4126c_6d2ef1ae",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
         "patchSetId": 7
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "24f02dde_4ffbe2cd",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T21:17:24Z",
+      "side": 1,
+      "message": "Removed the EXPECT.",
+      "parentUuid": "6bf4126c_6d2ef1ae",
+      "range": {
+        "startLine": 503,
+        "startChar": 15,
+        "endLine": 503,
+        "endChar": 26
+      },
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "525e87d2_ae7d1234",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
         "patchSetId": 7
@@ -171,6 +333,24 @@
       "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c141e1_b090b429",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T21:17:24Z",
+      "side": 1,
+      "message": "This one is a bit stronger since it doesn\u0027t work off a mock model but rather tests \"real behavior\", so I think it\u0027s OK to keep. LMK if you feel strongly and I\u0027ll nuke it.",
+      "parentUuid": "525e87d2_ae7d1234",
+      "revId": "c6d1efe0e00e9161ebad1b23c3102f0251824939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
