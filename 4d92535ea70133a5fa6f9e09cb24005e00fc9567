@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b55cbc2_de724b81",
+        "filename": "tools/mb/docs/user_guide.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-14T03:10:39Z",
+      "side": 1,
+      "message": "The most obvious case right now is that the default dimensions might be wrong (e.g., to run a test on an Android device). I can add that to the docs to be clearer.",
+      "parentUuid": "8fbae4f5_deb7f3ed",
+      "revId": "4d92535ea70133a5fa6f9e09cb24005e00fc9567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee37a2aa_4d2ef910",
         "filename": "tools/mb/mb.py",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "4d92535ea70133a5fa6f9e09cb24005e00fc9567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e01dab_88c77343",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-14T03:10:39Z",
+      "side": 1,
+      "message": "Makes sense, will do.",
+      "parentUuid": "ee37a2aa_4d2ef910",
+      "revId": "4d92535ea70133a5fa6f9e09cb24005e00fc9567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dd9040b3_4e35c36f",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-14T03:10:39Z",
+      "side": 1,
+      "message": "Ah! I didn\u0027t realize that nargs\u003d2 would create nested lists, and that args.dimensions would be [[\u0027foo\u0027, 1], [\u0027bar\u0027, 2]], I thought it was a flat list, i.e., [\u0027foo\u0027, 1, \u0027bar\u0027, 2].\n\nYeah, that changes things, and is what I get for not testing this code path. Will fix / change.",
+      "parentUuid": "e8868c7d_f484c58f",
+      "revId": "4d92535ea70133a5fa6f9e09cb24005e00fc9567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31022117_f197d1ad",
         "filename": "tools/mb/mb.py",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "4d92535ea70133a5fa6f9e09cb24005e00fc9567",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ccb900_acb42d69",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-12-14T03:10:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "31022117_f197d1ad",
+      "revId": "4d92535ea70133a5fa6f9e09cb24005e00fc9567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
