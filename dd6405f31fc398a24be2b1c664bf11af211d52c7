@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00e1a69f_c7430e5d",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-14T22:15:53Z",
+      "side": 1,
+      "message": "Kudos for \u0027.\u0027",
+      "range": {
+        "startLine": 344,
+        "startChar": 73,
+        "endLine": 344,
+        "endChar": 74
+      },
+      "revId": "dd6405f31fc398a24be2b1c664bf11af211d52c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
