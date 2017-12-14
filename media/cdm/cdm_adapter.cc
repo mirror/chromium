@@ -1157,6 +1157,8 @@ void CdmAdapter::OnDeferredInitializationDone(cdm::StreamType stream_type,
 
 cdm::FileIO* CdmAdapter::CreateFileIO(cdm::FileIOClient* client) {
   DCHECK(task_runner_->BelongsToCurrentThread());
+  DVLOG(3) << __func__;
+
   return helper_->CreateCdmFileIO(client);
 }
 
@@ -1172,9 +1174,10 @@ void CdmAdapter::RequestStorageId(uint32_t version) {
 }
 
 cdm::CdmProxy* CdmAdapter::CreateCdmProxy() {
-  // TODO(xhwang): Implement this!
-  NOTIMPLEMENTED();
-  return nullptr;
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  DVLOG(3) << __func__;
+
+  return helper_->CreateCdmProxy();
 }
 
 void CdmAdapter::OnStorageIdObtained(uint32_t version,
