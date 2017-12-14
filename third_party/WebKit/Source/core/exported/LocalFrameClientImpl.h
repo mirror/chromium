@@ -227,7 +227,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void SetEffectiveConnectionTypeForTesting(
       WebEffectiveConnectionType) override;
 
-  bool IsClientLoFiActiveForFrame() override;
+  WebURLRequest::PreviewsState GetPreviewsStateForFrame() const override;
 
   bool ShouldUseClientLoFiForRequest(const ResourceRequest&) override;
 
