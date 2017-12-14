@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a9019c8_febfc59a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T19:33:35Z",
+      "side": 1,
+      "message": "Let\u0027s not commit all these links.",
+      "revId": "c4ee24a03d4d4a96c1283269d72836eca4825b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62951873_173d197c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T19:33:35Z",
+      "side": 1,
+      "message": "Let\u0027s retire from default some of the older ones.",
+      "revId": "c4ee24a03d4d4a96c1283269d72836eca4825b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5ddefe7_be43ffc7",
         "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
         "patchSetId": 2
