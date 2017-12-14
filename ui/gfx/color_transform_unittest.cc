@@ -23,7 +23,7 @@ ColorSpace::PrimaryID all_primaries[] = {
     ColorSpace::PrimaryID::SMPTEST431_2, ColorSpace::PrimaryID::SMPTEST432_1,
 };
 
-ColorSpace::TransferID all_transfers[] = {
+ColorSpace::TransferID simple_transfers[] = {
     ColorSpace::TransferID::BT709,
     ColorSpace::TransferID::GAMMA22,
     ColorSpace::TransferID::GAMMA28,
@@ -43,6 +43,30 @@ ColorSpace::TransferID all_transfers[] = {
     // This one is weird as the non-linear numbers are not between 0 and 1.
     // TODO(hubbe): Test this separately.
     //  ColorSpace::TransferID::SMPTEST428_1,
+};
+
+ColorSpace::TransferID all_transfers[] = {
+    ColorSpace::TransferID::BT709,
+    ColorSpace::TransferID::GAMMA18,
+    ColorSpace::TransferID::GAMMA22,
+    ColorSpace::TransferID::GAMMA24,
+    ColorSpace::TransferID::GAMMA28,
+    ColorSpace::TransferID::SMPTE170M,
+    ColorSpace::TransferID::SMPTE240M,
+    ColorSpace::TransferID::LINEAR,
+    ColorSpace::TransferID::LOG,
+    ColorSpace::TransferID::LOG_SQRT,
+    ColorSpace::TransferID::IEC61966_2_4,
+    ColorSpace::TransferID::BT1361_ECG,
+    ColorSpace::TransferID::IEC61966_2_1,
+    ColorSpace::TransferID::BT2020_10,
+    ColorSpace::TransferID::BT2020_12,
+    ColorSpace::TransferID::SMPTEST2084,
+    ColorSpace::TransferID::SMPTEST428_1,
+    ColorSpace::TransferID::ARIB_STD_B67,
+    ColorSpace::TransferID::SMPTEST2084_NON_HDR,
+    ColorSpace::TransferID::IEC61966_2_1_HDR,
+    ColorSpace::TransferID::LINEAR_HDR,
 };
 
 ColorSpace::TransferID extended_transfers[] = {
@@ -322,13 +346,12 @@ TEST(SimpleColorSpace, GetColorSpace) {
 TEST(SimpleColorSpace, ToUndefined) {
   ColorSpace null;
   ColorSpace nonnull = gfx::ColorSpace::CreateSRGB();
-  // Video should have 1 step: YUV to RGB.
-  // Anything else should have 0 steps.
+  // Transform to or from an invalid color space should always be empty.
   ColorSpace video = gfx::ColorSpace::CreateREC709();
   std::unique_ptr<ColorTransform> video_to_null(
       ColorTransform::NewColorTransform(
           video, null, ColorTransform::Intent::INTENT_PERCEPTUAL));
-  EXPECT_EQ(video_to_null->NumberOfStepsForTesting(), 1u);
+  EXPECT_EQ(video_to_null->NumberOfStepsForTesting(), 0u);
 
   // Test with an ICC profile that can't be represented as matrix+transfer.
   ColorSpace luttrcicc = ICCProfileForTestingNoAnalyticTrFn().GetColorSpace();
@@ -476,9 +499,10 @@ TEST(SimpleColorSpace, MAYBE_SampleShaderSource) {
   EXPECT_EQ(source, expected);
 }
 
-class TransferTest : public testing::TestWithParam<ColorSpace::TransferID> {};
+class SimpleTransferTest
+    : public testing::TestWithParam<ColorSpace::TransferID> {};
 
-TEST_P(TransferTest, basicTest) {
+TEST_P(SimpleTransferTest, basicTest) {
   gfx::ColorSpace space_with_transfer(ColorSpace::PrimaryID::BT709, GetParam(),
                                       ColorSpace::MatrixID::RGB,
                                       ColorSpace::RangeID::FULL);
@@ -510,7 +534,37 @@ TEST_P(TransferTest, basicTest) {
 }
 
 INSTANTIATE_TEST_CASE_P(ColorSpace,
-                        TransferTest,
+                        SimpleTransferTest,
+                        testing::ValuesIn(simple_transfers));
+
+class AllTransferTest : public testing::TestWithParam<ColorSpace::TransferID> {
+};
+
+// This ensures that a transform can be constructed for all transfer functions.
+TEST_P(AllTransferTest, basicTest) {
+  gfx::ColorSpace space_with_transfer(ColorSpace::PrimaryID::BT709, GetParam(),
+                                      ColorSpace::MatrixID::RGB,
+                                      ColorSpace::RangeID::FULL);
+  gfx::ColorSpace space_linear(
+      ColorSpace::PrimaryID::BT709, ColorSpace::TransferID::LINEAR,
+      ColorSpace::MatrixID::RGB, ColorSpace::RangeID::FULL);
+
+  std::unique_ptr<ColorTransform> to_linear(ColorTransform::NewColorTransform(
+      space_with_transfer, space_linear,
+      ColorTransform::Intent::INTENT_ABSOLUTE));
+
+  std::unique_ptr<ColorTransform> from_linear(ColorTransform::NewColorTransform(
+      space_linear, space_with_transfer,
+      ColorTransform::Intent::INTENT_ABSOLUTE));
+
+  float x = 0.5;
+  ColorTransform::TriStim tristim(x, x, x);
+  to_linear->Transform(&tristim, 1);
+  from_linear->Transform(&tristim, 1);
+}
+
+INSTANTIATE_TEST_CASE_P(ColorSpace,
+                        AllTransferTest,
                         testing::ValuesIn(all_transfers));
 
 class ExtendedTransferTest
@@ -592,7 +646,7 @@ INSTANTIATE_TEST_CASE_P(
     A,
     ColorSpaceTest,
     testing::Combine(testing::ValuesIn(all_primaries),
-                     testing::ValuesIn(all_transfers),
+                     testing::ValuesIn(simple_transfers),
                      testing::Values(ColorSpace::MatrixID::BT709),
                      testing::Values(ColorSpace::RangeID::LIMITED),
                      testing::ValuesIn(intents)));
@@ -601,7 +655,7 @@ INSTANTIATE_TEST_CASE_P(
     B,
     ColorSpaceTest,
     testing::Combine(testing::Values(ColorSpace::PrimaryID::BT709),
-                     testing::ValuesIn(all_transfers),
+                     testing::ValuesIn(simple_transfers),
                      testing::ValuesIn(all_matrices),
                      testing::ValuesIn(all_ranges),
                      testing::ValuesIn(intents)));

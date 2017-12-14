@@ -58,7 +58,7 @@ Transform Invert(const Transform& t) {
 float FromLinear(ColorSpace::TransferID id, float v) {
   switch (id) {
     case ColorSpace::TransferID::SMPTEST2084_NON_HDR:
-      // Should already be handled.
+      // Should not be reached.
       break;
 
     case ColorSpace::TransferID::LOG:
@@ -828,7 +828,7 @@ void ColorTransformInternal::AppendColorSpaceToColorSpaceTransform(
         }
         break;
 
-      default:  // Do nothing
+      default:
         break;
     }
 
@@ -840,12 +840,6 @@ void ColorTransformInternal::AppendColorSpaceToColorSpaceTransform(
 
   steps_.push_back(
       std::make_unique<ColorTransformMatrix>(Invert(GetTransferMatrix(src))));
-
-  // If the target color space is not defined, just apply the adjust and
-  // tranfer matrices. This path is used by YUV to RGB color conversion
-  // when full color conversion is not enabled.
-  if (!dst.IsValid())
-    return;
 
   SkColorSpaceTransferFn src_to_linear_fn;
   if (src.GetTransferFunction(&src_to_linear_fn)) {
@@ -964,38 +958,30 @@ ColorTransformInternal::ColorTransformInternal(const ColorSpace& src,
                                                const ColorSpace& dst,
                                                Intent intent)
     : src_(src), dst_(dst) {
-  // If no source color space is specified, do no transformation.
-  // TODO(ccameron): We may want dst assume sRGB at some point in the future.
-  if (!src_.IsValid())
+  // If the src or dst color space is unspecified, do no transformation.
+  if (!src_.IsValid() || !dst_.IsValid()) {
+    DLOG(ERROR) << "Invalid color transform requested.";
     return;
-
-  // If the target color space is not defined, just apply the adjust and
-  // tranfer matrices. This path is used by YUV to RGB color conversion
-  // when full color conversion is not enabled.
-  sk_sp<SkColorSpace> src_sk_color_space;
-  sk_sp<SkColorSpace> dst_sk_color_space;
-
-  bool has_src_profile = false;
-  bool has_dst_profile = false;
-  if (dst.IsValid()) {
-    src_sk_color_space = GetSkColorSpaceIfNecessary(src_);
-    dst_sk_color_space = GetSkColorSpaceIfNecessary(dst_);
   }
-  has_src_profile = !!src_sk_color_space;
-  has_dst_profile = !!dst_sk_color_space;
+  // SMPTEST2084_NON_HDR does not make sense as a destination.
+  if (dst.transfer_ == ColorSpace::TransferID::SMPTEST2084_NON_HDR) {
+    DLOG(ERROR) << "Invalid dst transfer function.";
+    return;
+  }
 
-  if (has_src_profile) {
+  // Use an SkColorSpace to implement the transform if needed.
+  sk_sp<SkColorSpace> src_sk_color_space = GetSkColorSpaceIfNecessary(src_);
+  sk_sp<SkColorSpace> dst_sk_color_space = GetSkColorSpaceIfNecessary(dst_);
+  if (src_sk_color_space) {
     steps_.push_back(std::make_unique<SkiaColorTransform>(
-        std::move(src_sk_color_space),
-        ColorSpace::CreateXYZD50().ToSkColorSpace()));
+        src_sk_color_space, ColorSpace::CreateXYZD50().ToSkColorSpace()));
   }
   AppendColorSpaceToColorSpaceTransform(
-      has_src_profile ? ColorSpace::CreateXYZD50() : src_,
-      has_dst_profile ? ColorSpace::CreateXYZD50() : dst_, intent);
-  if (has_dst_profile) {
+      src_sk_color_space ? ColorSpace::CreateXYZD50() : src_,
+      dst_sk_color_space ? ColorSpace::CreateXYZD50() : dst_, intent);
+  if (dst_sk_color_space) {
     steps_.push_back(std::make_unique<SkiaColorTransform>(
-        ColorSpace::CreateXYZD50().ToSkColorSpace(),
-        std::move(dst_sk_color_space)));
+        ColorSpace::CreateXYZD50().ToSkColorSpace(), dst_sk_color_space));
   }
 
   if (intent != Intent::TEST_NO_OPT)
