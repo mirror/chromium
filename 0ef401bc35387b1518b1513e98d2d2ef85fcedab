@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95943cc3_87f97fe0",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "In Objective-C asynchronous methods should always call completion handlers asynchronously. Having inconsistent API contract and calling completion handler synchronously just in error cases can cause bugs.\n\nweb::WebThread::PostTask(web::WebThread::UI, FROM_HERE, base::BindBlockArc(^{\n  completion(NO);\n});",
+      "range": {
+        "startLine": 566,
+        "startChar": 15,
+        "endLine": 566,
+        "endChar": 17
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a360cca_8133ee17",
+        "filename": "components/autofill/ios/browser/autofill_agent.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "Not related to your CL, but this is dead code now, which can be removed.",
+      "range": {
+        "startLine": 571,
+        "startChar": 25,
+        "endLine": 571,
+        "endChar": 50
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e88c1f_73f85d04",
+        "filename": "ios/chrome/browser/autofill/form_suggestion_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "nit: s/bool/BOOL",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 6
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32171387_87e26d38",
+        "filename": "ios/web/public/web_state/form_activity_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "Can we add comments? Specifically that main_frame is false when the activity was registered in same-origin frame.",
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95105506_82ce4cda",
+        "filename": "ios/web/public/web_state/form_activity_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "bool is_main_frame \u003d false;",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf59cc7_00a07026",
+        "filename": "ios/web/public/web_state/web_state_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "Can we explain in the comments that callback is only called for same origin frame?",
+      "range": {
+        "startLine": 137,
+        "startChar": 23,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a60b612_cd36c5ae",
+        "filename": "ios/web/public/web_state/web_state_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 145,
+        "startChar": 15,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e27345_a2a4e4eb",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "s/BOOL/bool\n\nCould you please fix the previous variable as well",
+      "range": {
+        "startLine": 320,
+        "startChar": 7,
+        "endLine": 320,
+        "endChar": 20
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e16f8e_6c220da2",
+        "filename": "ios/web/web_state/web_state_impl_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "Please update FormActivityRegistered test as well",
+      "range": {
+        "startLine": 328,
+        "startChar": 15,
+        "endLine": 328,
+        "endChar": 37
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c424dc8_84f457e9",
+        "filename": "ios/web/web_state/web_state_observer_bridge_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "bool is_main_frame \u003d true;\n\nCould you please fix the other variable as well.",
+      "range": {
+        "startLine": 220,
+        "startChar": 7,
+        "endLine": 220,
+        "endChar": 20
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df5c9c9_6ae60f0f",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "s/@YES/YES",
+      "range": {
+        "startLine": 155,
+        "startChar": 47,
+        "endLine": 155,
+        "endChar": 58
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd64b6f_713fbd88",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "/*is_main_frame\u003d*/true",
+      "range": {
+        "startLine": 235,
+        "startChar": 37,
+        "endLine": 235,
+        "endChar": 50
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6ae442_98dc9665",
+        "filename": "ios/web_view/internal/autofill/cwv_autofill_controller_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T19:07:25Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 243,
+        "startChar": 37,
+        "endLine": 243,
+        "endChar": 50
+      },
+      "revId": "0ef401bc35387b1518b1513e98d2d2ef85fcedab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
