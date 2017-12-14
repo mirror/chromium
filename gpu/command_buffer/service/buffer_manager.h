@@ -103,10 +103,15 @@ class GPU_EXPORT Buffer : public base::RefCounted<Buffer> {
     return mapped_range_.get();
   }
 
+  bool BoundForWebGLTransformFeedback() const {
+    return webgl_transform_feedback_binding_count_ > 0;
+  }
+
  private:
   friend class BufferManager;
   friend class BufferManagerTestBase;
   friend class base::RefCounted<Buffer>;
+  friend class IndexedBufferBindingHost;
 
   // Represents a range in a buffer.
   class Range {
@@ -191,6 +196,12 @@ class GPU_EXPORT Buffer : public base::RefCounted<Buffer> {
   // Whether or not this Buffer is not uploaded to the GPU but just
   // sitting in local memory.
   bool is_client_side_array_;
+
+  // Keeps track of whether this buffer is currently bound for transform
+  // feedback in a WebGL context. Used as an optimization when validating WebGL
+  // draw calls for compliance with binding restrictions.
+  // http://crbug.com/696345
+  int webgl_transform_feedback_binding_count_;
 
   // Service side buffer id.
   GLuint service_id_;
@@ -308,35 +319,40 @@ class GPU_EXPORT BufferManager : public base::trace_event::MemoryDumpProvider {
                               GLenum target,
                               GLintptr offset,
                               GLsizeiptr size,
-                              const char* func_name);
+                              const char* func_name,
+                              bool allow_transform_feedback = false);
   // Same as above, but assume to access the entire buffer.
   Buffer* RequestBufferAccess(ContextState* context_state,
                               GLenum target,
-                              const char* func_name);
+                              const char* func_name,
+                              bool allow_transform_feedback = false);
   // Same as above, but it can be any buffer rather than the buffer bound to
   // |target|. Return true if access is granted; return false if a GL error is
   // generated.
   bool RequestBufferAccess(ErrorState* error_state,
                            Buffer* buffer,
                            const char* func_name,
-                           const char* error_message_format, ...);
+                           bool allow_transform_feedback,
+                           const char* error_message_format,
+                           ...);
   // Generates INVALID_OPERATION if offset + size is out of range.
   bool RequestBufferAccess(ErrorState* error_state,
                            Buffer* buffer,
                            GLintptr offset,
                            GLsizeiptr size,
                            const char* func_name,
+                           bool allow_transform_feedback,
                            const char* error_message);
   // Returns false and generates INVALID_OPERATION if buffer at binding |ii|
   // doesn't exist, is mapped, or smaller than |variable_sizes[ii]| * |count|.
   // Return true otherwise.
-  bool RequestBuffersAccess(
-      ErrorState* error_state,
-      const IndexedBufferBindingHost* bindings,
-      const std::vector<GLsizeiptr>& variable_sizes,
-      GLsizei count,
-      const char* func_name,
-      const char* message_tag);
+  bool RequestBuffersAccess(ErrorState* error_state,
+                            const IndexedBufferBindingHost* bindings,
+                            const std::vector<GLsizeiptr>& variable_sizes,
+                            GLsizei count,
+                            const char* func_name,
+                            const char* message_tag,
+                            bool allow_transform_feedback = false);
 
  private:
   friend class Buffer;
@@ -394,7 +410,8 @@ class GPU_EXPORT BufferManager : public base::trace_event::MemoryDumpProvider {
                             Buffer* buffer,
                             const char* func_name,
                             const char* error_message_format,
-                            va_list varargs);
+                            va_list varargs,
+                            bool allow_transform_feedback = false);
 
   std::unique_ptr<MemoryTypeTracker> memory_type_tracker_;
   MemoryTracker* memory_tracker_;

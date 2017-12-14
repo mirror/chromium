@@ -44,6 +44,8 @@ class GPU_EXPORT IndexedBufferBindingHost :
 
   void RemoveBoundBuffer(Buffer* buffer);
 
+  void SetBoundForWebGLTransformFeedback(bool bound);
+
   Buffer* GetBufferBinding(GLuint index) const;
   // Returns |size| set by glBindBufferRange; 0 if set by glBindBufferBase.
   GLsizeiptr GetBufferSize(GLuint index) const;
@@ -60,6 +62,8 @@ class GPU_EXPORT IndexedBufferBindingHost :
   // Check if |buffer| is currently bound to one of the indexed binding point
   // from 0 to |used_binding_count| - 1.
   bool UsesBuffer(size_t used_binding_count, const Buffer* buffer) const;
+
+  bool HasBoundBuffer() const { return buffer_bindings_.size() > 0; }
 
  protected:
   friend class base::RefCounted<IndexedBufferBindingHost>;
@@ -106,6 +110,8 @@ class GPU_EXPORT IndexedBufferBindingHost :
   std::vector<IndexedBufferBinding> buffer_bindings_;
 
   bool needs_emulation_;
+
+  bool bound_for_webgl_transform_feedback_;
 
   // This is used for optimization purpose in context switching.
   size_t max_non_null_binding_index_plus_one_;
