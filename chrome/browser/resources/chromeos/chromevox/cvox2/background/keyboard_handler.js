@@ -8,7 +8,10 @@
 
 goog.provide('BackgroundKeyboardHandler');
 
+goog.require('ChromeVoxState');
+goog.require('Output');
 goog.require('cvox.ChromeVoxKbHandler');
+goog.require('cvox.ChromeVoxPrefs');
 
 /** @constructor */
 BackgroundKeyboardHandler = function() {
@@ -91,13 +94,36 @@ BackgroundKeyboardHandler.prototype = {
         newMode === ChromeVoxMode.FORCE_NEXT) {
       // Switching out of classic, classic compat, or uninitialized
       // (on startup).
-      window['prefs'].switchToKeyMap('keymap_next');
+      /** @type {cvox.ChromeVoxPrefs} */ (window['prefs'])
+          .switchToKeyMap('keymap_next');
     } else if (
         oldMode && oldMode != ChromeVoxMode.CLASSIC &&
         oldMode != ChromeVoxMode.CLASSIC_COMPAT) {
       // Switching out of next. Intentionally do nothing when switching out of
       // an uninitialized |oldMode|.
-      window['prefs'].switchToKeyMap('keymap_classic');
+      /** @type {cvox.ChromeVoxPrefs} */ (window['prefs'])
+          .switchToKeyMap('keymap_classic');
     }
   }
+};
+
+/**
+ * @param {number} keyCode
+ * @param {string} keyName
+ * @param {number=} modifiers
+ * @return {boolean}
+ */
+BackgroundKeyboardHandler.sendKeyPress = function(keyCode, keyName, modifiers) {
+  modifiers = modifiers || 0;
+  var key = {
+    type: 'keydown',
+    keyCode: keyCode,
+    keyName: keyName,
+    charValue: keyCode,
+    modifiers: modifiers
+  };
+  chrome.virtualKeyboardPrivate.sendKeyEvent(key);
+  key['type'] = 'keyup';
+  chrome.virtualKeyboardPrivate.sendKeyEvent(key);
+  return true;
 };
