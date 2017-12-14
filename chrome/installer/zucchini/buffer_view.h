@@ -159,6 +159,10 @@ class BufferViewBase {
     first_ = pos;
   }
 
+  bool equals(BufferViewBase other) const {
+    return size() == other.size() && std::equal(begin(), end(), other.begin());
+  }
+
  private:
   iterator first_ = nullptr;
   iterator last_ = nullptr;
