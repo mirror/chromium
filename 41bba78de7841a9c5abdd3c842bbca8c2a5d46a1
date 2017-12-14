@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e9842de_477abf4c",
+        "filename": "components/viz/service/display/surface_aggregator_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-14T16:18:07Z",
+      "side": 1,
+      "message": "nit: can auto when we make_unique",
+      "revId": "41bba78de7841a9c5abdd3c842bbca8c2a5d46a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
