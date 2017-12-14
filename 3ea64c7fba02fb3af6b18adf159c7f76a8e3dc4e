@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a1fd6a_97140119",
+        "filename": "gin/array_buffer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115851
+      },
+      "writtenOn": "2017-12-14T22:36:26Z",
+      "side": 1,
+      "message": "Please put a comment here explaining what\u0027s going on, in case someone else happens to read this before you land step 3.",
+      "revId": "3ea64c7fba02fb3af6b18adf159c7f76a8e3dc4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
