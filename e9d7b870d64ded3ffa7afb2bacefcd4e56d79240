@@ -45,6 +45,30 @@
       "revId": "e9d7b870d64ded3ffa7afb2bacefcd4e56d79240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5dddbc0_e5461c4a",
+        "filename": "chrome/browser/extensions/install_verifier_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T14:33:05Z",
+      "side": 1,
+      "message": "Hmm... parameterized tests are great for some things (they\u0027ve saved me so much time when writing tests that are meant to pass with/without experiments!), but I actually think that a parameterized test greatly reduces readability here.  With a parameterized test, it\u0027s something like:\n\nCreateExtension() {\n  ExtensionBuilder extension_builder(\"extension\");\n  extension_builder.SetLocation(GetParam().first);\n  if (GetParam().second) {\n    extension_builder.MergeManifest(\n        DictionaryBuilder()\n            .Set(\"update_url\", GetParam().second-\u003espec())\n            .Build());\n  }\n  return extension_builder.Build();\n}\n\nTEST_P(..., IsFromStore) {\n  CreateExtension();\n  EXPECT_TRUE(InstallVerifier::IsFromStore());\n}\n\nTEST_P(..., NotFromStore) {\n  CreateExtension();\n  EXPECT_FALSE(InstallVerifier::IsFromStore());\n}\n\n...\n\nINSTANTIATE_TEST_CASE_P(InternalFromStore,\n                        InstallVerifierTest,\n                        ::testing::Values(std::make_pair(INTERNAL, GURL(kStoreUrl)));\nINSTANTIATE_TEST_CASE_P(InternalNotFromStore,\n                        InstallVerifierTest,\n                        ::testing::Values(std::make_pair(INTERNAL, GURL(kNonStoreUrl)));\n\n....\n\nAnd then we have to instantiate each of the test cases (you suggested four) four times each (to account for various combinations of location/update url), leading to 16 opaque (IMO) instantiations that make the assumptions hard to reason about.\n\nI find the \"test_case\" version here much more readable, because it puts all the code proximal to the location of the assumptions, and doesn\u0027t require the reader to understand the entire test file (helper functions, the test, the test instantiations) to then grok the assertions the test is verifying.  Additionally, it\u0027s much easier (IMO) to spot omitted or missing values.\n\nUnless you feel strongly about this, I\u0027d really prefer to keep it this way.\n\n(Istiaque, if you have preferences one way or the other, let us know!)",
+      "parentUuid": "f4ba62b4_8cdc12f6",
+      "range": {
+        "startLine": 75,
+        "startChar": 20,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "e9d7b870d64ded3ffa7afb2bacefcd4e56d79240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
