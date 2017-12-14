@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a7f35aeb_d7e8726a",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T18:33:57Z",
+      "side": 1,
+      "message": "It doesn\u0027t make sense... as num_items_ doesn\u0027t decrease itself if a window item was removed from the grid or was closed. Could you add some log to see what caused the check fail?",
+      "parentUuid": "7fd1a2be_502218f7",
+      "revId": "ccfb466a2197ec617731c43f8320fab221732267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0da88212_7ac5268d",
         "filename": "ash/wm/overview/window_selector.cc",
         "patchSetId": 2
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "It will work like a small window. For example on the calculator app you can click 1 + 1 .",
       "parentUuid": "0da88212_7ac5268d",
+      "revId": "ccfb466a2197ec617731c43f8320fab221732267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c70f9e9_c3bd95a9",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T18:33:57Z",
+      "side": 1,
+      "message": "It seems to me that the stacking order of |item_widget_| and its window of the WindowSelectorItem is not right. Theoretically it should not happen. Can you double check?",
+      "parentUuid": "c89da7a2_b14d4af3",
       "revId": "ccfb466a2197ec617731c43f8320fab221732267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
