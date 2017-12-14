@@ -39,11 +39,14 @@ struct BASE_EXPORT Task : public PendingTask {
 
   ~Task();
 
+  Task& operator=(Task&& other);
+  Task& operator=(const Task& other) = delete;
+
   // The TaskTraits of this task.
-  const TaskTraits traits;
+  TaskTraits traits;
 
   // The delay that must expire before the task runs.
-  const TimeDelta delay;
+  TimeDelta delay;
 
   // The time at which the task was inserted in its sequence. For an undelayed
   // task, this happens at post time. For a delayed task, this happens some
