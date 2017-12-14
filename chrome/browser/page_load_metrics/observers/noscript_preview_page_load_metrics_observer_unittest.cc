@@ -62,11 +62,12 @@ class NoScriptPreviewPageLoadMetricsObserverTest
         content::NavigationSimulator::CreateRendererInitiated(
             GURL(kDefaultTestUrl), main_rfh());
     navigation_simulator->Start();
-    auto chrome_navigation_data = std::make_unique<ChromeNavigationData>();
-    chrome_navigation_data->set_previews_state(previews_state);
+
+    ChromeNavigationData chrome_navigation_data;
+    chrome_navigation_data.set_previews_state(previews_state);
     content::WebContentsTester::For(web_contents())
         ->SetNavigationData(navigation_simulator->GetNavigationHandle(),
-                            std::move(chrome_navigation_data));
+                            chrome_navigation_data.ToValue());
     navigation_simulator->Commit();
     return navigation_simulator->GetGlobalRequestID();
   }

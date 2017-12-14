@@ -20,7 +20,6 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/global_request_id.h"
-#include "content/public/browser/navigation_data.h"
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
@@ -99,7 +98,7 @@ void NavigationURLLoaderImpl::NotifyResponseStarted(
     const scoped_refptr<ResourceResponse>& response,
     std::unique_ptr<StreamHandle> body,
     const net::SSLInfo& ssl_info,
-    std::unique_ptr<NavigationData> navigation_data,
+    base::Value navigation_data,
     const GlobalRequestID& request_id,
     bool is_download,
     bool is_stream) {
