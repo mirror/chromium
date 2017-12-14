@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ea6e360_cf4bd688",
+        "filename": "third_party/WebKit/LayoutTests/performance/performance-observer-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1247538
+      },
+      "writtenOn": "2017-12-14T06:58:24Z",
+      "side": 1,
+      "message": "disconnect() has to be called from asynchronous PromiseReactionJob microtask in order to cause a crash. Even \"new Promise((respond, reject) \u003d\u003e { reject(); }.catch(disconnectObserver);\" will not crash. JS script tasks also appear to work properly.",
+      "parentUuid": "0cbef887_da93eedc",
+      "revId": "2facfaaa3bfa47fdfc9ec21252862698c3399090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f944a0a7_30b7867d",
         "filename": "third_party/WebKit/LayoutTests/performance/performance-observer-crash.html",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "2facfaaa3bfa47fdfc9ec21252862698c3399090",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcbd1142_eb0a794a",
+        "filename": "third_party/WebKit/LayoutTests/performance/performance-observer-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1247538
+      },
+      "writtenOn": "2017-12-14T06:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f944a0a7_30b7867d",
+      "revId": "2facfaaa3bfa47fdfc9ec21252862698c3399090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
