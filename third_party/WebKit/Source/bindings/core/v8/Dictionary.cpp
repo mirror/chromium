@@ -87,7 +87,7 @@ DictionaryIterator Dictionary::GetIterator(
     return nullptr;
   if (!iterator->IsObject())
     return nullptr;
-  return DictionaryIterator(v8::Local<v8::Object>::Cast(iterator), isolate_);
+  return DictionaryIterator(isolate_, v8::Local<v8::Object>::Cast(iterator));
 }
 
 bool Dictionary::Get(const StringView& key, Dictionary& value) const {
