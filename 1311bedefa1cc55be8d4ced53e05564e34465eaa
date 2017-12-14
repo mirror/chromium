@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd0c932e_42c66ca3",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-12-14T20:36:51Z",
+      "side": 1,
+      "message": "This is not quite O(log n). This is the best case scenario.\nThe actual runtime is O(log n + k) where k is the number of elements with same url. In the worst case, we have to do linear iteration of all elements (e.g. that in FindSession), and hence O(n).\n\nWe don\u0027t need to be technical here, but I think we should document that this is only best case O(log n).",
+      "revId": "1311bedefa1cc55be8d4ced53e05564e34465eaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
