@@ -85,8 +85,6 @@ source_set("wayland_unittests") {
   sources = [
     "fake_server.cc",
     "fake_server.h",
-    "mock_platform_window_delegate.cc",
-    "mock_platform_window_delegate.h",
     "wayland_connection_unittest.cc",
     "wayland_keyboard_unittest.cc",
     "wayland_pointer_unittest.cc",
@@ -102,8 +100,8 @@ source_set("wayland_unittests") {
     "//testing/gtest",
     "//third_party/wayland:wayland_server",
     "//third_party/wayland-protocols:xdg_shell_protocol",
-    "//ui/gfx:test_support",
     "//ui/ozone:platform",
+    "//ui/ozone:test_support",
   ]
 
   defines = [ "WL_HIDE_DEPRECATED" ]
