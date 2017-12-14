@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29e998f1_5df28935",
+        "filename": "chrome/browser/extensions/extension_system_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:11:24Z",
+      "side": 1,
+      "message": "Hmm... I wonder if we should somehow split this trace up.  Measuring incognito startup will be significantly faster (since it doesn\u0027t do most of the initialization), and also won\u0027t really be during browser startup.",
+      "revId": "bdd5731469cd254c8dfa9e88b72c836a43a05143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ade9342_a15cfa46",
+        "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:11:24Z",
+      "side": 1,
+      "message": "I think sending |false| here is misleading.  In many cases, extensions *aren\u0027t* disabled.  The only real cases where this is true is when this is for a specific type of profile, such as a guest session, login screen, etc (rather than just an incognito profile).\n\nI\u0027m not sure if there\u0027s a good way to detect that here - maybe Matt knows?",
+      "revId": "bdd5731469cd254c8dfa9e88b72c836a43a05143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5153b36_14a60dbd",
+        "filename": "extensions/browser/extension_system.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:11:24Z",
+      "side": 1,
+      "message": "I don\u0027t feel super strongly, but sometimes enums are more clear than booleans for things like this.",
+      "revId": "bdd5731469cd254c8dfa9e88b72c836a43a05143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99446c57_035bf272",
+        "filename": "extensions/shell/browser/shell_extension_system.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:11:24Z",
+      "side": 1,
+      "message": "I think this can be DCHECK(!incognito)",
+      "revId": "bdd5731469cd254c8dfa9e88b72c836a43a05143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
