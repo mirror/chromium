@@ -12,15 +12,10 @@
 #include "components/os_crypt/key_storage_linux.h"
 #include "components/os_crypt/kwallet_dbus.h"
 
-namespace base {
-class SequencedTaskRunner;
-}
-
 class KeyStorageKWallet : public KeyStorageLinux {
  public:
   KeyStorageKWallet(base::nix::DesktopEnvironment desktop_env,
-                    std::string app_name,
-                    scoped_refptr<base::SequencedTaskRunner> dbus_task_runner);
+                    std::string app_name);
   ~KeyStorageKWallet() override;
 
   // Initialize using an optional KWalletDBus mock.
@@ -30,7 +25,6 @@ class KeyStorageKWallet : public KeyStorageLinux {
 
  protected:
   // KeyStorageLinux
-  base::SequencedTaskRunner* GetTaskRunner() override;
   bool Init() override;
   std::string GetKeyImpl() override;
 
@@ -52,7 +46,6 @@ class KeyStorageKWallet : public KeyStorageLinux {
   std::string wallet_name_;
   const std::string app_name_;
   std::unique_ptr<KWalletDBus> kwallet_dbus_;
-  scoped_refptr<base::SequencedTaskRunner> dbus_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(KeyStorageKWallet);
 };
