@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "17b2fb1e_f5d482ed",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-14T01:28:41Z",
+      "side": 1,
+      "message": "Compiler doesn\u0027t allow this since the function template expansion is not in the scope of CompositorMutatorImpl, so it can not access the private constructor.",
+      "parentUuid": "23356f8b_26a852eb",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b47d5b59_d496ceb1",
         "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
         "patchSetId": 39
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "We want to predict it as well as possible.  Any decisions or optimizations that are forward looking are more likely to be right this way.",
       "parentUuid": "37abe54f_f495215c",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adf2df0_e8e6d820",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 39
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-14T01:28:41Z",
+      "side": 1,
+      "message": "This whole has animators seems like an orthogonal optimization.\nSince it seems to be causing confusion it seems to be better to remove it.",
+      "parentUuid": "91be2854_717af4ce",
       "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -363,6 +399,24 @@
       "writtenOn": "2017-12-01T20:24:52Z",
       "side": 1,
       "message": "Who owns the global scope?",
+      "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b32c75a_0b84e979",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/AnimationWorkletProxyClientImpl.h",
+        "patchSetId": 39
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-12-14T01:28:41Z",
+      "side": 1,
+      "message": "WorkerThread has a CrossThreadPersistent.  Dispose is called before it goes away, therefore Dispose is called on this, and a raw pointer should suffice, IIUC.  But it\u0027s not easily obvious.",
+      "parentUuid": "59a016d0_f6f31494",
       "revId": "5af7e099e6e8c13b7e4805eeb22527ad1743ec92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
