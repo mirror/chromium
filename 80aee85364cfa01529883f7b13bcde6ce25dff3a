@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e1173831_8fa4bf08",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_button_factory.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-14T08:06:36Z",
+      "side": 1,
+      "message": "This is only true for ARC (which fine in that case), but as you might return this variable as is, it is cleaner in my opinion.",
+      "parentUuid": "e07bb979_6af70acc",
+      "range": {
+        "startLine": 240,
+        "startChar": 41,
+        "endLine": 240,
+        "endChar": 42
+      },
+      "revId": "80aee85364cfa01529883f7b13bcde6ce25dff3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d73cb495_7b5141d7",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 5
