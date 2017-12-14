@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "855520b7_632769a4",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridgeBuilder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-12-14T22:13:11Z",
+      "side": 1,
+      "message": "ah, good catch.",
+      "parentUuid": "6fbc90ba_0b8b9151",
+      "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce118a2b_33cb30a9",
         "filename": "media/base/android/media_codec_bridge_impl.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T21:55:19Z",
       "side": 1,
       "message": "please consider doing that as part of this cl.  if it\u0027s not an acceptable change in jni_array, then there\u0027s probably a better way to do it here, too.",
+      "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea564e6_aee5480b",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-12-14T22:13:11Z",
+      "side": 1,
+      "message": "All right, I\u0027ll try that.",
+      "parentUuid": "ce118a2b_33cb30a9",
       "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5424cfc_a1809388",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-12-14T22:13:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38a1f8f9_f18d3913",
+      "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
