@@ -33,7 +33,14 @@ namespace {
 
 void CertCallbackSuccess(const AttestationFlow::CertificateCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(callback, true, "fake_cert"));
+      FROM_HERE, base::BindOnce(callback, ATTESTATION_SUCCESS, "fake_cert"));
+}
+
+void CertCallbackBadRequestFailure(
+    const AttestationFlow::CertificateCallback& callback) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::BindOnce(callback, ATTESTATION_SERVER_BAD_REQUEST_FAILURE, ""));
 }
 
 void StatusCallbackSuccess(
@@ -54,11 +61,18 @@ class EnrollmentPolicyObserverTest : public ::testing::Test {
 
  protected:
   // Configures mock expectations when identification for enrollment is needed.
-  void SetupMocks() {
+  void SetUpMocks() {
     EXPECT_CALL(attestation_flow_, GetCertificate(_, _, _, _, _))
         .WillOnce(WithArgs<4>(Invoke(CertCallbackSuccess)));
     EXPECT_CALL(policy_client_,
                 UploadEnterpriseEnrollmentCertificate("fake_cert", _))
+        .WillOnce(WithArgs<1>(Invoke(StatusCallbackSuccess)));
+  }
+
+  void SetUpMocksForBadRequestFailure() {
+    EXPECT_CALL(attestation_flow_, GetCertificate(_, _, _, _, _))
+        .WillOnce(WithArgs<4>(Invoke(CertCallbackBadRequestFailure)));
+    EXPECT_CALL(policy_client_, UploadEnterpriseEnrollmentCertificate("", _))
         .WillOnce(WithArgs<1>(Invoke(StatusCallbackSuccess)));
   }
 
@@ -86,8 +100,13 @@ TEST_F(EnrollmentPolicyObserverTest, UnregisteredPolicyClient) {
   Run();
 }
 
+TEST_F(EnrollmentPolicyObserverTest, GetCertificateFailure) {
+  SetUpMocksForBadRequestFailure();
+  Run();
+}
+
 TEST_F(EnrollmentPolicyObserverTest, DBusFailureRetry) {
-  SetupMocks();
+  SetUpMocks();
   // Simulate a DBus failure.
   cryptohome_client_.SetServiceIsAvailable(false);
 
