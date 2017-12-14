@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a51a3ecb_290c5176",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-14T20:59:27Z",
+      "side": 1,
+      "message": "why is this needed? Can the server not derive this from session_key and the device size included in the client config proto?",
+      "range": {
+        "startLine": 111,
+        "startChar": 17,
+        "endLine": 111,
+        "endChar": 39
+      },
+      "revId": "b3702b94614147be81a5d86c72eb23172d716260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
