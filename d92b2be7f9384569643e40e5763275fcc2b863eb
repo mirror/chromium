@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55d444d3_031e7673",
+        "filename": "third_party/WebKit/Source/core/paint/BlockPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-14T23:17:30Z",
+      "side": 1,
+      "message": "UpdateCullRectForScrollingContents() was designed for SPv2 to expand interest rect for probable composited scrolling div. This doesn\u0027t apply to SPv175.\n\nPreviously this expansion shadowed some cull_rect bugs that will be fixed by this CL.",
+      "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b43c21_2def2545",
+        "filename": "third_party/WebKit/Source/core/paint/FramePainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-14T23:17:30Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37da2c4a_122a7b3e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-12-14T23:17:30Z",
+      "side": 1,
+      "message": "This segment is just a cleaned-up version of the previous implementation by removing the handling of scroll_offset_accumulation. It seems clearer than adding multiple \"if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())\"s in the original code.",
+      "revId": "d92b2be7f9384569643e40e5763275fcc2b863eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
