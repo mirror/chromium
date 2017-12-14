@@ -26,6 +26,8 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/consent_auditor/consent_auditor_factory.h"
 #include "chrome/browser/obsolete_system/obsolete_system.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -38,6 +40,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
+#include "components/consent_auditor/consent_auditor.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/policy_constants.h"
@@ -394,6 +397,10 @@ void AboutHandler::RegisterMessages() {
 }
 
 void AboutHandler::OnJavascriptAllowed() {
+  auto* auditor =
+      ConsentAuditorFactory::GetForProfile(Profile::FromWebUI(web_ui()));
+  auditor->RecordGaiaConsent("testing-feature", {42}, {"I agree to be tested"},
+                             consent_auditor::ConsentStatus::GIVEN);
   apply_changes_from_upgrade_observer_ = true;
   version_updater_.reset(VersionUpdater::Create(web_ui()->GetWebContents()));
   policy_registrar_.reset(new policy::PolicyChangeRegistrar(
