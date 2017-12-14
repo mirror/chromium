@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f88420e6_57f91de6",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-14T08:10:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8cc40ec_bb0e0d25",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8ed6358_3ae3daf5",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T04:29:05Z",
       "side": 1,
       "message": "TODO format is a bit more conventional in command form \"Add Content-Length...\" or \"Consider adding Content-Length...\"\n\nI\u0027m wondering through the advantage of doing this. We\u0027ve had this TODO for 3 years:\nhttps://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_blob_reader.cc?l\u003d58\u0026rcl\u003d15e434d97da06bd2b9709b2aa65aa936aedbd277\n\nCan you help me understand why it\u0027s useful to have content-length?",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d695a951_c50c36d8",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-14T08:10:45Z",
+      "side": 1,
+      "message": "I think it\u0027s used for buffer sizing and reasoning about how to store the data. It\u0027s not totally trusted though afaik, it\u0027s a suggestion at best. I\u0027m probably not the best person to ask though.",
+      "parentUuid": "f8ed6358_3ae3daf5",
       "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5fb31ea0_6147adf7",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-14T08:10:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7df8fa7b_dbbd43ab",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c695c9d_7d230630",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05e620a_ff5777cf",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-14T08:10:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c695c9d_7d230630",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ac3aa98b_eb9f1448",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-14T08:10:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa768671_a76fb757",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "472fa459_47ab90b7",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "b222f84b_3e30a1a9",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-14T08:10:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "472fa459_47ab90b7",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42c58aad_51fa4f55",
         "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5bb85c6_cbfd3e5b",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-14T08:10:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c58aad_51fa4f55",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
