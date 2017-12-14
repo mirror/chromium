@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59618b93_2dc24099",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_ordering_barrier.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-14T20:12:06Z",
+      "side": 1,
+      "message": "nit: \"Shallow finish\"",
+      "revId": "e1442e6db4810b9ce1dcbc92ec65ebe14075aa8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4f8528_1d07aa02",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-14T20:12:06Z",
+      "side": 1,
+      "message": "nit: GL_CHROMIUM_image is added client-side in GLES2Implementation::GetStringHelper",
+      "revId": "e1442e6db4810b9ce1dcbc92ec65ebe14075aa8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062ea562_cd5e52b4",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-14T20:12:06Z",
+      "side": 1,
+      "message": "nit: I think similarly we should add it on the client side",
+      "revId": "e1442e6db4810b9ce1dcbc92ec65ebe14075aa8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd03725_2f6d470a",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-14T20:12:06Z",
+      "side": 1,
+      "message": "nit: This too.",
+      "revId": "e1442e6db4810b9ce1dcbc92ec65ebe14075aa8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
