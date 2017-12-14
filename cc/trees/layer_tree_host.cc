@@ -1562,4 +1562,8 @@ void LayerTreeHost::SetURLForUkm(const GURL& url) {
   proxy_->SetURLForUkm(url);
 }
 
+void LayerTreeHost::SetNeedsRedrawIntoNewSurface() {
+  proxy_->SetNeedsRedrawIntoNewSurface();
+}
+
 }  // namespace cc
