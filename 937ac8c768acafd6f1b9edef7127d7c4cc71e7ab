@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39995801_defa3445",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/profiles/ProfileDownloader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-14T17:52:23Z",
+      "side": 1,
+      "message": "should we call getOriginalProfile() on this to make sure this isn\u0027t incognito?",
+      "range": {
+        "startLine": 123,
+        "startChar": 34,
+        "endLine": 123,
+        "endChar": 52
+      },
+      "revId": "937ac8c768acafd6f1b9edef7127d7c4cc71e7ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
