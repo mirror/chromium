@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f3a97af_c3411507",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T20:06:01Z",
+      "side": 1,
+      "message": "nit: Ditto for const.",
+      "range": {
+        "startLine": 212,
+        "startChar": 13,
+        "endLine": 212,
+        "endChar": 42
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da95cd20_e479de4d",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T20:06:01Z",
+      "side": 1,
+      "message": "nit: Ditto for const.",
+      "range": {
+        "startLine": 286,
+        "startChar": 4,
+        "endLine": 286,
+        "endChar": 33
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655b34bb_a17ebcbc",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T20:06:01Z",
+      "side": 1,
+      "message": "nit: Ditto for extra namespace.",
+      "range": {
+        "startLine": 425,
+        "startChar": 4,
+        "endLine": 425,
+        "endChar": 27
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d34d4a74_4eb5c7ff",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T20:06:01Z",
+      "side": 1,
+      "message": "nit: Ditto for const.",
+      "range": {
+        "startLine": 203,
+        "startChar": 26,
+        "endLine": 203,
+        "endChar": 55
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746f5897_897a1e5b",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys_private/enterprise_platform_keys_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T20:06:01Z",
+      "side": 1,
+      "message": "nit: Ditto for const.",
+      "range": {
+        "startLine": 281,
+        "startChar": 4,
+        "endLine": 281,
+        "endChar": 56
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c131140_97f37819",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys_private/enterprise_platform_keys_private_api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T20:06:01Z",
+      "side": 1,
+      "message": "nit: Ditto for const.",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 58
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
