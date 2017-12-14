@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab250b0f_e3e27757",
+        "filename": "media/mojo/interfaces/cdm_proxy.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-14T22:09:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de3e7bda_6215e4cc",
+      "revId": "768e81869f27481da9084ea9c1a4aba61644b16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6680aa6_04380c85",
         "filename": "media/mojo/services/interface_factory_impl.cc",
         "patchSetId": 12
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3a7703e1_3facfcf5",
+        "filename": "media/mojo/services/interface_factory_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-14T22:09:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6680aa6_04380c85",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 7
+      },
+      "revId": "768e81869f27481da9084ea9c1a4aba61644b16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45302791_67b7cb55",
         "filename": "media/mojo/services/mojo_cdm_helper.h",
         "patchSetId": 12
@@ -53,6 +95,24 @@
       "writtenOn": "2017-12-13T10:15:18Z",
       "side": 1,
       "message": "Consider using flat_set with UniquePtrComparator. Then this will actually be a set, but you can also erase() MojoCdmProxy objects by raw pointer.",
+      "revId": "768e81869f27481da9084ea9c1a4aba61644b16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cf8cd5_aae4d3cf",
+        "filename": "media/mojo/services/mojo_cdm_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-14T22:09:42Z",
+      "side": 1,
+      "message": "Cool. Last time I looked at it, UniquePtrComparator didn\u0027t exist yet :)\n\nAdded a TODO and I\u0027ll do it in a follow up CL.",
+      "parentUuid": "45302791_67b7cb55",
       "revId": "768e81869f27481da9084ea9c1a4aba61644b16a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
