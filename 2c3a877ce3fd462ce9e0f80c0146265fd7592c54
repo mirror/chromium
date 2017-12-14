@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a034e3b2_5d64e614",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/security/origin-view-then-interstitial-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-14T00:07:23Z",
+      "side": 1,
+      "message": "Yes, this is a bit weird but it\u0027s part of the text button.\nThe same thing shows up for the \"Open full certificate details\" button https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/devtools/security/security-details-updated-with-security-state-expected.txt?rcl\u003d410c205dcccaaeca0070d25b500d23bbccf7da77\u0026l\u003d152",
+      "parentUuid": "5410e8ec_6c0864ea",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 37
+      },
+      "revId": "2c3a877ce3fd462ce9e0f80c0146265fd7592c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81fd1350_9dfe155c",
         "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-13T22:56:00Z",
       "side": 1,
       "message": "For my own education: Why do we use \"async e\" here but only \"e\" in the similar function createCertificateViewerButtonForCert below?",
+      "range": {
+        "startLine": 46,
+        "startChar": 37,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "2c3a877ce3fd462ce9e0f80c0146265fd7592c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0783361_4685e7e0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-14T00:07:23Z",
+      "side": 1,
+      "message": "I suspect it\u0027s because of this:\nvar names \u003d await SDK.multitargetNetworkManager.getCertificate(origin)\n \ncreateCertificateViewerButtonForCert receives the name in the param, while createCertificateViewerButtonForOrigin needs to retrieve the name from the origin\n\nNow that you mentioned it, I don\u0027t think the async for originNetworkButton is necessary. I removed it",
+      "parentUuid": "81fd1350_9dfe155c",
       "range": {
         "startLine": 46,
         "startChar": 37,
@@ -68,6 +116,30 @@
       "revId": "2c3a877ce3fd462ce9e0f80c0146265fd7592c54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e12327_1b3e20e1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-12-14T00:07:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36b745a6_6664515a",
+      "range": {
+        "startLine": 881,
+        "startChar": 6,
+        "endLine": 881,
+        "endChar": 115
+      },
+      "revId": "2c3a877ce3fd462ce9e0f80c0146265fd7592c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
