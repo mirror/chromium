@@ -22,6 +22,30 @@
       "revId": "dd0f4b75b9afc6a78e0ed23b2d782348504ecdc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a52d04_7ee0eb73",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:33:25Z",
+      "side": 1,
+      "message": "Interesting.  It definitely is noticeable when you look at it.  I don\u0027t have  a strong preference between the three evils of JS hacks, random colons, or reusing different strings though - they all sound equally meh :)  (though agreed they are also the only options.)  I\u0027m fine with whatever you decide.",
+      "parentUuid": "08531401_c8290314",
+      "range": {
+        "startLine": 218,
+        "startChar": 41,
+        "endLine": 218,
+        "endChar": 72
+      },
+      "revId": "dd0f4b75b9afc6a78e0ed23b2d782348504ecdc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

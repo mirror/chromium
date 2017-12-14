@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1555be7_834b3042",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:33:25Z",
+      "side": 1,
+      "message": "Instead of replicating the functionality from the app info dialog, let\u0027s pull it into a common location.  extensions/common/path_util isn\u0027t quite the right place, but it\u0027s probably close enough.\n\nAlso, let\u0027s use GetExtensionFileTaskRunner() here.",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4fbded_4f21e181",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:33:25Z",
+      "side": 1,
+      "message": "Do we need any kind of placeholder here?  A spinner, a \"calculating...\"-type string, etc?\n\nIn particular, this might be useful if going from extension a -\u003e extension b, since the same detail view element will be reused, right?",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea1ad48_9d60f120",
+        "filename": "chrome/common/extensions/api/developer_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:33:25Z",
+      "side": 1,
+      "message": "s/path/string",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab642cf5_9e6b07a7",
+        "filename": "chrome/common/extensions/api/developer_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:33:25Z",
+      "side": 1,
+      "message": "nit: add comments",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
