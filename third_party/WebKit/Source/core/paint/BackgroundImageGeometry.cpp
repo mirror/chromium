@@ -516,6 +516,15 @@ LayoutRectOutsets BackgroundImageGeometry::ComputeDestRectAdjustment(
     PaintPhase paint_phase) const {
   LayoutRectOutsets dest_adjust;
 
+  // Border radius may be applied via clipping.  Shrinking the dest rect in
+  // this case can actually hurt performance as it defeats certain peephole
+  // optimizations (specifically: save+clipRRect+drawRect+restore -> drawRRect).
+  // (https://crbug.com/794527)
+  // TODO(fmalita): refactor the background paint code to avoid clipping and
+  //                remove this kludge.
+  if (positioning_box_.StyleRef().HasBorderRadius())
+    return dest_adjust;
+
   // Attempt to shrink the destination rect if possible:
   //
   //   * for background-clip content-box/padding-box, we can restrict to the
