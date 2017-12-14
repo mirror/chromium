@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62083b96_1597dd10",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-14T17:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b53f299_3aa20914",
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce181d17_c2bb68fa",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145840aa_a2cd889d",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-14T17:37:51Z",
+      "side": 1,
+      "message": "Done; there were some merge errors.",
+      "parentUuid": "ce181d17_c2bb68fa",
+      "range": {
+        "startLine": 242,
+        "startChar": 18,
+        "endLine": 242,
+        "endChar": 25
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "33d4e6f8_aafdd69c",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-14T17:37:51Z",
+      "side": 1,
+      "message": "I don\u0027t think that I can do that and delegate the constructor.",
+      "parentUuid": "8756baee_a3fde76a",
+      "range": {
+        "startLine": 250,
+        "startChar": 8,
+        "endLine": 250,
+        "endChar": 13
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1d05e97_0398a850",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709c5c41_aaa42aa2",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-14T17:37:51Z",
+      "side": 1,
+      "message": "I *believe* that the LegacyAPI test tests that (in cronet_http_tests.h)",
+      "parentUuid": "e1d05e97_0398a850",
+      "range": {
+        "startLine": 751,
+        "startChar": 13,
+        "endLine": 751,
+        "endChar": 17
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "1b382d75_c9b503a3",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-14T17:37:51Z",
+      "side": 1,
+      "message": "We actually don\u0027t need canInitWithTask at all, I think.",
+      "parentUuid": "7b900b87_b7354596",
+      "range": {
+        "startLine": 926,
+        "startChar": 8,
+        "endLine": 926,
+        "endChar": 23
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f31630b1_4cf4adc1",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 3
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "95220e06_c48360cf",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-14T17:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f31630b1_4cf4adc1",
+      "range": {
+        "startLine": 953,
+        "startChar": 0,
+        "endLine": 965,
+        "endChar": 1
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8d99561_d79095cb",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 3
@@ -145,6 +283,30 @@
       "writtenOn": "2017-12-14T16:43:13Z",
       "side": 1,
       "message": "Will this work if _task is null?",
+      "range": {
+        "startLine": 997,
+        "startChar": 30,
+        "endLine": 997,
+        "endChar": 46
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b56c52_f042d70f",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-14T17:37:51Z",
+      "side": 1,
+      "message": "I don\u0027t think the metrics API can be invoked if task is null.  Andrei might know more though?",
+      "parentUuid": "c8d99561_d79095cb",
       "range": {
         "startLine": 997,
         "startChar": 30,
