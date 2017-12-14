@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc2d3f51_9b4b003c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34431,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-12-14T00:12:06Z",
+      "side": 1,
+      "message": "Well, I added these only for completeness, because they are logged by FFmpeg demuxer (https://cs.chromium.org/chromium/src/media/filters/ffmpeg_demuxer.cc?rcl\u003d33201b4fdc62be5c079bf7599dcca2d354af9f62\u0026l\u003d157). ATM the only metric that I\u0027m really interested in is AudioChannelLayout, so if you say those are not needed, I can remove them.\nAlso - do you want to deprecate/remove Media.AudioSamplesPerSecond(Unexpected) and Media.Remoting.AudioSamplesPerSecond(Unexpected) then?",
+      "parentUuid": "4ca7048a_efb8a6b9",
+      "revId": "08ee9c2bd74457ea50b1144cdfeb45440256e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aec714a4_7856338e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
