@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efff60b7_fd450f37",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-14T15:27:58Z",
+      "side": 1,
+      "message": "Why the lambda? Can\u0027t you just bind directly to RunJavaScriptAndExtractBoolOrFail?",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 18
+      },
+      "revId": "9f4113fd1e5978deb31b6aab0be273c57a49998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9e1dfb_5136b687",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-14T15:27:58Z",
+      "side": 1,
+      "message": "This is kind of a scary function in that it\u0027s pretty easy to misuse. It relies on the condition callback implementation actually polling a different thread for a result that\u0027s computed on a different thread. Maybe we can give this a scarier name, or a scarier comment?",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 36
+      },
+      "revId": "9f4113fd1e5978deb31b6aab0be273c57a49998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8148fa_3ccc8757",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-12-14T15:27:58Z",
+      "side": 1,
+      "message": "nit: newlines above these comments throughout.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 3
+      },
+      "revId": "9f4113fd1e5978deb31b6aab0be273c57a49998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
