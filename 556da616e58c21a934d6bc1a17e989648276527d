@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "e262f00d_8743bf01",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-14T07:11:12Z",
+      "side": 1,
+      "message": "I\u0027m not in a rush to get this committed, so we can draw out the conversation in email. It\u0027s a pain to separate dropping the \"Start full instance directly\" from the creation of the mini-container in the constructor or the factory.",
+      "parentUuid": "6c32e8cd_99113fe7",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ff67a02_a7a089d2",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3
@@ -238,6 +256,24 @@
     },
     {
       "key": {
+        "uuid": "4ddef7b7_7f7840ce",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-14T07:11:12Z",
+      "side": 1,
+      "message": "Oh! It was like that in the original code, but you\u0027re right, it\u0027s unnecessary, I also found it in a few other places and fixed it there too.",
+      "parentUuid": "5fb518ef_916afc81",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6f4ca67_e7c4037b",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3
@@ -288,6 +324,24 @@
       "revId": "556da616e58c21a934d6bc1a17e989648276527d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea57dcc6_71221552",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-12-14T07:11:12Z",
+      "side": 1,
+      "message": "It was like this before, but I like your suggestion and I\u0027ll include it in this change. It also helps cut down on the size of the Upgrade() function.",
+      "parentUuid": "cdecf1c7_ae2e533c",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
