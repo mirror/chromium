@@ -253,6 +253,7 @@ CronetEnvironment::CronetEnvironment(const std::string& user_agent,
     : http2_enabled_(false),
       quic_enabled_(false),
       brotli_enabled_(false),
+      quic_user_agent_id_(""),
       http_cache_(URLRequestContextConfig::HttpCacheType::DISK),
       user_agent_(user_agent),
       user_agent_partial_(user_agent_partial),
@@ -336,8 +337,12 @@ void CronetEnvironment::InitializeOnNetworkThread() {
 
   URLRequestContextConfigBuilder context_config_builder;
   context_config_builder.enable_quic = quic_enabled_;   // Enable QUIC.
-  context_config_builder.enable_spdy = http2_enabled_;  // Enable HTTP/2.
-  context_config_builder.http_cache = http_cache_;      // Set HTTP cache
+  context_config_builder.quic_user_agent_id =
+      quic_enabled_ && quic_user_agent_id_.empty()
+          ? getDefaultQuicUserAgentId()
+          : quic_user_agent_id_,  // QUIC User Agent ID.
+      context_config_builder.enable_spdy = http2_enabled_;  // Enable HTTP/2.
+  context_config_builder.http_cache = http_cache_;          // Set HTTP cache.
   context_config_builder.storage_path =
       storage_path.value();  // Storage path for http cache and prefs storage.
   context_config_builder.user_agent =
