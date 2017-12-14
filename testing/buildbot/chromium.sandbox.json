@@ -571,6 +571,7 @@
       },
       {
         "args": [
+          "--extra-browser-args=--enable-viz",
           "--jobs=1"
         ],
         "isolate_name": "telemetry_unittests",
