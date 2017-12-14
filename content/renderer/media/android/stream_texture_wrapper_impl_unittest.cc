@@ -15,7 +15,7 @@ class StreamTextureWrapperImplTest : public testing::Test {
  public:
   StreamTextureWrapperImplTest() {}
 
-  // Necessary, or else base::ThreadTaskRunnerHandle::Get() fails.
+  // Necessary, or else GetSingleThreadTaskRunnerForTesting() fails.
   base::test::ScopedTaskEnvironment scoped_task_environment_;
 
  private:
@@ -27,7 +27,7 @@ class StreamTextureWrapperImplTest : public testing::Test {
 TEST_F(StreamTextureWrapperImplTest, ConstructionDestruction_ShouldSucceed) {
   media::ScopedStreamTextureWrapper stream_texture_wrapper =
       StreamTextureWrapperImpl::Create(false, nullptr,
-                                       base::ThreadTaskRunnerHandle::Get());
+                                       GetSingleThreadTaskRunnerForTesting());
 }
 
 }  // Content
