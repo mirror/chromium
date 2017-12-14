@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a871ad87_34667073",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-14T17:40:10Z",
+      "side": 1,
+      "message": "This patch only makes one member variable const so this description is inaccurate. I would call this patch,\n\nRemove const_casts in SelectionModifier and ScopedFocusNavigation",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 78
+      },
+      "revId": "62b7234fd3546dd5181761cf8e5689aff5480ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bcd97fa_b1824dc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-14T17:40:10Z",
+      "side": 1,
+      "message": "Member\u003c\u003e now supports const types. This CL removes an unnecessary\nconst_cast in ScopedFocusNavigation and makes a Member\u003c\u003e const in\nSelectionModifier so we can do the same there.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 47
+      },
+      "revId": "62b7234fd3546dd5181761cf8e5689aff5480ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
