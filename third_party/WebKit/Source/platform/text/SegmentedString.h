@@ -35,32 +35,20 @@ class PLATFORM_EXPORT SegmentedSubstring {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
-  SegmentedSubstring() { data_.string8_ptr = nullptr; }
+  SegmentedSubstring() {}
 
-  SegmentedSubstring(const String& str)
-      : length_(str.length()),
-        string_(str) {
-    if (length_) {
-      if (string_.Is8Bit()) {
-        is8_bit_ = true;
-        data_.string8_ptr = string_.Characters8();
-        current_char_ = *data_.string8_ptr;
-      } else {
-        is8_bit_ = false;
-        data_.string16_ptr = string_.Characters16();
-        current_char_ = *data_.string16_ptr;
-      }
-    } else {
-      is8_bit_ = true;
-      data_.string8_ptr = nullptr;
+  SegmentedSubstring(const String& str) : string_(str) {
+    if (auto len = string_.length()) {
+      if (string_.Is8Bit())
+        string_.Ensure16Bit();
+      data_ = string_.Impl()->Characters16();
+      data_end_ = string_.Impl()->Characters16() + len + 1;
     }
   }
 
   void Clear() {
-    length_ = 0;
-    is8_bit_ = true;
-    data_.string8_ptr = nullptr;
-    current_char_ = 0;
+    data_ = nullptr;
+    data_end_ = nullptr;
   }
 
   bool ExcludeLineNumbers() const { return !do_not_exclude_line_numbers_; }
@@ -68,71 +56,52 @@ class PLATFORM_EXPORT SegmentedSubstring {
 
   void SetExcludeLineNumbers() { do_not_exclude_line_numbers_ = false; }
 
-  int NumberOfCharactersConsumed() const { return string_.length() - length_; }
+  int NumberOfCharactersConsumed() const {
+    return data_ - string_.Characters16();
+  }
 
   void AppendTo(StringBuilder& builder) const {
-    int offset = string_.length() - length_;
+    if (!data_)
+      return;
+
+    int offset = NumberOfCharactersConsumed();
 
     if (!offset) {
-      if (length_)
-        builder.Append(string_);
+      builder.Append(string_);
     } else {
-      builder.Append(string_.Substring(offset, length_));
+      builder.Append(string_.Substring(offset));
     }
   }
 
   bool PushIfPossible(UChar c) {
-    if (!length_)
+    if (!data_ || data_ == string_.Impl()->Bytes())
       return false;
 
-    // This checks if either 8 or 16 bit strings are in the first character
-    // (where we can't rewind). Since length_ is greater than zero, we can check
-    // the Impl() directly and avoid a branch here.
-    if (data_.void_ptr == string_.Impl()->Bytes())
+    if (*(data_ - 1) != c)
       return false;
 
-    if (is8_bit_) {
-      if (*(data_.string8_ptr - 1) != c)
-        return false;
-
-      --data_.string8_ptr;
-    } else {
-      if (*(data_.string16_ptr - 1) != c)
-        return false;
-
-      --data_.string16_ptr;
-    }
-
-    current_char_ = c;
-    ++length_;
+    --data_;
     return true;
   }
 
-  ALWAYS_INLINE UChar GetCurrentChar() const { return current_char_; }
+  ALWAYS_INLINE UChar GetCurrentChar() const { return *data_; }
 
-  ALWAYS_INLINE void IncrementAndDecrementLength() {
-    current_char_ = is8_bit_ ? *++data_.string8_ptr : *++data_.string16_ptr;
-    --length_;
-  }
+  ALWAYS_INLINE void IncrementAndDecrementLength() { ++data_; }
 
   String CurrentSubString(unsigned length) {
-    int offset = string_.length() - length_;
-    return string_.Substring(offset, length);
+    if (!data_)
+      return string_;
+
+    return string_.Substring(NumberOfCharactersConsumed());
   }
 
-  ALWAYS_INLINE int length() const { return length_; }
+  ALWAYS_INLINE int length() const { return data_end_ - data_; }
 
  private:
-  union {
-    const LChar* string8_ptr;
-    const UChar* string16_ptr;
-    const void* void_ptr;
-  } data_;
-  int length_ = 0;
-  UChar current_char_ = 0;
-  bool do_not_exclude_line_numbers_ = true;
-  bool is8_bit_ = true;
+  const UChar* data_ = nullptr;
+  const UChar* data_end_ = nullptr;
   String string_;
+  bool do_not_exclude_line_numbers_ = true;
 };
 
 class PLATFORM_EXPORT SegmentedString {
