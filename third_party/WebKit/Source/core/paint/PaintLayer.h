@@ -958,9 +958,11 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   // subsequence when painting a PaintLayer.
 
   IntSize PreviousScrollOffsetAccumulationForPainting() const {
+    DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
     return previous_scroll_offset_accumulation_for_painting_;
   }
   void SetPreviousScrollOffsetAccumulationForPainting(const IntSize& s) {
+    DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
     previous_scroll_offset_accumulation_for_painting_ = s;
   }
 
@@ -1304,7 +1306,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
 
   std::unique_ptr<PaintLayerStackingNode> stacking_node_;
 
-  IntSize previous_scroll_offset_accumulation_for_painting_;
+  IntSize previous_scroll_offset_accumulation_for_painting_;  // SPv1 only.
   LayoutRect previous_paint_dirty_rect_;
 
   std::unique_ptr<PaintLayerRareData> rare_data_;
