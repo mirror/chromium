@@ -536,8 +536,6 @@ source_set("unit_tests") {
     "extension_registrar_unittest.cc",
     "extension_registry_unittest.cc",
     "extension_throttle_simulation_unittest.cc",
-    "extension_throttle_test_support.cc",
-    "extension_throttle_test_support.h",
     "extension_throttle_unittest.cc",
     "file_highlighter_unittest.cc",
     "file_reader_unittest.cc",

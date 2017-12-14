@@ -20,6 +20,7 @@
 #include "base/environment.h"
 #include "base/macros.h"
 #include "base/rand_util.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "base/time/time.h"
 #include "net/base/request_priority.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
@@ -27,7 +28,6 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_test_util.h"
 #include "net/url_request/url_request_throttler_manager.h"
-#include "net/url_request/url_request_throttler_test_support.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::TimeDelta;
@@ -318,14 +318,14 @@ class MockURLRequestThrottlerEntry : public URLRequestThrottlerEntry {
   TimeTicks ImplGetTimeNow() const override { return fake_clock_.NowTicks(); }
 
   void SetFakeNow(const TimeTicks& fake_time) {
-    fake_clock_.set_now(fake_time);
+    fake_clock_.SetNowTicks(fake_time);
   }
 
  protected:
   ~MockURLRequestThrottlerEntry() override = default;
 
  private:
-  mutable TestTickClock fake_clock_;
+  mutable base::SimpleTestTickClock fake_clock_;
   BackoffEntry backoff_entry_;
 };
 

@@ -6,7 +6,7 @@
 
 namespace base {
 
-SimpleTestClock::SimpleTestClock() = default;
+SimpleTestClock::SimpleTestClock(Time now) : now_(now) {}
 
 SimpleTestClock::~SimpleTestClock() = default;
 

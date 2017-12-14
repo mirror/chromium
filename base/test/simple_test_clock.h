@@ -18,7 +18,7 @@ namespace base {
 class SimpleTestClock : public Clock {
  public:
   // Starts off with a clock set to Time().
-  SimpleTestClock();
+  explicit SimpleTestClock(Time ticks = Time());
   ~SimpleTestClock() override;
 
   Time Now() override;

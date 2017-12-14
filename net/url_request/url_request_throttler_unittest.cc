@@ -9,6 +9,7 @@
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "base/time/time.h"
 #include "net/base/load_flags.h"
 #include "net/base/request_priority.h"
@@ -18,7 +19,6 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_test_util.h"
 #include "net/url_request/url_request_throttler_manager.h"
-#include "net/url_request/url_request_throttler_test_support.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::TimeDelta;
@@ -68,7 +68,7 @@ class MockURLRequestThrottlerEntry : public URLRequestThrottlerEntry {
   BackoffEntry* GetBackoffEntry() override { return &backoff_entry_; }
 
   void ResetToBlank(const TimeTicks& time_now) {
-    fake_clock_.set_now(time_now);
+    fake_clock_.SetNowTicks(time_now);
 
     GetBackoffEntry()->Reset();
     set_sliding_window_release_time(time_now);
@@ -77,7 +77,7 @@ class MockURLRequestThrottlerEntry : public URLRequestThrottlerEntry {
   // Overridden for tests.
   TimeTicks ImplGetTimeNow() const override { return fake_clock_.NowTicks(); }
 
-  void set_fake_now(const TimeTicks& now) { fake_clock_.set_now(now); }
+  void set_fake_now(const TimeTicks& now) { fake_clock_.SetNowTicks(now); }
 
   void set_exponential_backoff_release_time(const TimeTicks& release_time) {
     GetBackoffEntry()->SetCustomReleaseTime(release_time);
@@ -95,7 +95,7 @@ class MockURLRequestThrottlerEntry : public URLRequestThrottlerEntry {
   ~MockURLRequestThrottlerEntry() override = default;
 
  private:
-  mutable TestTickClock fake_clock_;
+  mutable base::SimpleTestTickClock fake_clock_;
   BackoffEntry backoff_entry_;
 };
 

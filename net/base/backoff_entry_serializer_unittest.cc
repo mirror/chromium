@@ -6,7 +6,7 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/time/tick_clock.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "base/values.h"
 #include "net/base/backoff_entry_serializer.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -15,6 +15,7 @@ namespace net {
 
 namespace {
 
+using base::SimpleTestTickClock;
 using base::Time;
 using base::TimeDelta;
 using base::TimeTicks;
@@ -29,24 +30,10 @@ BackoffEntry::Policy base_policy = {
   false /* always_use_initial_delay */
 };
 
-class TestTickClock : public base::TickClock {
- public:
-  TestTickClock() = default;
-  ~TestTickClock() override = default;
-
-  TimeTicks NowTicks() override { return now_ticks_; }
-  void set_now(TimeTicks now) { now_ticks_ = now; }
-
- private:
-  TimeTicks now_ticks_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestTickClock);
-};
-
 TEST(BackoffEntrySerializerTest, SerializeNoFailures) {
   Time original_time = Time::Now();
-  TestTickClock original_ticks;
-  original_ticks.set_now(TimeTicks::Now());
+  SimpleTestTickClock original_ticks;
+  original_ticks.SetNowTicks(TimeTicks::Now());
   BackoffEntry original(&base_policy, &original_ticks);
   std::unique_ptr<base::Value> serialized =
       BackoffEntrySerializer::SerializeToValue(original, original_time);
@@ -61,7 +48,7 @@ TEST(BackoffEntrySerializerTest, SerializeNoFailures) {
 
 TEST(BackoffEntrySerializerTest, SerializeTimeOffsets) {
   Time original_time = Time::FromJsTime(1430907555111);  // May 2015 for realism
-  TestTickClock original_ticks;
+  SimpleTestTickClock original_ticks;
   BackoffEntry original(&base_policy, &original_ticks);
   // 2 errors.
   original.InformOfRequest(false);
@@ -100,8 +87,8 @@ TEST(BackoffEntrySerializerTest, SerializeTimeOffsets) {
   {
     // Test deserialization when TimeTicks::Now() has advanced but wall clock
     // hasn't (e.g. it's an hour later, but a DST change cancelled that out).
-    TestTickClock later_ticks;
-    later_ticks.set_now(TimeTicks() + TimeDelta::FromDays(1));
+    SimpleTestTickClock later_ticks;
+    later_ticks.SetNowTicks(TimeTicks() + TimeDelta::FromDays(1));
     std::unique_ptr<BackoffEntry> deserialized =
         BackoffEntrySerializer::DeserializeFromValue(
             *serialized, &base_policy, &later_ticks, original_time);
@@ -123,8 +110,8 @@ TEST(BackoffEntrySerializerTest, SerializeTimeOffsets) {
   {
     // Test deserialization when both wall clock and TimeTicks::Now() have
     // advanced (e.g. it's just later than it used to be).
-    TestTickClock later_ticks;
-    later_ticks.set_now(TimeTicks() + TimeDelta::FromDays(1));
+    SimpleTestTickClock later_ticks;
+    later_ticks.SetNowTicks(TimeTicks() + TimeDelta::FromDays(1));
     Time later_time = original_time + TimeDelta::FromDays(1);
     std::unique_ptr<BackoffEntry> deserialized =
         BackoffEntrySerializer::DeserializeFromValue(*serialized, &base_policy,
