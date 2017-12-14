@@ -515,6 +515,7 @@ LayoutRectOutsets BackgroundImageGeometry::ComputeDestRectAdjustment(
     const FillLayer& fill_layer,
     PaintPhase paint_phase) const {
   LayoutRectOutsets dest_adjust;
+  return dest_adjust;
 
   // Attempt to shrink the destination rect if possible:
   //
