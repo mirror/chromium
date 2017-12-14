@@ -159,6 +159,24 @@
       "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13995a0a_5e83d53b",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-14T18:58:19Z",
+      "side": 1,
+      "message": "\u003e Okay, I think I now get why the string is only in our build system - valid to specify a range of abi names and android picks the best one.\n\u003e\n\u003e How about storing all the names in java, and using that string to know whether to use the arm32 vs arm64 one?\n\nIt seems for arm32 we have two options (\"armeabi-v7a\", \"armeabi\"), and my brief reading suggests that we use the latter for JB (pre-MR1) APKs.\n\nthe options: https://codesearch.chromium.org/chromium/src/build/config/android/abi.gni?q\u003dbuild/config/android/abi.gni\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d30\n\n\u003e requires_sdk_api_level_23 is set for monochrome, but not for system_webview_apk, which also runs through the apk merger. If we don\u0027t need this for webview either, then we could add a GN arg to null it out for both.\n\nAh wow, I assumed monochrome_apk can be installed as system webview, what a mistake :) What is the proper/easy way to test webview with system_webview_apk?",
+      "parentUuid": "bee962a6_2914dbd6",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
