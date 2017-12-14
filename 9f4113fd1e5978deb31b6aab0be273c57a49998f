@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37e294dc_d50b2048",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T21:16:11Z",
+      "side": 1,
+      "message": "Yes you can. I think this is leftover from before I added RunJavaScriptAndExtractBoolOrFail, which required the creation of a temporary variable to hold the result.",
+      "parentUuid": "efff60b7_fd450f37",
+      "range": {
+        "startLine": 136,
+        "startChar": 7,
+        "endLine": 136,
+        "endChar": 18
+      },
+      "revId": "9f4113fd1e5978deb31b6aab0be273c57a49998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c9e1dfb_5136b687",
         "filename": "chrome/browser/vr/test/vr_browser_test.cc",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "edde7e4d_9f572025",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T21:16:11Z",
+      "side": 1,
+      "message": "Made both the name and comment more terror inducing.",
+      "parentUuid": "9c9e1dfb_5136b687",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 36
+      },
+      "revId": "9f4113fd1e5978deb31b6aab0be273c57a49998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db8148fa_3ccc8757",
         "filename": "chrome/browser/vr/test/vr_browser_test.h",
         "patchSetId": 19
@@ -68,6 +116,30 @@
       "revId": "9f4113fd1e5978deb31b6aab0be273c57a49998f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e86ffb_31d477a8",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T21:16:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db8148fa_3ccc8757",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 3
+      },
+      "revId": "9f4113fd1e5978deb31b6aab0be273c57a49998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
