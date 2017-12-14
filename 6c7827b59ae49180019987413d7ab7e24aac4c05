@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72fce57f_d46811f3",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-12-14T03:56:44Z",
+      "side": 1,
+      "message": "Is this sufficient or do we need the reason as well?\ne.g. Similar to |InterfacePtr::set_connection_error_with_reason_handler(...)|.",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 34
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
