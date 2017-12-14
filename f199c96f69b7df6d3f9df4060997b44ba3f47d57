@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a9220c4f_3cc85e23",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T18:37:49Z",
+      "side": 1,
+      "message": "Quite true.  Done.",
+      "parentUuid": "050c929d_8585f7e7",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 29
+      },
+      "revId": "f199c96f69b7df6d3f9df4060997b44ba3f47d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00b336a4_dc74f826",
         "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "15ed5a0d_e91e3cb0",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T18:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00b336a4_dc74f826",
+      "range": {
+        "startLine": 232,
+        "startChar": 33,
+        "endLine": 232,
+        "endChar": 35
+      },
+      "revId": "f199c96f69b7df6d3f9df4060997b44ba3f47d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2d87ff0_63cd7a8f",
         "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
         "patchSetId": 17
@@ -62,6 +110,24 @@
       "revId": "f199c96f69b7df6d3f9df4060997b44ba3f47d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebfa028_1014a383",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T18:37:49Z",
+      "side": 1,
+      "message": "Good call; done.",
+      "parentUuid": "e2d87ff0_63cd7a8f",
+      "revId": "f199c96f69b7df6d3f9df4060997b44ba3f47d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c6558d39_da69fd1a",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T18:37:49Z",
+      "side": 1,
+      "message": "That\u0027s not quite sufficient (since we\u0027d need to return a const WebContentsData* if GetWebContentsData() were to be const, which would mean we couldn\u0027t modify it in the Sets()).  We can use a Get..() and a GetOrCreate..().  I had thought about this, but didn\u0027t think it was worth the verbosity.  But, since you mentioned it too, let\u0027s go for it. :)\n\nDone.",
+      "parentUuid": "5d53365e_14b95b4f",
+      "range": {
+        "startLine": 245,
+        "startChar": 19,
+        "endLine": 245,
+        "endChar": 37
+      },
+      "revId": "f199c96f69b7df6d3f9df4060997b44ba3f47d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25824866_d3bff203",
         "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
         "patchSetId": 17
@@ -108,6 +198,30 @@
       "revId": "f199c96f69b7df6d3f9df4060997b44ba3f47d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e5056c_1cd8d371",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T18:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25824866_d3bff203",
+      "range": {
+        "startLine": 254,
+        "startChar": 7,
+        "endLine": 254,
+        "endChar": 10
+      },
+      "revId": "f199c96f69b7df6d3f9df4060997b44ba3f47d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
