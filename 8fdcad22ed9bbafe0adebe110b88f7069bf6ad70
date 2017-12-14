@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad36d749_7e0f780f",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-12-14T19:06:55Z",
+      "side": 1,
+      "message": "Looks like the DCHECK below is failing in tryjobs.\nMaybe it can be removed.\n\nFATAL:chrome_data_use_ascriber.cc(469)] Check failed: validated_url \u003d\u003d data_use.url() (https://127.0.0.1:57808/ssl/page_runs_and_displays_insecure_content.html?replace_text\u003dUkVQTEFDRV9XSVRIX0hPU1RfQU5EX1BPUlQ\u003d:ZXhhbXBsZS50ZXN0OjU3NDc4#0.15897567334388985 vs. https://127.0.0.1:57808/ssl/page_runs_and_displays_insecure_content.html?replace_text\u003dUkVQTEFDRV9XSVRIX0hPU1RfQU5EX1BPUlQ\u003d:ZXhhbXBsZS50ZXN0OjU3NDc4)\n\nFATAL:chrome_data_use_ascriber.cc(469)] Check failed: validated_url \u003d\u003d data_use.url() (http://127.0.0.1:40036/extensions/isolated_apps/app2/main.html vs. http://127.0.0.1:40036/extensions/isolated_apps/app2/redirect.html)\n\nFATAL:chrome_data_use_ascriber.cc(469)] Check failed: validated_url \u003d\u003d data_use.url() (https://127.0.0.1:34672/ssl/page_runs_and_displays_insecure_content.html?replace_text\u003dUkVQTEFDRV9XSVRIX0hPU1RfQU5EX1BPUlQ\u003d:ZXhhbXBsZS50ZXN0OjUwNzk3#0.0653918284118078 vs. https://127.0.0.1:34672/ssl/page_runs_and_displays_insecure_content.html?replace_text\u003dUkVQTEFDRV9XSVRIX0hPU1RfQU5EX1BPUlQ\u003d:ZXhhbXBsZS50ZXN0OjUwNzk3)",
+      "parentUuid": "fd20423e_ae853e5b",
+      "range": {
+        "startLine": 464,
+        "startChar": 2,
+        "endLine": 464,
+        "endChar": 4
+      },
+      "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8680488f_feed1560",
         "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.h",
         "patchSetId": 2
@@ -92,6 +116,30 @@
       "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59b07a0_a92bb3f0",
+        "filename": "components/data_use_measurement/core/data_use_ascriber.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163595
+      },
+      "writtenOn": "2017-12-14T19:06:55Z",
+      "side": 1,
+      "message": "Ack\nOnPageLoadConcluded/OnPageLoadTerminated seem to be better names.",
+      "parentUuid": "6b9be248_b97accf7",
+      "range": {
+        "startLine": 54,
+        "startChar": 17,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
