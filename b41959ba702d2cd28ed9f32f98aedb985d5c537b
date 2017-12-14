@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a2fd8d1_ccda9355",
+        "filename": "sandbox/win/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-12-14T19:41:19Z",
+      "side": 1,
+      "message": "A source_set works the same as other targets, in that the config settings affect the sources within. When a static_lib depends on a source_set, the .objs from the source_set will get pulled into the .lib.",
+      "parentUuid": "ed8912e7_b013d348",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "b41959ba702d2cd28ed9f32f98aedb985d5c537b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3522042_6a1ae057",
         "filename": "sandbox/win/BUILD.gn",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "3c085d5e_99c84e11",
+        "filename": "sandbox/win/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-12-14T19:41:19Z",
+      "side": 1,
+      "message": "Sure, but that\u0027s a different target.",
+      "parentUuid": "a3522042_6a1ae057",
+      "revId": "b41959ba702d2cd28ed9f32f98aedb985d5c537b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "137c60fd_6e2b4216",
         "filename": "sandbox/win/BUILD.gn",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-14T18:55:28Z",
       "side": 1,
       "message": "isn\u0027t this file being listed twice now?",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 29
+      },
+      "revId": "b41959ba702d2cd28ed9f32f98aedb985d5c537b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d2e466_022ae327",
+        "filename": "sandbox/win/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-12-14T19:41:19Z",
+      "side": 1,
+      "message": "Yups, good catch. I wonder if the fact that GN didn\u0027t blow up is a gn bug?",
+      "parentUuid": "137c60fd_6e2b4216",
       "range": {
         "startLine": 26,
         "startChar": 7,
