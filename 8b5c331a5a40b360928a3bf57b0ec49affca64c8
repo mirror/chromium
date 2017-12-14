@@ -16,6 +16,24 @@
       "revId": "8b5c331a5a40b360928a3bf57b0ec49affca64c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85bc4dd5_460d4d9e",
+        "filename": "ios/chrome/browser/autocomplete/autocomplete_provider_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-12-14T18:31:38Z",
+      "side": 1,
+      "message": "It\u0027s expected that we\u0027ll return nullptr on platforms that don\u0027t support Physical Web, so this is fine. We check for nullptr in PhysicalWebProvider::Start, and the provider isn\u0027t used on iOS anymore anyhow.",
+      "parentUuid": "7e546e7f_8df3f8fa",
+      "revId": "8b5c331a5a40b360928a3bf57b0ec49affca64c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
