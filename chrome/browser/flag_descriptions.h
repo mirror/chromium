@@ -132,6 +132,10 @@ extern const char kDataReductionProxyLoFiCellularOnly[];
 extern const char kDataReductionProxyLoFiDisabled[];
 extern const char kDataReductionProxyLoFiSlowConnectionsOnly[];
 
+extern const char kDataSaverServerPreviewsName[];
+extern const char kDataSaverServerPreviewsDescription[];
+extern const char kDataSaverServerPreviewsPreferLitePage[];
+
 extern const char kDatasaverPromptName[];
 extern const char kDatasaverPromptDescription[];
 extern const char kDatasaverPromptDemoMode[];
@@ -224,9 +228,6 @@ extern const char kEnableClientLoFiDescription[];
 
 extern const char kEnableNoScriptPreviewsName[];
 extern const char kEnableNoScriptPreviewsDescription[];
-
-extern const char kEnableDataReductionProxyLitePageName[];
-extern const char kEnableDataReductionProxyLitePageDescription[];
 
 extern const char kDataReductionProxyServerAlternative1[];
 extern const char kDataReductionProxyServerAlternative2[];
@@ -414,6 +415,7 @@ extern const char kForceEffectiveConnectionTypeDescription[];
 extern const char kEffectiveConnectionTypeUnknownDescription[];
 extern const char kEffectiveConnectionTypeOfflineDescription[];
 extern const char kEffectiveConnectionTypeSlow2GDescription[];
+extern const char kEffectiveConnectionTypeSlow2GOnCellularDescription[];
 extern const char kEffectiveConnectionType2GDescription[];
 extern const char kEffectiveConnectionType3GDescription[];
 extern const char kEffectiveConnectionType4GDescription[];
