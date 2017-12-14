@@ -22,6 +22,30 @@
       "revId": "2181072eb2a4718290fa65f3945b07c61e58c98a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a60cd9_5969768d",
+        "filename": "third_party/WebKit/LayoutTests/css-parser/color3_hsl-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-14T14:32:33Z",
+      "side": 1,
+      "message": "These are imported tests (https://github.com/SimonSapin/css-parsing-tests) designed to test CSS3 behavior, so should we still try to modify them? It would probably be good to modify this upstream, but since this repository hasn\u0027t been updated since 2015 I\u0027m not sure what would be best.",
+      "parentUuid": "a829062c_3386dff0",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 4
+      },
+      "revId": "2181072eb2a4718290fa65f3945b07c61e58c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
