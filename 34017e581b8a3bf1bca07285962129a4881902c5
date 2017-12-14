@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88494b35_9c2fe851",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-14T22:07:05Z",
+      "side": 1,
+      "message": "Indeed we can since the launch bug has been filed now. Done.",
+      "parentUuid": "ff9996fd_ad24aef4",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "34017e581b8a3bf1bca07285962129a4881902c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdb56b5e_d1acdfdd",
         "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "34017e581b8a3bf1bca07285962129a4881902c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61501721_55a64b0d",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-14T22:07:05Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "fdb56b5e_d1acdfdd",
+      "revId": "34017e581b8a3bf1bca07285962129a4881902c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "34017e581b8a3bf1bca07285962129a4881902c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff348f2_09cc041c",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-12-14T22:07:05Z",
+      "side": 1,
+      "message": "The appId is already base64 encoded in the Javascript since that\u0027s how the U2F implementation handles it. Thus we would either have to base64-decode it in Javascript, or in C++, and I just decided that C++ was easier in this case.",
+      "parentUuid": "22b68c81_b3267d57",
+      "range": {
+        "startLine": 28,
+        "startChar": 47,
+        "endLine": 28,
+        "endChar": 56
+      },
+      "revId": "34017e581b8a3bf1bca07285962129a4881902c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
