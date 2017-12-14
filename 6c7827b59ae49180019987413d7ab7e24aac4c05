@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "25c6fd21_3f2fc56b",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-14T17:49:45Z",
+      "side": 1,
+      "message": "How does this take care of retrieving the new network context pipe to be vended by GetNetworkContext() after a crash?",
+      "range": {
+        "startLine": 634,
+        "startChar": 31,
+        "endLine": 634,
+        "endChar": 66
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fba61b2_7a82b61e",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-14T17:49:45Z",
+      "side": 1,
+      "message": "Is it guaranteed that after an OnConnectionError() notification is received, that the next call to StoragePartition::GetNetworkContext() will not return the old pipe?  \n\nMore generally, I think there should be some comments here about the guarantees regarding ordering of OnConnectionError(), GetNetworkContext() returning a new pipe, and most importantly that if a consumer responds to OnConnectionError() by getting a new pipe, this interface guarantees another OnConnectionError() call referring to that pipe if there\u0027s another crash/problem.\n\nEven more generally :-}, the important thing for consumers to be able to do is associate instances of an OnConnectionError() with a particular network context that\u0027s been retrieved from the StoragePartition.  It looks like we\u0027re doing that through timing and ordering (and I can\u0027t think of a better way) but we should be explicit about those relationships.\n\nETA: It looks from storage_partition_impl.cc that we\u0027re not yet supporting automatic reacquisition of a valid NetworkContext pipe after failure.  That\u0027s fine, but I\u0027d like to make sure that the guarantees we\u0027re eventually going to provide are spelled out so that consumer can program to them now.  (+, of course, a TODO() to indicate that we\u0027re not there yet :-}.)",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72fce57f_d46811f3",
         "filename": "content/public/browser/storage_partition.h",
         "patchSetId": 3
@@ -18,6 +64,53 @@
         "startChar": 17,
         "endLine": 97,
         "endChar": 34
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb8e970_6fb6d5df",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-14T17:49:45Z",
+      "side": 1,
+      "message": "I\u0027m not aware of a need for the error, so probably keep it minimal for the moment.  (I.e. I think this is fine.)",
+      "parentUuid": "72fce57f_d46811f3",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 34
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bd741a_2c659ea0",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-14T17:49:45Z",
+      "side": 1,
+      "message": "It\u0027s probably obvious based on the interface, but I\u0027m inclined to think that it\u0027s worth a short note that the NetworkServiceObserver must be removed from the StoragePartition before it is destroyed.",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 40
       },
       "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
