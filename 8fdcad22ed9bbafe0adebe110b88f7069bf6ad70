@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c6492858_98b44e79",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-14T19:34:07Z",
+      "side": 1,
+      "message": "Yes, I was exploring this. Am removing the DCHECK and now handle internal error page case differently (since page not actually loaded after all)",
+      "parentUuid": "ad36d749_7e0f780f",
+      "range": {
+        "startLine": 464,
+        "startChar": 2,
+        "endLine": 464,
+        "endChar": 4
+      },
+      "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8680488f_feed1560",
         "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.h",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b22f94_5c3fc0f5",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-14T19:34:07Z",
+      "side": 1,
+      "message": "Now NotifyPageLoadConcluded",
+      "parentUuid": "8680488f_feed1560",
+      "range": {
+        "startLine": 175,
+        "startChar": 7,
+        "endLine": 175,
+        "endChar": 26
+      },
+      "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "Ack\nOnPageLoadConcluded/OnPageLoadTerminated seem to be better names.",
       "parentUuid": "6b9be248_b97accf7",
+      "range": {
+        "startLine": 54,
+        "startChar": 17,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f232a0cd_d2fce82a",
+        "filename": "components/data_use_measurement/core/data_use_ascriber.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-14T19:34:07Z",
+      "side": 1,
+      "message": "Ok, trying OnPageLoadConcluded instead of OnPageLoadComplete (Terminated seems more suggestive of a failure than Concluded does)",
+      "parentUuid": "b59b07a0_a92bb3f0",
       "range": {
         "startLine": 54,
         "startChar": 17,
