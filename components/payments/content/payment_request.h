@@ -26,6 +26,7 @@ class WebContents;
 namespace payments {
 
 class ContentPaymentRequestDelegate;
+class PaymentRequestDisplayManager;
 class PaymentRequestWebContentsManager;
 
 // This class manages the interaction between the renderer (through the
@@ -54,6 +55,7 @@ class PaymentRequest : public mojom::PaymentRequest,
                  content::WebContents* web_contents,
                  std::unique_ptr<ContentPaymentRequestDelegate> delegate,
                  PaymentRequestWebContentsManager* manager,
+                 PaymentRequestDisplayManager* display_manager,
                  mojo::InterfaceRequest<mojom::PaymentRequest> request,
                  ObserverForTest* observer_for_testing);
   ~PaymentRequest() override;
@@ -96,6 +98,8 @@ class PaymentRequest : public mojom::PaymentRequest,
   // Called when the user clicks on the "Pay" button.
   void Pay();
 
+  void HideIfNecessary();
+
   content::WebContents* web_contents() { return web_contents_; }
 
   PaymentRequestSpec* spec() { return spec_.get(); }
@@ -126,6 +130,7 @@ class PaymentRequest : public mojom::PaymentRequest,
   std::unique_ptr<ContentPaymentRequestDelegate> delegate_;
   // |manager_| owns this PaymentRequest.
   PaymentRequestWebContentsManager* manager_;
+  PaymentRequestDisplayManager* display_manager_;
   mojo::Binding<mojom::PaymentRequest> binding_;
   mojom::PaymentRequestClientPtr client_;
 
