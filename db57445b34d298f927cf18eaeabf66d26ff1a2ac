@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33957b8d_f9741e7e",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-14T22:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "107b5657_797d094d",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "db57445b34d298f927cf18eaeabf66d26ff1a2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acaaef5e_408b6067",
         "filename": "chrome/browser/vr/elements/text.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T21:54:30Z",
       "side": 1,
       "message": "IIUC, the texture size will be defined by the first text set. This means resetting text can overflow. Could that happen? With the old approach we had some wiggle room.",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "db57445b34d298f927cf18eaeabf66d26ff1a2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d804c6_417b8c6b",
+        "filename": "chrome/browser/vr/elements/text.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-14T22:15:24Z",
+      "side": 1,
+      "message": "Talked offline: SetText should trigger a redraw of TextTexture which makes a new surface with enough size.",
+      "parentUuid": "acaaef5e_408b6067",
       "range": {
         "startLine": 34,
         "startChar": 7,
