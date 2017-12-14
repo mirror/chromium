@@ -16,6 +16,7 @@
 #include "content/public/network/network_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/network/public/interfaces/network_change_manager.mojom.h"
+#include "services/network/public/interfaces/udp_socket.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 
@@ -24,6 +25,10 @@ class NetLog;
 class LoggingNetworkChangeObserver;
 class URLRequestContext;
 }  // namespace net
+
+namespace network {
+class UDPSocket;
+};  // namespace network
 
 namespace content {
 
@@ -65,6 +70,8 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   void SetRawHeadersAccess(uint32_t process_id, bool allow) override;
   void GetNetworkChangeManager(
       network::mojom::NetworkChangeManagerRequest request) override;
+  void CreateUDPSocket(network::mojom::UDPSocketRequest request,
+                       network::mojom::UDPSocketReceiverPtr receiver) override;
 
   bool quic_disabled() const { return quic_disabled_; }
   bool HasRawHeadersAccess(uint32_t process_id) const;
@@ -108,6 +115,8 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   // destroyed first.
   std::set<NetworkContext*> network_contexts_;
   std::set<uint32_t> processes_with_raw_headers_access_;
+
+  std::vector<std::unique_ptr<network::UDPSocket>> udp_sockets_;
 
   bool quic_disabled_ = false;
 
