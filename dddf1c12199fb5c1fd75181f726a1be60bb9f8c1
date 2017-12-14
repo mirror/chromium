@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "42a2a74c_138c3ff0",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-14T23:55:28Z",
+      "side": 1,
+      "message": "Does BindOnce require std::move instead of base::Passed?",
+      "range": {
+        "startLine": 221,
+        "startChar": 11,
+        "endLine": 221,
+        "endChar": 15
+      },
+      "revId": "dddf1c12199fb5c1fd75181f726a1be60bb9f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d9af73_89c80077",
+        "filename": "device/vr/openvr/openvr_render_loop.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-14T23:55:28Z",
+      "side": 1,
+      "message": "This is fine, but I wonder if there is a better option than a set of bools here.\n\nIn particular, if we add new options later, it could be easy to miss setting one in one of the device implementations.  Maybe a add factory for transport_options that all device implementations share, and it requires setting all flags?",
+      "revId": "dddf1c12199fb5c1fd75181f726a1be60bb9f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f743ec_c95ac6f2",
+        "filename": "device/vr/test/fake_vr_device.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-12-14T23:55:28Z",
+      "side": 1,
+      "message": "is this allowed to be null if we are presenting?",
+      "range": {
+        "startLine": 59,
+        "startChar": 32,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "dddf1c12199fb5c1fd75181f726a1be60bb9f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c7b0b0c_8ad962a3",
         "filename": "device/vr/vr_service.mojom",
         "patchSetId": 21
