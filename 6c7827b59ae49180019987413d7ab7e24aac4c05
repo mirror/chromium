@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "f4286705_ea44b461",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T17:59:41Z",
+      "side": 1,
+      "message": "I think we need to destroy |url_loader_factory_for_browser_process_|, too, as we aren\u0027t guaranteed that it will know it\u0027s dead by this point, since the pipes are separate.",
+      "range": {
+        "startLine": 720,
+        "startChar": 26,
+        "endLine": 720,
+        "endChar": 27
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fba61b2_7a82b61e",
         "filename": "content/public/browser/storage_partition.h",
         "patchSetId": 3
@@ -41,6 +64,29 @@
         "startChar": 8,
         "endLine": 95,
         "endChar": 30
+      },
+      "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd2943f_68e6951a",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T17:59:41Z",
+      "side": 1,
+      "message": "StoragePartitions manage NetworkContexts, rather than the network service itself.  Should this be NetworkContextObserver instead?  IF we wanted a NetworkServiceObserver, it should presumably be hooked up through network_service_instance.",
+      "range": {
+        "startLine": 95,
+        "startChar": 31,
+        "endLine": 95,
+        "endChar": 32
       },
       "revId": "6c7827b59ae49180019987413d7ab7e24aac4c05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
