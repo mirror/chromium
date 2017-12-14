@@ -36,8 +36,12 @@ class AwCookieAccessPolicy {
   void SetShouldAcceptCookies(bool allow);
 
   // Can we read/write third party cookies?
+  // |render_process_id| and |render_frame_id| must be valid.
+  // For navigation request, it may not be associated with a renderer process
+  // yet. In this case, |frame_tree_node_id| must be valid instead.
   bool GetShouldAcceptThirdPartyCookies(int render_process_id,
-                                        int render_frame_id);
+                                        int render_frame_id,
+                                        int frame_tree_node_id);
   bool GetShouldAcceptThirdPartyCookies(const net::URLRequest& request);
 
   // These are the functions called when operating over cookies from the
