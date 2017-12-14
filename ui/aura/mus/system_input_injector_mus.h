@@ -26,6 +26,9 @@ class SystemInputInjectorMus : public ui::SystemInputInjector {
                       bool suppress_auto_repeat) override;
 
  private:
+  // Forwards |event| to the display at |location|.
+  void InjectEventAt(const ui::Event& event, const gfx::Point& location);
+
   // Updates |modifiers_| based on an incoming event.
   void UpdateModifier(unsigned int modifier, bool down);
 
