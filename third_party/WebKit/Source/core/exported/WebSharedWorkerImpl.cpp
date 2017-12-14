@@ -349,11 +349,15 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
 
   GetWorkerThread()->Start(
       std::move(global_scope_creation_params), thread_startup_data,
-      std::make_unique<GlobalScopeInspectorCreationParams>(
-          worker_inspector_proxy_->ShouldPauseOnWorkerStart(document)),
-      task_runners, source_code);
+      worker_inspector_proxy_->ShouldPauseOnWorkerStart(document),
+      task_runners);
   worker_inspector_proxy_->WorkerThreadCreated(document, GetWorkerThread(),
                                                url_);
+  // TODO(nhiroki): Call RequestToImportModuleScript() here for module workers.
+  // (https://crbug.com/680046)
+  GetWorkerThread()->RequestToEvaluateClassicScript(
+      url_, source_code, nullptr /* cached_meta_data */,
+      v8_inspector::V8StackTraceId());
   client_->WorkerScriptLoaded();
 }
 
