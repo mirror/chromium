@@ -143,10 +143,17 @@ Polymer({
       type: Boolean,
       value: false,
     },
+
+    /** @private */
+    shouldShowNightLightScheduleSubLabel_: Boolean,
+
+    /** @private */
+    nightLightScheduleSubLabel_: String,
   },
 
   observers: [
-    'onScheduleTypeChanged_(prefs.ash.night_light.schedule_type.*)',
+    'updateNightLightSettings_(prefs.ash.night_light.schedule_type.*, ' +
+        'prefs.ash.night_light.enabled.*)',
   ],
 
   /** @private {number} Selected mode index received from chrome. */
@@ -599,9 +606,16 @@ Polymer({
   },
 
   /** @private */
-  onScheduleTypeChanged_: function() {
+  updateNightLightSettings_: function() {
+    var scheduleType = this.getPref('ash.night_light.schedule_type').value;
     this.shouldOpenCustomScheduleCollapse_ =
-        this.getPref('ash.night_light.schedule_type').value ==
-        NightLightScheduleType.CUSTOM;
+        scheduleType == NightLightScheduleType.CUSTOM;
+    this.shouldShowNightLightScheduleSubLabel_ =
+        scheduleType == NightLightScheduleType.SUNSET_TO_SUNRISE;
+
+    var nightLightStatus = this.getPref('ash.night_light.enabled').value;
+    this.nightLightScheduleSubLabel_ = nightLightStatus ?
+        this.i18n('displayNightLightOffAtSunrise') :
+        this.i18n('displayNightLightOnAtSunset');
   },
 });
