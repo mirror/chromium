@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a280b3ba_afa53d19",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T23:11:06Z",
+      "side": 1,
+      "message": "I was worried about a case like policy-enforced \u003d false, user logs in, policy arrives with policy-enforced true, wallpaper doesn\u0027t change. But I guess the policy-enforced wallpaper is only the login screen wallpaper, not the user\u0027s wallpaper? So this is OK?\n\n(Do we have a policy that can override the user\u0027s wallpaper? Or do we just have a policy that prevents the user from changing it? I imagine schoolchildren might set obnoxious wallpaper sometimes.)",
+      "parentUuid": "c9a76b33_8930443e",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71b13a6b_5af4bdbb",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
         "patchSetId": 9
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "We\u0027ve already had a Init() function. Moved this TODO to WallpaperControllerClient::Init().",
       "parentUuid": "71b13a6b_5af4bdbb",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f598aa_30097bc2",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T23:11:06Z",
+      "side": 1,
+      "message": "For future: We should do it all atomically in one mojo call so that it is only 1 IPC.",
+      "parentUuid": "02278370_e1d8b7e0",
       "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +191,24 @@
       "side": 1,
       "message": "I used mojo call the get device wallpaper file path in my previous patch but thought I can use static method so removed it in later patches. Bring it back. Let me know if it\u0027s acceptable to introduce a mojo call just for this.",
       "parentUuid": "b4c28b5a_33b6829d",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da330c1_c925aa83",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T23:11:06Z",
+      "side": 1,
+      "message": "I think it would be best to introduce a mojo struct with all the paths needed for wallpaper, then pass that struct in the SetClientAndPaths() call. I\u0027m OK with it having a lot of paths. It\u0027s OK to store copies of the same path in both chrome and ash as long as there\u0027s only one place that computes them. I\u0027m OK with that being in chrome and pushing the data to ash. I think that would make this class less asynchronous (no more waiting for the path).\n\nDoes that sound OK? Can you compute the path you need at startup/init time?",
+      "parentUuid": "308d3d13_47c1b125",
       "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

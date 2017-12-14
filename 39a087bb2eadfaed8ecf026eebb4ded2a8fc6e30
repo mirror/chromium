@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d199c55_e1a3bb42",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T23:11:06Z",
+      "side": 1,
+      "message": "optional: Maybe call the impl function GetDevicePolicyWallpaperPathImpl()? I thought it was odd these two functions had the same name.",
+      "revId": "39a087bb2eadfaed8ecf026eebb4ded2a8fc6e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
