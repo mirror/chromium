@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31d8eb47_ab98bd36",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T20:48:11Z",
+      "side": 1,
+      "message": "nit: ExecutionContext::From isn\u0027t entirely free so you may ultimately wish to lift this access out of the loop. But that might be premature optimization; up to you.",
+      "revId": "e9616a940dc6e991867e61bb699286f22c6774e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
