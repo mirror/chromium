@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37a6ae5d_af6dc224",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T17:57:50Z",
+      "side": 1,
+      "message": "Can revert this one now.",
+      "revId": "07024af97ae5cb42b87faaf182b38f87a8b4ed53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00545e03_9409d480",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T17:57:50Z",
+      "side": 1,
+      "message": "And this one?",
+      "revId": "07024af97ae5cb42b87faaf182b38f87a8b4ed53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90330e29_8ea071b0",
+        "filename": "content/public/common/use_zoom_for_dsf_policy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T17:57:50Z",
+      "side": 1,
+      "message": "You can name this IsUseZoomForDSFEnabled and retire the old one in content_switches_internal instead. WDYT?",
+      "range": {
+        "startLine": 15,
+        "startChar": 20,
+        "endLine": 15,
+        "endChar": 40
+      },
+      "revId": "07024af97ae5cb42b87faaf182b38f87a8b4ed53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
