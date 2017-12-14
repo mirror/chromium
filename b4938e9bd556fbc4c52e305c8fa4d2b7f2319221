@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "344af29b_eec2ee5f",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1159974
+      },
+      "writtenOn": "2017-12-14T15:02:22Z",
+      "side": 1,
+      "message": "I was thinking along the lines of, for input, trying to get the preferred channel layout regardless and falling back to total_channel_count if that fails. Perhaps that\u0027s unnecessary, if we\u0027re not doing anything clever with the actual layout.",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9acf93db_6f80be30",
         "filename": "media/audio/mac/scoped_audio_unit.cc",
         "patchSetId": 3
@@ -66,6 +83,24 @@
       "side": 1,
       "message": "I\u0027d prefer avoiding an implicit conversion int-\u003ebool-\u003eint and being explicit instead. It also assumes only 0 and 1 enum values, which of course is fine in practise in case of this enum.\n\nThat said, I\u0027ll change it if you wish. !enable_io is somewhat more readable.",
       "parentUuid": "a448e05b_dbe8c01a",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc886905_1aeca9fb",
+        "filename": "media/audio/mac/scoped_audio_unit.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1159974
+      },
+      "writtenOn": "2017-12-14T15:02:22Z",
+      "side": 1,
+      "message": "Why not:\nconst UInt32 enableInput for the first one and\nconst UInt32 enableOutput \u003d !enableInput (or something like that) for the second one?\nNeater to not reuse the variable like that.",
+      "parentUuid": "57370b80_aaea7c08",
       "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
