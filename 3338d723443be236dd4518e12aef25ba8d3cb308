@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edb147dc_fe6de06a",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1972,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-14T14:33:21Z",
+      "side": 1,
+      "message": "nit: s/entries/navigations",
+      "revId": "3338d723443be236dd4518e12aef25ba8d3cb308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a438bd4_829e1dbe",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1973,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-12-14T14:33:21Z",
+      "side": 1,
+      "message": "Can you put that in ShouldTreatNavigationAsReload? This is where we\u0027re handling the transition type.",
+      "revId": "3338d723443be236dd4518e12aef25ba8d3cb308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
