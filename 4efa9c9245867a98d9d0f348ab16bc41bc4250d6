@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff028445_658a5abd",
+        "filename": "content/browser/child_process_launcher_helper_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-14T21:06:42Z",
+      "side": 1,
+      "message": "|use_v2 \u003d v2_process \u0026\u0026 …| ?\n\n(simplifies the condition on line 71, and it can\u0027t be true without the other)",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "4efa9c9245867a98d9d0f348ab16bc41bc4250d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a163d70a_486b2c55",
+        "filename": "services/service_manager/sandbox/mac/common_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-14T21:06:42Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "4efa9c9245867a98d9d0f348ab16bc41bc4250d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a08fd49_c6d43aa8",
+        "filename": "services/service_manager/sandbox/mac/common_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-14T21:06:42Z",
+      "side": 1,
+      "message": "L",
+      "range": {
+        "startLine": 98,
+        "startChar": 10,
+        "endLine": 98,
+        "endChar": 11
+      },
+      "revId": "4efa9c9245867a98d9d0f348ab16bc41bc4250d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc0c35ea_0b0256fa",
+        "filename": "services/service_manager/sandbox/mac/common_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-14T21:06:42Z",
+      "side": 1,
+      "message": "Give this and line 119 more complete comments like you did with the rest of the groups?",
+      "revId": "4efa9c9245867a98d9d0f348ab16bc41bc4250d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9442672b_6b942568",
+        "filename": "services/service_manager/sandbox/mac/renderer_v2.sb",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-14T21:06:42Z",
+      "side": 1,
+      "message": "nit: \"The contents of\" so it looks like a full/capitalized sentence?",
+      "range": {
+        "startLine": 5,
+        "startChar": 5,
+        "endLine": 5,
+        "endChar": 6
+      },
+      "revId": "4efa9c9245867a98d9d0f348ab16bc41bc4250d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
