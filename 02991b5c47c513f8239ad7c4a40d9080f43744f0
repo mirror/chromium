@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1d9f2b2_74520484",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "Internally, base::TimeDelta doesn\u0027t support nanosecond precision. Could you just have a zero TimeDelta in this case?",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 78
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734bb677_0cef0079",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "You may end up with a negative TimeDelta if time passes between line 46 and line 51. Also, base::TimeTicks::Now() is not free to call. I recommend that you call base::TimeTicks::Now() once at the beginning of the method and that you store the return value in a local variable.",
+      "range": {
+        "startLine": 51,
+        "startChar": 55,
+        "endLine": 51,
+        "endChar": 77
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c51224_9e378cca",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "This looks like an arbitrary value, not a number of expirations.",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 37
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce82384d_87d0abc8",
+        "filename": "components/arc/timer/arc_timer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "Explain why you use this instead of base::WriteFileDescriptor().",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c35c378_a7240fa0",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "The main thread has a TaskRunner. It would be more accurate to write:\n\n\"All accesses to an instance of this class must happen on a single sequence that supports blocking operations and the base::FileDescriptorWatcher API.\"",
+      "range": {
+        "startLine": 27,
+        "startChar": 60,
+        "endLine": 29,
+        "endChar": 23
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ee3dd5_8f0cd4cc",
+        "filename": "components/arc/timer/arc_timer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "separate",
+      "range": {
+        "startLine": 37,
+        "startChar": 32,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d726f8ff_b890a881",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "base::flat_set\n\nO(log(n)) access\nO(n^2) insertions \"But because it avoids mallocs in most cases, inserts are better or comparable to other containers even for several dozen items\"",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 19
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ede85c_89de1d97",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "If ArcTimerBridge is deleted before this callback runs, the timers will be deleted on the wrong sequence. You could solve this by storing the ArcTimers in a special unique_ptr:\n\nstruct DeleteOnSequence {\n  DeleteOnSequence(\n      scoped_refptr\u003cbase::SequencedTaskRunner\u003e task_runner)\n      : task_runner_(std::move(task_runner)) {}\n\n  void operator()(ArcTimer* timer) const {\n    task_runner_-\u003eDeleteSoon(FROM_HERE, timer);\n  }\n \n  scoped_refptr\u003cbase::SequencedTaskRunner\u003e task_runner_;\n};\n\nstd::unique_ptr\u003cArcTimer, DeleteOnSequence\u003e timer(new ArcTimer(...), task_runner);\n\nIf you do this, it will also become non-necessary to have a post task in DeleteArcTimers (clearing the vector delete the unique_ptr which will automatically post deleteion tasks to the right sequence).",
+      "range": {
+        "startLine": 148,
+        "startChar": 21,
+        "endLine": 148,
+        "endChar": 49
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b02bb4_cbcfaec2",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "a \u003d\u003d b \u003d\u003d c doesn\u0027t do what you want\nhttp://www.cplusplus.com/forum/beginner/74286/",
+      "range": {
+        "startLine": 158,
+        "startChar": 9,
+        "endLine": 160,
+        "endChar": 43
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef495a0_842705bd",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "Can you add unit tests for ArcTimerBridge::CreateTimers?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6159c99_69720dae",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "This is an implementation detail.",
+      "range": {
+        "startLine": 53,
+        "startChar": 33,
+        "endLine": 54,
+        "endChar": 19
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecb8ee1_6d0ae46a",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "Maybe the anonymous function CreateArcTimers() could be a static method so that this can be private.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbc9d00_2e7373f1",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "timers_task_runner_\n\nWould better describe how this is used.",
+      "range": {
+        "startLine": 77,
+        "startChar": 43,
+        "endLine": 77,
+        "endChar": 66
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2574e54a_419c3819",
+        "filename": "components/arc/timer/arc_timer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-12-14T19:11:08Z",
+      "side": 1,
+      "message": "Not used",
+      "range": {
+        "startLine": 81,
+        "startChar": 3,
+        "endLine": 83,
+        "endChar": 54
+      },
+      "revId": "02991b5c47c513f8239ad7c4a40d9080f43744f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
