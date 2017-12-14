@@ -357,6 +357,7 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // Result callback when Mojo terminateRoute is invoked.  |route_id| is bound
   // to the ID of the route that was terminated.
   void OnTerminateRouteResult(const MediaRoute::Id& route_id,
+                              MediaRouteProviderId provider_id,
                               const base::Optional<std::string>& error_text,
                               RouteRequestResult::ResultCode result_code);
 
