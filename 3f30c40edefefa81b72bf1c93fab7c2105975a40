@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87b2f572_a2c7218f",
+        "filename": "base/trace_event/trace_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-12-14T05:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8519fb3a_f30abf34",
+      "revId": "3f30c40edefefa81b72bf1c93fab7c2105975a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5879ab4c_0f42a1f3",
         "filename": "base/trace_event/trace_log.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f97aff4c_509eba3d",
+        "filename": "base/trace_event/trace_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-12-14T05:08:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5879ab4c_0f42a1f3",
+      "revId": "3f30c40edefefa81b72bf1c93fab7c2105975a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74d0eb8c_c8f27dda",
         "filename": "base/trace_event/trace_log.h",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-13T18:44:10Z",
       "side": 1,
       "message": "nit: \"process_creation_time_\" is a bit misleading. Maybe just \"creation_time_\", or tracelog_creation_time_",
+      "revId": "3f30c40edefefa81b72bf1c93fab7c2105975a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb778ea_64f5657a",
+        "filename": "base/trace_event/trace_log.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-12-14T05:08:38Z",
+      "side": 1,
+      "message": "In desktop cases it is actually process_creation_time_. I have added a comment that says in android it is approximate.",
+      "parentUuid": "74d0eb8c_c8f27dda",
       "revId": "3f30c40edefefa81b72bf1c93fab7c2105975a40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
