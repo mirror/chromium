@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "563d3f06_5063d879",
+        "filename": "build/config/android/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-12-14T09:17:45Z",
+      "side": 1,
+      "message": "Are we sure we don\u0027t need both flags?\n\nI\u0027ll double-check this, but today is busy with the all-hands events so I don\u0027t know how much time I\u0027ll have.",
+      "range": {
+        "startLine": 217,
+        "startChar": 17,
+        "endLine": 217,
+        "endChar": 28
+      },
+      "revId": "6a42cd00033d272c22f4e228bf37fe4f4c46d23a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ba8af6_319afddf",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
