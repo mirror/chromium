@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<script src="../resources/runner.js"></script>
+<div id="root"></div>
+<script>
+var num = 100;
+var count = 0;
+
+function receive(e) {
+  count++;
+  if (count >= num) {
+    window.testRunner.isDone = true;
+  }
+}
+
+window.addEventListener('message', receive, false);
+
+window.onload = function() {
+  var html = '';
+  for (var i = 0; i < num; i++) {
+    html += '<iframe src="./resources/empty.html?' + i + '"></iframe>';
+  }
+  var root = document.getElementById('root');
+  root.innerHTML = html;
+}
+</script>

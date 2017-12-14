@@ -102,6 +102,10 @@
       {
         "path": "v8_context_snapshot.bin",
         "platform": "linux"
+      },
+      {
+        "path": "asserts/v8_context_snapshot.bin",
+        "platform": "android"
       }
     ]
   }
