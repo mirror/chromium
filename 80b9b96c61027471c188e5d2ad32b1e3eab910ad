@@ -16,6 +16,24 @@
       "revId": "80b9b96c61027471c188e5d2ad32b1e3eab910ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71327dd5_b385fe55",
+        "filename": "content/browser/renderer_host/media/audio_input_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-14T13:12:34Z",
+      "side": 0,
+      "message": "Sorry, I don\u0027t think I really understood the point you are trying to make here.\n\n\u003e What is rationale of the change introduced here? Why obscuring absence of parameters in the reply?\n\nYou are referring to l.95 where we pass UnavailableDeviceParams()?\n\n\u003e Shouldn\u0027t the whole stack be switched to optional parameters instead?\n\nCan you please elaborate further on this?",
+      "parentUuid": "b828db0e_fbbef4ff",
+      "revId": "80b9b96c61027471c188e5d2ad32b1e3eab910ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
