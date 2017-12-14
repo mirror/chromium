@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e884b64_db1ea247",
+        "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-14T09:29:45Z",
+      "side": 1,
+      "message": "We have pretty much same suffix constants in other files too, e.g. https://cs.chromium.org/chromium/src/chrome/browser/page_load_metrics/observers/data_reduction_proxy_metrics_observer.h\n\nThe names are slightly different so they don\u0027t conflict but they\u0027re also in the same namespace.  Should we unify these?",
+      "revId": "ce676f8a00e46d82f0ec3e71fa6f7da59bb2f450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
