@@ -10,15 +10,14 @@
 #include <utility>
 #include <vector>
 
-#include "base/macros.h"
-#include "chrome/browser/chromeos/policy/cloud_external_data_policy_observer.h"
+#include "chromeos/chromeos_export.h"
 #include "chromeos/printing/printer_configuration.h"
 
 namespace chromeos {
 
 // Manages download and parsing of the external policy printer configuration and
 // enforces restrictions.
-class ExternalPrinters {
+class CHROMEOS_EXPORT ExternalPrinters {
  public:
   // Choose the policy for printer access.
   enum AccessMode {
@@ -36,7 +35,7 @@ class ExternalPrinters {
   // observing.
   class Observer {
    public:
-    // Called when the computed set of printers changes.
+    // Called when the set of printers have changed and should be queried.
     virtual void OnPrintersChanged() = 0;
   };
 
@@ -58,11 +57,18 @@ class ExternalPrinters {
   virtual void SetBlacklist(const std::vector<std::string>& blacklist) = 0;
   virtual void SetWhitelist(const std::vector<std::string>& whitelist) = 0;
 
-  // Returns true if the printer configuration has been downloaded and parsed.
+  // Returns true if the required fields have been set to compute the effective
+  // list of printers.  A true value guarantees that a list will be computed
+  // eventually.
   virtual bool IsPolicySet() const = 0;
 
-  // Returns all the printers available from the policy.
-  virtual const std::vector<Printer>& GetPrinters() const = 0;
+  // Returns a pointer to the computed list of printers.  This can return
+  // nullptr.  If nullptr is returned, the set of printers is being recomputed
+  // and OnPrintersChanged will be called eventually.  If the set of printers is
+  // invalid, the list is empty.  If you intend to retain the list of printers,
+  // the PRINTERS need to be COPIED as they will become invalid if there is a
+  // policy change.
+  virtual const std::vector<const Printer*>* GetPrinters() const = 0;
 };
 
 }  // namespace chromeos
