@@ -54,7 +54,8 @@ Polymer({
       type: String,
       value: '',
       computed: 'getSpellCheckSecondaryText_(languages.enabled.*, ' +
-          'languages.forcedSpellCheckLanguages.*)',
+          'languages.forcedSpellCheckLanguages.*, ' +
+          'prefs.browser.*)',
     },
 
     /** @private */
@@ -63,6 +64,12 @@ Polymer({
       value: function() {
         return [];
       },
+    },
+
+    /** @private */
+    spellCheckDisabled_: {
+      type: Boolean,
+      value: false,
     },
     // </if>
 
@@ -112,6 +119,7 @@ Polymer({
   observers: [
     'updateSpellcheckLanguages_(languages.enabled.*, ' +
         'languages.forcedSpellCheckLanguages.*)',
+    'updateSpellcheckEnabled_(prefs.browser.*)',
   ],
 
   /**
@@ -420,6 +428,8 @@ Polymer({
    * @private
    */
   getSpellCheckSecondaryText_: function() {
+    if (this.prefs.browser.enable_spellchecking.value === false)
+      return loadTimeData.getString('spellCheckDisabled');
     var enabledSpellCheckLanguages =
         this.getSpellCheckLanguages_().filter(function(languageState) {
           return (languageState.spellCheckEnabled || languageState.isManaged) &&
@@ -451,6 +461,10 @@ Polymer({
     }
   },
 
+  getSpellCheckDisabled_: function() {
+    return this.prefs.browser.enable_spellchecking.value === false;
+  },
+
   /**
    * Returns an array of enabled languages, plus spellcheck languages that are
    * forced by policy.
@@ -477,6 +491,25 @@ Polymer({
     for (var i = 0; i < this.spellCheckLanguages_.length; i++) {
       this.notifyPath(`spellCheckLanguages_.${i}.isManaged`);
       this.notifyPath(`spellCheckLanguages_.${i}.spellCheckEnabled`);
+    }
+  },
+
+  /** @private */
+  updateSpellcheckEnabled_: function() {
+    this.set(
+        'spellCheckDisabled_',
+        this.prefs.browser.enable_spellchecking.value === false);
+
+    if (this.spellCheckDisabled_) {
+      this.unlisten(
+          this.$.spellCheckSubpageTrigger, 'tap', 'toggleExpandButton_');
+
+      // If the spellcheck section was expanded, close it.
+      this.$.spellCheckSubpageTrigger.querySelector('cr-expand-button')
+          .expanded = false;
+    } else {
+      this.listen(
+          this.$.spellCheckSubpageTrigger, 'tap', 'toggleExpandButton_');
     }
   },
 
