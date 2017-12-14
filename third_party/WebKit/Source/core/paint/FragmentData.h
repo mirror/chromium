@@ -159,6 +159,7 @@ class CORE_EXPORT FragmentData {
   const TransformPaintPropertyNode* PreTransform() const;
   const TransformPaintPropertyNode* PostScrollTranslation() const;
   const ClipPaintPropertyNode* PreCssClip() const;
+  const ClipPaintPropertyNode* PreInnerBorderRadiusClip() const;
   const ClipPaintPropertyNode* PostOverflowClip() const;
   const EffectPaintPropertyNode* PreEffect() const;
   const EffectPaintPropertyNode* PreFilter() const;
