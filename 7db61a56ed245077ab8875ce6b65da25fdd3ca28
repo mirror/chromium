@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05f7a96b_909b8767",
+        "filename": "components/ntp_snippets/user_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-12-14T15:49:04Z",
+      "side": 1,
+      "message": "delete?",
+      "range": {
+        "startLine": 49,
+        "startChar": 22,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "7db61a56ed245077ab8875ce6b65da25fdd3ca28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
