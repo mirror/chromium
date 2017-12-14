@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b05b3217_e6cef0bc",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-14T18:01:43Z",
+      "side": 1,
+      "message": "this part is still aapt(1) (aapt refers to the aapt(1) binary). It is not yet possible to move everything to aapt2, specifically compiling libraries.",
+      "parentUuid": "b905694d_82f19842",
+      "revId": "3e25d42cc640eb70b671bccb3bd2005f186aefeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d279d87a_702db176",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "3e25d42cc640eb70b671bccb3bd2005f186aefeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3608354_f48354f8",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-14T18:01:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d279d87a_702db176",
+      "revId": "3e25d42cc640eb70b671bccb3bd2005f186aefeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a51dbe82_f9e8eaf9",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-14T18:01:43Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "d40466b7_e269ebc0",
+      "revId": "3e25d42cc640eb70b671bccb3bd2005f186aefeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1edb5350_f89f2757",
         "filename": "build/android/gyp/util/build_utils.py",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "3e25d42cc640eb70b671bccb3bd2005f186aefeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60639c93_20e00308",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1250067
+      },
+      "writtenOn": "2017-12-14T18:01:43Z",
+      "side": 1,
+      "message": "not having .d.stamp in the ignores causes errors, it expects only directories at the root of res, I think. Here is one such problematic build target //android_webview:resources",
+      "parentUuid": "1edb5350_f89f2757",
+      "revId": "3e25d42cc640eb70b671bccb3bd2005f186aefeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
