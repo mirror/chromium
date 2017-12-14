@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce181d17_c2bb68fa",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-14T16:43:13Z",
+      "side": 1,
+      "message": "How doest this work? I *think* this should still take (NSURLRequest* request)",
+      "range": {
+        "startLine": 242,
+        "startChar": 18,
+        "endLine": 242,
+        "endChar": 25
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d05e97_0398a850",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-14T16:43:13Z",
+      "side": 1,
+      "message": "We should have a test that it is ok to have task_ \u003d\u003d nullptr.",
+      "range": {
+        "startLine": 751,
+        "startChar": 13,
+        "endLine": 751,
+        "endChar": 17
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b900b87_b7354596",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-14T16:43:13Z",
+      "side": 1,
+      "message": "should we also restore \u0027canInitWithRequest\u0027?",
+      "range": {
+        "startLine": 926,
+        "startChar": 8,
+        "endLine": 926,
+        "endChar": 23
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d99561_d79095cb",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-12-14T16:43:13Z",
+      "side": 1,
+      "message": "Will this work if _task is null?",
+      "range": {
+        "startLine": 997,
+        "startChar": 30,
+        "endLine": 997,
+        "endChar": 46
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
