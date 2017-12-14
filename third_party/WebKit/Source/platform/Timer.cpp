@@ -62,7 +62,7 @@ void TimerBase::Start(TimeDelta next_fire_interval,
 
   location_ = caller;
   repeat_interval_ = repeat_interval;
-  SetNextFireTime(TimerMonotonicallyIncreasingTime(), next_fire_interval);
+  SetNextFireTime(TimerCurrentTimeTicksInSeconds(), next_fire_interval);
 }
 
 void TimerBase::Stop() {
@@ -77,7 +77,7 @@ void TimerBase::Stop() {
 
 TimeDelta TimerBase::NextFireIntervalDelta() const {
   DCHECK(IsActive());
-  TimeTicks current = TimerMonotonicallyIncreasingTime();
+  TimeTicks current = TimerCurrentTimeTicksInSeconds();
   if (next_fire_time_ < current)
     return TimeDelta();
   return next_fire_time_ - current;
@@ -100,7 +100,7 @@ void TimerBase::MoveToNewTaskRunner(scoped_refptr<WebTaskRunner> task_runner) {
   if (!active)
     return;
 
-  TimeTicks now = TimerMonotonicallyIncreasingTime();
+  TimeTicks now = TimerCurrentTimeTicksInSeconds();
   TimeTicks next_fire_time = std::max(next_fire_time_, now);
   next_fire_time_ = TimeTicks();
 
@@ -151,7 +151,7 @@ void TimerBase::RunInternal() {
 #endif
 
   if (!repeat_interval_.is_zero()) {
-    TimeTicks now = TimerMonotonicallyIncreasingTime();
+    TimeTicks now = TimerCurrentTimeTicksInSeconds();
     // This computation should be drift free, and it will cope if we miss a
     // beat, which can easily happen if the thread is busy.  It will also cope
     // if we get called slightly before m_unalignedNextFireTime, which can
@@ -171,7 +171,7 @@ bool TimerBase::Comparator::operator()(const TimerBase* a,
 }
 
 // static
-TimeTicks TimerBase::TimerMonotonicallyIncreasingTime() const {
+TimeTicks TimerBase::TimerCurrentTimeTicksInSeconds() const {
   return TimeTicks::FromSeconds(
       TimerTaskRunner()->MonotonicallyIncreasingVirtualTimeSeconds());
 }
