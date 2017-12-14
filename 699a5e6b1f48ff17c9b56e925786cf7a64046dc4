@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f965a9b2_07cac362",
+        "filename": "ash/shelf/back_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T23:31:01Z",
+      "side": 1,
+      "message": "Isn\u0027t this just gfx::Insets(kAppListButtonRadious, kAppListButtonRadious) ?",
+      "revId": "699a5e6b1f48ff17c9b56e925786cf7a64046dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48398fc_e6b65b5b",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T23:31:01Z",
+      "side": 1,
+      "message": "optional: keep the current mode in local var.",
+      "revId": "699a5e6b1f48ff17c9b56e925786cf7a64046dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d3441d_be77de1d",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T23:31:01Z",
+      "side": 1,
+      "message": "revert this? (unless you want to change)",
+      "revId": "699a5e6b1f48ff17c9b56e925786cf7a64046dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
