@@ -6,6 +6,7 @@
 #define CompositingInputsUpdater_h
 
 #include "core/layout/LayoutGeometryMap.h"
+#include "core/paint/compositing/PaintLayerCompositor.h"
 #include "platform/wtf/Allocator.h"
 
 namespace blink {
@@ -19,7 +20,7 @@ class CompositingInputsUpdater {
   explicit CompositingInputsUpdater(PaintLayer* root_layer);
   ~CompositingInputsUpdater();
 
-  void Update();
+  void Update(CompositingUpdateType);
 
 #if DCHECK_IS_ON()
   static void AssertNeedsCompositingInputsUpdateBitsCleared(PaintLayer*);
@@ -53,7 +54,10 @@ class CompositingInputsUpdater {
     bool has_ancestor_with_clip_path;
   };
 
-  void UpdateRecursive(PaintLayer*, UpdateType, AncestorInfo);
+  void UpdateRecursive(PaintLayer*,
+                       UpdateType,
+                       AncestorInfo,
+                       CompositingUpdateType);
 
   LayoutGeometryMap geometry_map_;
   PaintLayer* root_layer_;
