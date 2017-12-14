@@ -31,6 +31,8 @@
 
 const char kPopupEngagement[] =
     "ContentSettings.Popups.FirstDocumentEngagementTime2";
+const char kBlockablePopupTotalEngagement[] = "Tab.VisibleTime.Popup.Blockable";
+const char kPopupTotalEngagement[] = "Tab.VisibleTime.Popup";
 
 class PopupTrackerBrowserTest : public InProcessBrowserTest {
  public:
@@ -50,6 +52,7 @@ IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, NoPopup_NoTracker) {
       browser()->tab_strip_model()->GetActiveWebContents()));
 
   tester.ExpectTotalCount(kPopupEngagement, 0);
+  tester.ExpectTotalCount(kPopupTotalEngagement, 0);
 }
 
 IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, WindowOpenPopup_HasTracker) {
@@ -76,6 +79,42 @@ IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, WindowOpenPopup_HasTracker) {
   destroyed_watcher.Wait();
 
   tester.ExpectTotalCount(kPopupEngagement, 1);
+  tester.ExpectTotalCount(kPopupTotalEngagement, 1);
+  tester.ExpectTotalCount(kBlockablePopupTotalEngagement, 1);
+}
+
+// A popup opened via a spoofed shift-click (or other special action) should be
+// considered blockable.
+IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, SpoofClickPopup_HasTracker) {
+  base::HistogramTester tester;
+  ui_test_utils::NavigateToURL(
+      browser(), embedded_test_server()->GetURL(
+                     "/popup_blocker/popup-spoof-shift-click.html"));
+
+  content::TestNavigationObserver navigation_observer(nullptr, 1);
+  navigation_observer.StartWatchingNewWebContents();
+
+  EXPECT_TRUE(content::ExecuteScript(
+      browser()->tab_strip_model()->GetActiveWebContents(),
+      "spoofShiftClick();"));
+  navigation_observer.Wait();
+
+  EXPECT_EQ(2u, chrome::GetBrowserCount(browser()->profile()));
+  content::WebContents* new_contents = BrowserList::GetInstance()
+                                           ->GetLastActive()
+                                           ->tab_strip_model()
+                                           ->GetActiveWebContents();
+  EXPECT_TRUE(PopupTracker::FromWebContents(new_contents));
+
+  // Close the popup and check metric.
+  content::WebContentsDestroyedWatcher destroyed_watcher(new_contents);
+  BrowserList::CloseAllBrowsersWithProfile(
+      Profile::FromBrowserContext(new_contents->GetBrowserContext()));
+  destroyed_watcher.Wait();
+
+  tester.ExpectTotalCount(kPopupEngagement, 1);
+  tester.ExpectTotalCount(kPopupTotalEngagement, 1);
+  tester.ExpectTotalCount(kBlockablePopupTotalEngagement, 1);
 }
 
 // OpenURLFromTab goes through a different code path than traditional popups
@@ -113,6 +152,8 @@ IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, ControlClick_HasTracker) {
   destroyed_watcher.Wait();
 
   tester.ExpectTotalCount(kPopupEngagement, 1);
+  tester.ExpectTotalCount(kPopupTotalEngagement, 1);
+  tester.ExpectTotalCount(kBlockablePopupTotalEngagement, 0);
 }
 
 IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, ShiftClick_HasTracker) {
@@ -144,6 +185,8 @@ IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, ShiftClick_HasTracker) {
   destroyed_watcher.Wait();
 
   tester.ExpectTotalCount(kPopupEngagement, 1);
+  tester.ExpectTotalCount(kPopupTotalEngagement, 1);
+  tester.ExpectTotalCount(kBlockablePopupTotalEngagement, 0);
 }
 
 IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, WhitelistedPopup_HasTracker) {
@@ -174,6 +217,8 @@ IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, WhitelistedPopup_HasTracker) {
   destroyed_watcher.Wait();
 
   tester.ExpectTotalCount(kPopupEngagement, 1);
+  tester.ExpectTotalCount(kPopupTotalEngagement, 1);
+  tester.ExpectTotalCount(kBlockablePopupTotalEngagement, 0);
 }
 
 IN_PROC_BROWSER_TEST_F(PopupTrackerBrowserTest, NoOpener_NoTracker) {

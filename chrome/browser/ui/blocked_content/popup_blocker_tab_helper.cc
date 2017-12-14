@@ -203,7 +203,7 @@ void PopupBlockerTabHelper::ShowBlockedPopup(
 #endif
   if (popup->params.target_contents) {
     PopupTracker::CreateForWebContents(popup->params.target_contents,
-                                       web_contents());
+                                       web_contents(), false /* untrusted */);
 
     if (popup->params.disposition == WindowOpenDisposition::NEW_POPUP) {
       content::RenderFrameHost* host =
