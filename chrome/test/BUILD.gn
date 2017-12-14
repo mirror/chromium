@@ -4021,7 +4021,10 @@ test("unit_tests") {
       "../browser/ui/views/payments/view_stack_unittest.cc",
     ]
     if (is_chromeos) {
-      sources += [ "../browser/ui/views/ime_driver/input_method_bridge_chromeos_unittest.cc" ]
+      sources += [
+        "../browser/ui/views/frame/hosted_app_frame_header_ash_unittest.cc",
+        "../browser/ui/views/ime_driver/input_method_bridge_chromeos_unittest.cc",
+      ]
     }
     if (!is_chromeos && (!is_mac || mac_views_browser)) {
       sources += [

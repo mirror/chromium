@@ -30,9 +30,18 @@ class HostedAppFrameHeaderAsh : public ash::DefaultFrameHeader {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(HostedAppNonClientFrameViewAshTest, HostedAppFrame);
+  FRIEND_TEST_ALL_PREFIXES(HostedAppFrameHeaderAshTest, GetRenderTexts);
 
   // Create a render text for this header.
   std::unique_ptr<gfx::RenderText> CreateRenderText();
+
+  // Gets the text to display in the two adjacent labels for the title and app +
+  // domain. Static, for testing purposes.
+  static void GetRenderTexts(const base::string16& page_title,
+                             const base::string16& app_name,
+                             const base::string16& app_and_domain,
+                             base::string16* title_label_text,
+                             base::string16* app_and_domain_label_text);
 
   // Refresh the text inside the render texts.
   void UpdateRenderTexts();
