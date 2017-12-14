@@ -158,6 +158,30 @@
     },
     {
       "key": {
+        "uuid": "d1a02aaf_7b9b0d12",
+        "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T06:41:07Z",
+      "side": 1,
+      "message": "Thanks for the comments on this test, those are good points. I tried some things and think we\u0027re very limited in content unittests:\n* MockRenderProcessHost always thinks it\u0027s in the default storage partition. So we can\u0027t test the storage partition of the returned process.\n* The code path that stashes the site URL cannot be hit in this test, since we\u0027re using a RenderProcessHostFactory so we early return in RenderProcessHostImpl::CreateRenderProcessHost.\n\nI\u0027m not too clear why MockRenderProcessHost is allergic to StoragePartition.\n\nUsing RenderProcessHostImpl instead of the Mock seems to break since rph-\u003eInit() will crash.\n\nI\u0027ve modified the unit test to simply check the |site_instance| parameter passed to CreateRenderProcessHost (i.e., it tests that ServiceWorkerProcessManager uses the stashed site URL when it\u0027s available).\n\nIt seems like a real test will need to be a browser_test that tests a Chrome App that uses \u003cwebview\u003e and starts up a service worker. Could we convert something like the app in the bug report to a browser test?",
+      "parentUuid": "d5457d29_69fec95c",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 78
+      },
+      "revId": "1377c3753ce1368d41aace2ae2ad70189b50c457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3613509_82fcabb4",
         "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
         "patchSetId": 13
@@ -221,6 +245,30 @@
     },
     {
       "key": {
+        "uuid": "4f63b25f_f55a52e8",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T06:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dcc20c7_0efb71f9",
+      "range": {
+        "startLine": 154,
+        "startChar": 47,
+        "endLine": 154,
+        "endChar": 58
+      },
+      "revId": "1377c3753ce1368d41aace2ae2ad70189b50c457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7b8f3df_fe5b5f16",
         "filename": "content/browser/storage_partition_impl.h",
         "patchSetId": 13
@@ -264,6 +312,54 @@
       "revId": "1377c3753ce1368d41aace2ae2ad70189b50c457",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97da1073_2995567f",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T06:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b712773d_eb086193",
+      "range": {
+        "startLine": 158,
+        "startChar": 5,
+        "endLine": 158,
+        "endChar": 8
+      },
+      "revId": "1377c3753ce1368d41aace2ae2ad70189b50c457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d653658_7907affd",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T06:41:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b8f3df_fe5b5f16",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 9
+      },
+      "revId": "1377c3753ce1368d41aace2ae2ad70189b50c457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
