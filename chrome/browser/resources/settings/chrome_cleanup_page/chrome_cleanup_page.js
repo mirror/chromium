@@ -244,10 +244,18 @@ Polymer({
    */
   renderScanOfferedByDefault_: true,
 
+  /** @private {string} */
+  logsPermissionExplanation_: null,
+
   /** @override */
   attached: function() {
     this.userInitiatedCleanupsEnabled_ =
         loadTimeData.getBoolean('userInitiatedCleanupsEnabled');
+    if (this.userInitiatedCleanupsEnabled_) {
+      this.logsPermissionExplanation_ =
+          this.i18n('chromeCleanupTitleLogsPermissionExplanation');
+    }
+
     this.browserProxy_ = settings.ChromeCleanupProxyImpl.getInstance();
     this.cardStateToComponentsMap_ = this.buildCardStateToComponentsMap_();
 
