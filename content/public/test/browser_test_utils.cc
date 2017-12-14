@@ -41,6 +41,7 @@
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/interstitial_page_impl.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/browser/network_service_instance_impl.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
@@ -60,7 +61,6 @@
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/navigation_throttle.h"
-#include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_frame_host.h"
@@ -2377,9 +2377,13 @@ void SimulateNetworkServiceCrash() {
   FlushNetworkServiceInstanceForTesting();
 }
 
-int LoadBasicRequest(mojom::NetworkContext* network_context, const GURL& url) {
+int LoadBasicRequest(mojom::NetworkContext* network_context,
+                     const GURL& url,
+                     int process_id,
+                     int render_frame_id) {
   mojom::URLLoaderFactoryPtr url_loader_factory;
-  network_context->CreateURLLoaderFactory(MakeRequest(&url_loader_factory), 0);
+  network_context->CreateURLLoaderFactory(MakeRequest(&url_loader_factory),
+                                          process_id);
   // |url_loader_factory| will receive error notification asynchronously if
   // |network_context| has already encountered error. However it's still false
   // at this point.
@@ -2387,6 +2391,7 @@ int LoadBasicRequest(mojom::NetworkContext* network_context, const GURL& url) {
 
   auto request = std::make_unique<ResourceRequest>();
   request->url = url;
+  request->render_frame_id = render_frame_id;
 
   content::SimpleURLLoaderTestHelper simple_loader_helper;
   std::unique_ptr<content::SimpleURLLoader> simple_loader =
