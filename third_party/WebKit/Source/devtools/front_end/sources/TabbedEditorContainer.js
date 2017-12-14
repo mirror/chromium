@@ -86,7 +86,7 @@ Sources.TabbedEditorContainer = class extends Common.Object {
     var wasSelectedInNetwork = this._currentFile === binding.network;
     var currentSelectionRange = this._history.selectionRange(binding.network.url());
     var currentScrollLineNumber = this._history.scrollLineNumber(binding.network.url());
-    this._history.remove(binding.network.url());
+    this._history.remove(binding.fileSystem.url());
 
     if (!networkTabId)
       return;
@@ -184,7 +184,7 @@ Sources.TabbedEditorContainer = class extends Common.Object {
     var uriToUISourceCode = {};
     for (var id in this._files) {
       var uiSourceCode = this._files[id];
-      uriToUISourceCode[uiSourceCode.url()] = uiSourceCode;
+      uriToUISourceCode[this._canonicalURLForUISourceCode(uiSourceCode)] = uiSourceCode;
     }
 
     var result = [];
@@ -223,7 +223,7 @@ Sources.TabbedEditorContainer = class extends Common.Object {
       clearTimeout(this._scrollTimer);
     var lineNumber = /** @type {number} */ (event.data);
     this._scrollTimer = setTimeout(saveHistory.bind(this), 100);
-    this._history.updateScrollLineNumber(this._currentFile.url(), lineNumber);
+    this._history.updateScrollLineNumber(this._canonicalURLForUISourceCode(this._currentFile), lineNumber);
 
     /**
      * @this {Sources.TabbedEditorContainer}
@@ -238,10 +238,10 @@ Sources.TabbedEditorContainer = class extends Common.Object {
    */
   _selectionChanged(event) {
     var range = /** @type {!TextUtils.TextRange} */ (event.data);
-    this._history.updateSelectionRange(this._currentFile.url(), range);
+    this._history.updateSelectionRange(this._canonicalURLForUISourceCode(this._currentFile), range);
     this._history.save(this._previouslyViewedFilesSetting);
 
-    Extensions.extensionServer.sourceSelectionChanged(this._currentFile.url(), range);
+    Extensions.extensionServer.sourceSelectionChanged(this._canonicalURLForUISourceCode(this._currentFile), range);
   }
 
   /**
@@ -346,7 +346,7 @@ Sources.TabbedEditorContainer = class extends Common.Object {
    * @param {!Workspace.UISourceCode} uiSourceCode
    */
   addUISourceCode(uiSourceCode) {
-    var uri = uiSourceCode.url();
+    var uri = this._canonicalURLForUISourceCode(uiSourceCode);
     var index = this._history.index(uri);
     if (index === -1)
       return;
@@ -365,8 +365,8 @@ Sources.TabbedEditorContainer = class extends Common.Object {
     var currentProjectType = this._currentFile.project().type();
     var addedProjectType = uiSourceCode.project().type();
     var snippetsProjectType = Workspace.projectTypes.Snippets;
-    if (this._history.index(this._currentFile.url()) && currentProjectType === snippetsProjectType &&
-        addedProjectType !== snippetsProjectType)
+    if (this._history.index(this._canonicalURLForUISourceCode(this._currentFile)) &&
+        currentProjectType === snippetsProjectType && addedProjectType !== snippetsProjectType)
       this._innerShowFile(uiSourceCode, false);
   }
 
@@ -395,7 +395,7 @@ Sources.TabbedEditorContainer = class extends Common.Object {
    * @param {!Workspace.UISourceCode} uiSourceCode
    */
   _editorClosedByUserAction(uiSourceCode) {
-    this._history.remove(uiSourceCode.url());
+    this._history.remove(this._canonicalURLForUISourceCode(uiSourceCode));
     this._updateHistory();
   }
 
@@ -411,11 +411,20 @@ Sources.TabbedEditorContainer = class extends Common.Object {
      * @this {Sources.TabbedEditorContainer}
      */
     function tabIdToURI(tabId) {
-      return this._files[tabId].url();
+      return this._canonicalURLForUISourceCode(this._files[tabId]);
     }
 
     this._history.update(tabIds.map(tabIdToURI.bind(this)));
     this._history.save(this._previouslyViewedFilesSetting);
+  }
+
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @return {string}
+   */
+  _canonicalURLForUISourceCode(uiSourceCode) {
+    var binding = Persistence.persistence.binding(uiSourceCode);
+    return binding ? binding.network.url() : uiSourceCode.url();
   }
 
   /**
@@ -442,8 +451,8 @@ Sources.TabbedEditorContainer = class extends Common.Object {
     this._tabIds.set(uiSourceCode, tabId);
     this._files[tabId] = uiSourceCode;
 
-    var savedSelectionRange = this._history.selectionRange(uiSourceCode.url());
-    var savedScrollLineNumber = this._history.scrollLineNumber(uiSourceCode.url());
+    var savedSelectionRange = this._history.selectionRange(this._canonicalURLForUISourceCode(uiSourceCode));
+    var savedScrollLineNumber = this._history.scrollLineNumber(this._canonicalURLForUISourceCode(uiSourceCode));
     this._restoreEditorProperties(view, savedSelectionRange, savedScrollLineNumber);
 
     this._tabbedPane.appendTab(tabId, title, view, tooltip, userGesture, undefined, index);
