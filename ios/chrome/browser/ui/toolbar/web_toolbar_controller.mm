@@ -132,8 +132,8 @@ using ios::material::TimingFunction;
   // If set to |YES|, disables animations that tests would otherwise trigger.
   BOOL _unitTesting;
 
-  // Keeps track of the last known toolbar frame.
-  CGRect _lastKnownToolbarFrame;
+  // Keeps track of the last known toolbar Y origin.
+  CGFloat _lastKnownToolbarYOrigin;
 
   // Keeps track of last known trait collection used by the subviews.
   UITraitCollection* _lastKnownTraitCollection;
@@ -700,6 +700,12 @@ using ios::material::TimingFunction;
   clippingFrame.origin.y =
       [_webToolbar frame].size.height - clippingFrame.size.height;
   [_clippingView setFrame:clippingFrame];
+
+  // Omnibox background height also must be manually resized.
+  if ([_locationBarView.textField isFirstResponder]) {
+    CGRect omniboxFrame = CGRectInset([_clippingView bounds], -2, -2);
+    [_omniboxBackground setFrame:omniboxFrame];
+  }
 }
 
 - (void)setUpButton:(UIButton*)button
@@ -1007,10 +1013,10 @@ using ios::material::TimingFunction;
 
 - (void)toolbarDidLayout {
   CGRect frame = self.view.frame;
-  if (CGRectEqualToRect(_lastKnownToolbarFrame, frame))
+  if (frame.origin.y == _lastKnownToolbarYOrigin)
     return;
   [self updateToolbarAlphaForFrame:frame];
-  _lastKnownToolbarFrame = frame;
+  _lastKnownToolbarYOrigin = frame.origin.y;
 }
 
 - (void)windowDidChange {
@@ -1189,6 +1195,14 @@ using ios::material::TimingFunction;
     [_webToolbar setAutoresizesSubviews:NO];
     CGRect expandedFrame =
         RectShiftedDownAndResizedForStatusBar(self.contentView.bounds);
+    // Using -RectShiftedDownAndResizedForStatusBar can sometimes be wrong in
+    // an autolayout world, such as if the view is rotated with the app
+    // backgrounded. It's safer to use -SafeAreaInsetsForView.
+    if (IsSafeAreaCompatibleToolbarEnabled()) {
+      UIEdgeInsets safeAreaInsets = SafeAreaInsetsForView(self.contentView);
+      expandedFrame =
+          UIEdgeInsetsInsetRect(self.contentView.bounds, safeAreaInsets);
+    }
     [_webToolbar
         setFrame:growOmnibox ? expandedFrame : [self specificControlsArea]];
     [_webToolbar setAutoresizesSubviews:YES];
@@ -2048,6 +2062,15 @@ using ios::material::TimingFunction;
 - (void)layoutCancelButton {
   CGFloat height = CGRectGetHeight([self specificControlsArea]) -
                    kCancelButtonTopMargin - kCancelButtonBottomMargin;
+  // Using -specificControlsArea can sometimes be wrong in
+  // an autolayout world, such as if the view is rotated with the app
+  // backgrounded. It's safer to use -SafeAreaInsetsForView.
+  if (IsSafeAreaCompatibleToolbarEnabled()) {
+    UIEdgeInsets safeAreaInsets = SafeAreaInsetsForView(self.contentView);
+    height = CGRectGetHeight(UIEdgeInsetsInsetRect(self.contentView.bounds,
+                                                   safeAreaInsets)) -
+             kCancelButtonTopMargin - kCancelButtonBottomMargin;
+  }
   LayoutRect cancelButtonLayout;
   cancelButtonLayout.position.leading =
       CGRectGetWidth([_webToolbar bounds]) - height;
