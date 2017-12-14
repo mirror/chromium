@@ -16,6 +16,24 @@
       "revId": "79a80b16cce5835b0871b79da9286e6d83065672",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89eb60b_4489085a",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-12-14T00:31:00Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "0fbc03ac_14e02663",
+      "revId": "79a80b16cce5835b0871b79da9286e6d83065672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
