@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7bd8615c_36063fc0",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T19:56:48Z",
+      "side": 1,
+      "message": "I think it is okay to have it removed at this point. Can examine destination changes more closely once we add the destination search overlay.",
+      "parentUuid": "b28b0ce1_84ed8907",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd32289d_474850d3",
         "filename": "chrome/browser/resources/print_preview/new/app.js",
         "patchSetId": 6
@@ -154,6 +178,30 @@
       "writtenOn": "2017-12-14T18:51:03Z",
       "side": 1,
       "message": "When does this happen? Does the observer even trigger if this is not set?",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 0
+      },
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf62acf_d6912fce",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T19:56:48Z",
+      "side": 1,
+      "message": "Happens here https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/data/destination_store.js?l\u003d1099\nwhich is called when the destination store is constructed (also when we reload destinations). The destination store selecting null dispatches the select event so this.destination_ gets set to null. However it does not seem to trigger the observer so far, so I have removed it. Would it be a good idea to add an early return in onDestinationSelect_ to handle this case?",
+      "parentUuid": "35c36892_425c9b76",
       "range": {
         "startLine": 234,
         "startChar": 4,
