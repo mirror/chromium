@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9b1c8f34_884c5b13",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T01:40:36Z",
+      "side": 1,
+      "message": "Nevermind, reverted back to how it originally was since we need some in the header file (for default parameters), and and we don\u0027t want to have some constants set in the .h and some in the .cc.",
+      "parentUuid": "9d6a3c0e_610d610f",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 13
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c877140_a7772174",
         "filename": "chrome/browser/vr/test/vr_browser_test.cc",
         "patchSetId": 17
