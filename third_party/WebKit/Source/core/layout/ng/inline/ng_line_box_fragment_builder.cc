@@ -57,20 +57,25 @@ const NGPhysicalFragment* NGLineBoxFragmentBuilder::Child::PhysicalFragment()
 
 void NGLineBoxFragmentBuilder::ChildList::AddChild(
     scoped_refptr<NGLayoutResult> layout_result,
-    const NGLogicalOffset& child_offset) {
-  children_.push_back(Child{std::move(layout_result), nullptr, child_offset});
+    const NGLogicalOffset& child_offset,
+    LayoutUnit inline_size,
+    UBiDiLevel bidi_level) {
+  children_.push_back(
+      Child{std::move(layout_result), child_offset, inline_size, bidi_level});
 }
 
 void NGLineBoxFragmentBuilder::ChildList::AddChild(
     scoped_refptr<NGPhysicalFragment> fragment,
-    const NGLogicalOffset& child_offset) {
-  children_.push_back(Child{nullptr, std::move(fragment), child_offset});
+    LayoutUnit block_offset,
+    LayoutUnit inline_size,
+    UBiDiLevel bidi_level) {
+  children_.push_back(
+      Child{std::move(fragment), block_offset, inline_size, bidi_level});
 }
 
 void NGLineBoxFragmentBuilder::ChildList::AddChild(
-    std::nullptr_t,
     const NGLogicalOffset& child_offset) {
-  children_.push_back(Child{nullptr, nullptr, child_offset});
+  children_.push_back(Child{child_offset});
 }
 
 void NGLineBoxFragmentBuilder::ChildList::MoveInBlockDirection(
