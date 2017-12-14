@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "94756852_456e3a1d",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T17:03:20Z",
+      "side": 1,
+      "message": "Under mash, the code in //ash runs in a separate process, even though it is linked into the chrome binary. This is just like renderer processes.\n\nSo even though this is a static function, it uses static variables. There will be two copies of those variables, one in the browser process and one in the ash process. I don\u0027t think the one in the browser process will be initialized (since it\u0027s not running any of the other code in ash::WallpaperController).\n\nThe only code allowed to be accessed from the browser process is code in //ash/public, which has been vetted to work OK on both sides of the process boundary. It\u0027s mostly mojo interfaces, constants, shared structures, and a few utility functions that don\u0027t share data.\n\n(This sort of thing is clearer for browser vs. renderer because of the //chrome/browser vs. //chrome/renderer directory structure.)\n\nThe access you point out is a constant, which will work. However, that constant really ought to be moved to //ash/public if both sides need it.",
+      "parentUuid": "9159635f_553ac1ec",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78f2222d_b317d268",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
         "patchSetId": 9
