@@ -1327,7 +1327,7 @@ void LocalFrameView::UpdateLayout() {
 
   // FIXME: Could find the common ancestor layer of all dirty subtrees and mark
   // from there. crbug.com/462719
-  GetLayoutViewItem().EnclosingLayer()->UpdateLayerPositionsAfterLayout();
+  SetNeedsCompositingUpdate(kCompositingUpdateAfterGeometryChange);
 
   TRACE_EVENT_OBJECT_SNAPSHOT_WITH_ID(
       TRACE_DISABLED_BY_DEFAULT("blink.debug.layout.trees"), "LayoutTree", this,
@@ -3066,11 +3066,6 @@ void LocalFrameView::UpdateLifecyclePhasesForPrinting() {
   // painting.
   detached_frame_view->UpdateLifecyclePhasesInternal(
       DocumentLifecycle::kPrePaintClean);
-}
-
-void LocalFrameView::UpdateLifecycleToLayoutClean() {
-  GetFrame().LocalFrameRoot().View()->UpdateLifecyclePhasesInternal(
-      DocumentLifecycle::kLayoutClean);
 }
 
 void LocalFrameView::ScheduleVisualUpdateForPaintInvalidationIfNeeded() {

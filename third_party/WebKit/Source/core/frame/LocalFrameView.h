@@ -328,11 +328,6 @@ class CORE_EXPORT LocalFrameView final
   // >= CompositingInputsClean (unless throttling is allowed).
   void UpdateLifecycleToCompositingInputsClean();
 
-  // Computes only the style and layout lifecycle stages.
-  // After calling this method, all frames will be in a lifecycle
-  // state >= LayoutClean (unless throttling is allowed).
-  void UpdateLifecycleToLayoutClean();
-
   void ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 
   bool InvalidateViewportConstrainedObjects();

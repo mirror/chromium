@@ -550,7 +550,7 @@ TEST_P(PaintPropertyTreeUpdateTest, NoPaintPropertyUpdateOnBackgroundChange) {
 
   GetDocument().View()->UpdateAllLifecyclePhases();
   div->setAttribute(HTMLNames::styleAttr, "background-color: green");
-  GetDocument().View()->UpdateLifecycleToLayoutClean();
+  GetDocument().View()->UpdateLifecycleToCompositingInputsClean();
   EXPECT_FALSE(div->GetLayoutObject()->NeedsPaintPropertyUpdate());
 }
 

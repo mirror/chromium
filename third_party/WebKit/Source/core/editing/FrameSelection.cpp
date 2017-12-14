@@ -944,7 +944,7 @@ LayoutRect FrameSelection::UnclippedBounds() const {
   if (!view || layout_view.IsNull())
     return LayoutRect();
 
-  view->UpdateLifecycleToLayoutClean();
+  view->UpdateLifecycleToCompositingInputsClean();
   return LayoutRect(layout_selection_->SelectionBounds());
 }
 
