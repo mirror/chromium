@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0d084df_44ce43c4",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-14T19:10:48Z",
+      "side": 1,
+      "message": "It looks like this should just be prefs.browser.enable_spellchecking.* ?",
+      "revId": "7fed02109eca6967efc8254319aebad31d750d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af92c90c_82906057",
+        "filename": "chrome/browser/resources/settings/languages_page/languages_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-14T19:10:48Z",
+      "side": 1,
+      "message": "We try do avoid this sort of explicit DOM modification with Polymer.\nInstead, maybe check the \u0027actionable\u0027 property of the event target in \u0027toggleExpandButton_\u0027 (i.e. do nothing if the div is not actionable). Also, set |spellCheckOpened_| to false explicitly rather than setting the expanded property of the button.",
+      "revId": "7fed02109eca6967efc8254319aebad31d750d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
