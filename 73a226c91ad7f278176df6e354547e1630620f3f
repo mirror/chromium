@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d2121d_2a1b0ea7",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-12-14T18:29:20Z",
+      "side": 1,
+      "message": "Before you submit - is there a reason why this assumption doesn\u0027t hold? And under the circumstances that violate it, is an early-out the right answer?\n\nSure, the change fixes the immediate crash issue - and I\u0027ll happily LG if that addresses e.g. a top crasher - but I\u0027m not sure there isn\u0027t an underlying problem. If there is, we should address that.\n\nIf there isn\u0027t, it\u0027s probably worth explaining in the checkin comment how the DCHECK violation happens and why it\u0027s safe to early-out.",
+      "range": {
+        "startLine": 183,
+        "startChar": 36,
+        "endLine": 183,
+        "endChar": 51
+      },
+      "revId": "73a226c91ad7f278176df6e354547e1630620f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
