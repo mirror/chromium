@@ -61,7 +61,21 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  _webView = web::BuildWKWebView(self.view.bounds, _browserState);
+  WKWebViewConfiguration* config = [[WKWebViewConfiguration alloc] init];
+  NSString* scriptURL =
+      [[NSBundle mainBundle] pathForResource:@"privacy_notice" ofType:@"js"];
+  NSString* scriptContent =
+      [NSString stringWithContentsOfFile:scriptURL
+                                encoding:NSUTF8StringEncoding
+                                   error:NULL];
+  WKUserScript* script = [[WKUserScript alloc]
+        initWithSource:scriptContent
+         injectionTime:WKUserScriptInjectionTimeAtDocumentEnd
+      forMainFrameOnly:YES];
+  [config.userContentController addUserScript:script];
+  _webView =
+      [[WKWebView alloc] initWithFrame:self.view.bounds configuration:config];
+
   [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                 UIViewAutoresizingFlexibleHeight];
 

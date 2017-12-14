@@ -204,6 +204,7 @@ bundle_data("resources") {
     "//components/resources/terms/terms_vi.html",
     "//components/resources/terms/terms_zh-CN.html",
     "//components/resources/terms/terms_zh-TW.html",
+    "//ios/chrome/browser/ui/first_run/privacy_notice.js",
   ]
   outputs = [
     "{{bundle_resources_dir}}/{{source_file_part}}",
