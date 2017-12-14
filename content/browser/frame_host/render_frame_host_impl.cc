@@ -3128,6 +3128,14 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
       base::IgnoreResult(&RenderFrameHostImpl::CreateWebBluetoothService),
       base::Unretained(this)));
 
+  registry_->AddInterface(base::BindRepeating(
+      &ContentBrowserClient::CreateUsbDeviceManager,
+      base::Unretained(GetContentClient()->browser()), base::Unretained(this)));
+
+  registry_->AddInterface(base::BindRepeating(
+      &ContentBrowserClient::CreateWebUsbChooserService,
+      base::Unretained(GetContentClient()->browser()), base::Unretained(this)));
+
   registry_->AddInterface<media::mojom::InterfaceFactory>(
       base::Bind(&RenderFrameHostImpl::BindMediaInterfaceFactoryRequest,
                  base::Unretained(this)));

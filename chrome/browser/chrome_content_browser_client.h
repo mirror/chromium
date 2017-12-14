@@ -392,6 +392,13 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       content::NavigationUIData* navigation_ui_data) override;
   bool ShouldForceDownloadResource(const GURL& url,
                                    const std::string& mime_type) override;
+  void CreateUsbDeviceManager(
+      content::RenderFrameHost* render_frame_host,
+      device::mojom::UsbDeviceManagerRequest request) override;
+
+  void CreateWebUsbChooserService(
+      content::RenderFrameHost* render_frame_host,
+      device::mojom::UsbChooserServiceRequest request) override;
 
  protected:
   static bool HandleWebUI(GURL* url, content::BrowserContext* browser_context);
