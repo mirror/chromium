@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9a76b33_8930443e",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T20:01:49Z",
+      "side": 1,
+      "message": "No, the device wallpaper only shows on login screen, not lock screen or multiprofile user adding screen.\n\nIt\u0027s not guaranteed that the policy can be loaded (if there is any policy change) before login can happen. Actually I think it happens always after that.\n|is_device_wallpaper_policy_enforced_| is firstly initialized by WallpaperControllerClient::Init(). Then depending on the initial value, the login wallpaper will either show the device wallpaper (if true) or the user\u0027s wallpaper (if false). WallpaperPolicyHandler will observe the policy change and notify WallpaperController about the change and update the login wallpaper if necessary.\n\nThere are several possible cases:\n1. |is_device_wallpaper_policy_enforced_| is false -\u003e login screen shows the user\u0027s wallpaper -\u003e WallpaperPolicyHandler receives the change -\u003e login screen wallpaper is then replaced by the device wallpaper\n2. |is_device_wallpaper_policy_enforced_| is true -\u003e login screen shows the device wallpaper -\u003e WallpaperPolicyHandler receives the policy clear -\u003e login screen wallpaper reverts to the user\u0027s wallpaper\n3. |is_device_wallpaper_policy_enforced_| is true -\u003e login screen shows the device wallpaper -\u003e WallpaperPolicyHandler receives the change -\u003e login screen wallpaper changes to a different device wallpaper",
+      "parentUuid": "6e8f240a_f02007a3",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71b13a6b_5af4bdbb",
         "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T15:24:03Z",
       "side": 1,
       "message": "For future CL: You might want to do that in SetClientAndPaths() and maybe rename that method to Initialize(). That way it will be atomic with all the other setup.",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02278370_e1d8b7e0",
+        "filename": "chrome/browser/ui/ash/wallpaper_controller_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T20:01:49Z",
+      "side": 1,
+      "message": "We\u0027ve already had a Init() function. Moved this TODO to WallpaperControllerClient::Init().",
+      "parentUuid": "71b13a6b_5af4bdbb",
       "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "308d3d13_47c1b125",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T20:01:49Z",
+      "side": 1,
+      "message": "I used mojo call the get device wallpaper file path in my previous patch but thought I can use static method so removed it in later patches. Bring it back. Let me know if it\u0027s acceptable to introduce a mojo call just for this.",
+      "parentUuid": "b4c28b5a_33b6829d",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78f2222d_b317d268",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
         "patchSetId": 9
@@ -124,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "7b0cd4dd_d4d37776",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T20:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78f2222d_b317d268",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8280536b_0a24576b",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
         "patchSetId": 9
@@ -135,6 +207,24 @@
       "writtenOn": "2017-12-14T15:24:03Z",
       "side": 1,
       "message": "Is there existing test coverage for this code somewhere? There\u0027s a lot going on here and no tests in this CL.",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfae9d6_b5913181",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T20:01:49Z",
+      "side": 1,
+      "message": "The old codes has an existing test coverage for device policy, see WallpaperManagerPolicyTest.DevicePolicyTest. After hooking up the new codes with WallpaperController(Client), I will modify the test to make sure it works.",
+      "parentUuid": "8280536b_0a24576b",
       "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -158,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "935fe385_c49ea80a",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T20:01:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3a5820a_94eb6429",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "438bb1b5_c4924183",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.h",
         "patchSetId": 9
@@ -169,6 +277,24 @@
       "writtenOn": "2017-12-14T15:24:03Z",
       "side": 1,
       "message": "Is this based on a similar class elsewhere?",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef271219_9b2870c4",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-12-14T20:01:49Z",
+      "side": 1,
+      "message": "No. We have similar codes in WallpaperManager and that\u0027s going to be removed in a following-up CL.",
+      "parentUuid": "438bb1b5_c4924183",
       "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
