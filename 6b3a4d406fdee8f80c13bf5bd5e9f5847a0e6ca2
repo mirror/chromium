@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b37976e6_6402c055",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2318,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "This tests the hardware mirroring scenario. Why you needed this?",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67adba8_ab85c698",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "Update the name?\n\nCan you add \"Add\" scenario?",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cfe023_3b26b875",
+        "filename": "ash/touch/touch_observer_hud_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "why you need this?",
+      "range": {
+        "startLine": 351,
+        "startChar": 21,
+        "endLine": 351,
+        "endChar": 63
+      },
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69724d1_071e4a5e",
+        "filename": "ash/touch/touch_observer_hud_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52cf31d_91aa2d0d",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "why not just list of ids? is this because you\u0027re planning to extend to \"mirror\n, \"mixed_mirror\" ?",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccff1cc5_f1aee3aa",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "I guess we should create a builder to make it simpler. let me work on it.",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da1c1f8_16a74d6d",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "Why this?",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2460e099_3bf442bb",
+        "filename": "ui/display/display_layout.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "can we remove now?",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e887d6_024806b7",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "can you add a test case for this scenarios? (You may have to update the test anyway though)",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35d41ff_8fab2eec",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "constexpr .. kMask",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 10
+      },
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6054dfa3_117f5330",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "let\u0027s be more specific about what it does so that reader can guess from the code. How about\n\nGetDisplayIdWithoutOutputIndex  ?",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

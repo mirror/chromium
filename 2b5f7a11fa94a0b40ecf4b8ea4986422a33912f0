@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "c0845b77_82c5c722",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "I\u0027m still not sure why we\u0027re doing this. Once it\u0027s closed, it\u0027s not reflecting, so updating it doesn\u0027t make sense to me. If it\u0027s valid id, then we should keep it opened, shouldn\u0027t we?",
+      "parentUuid": "2b4d5a29_a4cfa2e6",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d902c15_368bd4db",
         "filename": "ash/display/window_tree_host_manager.cc",
         "patchSetId": 8
@@ -212,6 +230,41 @@
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6609c452_01e58371",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "I thought we agreed to keep the logic ?",
+      "parentUuid": "7a390505_b246ac4b",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93b3bb22_a54de195",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "For example, with this path, UpdateDisplay isn\u0027t necessary.",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -633,6 +686,24 @@
       "side": 1,
       "message": "Ack.",
       "parentUuid": "ce0c2d52_50de8b05",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d81bc28_fcb10f04",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T00:57:53Z",
+      "side": 1,
+      "message": "I assume you mean \"Done\"",
+      "parentUuid": "29f00388_3d935204",
       "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
