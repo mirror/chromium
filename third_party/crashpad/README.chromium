@@ -36,3 +36,5 @@ $ git am --3way --message-id -p4 /tmp/patchdir
 
 Local Modifications:
  - codereview.settings has been excluded.
+ - //third_party/crashpad/crashpad/util/misc/metrics.cc has been updated to use
+   the recently updated sparse histogram API, base::UmaHistogramSparse().
