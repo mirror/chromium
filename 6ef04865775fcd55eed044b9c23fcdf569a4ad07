@@ -141,6 +141,30 @@
       "revId": "6ef04865775fcd55eed044b9c23fcdf569a4ad07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e076138c_d7838166",
+        "filename": "third_party/WebKit/Source/modules/device_orientation/DeviceMotionEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-12-14T00:45:51Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "3cba50a8_87bfb71f",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 55
+      },
+      "revId": "6ef04865775fcd55eed044b9c23fcdf569a4ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
