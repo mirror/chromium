@@ -227,7 +227,10 @@ const char* kReplaceStateRootPathSpaceURL = "http://ios/rep lace";
 }
 
 // Tests calling pushState with unicode characters.
-- (void)testHtml5HistoryPushUnicodeCharacters {
+// TODO(crbug.com/795075) Omnibox text handling was changed with
+// https://chromium-review.googlesource.com/822819, which caused this test to
+// fail. This test disabled until it can be fixed.
+- (void)DISABLED_Html5HistoryPushUnicodeCharacters {
   const GURL pushStateUnicodeURLEncoded = web::test::HttpServer::MakeUrl(
       "http://ios/testing/data/http_server_files/"
       "history.html#unicode%E1%84%91");
