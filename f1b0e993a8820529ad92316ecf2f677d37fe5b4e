@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0536cb3_4cf1de60",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3753,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T23:23:31Z",
+      "side": 1,
+      "message": "1) Can we add a comment that documents why we ignore requests from extensions?\n2) Can we fix this in a followup to just ask the extension system directly if this RFH is in an extension process? It feels a bit odd to check the site instance URL for this fact: it just so happens that the site instance URL is Correct Enough for the extensions case, but that\u0027s not generally true.",
+      "revId": "f1b0e993a8820529ad92316ecf2f677d37fe5b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
