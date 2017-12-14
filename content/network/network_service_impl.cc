@@ -94,10 +94,9 @@ NetworkServiceImpl::NetworkServiceImpl(
     mojom::NetworkServiceRequest request,
     net::NetLog* net_log)
     : registry_(std::move(registry)), binding_(this) {
-  // |registry_| is nullptr when an in-process NetworkService is
-  // created directly. The latter is done in concert with using
-  // CreateNetworkContextWithBuilder to ease the transition to using the
-  // network service.
+  // |registry_| is nullptr when an in-process NetworkService is created
+  // directly. The latter is done to ease the transition to using the network
+  // service.
   if (registry_) {
     DCHECK(!request.is_pending());
     registry_->AddInterface<mojom::NetworkService>(
@@ -133,19 +132,6 @@ NetworkServiceImpl::~NetworkServiceImpl() {
   // NetworkContexts deregister themselves in Cleanup(), so have to be careful.
   while (!network_contexts_.empty())
     (*network_contexts_.begin())->Cleanup();
-}
-
-std::unique_ptr<mojom::NetworkContext>
-NetworkServiceImpl::CreateNetworkContextWithBuilder(
-    content::mojom::NetworkContextRequest request,
-    content::mojom::NetworkContextParamsPtr params,
-    std::unique_ptr<URLRequestContextBuilderMojo> builder,
-    net::URLRequestContext** url_request_context) {
-  std::unique_ptr<NetworkContext> network_context =
-      std::make_unique<NetworkContext>(this, std::move(request),
-                                       std::move(params), std::move(builder));
-  *url_request_context = network_context->url_request_context();
-  return network_context;
 }
 
 std::unique_ptr<NetworkServiceImpl> NetworkServiceImpl::CreateForTesting() {
