@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fb1eb1b_7303ad81",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-14T20:08:59Z",
+      "side": 1,
+      "message": "How can this test fail?",
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04827b65_fdce1a49",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 2135,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-14T20:08:59Z",
+      "side": 1,
+      "message": "This isn\u0027t quite right, as the code only executes if there\u0027s a delegate attached.  If you want the description to be right, put the recording code within the delegate check.  Otherwise revise the desscription.",
+      "range": {
+        "startLine": 2135,
+        "startChar": 42,
+        "endLine": 2135,
+        "endChar": 54
+      },
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00fb6ba_0f5ddf46",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 98648,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-14T20:08:59Z",
+      "side": 1,
+      "message": "I only see this histogram emitted in this changelist with the ShelfButton suffix.  What gives?",
+      "range": {
+        "startLine": 98648,
+        "startChar": 57,
+        "endLine": 98648,
+        "endChar": 0
+      },
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25738820_fc516f1b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 98649,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-14T20:08:59Z",
+      "side": 1,
+      "message": "ditto.\n\nDo you plan to add the others (soon) in later changelists?  Otherwise this is cluttering the dashboard\u0027s histogram selector...",
+      "range": {
+        "startLine": 98649,
+        "startChar": 62,
+        "endLine": 98649,
+        "endChar": 0
+      },
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae81d065_31498a72",
+        "filename": "ui/base/models/simple_menu_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-12-14T20:08:59Z",
+      "side": 1,
+      "message": "How can this happen?",
+      "range": {
+        "startLine": 466,
+        "startChar": 30,
+        "endLine": 466,
+        "endChar": 0
+      },
+      "revId": "1680f892a00e528bed9c99c52c6600f6ba6d6a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
