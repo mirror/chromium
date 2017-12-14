@@ -23,7 +23,8 @@ struct CONTENT_EXPORT CdmInfo {
           const std::string& file_system_id,
           const std::vector<std::string>& supported_codecs,
           const std::string& supported_key_system,
-          bool supports_sub_key_systems);
+          bool supports_sub_key_systems,
+          bool supports_persistent_licenses);
   CdmInfo(const CdmInfo& other);
   ~CdmInfo();
 
@@ -58,6 +59,9 @@ struct CONTENT_EXPORT CdmInfo {
   // For example, com.example.somekeysystem.a and com.example.somekeysystem.b
   // are both sub key systems of com.example.somekeysystem.
   bool supports_sub_key_systems = false;
+
+  // Whether this CDM supports persistent licenses.
+  bool supports_persistent_licenses;
 };
 
 }  // namespace content

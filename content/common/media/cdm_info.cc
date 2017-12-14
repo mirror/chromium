@@ -16,7 +16,8 @@ CdmInfo::CdmInfo(const std::string& name,
                  const std::string& file_system_id,
                  const std::vector<std::string>& supported_codecs,
                  const std::string& supported_key_system,
-                 bool supports_sub_key_systems)
+                 bool supports_sub_key_systems,
+                 bool supports_persistent_licenses)
     : name(name),
       guid(guid),
       version(version),
@@ -24,7 +25,8 @@ CdmInfo::CdmInfo(const std::string& name,
       file_system_id(file_system_id),
       supported_codecs(supported_codecs),
       supported_key_system(supported_key_system),
-      supports_sub_key_systems(supports_sub_key_systems) {
+      supports_sub_key_systems(supports_sub_key_systems),
+      supports_persistent_licenses(supports_persistent_licenses) {
   DCHECK(base::IsValidGUID(guid));
 }
 

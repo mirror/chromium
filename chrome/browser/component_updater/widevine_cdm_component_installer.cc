@@ -255,7 +255,6 @@ void RegisterWidevineCdmWithChrome(
   PluginService::GetInstance()->PurgePluginListCache(NULL, false);
 
   // Also register Widevine with the CdmRegistry.
-  // TODO(xhwang): Add |is_persistent_license_supported| to CdmInfo.
   const base::FilePath cdm_path =
       GetPlatformDirectory(cdm_install_dir)
           .AppendASCII(base::GetNativeLibraryName(kWidevineCdmLibraryName));
@@ -264,7 +263,8 @@ void RegisterWidevineCdmWithChrome(
       base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
   CdmRegistry::GetInstance()->RegisterCdm(content::CdmInfo(
       kWidevineCdmDisplayName, kWidevineCdmGuid, cdm_version, cdm_path,
-      kWidevineCdmFileSystemId, supported_codecs, kWidevineKeySystem, false));
+      kWidevineCdmFileSystemId, supported_codecs, kWidevineKeySystem, false,
+      is_persistent_license_supported));
 }
 
 }  // namespace
