@@ -312,4 +312,9 @@ void ChildFrameCompositingHelper::UpdateVisibility(bool visible) {
     web_layer_->SetDrawsContent(visible);
 }
 
+void ChildFrameCompositingHelper::WasEvicted() {
+  if (web_layer_)
+    UpdateWebLayer(nullptr);
+}
+
 }  // namespace content

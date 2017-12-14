@@ -189,6 +189,8 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   // IPC handlers
   void OnDidStartLoading();
 
+  void WasEvicted();
+
  private:
   RenderFrameProxy(int routing_id);
 

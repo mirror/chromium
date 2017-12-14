@@ -21,7 +21,9 @@ class VIZ_CLIENT_EXPORT LocalSurfaceIdProvider {
   virtual const LocalSurfaceId& GetLocalSurfaceIdForFrame(
       const CompositorFrame& frame) = 0;
 
- private:
+  virtual void SetNeedsNewSurface() = 0;
+
+ protected:
   DISALLOW_COPY_AND_ASSIGN(LocalSurfaceIdProvider);
 };
 
@@ -30,13 +32,16 @@ class VIZ_CLIENT_EXPORT DefaultLocalSurfaceIdProvider
  public:
   DefaultLocalSurfaceIdProvider();
 
+  // LocalSurfaceIdProvider implementation.
   const LocalSurfaceId& GetLocalSurfaceIdForFrame(
       const CompositorFrame& frame) override;
+  void SetNeedsNewSurface() override;
 
  private:
   LocalSurfaceId local_surface_id_;
   gfx::Size surface_size_;
   float device_scale_factor_ = 0;
+  bool needs_new_surface_ = false;
   ParentLocalSurfaceIdAllocator parent_local_surface_id_allocator_;
 
   DISALLOW_COPY_AND_ASSIGN(DefaultLocalSurfaceIdProvider);
