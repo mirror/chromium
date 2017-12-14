@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a161fc41_aa648785",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T04:05:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d5403d61_d681d37c",
+      "revId": "0fabfdd20b078f4c3577566e98632cc796165631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5a98d48_87d04759",
         "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yes we could, but jbudorick prefers to avoid reflection.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/762125/2/testing/android/native_test/java/src/org/chromium/native_test/NativeUnitTest.java#47\n\nI don\u0027t mind either way though.",
       "parentUuid": "c5a98d48_87d04759",
+      "revId": "0fabfdd20b078f4c3577566e98632cc796165631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eefcad30_5d13072c",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T04:05:37Z",
+      "side": 1,
+      "message": "Given that the code will be compiled out for shipping builds, and that the reflection is used only on older apis (which will never change), I\u0027d guess reflection would be fine.\n\nBut if it\u0027s not important, then no point in adding it.",
+      "parentUuid": "3d9e6034_30866526",
       "revId": "0fabfdd20b078f4c3577566e98632cc796165631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
