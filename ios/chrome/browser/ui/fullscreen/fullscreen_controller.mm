@@ -43,7 +43,7 @@ void FullscreenController::SetWebStateList(WebStateList* web_state_list) {
   web_state_list_ = web_state_list;
   web_state_list_observer_ =
       web_state_list_ ? base::MakeUnique<FullscreenWebStateListObserver>(
-                            model_.get(), web_state_list_)
+                            this, model_.get(), web_state_list_)
                       : nullptr;
 }
 
