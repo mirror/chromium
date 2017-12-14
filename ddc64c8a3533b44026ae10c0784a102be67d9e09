@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c0b8598_0a04a904",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1170114
+      },
+      "writtenOn": "2017-12-14T21:33:37Z",
+      "side": 1,
+      "message": "This is still creating a temporary. When you use emplace_back it is as if the emplace_back function becomes the constructor function.\n\nSee https://eli.thegreenplace.net/2014/perfect-forwarding-and-universal-references-in-c/",
+      "revId": "ddc64c8a3533b44026ae10c0784a102be67d9e09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
