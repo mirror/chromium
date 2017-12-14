@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dcb678d_64dec602",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-12-14T16:47:48Z",
+      "side": 0,
+      "message": "If this call remains in this method does the bug still repro?",
+      "range": {
+        "startLine": 1012,
+        "startChar": 12,
+        "endLine": 1015,
+        "endChar": 89
+      },
+      "revId": "7c4e86a20a7a14dca766799966d2c9fe5b919b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
