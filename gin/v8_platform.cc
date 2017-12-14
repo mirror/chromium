@@ -22,6 +22,8 @@ namespace gin {
 
 namespace {
 
+constexpr double kMinimumJsTimeDeltaMillis = 1;
+
 base::LazyInstance<V8Platform>::Leaky g_v8_platform = LAZY_INSTANCE_INITIALIZER;
 
 void PrintStackTrace() {
@@ -228,7 +230,24 @@ double V8Platform::MonotonicallyIncreasingTime() {
 }
 
 double V8Platform::CurrentClockTimeMillis() {
-  return base::Time::Now().ToJsTime();
+  double now = base::Time::Now().ToJsTime();
+  if (clock_time_offset_millis_) {
+    if (last_clock_time_millis_ && now <= *last_clock_time_millis_) {
+      // Time didn't advanced at all. This likely means the scheduler is paused,
+      // so to make things progress on JS side we'll need to make sure time here
+      // advances at least a little bit.
+      *clock_time_offset_millis_ += kMinimumJsTimeDeltaMillis;
+    }
+    last_clock_time_millis_ = now;
+    return now + *clock_time_offset_millis_;
+  }
+  return now;
+}
+
+void V8Platform::SetClockTimeOffsetMillis(base::Optional<double> offset) {
+  clock_time_offset_millis_ = offset;
+  if (!clock_time_offset_millis_)
+    last_clock_time_millis_.reset();
 }
 
 v8::TracingController* V8Platform::GetTracingController() {
