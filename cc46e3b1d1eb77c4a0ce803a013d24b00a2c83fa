@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2690e372_766ca3b6",
+        "filename": "chrome/browser/extensions/api/developer_private/extension_info_generator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:23:25Z",
+      "side": 1,
+      "message": "Can you add a TODO() here to remove the home_page entry (above) when MD extensions launches?",
+      "revId": "cc46e3b1d1eb77c4a0ce803a013d24b00a2c83fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06e6894a_7aa4b778",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 3
@@ -65,6 +82,40 @@
     },
     {
       "key": {
+        "uuid": "0146a90e_c19f1a52",
+        "filename": "extensions/common/manifest_url_handlers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:23:25Z",
+      "side": 1,
+      "message": "The comments should differentiate these functions (right now developer site url and webstore url use the same comments?)",
+      "revId": "cc46e3b1d1eb77c4a0ce803a013d24b00a2c83fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54f3a2f_4084f97f",
+        "filename": "extensions/common/manifest_url_handlers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:23:25Z",
+      "side": 1,
+      "message": "Developer Site is a bit misleading IMO.  I\u0027d prefer we do something like\nGetExplicitHomePageUrl() or GetSpecifiedHomePageUrl().",
+      "revId": "cc46e3b1d1eb77c4a0ce803a013d24b00a2c83fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60366302_5667dc05",
         "filename": "third_party/closure_compiler/externs/developer_private.js",
         "patchSetId": 3
@@ -76,6 +127,30 @@
       "writtenOn": "2017-12-14T22:48:49Z",
       "side": 1,
       "message": "Should we preserve alphabetical order? It seems that the rest of this typedef is attempting to do so.",
+      "range": {
+        "startLine": 298,
+        "startChar": 5,
+        "endLine": 299,
+        "endChar": 25
+      },
+      "revId": "cc46e3b1d1eb77c4a0ce803a013d24b00a2c83fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406c1e48_517a5dff",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T23:23:25Z",
+      "side": 1,
+      "message": "Please do (though note this is in the idl)",
+      "parentUuid": "60366302_5667dc05",
       "range": {
         "startLine": 298,
         "startChar": 5,
