@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34d1ecb3_1a97997f",
+        "filename": "content/public/network/network_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-12-14T22:10:04Z",
+      "side": 0,
+      "message": "I\u0027ll remove this interface since it\u0027s no longer needed in a followup",
+      "revId": "fad8f267ba2718c5e6a4011263835be8cc428a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
