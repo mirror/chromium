@@ -232,6 +232,10 @@ bool ChunkDemuxerStream::UpdateAudioConfig(const AudioDecoderConfig& config,
   DCHECK(config.IsValidConfig());
   DCHECK_EQ(type_, AUDIO);
   base::AutoLock auto_lock(lock_);
+
+  UMA_HISTOGRAM_ENUMERATION("Media.MSE.AudioChannelLayout",
+                            config.channel_layout(), CHANNEL_LAYOUT_MAX + 1);
+
   if (!SBSTREAM_IS_SET) {
     DCHECK_EQ(state_, UNINITIALIZED);
 

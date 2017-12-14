@@ -34415,8 +34415,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.MSE.AudioChannelLayout" enum="ChannelLayout">
+  <owner>wolenetz@chromium.org</owner>
+  <summary>Audio channel layout in Media Source Extensions playback.</summary>
+</histogram>
+
 <histogram name="Media.MSE.AudioCodec" enum="MSECodec">
-  <owner>acolwell@chromium.org</owner>
+  <owner>wolenetz@chromium.org</owner>
   <summary>
     Audio codec used in Media Source Extensions playback. Set when AddId() is
     called during playback.
