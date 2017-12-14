@@ -20,7 +20,7 @@ class AudioPermissionPromptTexture : public UiTexture {
  public:
   AudioPermissionPromptTexture();
   ~AudioPermissionPromptTexture() override;
-  gfx::Size GetPreferredTextureSize(int width) const override;
+  gfx::Size GetPreferredTextureSize(int width) override;
   gfx::SizeF GetDrawnSize() const override;
 
   void SetPrimaryButtonHovered(bool hovered);

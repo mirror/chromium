@@ -21,7 +21,7 @@ class SystemIndicatorTexture : public UiTexture {
   void SetMessageId(int id);
 
  private:
-  gfx::Size GetPreferredTextureSize(int width) const override;
+  gfx::Size GetPreferredTextureSize(int width) override;
   gfx::SizeF GetDrawnSize() const override;
   void Draw(SkCanvas* canvas, const gfx::Size& texture_size) override;
 

@@ -37,7 +37,7 @@ class UrlBarTexture : public UiTexture {
   UrlBarTexture(
       const base::Callback<void(UiUnsupportedMode)>& failure_callback);
   ~UrlBarTexture() override;
-  gfx::Size GetPreferredTextureSize(int width) const override;
+  gfx::Size GetPreferredTextureSize(int width) override;
   gfx::SizeF GetDrawnSize() const override;
 
   void SetToolbarState(const ToolbarState& state);

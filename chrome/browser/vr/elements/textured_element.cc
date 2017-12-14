@@ -54,6 +54,9 @@ bool TexturedElement::PrepareToDraw() {
       !(GetTexture()->dirty() || g_rerender_if_not_dirty_for_testing_) ||
       !IsVisible())
     return false;
+  // PreferredTextureSize might change due to text element has new layout or new
+  // text. So we need to get the latest value before create surface.
+  texture_size_ = GetTexture()->GetPreferredTextureSize(maximum_width_);
   surface_ = provider_->MakeSurface(texture_size_);
   DCHECK(surface_.get());
   GetTexture()->DrawAndLayout(surface_->getCanvas(), texture_size_);

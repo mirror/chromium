@@ -15,13 +15,15 @@
 
 namespace {
 constexpr float kCursorWidthRatio = 0.07f;
+constexpr int kTextPixelPerDMM = 1100;
 }
 
 namespace vr {
 
 class TextTexture : public UiTexture {
  public:
-  explicit TextTexture(float font_height) : font_height_(font_height) {}
+  explicit TextTexture(float font_height_dmms)
+      : font_height_dmms_(font_height_dmms) {}
   ~TextTexture() override {}
 
   void SetText(const base::string16& text) { SetAndDirty(&text_, text); }
@@ -32,7 +34,8 @@ class TextTexture : public UiTexture {
     SetAndDirty(&alignment_, alignment);
   }
 
-  void SetMultiLine(bool multiline) { SetAndDirty(&multiline_, multiline); }
+  void SetTextMode(TextMode mode) { SetAndDirty(&mode_, mode); }
+
   void SetCursorEnabled(bool enabled) {
     SetAndDirty(&cursor_enabled_, enabled);
   }
@@ -41,7 +44,7 @@ class TextTexture : public UiTexture {
     SetAndDirty(&cursor_position_, position);
   }
 
-  void SetTextWidth(float width) { SetAndDirty(&text_width_, width); }
+  void SetTextSize(const gfx::SizeF& size) { text_size_ = size; }
 
   gfx::SizeF GetDrawnSize() const override { return size_; }
 
@@ -51,12 +54,16 @@ class TextTexture : public UiTexture {
   // the texture. This allows for deeper unit testing of the Text element
   // without having to mock canvases and simulate frame rendering. The state of
   // the texture is modified here.
-  std::vector<std::unique_ptr<gfx::RenderText>> LayOutText(
-      const gfx::Size& texture_size);
+  void LayOutText();
+
+  const std::vector<std::unique_ptr<gfx::RenderText>>& lines() {
+    return lines_;
+  }
 
  private:
-  gfx::Size GetPreferredTextureSize(int width) const override {
-    return gfx::Size(width, width);
+  gfx::Size GetPreferredTextureSize(int width) override {
+    LayOutText();
+    return gfx::Size(GetDrawnSize().width(), GetDrawnSize().height());
   }
 
   void Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) override;
@@ -64,21 +71,22 @@ class TextTexture : public UiTexture {
   gfx::SizeF size_;
   base::string16 text_;
   // These dimensions are in meters.
-  float font_height_ = 0;
-  float text_width_ = 0;
+  float font_height_dmms_ = 0;
   TextAlignment alignment_ = kTextAlignmentCenter;
-  bool multiline_ = true;
+  TextMode mode_ = kMultiLineFixedWidth;
+  gfx::SizeF text_size_;
   SkColor color_ = SK_ColorBLACK;
   bool cursor_enabled_ = false;
   int cursor_position_ = 0;
   gfx::Rect cursor_bounds_;
+  std::vector<std::unique_ptr<gfx::RenderText>> lines_;
 
   DISALLOW_COPY_AND_ASSIGN(TextTexture);
 };
 
-Text::Text(int maximum_width_pixels, float font_height_meters)
-    : TexturedElement(maximum_width_pixels),
-      texture_(base::MakeUnique<TextTexture>(font_height_meters)) {}
+Text::Text(float font_height_dmms)
+    : TexturedElement(0),
+      texture_(base::MakeUnique<TextTexture>(font_height_dmms)) {}
 Text::~Text() {}
 
 void Text::SetText(const base::string16& text) {
@@ -93,8 +101,9 @@ void Text::SetTextAlignment(UiTexture::TextAlignment alignment) {
   texture_->SetAlignment(alignment);
 }
 
-void Text::SetMultiLine(bool multiline) {
-  texture_->SetMultiLine(multiline);
+void Text::SetTextMode(TextMode mode) {
+  text_mode_ = mode;
+  texture_->SetTextMode(mode);
 }
 
 void Text::SetCursorEnabled(bool enabled) {
@@ -121,12 +130,18 @@ gfx::RectF Text::GetCursorBounds() const {
 }
 
 void Text::OnSetSize(gfx::SizeF size) {
-  texture_->SetTextWidth(size.width());
+  texture_->SetTextSize(size);
 }
 
-std::vector<std::unique_ptr<gfx::RenderText>> Text::LayOutTextForTest(
-    const gfx::Size& texture_size) {
-  return texture_->LayOutText(texture_size);
+void Text::UpdateElementSize() {
+  gfx::SizeF drawn_size = GetTexture()->GetDrawnSize();
+  SetSize(drawn_size.width() / kTextPixelPerDMM,
+          drawn_size.height() / kTextPixelPerDMM);
+}
+
+const std::vector<std::unique_ptr<gfx::RenderText>>& Text::LayOutTextForTest() {
+  texture_->LayOutText();
+  return texture_->lines();
 }
 
 gfx::SizeF Text::GetTextureSizeForTest() const {
@@ -137,34 +152,37 @@ UiTexture* Text::GetTexture() const {
   return texture_.get();
 }
 
-std::vector<std::unique_ptr<gfx::RenderText>> TextTexture::LayOutText(
-    const gfx::Size& texture_size) {
+void TextTexture::LayOutText() {
   gfx::FontList fonts;
-  float pixels_per_meter = texture_size.width() / text_width_;
-  int pixel_font_height = static_cast<int>(font_height_ * pixels_per_meter);
+  int pixel_font_height =
+      static_cast<int>(font_height_dmms_ * kTextPixelPerDMM);
   GetDefaultFontList(pixel_font_height, text_, &fonts);
-  gfx::Rect text_bounds(texture_size.width(), 0);
+  gfx::Rect text_bounds;
+  if (mode_ == kSingleLineFixedHeight) {
+    text_bounds.set_height(pixel_font_height);
+  } else {
+    text_bounds.set_width(kTextPixelPerDMM * text_size_.width());
+  }
 
   TextRenderParameters parameters;
   parameters.color = color_;
   parameters.text_alignment = alignment_;
-  parameters.wrapping_behavior =
-      multiline_ ? kWrappingBehaviorWrap : kWrappingBehaviorNoWrap;
+  parameters.wrapping_behavior = mode_ == kMultiLineFixedWidth
+                                     ? kWrappingBehaviorWrap
+                                     : kWrappingBehaviorNoWrap;
   parameters.cursor_enabled = cursor_enabled_;
   parameters.cursor_position = cursor_position_;
 
-  std::vector<std::unique_ptr<gfx::RenderText>> lines =
+  lines_ =
       // TODO(vollick): if this subsumes all text, then we should probably move
       // this function into this class.
       PrepareDrawStringRect(text_, fonts, &text_bounds, parameters);
 
   if (cursor_enabled_)
-    cursor_bounds_ = lines.front()->GetUpdatedCursorBounds();
+    cursor_bounds_ = lines_.front()->GetUpdatedCursorBounds();
 
   // Note, there is no padding here whatsoever.
   size_ = gfx::SizeF(text_bounds.size());
-
-  return lines;
 }
 
 void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
@@ -172,8 +190,7 @@ void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
   gfx::Canvas gfx_canvas(&paint_canvas, 1.0f);
   gfx::Canvas* canvas = &gfx_canvas;
 
-  auto lines = LayOutText(texture_size);
-  for (auto& render_text : lines)
+  for (auto& render_text : lines_)
     render_text->Draw(canvas);
 }
 

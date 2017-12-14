@@ -20,7 +20,7 @@ class ExitPromptTexture : public UiTexture {
  public:
   ExitPromptTexture();
   ~ExitPromptTexture() override;
-  gfx::Size GetPreferredTextureSize(int width) const override;
+  gfx::Size GetPreferredTextureSize(int width) override;
   gfx::SizeF GetDrawnSize() const override;
 
   void SetPrimaryButtonHovered(bool hovered);

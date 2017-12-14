@@ -40,7 +40,7 @@ class SpinnerTexture : public UiTexture {
   void SetColor(SkColor color) { SetAndDirty(&color_, color); }
 
  private:
-  gfx::Size GetPreferredTextureSize(int width) const override {
+  gfx::Size GetPreferredTextureSize(int width) override {
     return gfx::Size(width, width);
   }
 

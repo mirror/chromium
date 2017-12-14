@@ -24,7 +24,7 @@ class WebVrUrlToastTexture : public UiTexture {
   WebVrUrlToastTexture(
       const base::Callback<void(UiUnsupportedMode)>& failure_callback);
   ~WebVrUrlToastTexture() override;
-  gfx::Size GetPreferredTextureSize(int width) const override;
+  gfx::Size GetPreferredTextureSize(int width) override;
   gfx::SizeF GetDrawnSize() const override;
 
   void SetToolbarState(const ToolbarState& state);

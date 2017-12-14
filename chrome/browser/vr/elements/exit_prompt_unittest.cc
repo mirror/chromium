@@ -26,7 +26,7 @@ class MockExitPromptTexture : public ExitPromptTexture {
   MOCK_CONST_METHOD1(HitsPrimaryButton, bool(const gfx::PointF&));
   MOCK_CONST_METHOD1(HitsSecondaryButton, bool(const gfx::PointF&));
 
-  MOCK_CONST_METHOD1(GetPreferredTextureSize, gfx::Size(int));
+  MOCK_METHOD1(GetPreferredTextureSize, gfx::Size(int));
   MOCK_CONST_METHOD0(GetDrawnSize, gfx::SizeF());
   MOCK_METHOD2(Draw, void(SkCanvas*, const gfx::Size&));
 

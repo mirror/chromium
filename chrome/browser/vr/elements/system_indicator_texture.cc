@@ -86,8 +86,7 @@ void SystemIndicatorTexture::Draw(SkCanvas* sk_canvas,
   }
 }
 
-gfx::Size SystemIndicatorTexture::GetPreferredTextureSize(
-    int maximum_width) const {
+gfx::Size SystemIndicatorTexture::GetPreferredTextureSize(int maximum_width) {
   // All indicators need to be the same height, so compute height, and then
   // re-compute with based on whether the indicator has text or not.
   int height = maximum_width / kHeightWidthRatio;

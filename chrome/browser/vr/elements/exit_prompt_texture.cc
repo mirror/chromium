@@ -158,7 +158,7 @@ void ExitPromptTexture::SetSecondaryButtonColors(const ButtonColors& colors) {
   SetAndDirty(&secondary_button_colors_, colors);
 }
 
-gfx::Size ExitPromptTexture::GetPreferredTextureSize(int maximum_width) const {
+gfx::Size ExitPromptTexture::GetPreferredTextureSize(int maximum_width) {
   return gfx::Size(maximum_width, maximum_width * kHeight / kWidth);
 }
 

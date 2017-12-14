@@ -26,7 +26,7 @@ class VectorIconTexture : public UiTexture {
   }
 
  private:
-  gfx::Size GetPreferredTextureSize(int width) const override {
+  gfx::Size GetPreferredTextureSize(int width) override {
     return gfx::Size(width, width);
   }
 
