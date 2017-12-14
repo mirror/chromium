@@ -7188,6 +7188,11 @@ class TestNetworkErrorLoggingDelegate : public NetworkErrorLoggingDelegate {
     errors_.push_back(details);
   }
 
+  void RemoveBrowsingData(const base::RepeatingCallback<bool(const GURL&)>&
+                              origin_filter) override {
+    NOTREACHED();
+  }
+
  private:
   std::vector<Header> headers_;
   std::vector<ErrorDetails> errors_;
