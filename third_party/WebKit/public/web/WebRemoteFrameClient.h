@@ -61,6 +61,11 @@ class WebRemoteFrameClient {
   // This frame was focused by another frame.
   virtual void FrameFocused() {}
 
+  // Print out this frame.
+  // |rect| is the actual rectangle area this frame occupy. |content_id| is a
+  // unique id for the rendered content.
+  virtual void Print(const WebRect& rect, uint32_t content_id) {}
+
  protected:
   virtual ~WebRemoteFrameClient() {}
 };
