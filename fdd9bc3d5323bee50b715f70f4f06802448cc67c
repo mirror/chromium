@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e7cfdd3_410581dd",
+        "filename": "third_party/android_deps/README.chromium",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-14T20:29:32Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "eb9e8735_0981652f",
+      "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5158779_3abbe11d",
         "filename": "tools/android/roll/android_deps/README.md",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6aeb6ca_68546fde",
+        "filename": "tools/android/roll/android_deps/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-14T20:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5158779_3abbe11d",
+      "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "abb57ab1_417c1cf7",
+        "filename": "tools/android/roll/android_deps/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-14T20:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01805c32_7304d9d8",
+      "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74adde70_13544d3e",
         "filename": "tools/android/roll/android_deps/buildSrc/src/main/groovy/ChromiumDepGraph.groovy",
         "patchSetId": 6
@@ -64,6 +118,47 @@
       "writtenOn": "2017-12-13T18:21:06Z",
       "side": 1,
       "message": "Add copyright headers?",
+      "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db150a0e_a73675a3",
+        "filename": "tools/android/roll/android_deps/buildSrc/src/main/groovy/ChromiumDepGraph.groovy",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-14T20:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74adde70_13544d3e",
+      "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4d20477_8132d410",
+        "filename": "tools/android/roll/android_deps/buildSrc/src/main/groovy/ChromiumDepGraph.groovy",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-14T20:29:32Z",
+      "side": 1,
+      "message": "I currently don\u0027t do anything with it, but I could make the non topLevel dependnecies private to the repository",
+      "range": {
+        "startLine": 12,
+        "startChar": 14,
+        "endLine": 12,
+        "endChar": 25
+      },
       "revId": "fdd9bc3d5323bee50b715f70f4f06802448cc67c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
