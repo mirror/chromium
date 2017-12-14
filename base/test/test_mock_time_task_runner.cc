@@ -277,6 +277,7 @@ size_t TestMockTimeTaskRunner::GetPendingTaskCount() const {
 
 TimeDelta TestMockTimeTaskRunner::NextPendingTaskDelay() const {
   DCHECK(thread_checker_.CalledOnValidThread());
+  AutoLock scoped_lock(tasks_lock_);
   return tasks_.empty() ? TimeDelta::Max()
                         : tasks_.top().GetTimeToRun() - NowTicks();
 }
