@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19daed01_df2f3ad7",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-14T19:08:01Z",
+      "side": 1,
+      "message": "+ katie@. The screen reader behavior itself (non-visual) is significantly better -- no toolbar to accidentally tab into.\n\nAccording to extension docs, panels have fixed size and position (you cannot set them).",
+      "parentUuid": "c486ba8f_1e4fec95",
+      "revId": "33bac3740e9c07a191c333148cc1e17a2cc5e879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbc148a3_e0b3ed5d",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "33bac3740e9c07a191c333148cc1e17a2cc5e879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5704b89b_897d498a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-12-14T19:08:01Z",
+      "side": 1,
+      "message": "Let\u0027s keep it in mind. I think load complete is pretty unique in this regard of having focus on the aura Window. I\u0027m not sure if that was intended at some point or not. There\u0027s really nothing wrong with a focused window, except for ChromeVox; the window has a poor accessible name and the webpage title only lives on the root web area.",
+      "parentUuid": "cbc148a3_e0b3ed5d",
+      "revId": "33bac3740e9c07a191c333148cc1e17a2cc5e879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
