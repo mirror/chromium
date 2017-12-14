@@ -16,6 +16,7 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLPlugInElement.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/ScrollAlignment.h"
@@ -303,6 +304,11 @@ void WebRemoteFrameImpl::DidStopLoading() {
     WebLocalFrameImpl* parent_frame =
         ToWebLocalFrameImpl(Parent()->ToWebLocalFrame());
     parent_frame->GetFrame()->GetDocument()->CheckCompleted();
+  }
+
+  if (auto* owner = GetFrame()->DeprecatedLocalOwner()) {
+    if (IsHTMLPlugInElement(owner))
+      ToHTMLPlugInElement(owner)->ContentFrameDidStopLoading();
   }
 }
 
