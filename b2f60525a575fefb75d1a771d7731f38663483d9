@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bddb7460_7a2cb1bf",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:04:07Z",
+      "side": 1,
+      "message": "Can remove it. I left it in for testing, so I could see what happened as the destination transitioned.",
+      "parentUuid": "72e8e55b_1a79b97d",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd32289d_474850d3",
         "filename": "chrome/browser/resources/print_preview/new/app.js",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "f99260d9_fe28b911",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd32289d_474850d3",
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "852c6874_86cb68a8",
         "filename": "chrome/browser/resources/print_preview/new/app.js",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c37b69_b60f39fb",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:04:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "852c6874_86cb68a8",
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
