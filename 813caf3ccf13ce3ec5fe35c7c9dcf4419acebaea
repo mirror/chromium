@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "c0b0e65f_fc3eacc1",
+        "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T00:24:57Z",
+      "side": 1,
+      "message": "Unfortunately, I think being able to do this is going to be some ways off. Today, the clipboard IPCs are not frame-scoped, so a compromised renderer could simply bypass the permissions checks altogether and just invoke the clipboard IPCs directly.\n\nFixing that would be a worthwhile followup once slangley@ is done simplifying clipboard.mojom. However, even then, there\u0027s another problem: edit commands are handled by the renderer, so it\u0027s the renderer that essentially initiates the request for pasting. So we would need to change this to be browser-driven as well and push the data from the browser down into the renderer on a paste, rather than the renderer going back up to the browser when it realizes it needs to do a paste. That would be a fairly involved change as well... so I think this is the best we can do for now.",
+      "parentUuid": "7c8d61a4_48ca64e3",
+      "revId": "813caf3ccf13ce3ec5fe35c7c9dcf4419acebaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a1e94a5_d5472e1b",
         "filename": "third_party/WebKit/Source/modules/clipboard/ClipboardPromise.cpp",
         "patchSetId": 1
