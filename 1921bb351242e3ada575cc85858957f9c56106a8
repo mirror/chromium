@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c949538_b499406b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
+        "patchSetId": 34
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-14T02:21:16Z",
+      "side": 0,
+      "message": "nit: removing this \u0027-\u0027 introduces an extra blank line",
+      "revId": "1921bb351242e3ada575cc85858957f9c56106a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

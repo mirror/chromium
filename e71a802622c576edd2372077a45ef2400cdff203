@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "613e977d_f8724316",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertySubclass.h.tmpl",
+        "patchSetId": 34
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-14T02:21:16Z",
+      "side": 1,
+      "message": "i feel like this comment can be removed now that all includes are conditional",
+      "revId": "e71a802622c576edd2372077a45ef2400cdff203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
