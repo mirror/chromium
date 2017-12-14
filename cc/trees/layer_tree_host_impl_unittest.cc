@@ -9201,8 +9201,7 @@ void ExpectFullDamageAndDraw(LayerTreeHostImpl* host_impl) {
 }
 }  // namespace
 
-TEST_F(LayerTreeHostImplTestDrawAndTestDamage,
-       RequireHighResAndRedrawWhenVisible) {
+TEST_F(LayerTreeHostImplTestDrawAndTestDamage, RequireHighResWhenVisible) {
   ASSERT_TRUE(host_impl_->active_tree());
 
   std::unique_ptr<SolidColorLayerImpl> root =
@@ -9233,9 +9232,6 @@ TEST_F(LayerTreeHostImplTestDrawAndTestDamage,
   did_request_redraw_ = false;
   host_impl_->SetVisible(true);
   EXPECT_TRUE(host_impl_->RequiresHighResToDraw());
-  // Expect redraw and full frame damage when becoming visible.
-  EXPECT_TRUE(did_request_redraw_);
-  EXPECT_SCOPED(ExpectFullDamageAndDraw(host_impl_.get()));
 }
 
 TEST_F(LayerTreeHostImplTest, RequireHighResAfterGpuRasterizationToggles) {
