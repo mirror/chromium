@@ -790,6 +790,24 @@
     },
     {
       "key": {
+        "uuid": "31db376d_99789162",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-12-14T12:01:07Z",
+      "side": 1,
+      "message": "Added ReplacedNavigationEntryData_BackAfterReplaceState, PTAL! I believe this is what you\u0027re suggesting, although I\u0027m not sure what exactly we\u0027re trying to test (that is, server-side redirects don\u0027t seem particularly interesting).",
+      "parentUuid": "0eb96343_456c65b1",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15a1a282_08b5e188",
         "filename": "content/public/browser/navigation_entry.h",
         "patchSetId": 5
@@ -947,6 +965,24 @@
       "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2171a8a_ef5c27fa",
+        "filename": "content/public/browser/navigation_entry.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-12-14T12:01:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa9f1718_1ecc5ed3",
+      "revId": "9327e9fc20e341ae904495bbc82057a6b7a3998f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
