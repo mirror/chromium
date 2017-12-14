@@ -16,6 +16,24 @@
       "revId": "10e0928711e85fa951c88d6e41dc5f04e7727e94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9d6a10_5a21c6b2",
+        "filename": "components/crash/core/common/crash_key_breakpad_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-14T18:14:02Z",
+      "side": 1,
+      "message": "The __block storage pattern is idiomatic, and in the next CL I\u0027ll need a non-bool return type.",
+      "parentUuid": "34f02d47_818b9978",
+      "revId": "10e0928711e85fa951c88d6e41dc5f04e7727e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
