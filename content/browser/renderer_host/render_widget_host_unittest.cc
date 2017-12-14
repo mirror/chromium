@@ -79,6 +79,7 @@ using blink::WebTouchEvent;
 using blink::WebTouchPoint;
 
 namespace content {
+namespace render_widget_host_unittest {
 
 // MockInputRouter -------------------------------------------------------------
 
@@ -258,8 +259,6 @@ class MockRenderWidgetHost : public RenderWidgetHostImpl {
 
   DISALLOW_COPY_AND_ASSIGN(MockRenderWidgetHost);
 };
-
-namespace  {
 
 // RenderWidgetHostProcess -----------------------------------------------------
 
@@ -902,8 +901,6 @@ class RenderWidgetHostWithSourceTest
     : public RenderWidgetHostTest,
       public testing::WithParamInterface<WebGestureDevice> {};
 #endif  // GTEST_HAS_PARAM_TEST
-
-}  // namespace
 
 // -----------------------------------------------------------------------------
 
@@ -2937,4 +2934,5 @@ TEST_F(RenderWidgetHostTest, InflightEventCountResetsAfterRebind) {
   EXPECT_EQ(0u, host_->in_flight_event_count());
 }
 
+}  // namespace render_widget_host_unittest
 }  // namespace content

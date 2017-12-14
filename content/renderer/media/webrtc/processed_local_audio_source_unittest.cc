@@ -27,8 +27,7 @@ using ::testing::Invoke;
 using ::testing::WithArg;
 
 namespace content {
-
-namespace {
+namespace processed_local_audio_source_unittest {
 
 // Audio parameters for the VerifyAudioFlowWithoutAudioProcessing test.
 constexpr int kSampleRate = 48000;
@@ -71,8 +70,6 @@ class MockMediaStreamAudioSink : public MediaStreamAudioSink {
  private:
   media::AudioParameters params_;
 };
-
-}  // namespace
 
 class ProcessedLocalAudioSourceTest : public testing::Test {
  protected:
@@ -204,5 +201,5 @@ TEST_F(ProcessedLocalAudioSourceTest, VerifyAudioFlowWithoutAudioProcessing) {
   MediaStreamAudioTrack::From(blink_audio_track())->Stop();
 }
 
-
+}  // namespace processed_local_audio_source_unittest
 }  // namespace content
