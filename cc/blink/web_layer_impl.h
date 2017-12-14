@@ -110,6 +110,9 @@ class CC_BLINK_EXPORT WebLayerImpl : public blink::WebLayer {
   blink::WebVector<blink::WebRect>
       TouchEventHandlerRegionForTouchActionForTesting(
           cc::TouchAction) const override;
+  void SetWheelEventHandlerRegion(
+      const blink::WebVector<blink::WebRect>& region) override;
+  blink::WebVector<blink::WebRect> WheelEventHandlerRegion() const override;
   void SetIsContainerForFixedPositionLayers(bool is_container) override;
   bool IsContainerForFixedPositionLayers() const override;
   void SetIsResizedByBrowserControls(bool) override;
