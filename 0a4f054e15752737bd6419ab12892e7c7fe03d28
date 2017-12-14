@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3670503_690733a7",
+        "filename": "services/device/generic_sensor/absolute_orientation_euler_angles_fusion_algorithm_using_accelerometer_and_magnetometer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-12-14T07:30:36Z",
+      "side": 1,
+      "message": "It is also defined and used in orientation_util.cc. It would be better to move constant to \"services/device/generic_sensor/generic_sensor_consts.h\", so that orientation_util.cc and unit tests would not need to duplicate constant.",
+      "revId": "0a4f054e15752737bd6419ab12892e7c7fe03d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
