@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ff1188b_917d3832",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Mark suggests adding these fields in previous patch...(https://chromium-review.googlesource.com/c/chromium/src/+/745538/6/chrome/common/media_router/mojo/dial_app_info_parser.mojom)",
+      "parentUuid": "4a21cba2_b5b3a020",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbe5c479_8e12c2f9",
         "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22743e05_89fd45a3",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbe5c479_8e12c2f9",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73837e61_4bd27ccc",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d9b5406_4563b572",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8132301a_9d974184",
         "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f5769d_ae497b6c",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8132301a_9d974184",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "94fe5046_e0b6b707",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "It seems so. data_decoder::ParseXml() does XML parsing (into a JSON style base::Value) in a separate process; All the helper APIs (GetXmlXXXX()) just extract necessary fields from base::Value.",
+      "parentUuid": "62ffc8d6_6b1e4187",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1820721_8c17bc19",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612cde22_91b879fa",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1820721_8c17bc19",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "b5bf4854_9d64ccc9",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "536d8427_c6968dae",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "634765fb_e326eb10",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
         "patchSetId": 1
@@ -150,6 +276,24 @@
       "writtenOn": "2017-12-14T20:26:14Z",
       "side": 1,
       "message": "I wonder if we can reuse the same utility process for parsing device description here, i.e. have both share the same batch ID \"DialXmlParser\". I can\u0027t think of a reason why they need to be in separate processes for security considerations, so sharing the process would be better for performance.",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41c898e_483f182f",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Sure. Plan to do this in the 3rd patch. Would like to keep a batch ID in DialMediaSinkService, and pass it around to create SafeDialDeviceDescriptionParser and SafeDialAppInfoParser.",
+      "parentUuid": "634765fb_e326eb10",
       "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "0d953f86_c1944fdc",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f863ae1_70033e41",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f40f03f_1a6cecfb",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
         "patchSetId": 1
@@ -187,6 +349,24 @@
       "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3149ce29_b5c1de76",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Yes, we check size limit in dial_app_info_fetcher class in the 2nd patch (https://chromium-review.googlesource.com/c/chromium/src/+/754294/5/chrome/browser/media/router/discovery/dial/dial_app_info_fetcher.cc).",
+      "parentUuid": "2f40f03f_1a6cecfb",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "c8d9dcb3_bb68849e",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "91974f70_3c212cfc",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d87c7f9_62128604",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.h",
         "patchSetId": 1
@@ -221,6 +419,24 @@
       "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3671f311_7e0c2c59",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d87c7f9_62128604",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "8b1adab1_8ddc722b",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Great :)",
+      "parentUuid": "772a8d4f_c597ab87",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3319474_1c4a483c",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser_unittest.cc",
         "patchSetId": 1
@@ -258,6 +492,24 @@
     },
     {
       "key": {
+        "uuid": "f61f0696_72b0d8ee",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3319474_1c4a483c",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7da0e861_92741015",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser_unittest.cc",
         "patchSetId": 1
@@ -272,6 +524,24 @@
       "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abe63c8_da037979",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-12-14T22:44:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7da0e861_92741015",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
