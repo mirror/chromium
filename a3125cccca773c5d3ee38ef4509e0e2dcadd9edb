@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15df3eaa_ece11af8",
+        "filename": "storage/browser/blob/blob_url_store_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-14T11:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "269baf6b_41b7fc68",
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f22d82_a2c68d2f",
         "filename": "storage/browser/blob/blob_url_store_impl_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac82e5f_6583ad84",
+        "filename": "storage/browser/blob/blob_url_store_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-14T11:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23f22d82_a2c68d2f",
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "4d1ac516_1d0c4725",
+        "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-14T11:03:30Z",
+      "side": 1,
+      "message": "(and to add further to this, we really currently can\u0027t have any copies of the origin in this path, as the whole point of storing the origin for blob URLs is to make sure object-identity-comparisons correctly detect unique-originied blob URLs as being same origin with their creation context. So until SecurityOrigin is fixed to actually store a UUID or something to use for unique-origin-identity, we\u0027ll need to maintain object-identity).",
+      "parentUuid": "311e8637_929146ed",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cbdfb4a_6bad4578",
         "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
         "patchSetId": 3
@@ -226,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "093fbb61_287c45e5",
+        "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-14T11:03:30Z",
+      "side": 1,
+      "message": "As it turned out that then meant I needed to move the !is_stopped_ check to before the CreatePublicURL code, as otherwise calling this on a detached iframe/destroyed context would crash. As the resulting blob URL wouldn\u0027t be functional anyway, it doesn\u0027t really matter if the URL returned is actually syntactically correct as a Blob URL, so just returning an empty string seems good enough to me for now.",
+      "parentUuid": "d056af15_de000442",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcc7af24_51713aa1",
         "filename": "third_party/WebKit/common/blob/blob_url_store.mojom",
         "patchSetId": 3
@@ -240,6 +324,24 @@
       "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c111b9_146af062",
+        "filename": "third_party/WebKit/common/blob/blob_url_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-14T11:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcc7af24_51713aa1",
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
