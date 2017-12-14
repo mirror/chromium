@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b7079ee_5cc95e81",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-14T23:23:34Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "d1be4040_24ab8b47",
+      "range": {
+        "startLine": 267,
+        "startChar": 6,
+        "endLine": 267,
+        "endChar": 37
+      },
+      "revId": "1562f14291c5aadb70bf10da32fea5db814e09fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ab4480b_7ddb2136",
         "filename": "content/public/common/cdm_info.h",
         "patchSetId": 2
@@ -62,6 +86,48 @@
       "revId": "1562f14291c5aadb70bf10da32fea5db814e09fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7f2381_bae08bba",
+        "filename": "content/public/common/cdm_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-14T23:23:34Z",
+      "side": 1,
+      "message": "Moved. Done.",
+      "parentUuid": "62774861_3703640a",
+      "revId": "1562f14291c5aadb70bf10da32fea5db814e09fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ff3d1f2_eeebd0df",
+        "filename": "content/public/common/cdm_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-12-14T23:23:34Z",
+      "side": 1,
+      "message": "Today it only the p-l session type that needs this, but in the future there may be different types. However, it reads the same either way, so done.",
+      "parentUuid": "8ab4480b_7ddb2136",
+      "range": {
+        "startLine": 64,
+        "startChar": 34,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "1562f14291c5aadb70bf10da32fea5db814e09fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
