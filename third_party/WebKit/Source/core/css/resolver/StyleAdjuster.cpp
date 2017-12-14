@@ -504,6 +504,7 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
       style.SetDisplay(EDisplay::kBlock);
   } else {
     AdjustStyleForFirstLetter(style);
+    return;
   }
 
   // Make sure our z-index value is only applied if the object is positioned.
