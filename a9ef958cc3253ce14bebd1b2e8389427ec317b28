@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec5ab4c7_cfbbbfec",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "Can this return a unique_ptr instead of returning the vector by value (like LoadMITMSoftwareList above)? Returning the vector could be an expensive copy if the dynamic interstitial list is big.\n\nAlso, maybe this should be a std::unique_ptr\u003cstd::vector\u003cDynamicInterstitialInfo\u003e\u003e instead of a vector of std::unique_ptr\u003cDynamicInterstitialInfo\u003e. No reason for the elements themselves to be pointers AFAICT.",
+      "range": {
+        "startLine": 55,
+        "startChar": 5,
+        "endLine": 55,
+        "endChar": 11
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11244470_7587361f",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "Do we need this extra enum? Could the places that use DynamicInterstitialPageType use chrome_browser_ssl::DynamicInterstitial::InterstitialPageType directly instead?",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d95193_02b3356b",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "nit: const reference",
+      "range": {
+        "startLine": 185,
+        "startChar": 18,
+        "endLine": 185,
+        "endChar": 24
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a15133a_015140d5",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "If you take my suggestion above about making |dynamic_interstial_list_| a std::unique_ptr\u003cstd::vector\u003cDynamicInterstitialInfo\u003e\u003e, then this method can return a `base::Optional\u003cconst DynamicIntersitialInfo\u0026\u003e` and this loop can be\n\nfor (const DynamicInterstitialInfo\u0026 data : *dynamic_interstitial_list_) {\n...\n  return data;\n}\nreturn base::nullopt;",
+      "range": {
+        "startLine": 222,
+        "startChar": 7,
+        "endLine": 223,
+        "endChar": 33
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d7a321_107f0ad2",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "It might be simpler to have this be a struct, similar to MITMSoftwareType. Also please add a comment to describe it.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03faabbe_c417a2c6",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "nit: make this a const reference, though if you make this class a struct then you can just make the members public",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 51,
+        "endChar": 20
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9fedae_831754e6",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "nit: returns",
+      "range": {
+        "startLine": 90,
+        "startChar": 52,
+        "endLine": 90,
+        "endChar": 58
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19c3ce4_5b1842b1",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 26
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "nit: add a comment to say that this is a \"special\" value, in that if cert_error is set to this value, the field will basically be ignored: anything matching the other fields will be treated as a match, regardless of the cert error",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a21379_c67db0c4",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 26
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "nit: I think protobuf style is to make all fields `optional`. (I think it\u0027s more flexible and less likely to run into backwards compatibility concerns...?)",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 10
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800a0f80_76e1427a",
+        "filename": "chrome/browser/ssl/ssl_error_assistant_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "Could you please make these 3 tests into separate test cases? It\u0027d be easier to read that way, I think, even if they repeat some common setup code.",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 43
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f264f7_dfd28b54",
+        "filename": "chrome/browser/ssl/ssl_error_assistant_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "How about a test case for the cert error matching? i.e. a test case where the filter\u0027s cert_error is present in ssl_info().cert_status and check that the interstitial is matched in that case.",
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a41538_d75bde9e",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T22:13:39Z",
+      "side": 1,
+      "message": "nit: const GURL\u0026\nAlso, I think default arguments are discouraged in chromium. I suggest making this a regular argument without a default and having the callers pass GURL() if they don\u0027t want to specify a URL.",
+      "range": {
+        "startLine": 120,
+        "startChar": 37,
+        "endLine": 120,
+        "endChar": 41
+      },
+      "revId": "a9ef958cc3253ce14bebd1b2e8389427ec317b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
