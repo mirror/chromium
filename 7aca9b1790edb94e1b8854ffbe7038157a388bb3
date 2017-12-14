@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d4f43ce_e297f419",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:34:47Z",
+      "side": 1,
+      "message": "Add a statement like \"Previews are usually served on 2G networks.\"",
+      "range": {
+        "startLine": 663,
+        "startChar": 54,
+        "endLine": 663,
+        "endChar": 61
+      },
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6515180e_78393471",
+        "filename": "tools/chrome_proxy/integration_tests/chrome_proxy_measurements.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:34:47Z",
+      "side": 1,
+      "message": "enabled\n\nAlso, make sure to run these all again once you are ready to submit since they don\u0027t run on the CQ.",
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58bf109_c3c419f6",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:34:47Z",
+      "side": 1,
+      "message": "I think we want this test for the new flags.",
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378e434c_59106855",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:34:47Z",
+      "side": 1,
+      "message": "I think we want this test for the new flags.",
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efeb5b58_8c363030",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:34:47Z",
+      "side": 1,
+      "message": "I think we want this test for the new flags.",
+      "range": {
+        "startLine": 202,
+        "startChar": 6,
+        "endLine": 202,
+        "endChar": 25
+      },
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f811ab_f4ed4338",
+        "filename": "tools/chrome_proxy/webdriver/lite_page.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:34:47Z",
+      "side": 1,
+      "message": "I think we want this test for the new flags.",
+      "range": {
+        "startLine": 369,
+        "startChar": 6,
+        "endLine": 369,
+        "endChar": 45
+      },
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a1b87d_355eadc9",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:34:47Z",
+      "side": 1,
+      "message": "I think we want this test for the new flags.",
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f26eb8_47c4e3e9",
+        "filename": "tools/chrome_proxy/webdriver/lofi.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:34:47Z",
+      "side": 1,
+      "message": "I think we want this test for the new flags.",
+      "range": {
+        "startLine": 158,
+        "startChar": 6,
+        "endLine": 158,
+        "endChar": 25
+      },
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
