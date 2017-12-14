@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bac50341_96c8986b",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T00:13:23Z",
+      "side": 1,
+      "message": "So the possibilities for the renderer are:\n1) crashed, will never send data.\n2) hung, will never send data.\n3) slow, will send data, but maybe not in a reasonable amount of time.\n4) behaving normally, will send data within the timeout value.\n\nI\u0027m wondering if the browser does (will do) detection for cases (1) and (2), so the compositor can get a notification, instead of waiting for the timeout.\n\nFor (3), we need to figure out how to adjust the timeout accordingly. Maybe a static timeout value is ok for now.",
+      "parentUuid": "62d932f9_1c85aa08",
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67016c24_00ddd4d3",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 12
