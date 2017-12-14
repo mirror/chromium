@@ -59,15 +59,9 @@ GURL UrlFromValue(const base::Value* value) {
     // Log result if an invalid canonical URL is found.
     LogCanonicalUrlResultHistogram(
         activity_services::FAILED_CANONICAL_URL_INVALID);
-  } else if (!canonical_url.SchemeIsCryptographic()) {
-    // Logs result if the found canonical URL is not HTTPS.
-    LogCanonicalUrlResultHistogram(
-        activity_services::FAILED_CANONICAL_URL_NOT_HTTPS);
   }
 
-  return canonical_url.is_valid() && canonical_url.SchemeIsCryptographic()
-             ? canonical_url
-             : GURL::EmptyGURL();
+  return canonical_url.is_valid() ? canonical_url : GURL::EmptyGURL();
 }
 }  // namespace
 
@@ -91,10 +85,13 @@ void RetrieveCanonicalUrl(web::WebState* web_state,
         // and the success can be logged.
         if (!canonical_url.is_empty()) {
           LogCanonicalUrlResultHistogram(
-              visible_url == canonical_url
-                  ? activity_services::SUCCESS_CANONICAL_URL_SAME_AS_VISIBLE
-                  : activity_services::
-                        SUCCESS_CANONICAL_URL_DIFFERENT_FROM_VISIBLE);
+              !canonical_url.SchemeIsCryptographic()
+                  ? activity_services::FAILED_CANONICAL_URL_NOT_HTTPS
+                  : visible_url == canonical_url
+                        ? activity_services::
+                              SUCCESS_CANONICAL_URL_SAME_AS_VISIBLE
+                        : activity_services::
+                              SUCCESS_CANONICAL_URL_DIFFERENT_FROM_VISIBLE);
         }
 
         completion(canonical_url);
