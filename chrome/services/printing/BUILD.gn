@@ -7,6 +7,10 @@ import("//services/service_manager/public/service_manifest.gni")
 
 source_set("lib") {
   sources = [
+    "pdf_to_emf_converter.cc",
+    "pdf_to_emf_converter.h",
+    "pdf_to_emf_converter_factory.cc",
+    "pdf_to_emf_converter_factory.h",
     "pdf_to_pwg_raster_converter.cc",
     "pdf_to_pwg_raster_converter.h",
     "printing_service.cc",
