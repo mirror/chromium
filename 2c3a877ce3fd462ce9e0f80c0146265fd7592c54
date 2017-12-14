@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "429c2aea_c1e7a250",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/security/origin-view-then-interstitial-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-14T16:15:25Z",
+      "side": 1,
+      "message": "interesting, thanks.",
+      "parentUuid": "a034e3b2_5d64e614",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 68,
+        "endChar": 37
+      },
+      "revId": "2c3a877ce3fd462ce9e0f80c0146265fd7592c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81fd1350_9dfe155c",
         "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I suspect it\u0027s because of this:\nvar names \u003d await SDK.multitargetNetworkManager.getCertificate(origin)\n \ncreateCertificateViewerButtonForCert receives the name in the param, while createCertificateViewerButtonForOrigin needs to retrieve the name from the origin\n\nNow that you mentioned it, I don\u0027t think the async for originNetworkButton is necessary. I removed it",
       "parentUuid": "81fd1350_9dfe155c",
+      "range": {
+        "startLine": 46,
+        "startChar": 37,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "2c3a877ce3fd462ce9e0f80c0146265fd7592c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e9e1df_4c23c216",
+        "filename": "third_party/WebKit/Source/devtools/front_end/security/SecurityPanel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-12-14T16:15:25Z",
+      "side": 1,
+      "message": "Oh, interesting. I haven\u0027t looked at the async/await stuff in JavaScript before but I do recall in C# that you have to have async if you want to use await in the body.",
+      "parentUuid": "c0783361_4685e7e0",
       "range": {
         "startLine": 46,
         "startChar": 37,
