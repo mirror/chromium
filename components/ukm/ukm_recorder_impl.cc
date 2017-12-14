@@ -4,6 +4,10 @@
 
 #include "components/ukm/ukm_recorder_impl.h"
 
+#include <memory>
+#include <string>
+#include <utility>
+
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
@@ -14,6 +18,7 @@
 #include "third_party/metrics_proto/ukm/entry.pb.h"
 #include "third_party/metrics_proto/ukm/report.pb.h"
 #include "third_party/metrics_proto/ukm/source.pb.h"
+#include "url/gurl.h"
 
 namespace ukm {
 
@@ -55,6 +60,18 @@ size_t GetMaxEntries() {
       kUkmFeature, "MaxEntries", kDefaultMaxEntries));
 }
 
+// Returns whether |url| has one of the schemes supported for logging to UKM.
+// URLs with other schemes will not be logged.
+// Note: This currently excludes chrome-extension:// URLs as in order to log
+// them, UKM needs to take into account extension-sync consent, which is not
+// yet done.
+bool HasSupportedScheme(const GURL& url) {
+  // Note: kChromeUIScheme is defined in content, which this code can't
+  // depend on - since it's used by iOS too. So "chrome" is hardcoded here.
+  return url.SchemeIsHTTPOrHTTPS() || url.SchemeIs(url::kFtpScheme) ||
+         url.SchemeIs(url::kAboutScheme) || url.SchemeIs("chrome");
+}
+
 // True if we should record the initial_url field of the UKM Source proto.
 bool ShouldRecordInitialUrl() {
   return base::GetFieldTrialParamByFeatureAsBool(kUkmFeature,
@@ -66,6 +83,7 @@ enum class DroppedDataReason {
   RECORDING_DISABLED = 1,
   MAX_HIT = 2,
   NOT_WHITELISTED = 3,
+  UNSUPPORTED_URL_SCHEME = 4,
   NUM_DROPPED_DATA_REASONS
 };
 
@@ -92,6 +110,18 @@ void StoreEntryProto(const mojom::UkmEntry& in, Entry* out) {
     proto_metric->set_metric_hash(metric->metric_hash);
     proto_metric->set_value(metric->value);
   }
+}
+
+GURL SanitizeURL(const GURL& url) {
+  GURL::Replacements remove_params;
+  remove_params.ClearUsername();
+  remove_params.ClearPassword();
+  // chrome:// and about: URLs params are never used for navigation, only to
+  // prepopulate data on the page, so don't include their params.
+  if (url.SchemeIs(url::kAboutScheme) || url.SchemeIs("chrome")) {
+    remove_params.ClearQuery();
+  }
+  return url.ReplaceComponents(remove_params);
 }
 
 }  // namespace
@@ -175,7 +205,8 @@ bool UkmRecorderImpl::ShouldRestrictToWhitelistedSourceIds() const {
       kUkmFeature, "RestrictToWhitelistedSourceIds", true);
 }
 
-void UkmRecorderImpl::UpdateSourceURL(SourceId source_id, const GURL& url) {
+void UkmRecorderImpl::UpdateSourceURL(SourceId source_id,
+                                      const GURL& unsanitized_url) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   if (!recording_enabled_) {
@@ -186,6 +217,13 @@ void UkmRecorderImpl::UpdateSourceURL(SourceId source_id, const GURL& url) {
   if (ShouldRestrictToWhitelistedSourceIds() &&
       !IsWhitelistedSourceId(source_id)) {
     RecordDroppedSource(DroppedDataReason::NOT_WHITELISTED);
+    return;
+  }
+
+  GURL url = SanitizeURL(unsanitized_url);
+
+  if (!HasSupportedScheme(url)) {
+    RecordDroppedSource(DroppedDataReason::UNSUPPORTED_URL_SCHEME);
     return;
   }
 

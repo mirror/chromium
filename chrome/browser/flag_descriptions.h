@@ -1030,6 +1030,9 @@ extern const char kBackgroundLoaderForDownloadsDescription[];
 extern const char kChromeHomeBottomNavLabelsName[];
 extern const char kChromeHomeBottomNavLabelsDescription[];
 
+extern const char kChromeHomeEnableSurveyName[];
+extern const char kChromeHomeEnableSurveyDescription[];
+
 extern const char kChromeHomeInactivitySheetExpansionName[];
 extern const char kChromeHomeInactivitySheetExpansionDescription[];
 
@@ -1746,6 +1749,9 @@ extern const char kAshDisableLoginDimAndBlurDescription[];
 
 extern const char kAshDisableSmoothScreenRotationName[];
 extern const char kAshDisableSmoothScreenRotationDescription[];
+
+extern const char kAshEnableDisplayMoveWindowAccelsName[];
+extern const char kAshEnableDisplayMoveWindowAccelsDescription[];
 
 extern const char kAshEnableKeyboardShortcutViewerName[];
 extern const char kAshEnableKeyboardShortcutViewerDescription[];

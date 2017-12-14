@@ -104,7 +104,7 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
       [contentStack.leadingAnchor
           constraintEqualToAnchor:self.contentView.leadingAnchor],
       [contentStack.trailingAnchor
-          constraintLessThanOrEqualToAnchor:self.contentView.trailingAnchor]
+          constraintEqualToAnchor:self.contentView.trailingAnchor]
     ]];
 
     // Add separator view.
@@ -138,8 +138,8 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
   self.titleText.text = bookmark_utils_ios::TitleForBookmarkNode(node);
   [self updateAccessibilityValues];
 
-  self.iconView.image = [UIImage imageNamed:@"bookmark_gray_folder_new"];
   if (node->is_folder()) {
+    self.iconView.image = [UIImage imageNamed:@"bookmark_gray_folder_new"];
     [self setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
   } else {
     [self setAccessoryType:UITableViewCellAccessoryNone];

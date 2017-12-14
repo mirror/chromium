@@ -16,6 +16,7 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.infobar.InfoBarContainer;
 import org.chromium.chrome.browser.infobar.InfoBarContainerLayout.Item;
@@ -49,6 +50,7 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
 
     private static final String TRIAL_NAME = "ChromeHome";
     private static final String MAX_NUMBER = "MaxNumber";
+    private static final String TEST_SITE_ID = "obw74vpeieqaw4xmw7o6qlpdbq";
 
     private static boolean sForceUmaEnabledForTesting;
 
@@ -93,6 +95,8 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
         String siteId;
         if (commandLine.hasSwitch(PARAM_NAME)) {
             siteId = commandLine.getSwitchValue(PARAM_NAME);
+        } else if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_SURVEY)) {
+            siteId = TEST_SITE_ID;
         } else {
             siteId = VariationsAssociatedData.getVariationParamValue(TRIAL_NAME, PARAM_NAME);
         }
@@ -117,7 +121,8 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
         if (!FeatureUtilities.isChromeHomeEnabled()) return true;
         return wasChromeHomeEnabledForMinimumOneWeek()
                 || CommandLine.getInstance().hasSwitch(
-                           ChromeSwitches.CHROME_HOME_FORCE_ENABLE_SURVEY);
+                           ChromeSwitches.CHROME_HOME_FORCE_ENABLE_SURVEY)
+                || ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_SURVEY);
     }
 
     /**
@@ -337,13 +342,15 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
             }
 
             @Override
-            public void onSurveyInfoBarClosed() {
+            public void onSurveyInfoBarCloseButtonClicked() {
+                RecordUserAction.record("Android.ChromeHome.ClickedSurveyInfoBarCloseButton");
                 recordInfoBarDisplayed();
             }
 
             @Override
             public void onSurveyTriggered() {
                 RecordUserAction.record("Android.ChromeHome.AcceptedSurvey");
+                recordInfoBarDisplayed();
             }
 
             @Override
@@ -356,9 +363,14 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
 
     /** Logs in {@link SharedPreferences} that the info bar was displayed. */
     private void recordInfoBarDisplayed() {
+        // This can be called multiple times e.g. by mLoggingHandler & onSurveyInfoBarClosed().
+        // Return early to allow only one call to this method (http://crbug.com/791076).
+        if (mSurveyInfoBarTab == null) return;
+
         if (mSurveyInfoBarTab.getInfoBarContainer() != null) {
             mSurveyInfoBarTab.getInfoBarContainer().removeAnimationListener(this);
         }
+
         mLoggingHandler.removeCallbacksAndMessages(null);
 
         SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
@@ -390,7 +402,8 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
             if (!mController.doesUserQualifyForSurvey()) return false;
             return mController.isRandomlySelectedForSurvey()
                     || CommandLine.getInstance().hasSwitch(
-                               ChromeSwitches.CHROME_HOME_FORCE_ENABLE_SURVEY);
+                               ChromeSwitches.CHROME_HOME_FORCE_ENABLE_SURVEY)
+                    || ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_SURVEY);
         }
 
         @Override

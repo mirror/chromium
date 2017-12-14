@@ -122,6 +122,7 @@ public class VrShellDelegate
     private static boolean sRegisteredDaydreamHook;
     private static boolean sAddedBlackOverlayView;
     private static boolean sRegisteredVrAssetsComponent = false;
+    private static boolean sChromeStarted = false;
 
     private ChromeActivity mActivity;
 
@@ -317,7 +318,9 @@ public class VrShellDelegate
      */
     public static int getVrSupportLevel(VrDaydreamApi daydreamApi,
             VrCoreVersionChecker versionChecker, Tab tabToShowInfobarIn) {
-        if (versionChecker == null || daydreamApi == null
+        // TODO(mthiesse, crbug.com/791090): Re-enable VR mode for devices that boot to VR once we
+        // support those devices.
+        if (versionChecker == null || daydreamApi == null || daydreamApi.bootsToVr()
                 || !isVrCoreCompatible(versionChecker, tabToShowInfobarIn)) {
             return VR_NOT_AVAILABLE;
         }
@@ -334,6 +337,10 @@ public class VrShellDelegate
     public static void maybeRegisterVrEntryHook(final ChromeActivity activity) {
         // Daydream is not supported on pre-N devices.
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return;
+        if (isVrEnabled() && !sChromeStarted) {
+            nativeOnChromeStarted();
+            sChromeStarted = true;
+        }
         if (sInstance != null) return; // Will be handled in onResume.
         if (!activitySupportsVrBrowsing(activity) && sRegisteredVrAssetsComponent) return;
 
@@ -1776,4 +1783,5 @@ public class VrShellDelegate
     private native boolean nativeIsClearActivatePending(long nativeVrShellDelegate);
     private native void nativeDestroy(long nativeVrShellDelegate);
     private static native void nativeRegisterVrAssetsComponent();
+    private static native void nativeOnChromeStarted();
 }
