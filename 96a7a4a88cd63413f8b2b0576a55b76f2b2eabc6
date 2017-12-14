@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "73d04cf7_51620a1b",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-12-14T00:39:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure what a \"UDP socket and its client\" means. In the code (and in practice), we have UDPClientSocket and UDPServerSocket, which each have a UDPSocket in them. What is a UDPSocket and a UDPSocketReceiver?",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d728e97f_35136b7a",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 23
@@ -168,6 +185,30 @@
       "writtenOn": "2017-12-12T22:33:53Z",
       "side": 1,
       "message": "*blink*  Really?  My imagination would be that, for a datagram oriented interface, this would be a pretty bad API; i.e. that consumers would generally be relying on datagrams being transmitted or dropped as a unit.  Do you have a consumer that wants this behavior?  \n\nI don\u0027t have the expertise to be confident in pushing back, but I\u0027d like to get positive acknowledgement from someone familiar with using UDP from the consumer side (by default, Jana) that this interface doesn\u0027t have some pretty uncomfortable sharp edges.",
+      "range": {
+        "startLine": 119,
+        "startChar": 27,
+        "endLine": 119,
+        "endChar": 31
+      },
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb30243_5bbd8e93",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-12-14T00:39:28Z",
+      "side": 1,
+      "message": "I agree with Randy -- you want the entire message to be consumed or not at all. POSIX sendto() returns number of bytes written but I think that\u0027s because it can be used over TCP sockets as well. (I don\u0027t think a sendto() used with a SOCK_DGRAM on a POSIX system does partial writes.)",
+      "parentUuid": "274aa2e6_245566ee",
       "range": {
         "startLine": 119,
         "startChar": 27,
