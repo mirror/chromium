@@ -23,11 +23,6 @@
 namespace ntp_tiles {
 
 bool ShouldShowPopularSites() {
-  // Note: It's important to query the field trial state first, to ensure that
-  // UMA reports the correct group.
-  const std::string group_name =
-      base::FieldTrialList::FindFullName(kPopularSitesFieldTrialName);
-
   base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
   if (cmd_line->HasSwitch(switches::kDisableNTPPopularSites))
     return false;
@@ -42,13 +37,7 @@ bool ShouldShowPopularSites() {
   }
 #endif
 
-  // Until any configuration is fetched, the default is to enable popular sites.
-  if (group_name.empty()) {
-    return true;
-  }
-
-  return base::StartsWith(group_name, "Enabled",
-                          base::CompareCase::INSENSITIVE_ASCII);
+  return true;
 }
 
 }  // namespace ntp_tiles
