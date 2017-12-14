@@ -15,6 +15,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
+#include "base/strings/string_util.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_restrictions.h"
@@ -358,6 +359,17 @@ class PageLoadMetricsBrowserTest : public InProcessBrowserTest {
     ui_test_utils::NavigateToURL(browser(), GURL(url::kAboutBlankURL));
   }
 
+  std::string GetRecordedPageLoadMetricNames() {
+    auto entries = histogram_tester_.GetTotalCountsForPrefix("PageLoad.");
+    std::vector<std::string> names;
+    std::transform(
+        entries.begin(), entries.end(), std::back_inserter(names),
+        [](const std::pair<std::string, base::HistogramBase::Count>& entry) {
+          return entry.first;
+        });
+    return base::JoinString(names, ",");
+  }
+
   bool NoPageLoadMetricsRecorded() {
     // Determine whether any 'public' page load metrics are recorded. We exclude
     // 'internal' metrics as these may be recorded for debugging purposes.
@@ -385,7 +397,8 @@ class PageLoadMetricsBrowserTest : public InProcessBrowserTest {
 
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NoNavigation) {
   ASSERT_TRUE(embedded_test_server()->Start());
-  EXPECT_TRUE(NoPageLoadMetricsRecorded());
+  EXPECT_TRUE(NoPageLoadMetricsRecorded())
+      << "Recorded metrics: " << GetRecordedPageLoadMetricNames();
 }
 
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NewPage) {
@@ -628,21 +641,17 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NonHtmlMainResource) {
   ui_test_utils::NavigateToURL(browser(),
                                embedded_test_server()->GetURL("/circle.svg"));
   NavigateToUntrackedUrl();
-  EXPECT_TRUE(NoPageLoadMetricsRecorded());
+  EXPECT_TRUE(NoPageLoadMetricsRecorded())
+      << "Recorded metrics: " << GetRecordedPageLoadMetricNames();
 }
 
-// Flaky on Win7 dbg. crbug.com/794879.
-#if defined(OS_WIN)
-#define MAYBE_NonHttpOrHttpsUrl DISABLED_NonHttpOrHttpsUrl
-#else
-#define MAYBE_NonHttpOrHttpsUrl NonHttpOrHttpsUrl
-#endif
-IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, MAYBE_NonHttpOrHttpsUrl) {
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NonHttpOrHttpsUrl) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUIVersionURL));
   NavigateToUntrackedUrl();
-  EXPECT_TRUE(NoPageLoadMetricsRecorded());
+  EXPECT_TRUE(NoPageLoadMetricsRecorded())
+      << "Recorded metrics: " << GetRecordedPageLoadMetricNames();
 }
 
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, HttpErrorPage) {
@@ -651,7 +660,8 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, HttpErrorPage) {
   ui_test_utils::NavigateToURL(
       browser(), embedded_test_server()->GetURL("/page_load_metrics/404.html"));
   NavigateToUntrackedUrl();
-  EXPECT_TRUE(NoPageLoadMetricsRecorded());
+  EXPECT_TRUE(NoPageLoadMetricsRecorded())
+      << "Recorded metrics: " << GetRecordedPageLoadMetricNames();
 }
 
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, ChromeErrorPage) {
@@ -669,7 +679,8 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, ChromeErrorPage) {
   ui_test_utils::NavigateToURL(browser(),
                                embedded_test_server()->GetURL("/title1.html"));
   NavigateToUntrackedUrl();
-  EXPECT_TRUE(NoPageLoadMetricsRecorded());
+  EXPECT_TRUE(NoPageLoadMetricsRecorded())
+      << "Recorded metrics: " << GetRecordedPageLoadMetricNames();
 }
 
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, Ignore204Pages) {
@@ -678,7 +689,8 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, Ignore204Pages) {
   ui_test_utils::NavigateToURL(browser(),
                                embedded_test_server()->GetURL("/page204.html"));
   NavigateToUntrackedUrl();
-  EXPECT_TRUE(NoPageLoadMetricsRecorded());
+  EXPECT_TRUE(NoPageLoadMetricsRecorded())
+      << "Recorded metrics: " << GetRecordedPageLoadMetricNames();
 }
 
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, IgnoreDownloads) {
@@ -699,7 +711,8 @@ IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, IgnoreDownloads) {
   downloads_observer.WaitForFinished();
 
   NavigateToUntrackedUrl();
-  EXPECT_TRUE(NoPageLoadMetricsRecorded());
+  EXPECT_TRUE(NoPageLoadMetricsRecorded())
+      << "Recorded metrics: " << GetRecordedPageLoadMetricNames();
 }
 
 IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, NoDocumentWrite) {
