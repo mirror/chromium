@@ -216,6 +216,7 @@ content::WebUIDataSource* CreateMdExtensionsSource(bool in_dev_mode) {
                              IDS_MD_EXTENSIONS_ITEM_SOURCE_WEBSTORE);
   source->AddLocalizedString("itemVersion",
                              IDS_MD_EXTENSIONS_ITEM_VERSION);
+  source->AddLocalizedString("itemSize", IDS_APPLICATION_INFO_SIZE_LABEL);
   source->AddLocalizedString("itemAllowOnFileUrls",
                              IDS_EXTENSIONS_ALLOW_FILE_ACCESS);
   source->AddLocalizedString("itemAllowOnAllSites",
