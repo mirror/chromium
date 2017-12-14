@@ -141,6 +141,24 @@
       "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee962a6_2914dbd6",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T18:42:26Z",
+      "side": 1,
+      "message": "Okay, I think I now get why the string is only in our build system - valid to specify a range of abi names and android picks the best one.\n\nHow about storing all the names in java, and using that string to know whether to use the arm32 vs arm64 one?\n\nrequires_sdk_api_level_23 is set for monochrome, but not for system_webview_apk, which also runs through the apk merger. If we don\u0027t need this for webview either, then we could add a GN arg to null it out for both.",
+      "parentUuid": "85910ce6_e1020a5e",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
