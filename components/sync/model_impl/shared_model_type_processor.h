@@ -113,8 +113,11 @@ class SharedModelTypeProcessor : public ModelTypeProcessor,
   void OnInitialUpdateReceived(const sync_pb::ModelTypeState& type_state,
                                const UpdateResponseDataList& updates);
 
-  // ModelTypeSyncBridge::GetData() callback for initial pending commit data.
-  void OnInitialPendingDataLoaded(std::unique_ptr<DataBatch> data_batch);
+  // ModelTypeSyncBridge::GetData() callback for pending loading data upon
+  // GetLocalChanges call.
+  void OnPendingDataLoaded(size_t max_entries,
+                           const GetLocalChangesCallback& callback,
+                           std::unique_ptr<DataBatch> data_batch);
 
   // ModelTypeSyncBridge::GetData() callback for re-encryption commit data.
   void OnDataLoadedForReEncryption(std::unique_ptr<DataBatch> data_batch);
