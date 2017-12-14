@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b563945_753fa746",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-14T18:42:49Z",
+      "side": 1,
+      "message": "Now that the build dir was renamed, maybe this variable should be renamed too.",
+      "revId": "f67d73d7255af8a402a2329dfc6b1cce98116f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09610e49_2945386a",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-14T18:42:49Z",
+      "side": 1,
+      "message": "could the for-loop be used on windows too?",
+      "revId": "f67d73d7255af8a402a2329dfc6b1cce98116f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
