@@ -98,6 +98,11 @@ class ASH_EXPORT ShelfView : public views::View,
     owner_overflow_bubble_ = owner;
   }
 
+  // Records the current time for histograms.
+  void OnShelfButtonContextMenuShown() {
+    shelf_button_context_menu_time_ = base::Time::Now();
+  }
+
   AppListButton* GetAppListButton() const;
 
   // Returns true if the mouse cursor exits the area for launcher tooltip.
@@ -450,6 +455,10 @@ class ASH_EXPORT ShelfView : public views::View,
 
   // The timestamp of the event which closed the last menu - or 0.
   base::TimeTicks closing_event_time_;
+
+  // The timestamp of the event which opened the last context menu on a
+  // ShelfButton. Used in metrics.
+  base::Time shelf_button_context_menu_time_;
 
   // True if a drag and drop operation created/pinned the item in the launcher
   // and it needs to be deleted/unpinned again if the operation gets cancelled.
