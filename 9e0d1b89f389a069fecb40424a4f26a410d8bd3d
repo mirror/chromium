@@ -22,6 +22,30 @@
       "revId": "9e0d1b89f389a069fecb40424a4f26a410d8bd3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71fd80f_404f97fd",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-12-14T18:20:44Z",
+      "side": 1,
+      "message": "Yes, Array.prototype.some is supported on IOS at least from IOS 8 (http://kangax.github.io/compat-table/es5/, checkbox \"Show obsolete platforms\")",
+      "parentUuid": "3aaff068_16fb08a7",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 41
+      },
+      "revId": "9e0d1b89f389a069fecb40424a4f26a410d8bd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
