@@ -1795,6 +1795,14 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Processing in WebRTC"/>
 </enum>
 
+<enum name="AuthenticatedLaunchUserEvent">
+  <int value="0" label="Local Reauth Dialog"/>
+  <int value="1" label="Gaia Reauth Dialog"/>
+  <int value="2" label="Supervised Profile Blocked Warning"/>
+  <int value="3" label="Used Profile Blocked Warning"/>
+  <int value="4" label="Forced Primary Signin Dialog"/>
+</enum>
+
 <enum name="AuthMethod">
   <int value="0" label="Password"/>
   <int value="1" label="PIN"/>
@@ -3119,6 +3127,38 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="BR/EDR"/>
   <int value="2" label="LE with public address"/>
   <int value="3" label="LE with random address"/>
+</enum>
+
+<enum name="BookmarkAppNavigationResult">
+  <int value="0" label="From app or tab to new tab: Context Menu navigation"/>
+  <int value="1"
+      label="From probably omnibox to same context: Typed navigation"/>
+  <int value="2"
+      label="From probably launch surface e.g. NTP, Shelf, etc. to new app or
+             tab: Auto Bookmark navigation"/>
+  <int value="3" label="Keep in subframe: Auto subframe navigation"/>
+  <int value="4" label="Keep in subframe: Manual subframe navigation"/>
+  <int value="5"
+      label="From probably tab to same context: Generated entry navigation"/>
+  <int value="6"
+      label="From probably tab to same context: Auto top level navigation"/>
+  <int value="7" label="From app or tab to same context: Reload navigation"/>
+  <int value="8" label="From probably tab to same context: Keyword navigation"/>
+  <int value="9"
+      label="From probably tab to same context: Generated keyword navigation"/>
+  <int value="10"
+      label="From app or tab to same context: Forward/Back navigation"/>
+  <int value="11"
+      label="From probably omnibox to same context: Address bar navigation"/>
+  <int value="12" label="From app to new tab: Out of scope launch"/>
+  <int value="13" label="From app to same context: Same scope navigation"/>
+  <int value="14" label="From tab to same context: Form submission"/>
+  <int value="15" label="From tab to same context: Same scope navigation"/>
+  <int value="16" label="In app or tab, cancel prerender link navigation"/>
+  <int value="17"
+      label="From app or tab to new app context, close previous context"/>
+  <int value="18" label="From app or tab to new app context"/>
+  <int value="19" label="From app to new tab: Out of scope navigation"/>
 </enum>
 
 <enum name="BookmarkLaunchLocation">
@@ -17109,6 +17149,11 @@ Called by update_net_error_codes.py.-->
   <int value="2256" label="LocalCSSFile"/>
   <int value="2257" label="LocalCSSFileExtensionRejected"/>
   <int value="2258" label="UserMediaDisableHardwareNoiseSuppression"/>
+  <int value="2259" label="CertificateTransparencyRequiredErrorOnResourceLoad"/>
+  <int value="2260" label="CSSSelectorPseudoWebkitAnyLink"/>
+  <int value="2261" label="AudioWorkletAddModule"/>
+  <int value="2262" label="AudioWorkletGlobalScopeRegisterProcessor"/>
+  <int value="2263" label="AudioWorkletNodeConstructor"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -24911,6 +24956,7 @@ from previous Chrome versions.
   <int value="-795600188" label="disable-async-dns"/>
   <int value="-793921836" label="ShowAllDialogsWithViewsToolkit:disabled"/>
   <int value="-790036192" label="overscroll-start-threshold"/>
+  <int value="-787426248" label="ChromeHomeSurvey:disabled"/>
   <int value="-780798969" label="disable-single-click-autofill"/>
   <int value="-776686417" label="SiteExplorationUi:disabled"/>
   <int value="-775321548" label="UseNewDoodleApi:disabled"/>
@@ -25194,6 +25240,7 @@ from previous Chrome versions.
   <int value="10458238" label="disable-print-preview-simplify"/>
   <int value="11698808" label="enable-dom-distiller-button-animation"/>
   <int value="27507364" label="apps-keep-chrome-alive"/>
+  <int value="28272521" label="ash-enable-display-move-window-accels"/>
   <int value="31848187" label="ViewsTaskManager:disabled"/>
   <int value="33778663" label="OriginTrials:enabled"/>
   <int value="37024318" label="disable-affiliation-based-matching"/>
@@ -25403,6 +25450,7 @@ from previous Chrome versions.
   <int value="635971109" label="PrintPdfAsImage:disabled"/>
   <int value="636425179" label="mhtml-generator-option"/>
   <int value="637396292" label="AllBookmarks:enabled"/>
+  <int value="637452937" label="ChromeHomeSurvey:enabled"/>
   <int value="643725031" label="disable-touch-feedback"/>
   <int value="644189071" label="PermissionsBlacklist:enabled"/>
   <int value="644674603" label="DataReductionProxySiteBreakdown:disabled"/>
@@ -36142,6 +36190,13 @@ Called by update_net_trust_anchors.py.-->
   <int value="5" label="HasContentEncoding"/>
 </enum>
 
+<enum name="ResourceLoadSchedulerCircumstance">
+  <int value="0" label="Main frame, throttled"/>
+  <int value="1" label="Main frame, not throttled"/>
+  <int value="2" label="Sub frame, throttled"/>
+  <int value="3" label="Sub frame, not throttled"/>
+</enum>
+
 <enum name="ResourcePrefetchPredictorMainFrameRequestStats">
   <int value="0" label="MAIN_FRAME_REQUEST_STATS_TOTAL_REQUESTS"/>
   <int value="1" label="MAIN_FRAME_REQUEST_STATS_PROCESSED_REQUESTS"/>
@@ -38504,6 +38559,14 @@ Called by update_net_trust_anchors.py.-->
   <int value="2" label="JSON"/>
   <int value="3" label="Plain"/>
   <int value="4" label="Others"/>
+</enum>
+
+<enum name="SiteIsolationResponseAction">
+  <int value="0" label="Response started"/>
+  <int value="1" label="Response blocked without sniffing"/>
+  <int value="2" label="Response blocked after sniffing"/>
+  <int value="3" label="Response allowed without sniffing"/>
+  <int value="4" label="Response allowed after sniffing"/>
 </enum>
 
 <enum name="SkiaFilterQuality">
@@ -41783,6 +41846,7 @@ Full version information for the fingerprint enum values:
   <int value="1" label="Recording disabled"/>
   <int value="2" label="Max hit"/>
   <int value="3" label="Not whitelisted"/>
+  <int value="4" label="Unsupported URL scheme"/>
 </enum>
 
 <enum name="UmaCleanExitConsistency">
