@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53f7ba95_7509391b",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:00:44Z",
+      "side": 1,
+      "message": "These are just moved here from below with no changes to keep SoftwareImageDecodeCache implementation together (as opposed to the subclasses)",
+      "revId": "0316a032d276e82f4614aeea5bfe6fc1297d0ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
