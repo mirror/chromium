@@ -418,6 +418,29 @@
     },
     {
       "key": {
+        "uuid": "bc6091c4_e5ede33a",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T22:14:52Z",
+      "side": 1,
+      "message": "Set priority to be that of the original DNS request?",
+      "range": {
+        "startLine": 336,
+        "startChar": 5,
+        "endLine": 336,
+        "endChar": 0
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7af0be8_8ea4e773",
         "filename": "net/dns/dns_transaction.cc",
         "patchSetId": 6
@@ -480,6 +503,29 @@
         "startChar": 6,
         "endLine": 343,
         "endChar": 0
+      },
+      "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca26264f_403dd7e8",
+        "filename": "net/dns/dns_transaction.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T22:14:52Z",
+      "side": 1,
+      "message": "One other thing:  Suggest we use the load flags:\n\nLOAD_DISABLE_CACHE:  Currently, we flush the DNS cache when changing networks.  Using the HTTP cache bypasses that logic, particularly because we cache results in the case of no cache-related headers.  Also, DNS has its own lifetime semantics, which we respect, so no need to use HTTP ones, too.\n\nLOAD_BYPASS_PROXY:  PAC scripts can do DNS lookups.  Which could again get us into all sorts of fun loops with PAC scripts doing DNS lookups which try to establish connections that cause the PAC script to do yet more DNS lookups.\n\nLOAD_DO_NOT_SEND_COOKIES,\nLOAD_DO_NOT_SAVE_COOKIES,\nLOAD_DO_NOT_SEND_AUTH_DATA\n\n(i.e., use the anonymous mode cookie store.  If we\u0027re opting people in, just seems best not to set cookies, too, though, admittedly, we\u0027re already seeing all their DNS lookups.  I assume privacy team is ok with experiments on this?)",
+      "range": {
+        "startLine": 348,
+        "startChar": 0,
+        "endLine": 348,
+        "endChar": 39
       },
       "revId": "82bb2f35717546e04813490a283abaeedecf4b0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
