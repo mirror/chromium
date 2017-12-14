@@ -104,6 +104,24 @@
       "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb1dceb_7052dbc6",
+        "filename": "media/audio/mac/scoped_audio_unit.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-14T16:30:00Z",
+      "side": 1,
+      "message": "Yeah definitely the ! is more readable. Dunno if API will take a const, but otherwise sgtm.",
+      "parentUuid": "cc886905_1aeca9fb",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
