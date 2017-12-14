@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2fa40d23_5b44740b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 37
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bebba293_6a8a965c",
+      "range": {
+        "startLine": 10,
+        "startChar": 28,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c41a0d86_c8721735",
         "filename": "chrome/browser/printing/print_view_manager_base.cc",
         "patchSetId": 37
@@ -39,6 +63,24 @@
       "revId": "da2647807624adb38357dd36401b399b08c73d7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581d7d2c_696951af",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c41a0d86_c8721735",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c5281c29_5476e7ff",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be2a1d9_90ffcfbc",
+      "range": {
+        "startLine": 154,
+        "startChar": 23,
+        "endLine": 154,
+        "endChar": 46
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa311ead_56c11112",
         "filename": "chrome/browser/printing/print_view_manager_base.cc",
         "patchSetId": 37
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "a3d30367_4db9b0d7",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa311ead_56c11112",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7246f7d_47a6cb21",
         "filename": "chrome/browser/printing/print_view_manager_base.cc",
         "patchSetId": 37
@@ -96,6 +180,24 @@
       "revId": "da2647807624adb38357dd36401b399b08c73d7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d534413_6badb674",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7246f7d_47a6cb21",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "15f91a9b_aebc6f26",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a2ea745_0a6a09e8",
+      "range": {
+        "startLine": 353,
+        "startChar": 12,
+        "endLine": 353,
+        "endChar": 16
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19f2d374_ab4d826e",
         "filename": "chrome/browser/printing/print_view_manager_base.h",
         "patchSetId": 37
@@ -142,6 +268,30 @@
       "revId": "da2647807624adb38357dd36401b399b08c73d7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab78fd5_3d0932c3",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19f2d374_ab4d826e",
+      "range": {
+        "startLine": 57,
+        "startChar": 26,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "822c5514_ab21fb24",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa8b6b73_3100b165",
+      "range": {
+        "startLine": 58,
+        "startChar": 70,
+        "endLine": 58,
+        "endChar": 75
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef16909e_04c213d7",
         "filename": "chrome/browser/printing/print_view_manager_base.h",
         "patchSetId": 37
@@ -185,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "48b7b383_1ebd1cb8",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef16909e_04c213d7",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad9d107_9355741d",
         "filename": "chrome/browser/printing/printing_message_filter.cc",
         "patchSetId": 37
@@ -196,6 +388,24 @@
       "writtenOn": "2017-11-29T06:14:00Z",
       "side": 1,
       "message": "When this was originally added, the IDs were based on |render_process_id_| and reply_msg-\u003erouting_id(). I wonder what\u0027s the right value here.\n\nWhatever the correct values are, we can fold them into the CreatePrinterQuery() call and drop the variables.",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05fced90_70c352bb",
+        "filename": "chrome/browser/printing/printing_message_filter.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Folded into the call. This is keeping the same behavior as before, because new_settings-\u003eGetInteger(kPreviewInitiatorHostId, \u0026host_id) as well as the call for RoutingId will now always return false. Reason is that job_settings come from PrintRenderFrameHelper, which gets them from PrintPreviewHandler. There were 2 paths to get here.\n(1) PrintPreviewHandler::HandlePrint-\u003ePrintMsg_PrintForPrintPreview -\u003e PrintRenderFrameHelper::OnPrintForPrintPreview. In this case PrintPreviewHandler set the HostId and RoutingId here: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/print_preview/print_preview_handler.cc?l\u003d766\n(2) PrintPreviewHandler::HandleGetPreview -\u003e PrintMsg_PrintPreview -\u003e PrintRenderFrameHelper::OnPrintPreview. In this case the Ids were never set by Print Preview Handler.\n\nAfter this CL path 1 no longer exists, so there is no need to check for the Ids.",
+      "parentUuid": "dad9d107_9355741d",
       "revId": "da2647807624adb38357dd36401b399b08c73d7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -219,6 +429,24 @@
     },
     {
       "key": {
+        "uuid": "141d1d09_134dff95",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_default.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1931e76f_2eca9804",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55b13608_cf37f6bb",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
         "patchSetId": 37
@@ -233,6 +461,24 @@
       "revId": "da2647807624adb38357dd36401b399b08c73d7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457f54d3_ddbcce4a",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Left it here since it was here originally. Moved.",
+      "parentUuid": "55b13608_cf37f6bb",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +499,24 @@
     },
     {
       "key": {
+        "uuid": "ec1b9e4e_ead91c37",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8f1f96b_6a612ce2",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3139feda_4946cd1b",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
         "patchSetId": 37
@@ -267,6 +531,24 @@
       "revId": "da2647807624adb38357dd36401b399b08c73d7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bb7b1e_7ac838e8",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3139feda_4946cd1b",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +575,30 @@
     },
     {
       "key": {
+        "uuid": "d6796514_63672e4f",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9633995e_acbdd4be",
+      "range": {
+        "startLine": 337,
+        "startChar": 31,
+        "endLine": 337,
+        "endChar": 43
+      },
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fd44327_8735e150",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.h",
         "patchSetId": 37
@@ -307,6 +613,24 @@
       "revId": "da2647807624adb38357dd36401b399b08c73d7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51fe2a02_f91767f3",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-12-14T02:35:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fd44327_8735e150",
+      "revId": "da2647807624adb38357dd36401b399b08c73d7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
