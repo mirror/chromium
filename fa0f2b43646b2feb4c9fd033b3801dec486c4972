@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bca407fa_e12fed83",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-14T19:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d9cfb7_d70a659c",
+      "range": {
+        "startLine": 322,
+        "startChar": 31,
+        "endLine": 322,
+        "endChar": 64
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19226b9b_73308693",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 32
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4d8c3897_d082f6d3",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-14T19:01:20Z",
+      "side": 1,
+      "message": "I think I had a crash some time back where one of these was null, and now I checked that browser_ is never null so it must have been the window. But now I also checked the window, and it should also never be null. I probably messed up something back then or misremembered. Removed the check.",
+      "parentUuid": "19226b9b_73308693",
+      "range": {
+        "startLine": 1202,
+        "startChar": 6,
+        "endLine": 1202,
+        "endChar": 15
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d25ef036_2e7e3e88",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 32
@@ -68,6 +116,30 @@
       "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7dab86_8154bf17",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-14T19:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d25ef036_2e7e3e88",
+      "range": {
+        "startLine": 1218,
+        "startChar": 7,
+        "endLine": 1219,
+        "endChar": 53
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +178,30 @@
       "side": 1,
       "message": "That likely means you\u0027re calling this function when the tabstrip is empty. What does the stack trace look like? Probably easiest fix is to early out in UpdateCommandsForLockedFullscreenMode if the tabstrip is empty.",
       "parentUuid": "2744d3f9_987cf9a9",
+      "range": {
+        "startLine": 1293,
+        "startChar": 18,
+        "endLine": 1293,
+        "endChar": 60
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a53b08_f0558dfa",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-14T19:01:20Z",
+      "side": 1,
+      "message": "I\u0027m sure the tabstrip is empty, no idea why that happens tho. Here\u0027s the stacktrace https://paste.googleplex.com/5280901911019520. I\u0027ve actually added a check before calling UpdateCommandsForFind instead of an early out because I don\u0027t want to somehow end up in the locked fullscreen state without disabling most of the commands. Another option is to put the check in here before calling IsTabBlocked, WDYT?",
+      "parentUuid": "6270c8b6_91aa3018",
       "range": {
         "startLine": 1293,
         "startChar": 18,
