@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "107b5657_797d094d",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-12-14T21:54:30Z",
+      "side": 1,
+      "message": "Nit: Dmm here and at other places?",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "db57445b34d298f927cf18eaeabf66d26ff1a2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acaaef5e_408b6067",
+        "filename": "chrome/browser/vr/elements/text.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-12-14T21:54:30Z",
+      "side": 1,
+      "message": "IIUC, the texture size will be defined by the first text set. This means resetting text can overflow. Could that happen? With the old approach we had some wiggle room.",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "db57445b34d298f927cf18eaeabf66d26ff1a2ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
