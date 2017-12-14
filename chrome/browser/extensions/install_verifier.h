@@ -180,14 +180,18 @@ class InstallVerifier : public KeyedService,
 // during tests.
 class ScopedInstallVerifierBypassForTest {
  public:
-  ScopedInstallVerifierBypassForTest();
+  enum ForceType {
+    FORCE_ON,
+    FORCE_OFF,
+  };
+
+  explicit ScopedInstallVerifierBypassForTest(ForceType force_type = FORCE_OFF);
   ~ScopedInstallVerifierBypassForTest();
 
-  // Should install verification be bypassed?
-  static bool ShouldBypass();
-
  private:
-  bool old_value_;
+  ForceType value_;
+  ForceType* old_value_;
+
   DISALLOW_COPY_AND_ASSIGN(ScopedInstallVerifierBypassForTest);
 };
 
