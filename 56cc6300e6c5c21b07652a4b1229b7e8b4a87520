@@ -16,6 +16,24 @@
       "revId": "56cc6300e6c5c21b07652a4b1229b7e8b4a87520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e246d129_225c2b23",
+        "filename": "content/renderer/loader/url_loader_client_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-14T06:43:55Z",
+      "side": 1,
+      "message": "I don\u0027t have a plan to deprecate this class.",
+      "parentUuid": "313e638e_c39696f2",
+      "revId": "56cc6300e6c5c21b07652a4b1229b7e8b4a87520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
