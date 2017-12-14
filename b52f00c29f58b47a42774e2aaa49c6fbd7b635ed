@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e84a656a_86896979",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-14T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22785575_431cf3fc",
+      "revId": "b52f00c29f58b47a42774e2aaa49c6fbd7b635ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdcaf8cb_6bc8dec4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotController.java",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "b52f00c29f58b47a42774e2aaa49c6fbd7b635ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e75ea9_f305a80f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-14T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdcaf8cb_6bc8dec4",
+      "revId": "b52f00c29f58b47a42774e2aaa49c6fbd7b635ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "b52f00c29f58b47a42774e2aaa49c6fbd7b635ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636fd061_f68480ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/incognito/IncognitoTabSnapshotController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-12-14T21:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f7cf90d_ff80b204",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 34
+      },
+      "revId": "b52f00c29f58b47a42774e2aaa49c6fbd7b635ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
