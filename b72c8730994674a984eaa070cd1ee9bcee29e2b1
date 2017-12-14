@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b628578_72ea3e34",
+        "filename": "components/exo/surface_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-12-14T22:43:42Z",
+      "side": 1,
+      "message": "nit: please add a TODO with a bug about removing this when no longer needed.",
+      "revId": "b72c8730994674a984eaa070cd1ee9bcee29e2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
