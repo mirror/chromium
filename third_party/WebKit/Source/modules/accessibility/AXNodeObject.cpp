@@ -618,11 +618,12 @@ bool AXNodeObject::HasContentEditableAttributeSet() const {
          EqualIgnoringASCIICase(content_editable_value, "true");
 }
 
-// TODO(dmazzoni) Find a more appropriate name or consider returning false
-// for everything but a searchbox or textfield, as a combobox and spinbox
-// can contain a field but should not be considered edit controls themselves.
-// Combo box text fields should return true though.
+// When it's a native spin button, it behaves like a text box, i.e. users can
+// type in it and navigate around using cursors.
 bool AXNodeObject::IsTextControl() const {
+  if (!GetNode())
+    return false;
+
   if (HasContentEditableAttributeSet())
     return true;
 
@@ -630,9 +631,13 @@ bool AXNodeObject::IsTextControl() const {
     case kTextFieldRole:
     case kTextFieldWithComboBoxRole:
     case kSearchBoxRole:
-    // TODO(dmazzoni): kSpinButtonRole might need to be removed.
-    case kSpinButtonRole:
       return true;
+    case kSpinButtonRole:
+      if (auto* input = ToHTMLInputElementOrNull(*GetNode())) {
+        const AtomicString& type = input->type();
+        return type == InputTypeNames::number;
+      }
+      return false;
     default:
       return false;
   }
@@ -1337,8 +1342,9 @@ String AXNodeObject::GetText() const {
     return String();
 
   if (IsNativeTextControl() &&
-      (IsHTMLTextAreaElement(*node) || IsHTMLInputElement(*node)))
+      (IsHTMLTextAreaElement(*node) || IsHTMLInputElement(*node))) {
     return ToTextControlElement(*node).value();
+  }
 
   if (!node->IsElementNode())
     return String();
@@ -1535,7 +1541,7 @@ bool AXNodeObject::ValueForRange(float* out_value) const {
     return true;
   }
 
-  if (IsNativeSlider()) {
+  if (IsNativeSlider() || IsNativeSpinButton()) {
     *out_value = ToHTMLInputElement(*GetNode()).valueAsNumber();
     return true;
   }
