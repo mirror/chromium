@@ -539,7 +539,7 @@ bool FrameLoader::AllowPlugins(ReasonForCallingAllowPlugins reason) {
 void FrameLoader::UpdateForSameDocumentNavigation(
     const KURL& new_url,
     SameDocumentNavigationSource same_document_navigation_source,
-    scoped_refptr<SerializedScriptValue> data,
+    std::unique_ptr<SerializedScriptValue> data,
     HistoryScrollRestorationType scroll_restoration_type,
     FrameLoadType type,
     Document* initiating_document) {
@@ -581,7 +581,7 @@ void FrameLoader::DetachDocumentLoader(Member<DocumentLoader>& loader) {
 
 void FrameLoader::LoadInSameDocument(
     const KURL& url,
-    scoped_refptr<SerializedScriptValue> state_object,
+    std::unique_ptr<SerializedScriptValue> state_object,
     FrameLoadType frame_load_type,
     HistoryItem* history_item,
     ClientRedirectPolicy client_redirect,
@@ -935,7 +935,7 @@ void FrameLoader::Load(const FrameLoadRequest& passed_request,
   // Perform same document navigation.
   if (same_document_history_navigation || same_document_navigation) {
     DCHECK(history_item || !same_document_history_navigation);
-    scoped_refptr<SerializedScriptValue> state_object =
+    std::unique_ptr<SerializedScriptValue> state_object =
         same_document_history_navigation ? history_item->StateObject()
                                          : nullptr;
 

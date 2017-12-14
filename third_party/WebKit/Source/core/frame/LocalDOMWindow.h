@@ -311,10 +311,10 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   void EnqueueDocumentEvent(Event*);
   void EnqueuePageshowEvent(PageshowEventPersistence);
   void EnqueueHashchangeEvent(const String& old_url, const String& new_url);
-  void EnqueuePopstateEvent(scoped_refptr<SerializedScriptValue>);
+  void EnqueuePopstateEvent(std::unique_ptr<SerializedScriptValue>);
   void DispatchWindowLoadEvent();
   void DocumentWasClosed();
-  void StatePopped(scoped_refptr<SerializedScriptValue>);
+  void StatePopped(std::unique_ptr<SerializedScriptValue>);
 
   // FIXME: This shouldn't be public once LocalDOMWindow becomes
   // ExecutionContext.
@@ -383,7 +383,7 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   mutable Member<ApplicationCache> application_cache_;
 
   Member<DOMWindowEventQueue> event_queue_;
-  scoped_refptr<SerializedScriptValue> pending_state_object_;
+  std::unique_ptr<SerializedScriptValue> pending_state_object_;
 
   HeapHashSet<Member<PostMessageTimer>> post_message_timers_;
   HeapHashSet<WeakMember<EventListenerObserver>> event_listener_observers_;

@@ -6,7 +6,6 @@
 #include "modules/serviceworkers/ServiceWorkerWindowClient.h"
 
 #include <memory>
-#include "base/memory/scoped_refptr.h"
 #include "bindings/core/v8/CallbackPromiseAdapter.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
@@ -86,7 +85,7 @@ String ServiceWorkerClient::frameType(ScriptState* script_state) const {
 
 void ServiceWorkerClient::postMessage(
     ScriptState* script_state,
-    scoped_refptr<SerializedScriptValue> message,
+    std::unique_ptr<SerializedScriptValue> message,
     const MessagePortArray& ports,
     ExceptionState& exception_state) {
   ExecutionContext* context = ExecutionContext::From(script_state);

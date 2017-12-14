@@ -38,7 +38,7 @@ class MODULES_EXPORT ServiceWorkerClient : public ScriptWrappable {
   String frameType(ScriptState*) const;
   String id() const { return uuid_; }
   void postMessage(ScriptState*,
-                   scoped_refptr<SerializedScriptValue> message,
+                   std::unique_ptr<SerializedScriptValue> message,
                    const MessagePortArray&,
                    ExceptionState&);
 

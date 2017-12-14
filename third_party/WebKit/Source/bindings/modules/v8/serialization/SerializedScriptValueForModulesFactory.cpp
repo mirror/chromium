@@ -10,7 +10,7 @@
 
 namespace blink {
 
-scoped_refptr<SerializedScriptValue>
+std::unique_ptr<SerializedScriptValue>
 SerializedScriptValueForModulesFactory::Create(
     v8::Isolate* isolate,
     v8::Local<v8::Value> value,
@@ -23,7 +23,7 @@ SerializedScriptValueForModulesFactory::Create(
 }
 
 v8::Local<v8::Value> SerializedScriptValueForModulesFactory::Deserialize(
-    scoped_refptr<SerializedScriptValue> value,
+    SerializedScriptValue* value,
     v8::Isolate* isolate,
     const SerializedScriptValue::DeserializeOptions& options) {
   TRACE_EVENT0("blink", "SerializedScriptValueFactory::deserialize");
