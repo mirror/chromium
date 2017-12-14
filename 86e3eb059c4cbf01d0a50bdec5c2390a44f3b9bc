@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8f4d6a_6b5fb825",
+        "filename": "chromeos/cryptohome/async_method_caller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-14T18:54:55Z",
+      "side": 1,
+      "message": "It\u0027s unclear what \u0027return status\u0027 applies to. /* return status */ would be more clear.",
+      "revId": "86e3eb059c4cbf01d0a50bdec5c2390a44f3b9bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
