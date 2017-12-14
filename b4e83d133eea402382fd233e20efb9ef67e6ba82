@@ -118,6 +118,30 @@
       "revId": "b4e83d133eea402382fd233e20efb9ef67e6ba82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463abda3_8b8e55d4",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-14T07:32:14Z",
+      "side": 1,
+      "message": "Sure. I had figured out why source-\u003edevice().matched_output_device_id is empty for RenderToAssociatedSinkTrue test and that we need to set a non-empty |matched_output_device_id| in MockMojoMediaStreamDispatcherHost::GenerateStream() for this test to pass.\n\nI was only expecting a little bit of clarification on \n\"input devices may or may not have associated output devices even if renderToAssociatedSink is true.\", before I upload the next patchset with the RenderToAssociatedSinkTrue test.\nDoes renderToAssociatedSink\u003dtrue always imply |matched_output_device_id| is not empty?\nIsn\u0027t it possible for input devices to not have associated output devices even if renderToAssociatedSink is true?(let\u0027s say in a real time scenario and not tests).\nThank you.",
+      "parentUuid": "29833ab1_637ca452",
+      "range": {
+        "startLine": 1391,
+        "startChar": 32,
+        "endLine": 1391,
+        "endChar": 59
+      },
+      "revId": "b4e83d133eea402382fd233e20efb9ef67e6ba82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
