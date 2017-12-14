@@ -2619,7 +2619,7 @@ void RenderViewContextMenu::ExecPictureInPicture() {
   PictureInPictureWindowController* window_controller =
       PictureInPictureWindowController::GetOrCreateForWebContents(
           embedder_web_contents_);
-  window_controller->Show();
+  window_controller->Show(gfx::Size());
 }
 
 void RenderViewContextMenu::WriteURLToClipboard(const GURL& url) {
