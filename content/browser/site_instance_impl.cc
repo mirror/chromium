@@ -4,6 +4,8 @@
 
 #include "content/browser/site_instance_impl.h"
 
+#include <string>
+
 #include "base/command_line.h"
 #include "base/debug/crash_logging.h"
 #include "base/macros.h"
@@ -410,7 +412,7 @@ GURL SiteInstance::GetSiteForURL(BrowserContext* browser_context,
   }
 
   // If the url has a host, then determine the site.
-  if (!origin.host().empty()) {
+  if (!origin.host().empty() && origin.scheme() != url::kFileScheme) {
     // Only keep the scheme and registered domain of |origin|.
     std::string domain = net::registry_controlled_domains::GetDomainAndRegistry(
         origin.host(),
