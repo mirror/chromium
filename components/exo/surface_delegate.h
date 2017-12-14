@@ -23,6 +23,10 @@ class SurfaceDelegate {
   // double-buffered state should be synchronized with parent surface.
   virtual bool IsSurfaceSynchronized() const = 0;
 
+  // Returns true if surface should receive touch events.
+  // TODO(domlaskowski): Remove once client-driven dragging/resizing is removed.
+  virtual bool IsTouchEnabled(Surface* surface) const = 0;
+
   // Called when surface was requested to use a specific frame type.
   virtual void OnSetFrame(SurfaceFrameType type) = 0;
 
