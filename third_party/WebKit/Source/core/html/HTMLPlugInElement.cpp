@@ -24,6 +24,7 @@
 
 #include "bindings/core/v8/ScriptController.h"
 #include "core/CSSPropertyNames.h"
+#include "core/dom/ChildFrameDisconnector.h"
 #include "core/dom/Document.h"
 #include "core/dom/Node.h"
 #include "core/dom/ShadowRoot.h"
@@ -140,6 +141,9 @@ bool HTMLPlugInElement::RequestObjectInternal(
     // causing what was previously in the EmbeddedContentView to be torn down.
     return LoadOrRedirectSubframe(completed_url, GetNameAttribute(), true);
   }
+
+  if (ContentFrame())
+    ChildFrameDisconnector(*this).Disconnect();
 
   // If an object's content can't be handled and it has no fallback, let
   // it be handled as a plugin to show the broken plugin icon.
@@ -299,9 +303,10 @@ void HTMLPlugInElement::DetachLayoutTree(const AttachContext& context) {
   PluginView* plugin = OwnedPlugin();
   if (plugin && context.performing_reattach) {
     SetPersistedPlugin(ToPluginView(ReleaseEmbeddedContentView()));
-  } else {
+  } else if (auto* embedded_content_view = OwnedEmbeddedContentView()) {
     // Clear the plugin; will trigger disposal of it with Oilpan.
-    SetEmbeddedContentView(nullptr);
+    if (embedded_content_view->IsPluginView())
+      SetEmbeddedContentView(nullptr);
   }
 
   ResetInstance();
