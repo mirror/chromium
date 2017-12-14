@@ -38,6 +38,10 @@ class CHROMEOS_EXPORT AsyncMethodCaller {
   typedef base::Callback<void(bool success, MountError return_code)> Callback;
   typedef base::Callback<void(bool success, const std::string& data)>
       DataCallback;
+  typedef base::RepeatingCallback<void(
+      chromeos::attestation::AttestationServerStatus success,
+      const std::string& data)>
+      PrivacyCACallback;
 
   virtual ~AsyncMethodCaller() {}
 
@@ -136,7 +140,7 @@ class CHROMEOS_EXPORT AsyncMethodCaller {
       chromeos::attestation::AttestationKeyType key_type,
       const Identification& user_id,
       const std::string& key_name,
-      const DataCallback& callback) = 0;
+      const PrivacyCACallback& callback) = 0;
 
   // Asks cryptohomed to asynchronously register the attestation key specified
   // by |key_type| and |key_name|.  If |key_type| is KEY_USER, a |user_id| must

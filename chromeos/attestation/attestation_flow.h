@@ -58,8 +58,9 @@ class CHROMEOS_EXPORT ServerProxy {
 // This class is not thread safe.
 class CHROMEOS_EXPORT AttestationFlow {
  public:
-  typedef base::Callback<void(bool success,
-                              const std::string& pem_certificate_chain)>
+  typedef base::RepeatingCallback<void(
+      AttestationServerStatus status,
+      const std::string& pem_certificate_chain)>
       CertificateCallback;
 
   // Returns the attestation key type for a given |certificate_profile|.

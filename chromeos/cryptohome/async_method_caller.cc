@@ -138,13 +138,13 @@ class AsyncMethodCallerImpl : public AsyncMethodCaller,
       chromeos::attestation::AttestationKeyType key_type,
       const Identification& cryptohome_id,
       const std::string& key_name,
-      const DataCallback& callback) override {
+      const PrivacyCACallback& callback) override {
     DBusThreadManager::Get()
         ->GetCryptohomeClient()
         ->AsyncTpmAttestationFinishCertRequest(
             pca_response, key_type, cryptohome_id, key_name,
             base::Bind(
-                &AsyncMethodCallerImpl::RegisterAsyncDataCallback,
+                &AsyncMethodCallerImpl::RegisterAsyncPrivacyCACallback,
                 weak_ptr_factory_.GetWeakPtr(), callback,
                 "Couldn't initiate async attestation finish cert request."));
   }
@@ -230,8 +230,19 @@ class AsyncMethodCallerImpl : public AsyncMethodCaller,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner;
   };
 
+  struct PrivacyCACallbackElement {
+    PrivacyCACallbackElement() = default;
+    explicit PrivacyCACallbackElement(
+        const AsyncMethodCaller::PrivacyCACallback& callback)
+        : privacy_ca_callback(callback),
+          task_runner(base::ThreadTaskRunnerHandle::Get()) {}
+    AsyncMethodCaller::PrivacyCACallback privacy_ca_callback;
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner;
+  };
+
   typedef base::hash_map<int, CallbackElement> CallbackMap;
   typedef base::hash_map<int, DataCallbackElement> DataCallbackMap;
+  typedef base::hash_map<int, PrivacyCACallbackElement> PrivacyCACallbackMap;
 
   // Handles the response for async calls.
   // Below is described how async calls work.
@@ -270,6 +281,24 @@ class AsyncMethodCallerImpl : public AsyncMethodCaller,
         base::Bind(it->second.data_callback, return_status, return_data));
     data_callback_map_.erase(it);
   }
+
+  // Similar to HandleAsyncResponse but for signals with a raw data payload.
+  void AsyncCallStatusForPrivacyCA(
+      int async_id,
+      chromeos::attestation::AttestationServerStatus return_status,
+      const std::string& return_data) override {
+    const PrivacyCACallbackMap::iterator it =
+        privacy_ca_callback_map_.find(async_id);
+    if (it == privacy_ca_callback_map_.end()) {
+      LOG(ERROR) << "Received signal for unknown async_id " << async_id;
+      return;
+    }
+    it->second.task_runner->PostTask(
+        FROM_HERE, base::BindRepeating(it->second.privacy_ca_callback,
+                                       return_status, return_data));
+    privacy_ca_callback_map_.erase(it);
+  }
+
   // Registers a callback which is called when the result for AsyncXXX is ready.
   void RegisterAsyncCallback(Callback callback,
                              const char* error,
@@ -289,6 +318,7 @@ class AsyncMethodCallerImpl : public AsyncMethodCaller,
     VLOG(1) << "Adding handler for " << async_id.value();
     DCHECK_EQ(callback_map_.count(async_id.value()), 0U);
     DCHECK_EQ(data_callback_map_.count(async_id.value()), 0U);
+    DCHECK_EQ(privacy_ca_callback_map_.count(async_id.value()), 0U);
     callback_map_[async_id.value()] = CallbackElement(callback);
   }
 
@@ -310,11 +340,37 @@ class AsyncMethodCallerImpl : public AsyncMethodCaller,
     VLOG(1) << "Adding handler for " << async_id.value();
     DCHECK_EQ(callback_map_.count(async_id.value()), 0U);
     DCHECK_EQ(data_callback_map_.count(async_id.value()), 0U);
+    DCHECK_EQ(privacy_ca_callback_map_.count(async_id.value()), 0U);
     data_callback_map_[async_id.value()] = DataCallbackElement(callback);
+  }
+
+  // Registers a callback which is called when the result for AsyncXXX is ready.
+  void RegisterAsyncPrivacyCACallback(PrivacyCACallback callback,
+                                      const char* error,
+                                      base::Optional<int> async_id) {
+    if (!async_id.has_value()) {
+      base::ThreadTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE,
+          base::BindOnce(callback,
+                         chromeos::attestation::ATTESTATION_UNSPECIFIED_FAILURE,
+                         std::string()));
+      return;
+    }
+    if (async_id.value() == 0) {
+      LOG(ERROR) << error;
+      return;
+    }
+    VLOG(1) << "Adding handler for " << async_id.value();
+    DCHECK_EQ(callback_map_.count(async_id.value()), 0U);
+    DCHECK_EQ(data_callback_map_.count(async_id.value()), 0U);
+    DCHECK_EQ(privacy_ca_callback_map_.count(async_id.value()), 0U);
+    privacy_ca_callback_map_[async_id.value()] =
+        PrivacyCACallbackElement(callback);
   }
 
   CallbackMap callback_map_;
   DataCallbackMap data_callback_map_;
+  PrivacyCACallbackMap privacy_ca_callback_map_;
   base::WeakPtrFactory<AsyncMethodCallerImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AsyncMethodCallerImpl);
