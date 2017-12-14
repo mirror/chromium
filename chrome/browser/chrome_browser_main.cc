@@ -907,7 +907,7 @@ int ChromeBrowserMainParts::PreCreateThreads() {
   // process from BrowserMainLoop::BrowserThreadsStarted.
 
   // Retrieve cached GL strings from local state and use them for GPU
-  // blacklist decisions.
+  // blacklist decisions. Currently this is only done on Android.
   if (g_browser_process->gpu_profile_cache())
     g_browser_process->gpu_profile_cache()->Initialize();
 

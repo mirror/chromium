@@ -680,9 +680,13 @@ IconManager* BrowserProcessImpl::icon_manager() {
 
 GpuProfileCache* BrowserProcessImpl::gpu_profile_cache() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+#if defined(OS_ANDROID)
   if (!gpu_profile_cache_)
     gpu_profile_cache_ = GpuProfileCache::Create();
   return gpu_profile_cache_.get();
+#else
+  return nullptr;
+#endif
 }
 
 GpuModeManager* BrowserProcessImpl::gpu_mode_manager() {
