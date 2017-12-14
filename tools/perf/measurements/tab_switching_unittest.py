@@ -13,12 +13,27 @@ from telemetry.testing import page_test_test_case
 from telemetry.testing import options_for_unittests
 from telemetry.value import histogram
 
+class FakeTracingController(object):
+
+  def __init__(self):
+    self.config = None
+
+  def StartTracing(self, config):
+    self.config = config
+
+  def IsChromeTracingSupported(self):
+    return True
+
+  def StopTracing(self):
+    pass
+
 
 class BrowserForTest(object):
   def __init__(self):
     self.tabs = []
     self.platform = mock.MagicMock()
     self.platform.CanMonitorPower = mock.Mock(return_value=False)
+    self.platform.tracing_controller = FakeTracingController()
 
   def AddTab(self, tab):
     tab.browser = self
@@ -84,9 +99,12 @@ class TabSwitchingUnittest(page_test_test_case.PageTestTestCase):
         mock.patch('telemetry.value.histogram_util.GetHistogram',
                    mock_get_histogram),
         mock.patch('metrics.keychain_metric.KeychainMetric')):
-      measure.DidNavigateToPage(story_set.stories[0], browser.tabs[-1])
-      measure.ValidateAndMeasurePage(story_set.stories[0], browser.tabs[-1],
-                                     page_test_results.PageTestResults())
+      results = page_test_results.PageTestResults()
+      page = story_set.stories[0]
+      results.WillRunPage(page)
+      measure.DidNavigateToPage(page, browser.tabs[-1])
+      measure.ValidateAndMeasurePage(page, browser.tabs[-1], results)
+      results.DidRunPage(page)
       self.assertEqual(len(expected_histogram),
                        len(mock_get_histogram.mock_calls))
       # The last tab is passed to DidNavigateToPage() and
