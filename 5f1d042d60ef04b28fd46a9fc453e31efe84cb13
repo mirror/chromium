@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fe2eb50_b604fdbc",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T17:47:52Z",
+      "side": 1,
+      "message": "It looks like now instead of only installing the event rewriter when\nselect-to-speak is enabled, you\u0027re always installing it - but I don\u0027t\nsee a mechanism to only make it take effect when the feature is enabled.\n\nI suspect that if the feature is disabled, now holding down Search and\ndragging will no longer result in a click/drag, which is a change.",
+      "revId": "5f1d042d60ef04b28fd46a9fc453e31efe84cb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
