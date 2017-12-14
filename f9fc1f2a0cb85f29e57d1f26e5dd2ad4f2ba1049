@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4d5e1b6_c11ee8c8",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-14T00:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d976673_6947e742",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 19
+      },
+      "revId": "f9fc1f2a0cb85f29e57d1f26e5dd2ad4f2ba1049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62ab9446_58783bce",
         "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "f9fc1f2a0cb85f29e57d1f26e5dd2ad4f2ba1049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75d07a9_d9863463",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-14T00:00:52Z",
+      "side": 1,
+      "message": "Thanks, done!",
+      "parentUuid": "62ab9446_58783bce",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 75
+      },
+      "revId": "f9fc1f2a0cb85f29e57d1f26e5dd2ad4f2ba1049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b23aeba0_4805dfc7",
+        "filename": "media/mojo/services/watch_time_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-14T00:00:52Z",
+      "side": 1,
+      "message": "That\u0027s true if it\u0027s really the _very_ first frame the pipeline has seen. Otherwise if the decoder configurations are mostly the same we\u0027ll finalize the old watch time and put the rest in the new reporter.",
+      "parentUuid": "7705ede9_0f129ed3",
+      "range": {
+        "startLine": 328,
+        "startChar": 10,
+        "endLine": 328,
+        "endChar": 33
+      },
+      "revId": "f9fc1f2a0cb85f29e57d1f26e5dd2ad4f2ba1049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b042ccd9_ec30db3c",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "f9fc1f2a0cb85f29e57d1f26e5dd2ad4f2ba1049",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba15e08_722e1608",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-14T00:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b042ccd9_ec30db3c",
+      "range": {
+        "startLine": 855,
+        "startChar": 63,
+        "endLine": 855,
+        "endChar": 73
+      },
+      "revId": "f9fc1f2a0cb85f29e57d1f26e5dd2ad4f2ba1049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
