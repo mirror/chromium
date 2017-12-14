@@ -16,6 +16,29 @@
       "revId": "4d0990c6e4fefc69b088322fcc53cadb19bfa7c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc68f20_d35d05e0",
+        "filename": "chrome/browser/resources/cryptotoken/usbenrollhandler.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-14T22:51:15Z",
+      "side": 1,
+      "message": "how about:\nthis.tryEnrollComplete_.bind(this, gnubby, version)\n\nor\nresult \u003d\u003e {\n  this.tryToEnrollComplete_(gnubby, version, result);\n}",
+      "range": {
+        "startLine": 225,
+        "startChar": 17,
+        "endLine": 227,
+        "endChar": 7
+      },
+      "revId": "4d0990c6e4fefc69b088322fcc53cadb19bfa7c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
