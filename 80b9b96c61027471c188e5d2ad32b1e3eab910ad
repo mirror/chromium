@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b828db0e_fbbef4ff",
+        "filename": "content/browser/renderer_host/media/audio_input_device_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-12-14T12:53:00Z",
+      "side": 0,
+      "message": "What is rationale of the change introduced here? Why obscuring absence of parameters in the reply? Shouldn\u0027t the whole stack be switched to optional parameters instead?",
+      "revId": "80b9b96c61027471c188e5d2ad32b1e3eab910ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
