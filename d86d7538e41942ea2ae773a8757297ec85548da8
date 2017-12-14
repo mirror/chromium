@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f6163d7_62b50436",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-14T21:55:01Z",
+      "side": 1,
+      "message": "should this be annotated with @ContentType?  Or is this a view id (maybe @IdRes)?",
+      "range": {
+        "startLine": 764,
+        "startChar": 43,
+        "endLine": 764,
+        "endChar": 46
+      },
+      "revId": "d86d7538e41942ea2ae773a8757297ec85548da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05e4f8f_85dd671d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-12-14T21:55:01Z",
+      "side": 1,
+      "message": "else throw an exception?",
+      "range": {
+        "startLine": 779,
+        "startChar": 9,
+        "endLine": 779,
+        "endChar": 0
+      },
+      "revId": "d86d7538e41942ea2ae773a8757297ec85548da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
