@@ -25321,32 +25321,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Favicons.CandidatesWithDefinedSizesCount">
-  <owner>fhorschig@chromium.org</owner>
-  <summary>
-    Records the number of favicon link tags with a non empty sizes attribute
-    once the page has finished loading.
-  </summary>
-</histogram>
-
-<histogram name="Favicons.CandidatesWithTouchIconsCount">
-  <owner>fhorschig@chromium.org</owner>
-  <summary>
-    Records the number of apple-touch-icon and apple-touch-icon-precomposed link
-    tags once the page has finished loading.
-  </summary>
-</histogram>
-
-<histogram base="true" name="Favicons.DownloadAttempts" units="attempts">
-  <owner>fhorschig@chromium.org</owner>
-  <summary>
-    Records the number of icons requested until the best-fitting candidate was
-    found or there were no candidates left to check. More than 15 attempts are
-    unlikely and will be stored in overflow bucket 16. Less than 1 attempt means
-    an error happened; these cases are in bucket 0.
-  </summary>
-</histogram>
-
 <histogram name="Favicons.LargeIconService.BlacklistedURLMismatch"
     units="BooleanError">
   <owner>mastiz@chromium.org</owner>
@@ -102312,13 +102286,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Webstore"
       label="sideloaded extensions that update from the webstore"/>
   <affected-histogram name="Extensions.ExternalExtensionEvent"/>
-</histogram_suffixes>
-
-<histogram_suffixes name="FaviconIconType" separator=".">
-  <suffix name="Favicons" label="Metrics for regular favicons."/>
-  <suffix name="LargeIcons" label="Metrics for large non-touch icons."/>
-  <suffix name="TouchIcons" label="Metrics for large touch icons."/>
-  <affected-histogram name="Favicons.DownloadAttempts"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="FieldPredictionSubmissionEvents" separator=".">
