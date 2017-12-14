@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "17c10e24_d1e07c36",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3655,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-12-14T23:36:45Z",
+      "side": 1,
+      "message": "Adding the pointer is small enough IMHO, but if you think it is enough overhead, feel free to exclude it.\n\nVisually, it will likely be easy enough to correlate the two, even though they won\u0027t be nested, since the NavigationHandle itself gets a separate line on the trace UI. However, if you are processing the trace to look for events and try to correlate them, it will likely be harder.",
+      "parentUuid": "648664b3_1578d4cf",
+      "revId": "069959fe08c6bb0e2ccb862c9aba5f75f018cdb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09440fc7_8b8790f4",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 1
