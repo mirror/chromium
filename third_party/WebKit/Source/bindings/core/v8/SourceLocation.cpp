@@ -10,7 +10,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/ScriptableDocumentParser.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/ThreadInspector.h"
 #include "core/inspector/V8InspectorString.h"
 #include "platform/bindings/ScriptForbiddenScope.h"
 #include "platform/bindings/V8BindingMacros.h"
@@ -24,11 +24,11 @@ namespace {
 
 std::unique_ptr<v8_inspector::V8StackTrace> CaptureStackTrace(bool full) {
   v8::Isolate* isolate = v8::Isolate::GetCurrent();
-  ThreadDebugger* debugger = ThreadDebugger::From(isolate);
-  if (!debugger || !isolate->InContext())
+  ThreadInspector* inspector = ThreadInspector::From(isolate);
+  if (!inspector || !isolate->InContext())
     return nullptr;
   ScriptForbiddenScope::AllowUserAgentScript allow_scripting;
-  return debugger->GetV8Inspector()->captureStackTrace(full);
+  return inspector->GetV8Inspector()->captureStackTrace(full);
 }
 }
 
@@ -82,9 +82,9 @@ std::unique_ptr<SourceLocation> SourceLocation::FromMessage(
     ExecutionContext* execution_context) {
   v8::Local<v8::StackTrace> stack = message->GetStackTrace();
   std::unique_ptr<v8_inspector::V8StackTrace> stack_trace = nullptr;
-  ThreadDebugger* debugger = ThreadDebugger::From(isolate);
-  if (debugger)
-    stack_trace = debugger->GetV8Inspector()->createStackTrace(stack);
+  ThreadInspector* inspector = ThreadInspector::From(isolate);
+  if (inspector)
+    stack_trace = inspector->GetV8Inspector()->createStackTrace(stack);
 
   int script_id = message->GetScriptOrigin().ScriptID()->Value();
   if (!stack.IsEmpty() && stack->GetFrameCount() > 0) {

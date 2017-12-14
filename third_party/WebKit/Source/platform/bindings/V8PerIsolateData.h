@@ -189,8 +189,8 @@ class PLATFORM_EXPORT V8PerIsolateData {
   void RunEndOfScopeTasks();
   void ClearEndOfScopeTasks();
 
-  void SetThreadDebugger(std::unique_ptr<Data>);
-  Data* ThreadDebugger();
+  void SetThreadInspector(std::unique_ptr<Data>);
+  Data* ThreadInspector();
 
   using ActiveScriptWrappableSet =
       HeapHashSet<WeakMember<ActiveScriptWrappableBase>>;
@@ -301,7 +301,7 @@ class PLATFORM_EXPORT V8PerIsolateData {
   bool is_reporting_exception_;
 
   Vector<base::OnceClosure> end_of_scope_tasks_;
-  std::unique_ptr<Data> thread_debugger_;
+  std::unique_ptr<Data> thread_inspector_;
 
   Persistent<ActiveScriptWrappableSet> active_script_wrappables_;
   std::unique_ptr<ScriptWrappableVisitor> script_wrappable_visitor_;

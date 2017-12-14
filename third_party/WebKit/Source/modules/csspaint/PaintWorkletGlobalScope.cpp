@@ -13,7 +13,7 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "modules/csspaint/CSSPaintDefinition.h"
@@ -182,7 +182,7 @@ PaintWorkletGlobalScope* PaintWorkletGlobalScope::Create(
   String context_name("PaintWorklet #");
   context_name.append(String::Number(global_scope_number));
   global_scope->ScriptController()->InitializeContextIfNeeded(context_name);
-  MainThreadDebugger::Instance()->ContextCreated(
+  MainThreadInspector::Instance()->ContextCreated(
       global_scope->ScriptController()->GetScriptState(),
       global_scope->GetFrame(), global_scope->GetSecurityOrigin());
   return global_scope;
@@ -203,7 +203,7 @@ PaintWorkletGlobalScope::PaintWorkletGlobalScope(
 PaintWorkletGlobalScope::~PaintWorkletGlobalScope() {}
 
 void PaintWorkletGlobalScope::Dispose() {
-  MainThreadDebugger::Instance()->ContextWillBeDestroyed(
+  MainThreadInspector::Instance()->ContextWillBeDestroyed(
       ScriptController()->GetScriptState());
 
   pending_generator_registry_ = nullptr;

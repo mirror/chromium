@@ -4,7 +4,7 @@
 
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/inspector/ConsoleMessageStorage.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/ThreadInspector.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/testing/DummyPageHolder.h"
 #include "core/workers/GlobalScopeCreationParams.h"

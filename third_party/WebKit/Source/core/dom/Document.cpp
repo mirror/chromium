@@ -173,7 +173,7 @@
 #include "core/input/TouchList.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/InspectorTraceEvents.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/intersection_observer/IntersectionObserverController.h"
 #include "core/layout/AdjustForAbsoluteZoom.h"
 #include "core/layout/HitTestCanvasResult.h"
@@ -3705,7 +3705,7 @@ EventTarget* Document::ErrorEventTarget() {
 }
 
 void Document::ExceptionThrown(ErrorEvent* event) {
-  MainThreadDebugger::Instance()->ExceptionThrown(this, event);
+  MainThreadInspector::Instance()->ExceptionThrown(this, event);
 }
 
 KURL Document::urlForBinding() const {

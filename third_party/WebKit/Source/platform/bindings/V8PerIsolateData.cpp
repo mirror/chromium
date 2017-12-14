@@ -134,7 +134,7 @@ void V8PerIsolateData::EnableIdleTasks(
 void V8PerIsolateData::WillBeDestroyed(v8::Isolate* isolate) {
   V8PerIsolateData* data = From(isolate);
 
-  data->thread_debugger_.reset();
+  data->thread_inspector_.reset();
   // Clear any data that may have handles into the heap,
   // prior to calling ThreadState::detach().
   data->ClearEndOfScopeTasks();
@@ -334,14 +334,14 @@ void V8PerIsolateData::ClearEndOfScopeTasks() {
   end_of_scope_tasks_.clear();
 }
 
-void V8PerIsolateData::SetThreadDebugger(
-    std::unique_ptr<V8PerIsolateData::Data> thread_debugger) {
-  DCHECK(!thread_debugger_);
-  thread_debugger_ = std::move(thread_debugger);
+void V8PerIsolateData::SetThreadInspector(
+    std::unique_ptr<V8PerIsolateData::Data> thread_inspector) {
+  DCHECK(!thread_inspector_);
+  thread_inspector_ = std::move(thread_inspector);
 }
 
-V8PerIsolateData::Data* V8PerIsolateData::ThreadDebugger() {
-  return thread_debugger_.get();
+V8PerIsolateData::Data* V8PerIsolateData::ThreadInspector() {
+  return thread_inspector_.get();
 }
 
 void V8PerIsolateData::AddActiveScriptWrappable(

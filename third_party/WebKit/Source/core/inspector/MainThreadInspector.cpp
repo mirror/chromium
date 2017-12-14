@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 
 #include <memory>
 
@@ -87,12 +87,12 @@ LocalFrame* ToFrame(ExecutionContext* context) {
     return ToMainThreadWorkletGlobalScope(context)->GetFrame();
   return nullptr;
 }
-}
+}  // namespace
 
-MainThreadDebugger* MainThreadDebugger::instance_ = nullptr;
+MainThreadInspector* MainThreadInspector::instance_ = nullptr;
 
-MainThreadDebugger::MainThreadDebugger(v8::Isolate* isolate)
-    : ThreadDebugger(isolate),
+MainThreadInspector::MainThreadInspector(v8::Isolate* isolate)
+    : ThreadInspector(isolate),
       task_runner_(std::make_unique<InspectorTaskRunner>()),
       paused_(false) {
   MutexLocker locker(CreationMutex());
@@ -100,42 +100,42 @@ MainThreadDebugger::MainThreadDebugger(v8::Isolate* isolate)
   instance_ = this;
 }
 
-MainThreadDebugger::~MainThreadDebugger() {
+MainThreadInspector::~MainThreadInspector() {
   MutexLocker locker(CreationMutex());
   DCHECK_EQ(instance_, this);
   instance_ = nullptr;
 }
 
-void MainThreadDebugger::ReportConsoleMessage(ExecutionContext* context,
-                                              MessageSource source,
-                                              MessageLevel level,
-                                              const String& message,
-                                              SourceLocation* location) {
+void MainThreadInspector::ReportConsoleMessage(ExecutionContext* context,
+                                               MessageSource source,
+                                               MessageLevel level,
+                                               const String& message,
+                                               SourceLocation* location) {
   if (LocalFrame* frame = ToFrame(context))
     frame->Console().ReportMessageToClient(source, level, message, location);
 }
 
-int MainThreadDebugger::ContextGroupId(ExecutionContext* context) {
+int MainThreadInspector::ContextGroupId(ExecutionContext* context) {
   LocalFrame* frame = ToFrame(context);
   return frame ? ContextGroupId(frame) : 0;
 }
 
-void MainThreadDebugger::SetClientMessageLoop(
+void MainThreadInspector::SetClientMessageLoop(
     std::unique_ptr<ClientMessageLoop> client_message_loop) {
   DCHECK(!client_message_loop_);
   DCHECK(client_message_loop);
   client_message_loop_ = std::move(client_message_loop);
 }
 
-void MainThreadDebugger::DidClearContextsForFrame(LocalFrame* frame) {
+void MainThreadInspector::DidClearContextsForFrame(LocalFrame* frame) {
   DCHECK(IsMainThread());
   if (frame->LocalFrameRoot() == frame)
     GetV8Inspector()->resetContextGroup(ContextGroupId(frame));
 }
 
-void MainThreadDebugger::ContextCreated(ScriptState* script_state,
-                                        LocalFrame* frame,
-                                        const SecurityOrigin* origin) {
+void MainThreadInspector::ContextCreated(ScriptState* script_state,
+                                         LocalFrame* frame,
+                                         const SecurityOrigin* origin) {
   DCHECK(IsMainThread());
   v8::HandleScope handles(script_state->GetIsolate());
   DOMWrapperWorld& world = script_state->World();
@@ -160,13 +160,13 @@ void MainThreadDebugger::ContextCreated(ScriptState* script_state,
   GetV8Inspector()->contextCreated(context_info);
 }
 
-void MainThreadDebugger::ContextWillBeDestroyed(ScriptState* script_state) {
+void MainThreadInspector::ContextWillBeDestroyed(ScriptState* script_state) {
   v8::HandleScope handles(script_state->GetIsolate());
   GetV8Inspector()->contextDestroyed(script_state->GetContext());
 }
 
-void MainThreadDebugger::ExceptionThrown(ExecutionContext* context,
-                                         ErrorEvent* event) {
+void MainThreadInspector::ExceptionThrown(ExecutionContext* context,
+                                          ErrorEvent* event) {
   LocalFrame* frame = nullptr;
   ScriptState* script_state = nullptr;
   if (context->IsDocument()) {
@@ -208,20 +208,20 @@ void MainThreadDebugger::ExceptionThrown(ExecutionContext* context,
   }
 }
 
-int MainThreadDebugger::ContextGroupId(LocalFrame* frame) {
+int MainThreadInspector::ContextGroupId(LocalFrame* frame) {
   LocalFrame& local_frame_root = frame->LocalFrameRoot();
   return WeakIdentifierMap<LocalFrame>::Identifier(&local_frame_root);
 }
 
-MainThreadDebugger* MainThreadDebugger::Instance() {
+MainThreadInspector* MainThreadInspector::Instance() {
   DCHECK(IsMainThread());
-  ThreadDebugger* debugger =
-      ThreadDebugger::From(V8PerIsolateData::MainThreadIsolate());
-  DCHECK(debugger && !debugger->IsWorker());
-  return static_cast<MainThreadDebugger*>(debugger);
+  ThreadInspector* inspector =
+      ThreadInspector::From(V8PerIsolateData::MainThreadIsolate());
+  DCHECK(inspector && !inspector->IsWorker());
+  return static_cast<MainThreadInspector*>(inspector);
 }
 
-void MainThreadDebugger::InterruptMainThreadAndRun(
+void MainThreadInspector::InterruptMainThreadAndRun(
     InspectorTaskRunner::Task task) {
   MutexLocker locker(CreationMutex());
   if (instance_) {
@@ -231,7 +231,7 @@ void MainThreadDebugger::InterruptMainThreadAndRun(
   }
 }
 
-void MainThreadDebugger::runMessageLoopOnPause(int context_group_id) {
+void MainThreadInspector::runMessageLoopOnPause(int context_group_id) {
   LocalFrame* paused_frame =
       WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
   // Do not pause in Context of detached frame.
@@ -247,13 +247,13 @@ void MainThreadDebugger::runMessageLoopOnPause(int context_group_id) {
     client_message_loop_->Run(paused_frame);
 }
 
-void MainThreadDebugger::quitMessageLoopOnPause() {
+void MainThreadInspector::quitMessageLoopOnPause() {
   paused_ = false;
   if (client_message_loop_)
     client_message_loop_->QuitNow();
 }
 
-void MainThreadDebugger::muteMetrics(int context_group_id) {
+void MainThreadInspector::muteMetrics(int context_group_id) {
   LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
   if (frame && frame->GetPage()) {
     frame->GetPage()->GetUseCounter().MuteForInspector();
@@ -261,7 +261,7 @@ void MainThreadDebugger::muteMetrics(int context_group_id) {
   }
 }
 
-void MainThreadDebugger::unmuteMetrics(int context_group_id) {
+void MainThreadInspector::unmuteMetrics(int context_group_id) {
   LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
   if (frame && frame->GetPage()) {
     frame->GetPage()->GetUseCounter().UnmuteForInspector();
@@ -269,7 +269,7 @@ void MainThreadDebugger::unmuteMetrics(int context_group_id) {
   }
 }
 
-v8::Local<v8::Context> MainThreadDebugger::ensureDefaultContextInGroup(
+v8::Local<v8::Context> MainThreadInspector::ensureDefaultContextInGroup(
     int context_group_id) {
   LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
   ScriptState* script_state =
@@ -277,28 +277,28 @@ v8::Local<v8::Context> MainThreadDebugger::ensureDefaultContextInGroup(
   return script_state ? script_state->GetContext() : v8::Local<v8::Context>();
 }
 
-void MainThreadDebugger::beginEnsureAllContextsInGroup(int context_group_id) {
+void MainThreadInspector::beginEnsureAllContextsInGroup(int context_group_id) {
   LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
   frame->GetSettings()->SetForceMainWorldInitialization(true);
 }
 
-void MainThreadDebugger::endEnsureAllContextsInGroup(int context_group_id) {
+void MainThreadInspector::endEnsureAllContextsInGroup(int context_group_id) {
   LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
   frame->GetSettings()->SetForceMainWorldInitialization(false);
 }
 
-bool MainThreadDebugger::canExecuteScripts(int context_group_id) {
+bool MainThreadInspector::canExecuteScripts(int context_group_id) {
   LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
   return frame->GetDocument()->CanExecuteScripts(kNotAboutToExecuteScript);
 }
 
-void MainThreadDebugger::runIfWaitingForDebugger(int context_group_id) {
+void MainThreadInspector::runIfWaitingForDebugger(int context_group_id) {
   LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
   if (client_message_loop_)
     client_message_loop_->RunIfWaitingForDebugger(frame);
 }
 
-void MainThreadDebugger::consoleAPIMessage(
+void MainThreadInspector::consoleAPIMessage(
     int context_group_id,
     v8::Isolate::MessageErrorLevel level,
     const v8_inspector::StringView& message,
@@ -319,7 +319,7 @@ void MainThreadDebugger::consoleAPIMessage(
                                          ToCoreString(message), location.get());
 }
 
-void MainThreadDebugger::consoleClear(int context_group_id) {
+void MainThreadInspector::consoleClear(int context_group_id) {
   LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
   if (!frame)
     return;
@@ -327,7 +327,7 @@ void MainThreadDebugger::consoleClear(int context_group_id) {
     frame->GetPage()->GetConsoleMessageStorage().Clear();
 }
 
-v8::MaybeLocal<v8::Value> MainThreadDebugger::memoryInfo(
+v8::MaybeLocal<v8::Value> MainThreadInspector::memoryInfo(
     v8::Isolate* isolate,
     v8::Local<v8::Context> context) {
   ExecutionContext* execution_context = ToExecutionContext(context);
@@ -336,18 +336,18 @@ v8::MaybeLocal<v8::Value> MainThreadDebugger::memoryInfo(
   return ToV8(MemoryInfo::Create(), context->Global(), isolate);
 }
 
-void MainThreadDebugger::installAdditionalCommandLineAPI(
+void MainThreadInspector::installAdditionalCommandLineAPI(
     v8::Local<v8::Context> context,
     v8::Local<v8::Object> object) {
-  ThreadDebugger::installAdditionalCommandLineAPI(context, object);
+  ThreadInspector::installAdditionalCommandLineAPI(context, object);
   CreateFunctionProperty(
-      context, object, "$", MainThreadDebugger::QuerySelectorCallback,
+      context, object, "$", MainThreadInspector::QuerySelectorCallback,
       "function $(selector, [startNode]) { [Command Line API] }");
   CreateFunctionProperty(
-      context, object, "$$", MainThreadDebugger::QuerySelectorAllCallback,
+      context, object, "$$", MainThreadInspector::QuerySelectorAllCallback,
       "function $$(selector, [startNode]) { [Command Line API] }");
   CreateFunctionProperty(
-      context, object, "$x", MainThreadDebugger::XpathSelectorCallback,
+      context, object, "$x", MainThreadInspector::XpathSelectorCallback,
       "function $x(xpath, [startNode]) { [Command Line API] }");
 }
 
@@ -364,7 +364,7 @@ static Node* SecondArgumentAsNode(
   return nullptr;
 }
 
-void MainThreadDebugger::QuerySelectorCallback(
+void MainThreadInspector::QuerySelectorCallback(
     const v8::FunctionCallbackInfo<v8::Value>& info) {
   if (info.Length() < 1)
     return;
@@ -387,7 +387,7 @@ void MainThreadDebugger::QuerySelectorCallback(
     info.GetReturnValue().Set(v8::Null(info.GetIsolate()));
 }
 
-void MainThreadDebugger::QuerySelectorAllCallback(
+void MainThreadInspector::QuerySelectorAllCallback(
     const v8::FunctionCallbackInfo<v8::Value>& info) {
   if (info.Length() < 1)
     return;
@@ -419,7 +419,7 @@ void MainThreadDebugger::QuerySelectorAllCallback(
   info.GetReturnValue().Set(nodes);
 }
 
-void MainThreadDebugger::XpathSelectorCallback(
+void MainThreadInspector::XpathSelectorCallback(
     const v8::FunctionCallbackInfo<v8::Value>& info) {
   if (info.Length() < 1)
     return;

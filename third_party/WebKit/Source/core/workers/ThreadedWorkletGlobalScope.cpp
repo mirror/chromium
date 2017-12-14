@@ -7,7 +7,7 @@
 #include "base/memory/scoped_refptr.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleMessageStorage.h"
-#include "core/inspector/WorkerThreadDebugger.h"
+#include "core/inspector/WorkerThreadInspector.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThread.h"
@@ -53,9 +53,9 @@ void ThreadedWorkletGlobalScope::AddConsoleMessage(
 
 void ThreadedWorkletGlobalScope::ExceptionThrown(ErrorEvent* error_event) {
   DCHECK(IsContextThread());
-  if (WorkerThreadDebugger* debugger =
-          WorkerThreadDebugger::From(GetThread()->GetIsolate()))
-    debugger->ExceptionThrown(thread_, error_event);
+  if (WorkerThreadInspector* inspector =
+          WorkerThreadInspector::From(GetThread()->GetIsolate()))
+    inspector->ExceptionThrown(thread_, error_event);
 }
 
 }  // namespace blink

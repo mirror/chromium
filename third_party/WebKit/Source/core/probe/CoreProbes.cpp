@@ -40,8 +40,8 @@
 #include "core/inspector/InspectorPageAgent.h"
 #include "core/inspector/InspectorSession.h"
 #include "core/inspector/InspectorTraceEvents.h"
-#include "core/inspector/MainThreadDebugger.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
+#include "core/inspector/ThreadInspector.h"
 #include "core/page/Page.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -63,7 +63,7 @@ AsyncTask::AsyncTask(ExecutionContext* context,
                      void* task,
                      const char* step,
                      bool enabled)
-    : debugger_(enabled ? ThreadDebugger::From(ToIsolate(context)) : nullptr),
+    : inspector_(enabled ? ThreadInspector::From(ToIsolate(context)) : nullptr),
       task_(AsyncId(task)),
       recurring_(step) {
   if (recurring_) {
@@ -74,15 +74,15 @@ AsyncTask::AsyncTask(ExecutionContext* context,
     TRACE_EVENT_FLOW_END0("devtools.timeline.async", "AsyncTask",
                           TRACE_ID_LOCAL(reinterpret_cast<uintptr_t>(task)));
   }
-  if (debugger_)
-    debugger_->AsyncTaskStarted(task_);
+  if (inspector_)
+    inspector_->AsyncTaskStarted(task_);
 }
 
 AsyncTask::~AsyncTask() {
-  if (debugger_) {
-    debugger_->AsyncTaskFinished(task_);
+  if (inspector_) {
+    inspector_->AsyncTaskFinished(task_);
     if (!recurring_)
-      debugger_->AsyncTaskCanceled(task_);
+      inspector_->AsyncTaskCanceled(task_);
   }
 }
 
@@ -92,8 +92,8 @@ void AsyncTaskScheduled(ExecutionContext* context,
   TRACE_EVENT_FLOW_BEGIN1("devtools.timeline.async", "AsyncTask",
                           TRACE_ID_LOCAL(reinterpret_cast<uintptr_t>(task)),
                           "data", InspectorAsyncTask::Data(name));
-  if (ThreadDebugger* debugger = ThreadDebugger::From(ToIsolate(context)))
-    debugger->AsyncTaskScheduled(name, AsyncId(task), true);
+  if (ThreadInspector* inspector = ThreadInspector::From(ToIsolate(context)))
+    inspector->AsyncTaskScheduled(name, AsyncId(task), true);
 }
 
 void AsyncTaskScheduledBreakable(ExecutionContext* context,
@@ -104,8 +104,8 @@ void AsyncTaskScheduledBreakable(ExecutionContext* context,
 }
 
 void AsyncTaskCanceled(ExecutionContext* context, void* task) {
-  if (ThreadDebugger* debugger = ThreadDebugger::From(ToIsolate(context)))
-    debugger->AsyncTaskCanceled(AsyncId(task));
+  if (ThreadInspector* inspector = ThreadInspector::From(ToIsolate(context)))
+    inspector->AsyncTaskCanceled(AsyncId(task));
   TRACE_EVENT_FLOW_END0("devtools.timeline.async", "AsyncTask",
                         TRACE_ID_LOCAL(reinterpret_cast<uintptr_t>(task)));
 }
@@ -118,8 +118,8 @@ void AsyncTaskCanceledBreakable(ExecutionContext* context,
 }
 
 void AllAsyncTasksCanceled(ExecutionContext* context) {
-  if (ThreadDebugger* debugger = ThreadDebugger::From(ToIsolate(context)))
-    debugger->AllAsyncTasksCanceled();
+  if (ThreadInspector* inspector = ThreadInspector::From(ToIsolate(context)))
+    inspector->AllAsyncTasksCanceled();
 }
 
 void DidReceiveResourceResponseButCanceled(LocalFrame* frame,

@@ -10,7 +10,7 @@
 #include "core/events/ErrorEvent.h"
 #include "core/events/MessageEvent.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/DedicatedWorker.h"
 #include "core/workers/DedicatedWorkerObjectProxy.h"
@@ -155,10 +155,10 @@ void DedicatedWorkerMessagingProxy::PostMessageToWorkerObject(
 
   MessagePortArray* ports =
       MessagePort::EntanglePorts(*GetExecutionContext(), std::move(channels));
-  MainThreadDebugger::Instance()->ExternalAsyncTaskStarted(stack_id);
+  MainThreadInspector::Instance()->ExternalAsyncTaskStarted(stack_id);
   worker_object_->DispatchEvent(
       MessageEvent::Create(ports, std::move(message)));
-  MainThreadDebugger::Instance()->ExternalAsyncTaskFinished(stack_id);
+  MainThreadInspector::Instance()->ExternalAsyncTaskFinished(stack_id);
 }
 
 void DedicatedWorkerMessagingProxy::DispatchErrorEvent(

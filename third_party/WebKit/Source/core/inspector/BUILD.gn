@@ -87,20 +87,20 @@ blink_core_sources("inspector") {
     "InspectorTracingAgent.h",
     "InspectorWorkerAgent.cpp",
     "InspectorWorkerAgent.h",
-    "MainThreadDebugger.cpp",
-    "MainThreadDebugger.h",
+    "MainThreadInspector.cpp",
+    "MainThreadInspector.h",
     "NetworkResourcesData.cpp",
     "NetworkResourcesData.h",
     "ResolveNode.cpp",
     "ResolveNode.h",
-    "ThreadDebugger.cpp",
-    "ThreadDebugger.h",
+    "ThreadInspector.cpp",
+    "ThreadInspector.h",
     "V8InspectorString.cpp",
     "V8InspectorString.h",
     "WorkerInspectorController.cpp",
     "WorkerInspectorController.h",
-    "WorkerThreadDebugger.cpp",
-    "WorkerThreadDebugger.h",
+    "WorkerThreadInspector.cpp",
+    "WorkerThreadInspector.h",
   ]
 
   jumbo_excluded_sources = [
@@ -109,7 +109,7 @@ blink_core_sources("inspector") {
     "InspectorNetworkAgent.cpp",
 
     # Collides with InspectorPageAgent.cpp (patch incoming)
-    "MainThreadDebugger.cpp",
+    "MainThreadInspector.cpp",
   ]
 
   configs += [

@@ -102,7 +102,7 @@
 #include "core/html_names.h"
 #include "core/input/EventHandler.h"
 #include "core/input/KeyboardEventManager.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/layout/LayoutMenuList.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTreeAsText.h"

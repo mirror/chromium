@@ -44,7 +44,7 @@ namespace blink {
 
 class CoreProbeSink;
 class Resource;
-class ThreadDebugger;
+class ThreadInspector;
 
 namespace probe {
 
@@ -59,7 +59,7 @@ class CORE_EXPORT AsyncTask {
   ~AsyncTask();
 
  private:
-  ThreadDebugger* debugger_;
+  ThreadInspector* inspector_;
   void* task_;
   bool recurring_;
 };

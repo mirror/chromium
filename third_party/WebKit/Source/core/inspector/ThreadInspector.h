@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef ThreadDebugger_h
-#define ThreadDebugger_h
+#ifndef ThreadInspector_h
+#define ThreadInspector_h
 
 #include <memory>
 #include "base/macros.h"
@@ -23,14 +23,13 @@ namespace blink {
 class ExecutionContext;
 class SourceLocation;
 
-// TODO(dgozman): rename this to ThreadInspector (and subclasses).
-class CORE_EXPORT ThreadDebugger : public v8_inspector::V8InspectorClient,
-                                   public V8PerIsolateData::Data {
+class CORE_EXPORT ThreadInspector : public v8_inspector::V8InspectorClient,
+                                    public V8PerIsolateData::Data {
  public:
-  explicit ThreadDebugger(v8::Isolate*);
-  ~ThreadDebugger() override;
+  explicit ThreadInspector(v8::Isolate*);
+  ~ThreadInspector() override;
 
-  static ThreadDebugger* From(v8::Isolate*);
+  static ThreadInspector* From(v8::Isolate*);
   virtual bool IsWorker() = 0;
   v8_inspector::V8Inspector* GetV8Inspector() const {
     return v8_inspector_.get();
@@ -110,11 +109,11 @@ class CORE_EXPORT ThreadDebugger : public v8_inspector::V8InspectorClient,
 
   std::unique_ptr<v8_inspector::V8Inspector> v8_inspector_;
   std::unique_ptr<v8::TracingCpuProfiler> v8_tracing_cpu_profiler_;
-  Vector<std::unique_ptr<Timer<ThreadDebugger>>> timers_;
+  Vector<std::unique_ptr<Timer<ThreadInspector>>> timers_;
   Vector<v8_inspector::V8InspectorClient::TimerCallback> timer_callbacks_;
   Vector<void*> timer_data_;
   std::unique_ptr<UserGestureIndicator> user_gesture_indicator_;
-  DISALLOW_COPY_AND_ASSIGN(ThreadDebugger);
+  DISALLOW_COPY_AND_ASSIGN(ThreadInspector);
 };
 
 template <>
@@ -125,4 +124,4 @@ struct CrossThreadCopier<v8_inspector::V8StackTraceId> {
 
 }  // namespace blink
 
-#endif  // ThreadDebugger_h
+#endif  // ThreadInspector_h

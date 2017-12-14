@@ -48,7 +48,7 @@
 #include "core/html/HTMLPlugInElement.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/InspectorTraceEvents.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/NavigationScheduler.h"
@@ -75,7 +75,7 @@ void ScriptController::Trace(blink::Visitor* visitor) {
 
 void ScriptController::ClearForClose() {
   window_proxy_manager_->ClearForClose();
-  MainThreadDebugger::Instance()->DidClearContextsForFrame(GetFrame());
+  MainThreadInspector::Instance()->DidClearContextsForFrame(GetFrame());
 }
 
 void ScriptController::UpdateSecurityOrigin(
@@ -205,7 +205,7 @@ void ScriptController::ClearWindowProxy() {
   // V8 binding expects ScriptController::clearWindowProxy only be called when a
   // frame is loading a new page. This creates a new context for the new page.
   window_proxy_manager_->ClearForNavigation();
-  MainThreadDebugger::Instance()->DidClearContextsForFrame(GetFrame());
+  MainThreadInspector::Instance()->DidClearContextsForFrame(GetFrame());
 }
 
 void ScriptController::UpdateDocument() {

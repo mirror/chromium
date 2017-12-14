@@ -8,7 +8,7 @@
 #include "base/macros.h"
 #include "core/CoreExport.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/ThreadInspector.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashMap.h"

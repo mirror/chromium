@@ -37,7 +37,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/events/MessageEvent.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/ThreadInspector.h"
 #include "core/workers/DedicatedWorkerMessagingProxy.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/WorkerGlobalScope.h"
@@ -84,10 +84,11 @@ void DedicatedWorkerObjectProxy::ProcessMessageFromWorkerObject(
   MessagePortArray* ports =
       MessagePort::EntanglePorts(*global_scope, std::move(channels));
 
-  ThreadDebugger* debugger = ThreadDebugger::From(worker_thread->GetIsolate());
-  debugger->ExternalAsyncTaskStarted(stack_id);
+  ThreadInspector* inspector =
+      ThreadInspector::From(worker_thread->GetIsolate());
+  inspector->ExternalAsyncTaskStarted(stack_id);
   global_scope->DispatchEvent(MessageEvent::Create(ports, std::move(message)));
-  debugger->ExternalAsyncTaskFinished(stack_id);
+  inspector->ExternalAsyncTaskFinished(stack_id);
 }
 
 void DedicatedWorkerObjectProxy::ProcessUnhandledException(
