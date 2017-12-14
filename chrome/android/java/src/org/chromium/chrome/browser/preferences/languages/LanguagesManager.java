@@ -106,6 +106,15 @@ class LanguagesManager {
     }
 
     /**
+     * Move a language to a new position n the current user's accept languages.
+     * @param code The language code to move.
+     * @param offset The new position for this language.
+     */
+    public void moveLanguagePosition(String code, int offset) {
+        mPrefServiceBridge.moveAcceptLanguage(code, offset);
+    }
+
+    /**
      * Get the static instance of ChromePreferenceManager if it exists else create it.
      * @return the LanguagesManager singleton.
      */
