@@ -13,7 +13,6 @@ namespace favicon {
 
 extern const base::Feature kFaviconsFromWebManifest;
 extern const base::Feature kAllowPropagationOfFaviconCacheHits;
-extern const base::Feature kAllowDeletionOfFaviconMappings;
 
 }  // namespace favicon
 

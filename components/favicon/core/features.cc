@@ -14,7 +14,4 @@ const base::Feature kFaviconsFromWebManifest{"FaviconsFromWebManifest",
 const base::Feature kAllowPropagationOfFaviconCacheHits{
     "kAllowPropagationOfFaviconCacheHits", base::FEATURE_ENABLED_BY_DEFAULT};
 
-const base::Feature kAllowDeletionOfFaviconMappings{
-    "AllowDeletionOfFaviconMappings", base::FEATURE_ENABLED_BY_DEFAULT};
-
 }  // namespace favicon
