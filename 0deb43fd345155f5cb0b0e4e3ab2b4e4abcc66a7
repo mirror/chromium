@@ -1,0 +1,385 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "620f690d_50c2da77",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "What are your thoughts on calculating the readiness on the browser side, instead of in the PDF compositor? Then the compositor may be a bit simpler, and the browser won\u0027t have to make a round trip to ask about the readiness. Or would that mean the compositor will end up having a lot of redundant frame tree data because it needs it no matter what?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1ade81_4bd775cb",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "How did we pick this value?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e3d8ca_080fff60",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "IWYU",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb77f3dd_3f06a51b",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Using iter-\u003e here is slightly cheaper.",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 45
+      },
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53debc94_277eb50b",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "So a previous call to AddSubframeContent() added a parent ID on line 54, and this overwrite it?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53041b4_4850e618",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Can this overwrite an existing entry?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f920298_87c70f41",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Most text editors will get confused about the double open braces in the #if/else. How about:\n\nbool result;\n#if defined(EXPERIMENTAL_SKIA)\n  result \u003d Sk...();\n#else\n  result \u003d Sk...();\n#endif\n  if (!result) {\n    ...\n  }",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5361c3ca_287f5bc2",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Let\u0027s add:\n\nstd::unique_ptr\u003cFrameInfo\u003e\u0026 frame_info \u003d iter-\u003esecond;\n\nand then use that in place of iter-\u003esecond everywhere below.",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387ab4eb_9f6e6c16",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need comments for the overrides. The virtual function definition should contain the comments already.",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3686a1_fc99e39d",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Add a comment to describe when this is set to true.",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabaf50c_be8e9974",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "This is the MSKP data from the renderer, right? Can you add a comment?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9365f7d8_f9babc6a",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "And explain what this is, since it\u0027s not the same variable type as the |content| passed in to the constructor.",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed02ad06_0ab587c8",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Is the size of the map generally small, since usually there are very few iframes on any page? Maybe move to base::flat_map for containers that are expected to be small.",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a0f435_6e0ccde7",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "|frame_info_map_| is more specific, since all the maps below have \"frame\" in their names.",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd286cc_1b2d335b",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "bad formatting due to git cl format confusion over the unneeded semi-colon.",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48773b4a_c5e3119b",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Can this loop happen with production code?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da707ee_702112dd",
+        "filename": "components/printing/service/pdf_compositor_service_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Declare this after line 215, so it\u0027s closer to where it\u0027s used. Also make it const.",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3534af10_7b6c0852",
+        "filename": "components/printing/service/public/cpp/pdf_compositor_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Not used?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133dfb70_4c491523",
+        "filename": "components/printing/service/public/cpp/pdf_compositor_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "content_id",
+      "range": {
+        "startLine": 50,
+        "startChar": 50,
+        "endLine": 50,
+        "endChar": 53
+      },
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4c97fe_a812e9f6",
+        "filename": "components/printing/service/public/cpp/pdf_compositor_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Is this needed? Should AddSubframeMap() have been called already? Or is the call order something the compositor cannot enforce?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f1c4d6_3438a9ab",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T03:09:50Z",
+      "side": 1,
+      "message": "Do you know if Mojo supports base::Optional?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
