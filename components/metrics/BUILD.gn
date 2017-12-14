@@ -134,6 +134,13 @@ static_library("metrics") {
     deps += [ "//components/browser_watcher:stability_client" ]
   }
 
+  if (is_android) {
+    sources += [
+      "gms_core_version.cc",
+      "gms_core_version.h",
+    ]
+  }
+
   if (is_fuchsia) {
     sources += [ "drive_metrics_provider_fuchsia.cc" ]
   }

@@ -29,6 +29,7 @@ class StabilityMetricsProvider : public MetricsProvider {
   void MarkSessionEndCompleted(bool end_completed);
 
   void LogCrash();
+  void LogCrashWithoutGmsCoreUpdate();
   void LogStabilityLogDeferred();
   void LogStabilityDataDiscarded();
   void LogLaunch();

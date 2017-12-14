@@ -146,6 +146,7 @@
 #include "build/build_config.h"
 #include "components/metrics/environment_recorder.h"
 #include "components/metrics/field_trials_provider.h"
+#include "components/metrics/gms_core_version.h"
 #include "components/metrics/metrics_log.h"
 #include "components/metrics/metrics_log_manager.h"
 #include "components/metrics/metrics_log_uploader.h"
@@ -205,6 +206,9 @@ void MetricsService::RegisterPrefs(PrefRegistrySimple* registry) {
 
   registry->RegisterInt64Pref(prefs::kUninstallLaunchCount, 0);
   registry->RegisterInt64Pref(prefs::kUninstallMetricsUptimeSec, 0);
+#if defined(OS_ANDROID)
+  registry->RegisterStringPref(prefs::kStabilityGmsCoreVersion, "");
+#endif
 }
 
 MetricsService::MetricsService(MetricsStateManager* state_manager,
@@ -475,6 +479,15 @@ void MetricsService::InitializeMetricsState() {
   StabilityMetricsProvider provider(local_state_);
   if (!state_manager_->clean_exit_beacon()->exited_cleanly()) {
     provider.LogCrash();
+#if defined(OS_ANDROID)
+    // In android, if there is an update for GMS core when Chrome is running,
+    // Chrome will be killed and restart. This is expected and we should only
+    // report crash if the GMS core version has not been changed.
+    if (GmsCoreVersion::CheckConsistencyAndUpdate(local_state_)) {
+      provider.LogCrashWithoutGmsCoreUpdate();
+    }
+#endif
+
     // Reset flag, and wait until we call LogNeedForCleanShutdown() before
     // monitoring.
     state_manager_->clean_exit_beacon()->WriteBeaconValue(true);

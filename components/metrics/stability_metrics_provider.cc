@@ -64,6 +64,15 @@ void StabilityMetricsProvider::ProvideStabilityMetrics(
     stability->set_crash_count(crash_count);
   }
 
+  int crash_count_without_gms_core_update =
+      local_state_->GetInteger(prefs::kStabilityCrashCountWithoutGmsCoreUpdate);
+  if (crash_count_without_gms_core_update) {
+    local_state_->SetInteger(prefs::kStabilityCrashCountWithoutGmsCoreUpdate,
+                             0);
+    stability->set_crash_count_without_gms_core_update(
+        crash_count_without_gms_core_update);
+  }
+
   int incomplete_shutdown_count =
       local_state_->GetInteger(prefs::kStabilityIncompleteSessionEndCount);
   if (incomplete_shutdown_count) {
@@ -153,6 +162,10 @@ void StabilityMetricsProvider::MarkSessionEndCompleted(bool end_completed) {
 
 void StabilityMetricsProvider::LogCrash() {
   IncrementPrefValue(prefs::kStabilityCrashCount);
+}
+
+void StabilityMetricsProvider::LogCrashWithoutGmsCoreUpdate() {
+  IncrementPrefValue(prefs::kStabilityCrashCountWithoutGmsCoreUpdate);
 }
 
 void StabilityMetricsProvider::LogStabilityLogDeferred() {
