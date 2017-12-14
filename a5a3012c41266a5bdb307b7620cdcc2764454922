@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "555d040c_3e6134dd",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-12-14T11:36:30Z",
+      "side": 1,
+      "message": "nit: If the order isn\u0027t important, maybe add the common ld flag once above after line 646?",
+      "range": {
+        "startLine": 666,
+        "startChar": 15,
+        "endLine": 666,
+        "endChar": 24
+      },
+      "revId": "a5a3012c41266a5bdb307b7620cdcc2764454922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
