@@ -30,10 +30,10 @@ namespace blink {
 
 using namespace HTMLNames;
 
-static bool StyleSheetTypeIsSupported(const String& type) {
-  String trimmed_type = ContentType(type).GetType();
-  return trimmed_type.IsEmpty() ||
-         MIMETypeRegistry::IsSupportedStyleSheetMIMEType(trimmed_type);
+static bool IsSupportedStyleSheetType(const String& type) {
+  String mime_type = ContentType(type).GetType();
+  return mime_type.IsEmpty() ||
+         MIMETypeRegistry::IsSupportedStyleSheetMIMEType(mime_type);
 }
 
 LinkStyle* LinkStyle::Create(HTMLLinkElement* owner) {
@@ -258,7 +258,7 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
     const WTF::TextEncoding& charset,
     const String& type) {
   if (disabled_state_ == kDisabled || !owner_->RelAttribute().IsStyleSheet() ||
-      !StyleSheetTypeIsSupported(type) || !ShouldLoadResource() ||
+      !IsSupportedStyleSheetType(type) || !ShouldLoadResource() ||
       !url.IsValid())
     return kNotNeeded;
 
@@ -345,9 +345,9 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
 
 void LinkStyle::Process() {
   DCHECK(owner_->ShouldProcessStyle());
-  String type = owner_->TypeValue().DeprecatedLower();
-  String as = owner_->AsValue().DeprecatedLower();
-  String media = owner_->Media().DeprecatedLower();
+  const String& type = owner_->TypeValue().LowerASCII();
+  const String& as = owner_->AsValue().LowerASCII();
+  const String& media = owner_->Media().LowerASCII();
 
   const KURL& href = owner_->GetNonEmptyURLAttribute(hrefAttr);
   WTF::TextEncoding charset = GetCharset();

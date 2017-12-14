@@ -102,10 +102,10 @@ bool MIMETypeRegistry::IsSupportedImagePrefixedMIMEType(
 
 bool MIMETypeRegistry::IsSupportedImageMIMETypeForEncoding(
     const String& mime_type) {
-  if (DeprecatedEqualIgnoringCase(mime_type, "image/jpeg") ||
-      DeprecatedEqualIgnoringCase(mime_type, "image/png"))
+  if (EqualIgnoringASCIICase(mime_type, "image/jpeg") ||
+      EqualIgnoringASCIICase(mime_type, "image/png"))
     return true;
-  if (DeprecatedEqualIgnoringCase(mime_type, "image/webp"))
+  if (EqualIgnoringASCIICase(mime_type, "image/webp"))
     return true;
   return false;
 }
@@ -182,20 +182,20 @@ bool MIMETypeRegistry::IsJavaAppletMIMEType(const String& mime_type) {
 }
 
 bool MIMETypeRegistry::IsSupportedStyleSheetMIMEType(const String& mime_type) {
-  return DeprecatedEqualIgnoringCase(mime_type, "text/css");
+  return EqualIgnoringASCIICase(mime_type, "text/css");
 }
 
 bool MIMETypeRegistry::IsSupportedFontMIMEType(const String& mime_type) {
   static const unsigned kFontLen = 5;
   if (!mime_type.StartsWithIgnoringASCIICase("font/"))
     return false;
-  String sub_type = mime_type.Substring(kFontLen).DeprecatedLower();
+  const String& sub_type = mime_type.Substring(kFontLen).LowerASCII();
   return sub_type == "woff" || sub_type == "woff2" || sub_type == "otf" ||
          sub_type == "ttf" || sub_type == "sfnt";
 }
 
 bool MIMETypeRegistry::IsSupportedTextTrackMIMEType(const String& mime_type) {
-  return DeprecatedEqualIgnoringCase(mime_type, "text/vtt");
+  return EqualIgnoringASCIICase(mime_type, "text/vtt");
 }
 
 }  // namespace blink
