@@ -143,6 +143,10 @@ message CreateClientConfigRequest {
   // The DogfoodGroup of the user.
   // Added in M65.
   optional DogfoodGroup dogfood_group = 4;
+
+  // Kilobytes of total device memory.
+  // Added in M65.
+  optional int64 total_device_memory_kb = 5;
 }
 
 // Build version information.

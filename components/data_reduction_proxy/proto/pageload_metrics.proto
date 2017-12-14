@@ -105,4 +105,8 @@ message PageloadMetrics {
   // The name of the finch group for the data reduction proxy holdback
   // experiment. This can be an empty string if not included in a finch group.
   optional string holdback_group = 19;
+
+  // Kilobytes of total device memory.
+  // Added in M65.
+  optional int64 total_device_memory_kb = 20;
 }
