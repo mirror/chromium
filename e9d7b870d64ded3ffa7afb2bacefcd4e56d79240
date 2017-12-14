@@ -93,6 +93,30 @@
       "revId": "e9d7b870d64ded3ffa7afb2bacefcd4e56d79240",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef3ac7f_d32e8341",
+        "filename": "chrome/browser/extensions/install_verifier_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T15:49:18Z",
+      "side": 1,
+      "message": "Personally, I do still find that much more verbose and harder to read than the current version, but I\u0027ll let Istiaque chime in if he has a preference. :)",
+      "parentUuid": "1c4df57f_5048bf37",
+      "range": {
+        "startLine": 75,
+        "startChar": 20,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "e9d7b870d64ded3ffa7afb2bacefcd4e56d79240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
