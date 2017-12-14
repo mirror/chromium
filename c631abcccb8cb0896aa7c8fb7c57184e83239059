@@ -22,6 +22,30 @@
       "revId": "c631abcccb8cb0896aa7c8fb7c57184e83239059",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d005a9b_86aebddb",
+        "filename": "content/browser/download/parallel_download_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-12-14T00:15:15Z",
+      "side": 1,
+      "message": "Removing this will break the case when the feature is disabled. Since GetFieldTrialParamByFeatureAsBool will use the default value.\n\nAdded a test case to cover this.",
+      "parentUuid": "150a934a_c04c6b3b",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 67
+      },
+      "revId": "c631abcccb8cb0896aa7c8fb7c57184e83239059",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
