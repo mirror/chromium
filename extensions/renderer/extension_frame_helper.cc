@@ -307,6 +307,10 @@ void ExtensionFrameHelper::WillReleaseScriptContext(
       render_frame()->GetWebFrame(), context, world_id);
 }
 
+void ExtensionFrameHelper::DidClearWindowObject() {
+  extension_dispatcher_->DidClearWindowObject(render_frame()->GetWebFrame());
+}
+
 bool ExtensionFrameHelper::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(ExtensionFrameHelper, message)
