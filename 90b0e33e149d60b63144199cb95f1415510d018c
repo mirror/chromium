@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8baaf90_10eb3327",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-14T16:55:52Z",
+      "side": 1,
+      "message": "Lambdas are not widely used yet.  Let me know if you think it would be better to use a counter and a for loop instead.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 72
+      },
+      "revId": "90b0e33e149d60b63144199cb95f1415510d018c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ddb80d80_20328299",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-14T16:55:52Z",
+      "side": 1,
+      "message": "The standard is not available for free, so I cannot add a canonical citation here, but this is what https://stackoverflow.com/questions/28811034/using-stdless-with-nullptr states.",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 75
+      },
+      "revId": "90b0e33e149d60b63144199cb95f1415510d018c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7cbec1f7_3fb9e889",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-14T16:55:52Z",
+      "side": 1,
+      "message": "Reordering members to better align with comparison operator.",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 27
+      },
+      "revId": "90b0e33e149d60b63144199cb95f1415510d018c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd45753b_50dc55c9",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-14T16:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da4564fb_e7b4036c",
+      "revId": "db3b2604cb4e8cf981dccf4d043c3b14fb7861f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9279f5a6_3b7983ad",
         "filename": "net/spdy/chromium/http2_push_promise_index.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "074b90bc_ef34d0d2",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-14T16:55:52Z",
+      "side": 1,
+      "message": "Yes, that case is only used by CountStreamsForSession(), which is only used for testing, NetLog, and DCHECK.  I agree with you that it is better not to add complexity to support this in log(N) time, since the linear implementation is much simpler overall.\n\nOn the other hand, since SpdySession::GetInfoAsValue() already creates a DictionaryValue with a large number of entries, I am not convinced that it would be an improvement to call CountStreamsForSession() from SpdySessionPool instead of SpdySession.",
+      "parentUuid": "9279f5a6_3b7983ad",
+      "revId": "db3b2604cb4e8cf981dccf4d043c3b14fb7861f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a186f296_969964d4",
         "filename": "net/spdy/chromium/http2_push_promise_index.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "db3b2604cb4e8cf981dccf4d043c3b14fb7861f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b13cd9_8a7422f2",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-14T16:55:52Z",
+      "side": 1,
+      "message": "Agreed.  I\u0027m removing one set at the cost of making CountStreamsForSession() linear.  All other methods are still optimal.",
+      "parentUuid": "a186f296_969964d4",
+      "revId": "db3b2604cb4e8cf981dccf4d043c3b14fb7861f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "db3b2604cb4e8cf981dccf4d043c3b14fb7861f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ab091b_53170526",
+        "filename": "net/spdy/chromium/http2_push_promise_index_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-12-14T16:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a781940_6fe367e9",
+      "range": {
+        "startLine": 92,
+        "startChar": 29,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "db3b2604cb4e8cf981dccf4d043c3b14fb7861f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
