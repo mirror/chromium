@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea95af2a_100402c4",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T19:48:46Z",
+      "side": 1,
+      "message": "Ping?",
+      "parentUuid": "d898c0bf_49949e0e",
+      "range": {
+        "startLine": 209,
+        "startChar": 17,
+        "endLine": 209,
+        "endChar": 40
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cae30fa_b39ee3c2",
         "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
         "patchSetId": 2
@@ -215,6 +239,30 @@
       "writtenOn": "2017-12-13T18:17:58Z",
       "side": 1,
       "message": "nit: Omit \"chromeos::attestation::\".",
+      "range": {
+        "startLine": 237,
+        "startChar": 6,
+        "endLine": 237,
+        "endChar": 29
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c91b75_6404ba79",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T19:48:46Z",
+      "side": 1,
+      "message": "Ping?",
+      "parentUuid": "07ff1169_e3da048c",
       "range": {
         "startLine": 237,
         "startChar": 6,

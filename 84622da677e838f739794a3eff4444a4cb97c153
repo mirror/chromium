@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9304a1b5_1f5378db",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T19:48:46Z",
+      "side": 1,
+      "message": "nit: Remove \"const\". Enum argument is of trivial value and is passed by value anyway.\n\nDitto for other places in this and other files.",
+      "range": {
+        "startLine": 95,
+        "startChar": 4,
+        "endLine": 95,
+        "endChar": 56
+      },
+      "revId": "84622da677e838f739794a3eff4444a4cb97c153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f615a26e_f686573b",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T19:48:46Z",
+      "side": 1,
+      "message": "BTW, wouldn\u0027t printing |status| be helpful for debugging such errors?",
+      "revId": "84622da677e838f739794a3eff4444a4cb97c153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85428fe0_de0ad9cd",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T19:48:46Z",
+      "side": 1,
+      "message": "nit: Typo.",
+      "range": {
+        "startLine": 68,
+        "startChar": 26,
+        "endLine": 68,
+        "endChar": 31
+      },
+      "revId": "84622da677e838f739794a3eff4444a4cb97c153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810bb8a1_e707411a",
+        "filename": "chromeos/attestation/attestation_flow.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T19:48:46Z",
+      "side": 1,
+      "message": "nit: Add curly brackets around the condition body, as it\u0027s multi-line now.",
+      "revId": "84622da677e838f739794a3eff4444a4cb97c153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
