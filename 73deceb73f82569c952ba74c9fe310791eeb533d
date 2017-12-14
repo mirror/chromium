@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fd5a166d_d0aec9d4",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-14T19:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40c62e8a_21ce8df3",
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6deb51de_20b2efc1",
         "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
         "patchSetId": 19
@@ -296,6 +314,30 @@
       "side": 1,
       "message": "But I\u0027m still not quite getting - the policy itself is just talking about restricting account switching inside user session, and this (IIUC) should work as promised as long as incognito and multi-sign-in are blocked.\n\nOf course, if the admin wants only user X to be allowed to sign in to the device, or something else along these lines, then they would additionally need the sign-in restriction policy. But I think it\u0027s just a different level of control - and not necessarily tied to this policy.\n\nAlso, the fact that this policy isn\u0027t applied to all users on a given device is inferred from it being a user policy, not a device policy.\n\nWDYT?",
       "parentUuid": "139b071c_edb41ed6",
+      "range": {
+        "startLine": 4513,
+        "startChar": 53,
+        "endLine": 4513,
+        "endChar": 77
+      },
+      "revId": "73deceb73f82569c952ba74c9fe310791eeb533d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc98570b_9be1a2b1",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 19
+      },
+      "lineNbr": 4513,
+      "author": {
+        "id": 1252512
+      },
+      "writtenOn": "2017-12-14T19:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ad5e56b_64285b29",
       "range": {
         "startLine": 4513,
         "startChar": 53,
