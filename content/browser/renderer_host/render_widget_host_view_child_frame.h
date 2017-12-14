@@ -94,7 +94,6 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
                        const ReadbackRequestCallback& callback,
                        const SkColorType color_type) override;
   void Show() override;
-  void Hide() override;
   Visibility GetVisibility() const override;
   gfx::Rect GetViewBounds() const override;
   gfx::Size GetVisibleViewportSize() const override;
@@ -284,6 +283,9 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   // sent through it are routed to the embedding renderer process.
   FrameConnectorDelegate* frame_connector_;
 
+  // Whether the view is visible.
+  bool is_visible_;
+
   base::WeakPtr<RenderWidgetHostViewChildFrame> AsWeakPtr() {
     return weak_factory_.GetWeakPtr();
   }
@@ -314,6 +316,11 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   // associated with this view or a cross process ancestor frame has been hidden
   // using CSS.
   bool CanBecomeVisible();
+
+  // RenderWidgetHostViewBase:
+  void DoHide() override;
+  void WasShown() override;
+  void WasHidden() override;
 
   using FrameSwappedCallbackList =
       base::circular_deque<std::unique_ptr<base::Closure>>;

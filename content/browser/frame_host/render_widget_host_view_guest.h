@@ -68,7 +68,6 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   void Focus() override;
   bool HasFocus() const override;
   void Show() override;
-  void Hide() override;
   gfx::NativeView GetNativeView() const override;
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
   gfx::Rect GetViewBounds() const override;
@@ -187,6 +186,10 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
 #if defined(USE_AURA)
   void OnGotEmbedToken(const base::UnguessableToken& token);
 #endif
+
+  // RenderWidgetHostViewBase:
+  void WasShown() override;
+  void WasHidden() override;
 
   // BrowserPluginGuest and RenderWidgetHostViewGuest's lifetimes are not tied
   // to one another, therefore we access |guest_| through WeakPtr.

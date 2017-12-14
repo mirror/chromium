@@ -73,6 +73,7 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       next_surface_sequence_(1u),
       current_surface_scale_factor_(1.f),
       frame_connector_(nullptr),
+      is_visible_(!host_->is_hidden()),
       enable_viz_(base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableViz)),
       background_color_(SK_ColorWHITE),
@@ -229,30 +230,16 @@ bool RenderWidgetHostViewChildFrame::IsSurfaceAvailableForCopy() const {
 }
 
 void RenderWidgetHostViewChildFrame::Show() {
-  if (!host_->is_hidden())
-    return;
-
   if (!CanBecomeVisible())
     return;
 
-  host_->WasShown(ui::LatencyInfo());
-
-  if (frame_connector_)
-    frame_connector_->SetVisibilityForChildViews(true);
-}
-
-void RenderWidgetHostViewChildFrame::Hide() {
-  if (host_->is_hidden())
-    return;
-  host_->WasHidden();
-
-  if (frame_connector_)
-    frame_connector_->SetVisibilityForChildViews(false);
+  is_visible_ = true;
+  VisibilityChanged();
 }
 
 Visibility RenderWidgetHostViewChildFrame::GetVisibility() const {
   // RenderWidgetHostViewChildFrame doesn't track occlusion.
-  return host_->is_hidden() ? Visibility::HIDDEN : Visibility::VISIBLE;
+  return is_visible_ ? Visibility::VISIBLE : Visibility::HIDDEN;
 }
 
 gfx::Rect RenderWidgetHostViewChildFrame::GetViewBounds() const {
@@ -1113,6 +1100,31 @@ bool RenderWidgetHostViewChildFrame::CanBecomeVisible() {
 
   return static_cast<RenderWidgetHostViewChildFrame*>(parent_view)
       ->CanBecomeVisible();
+}
+
+void RenderWidgetHostViewChildFrame::DoHide() {
+  is_visible_ = false;
+  VisibilityChanged();
+}
+
+void RenderWidgetHostViewChildFrame::WasShown() {
+  if (!host_->is_hidden())
+    return;
+
+  host_->WasShown(ui::LatencyInfo());
+
+  if (frame_connector_)
+    frame_connector_->SetVisibilityForChildViews(true);
+}
+
+void RenderWidgetHostViewChildFrame::WasHidden() {
+  if (host_->is_hidden())
+    return;
+
+  host_->WasHidden();
+
+  if (frame_connector_)
+    frame_connector_->SetVisibilityForChildViews(false);
 }
 
 }  // namespace content

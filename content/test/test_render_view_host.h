@@ -77,11 +77,8 @@ class TestRenderWidgetHostView : public RenderWidgetHostViewBase,
   ui::TextInputClient* GetTextInputClient() override;
   bool HasFocus() const override;
   void Show() override;
-  void Hide() override;
   Visibility GetVisibility() const override;
   void CaptureStateChanged() override;
-  void WasUnOccluded() override;
-  void WasOccluded() override;
   gfx::Rect GetViewBounds() const override;
   void SetBackgroundColor(SkColor color) override;
   SkColor background_color() const override;
@@ -122,7 +119,6 @@ class TestRenderWidgetHostView : public RenderWidgetHostViewBase,
   viz::FrameSinkId GetFrameSinkId() override;
 
   bool is_showing() const { return is_showing_; }
-  bool is_occluded() const { return is_occluded_; }
   int num_capture_state_changed() const { return num_capture_state_changed_; }
   bool did_swap_compositor_frame() const { return did_swap_compositor_frame_; }
   void reset_did_swap_compositor_frame() { did_swap_compositor_frame_ = false; }
@@ -146,8 +142,12 @@ class TestRenderWidgetHostView : public RenderWidgetHostViewBase,
   viz::FrameSinkId frame_sink_id_;
 
  private:
+  // RenderWidgetHostViewBase:
+  void DoHide() override;
+  void WasShown() override;
+  void WasHidden() override;
+
   bool is_showing_ = false;
-  bool is_occluded_ = false;
   int num_capture_state_changed_ = 0;
   bool did_swap_compositor_frame_ = false;
   bool did_change_compositor_frame_sink_ = false;

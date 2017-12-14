@@ -833,6 +833,12 @@ void RenderWidgetHostImpl::WasResized() {
     delegate_->RenderWidgetWasResized(this, width_changed);
 }
 
+bool RenderWidgetHostImpl::IsBeingCaptured() const {
+  return (delegate_ && delegate_->IsBeingCaptured()) ||
+         !pending_browser_snapshots_.empty() ||
+         !pending_surface_browser_snapshots_.empty();
+}
+
 void RenderWidgetHostImpl::GotFocus() {
   Focus();
   if (owner_delegate_)
@@ -1583,6 +1589,7 @@ void RenderWidgetHostImpl::NotifyScreenInfoChanged() {
 void RenderWidgetHostImpl::GetSnapshotFromBrowser(
     const GetSnapshotFromBrowserCallback& callback,
     bool from_surface) {
+  const bool was_being_captured = IsBeingCaptured();
   int id = next_browser_snapshot_id_++;
   if (from_surface) {
     pending_surface_browser_snapshots_.insert(std::make_pair(id, callback));
@@ -1590,21 +1597,23 @@ void RenderWidgetHostImpl::GetSnapshotFromBrowser(
     latency_info.AddLatencyNumber(ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT,
                                   0, id);
     Send(new ViewMsg_ForceRedraw(GetRoutingID(), latency_info));
-    return;
+  } else {
+#if defined(OS_MACOSX)
+    // MacOS version of underlying GrabViewSnapshot() blocks while display/GPU
+    // are in a power-saving mode, so make sure display does not go to sleep for
+    // the duration of reading a snapshot.
+    if (pending_browser_snapshots_.empty())
+      GetWakeLock()->RequestWakeLock();
+#endif
+    pending_browser_snapshots_.insert(std::make_pair(id, callback));
+    ui::LatencyInfo latency_info;
+    latency_info.AddLatencyNumber(ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT,
+                                  0, id);
+    Send(new ViewMsg_ForceRedraw(GetRoutingID(), latency_info));
   }
 
-#if defined(OS_MACOSX)
-  // MacOS version of underlying GrabViewSnapshot() blocks while
-  // display/GPU are in a power-saving mode, so make sure display
-  // does not go to sleep for the duration of reading a snapshot.
-  if (pending_browser_snapshots_.empty())
-    GetWakeLock()->RequestWakeLock();
-#endif
-  pending_browser_snapshots_.insert(std::make_pair(id, callback));
-  ui::LatencyInfo latency_info;
-  latency_info.AddLatencyNumber(ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT, 0,
-                                id);
-  Send(new ViewMsg_ForceRedraw(GetRoutingID(), latency_info));
+  if (!was_being_captured && view_)
+    view_->CaptureStateChanged();
 }
 
 void RenderWidgetHostImpl::SelectionChanged(const base::string16& text,
@@ -2550,6 +2559,8 @@ void RenderWidgetHostImpl::OnSnapshotFromSurfaceReceived(
       ++it;
     }
   }
+  if (!IsBeingCaptured() && view_)
+    view_->CaptureStateChanged();
 }
 
 void RenderWidgetHostImpl::OnSnapshotReceived(int snapshot_id,
@@ -2569,6 +2580,8 @@ void RenderWidgetHostImpl::OnSnapshotReceived(int snapshot_id,
   if (pending_browser_snapshots_.empty())
     GetWakeLock()->CancelWakeLock();
 #endif
+  if (!IsBeingCaptured() && view_)
+    view_->CaptureStateChanged();
 }
 
 // static
