@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26d28dfc_97542c92",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-14T06:54:23Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to qualify this with WTF here.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 3
+      },
+      "revId": "e2649d6270f1317a64e26ef950cea48f0370e881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1e5dc5_1eed4ed0",
+        "filename": "third_party/WebKit/Source/platform/exported/WebClipboardImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-14T06:54:23Z",
+      "side": 1,
+      "message": "g_empty_string16_bit",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 13
+      },
+      "revId": "e2649d6270f1317a64e26ef950cea48f0370e881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
