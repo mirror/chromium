@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1be4040_24ab8b47",
+        "filename": "chrome/browser/component_updater/widevine_cdm_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-14T07:21:08Z",
+      "side": 1,
+      "message": "nit: it\u0027d be nice to be consistent with the name of this boolean, e.g. use supports_persistent_license here as well.",
+      "range": {
+        "startLine": 267,
+        "startChar": 6,
+        "endLine": 267,
+        "endChar": 37
+      },
+      "revId": "1562f14291c5aadb70bf10da32fea5db814e09fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab4480b_7ddb2136",
+        "filename": "content/public/common/cdm_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-14T07:21:08Z",
+      "side": 1,
+      "message": "nit: supports_persistent_license (w/o s) since the session type is called p-l?",
+      "range": {
+        "startLine": 64,
+        "startChar": 34,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "1562f14291c5aadb70bf10da32fea5db814e09fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62774861_3703640a",
+        "filename": "content/public/common/cdm_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-14T07:21:08Z",
+      "side": 1,
+      "message": "move this up to be together with |supported_codecs|, or alternatively move the latter down. Basically these two are all features of the CDM and should stay together.",
+      "revId": "1562f14291c5aadb70bf10da32fea5db814e09fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
