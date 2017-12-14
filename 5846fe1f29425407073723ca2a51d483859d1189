@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ea258cdd_2e62b039",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T19:59:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea95af2a_100402c4",
+      "range": {
+        "startLine": 209,
+        "startChar": 17,
+        "endLine": 209,
+        "endChar": 40
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cae30fa_b39ee3c2",
         "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "5846fe1f29425407073723ca2a51d483859d1189",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2a2aa7_7c2ebf76",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T19:59:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6cae30fa_b39ee3c2",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 31
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -103,6 +151,24 @@
       "revId": "5846fe1f29425407073723ca2a51d483859d1189",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a51852_a6542f6b",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T19:59:44Z",
+      "side": 1,
+      "message": "We didn\u0027t before... I don\u0027t want to spam the log, we log when we give up.",
+      "parentUuid": "f4ab3d1d_3a3705e2",
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
