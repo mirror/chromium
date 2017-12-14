@@ -105,6 +105,9 @@ void ContentElement::SetProjectionMatrix(const gfx::Transform& matrix) {
 
 bool ContentElement::OnBeginFrame(const base::TimeTicks& time,
                                   const gfx::Vector3dF& look_at) {
+  if (projection_matrix_.IsIdentity())
+    return false;
+
   // Determine if the projected size of the content quad changed more than a
   // given threshold. If so, propagate this info so that the content's
   // resolution and size can be adjusted. For the calculation, we cannot take
