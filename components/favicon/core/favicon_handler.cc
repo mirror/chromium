@@ -45,35 +45,6 @@ bool IsValid(const favicon_base::FaviconRawBitmapResult& bitmap_result) {
   return bitmap_result.is_valid();
 }
 
-void RecordDownloadAttemptsForHandlerType(
-    FaviconDriverObserver::NotificationIconType handler_type,
-    int attempts) {
-  // If not at least one attempts was recorded or more than 15 attempts were
-  // registered, something went wrong. Underflows are stored in bucket 0 and
-  // overflows in bucket 16.
-  attempts = std::max(0, std::min(attempts, 16));
-  switch (handler_type) {
-    case FaviconDriverObserver::NON_TOUCH_16_DIP:
-      base::UmaHistogramSparse("Favicons.DownloadAttempts.Favicons", attempts);
-      return;
-    case FaviconDriverObserver::NON_TOUCH_LARGEST:
-      base::UmaHistogramSparse("Favicons.DownloadAttempts.LargeIcons",
-                               attempts);
-      return;
-    case FaviconDriverObserver::TOUCH_LARGEST:
-      base::UmaHistogramSparse("Favicons.DownloadAttempts.TouchIcons",
-                               attempts);
-      return;
-  }
-  NOTREACHED();
-}
-
-void RecordDownloadOutcome(FaviconHandler::DownloadOutcome outcome) {
-  UMA_HISTOGRAM_ENUMERATION(
-      "Favicons.DownloadOutcome", outcome,
-      FaviconHandler::DownloadOutcome::DOWNLOAD_OUTCOME_COUNT);
-}
-
 // Returns true if |bitmap_results| is non-empty and:
 // - At least one of the bitmaps in |bitmap_results| is expired
 // OR
@@ -536,13 +507,11 @@ void FaviconHandler::OnDidDownloadFavicon(
   if (bitmaps.empty()) {
     if (http_status_code == 404) {
       DVLOG(1) << "Failed to Download Favicon:" << image_url;
-      RecordDownloadOutcome(DownloadOutcome::FAILED);
       service_->UnableToDownloadFavicon(image_url);
     } else if (http_status_code != 0) {
       error_other_than_404_found_ = true;
     }
   } else {
-    RecordDownloadOutcome(DownloadOutcome::SUCCEEDED);
     float score = 0.0f;
     gfx::ImageSkia image_skia;
     if (download_largest_icon_) {
@@ -580,8 +549,6 @@ void FaviconHandler::OnDidDownloadFavicon(
   } else {
     // OnDidDownloadFavicon() can only be called after requesting a download, so
     // |num_image_download_requests_| can never be 0.
-    RecordDownloadAttemptsForHandlerType(handler_type_,
-                                         num_image_download_requests_);
     if (best_favicon_.candidate.icon_type == favicon_base::IconType::kInvalid) {
       // No valid icon found, so check if mappings should be deleted.
       MaybeDeleteFaviconMappings();
@@ -713,9 +680,6 @@ void FaviconHandler::OnFaviconData(const std::vector<
   if (has_expired_or_incomplete_result) {
     ScheduleImageDownload(current_candidate()->icon_url,
                           current_candidate()->icon_type);
-  } else if (num_image_download_requests_ > 0) {
-    RecordDownloadAttemptsForHandlerType(handler_type_,
-                                         num_image_download_requests_);
   }
 }
 
@@ -727,7 +691,6 @@ void FaviconHandler::ScheduleImageDownload(const GURL& image_url,
       << "More than one ongoing download";
   if (service_->WasUnableToDownloadFavicon(image_url)) {
     DVLOG(1) << "Skip Failed FavIcon: " << image_url;
-    RecordDownloadOutcome(DownloadOutcome::SKIPPED);
     OnDidDownloadFavicon(icon_type, 0, 0, image_url, std::vector<SkBitmap>(),
                          std::vector<gfx::Size>());
     return;
