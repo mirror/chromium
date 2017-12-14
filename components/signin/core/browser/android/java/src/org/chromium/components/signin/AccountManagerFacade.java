@@ -549,6 +549,16 @@ public class AccountManagerFacade {
         mCallbacksWaitingForPendingUpdates.add(callback);
     }
 
+    /**
+     * Checks whether there are pending updates for account list cache.
+     * @return true if there are no pending updates, false otherwise
+     */
+    @MainThread
+    public boolean isUpdatePending() {
+        ThreadUtils.assertOnUiThread();
+        return mUpdateTasksCounter > 0;
+    }
+
     private void updateAccounts() {
         ThreadUtils.assertOnUiThread();
         ++mUpdateTasksCounter;
