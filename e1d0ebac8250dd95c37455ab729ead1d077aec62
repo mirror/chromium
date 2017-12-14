@@ -16,6 +16,24 @@
       "revId": "e1d0ebac8250dd95c37455ab729ead1d077aec62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49662bbd_3a072878",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-14T20:06:25Z",
+      "side": 1,
+      "message": "PTAL again. Thanks. I used a temporary workaround to maintain the current behavior (including \u0027-1\u0027), and in order not to block future refactoring efforts. We\u0027ll revisit this part when the refactoring is near completion, and we should have more ideas on how to support this in a better way.",
+      "parentUuid": "ad5f8ffd_b31d0ec5",
+      "revId": "e1d0ebac8250dd95c37455ab729ead1d077aec62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
