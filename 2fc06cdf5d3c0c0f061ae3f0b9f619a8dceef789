@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43f6a0da_eef0a142",
+        "filename": "ash/lock_screen_action/lock_screen_action_background_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T00:18:20Z",
+      "side": 1,
+      "message": "You need to fix this case.",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 16
+      },
+      "revId": "2fc06cdf5d3c0c0f061ae3f0b9f619a8dceef789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067c1cf2_59ac7083",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T00:18:20Z",
+      "side": 1,
+      "message": "You need to fix this one.",
+      "range": {
+        "startLine": 395,
+        "startChar": 2,
+        "endLine": 395,
+        "endChar": 8
+      },
+      "revId": "2fc06cdf5d3c0c0f061ae3f0b9f619a8dceef789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c58b7fe_22a832b5",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T00:18:20Z",
+      "side": 1,
+      "message": "You\u0027ll need to fix this one.",
+      "range": {
+        "startLine": 456,
+        "startChar": 2,
+        "endLine": 456,
+        "endChar": 19
+      },
+      "revId": "2fc06cdf5d3c0c0f061ae3f0b9f619a8dceef789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
