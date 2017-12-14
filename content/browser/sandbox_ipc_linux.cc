@@ -30,6 +30,7 @@
 #include "ui/gfx/font.h"
 #include "ui/gfx/font_fallback_linux.h"
 #include "ui/gfx/font_render_params.h"
+#include "ui/gfx/platform_font_linux.h"
 
 namespace {
 
@@ -102,7 +103,11 @@ void SandboxIPCHandler::SetObserverForTests(
 }
 
 SandboxIPCHandler::SandboxIPCHandler(int lifeline_fd, int browser_socket)
-    : lifeline_fd_(lifeline_fd), browser_socket_(browser_socket) {}
+    : lifeline_fd_(lifeline_fd), browser_socket_(browser_socket) {
+  // Prime FontConfig for use.  Doing this after the thread has started may lead
+  // to data races.
+  gfx::PlatformFontLinux::InitDefaultFont();
+}
 
 void SandboxIPCHandler::Run() {
   struct pollfd pfds[2];
