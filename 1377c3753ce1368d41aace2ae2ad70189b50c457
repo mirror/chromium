@@ -182,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "c8508e7f_b29e44f4",
+        "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-14T22:12:36Z",
+      "side": 1,
+      "message": "Sigh, you\u0027re right.\n\nI don\u0027t know of a reason why MockRenderProcessHost always uses the default StoragePartition; it might just be that multi-partition support was never needed before.  Probably not worth trying to add it in this CL, though you could file a bug for that if you\u0027d like, and we can come back and improve this test if/when that gets done.\n\nAnd yes, I forgot about the bypass via RenderProcessHostFactory, that\u0027s too bad.  Given that, I think your current approach is the best we can do, and I\u0027m ok with it.",
+      "parentUuid": "d1a02aaf_7b9b0d12",
+      "range": {
+        "startLine": 347,
+        "startChar": 0,
+        "endLine": 347,
+        "endChar": 78
+      },
+      "revId": "1377c3753ce1368d41aace2ae2ad70189b50c457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3613509_82fcabb4",
         "filename": "content/browser/service_worker/service_worker_process_manager_unittest.cc",
         "patchSetId": 13

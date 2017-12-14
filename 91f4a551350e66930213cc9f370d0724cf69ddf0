@@ -16,6 +16,24 @@
       "revId": "91f4a551350e66930213cc9f370d0724cf69ddf0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f248c24_40c0decb",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-14T22:12:36Z",
+      "side": 1,
+      "message": "Good catch!  Looks like it might be null via WarmupSpareRenderProcessHost().",
+      "parentUuid": "edde890c_8c6b7db2",
+      "revId": "91f4a551350e66930213cc9f370d0724cf69ddf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
