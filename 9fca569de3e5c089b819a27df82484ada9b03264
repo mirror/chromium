@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8784aa69_17f45d94",
+        "filename": "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T22:12:43Z",
+      "side": 1,
+      "message": "Got it, I didn\u0027t see this check was added. Looks good.",
+      "revId": "9fca569de3e5c089b819a27df82484ada9b03264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
