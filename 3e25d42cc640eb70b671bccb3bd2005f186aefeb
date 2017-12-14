@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "d279d87a_702db176",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T01:11:09Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer we didn\u0027t add code for malformed input. use str.split() rather than re.split(). Guessing the if g !\u003d \u0027\u0027 is necessary for empty pattern?",
+      "revId": "3e25d42cc640eb70b671bccb3bd2005f186aefeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d40466b7_e269ebc0",
         "filename": "build/android/gyp/process_resources.py",
         "patchSetId": 1
@@ -30,6 +47,23 @@
       "writtenOn": "2017-12-13T23:33:34Z",
       "side": 1,
       "message": "Also here?",
+      "revId": "3e25d42cc640eb70b671bccb3bd2005f186aefeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edb5350_f89f2757",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T01:11:09Z",
+      "side": 1,
+      "message": "Sounds like ! isn\u0027t necessary since we hide output, so maybe we should remove them to simplify?\n\nWould be great to add comments. Maybe do:\n\nAAPT_IGNORE_PATTERN \u003d \u0027:\u0027.join([\n    \u0027OWNERS\u0027,  # Allow OWNERS files within res/\n    \u0027*.py\u0027,  # PRESUBMIT.py sometimes exist.\n    \u0027*.pyc\u0027, \n    \u0027*~\u0027,  # Some editors create these as temp files.\n    \u0027.*\u0027,  # Never makes sense to include dotfiles.\n    ])\n\nI\u0027d double check about .stamp files. I think actually they may only be being put in by resource rules that don\u0027t use process_resource.py in the first place (some rules create their own zip).",
       "revId": "3e25d42cc640eb70b671bccb3bd2005f186aefeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

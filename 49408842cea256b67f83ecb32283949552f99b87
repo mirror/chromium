@@ -16,6 +16,24 @@
       "revId": "49408842cea256b67f83ecb32283949552f99b87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866669b4_536a4b63",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T01:11:09Z",
+      "side": 0,
+      "message": "I asked to simplify it since adding support for \u003cdir\u003e_* would be non-trivial I don\u0027t think is relevant to us anyways. Also - there\u0027s an empty entry, and many .svn,.git, etc are covered by .*.\n\nAgree worth noting in CL description.",
+      "parentUuid": "117ce062_13b2aec9",
+      "revId": "49408842cea256b67f83ecb32283949552f99b87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
