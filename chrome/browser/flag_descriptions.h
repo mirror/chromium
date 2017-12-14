@@ -125,12 +125,9 @@ extern const char kCreditCardAssistDescription[];
 extern const char kCrossProcessGuestViewIsolationName[];
 extern const char kCrossProcessGuestViewIsolationDescription[];
 
-extern const char kDataReductionProxyLoFiName[];
-extern const char kDataReductionProxyLoFiDescription[];
-extern const char kDataReductionProxyLoFiAlwaysOn[];
-extern const char kDataReductionProxyLoFiCellularOnly[];
-extern const char kDataReductionProxyLoFiDisabled[];
-extern const char kDataReductionProxyLoFiSlowConnectionsOnly[];
+extern const char kDataSaverServerPreviewsName[];
+extern const char kDataSaverServerPreviewsDescription[];
+extern const char kDataSaverServerPreviewsPreferLitePage[];
 
 extern const char kDatasaverPromptName[];
 extern const char kDatasaverPromptDescription[];
@@ -224,9 +221,6 @@ extern const char kEnableClientLoFiDescription[];
 
 extern const char kEnableNoScriptPreviewsName[];
 extern const char kEnableNoScriptPreviewsDescription[];
-
-extern const char kEnableDataReductionProxyLitePageName[];
-extern const char kEnableDataReductionProxyLitePageDescription[];
 
 extern const char kDataReductionProxyServerAlternative1[];
 extern const char kDataReductionProxyServerAlternative2[];
