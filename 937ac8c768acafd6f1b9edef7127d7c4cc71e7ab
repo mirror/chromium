@@ -22,6 +22,30 @@
       "revId": "937ac8c768acafd6f1b9edef7127d7c4cc71e7ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800d7d82_d08f4738",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/profiles/ProfileDownloader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-14T18:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39995801_defa3445",
+      "range": {
+        "startLine": 123,
+        "startChar": 34,
+        "endLine": 123,
+        "endChar": 52
+      },
+      "revId": "937ac8c768acafd6f1b9edef7127d7c4cc71e7ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
