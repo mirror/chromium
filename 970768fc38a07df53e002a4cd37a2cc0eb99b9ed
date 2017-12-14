@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c2fa436_25ed5f33",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "Suggested phrasing:\n\nObserves a WebContents and requests fullscreening of its first video element.  The request is sent after the WebContents is loaded and tab capture has begun.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0808f9a8_607bd709",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "Suggested phrasing to be a bit more precise:\n\nObserves a WebContents and requests fullscreen of the first video element showing |file_url|.  The request is sent after the WebContents is loaded and tab capture has begun.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad78872f_2274fb97",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "Nit: Use \"WebContents\" consistently in comments",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ff700c_d4acfff5",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "There should be a space between override and {}.  Please run git cl format to fix any minor style issues.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8cc68d_584aa62a",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this just be kCreateRouteTimeoutForTab? Or is there a reason we should timeout route creation sooner for this case?",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f077337a_e649f54c",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "Fullscreen is requested once per WebContents, so maybe this could be fullscreen_request_time_.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e17b152c_48c8e7f1",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "This isn\u0027t the right bug link.  It points to some old bug that\u0027s been fixed.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa98bde5_aaabe8f8",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "s/requests/request/\n\nYou might clarify in this comment that the request is only sent once capture has begun.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893b02aa_12bfb8be",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "How do you avoid double delete if the WebContents navigates/is destroyed?\n\nI wonder if you can just \"delete this\" since there should be no outstanding tasks on capture_poll_timer_ and nothing on the stack that refers to |this|.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f65c6f_1f3f6340",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "Similar comment to the above.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8067cd_341a6a77",
+        "filename": "chrome/test/media_router/media_router_e2e_ui_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "Typo in operations",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fc5714_ccd8c3e4",
+        "filename": "chrome/test/media_router/media_router_e2e_ui_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "Relying on timeouts for the MR to change state leads to flaky tests.  Directly observing the state of the media route should lead to more reliable and faster tests.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c15d9bc_62d87ae6",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "Is there some way we can observe this state change without hard coding a timeout?",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c13ff90_09f1bc4d",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "Is is possible that capture begins after this is called (resulting in a false positive)?",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2cbef0ee_14c4c25a",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:05:54Z",
+      "side": 1,
+      "message": "The polling in offscreen_tab is accomplishing something a little different - it\u0027s basically a back channel to the Media Router so that when the associated media route is terminated (which destroys the capturer) the offscreen tab is cleaned up.\n\nIn general replacing the polling in this patch and the tests with observers of the underlying state changes should be done, but it\u0027s not clear to me what layer needs to be observed (capturer vs. media route).  Let\u0027s discuss offline with input from imcheng@.\n\nAs a secondary discussion, triggering remoting from the browser side without requiring fullscreen is something we should queue a task for (after some PM input).  I feel this is necessary for a good Remote Playback API implementation and could be useful here.",
+      "parentUuid": "95807a3f_68bd9d1e",
+      "revId": "7364ceb6f1b3d75ec2fe29fdcf01d5c8228a3b1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61fea95e_cfb70180",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 6
