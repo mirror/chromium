@@ -65,13 +65,11 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
     : type(type),
       id(id),
       video_facing(media::MEDIA_VIDEO_FACING_NONE),
-      name(name),
-      input(media::AudioParameters::AUDIO_FAKE,
-            static_cast<media::ChannelLayout>(channel_layout),
-            sample_rate,
-            16,
-            frames_per_buffer) {
-  DCHECK(input.IsValid());
+      name(name) {
+  input.emplace(media::AudioParameters::AUDIO_FAKE,
+                static_cast<media::ChannelLayout>(channel_layout), sample_rate,
+                16, frames_per_buffer);
+  DCHECK(input->IsValid());
 }
 
 MediaStreamDevice::MediaStreamDevice(const MediaStreamDevice& other) = default;
@@ -80,11 +78,19 @@ MediaStreamDevice::~MediaStreamDevice() {}
 
 bool MediaStreamDevice::IsSameDevice(
     const MediaStreamDevice& other_device) const {
-  return type == other_device.type && name == other_device.name &&
-         id == other_device.id &&
-         input.sample_rate() == other_device.input.sample_rate() &&
-         input.channel_layout() == other_device.input.channel_layout() &&
-         session_id == other_device.session_id;
+  if ((input && !other_device.input) || (!input && other_device.input))
+    return false;
+
+  bool is_same_device =
+      (type == other_device.type && name == other_device.name &&
+       id == other_device.id && session_id == other_device.session_id);
+
+  if (!input && !other_device.input)
+    return is_same_device;
+
+  return is_same_device &&
+         input->sample_rate() == other_device.input->sample_rate() &&
+         input->channel_layout() == other_device.input->channel_layout();
 }
 
 MediaStreamRequest::MediaStreamRequest(
