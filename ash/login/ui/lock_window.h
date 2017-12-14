@@ -41,6 +41,8 @@ class ASH_EXPORT LockWindow : public views::Widget,
  private:
   // views::WidgetDelegate:
   views::View* GetInitiallyFocusedView() override;
+  ui::AXRole GetAccessibleWindowRole() const override;
+  bool ShouldAdvanceFocusToTopLevelWidget() const override;
   views::Widget* GetWidget() override;
   const views::Widget* GetWidget() const override;
 

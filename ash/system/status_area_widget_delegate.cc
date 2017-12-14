@@ -120,6 +120,14 @@ bool StatusAreaWidgetDelegate::CanActivate() const {
 
 void StatusAreaWidgetDelegate::DeleteDelegate() {}
 
+ui::AXRole StatusAreaWidgetDelegate::GetAccessibleWindowRole() const {
+  return ui::AX_ROLE_GROUP;
+}
+
+bool StatusAreaWidgetDelegate::ShouldAdvanceFocusToTopLevelWidget() const {
+  return true;
+}
+
 void StatusAreaWidgetDelegate::AddTray(views::View* tray) {
   SetLayoutManager(NULL);  // Reset layout manager before adding a child.
   AddChildView(tray);

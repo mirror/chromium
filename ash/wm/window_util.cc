@@ -97,8 +97,8 @@ void GetBlockingContainersForRoot(aura::Window* root_window,
                                   aura::Window** min_container,
                                   aura::Window** system_modal_container) {
   if (Shell::Get()->session_controller()->IsUserSessionBlocked()) {
-    *min_container =
-        root_window->GetChildById(kShellWindowId_LockScreenContainersContainer);
+    *min_container = root_window->GetChildById(
+        kShellWindowId_LockScreenRootContainersContainer);
     *system_modal_container =
         root_window->GetChildById(kShellWindowId_LockSystemModalContainer);
   } else {

@@ -6,6 +6,7 @@
 
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
+#include "ui/accessibility/platform/aura_window_properties.h"
 #include "ui/events/gestures/gesture_recognizer.h"
 #include "ui/keyboard/keyboard_util.h"
 
@@ -33,6 +34,9 @@ LockWindow::LockWindow(Config config) {
   // login/lock content. See crbug.com/363635.
   keyboard::SetKeyboardOverscrollOverride(
       keyboard::KEYBOARD_OVERSCROLL_OVERRIDE_DISABLED);
+
+  GetNativeWindow()->SetProperty(ui::kAXRoleOverride,
+                                 static_cast<ui::AXRole>(ui::AX_ROLE_GROUP));
 }
 
 LockWindow::~LockWindow() {
@@ -56,6 +60,14 @@ const views::Widget* LockWindow::GetWidget() const {
 views::View* LockWindow::GetInitiallyFocusedView() {
   // There are multiple GetContentsView definitions; use the views::Widget one.
   return views::Widget::GetContentsView();
+}
+
+ui::AXRole LockWindow::GetAccessibleWindowRole() const {
+  return ui::AX_ROLE_GROUP;
+}
+
+bool LockWindow::ShouldAdvanceFocusToTopLevelWidget() const {
+  return true;
 }
 
 }  // namespace ash

@@ -18,6 +18,7 @@
 #include "ash/system/virtual_keyboard/virtual_keyboard_tray.h"
 #include "ash/system/web_notification/web_notification_tray.h"
 #include "base/i18n/time_formatting.h"
+#include "ui/accessibility/platform/aura_window_properties.h"
 #include "ui/display/display.h"
 #include "ui/native_theme/native_theme_dark_aura.h"
 
@@ -45,6 +46,9 @@ StatusAreaWidget::StatusAreaWidget(aura::Window* status_container, Shelf* shelf)
   Init(params);
   set_focus_on_creation(false);
   SetContentsView(status_area_widget_delegate_);
+
+  GetNativeWindow()->SetProperty(ui::kAXRoleOverride,
+                                 static_cast<ui::AXRole>(ui::AX_ROLE_GROUP));
 }
 
 StatusAreaWidget::~StatusAreaWidget() = default;
