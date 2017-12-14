@@ -1,0 +1,378 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5926e1db_3dcd0e1e",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Nit: Maybe \"DieIfOriginalProfileDestroyed\" for similarity with \"DieIfContentCaptureEnded.\"",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18c9958_c860ac31",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Is there a reason for this pattern instead of a base::Singleton, which is the more common way to create a per-process object?\n\nbase::Singleton is thread-safe and allows optional running of destructors on process exit.",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da124f6d_67d1a9e5",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Could this ever be false? You are inserting a newly constructed Profile* into the maps.",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97dbe9d_d3d65479",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "It isn\u0027t obvious to me why |profile| must be unregistered (and its callback entry removed) before the last Browser is removed.  Can you explain why this is true?",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a457a32c_801d725f",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "This is a tiny nitpick but, I would find the code easier to follow if the decrement were moved before the if() and the refcount check was against zero.",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e94ea56_1b9978a7",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "If you can ensure this is destroyed after all Browsers, you should be able to assert that the refcounts for all owned profiles are 1, correct?\n\nDo we have some other way of knowing that refcounts are being maintained properly?",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fecca9_1792bcb5",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Similar comment about decrement-then-check here.",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e67407_9b145518",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Nit: s/from/by/",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c2c563_b92bfd45",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Is it correct to say:\n\n\"These instances are owned by this class, instead of the original Profile (as is normally the case), as the lifetime assumptions are different.\"",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7cd0e6_dcaadd74",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Normally, the last Browser object using an OTR profile will delete that profile (via its original Profile) when the Browser is closed.",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956eaa5e_efc2cf9c",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "...can\u0027t let a Browser destroy an independently created OTR profile and must...",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd4f89f_7452c2c8",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "by extensions::OffscreenTab and PresentationReceiverWindow* (used by the Presentation API).\n\n* Does this need a namespace?",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02f2005_9ee67ae2",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Presentation API receiver Windows",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33a8616_c2d51ee9",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Can you document the behavior around the original profile as well: Normally the caller should own the registration and delete it if the original profile is also deleted.  However, if the original profile is deleted while the registration is still alive, then the OTR profile will be destroyed.",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49964638_7d0ede37",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Creates an OTR profile from |profile| and registers it with this object.  |callback|...",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d70637d_8b1b11e9",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Can these be named refcounts_map_ and callbacks_map_ for readability?",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630a9e4a_6316f8bf",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Can you document |profile| here? Can it be an original profile or OTR profile or both?",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4021d23b_30e6e37e",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Document |profile| here.  It\u0027s an original profile we are creating a registered OTR profile from?",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb20934_adf42cbc",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Where is it asserted that the OTR profile is actually destroyed?  It seems like the test will just hang (run loop will never be quit).  I would prefer an explicit assertion somewhere with a meaningful message to help future test debugging.",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de46385c_e5013d6a",
+        "filename": "chrome/browser/media/router/independent_otr_profile_manager_browsertest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "If all the dependent tasks have been posted to the UI thread, you can call QuitWhenIdle() here instead of posting the closure.  Not a big deal either way.",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c747f8_0d59efa6",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "Should these declarations have a namespace?  Similar comment applies to other code in c/b/ui/.",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5358746_12026df4",
+        "filename": "chrome/browser/ui/media_router/presentation_receiver_window_controller.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T22:40:58Z",
+      "side": 1,
+      "message": "I don\u0027t think this class is involved with the messaging implementation?  I didn\u0027t see any calls to the PresentationService (nor should it really as it\u0027s a layer above).",
+      "revId": "36b48bf266fb9322afba01b2704c356cc53f5a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
