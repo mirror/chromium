@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cc449243_96b9b424",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-14T19:05:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0439a801_699a04c5",
+      "revId": "f0fe618bda7677a0a95c1f7ff4ef591779186845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41f601b3_c49caf41",
         "filename": "tools/clang/scripts/update.py",
         "patchSetId": 1

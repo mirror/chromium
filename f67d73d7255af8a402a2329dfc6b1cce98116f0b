@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7db9115_94ba2322",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-14T19:05:58Z",
+      "side": 1,
+      "message": "Oh, right! Done.",
+      "parentUuid": "6b563945_753fa746",
+      "revId": "f67d73d7255af8a402a2329dfc6b1cce98116f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09610e49_2945386a",
         "filename": "tools/clang/scripts/update.py",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T18:42:49Z",
       "side": 1,
       "message": "could the for-loop be used on windows too?",
+      "revId": "f67d73d7255af8a402a2329dfc6b1cce98116f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e6675f_bafd6c91",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-12-14T19:05:58Z",
+      "side": 1,
+      "message": "Sure, but I think we haven\u0027t tried building / running coverage tools on Windows yet. Also, what would be the names of windows binaries? I\u0027d guess |tool + \u0027.exe\u0027| and |tool + \u0027.pdb\u0027|, but lld seems to have \u0027-link.exe\u0027 suffix...",
+      "parentUuid": "09610e49_2945386a",
       "revId": "f67d73d7255af8a402a2329dfc6b1cce98116f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
