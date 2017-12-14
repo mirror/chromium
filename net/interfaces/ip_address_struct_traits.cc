@@ -14,7 +14,7 @@ bool StructTraits<net::interfaces::IPAddressDataView, net::IPAddress>::Read(
     return false;
 
   *out = net::IPAddress(bytes.data(), bytes.size());
-  return out->IsValid();
+  return true;
 }
 
 }  // namespace mojo

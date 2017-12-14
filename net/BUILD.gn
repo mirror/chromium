@@ -4952,6 +4952,7 @@ test("net_unittests") {
     "http2/tools/random_decoder_test.h",
     "http2/tools/random_util.cc",
     "http2/tools/random_util.h",
+    "interfaces/ip_endpoint_struct_traits_unittest.cc",
     "log/file_net_log_observer_unittest.cc",
     "log/net_log_capture_mode_unittest.cc",
     "log/net_log_unittest.cc",
@@ -5570,6 +5571,7 @@ test("net_unittests") {
     sources -= [
       "dns/host_resolver_mojo_unittest.cc",
       "dns/mojo_host_resolver_impl_unittest.cc",
+      "interfaces/ip_endpoint_struct_traits_unittest.cc",
       "proxy/mojo_proxy_resolver_v8_tracing_bindings_unittest.cc",
     ]
   }
