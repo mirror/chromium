@@ -119,6 +119,30 @@ IN_PROC_BROWSER_TEST_F(MojoDOMStorageBrowserTest, MAYBE_DataPersists) {
   SimpleTest(GetTestUrl("dom_storage", "verify_data.html"), kNotIncognito);
 }
 
+// Regression test for https://crbug.com/776160.  The test verifies that there
+// is no disagreement between 1) site URL used for browser-side isolation
+// enforcement and 2) the origin requested by Blink.  Before this bug was fixed,
+// (1) was file://localhost/ and (2) was file:// - this led to renderer kills.
+IN_PROC_BROWSER_TEST_F(MojoDOMStorageBrowserTest,
+                       LocalStorage_FileUrlWithHost) {
+  // Navigate to file://localhost/.../title1.html
+  GURL regular_file_url = GetTestUrl(nullptr, "title1.html");
+  GURL::Replacements host_replacement;
+  host_replacement.SetHostStr("localhost");
+  GURL file_with_host_url =
+      regular_file_url.ReplaceComponents(host_replacement);
+  EXPECT_TRUE(NavigateToURL(shell(), file_with_host_url));
+
+  // Verify that window.localStorage works fine.
+  std::string result;
+  std::string script = R"(
+      localStorage["foo"] = "bar";
+      domAutomationController.send(localStorage["foo"]);
+  )";
+  EXPECT_TRUE(ExecuteScriptAndExtractString(shell(), script, &result));
+  EXPECT_EQ("bar", result);
+}
+
 class DOMStorageMigrationBrowserTest : public DOMStorageBrowserTest {
  public:
   void SetUpCommandLine(base::CommandLine* command_line) override {
