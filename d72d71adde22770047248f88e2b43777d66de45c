@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e05b60f3_23c18deb",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-iframe-no-scrollable-content.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T18:53:18Z",
+      "side": 1,
+      "message": "Instead of extending this test case, could you add the test case from the bug post? That one is simpler so it allows us to test this \"non-navigable iframe\"-bug independently.\n\nMaybe call it snav-backtrack-out-of-non-navigable-iframe.html, because that\u0027s what we want to do here, right?",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb5110e_e72b9676",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T18:53:18Z",
+      "side": 1,
+      "message": "AdvanceFocusDirectionallyInNavigableSubContainer ?",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a421dd_c3d787d1",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1425,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T18:53:18Z",
+      "side": 1,
+      "message": "Here and at line 1409 we call into our caller, AdvanceFocusDirectionallyInContainer. These recursions are bit hidden. I think they are hard to follow.\n\nIdea to avoid recursions: Merge AdvanceFocusDirectionallyIn* with FindFocusCandidateInContainer and make it traverse the DOM tree *once* with ElementTraversal.",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c9fa88_14a9d868",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T18:53:18Z",
+      "side": 1,
+      "message": "S",
+      "range": {
+        "startLine": 1455,
+        "startChar": 50,
+        "endLine": 1455,
+        "endChar": 51
+      },
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134f467d_c2d8b668",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T18:53:18Z",
+      "side": 1,
+      "message": "AdvanceFocusDirectionally()",
+      "range": {
+        "startLine": 1456,
+        "startChar": 17,
+        "endLine": 1456,
+        "endChar": 49
+      },
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278fd53c_85c422eb",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1461,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T18:53:18Z",
+      "side": 1,
+      "message": "What is the scenario here? FindFocusCandidateInContainer finds an iframe but the iframe does not have any focusable elements so we need to _backtrack_ and ask FindFocusCandidateInContainer to find us another candidate? \n\nSay |container| has n non-navigable \u003ciframe\u003es followed by one \u003ca\u003e. Say all n \u003ciframe\u003es are closer, spatially, to the current focus. We would then do n calls into FindFocusCandidateInContainer to go find that \u003ca\u003e? The last call will walk through all n element \u003d\u003e total time to find the \u003ca\u003e is O(n²)?\n\nHmm. How to avoid O(n²) and visit the container\u0027s children only once?\n\nCould we have FindFocusCandidateInContainer not return any such \"bad\" (\u003dnon-navigable) containers? In FindFocusCandidateInContainer I imagine:\n\n  if (!NonNavigableContainer(element))\n    continue;\n\nAnd here:\n \n  // We know from the contract of FindFocusCandidateInContainer that\n  // a navigable container will have something that we can focus:\n  return AdvanceFocusDirectionallyInDiscoveredContainer(next_closest, type);\n\nBut I think we better avoid recursions to save us some stack space and get better readability.",
+      "revId": "d72d71adde22770047248f88e2b43777d66de45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
