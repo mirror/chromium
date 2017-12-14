@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fbc90ba_0b8b9151",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridgeBuilder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-14T21:55:19Z",
+      "side": 1,
+      "message": "on failure, MediaCodecBridge::Create*coder() would delete the MediaCodecBridge object.  this would call release() on the bridge.\n\nthe new code won\u0027t do that, i think.",
+      "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce118a2b_33cb30a9",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-14T21:55:19Z",
+      "side": 1,
+      "message": "please consider doing that as part of this cl.  if it\u0027s not an acceptable change in jni_array, then there\u0027s probably a better way to do it here, too.",
+      "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a1f8f9_f18d3913",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-12-14T21:55:19Z",
+      "side": 1,
+      "message": "might want to init this to false near the beginning, rather than making the call site have to do it.",
+      "revId": "fc415df0d2f45d85da61ce82fd53a23caca97de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
