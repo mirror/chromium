@@ -14,14 +14,12 @@ class NetworkService;
 }
 
 // Returns a pointer to the NetworkService, creating / re-creating it as needed.
-// Must only be called on the UI thread. Must not be called if the network
-// service is disabled.
+// NetworkService will be running in-process if
+//   1) kNetworkService feature is disabled, or
+//   2) kNetworkService and kNetworkServiceInProcess are enabled)
+// Otherwise it runs out of process.
+// This method can only be called on the UI thread.
 CONTENT_EXPORT mojom::NetworkService* GetNetworkService();
-
-// Call |FlushForTesting()| on cached |NetworkServicePtr|. For testing only.
-// Must only be called on the UI thread. Must not be called if the network
-// service is disabled.
-CONTENT_EXPORT void FlushNetworkServiceInstanceForTesting();
 
 }  // namespace content
 
