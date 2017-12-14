@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a51a1986_7499f164",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-14T20:37:57Z",
+      "side": 1,
+      "message": "Will address in follow up CL.",
+      "parentUuid": "d6a17b71_dc6cb0b3",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "c24f6f7d1b280440342a5a80d33ca6a02a395bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55a03afb_e37d4035",
         "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "c24f6f7d1b280440342a5a80d33ca6a02a395bf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c08cd78_52e7b394",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-14T20:37:57Z",
+      "side": 1,
+      "message": "But that may unnecessarily create a CWVWebViewConfiguration just before shutting it down. Also, it is more convenient for the client that we do it for them.",
+      "parentUuid": "55a03afb_e37d4035",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "c24f6f7d1b280440342a5a80d33ca6a02a395bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
