@@ -618,6 +618,33 @@ void ChromeDownloadManagerDelegate::OpenDownload(DownloadItem* download) {
 #endif
 }
 
+bool ChromeDownloadManagerDelegate::IsMostRecentDownloadItemAtFilePath(
+    DownloadItem* download) {
+  std::vector<DownloadItem*> all_downloads;
+
+  Profile* profile = Profile::FromBrowserContext(download->GetBrowserContext());
+  content::DownloadManager* manager =
+      content::BrowserContext::GetDownloadManager(profile);
+  manager->GetAllDownloads(&all_downloads);
+
+  Profile* other_profile = profile->IsOffTheRecord()
+                               ? profile->GetOriginalProfile()
+                               : profile->GetOffTheRecordProfile();
+  manager = content::BrowserContext::GetDownloadManager(other_profile);
+  manager->GetAllDownloads(&all_downloads);
+
+  for (auto* item : all_downloads) {
+    if (item->GetGuid() == download->GetGuid() ||
+        item->GetTargetFilePath() != download->GetTargetFilePath())
+      continue;
+
+    if (!item->IsDone())
+      return false;
+  }
+
+  return true;
+}
+
 void ChromeDownloadManagerDelegate::ShowDownloadInShell(
     DownloadItem* download) {
   if (!download->CanShowInFolder())
