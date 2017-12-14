@@ -498,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "0f10e001_f9cc50c8",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-14T16:15:06Z",
+      "side": 1,
+      "message": "I finally understood your concerns around the logic in this function, and hence I revamped the approach here. I think it should be good now, thanks for taking the time to explain :-)",
+      "parentUuid": "a013f9a8_d649af2f",
+      "range": {
+        "startLine": 1203,
+        "startChar": 4,
+        "endLine": 1206,
+        "endChar": 35
+      },
+      "revId": "c5f4f5a6b30ccb7e97d434439ce763e8541bf203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff5258ec_2d4dda03",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 27

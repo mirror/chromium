@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "608e8090_c1e79d45",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-14T16:15:06Z",
+      "side": 1,
+      "message": "It\u0027s actually enabled, just did a test. IDC_FIND/IDC_FIND_NEXT/IDC_FIND_PREVIOUS are all enabled or disabled together in BrowserCommandController::UpdateCommandsForFind [1].\n\nYou can also do a manual test in your browser [2], CTRL+F always works (IDC_FIND), but so does F3 (IDC_FIND_NEXT) - even if there is no find text.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/browser_command_controller.cc?q\u003dIDC_FIND_NEXT\u0026sq\u003dpackage:chromium\u0026l\u003d1169\n[2] https://cs.chromium.org/chromium/src/chrome/app/chrome_dll.rc?rcl\u003d9966b73a986a5de99d3ba51d0d587b17fd0b938d\u0026l\u003d56",
+      "parentUuid": "85cd1dc8_5eb1848c",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 75
+      },
+      "revId": "4c1f232eefc8bf7caaf0e211bc5da6328ac52877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df834deb_04826246",
         "filename": "chrome/browser/extensions/window_open_apitest.cc",
         "patchSetId": 31
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1a564e5a_9e58eaab",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-14T16:15:06Z",
+      "side": 1,
+      "message": "I put it in browser_command_controller_browsertest, I think it\u0027s better suited there.",
+      "parentUuid": "df834deb_04826246",
+      "revId": "4c1f232eefc8bf7caaf0e211bc5da6328ac52877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50c06fe0_5baac57f",
         "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
         "patchSetId": 31
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-13T22:10:45Z",
       "side": 1,
       "message": "Are you sure this should be enabled? I would expect it to be false given nothing is selected.",
+      "range": {
+        "startLine": 132,
+        "startChar": 50,
+        "endLine": 132,
+        "endChar": 58
+      },
+      "revId": "4c1f232eefc8bf7caaf0e211bc5da6328ac52877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63601e82_aea26fd4",
+        "filename": "chrome/browser/ui/browser_command_controller_browsertest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-12-14T16:15:06Z",
+      "side": 1,
+      "message": "At first I didn\u0027t understand what you meant, but now I do [1]:\n\n// TODO(devint): http://b/issue?id\u003d1117225 Cut, Copy, and Paste are always\n// enabled in the page menu regardless of whether the command will do\n// anything. When someone selects the menu item, we just act as if they hit\n// the keyboard shortcut for the command by sending the associated key press\n// to windows. The real fix to this bug is to disable the commands when they\n// won\u0027t do anything. We\u0027ll need something like an overall clipboard command\n// manager to do that.\n\nI guess it\u0027s currently enabled all the time (I\u0027m ignoring the pdf case [2] which is the only place that actually disables it), and the test should be fine and exactly what I want (I want to make sure that copy is allowed). But there\u0027s the potential case of this behaviour changing sometimes in the future breaking this test. I\u0027m unsure what to do here, maybe just skip the check for cut/copy/paste.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/frame/browser_view.cc?rcl\u003d92c16a76d98e3926866746dcf85864fd145a53be\u0026l\u003d1396\n[2] https://cs.chromium.org/chromium/src/pdf/out_of_process_instance.cc?rcl\u003dc8faad16740ae9ae902b60f62be1224271ea3855\u0026l\u003d1537",
+      "parentUuid": "50c06fe0_5baac57f",
       "range": {
         "startLine": 132,
         "startChar": 50,
