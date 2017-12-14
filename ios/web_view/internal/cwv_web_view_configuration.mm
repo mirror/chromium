@@ -39,8 +39,10 @@
 @synthesize preferences = _preferences;
 @synthesize userContentController = _userContentController;
 
-static CWVWebViewConfiguration* defaultConfiguration;
-static CWVWebViewConfiguration* incognitoConfiguration;
+namespace {
+CWVWebViewConfiguration* defaultConfiguration;
+CWVWebViewConfiguration* incognitoConfiguration;
+}  // namespace
 
 + (void)shutDown {
   [defaultConfiguration shutDown];
