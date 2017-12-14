@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b84d7ca9_afd1a20a",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-14T20:33:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e3dc99e_ce8321e8",
+      "revId": "97c816eab60d4752a740e20611bcaa3dbd3e9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe494bcc_a7a819a2",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "97c816eab60d4752a740e20611bcaa3dbd3e9160",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feffe56b_203a116b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-14T20:33:42Z",
+      "side": 1,
+      "message": "At the time of writing this code I guess that functionality was not still there.\nGood to know though. It made the code a lot cleaner.",
+      "parentUuid": "fe494bcc_a7a819a2",
+      "revId": "97c816eab60d4752a740e20611bcaa3dbd3e9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d0a27589_eb116712",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-14T20:33:42Z",
+      "side": 1,
+      "message": "Done. A quick question though. Who is taking care of deleting this object then now? Do we have some sort of garbage collection for mojo objects?",
+      "parentUuid": "6463e96c_982e0631",
+      "revId": "97c816eab60d4752a740e20611bcaa3dbd3e9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcb0a637_59a43bd5",
         "filename": "services/viz/public/interfaces/hit_test/input_target_client.mojom",
         "patchSetId": 18
@@ -67,6 +121,24 @@
       "revId": "97c816eab60d4752a740e20611bcaa3dbd3e9160",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89012970_2e8ae475",
+        "filename": "services/viz/public/interfaces/hit_test/input_target_client.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-12-14T20:33:42Z",
+      "side": 1,
+      "message": "As far as I understand yes. Regarding the scaling I\u0027m not sure myself. Presumably they don\u0027t need to do any scaling at all. What you saw in the test is very likely an artifact of a test setup or something. That is why I filed that other bug to dig in more separately and do no delay exposing the API itself and mojo implementations with that.",
+      "parentUuid": "bcb0a637_59a43bd5",
+      "revId": "97c816eab60d4752a740e20611bcaa3dbd3e9160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
