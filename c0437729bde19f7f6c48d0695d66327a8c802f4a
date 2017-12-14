@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e4da18_c054f046",
+        "filename": "third_party/WebKit/Source/modules/storage/DOMWindowStorage.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-12-14T12:39:33Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 65,
+        "startChar": 38,
+        "endLine": 65,
+        "endChar": 61
+      },
+      "revId": "c0437729bde19f7f6c48d0695d66327a8c802f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cec93e_7fac4724",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 1784,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-12-14T12:39:33Z",
+      "side": 1,
+      "message": "Is this used anywhere?",
+      "range": {
+        "startLine": 1784,
+        "startChar": 2,
+        "endLine": 1784,
+        "endChar": 27
+      },
+      "revId": "c0437729bde19f7f6c48d0695d66327a8c802f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
