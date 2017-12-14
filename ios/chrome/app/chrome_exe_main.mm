@@ -26,7 +26,7 @@ void StartCrashController() {
     std::string channel_string = GetChannelString();
 
     RegisterChromeIOSCrashKeys();
-    base::debug::SetCrashKeyValue(crash_keys::kChannel, channel_string);
+    crash_keys::channel.Set(channel_string);
     breakpad_helper::Start(channel_string);
   }
 }

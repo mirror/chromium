@@ -247,7 +247,7 @@ void SetChannelFromCommandLine(const base::CommandLine& command_line) {
   if (!GetEnableCrashReporterSwitchParts(command_line, &switch_parts))
     return;
 
-  base::debug::SetCrashKeyValue(crash_keys::kChannel, switch_parts[1]);
+  crash_keys::channel.Set(switch_parts[1]);
 }
 #endif
 
