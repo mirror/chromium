@@ -156,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "20edcac5_ac958beb",
+        "filename": "components/arc/arc_session_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-14T14:01:47Z",
+      "side": 1,
+      "message": "Even if it\u0027s not a rush, \"removing direct full container start\" and \"removing NOT_STARTED state\" are conceptually independent, so could you split anyway?\n\nBTW, I couldn\u0027t find any pain point to drop it. Moreover, it looks just a simple work;\n- Extract this line to the end of ctor to a method Start().\n- Call it in arc_session_runner L252.\n- Restore NOT_STARTED.\n- Revert relevant part in arc_session_impl_unittest.cc.\n\nif we compare it to base, it looks like;\n- Start() always calls StartMiniInstance() so inlined.\n- StartFullInstance() is renamed to Upgrade(). (probably, NOT_STARTED should be asserted)\n\nOther parts are some refactoring (I appreciate your effort to keep the code clean!).\nRemoving NOT_STARTED can be on top that.",
+      "parentUuid": "e262f00d_8743bf01",
+      "revId": "556da616e58c21a934d6bc1a17e989648276527d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ff67a02_a7a089d2",
         "filename": "components/arc/arc_session_impl.cc",
         "patchSetId": 3

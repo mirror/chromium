@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "919f44de_1eb8bb19",
+        "filename": "components/arc/arc_session_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-14T14:01:47Z",
+      "side": 1,
+      "message": "Please keep the name even if it is unused in Chromium. You may want to document it, instead.",
+      "revId": "312ada4ff55364cbe7723e44a0bca985de3a180d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
