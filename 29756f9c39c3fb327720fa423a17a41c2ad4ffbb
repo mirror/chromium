@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "181db478_99e444a1",
+        "filename": "ios/web/web_state/js/resources/form.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-12-14T19:29:05Z",
+      "side": 1,
+      "message": "*same* -- did you mean \"different\"?",
+      "range": {
+        "startLine": 15,
+        "startChar": 32,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "29756f9c39c3fb327720fa423a17a41c2ad4ffbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
