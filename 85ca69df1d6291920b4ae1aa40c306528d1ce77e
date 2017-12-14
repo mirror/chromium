@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9d6a3c0e_610d610f",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T01:01:53Z",
+      "side": 1,
+      "message": "Set the values in the .cc",
+      "parentUuid": "a0189e29_ce26aa01",
+      "range": {
+        "startLine": 31,
+        "startChar": 3,
+        "endLine": 31,
+        "endChar": 13
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c877140_a7772174",
         "filename": "chrome/browser/vr/test/vr_browser_test.cc",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7da54d4e_f3e689f6",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T01:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c877140_a7772174",
+      "range": {
+        "startLine": 66,
+        "startChar": 42,
+        "endLine": 66,
+        "endChar": 54
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c0c3c78_0099bb80",
         "filename": "chrome/browser/vr/test/vr_browser_test.cc",
         "patchSetId": 17
@@ -68,6 +116,30 @@
       "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5aa098_aa530651",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T01:01:53Z",
+      "side": 1,
+      "message": "Yes, although it\u0027s probably about time for the test files to be moved out of chrome/test/data/android and into chrome/test/data. That\u0027ll require some Android refactoring as well, so I\u0027ll do that in a follow-up CL.",
+      "parentUuid": "7c0c3c78_0099bb80",
+      "range": {
+        "startLine": 73,
+        "startChar": 40,
+        "endLine": 73,
+        "endChar": 47
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,30 @@
       "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43db1a54_1bd3bf06",
+        "filename": "chrome/browser/vr/test/vr_browser_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T01:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fd86422_5bfa8112",
+      "range": {
+        "startLine": 149,
+        "startChar": 30,
+        "endLine": 149,
+        "endChar": 32
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "a2b15043_f7e08598",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T01:01:53Z",
+      "side": 1,
+      "message": "The looks promising, although glancing through the code, it doesn\u0027t look like you can set it to expect failure and whitelist certain configs. It\u0027ll be worth checking with a GPU team member, though.",
+      "parentUuid": "5398af3b_0b7c5505",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a52ea67_0b41e825",
         "filename": "chrome/browser/vr/test/vr_browser_test.h",
         "patchSetId": 17
@@ -207,6 +327,30 @@
       "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1119538a_19743160",
+        "filename": "chrome/browser/vr/test/vr_browser_test.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T01:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a52ea67_0b41e825",
+      "range": {
+        "startLine": 52,
+        "startChar": 23,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +398,30 @@
       "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8582616_244c770c",
+        "filename": "chrome/browser/vr/test/vr_transition_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T01:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9872b04_d58de12c",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "85ca69df1d6291920b4ae1aa40c306528d1ce77e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
