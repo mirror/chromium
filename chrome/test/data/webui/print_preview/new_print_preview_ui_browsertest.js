@@ -50,6 +50,7 @@ PrintPreviewSettingsSectionsTest = class extends NewPrintPreviewTest {
   /** @override */
   get extraLibraries() {
     return super.extraLibraries.concat([
+      'print_preview_tests.js',
       'settings_section_test.js',
     ]);
   }

@@ -121,14 +121,14 @@ cr.define('print_preview_test', function() {
         version: '1.0',
         printer: {
           supported_content_type: [{content_type: 'application/pdf'}],
-          collate: {},
+          collate: {default: true},
+          copies: {default: 1, max: 1000},
           color: {
             option: [
               {type: 'STANDARD_COLOR', is_default: true},
               {type: 'STANDARD_MONOCHROME'}
             ]
           },
-          copies: {},
           dpi: {
             option: [
               {horizontal_dpi: 200, vertical_dpi: 200, is_default: true},
