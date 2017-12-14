@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8653ae76_78cd40a0",
+        "filename": "build/config/ui.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-12-14T21:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24636ef5_a1d277ee",
+      "range": {
+        "startLine": 35,
+        "startChar": 34,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9931728f_b172be48",
         "filename": "build/config/ui.gni",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08fe62ac_58eaa780",
+        "filename": "build/config/ui.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-12-14T21:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9931728f_b172be48",
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "544ec420_1af4490a",
+        "filename": "gpu/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-12-14T21:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b97be581_c82a5088",
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91b9a2b8_bf5557db",
         "filename": "gpu/BUILD.gn",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef504596_b35d1ee1",
+        "filename": "gpu/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-12-14T21:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91b9a2b8_bf5557db",
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "3d8500eb_5cda9969",
+        "filename": "gpu/config/gpu_info_collector_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-12-14T21:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f354b5_97158213",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 0
+      },
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a534b17_b8a3449a",
         "filename": "ui/gl/init/gl_initializer_android.cc",
         "patchSetId": 2
@@ -119,6 +221,30 @@
       "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba3ba04_ce6b5a26",
+        "filename": "ui/gl/init/gl_initializer_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-12-14T21:19:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a534b17_b8a3449a",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
