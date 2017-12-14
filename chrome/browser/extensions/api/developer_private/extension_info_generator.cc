@@ -411,6 +411,11 @@ void ExtensionInfoGenerator::CreateExtensionInfoHelper(
   info->home_page.url = ManifestURL::GetHomepageURL(&extension).spec();
   info->home_page.specified = ManifestURL::SpecifiedHomepageURL(&extension);
 
+  // Developer and web store URLs.
+  info->developer_site_url =
+      ManifestURL::GetDeveloperSiteURL(&extension).spec();
+  info->web_store_url = ManifestURL::GetWebStoreURL(&extension).spec();
+
   info->id = extension.id();
 
   // Incognito access.

@@ -295,6 +295,8 @@ chrome.developerPrivate.Permission;
  *   errorCollection: !chrome.developerPrivate.AccessModifier,
  *   fileAccess: !chrome.developerPrivate.AccessModifier,
  *   homePage: !chrome.developerPrivate.HomePage,
+ *   developerSiteUrl: string,
+ *   webStoreUrl: string,
  *   iconUrl: string,
  *   id: string,
  *   incognitoAccess: !chrome.developerPrivate.AccessModifier,
@@ -726,7 +728,7 @@ chrome.developerPrivate.requestFileSource = function(properties, callback) {};
 chrome.developerPrivate.openDevTools = function(properties, callback) {};
 
 /**
- * Delete reported extension erors.
+ * Delete reported extension errors.
  * @param {!chrome.developerPrivate.DeleteExtensionErrorsProperties} properties
  *     The properties specifying the errors to remove.
  * @param {function():void=} callback
