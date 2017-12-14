@@ -30,48 +30,56 @@
 
 namespace blink {
 
-ContentType::ContentType(const String& content_type) : type_(content_type) {}
+ContentType::ContentType(const String& content_type) {
+  type_ = content_type.StripWhiteSpace();
+}
 
 String ContentType::Parameter(const String& parameter_name) const {
-  String parameter_value;
-  String stripped_type = type_.StripWhiteSpace();
-
   // a MIME type can have one or more "param=value" after a semi-colon, and
   // separated from each other by semi-colons
-  size_t semi = stripped_type.find(';');
-  if (semi != kNotFound) {
-    size_t start =
-        stripped_type.FindIgnoringASCIICase(parameter_name, semi + 1);
-    if (start != kNotFound) {
-      start = stripped_type.find('=', start + parameter_name.length());
-      if (start != kNotFound) {
-        size_t quote = stripped_type.find('\"', start + 1);
-        size_t end = stripped_type.find('\"', start + 2);
-        if (quote != kNotFound && end != kNotFound) {
-          start = quote;
-        } else {
-          end = stripped_type.find(';', start + 1);
-          if (end == kNotFound)
-            end = stripped_type.length();
-        }
-        parameter_value = stripped_type.Substring(start + 1, end - (start + 1))
-                              .StripWhiteSpace();
-      }
-    }
-  }
+  size_t pos = type_.find(';');
+  if (pos == kNotFound)
+    return String();
+  ++pos;
 
-  return parameter_value;
+  // TODO(crbug.com/674329): Fix this to match only strings that are placed at
+  // the parameter name portion.
+  pos = type_.FindIgnoringASCIICase(parameter_name, pos);
+  if (pos == kNotFound)
+    return String();
+  pos += parameter_name.length();
+
+  pos = type_.find('=', pos);
+  if (pos == kNotFound)
+    return String();
+  ++pos;
+
+  // TODO(crbug.com/674329): Fix this to skip only whitespace-ish characters.
+  size_t quote = type_.find('\"', pos);
+  if (quote == kNotFound) {
+    // TODO(crbug.com/674329): Fix this to accept only valid characters for the
+    // parameter value part.
+    size_t end = type_.find(';', pos);
+    if (end == kNotFound)
+      end = type_.length();
+    return type_.Substring(pos, end - pos).StripWhiteSpace();
+  }
+  pos = quote + 1;
+
+  size_t end = type_.find('\"', pos);
+  if (end == kNotFound)
+    return String();
+
+  return type_.Substring(pos, end - pos).StripWhiteSpace();
 }
 
 String ContentType::GetType() const {
-  String stripped_type = type_.StripWhiteSpace();
-
   // "type" can have parameters after a semi-colon, strip them
-  size_t semi = stripped_type.find(';');
-  if (semi != kNotFound)
-    stripped_type = stripped_type.Left(semi).StripWhiteSpace();
+  size_t pos = type_.find(';');
+  if (pos == kNotFound)
+    return type_;
 
-  return stripped_type;
+  return type_.Left(pos).StripWhiteSpace();
 }
 
 }  // namespace blink
