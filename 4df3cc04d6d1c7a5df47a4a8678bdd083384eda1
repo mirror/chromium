@@ -22,6 +22,30 @@
       "revId": "4df3cc04d6d1c7a5df47a4a8678bdd083384eda1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cdac3e_65c1c8f8",
+        "filename": "content/browser/bluetooth/bluetooth_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-12-14T08:27:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73b03f4e_86b90ded",
+      "range": {
+        "startLine": 24,
+        "startChar": 27,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "4df3cc04d6d1c7a5df47a4a8678bdd083384eda1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
