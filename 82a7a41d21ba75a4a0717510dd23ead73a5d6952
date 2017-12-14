@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc9218bb_c38f7e89",
+        "filename": "content/browser/dom_storage/dom_storage_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-14T21:26:23Z",
+      "side": 1,
+      "message": "File URLs with hostnames don\u0027t work on Windows by default (I guess I would need to enable samba/file sharing first), so I am skipping the test on Windows.  The test still works and would catch the bug on other platforms - I think this is good enough.",
+      "range": {
+        "startLine": 127,
+        "startChar": 14,
+        "endLine": 127,
+        "endChar": 80
+      },
+      "revId": "82a7a41d21ba75a4a0717510dd23ead73a5d6952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
