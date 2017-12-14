@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3de8d78_a9a7b986",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-12-14T22:49:37Z",
+      "side": 1,
+      "message": "Nit: s.find(\u0027/\u0027) is probably a little faster. One\u0027s a strchr and the other\u0027s a strstr.",
+      "revId": "4d0990c6e4fefc69b088322fcc53cadb19bfa7c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
