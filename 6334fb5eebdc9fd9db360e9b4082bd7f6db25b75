@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "4a21cba2_b5b3a020",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-14T20:26:14Z",
+      "side": 1,
+      "message": "Looking at the extension implementation, we don\u0027t use all the fields parsed except for name / state / extra_data. Would it be possible to leave out unused fields?",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe5c479_8e12c2f9",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-14T20:26:14Z",
+      "side": 1,
+      "message": "This field needs a default value.",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d9b5406_4563b572",
         "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
         "patchSetId": 1
@@ -70,6 +104,40 @@
     },
     {
       "key": {
+        "uuid": "4f34ed95_311e7fa0",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-14T20:26:14Z",
+      "side": 1,
+      "message": "There\u0027s also the installable\u003durl case, so we should add a INSTALLABLE value to follow the spec (although we just treat it as unavailable for our purposes)",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634765fb_e326eb10",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-14T20:26:14Z",
+      "side": 1,
+      "message": "I wonder if we can reuse the same utility process for parsing device description here, i.e. have both share the same batch ID \"DialXmlParser\". I can\u0027t think of a reason why they need to be in separate processes for security considerations, so sharing the process would be better for performance.",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f863ae1_70033e41",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
         "patchSetId": 1
@@ -98,6 +166,23 @@
       "writtenOn": "2017-12-14T01:32:46Z",
       "side": 1,
       "message": "Can you check if we set a limit on the size of the DIAL response before parsing?  That would prevent a potential denial of service by a device serving an enormous blob of XML, which we then parse and clone.",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91974f70_3c212cfc",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-12-14T20:26:14Z",
+      "side": 1,
+      "message": "I think \"unknown\" is only used in the MR extension (I can\u0027t recall why don\u0027t we just use an empty string there) and can be removed here?",
       "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
