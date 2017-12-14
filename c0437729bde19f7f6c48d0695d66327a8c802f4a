@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "768f28e5_18b04dd9",
+        "filename": "third_party/WebKit/Source/modules/storage/DOMWindowStorage.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-14T14:32:54Z",
+      "side": 1,
+      "message": "Because this is accessing `window.sessionStorage`, not `window.localStorage`. There should be no behavioral change, as the `SecurityOrigin` implementation of both methods is identical, but it confused me while I was reading the code, so I fixed it. :)",
+      "parentUuid": "f0e4da18_c054f046",
+      "range": {
+        "startLine": 65,
+        "startChar": 38,
+        "endLine": 65,
+        "endChar": 61
+      },
+      "revId": "c0437729bde19f7f6c48d0695d66327a8c802f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1cec93e_7fac4724",
         "filename": "third_party/WebKit/public/platform/web_feature.mojom",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T12:39:33Z",
       "side": 1,
       "message": "Is this used anywhere?",
+      "range": {
+        "startLine": 1784,
+        "startChar": 2,
+        "endLine": 1784,
+        "endChar": 27
+      },
+      "revId": "c0437729bde19f7f6c48d0695d66327a8c802f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7531beb4_64496054",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 1784,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-12-14T14:32:54Z",
+      "side": 1,
+      "message": "It is now! :)",
+      "parentUuid": "b1cec93e_7fac4724",
       "range": {
         "startLine": 1784,
         "startChar": 2,
