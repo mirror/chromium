@@ -121,6 +121,29 @@
     },
     {
       "key": {
+        "uuid": "0aabf703_9aab5afc",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T11:05:04Z",
+      "side": 1,
+      "message": "Is this bug number a typo?",
+      "range": {
+        "startLine": 252,
+        "startChar": 10,
+        "endLine": 252,
+        "endChar": 25
+      },
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa98bde5_aaabe8f8",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 9
@@ -149,6 +172,23 @@
       "writtenOn": "2017-12-14T01:05:54Z",
       "side": 1,
       "message": "How do you avoid double delete if the WebContents navigates/is destroyed?\n\nI wonder if you can just \"delete this\" since there should be no outstanding tasks on capture_poll_timer_ and nothing on the stack that refers to |this|.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5a7b4c_2a77b72c",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T11:05:04Z",
+      "side": 1,
+      "message": "Consider just doing \u0027delete this\u0027 here (ditto below)",
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -234,6 +274,40 @@
       "writtenOn": "2017-12-14T01:05:54Z",
       "side": 1,
       "message": "Is is possible that capture begins after this is called (resulting in a false positive)?",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3249a9_78018722",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7093,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T11:05:04Z",
+      "side": 1,
+      "message": "Nit: this probably doesn\u0027t need to be associated, so it can just use registry_ directly.",
+      "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63638918_f86af067",
+        "filename": "third_party/WebKit/public/platform/fullscreen_video_element.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T11:05:04Z",
+      "side": 1,
+      "message": "Let\u0027s add this to the frame interface in frame.mojom for now instead of creating a new interface. We haven\u0027t quite figured out the right granularity for these sort of things yet, but if we\u0027re routing via RF anyway, we may as well put it there for now.",
       "revId": "970768fc38a07df53e002a4cd37a2cc0eb99b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
