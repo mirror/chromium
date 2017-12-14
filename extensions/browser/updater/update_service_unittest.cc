@@ -55,6 +55,9 @@ class FakeUpdateClient : public update_client::UpdateClient {
   void Install(const std::string& id,
                CrxDataCallback crx_data_callback,
                update_client::Callback callback) override {}
+  void Install(const std::vector<std::string>& ids,
+               CrxDataCallback crx_data_callback,
+               update_client::Callback callback) override {}
   void Update(const std::vector<std::string>& ids,
               CrxDataCallback crx_data_callback,
               update_client::Callback callback) override;
