@@ -16,6 +16,24 @@
       "revId": "8d6bcc274f51887e980133b953ad10233e65c8dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc98d348_ddf3496e",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-14T21:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c7d312f_f3d3770a",
+      "revId": "8d6bcc274f51887e980133b953ad10233e65c8dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
