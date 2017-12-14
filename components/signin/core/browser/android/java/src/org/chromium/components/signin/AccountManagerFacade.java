@@ -538,15 +538,17 @@ public class AccountManagerFacade {
      * Executes the callback after all pending account list updates finish. If there are no pending
      * account list updates, executes the callback right away.
      * @param callback the callback to be executed
+     * @return true if there are no pending updates, false otherwise
      */
     @MainThread
-    public void waitForPendingUpdates(Runnable callback) {
+    public boolean waitForPendingUpdates(@Nullable Runnable callback) {
         ThreadUtils.assertOnUiThread();
         if (mUpdateTasksCounter == 0) {
-            callback.run();
-            return;
+            if (callback != null) callback.run();
+            return true;
         }
-        mCallbacksWaitingForPendingUpdates.add(callback);
+        if (callback != null) mCallbacksWaitingForPendingUpdates.add(callback);
+        return false;
     }
 
     private void updateAccounts() {
