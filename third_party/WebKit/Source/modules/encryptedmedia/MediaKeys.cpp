@@ -31,6 +31,8 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/frame/UseCounter.h"
+#include "core/frame/WebFeature.h"
 #include "core/html/media/HTMLMediaElement.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "modules/encryptedmedia/ContentDecryptionModuleResultPromise.h"
@@ -314,6 +316,9 @@ void MediaKeys::SetServerCertificateTask(
 ScriptPromise MediaKeys::getStatusForPolicy(
     ScriptState* script_state,
     const MediaKeysPolicy& media_keys_policy) {
+  ExecutionContext* context = GetExecutionContext();
+  UseCounter::Count(context, WebFeature::kEncryptedMediaGetStatusForPolicy);
+
   // TODO(xhwang): Pass MediaKeysPolicy classes all the way to Chromium when
   // we have more than one policy to check.
   String min_hdcp_version = media_keys_policy.minHdcpVersion();
