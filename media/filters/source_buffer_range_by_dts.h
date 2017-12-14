@@ -70,12 +70,12 @@ class MEDIA_EXPORT SourceBufferRangeByDts : public SourceBufferRange {
 
   // Return the config ID for the buffer at |timestamp|. Precondition: callers
   // must first verify CanSeekTo(timestamp) == true.
-  int GetConfigIdAtTime(DecodeTimestamp timestamp);
+  int GetConfigIdAtTime(DecodeTimestamp timestamp) const;
 
   // Return true if all buffers in range of [start, end] have the same config
   // ID. Precondition: callers must first verify that
   // CanSeekTo(start) ==  CanSeekTo(end) == true.
-  bool SameConfigThruRange(DecodeTimestamp start, DecodeTimestamp end);
+  bool SameConfigThruRange(DecodeTimestamp start, DecodeTimestamp end) const;
 
   // Finds the next keyframe from |buffers_| starting at or after |timestamp|
   // and creates and returns a new SourceBufferRangeByDts with the buffers from
@@ -117,7 +117,7 @@ class MEDIA_EXPORT SourceBufferRangeByDts : public SourceBufferRange {
   size_t GetRemovalGOP(DecodeTimestamp start_timestamp,
                        DecodeTimestamp end_timestamp,
                        size_t bytes_to_free,
-                       DecodeTimestamp* end_removal_timestamp);
+                       DecodeTimestamp* end_removal_timestamp) const;
 
   // Returns true iff the buffered end time of the first GOP in this range is
   // at or before |media_time|.
@@ -153,12 +153,12 @@ class MEDIA_EXPORT SourceBufferRangeByDts : public SourceBufferRange {
   // is returned. If |timestamp| is in the "gap" between the value  returned by
   // GetStartTimestamp() and the timestamp on the first buffer in |buffers_|,
   // then |timestamp| is returned.
-  DecodeTimestamp NextKeyframeTimestamp(DecodeTimestamp timestamp);
+  DecodeTimestamp NextKeyframeTimestamp(DecodeTimestamp timestamp) const;
 
   // Gets the timestamp for the closest keyframe that is <= |timestamp|. If
   // there isn't a keyframe before |timestamp| or |timestamp| is outside
   // this range, then kNoTimestamp is returned.
-  DecodeTimestamp KeyframeBeforeTimestamp(DecodeTimestamp timestamp);
+  DecodeTimestamp KeyframeBeforeTimestamp(DecodeTimestamp timestamp) const;
 
   // Returns true if the range has enough data to seek to the specified
   // |timestamp|, false otherwise.
@@ -168,7 +168,7 @@ class MEDIA_EXPORT SourceBufferRangeByDts : public SourceBufferRange {
   // no buffers exist in the range returns false, true otherwise.
   bool GetBuffersInRange(DecodeTimestamp start,
                          DecodeTimestamp end,
-                         BufferQueue* buffers);
+                         BufferQueue* buffers) const;
 
  private:
   typedef std::map<DecodeTimestamp, int> KeyframeMap;
@@ -184,17 +184,19 @@ class MEDIA_EXPORT SourceBufferRangeByDts : public SourceBufferRange {
   // If |skip_given_timestamp| is true, this returns the first buffer with
   // timestamp greater than |timestamp|.
   BufferQueue::iterator GetBufferItrAt(DecodeTimestamp timestamp,
-                                       bool skip_given_timestamp);
+                                       bool skip_given_timestamp) const;
 
   // Returns an iterator in |keyframe_map_| pointing to the next keyframe after
   // |timestamp|. If |skip_given_timestamp| is true, this returns the first
   // keyframe with a timestamp strictly greater than |timestamp|.
-  KeyframeMap::iterator GetFirstKeyframeAt(DecodeTimestamp timestamp,
-                                           bool skip_given_timestamp);
+  KeyframeMap::const_iterator GetFirstKeyframeAt(
+      DecodeTimestamp timestamp,
+      bool skip_given_timestamp) const;
 
   // Returns an iterator in |keyframe_map_| pointing to the first keyframe
   // before or at |timestamp|.
-  KeyframeMap::iterator GetFirstKeyframeAtOrBefore(DecodeTimestamp timestamp);
+  KeyframeMap::const_iterator GetFirstKeyframeAtOrBefore(
+      DecodeTimestamp timestamp) const;
 
   // Updates |highest_frame_| to be the frame with highest PTS in the last GOP
   // in this range.  If there are no buffers in this range, resets
