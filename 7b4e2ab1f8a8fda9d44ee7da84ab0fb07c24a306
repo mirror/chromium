@@ -276,6 +276,30 @@
     },
     {
       "key": {
+        "uuid": "5b3ec959_a00d1312",
+        "filename": "content/browser/background_sync/background_sync_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1234245
+      },
+      "writtenOn": "2017-12-14T11:12:17Z",
+      "side": 1,
+      "message": "Let\u0027s use AdaptCallbackForRepeating for now.",
+      "parentUuid": "d9eef757_3bf783e8",
+      "range": {
+        "startLine": 779,
+        "startChar": 57,
+        "endLine": 779,
+        "endChar": 66
+      },
+      "revId": "7b4e2ab1f8a8fda9d44ee7da84ab0fb07c24a306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea6d909e_6246acdb",
         "filename": "content/browser/notifications/notification_event_dispatcher_impl.cc",
         "patchSetId": 4
