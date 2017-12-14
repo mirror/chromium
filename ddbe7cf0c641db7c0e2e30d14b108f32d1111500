@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aef979b9_e42a2bc8",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-14T16:15:51Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp?rcl\u003dacea41cedbf44025e042ee779ca08ce1ada64477\u0026l\u003d985 already checks IsGpuCompositingEnabled which takes priority.",
+      "parentUuid": "d7baebea_206fafbd",
+      "revId": "ddbe7cf0c641db7c0e2e30d14b108f32d1111500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d09f655_9d93f520",
         "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T04:34:23Z",
       "side": 1,
       "message": "Is it necessary to also check the value from above before overriding the value of is_accelerated_2d_canvas_blacklisted? Seems to me that otherwise this code doesn\u0027t properly fall back to non-accelerated mode if the compositor fell back to software for some reason.",
+      "revId": "ddbe7cf0c641db7c0e2e30d14b108f32d1111500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa552311_5a1d8f0a",
+        "filename": "third_party/WebKit/Source/core/offscreencanvas/OffscreenCanvas.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-12-14T16:15:51Z",
+      "side": 1,
+      "message": "Right, this code should start with the value from the compositor, then only be able to change the value to true afterward.",
+      "parentUuid": "1d09f655_9d93f520",
       "revId": "ddbe7cf0c641db7c0e2e30d14b108f32d1111500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
