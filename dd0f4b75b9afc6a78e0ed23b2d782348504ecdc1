@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08531401_c8290314",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T22:02:11Z",
+      "side": 1,
+      "message": "Note:This string unfortunately also includes a colon at the end, like \"Size:\", see https://imgur.com/a/HRmKg, which is undesirable in the MD version. If we are planning to merge this CL, then I can\u0027t introduce a new string at this time. So, if that is important, we could do either of the following:\n\n1) Slice-off the colon in \"JS\" (if it exists, to account for translations that might not have it).\n2) Use some other \"Size\" string from Chrome, even if it was added for different UIs. I found IDS_DIRECTORY_LISTING_SIZE, see https://cs.chromium.org/chromium/src/chrome/app/generated_resources.grd?q\u003dgenerated_resources\u0026dr\u003dC\u0026l\u003d8003\n\nLet me know if you think this is necessary, or if displaying \"Size: \" is fine.",
+      "range": {
+        "startLine": 218,
+        "startChar": 41,
+        "endLine": 218,
+        "endChar": 72
+      },
+      "revId": "dd0f4b75b9afc6a78e0ed23b2d782348504ecdc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
