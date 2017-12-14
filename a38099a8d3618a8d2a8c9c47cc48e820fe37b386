@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b9f8aad0_0359b1ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupPageLoadMetricsObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-12-14T02:20:15Z",
+      "side": 1,
+      "message": "Hrmm, I\u0027m just wondering whether this is 100% accurate. It seems like it could be ok because the bit is only unset when navigation is finished. Does this work if initial page is failure (due to net error) and then network resumes, and page is refreshed?",
+      "range": {
+        "startLine": 28,
+        "startChar": 43,
+        "endLine": 28,
+        "endChar": 68
+      },
+      "revId": "a38099a8d3618a8d2a8c9c47cc48e820fe37b386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f04c003a_8d5367b7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
