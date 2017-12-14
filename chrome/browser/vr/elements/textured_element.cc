@@ -54,6 +54,8 @@ bool TexturedElement::PrepareToDraw() {
       !(GetTexture()->dirty() || g_rerender_if_not_dirty_for_testing_) ||
       !IsVisible())
     return false;
+  // texture_size might change due to new text is set for Text element.
+  texture_size_ = GetTexture()->GetPreferredTextureSize(maximum_width_);
   surface_ = provider_->MakeSurface(texture_size_);
   DCHECK(surface_.get());
   GetTexture()->DrawAndLayout(surface_->getCanvas(), texture_size_);

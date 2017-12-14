@@ -67,7 +67,7 @@ void ExclusiveScreenToastTexture::Draw(SkCanvas* sk_canvas,
 }
 
 gfx::Size ExclusiveScreenToastTexture::GetPreferredTextureSize(
-    int maximum_width) const {
+    int maximum_width) {
   return gfx::Size(maximum_width, maximum_width / kWidthHeightRatio);
 }
 

@@ -14,7 +14,7 @@ class ExclusiveScreenToastTexture : public UiTexture {
  public:
   ExclusiveScreenToastTexture();
   ~ExclusiveScreenToastTexture() override;
-  gfx::Size GetPreferredTextureSize(int width) const override;
+  gfx::Size GetPreferredTextureSize(int width) override;
   gfx::SizeF GetDrawnSize() const override;
 
  private:
