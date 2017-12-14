@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06e6894a_7aa4b778",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T22:48:49Z",
+      "side": 1,
+      "message": "Should we be consistent within this file with regards to using quotes?  See line 178 for comparison.",
+      "range": {
+        "startLine": 166,
+        "startChar": 16,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "cc46e3b1d1eb77c4a0ce803a013d24b00a2c83fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4e44a5_27b22b66",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T22:48:49Z",
+      "side": 1,
+      "message": "Is this function used anywhere?",
+      "range": {
+        "startLine": 196,
+        "startChar": 4,
+        "endLine": 196,
+        "endChar": 31
+      },
+      "revId": "cc46e3b1d1eb77c4a0ce803a013d24b00a2c83fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ab20dd_0c9ec044",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T22:48:49Z",
+      "side": 1,
+      "message": "Can we put the new window.open calls in service.js, such that we can easily mock them with test_service.js in tests? Since this is intended to be merged, can we at least add a TODO for this.",
+      "revId": "cc46e3b1d1eb77c4a0ce803a013d24b00a2c83fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60366302_5667dc05",
+        "filename": "third_party/closure_compiler/externs/developer_private.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T22:48:49Z",
+      "side": 1,
+      "message": "Should we preserve alphabetical order? It seems that the rest of this typedef is attempting to do so.",
+      "range": {
+        "startLine": 298,
+        "startChar": 5,
+        "endLine": 299,
+        "endChar": 25
+      },
+      "revId": "cc46e3b1d1eb77c4a0ce803a013d24b00a2c83fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
