@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.preferences.password;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -249,6 +250,7 @@ public class PasswordEntryEditor extends Fragment {
                 .updatePasswordLists();
     }
 
+    @SuppressLint("CutPasteId")
     private void hookupCopyUsernameButton(View usernameView) {
         final ImageButton copyUsernameButton =
                 (ImageButton) usernameView.findViewById(R.id.password_entry_editor_copy);
@@ -275,6 +277,7 @@ public class PasswordEntryEditor extends Fragment {
         });
     }
 
+    @SuppressLint("CutPasteId")
     private void hookupCopySiteButton(View siteView) {
         final ImageButton copySiteButton =
                 (ImageButton) siteView.findViewById(R.id.password_entry_editor_copy);
@@ -353,6 +356,7 @@ public class PasswordEntryEditor extends Fragment {
                 PASSWORD_ACTION_BOUNDARY);
     }
 
+    @SuppressLint("CutPasteId")
     private void hookupPasswordButtons() {
         final ImageButton copyPasswordButton =
                 (ImageButton) mView.findViewById(R.id.password_entry_editor_copy_password);
