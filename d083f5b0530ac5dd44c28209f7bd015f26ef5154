@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "adcc691c_22f9ff5a",
+        "filename": "chrome/browser/ui/translate/translate_bubble_view_state_transition.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T02:14:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52165318_60197454",
+      "range": {
+        "startLine": 82,
+        "startChar": 35,
+        "endLine": 82,
+        "endChar": 46
+      },
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20930305_876a3a2d",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0c8fd5_112086e4",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T02:14:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20930305_876a3a2d",
+      "range": {
+        "startLine": 314,
+        "startChar": 64,
+        "endLine": 314,
+        "endChar": 65
+      },
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ecbbd95e_57ca5233",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T02:14:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7e02a99_71824530",
+      "range": {
+        "startLine": 316,
+        "startChar": 7,
+        "endLine": 316,
+        "endChar": 36
+      },
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d439bb31_24d108ff",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d812b43_041b3859",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T02:14:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d439bb31_24d108ff",
+      "range": {
+        "startLine": 319,
+        "startChar": 8,
+        "endLine": 319,
+        "endChar": 26
+      },
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b0e74f27_f705a521",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T02:14:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a03cc253_fb7afebd",
+      "range": {
+        "startLine": 354,
+        "startChar": 21,
+        "endLine": 354,
+        "endChar": 58
+      },
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86513474_a4512379",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
         "patchSetId": 2
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "0670c93d_84d0eb6e",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T02:14:17Z",
+      "side": 1,
+      "message": "Let\u0027s do no check, looks fine locally, so what could possibly go wrong?\n\n.. I said, and then I tried building properly and it crashed. Yep, this can be called before we have a widget as part of Init code.",
+      "parentUuid": "86513474_a4512379",
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f3d2bf7_d5fd6d21",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
         "patchSetId": 2
@@ -148,6 +286,24 @@
       "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb6b41a_81f75b43",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-12-14T02:14:17Z",
+      "side": 1,
+      "message": "*shrug*\n\nThere\u0027s a new one in the works, so I\u0027ll assume this code will all be torched as part of that.",
+      "parentUuid": "8f3d2bf7_d5fd6d21",
+      "revId": "d083f5b0530ac5dd44c28209f7bd015f26ef5154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
