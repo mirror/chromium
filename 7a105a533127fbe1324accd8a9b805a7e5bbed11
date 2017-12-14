@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae74d98b_f5ab31c3",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-14T20:35:09Z",
+      "side": 1,
+      "message": "You probably don\u0027t want to call exit. That\u0027ll close the whole browser.",
+      "range": {
+        "startLine": 429,
+        "startChar": 6,
+        "endLine": 429,
+        "endChar": 10
+      },
+      "revId": "7a105a533127fbe1324accd8a9b805a7e5bbed11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
