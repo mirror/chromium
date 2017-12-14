@@ -16,6 +16,24 @@
       "revId": "5f1d042d60ef04b28fd46a9fc453e31efe84cb13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d83c828c_b248d3b5",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-12-14T21:01:09Z",
+      "side": 1,
+      "message": "I\u0027m always adding the event rewriter, but it only rewrites events if select-to-speak is on. See SelectToSpeakEventRewriter::RewriteEvent -- the first line of that function.\n\nThe search key + drag behavior with select-to-speak disabled appears the same to me with and without this change.",
+      "parentUuid": "1fe2eb50_b604fdbc",
+      "revId": "5f1d042d60ef04b28fd46a9fc453e31efe84cb13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
