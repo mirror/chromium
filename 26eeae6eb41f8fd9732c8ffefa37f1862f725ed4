@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60d23ac5_4ec36835",
+        "filename": "third_party/WebKit/LayoutTests/W3CImportExpectations",
+        "patchSetId": 8
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-14T22:42:50Z",
+      "side": 1,
+      "message": "There\u0027s a section in NeverFixTests called \"Below are manual tests from web-platform-tests without automation\" where this would make sense. Makes it easier to automate them later, and find them when grepping.",
+      "range": {
+        "startLine": 198,
+        "startChar": 14,
+        "endLine": 198,
+        "endChar": 21
+      },
+      "revId": "26eeae6eb41f8fd9732c8ffefa37f1862f725ed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
