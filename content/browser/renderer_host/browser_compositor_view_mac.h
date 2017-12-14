@@ -28,6 +28,7 @@ class BrowserCompositorMacClient {
   virtual void BrowserCompositorMacOnBeginFrame() = 0;
   virtual viz::LocalSurfaceId GetLocalSurfaceId() const = 0;
   virtual void OnFrameTokenChanged(uint32_t frame_token) = 0;
+  virtual void WasEvicted() = 0;
 };
 
 // This class owns a DelegatedFrameHost, and will dynamically attach and
@@ -110,6 +111,7 @@ class CONTENT_EXPORT BrowserCompositorMac : public DelegatedFrameHostClient {
   void OnBeginFrame() override;
   bool IsAutoResizeEnabled() const override;
   void OnFrameTokenChanged(uint32_t frame_token) override;
+  void WasEvicted() override;
 
   // Returns nullptr if no compositor is attached.
   ui::Compositor* CompositorForTesting() const;

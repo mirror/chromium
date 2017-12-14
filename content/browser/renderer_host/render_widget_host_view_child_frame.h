@@ -233,6 +233,8 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   RenderWidgetHostViewBase* GetRootRenderWidgetHostView() const;
 
+  void WasEvicted();
+
  protected:
   friend class RenderWidgetHostView;
   friend class RenderWidgetHostViewChildFrameTest;

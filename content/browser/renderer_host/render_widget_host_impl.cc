@@ -2883,4 +2883,8 @@ void RenderWidgetHostImpl::SetWidget(mojom::WidgetPtr widget) {
   }
 }
 
+void RenderWidgetHostImpl::WasEvicted() {
+  Send(new ViewMsg_WasEvicted(routing_id_));
+}
+
 }  // namespace content
