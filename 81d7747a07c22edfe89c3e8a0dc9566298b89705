@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a26ca3a_d95c091e",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-14T07:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78a4d966_46c3012b",
+      "revId": "81d7747a07c22edfe89c3e8a0dc9566298b89705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de548b2a_a1ccb7b3",
         "filename": "chrome/common/web_application_info_provider.mojom",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "81d7747a07c22edfe89c3e8a0dc9566298b89705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244da58d_76d6099b",
+        "filename": "chrome/common/web_application_info_provider.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1249510
+      },
+      "writtenOn": "2017-12-14T07:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de548b2a_a1ccb7b3",
+      "revId": "81d7747a07c22edfe89c3e8a0dc9566298b89705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
