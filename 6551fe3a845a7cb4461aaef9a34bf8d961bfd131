@@ -137,6 +137,52 @@
       "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334f5df9_f51eca55",
+        "filename": "chromeos/attestation/attestation_constants.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1152319
+      },
+      "writtenOn": "2017-12-14T20:20:36Z",
+      "side": 1,
+      "message": "It\u0027s not actualy a server status, is more an attestation _request_ status - could have failed on the server side or on our side",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 30
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f0fcd8_348f3a9b",
+        "filename": "chromeos/attestation/attestation_flow.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1152319
+      },
+      "writtenOn": "2017-12-14T20:20:36Z",
+      "side": 1,
+      "message": "is that a good name? we don\u0027t know if the request was ill-formatted (what \u0027bad request\u0027 normally means to me), or the server is unavailable due to network condition, or the server crashed and returned 5xx for no good reason.\nI\u0027d say ATTESTATION_FAILURE_SERVER as opposed to all other failures on our end...",
+      "range": {
+        "startLine": 292,
+        "startChar": 19,
+        "endLine": 292,
+        "endChar": 57
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
