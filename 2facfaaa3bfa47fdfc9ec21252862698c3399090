@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "14214c57_d8197c87",
+        "filename": "third_party/WebKit/LayoutTests/performance/performance-observer-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T23:37:58Z",
+      "side": 1,
+      "message": "This seems pretty subtle to me; it might be useful to document the conditions that were required to trigger this crash so someone looking at the history will be able to better comprehend what\u0027s going on here.",
+      "parentUuid": "2ea6e360_cf4bd688",
+      "revId": "2facfaaa3bfa47fdfc9ec21252862698c3399090",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f944a0a7_30b7867d",
         "filename": "third_party/WebKit/LayoutTests/performance/performance-observer-crash.html",
         "patchSetId": 1
