@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca6a0665_bada88e3",
+        "filename": "chrome/browser/ui/views/hover_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-14T04:14:14Z",
+      "side": 1,
+      "message": "nit: order before StateChanged for a closer match to the order in button.h  (this will put the definition in the .cc closer to correct too, but hover_button isn\u0027t 100% sorted right now).",
+      "revId": "2860a38218a78866462f8ba91c5fc5354e3f1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52dffc4f_9e65288c",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-14T04:14:14Z",
+      "side": 1,
+      "message": "nit: order the same as in the .h",
+      "revId": "2860a38218a78866462f8ba91c5fc5354e3f1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65dab9a2_6f439c22",
+        "filename": "ui/views/controls/button/button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-14T04:14:14Z",
+      "side": 1,
+      "message": "(insert here)",
+      "revId": "2860a38218a78866462f8ba91c5fc5354e3f1777",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
