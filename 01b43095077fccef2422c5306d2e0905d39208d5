@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "10b21512_c00ceb87",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-14T22:30:15Z",
+      "side": 1,
+      "message": "The BrowserStartupController#onSuccess in SuggestionsSheetVisibilityChangeObserver would initialize the suggestions UI and call onContentShown() and onContenteStateChanged() correctly from onStateChange() since the visibility would change.\n\nAnd also, is the metrics recording whether the suggestions are visible? If so, we probably don\u0027t need to record SufaceHalfVisible or SufaceFullyVisible? Maybe we should record another action like SurfaceLoading for the suggestions metrics?",
+      "parentUuid": "5420b062_accbe31e",
+      "range": {
+        "startLine": 162,
+        "startChar": 39,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea326176_ff380fc6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
@@ -325,6 +349,24 @@
     },
     {
       "key": {
+        "uuid": "d92c76f6_5eb0a12a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-14T22:30:15Z",
+      "side": 1,
+      "message": "Hm.. I thought it would be adding a lot of BrowserStartupControllers, but since BottomToolbarPhone and LocationBar has its own notification already, we only need to add one more BrowserStartupController.",
+      "parentUuid": "28aded31_27897c94",
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca36fe75_35e6924a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 2
@@ -481,6 +523,24 @@
       "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424bbe6c_f0ab8ada",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphBubbleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-14T22:30:15Z",
+      "side": 1,
+      "message": "Sounds good. Done.",
+      "parentUuid": "f10f5740_d8d8c470",
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
