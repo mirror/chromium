@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "893caf84_e8cc9460",
+        "filename": "components/favicon/core/favicon_driver_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:29:09Z",
+      "side": 1,
+      "message": "Similar comment about name and description.",
+      "range": {
+        "startLine": 71,
+        "startChar": 15,
+        "endLine": 71,
+        "endChar": 33
+      },
+      "revId": "a93d28dff7a4b180670d4fa1e5b2f8da2adccd56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a141f5d8_1753cbcb",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:29:09Z",
+      "side": 1,
+      "message": "no {}",
+      "range": {
+        "startLine": 356,
+        "startChar": 26,
+        "endLine": 356,
+        "endChar": 27
+      },
+      "revId": "a93d28dff7a4b180670d4fa1e5b2f8da2adccd56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ff812c_42ecdd66",
+        "filename": "components/favicon/core/favicon_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:29:09Z",
+      "side": 1,
+      "message": "This name is rather confusing. I get that you made it match HasPendingTasks below, but without that context it isn\u0027t particularly clear what this name means. How about OnFaviconFetchComplete or OnFaviconLoadingCompleted. Either way, add a description.",
+      "range": {
+        "startLine": 143,
+        "startChar": 17,
+        "endLine": 143,
+        "endChar": 35
+      },
+      "revId": "a93d28dff7a4b180670d4fa1e5b2f8da2adccd56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f721efea_f5fffac1",
+        "filename": "components/favicon/core/favicon_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:29:09Z",
+      "side": 1,
+      "message": "Remove this comment.",
+      "range": {
+        "startLine": 171,
+        "startChar": 35,
+        "endLine": 171,
+        "endChar": 56
+      },
+      "revId": "a93d28dff7a4b180670d4fa1e5b2f8da2adccd56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
