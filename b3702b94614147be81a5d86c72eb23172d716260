@@ -22,6 +22,30 @@
       "revId": "b3702b94614147be81a5d86c72eb23172d716260",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "534f1363_d9200429",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:09:47Z",
+      "side": 1,
+      "message": "It allows for automating the server pipeline more easily.",
+      "parentUuid": "a51a3ecb_290c5176",
+      "range": {
+        "startLine": 111,
+        "startChar": 17,
+        "endLine": 111,
+        "endChar": 39
+      },
+      "revId": "b3702b94614147be81a5d86c72eb23172d716260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
