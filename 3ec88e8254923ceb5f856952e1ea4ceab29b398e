@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b4c28b5a_33b6829d",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-14T17:58:34Z",
+      "side": 1,
+      "message": "I see, so which of the workaround do you think is the most acceptable? 1) Send the computed path during initialization, but for custom wallpapers there\u0027re four variations, so the mojo call will take many parameters.. 2) Having two separate computation methods. 3) Create mojo callback to get device/custom wallpaper dir computation results. 4) IIUC in WallpaperControllerClient if we directly do: ash::WallpaperController::dir_user_data_path_ \u003d SOME_CHROME_FILE_PATH, in addition to the SetClientAndPaths() mojo call, it should work? But it may be a bad approach to initialize the two copies separately? \n\nThanks!",
+      "parentUuid": "94756852_456e3a1d",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78f2222d_b317d268",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
         "patchSetId": 9
