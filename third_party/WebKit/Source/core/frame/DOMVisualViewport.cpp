@@ -82,18 +82,12 @@ float DOMVisualViewport::pageLeft() const {
   if (!frame)
     return 0;
 
-  Page* page = frame->GetPage();
-  if (!page)
-    return 0;
-
   LocalFrameView* view = frame->View();
-  if (!view || !view->LayoutViewportScrollableArea())
+  if (!view)
     return 0;
 
   frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-  float viewport_x =
-      page->GetVisualViewport().GetScrollOffset().Width() +
-      view->LayoutViewportScrollableArea()->GetScrollOffset().Width();
+  float viewport_x = view->GetScrollableArea()->GetScrollOffset().Width();
   return AdjustForAbsoluteZoom::AdjustScroll(viewport_x,
                                              frame->PageZoomFactor());
 }
@@ -103,18 +97,12 @@ float DOMVisualViewport::pageTop() const {
   if (!frame)
     return 0;
 
-  Page* page = frame->GetPage();
-  if (!page)
-    return 0;
-
   LocalFrameView* view = frame->View();
-  if (!view || !view->LayoutViewportScrollableArea())
+  if (!view)
     return 0;
 
   frame->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-  float viewport_y =
-      page->GetVisualViewport().GetScrollOffset().Height() +
-      view->LayoutViewportScrollableArea()->GetScrollOffset().Height();
+  float viewport_y = view->GetScrollableArea()->GetScrollOffset().Height();
   return AdjustForAbsoluteZoom::AdjustScroll(viewport_y,
                                              frame->PageZoomFactor());
 }
