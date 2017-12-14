@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e051530_ebb373e7",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:18:28Z",
+      "side": 1,
+      "message": "Is this call relevant? Is it necessary?",
+      "range": {
+        "startLine": 421,
+        "startChar": 2,
+        "endLine": 421,
+        "endChar": 29
+      },
+      "revId": "74047e54b71725eee7c3e14a053d229de6db1a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d74894d_8b43104a",
+        "filename": "ash/extended_desktop_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:18:28Z",
+      "side": 1,
+      "message": "Similar question about the need to activate the window here.",
+      "range": {
+        "startLine": 589,
+        "startChar": 2,
+        "endLine": 589,
+        "endChar": 25
+      },
+      "revId": "74047e54b71725eee7c3e14a053d229de6db1a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c306387a_e19f645a",
+        "filename": "ash/wm/window_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:18:28Z",
+      "side": 1,
+      "message": "There is no guarantee transient_child is parented yet.",
+      "range": {
+        "startLine": 114,
+        "startChar": 29,
+        "endLine": 114,
+        "endChar": 61
+      },
+      "revId": "74047e54b71725eee7c3e14a053d229de6db1a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
