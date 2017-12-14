@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "5420b062_accbe31e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-14T00:59:33Z",
+      "side": 1,
+      "message": "I think most metrics probably aren\u0027t relevant, but we probably want to make sure #recordSurfaceFullyVisible() or #recordSurfaceHalfVisible() are recorded and scroll is enabled or disabled correctly after native is loaded. We could pull this code out somewhere common and call it once in the native initialization observer.",
+      "parentUuid": "6bd23ec0_bf8c5881",
+      "range": {
+        "startLine": 162,
+        "startChar": 39,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea326176_ff380fc6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
@@ -283,6 +307,24 @@
     },
     {
       "key": {
+        "uuid": "28aded31_27897c94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-14T00:59:33Z",
+      "side": 1,
+      "message": "I was thinking about having each class that needed to know about native initialization listen to BrowserStartupController directly rather than having a BottomSheet observer method. Maybe that\u0027s too many new observers on BrowserStartupController?",
+      "parentUuid": "bb9a7fbf_4d3fc442",
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca36fe75_35e6924a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 2
@@ -318,6 +360,30 @@
       "side": 1,
       "message": "Sure, let\u0027s disable the menu items. Is there any cases that incognito bottom sheet can show before native loaded?\n\nI\u0027m also wondering if we should disable tab switcher and overflow menu button too before native loaded to be more consistent (maybe as a separate bug)?",
       "parentUuid": "ca36fe75_35e6924a",
+      "range": {
+        "startLine": 432,
+        "startChar": 8,
+        "endLine": 432,
+        "endChar": 63
+      },
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2966907a_f767fc98",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-14T00:59:33Z",
+      "side": 1,
+      "message": "Users can open a new incognito tab via a launcher shortcut which may be the easiest way to test opening the incognito bottom sheet before native is loaded.\n\nLet\u0027s have a conversation with Ted about the tab switcher/overflow menu button tomorrow to see if there\u0027s any historical reason why we allow taps before native. I think we should probably keep them enabled, but curious to hear his opinion.",
+      "parentUuid": "d43093ca_4ad0285f",
       "range": {
         "startLine": 432,
         "startChar": 8,
@@ -394,6 +460,24 @@
       "side": 1,
       "message": "Hm... I\u0027m not familiar with the Tracker. It seems that we need a profile for getting the Tracker [1], but I don\u0027t think we can get the last used profile before native loaded [2].\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/android/feature_engagement/tracker_factory_android.cc?q\u003dGetTrackerForProfile\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d13\n[2] https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/profiles/Profile.java?q\u003dgetLastUsedProfile\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs",
       "parentUuid": "ae3956de_c9f710a5",
+      "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10f5740_d8d8c470",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomeIphBubbleController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-14T00:59:33Z",
+      "side": 1,
+      "message": "I think we would need to hold onto the event that opened the sheet (e.g. in a variable in this class) and record it after native is initialized.",
+      "parentUuid": "340bb8a9_c1620cb0",
       "revId": "01b43095077fccef2422c5306d2e0905d39208d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
