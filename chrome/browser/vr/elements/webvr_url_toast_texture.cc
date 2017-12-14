@@ -35,8 +35,7 @@ WebVrUrlToastTexture::WebVrUrlToastTexture(
 
 WebVrUrlToastTexture::~WebVrUrlToastTexture() = default;
 
-gfx::Size WebVrUrlToastTexture::GetPreferredTextureSize(
-    int maximum_width) const {
+gfx::Size WebVrUrlToastTexture::GetPreferredTextureSize(int maximum_width) {
   return gfx::Size(maximum_width, maximum_width * kHeight / kWidth);
 }
 

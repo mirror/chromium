@@ -34,7 +34,7 @@ class UiTexture {
   virtual ~UiTexture();
 
   void DrawAndLayout(SkCanvas* canvas, const gfx::Size& texture_size);
-  virtual gfx::Size GetPreferredTextureSize(int maximum_width) const = 0;
+  virtual gfx::Size GetPreferredTextureSize(int maximum_width) = 0;
   virtual gfx::SizeF GetDrawnSize() const = 0;
   virtual bool LocalHitTest(const gfx::PointF& point) const;
 

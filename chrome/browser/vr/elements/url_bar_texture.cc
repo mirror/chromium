@@ -389,7 +389,7 @@ void UrlBarTexture::ApplyUrlStyling(
   }
 }
 
-gfx::Size UrlBarTexture::GetPreferredTextureSize(int maximum_width) const {
+gfx::Size UrlBarTexture::GetPreferredTextureSize(int maximum_width) {
   return gfx::Size(maximum_width, maximum_width * kHeight / kWidth);
 }
 
