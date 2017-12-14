@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61248a20_09078999",
+        "filename": "third_party/WebKit/Source/core/dom/Document.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-14T13:56:54Z",
+      "side": 1,
+      "message": "Could you add a TODO comment to make |all| [SameObject]?",
+      "revId": "042248940f25c1e22e9df35124de9935743c0f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
