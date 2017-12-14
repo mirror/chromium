@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9fd42a7_8ac407a5",
+        "filename": "gpu/command_buffer/service/raster_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-14T07:34:12Z",
+      "side": 1,
+      "message": "These command ids can change if someone modifies the GLES2 script.  Use the auto generated ids, i.e. TraceBeginCHROMIUM::kCmdId.",
+      "revId": "a1312d7f1cb5480d6bce88a4748d1b74dcb5400d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5dd2c1_a01c9c99",
+        "filename": "gpu/command_buffer/service/raster_decoder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-12-14T07:34:12Z",
+      "side": 1,
+      "message": "nit: please add comment // GLES2Decoder implementation.",
+      "revId": "a1312d7f1cb5480d6bce88a4748d1b74dcb5400d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
