@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d584e9dd_b8fb39f7",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-14T19:15:56Z",
+      "side": 1,
+      "message": "This is still called lld_..",
+      "revId": "95a2447b06807ca9da840ebc47417276e630e688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

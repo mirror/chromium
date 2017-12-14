@@ -69,6 +69,24 @@
       "revId": "f67d73d7255af8a402a2329dfc6b1cce98116f0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384e5940_b7c51e9f",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-12-14T19:15:56Z",
+      "side": 1,
+      "message": "Okay, maybe let\u0027s skip this for now.",
+      "parentUuid": "58e6675f_bafd6c91",
+      "revId": "f67d73d7255af8a402a2329dfc6b1cce98116f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
