@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "994179b8_d364667f",
+        "filename": "gpu/command_buffer/service/raster_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001248
+      },
+      "writtenOn": "2017-12-14T15:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9fd42a7_8ac407a5",
+      "revId": "a1312d7f1cb5480d6bce88a4748d1b74dcb5400d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e5dd2c1_a01c9c99",
         "filename": "gpu/command_buffer/service/raster_decoder.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "a1312d7f1cb5480d6bce88a4748d1b74dcb5400d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6427c720_6a5ec238",
+        "filename": "gpu/command_buffer/service/raster_decoder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001248
+      },
+      "writtenOn": "2017-12-14T15:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e5dd2c1_a01c9c99",
+      "revId": "a1312d7f1cb5480d6bce88a4748d1b74dcb5400d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
