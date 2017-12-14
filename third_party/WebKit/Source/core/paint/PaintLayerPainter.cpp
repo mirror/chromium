@@ -21,6 +21,7 @@
 #include "platform/graphics/paint/CompositingRecorder.h"
 #include "platform/graphics/paint/DisplayItemCacheSkipper.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
+#include "platform/graphics/paint/GeometryMapper.h"
 #include "platform/graphics/paint/PaintChunkProperties.h"
 #include "platform/graphics/paint/ScopedPaintChunkProperties.h"
 #include "platform/graphics/paint/SubsequenceRecorder.h"
@@ -241,51 +242,73 @@ static bool ShouldRepaintSubsequence(
   }
   paint_layer.SetPreviousPaintDirtyRect(painting_info.paint_dirty_rect);
 
-  // Repaint if scroll offset accumulation changes.
-  if (painting_info.scroll_offset_accumulation !=
-      paint_layer.PreviousScrollOffsetAccumulationForPainting()) {
-    needs_repaint = true;
-    should_clear_empty_paint_phase_flags = true;
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    // Repaint if scroll offset accumulation changes.
+    if (painting_info.scroll_offset_accumulation !=
+        paint_layer.PreviousScrollOffsetAccumulationForPainting()) {
+      needs_repaint = true;
+      should_clear_empty_paint_phase_flags = true;
+    }
+    paint_layer.SetPreviousScrollOffsetAccumulationForPainting(
+        painting_info.scroll_offset_accumulation);
   }
-  paint_layer.SetPreviousScrollOffsetAccumulationForPainting(
-      painting_info.scroll_offset_accumulation);
 
   return needs_repaint;
 }
 
-void PaintLayerPainter::AdjustForPaintOffsetTranslation(
-    PaintLayerPaintingInfo& painting_info) {
+void PaintLayerPainter::AdjustForPaintProperties(
+    PaintLayerPaintingInfo& painting_info,
+    PaintLayerFlags& paint_flags) {
   if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return;
-  // Paint offset translation for transforms or composited layers is already
-  // taken care of.
-  if (paint_layer_.PaintsWithTransform(painting_info.GetGlobalPaintFlags()) ||
+  // Paint offset translation for transforms, composited layers or LayoutView
+  // is already taken care of.
+  if (&paint_layer_ == painting_info.root_layer ||
+      paint_layer_.PaintsWithTransform(painting_info.GetGlobalPaintFlags()) ||
       paint_layer_.PaintsIntoOwnOrGroupedBacking(
-          painting_info.GetGlobalPaintFlags()))
+          painting_info.GetGlobalPaintFlags()) ||
+      paint_layer_.GetLayoutObject().IsLayoutView())
     return;
 
-  if (const auto* properties =
-          paint_layer_.GetLayoutObject().FirstFragment().PaintProperties()) {
-    if (properties->PaintOffsetTranslation()) {
-      // Map paint_dirty_rect from the original root layer to the current layer,
-      // and make the current layer the new root layer.
-      painting_info.paint_dirty_rect =
-          properties->PaintOffsetTranslation()->Matrix().Inverse().MapRect(
-              painting_info.paint_dirty_rect);
-      // If the original root layer doesn't have PaintOffsetTranslation which
-      // means that paint_layer_'s PaintOffsetTranslation includes root layer's
-      // paint offset, then we need to add the root layer's paint offset.
-      const auto& root_fragment =
-          painting_info.root_layer->GetLayoutObject().FirstFragment();
-      if (!root_fragment.PaintProperties() ||
-          !root_fragment.PaintProperties()->PaintOffsetTranslation())
-        painting_info.paint_dirty_rect.MoveBy(root_fragment.PaintOffset());
-      painting_info.root_layer = &paint_layer_;
+  const auto& current_fragment = paint_layer_.GetLayoutObject().FirstFragment();
+  const auto* current_transform =
+      current_fragment.LocalBorderBoxProperties()->Transform();
+  const auto& root_fragment =
+      painting_info.root_layer->GetLayoutObject().FirstFragment();
+  const auto* root_transform =
+      root_fragment.LocalBorderBoxProperties()->Transform();
+  if (current_transform == root_transform)
+    return;
 
-      // TODO(chrishtr): is this correct for fragmentation?
-      painting_info.sub_pixel_accumulation = ToLayoutSize(
-          paint_layer_.GetLayoutObject().FirstFragment().PaintOffset());
-    }
+  // painting_info.paint_dirty_rect is currently in the space of root layer's
+  // contents transform state. We need to adjust it into the/ space of the
+  // current layer's transform state. This handles the following cases:
+  // - The current layer has PaintOffsetTranslation;
+  // - The current layer's transform state escapes the root layers contents
+  //   transform, e.g. a fixed-position layer;
+  // - Scroll offsets.
+  const auto& matrix = GeometryMapper::SourceToDestinationProjection(
+      root_transform, current_transform);
+  painting_info.paint_dirty_rect.MoveBy(root_fragment.PaintOffset());
+  painting_info.paint_dirty_rect =
+      matrix.MapRect(painting_info.paint_dirty_rect);
+  painting_info.paint_dirty_rect.MoveBy(-current_fragment.PaintOffset());
+
+  // These flags no longer apply for the new root layer, except that we need to
+  // pass the root background flags from LayoutView to the document element.
+  paint_flags &= ~kPaintLayerPaintingSkipRootBackground;
+  paint_flags &= ~kPaintLayerPaintingOverflowContents;
+  paint_flags &= ~kPaintLayerPaintingCompositingScrollingPhase;
+
+  // Now paint_dirty_rect is in the current layer's space, so make the current
+  // layer the new root layer.
+  painting_info.root_layer = &paint_layer_;
+
+  // TODO(chrishtr): is this correct for fragmentation?
+  if (current_fragment.PaintProperties() &&
+      current_fragment.PaintProperties()->PaintOffsetTranslation()) {
+    painting_info.sub_pixel_accumulation =
+        ToLayoutSize(current_fragment.PaintOffset());
   }
 }
 
@@ -363,7 +386,7 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   }
 
   PaintLayerPaintingInfo painting_info = painting_info_arg;
-  AdjustForPaintOffsetTranslation(painting_info);
+  AdjustForPaintProperties(painting_info, paint_flags);
 
   LayoutPoint offset_from_root;
   paint_layer_.ConvertToLayerCoords(painting_info.root_layer, offset_from_root);
@@ -862,6 +885,24 @@ PaintResult PaintLayerPainter::PaintChildren(
 
   PaintLayerStackingNodeIterator iterator(*paint_layer_.StackingNode(),
                                           children_to_visit);
+
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    for (auto* child = iterator.Next(); child; child = iterator.Next()) {
+      // If this Layer should paint into its own backing or a grouped backing,
+      // that will be done via CompositedLayerMapping::PaintContents() and
+      // CompositedLayerMapping::DoPaintTask().
+      if (child->Layer()->PaintsIntoOwnOrGroupedBacking(
+              painting_info.GetGlobalPaintFlags()))
+        continue;
+
+      if (PaintLayerPainter(*child->Layer())
+              .Paint(context, painting_info, paint_flags) ==
+          kMayBeClippedByPaintDirtyRect)
+        result = kMayBeClippedByPaintDirtyRect;
+    }
+    return result;
+  }
+
   PaintLayerStackingNode* child = iterator.Next();
   if (!child)
     return result;
@@ -893,15 +934,8 @@ PaintResult PaintLayerPainter::PaintChildren(
         scroll_parents.push_back(parent_layer);
     }
 
-    // Iterate in reverse order to get ancestor scrollers before descendnat
-    // ones, so that AdjustForPaintOffsetTranslation ends up with the correct
-    // final rootLayer.
     for (auto scroller = scroll_parents.rbegin();
          scroller != scroll_parents.rend(); ++scroller) {
-      if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-        PaintLayerPainter(**scroller)
-            .AdjustForPaintOffsetTranslation(child_painting_info);
-      }
       child_painting_info.scroll_offset_accumulation +=
           (*scroller)->GetLayoutBox()->ScrolledContentOffset();
     }
@@ -1049,7 +1083,6 @@ void PaintLayerPainter::PaintFragmentWithPhase(
   LayoutPoint paint_offset = -paint_layer_.LayoutBoxLocation();
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     paint_offset += fragment.fragment_data->PaintOffset();
-    new_cull_rect.Move(painting_info.scroll_offset_accumulation);
     if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
       // For SPv175, we paint in the containing transform node's space. Now
       // |new_cull_rect| is in the pixel-snapped border box space of
