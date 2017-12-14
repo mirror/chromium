@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "531ba115_4a532e03",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-14T20:34:19Z",
+      "side": 1,
+      "message": "This appears to work. I think I have to call V8StringOrStringSequence::ToImpl directly with a different enum value so that it turns null/undefined to string as well, but lmk if that\u0027s wrong.",
+      "parentUuid": "2f2abe5b_0be93263",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dc3d841_01676cf7",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "c4ea051d83cd468d419b6a735b47461920344322",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425aefc9_50af600d",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-14T20:34:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1dc3d841_01676cf7",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fe52b829_355723a7",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-14T20:34:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3f63c55a_b9bbca46",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2c75e4b_3263c18f",
         "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
         "patchSetId": 19
@@ -67,6 +121,24 @@
       "revId": "c4ea051d83cd468d419b6a735b47461920344322",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a798f300_222e80d3",
+        "filename": "third_party/WebKit/Source/core/animation/EffectInput.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-14T20:34:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2c75e4b_3263c18f",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "47579f8b_c61db8c3",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffect.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-14T20:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f074ef7f_00ba80af",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9b79e2b_394b65dd",
         "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.h",
         "patchSetId": 19
@@ -101,6 +191,24 @@
       "revId": "c4ea051d83cd468d419b6a735b47461920344322",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5efadb0c_04356687",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-14T20:34:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9b79e2b_394b65dd",
+      "revId": "c4ea051d83cd468d419b6a735b47461920344322",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
