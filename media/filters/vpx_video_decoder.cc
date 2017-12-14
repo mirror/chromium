@@ -508,53 +508,16 @@ bool VpxVideoDecoder::CopyVpxImageToVideoFrame(
     case VPX_IMG_FMT_I420:
       codec_format = vpx_image_alpha ? PIXEL_FORMAT_YV12A : PIXEL_FORMAT_YV12;
       break;
-
+    case VPX_IMG_FMT_I42016:
+      codec_format = PIXEL_FORMAT_I420;
+      break;
+    case VPX_IMG_FMT_I42216:
+      codec_format = PIXEL_FORMAT_I422;
+      break;
     case VPX_IMG_FMT_I444:
+    case VPX_IMG_FMT_I44416:
       codec_format = PIXEL_FORMAT_YV24;
       break;
-
-    case VPX_IMG_FMT_I42016:
-      switch (vpx_image->bit_depth) {
-        case 10:
-          codec_format = PIXEL_FORMAT_YUV420P10;
-          break;
-        case 12:
-          codec_format = PIXEL_FORMAT_YUV420P12;
-          break;
-        default:
-          DLOG(ERROR) << "Unsupported bit depth: " << vpx_image->bit_depth;
-          return false;
-      }
-      break;
-
-    case VPX_IMG_FMT_I42216:
-      switch (vpx_image->bit_depth) {
-        case 10:
-          codec_format = PIXEL_FORMAT_YUV422P10;
-          break;
-        case 12:
-          codec_format = PIXEL_FORMAT_YUV422P12;
-          break;
-        default:
-          DLOG(ERROR) << "Unsupported bit depth: " << vpx_image->bit_depth;
-          return false;
-      }
-      break;
-
-    case VPX_IMG_FMT_I44416:
-      switch (vpx_image->bit_depth) {
-        case 10:
-          codec_format = PIXEL_FORMAT_YUV444P10;
-          break;
-        case 12:
-          codec_format = PIXEL_FORMAT_YUV444P12;
-          break;
-        default:
-          DLOG(ERROR) << "Unsupported bit depth: " << vpx_image->bit_depth;
-          return false;
-      }
-      break;
-
     default:
       DLOG(ERROR) << "Unsupported pixel format: " << vpx_image->fmt;
       return false;
@@ -584,14 +547,14 @@ bool VpxVideoDecoder::CopyVpxImageToVideoFrame(
           vpx_image->stride[VPX_PLANE_U], vpx_image->stride[VPX_PLANE_V],
           vpx_image_alpha->stride[VPX_PLANE_Y], vpx_image->planes[VPX_PLANE_Y],
           vpx_image->planes[VPX_PLANE_U], vpx_image->planes[VPX_PLANE_V],
-          alpha_plane, kNoTimestamp);
+          alpha_plane, kNoTimestamp, vpx_image->bit_depth);
     } else {
       *video_frame = VideoFrame::WrapExternalYuvData(
           codec_format, coded_size, gfx::Rect(visible_size),
           config_.natural_size(), vpx_image->stride[VPX_PLANE_Y],
           vpx_image->stride[VPX_PLANE_U], vpx_image->stride[VPX_PLANE_V],
           vpx_image->planes[VPX_PLANE_Y], vpx_image->planes[VPX_PLANE_U],
-          vpx_image->planes[VPX_PLANE_V], kNoTimestamp);
+          vpx_image->planes[VPX_PLANE_V], kNoTimestamp, vpx_image->bit_depth);
     }
     if (!(*video_frame))
       return false;

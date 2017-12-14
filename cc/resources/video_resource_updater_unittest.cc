@@ -161,12 +161,13 @@ class VideoResourceUpdaterTest : public testing::Test {
   }
 
   scoped_refptr<media::VideoFrame> CreateTestHighBitFrame() {
+    const int kBitDepth = 10;
     const int kDimension = 10;
     gfx::Size size(kDimension, kDimension);
 
     scoped_refptr<media::VideoFrame> video_frame(media::VideoFrame::CreateFrame(
-        media::PIXEL_FORMAT_YUV420P10, size, gfx::Rect(size), size,
-        base::TimeDelta()));
+        media::PIXEL_FORMAT_I420, size, gfx::Rect(size), size,
+        base::TimeDelta(), kBitDepth));
     EXPECT_TRUE(video_frame);
     return video_frame;
   }
