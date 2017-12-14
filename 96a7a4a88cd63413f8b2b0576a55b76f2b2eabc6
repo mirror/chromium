@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "dc79c517_84d467f5",
+        "filename": "services/network/public/interfaces/udp_socket.mojom",
+        "patchSetId": 23
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-12-14T01:10:51Z",
+      "side": 1,
+      "message": "In this case, it means the client of the Mojo interface.  UDPSocketReceiver is the interface over which received data on the socket will flow.",
+      "parentUuid": "73d04cf7_51620a1b",
+      "revId": "96a7a4a88cd63413f8b2b0576a55b76f2b2eabc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d728e97f_35136b7a",
         "filename": "services/network/public/interfaces/udp_socket.mojom",
         "patchSetId": 23
