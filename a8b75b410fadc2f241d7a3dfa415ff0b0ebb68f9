@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "049c5da9_041c499e",
+        "filename": "chrome/browser/chromeos/status/data_promo_notification.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T23:50:56Z",
+      "side": 1,
+      "message": "Out of curiosity, why does this move here? Was the check for DataSaverSwitchDemoMode() not important?",
+      "revId": "a8b75b410fadc2f241d7a3dfa415ff0b0ebb68f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
