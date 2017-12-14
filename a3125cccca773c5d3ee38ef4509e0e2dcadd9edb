@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d727b4ba_2609744b",
+        "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-14T08:28:37Z",
+      "side": 1,
+      "message": "nit: can you make this const and call GetSecurityOrigin() instead? The call bellow should still work, it takes a const *.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cbdfb4a_6bad4578",
+        "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-12-14T08:28:37Z",
+      "side": 1,
+      "message": "nit: can you verify with some dchecks here... maybe do a variable surrounded by #if DCHECK_IS_ON() [sp]\nconst SecurityOrigin* url_registry_security_origin\n#endif\n\nstore it in the above if statement, and then dcheck that here it\u0027s the same as what is in context?\n\nThis might be overkill, but having that in there at least for a run of layouttests would make me more confident it won\u0027t change.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
