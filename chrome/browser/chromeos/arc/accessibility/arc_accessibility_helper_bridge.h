@@ -85,6 +85,12 @@ class ArcAccessibilityHelperBridge
     return task_id_to_tree_;
   }
 
+  const std::map<std::string,
+                 std::pair<uint32_t, std::unique_ptr<AXTreeSourceArc>>>&
+  notification_key_to_tree_for_test() {
+    return notification_key_to_tree_;
+  }
+
  protected:
   virtual aura::Window* GetActiveWindow();
 
@@ -97,16 +103,15 @@ class ArcAccessibilityHelperBridge
   void OnActionResult(const ui::AXActionData& data, bool result) const;
 
   AXTreeSourceArc* GetOrCreateFromTaskId(int32_t task_id);
-  AXTreeSourceArc* CreateFromNotificationKey(
-      const std::string& notification_key);
-  AXTreeSourceArc* GetFromNotificationKey(
-      const std::string& notification_key) const;
+  AXTreeSourceArc* GetOrCreateFromNotificationKey(
+      const std::string& notification_key,
+      bool increment_counter);
   AXTreeSourceArc* GetFromTreeId(int32_t tree_id) const;
 
   Profile* const profile_;
   ArcBridgeService* const arc_bridge_service_;
   std::map<int32_t, std::unique_ptr<AXTreeSourceArc>> task_id_to_tree_;
-  std::map<std::string, std::unique_ptr<AXTreeSourceArc>>
+  std::map<std::string, std::pair<uint32_t, std::unique_ptr<AXTreeSourceArc>>>
       notification_key_to_tree_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcAccessibilityHelperBridge);
