@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feafca1c_3a7c6658",
+        "filename": "tools/perf/page_sets/data/key_desktop_move_cases.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-12-14T11:13:53Z",
+      "side": 0,
+      "message": "can you remove the key_desktop_move_cases_002.wprgo.sha1 file?",
+      "revId": "d1ef1c3bbdf569d2058d768f08cc10044563b51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
