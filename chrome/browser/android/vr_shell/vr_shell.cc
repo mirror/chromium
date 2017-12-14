@@ -154,7 +154,8 @@ VrShell::VrShell(JNIEnv* env,
 
   gl_thread_ = base::MakeUnique<VrGLThread>(
       weak_ptr_factory_.GetWeakPtr(), main_thread_task_runner_, gvr_api,
-      ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env));
+      ui_initial_state, reprojected_rendering_, HasDaydreamSupport(env),
+      vr::Assets::GetInstance()->ComponentReady());
   ui_ = gl_thread_.get();
   toolbar_ = base::MakeUnique<vr::ToolbarHelper>(ui_, this);
   autocomplete_controller_ = base::MakeUnique<AutocompleteController>(ui_);
