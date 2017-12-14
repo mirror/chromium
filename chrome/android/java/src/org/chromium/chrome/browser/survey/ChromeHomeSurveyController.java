@@ -48,7 +48,7 @@ public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnima
     public static final String PARAM_NAME = "survey_override_site_id";
     public static final long REQUIRED_VISIBILITY_DURATION_MS = 5000;
 
-    private static final String TRIAL_NAME = "ChromeHome";
+    private static final String TRIAL_NAME = "ChromeHomeHappinessSurvey";
     private static final String MAX_NUMBER = "MaxNumber";
     private static final String TEST_SITE_ID = "obw74vpeieqaw4xmw7o6qlpdbq";
 
