@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95c0ee82_a20b9681",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 2268,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-12-14T23:29:37Z",
+      "side": 1,
+      "message": "loadUrl() is called whenever any omnibox query was completed voice or otherwise, this should check for voice actually being used.",
+      "range": {
+        "startLine": 2268,
+        "startChar": 24,
+        "endLine": 2268,
+        "endChar": 28
+      },
+      "revId": "8600a63dad5c280141c38db7da7dc41354601b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
