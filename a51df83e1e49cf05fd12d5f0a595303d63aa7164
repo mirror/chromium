@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e1a58a2_4fc9ed7f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-14T23:33:39Z",
+      "side": 1,
+      "message": "Done.  Actually, iPhone 6(plus) also looks identical to its successors.",
+      "parentUuid": "66e93251_c01fadc8",
+      "revId": "a51df83e1e49cf05fd12d5f0a595303d63aa7164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4329e28_f1d5c2b6",
         "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d555b4fc_4fc8fbe5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-14T23:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4329e28_f1d5c2b6",
+      "revId": "a51df83e1e49cf05fd12d5f0a595303d63aa7164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2c63439_1c934cdf",
         "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "a51df83e1e49cf05fd12d5f0a595303d63aa7164",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318f1a90_d5007b4b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-12-14T23:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c63439_1c934cdf",
+      "revId": "a51df83e1e49cf05fd12d5f0a595303d63aa7164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
