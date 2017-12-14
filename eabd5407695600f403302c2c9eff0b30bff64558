@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "93be0d39_aa849f64",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-14T19:39:07Z",
+      "side": 1,
+      "message": "Hrm, you may be right.\n\nI am finding it very difficult to tease out all the possible interactions of rAFs and animations that should/shouldn\u0027t record a draw interval. My most recent thought is \u0027what if a pending rAF is cancelled?\u0027. I think that could lead to a huge draw interval recorded:\n\nFrame N-1:\n  * rAF runs (current_frame_had_raf \u003d true), registers a new rAF (next_frame_has_pending_raf \u003d true)\n  * later, pending rAF is cancelled (click/scroll handler? setInterval?)\n  * previous_frame_had_raf_ is set to true here, because we don\u0027t know the pending rAF was (were) cancelled.\n[Time passes, no frame]\n\nFrame N:\n  * Another rAF is triggered from setInterval (current_frame_had_raf \u003d true)\n  * Here, we then get that current_frame_had_raf is true and previous_frame_had_raf_ is true, so record a big draw diff.\n\nI must admit I\u0027m not sure if a pending rAF can be cancelled like this, but overall this just seems so delicate.",
+      "parentUuid": "5304f62a_9bed05f3",
+      "range": {
+        "startLine": 930,
+        "startChar": 44,
+        "endLine": 930,
+        "endChar": 65
+      },
+      "revId": "eabd5407695600f403302c2c9eff0b30bff64558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10152f77_fbdf0060",
         "filename": "cc/scheduler/compositor_timing_history.cc",
         "patchSetId": 8
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "3a5feb81_4a643210",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-14T19:39:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we\u0027re guaranteed, but I threw together a test and it did look like there was a frame at the end of each animation with main_thread_animations_count \u003d 0.",
+      "parentUuid": "10152f77_fbdf0060",
+      "revId": "eabd5407695600f403302c2c9eff0b30bff64558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76255cc6_aa21f74b",
         "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
         "patchSetId": 8
@@ -70,6 +112,24 @@
       "writtenOn": "2017-12-14T16:17:01Z",
       "side": 1,
       "message": "Dosen\u0027t this also need the next frame has pending raf so we can test pure raf animations?",
+      "revId": "eabd5407695600f403302c2c9eff0b30bff64558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6543e6_d7392417",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-12-14T19:39:07Z",
+      "side": 1,
+      "message": "I\u0027m not updating tests until we can agree on a working approach to the problem :)",
+      "parentUuid": "76255cc6_aa21f74b",
       "revId": "eabd5407695600f403302c2c9eff0b30bff64558",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
