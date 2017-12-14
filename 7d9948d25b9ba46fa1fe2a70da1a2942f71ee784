@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9222dba2_a8c2918c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-12-14T19:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d32f10f8_85adb9ec",
+      "range": {
+        "startLine": 9,
+        "startChar": 24,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "7d9948d25b9ba46fa1fe2a70da1a2942f71ee784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec9dfe91_edb37ccc",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
         "patchSetId": 7
