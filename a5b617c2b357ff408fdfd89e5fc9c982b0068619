@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7be8456_5319c941",
+        "filename": "media/mojo/clients/mojo_decryptor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-14T01:28:57Z",
+      "side": 1,
+      "message": "Added a TODO to refactor this part.",
+      "parentUuid": "f9a97311_c397c899",
+      "revId": "a5b617c2b357ff408fdfd89e5fc9c982b0068619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3f4cc54_019eaf97",
         "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-13T21:58:43Z",
       "side": 1,
       "message": "I don\u0027t quite understand this state machine: does this mean that once Flush() is called, no *further* calls to ReadDecoderBuffer() or Flush() should happen until |flush_cb| runs?",
+      "range": {
+        "startLine": 58,
+        "startChar": 32,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "a5b617c2b357ff408fdfd89e5fc9c982b0068619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dde788e_836e9c3d",
+        "filename": "media/mojo/common/mojo_decoder_buffer_converter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-14T01:28:57Z",
+      "side": 1,
+      "message": "Your understanding is exactly right. I added the *further* part to make it more clear.",
+      "parentUuid": "a3f4cc54_019eaf97",
       "range": {
         "startLine": 58,
         "startChar": 32,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "21a72f27_95e4eddc",
+        "filename": "media/mojo/services/mojo_decryptor_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-14T01:28:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0354831e_3114e60b",
+      "revId": "a5b617c2b357ff408fdfd89e5fc9c982b0068619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a8f96a4_99cea957",
         "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
         "patchSetId": 6
@@ -70,6 +130,24 @@
       "writtenOn": "2017-12-13T21:58:43Z",
       "side": 1,
       "message": "Similar to my comment elsewhere, it might actually be helpful to have the size of the frame specified explicitly here, so it\u0027s obvious that it will force chunking in conjunction with the writer capacity specified.",
+      "revId": "a5b617c2b357ff408fdfd89e5fc9c982b0068619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3161ef4b_9bfd48a3",
+        "filename": "media/mojo/test/mojo_video_decoder_integration_test.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-12-14T01:28:57Z",
+      "side": 1,
+      "message": "ditto, this is done at initialization time and it\u0027ll be too late to do it here.",
+      "parentUuid": "8a8f96a4_99cea957",
       "revId": "a5b617c2b357ff408fdfd89e5fc9c982b0068619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
