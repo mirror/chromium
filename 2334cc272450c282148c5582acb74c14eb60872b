@@ -16,6 +16,24 @@
       "revId": "2334cc272450c282148c5582acb74c14eb60872b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d39a23_df2bd7ad",
+        "filename": "content/browser/webauth/cbor/cbor_reader_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-14T04:05:00Z",
+      "side": 1,
+      "message": "Oops Thanks for the catch! :)",
+      "parentUuid": "f64da6ff_9fad6eb1",
+      "revId": "2334cc272450c282148c5582acb74c14eb60872b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
