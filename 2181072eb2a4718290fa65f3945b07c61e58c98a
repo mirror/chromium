@@ -46,6 +46,30 @@
       "revId": "2181072eb2a4718290fa65f3945b07c61e58c98a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9a20a3_ed357fcf",
+        "filename": "third_party/WebKit/LayoutTests/css-parser/color3_hsl-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-14T14:49:36Z",
+      "side": 1,
+      "message": "Ack.  I would expect imported tests to live under Layout/external/, but, as you point out, these are really old and predate that structure.\n\nIdeally they should be converted/upstreamed to WPT.  I would also not rule out modifying them locally (looks like at least some of them were refactored at some point).  But since they had FAIL expectations checked in before, I\u0027m fine with landing as-is.",
+      "parentUuid": "40a60cd9_5969768d",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 4
+      },
+      "revId": "2181072eb2a4718290fa65f3945b07c61e58c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
