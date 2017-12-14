@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cce48a0_f9e2b8d1",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T16:49:50Z",
+      "side": 1,
+      "message": "Also add a TODO to think about whether parts of the URL need to be removed?\n\nI\u0027m mostly thinking about username, password, and the hash/location part of the URL - normally they don\u0027t make it to the proxy layer, so I\u0027m not sure if the proxy filters them out or not.  I don\u0027t think there is a security issue here, since we ignore them anyways, at this layer, but I\u0027d like to at least understand if they make it to the PAC script.",
+      "range": {
+        "startLine": 49,
+        "startChar": 25,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a3f526_fb200c77",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T16:49:50Z",
+      "side": 1,
+      "message": "nit:  Add braces",
+      "range": {
+        "startLine": 225,
+        "startChar": 13,
+        "endLine": 225,
+        "endChar": 0
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c5b2fc_273d73e3",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T16:49:50Z",
+      "side": 1,
+      "message": "This is needlessly expensive.  This is the same as just:\n\nip_address.AssignFromIPLiteral(url_.HostNoBrackets());\n\nand using url_.EffectiveIntPort() below.\n\nSo we don\u0027t need host_port_pair.",
+      "range": {
+        "startLine": 354,
+        "startChar": 38,
+        "endLine": 354,
+        "endChar": 52
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0052b61_490557c5",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T16:49:50Z",
+      "side": 1,
+      "message": "Some of these should theoretically be calling into the socket, if it\u0027s non-null, but I expect we\u0027ll be removing them, anyways (And making this no longer a net::StreamSocket), once everything is using the Mojo API.",
+      "range": {
+        "startLine": 392,
+        "startChar": 33,
+        "endLine": 392,
+        "endChar": 50
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c32dd38_1f31bbf1",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T16:49:50Z",
+      "side": 1,
+      "message": "The order of these methods doesn\u0027t match the header.  Maybe defrag in a followup?",
+      "range": {
+        "startLine": 416,
+        "startChar": 5,
+        "endLine": 416,
+        "endChar": 31
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "740046e3_66e09fec",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T16:49:50Z",
+      "side": 1,
+      "message": "Think this needs a short description, and a TODO to make it private, and only expose it via a Mojo interface.",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 33
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a3f8cc_2d3fae9a",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T16:49:50Z",
+      "side": 1,
+      "message": "Switch this to mock sockets, like ReusesHTTPAuthCache_Lookup, to simulate a connection error, and then re-enabled?  I assume the issue with the old test is that 0.0.0.0 is used as an alias for 127.0.0.1 on some Linux PCs.\n\nDouble-up to test, to cover sync and async errors?",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 37
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e536cc9_836ddd5d",
+        "filename": "services/network/public/cpp/proxy_resolving_client_socket_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T16:49:50Z",
+      "side": 1,
+      "message": "Suggested tests (I\u0027m fine with these in a followup, as long as we get them in before we add more consumers):\n\n* Test fallback success via the implicit-fallback-to-direct logic.\n* Test when fallback also fails.\n* Test fallback to another proxy.\n* Make sure that we test sync/async cases (I\u0027m mostly concerned about proxy resolution)\n* Check that the PAC service is send the correct URL (Admittedly, not to interesting).\n* None of the above tests look to check that we connect to the right proxy address.  They should.\n* Test where proxy configuration changes while in the middle of a proxy connect (Not sure if the proxy connect needs to fail or not to make this interesting).\n\n* There are no tests for actually reading/writing data (Both in the proxy and direct cases), or read/write errors, though those are simple enough that we may just want to do integration tests for them.  Up to you.",
+      "range": {
+        "startLine": 257,
+        "startChar": 1,
+        "endLine": 257,
+        "endChar": 0
+      },
+      "revId": "23381cf5e0fa3d3cb0b7b01ee6991ee75e7edd1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
