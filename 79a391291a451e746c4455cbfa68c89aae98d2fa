@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24636ef5_a1d277ee",
+        "filename": "build/config/ui.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-14T04:21:41Z",
+      "side": 1,
+      "message": "Please add:\n(Android only)\nassuming that this really only works on Android.",
+      "range": {
+        "startLine": 35,
+        "startChar": 34,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9931728f_b172be48",
+        "filename": "build/config/ui.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-14T04:21:41Z",
+      "side": 1,
+      "message": "To avoid violating the big comment at the top of this file, can you instead put the new argument into a new ui/gl/features.gni or similar, and pick it up from the various BUILD.gn files touched in this CL?",
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97be581_c82a5088",
+        "filename": "gpu/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-14T04:21:41Z",
+      "side": 1,
+      "message": "Suggest not duplicating the test against use_static_angle here.",
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b9a2b8_bf5557db",
+        "filename": "gpu/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-14T04:21:41Z",
+      "side": 1,
+      "message": "Suggest adding a comment like:\n# if (!use_static_angle)\nhere.",
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f354b5_97158213",
+        "filename": "gpu/config/gpu_info_collector_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-14T04:21:41Z",
+      "side": 1,
+      "message": "Please add /* defined(USE_STATIC_ANGLE) */ here.",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 0
+      },
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a534b17_b8a3449a",
+        "filename": "ui/gl/init/gl_initializer_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-14T04:21:41Z",
+      "side": 1,
+      "message": "Same comment here.",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "79a391291a451e746c4455cbfa68c89aae98d2fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
