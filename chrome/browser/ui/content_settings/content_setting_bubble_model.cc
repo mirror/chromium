@@ -38,7 +38,7 @@
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model_delegate.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/common/insecure_content_renderer.mojom.h"
+#include "chrome/common/content_settings_renderer.mojom.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/grit/chromium_strings.h"
@@ -63,7 +63,7 @@
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/origin_util.h"
 #include "ppapi/features/features.h"
-#include "services/service_manager/public/cpp/interface_provider.h"
+#include "third_party/WebKit/common/associated_interfaces/associated_interface_provider.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -94,9 +94,9 @@ int GetIdForContentType(const ContentSettingsTypeIdEntry* entries,
   return 0;
 }
 
-void SetAllowRunningInsecureContent(content::RenderFrameHost* frame) {
-  chrome::mojom::InsecureContentRendererPtr renderer;
-  frame->GetRemoteInterfaces()->GetInterface(&renderer);
+void SetAllowRunningInsecureContent(
+    chrome::mojom::ContentSettingsRendererAssociatedPtr renderer,
+    content::RenderFrameHost* frame) {
   renderer->SetAllowRunningInsecureContent();
 }
 
@@ -281,8 +281,15 @@ void ContentSettingMixedScriptBubbleModel::OnCustomLinkClicked() {
   }
 
   // Update renderer side settings to allow active mixed content.
+  // Send a message to the renderer to retrieve information about the page.
+  chrome::mojom::ContentSettingsRendererAssociatedPtr content_settings_renderer;
+  web_contents()->GetMainFrame()->GetRemoteAssociatedInterfaces()->GetInterface(
+      &content_settings_renderer);
+  // Bind the InterfacePtr into the callback so that it's kept alive
+  // until there's either a connection error or a response.
   web_contents()->ForEachFrame(
-      base::BindRepeating(&::SetAllowRunningInsecureContent));
+      base::BindRepeating(&::SetAllowRunningInsecureContent,
+                          base::Passed(&content_settings_renderer)));
 
   content_settings::RecordMixedScriptAction(
       content_settings::MIXED_SCRIPT_ACTION_CLICKED_ALLOW);
