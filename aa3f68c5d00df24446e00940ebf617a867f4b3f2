@@ -16,6 +16,24 @@
       "revId": "aa3f68c5d00df24446e00940ebf617a867f4b3f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7df1f1a_fa5404e6",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-14T06:53:09Z",
+      "side": 1,
+      "message": "I meant that\na) |id| is not found, or\nb) the callback is nullptr,\nthen, remove the entry and immediately return.",
+      "parentUuid": "73b58198_2e9ed72c",
+      "revId": "aa3f68c5d00df24446e00940ebf617a867f4b3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
