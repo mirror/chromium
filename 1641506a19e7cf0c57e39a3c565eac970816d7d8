@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbb52a55_0ddaf220",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2670,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-12-14T19:44:14Z",
+      "side": 1,
+      "message": "Since this is the only place you set the key, I\u0027d move the allocation into this scope as well.",
+      "revId": "1641506a19e7cf0c57e39a3c565eac970816d7d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
