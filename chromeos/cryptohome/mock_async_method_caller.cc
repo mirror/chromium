@@ -88,8 +88,11 @@ void MockAsyncMethodCaller::FakeCreateCertRequest(
 }
 
 void MockAsyncMethodCaller::FakeFinishCertRequest(
-    const DataCallback& callback) {
-  callback.Run(success_, kFakeAttestationCert);
+    const PrivacyCACallback& callback) {
+  callback.Run(success_
+                   ? chromeos::attestation::ATTESTATION_SUCCESS
+                   : chromeos::attestation::ATTESTATION_UNSPECIFIED_FAILURE,
+               kFakeAttestationCert);
 }
 
 void MockAsyncMethodCaller::FakeGetSanitizedUsername(

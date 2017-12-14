@@ -33,7 +33,7 @@ namespace {
 
 void CertCallbackSuccess(const AttestationFlow::CertificateCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(callback, true, "fake_cert"));
+      FROM_HERE, base::BindOnce(callback, ATTESTATION_SUCCESS, "fake_cert"));
 }
 
 void StatusCallbackSuccess(

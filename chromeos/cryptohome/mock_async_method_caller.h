@@ -69,7 +69,7 @@ class MockAsyncMethodCaller : public AsyncMethodCaller {
                     chromeos::attestation::AttestationKeyType key_type,
                     const Identification& user_id,
                     const std::string& key_name,
-                    const DataCallback& callback));
+                    const PrivacyCACallback& callback));
   MOCK_METHOD4(TpmAttestationRegisterKey,
                void(chromeos::attestation::AttestationKeyType key_type,
                     const Identification& user_id,
@@ -102,7 +102,7 @@ class MockAsyncMethodCaller : public AsyncMethodCaller {
   // Default fakes for attestation calls.
   void FakeCreateEnrollRequest(const DataCallback& callback);
   void FakeCreateCertRequest(const DataCallback& callback);
-  void FakeFinishCertRequest(const DataCallback& callback);
+  void FakeFinishCertRequest(const PrivacyCACallback& callback);
   void FakeGetSanitizedUsername(const DataCallback& callback);
   void FakeEnterpriseChallenge(const DataCallback& callback);
 
