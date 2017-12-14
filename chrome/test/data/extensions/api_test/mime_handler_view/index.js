@@ -169,8 +169,7 @@ chrome.mimeHandlerPrivate.getStreamInfo(function(streamInfo) {
   // Run the test for data URLs.
   if (streamInfo.originalUrl.startsWith("data:")) {
     window.removeEventListener('message', queueMessage);
-    // Long data URLs get truncated.
-    if (streamInfo.originalUrl == "data:")
+    if (streamInfo.originalUrl.length > 1024)
       chrome.test.runTests([testsByName['testDataUrlLong']]);
     else
       chrome.test.runTests([testsByName['testDataUrl']]);

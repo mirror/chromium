@@ -103,17 +103,7 @@ extensions::mime_handler::StreamInfoPtr TypeConverter<
   result->tab_id = stream.tab_id();
   const content::StreamInfo* info = stream.stream_info();
   result->mime_type = info->mime_type;
-
-  // If the URL is too long, mojo will give up on sending the URL. In these
-  // cases truncate it. Only data: URLs should ever really suffer this problem
-  // so only worry about those for now.
-  // TODO(raymes): This appears to be a bug in mojo somewhere. crbug.com/480099.
-  if (info->original_url.SchemeIs(url::kDataScheme) &&
-      info->original_url.spec().size() > content::kMaxURLDisplayChars) {
-    result->original_url = info->original_url.scheme() + ":";
-  } else {
-    result->original_url = info->original_url.spec();
-  }
+  result->original_url = info->original_url.spec();
 
   result->stream_url = info->handle->GetURL().spec();
   result->response_headers =
