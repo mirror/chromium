@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27bbb1a0_a3f7f4a8",
+        "filename": "android_webview/browser/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T23:59:11Z",
+      "side": 1,
+      "message": "Nit: maybe group this with the other third_party/WebKit stuff.",
+      "revId": "bd9aa17b6247ec4dade656daae23ae5999f8345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38e8b3c_6ad55a4c",
+        "filename": "third_party/WebKit/common/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T23:59:11Z",
+      "side": 1,
+      "message": "This is needed because the Blink variant of the storage interfaces would depend on the Blink typemap which depends on blink_common right?",
+      "revId": "bd9aa17b6247ec4dade656daae23ae5999f8345b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
