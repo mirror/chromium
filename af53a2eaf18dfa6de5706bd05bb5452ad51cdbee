@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d24bffd_b2fce756",
+        "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:22:20Z",
+      "side": 1,
+      "message": "Move into conditional one line above? Same comment with click_settings_ below.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 27
+      },
+      "revId": "af53a2eaf18dfa6de5706bd05bb5452ad51cdbee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a4d5c5_dd43e596",
+        "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:22:20Z",
+      "side": 1,
+      "message": "optional: mild preference for initializing to null here. Easier to see the default and make sure the values don\u0027t go uninitialized.",
+      "range": {
+        "startLine": 45,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "af53a2eaf18dfa6de5706bd05bb5452ad51cdbee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
