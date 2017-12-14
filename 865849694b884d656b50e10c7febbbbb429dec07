@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "638e31d0_74b9f214",
+        "filename": "third_party/WebKit/Source/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-14T07:37:45Z",
+      "side": 1,
+      "message": "This shows as broken image, now I have access to the file and the embed URL seems to be this one:\nhttps://drive.google.com/file/d/1Eg8Sff44GIfWr-QYA6XLqPaRuqMGP8hM/preview\n\nYou can check the image clicking on \"gitiles\" link on top of Gerrit when visualizing 1 file:\nhttps://screenshot.googleplex.com/GqSGidJXgOj\nhttps://screenshot.googleplex.com/W7ih719yr7g",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 87
+      },
+      "revId": "865849694b884d656b50e10c7febbbbb429dec07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
