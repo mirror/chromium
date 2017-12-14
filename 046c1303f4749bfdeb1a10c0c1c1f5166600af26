@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8078fc98_838b88dc",
+        "filename": "chrome/browser/extensions/api/developer_private/developer_private_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T23:48:57Z",
+      "side": 1,
+      "message": "I was expecting that the app info dialog would be eventually deleted as part of migrating to MD Extensions. Is it used anywhere else?\nOtherwise pulling out the code to re-use it in both places seems unnecessary.",
+      "parentUuid": "d1555be7_834b3042",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da4fbded_4f21e181",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T23:33:25Z",
       "side": 1,
       "message": "Do we need any kind of placeholder here?  A spinner, a \"calculating...\"-type string, etc?\n\nIn particular, this might be useful if going from extension a -\u003e extension b, since the same detail view element will be reused, right?",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555f9721_2f456a15",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T23:48:57Z",
+      "side": 1,
+      "message": "The old UI did not seem to use any spinner. Also when I tried locally (granted not with a very large extension) it seemed instant. I am leaning towards a simpler no-spinner solution first (especially since this will be merge-requested), and only add a spinner later, if it proves to be an issue.\n\nRegarding reusing the same view for different extensions, yes we reuse it. How about clearing the number when the view exits. This way, when the user navigates to a different extension\u0027s detail page, and if  size calculation takes a while, an empty size would be shown, instead of an obsolete one?",
+      "parentUuid": "da4fbded_4f21e181",
       "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,42 @@
     },
     {
       "key": {
+        "uuid": "a070ed63_d85fdeae",
+        "filename": "chrome/common/extensions/api/developer_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T23:48:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea1ad48_9d60f120",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e496957_d2343f3d",
+        "filename": "chrome/common/extensions/api/developer_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T23:48:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dea1ad48_9d60f120",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab642cf5_9e6b07a7",
         "filename": "chrome/common/extensions/api/developer_private.idl",
         "patchSetId": 4
@@ -67,6 +139,24 @@
       "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78ee7f8_c0f9f89b",
+        "filename": "chrome/common/extensions/api/developer_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T23:48:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab642cf5_9e6b07a7",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
