@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65c73794_fe8e2dcb",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-14T21:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "541549fa_29c37cfb",
+      "range": {
+        "startLine": 256,
+        "startChar": 6,
+        "endLine": 256,
+        "endChar": 25
+      },
+      "revId": "2a2fa8ab2ba778c3935d907056a351ad69a18f73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6373b3a0_6079a09f",
         "filename": "components/cronet/ios/cronet_environment.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2a2fa8ab2ba778c3935d907056a351ad69a18f73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fcd11a_5defeda1",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-12-14T21:57:13Z",
+      "side": 1,
+      "message": "Whoops, the formatting was strange because I ended the line with a comma.  Fixed and reformatted.",
+      "parentUuid": "6373b3a0_6079a09f",
+      "range": {
+        "startLine": 344,
+        "startChar": 6,
+        "endLine": 344,
+        "endChar": 28
+      },
+      "revId": "2a2fa8ab2ba778c3935d907056a351ad69a18f73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
