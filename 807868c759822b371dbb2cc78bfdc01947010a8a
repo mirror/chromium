@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd35be01_57929a0f",
+        "filename": "services/device/generic_sensor/orientation_quaternion_fusion_algorithm_using_euler_angles.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-12-14T10:56:02Z",
+      "side": 1,
+      "message": "Could you provide the similar renames also in orientation_euler_angles_fusion_algorithm_using_quaternion.cc ?",
+      "revId": "807868c759822b371dbb2cc78bfdc01947010a8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
