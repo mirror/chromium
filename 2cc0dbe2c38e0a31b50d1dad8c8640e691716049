@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f3f8657_b9742129",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-12-14T09:40:52Z",
+      "side": 1,
+      "message": "Unfortunately, this will never be true if there is already any favicon for the given page URL\n(this is the way GetLargeIconOrFallbackStyleFromGoogleServerSkippingLocalCache currently works). For most/all bookmarks, there is already a 16x16 favicon coming from sync.\n\nThis is my mistake, I have forgotten about this limitation when pinging you about this feature. The reasons for this limitations are somewhat subtle, I\u0027ll start a new email thread with pkotwicz@ to figure out how to lift it.",
+      "range": {
+        "startLine": 942,
+        "startChar": 15,
+        "endLine": 943,
+        "endChar": 72
+      },
+      "revId": "2cc0dbe2c38e0a31b50d1dad8c8640e691716049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
