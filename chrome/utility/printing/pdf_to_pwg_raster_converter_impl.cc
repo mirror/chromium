@@ -4,6 +4,10 @@
 
 #include "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.h"
 
+#include <limits>
+#include <string>
+#include <utility>
+
 #include "chrome/utility/cloud_print/bitmap_image.h"
 #include "chrome/utility/cloud_print/pwg_encoder.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -58,6 +62,9 @@ bool RenderPdfPagesToPwgRaster(base::File pdf_file,
     cloud_print::PwgHeaderInfo header_info;
     header_info.dpi = gfx::Size(settings.dpi, settings.dpi);
     header_info.total_pages = total_page_count;
+    header_info.color_space = bitmap_settings.use_color
+                                  ? cloud_print::PwgHeaderInfo::SRGB
+                                  : cloud_print::PwgHeaderInfo::SGRAY;
 
     // Transform odd pages.
     if (page_number % 2) {
