@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f9d5178_86aaa8d2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ShortcutsScreen.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-14T17:42:07Z",
+      "side": 1,
+      "message": "Actually, these are more help than settings :-)",
+      "revId": "952ebd262ac277cbeb6da6cf734ec5a7188e5c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
