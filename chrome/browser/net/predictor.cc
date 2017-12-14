@@ -37,6 +37,8 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
+#include "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.h"
+#include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
@@ -988,6 +990,31 @@ bool Predictor::WouldLikelyProxyURL(const GURL& url) {
   return synchronous_success && !info.is_direct();
 }
 
+bool Predictor::WouldLikelyBeFetchedViaDataSaver(const GURL& gurl) const {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  if (!base::FeatureList::IsEnabled(
+          data_reduction_proxy::features::kDisableDnsPreResolution)) {
+    return false;
+  }
+
+  data_reduction_proxy::DataReductionProxyIOData* data_reduction_proxy_io_data =
+      profile_io_data_->data_reduction_proxy_io_data();
+
+  if (!data_reduction_proxy_io_data)
+    return false;
+
+  if (!data_reduction_proxy_io_data->IsEnabled())
+    return false;
+
+  if (!gurl.is_valid() || !gurl.SchemeIs(url::kHttpScheme)) {
+    // Only HTTP URLs are fetched via data saver.
+    return false;
+  }
+
+  return true;
+}
+
 void Predictor::AppendToResolutionQueue(
     const GURL& url,
     UrlInfo::ResolutionMotivation motivation) {
@@ -1008,6 +1035,11 @@ void Predictor::AppendToResolutionQueue(
 
   if (WouldLikelyProxyURL(url)) {
     info->DLogResultsStats("DNS PrefetchForProxiedRequest");
+    return;
+  }
+
+  if (WouldLikelyBeFetchedViaDataSaver(url)) {
+    info->DLogResultsStats("DNS PrefetchForDataSaverRequest");
     return;
   }
 

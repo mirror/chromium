@@ -409,6 +409,12 @@ class Predictor {
   // if the unproxied DNS may contain incorrect entries.
   bool WouldLikelyProxyURL(const GURL& url);
 
+  // Synchronously returns true if the request to |gurl| would likely go
+  // through the data saver proxy.  Otherwise, returns false. This is used to
+  // avoid issuing DNS requests when data saver proxy is in use. This improves
+  // efficiency.
+  bool WouldLikelyBeFetchedViaDataSaver(const GURL& gurl) const;
+
   // Applies the HSTS redirect for |url|, if any.
   GURL GetHSTSRedirectOnIOThread(const GURL& url);
 
