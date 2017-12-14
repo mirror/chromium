@@ -592,7 +592,8 @@ void UiElement::DoLayOutChildren() {
   gfx::RectF bounds;
   bool first = false;
   for (auto& child : children_) {
-    if (!child->IsVisible() || child->size().IsEmpty()) {
+    if (!child->IsVisible() || child->size().IsEmpty() ||
+        !child->contributes_to_parent_bounds()) {
       continue;
     }
     gfx::Point3F child_center(child->local_origin());
@@ -613,6 +614,7 @@ void UiElement::DoLayOutChildren() {
   bounds.set_origin(bounds.CenterPoint());
   size_ = bounds.size();
   local_origin_ = bounds.origin();
+  OnSetSize(size_);
 }
 
 void UiElement::LayOutChildren() {
