@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1de2694a_5bbbe8d1",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-12-14T18:41:13Z",
+      "side": 1,
+      "message": "Please ensure that the ordinal of this enum is stable.",
+      "range": {
+        "startLine": 436,
+        "startChar": 57,
+        "endLine": 436,
+        "endChar": 62
+      },
+      "revId": "09806277cfcb5448918419122ed3aa39c33c6837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
