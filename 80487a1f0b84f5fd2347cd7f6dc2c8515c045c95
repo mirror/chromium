@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "367063d8_62144d06",
+        "filename": "components/proximity_auth/bluetooth_low_energy_connection_finder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-12-14T18:12:40Z",
+      "side": 1,
+      "message": "Is this actually needed? It seems to be orthogonal to the purpose of this test.\n\nCan you just pass an empty ManufacturerDataMap to UpdateAdvertisementData() instead?",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 56
+      },
+      "revId": "80487a1f0b84f5fd2347cd7f6dc2c8515c045c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
