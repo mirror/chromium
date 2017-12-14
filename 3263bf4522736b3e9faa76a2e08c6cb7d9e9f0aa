@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f63baf4a_635559fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkFolderRow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-14T18:45:09Z",
+      "side": 1,
+      "message": "As discussed offline, we would cache this in memory on native side so that we don\u0027t need to do repetitive calculations.",
+      "parentUuid": "b43a136c_17933095",
+      "revId": "3263bf4522736b3e9faa76a2e08c6cb7d9e9f0aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30c6ff91_9e4c42d2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkFolderRow.java",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-12-14T17:51:45Z",
       "side": 1,
       "message": "I wonder if subfolder should be counted in the child count?\n\nFor example, if I have a folder with 3 sub-folders and no bookmarks, does it really make sense to show \"0 bookamrks\"?",
+      "range": {
+        "startLine": 68,
+        "startChar": 52,
+        "endLine": 68,
+        "endChar": 72
+      },
+      "revId": "3263bf4522736b3e9faa76a2e08c6cb7d9e9f0aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc69ff6_80293f18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkFolderRow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-12-14T18:45:09Z",
+      "side": 1,
+      "message": "My personal feeling that \"bookmark\" should be only describing number of bookmarks. I suggested that we might want to put number of \"folder\" on the description in the bug, but cleer@ said it is an overkill. I wonder if number of \"items\" might be a better description.",
+      "parentUuid": "30c6ff91_9e4c42d2",
       "range": {
         "startLine": 68,
         "startChar": 52,
