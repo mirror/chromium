@@ -16,6 +16,24 @@
       "revId": "41b492ee93c10219655eed3aab9eceea5802b415",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d4bfa0_c40941e0",
+        "filename": "chromeos/chromeos_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-14T01:03:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5eb4d5e0_4ef1be15",
+      "revId": "41b492ee93c10219655eed3aab9eceea5802b415",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
