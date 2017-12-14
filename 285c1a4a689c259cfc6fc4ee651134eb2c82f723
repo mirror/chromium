@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "406344a3_4db1abce",
+        "filename": "third_party/WebKit/Source/platform/text/CharacterPropertyDataGenerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-14T03:04:44Z",
+      "side": 1,
+      "message": "U+4DC0-4DFF is Yijing Hexagram Symbols\nhttp://www.unicode.org/charts/PDF/U4DC0.pdf\n\nI\u0027m ok to include them as ideographic.",
+      "parentUuid": "1b7ca5c5_be6f335c",
+      "range": {
+        "startLine": 44,
+        "startChar": 3,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "285c1a4a689c259cfc6fc4ee651134eb2c82f723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec513ea2_1d2b55df",
         "filename": "third_party/WebKit/Source/platform/text/CharacterPropertyDataGenerator.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bef8bba3_a8f42b29",
+        "filename": "third_party/WebKit/Source/platform/text/CharacterPropertyDataGenerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-14T03:04:44Z",
+      "side": 1,
+      "message": "They are marks and we run this function after shaping, so I believe marks are not needed.\n\nAlso, they are unlikely to have ink below baseline, as far as I understand from code charts, no?",
+      "parentUuid": "ec513ea2_1d2b55df",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "285c1a4a689c259cfc6fc4ee651134eb2c82f723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9daa222_309871ff",
         "filename": "third_party/WebKit/Source/platform/text/CharacterPropertyDataGenerator.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-12-12T19:28:17Z",
       "side": 1,
       "message": "Tangut blocks are added here. Then, they should be removed from the other place (switch-statement), shouldn\u0027t they?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "285c1a4a689c259cfc6fc4ee651134eb2c82f723",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe03a0c_9b5d51bd",
+        "filename": "third_party/WebKit/Source/platform/text/CharacterPropertyDataGenerator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-12-14T03:04:44Z",
+      "side": 1,
+      "message": "Thanks, will do.",
+      "parentUuid": "e9daa222_309871ff",
       "range": {
         "startLine": 89,
         "startChar": 0,
