@@ -111,6 +111,11 @@ public class ImeUtils {
             }
         }
 
+        if ((inputFlags & WebTextInputFlags.HAS_BEEN_PASSWORD_FIELD) != 0) {
+            outAttrs.inputType =
+                    InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD;
+        }
+
         outAttrs.imeOptions |= getImeAction(inputType, inputFlags, inputMode,
                 (outAttrs.inputType & EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE) != 0);
 
