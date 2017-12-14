@@ -48,9 +48,12 @@
 #include "platform/wtf/Compiler.h"
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/MathExtras.h"
+#include "platform/wtf/HashSet.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/Unicode.h"
+
+#include <SkStream.h>
 
 namespace blink {
 
@@ -191,6 +194,30 @@ static inline hb_script_t ICUScriptToHBScript(UScriptCode script) {
   return hb_script_from_string(uscript_getShortName(script), -1);
 }
 
+namespace {
+}
+
+static AtomicString writeTypefaceToFile(SkTypeface* typeface) {
+  String base_path = "/tmp/dump_fonts/";
+  SkStreamAsset* typeface_stream = typeface->openStream(nullptr);
+  if (!typeface_stream)
+    return "NO STREAM";
+  Vector<char> buffer;
+  buffer.resize(typeface_stream->getLength());
+  typeface_stream->rewind();
+  size_t read_bytes = typeface_stream->read(buffer.data(), buffer.size());
+  CHECK_EQ(read_bytes, buffer.size());
+
+  SkString family_name;
+  typeface->getFamilyName(&family_name);
+  String output_path = base_path + String(family_name.c_str()) + "_" + String::Number(typeface->uniqueID()) + String(".otf");
+  VLOG(4) << "writing to output path: " << output_path;
+  SkFILEWStream file_writer(output_path.Utf8(kLenientUTF8Conversion).data());
+  file_writer.write(buffer.data(), buffer.size());
+  file_writer.flush();
+  return AtomicString(output_path);
+}
+
 inline bool ShapeRange(hb_buffer_t* buffer,
                        hb_feature_t* font_features,
                        unsigned font_features_size,
@@ -200,6 +227,22 @@ inline bool ShapeRange(hb_buffer_t* buffer,
                        hb_direction_t direction,
                        hb_language_t language) {
   const FontPlatformData* platform_data = &(current_font->PlatformData());
+
+  auto& encounteredFonts = FontCache::GetFontCache()->encounteredFonts;
+  SkFontID shaping_font_id = platform_data->Typeface()->uniqueID();
+  if (encounteredFonts.find(shaping_font_id) == encounteredFonts.end()) {
+      // Found a new font, try to get FontData, and write out to file, log family and storage location.
+      FontCache::EncounteredFont font = {
+          AtomicString(platform_data->FontFamilyName()),
+          writeTypefaceToFile(platform_data->Typeface())};
+      encounteredFonts.insert(shaping_font_id, font);
+      size_t counter = 0;
+      VLOG(4) << "### Encountered Fonts";
+      for (auto entry = encounteredFonts.begin(); entry != encounteredFonts.end(); ++entry) {
+        VLOG(4) << ++counter << ") " << entry->value.family_name << " FILE: " << entry->value.written_to;
+      }
+  }
+
   HarfBuzzFace* face = platform_data->GetHarfBuzzFace();
   if (!face) {
     DLOG(ERROR) << "Could not create HarfBuzzFace from FontPlatformData.";
@@ -735,7 +778,7 @@ CapsFeatureSettingsScopedOverlay::~CapsFeatureSettingsScopedOverlay() {
   features_->EraseAt(0, count_features_);
 }
 
-}  // namespace
+}  // namespacer
 
 void HarfBuzzShaper::ShapeSegment(RangeData* range_data,
                                   RunSegmenter::RunSegmenterRange segment,

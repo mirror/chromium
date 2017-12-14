@@ -49,11 +49,13 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashMap.h"
+#include "platform/wtf/HashSet.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/Unicode.h"
 #include "platform/wtf/text/WTFString.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
+#include "third_party/skia/include/core/SkTypeface.h"
 
 #include "SkFontMgr.h"
 
@@ -317,11 +319,19 @@ class PLATFORM_EXPORT FontCache {
   FallbackListShaperCache fallback_list_shaper_cache_;
   FontDataCache font_data_cache_;
 
+
   void PurgePlatformFontDataCache();
   void PurgeFallbackListShaperCache();
 
   friend class SimpleFontData;  // For fontDataFromFontPlatformData
   friend class FontFallbackList;
+public:
+
+  struct EncounteredFont {
+    AtomicString family_name;
+    AtomicString written_to;
+  };
+  HashMap<SkFontID, EncounteredFont> encounteredFonts;
 };
 
 class PLATFORM_EXPORT FontCachePurgePreventer {
