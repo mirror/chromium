@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5febcbc7_6057b43f",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-12-14T05:58:28Z",
+      "side": 1,
+      "message": "I think my other CL helps you to understand how module case will work:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/822320/9/third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp\n\nSee DedicatedWorkerMessagingProxy::StartWorkerGlobalScope() in the CL.",
+      "range": {
+        "startLine": 62,
+        "startChar": 12,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "4dbd274f112a6ee8b7c0dbb07c496932da5cce34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
