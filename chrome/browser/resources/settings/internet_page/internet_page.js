@@ -80,26 +80,36 @@ Polymer({
 
     /**
      * List of third party VPN providers.
-     * @type {!Array<!chrome.networkingPrivate.ThirdPartyVPNProperties>}
-     * @private
+     * @private {!Array<!chrome.networkingPrivate.ThirdPartyVPNProperties>}
      */
     thirdPartyVpnProviders_: {
       type: Array,
       value: function() {
         return [];
-      }
+      },
     },
 
     /**
      * List of Arc VPN providers.
-     * @type {!Array<!settings.ArcVpnProvider>}
-     * @private
+     * @private {!Array<!settings.ArcVpnProvider>}
      */
     arcVpnProviders_: {
       type: Array,
       value: function() {
         return [];
-      }
+      },
+    },
+
+    /**
+     * List of potential Tether hosts whose "Google Play Services" notifications
+     * are disabled (these notifications are required to use Instant Tethering).
+     * @private {!Array<string>}
+     */
+    notificationsDisabledDeviceNames_: {
+      type: Array,
+      value: function() {
+        return [];
+      },
     },
 
     /** @private {!Map<string, string>} */
@@ -154,6 +164,10 @@ Polymer({
     this.browserProxy_.setUpdateArcVpnProvidersCallback(
         this.onArcVpnProvidersReceived_.bind(this));
     this.browserProxy_.requestArcVpnProviders();
+
+    this.browserProxy_.setGmsCoreNotificationsDisabledDeviceNamesCallback(
+        this.onNotificationsDisabledDeviceNamesReceived_.bind(this));
+    this.browserProxy_.requestGmsCoreNotificationsDisabledDeviceNames();
   },
 
   /** @override */
@@ -539,6 +553,19 @@ Polymer({
   onArcVpnProvidersReceived_: function(arcVpnProviders) {
     arcVpnProviders.sort(this.compareArcVpnProviders_);
     this.arcVpnProviders_ = arcVpnProviders;
+  },
+
+  /**
+   * @param {!Array<string>} notificationsDisabledDeviceNames
+   * @private
+   */
+  onNotificationsDisabledDeviceNamesReceived_: function(
+      notificationsDisabledDeviceNames) {
+    this.notificationsDisabledDeviceNames_ = notificationsDisabledDeviceNames;
+    console.log(
+        'onNotificationsDisabledDeviceNamesReceived_',
+        this.notificationsDisabledDeviceNames_,
+        typeof this.notificationsDisabledDeviceNames_);
   },
 
   /**
