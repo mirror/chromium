@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efdedb5d_3dd4f6c5",
+        "filename": "content/renderer/history_serialization.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-14T00:43:05Z",
+      "side": 1,
+      "message": ".get() is not needed.",
+      "revId": "8dd3717093467403767504c096288d69773c101d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17158a59_8420b1f7",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-14T00:43:05Z",
+      "side": 1,
+      "message": "You need to return null when a read operation has already been performed.\n\nMaybe\n\nif (simple_consumer_ || data_pipe_consumer_)\n  return nullptr;\n\n?",
+      "revId": "8dd3717093467403767504c096288d69773c101d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05e337d6_56009de4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/resources/fetch-event-request-body-worker.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-12-14T00:43:05Z",
+      "side": 1,
+      "message": "\u0027)\u0027 is missing at the end of the literal.",
+      "revId": "6719e840195baaa109b1277e0649ef3f16676b50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
