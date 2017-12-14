@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e75b9cc7_48901b0c",
+        "filename": "media/audio/mac/scoped_audio_unit.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-14T14:53:03Z",
+      "side": 1,
+      "message": "Good point, done. And done.",
+      "parentUuid": "9acf93db_6f80be30",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a448e05b_dbe8c01a",
         "filename": "media/audio/mac/scoped_audio_unit.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-13T18:57:07Z",
       "side": 1,
       "message": "Just !enableIO?",
+      "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57370b80_aaea7c08",
+        "filename": "media/audio/mac/scoped_audio_unit.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-14T14:53:03Z",
+      "side": 1,
+      "message": "I\u0027d prefer avoiding an implicit conversion int-\u003ebool-\u003eint and being explicit instead. It also assumes only 0 and 1 enum values, which of course is fine in practise in case of this enum.\n\nThat said, I\u0027ll change it if you wish. !enable_io is somewhat more readable.",
+      "parentUuid": "a448e05b_dbe8c01a",
       "revId": "b4938e9bd556fbc4c52e305c8fa4d2b7f2319221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
