@@ -69,6 +69,24 @@
       "revId": "3c526153ebf533520fe5cca3e7bc1f9d05aba3e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0768eeb_fb6e3f9a",
+        "filename": "gpu/command_buffer/service/raster_decoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-12-14T22:12:23Z",
+      "side": 1,
+      "message": "I\u0027d suggest an opposite approach: look at all functions called from (Raster)CommandBufferStub, and make an interface out of them. Anything else stays on GLES2Decoder (and not RasterDecoder). That should let you eliminate the bulk of them with minimal friction. Then iterate after that (e.g. you\u0027ll find wanting to incorporate Take/ReturnFrontBuffer in the common API, but it\u0027s only meaningful on GLES2, so that indicates a refactor of some sort).",
+      "parentUuid": "94145313_f3004a3b",
+      "revId": "3c526153ebf533520fe5cca3e7bc1f9d05aba3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
