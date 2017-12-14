@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4172b134_ce202ee6",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-12-14T17:59:34Z",
+      "side": 0,
+      "message": "why is this not needed anymore?",
+      "range": {
+        "startLine": 151,
+        "startChar": 4,
+        "endLine": 151,
+        "endChar": 60
+      },
+      "revId": "76c7e1e4d89b8675041c6c8f4c16266682e25c4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

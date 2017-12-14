@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35b2bd25_316501f5",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116265
+      },
+      "writtenOn": "2017-12-14T17:59:34Z",
+      "side": 1,
+      "message": "this is only used for deleting the histogram. Can we move it down and merge with the reset line. Also add a comment as now the delete happens implicitly when ptr goes out of scope verses previous code.",
+      "range": {
+        "startLine": 84,
+        "startChar": 33,
+        "endLine": 84,
+        "endChar": 52
+      },
+      "revId": "ef0daf318973d189647ed30670ecd25573a3add8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
