@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaec57db_4fc520ba",
+        "filename": "chrome/browser/ui/views/omnibox/omnibox_view_views.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T17:18:24Z",
+      "side": 1,
+      "message": "I\u0027d maybe update the comment to explain *what* we\u0027re doing before *why*.\nSomething like:\n\n// Establish a \"CONTROLS\" relationship between the omnibox and the\n// the popup. This allows a screen reader to understand the relationship\n// between the omnibox and the list of suggestions, and determine which\n// suggestion is currently selected, even though focus remains here on\n// the omnibox.",
+      "revId": "9d6f74c213f6a0df004b107094abf70f4ebc01bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfe3b80_451bf935",
+        "filename": "ui/views/accessibility/native_view_accessibility_base.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T17:18:24Z",
+      "side": 1,
+      "message": "Calling this unique_id and using GetNextAXPlatformNodeUniqueId\nsort of implies that this is the *same* as the unique ID assigned\nto each AXPlatformNodeWin, but it\u0027s actually a different ID space.\n\nI\u0027d be happier with one of these two solutions:\n\n1. Just call this id_ instead of unique_id_ and create your own\n   incrementing IDs here (i.e. just use a static or global to keep\n   track of the next ID).\n2. Alternatively, move AXPlatformNodeWin::unique_id_ up to\n   AXPlatformNode and give it an accessor. Then NativeViewAccessibility\n   can just retrieve that ID directly and doesn\u0027t need its own.",
+      "revId": "9d6f74c213f6a0df004b107094abf70f4ebc01bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
