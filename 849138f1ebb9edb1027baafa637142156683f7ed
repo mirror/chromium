@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5bd0659_61a941bf",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration_internal.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-14T00:04:06Z",
+      "side": 1,
+      "message": "I thought it was ok since this isn\u0027t a public header and will only be seen by devs who work on this library. I changed the word \"app\" to \"object\". WDYT?",
+      "parentUuid": "22ea0faa_c09d87fe",
+      "range": {
+        "startLine": 30,
+        "startChar": 51,
+        "endLine": 30,
+        "endChar": 54
+      },
+      "revId": "849138f1ebb9edb1027baafa637142156683f7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82887cdf_85d57da3",
         "filename": "ios/web_view/internal/cwv_web_view_internal.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "849138f1ebb9edb1027baafa637142156683f7ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab08186d_d10a46b9",
+        "filename": "ios/web_view/internal/cwv_web_view_internal.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-12-14T00:04:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82887cdf_85d57da3",
+      "range": {
+        "startLine": 12,
+        "startChar": 54,
+        "endLine": 12,
+        "endChar": 72
+      },
+      "revId": "849138f1ebb9edb1027baafa637142156683f7ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
