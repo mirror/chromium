@@ -1123,8 +1123,7 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
 
 #if defined(OS_LINUX) || defined(OS_OPENBSD)
   // Set the product channel for crash reports.
-  base::debug::SetCrashKeyValue(crash_keys::kChannel,
-                                chrome::GetChannelString());
+  breakpad::SetChannelCrashKey(chrome::GetChannelString());
 #endif  // defined(OS_LINUX) || defined(OS_OPENBSD)
 
 #if defined(OS_MACOSX)
