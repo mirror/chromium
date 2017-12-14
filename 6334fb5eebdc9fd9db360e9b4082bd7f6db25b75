@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d9b5406_4563b572",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:32:46Z",
+      "side": 1,
+      "message": "typo in specification",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8132301a_9d974184",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:32:46Z",
+      "side": 1,
+      "message": "I wonder if any DIAL apps actually use nested data.  Maybe we can get away with a strict key/value mapping.",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ffc8d6_6b1e4187",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:32:46Z",
+      "side": 1,
+      "message": "These APIs are all safe to call from the browser process?",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1820721_8c17bc19",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:32:46Z",
+      "side": 1,
+      "message": "I wonder if we should be lenient and convert app_state to lower case before comparison.",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f863ae1_70033e41",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:32:46Z",
+      "side": 1,
+      "message": "|error| seems to be unused here.  Should it be logged?",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f40f03f_1a6cecfb",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:32:46Z",
+      "side": 1,
+      "message": "Can you check if we set a limit on the size of the DIAL response before parsing?  That would prevent a potential denial of service by a device serving an enormous blob of XML, which we then parse and clone.",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d87c7f9_62128604",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:32:46Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772a8d4f_c597ab87",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:32:46Z",
+      "side": 1,
+      "message": "We don\u0027t need to support this tag any more.",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3319474_1c4a483c",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:32:46Z",
+      "side": 1,
+      "message": "Please assert the contents of |extra_data|",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da0e861_92741015",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T01:32:46Z",
+      "side": 1,
+      "message": "Can you check that all error cases are covered by tests? E.g. multiple \u003cservice\u003e elements",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
