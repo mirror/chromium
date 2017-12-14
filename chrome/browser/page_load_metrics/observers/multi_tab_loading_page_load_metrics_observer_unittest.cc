@@ -18,17 +18,18 @@ const char kDefaultTestUrl[] = "https://google.com";
 class TestMultiTabLoadingPageLoadMetricsObserver
     : public MultiTabLoadingPageLoadMetricsObserver {
  public:
-  explicit TestMultiTabLoadingPageLoadMetricsObserver(bool multi_tab_loading)
-      : multi_tab_loading_(multi_tab_loading) {}
+  explicit TestMultiTabLoadingPageLoadMetricsObserver(
+      int number_of_tabs_with_inflight_load)
+      : number_of_tabs_with_inflight_load_(number_of_tabs_with_inflight_load) {}
   ~TestMultiTabLoadingPageLoadMetricsObserver() override {}
 
  private:
   int NumberOfTabsWithInflightLoad(
       content::NavigationHandle* navigation_handle) override {
-    return multi_tab_loading_ ? 1 : 0;
+    return number_of_tabs_with_inflight_load_;
   }
 
-  const bool multi_tab_loading_;
+  const int number_of_tabs_with_inflight_load_;
 };
 
 }  // namespace
@@ -36,11 +37,11 @@ class TestMultiTabLoadingPageLoadMetricsObserver
 class MultiTabLoadingPageLoadMetricsObserverTest
     : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  public:
-  enum UseCase { SingleTabLoading, MultiTabLoading };
   enum TabState { Foreground, Background };
 
-  void SimulatePageLoad(UseCase use_case, TabState tab_state) {
-    use_case_ = use_case;
+  void SimulatePageLoad(int number_of_tabs_with_inflight_load,
+                        TabState tab_state) {
+    number_of_tabs_with_inflight_load_ = number_of_tabs_with_inflight_load;
 
     page_load_metrics::mojom::PageLoadTiming timing;
     page_load_metrics::InitPageLoadTimingForTest(&timing);
@@ -74,75 +75,116 @@ class MultiTabLoadingPageLoadMetricsObserverTest
   void RegisterObservers(page_load_metrics::PageLoadTracker* tracker) override {
     tracker->AddObserver(
         base::MakeUnique<TestMultiTabLoadingPageLoadMetricsObserver>(
-            use_case_.value() == MultiTabLoading));
+            number_of_tabs_with_inflight_load_.value()));
+  }
+
+  void ValidateHistograms(const char* suffix,
+                          base::HistogramBase::Count expected_base,
+                          base::HistogramBase::Count expected_2_or_more,
+                          base::HistogramBase::Count expected_5_or_more) {
+    histogram_tester().ExpectTotalCount(
+        std::string(internal::kHistogramPrefixMultiTabLoading).append(suffix),
+        expected_base);
+    histogram_tester().ExpectTotalCount(
+        std::string(internal::kHistogramPrefixMultiTabLoading2OrMore)
+            .append(suffix),
+        expected_2_or_more);
+    histogram_tester().ExpectTotalCount(
+        std::string(internal::kHistogramPrefixMultiTabLoading5OrMore)
+            .append(suffix),
+        expected_5_or_more);
   }
 
  private:
-  base::Optional<UseCase> use_case_;
+  base::Optional<int> number_of_tabs_with_inflight_load_;
 };
 
 TEST_F(MultiTabLoadingPageLoadMetricsObserverTest, SingleTabLoading) {
-  SimulatePageLoad(SingleTabLoading, Foreground);
+  SimulatePageLoad(0, Foreground);
   histogram_tester().ExpectUniqueSample(
       internal::kHistogramMultiTabLoadingNumTabsWithInflightLoad, 0, 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingFirstContentfulPaint, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingForegroundToFirstContentfulPaint, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingFirstMeaningfulPaint, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingForegroundToFirstMeaningfulPaint, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingDomContentLoaded, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kBackgroundHistogramMultiTabLoadingDomContentLoaded, 0);
-  histogram_tester().ExpectTotalCount(internal::kHistogramMultiTabLoadingLoad,
-                                      0);
-  histogram_tester().ExpectTotalCount(
-      internal::kBackgroundHistogramMultiTabLoadingLoad, 0);
+
+  ValidateHistograms(internal::kHistogramSuffixFirstContentfulPaint, 0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixForegroundToFirstContentfulPaint,
+                     0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixFirstMeaningfulPaint, 0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixForegroundToFirstMeaningfulPaint,
+                     0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixDomContentLoaded, 0, 0, 0);
+  ValidateHistograms(internal::kBackgroundHistogramSuffixDomContentLoaded, 0, 0,
+                     0);
+  ValidateHistograms(internal::kHistogramSuffixLoad, 0, 0, 0);
+  ValidateHistograms(internal::kBackgroundHistogramSuffixLoad, 0, 0, 0);
 }
 
-TEST_F(MultiTabLoadingPageLoadMetricsObserverTest, MultiTabLoading) {
-  SimulatePageLoad(MultiTabLoading, Foreground);
+TEST_F(MultiTabLoadingPageLoadMetricsObserverTest, MultiTabLoading1) {
+  SimulatePageLoad(1, Foreground);
   histogram_tester().ExpectUniqueSample(
       internal::kHistogramMultiTabLoadingNumTabsWithInflightLoad, 1, 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingFirstContentfulPaint, 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingForegroundToFirstContentfulPaint, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingFirstMeaningfulPaint, 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingForegroundToFirstMeaningfulPaint, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingDomContentLoaded, 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kBackgroundHistogramMultiTabLoadingDomContentLoaded, 0);
-  histogram_tester().ExpectTotalCount(internal::kHistogramMultiTabLoadingLoad,
-                                      1);
-  histogram_tester().ExpectTotalCount(
-      internal::kBackgroundHistogramMultiTabLoadingLoad, 0);
+
+  ValidateHistograms(internal::kHistogramSuffixFirstContentfulPaint, 1, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixForegroundToFirstContentfulPaint,
+                     0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixFirstMeaningfulPaint, 1, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixForegroundToFirstMeaningfulPaint,
+                     0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixDomContentLoaded, 1, 0, 0);
+  ValidateHistograms(internal::kBackgroundHistogramSuffixDomContentLoaded, 0, 0,
+                     0);
+  ValidateHistograms(internal::kHistogramSuffixLoad, 1, 0, 0);
+  ValidateHistograms(internal::kBackgroundHistogramSuffixLoad, 0, 0, 0);
+}
+
+TEST_F(MultiTabLoadingPageLoadMetricsObserverTest, MultiTabLoading2) {
+  SimulatePageLoad(2, Foreground);
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramMultiTabLoadingNumTabsWithInflightLoad, 2, 1);
+
+  ValidateHistograms(internal::kHistogramSuffixFirstContentfulPaint, 1, 1, 0);
+  ValidateHistograms(internal::kHistogramSuffixForegroundToFirstContentfulPaint,
+                     0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixFirstMeaningfulPaint, 1, 1, 0);
+  ValidateHistograms(internal::kHistogramSuffixForegroundToFirstMeaningfulPaint,
+                     0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixDomContentLoaded, 1, 1, 0);
+  ValidateHistograms(internal::kBackgroundHistogramSuffixDomContentLoaded, 0, 0,
+                     0);
+  ValidateHistograms(internal::kHistogramSuffixLoad, 1, 1, 0);
+  ValidateHistograms(internal::kBackgroundHistogramSuffixLoad, 0, 0, 0);
+}
+
+TEST_F(MultiTabLoadingPageLoadMetricsObserverTest, MultiTabLoading5) {
+  SimulatePageLoad(5, Foreground);
+  histogram_tester().ExpectUniqueSample(
+      internal::kHistogramMultiTabLoadingNumTabsWithInflightLoad, 5, 1);
+
+  ValidateHistograms(internal::kHistogramSuffixFirstContentfulPaint, 1, 1, 1);
+  ValidateHistograms(internal::kHistogramSuffixForegroundToFirstContentfulPaint,
+                     0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixFirstMeaningfulPaint, 1, 1, 1);
+  ValidateHistograms(internal::kHistogramSuffixForegroundToFirstMeaningfulPaint,
+                     0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixDomContentLoaded, 1, 1, 1);
+  ValidateHistograms(internal::kBackgroundHistogramSuffixDomContentLoaded, 0, 0,
+                     0);
+  ValidateHistograms(internal::kHistogramSuffixLoad, 1, 1, 1);
+  ValidateHistograms(internal::kBackgroundHistogramSuffixLoad, 0, 0, 0);
 }
 
 TEST_F(MultiTabLoadingPageLoadMetricsObserverTest, MultiTabBackground) {
-  SimulatePageLoad(MultiTabLoading, Background);
+  SimulatePageLoad(1, Background);
   histogram_tester().ExpectUniqueSample(
       internal::kHistogramMultiTabLoadingNumTabsWithInflightLoad, 1, 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingFirstContentfulPaint, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingForegroundToFirstContentfulPaint, 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingFirstMeaningfulPaint, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingForegroundToFirstMeaningfulPaint, 1);
-  histogram_tester().ExpectTotalCount(
-      internal::kHistogramMultiTabLoadingDomContentLoaded, 0);
-  histogram_tester().ExpectTotalCount(
-      internal::kBackgroundHistogramMultiTabLoadingDomContentLoaded, 1);
-  histogram_tester().ExpectTotalCount(internal::kHistogramMultiTabLoadingLoad,
-                                      0);
-  histogram_tester().ExpectTotalCount(
-      internal::kBackgroundHistogramMultiTabLoadingLoad, 1);
+
+  ValidateHistograms(internal::kHistogramSuffixFirstContentfulPaint, 0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixForegroundToFirstContentfulPaint,
+                     1, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixFirstMeaningfulPaint, 0, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixForegroundToFirstMeaningfulPaint,
+                     1, 0, 0);
+  ValidateHistograms(internal::kHistogramSuffixDomContentLoaded, 0, 0, 0);
+  ValidateHistograms(internal::kBackgroundHistogramSuffixDomContentLoaded, 1, 0,
+                     0);
+  ValidateHistograms(internal::kHistogramSuffixLoad, 0, 0, 0);
+  ValidateHistograms(internal::kBackgroundHistogramSuffixLoad, 1, 0, 0);
 }

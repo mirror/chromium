@@ -31,6 +31,11 @@ class MultiTabLoadingPageLoadMetricsBrowserTest : public InProcessBrowserTest {
   void SetUpOnMainThread() override {
     ASSERT_TRUE(embedded_test_server()->Start());
   }
+
+  std::string HistogramNameWithSuffix(const char* suffix) {
+    return std::string(internal::kHistogramPrefixMultiTabLoading)
+        .append(suffix);
+  }
 };
 
 IN_PROC_BROWSER_TEST_F(MultiTabLoadingPageLoadMetricsBrowserTest, SingleTab) {
@@ -41,9 +46,10 @@ IN_PROC_BROWSER_TEST_F(MultiTabLoadingPageLoadMetricsBrowserTest, SingleTab) {
   // Navigate away to force the histogram recording.
   ui_test_utils::NavigateToURL(browser(), GURL(url::kAboutBlankURL));
 
-  histogram_tester.ExpectTotalCount(internal::kHistogramMultiTabLoadingLoad, 0);
   histogram_tester.ExpectTotalCount(
-      internal::kBackgroundHistogramMultiTabLoadingLoad, 0);
+      HistogramNameWithSuffix(internal::kHistogramSuffixLoad), 0);
+  histogram_tester.ExpectTotalCount(
+      HistogramNameWithSuffix(internal::kBackgroundHistogramSuffixLoad), 0);
 }
 
 IN_PROC_BROWSER_TEST_F(MultiTabLoadingPageLoadMetricsBrowserTest,
@@ -60,9 +66,10 @@ IN_PROC_BROWSER_TEST_F(MultiTabLoadingPageLoadMetricsBrowserTest,
   // Navigate away to force the histogram recording.
   ui_test_utils::NavigateToURL(browser(), GURL(url::kAboutBlankURL));
 
-  histogram_tester.ExpectTotalCount(internal::kHistogramMultiTabLoadingLoad, 1);
   histogram_tester.ExpectTotalCount(
-      internal::kBackgroundHistogramMultiTabLoadingLoad, 0);
+      HistogramNameWithSuffix(internal::kHistogramSuffixLoad), 1);
+  histogram_tester.ExpectTotalCount(
+      HistogramNameWithSuffix(internal::kBackgroundHistogramSuffixLoad), 0);
 }
 
 IN_PROC_BROWSER_TEST_F(MultiTabLoadingPageLoadMetricsBrowserTest,
@@ -87,7 +94,8 @@ IN_PROC_BROWSER_TEST_F(MultiTabLoadingPageLoadMetricsBrowserTest,
   // Navigate away to force the histogram recording.
   ui_test_utils::NavigateToURL(browser(), GURL(url::kAboutBlankURL));
 
-  histogram_tester.ExpectTotalCount(internal::kHistogramMultiTabLoadingLoad, 0);
   histogram_tester.ExpectTotalCount(
-      internal::kBackgroundHistogramMultiTabLoadingLoad, 1);
+      HistogramNameWithSuffix(internal::kHistogramSuffixLoad), 0);
+  histogram_tester.ExpectTotalCount(
+      HistogramNameWithSuffix(internal::kBackgroundHistogramSuffixLoad), 1);
 }
