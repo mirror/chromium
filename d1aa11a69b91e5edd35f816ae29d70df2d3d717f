@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1a0652_2b1913c4",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-14T01:28:14Z",
+      "side": 1,
+      "message": "No need to test state here with the assert.",
+      "revId": "d1aa11a69b91e5edd35f816ae29d70df2d3d717f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50bef4c1_58cd4615",
+        "filename": "ui/webui/resources/cr_elements/chromeos/network/cr_network_select.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-14T01:28:14Z",
+      "side": 1,
+      "message": "defaultState.GUID should never be empty, so the this.defaultStateGuid_ is unnecessary and (imho) slightly confusing since it imples that defaultState.GUID could be empty.",
+      "revId": "d1aa11a69b91e5edd35f816ae29d70df2d3d717f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
