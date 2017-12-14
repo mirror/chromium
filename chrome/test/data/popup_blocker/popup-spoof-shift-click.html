@@ -1,0 +1,12 @@
+<a href="/" id="link">Clickme</a>
+<script>
+function spoofShiftClick() {
+  var evt = new MouseEvent("click", {
+    view : window,
+    bubbles : true,
+    cancelable : true,
+    shiftKey : true,
+  });
+  document.getElementById('link').dispatchEvent(evt);
+}
+</script>
