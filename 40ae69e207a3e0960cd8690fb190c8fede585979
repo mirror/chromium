@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "304192ef_b4b15774",
+        "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-12-14T13:26:01Z",
+      "side": 0,
+      "message": "This change is cause for concern as document.all is ancient and even a corner case like this might have stuff depending on it. But, https://wpt.fyi/html/dom/interfaces.html to the rescue, Edge 15 already passed this test, giving some confidence that the whole won\u0027t break. Let\u0027s try it and see.",
+      "range": {
+        "startLine": 1110,
+        "startChar": 14,
+        "endLine": 1110,
+        "endChar": 0
+      },
+      "revId": "40ae69e207a3e0960cd8690fb190c8fede585979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
