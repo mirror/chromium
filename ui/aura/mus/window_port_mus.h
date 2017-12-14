@@ -12,6 +12,7 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "components/viz/client/client_layer_tree_frame_sink.h"
 #include "components/viz/common/surfaces/surface_info.h"
 #include "services/ui/public/interfaces/cursor/cursor.mojom.h"
@@ -82,6 +83,9 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   // in the window manager.
   void SetExtendedHitRegionForChildren(const gfx::Insets& mouse_insets,
                                        const gfx::Insets& touch_insets);
+
+  // See description in mojom for details on this.
+  void SetHitTestMask(const base::Optional<gfx::Rect>& rect);
 
   // Embeds a new client in this Window. See WindowTreeClient::Embed() for
   // details on arguments.
