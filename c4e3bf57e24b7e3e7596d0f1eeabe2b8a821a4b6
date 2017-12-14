@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fdba9ca4_b966109d",
+        "filename": "chrome/browser/vr/elements/corner_radii.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T16:02:37Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ae8f5a3a_2a475584",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 18
+      },
+      "revId": "c4e3bf57e24b7e3e7596d0f1eeabe2b8a821a4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f534adbd_57a2a5b7",
         "filename": "chrome/browser/vr/elements/corner_radii.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "c4e3bf57e24b7e3e7596d0f1eeabe2b8a821a4b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1127c96_f787ab6c",
+        "filename": "chrome/browser/vr/elements/corner_radii.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T16:02:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f534adbd_57a2a5b7",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 13
+      },
+      "revId": "c4e3bf57e24b7e3e7596d0f1eeabe2b8a821a4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4e92c090_79c510d7",
+        "filename": "chrome/browser/vr/elements/shadow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T16:02:37Z",
+      "side": 1,
+      "message": "Shadows don\u0027t support individually configurable corner radii yet -- not sure if it\u0027ll be needed, either. Fixed bracing.",
+      "parentUuid": "5b332d62_8d342e50",
+      "range": {
+        "startLine": 150,
+        "startChar": 4,
+        "endLine": 150,
+        "endChar": 21
+      },
+      "revId": "c4e3bf57e24b7e3e7596d0f1eeabe2b8a821a4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fe97f24_cf5609b3",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-14T15:45:22Z",
       "side": 1,
       "message": "nit: can we extract this into a helper function like IsCircular or something?\n\nActually, if the rrect hittest below isn\u0027t super slow, why do we even bother having this special case? I\u0027d prefer to get rid of it as premature optimization.",
+      "range": {
+        "startLine": 320,
+        "startChar": 13,
+        "endLine": 321,
+        "endChar": 50
+      },
+      "revId": "c4e3bf57e24b7e3e7596d0f1eeabe2b8a821a4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3f2e42_daa97b69",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T16:02:37Z",
+      "side": 1,
+      "message": "Sg. Removed.",
+      "parentUuid": "8fe97f24_cf5609b3",
       "range": {
         "startLine": 320,
         "startChar": 13,
