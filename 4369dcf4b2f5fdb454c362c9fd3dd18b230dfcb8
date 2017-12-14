@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2899209c_b2503b0d",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1850,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 0,
+      "message": "Thanks :)",
+      "range": {
+        "startLine": 1846,
+        "startChar": 1,
+        "endLine": 1850,
+        "endChar": 62
+      },
+      "revId": "4369dcf4b2f5fdb454c362c9fd3dd18b230dfcb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

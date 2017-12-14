@@ -2,6 +2,218 @@
   "comments": [
     {
       "key": {
+        "uuid": "247bdf90_2e784a22",
+        "filename": "cc/paint/decode_stashing_image_provider.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "nit: maybe Reset()? I know that this flushes the transfer cache things, but it\u0027s not obvious from the callsite. Either that or maybe expand the comment to say what may happen as a result of the flush?",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df8ddfb_b350d225",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "ASAN is likely to yell at this. Can you clear the pixels that you allocate?",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6228de_657ebdf8",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "nit: just store a gfx::Vector2dF on the options (unless it\u0027s inconvenient sometimes)",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 75
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b788cd6_9f0c594b",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "hmm.. Maybe Low here as the default? None is nearest neighbor which I think the dev needs to specify explicitly. Maybe it doesn\u0027t matter.",
+      "range": {
+        "startLine": 27,
+        "startChar": 56,
+        "endLine": 27,
+        "endChar": 60
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633a1f50_df70c45a",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "clear the data plz",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 36
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87680641_43bb6f50",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "I think this should be:\n\nif (!valid_ || transfer_cache_entry_id \u003d\u003d kInvalidImageTransferCacheEntryId) {\n  SetInvalid();\n  return;\n}\n\nunless reading an invalid transfer cache entry id is expected sometimes?",
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00741d45_e6c72ebe",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "What are the cases when this can happen? Can you document it (is this a TODO? or is this expected sometimes?)",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 52
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd9045e_fd39d3b2",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "msvc isn\u0027t happy :P just return false at the end I guess.",
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf10c12c_7abdf455",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1405,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "Weeeelll.. it does just not here, it will be decided later in the Service entry",
+      "range": {
+        "startLine": 1405,
+        "startChar": 22,
+        "endLine": 1405,
+        "endChar": 33
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c4081e_8315048d",
+        "filename": "cc/tiles/gpu_image_decode_cache.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "At some point we should also switch to kGpu, kCpu, and kTransferCache",
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af04e998_a9df02aa",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 9
@@ -13,6 +225,30 @@
       "writtenOn": "2017-12-14T21:27:09Z",
       "side": 1,
       "message": "vmpstr@, different from our conversation yesterday, I think I want to keep this pattern for now. We need to call Flush on the StashingImageProvider - but that method doesn\u0027t exist on ImageProvider (and doesn\u0027t really make sense there?), so passing this in to PaintOpSerializer so we don\u0027t lose type info.",
+      "range": {
+        "startLine": 7340,
+        "startChar": 35,
+        "endLine": 7340,
+        "endChar": 58
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4aa1cfe_099599c9",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7340,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-12-14T23:25:44Z",
+      "side": 1,
+      "message": "Ack. We can do a similar thing with the transfer cache serialize helper maybe (to fix the TODO below)",
+      "parentUuid": "af04e998_a9df02aa",
       "range": {
         "startLine": 7340,
         "startChar": 35,
