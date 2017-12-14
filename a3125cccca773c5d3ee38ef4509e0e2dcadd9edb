@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "269baf6b_41b7fc68",
+        "filename": "storage/browser/blob/blob_url_store_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-14T09:11:55Z",
+      "side": 1,
+      "message": "nit: having these outside the namespace storage ?",
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f22d82_a2c68d2f",
+        "filename": "storage/browser/blob/blob_url_store_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-14T09:11:55Z",
+      "side": 1,
+      "message": "nit: ResolveNonExistentURL ?",
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d727b4ba_2609744b",
         "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
         "patchSetId": 3
@@ -97,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "311e8637_929146ed",
+        "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-14T09:11:55Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "d727b4ba_2609744b",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cbdfb4a_6bad4578",
         "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
         "patchSetId": 3
@@ -165,6 +223,23 @@
       "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcc7af24_51713aa1",
+        "filename": "third_party/WebKit/common/blob/blob_url_store.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-14T09:11:55Z",
+      "side": 1,
+      "message": "nit: Also let\u0027s document that this is the browser side\u0027s interface that gets requests from renderers.",
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53adabc2_a94c97fd",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-14T09:11:55Z",
+      "side": 1,
+      "message": "So we don\u0027t use this origin (yet?)... could we have a (todo-style) comment to note that how the |origin| is to be used?",
+      "revId": "aac0bfc37d46c8b602a1e7936af58e0c7fab2e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
