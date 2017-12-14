@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea77a272_deddcc3a",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T21:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f3a97af_c3411507",
+      "range": {
+        "startLine": 212,
+        "startChar": 13,
+        "endLine": 212,
+        "endChar": 42
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da95cd20_e479de4d",
         "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbc30fd_fc9d2fde",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T21:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da95cd20_e479de4d",
+      "range": {
+        "startLine": 286,
+        "startChar": 4,
+        "endLine": 286,
+        "endChar": 33
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0941cbea_275861a0",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T21:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "655b34bb_a17ebcbc",
+      "range": {
+        "startLine": 425,
+        "startChar": 4,
+        "endLine": 425,
+        "endChar": 27
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d34d4a74_4eb5c7ff",
         "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.h",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99da07db_0c66df6e",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T21:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d34d4a74_4eb5c7ff",
+      "range": {
+        "startLine": 203,
+        "startChar": 26,
+        "endLine": 203,
+        "endChar": 55
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a9fa107e_7a579692",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys_private/enterprise_platform_keys_private_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T21:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "746f5897_897a1e5b",
+      "range": {
+        "startLine": 281,
+        "startChar": 4,
+        "endLine": 281,
+        "endChar": 56
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c131140_97f37819",
         "filename": "chrome/browser/extensions/api/enterprise_platform_keys_private/enterprise_platform_keys_private_api.h",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453dd4e2_768a066f",
+        "filename": "chrome/browser/extensions/api/enterprise_platform_keys_private/enterprise_platform_keys_private_api.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T21:25:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c131140_97f37819",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 58
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +318,30 @@
       "writtenOn": "2017-12-14T20:20:36Z",
       "side": 1,
       "message": "is that a good name? we don\u0027t know if the request was ill-formatted (what \u0027bad request\u0027 normally means to me), or the server is unavailable due to network condition, or the server crashed and returned 5xx for no good reason.\nI\u0027d say ATTESTATION_FAILURE_SERVER as opposed to all other failures on our end...",
+      "range": {
+        "startLine": 292,
+        "startChar": 19,
+        "endLine": 292,
+        "endChar": 57
+      },
+      "revId": "6551fe3a845a7cb4461aaef9a34bf8d961bfd131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91a21aca_22ccf7b8",
+        "filename": "chromeos/attestation/attestation_flow.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T21:25:13Z",
+      "side": 1,
+      "message": "I believe we determined that at this point in code the server had return a 200 with a code in a proto and that here it could only be a bad request.",
+      "parentUuid": "f3f0fcd8_348f3a9b",
       "range": {
         "startLine": 292,
         "startChar": 19,
