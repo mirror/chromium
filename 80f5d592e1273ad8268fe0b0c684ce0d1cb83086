@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5e8eddad_26c0e196",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-12-14T14:08:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0908b940_6d82045e",
+      "range": {
+        "startLine": 14,
+        "startChar": 60,
+        "endLine": 14,
+        "endChar": 61
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec7d0cd8_62696096",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 8
