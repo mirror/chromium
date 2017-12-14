@@ -177,6 +177,42 @@
       "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa881181_7ce1df3d",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-12-14T20:09:15Z",
+      "side": 1,
+      "message": "In practise that directory will probably always exist and probably always be consistently named (though they\u0027re named mostly by the generic arch names and not the full ABI names, so we\u0027d need a mapping table).\n\nIn theory this is an internal implementation detail that can\u0027t be relied on at all.\n\nSooo *shrug* :p",
+      "parentUuid": "9c67bccb_3ca0d60f",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68590823_d9332531",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-12-14T20:09:15Z",
+      "side": 1,
+      "message": "monochrome_apk can be used as the system webview; i\u0027m not sure what you mean. system_webview_google_apk is the corresponding standalone webview build; you can just install that on a pre-N device (that\u0027s how all the pre-N devices work).",
+      "parentUuid": "13995a0a_5e83d53b",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
