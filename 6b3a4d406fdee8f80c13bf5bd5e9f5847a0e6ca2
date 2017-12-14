@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c191ac6_21dba7d1",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2318,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "\"UpdateDisplay(\"1+0-500x500,1+0-500x500\");\" turns on hardware mirror mode, then we update configuration so that it won\u0027t be able to do hardware mirroring. It will switch to software mirroring based on previous mirror mode. So this is used to prevent restoring mirror mode.",
+      "parentUuid": "b37976e6_6402c055",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f67adba8_ab85c698",
         "filename": "ash/system/screen_layout_observer_unittest.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed2cd55_fe3faa0b",
+        "filename": "ash/system/screen_layout_observer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "Sure. Done.",
+      "parentUuid": "f67adba8_ab85c698",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f7d73e2e_883c1d9f",
+        "filename": "ash/touch/touch_observer_hud_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "Added comment.",
+      "parentUuid": "11cfe023_3b26b875",
+      "range": {
+        "startLine": 351,
+        "startChar": 21,
+        "endLine": 351,
+        "endChar": 63
+      },
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c69724d1_071e4a5e",
         "filename": "ash/touch/touch_observer_hud_unittest.cc",
         "patchSetId": 12
@@ -73,6 +133,24 @@
       "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256aa441_2e28ac51",
+        "filename": "ash/touch/touch_observer_hud_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c69724d1_071e4a5e",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "a0bc0a30_f2eff425",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "No, let me use the list, it\u0027s actually better.",
+      "parentUuid": "d52cf31d_91aa2d0d",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccff1cc5_f1aee3aa",
         "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
         "patchSetId": 12
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "8cf3da7e_2ed1dace",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ccff1cc5_f1aee3aa",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7da1c1f8_16a74d6d",
         "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
         "patchSetId": 12
@@ -121,6 +235,24 @@
       "writtenOn": "2017-12-14T00:57:53Z",
       "side": 1,
       "message": "Why this?",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0b6b75_6fe40474",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "This is used to update display list so that display manager knows we have two displays now.",
+      "parentUuid": "7da1c1f8_16a74d6d",
       "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "56593298_e928816b",
+        "filename": "ui/display/display_layout.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "I would prefer to do this in the next CL, because it involves a lot of related changes and we might not want to enlarge this CL.",
+      "parentUuid": "2460e099_3bf442bb",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89e887d6_024806b7",
         "filename": "ui/display/manager/chromeos/display_configurator.cc",
         "patchSetId": 12
@@ -155,6 +305,24 @@
       "writtenOn": "2017-12-14T00:57:53Z",
       "side": 1,
       "message": "can you add a test case for this scenarios? (You may have to update the test anyway though)",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0846b95d_cb0489f4",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "I added a TODO in ResumeDisplays to solve the corner case where multiple connected displays result in extra display configuration.",
+      "parentUuid": "89e887d6_024806b7",
       "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -184,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "4b315474_73b3d030",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e35d41ff_8fab2eec",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 10
+      },
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6054dfa3_117f5330",
         "filename": "ui/display/manager/display_manager_utilities.h",
         "patchSetId": 12
@@ -198,6 +390,24 @@
       "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be83f22a_5525a9fa",
+        "filename": "ui/display/manager/display_manager_utilities.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T05:20:44Z",
+      "side": 1,
+      "message": "That\u0027s better, done.",
+      "parentUuid": "6054dfa3_117f5330",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
