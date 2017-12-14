@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "89eee3e9_807eacea",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:36:16Z",
+      "side": 1,
+      "message": "Also, be aware there is a backlog (3-5) in here are not on the server yet. You should be able to copy it over and convert to proto3 though.",
+      "parentUuid": "fba9adb9_64fb842e",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 36
+      },
+      "revId": "b3702b94614147be81a5d86c72eb23172d716260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d30d0fc0_65682742",
         "filename": "components/data_reduction_proxy/proto/client_config.proto",
         "patchSetId": 4
