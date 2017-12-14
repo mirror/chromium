@@ -14,6 +14,29 @@ namespace web {
 class WebState;
 }  // namespace web
 
+// Key of the UMA Download.IOSPresentAddPassesDialogResult histogram.
+extern const char kUmaPresentAddPassesDialogResult[];
+
+// Enum for the Download.IOSPresentAddPassesDialogResult UMA histogram
+// to report the results of the add passes dialog presentation. The presentation
+// can be successful or unsuccessful if another view controller is currently
+// presented. If number is unsuccessful presentations is high, it means that
+// Chrome has to queue the dialogs to present those dialogs for every downloaded
+// pkpass.
+// Note: This enum is used to back an UMA histogram, and should be treated as
+// append-only.
+enum class PresentAddPassesDialogResult {
+  // The dialog was sucessesfully presented.
+  Successful = 0,
+  // The dialog cannot be presented, because another PKAddPassesViewController
+  // is already presented.
+  AnotherAddPassesViewControllerIsPresented,
+  // The dialog cannot be presented, because another view controller is already
+  // presented.
+  AnotherViewControllerIsPresented,
+  Count
+};
+
 // Coordinates presentation of "Add pkpass UI" and "failed to add pkpass UI".
 @interface PassKitCoordinator : ChromeCoordinator<PassKitTabHelperDelegate>
 
