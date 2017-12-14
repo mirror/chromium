@@ -33,6 +33,24 @@
       "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3aa0723_e1b79a7f",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-12-14T14:47:36Z",
+      "side": 1,
+      "message": "oh that\u0027s really unfortunate because this defines the library name to use (obviously, before the native library is loaded). The CrazyLinker/ModernLinker have this name queried from the native code, the small part they load before they load the main libchrome*.\n\nThis code is not triggered for monochrome, can we ignore this difference in apk_merger.py somehow?",
+      "parentUuid": "a7d40828_7901d3e9",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
