@@ -70,6 +70,24 @@
       "revId": "aa3f68c5d00df24446e00940ebf617a867f4b3f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e687dde2_51ce3350",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-12-14T07:48:16Z",
+      "side": 1,
+      "message": "Ah, good catch!\n\nI like following the std:: way.  Plus, I\u0027ve realized that the idle task must never be nullptr (although, |id| in the hash map can be gone by cancelling).\n\nUpdated the code.",
+      "parentUuid": "06f3397a_3fc780df",
+      "revId": "aa3f68c5d00df24446e00940ebf617a867f4b3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
