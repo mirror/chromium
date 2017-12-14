@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af2d3e05_3b6b6463",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1256,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T21:54:49Z",
+      "side": 1,
+      "message": "nit:  Google style discourages uncommon abbreviations.  Just use connection_type or effective_connection_type.",
+      "range": {
+        "startLine": 1256,
+        "startChar": 7,
+        "endLine": 1256,
+        "endChar": 31
+      },
+      "revId": "dc22b6c9ff284abc20419c7fdc4c54b92e0b0d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702bc148_ab29f6d8",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T21:54:49Z",
+      "side": 1,
+      "message": "Optional:  Could just make this into a utility method:\n\nParamsForNetworkQualityRanges GetNetworkQualityParams(nqe) {\n  if (nqe) {\n    for (const auto\u0026 range : params_for_network_quality_ranges_) {\n      if (ect \u003d\u003d range.effective_connection_type) {\n        return range.max_delayable_requests;\n      }\n    }\n  }\n  return ParamsForNetworkQualityRanges(default_values);\n}\n\nThe just call it here, and get rid of ThrottleDelayble::GetCurrentNonDelayableWeight.",
+      "range": {
+        "startLine": 1262,
+        "startChar": 5,
+        "endLine": 1262,
+        "endChar": 0
+      },
+      "revId": "dc22b6c9ff284abc20419c7fdc4c54b92e0b0d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef76540d_01bd74a8",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T21:54:49Z",
+      "side": 1,
+      "message": "Old issue, but could you rename \"ThrottleDelayble\" to \"ThrottleDelayable\"?  (Not the missing \"a\" in the old one)",
+      "range": {
+        "startLine": 1267,
+        "startChar": 44,
+        "endLine": 1267,
+        "endChar": 72
+      },
+      "revId": "dc22b6c9ff284abc20419c7fdc4c54b92e0b0d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1309c683_88fc97f3",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T21:54:49Z",
+      "side": 1,
+      "message": "Again, rename.",
+      "range": {
+        "startLine": 1275,
+        "startChar": 31,
+        "endLine": 1275,
+        "endChar": 34
+      },
+      "revId": "dc22b6c9ff284abc20419c7fdc4c54b92e0b0d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb6b013_44a4aa12",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-12-14T21:54:49Z",
+      "side": 1,
+      "message": "nit:  Missed these before, but these should use kConstNamingScheme.",
+      "range": {
+        "startLine": 1291,
+        "startChar": 13,
+        "endLine": 1291,
+        "endChar": 38
+      },
+      "revId": "dc22b6c9ff284abc20419c7fdc4c54b92e0b0d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
