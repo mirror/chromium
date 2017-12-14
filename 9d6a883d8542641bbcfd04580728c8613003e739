@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "008eb1e8_2ed629db",
+        "filename": "components/policy/core/common/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T15:05:43Z",
+      "side": 1,
+      "message": "nit: Maybe add a TODO for removing this dependency once crbug.com/685996 is fixed?\nDitto for components/policy/core/common/DEPS .",
+      "revId": "9d6a883d8542641bbcfd04580728c8613003e739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
