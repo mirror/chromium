@@ -208,7 +208,10 @@ void CardUnmaskPromptControllerImpl::OnUnmaskResponse(
     pending_response_.should_store_pan = false;
   }
 
-  delegate_->OnUnmaskResponse(pending_response_);
+  // There is a chance the delegate has disappeared (i.e. tab closed) before the
+  // unmask response came in. Avoid a crash.
+  if (delegate_.get())
+    delegate_->OnUnmaskResponse(pending_response_);
 }
 
 void CardUnmaskPromptControllerImpl::NewCardLinkClicked() {
