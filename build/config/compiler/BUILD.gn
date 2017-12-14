@@ -1967,6 +1967,9 @@ config("minimal_symbols") {
       if (strip_debug_info) {
         ldflags += [ "-Wl,--strip-debug" ]
       }
+    } else if (is_clang && !is_nacl) {
+      # Reduce the size of binary.
+      ldflags += [ "-Wl,--strip-debug" ]
     }
 
     # Note: -gsplit-dwarf implicitly turns on -g2 with clang, so don't pass it.
