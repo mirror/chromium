@@ -5667,6 +5667,7 @@ test("net_unittests") {
       # TODO(mmenke):  This depends on test_support_base, which depends on
       #                icu.  Figure out a way to remove that dependency.
       "//testing/android/native_test:native_test_native_code",
+      "//tools/v8_context_snapshot:v8_context_snapshot_assets",
       "//v8:v8_external_startup_data_assets",
     ]
     android_manifest = "//net/android/unittest_support/AndroidManifest.xml"
