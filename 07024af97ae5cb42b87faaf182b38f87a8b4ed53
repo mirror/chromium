@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "802b4374_9ca44555",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-14T23:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37a6ae5d_af6dc224",
+      "revId": "07024af97ae5cb42b87faaf182b38f87a8b4ed53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00545e03_9409d480",
         "filename": "content/public/common/BUILD.gn",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "75983b40_20c05f1d",
+        "filename": "content/public/common/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-14T23:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00545e03_9409d480",
+      "revId": "07024af97ae5cb42b87faaf182b38f87a8b4ed53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90330e29_8ea071b0",
         "filename": "content/public/common/use_zoom_for_dsf_policy.h",
         "patchSetId": 10
@@ -47,6 +83,30 @@
       "writtenOn": "2017-12-14T17:57:50Z",
       "side": 1,
       "message": "You can name this IsUseZoomForDSFEnabled and retire the old one in content_switches_internal instead. WDYT?",
+      "range": {
+        "startLine": 15,
+        "startChar": 20,
+        "endLine": 15,
+        "endChar": 40
+      },
+      "revId": "07024af97ae5cb42b87faaf182b38f87a8b4ed53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4233d9f_0f69e83c",
+        "filename": "content/public/common/use_zoom_for_dsf_policy.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-14T23:55:17Z",
+      "side": 1,
+      "message": "I agree with you, but currently the old one in content_switches_internal is used in many places. Since this is a urgent feature (if I do not enable it quickly, there will be more bugs related to it), I left it as TODO (See the comment in the old one).",
+      "parentUuid": "90330e29_8ea071b0",
       "range": {
         "startLine": 15,
         "startChar": 20,
