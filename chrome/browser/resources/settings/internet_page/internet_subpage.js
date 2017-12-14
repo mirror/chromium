@@ -56,6 +56,13 @@ Polymer({
     arcVpnProviders: Array,
 
     /**
+     * List of potential Tether hosts whose "Google Play Services" notifications
+     * are disabled (these notifications are required to use Instant Tethering).
+     * @type {!Array<string>|undefined}
+     */
+    notificationsDisabledDeviceNames: Array,
+
+    /**
      * Interface for networkingPrivate calls, passed from internet_page.
      * @type {!NetworkingPrivate}
      */
@@ -587,5 +594,49 @@ Polymer({
     }
 
     return this.i18n('internetNoNetworks');
+  },
+
+  /**
+   * @param {!Array<!CrOnc.NetworkStateProperties>} networkStateList
+   * @return {string}
+   * @private
+   */
+  gmsCoreNotificationsContainerClass_: function(networkStateList) {
+    return !!networkStateList.length ? '' : 'no-networks-text-below';
+  },
+
+  /**
+   * @param {!Array<string>} notificationsDisabledDeviceNames
+   * @return {boolean}
+   * @private
+   */
+  showGmsCoreNotificationsSection_: function(notificationsDisabledDeviceNames) {
+    console.log(
+        'showGmsCoreNotificationsSection_', notificationsDisabledDeviceNames,
+        typeof notificationsDisabledDeviceNames);
+    return notificationsDisabledDeviceNames.length > 0;
+  },
+
+  /**
+   * @param {!Array<string>} notificationsDisabledDeviceNames
+   * @return {string}
+   * @private
+   */
+  getGmsCoreNotificationsDevicesString_: function(
+      notificationsDisabledDeviceNames) {
+    if (notificationsDisabledDeviceNames.length == 1) {
+      return this.i18n(
+          'gmscoreNotificationsOneDeviceSubtitle',
+          notificationsDisabledDeviceNames[0]);
+    }
+
+    if (notificationsDisabledDeviceNames.length == 2) {
+      return this.i18n(
+          'gmscoreNotificationsTwoDevicesSubtitle',
+          notificationsDisabledDeviceNames[0],
+          notificationsDisabledDeviceNames[1]);
+    }
+
+    return this.i18n('gmscoreNotificationsManyDevicesSubtitle');
   },
 });
