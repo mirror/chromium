@@ -16,6 +16,24 @@
       "revId": "005d0a093ec4c62f531f83d76a2ad06b9998e837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e2e14c_427d39d4",
+        "filename": "chrome/common/extensions/api/autotest_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1245973
+      },
+      "writtenOn": "2017-12-14T06:44:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9567178e_47e38cfa",
+      "revId": "005d0a093ec4c62f531f83d76a2ad06b9998e837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
