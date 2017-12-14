@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72e8e55b_1a79b97d",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T00:45:34Z",
+      "side": 1,
+      "message": "Do we still need to populate this manually on startup? Or was it temporary?",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd32289d_474850d3",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T00:45:34Z",
+      "side": 1,
+      "message": "Should we also add a this.tracker_.removeAll(), similar to https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/component.js?\u0026l\u003d98 ?",
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852c6874_86cb68a8",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T00:45:34Z",
+      "side": 1,
+      "message": "Should this be\nthis.set(\u0027destination_.capabilities\u0027, this.destinationStore_.selectedDestination.capabilities);\n\nTo trigger observers?",
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
