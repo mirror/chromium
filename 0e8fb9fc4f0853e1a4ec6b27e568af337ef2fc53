@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a06f1ae3_c7ac33d6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/websockets/Create-invalid-urls.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-14T09:34:27Z",
+      "side": 1,
+      "message": "should be construction of a WebSocket using some valid ws URL.\n\nIf a fake address doesn\u0027t work, please try using the WebSocket testing facility to let it establish successfully.",
+      "revId": "0e8fb9fc4f0853e1a4ec6b27e568af337ef2fc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8ea82e_d67e1217",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/websockets/Create-invalid-urls.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-12-14T09:34:27Z",
+      "side": 1,
+      "message": "how about assert_true?",
+      "revId": "0e8fb9fc4f0853e1a4ec6b27e568af337ef2fc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
