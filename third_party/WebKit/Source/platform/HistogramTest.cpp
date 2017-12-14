@@ -5,7 +5,7 @@
 #include "platform/Histogram.h"
 
 #include "base/metrics/histogram_samples.h"
-#include "base/test/simple_test_tick_clock.h"
+#include "platform/wtf/Time.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -21,12 +21,24 @@ class TestCustomCountHistogram : public CustomCountHistogram {
   base::HistogramBase* Histogram() { return histogram_; }
 };
 
-TEST(ScopedUsHistogramTimerTest, Basic) {
+class ScopedUsHistogramTimerTest : public ::testing::Test {
+ protected:
+  static double MockedTime() { return mocked_time_; }
+
+  static void SetMockedTime(double mocked_time) { mocked_time_ = mocked_time; }
+
+  static double mocked_time_;
+};
+
+double ScopedUsHistogramTimerTest::mocked_time_ = 0.0;
+
+TEST_F(ScopedUsHistogramTimerTest, Basic) {
+  SetTimeFunctionsForTesting(&MockedTime);
   TestCustomCountHistogram scoped_us_counter("test", 0, 10000000, 50);
   {
-    base::SimpleTestTickClock clock;
-    ScopedUsHistogramTimer timer(scoped_us_counter, &clock);
-    clock.Advance(TimeDelta::FromMilliseconds(500));
+    EXPECT_EQ(0.0, MockedTime());
+    ScopedUsHistogramTimer timer(scoped_us_counter);
+    SetMockedTime(0.5);
   }
   // 500ms == 500000us
   EXPECT_EQ(500000, scoped_us_counter.Histogram()->SnapshotSamples()->sum());
