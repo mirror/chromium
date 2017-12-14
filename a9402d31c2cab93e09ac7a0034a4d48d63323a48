@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dfedf3f_06c6b7c6",
+        "filename": "components/prefs/pref_notifier_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-12-14T09:06:41Z",
+      "side": 1,
+      "message": "I wonder whether this should be:\nPrefInitObserverList observers;\nstd::swap(observers, init_observers_);\n\nI haven\u0027t found any conclusive evidence that init_observers_ is in an empty state after the move. I have only found \"undefined but valid\". I\u0027d appreciate to be enlightened that this is not necessary, though.",
+      "revId": "a9402d31c2cab93e09ac7a0034a4d48d63323a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
