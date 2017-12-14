@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "686567b1_604225fd",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/braille_command_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T17:42:38Z",
+      "side": 1,
+      "message": "Maybe a constant for 4 so it\u0027s more clear what it means here?",
+      "revId": "81921edd04b049b5664d50d5efa74c22a716a298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f428cff6_419504ac",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T17:42:38Z",
+      "side": 1,
+      "message": "Maybe add a comment to explain how this relates / differs from\nBrailleCommandHandler.onEditCommand?",
+      "revId": "81921edd04b049b5664d50d5efa74c22a716a298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f60ab29_0f039cc3",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T17:42:38Z",
+      "side": 1,
+      "message": "Same - constants for the modifiers",
+      "revId": "81921edd04b049b5664d50d5efa74c22a716a298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
