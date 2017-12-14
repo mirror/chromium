@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "88e72662_51384771",
+        "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-12-14T15:09:48Z",
+      "side": 1,
+      "message": "Nit: I think that things would be clearer if you moved the checking for free space to WebApkInstaller.\n\nIf you move this logic to WebApkInstaller,\n- you don\u0027t need to bind as many parameters because all of the parameters are members of the WebApkInstaller class\n- you don\u0027t need to do any fancy callback binding (reinterpret_cast\u003cuintptr_t\u003e(new base::Callback)) because WebApkInstaller owns the Java version",
+      "revId": "4aa3799077d5bfcc153811ef846f15dc769dafcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e5dcc32_62a79f72",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 12
