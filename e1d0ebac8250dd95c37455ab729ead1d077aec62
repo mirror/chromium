@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad5f8ffd_b31d0ec5",
+        "filename": "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-14T06:31:42Z",
+      "side": 1,
+      "message": "I think OnWallpaperDataChanged (or some alternative mechanism) needs to be kept.\nIt has two responsibilities;\n- Notifies ARC container when setting wallpaper initiated by ARC is completed by android_id_.\n- Notifies ARC container when setting wallpaper initiated by \"some component other than ARC\" is completed. In this case, \u0027-1\u0027 is the expected ID.\n\nIn this PS, the second \u0027-1\u0027 is not sent. Could you keep that behavior?",
+      "revId": "e1d0ebac8250dd95c37455ab729ead1d077aec62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
