@@ -28,12 +28,14 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/resource_response.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace content {
 
 struct DownloadResourceHandler::DownloadTabInfo {
   GURL tab_url;
   GURL tab_referrer_url;
+  ukm::SourceId ukm_source_id;
 };
 
 namespace {
@@ -77,6 +79,7 @@ static void StartOnUIThread(
 
   info->tab_url = tab_info->tab_url;
   info->tab_referrer_url = tab_info->tab_referrer_url;
+  info->ukm_source_id = tab_info->ukm_source_id;
   info->site_url = frame_host->GetSiteInstance()->GetSiteURL();
 
   download_manager->StartDownload(
@@ -96,6 +99,11 @@ void InitializeDownloadTabInfoOnUIThread(
     if (entry) {
       tab_info->tab_url = entry->GetURL();
       tab_info->tab_referrer_url = entry->GetReferrer().url;
+
+      ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+      tab_info->ukm_source_id = ukm_recorder->GetNewSourceID();
+      ukm_recorder->UpdateSourceURL(tab_info->ukm_source_id,
+                                    web_contents->GetLastCommittedURL());
     }
   }
 }

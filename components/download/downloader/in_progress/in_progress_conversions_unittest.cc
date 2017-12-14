@@ -22,6 +22,8 @@ TEST_F(InProgressConversionsTest, DownloadEntry) {
   entry.guid = "guid";
   entry.request_origin = "request origin";
   entry.download_source = DownloadSource::DRAG_AND_DROP;
+  entry.ukm_id = 789;
+  entry.ukm_source_id = 12345;
   EXPECT_EQ(entry, DownloadEntryFromProto(DownloadEntryToProto(entry)));
 }
 
