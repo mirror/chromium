@@ -6852,6 +6852,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram base="true" name="Blink.ResourceLoadScheduler.DecodedBytes"
+    units="bytes">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <summary>Count received data size in bytes for each resource.</summary>
+</histogram>
+
 <histogram base="true" name="Blink.ResourceLoadScheduler.PeakRequests"
     units="requests">
 <!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
@@ -6860,6 +6868,60 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The largest number of outstanding resource requests issued by a frame until
     the network 2-quiet (no more than 2 active network requests for 1 seconds).
+  </summary>
+</histogram>
+
+<histogram name="Blink.ResourceLoadScheduler.RequestCounts"
+    enum="ResourceLoadSchedulerCircumstance">
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Count resource request circumstance, e.g. from the main frame vs sub-frames,
+    or in throttled state vs in not-throttled state, on each resource load
+    completion.
+  </summary>
+</histogram>
+
+<histogram base="true" name="Blink.ResourceLoadScheduler.TotalDecodedBytes"
+    units="bytes">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Total received data size in bytes to load resources from the frame creation
+    until network activity quiets.
+  </summary>
+</histogram>
+
+<histogram base="true" name="Blink.ResourceLoadScheduler.TotalRequestCount"
+    units="requests">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Total number of resource requests completed from the frame creation until
+    network activity quiets.
+  </summary>
+</histogram>
+
+<histogram base="true" name="Blink.ResourceLoadScheduler.TotalTrafficBytes"
+    units="bytes">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Total traffic data in bytes transferred over networks to load resources from
+    the frame creation until network activity quiets.
+  </summary>
+</histogram>
+
+<histogram base="true" name="Blink.ResourceLoadScheduler.TrafficBytes"
+    units="bytes">
+<!-- Name completed by histogram_suffixes name="ResourceLoadScheduler.FrameType" -->
+
+  <owner>toyoshim@chromium.org</owner>
+  <summary>
+    Count traffic data size in bytes transferred over networks to load each
+    resource.
   </summary>
 </histogram>
 
@@ -22244,6 +22306,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Extensions.BookmarkApp.NavigationResult"
+    enum="BookmarkAppNavigationResult">
+  <owner>mgiuca@chromium.org</owner>
+  <owner>ortuno@chromium.org</owner>
+  <summary>
+    Number of times navigations into and out of Bookmark Apps are processed,
+    grouped by their result.
+  </summary>
+</histogram>
+
 <histogram name="Extensions.BookmarkAppLaunchContainer"
     enum="AppLaunchContainer">
   <owner>benwells@chromium.org</owner>
@@ -36028,6 +36100,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Memory.Browser.PrivateSwapFootprint" units="MB">
+  <owner>mariakhomenko@chromium.org</owner>
+  <summary>
+    An amount of private memory of the browser process placed in swap (VmSwap).
+    Available only on Android and Linux.
+  </summary>
+</histogram>
+
 <histogram name="Memory.Browser.SharedMemoryFootprint" units="MB">
   <owner>erikchen@chromium.org</owner>
   <summary>
@@ -36544,6 +36624,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     A rough estimate of the private memory footprint of the gpu process.
     Recorded once per UMA ping.
+  </summary>
+</histogram>
+
+<histogram name="Memory.Gpu.PrivateSwapFootprint" units="MB">
+  <owner>mariakhomenko@chromium.org</owner>
+  <summary>
+    An amount of private memory of the GPU process placed in swap (VmSwap).
+    Available only on Android and Linux.
   </summary>
 </histogram>
 
@@ -79678,6 +79766,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Track how a user interfacts with the android signin promo.</summary>
 </histogram>
 
+<histogram name="Signin.AuthenticatedLaunchUserEvent"
+    enum="AuthenticatedLaunchUserEvent">
+  <owner>zmin@chromium.org</owner>
+  <summary>
+    Records the UI event when user clicks a locked profile on UserManager.
+    Please note that if the local reauth failed, UserManager might show Gaia
+    Reauth dialog.
+  </summary>
+</histogram>
+
 <histogram name="Signin.AuthError" enum="GoogleServiceAuthError">
   <owner>mlerman@chromium.org</owner>
   <summary>
@@ -79756,6 +79854,25 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Track how many minutes of local system time elapsed from when Chrome was
     installed to when Signin occured for this profile.
+  </summary>
+</histogram>
+
+<histogram name="Signin.ForceSigninVerificationRequest" enum="BooleanRequested">
+  <owner>zmin@chromium.org</owner>
+  <summary>
+    The number profile load events that needs a force-sign-in verification
+    request. It's recorded when profile is loaded with an authentication token
+    and force-sign-in policy is enabled.
+  </summary>
+</histogram>
+
+<histogram name="Signin.ForceSigninVerificationTime" units="ms">
+  <owner>zmin@chromium.org</owner>
+  <summary>
+    Elapsed time of the force-sign-in verfication if it's finished. It includes
+    total network delay, retry delay and wait time due to no connection. The
+    verfication will not be recorded if it's not finished before profile is
+    signed out or removed from memory.
   </summary>
 </histogram>
 
@@ -80958,6 +81075,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SiteIsolation.Flags.IsolateOrigins" enum="BooleanEnabled">
+  <owner>alexmos@chromium.org</owner>
+  <summary>
+    True if the --isolate-origins mode was enabled from the command line,
+    about:flags, or enterprise policy.  Recorded on browser startup.
+  </summary>
+</histogram>
+
+<histogram name="SiteIsolation.Flags.SitePerProcess" enum="BooleanEnabled">
+  <owner>alexmos@chromium.org</owner>
+  <summary>
+    True if the --site-per-process mode was enabled from the command line,
+    about:flags, or enterprise policy.  Recorded on browser startup.
+  </summary>
+</histogram>
+
 <histogram name="SiteIsolation.IsolateAllSitesProcessCountEstimate">
   <owner>creis@chromium.org</owner>
   <summary>
@@ -81091,6 +81224,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SiteIsolation.IsolateOrigins.Size" units="origins">
+  <owner>alexmos@chromium.org</owner>
+  <summary>
+    The number of currently enabled isolated origins.  This includes origins
+    specified via the --isolate-origins command-line flag as well as those
+    configured via enterprise policy.  Recorded on browser startup.
+  </summary>
+</histogram>
+
 <histogram name="SiteIsolation.OutOfProcessIframes">
   <owner>nasko@chromium.org</owner>
   <summary>
@@ -81129,6 +81271,35 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The count of SiteInstances in a single BrowsingInstance. Recorded each UMA
     ping, once per BrowsingInstance.
+  </summary>
+</histogram>
+
+<histogram name="SiteIsolation.XSD.Browser.Action"
+    enum="SiteIsolationResponseAction">
+  <owner>creis@chromium.org</owner>
+  <summary>
+    Various actions related to cross-site document blocking in the browser
+    process, indicating whether the response was blocked from the renderer.
+    Recorded as the response is processed in the network stack.
+  </summary>
+</histogram>
+
+<histogram name="SiteIsolation.XSD.Browser.Blocked" enum="ContentResourceType2">
+  <owner>creis@chromium.org</owner>
+  <summary>
+    The total count of responses that were blocked by the cross-site document
+    blocking logic in the browser process. Sampled with a resource type (0-17)
+    when the response is blocked, just after the first read from the network.
+    This is also recorded with a suffix indicating the MIME type category.
+  </summary>
+</histogram>
+
+<histogram name="SiteIsolation.XSD.Browser.BytesReadForSniffing" units="bytes">
+  <owner>creis@chromium.org</owner>
+  <summary>
+    The number of bytes in the first read of the network response, when
+    attempting to sniff the response to determine if it should be blocked as a
+    cross-site document. Recorded when sniffing is attempted.
   </summary>
 </histogram>
 
@@ -93005,7 +93176,31 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="VR.AssetsComponent.LoadStatus" enum="VRAssetsLoadStatus">
+<histogram name="VR.Component.Assets.DurationUntilReady.OnChromeStart"
+    units="ms">
+  <owner>tiborg@chromium.org</owner>
+  <summary>
+    Duration from starting Chrome until VR assets component is ready to use.
+  </summary>
+</histogram>
+
+<histogram base="true" name="VR.Component.Assets.DurationUntilReady.OnEnter"
+    units="ms">
+  <owner>tiborg@chromium.org</owner>
+  <summary>
+    Duration from entering a VR mode until the VR assets component is ready to
+    use.
+  </summary>
+</histogram>
+
+<histogram base="true" name="VR.Component.Assets.Status.OnEnter"
+    enum="VRAssetsComponentEnterStatus">
+  <owner>tiborg@chromium.org</owner>
+  <summary>Status of the VR assets component when entering a VR mode.</summary>
+</histogram>
+
+<histogram name="VR.Component.Assets.VersionAndStatus.OnLoad"
+    enum="VRAssetsLoadStatus">
   <owner>tiborg@chromium.org</owner>
   <summary>
     The component version and status of loading the VR assets. The value is
@@ -93015,21 +93210,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="VR.AssetsComponent.ReadyLatency.OnEnter"
-    units="ms">
-  <owner>tiborg@chromium.org</owner>
-  <summary>
-    Duration from entering a VR mode until VR assets component is ready to use.
-  </summary>
-</histogram>
-
-<histogram base="true" name="VR.AssetsComponent.Status.OnEnter"
-    enum="VRAssetsComponentEnterStatus">
-  <owner>tiborg@chromium.org</owner>
-  <summary>Status of the VR assets component when entering a VR mode.</summary>
-</histogram>
-
-<histogram name="VR.AssetsComponent.UpdateStatus"
+<histogram name="VR.Component.Assets.VersionAndStatus.OnUpdate"
     enum="VRAssetsComponentUpdateStatus">
   <owner>tiborg@chromium.org</owner>
   <summary>
@@ -93041,16 +93222,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="VR.DataConnection.OnEnter"
+<histogram base="true" name="VR.NetworkConnectionType.OnEnter"
     enum="NetworkConnectionType">
   <owner>tiborg@chromium.org</owner>
-  <summary>Data connection when entering a VR mode.</summary>
+  <summary>Network connection type when entering a VR mode.</summary>
 </histogram>
 
-<histogram name="VR.DataConnection.OnRegisterAssetsComponent"
+<histogram name="VR.NetworkConnectionType.OnRegisterComponent"
     enum="NetworkConnectionType">
   <owner>tiborg@chromium.org</owner>
-  <summary>Data connection when registering the VR assets component.</summary>
+  <summary>
+    Network connection type when registering the VR component(s).
+  </summary>
 </histogram>
 
 <histogram name="VR.Session.VoiceSearch.StartedCount" units="searches">
@@ -107217,6 +107400,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="PartitionAlloc" label="Constrained to partition allocator."/>
   <suffix name="BlinkGC" label="Constrained to blink GC allocator."/>
   <suffix name="V8" label="Constrained to v8 allocator."/>
+  <suffix name="PrivateSwapFootprint"
+      label="Only counting private swapped memory. Available only on Android
+             and Linux."/>
   <affected-histogram name="Memory.Experimental.Extension2"/>
   <affected-histogram name="Memory.Experimental.Renderer2"/>
 </histogram_suffixes>
@@ -107456,7 +107642,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="SubframeNotThrottled" label="Sub frame, not throttled"/>
   <suffix name="SubframePartiallyThrottled"
       label="Sub frame, partially throttled"/>
+  <affected-histogram name="Blink.ResourceLoadScheduler.DecodedBytes"/>
   <affected-histogram name="Blink.ResourceLoadScheduler.PeakRequests"/>
+  <affected-histogram name="Blink.ResourceLoadScheduler.TotalDecodedBytes"/>
+  <affected-histogram name="Blink.ResourceLoadScheduler.TotalRequestCount"/>
+  <affected-histogram name="Blink.ResourceLoadScheduler.TotalTrafficBytes"/>
+  <affected-histogram name="Blink.ResourceLoadScheduler.TrafficBytes"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="ResourcePrefetchPredictorNetworkTypePrefetch"
@@ -108342,6 +108533,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Signin"/>
 </histogram_suffixes>
 
+<histogram_suffixes name="Signin.ForceSigninVerificationResult" separator=".">
+  <suffix name="Success" label="The authenticaion token is valid"/>
+  <suffix name="Failure"
+      label="The authenticaion token can not be verified due to persisten
+             error"/>
+  <affected-histogram name="Signin.ForceSigninVerificationTime"/>
+</histogram_suffixes>
+
 <histogram_suffixes name="Signin.ObsoleteActions" separator=".">
   <obsolete>
     Deprecated as of 12/2014.
@@ -108394,6 +108593,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="SimpleCache.SyncCreateResult"/>
   <affected-histogram name="SimpleCache.SyncOpenPlatformFileError"/>
   <affected-histogram name="SimpleCache.SyncOpenResult"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="SiteIsolation.XSD.MIME" separator=".">
+  <suffix name="HTML" label="Classified as HTML MIME type."/>
+  <suffix name="XML" label="Classified as XML MIME type."/>
+  <suffix name="JSON" label="Classified as JSON MIME type."/>
+  <suffix name="Plain" label="Classified as plain text MIME type."/>
+  <affected-histogram name="SiteIsolation.XSD.Browser.Blocked"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="SkiaDrawScaleFactorFilterQuality" separator=".">
@@ -109175,13 +109382,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="VR.Mode" separator=".">
-  <affected-histogram name="VR.AssetsComponent.ReadyLatency.OnEnter"/>
-  <suffix name="VR" label="Entered either VR Browsing or WebVR mode."/>
+  <suffix name="AllVR" label="Entered either VR Browsing or WebVR mode."/>
   <suffix name="VRBrowsing" label="Entered VR Browsing Mode."/>
-  <suffix name="WebVR"
-      label="Entered WebVR mode (also includes splash screen)."/>
-  <affected-histogram name="VR.AssetsComponent.Status.OnEnter"/>
-  <affected-histogram name="VR.DataConnection.OnEnter"/>
+  <suffix name="WebVRPresentation"
+      label="Entered WebVR presentation mode (also includes splash screen)."/>
+  <affected-histogram name="VR.Component.Assets.DurationUntilReady.OnEnter"/>
+  <affected-histogram name="VR.Component.Assets.Status.OnEnter"/>
+  <affected-histogram name="VR.NetworkConnectionType.OnEnter"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="VRFreNotCompleteType" separator=".">
