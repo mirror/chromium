@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afbde125_27a39e68",
+        "filename": "ios/web_view/internal/cwv_web_view_configuration.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-12-14T22:15:25Z",
+      "side": 1,
+      "message": "CWVWebViewConfiguration* gDefaultConfiguration \u003d nil;\n\nSame comment for the next variable.",
+      "range": {
+        "startLine": 43,
+        "startChar": 25,
+        "endLine": 43,
+        "endChar": 45
+      },
+      "revId": "11c8f77d347bb9965a5279fd23b97c0f7916dd12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
