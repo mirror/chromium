@@ -56,9 +56,9 @@ class RuntimeFeatureWriter(json5_generator.Writer):
             enabled_condition = 'is_%senabled_' % feature['class_member_name']
             assert not feature['implied_by'] or not feature['depends_on'], 'Only one of implied_by and depends_on is allowed'
             for implied_by_name in feature['implied_by']:
-                enabled_condition += ' || is_%senabled_' % class_member_name(implied_by_name)
+                enabled_condition += ' || %sEnabled()' % implied_by_name
             for dependant_name in feature['depends_on']:
-                enabled_condition += ' && is_%senabled_' % class_member_name(dependant_name)
+                enabled_condition += ' && %sEnabled()' % dependant_name
             feature['enabled_condition'] = enabled_condition
         self._standard_features = [feature for feature in self._features if not feature['custom']]
         self._origin_trial_features = [feature for feature in self._features if feature['origin_trial_feature_name']]
