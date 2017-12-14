@@ -203,7 +203,7 @@ void UiElement::SetSize(float width, float height) {
   OnSetSize(gfx::SizeF(width, height));
 }
 
-void UiElement::OnSetSize(gfx::SizeF size) {}
+void UiElement::OnSetSize(const gfx::SizeF& size) {}
 
 void UiElement::SetVisible(bool visible) {
   SetOpacity(visible ? opacity_when_visible_ : 0.0);
@@ -589,7 +589,8 @@ void UiElement::DoLayOutChildren() {
   gfx::RectF bounds;
   bool first = false;
   for (auto& child : children_) {
-    if (!child->IsVisible() || child->size().IsEmpty()) {
+    if (!child->IsVisible() || child->size().IsEmpty() ||
+        !child->contributes_to_parent_bounds()) {
       continue;
     }
     gfx::Point3F child_center(child->local_origin());
@@ -610,6 +611,7 @@ void UiElement::DoLayOutChildren() {
   bounds.set_origin(bounds.CenterPoint());
   size_ = bounds.size();
   local_origin_ = bounds.origin();
+  OnSetSize(size_);
 }
 
 void UiElement::LayOutChildren() {

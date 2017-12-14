@@ -218,7 +218,7 @@ class UiElement : public cc::AnimationTarget {
 
   gfx::SizeF size() const;
   void SetSize(float width, float hight);
-  virtual void OnSetSize(gfx::SizeF size);
+  virtual void OnSetSize(const gfx::SizeF& size);
 
   gfx::PointF local_origin() const { return local_origin_; }
 
@@ -272,6 +272,13 @@ class UiElement : public cc::AnimationTarget {
   bool bounds_contain_children() const { return bounds_contain_children_; }
   void set_bounds_contain_children(bool bounds_contain_children) {
     bounds_contain_children_ = bounds_contain_children;
+  }
+
+  bool contributes_to_parent_bounds() const {
+    return contributes_to_parent_bounds_;
+  }
+  void set_contributes_to_parent_bounds(bool value) {
+    contributes_to_parent_bounds_ = value;
   }
 
   float x_padding() const { return x_padding_; }
@@ -486,6 +493,7 @@ class UiElement : public cc::AnimationTarget {
   // size to accommodate all descendants, adding in the padding below along the
   // x and y axes.
   bool bounds_contain_children_ = false;
+  bool contributes_to_parent_bounds_ = true;
   float x_padding_ = 0.0f;
   float y_padding_ = 0.0f;
 
