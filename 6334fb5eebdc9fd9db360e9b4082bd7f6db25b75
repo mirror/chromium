@@ -121,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "536d8427_c6968dae",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-12-14T20:47:28Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to handle any other states so falling through to UNKNOWN should be ok too.",
+      "parentUuid": "4f34ed95_311e7fa0",
+      "revId": "6334fb5eebdc9fd9db360e9b4082bd7f6db25b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "634765fb_e326eb10",
         "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
         "patchSetId": 1
