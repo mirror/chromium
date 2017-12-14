@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d7aa60_11696211",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-14T17:27:23Z",
+      "side": 0,
+      "message": "I wonder if it would be useful to include a logging helper function so we could write:\nEXPECT_TRUE(NoPageLoadMetricsRecorded()) \u003c\u003c AllPageLoadMetrics()\n\nSo failures in the future are actionable.",
+      "revId": "8da2ab335438e7a3525efb843eac628c4249dc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388eb672_497ba32f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 57768,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-12-14T17:27:23Z",
+      "side": 0,
+      "message": "We should just mark these as obsolete.",
+      "revId": "8da2ab335438e7a3525efb843eac628c4249dc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
