@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3975a3a3_b2cc083d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T16:11:40Z",
+      "side": 1,
+      "message": "This description refers to RemovePeerConnection only, but you are changing more than that.\nYou should refer to PeerConnectionTracker.",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "0e4de6ccd71360da589079dfc4bdf1d25a7012f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0ca9bfd_7752d171",
         "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
         "patchSetId": 13
