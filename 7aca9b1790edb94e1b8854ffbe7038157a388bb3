@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "8a651feb_c565b87b",
+        "filename": "net/nqe/network_quality_estimator_params.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-14T21:40:49Z",
+      "side": 1,
+      "message": "Thinking about what happens if the user is first on cellular, and then changes to WiFi connection.\n\nWhen the user is on cellular, forced_e_c_t_ will be set to Slow2G.\nSo, afterwards, when the user switches to WiFi, would this method still return Slow2G as the value?",
+      "range": {
+        "startLine": 523,
+        "startChar": 4,
+        "endLine": 523,
+        "endChar": 37
+      },
+      "revId": "7aca9b1790edb94e1b8854ffbe7038157a388bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6515180e_78393471",
         "filename": "tools/chrome_proxy/integration_tests/chrome_proxy_measurements.py",
         "patchSetId": 11
