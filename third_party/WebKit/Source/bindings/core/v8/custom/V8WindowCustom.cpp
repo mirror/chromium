@@ -54,7 +54,7 @@
 #include "core/html/HTMLCollection.h"
 #include "core/html/HTMLDocument.h"
 #include "core/imagebitmap/ImageBitmap.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"

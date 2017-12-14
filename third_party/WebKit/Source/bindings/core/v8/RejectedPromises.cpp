@@ -10,7 +10,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/events/PromiseRejectionEvent.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/ThreadInspector.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/ScopedPersistent.h"
 #include "platform/bindings/ScriptState.h"
@@ -80,10 +80,10 @@ class RejectedPromises::Message final {
     }
 
     if (should_log_to_console_) {
-      ThreadDebugger* debugger =
-          ThreadDebugger::From(script_state_->GetIsolate());
-      if (debugger) {
-        promise_rejection_id_ = debugger->PromiseRejected(
+      ThreadInspector* inspector =
+          ThreadInspector::From(script_state_->GetIsolate());
+      if (inspector) {
+        promise_rejection_id_ = inspector->PromiseRejected(
             script_state_->GetContext(), error_message_, reason,
             std::move(location_));
       }
@@ -117,11 +117,11 @@ class RejectedPromises::Message final {
     }
 
     if (should_log_to_console_ && promise_rejection_id_) {
-      ThreadDebugger* debugger =
-          ThreadDebugger::From(script_state_->GetIsolate());
-      if (debugger) {
-        debugger->PromiseRejectionRevoked(script_state_->GetContext(),
-                                          promise_rejection_id_);
+      ThreadInspector* inspector =
+          ThreadInspector::From(script_state_->GetIsolate());
+      if (inspector) {
+        inspector->PromiseRejectionRevoked(script_state_->GetContext(),
+                                           promise_rejection_id_);
       }
     }
   }

@@ -45,7 +45,7 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/DocumentNameCollection.h"
 #include "core/html/HTMLIFrameElement.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/loader/FrameLoader.h"
 #include "platform/Histogram.h"
 #include "platform/bindings/DOMWrapperWorld.h"
@@ -77,7 +77,7 @@ void LocalWindowProxy::DisposeContext(Lifecycle next_status,
   // willReleaseScriptContext callback, so all disposing should happen after
   // it returns.
   GetFrame()->Client()->WillReleaseScriptContext(context, world_->GetWorldId());
-  MainThreadDebugger::Instance()->ContextWillBeDestroyed(script_state_.get());
+  MainThreadInspector::Instance()->ContextWillBeDestroyed(script_state_.get());
 
   if (next_status == Lifecycle::kGlobalObjectIsDetached) {
     v8::Local<v8::Context> context = script_state_->GetContext();
@@ -132,7 +132,7 @@ void LocalWindowProxy::Initialize() {
   // evaluation is forbiden during creating of snapshot, we should ignore any
   // inspector interruption to avoid JavaScript execution.
   InspectorTaskRunner::IgnoreInterruptsScope inspector_ignore_interrupts(
-      MainThreadDebugger::Instance()->TaskRunner());
+      MainThreadInspector::Instance()->TaskRunner());
   v8::HandleScope handle_scope(GetIsolate());
 
   CreateContext();
@@ -168,8 +168,8 @@ void LocalWindowProxy::Initialize() {
   {
     TRACE_EVENT1("v8", "ContextCreatedNotification", "IsMainFrame",
                  GetFrame()->IsMainFrame());
-    MainThreadDebugger::Instance()->ContextCreated(script_state_.get(),
-                                                   GetFrame(), origin);
+    MainThreadInspector::Instance()->ContextCreated(script_state_.get(),
+                                                    GetFrame(), origin);
     GetFrame()->Client()->DidCreateScriptContext(context, world_->GetWorldId());
   }
 

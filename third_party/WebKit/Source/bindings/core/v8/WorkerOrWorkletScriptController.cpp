@@ -42,7 +42,7 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/events/ErrorEvent.h"
 #include "core/inspector/InspectorTraceEvents.h"
-#include "core/inspector/WorkerThreadDebugger.h"
+#include "core/inspector/WorkerThreadInspector.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "core/workers/WorkerThread.h"
@@ -129,9 +129,9 @@ void WorkerOrWorkletScriptController::DisposeContextIfNeeded() {
   if (global_scope_->IsWorkerGlobalScope() ||
       global_scope_->IsThreadedWorkletGlobalScope()) {
     ScriptState::Scope scope(script_state_.get());
-    WorkerThreadDebugger* debugger = WorkerThreadDebugger::From(isolate_);
-    debugger->ContextWillBeDestroyed(global_scope_->GetThread(),
-                                     script_state_->GetContext());
+    WorkerThreadInspector* inspector = WorkerThreadInspector::From(isolate_);
+    inspector->ContextWillBeDestroyed(global_scope_->GetThread(),
+                                      script_state_->GetContext());
   }
   script_state_->DisposePerContextData();
 }
@@ -227,8 +227,8 @@ bool WorkerOrWorkletScriptController::InitializeContextIfNeeded(
   // this is done once the context is initialized.
   if (global_scope_->IsWorkerGlobalScope() ||
       global_scope_->IsThreadedWorkletGlobalScope()) {
-    WorkerThreadDebugger* debugger = WorkerThreadDebugger::From(isolate_);
-    debugger->ContextCreated(global_scope_->GetThread(), context);
+    WorkerThreadInspector* inspector = WorkerThreadInspector::From(isolate_);
+    inspector->ContextCreated(global_scope_->GetThread(), context);
   }
 
   // Set the human readable name for the world if the call passes an actual

@@ -33,7 +33,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleMessageStorage.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"

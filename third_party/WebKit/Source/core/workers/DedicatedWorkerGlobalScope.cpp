@@ -35,7 +35,7 @@
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/ThreadInspector.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/DedicatedWorkerObjectProxy.h"
 #include "core/workers/DedicatedWorkerThread.h"
@@ -67,9 +67,10 @@ void DedicatedWorkerGlobalScope::postMessage(
       ExecutionContext::From(script_state), ports, exception_state);
   if (exception_state.HadException())
     return;
-  ThreadDebugger* debugger = ThreadDebugger::From(script_state->GetIsolate());
+  ThreadInspector* inspector =
+      ThreadInspector::From(script_state->GetIsolate());
   v8_inspector::V8StackTraceId stack_id =
-      debugger->StoreCurrentStackTrace("postMessage");
+      inspector->StoreCurrentStackTrace("postMessage");
   WorkerObjectProxy().PostMessageToWorkerObject(std::move(message),
                                                 std::move(channels), stack_id);
 }

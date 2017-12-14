@@ -28,39 +28,65 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef WorkerThreadDebugger_h
-#define WorkerThreadDebugger_h
+#ifndef MainThreadInspector_h
+#define MainThreadInspector_h
 
+#include <memory>
 #include "base/macros.h"
 #include "core/CoreExport.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/InspectorTaskRunner.h"
+#include "core/inspector/ThreadInspector.h"
+#include "platform/bindings/ScriptState.h"
+#include "platform/heap/Handle.h"
+#include "v8/include/v8-inspector.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
 class ErrorEvent;
+class LocalFrame;
+class SecurityOrigin;
 class SourceLocation;
-class WorkerThread;
 
-class CORE_EXPORT WorkerThreadDebugger final : public ThreadDebugger {
+class CORE_EXPORT MainThreadInspector final : public ThreadInspector {
  public:
-  explicit WorkerThreadDebugger(v8::Isolate*);
-  ~WorkerThreadDebugger() override;
+  class ClientMessageLoop {
+    USING_FAST_MALLOC(ClientMessageLoop);
 
-  static WorkerThreadDebugger* From(v8::Isolate*);
-  bool IsWorker() override { return true; }
+   public:
+    virtual ~ClientMessageLoop() {}
+    virtual void Run(LocalFrame*) = 0;
+    virtual void QuitNow() = 0;
+    virtual void RunIfWaitingForDebugger(LocalFrame*) = 0;
+  };
 
-  int ContextGroupId(WorkerThread*);
-  void ContextCreated(WorkerThread*, v8::Local<v8::Context>);
-  void ContextWillBeDestroyed(WorkerThread*, v8::Local<v8::Context>);
-  void ExceptionThrown(WorkerThread*, ErrorEvent*);
+  explicit MainThreadInspector(v8::Isolate*);
+  ~MainThreadInspector() override;
+
+  static MainThreadInspector* Instance();
+  static void InterruptMainThreadAndRun(InspectorTaskRunner::Task);
+
+  InspectorTaskRunner* TaskRunner() const { return task_runner_.get(); }
+  bool IsWorker() override { return false; }
+  bool IsPaused() const { return paused_; }
+  void SetClientMessageLoop(std::unique_ptr<ClientMessageLoop>);
+
+  // TODO(dgozman): by making this method virtual, we can move many methods to
+  // ThreadInspector and avoid some duplication. Should be careful about
+  // performance.
+  int ContextGroupId(LocalFrame*);
+  void DidClearContextsForFrame(LocalFrame*);
+  void ContextCreated(ScriptState*, LocalFrame*, const SecurityOrigin*);
+  void ContextWillBeDestroyed(ScriptState*);
+  void ExceptionThrown(ExecutionContext*, ErrorEvent*);
 
  private:
-  int ContextGroupId(ExecutionContext*) override;
   void ReportConsoleMessage(ExecutionContext*,
                             MessageSource,
                             MessageLevel,
                             const String& message,
                             SourceLocation*) override;
+  int ContextGroupId(ExecutionContext*) override;
 
   // V8InspectorClient implementation.
   void runMessageLoopOnPause(int context_group_id) override;
@@ -73,8 +99,6 @@ class CORE_EXPORT WorkerThreadDebugger final : public ThreadDebugger {
   void endEnsureAllContextsInGroup(int context_group_id) override;
   bool canExecuteScripts(int context_group_id) override;
   void runIfWaitingForDebugger(int context_group_id) override;
-  v8::MaybeLocal<v8::Value> memoryInfo(v8::Isolate*,
-                                       v8::Local<v8::Context>) override;
   void consoleAPIMessage(int context_group_id,
                          v8::Isolate::MessageErrorLevel,
                          const v8_inspector::StringView& message,
@@ -83,12 +107,23 @@ class CORE_EXPORT WorkerThreadDebugger final : public ThreadDebugger {
                          unsigned column_number,
                          v8_inspector::V8StackTrace*) override;
   void consoleClear(int context_group_id) override;
+  void installAdditionalCommandLineAPI(v8::Local<v8::Context>,
+                                       v8::Local<v8::Object>) override;
+  v8::MaybeLocal<v8::Value> memoryInfo(v8::Isolate*,
+                                       v8::Local<v8::Context>) override;
 
-  int paused_context_group_id_;
-  WTF::HashMap<int, WorkerThread*> worker_threads_;
-  DISALLOW_COPY_AND_ASSIGN(WorkerThreadDebugger);
+  static void QuerySelectorCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+  static void QuerySelectorAllCallback(
+      const v8::FunctionCallbackInfo<v8::Value>&);
+  static void XpathSelectorCallback(const v8::FunctionCallbackInfo<v8::Value>&);
+
+  std::unique_ptr<ClientMessageLoop> client_message_loop_;
+  std::unique_ptr<InspectorTaskRunner> task_runner_;
+  bool paused_;
+  static MainThreadInspector* instance_;
+  DISALLOW_COPY_AND_ASSIGN(MainThreadInspector);
 };
 
 }  // namespace blink
 
-#endif  // WorkerThreadDebugger_h
+#endif  // MainThreadInspector_h

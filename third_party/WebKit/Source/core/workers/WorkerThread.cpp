@@ -33,7 +33,7 @@
 #include "core/inspector/ConsoleMessageStorage.h"
 #include "core/inspector/InspectorTaskRunner.h"
 #include "core/inspector/WorkerInspectorController.h"
-#include "core/inspector/WorkerThreadDebugger.h"
+#include "core/inspector/WorkerThreadInspector.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/ThreadedWorkletGlobalScope.h"
@@ -240,7 +240,7 @@ void WorkerThread::StartRunningDebuggerTasksOnPauseOnWorkerThread() {
   if (worker_inspector_controller_)
     worker_inspector_controller_->FlushProtocolNotifications();
   paused_in_debugger_ = true;
-  ThreadDebugger::IdleStarted(GetIsolate());
+  ThreadInspector::IdleStarted(GetIsolate());
   do {
     CrossThreadClosure task =
         inspector_task_runner_->TakeNextTask(InspectorTaskRunner::kWaitForTask);
@@ -249,7 +249,7 @@ void WorkerThread::StartRunningDebuggerTasksOnPauseOnWorkerThread() {
     std::move(task).Run();
     // Keep waiting until execution is resumed.
   } while (paused_in_debugger_);
-  ThreadDebugger::IdleFinished(GetIsolate());
+  ThreadInspector::IdleFinished(GetIsolate());
 }
 
 void WorkerThread::StopRunningDebuggerTasksOnPauseOnWorkerThread() {
@@ -443,12 +443,12 @@ void WorkerThread::InitializeOnWorkerThread(
   // (https://crbug.com/680046)
   if (GlobalScope()->IsWorkletGlobalScope())
     return;
-  WorkerThreadDebugger* debugger = WorkerThreadDebugger::From(GetIsolate());
-  debugger->ExternalAsyncTaskStarted(
+  WorkerThreadInspector* inspector = WorkerThreadInspector::From(GetIsolate());
+  inspector->ExternalAsyncTaskStarted(
       global_scope_inspector_creation_params->stack_id);
   GlobalScope()->EvaluateClassicScript(script_url, std::move(source_code),
                                        std::move(cached_meta_data));
-  debugger->ExternalAsyncTaskStarted(
+  inspector->ExternalAsyncTaskStarted(
       global_scope_inspector_creation_params->stack_id);
 }
 
@@ -507,7 +507,7 @@ void WorkerThread::PerformDebuggerTaskOnWorkerThread(CrossThreadClosure task) {
     DCHECK_EQ(ThreadState::kRunning, thread_state_);
     running_debugger_task_ = true;
   }
-  ThreadDebugger::IdleFinished(GetIsolate());
+  ThreadInspector::IdleFinished(GetIsolate());
   {
     DEFINE_THREAD_SAFE_STATIC_LOCAL(
         CustomCountHistogram, scoped_us_counter,
@@ -515,7 +515,7 @@ void WorkerThread::PerformDebuggerTaskOnWorkerThread(CrossThreadClosure task) {
     ScopedUsHistogramTimer timer(scoped_us_counter);
     std::move(task).Run();
   }
-  ThreadDebugger::IdleStarted(GetIsolate());
+  ThreadInspector::IdleStarted(GetIsolate());
   {
     MutexLocker lock(thread_state_mutex_);
     running_debugger_task_ = false;

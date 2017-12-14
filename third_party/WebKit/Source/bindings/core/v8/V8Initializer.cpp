@@ -51,7 +51,7 @@
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/bindings/DOMWrapperWorld.h"
@@ -680,8 +680,8 @@ void V8Initializer::InitializeMainThread(const intptr_t* reference_table) {
       ScriptWrappableVisitor::InvalidateDeadObjectsInMarkingDeque,
       ScriptWrappableVisitor::PerformCleanup);
 
-  V8PerIsolateData::From(isolate)->SetThreadDebugger(
-      std::make_unique<MainThreadDebugger>(isolate));
+  V8PerIsolateData::From(isolate)->SetThreadInspector(
+      std::make_unique<MainThreadInspector>(isolate));
 
   BindingSecurity::InitWrapperCreationSecurityCheck();
 }

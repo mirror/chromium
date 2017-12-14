@@ -43,7 +43,7 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleMessageStorage.h"
 #include "core/inspector/WorkerInspectorController.h"
-#include "core/inspector/WorkerThreadDebugger.h"
+#include "core/inspector/WorkerThreadInspector.h"
 #include "core/loader/WorkerThreadableLoader.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/probe/CoreProbes.h"
@@ -121,9 +121,9 @@ void WorkerGlobalScope::Dispose() {
 void WorkerGlobalScope::ExceptionUnhandled(int exception_id) {
   ErrorEvent* event = pending_error_events_.Take(exception_id);
   DCHECK(event);
-  if (WorkerThreadDebugger* debugger =
-          WorkerThreadDebugger::From(GetThread()->GetIsolate()))
-    debugger->ExceptionThrown(thread_, event);
+  if (WorkerThreadInspector* inspector =
+          WorkerThreadInspector::From(GetThread()->GetIsolate()))
+    inspector->ExceptionThrown(thread_, event);
 }
 
 WorkerLocation* WorkerGlobalScope::location() const {

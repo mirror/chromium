@@ -35,7 +35,7 @@
 #include "core/events/MessageEvent.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "core/inspector/WorkerThreadDebugger.h"
+#include "core/inspector/WorkerThreadInspector.h"
 #include "core/workers/SharedWorkerThread.h"
 #include "platform/wtf/Time.h"
 
@@ -64,9 +64,9 @@ const AtomicString& SharedWorkerGlobalScope::InterfaceName() const {
 
 void SharedWorkerGlobalScope::ExceptionThrown(ErrorEvent* event) {
   WorkerGlobalScope::ExceptionThrown(event);
-  if (WorkerThreadDebugger* debugger =
-          WorkerThreadDebugger::From(GetThread()->GetIsolate()))
-    debugger->ExceptionThrown(GetThread(), event);
+  if (WorkerThreadInspector* inspector =
+          WorkerThreadInspector::From(GetThread()->GetIsolate()))
+    inspector->ExceptionThrown(GetThread(), event);
 }
 
 void SharedWorkerGlobalScope::Trace(blink::Visitor* visitor) {

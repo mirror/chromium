@@ -8,7 +8,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/SecurityContext.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/ThreadInspector.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/ThreadedWorkletObjectProxy.h"

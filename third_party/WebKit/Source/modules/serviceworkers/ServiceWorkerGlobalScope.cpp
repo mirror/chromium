@@ -41,7 +41,7 @@
 #include "core/dom/events/Event.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/WorkerInspectorController.h"
-#include "core/inspector/WorkerThreadDebugger.h"
+#include "core/inspector/WorkerThreadInspector.h"
 #include "core/loader/ThreadableLoader.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/GlobalScopeCreationParams.h"
@@ -309,9 +309,9 @@ ServiceWorkerGlobalScope::CreateWorkerScriptCachedMetadataHandler(
 
 void ServiceWorkerGlobalScope::ExceptionThrown(ErrorEvent* event) {
   WorkerGlobalScope::ExceptionThrown(event);
-  if (WorkerThreadDebugger* debugger =
-          WorkerThreadDebugger::From(GetThread()->GetIsolate()))
-    debugger->ExceptionThrown(GetThread(), event);
+  if (WorkerThreadInspector* inspector =
+          WorkerThreadInspector::From(GetThread()->GetIsolate()))
+    inspector->ExceptionThrown(GetThread(), event);
 }
 
 void ServiceWorkerGlobalScope::CountCacheStorageInstalledScript(

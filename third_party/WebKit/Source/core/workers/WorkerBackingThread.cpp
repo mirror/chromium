@@ -10,7 +10,7 @@
 #include "bindings/core/v8/V8GCController.h"
 #include "bindings/core/v8/V8IdleTaskRunner.h"
 #include "bindings/core/v8/V8Initializer.h"
-#include "core/inspector/WorkerThreadDebugger.h"
+#include "core/inspector/WorkerThreadInspector.h"
 #include "core/workers/WorkerBackingThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WebThreadSupportingGC.h"
@@ -93,8 +93,8 @@ void WorkerBackingThread::InitializeOnBackingThread(
   if (is_owning_thread_)
     Platform::Current()->DidStartWorkerThread();
 
-  V8PerIsolateData::From(isolate_)->SetThreadDebugger(
-      std::make_unique<WorkerThreadDebugger>(isolate_));
+  V8PerIsolateData::From(isolate_)->SetThreadInspector(
+      std::make_unique<WorkerThreadInspector>(isolate_));
 
   // Optimize for memory usage instead of latency for the worker isolate.
   isolate_->IsolateInBackgroundNotification();

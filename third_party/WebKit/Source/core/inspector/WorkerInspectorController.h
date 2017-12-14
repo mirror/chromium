@@ -44,7 +44,7 @@ namespace blink {
 
 class CoreProbeSink;
 class WorkerThread;
-class WorkerThreadDebugger;
+class WorkerThreadInspector;
 
 class WorkerInspectorController final
     : public GarbageCollectedFinalized<WorkerInspectorController>,
@@ -65,7 +65,7 @@ class WorkerInspectorController final
   void FlushProtocolNotifications();
 
  private:
-  WorkerInspectorController(WorkerThread*, WorkerThreadDebugger*);
+  WorkerInspectorController(WorkerThread*, WorkerThreadInspector*);
 
   // InspectorSession::Client implementation.
   void SendProtocolMessage(int session_id,
@@ -77,7 +77,7 @@ class WorkerInspectorController final
   void WillProcessTask() override;
   void DidProcessTask() override;
 
-  WorkerThreadDebugger* debugger_;
+  WorkerThreadInspector* inspector_;
   WorkerThread* thread_;
   Member<CoreProbeSink> probe_sink_;
   HeapHashMap<int, Member<InspectorSession>> sessions_;

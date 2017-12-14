@@ -68,7 +68,7 @@
 #include "core/inspector/InspectorTaskRunner.h"
 #include "core/inspector/InspectorTracingAgent.h"
 #include "core/inspector/InspectorWorkerAgent.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
@@ -100,18 +100,18 @@ bool IsMainFrame(WebLocalFrameImpl* frame) {
 }
 }  // namespace
 
-class ClientMessageLoopAdapter : public MainThreadDebugger::ClientMessageLoop {
+class ClientMessageLoopAdapter : public MainThreadInspector::ClientMessageLoop {
  public:
   ~ClientMessageLoopAdapter() override { instance_ = nullptr; }
 
-  static void EnsureMainThreadDebuggerCreated(WebDevToolsAgentClient* client) {
+  static void EnsureMainThreadInspectorCreated(WebDevToolsAgentClient* client) {
     if (instance_)
       return;
     std::unique_ptr<ClientMessageLoopAdapter> instance =
         WTF::WrapUnique(new ClientMessageLoopAdapter(
             WTF::WrapUnique(client->CreateClientMessageLoop())));
     instance_ = instance.get();
-    MainThreadDebugger::Instance()->SetClientMessageLoop(std::move(instance));
+    MainThreadInspector::Instance()->SetClientMessageLoop(std::move(instance));
   }
 
   static void ContinueProgram() {
@@ -302,14 +302,14 @@ void WebDevToolsAgentImpl::WillBeDestroyed() {
 InspectorSession* WebDevToolsAgentImpl::InitializeSession(int session_id,
                                                           String* state) {
   DCHECK(client_);
-  ClientMessageLoopAdapter::EnsureMainThreadDebuggerCreated(client_);
-  MainThreadDebugger* main_thread_debugger = MainThreadDebugger::Instance();
+  ClientMessageLoopAdapter::EnsureMainThreadInspectorCreated(client_);
+  MainThreadInspector* main_thread_inspector = MainThreadInspector::Instance();
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
 
   InspectorSession* session = new InspectorSession(
       this, probe_sink_.Get(), session_id,
-      main_thread_debugger->GetV8Inspector(),
-      main_thread_debugger->ContextGroupId(inspected_frames_->Root()), state);
+      main_thread_inspector->GetV8Inspector(),
+      main_thread_inspector->ContextGroupId(inspected_frames_->Root()), state);
 
   InspectorDOMAgent* dom_agent = new InspectorDOMAgent(
       isolate, inspected_frames_.Get(), session->V8Session());
@@ -503,7 +503,7 @@ void WebDevToolsAgentImpl::DispatchOnInspectorBackend(
   if (!Attached())
     return;
   if (WebDevToolsAgent::ShouldInterruptForMethod(method))
-    MainThreadDebugger::Instance()->TaskRunner()->RunAllTasksDontWait();
+    MainThreadInspector::Instance()->TaskRunner()->RunAllTasksDontWait();
   else
     DispatchMessageFromFrontend(session_id, method, message);
 }
@@ -517,7 +517,7 @@ void WebDevToolsAgentImpl::DispatchMessageFromFrontend(int session_id,
   if (session_it == sessions_.end())
     return;
   InspectorTaskRunner::IgnoreInterruptsScope scope(
-      MainThreadDebugger::Instance()->TaskRunner());
+      MainThreadInspector::Instance()->TaskRunner());
   session_it->value->DispatchProtocolMessage(method, message);
 }
 
@@ -637,13 +637,13 @@ void WebDevToolsAgentImpl::FlushProtocolNotifications() {
 void WebDevToolsAgentImpl::WillProcessTask() {
   if (!Attached())
     return;
-  ThreadDebugger::IdleFinished(V8PerIsolateData::MainThreadIsolate());
+  ThreadInspector::IdleFinished(V8PerIsolateData::MainThreadIsolate());
 }
 
 void WebDevToolsAgentImpl::DidProcessTask() {
   if (!Attached())
     return;
-  ThreadDebugger::IdleStarted(V8PerIsolateData::MainThreadIsolate());
+  ThreadInspector::IdleStarted(V8PerIsolateData::MainThreadIsolate());
   FlushProtocolNotifications();
 }
 
@@ -666,7 +666,7 @@ void WebDevToolsAgent::InterruptAndDispatch(int session_id,
                                             MessageDescriptor* raw_descriptor) {
   // rawDescriptor can't be a std::unique_ptr because interruptAndDispatch is a
   // WebKit API function.
-  MainThreadDebugger::InterruptMainThreadAndRun(
+  MainThreadInspector::InterruptMainThreadAndRun(
       CrossThreadBind(WebDevToolsAgentImpl::RunDebuggerTask, session_id,
                       WTF::Passed(WTF::WrapUnique(raw_descriptor))));
 }

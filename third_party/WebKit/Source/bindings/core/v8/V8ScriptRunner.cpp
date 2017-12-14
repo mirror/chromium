@@ -38,7 +38,7 @@
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/InspectorTraceEvents.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/ThreadInspector.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/Histogram.h"
 #include "platform/bindings/ScriptForbiddenScope.h"

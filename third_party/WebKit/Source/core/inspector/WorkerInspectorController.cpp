@@ -34,7 +34,7 @@
 #include "core/inspector/InspectorLogAgent.h"
 #include "core/inspector/InspectorNetworkAgent.h"
 #include "core/inspector/InspectorTraceEvents.h"
-#include "core/inspector/WorkerThreadDebugger.h"
+#include "core/inspector/WorkerThreadInspector.h"
 #include "core/inspector/protocol/Protocol.h"
 #include "core/loader/WorkerFetchContext.h"
 #include "core/probe/CoreProbes.h"
@@ -50,15 +50,15 @@ namespace blink {
 
 WorkerInspectorController* WorkerInspectorController::Create(
     WorkerThread* thread) {
-  WorkerThreadDebugger* debugger =
-      WorkerThreadDebugger::From(thread->GetIsolate());
-  return debugger ? new WorkerInspectorController(thread, debugger) : nullptr;
+  WorkerThreadInspector* inspector =
+      WorkerThreadInspector::From(thread->GetIsolate());
+  return inspector ? new WorkerInspectorController(thread, inspector) : nullptr;
 }
 
 WorkerInspectorController::WorkerInspectorController(
     WorkerThread* thread,
-    WorkerThreadDebugger* debugger)
-    : debugger_(debugger), thread_(thread), probe_sink_(new CoreProbeSink()) {
+    WorkerThreadInspector* inspector)
+    : inspector_(inspector), thread_(thread), probe_sink_(new CoreProbeSink()) {
   probe_sink_->addInspectorTraceEvents(new InspectorTraceEvents());
 }
 
@@ -73,8 +73,8 @@ void WorkerInspectorController::ConnectFrontend(
     return;
 
   InspectorSession* session = new InspectorSession(
-      this, probe_sink_.Get(), session_id, debugger_->GetV8Inspector(),
-      debugger_->ContextGroupId(thread_), nullptr);
+      this, probe_sink_.Get(), session_id, inspector_->GetV8Inspector(),
+      inspector_->ContextGroupId(thread_), nullptr);
   session->Append(new InspectorLogAgent(thread_->GetConsoleMessageStorage(),
                                         nullptr, session->V8Session()));
   if (thread_->GlobalScope()->IsWorkerGlobalScope() &&

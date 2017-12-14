@@ -13,7 +13,7 @@
 #include "core/events/MessageEvent.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/WebLocalFrameImpl.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/DedicatedWorkerMessagingProxy.h"
 #include "core/workers/WorkerClients.h"
@@ -76,7 +76,7 @@ void DedicatedWorker::postMessage(ScriptState* script_state,
   if (exception_state.HadException())
     return;
   v8_inspector::V8StackTraceId stack_id =
-      MainThreadDebugger::Instance()->StoreCurrentStackTrace(
+      MainThreadInspector::Instance()->StoreCurrentStackTrace(
           "Worker.postMessage");
   context_proxy_->PostMessageToWorkerGlobalScope(std::move(message),
                                                  std::move(channels), stack_id);
@@ -94,7 +94,7 @@ void DedicatedWorker::Start() {
   }
 
   v8_inspector::V8StackTraceId stack_id =
-      MainThreadDebugger::Instance()->StoreCurrentStackTrace("Worker Created");
+      MainThreadInspector::Instance()->StoreCurrentStackTrace("Worker Created");
   script_loader_ = WorkerScriptLoader::Create();
   script_loader_->LoadAsynchronously(
       *GetExecutionContext(), script_url_, WebURLRequest::kRequestContextWorker,

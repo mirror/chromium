@@ -8,7 +8,7 @@
 #include "core/frame/Deprecation.h"
 #include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
-#include "core/inspector/MainThreadDebugger.h"
+#include "core/inspector/MainThreadInspector.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 
@@ -49,7 +49,7 @@ void MainThreadWorkletGlobalScope::AddConsoleMessage(
 }
 
 void MainThreadWorkletGlobalScope::ExceptionThrown(ErrorEvent* event) {
-  MainThreadDebugger::Instance()->ExceptionThrown(this, event);
+  MainThreadInspector::Instance()->ExceptionThrown(this, event);
 }
 
 CoreProbeSink* MainThreadWorkletGlobalScope::GetProbeSink() {
