@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "32c74838_7004510b",
+        "filename": "chrome/browser/offline_pages/offline_page_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-12-14T22:16:33Z",
+      "side": 1,
+      "message": "With more discussion, we went back to adding a field is_trusted in OfflinePageTabHelper::LoadedOfflinePageInfo. Thus we need to add this method to expose it.",
+      "parentUuid": "42ffafd3_3565662a",
+      "range": {
+        "startLine": 261,
+        "startChar": 27,
+        "endLine": 261,
+        "endChar": 54
+      },
+      "revId": "1ddf4c7fc698b596df140989ae1a9f1de161daa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcd5a0f5_dd7b4490",
         "filename": "chrome/browser/offline_pages/offline_page_tab_helper.h",
         "patchSetId": 2
