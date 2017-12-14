@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a91da8af_bdf5dd4e",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "yes, that would duplicate the tree structure as well as the tree traversal, if we don\u0027t actually compose subframes in browser. Due to security reason, we can not do any composition in browser process. Since mojo IPC is relatively inexpensive, this may be a reasonable trade-off to keep browser side logic simpler.",
+      "parentUuid": "620f690d_50c2da77",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee1ade81_4bd775cb",
         "filename": "components/printing/browser/print_composite_client.cc",
         "patchSetId": 18
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T03:09:50Z",
       "side": 1,
       "message": "How did we pick this value?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d0dafc_40eb1ef1",
+        "filename": "components/printing/browser/print_composite_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "I just need a value neither too small nor too big so that printing is responsive without too many requests. I was thinking about more sophisticated scheme, but not sure whether it is helpful.",
+      "parentUuid": "ee1ade81_4bd775cb",
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97501151_5c78965b",
+        "filename": "components/printing/browser/print_composite_client.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22e3d8ca_080fff60",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +147,48 @@
     },
     {
       "key": {
+        "uuid": "53958274_f23de99b",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "AddSubframeContent() is only called once for a particular frame. Each content should only maps to one frame. The only reason this entry was added is from AddSubframeMap(). In that case, we don\u0027t want to overwrite parent frame id. Added comment here.",
+      "parentUuid": "53debc94_277eb50b",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b38e18_3a1f8108",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb77f3dd_3f06a51b",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 45
+      },
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d53041b4_4850e618",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 18
@@ -104,6 +200,24 @@
       "writtenOn": "2017-12-14T03:09:50Z",
       "side": 1,
       "message": "Can this overwrite an existing entry?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1632541_f4bc39cb",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "No, added a DCHECK",
+      "parentUuid": "d53041b4_4850e618",
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "ad3f2f23_4d57a16d",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done, thanks",
+      "parentUuid": "2f920298_87c70f41",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5361c3ca_287f5bc2",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 18
@@ -141,6 +273,24 @@
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e64f838_7855b185",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5361c3ca_287f5bc2",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "06158228_46976452",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "387ab4eb_9f6e6c16",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3686a1_fc99e39d",
         "filename": "components/printing/service/pdf_compositor_impl.h",
         "patchSetId": 18
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "f64e1676_dcdda05c",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba3686a1_fc99e39d",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dabaf50c_be8e9974",
         "filename": "components/printing/service/pdf_compositor_impl.h",
         "patchSetId": 18
@@ -189,6 +375,24 @@
       "writtenOn": "2017-12-14T03:09:50Z",
       "side": 1,
       "message": "This is the MSKP data from the renderer, right? Can you add a comment?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43fde533_5f3651ca",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "It is SkPicture format. Comment added.",
+      "parentUuid": "dabaf50c_be8e9974",
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "1edf58d9_0e97f55f",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9365f7d8_f9babc6a",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed02ad06_0ab587c8",
         "filename": "components/printing/service/pdf_compositor_impl.h",
         "patchSetId": 18
@@ -226,6 +448,24 @@
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa05cdd_5ac15fea",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed02ad06_0ab587c8",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +492,30 @@
     },
     {
       "key": {
+        "uuid": "d48b4b01_d2060f5c",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9a0f435_6e0ccde7",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccd286cc_1b2d335b",
         "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
         "patchSetId": 18
@@ -275,6 +539,30 @@
     },
     {
       "key": {
+        "uuid": "04c4704e_7654fffb",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccd286cc_1b2d335b",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48773b4a_c5e3119b",
         "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
         "patchSetId": 18
@@ -286,6 +574,24 @@
       "writtenOn": "2017-12-14T03:09:50Z",
       "side": 1,
       "message": "Can this loop happen with production code?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d244745f_2d685c12",
+        "filename": "components/printing/service/pdf_compositor_impl_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "I am not sure whether there is any real webpage has a reference loop. But we can definitely craft one.",
+      "parentUuid": "48773b4a_c5e3119b",
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -309,6 +615,24 @@
     },
     {
       "key": {
+        "uuid": "399f4fda_50c077da",
+        "filename": "components/printing/service/pdf_compositor_service_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7da707ee_702112dd",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3534af10_7b6c0852",
         "filename": "components/printing/service/public/cpp/pdf_compositor_client.cc",
         "patchSetId": 18
@@ -323,6 +647,24 @@
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6459d8dc_4b10a359",
+        "filename": "components/printing/service/public/cpp/pdf_compositor_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3534af10_7b6c0852",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +691,30 @@
     },
     {
       "key": {
+        "uuid": "128174b0_de36aa80",
+        "filename": "components/printing/service/public/cpp/pdf_compositor_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133dfb70_4c491523",
+      "range": {
+        "startLine": 50,
+        "startChar": 50,
+        "endLine": 50,
+        "endChar": 53
+      },
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f4c97fe_a812e9f6",
         "filename": "components/printing/service/public/cpp/pdf_compositor_client.cc",
         "patchSetId": 18
@@ -366,6 +732,24 @@
     },
     {
       "key": {
+        "uuid": "64be8439_4d81557b",
+        "filename": "components/printing/service/public/cpp/pdf_compositor_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "This is just for safety check since the execution order is not enforced in mojom specification. This class is just a thin wrapper for that.",
+      "parentUuid": "4f4c97fe_a812e9f6",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74f1c4d6_3438a9ab",
         "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
         "patchSetId": 18
@@ -377,6 +761,24 @@
       "writtenOn": "2017-12-14T03:09:50Z",
       "side": 1,
       "message": "Do you know if Mojo supports base::Optional?",
+      "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5c9a38_0b2361ca",
+        "filename": "components/printing/service/public/interfaces/pdf_compositor.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Not sure, Why we need it?",
+      "parentUuid": "74f1c4d6_3438a9ab",
       "revId": "0deb43fd345155f5cb0b0e4e3ab2b4e4abcc66a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d01efce0_bedf58b7",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "I feel that the chance of 1) or 2) happening is so slim that it is not worth extra complication of browser side monitoring. \n\nnow I think since the chance is so small, maybe we should set the timeout to a bigger value to accommodate slow machines and/or large pdfs?",
+      "parentUuid": "bac50341_96c8986b",
+      "revId": "b5518d9b9ea27c39e91aa840d117bce93729348c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67016c24_00ddd4d3",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 12

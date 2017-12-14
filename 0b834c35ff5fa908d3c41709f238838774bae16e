@@ -569,6 +569,24 @@
     },
     {
       "key": {
+        "uuid": "fc8c3fa9_2e7e3a6d",
+        "filename": "components/printing/service/pdf_compositor_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f85b1947_2edbf09c",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab213f59_6abe4b31",
         "filename": "components/printing/service/pdf_compositor_impl.cc",
         "patchSetId": 3
@@ -925,6 +943,24 @@
       "side": 1,
       "message": "I think it\u0027ll be helpful if you make the example in the doc more concrete by filling out what the maps look like for the example.",
       "parentUuid": "d103a8c1_e686ec19",
+      "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e047d174_52f73291",
+        "filename": "components/printing/service/pdf_compositor_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-12-14T20:53:36Z",
+      "side": 1,
+      "message": "Done, added a couple examples.",
+      "parentUuid": "45da24f4_78c28b79",
       "revId": "0b834c35ff5fa908d3c41709f238838774bae16e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
