@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a25f4ba3_c0f48af1",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_coordinator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-14T09:31:32Z",
+      "side": 1,
+      "message": "With Regard To? This is a copy/pasted comment.",
+      "parentUuid": "db025bf2_9b76b887",
+      "range": {
+        "startLine": 88,
+        "startChar": 55,
+        "endLine": 88,
+        "endChar": 58
+      },
+      "revId": "37191280fcdf8939f6e3f23e2dcb504996945c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9b4dd7e_44e64e50",
         "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "37191280fcdf8939f6e3f23e2dcb504996945c40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ccf7b7_99a2f6ac",
+        "filename": "ios/chrome/browser/ui/toolbar/clean/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-12-14T09:31:32Z",
+      "side": 1,
+      "message": "No. This constraint is never activated without setting a constant first. No need to set a constant at the initialization.",
+      "parentUuid": "c9b4dd7e_44e64e50",
+      "range": {
+        "startLine": 455,
+        "startChar": 40,
+        "endLine": 455,
+        "endChar": 53
+      },
+      "revId": "37191280fcdf8939f6e3f23e2dcb504996945c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
