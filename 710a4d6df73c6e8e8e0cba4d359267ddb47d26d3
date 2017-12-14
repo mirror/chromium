@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ddff31f_29306075",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-14T12:36:55Z",
+      "side": 1,
+      "message": "Please add a TODO to re-enable this test as part of http://crbug.com/794821",
+      "range": {
+        "startLine": 794,
+        "startChar": 18,
+        "endLine": 794,
+        "endChar": 22
+      },
+      "revId": "710a4d6df73c6e8e8e0cba4d359267ddb47d26d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
