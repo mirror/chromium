@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fbae4f5_deb7f3ed",
+        "filename": "tools/mb/docs/user_guide.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T02:34:47Z",
+      "side": 1,
+      "message": "What\u0027s the use case for --no-default-dimensions?",
+      "revId": "4d92535ea70133a5fa6f9e09cb24005e00fc9567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee37a2aa_4d2ef910",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T02:34:47Z",
+      "side": 1,
+      "message": "I\u0027d recommend to extract this into a function",
+      "revId": "4d92535ea70133a5fa6f9e09cb24005e00fc9567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8868c7d_f484c58f",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T02:34:47Z",
+      "side": 1,
+      "message": "(optional) I\u0027d prefer:\n\ncmd \u003d [\n...\n]\nfor d in self._DefaultDimensions():\n  cmd.extend((\u0027-d\u0027, d[0], d[1]))\nfor d in args.dimensions:\n  cmd.extend((\u0027-d\u0027, d[0], d[1]))\n\n\nI wouldn\u0027t try to use lines 367-369 as common code paths.",
+      "revId": "4d92535ea70133a5fa6f9e09cb24005e00fc9567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31022117_f197d1ad",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T02:34:47Z",
+      "side": 1,
+      "message": "Please use a list of tuple, e.g. [(\u0027key\u0027, \u0027value\u0027)]",
+      "revId": "4d92535ea70133a5fa6f9e09cb24005e00fc9567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
