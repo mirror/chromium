@@ -251,6 +251,8 @@ void LoaderImpl::BackgroundLoadFile(const Settings* settings,
   }
 
   Scope our_scope(settings->base_config());
+  our_scope.AddAffectedFile(file_name);
+
   ScopePerFileProvider per_file_provider(&our_scope, true);
   our_scope.set_source_dir(file_name.GetDir());
 
@@ -294,6 +296,7 @@ void LoaderImpl::BackgroundLoadBuildConfig(
 
   Scope* base_config = settings->base_config();
   base_config->set_source_dir(SourceDir("//"));
+  base_config->AddAffectedFile(settings->build_settings()->build_config_file());
 
   settings->build_settings()->build_args().SetupRootScope(
       base_config, toolchain_overrides);

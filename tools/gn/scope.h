@@ -22,6 +22,7 @@
 class Item;
 class ParseNode;
 class Settings;
+class SourceFile;
 class Template;
 
 // Scope for the script execution.
@@ -284,6 +285,13 @@ class Scope {
   const SourceDir& GetSourceDir() const;
   void set_source_dir(const SourceDir& d) { source_dir_ = d; }
 
+  // Set of files executed within this scope, and changes to these files will
+  // affect this scope.
+  const std::set<const SourceFile>& affected_files() const {
+    return affected_files_;
+  }
+  void AddAffectedFile(const SourceFile& affected_file);
+
   // The item collector is where Items (Targets, Configs, etc.) go that have
   // been defined. If a scope can generate items, this non-owning pointer will
   // point to the storage for such items. The creator of this scope will be
@@ -316,6 +324,8 @@ class Scope {
   // the key (if the pointer is non-NULL).
   void SetProperty(const void* key, void* value);
   void* GetProperty(const void* key, const Scope** found_on_scope) const;
+
+  void Print() const;
 
  private:
   friend class ProgrammaticProvider;
@@ -378,6 +388,8 @@ class Scope {
   ProviderSet programmatic_providers_;
 
   SourceDir source_dir_;
+
+  std::set<const SourceFile> affected_files_;
 
   DISALLOW_COPY_AND_ASSIGN(Scope);
 };

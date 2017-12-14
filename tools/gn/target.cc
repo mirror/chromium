@@ -273,8 +273,10 @@ Dependencies
   future, do not rely on this behavior.
 )";
 
-Target::Target(const Settings* settings, const Label& label)
-    : Item(settings, label),
+Target::Target(const Settings* settings,
+               const Label& label,
+               const std::set<const SourceFile>& affected_files)
+    : Item(settings, label, affected_files),
       output_type_(UNKNOWN),
       output_prefix_override_(false),
       output_extension_set_(false),
