@@ -1476,8 +1476,8 @@ bool WebGLRenderingContextBase::PaintRenderingResultsToCanvas(
                                                    source_buffer)) {
     // Currently, copyRenderingResultsFromDrawingBuffer is expected to always
     // succeed because cases where canvas()-buffer() is not accelerated are
-    // handle before reaching this point.  If that assumption ever stops holding
-    // true, we may need to implement a fallback right here.
+    // handled before reaching this point.  If that assumption ever stops
+    // holding true, we may need to implement a fallback right here.
     NOTREACHED();
     return false;
   }

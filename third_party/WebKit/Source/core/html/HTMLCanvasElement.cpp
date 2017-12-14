@@ -120,11 +120,20 @@ const int kMaxGlobalGPUMemoryUsage =
 // misinterpreted as a user-input value
 const int kUndefinedQualityValue = -1.0;
 
-scoped_refptr<StaticBitmapImage> CreateTransparentImage(const IntSize& size) {
+scoped_refptr<StaticBitmapImage> CreateTransparentImage(
+    const IntSize& size,
+    CanvasColorParams color_params = CanvasColorParams()) {
   if (!ImageBuffer::CanCreateImageBuffer(size))
     return nullptr;
-  sk_sp<SkSurface> surface =
-      SkSurface::MakeRasterN32Premul(size.Width(), size.Height());
+  sk_sp<SkSurface> surface = nullptr;
+  if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled()) {
+    SkImageInfo info = SkImageInfo::Make(
+        size.Width(), size.Height(), color_params.GetSkColorType(),
+        kUnpremul_SkAlphaType, color_params.GetSkColorSpaceForSkSurfaces());
+    surface = SkSurface::MakeRaster(info, info.minRowBytes(), nullptr);
+  } else {
+    surface = SkSurface::MakeRasterN32Premul(size.Width(), size.Height());
+  }
   if (!surface)
     return nullptr;
   return StaticBitmapImage::Create(surface->makeImageSnapshot());
@@ -775,6 +784,11 @@ scoped_refptr<StaticBitmapImage> HTMLCanvasElement::ToStaticBitmapImage(
         SkImageInfo info =
             SkImageInfo::Make(adjusted_size.Width(), adjusted_size.Height(),
                               kRGBA_8888_SkColorType, kUnpremul_SkAlphaType);
+        if (RuntimeEnabledFeatures::WebGLColorSpaceEnabled()) {
+          info = info.makeColorSpace(ColorParams().GetSkColorSpace());
+          if (ColorParams().GetSkColorType() != kN32_SkColorType)
+            info = info.makeColorType(kRGBA_F16_SkColorType);
+        }
         image_bitmap = StaticBitmapImage::Create(std::move(data_array), info);
       }
     }
