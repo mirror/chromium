@@ -6,6 +6,7 @@ import("//chrome/common/features.gni")
 import("//device/vr/features/features.gni")
 import("//testing/test.gni")
 import("//tools/grit/repack.gni")
+import("//build/config/chrome_build.gni")
 
 if (is_android) {
   import("//build/config/android/rules.gni")
