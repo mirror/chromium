@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c921fe6e_e48d5868",
+        "filename": "components/policy/core/common/cloud/cloud_policy_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T17:25:52Z",
+      "side": 1,
+      "message": "nit: Move this method to private (now it\u0027s still protected). There\u0027s no need to expose it to subclasses AFAICS.\n\n(And once you move the method here, please move the implementation in the .cc file to the corresponding new location.)",
+      "revId": "cda6505d14be26a2ef48a0b2ddec742fd9b9999e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
