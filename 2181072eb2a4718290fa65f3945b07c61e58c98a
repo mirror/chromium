@@ -70,6 +70,30 @@
       "revId": "2181072eb2a4718290fa65f3945b07c61e58c98a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c79f300_ad214eff",
+        "filename": "third_party/WebKit/LayoutTests/css-parser/color3_hsl-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1119169
+      },
+      "writtenOn": "2017-12-14T15:05:07Z",
+      "side": 1,
+      "message": "Upstreaming to WPT makes sense. I can try to do that in a future patch.",
+      "parentUuid": "9f9a20a3_ed357fcf",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 4
+      },
+      "revId": "2181072eb2a4718290fa65f3945b07c61e58c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
