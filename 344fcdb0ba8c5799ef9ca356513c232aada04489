@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6510b46b_b4dc5888",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-14T07:09:57Z",
+      "side": 1,
+      "message": "These #include additions are no longer necessary.",
+      "revId": "344fcdb0ba8c5799ef9ca356513c232aada04489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46ea22b_48318b45",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-14T07:09:57Z",
+      "side": 1,
+      "message": "These should be removed for this CL for now.",
+      "revId": "344fcdb0ba8c5799ef9ca356513c232aada04489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca17c610_2a988464",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLSelectElement.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-12-14T07:09:57Z",
+      "side": 1,
+      "message": "You can inline this trivial function.\n(and ditto for all similar instances in this CL)",
+      "revId": "344fcdb0ba8c5799ef9ca356513c232aada04489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
