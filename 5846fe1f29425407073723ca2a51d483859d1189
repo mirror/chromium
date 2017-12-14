@@ -275,6 +275,30 @@
     },
     {
       "key": {
+        "uuid": "6ffa66c1_c97a57c5",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_flow.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T19:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76c91b75_6404ba79",
+      "range": {
+        "startLine": 237,
+        "startChar": 6,
+        "endLine": 237,
+        "endChar": 29
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d76e841a_00a1dc48",
         "filename": "chrome/browser/chromeos/policy/enrollment_handler_chromeos.cc",
         "patchSetId": 2
