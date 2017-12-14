@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b1aeadca_9b7dc8a9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2858,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-14T21:29:08Z",
+      "side": 1,
+      "message": "I\u0027m going to try to load the content locally in the future, just like we might load test-content in another tab (issue 794623), so this will give me a head start on that.  Good idea to ask Yoland for future reference.",
+      "parentUuid": "1aab905a_1abfe5e9",
+      "range": {
+        "startLine": 2858,
+        "startChar": 0,
+        "endLine": 2858,
+        "endChar": 87
+      },
+      "revId": "16b4f611f19507bc7f62a54557ac106a879ab0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f37d56f_8b2c7aeb",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "16b4f611f19507bc7f62a54557ac106a879ab0f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "130c9c18_48b66762",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 2863,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-14T21:29:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f37d56f_8b2c7aeb",
+      "range": {
+        "startLine": 2863,
+        "startChar": 5,
+        "endLine": 2863,
+        "endChar": 14
+      },
+      "revId": "16b4f611f19507bc7f62a54557ac106a879ab0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

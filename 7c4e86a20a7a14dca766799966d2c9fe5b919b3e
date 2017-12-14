@@ -22,6 +22,30 @@
       "revId": "7c4e86a20a7a14dca766799966d2c9fe5b919b3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d032165_8cd25527",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-12-14T21:29:08Z",
+      "side": 0,
+      "message": "Oops, I got these two methods mixed up.  Moved back here.",
+      "parentUuid": "2dcb678d_64dec602",
+      "range": {
+        "startLine": 1012,
+        "startChar": 12,
+        "endLine": 1015,
+        "endChar": 89
+      },
+      "revId": "7c4e86a20a7a14dca766799966d2c9fe5b919b3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
