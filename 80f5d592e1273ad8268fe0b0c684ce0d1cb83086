@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0908b940_6d82045e",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T14:02:11Z",
+      "side": 1,
+      "message": "If extern is here, readers might also think that it\u0027s *not* declared on a header file.\nRemove extern, also for consistency with the rest of the code base.",
+      "parentUuid": "ab9afc40_bd07f8b1",
+      "range": {
+        "startLine": 14,
+        "startChar": 60,
+        "endLine": 14,
+        "endChar": 61
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec7d0cd8_62696096",
         "filename": "content/browser/webrtc/webrtc_event_log_manager.cc",
         "patchSetId": 8
@@ -281,6 +305,30 @@
       "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c047547_8bd6499b",
+        "filename": "content/browser/webrtc/webrtc_local_event_log_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T14:02:11Z",
+      "side": 1,
+      "message": "The protected part is still a part of the header\u0027s API since it can be used by code outside the class implementation.\nAlso, it\u0027s great that you moved most of the stuff to private since data members should be in the private section as well.\nFor more details, look at the style guide.",
+      "parentUuid": "72232bb2_fd355227",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 7
+      },
+      "revId": "80f5d592e1273ad8268fe0b0c684ce0d1cb83086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

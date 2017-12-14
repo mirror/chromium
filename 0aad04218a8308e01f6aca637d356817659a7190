@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "402dd223_86981fb9",
+        "filename": "content/browser/webrtc/webrtc_event_log_manager_common.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T14:02:11Z",
+      "side": 1,
+      "message": "nit: remove empty line since all three constants look related.",
+      "revId": "0aad04218a8308e01f6aca637d356817659a7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
