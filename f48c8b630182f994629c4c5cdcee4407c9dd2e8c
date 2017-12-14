@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24f9e098_f8d00847",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/OfflineGroupHeaderView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-14T00:26:47Z",
+      "side": 1,
+      "message": "Since setChecked() calls updateCheckIcon(), can this line be removed?",
+      "revId": "f48c8b630182f994629c4c5cdcee4407c9dd2e8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
