@@ -19,6 +19,7 @@
 #include "net/url_request/redirect_info.h"
 #include "third_party/WebKit/common/blob/blob.mojom.h"
 #include "third_party/WebKit/common/blob/blob_registry.mojom.h"
+#include "third_party/WebKit/common/blob/blob_url_store.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_event_status.mojom.h"
 #include "third_party/WebKit/common/service_worker/service_worker_stream_handle.mojom.h"
 
@@ -141,7 +142,7 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   net::MutableNetworkTrafficAnnotationTag traffic_annotation_;
 
   // To load a blob.
-  blink::mojom::BlobURLHandlePtr blob_url_handle_;
+  blink::mojom::BlobURLStoreAssociatedPtr blob_store_;
   GURL controller_origin_;
   mojom::URLLoaderPtr blob_loader_;
   mojo::Binding<mojom::URLLoaderClient> blob_client_binding_;
