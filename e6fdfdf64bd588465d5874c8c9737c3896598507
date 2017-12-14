@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c04288d_89649087",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T21:30:56Z",
+      "side": 1,
+      "message": "nit: Technically, a managed pref value override all other values, not only the default one. So a bit more precise comment would be something like:\n\n   ..., do not override the pref value. The default value for the preference is: ...",
+      "range": {
+        "startLine": 27,
+        "startChar": 45,
+        "endLine": 27,
+        "endChar": 58
+      },
+      "revId": "e6fdfdf64bd588465d5874c8c9737c3896598507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3a48fe_61e2b65d",
+        "filename": "chrome/browser/chromeos/policy/secondary_google_account_signin_policy_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T21:30:56Z",
+      "side": 1,
+      "message": "nit: Please update the comment - it\u0027s no more \"negation\". Basically, you may just say:\n\n  Disallow secondary sign-in by enabling mirror consistency.",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 77
+      },
+      "revId": "e6fdfdf64bd588465d5874c8c9737c3896598507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a185eb_e441fca4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 23
+      },
+      "lineNbr": 4509,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T21:30:56Z",
+      "side": 1,
+      "message": "nit: BTW, is there a reason to have this link here?\nWe don\u0027t usually have such back references to the feature bugs from the code. And this can be easily found via git blame or by other means.",
+      "revId": "e6fdfdf64bd588465d5874c8c9737c3896598507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3740bb39_9f40891c",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 23
+      },
+      "lineNbr": 4512,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T21:30:56Z",
+      "side": 1,
+      "message": "Thanks for removing the parts that were talking about multi-sign-in and sign-in restrictions, as those weren\u0027t related exclusively to this policy, and are more suitable for a Help Article describing a complete setup for a target use case.\n\nBut the point about Incognito tabs was also lost, and I think we\u0027d want to get it back here in the policy description. The reason is that this case happens inside that same user for which the policy is configured - in other words, it sounds like a bug in the policy-enforced restriction, unless we document it as the expected behavior and point out that this gap has to be closed via another policy.\n\nWhat about something along these lines:\n\n  If this policy is set to false, signing in to a different account from non-Incognito browser content area will not be allowed.\n\n  In case signing in to a different account shouldn\u0027t be allowed via the Incognito mode, consider blocking that mode using the IncognitoModeAvailability policy.",
+      "revId": "e6fdfdf64bd588465d5874c8c9737c3896598507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6468c41b_5edf1078",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 23
+      },
+      "lineNbr": 4514,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-12-14T21:30:56Z",
+      "side": 1,
+      "message": "nit: Worth noting that this is simply the default behavior. And maybe reorder it to start from the most typical, non-child case:\n\n  If this policy is set to true or unset, the default behavior will be used: signing in to a different account from the browser content is generally allowed, except for child accounts for which it\u0027s always blocked.",
+      "range": {
+        "startLine": 4514,
+        "startChar": 46,
+        "endLine": 4514,
+        "endChar": 204
+      },
+      "revId": "e6fdfdf64bd588465d5874c8c9737c3896598507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
