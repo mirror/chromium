@@ -7,8 +7,9 @@
 <script>
 test_with_window((w) => {
   class X extends w.HTMLElement {}
+  var ce = w.customElements;
   t.appendChild(b);
   // If the following line does not crash, the test passed.
-  w.customElements.define('a-a', X);
+  ce.define('a-a', X);
 });
 </script>

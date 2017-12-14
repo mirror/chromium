@@ -6095,10 +6095,10 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
         // Some clients want local URLs to have universal access, but that
         // setting is dangerous for other clients.
         GetMutableSecurityOrigin()->GrantUniversalAccess();
-      } else if (!settings->GetAllowFileAccessFromFileURLs()) {
-        // Some clients do not want local URLs to have access to other local
-        // URLs.
-        GetMutableSecurityOrigin()->BlockLocalAccessFromLocalOrigin();
+      }
+
+      if (settings->GetAllowFileAccessFromFileURLs()) {
+        GetMutableSecurityOrigin()->GrantLocalAccessFromLocalOrigin();
       }
     }
   }
