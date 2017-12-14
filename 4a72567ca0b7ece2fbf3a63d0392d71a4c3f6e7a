@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "429a5565_026d7f02",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-12-14T22:53:25Z",
+      "side": 1,
+      "message": "nit: comment?",
+      "revId": "4a72567ca0b7ece2fbf3a63d0392d71a4c3f6e7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
