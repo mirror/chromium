@@ -1,6 +1,24 @@
 // Copyright 2016 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+function indexOfNthChar(str, char, n, reverse) {
+  let count = 0;
+  let index = null;
+
+  while (count < n && index !== -1) {
+    if (reverse)
+      index = str.lastIndexOf(char, index !== null ? index - 1 : undefined);
+    else
+      index = str.indexOf(char, index + 1);
+    count++;
+  }
+
+  return index;
+}
+
+function lineCount(str) {
+  return str.split('\n').length - 1;
+}
 
 cr.define('extensions', function() {
   'use strict';
@@ -26,10 +44,12 @@ cr.define('extensions', function() {
        * changes.
        * @private
        */
-      codeText_: {
-        type: String,
-        computed: 'computeCodeText_(code.*)',
-      },
+      codeText_: String,
+
+      lineNumbers_: String,
+
+      truncatedBefore_: Boolean,
+      truncatedAfter_: Boolean,
 
       /**
        * The string to display if no |code| is set (e.g. because we couldn't
@@ -40,94 +60,87 @@ cr.define('extensions', function() {
     },
 
     observers: [
-      'onHighlightChanged_(code.highlight)',
+      'onCodeChanged_(code.*)',
     ],
 
     /**
      * @return {string}
      * @private
      */
-    computeCodeText_: function() {
-      if (!this.code)
-        return '';
+    onCodeChanged_: function() {
+      const TOTAL_SHOWN = 1000;
 
-      return this.code.beforeHighlight + this.code.highlight +
-          this.code.afterHighlight;
-    },
+      if (!this.code) {
+        this.codeText_ = '';
+        this.lineNumbers_ = '';
+        return;
+      }
 
-    /**
-     * Computes the content of the line numbers span, which basically just
-     * contains 1\n2\n3\n... for the number of lines.
-     * @return {string}
-     * @private
-     */
-    computeLineNumbersContent_: function() {
-      if (!this.codeText_)
-        return '';
+      const highlight = this.code.highlight;
 
-      const lines = this.codeText_.match(/\n/g);
-      const lineCount = lines ? lines.length : 0;
-      let textContent = '';
-      for (let i = 1; i <= lineCount + 1; ++i)
-        textContent += i + '\n';
-      return textContent;
+      const before = this.code.beforeHighlight;
+      const lineCountBefore = lineCount(before);
+
+      const after = this.code.afterHighlight;
+      const lineCountAfter = lineCount(after);
+
+      const indexBefore = indexOfNthChar(
+          before, '\n', Math.max(TOTAL_SHOWN / 2, TOTAL_SHOWN - lineCountAfter),
+          true);
+      const indexAfter = indexOfNthChar(
+          after, '\n',
+          Math.max(TOTAL_SHOWN / 2, TOTAL_SHOWN - lineCountBefore));
+
+      const visibleBefore = before.substring(indexBefore + 1);
+      const visibleAfter =
+          after.substring(0, indexAfter !== -1 ? indexAfter : undefined);
+
+      this.codeText_ = visibleBefore + highlight + visibleAfter;
+
+      const hiddenLinesBefore = lineCountBefore - lineCount(visibleBefore);
+      const hiddenLinesAfter = lineCountAfter - lineCount(visibleAfter);
+      const shownLineCount = lineCount(this.codeText_);
+
+      let lineNumbers = '';
+      for (let i = hiddenLinesBefore + 1;
+           i <= hiddenLinesBefore + shownLineCount + 1; ++i)
+        lineNumbers += i + '\n';
+
+      this.lineNumbers_ = lineNumbers;
+      this.truncatedBefore_ = hiddenLinesBefore !== 0;
+      this.truncatedAfter_ = hiddenLinesAfter !== 0;
+
+      this.createHighlight_(
+          visibleBefore.length, visibleBefore.length + highlight.length);
+      this.scrollToHighlight_(lineCount(visibleBefore));
     },
 
     /**
      * Uses the native text-selection API to highlight desired code.
      * @private
      */
-    createHighlight_: function() {
+    createHighlight_: function(start, end) {
       const range = document.createRange();
       const node = this.$.source.querySelector('span').firstChild;
-      range.setStart(node, this.code.beforeHighlight.length);
-      range.setEnd(
-          node, this.code.beforeHighlight.length + this.code.highlight.length);
+      range.setStart(node, start);
+      range.setEnd(node, end);
 
       const selection = window.getSelection();
       selection.removeAllRanges();
       selection.addRange(range);
     },
 
-    /**
-     * Scroll the highlight code to roughly the middle. It will do smooth
-     * scrolling if the target scroll position is close-by, or jump to it if
-     * it's far away.
-     * @private
-     */
-    scrollToHighlight_: function() {
+    scrollToHighlight_: function(linesBeforeHighlight) {
       const CSS_LINE_HEIGHT = 20;
       const SCROLL_LOC_THRESHOLD = 100;
 
-      const linesBeforeHighlight = this.code.beforeHighlight.match(/\n/g);
-
       // Count how many pixels is above the highlighted code.
-      const highlightTop = linesBeforeHighlight ?
-          linesBeforeHighlight.length * CSS_LINE_HEIGHT :
-          0;
+      const highlightTop = linesBeforeHighlight * CSS_LINE_HEIGHT;
 
       // Find the position to show the highlight roughly in the middle.
       const targetTop = highlightTop - this.clientHeight * 0.5;
 
-      // Smooth scrolling if moving within ~100 LOC, otherwise just jump to it.
-      const behavior =
-          Math.abs(this.$['scroll-container'].scrollTop - targetTop) <
-              (CSS_LINE_HEIGHT * SCROLL_LOC_THRESHOLD) ?
-          'smooth' :
-          'auto';
-      this.$['scroll-container'].scrollTo({
-        top: targetTop,
-        behavior: behavior,
-      });
-    },
-
-    /** @private */
-    onHighlightChanged_: function() {
-      if (!this.codeText_)
-        return;
-
-      this.createHighlight_();
-      this.scrollToHighlight_();
+      this.$['scroll-container'].scrollTo({top: targetTop});
     },
   });
 
