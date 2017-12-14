@@ -38,7 +38,7 @@ class FaviconDriverImpl : public FaviconDriver,
 
   // Returns whether the driver is waiting for a download to complete or for
   // data from the FaviconService. Reserved for testing.
-  bool HasPendingTasksForTest();
+  bool HasPendingTasks();
 
  protected:
   FaviconDriverImpl(FaviconService* favicon_service,

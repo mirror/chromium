@@ -258,6 +258,8 @@ void FaviconHandler::FetchFavicon(const GURL& page_url, bool is_same_document) {
       base::Bind(&FaviconHandler::OnFaviconDataForInitialURLFromFaviconService,
                  base::Unretained(this)),
       &cancelable_task_tracker_for_page_url_);
+
+  MaybeNotifyPendingTasksDone();
 }
 
 bool FaviconHandler::UpdateFaviconCandidate(
@@ -350,6 +352,12 @@ void FaviconHandler::NotifyFaviconUpdated(const GURL& icon_url,
   notification_icon_type_ = icon_type;
 }
 
+void FaviconHandler::MaybeNotifyPendingTasksDone() {
+  if (!HasPendingTasks()) {
+    delegate_->OnPendingTasksDone();
+  }
+}
+
 void FaviconHandler::OnUpdateCandidates(
     const GURL& page_url,
     const std::vector<FaviconURL>& candidates,
@@ -404,6 +412,8 @@ void FaviconHandler::OnUpdateCandidates(
       /*icon_url=*/manifest_url_, favicon_base::IconType::kWebManifestIcon,
       base::Bind(&FaviconHandler::OnFaviconDataForManifestFromFaviconService,
                  base::Unretained(this)));
+
+  MaybeNotifyPendingTasksDone();
 }
 
 void FaviconHandler::OnFaviconDataForManifestFromFaviconService(
@@ -457,6 +467,8 @@ void FaviconHandler::OnDidDownloadManifest(
   manifest_url_ = GURL();
 
   OnGotFinalIconURLCandidates(non_manifest_original_candidates_);
+
+  MaybeNotifyPendingTasksDone();
 }
 
 void FaviconHandler::OnGotFinalIconURLCandidates(
@@ -601,6 +613,8 @@ void FaviconHandler::OnDidDownloadFavicon(
     num_image_download_requests_ = 0;
     best_favicon_ = DownloadedFavicon();
   }
+
+  MaybeNotifyPendingTasksDone();
 }
 
 const std::vector<GURL> FaviconHandler::GetIconURLs() const {
@@ -610,7 +624,7 @@ const std::vector<GURL> FaviconHandler::GetIconURLs() const {
   return icon_urls;
 }
 
-bool FaviconHandler::HasPendingTasksForTest() {
+bool FaviconHandler::HasPendingTasks() {
   return !image_download_request_.IsCancelled() ||
          !manifest_download_request_.IsCancelled() ||
          cancelable_task_tracker_for_page_url_.HasTrackedTasks() ||

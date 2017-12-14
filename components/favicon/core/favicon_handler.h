@@ -139,6 +139,8 @@ class FaviconHandler {
     virtual void OnFaviconDeleted(
         const GURL& page_url,
         FaviconDriverObserver::NotificationIconType notification_icon_type) = 0;
+
+    virtual void OnPendingTasksDone() = 0;
   };
 
   // |service| and |delegate| must not be nullptr and must outlive this class.
@@ -167,7 +169,7 @@ class FaviconHandler {
 
   // Returns whether the handler is waiting for a download to complete or for
   // data from the FaviconService. Reserved for testing.
-  bool HasPendingTasksForTest();
+  bool HasPendingTasks();
 
   // Get the maximal icon size in pixels for a handler of type |handler_type|.
   // |candidates_from_web_manifest| represents whether the icons are coming
@@ -287,6 +289,8 @@ class FaviconHandler {
   void NotifyFaviconUpdated(const GURL& icon_url,
                             favicon_base::IconType icon_type,
                             const gfx::Image& image);
+
+  void MaybeNotifyPendingTasksDone();
 
   // Return the current candidate if any.
   const FaviconCandidate* current_candidate() const {

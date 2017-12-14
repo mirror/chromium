@@ -180,6 +180,12 @@ void ContentFaviconDriver::OnFaviconDeleted(
                                 content::FaviconStatus().image);
 }
 
+void ContentFaviconDriver::OnPendingTasksDone() {
+  if (!HasPendingTasks()) {
+    NotifyPendingTasksDoneObservers();
+  }
+}
+
 void ContentFaviconDriver::DidUpdateFaviconURL(
     const std::vector<content::FaviconURL>& candidates) {
   // Ignore the update if there is no last committed navigation entry. This can

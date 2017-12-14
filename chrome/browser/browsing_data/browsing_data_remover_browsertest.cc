@@ -355,8 +355,11 @@ IN_PROC_BROWSER_TEST_F(BrowsingDataRemoverBrowserTest, Cache) {
   GURL url1 = embedded_test_server()->GetURL("/simple.html");
   GURL url2 = embedded_test_server()->GetURL(kExampleHost, "/simple.html");
   ASSERT_FALSE(url::IsSameOriginWith(url1, url2));
+  ui_test_utils::FaviconWaiter waiter(
+      browser()->tab_strip_model()->GetActiveWebContents());
   ui_test_utils::NavigateToURL(browser(), url1);
   ui_test_utils::NavigateToURL(browser(), url2);
+  waiter.Wait();
 
   // The cache is nonempty, because we created entries by visiting websites.
   browsing_data::BrowsingDataCounter::ResultInt original_size = GetCacheSize();
