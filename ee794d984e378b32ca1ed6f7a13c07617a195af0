@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "418ece5a_059a4786",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T14:25:59Z",
+      "side": 1,
+      "message": "nit: continue here seems unnecessary. Just change the next if to an elif?",
+      "revId": "ee794d984e378b32ca1ed6f7a13c07617a195af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
