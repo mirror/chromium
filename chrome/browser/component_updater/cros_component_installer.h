@@ -10,10 +10,12 @@
 #include <string>
 #include <vector>
 
+#include "chrome/browser/browser_process.h"
 #include "chromeos/dbus/dbus_method_call_status.h"
 #include "components/component_updater/component_installer.h"
 #include "components/component_updater/component_updater_service.h"
 #include "components/update_client/update_client.h"
+#include "content/public/browser/browser_thread.h"
 #include "crypto/sha2.h"
 
 //  Developer API usage:
@@ -26,7 +28,7 @@
 //    ...
 //  }
 //  ...
-//  component_updater::CrOSComponent::LoadComponent(
+//  component_updater::CrOSComponent::Load(
 //            name,
 //            base::BindOnce(&LoadCallback));
 //
@@ -49,10 +51,9 @@ class CrOSComponentInstallerPolicy : public ComponentInstallerPolicy {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest, IsCompatibleOrNot);
+  FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest, CompatibilityOK);
   FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,
-                           ComponentReadyCorrectManifest);
-  FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest,
-                           ComponentReadyWrongManifest);
+                           CompatibilityMissingManifest);
   // The following methods override ComponentInstallerPolicy.
   bool SupportsGroupPolicyEnabledComponentUpdates() const override;
   bool RequiresNetworkEncryption() const override;
@@ -83,30 +84,76 @@ class CrOSComponentInstallerPolicy : public ComponentInstallerPolicy {
 // This class contains functions used to register and install a component.
 class CrOSComponent {
  public:
+  explicit CrOSComponent();
+  virtual ~CrOSComponent();
   // Installs a component and keeps it up-to-date.
-  static void LoadComponent(
-      const std::string& name,
-      base::OnceCallback<void(const std::string&)> load_callback);
+  void Load(const std::string& name,
+            base::OnceCallback<void(const std::string&)> load_callback);
 
   // Stops updating and removes a component.
   // Returns true if the component was successfully unloaded
   // or false if it couldn't be unloaded or already wasn't loaded.
-  static bool UnloadComponent(const std::string& name);
+  bool Unload(const std::string& name);
 
   // Returns all installed components.
-  static std::vector<ComponentConfig> GetInstalledComponents();
+  std::vector<ComponentConfig> GetInstalled();
 
   // Registers component |configs| to be updated.
-  static void RegisterComponents(const std::vector<ComponentConfig>& configs);
+  void RegisterN(const std::vector<ComponentConfig>& configs);
+
+  // Saves the name and install path of a compatible component.
+  void RegisterCompatiblePath(const std::string& name,
+                              const base::FilePath& path);
+
+  // Removes the name and install path entry of a component.
+  void UnregisterCompatiblePath(const std::string& name);
+
+  // Checks if the current installed component is compatible given a component
+  // |name|. If compatible, sets |path| to be its installed path.
+  bool IsCompatible(const std::string& name) const;
+
+  // Returns installed path of a compatible component given |name|. Returns an
+  // empty path if the component isn't compatible.
+  base::FilePath GetCompatiblePath(const std::string& name) const;
 
  private:
-  static void RegisterResult(ComponentUpdateService* cus,
-                             const std::string& id,
-                             update_client::Callback install_callback);
-  static void InstallComponent(
+  FRIEND_TEST_ALL_PREFIXES(CrOSComponentInstallerTest, RegisterComponent);
+  // Maps from a compatible component name to its installed path.
+  base::flat_map<std::string, base::FilePath> compatible_components_;
+
+  // Registers a component with a dedicated ComponentUpdateService instance.
+  void Register(ComponentUpdateService* cus,
+                const ComponentConfig& config,
+                base::OnceClosure register_callback);
+
+  // Installs a component with a dedicated ComponentUpdateService instance.
+  virtual void Install(
       ComponentUpdateService* cus,
       const std::string& name,
       base::OnceCallback<void(const std::string&)> load_callback);
+
+  // It calls OnDemandUpdate to install the component right after being
+  // registered.
+  void StartInstall(ComponentUpdateService* cus,
+                    const std::string& id,
+                    update_client::Callback install_callback);
+
+  // It calls LoadInternal to load the installed component.
+  void FinishInstall(const std::string& name,
+                     base::OnceCallback<void(const std::string&)> load_callback,
+                     update_client::Error error);
+
+  // Internal function to load a component.
+  virtual void LoadInternal(
+      const std::string& name,
+      base::OnceCallback<void(const std::string&)> load_callback);
+
+  // It calls load_callback and pass in the parameter |result| (component mount
+  // point).
+  void FinishLoad(base::OnceCallback<void(const std::string&)> load_callback,
+                  base::Optional<std::string> result);
+
+  DISALLOW_COPY_AND_ASSIGN(CrOSComponent);
 };
 
 }  // namespace component_updater
