@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2051c557_b95670a9",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-12-14T05:21:26Z",
+      "side": 1,
+      "message": "Can you add a comment here about when and how you should use this define?",
+      "revId": "91a32be9502a43e894130063e254a0205c365578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
