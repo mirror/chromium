@@ -47,6 +47,7 @@ FetchRequestData* CreateCopyOfFetchRequestDataForFetch(
   request->SetCacheMode(original->CacheMode());
   request->SetRedirect(original->Redirect());
   request->SetIntegrity(original->Integrity());
+  request->SetKeepalive(original->Keepalive());
   return request;
 }
 
@@ -287,8 +288,9 @@ Request* Request::CreateRequestWithRequestOrString(
   if (!init.Integrity().IsNull())
     request->SetIntegrity(init.Integrity());
 
-  if (init.Keepalive().has_value())
+  if (init.Keepalive().has_value()) {
     request->SetKeepalive(*init.Keepalive());
+  }
 
   // "If |init|'s method member is present, let |method| be it and run these
   // substeps:"
