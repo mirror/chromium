@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d7bc368_25fd6932",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T17:49:09Z",
+      "side": 1,
+      "message": "Why do we notify in case of kIgnoreAll?",
+      "revId": "390a9d0d9f47b7f251d84091d5c5dbad51e2c963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a06212_b8c0bcd8",
+        "filename": "content/browser/devtools/protocol/security_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T17:49:09Z",
+      "side": 1,
+      "message": "There is no need to enable the domain here - we don\u0027t send any notifications.",
+      "revId": "390a9d0d9f47b7f251d84091d5c5dbad51e2c963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b451549_e48a28a8",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T17:49:09Z",
+      "side": 1,
+      "message": "Instead of exposing this method, let\u0027s move all the logic to DevToolsAgentHostImpl::HandleCertificateError, which can internally do whatever with agent hosts.\n\nBasically, I\u0027d like all the handling logic be in devtools code with one-line entry points from random code.",
+      "revId": "390a9d0d9f47b7f251d84091d5c5dbad51e2c963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
