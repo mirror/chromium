@@ -160,11 +160,14 @@ void WebRtcEventLogManager::PeerConnectionAddedInternal(
     int lid,
     base::OnceCallback<void(bool)> reply) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  const bool result =
+  const bool local_result =
       local_logs_manager_.PeerConnectionAdded(render_process_id, lid);
+  const bool remote_result =
+      remote_logs_manager_.PeerConnectionAdded(render_process_id, lid);
+  DCHECK_EQ(local_result, remote_result);
   if (reply) {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            base::BindOnce(std::move(reply), result));
+                            base::BindOnce(std::move(reply), remote_result));
   }
 }
 
@@ -173,11 +176,14 @@ void WebRtcEventLogManager::PeerConnectionRemovedInternal(
     int lid,
     base::OnceCallback<void(bool)> reply) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
-  const bool result =
+  const bool local_result =
       local_logs_manager_.PeerConnectionRemoved(render_process_id, lid);
+  const bool remote_result =
+      remote_logs_manager_.PeerConnectionRemoved(render_process_id, lid);
+  DCHECK_EQ(local_result, remote_result);
   if (reply) {
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            base::BindOnce(std::move(reply), result));
+                            base::BindOnce(std::move(reply), remote_result));
   }
 }
 
