@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4358592_c543044a",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T07:02:39Z",
+      "side": 1,
+      "message": "The \"name\" attribute seems odd to me, that\u0027s not actually\nan accessibility attribute. I\u0027d expect the computed name\nto be \"Click Me\", and if you want to override it, I\u0027d\nsuggest aria-label\u003d\"axButton\".",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4949c3c_c373967b",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T07:02:39Z",
+      "side": 1,
+      "message": "ComputedAccessibilityNode -\u003e ComputedAccessibleNode throughout",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93508b35_7721dc8b",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T07:02:39Z",
+      "side": 1,
+      "message": "As currently written, the accessible name should be \"Click Me\"",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f035c5_59e8a731",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T07:02:39Z",
+      "side": 1,
+      "message": "I think you just want element_-\u003ecomputedName().",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb0d3b2_0bd5d7f1",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T07:02:39Z",
+      "side": 1,
+      "message": "Implementation-wise, we won\u0027t want to store all of the properties\nhere in this node. This is totally fine for now, but I\u0027d maybe add\na comment indicating that this is just temporary?",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c70115_acf7b1c0",
+        "filename": "third_party/WebKit/Source/core/frame/Window.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T07:02:39Z",
+      "side": 1,
+      "message": "Add [RuntimeEnabled\u003dAccessibilityObjectModel]",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
