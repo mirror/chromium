@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "c4d9cfb7_d70a659c",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:56:19Z",
+      "side": 1,
+      "message": "Is there any reason to have this separate function now? Move it to BrowserCommandController::ExecuteCommandWithDisposition.",
+      "range": {
+        "startLine": 322,
+        "startChar": 31,
+        "endLine": 322,
+        "endChar": 64
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19226b9b_73308693",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 1202,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:56:19Z",
+      "side": 1,
+      "message": "browser_ is never null, so you shouldn\u0027t need this check. Are you sure you need the window check too?",
+      "range": {
+        "startLine": 1202,
+        "startChar": 6,
+        "endLine": 1202,
+        "endChar": 15
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25ef036_2e7e3e88",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:56:19Z",
+      "side": 1,
+      "message": "optional: add a function only if DCHECKs are enabled that ensures no other commands are enabled.",
+      "range": {
+        "startLine": 1218,
+        "startChar": 7,
+        "endLine": 1219,
+        "endChar": 53
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2744d3f9_987cf9a9",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 32
@@ -13,6 +82,30 @@
       "writtenOn": "2017-12-14T17:30:51Z",
       "side": 1,
       "message": "WindowOpenApiTest.OpenLockedFullscreenWindow [1] is crashing here, the active tab index being -1 (this function is called from UpdateCommandsForLockedFullscreenMode). Not sure how to handle this. Will do some more thinking.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/extensions/window_open_apitest.cc?type\u003dcs\u0026q\u003dWindowOpenApiTest+OpenLockedFullscreenWindow\u0026sq\u003dpackage:chromium\u0026l\u003d415",
+      "range": {
+        "startLine": 1293,
+        "startChar": 18,
+        "endLine": 1293,
+        "endChar": 60
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6270c8b6_91aa3018",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T17:56:19Z",
+      "side": 1,
+      "message": "That likely means you\u0027re calling this function when the tabstrip is empty. What does the stack trace look like? Probably easiest fix is to early out in UpdateCommandsForLockedFullscreenMode if the tabstrip is empty.",
+      "parentUuid": "2744d3f9_987cf9a9",
       "range": {
         "startLine": 1293,
         "startChar": 18,
