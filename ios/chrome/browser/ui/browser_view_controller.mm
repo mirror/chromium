@@ -2234,7 +2234,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [self.dispatcher dismissToolsMenu];
   [self.dispatcher hidePageInfo];
   [_tabHistoryCoordinator dismissHistoryPopup];
-  [self.tabTipBubblePresenter dismissAnimated:YES];
+  [self.tabTipBubblePresenter dismissAnimated:NO];
+  [self.incognitoTabTipBubblePresenter dismissAnimated:NO];
 }
 
 - (BubbleViewControllerPresenter*)
@@ -2321,11 +2322,17 @@ bubblePresenterForFeature:(const base::Feature&)feature
   // If the feature engagement tracker does not consider it valid to display
   // the new tab tip, then |bubblePresenterForFeature| returns |nil| and the
   // call to |presentInViewController| is a no-op.
-  self.tabTipBubblePresenter =
+  BubbleViewControllerPresenter* presenter =
       [self bubblePresenterForFeature:feature_engagement::kIPHNewTabTipFeature
                             direction:BubbleArrowDirectionUp
                             alignment:BubbleAlignmentTrailing
                                  text:text];
+  // If there is no new presenter, no more work is needed to be done.
+  if (!presenter)
+    return;
+
+  self.tabTipBubblePresenter = presenter;
+
   [self.tabTipBubblePresenter presentInViewController:self
                                                  view:self.view
                                           anchorPoint:tabSwitcherAnchor];
@@ -2361,20 +2368,24 @@ bubblePresenterForFeature:(const base::Feature&)feature
       IDS_IOS_NEW_INCOGNITO_TAB_IPH_PROMOTION_TEXT);
   CGPoint toolsButtonAnchor = [_toolbarCoordinator
       anchorPointForToolsMenuButton:BubbleArrowDirectionUp];
-  self.incognitoTabTipBubblePresenter =
+
+  BubbleViewControllerPresenter* presenter =
       [self bubblePresenterForFeature:feature_engagement::
                                           kIPHNewIncognitoTabTipFeature
                             direction:BubbleArrowDirectionUp
                             alignment:BubbleAlignmentTrailing
                                  text:text];
+  // If there is no new presenter, no more is needed to be done.
+  if (!presenter)
+    return;
+
+  self.incognitoTabTipBubblePresenter = presenter;
+
   [self.incognitoTabTipBubblePresenter
       presentInViewController:self
                          view:self.view
                   anchorPoint:toolsButtonAnchor];
-  // Only trigger the tools menu button animation if the bubble is shown.
-  if (self.incognitoTabTipBubblePresenter) {
-    [_toolbarCoordinator triggerToolsMenuButtonAnimation];
-  }
+  [_toolbarCoordinator triggerToolsMenuButtonAnimation];
 }
 
 #pragma mark - Tap handling
@@ -4814,6 +4825,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   [_dialogPresenter cancelAllDialogs];
   [self.dispatcher hidePageInfo];
   [self.tabTipBubblePresenter dismissAnimated:NO];
+  [self.incognitoTabTipBubblePresenter dismissAnimated:NO];
   if (_voiceSearchController)
     _voiceSearchController->DismissMicPermissionsHelp();
 
