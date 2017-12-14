@@ -24,6 +24,7 @@
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/fileapi/browser_file_system_helper.h"
 #include "content/browser/gpu/shader_cache_factory.h"
+#include "content/browser/network_service_instance_impl.h"
 #include "content/browser/notifications/platform_notification_context_impl.h"
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "content/network/network_context.h"
@@ -262,7 +263,7 @@ class StoragePartitionImpl::NetworkContextOwner {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     context_getter_ = std::move(context_getter);
     network_context_ = std::make_unique<NetworkContext>(
-        std::move(network_context_request),
+        GetNetworkServiceImpl(), std::move(network_context_request),
         context_getter_->GetURLRequestContext());
   }
 
