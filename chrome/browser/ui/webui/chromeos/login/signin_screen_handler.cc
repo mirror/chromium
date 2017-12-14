@@ -944,8 +944,6 @@ void SigninScreenHandler::OnCurrentScreenChanged(OobeScreen current_screen,
   }
 }
 
-void SigninScreenHandler::OnWallpaperDataChanged() {}
-
 void SigninScreenHandler::OnWallpaperColorsChanged() {
   UpdateAccountPickerColors();
 }

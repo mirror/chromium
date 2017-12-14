@@ -174,8 +174,6 @@ TEST_F(ArcWallpaperServiceTest, SetWallpaperFailure) {
   std::vector<uint8_t> bytes;
   service_->SetWallpaper(bytes, 10 /* ID */);
   content::RunAllTasksUntilIdle();
-  // Wait until wallpaper loading is done.
-  chromeos::wallpaper_manager_test_utils::WaitAsyncWallpaperLoadFinished();
 
   // For failure case, ArcWallpaperService reports that wallpaper is changed to
   // requested wallpaper (ID=10), then reports that the wallpaper is changed

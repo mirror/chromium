@@ -382,58 +382,6 @@ IN_PROC_BROWSER_TEST_F(WallpaperManagerPolicyTest, SetResetClear) {
   ASSERT_EQ(4, wallpaper_change_count_);
 }
 
-IN_PROC_BROWSER_TEST_F(WallpaperManagerPolicyTest,
-                       DISABLED_PRE_PRE_PRE_WallpaperOnLoginScreen) {
-  RegisterUser(testUsers_[0]);
-  RegisterUser(testUsers_[1]);
-  StartupUtils::MarkOobeCompleted();
-}
-
-IN_PROC_BROWSER_TEST_F(WallpaperManagerPolicyTest,
-                       DISABLED_PRE_PRE_WallpaperOnLoginScreen) {
-  LoginUser(testUsers_[0]);
-
-  // Wait until default wallpaper has been loaded.
-  RunUntilWallpaperChangeCount(1);
-
-  // Set wallpaper policy to red image.
-  InjectPolicy(0, kRedImageFileName);
-
-  // Run until wallpaper has changed.
-  RunUntilWallpaperChangeCount(2);
-  ASSERT_EQ(kRedImageColor, GetAverageWallpaperColor());
-}
-
-IN_PROC_BROWSER_TEST_F(WallpaperManagerPolicyTest,
-                       DISABLED_PRE_WallpaperOnLoginScreen) {
-  LoginUser(testUsers_[1]);
-
-  // Wait until default wallpaper has been loaded.
-  RunUntilWallpaperChangeCount(1);
-
-  // Set wallpaper policy to green image.
-  InjectPolicy(1, kGreenImageFileName);
-
-  // Run until wallpaper has changed.
-  RunUntilWallpaperChangeCount(2);
-  ASSERT_EQ(kGreenImageColor, GetAverageWallpaperColor());
-}
-
-// Disabled due to flakiness: http://crbug.com/385648.
-IN_PROC_BROWSER_TEST_F(WallpaperManagerPolicyTest,
-                       DISABLED_WallpaperOnLoginScreen) {
-  // Wait for active pod's wallpaper to be loaded.
-  RunUntilWallpaperChangeCount(1);
-  ASSERT_EQ(kGreenImageColor, GetAverageWallpaperColor());
-
-  // Select the second pod (belonging to user 1).
-  ASSERT_TRUE(content::ExecuteScript(
-      LoginDisplayHost::default_host()->GetOobeUI()->web_ui()->GetWebContents(),
-      "document.getElementsByClassName('pod')[1].focus();"));
-  RunUntilWallpaperChangeCount(2);
-  ASSERT_EQ(kRedImageColor, GetAverageWallpaperColor());
-}
-
 IN_PROC_BROWSER_TEST_F(WallpaperManagerPolicyTest, PRE_PRE_PersistOverLogout) {
   SetSystemSalt();
   RegisterUser(testUsers_[0]);
