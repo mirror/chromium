@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "20fbf76e_1507af23",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-14T12:45:49Z",
+      "side": 1,
+      "message": "No problem. :)",
+      "parentUuid": "7b92a8ca_27c1899d",
+      "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72a3cd34_bfbfcdcc",
         "filename": "media/base/audio_latency.cc",
         "patchSetId": 6
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "How do we guarantee that output_buffer_size is still a multiple of minimum buffer size and where is it documented? And why it has to be a multiplier of minimum buffer size? Why we don\u0027t relate to the actual hardware buffer size instead? Could you put rationale for calculations into the comment?\nRefactoring would be helpful! Thanks",
       "parentUuid": "85e8b099_4480b1f6",
+      "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510d9ed5_2d732d34",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1212154
+      },
+      "writtenOn": "2017-12-14T12:45:49Z",
+      "side": 1,
+      "message": "I\u0027ve refactored this now, let me know if it\u0027s clearer this way.\n\n\u003e How do we guarantee that output_buffer_size is still a multiple of minimum buffer size and where is it documented?\n\nI\u0027ve updated the comment here, and you were right in fact that if clamping to the max buffer size it could end up that we\u0027re returning a value that\u0027s no longer a multiple. Thanks!\n\n\u003e And why it has to be a multiplier of minimum buffer size?\n\nI tried to include this in the comment too but on the platforms where the minimum is lower than the hardware_buffer_size (OSX and ChromeOS) we know that it\u0027s safe to use multiples of this minimum size.\n\n\u003e Why we don\u0027t relate to the actual hardware buffer size instead?\n\nThe hardware_buffer_size comes from the AudioManager and is its \"preferred\" output buffer size, but we want to be able to change this and run the hardware at an even lower buffer size, hence the minimum. We could special-case the minimum and use the hardware_buffer_size in the \"multiples of\" calculation though if you think that\u0027s better, though it should be safe to use multiples of the minimum as well I believe.  \n\n\u003e Could you put rationale for calculations into the comment?\n\nTried to add more detail there, let me know if that looks better!",
+      "parentUuid": "72e12767_7e84cb7f",
       "revId": "9f71da73ee3a3a44ca3eac36b536fc04b4bffb1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
