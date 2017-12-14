@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "538063d1_51cc285a",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1247602
+      },
+      "writtenOn": "2017-12-14T00:47:30Z",
+      "side": 1,
+      "message": "Writing CBORValue(0) results in compile time error due to ambiguous conversion of types. But this will be changed as we merge with CL777807 where constructor overload for integer type parameter is implemented.",
+      "range": {
+        "startLine": 170,
+        "startChar": 15,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "76691a0be72313e19195ecc505be8a95720811e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
