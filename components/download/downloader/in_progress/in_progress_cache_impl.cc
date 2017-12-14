@@ -35,6 +35,12 @@ void AddOrReplaceEntryInEntries(metadata_pb::DownloadEntries& entries,
   metadata_pb::DownloadEntry* entry_ptr =
       (entry_index < 0) ? entries.add_entries()
                         : entries.mutable_entries(entry_index);
+  // Always use the "oldest" ukm_id and ukm_source_id.
+  if (entry_ptr) {
+    metadata_entry.set_ukm_id(entry_ptr->ukm_id());
+    metadata_entry.set_ukm_source_id(entry_ptr->ukm_source_id());
+  }
+
   *entry_ptr = metadata_entry;
 }
 

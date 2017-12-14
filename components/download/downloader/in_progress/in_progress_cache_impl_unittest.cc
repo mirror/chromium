@@ -104,4 +104,6 @@ TEST_F(InProgressCacheImplTest, AddAndRetrieveAndReplaceAndRemove) {
   EXPECT_FALSE(removed_entry2.has_value());
 }
 
+// TODO(jming): Add tests to make sure that we keep the oldest UKM ID/Source ID.
+
 }  // namespace download
