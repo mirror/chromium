@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ba7cb3d_ac5aee7a",
+        "filename": "base/nix/xdg_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-14T01:51:18Z",
+      "side": 1,
+      "message": "these appear to be sorted (except OTHER), so move this above GNOME",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 30
+      },
+      "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3718de3a_99555d89",
+        "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-14T01:51:18Z",
+      "side": 1,
+      "message": "FYI, Cinnamon has bugs filed against it for not updating the Xsetting with this value.\nhttps://github.com/linuxmint/Cinnamon/issues/5136\nhttps://github.com/linuxmint/Cinnamon/issues/5617\n\nThe issue is that muffin WM reads the decoration layout from org.cinnamon.muffin, but cinnamon-settings-daemon reads the value from org.cinnamon.desktop.interface.   If I change that setting in Cinnamon, then I can see the layout of GTK apps get updated.",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 62
+      },
+      "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51451123_83a200c2",
+        "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-14T01:51:18Z",
+      "side": 1,
+      "message": "nit: might be simpler with a ternary operator?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 3
+      },
+      "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a89e63_ac60863d",
+        "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-14T01:51:18Z",
+      "side": 1,
+      "message": "This message gets printed out for every test run on the bots.  Does g_settings_new() fail when the schema doesn\u0027t exist?  If it does, we should probably remove this log message, since it would be an expected failure case.",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52042ce_bfcd6ed1",
+        "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-12-14T01:51:18Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 65,
+        "startChar": 60,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
