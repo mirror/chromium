@@ -162,10 +162,12 @@ void MediaRouterMojoImpl::RouteResponseReceived(
     OnRouteAdded(provider_id, *media_route);
   }
 
-  if (is_join)
+  if (is_join) {
     MediaRouterMojoMetrics::RecordJoinRouteResultCode(result->result_code());
-  else
-    MediaRouterMojoMetrics::RecordCreateRouteResultCode(result->result_code());
+  } else {
+    MediaRouterMojoMetrics::RecordCreateRouteResultCode(provider_id,
+                                                        result->result_code());
+  }
 
   RunRouteRequestCallbacks(std::move(result), std::move(callbacks));
 }

@@ -4,8 +4,13 @@
 
 #include "chrome/browser/media/router/mojo/media_router_mojo_metrics.h"
 
+#include "base/test/histogram_tester.h"
 #include "base/version.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+using base::Bucket;
+using testing::ElementsAre;
 
 namespace media_router {
 
@@ -38,6 +43,41 @@ TEST(MediaRouterMojoMetricsTest, TestGetMediaRouteProviderVersion) {
   EXPECT_EQ(MediaRouteProviderVersion::UNKNOWN,
             MediaRouterMojoMetrics::GetMediaRouteProviderVersion(
                 base::Version("0"), kBrowserVersion));
+}
+
+TEST(MediaRouterMojoMetricsTest, RecordCreateRouteResultCode) {
+  const char(&kExtensionHistogram)[] =
+      MediaRouterMojoMetrics::kHistogramProviderCreateRouteResult;
+  const char(&kWiredDisplayHistogram)[] =
+      MediaRouterMojoMetrics::kHistogramProviderCreateRouteResultWiredDisplay;
+  base::HistogramTester tester;
+  tester.ExpectTotalCount(kExtensionHistogram, 0);
+  tester.ExpectTotalCount(kWiredDisplayHistogram, 0);
+
+  MediaRouterMojoMetrics::RecordCreateRouteResultCode(
+      MediaRouteProviderId::WIRED_DISPLAY, RouteRequestResult::OK);
+  MediaRouterMojoMetrics::RecordCreateRouteResultCode(
+      MediaRouteProviderId::EXTENSION, RouteRequestResult::SINK_NOT_FOUND);
+  MediaRouterMojoMetrics::RecordCreateRouteResultCode(
+      MediaRouteProviderId::WIRED_DISPLAY, RouteRequestResult::ROUTE_NOT_FOUND);
+  MediaRouterMojoMetrics::RecordCreateRouteResultCode(
+      MediaRouteProviderId::EXTENSION, RouteRequestResult::OK);
+  MediaRouterMojoMetrics::RecordCreateRouteResultCode(
+      MediaRouteProviderId::EXTENSION, RouteRequestResult::SINK_NOT_FOUND);
+
+  tester.ExpectTotalCount(kExtensionHistogram, 3);
+  EXPECT_THAT(
+      tester.GetAllSamples(kExtensionHistogram),
+      ElementsAre(
+          Bucket(static_cast<int>(RouteRequestResult::OK), 1),
+          Bucket(static_cast<int>(RouteRequestResult::SINK_NOT_FOUND), 2)));
+
+  tester.ExpectTotalCount(kWiredDisplayHistogram, 2);
+  EXPECT_THAT(
+      tester.GetAllSamples(kWiredDisplayHistogram),
+      ElementsAre(
+          Bucket(static_cast<int>(RouteRequestResult::OK), 1),
+          Bucket(static_cast<int>(RouteRequestResult::ROUTE_NOT_FOUND), 1)));
 }
 
 }  // namespace media_router
