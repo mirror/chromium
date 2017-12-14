@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff9996fd_ad24aef4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-14T21:47:48Z",
+      "side": 1,
+      "message": "can you reference a bug here?",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "34017e581b8a3bf1bca07285962129a4881902c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb56b5e_d1acdfdd",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-14T21:47:48Z",
+      "side": 1,
+      "message": "I think this comment is not necessarily needed - the function is already documented in the IDL.",
+      "revId": "34017e581b8a3bf1bca07285962129a4881902c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b68c81_b3267d57",
+        "filename": "chrome/common/extensions/api/cryptotoken_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-14T21:47:48Z",
+      "side": 1,
+      "message": "Assuming that the only reason the app Id hash is base 64 encoded so it can be passed as string though API bindings, you can avoid that by making this ArrayBuffer (which would generate appIdHash as vector\u003cchar\u003e on C++ side)",
+      "range": {
+        "startLine": 28,
+        "startChar": 47,
+        "endLine": 28,
+        "endChar": 56
+      },
+      "revId": "34017e581b8a3bf1bca07285962129a4881902c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
