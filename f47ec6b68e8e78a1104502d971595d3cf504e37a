@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9da2141_4ce4a3c5",
+        "filename": "base/nix/xdg_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-14T06:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ba7cb3d_ac5aee7a",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 30
+      },
+      "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3718de3a_99555d89",
         "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb346f53_fd618637",
+        "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-14T06:33:53Z",
+      "side": 1,
+      "message": "Gotcha. Thanks for finding that. Glad it\u0027s known about upstream.",
+      "parentUuid": "3718de3a_99555d89",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 62
+      },
+      "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f0ea8a87_6c65e3d9",
+        "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-14T06:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51451123_83a200c2",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 3
+      },
+      "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05a89e63_ac60863d",
         "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f24dd0ad_75821b4d",
+        "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-14T06:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a89e63_ac60863d",
+      "range": {
+        "startLine": 54,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c52042ce_bfcd6ed1",
         "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "953a7d64_fb0ec243",
+        "filename": "chrome/browser/ui/libgtkui/settings_provider_gsettings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-12-14T06:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c52042ce_bfcd6ed1",
+      "range": {
+        "startLine": 65,
+        "startChar": 60,
+        "endLine": 65,
+        "endChar": 62
+      },
+      "revId": "f47ec6b68e8e78a1104502d971595d3cf504e37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
