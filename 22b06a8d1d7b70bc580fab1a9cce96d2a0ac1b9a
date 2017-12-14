@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5848429f_0d389249",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3059,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-14T23:50:02Z",
+      "side": 1,
+      "message": "hmm, maybe we should just add all these inside_action_ checks directly to FakeSchedulerClient? These checks should hold for all the unit tests as well?",
+      "revId": "22b06a8d1d7b70bc580fab1a9cce96d2a0ac1b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95778f9c_7892833f",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3145,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-14T23:50:02Z",
+      "side": 1,
+      "message": "is this required? this isn\u0027t really relevant to the test itself",
+      "revId": "22b06a8d1d7b70bc580fab1a9cce96d2a0ac1b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81689f7_987db1b6",
+        "filename": "cc/scheduler/scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3146,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-14T23:50:02Z",
+      "side": 1,
+      "message": "maybe add a comment here that InitializeLayerTreeFrameSinkAndFirstCommit does enough things for this test. Right now it just looks like the test doesn\u0027t do anything.",
+      "revId": "22b06a8d1d7b70bc580fab1a9cce96d2a0ac1b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
