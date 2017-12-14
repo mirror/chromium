@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9785c0b4_0e76abc5",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-14T08:17:14Z",
+      "side": 1,
+      "message": "I assume that just means I won\u0027t have to make any changes in this class, as it\u0027ll no longer go through URLs in the first place. So that\u0027s nice.",
+      "parentUuid": "42c0402a_f975938d",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 410,
+        "endChar": 44
+      },
+      "revId": "b613c94008aa24d3073683f4f6ffc0d3db0cbac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81647e85_adcf80ea",
         "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b613c94008aa24d3073683f4f6ffc0d3db0cbac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61bb9344_b533daf5",
+        "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-14T08:17:14Z",
+      "side": 1,
+      "message": "Good point, yes, revoking from a PublicURLManager that has never registered a URL should be possible.",
+      "parentUuid": "81647e85_adcf80ea",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 17
+      },
+      "revId": "b613c94008aa24d3073683f4f6ffc0d3db0cbac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
