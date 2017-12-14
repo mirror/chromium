@@ -194,7 +194,7 @@ bool PrintTarget(const Target* target,
   HANDLER(variables::kAllowCircularIncludesFrom, DefaultHandler);
   HANDLER(variables::kSources, DefaultHandler);
   HANDLER(variables::kPublic, PublicHandler);
-  HANDLER(variables::kInputs, DefaultHandler);
+  HANDLER(variables::kInputs, ConfigsHandler);
   HANDLER(variables::kConfigs, ConfigsHandler);
   HANDLER(variables::kPublicConfigs, ConfigsHandler);
   HANDLER(variables::kAllDependentConfigs, ConfigsHandler);

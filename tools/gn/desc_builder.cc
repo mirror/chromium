@@ -214,6 +214,7 @@ class ConfigDescBuilder : public BaseDescBuilder {
     CONFIG_VALUE_ARRAY_HANDLER(cflags_objcc, std::string)
     CONFIG_VALUE_ARRAY_HANDLER(defines, std::string)
     CONFIG_VALUE_ARRAY_HANDLER(include_dirs, SourceDir)
+    CONFIG_VALUE_ARRAY_HANDLER(inputs, SourceFile)
     CONFIG_VALUE_ARRAY_HANDLER(ldflags, std::string)
     CONFIG_VALUE_ARRAY_HANDLER(lib_dirs, SourceDir)
     CONFIG_VALUE_ARRAY_HANDLER(libs, LibFile)
@@ -393,6 +394,7 @@ class TargetDescBuilder : public BaseDescBuilder {
       CONFIG_VALUE_ARRAY_HANDLER(cflags_objcc, std::string)
       CONFIG_VALUE_ARRAY_HANDLER(defines, std::string)
       CONFIG_VALUE_ARRAY_HANDLER(include_dirs, SourceDir)
+      CONFIG_VALUE_ARRAY_HANDLER(inputs, SourceFile)
       CONFIG_VALUE_ARRAY_HANDLER(ldflags, std::string)
 #undef CONFIG_VALUE_ARRAY_HANDLER
 
