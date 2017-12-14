@@ -16,6 +16,24 @@
       "revId": "a952e0f1a6563510e104929a191b65a240a71b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64116db3_9fa7aff0",
+        "filename": "chrome/browser/component_updater/vr_assets_component_installer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-12-14T16:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f7b2879_83869221",
+      "revId": "a952e0f1a6563510e104929a191b65a240a71b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

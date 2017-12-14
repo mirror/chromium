@@ -16,6 +16,24 @@
       "revId": "53da1bf161e2938cd0a1d951491521d83de2faba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be68202_4c757153",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-12-14T16:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b100aba_6b2b6576",
+      "revId": "53da1bf161e2938cd0a1d951491521d83de2faba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
