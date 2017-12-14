@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27f13eb1_da71ad5b",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-14T08:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8612e576_a97f867c",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 71
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75f4846b_20d6f428",
         "filename": "ui/message_center/notification.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f660edb8_246ed7d4",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-14T08:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75f4846b_20d6f428",
+      "range": {
+        "startLine": 451,
+        "startChar": 0,
+        "endLine": 455,
+        "endChar": 3
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "75c70d76_b7d9480c",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-14T08:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dafe097_5dfcb8aa",
+      "range": {
+        "startLine": 457,
+        "startChar": 0,
+        "endLine": 460,
+        "endChar": 3
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69c6cc23_3cc1e3b0",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0701e2_34ad5100",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-14T08:56:18Z",
+      "side": 1,
+      "message": "I tried removing this (with set_can_process_events_within_subtree) and at least this was necessary for changing the cursor on GetCursor. I filed a bug for this: https://crbug.com/794861 Let me fix it in another CL.",
+      "parentUuid": "69c6cc23_3cc1e3b0",
+      "range": {
+        "startLine": 416,
+        "startChar": 5,
+        "endLine": 416,
+        "endChar": 46
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0f027e23_e318e95d",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-14T08:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68b3e495_19f29ace",
+      "range": {
+        "startLine": 526,
+        "startChar": 2,
+        "endLine": 526,
+        "endChar": 66
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01d0b51b_de0b02cc",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d5ec1c_7efdef50",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-14T08:56:18Z",
+      "side": 1,
+      "message": "Done. Added CreateOrUpdateInlineSettingsViews.",
+      "parentUuid": "01d0b51b_de0b02cc",
+      "range": {
+        "startLine": 501,
+        "startChar": 2,
+        "endLine": 534,
+        "endChar": 0
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e450a20a_b2b58ccd",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-14T08:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29e71d7c_19f44d8c",
+      "range": {
+        "startLine": 686,
+        "startChar": 6,
+        "endLine": 686,
+        "endChar": 20
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f7b11e8_9011a47d",
         "filename": "ui/message_center/views/notification_view_md.h",
         "patchSetId": 6
@@ -186,6 +354,54 @@
     },
     {
       "key": {
+        "uuid": "8f914dec_c25a472f",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-14T08:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f7b11e8_9011a47d",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 3
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19773f7b_3c486d49",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-14T08:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f7b11e8_9011a47d",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 3
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b76081d1_12725720",
         "filename": "ui/message_center/views/notification_view_md.h",
         "patchSetId": 6
@@ -206,6 +422,30 @@
       "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88dbd987_416469d5",
+        "filename": "ui/message_center/views/notification_view_md.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-12-14T08:56:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b76081d1_12725720",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 296,
+        "endChar": 50
+      },
+      "revId": "c918547fd73935613768cedc7cf7a6f2f10fad28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
