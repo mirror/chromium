@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7ea41fc_97e0a8e1",
+        "filename": "extensions/browser/updater/update_data_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T14:59:48Z",
+      "side": 1,
+      "message": "nit: DCHECK_GT(update_info.count(id), 0);",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911208a4_bc91f1c9",
+        "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T14:59:48Z",
+      "side": 1,
+      "message": "TestName\u003cN\u003e is always confusing, because it makes it unclear what\u0027s actually being tested.  Can we rename this something to help elaborate the difference?",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb2f22b_9ef82d19",
+        "filename": "extensions/browser/updater/update_data_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T14:59:48Z",
+      "side": 1,
+      "message": "This looks like something we should pull into a const somewhere.",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb633b31_a4eb408d",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T14:59:48Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me why we branch like this.  Can you add a comment?",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33465d3_e917232b",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T14:59:48Z",
+      "side": 1,
+      "message": "Why don\u0027t we in this CL?  Can\u0027t we just pass the collection of all update data into the provider?",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9026640f_be14d71d",
+        "filename": "extensions/browser/updater/update_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T14:59:48Z",
+      "side": 1,
+      "message": "Having ExtensionUpdateData and ExtensionUpdateInfo seems very confusing, especially when the only difference is that ExtensionUpdateInfo contains an id.  Additionally, it looks like UpdateDataProvider *requires* an id for every ExtensionUpdateData entry.  Could we just have UpdateDataProvider use ExtensionUpdateInfo, and get rid of ExtensionUpdateData?",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29eebb2_b78927d0",
+        "filename": "extensions/browser/updater/update_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-12-14T14:59:48Z",
+      "side": 1,
+      "message": "Add function comments",
+      "revId": "cbc0dd6b08160fd9d1c016f9debf1e677c6abb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
