@@ -22,6 +22,30 @@
       "revId": "09806277cfcb5448918419122ed3aa39c33c6837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a5338f_c1054c9f",
+        "filename": "chrome/browser/extensions/api/autotest_private/autotest_private_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1245973
+      },
+      "writtenOn": "2017-12-14T19:31:55Z",
+      "side": 1,
+      "message": "If chromeos::CupsPrinterManager::PrinterClass is changed, the changes will be reflected when this test is run.  Unless there are cases that people need to revisit previously saved test result, and the order of PrinterClass has been changed differently from previous definition, then we may end up with wrong printer type.  In this case, I think have a string representation is better if the printer type is used for information only.",
+      "parentUuid": "1de2694a_5bbbe8d1",
+      "range": {
+        "startLine": 436,
+        "startChar": 57,
+        "endLine": 436,
+        "endChar": 62
+      },
+      "revId": "09806277cfcb5448918419122ed3aa39c33c6837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
