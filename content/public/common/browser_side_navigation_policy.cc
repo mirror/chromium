@@ -11,6 +11,7 @@
 namespace content {
 
 bool IsBrowserSideNavigationEnabled() {
+  return true;
   // First check if the network service is enabled or if PlzNavigate was
   // manually enabled via the --enable-browser-side-navigation flag. This takes
   // precedence over other configuration. This ensure that tests that require
