@@ -14,6 +14,7 @@
 #include "net/proxy/proxy_list.h"
 #include "net/proxy/proxy_retry_info.h"
 #include "net/proxy/proxy_server.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -173,6 +174,11 @@ class NET_EXPORT ProxyInfo {
     return proxy_resolve_end_time_;
   }
 
+  // Returns network traffic annotation for proxy control.
+  const NetworkTrafficAnnotationTag traffic_annotation() const {
+    return NetworkTrafficAnnotationTag(traffic_annotation_);
+  }
+
  private:
   friend class ProxyService;
   FRIEND_TEST_ALL_PREFIXES(ProxyInfoTest, UseVsOverrideProxyList);
@@ -211,6 +217,9 @@ class NET_EXPORT ProxyInfo {
   // determined synchronously without running a PAC.
   base::TimeTicks proxy_resolve_start_time_;
   base::TimeTicks proxy_resolve_end_time_;
+
+  // Traffic annotation for proxy control.
+  MutableNetworkTrafficAnnotationTag traffic_annotation_;
 };
 
 }  // namespace net

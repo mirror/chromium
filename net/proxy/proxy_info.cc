@@ -8,12 +8,13 @@
 
 namespace net {
 
+// TODO(crbug.com/6566607): Remove default value and add appropriate interface.
 ProxyInfo::ProxyInfo()
     : config_id_(ProxyConfig::kInvalidConfigID),
       config_source_(PROXY_CONFIG_SOURCE_UNKNOWN),
       did_bypass_proxy_(false),
-      did_use_pac_script_(false) {
-}
+      did_use_pac_script_(false),
+      traffic_annotation_(NO_TRAFFIC_ANNOTATION_BUG_656607) {}
 
 ProxyInfo::ProxyInfo(const ProxyInfo& other) = default;
 
