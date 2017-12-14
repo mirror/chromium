@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64adf948_298dfca6",
+        "filename": "android_webview/browser/aw_contents.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-14T13:52:42Z",
+      "side": 1,
+      "message": "I checked the function that invokes AwContents::ScrollContainerViewTo().\nIn BrowserViewRenderer::UpdateRootLayerState(), input sizes are not in DIP scale when --use-zoom-for-dsf is enabled.\nI add code to convert those values into DIP scaled values in BrowserViewRenderer::UpdateRootLayerState().\n\nPlease see the code.",
+      "parentUuid": "da8d8544_ec7ce7f1",
+      "range": {
+        "startLine": 1095,
+        "startChar": 10,
+        "endLine": 1095,
+        "endChar": 12
+      },
+      "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3910b006_528b0771",
         "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "83100a87_80739e85",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 2975,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-14T13:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3910b006_528b0771",
+      "range": {
+        "startLine": 2975,
+        "startChar": 44,
+        "endLine": 2975,
+        "endChar": 46
+      },
+      "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "534ca350_525425e1",
         "filename": "content/common/content_switches_internal.cc",
         "patchSetId": 9
@@ -62,6 +110,24 @@
       "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659b5a52_b41c7346",
+        "filename": "content/common/content_switches_internal.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-14T13:52:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "534ca350_525425e1",
+      "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "bac88305_630f46c4",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-14T13:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52a59037_68fd60c9",
+      "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81e6aad0_087fff72",
         "filename": "content/public/common/content_switches.h",
         "patchSetId": 9
@@ -96,6 +180,24 @@
       "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87d5f9a_8fafda19",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-12-14T13:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81e6aad0_087fff72",
+      "revId": "87255a79f198e7335bd97e97001a4d2a2aab445e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
