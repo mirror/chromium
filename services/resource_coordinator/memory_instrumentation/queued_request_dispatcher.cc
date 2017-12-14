@@ -134,6 +134,12 @@ void QueuedRequestDispatcher::SetUpAndDispatch(
 
   for (const auto& client_info : clients) {
     mojom::ClientProcess* client = client_info.client;
+
+    // If we're only looking for a single pid process, then ignore clients
+    // with different pid.
+    if (request->pid != base::kNullProcessId && request->pid != client_info.pid)
+      continue;
+
     request->responses[client].process_id = client_info.pid;
     request->responses[client].process_type = client_info.process_type;
 
@@ -152,6 +158,11 @@ void QueuedRequestDispatcher::SetUpAndDispatch(
     client->RequestOSMemoryDump(request->wants_mmaps(), {base::kNullProcessId},
                                 base::Bind(os_callback, client));
 #endif  // !defined(OS_LINUX)
+
+    // If we are in the single pid case, then we've already found the only
+    // process we're looking for.
+    if (request->pid != base::kNullProcessId)
+      break;
   }
 
 // In some cases, OS stats can only be dumped from a privileged process to
@@ -159,23 +170,33 @@ void QueuedRequestDispatcher::SetUpAndDispatch(
 #if defined(OS_LINUX)
   std::vector<base::ProcessId> pids;
   mojom::ClientProcess* browser_client = nullptr;
-  pids.reserve(clients.size());
+  pids.reserve(request->pid == base::kNullProcessId ? clients.size() : 1);
   for (const auto& client_info : clients) {
-    pids.push_back(client_info.pid);
+    if (request->pid == base::kNullProcessId ||
+        client_info.pid == request->pid) {
+      pids.push_back(client_info.pid);
+    }
     if (client_info.process_type == mojom::ProcessType::BROWSER) {
       browser_client = client_info.client;
     }
   }
-
   if (clients.size() > 0) {
     DCHECK(browser_client);
   }
-  if (browser_client) {
+  if (browser_client && pids.size() > 0) {
     request->pending_responses.insert({browser_client, ResponseType::kOSDump});
     const auto callback = base::Bind(os_callback, browser_client);
     browser_client->RequestOSMemoryDump(request->wants_mmaps(), pids, callback);
   }
 #endif  // defined(OS_LINUX)
+
+  // In this case, we have not found the pid we are looking for so increment
+  // the failed dump count and exit.
+  if (request->pid != base::kNullProcessId &&
+      request->pending_responses.empty()) {
+    request->failed_memory_dump_count++;
+    return;
+  }
 }
 
 void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
@@ -253,6 +274,11 @@ void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
   for (const auto& response : request->responses) {
     base::ProcessId pid = response.second.process_id;
 
+    // On Linux, we may also have the browser process as a response.
+    // Just ignore it if we are looking for the single pid case.
+    if (request->pid != base::kNullProcessId && pid != request->pid)
+      continue;
+
     // These pointers are owned by |request|.
     mojom::RawOSMemDump* raw_os_dump = pid_to_os_dump[pid];
     auto* raw_chrome_dump = pid_to_pmd[pid];
@@ -265,6 +291,7 @@ void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
                        (!request->wants_chrome_dumps() || raw_chrome_dump) &&
                        (!request->wants_mmaps() ||
                         (raw_os_dump && !raw_os_dump->memory_maps.empty()));
+
     if (!valid)
       continue;
 
@@ -296,8 +323,14 @@ void QueuedRequestDispatcher::Finalize(QueuedRequest* request,
     global_dump->process_dumps.push_back(std::move(pmd));
   }
 
-  const auto& callback = request->callback;
   const bool global_success = request->failed_memory_dump_count == 0;
+
+  // In the single process-case, we want to ensure that global_success
+  // is true if and only if global_dump is not nullptr.
+  if (request->pid != base::kNullProcessId && !global_success) {
+    global_dump = nullptr;
+  }
+  const auto& callback = request->callback;
   callback.Run(global_success, request->args.dump_guid, std::move(global_dump));
   UMA_HISTOGRAM_MEDIUM_TIMES("Memory.Experimental.Debug.GlobalDumpDuration",
                              base::Time::Now() - request->start_time);
