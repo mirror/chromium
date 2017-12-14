@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71007623_6b52039e",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-14T18:17:36Z",
+      "side": 1,
+      "message": "This turned out to be pretty complicated: https://crbug.com/792430#c3. I have a CL that should remove this flag, but it still WIP (have to fix many tests).",
+      "parentUuid": "256ed172_0128bfac",
+      "range": {
+        "startLine": 104,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 47
+      },
+      "revId": "175ad2d83cb8584c91e32bf2a37f8c874c3e8b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebffb9c8_f1ef6546",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "175ad2d83cb8584c91e32bf2a37f8c874c3e8b77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13edee66_20a38957",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-12-14T18:17:36Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ebffb9c8_f1ef6546",
+      "range": {
+        "startLine": 298,
+        "startChar": 46,
+        "endLine": 298,
+        "endChar": 67
+      },
+      "revId": "175ad2d83cb8584c91e32bf2a37f8c874c3e8b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
