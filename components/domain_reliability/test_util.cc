@@ -120,8 +120,12 @@ MockTime::MockTime()
 
 MockTime::~MockTime() {}
 
-base::Time MockTime::Now() { return now_; }
-base::TimeTicks MockTime::NowTicks() { return now_ticks_; }
+base::Time MockTime::Now() const {
+  return now_;
+}
+base::TimeTicks MockTime::NowTicks() const {
+  return now_ticks_;
+}
 
 std::unique_ptr<MockableTime::Timer> MockTime::CreateTimer() {
   return std::unique_ptr<MockableTime::Timer>(new MockTimer(this));

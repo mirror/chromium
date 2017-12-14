@@ -29,7 +29,7 @@ class MockTickClock : public TickClock {
       scoped_refptr<const TestMockTimeTaskRunner> task_runner);
 
   // TickClock:
-  TimeTicks NowTicks() override;
+  TimeTicks NowTicks() const override;
 
  private:
   scoped_refptr<const TestMockTimeTaskRunner> task_runner_;
@@ -42,7 +42,7 @@ MockTickClock::MockTickClock(
     : task_runner_(task_runner) {
 }
 
-TimeTicks MockTickClock::NowTicks() {
+TimeTicks MockTickClock::NowTicks() const {
   return task_runner_->NowTicks();
 }
 
@@ -55,7 +55,7 @@ class MockClock : public Clock {
   explicit MockClock(scoped_refptr<const TestMockTimeTaskRunner> task_runner);
 
   // Clock:
-  Time Now() override;
+  Time Now() const override;
 
  private:
   scoped_refptr<const TestMockTimeTaskRunner> task_runner_;
@@ -67,7 +67,7 @@ MockClock::MockClock(scoped_refptr<const TestMockTimeTaskRunner> task_runner)
     : task_runner_(task_runner) {
 }
 
-Time MockClock::Now() {
+Time MockClock::Now() const {
   return task_runner_->Now();
 }
 

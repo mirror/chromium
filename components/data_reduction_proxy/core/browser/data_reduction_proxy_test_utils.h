@@ -151,10 +151,10 @@ class TestDataReductionProxyConfigServiceClient
     TestTickClock(const base::Time& initial_time);
 
     // base::TickClock implementation.
-    base::TimeTicks NowTicks() override;
+    base::TimeTicks NowTicks() const override;
 
     // base::Clock implementation.
-    base::Time Now() override;
+    base::Time Now() const override;
 
     // Sets the current time.
     void SetTime(const base::Time& time);

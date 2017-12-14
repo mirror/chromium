@@ -103,7 +103,7 @@ class MockExtensionThrottleEntry : public ExtensionThrottleEntry {
   ~MockExtensionThrottleEntry() override {}
 
  private:
-  mutable TestTickClock fake_clock_;
+  TestTickClock fake_clock_;
   BackoffEntry backoff_entry_;
 };
 

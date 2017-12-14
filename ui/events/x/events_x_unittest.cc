@@ -552,7 +552,7 @@ class MockTickClock : public base::TickClock {
  public:
   explicit MockTickClock(int64_t milliseconds)
       : ticks_(TimeTicksFromMillis(milliseconds)) {}
-  base::TimeTicks NowTicks() override { return ticks_; }
+  base::TimeTicks NowTicks() const override { return ticks_; }
 
  private:
   base::TimeTicks ticks_;

@@ -46,13 +46,13 @@ class TestTickClock : public base::TickClock {
   // Starts off with a clock set to TimeTicks().
   TestTickClock() {}
 
-  base::TimeTicks NowTicks() override {
+  base::TimeTicks NowTicks() const override {
     return base::TimeTicks() +
            base::TimeDelta::FromMicroseconds(ticks_++ * 1000);
   }
 
  private:
-  int64_t ticks_ = 1;
+  mutable int64_t ticks_ = 1;
 
   DISALLOW_COPY_AND_ASSIGN(TestTickClock);
 };
