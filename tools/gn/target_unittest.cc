@@ -868,6 +868,34 @@ TEST(Target, ObjectGeneratedInputs) {
   AssertSchedulerHasOneUnknownFileMatching(&final_target, object_file);
 }
 
+// Tests that Targets pull in inputs from included configs (including their
+// own), and don't get double-counted.
+TEST(Target, InputsAreSourcedFromConfigs) {
+  TestWithScope setup;
+  Err err;
+
+  auto child_file = SourceFile("//foo/baz");
+  auto library_file = SourceFile("//foo/qux");
+
+  Config child(setup.settings(), Label(SourceDir("//foo/"), "config"));
+  child.own_values().inputs().push_back(child_file);
+  ASSERT_TRUE(child.OnResolved(&err));
+
+  Config parent(setup.settings(), Label(SourceDir("//bar/"), "config"));
+  parent.configs().push_back(LabelConfigPair(&child));
+  ASSERT_TRUE(parent.OnResolved(&err));
+
+  TestTarget a(setup, "//baz", Target::STATIC_LIBRARY);
+  a.config_values().inputs().push_back(library_file);
+  a.configs().push_back(LabelConfigPair(&parent));
+  a.set_complete_static_lib(true);
+  ASSERT_TRUE(a.OnResolved(&err));
+
+  ASSERT_EQ(2u, a.inputs().size());
+  ASSERT_EQ(library_file, a.inputs()[0]);
+  ASSERT_EQ(child_file, a.inputs()[1]);
+}
+
 TEST(Target, ResolvePrecompiledHeaders) {
   TestWithScope setup;
   Err err;

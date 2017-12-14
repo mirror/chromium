@@ -50,8 +50,8 @@ void BinaryTargetGenerator::DoRun() {
   if (!FillCheckIncludes())
     return;
 
-  if (!FillInputs())
-    return;
+  // Inputs are populated indirectly here: we pick them up using the
+  // ConfigValuesGenerator below, and populate them during resolution.
 
   if (!FillConfigs())
     return;
