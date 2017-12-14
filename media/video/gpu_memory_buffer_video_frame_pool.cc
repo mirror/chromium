@@ -425,7 +425,8 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CreateHardwareFrame(
   if (output_format_ == GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED)
     output_format_ = gpu_factories_->VideoFrameOutputFormat();
 
-  if (output_format_ == GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED) {
+  if (output_format_ == GpuVideoAcceleratorFactories::OutputFormat::UNDEFINED ||
+      video_frame->bit_depth() > 8) {
     frame_ready_cb.Run(video_frame);
     return;
   }
@@ -448,6 +449,7 @@ void GpuMemoryBufferVideoFramePool::PoolImpl::CreateHardwareFrame(
     case PIXEL_FORMAT_RGB32:
     case PIXEL_FORMAT_MJPEG:
     case PIXEL_FORMAT_MT21:
+    // TODO(mcasas): Phase out the [P9,P10,P12] formats.
     case PIXEL_FORMAT_YUV420P9:
     case PIXEL_FORMAT_YUV422P9:
     case PIXEL_FORMAT_YUV444P9:

@@ -496,11 +496,12 @@ TEST_F(PaintCanvasVideoRendererTest, Video_Translate_Rotation_270) {
 }
 
 TEST_F(PaintCanvasVideoRendererTest, HighBits) {
+  const size_t kBitDepth = 10;
   // Copy cropped_frame into a highbit frame.
   scoped_refptr<VideoFrame> frame(VideoFrame::CreateFrame(
-      PIXEL_FORMAT_YUV420P10, cropped_frame()->coded_size(),
+      PIXEL_FORMAT_I420, cropped_frame()->coded_size(),
       cropped_frame()->visible_rect(), cropped_frame()->natural_size(),
-      cropped_frame()->timestamp()));
+      cropped_frame()->timestamp(), kBitDepth));
   for (int plane = VideoFrame::kYPlane; plane <= VideoFrame::kVPlane; ++plane) {
     int width = cropped_frame()->row_bytes(plane);
     uint16_t* dst = reinterpret_cast<uint16_t*>(frame->data(plane));
