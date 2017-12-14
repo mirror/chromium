@@ -14,6 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_piece.h"
 #include "net/base/net_export.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -35,6 +36,7 @@ class NET_EXPORT_PRIVATE DnsQuery {
   DnsQuery(uint16_t id,
            const base::StringPiece& qname,
            uint16_t qtype,
+           const NetworkTrafficAnnotationTag& traffic_annotation,
            const OptRecordRdata* opt_rdata = nullptr);
   ~DnsQuery();
 
@@ -55,6 +57,10 @@ class NET_EXPORT_PRIVATE DnsQuery {
 
   void set_flags(uint16_t flags);
 
+  const NetworkTrafficAnnotationTag traffic_annotation() const {
+    return NetworkTrafficAnnotationTag(traffic_annotation_);
+  }
+
  private:
   DnsQuery(const DnsQuery& orig, uint16_t id);
 
@@ -73,6 +79,8 @@ class NET_EXPORT_PRIVATE DnsQuery {
 
   // Pointer to the dns header section.
   dns_protocol::Header* header_;
+
+  MutableNetworkTrafficAnnotationTag traffic_annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(DnsQuery);
 };
