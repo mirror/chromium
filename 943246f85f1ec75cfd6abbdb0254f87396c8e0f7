@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fc021e2_3d128f97",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-14T14:09:10Z",
+      "side": 1,
+      "message": "This means that on 3X devices (iPhone Plus, X) the minimal size goes down from 48px to 32px. Is this desired?",
+      "revId": "943246f85f1ec75cfd6abbdb0254f87396c8e0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acda5012_668f0907",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-14T14:09:10Z",
+      "side": 1,
+      "message": "64px on a 3x device is marginally better than 48 that we had before.",
+      "range": {
+        "startLine": 44,
+        "startChar": 37,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "943246f85f1ec75cfd6abbdb0254f87396c8e0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40995915_ca3de6f2",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-12-14T14:09:10Z",
+      "side": 1,
+      "message": "(optional) consider also this:\nif the cached favicon is smaller than the optimal size, use the cached version *and* attempt to download a higher-res version.",
+      "range": {
+        "startLine": 962,
+        "startChar": 5,
+        "endLine": 962,
+        "endChar": 0
+      },
+      "revId": "943246f85f1ec75cfd6abbdb0254f87396c8e0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
