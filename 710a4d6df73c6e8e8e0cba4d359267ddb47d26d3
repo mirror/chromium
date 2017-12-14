@@ -22,6 +22,30 @@
       "revId": "710a4d6df73c6e8e8e0cba4d359267ddb47d26d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccef18f_a2637701",
+        "filename": "chrome/browser/profiles/profile_attributes_storage_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-12-14T12:56:07Z",
+      "side": 1,
+      "message": "Hmm, that\u0027s implicit and not common practise. Was there any particular reason? (Maybe you can add it if you want a specific comment?)",
+      "parentUuid": "6ddff31f_29306075",
+      "range": {
+        "startLine": 794,
+        "startChar": 18,
+        "endLine": 794,
+        "endChar": 22
+      },
+      "revId": "710a4d6df73c6e8e8e0cba4d359267ddb47d26d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
