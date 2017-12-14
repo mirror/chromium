@@ -92,8 +92,8 @@ class RendererWebMediaPlayerDelegateTest : public content::RenderViewTest {
 
   void RunLoopOnce() {
     base::RunLoop run_loop;
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  run_loop.QuitClosure());
+    GetSingleThreadTaskRunnerForTesting()->PostTask(FROM_HERE,
+                                                    run_loop.QuitClosure());
     run_loop.Run();
   }
 
