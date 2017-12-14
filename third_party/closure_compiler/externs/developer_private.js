@@ -604,6 +604,13 @@ chrome.developerPrivate.getExtensionsInfo = function(options, callback) {};
 chrome.developerPrivate.getExtensionInfo = function(id, callback) {};
 
 /**
+ * @param {string} id
+ * @param {function(string):void} callback
+ * @see https://developer.chrome.com/extensions/developerPrivate#method-getExtensionSize
+ */
+chrome.developerPrivate.getExtensionSize = function(id, callback) {};
+
+/**
  * Returns information of all the extensions and apps installed.
  * @param {boolean} includeDisabled include disabled items.
  * @param {boolean} includeTerminated include terminated items.
