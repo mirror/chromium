@@ -75,16 +75,19 @@ void IndexedBufferBindingHost::IndexedBufferBinding::Reset() {
   effective_full_buffer_size = 0;
 }
 
-
-IndexedBufferBindingHost::IndexedBufferBindingHost(
-    uint32_t max_bindings, bool needs_emulation)
+IndexedBufferBindingHost::IndexedBufferBindingHost(uint32_t max_bindings,
+                                                   bool needs_emulation)
     : needs_emulation_(needs_emulation),
+      bound_for_webgl_transform_feedback_(false),
       max_non_null_binding_index_plus_one_(0u) {
   DCHECK(needs_emulation);
   buffer_bindings_.resize(max_bindings);
 }
 
 IndexedBufferBindingHost::~IndexedBufferBindingHost() {
+  if (bound_for_webgl_transform_feedback_) {
+    SetBoundForWebGLTransformFeedback(false);
+  }
 }
 
 void IndexedBufferBindingHost::DoBindBufferBase(
@@ -93,7 +96,15 @@ void IndexedBufferBindingHost::DoBindBufferBase(
   GLuint service_id = buffer ? buffer->service_id() : 0;
   glBindBufferBase(target, index, service_id);
 
+  if (buffer_bindings_[index].buffer && bound_for_webgl_transform_feedback_) {
+    buffer_bindings_[index].buffer->webgl_transform_feedback_binding_count_--;
+    DCHECK(buffer_bindings_[index]
+               .buffer->webgl_transform_feedback_binding_count_ >= 0);
+  }
   buffer_bindings_[index].SetBindBufferBase(buffer);
+  if (buffer && bound_for_webgl_transform_feedback_) {
+    buffer->webgl_transform_feedback_binding_count_++;
+  }
   UpdateMaxNonNullBindingIndex(index);
 }
 
@@ -109,7 +120,15 @@ void IndexedBufferBindingHost::DoBindBufferRange(
     glBindBufferRange(target, index, service_id, offset, size);
   }
 
+  if (buffer_bindings_[index].buffer && bound_for_webgl_transform_feedback_) {
+    buffer_bindings_[index].buffer->webgl_transform_feedback_binding_count_--;
+    DCHECK(buffer_bindings_[index]
+               .buffer->webgl_transform_feedback_binding_count_ >= 0);
+  }
   buffer_bindings_[index].SetBindBufferRange(buffer, offset, size);
+  if (bound_for_webgl_transform_feedback_) {
+    buffer->webgl_transform_feedback_binding_count_++;
+  }
   UpdateMaxNonNullBindingIndex(index);
 }
 
@@ -182,6 +201,20 @@ void IndexedBufferBindingHost::RemoveBoundBuffer(Buffer* buffer) {
     if (buffer_bindings_[ii].buffer.get() == buffer) {
       buffer_bindings_[ii].Reset();
       UpdateMaxNonNullBindingIndex(ii);
+    }
+  }
+}
+
+void IndexedBufferBindingHost::SetBoundForWebGLTransformFeedback(bool bound) {
+  if (bound == bound_for_webgl_transform_feedback_) {
+    return;
+  }
+  bound_for_webgl_transform_feedback_ = bound;
+  int increment = bound ? 1 : -1;
+  for (size_t ii = 0; ii < buffer_bindings_.size(); ++ii) {
+    if (buffer_bindings_[ii].buffer) {
+      buffer_bindings_[ii].buffer->webgl_transform_feedback_binding_count_ +=
+          increment;
     }
   }
 }
