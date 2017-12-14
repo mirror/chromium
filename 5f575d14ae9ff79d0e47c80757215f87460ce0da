@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdeec7fa_96c46da8",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-12-14T19:44:58Z",
+      "side": 1,
+      "message": "I like this \"automatic\" approach rather than \"manually\" calling settingsWillBeDismissed from all places that we dismiss the navigation controller.\n\nI\u0027d like to push this further. If this works for this navigation controller, would it work for any arbitrary view controller? Can we get rid of the trickling down the command -settingsWillBeDismissed, and instead let each view controller recognize it\u0027s own demise?",
+      "revId": "5f575d14ae9ff79d0e47c80757215f87460ce0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
