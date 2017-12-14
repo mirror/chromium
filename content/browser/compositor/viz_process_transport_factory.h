@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "components/viz/common/display/renderer_settings.h"
+#include "components/viz/common/gpu/context_lost_observer.h"
 #include "components/viz/common/surfaces/frame_sink_id_allocator.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -49,7 +50,8 @@ namespace content {
 class VizProcessTransportFactory : public ui::ContextFactory,
                                    public ui::ContextFactoryPrivate,
                                    public ImageTransportFactory,
-                                   public viz::mojom::CompositingModeWatcher {
+                                   public viz::mojom::CompositingModeWatcher,
+                                   public viz::ContextLostObserver {
  public:
   VizProcessTransportFactory(
       gpu::GpuChannelEstablishFactory* gpu_channel_establish_factory,
@@ -110,6 +112,9 @@ class VizProcessTransportFactory : public ui::ContextFactory,
   // viz::mojom::CompositingModeWatcher implementation.
   void CompositingModeFallbackToSoftware() override;
 
+  // viz::ContextLostObserver implementation.
+  void OnContextLost() override;
+
  private:
   struct CompositorData {
     CompositorData();
@@ -160,7 +165,7 @@ class VizProcessTransportFactory : public ui::ContextFactory,
   std::unique_ptr<viz::ClientSharedBitmapManager> shared_bitmap_manager_;
   scoped_refptr<ui::ContextProviderCommandBuffer>
       shared_worker_context_provider_;
-  scoped_refptr<ui::ContextProviderCommandBuffer> compositor_context_provider_;
+  scoped_refptr<ui::ContextProviderCommandBuffer> shared_main_context_provider_;
 
   viz::FrameSinkIdAllocator frame_sink_id_allocator_;
   std::unique_ptr<cc::SingleThreadTaskGraphRunner> task_graph_runner_;
