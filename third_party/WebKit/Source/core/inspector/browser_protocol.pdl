@@ -4926,8 +4926,14 @@ domain Security
   # Enables tracking security state changes.
   command enable
 
+  # Enable/disable whether all certificate errors should be ignored. 
+  command setIgnoreCertificateErrors
+    parameters
+      # If true, all certificate errors will be ignored.
+      boolean ignore
+
   # Handles a certificate error that fired a certificateError event.
-  command handleCertificateError
+  deprecated command handleCertificateError
     parameters
       # The ID of the event.
       integer eventId
@@ -4936,7 +4942,7 @@ domain Security
 
   # Enable/disable overriding certificate errors. If enabled, all certificate error events need to
   # be handled by the DevTools client and should be answered with handleCertificateError commands.
-  command setOverrideCertificateErrors
+  deprecated command setOverrideCertificateErrors
     parameters
       # If true, certificate errors will be overridden.
       boolean override
@@ -4952,6 +4958,8 @@ domain Security
       string errorType
       # The url that was requested.
       string requestURL
+      # Whether the client should handle this error. If false, another agent or the browser itself will handle this error.
+      deprecated optional boolean shouldHandleError
 
   # The security state of the page changed.
   event securityStateChanged

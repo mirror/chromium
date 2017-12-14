@@ -190,7 +190,7 @@ void SecurityHandler::DidChangeVisibleSecurityState() {
 }
 
 void SecurityHandler::DidFinishNavigation(NavigationHandle* navigation_handle) {
-  if (certificate_errors_overriden_)
+  if (cert_error_override_mode_ == CertErrorOverrideMode::kHandleEvents)
     FlushPendingCertificateErrorNotifications();
 }
 
@@ -205,13 +205,27 @@ bool SecurityHandler::NotifyCertificateError(int cert_error,
                                              CertErrorCallback handler) {
   if (!enabled_)
     return false;
+
+  bool handle_error =
+      handler && cert_error_override_mode_ != CertErrorOverrideMode::kDisabled;
+  bool frontend_should_handle_error =
+      handle_error &&
+      cert_error_override_mode_ == CertErrorOverrideMode::kHandleEvents;
+
   frontend_->CertificateError(++last_cert_error_id_,
                               net::ErrorToShortString(cert_error),
-                              request_url.spec());
-  if (!certificate_errors_overriden_) {
+                              request_url.spec(), frontend_should_handle_error);
+
+  if (!handle_error)
     return false;
+
+  if (frontend_should_handle_error) {
+    cert_error_callbacks_[last_cert_error_id_] = handler;
+    return true;
   }
-  cert_error_callbacks_[last_cert_error_id_] = handler;
+
+  DCHECK_EQ(CertErrorOverrideMode::kIgnoreAll, cert_error_override_mode_);
+  handler.Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_CONTINUE);
   return true;
 }
 
@@ -225,7 +239,7 @@ Response SecurityHandler::Enable() {
 
 Response SecurityHandler::Disable() {
   enabled_ = false;
-  certificate_errors_overriden_ = false;
+  cert_error_override_mode_ = CertErrorOverrideMode::kDisabled;
   WebContentsObserver::Observe(nullptr);
   FlushPendingCertificateErrorNotifications();
   return Response::OK();
@@ -254,11 +268,29 @@ Response SecurityHandler::HandleCertificateError(int event_id,
 }
 
 Response SecurityHandler::SetOverrideCertificateErrors(bool override) {
-  if (override && !enabled_)
-    return Response::Error("Security domain not enabled");
-  certificate_errors_overriden_ = override;
-  if (!override)
+  if (override) {
+    if (!enabled_)
+      return Response::Error("Security domain not enabled");
+    if (cert_error_override_mode_ == CertErrorOverrideMode::kIgnoreAll)
+      return Response::Error("Certificate errors are already being ignored.");
+    cert_error_override_mode_ = CertErrorOverrideMode::kHandleEvents;
+  } else {
+    cert_error_override_mode_ = CertErrorOverrideMode::kDisabled;
     FlushPendingCertificateErrorNotifications();
+  }
+  return Response::OK();
+}
+
+Response SecurityHandler::SetIgnoreCertificateErrors(bool ignore) {
+  if (ignore) {
+    if (!enabled_)
+      return Response::Error("Security domain not enabled");
+    if (cert_error_override_mode_ == CertErrorOverrideMode::kHandleEvents)
+      return Response::Error("Certificate errors are already overridden.");
+    cert_error_override_mode_ = CertErrorOverrideMode::kIgnoreAll;
+  } else {
+    cert_error_override_mode_ = CertErrorOverrideMode::kDisabled;
+  }
   return Response::OK();
 }
 

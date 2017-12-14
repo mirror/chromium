@@ -10714,8 +10714,20 @@
                     "description": "Enables tracking security state changes."
                 },
                 {
+                    "name": "setIgnoreCertificateErrors",
+                    "description": "Enable/disable whether all certificate errors should be ignored.",
+                    "parameters": [
+                        {
+                            "name": "ignore",
+                            "description": "If true, all certificate errors will be ignored.",
+                            "type": "boolean"
+                        }
+                    ]
+                },
+                {
                     "name": "handleCertificateError",
                     "description": "Handles a certificate error that fired a certificateError event.",
+                    "deprecated": true,
                     "parameters": [
                         {
                             "name": "eventId",
@@ -10732,6 +10744,7 @@
                 {
                     "name": "setOverrideCertificateErrors",
                     "description": "Enable/disable overriding certificate errors. If enabled, all certificate error events need to\nbe handled by the DevTools client and should be answered with handleCertificateError commands.",
+                    "deprecated": true,
                     "parameters": [
                         {
                             "name": "override",
@@ -10760,6 +10773,13 @@
                             "name": "requestURL",
                             "description": "The url that was requested.",
                             "type": "string"
+                        },
+                        {
+                            "name": "shouldHandleError",
+                            "description": "Whether the client should handle this error. If false, another agent or the browser itself will handle this error.",
+                            "deprecated": true,
+                            "optional": true,
+                            "type": "boolean"
                         }
                     ]
                 },
