@@ -33,6 +33,20 @@
 namespace cc {
 namespace {
 
+class NoOpImageProvider : public ImageProvider {
+ public:
+  ~NoOpImageProvider() override = default;
+
+  ScopedDecodedDrawImage GetDecodedDrawImage(
+      const DrawImage& draw_image) override {
+    SkBitmap bitmap;
+    bitmap.allocN32Pixels(10, 10);
+    sk_sp<SkImage> image = SkImage::MakeFromBitmap(bitmap);
+    return ScopedDecodedDrawImage(DecodedDrawImage(
+        image, SkSize::Make(10, 10), SkSize::Make(1, 1), kLow_SkFilterQuality));
+  }
+};
+
 class OopPixelTest : public testing::Test {
  public:
   void SetUp() override {
@@ -118,11 +132,11 @@ class OopPixelTest : public testing::Test {
                             options.msaa_sample_count, options.use_lcd_text,
                             options.use_distance_field_text,
                             options.pixel_config);
-    gl->RasterCHROMIUM(display_item_list.get(), options.bitmap_rect.x(),
-                       options.bitmap_rect.y(), options.playback_rect.x(),
-                       options.playback_rect.y(), options.playback_rect.width(),
-                       options.playback_rect.height(), options.post_translate_x,
-                       options.post_translate_y, options.post_scale);
+    gl->RasterCHROMIUM(
+        display_item_list.get(), &image_provider_,
+        options.bitmap_rect.OffsetFromOrigin(), options.playback_rect,
+        gfx::Vector2dF(options.post_translate_x, options.post_translate_y),
+        options.post_scale);
     gl->EndRasterCHROMIUM();
     gl->Flush();
 
@@ -250,6 +264,7 @@ class OopPixelTest : public testing::Test {
   TestImageFactory image_factory_;
   std::unique_ptr<gpu::GLInProcessContext> context_;
   gl::DisableNullDrawGLBindings enable_pixel_output_;
+  NoOpImageProvider image_provider_;
 };
 
 TEST_F(OopPixelTest, DrawColor) {
