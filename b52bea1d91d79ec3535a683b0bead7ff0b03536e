@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b6416b6_400f5bc7",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T21:30:43Z",
+      "side": 1,
+      "message": "please remove rather than commenting out",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 64
+      },
+      "revId": "b52bea1d91d79ec3535a683b0bead7ff0b03536e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1502e557_525ce25e",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T21:30:43Z",
+      "side": 1,
+      "message": "looks like you forgot to change this one; line 269 should have www and this one shouldn\u0027t",
+      "range": {
+        "startLine": 282,
+        "startChar": 26,
+        "endLine": 282,
+        "endChar": 29
+      },
+      "revId": "b52bea1d91d79ec3535a683b0bead7ff0b03536e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

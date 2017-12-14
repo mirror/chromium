@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9789ab49_9db59e11",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T21:30:43Z",
+      "side": 1,
+      "message": "oh, interesting, TIL!",
+      "parentUuid": "b58663eb_5f579d7e",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62ffa810_1ae0c4c9",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
         "patchSetId": 9
