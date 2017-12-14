@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a31b537d_ddd21f87",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-14T01:32:05Z",
+      "side": 1,
+      "message": "Need to complete this comment.",
+      "range": {
+        "startLine": 58,
+        "startChar": 52,
+        "endLine": 58,
+        "endChar": 53
+      },
+      "revId": "6aa44bf3ca563f428d450255fea536a58e117f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3382af8f_9bdfe0c2",
+        "filename": "content/common/cross_site_document_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-12-14T01:32:05Z",
+      "side": 1,
+      "message": "I\u0027ll extract these semantic changes to the JSON sniffer so that they\u0027re an independent CL.",
+      "revId": "6aa44bf3ca563f428d450255fea536a58e117f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
