@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0822faf_a2d92747",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridgeTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1233,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-12-14T19:23:52Z",
+      "side": 0,
+      "message": "How is this removal relevant to the change to CanvasResource?",
+      "revId": "a2fe50be93893335b686b747f29965b52bf4f331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
