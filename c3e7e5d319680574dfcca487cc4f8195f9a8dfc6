@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "da04b975_5fea3834",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-14T00:44:09Z",
+      "side": 1,
+      "message": "typo: server",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe451409_45a8c73f",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 7
@@ -119,6 +142,29 @@
     },
     {
       "key": {
+        "uuid": "954a726e_47f79817",
+        "filename": "net/nqe/effective_connection_type.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-14T00:44:09Z",
+      "side": 1,
+      "message": "I would prefer this to be in params.cc since it\u0027s not really a new ECT value. It is just controlling when an existing ECT  (Slow2G) should be used.",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 69
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fe0d3d9_6ded0721",
         "filename": "net/nqe/network_quality_estimator_params.cc",
         "patchSetId": 7
@@ -163,6 +209,98 @@
       "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e60ed13_94d5f7e5",
+        "filename": "net/nqe/network_quality_estimator_params.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-14T00:44:09Z",
+      "side": 1,
+      "message": "I guess my only concern is that we are now doing all this computation repeatedly everytime GetForcedECT() is called.\n\nMay I suggest having something like this in the .h class:\nbase::optional\u003cECT\u003e forced_ect_;\nconst bool force_ect_on_cell_only_;\n\nThen, in force_ect(connection_type) method, we can just read the existing variables. This would save us the overhead of parsing the string repeatedly.",
+      "range": {
+        "startLine": 513,
+        "startChar": 0,
+        "endLine": 514,
+        "endChar": 63
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c817c0e1_d95d6d3f",
+        "filename": "net/nqe/network_quality_estimator_params.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-14T00:44:09Z",
+      "side": 1,
+      "message": "In this case, can we immediately return net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G or nullopt based on if the connection type is cellular or not?\n\nIt seems there is no need to overwrite |forced_value|, and then re-parse it.",
+      "range": {
+        "startLine": 523,
+        "startChar": 3,
+        "endLine": 526,
+        "endChar": 17
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8889ed6_2b5aaea9",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-14T00:44:09Z",
+      "side": 1,
+      "message": "add comment for connectione_type",
+      "range": {
+        "startLine": 98,
+        "startChar": 49,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8628ae58_b11a674a",
+        "filename": "net/nqe/network_quality_estimator_params.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-12-14T00:44:09Z",
+      "side": 1,
+      "message": "s/connectione_type/connection_type/",
+      "range": {
+        "startLine": 100,
+        "startChar": 44,
+        "endLine": 100,
+        "endChar": 60
+      },
+      "revId": "c3e7e5d319680574dfcca487cc4f8195f9a8dfc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
