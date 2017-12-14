@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "617fb374_b0d0a1e1",
+        "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-14T08:43:38Z",
+      "side": 1,
+      "message": "Not all of them do, URLRegistry::RegisterURL currently still takes a non-const pointer (historically SecurityOrigin was passed around as non-const almost everywhere, but some recent cleanup changed most trivial places to const, just not this one yet. I\u0027ll create a follow-up patch to change this one as well).",
+      "parentUuid": "d727b4ba_2609744b",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cbdfb4a_6bad4578",
         "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T08:28:37Z",
       "side": 1,
       "message": "nit: can you verify with some dchecks here... maybe do a variable surrounded by #if DCHECK_IS_ON() [sp]\nconst SecurityOrigin* url_registry_security_origin\n#endif\n\nstore it in the above if statement, and then dcheck that here it\u0027s the same as what is in context?\n\nThis might be overkill, but having that in there at least for a run of layouttests would make me more confident it won\u0027t change.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 49
+      },
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04d10a7_37d0d46e",
+        "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-14T08:43:38Z",
+      "side": 1,
+      "message": "Not sure, it does seem kind of weird to me to be verifying something that is relied on all over the place. I did change the interface of RegisterURL to not get passed in the execution context to make it more obvious that this is always called with the same execution context (the one that owns us). That should hopefully make it clearer that the origin is always the same as well?",
+      "parentUuid": "0cbdfb4a_6bad4578",
       "range": {
         "startLine": 64,
         "startChar": 0,
