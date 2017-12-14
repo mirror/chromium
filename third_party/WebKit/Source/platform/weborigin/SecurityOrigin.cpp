@@ -118,12 +118,7 @@ SecurityOrigin::SecurityOrigin(const KURL& url)
     : protocol_(url.Protocol()),
       host_(url.Host()),
       port_(url.Port()),
-      effective_port_(url.Port()),
-      is_unique_(false),
-      universal_access_(false),
-      domain_was_set_in_dom_(false),
-      block_local_access_from_local_origin_(false),
-      is_unique_origin_potentially_trustworthy_(false) {
+      effective_port_(url.Port()) {
   if (protocol_.IsNull())
     protocol_ = g_empty_string;
   if (host_.IsNull())
@@ -133,7 +128,6 @@ SecurityOrigin::SecurityOrigin(const KURL& url)
   String suborigin_name;
   if (DeserializeSuboriginAndProtocolAndHost(protocol_, host_, suborigin_name,
                                              protocol_, host_)) {
-
     suborigin_.SetName(suborigin_name);
   }
 
@@ -156,12 +150,7 @@ SecurityOrigin::SecurityOrigin()
       domain_(g_empty_string),
       port_(kInvalidPort),
       effective_port_(kInvalidPort),
-      is_unique_(true),
-      universal_access_(false),
-      domain_was_set_in_dom_(false),
-      can_load_local_resources_(false),
-      block_local_access_from_local_origin_(false),
-      is_unique_origin_potentially_trustworthy_(false) {}
+      is_unique_(true) {}
 
 SecurityOrigin::SecurityOrigin(const SecurityOrigin* other)
     : protocol_(other->protocol_.IsolatedCopy()),
@@ -174,8 +163,7 @@ SecurityOrigin::SecurityOrigin(const SecurityOrigin* other)
       universal_access_(other->universal_access_),
       domain_was_set_in_dom_(other->domain_was_set_in_dom_),
       can_load_local_resources_(other->can_load_local_resources_),
-      block_local_access_from_local_origin_(
-          other->block_local_access_from_local_origin_),
+      local_access_from_local_origin_(other->local_access_from_local_origin_),
       is_unique_origin_potentially_trustworthy_(
           other->is_unique_origin_potentially_trustworthy_) {}
 
@@ -263,7 +251,7 @@ bool SecurityOrigin::SerializesAsNull() const {
   if (IsUnique())
     return true;
 
-  if (IsLocal() && block_local_access_from_local_origin_)
+  if (IsLocal() && !local_access_from_local_origin_)
     return true;
 
   return false;
@@ -316,8 +304,8 @@ bool SecurityOrigin::PassesFileCheck(const SecurityOrigin* other) const {
   DCHECK(IsLocal());
   DCHECK(other->IsLocal());
 
-  return !block_local_access_from_local_origin_ &&
-         !other->block_local_access_from_local_origin_;
+  return local_access_from_local_origin_ &&
+         other->local_access_from_local_origin_;
 }
 
 bool SecurityOrigin::CanRequest(const KURL& url) const {
@@ -418,6 +406,11 @@ void SecurityOrigin::GrantUniversalAccess() {
   universal_access_ = true;
 }
 
+void SecurityOrigin::GrantLocalAccessFromLocalOrigin() {
+  DCHECK(IsLocal());
+  local_access_from_local_origin_ = true;
+}
+
 void SecurityOrigin::AddSuborigin(const Suborigin& suborigin) {
   DCHECK(RuntimeEnabledFeatures::SuboriginsEnabled());
   // Changing suborigins midstream is bad. Very bad. It should not happen.
@@ -426,11 +419,6 @@ void SecurityOrigin::AddSuborigin(const Suborigin& suborigin) {
   CHECK(suborigin_.GetName().IsNull() ||
         (suborigin_.GetName() == suborigin.GetName()));
   suborigin_.SetTo(suborigin);
-}
-
-void SecurityOrigin::BlockLocalAccessFromLocalOrigin() {
-  DCHECK(IsLocal());
-  block_local_access_from_local_origin_ = true;
 }
 
 bool SecurityOrigin::IsLocal() const {
@@ -614,8 +602,8 @@ SecurityOrigin::CreatePrivilegeData() const {
       WTF::WrapUnique(new PrivilegeData);
   privilege_data->universal_access_ = universal_access_;
   privilege_data->can_load_local_resources_ = can_load_local_resources_;
-  privilege_data->block_local_access_from_local_origin_ =
-      block_local_access_from_local_origin_;
+  privilege_data->local_access_from_local_origin_ =
+      local_access_from_local_origin_;
   return privilege_data;
 }
 
@@ -623,8 +611,8 @@ void SecurityOrigin::TransferPrivilegesFrom(
     std::unique_ptr<PrivilegeData> privilege_data) {
   universal_access_ = privilege_data->universal_access_;
   can_load_local_resources_ = privilege_data->can_load_local_resources_;
-  block_local_access_from_local_origin_ =
-      privilege_data->block_local_access_from_local_origin_;
+  local_access_from_local_origin_ =
+      privilege_data->local_access_from_local_origin_;
 }
 
 void SecurityOrigin::SetUniqueOriginIsPotentiallyTrustworthy(

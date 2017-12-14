@@ -38,7 +38,7 @@
     // static USVString domainToUnicode(USVString domain);
 
     stringifier attribute USVString href;
-    readonly attribute USVString origin;
+    [CallWith=ScriptState] readonly attribute USVString origin;
 
     attribute USVString protocol;
     attribute USVString username;

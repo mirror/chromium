@@ -14,7 +14,7 @@ test(function() {
     assertOrigin('HTTP://example.com/foo/bar', 'http://example.com');
     assertOrigin('https://example.com/ttt?ggg', 'https://example.com');
     assertOrigin('ftp://example.com/ttt?ggg', 'ftp://example.com');
-    assertOrigin('file:///home/abarth', 'file://');
+    assertOrigin('file:///home/abarth', 'null');
 
     // The following are implementation specific.
     assertOrigin('data:text/html,<b>foo</b>', 'null');

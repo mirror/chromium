@@ -1589,6 +1589,20 @@ class Port(object):
             # PhysicalTestSuite('svg', ['--force-compositing-mode']),
             PhysicalTestSuite('fast/text', ['--enable-direct-write', '--enable-font-antialiasing']),
             PhysicalTestSuite('hdr', ['--force-color-profile=scrgb-linear']),
+
+            # TODO(mkwst): Burn these down. https://crbug.com/794098
+            PhysicalTestSuite('editing/execCommand', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('editing/pasteboard', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('fast/dom', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('fast/files', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('fast/filesystem', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('fast/forms', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('fast/frames', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('fast/loader', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('fast/serviceworker', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('fast/workers', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('fast/xmlhttprequest', ['--allow-file-access-from-files']),
+            PhysicalTestSuite('gamepad', ['--allow-file-access-from-files']),
         ]
 
     def virtual_test_suites(self):

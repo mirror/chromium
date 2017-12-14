@@ -46,7 +46,8 @@ var PermissionsHelper = (function() {
                 resolver();
             };
 
-            testRunner.setPermission(name, state, location.origin, location.origin);
+            var origin = location.origin != "null" ? location.origin : (location.protocol + "//" + location.host);
+            testRunner.setPermission(name, state, origin, origin);
         });
       });
     }

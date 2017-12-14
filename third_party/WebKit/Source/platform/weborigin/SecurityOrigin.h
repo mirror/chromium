@@ -173,6 +173,14 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   void GrantUniversalAccess();
   bool IsGrantedUniversalAccess() const { return universal_access_; }
 
+  // By default 'file:' URLs may not access other 'file:' URLs. This method
+  // denies access. Unless both SecurityOrigins set this flag, the access
+  // check will fail.
+  void GrantLocalAccessFromLocalOrigin();
+  bool IsGrantedLocalAccessFromLocalOrigin() const {
+    return local_access_from_local_origin_;
+  }
+
   bool CanAccessDatabase() const { return !IsUnique(); }
   bool CanAccessLocalStorage() const { return !IsUnique(); }
   bool CanAccessSharedWorkers() const { return !IsUnique(); }
@@ -219,11 +227,6 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   // origin is the same physical origin.
   bool HasSuboriginAndShouldAllowCredentialsFor(const KURL&) const;
 
-  // By default 'file:' URLs may access other 'file:' URLs. This method
-  // denies access. If either SecurityOrigin sets this flag, the access
-  // check will fail.
-  void BlockLocalAccessFromLocalOrigin();
-
   // Convert this SecurityOrigin into a string. The string
   // representation of a SecurityOrigin is similar to a URL, except it
   // lacks a path component. The string representation does not encode
@@ -266,7 +269,7 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   struct PrivilegeData {
     bool universal_access_;
     bool can_load_local_resources_;
-    bool block_local_access_from_local_origin_;
+    bool local_access_from_local_origin_;
   };
   std::unique_ptr<PrivilegeData> CreatePrivilegeData() const;
   void TransferPrivilegesFrom(std::unique_ptr<PrivilegeData>);
@@ -317,12 +320,12 @@ class PLATFORM_EXPORT SecurityOrigin : public RefCounted<SecurityOrigin> {
   Suborigin suborigin_;
   uint16_t port_;
   uint16_t effective_port_;
-  const bool is_unique_;
-  bool universal_access_;
-  bool domain_was_set_in_dom_;
-  bool can_load_local_resources_;
-  bool block_local_access_from_local_origin_;
-  bool is_unique_origin_potentially_trustworthy_;
+  const bool is_unique_ = false;
+  bool universal_access_ = false;
+  bool domain_was_set_in_dom_ = false;
+  bool can_load_local_resources_ = false;
+  bool local_access_from_local_origin_ = false;
+  bool is_unique_origin_potentially_trustworthy_ = false;
 };
 
 }  // namespace blink
