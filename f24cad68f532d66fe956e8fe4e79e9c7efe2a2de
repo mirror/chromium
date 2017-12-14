@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6201f94_f8c95f8b",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-12-14T23:52:14Z",
+      "side": 1,
+      "message": "Sounds good. I wanted to change the structure as little as possible but considering this current code is dangerously close to arrow code I would agree that your suggestion is better :P",
+      "parentUuid": "38ef656c_fe669f5e",
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4a7e406_82ed50a8",
         "filename": "base/files/file_util_posix.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f332223f_309db33a",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-12-14T23:52:14Z",
+      "side": 1,
+      "message": "O_EXCL supersedes them, more or less. O_TRUNC means that if the file already exists, we truncate its size to 0. O_CREAT | O_EXCL refuses to open files that already exist so O_TRUNC is useless here.\n\nO_NONBLOCK is useless for similar reasons; any reason why a file would block on open would require it to already exist.",
+      "parentUuid": "e4a7e406_82ed50a8",
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93972c62_a71255ca",
         "filename": "base/files/file_util_unittest.cc",
         "patchSetId": 3
@@ -47,6 +83,30 @@
       "writtenOn": "2017-12-14T23:24:43Z",
       "side": 1,
       "message": "BTW, you can use FPL() from line 64 to make these shorter.",
+      "range": {
+        "startLine": 1057,
+        "startChar": 33,
+        "endLine": 1057,
+        "endChar": 50
+      },
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b840e348_36a7ab63",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-12-14T23:52:14Z",
+      "side": 1,
+      "message": "The surrounding code isn\u0027t very consistent about this...",
+      "parentUuid": "93972c62_a71255ca",
       "range": {
         "startLine": 1057,
         "startChar": 33,
