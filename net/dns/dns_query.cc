@@ -39,11 +39,13 @@ size_t OptRecordSize(const OptRecordRdata* rdata) {
 DnsQuery::DnsQuery(uint16_t id,
                    const base::StringPiece& qname,
                    uint16_t qtype,
+                   const NetworkTrafficAnnotationTag& traffic_annotation,
                    const OptRecordRdata* opt_rdata)
     : qname_size_(qname.size()),
       io_buffer_(new IOBufferWithSize(kHeaderSize + question_size() +
                                       OptRecordSize(opt_rdata))),
-      header_(reinterpret_cast<dns_protocol::Header*>(io_buffer_->data())) {
+      header_(reinterpret_cast<dns_protocol::Header*>(io_buffer_->data())),
+      traffic_annotation_(traffic_annotation) {
   DCHECK(!DNSDomainToString(qname).empty());
   *header_ = {};
   header_->id = base::HostToNet16(id);
