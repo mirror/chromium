@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2328e479_e1a4914a",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-12-14T04:11:32Z",
+      "side": 1,
+      "message": "We discussed that in earlier comments, both events might run when all queues are stopped, specially onfreeze. As this is the one and only call they will be able to run.",
+      "parentUuid": "03ed9c7b_1f528d69",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19fbbefd_e0e2ff24",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "934bc71d_e88bc2d3",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1800,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-12-14T04:11:32Z",
+      "side": 1,
+      "message": "Not as strong argument as onfreeze, but this might get called before the queue policy have be reenabled and it should run before any thing else.",
+      "parentUuid": "19fbbefd_e0e2ff24",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78ec8cee_deff827b",
         "filename": "third_party/WebKit/Source/core/events/event_type_names.json5",
         "patchSetId": 14
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-13T01:57:01Z",
       "side": 1,
       "message": "Just help me understand: What happens two event names conflict?",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4145ca6_309e25b9",
+        "filename": "third_party/WebKit/Source/core/events/event_type_names.json5",
+        "patchSetId": 14
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-12-14T04:11:32Z",
+      "side": 1,
+      "message": "onresume can be currently triggered from 2 other places, MediaRecorder and SpeechSynthesis, neither of them is an HTML element, and hence cannot be added to the DOM.\n\nSince they cannot be added to the DOM, capture/bubble will not be a factor.\nIn other words, I believe that the window.onresume event will only be invoked by the newly added event and it will not conflict with existing events.",
+      "parentUuid": "78ec8cee_deff827b",
       "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4f2ac539_7eb90c29",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-12-14T04:11:32Z",
+      "side": 1,
+      "message": "The PageStopped reflect the lifecycle state, and currently the lifecycle state in the documentation is STOPPED. The callback is freeze (onstop was taken). So far, the lifecycle states are internal, so we do not need to match them for now.",
+      "parentUuid": "53e06c33_2e5945e4",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8dbfbdd_077ac567",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 14
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "feabc563_d695a155",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-12-14T04:11:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8dbfbdd_077ac567",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67e48278_9fb5821c",
         "filename": "third_party/WebKit/Source/core/page/Page.cpp",
         "patchSetId": 14
@@ -98,6 +188,24 @@
       "writtenOn": "2017-12-13T01:57:01Z",
       "side": 1,
       "message": "Just to confirm: This iterates all frames in the renderer process, not all frames of that tab. Is this your intention, right?",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c148a8b5_21b6ae20",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-12-14T04:11:32Z",
+      "side": 1,
+      "message": "Yes, since currently we stop all queues in the process and we resume all queues in the process.\nWe we have greater control on the queues/frame, we will modify this logic.",
+      "parentUuid": "67e48278_9fb5821c",
       "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -175,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "df86e1f1_1fdb5a6a",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-12-14T04:11:32Z",
+      "side": 1,
+      "message": "Will do",
+      "parentUuid": "e51497d2_1862af60",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9836e17_fd8b1c40",
         "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
         "patchSetId": 14
@@ -189,6 +315,24 @@
       "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0602778d_44ed0924",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-12-14T04:11:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9836e17_fd8b1c40",
+      "revId": "a9fe2ff966d48a5e8310fe5cbb44ec91851e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
