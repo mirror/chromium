@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97959943_a4bc7387",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-14T23:19:15Z",
+      "side": 1,
+      "message": "Super nit: I believe this is the old copyright notice (I don\u0027t see the (c) in the new one).",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 64
+      },
+      "revId": "a37746ceb153b1615e9eff38a2ecb7b9627ffb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2860751_c73eb692",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-14T23:19:15Z",
+      "side": 1,
+      "message": "Is this include needed?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "a37746ceb153b1615e9eff38a2ecb7b9627ffb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25937ad1_55677d3c",
+        "filename": "chrome/browser/media/router/discovery/dial/parsed_dial_app_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-14T23:19:15Z",
+      "side": 1,
+      "message": "Nit: in the SafeDialAppInfoParser::ParsingError you use constant name style (e.g. kUnknown), which I think is preferred. Maybe you should use that there too?",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "a37746ceb153b1615e9eff38a2ecb7b9627ffb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd17aec_b238637d",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-14T23:19:15Z",
+      "side": 1,
+      "message": "Optional nit: this could be a stand-alone method in the anonymous namespace (same for ValidateParsedAppInfo)",
+      "range": {
+        "startLine": 111,
+        "startChar": 59,
+        "endLine": 111,
+        "endChar": 78
+      },
+      "revId": "a37746ceb153b1615e9eff38a2ecb7b9627ffb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a2e8d8_50b5fdf8",
+        "filename": "chrome/browser/media/router/discovery/dial/safe_dial_app_info_parser_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-14T23:19:15Z",
+      "side": 1,
+      "message": "Nit: you could use literal strings so you wouldn\u0027t have to escape quotes and not require the \\n\u0027s.",
+      "revId": "a37746ceb153b1615e9eff38a2ecb7b9627ffb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bac28c_680b76f4",
+        "filename": "services/data_decoder/public/cpp/safe_xml_parser.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-12-14T23:19:15Z",
+      "side": 1,
+      "message": "Could you name it GetXmlElementChildren (to be consistent with the other functions)?",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 30
+      },
+      "revId": "a37746ceb153b1615e9eff38a2ecb7b9627ffb3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
