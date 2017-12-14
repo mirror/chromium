@@ -295,7 +295,7 @@ class ChromeProxyLoFi(ChromeProxyValidation):
 
   def CustomizeBrowserOptions(self, options):
     super(ChromeProxyLoFi, self).CustomizeBrowserOptions(options)
-    options.AppendExtraBrowserArgs('--data-reduction-proxy-lo-fi=always-on')
+    options.AppendExtraBrowserArgs('--data-saver-server-previews=enabled')
     # Disable server experiments such as tamper detection.
     options.AppendExtraBrowserArgs(
         '--data-reduction-proxy-server-experiments-disabled')
@@ -331,7 +331,7 @@ class ChromeProxyCacheLoFiDisabled(ChromeProxyValidation):
       # First page load, enable LoFi and chrome proxy. Disable server
       # experiments such as tamper detection.
       self.options.AppendExtraBrowserArgs(
-            '--data-reduction-proxy-lo-fi=always-on')
+            '--data-saver-server-previews=enabled')
       self.options.AppendExtraBrowserArgs(
         '--data-reduction-proxy-server-experiments-disabled')
       self._is_lo_fi_enabled = True
@@ -339,7 +339,7 @@ class ChromeProxyCacheLoFiDisabled(ChromeProxyValidation):
       # Second page load, disable LoFi. Chrome proxy is still enabled. Disable
       # server experiments such as tamper detection.
       self.options.browser_options.extra_browser_args.discard(
-            '--data-reduction-proxy-lo-fi=always-on')
+            '--data-saver-server-previews=enabled')
       self.options.AppendExtraBrowserArgs(
         '--data-reduction-proxy-server-experiments-disabled')
       self._is_lo_fi_enabled = False
@@ -383,7 +383,7 @@ class ChromeProxyCacheProxyDisabled(ChromeProxyValidation):
       # First page load, enable LoFi and chrome proxy. Disable server
       # experiments such as tamper detection.
       self.options.AppendExtraBrowserArgs(
-            '--data-reduction-proxy-lo-fi=always-on')
+            '--data-saver-server-previews=enabled')
       self.options.AppendExtraBrowserArgs(
         '--data-reduction-proxy-server-experiments-disabled')
     else:
@@ -400,24 +400,6 @@ class ChromeProxyCacheProxyDisabled(ChromeProxyValidation):
     if not self._is_chrome_proxy_enabled:
       tab.ExecuteJavaScript('window.location.reload()')
       util.WaitFor(tab.HasReachedQuiescence, 3)
-
-class ChromeProxyLitePage(ChromeProxyValidation):
-  """Correctness measurement for lite pages in the Chrome-Proxy header."""
-
-  def __init__(self):
-    super(ChromeProxyLitePage, self).__init__(
-        metrics=metrics.ChromeProxyMetric())
-
-  def CustomizeBrowserOptions(self, options):
-    super(ChromeProxyLitePage, self).CustomizeBrowserOptions(options)
-    options.AppendExtraBrowserArgs(
-        '--data-reduction-proxy-lo-fi=always-on')
-    options.AppendExtraBrowserArgs(
-        '--enable-data-reduction-proxy-lite-page')
-    options.AppendExtraBrowserArgs('--disable-quic')
-
-  def AddResults(self, tab, results):
-    self._metrics.AddResultsForLitePage(tab, results)
 
 class ChromeProxyExpDirective(ChromeProxyValidation):
   """Correctness measurement for experiment directives in Chrome-Proxy header.
