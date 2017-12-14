@@ -69,6 +69,24 @@
       "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fa7f84_ef0590b0",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T15:19:48Z",
+      "side": 1,
+      "message": "Actually, I think this affects webview as well, which doesn\u0027t use that gn variable.\n\nProbably better to somehow query android for the value, or hardcode them all and select the active one (as before, but in java).",
+      "parentUuid": "4a38b444_7b6359ac",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
