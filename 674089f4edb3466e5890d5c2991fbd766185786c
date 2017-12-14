@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0373d7ba_61c6557f",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/tracing/TraceEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-12-14T19:32:19Z",
+      "side": 1,
+      "message": "pass const char* straight away?",
+      "revId": "674089f4edb3466e5890d5c2991fbd766185786c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
