@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "341eacf6_95b37c14",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-14T01:12:17Z",
+      "side": 1,
+      "message": "Returns true if the overscan setting should be shown for |display|.\n(Or just omit the comment since the name is self descriptive).\nComments should describe what the function does or returns, not how it is implemented.",
+      "revId": "cb85a97b00dd2f2c87ac2aa632518f0b68aa8fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
