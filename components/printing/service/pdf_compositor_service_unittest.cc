@@ -80,14 +80,19 @@ class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
   PdfCompositorServiceTest() : ServiceTest("pdf_compositor_service_unittest") {}
   ~PdfCompositorServiceTest() override {}
 
-  MOCK_METHOD1(CallbackOnSuccess, void(mojo::SharedBufferHandle));
-  MOCK_METHOD1(CallbackOnError, void(mojom::PdfCompositor::Status));
-  void OnCallback(mojom::PdfCompositor::Status status,
-                  mojo::ScopedSharedBufferHandle handle) {
+  MOCK_METHOD1(CallbackOnCompositeSuccess, void(mojo::SharedBufferHandle));
+  MOCK_METHOD1(CallbackOnCompositeStatus, void(mojom::PdfCompositor::Status));
+  MOCK_METHOD1(CallbackOnIsReadyStatus, void(bool));
+  void OnCompositeToPdfCallback(mojom::PdfCompositor::Status status,
+                                mojo::ScopedSharedBufferHandle handle) {
     if (status == mojom::PdfCompositor::Status::SUCCESS)
-      CallbackOnSuccess(handle.get());
+      CallbackOnCompositeSuccess(handle.get());
     else
-      CallbackOnError(status);
+      CallbackOnCompositeStatus(status);
+    run_loop_->Quit();
+  }
+  void OnIsReadyToCompositeCallback(bool status) {
+    CallbackOnIsReadyStatus(status);
     run_loop_->Quit();
   }
 
@@ -139,15 +144,17 @@ class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
   }
 
   void CallCompositorWithSuccess(mojom::PdfCompositorPtr ptr) {
+    static constexpr int kFrameId = 1234;
     auto handle = LoadFileInSharedMemory();
     ASSERT_TRUE(handle.IsValid());
     mojo::ScopedSharedBufferHandle buffer_handle =
         mojo::WrapSharedMemoryHandle(handle, handle.GetSize(), true);
     ASSERT_TRUE(buffer_handle->is_valid());
-    EXPECT_CALL(*this, CallbackOnSuccess(testing::_)).Times(1);
-    ptr->CompositePdf(std::move(buffer_handle),
-                      base::BindOnce(&PdfCompositorServiceTest::OnCallback,
-                                     base::Unretained(this)));
+    EXPECT_CALL(*this, CallbackOnCompositeSuccess(testing::_)).Times(1);
+    ptr->CompositeToPdf(
+        kFrameId, 0, std::move(buffer_handle), std::vector<uint32_t>(),
+        base::BindOnce(&PdfCompositorServiceTest::OnCompositeToPdfCallback,
+                       base::Unretained(this)));
     run_loop_->Run();
   }
 
@@ -161,12 +168,12 @@ class PdfCompositorServiceTest : public service_manager::test::ServiceTest {
 
 // Test callback is called on error conditions in service.
 TEST_F(PdfCompositorServiceTest, InvokeCallbackOnContentError) {
-  EXPECT_CALL(*this, CallbackOnError(
+  EXPECT_CALL(*this, CallbackOnCompositeStatus(
                          mojom::PdfCompositor::Status::CONTENT_FORMAT_ERROR))
       .Times(1);
-  compositor_->CompositePdf(
-      mojo::SharedBufferHandle::Create(10),
-      base::BindOnce(&PdfCompositorServiceTest::OnCallback,
+  compositor_->CompositeToPdf(
+      5, 0, mojo::SharedBufferHandle::Create(10), std::vector<uint32_t>(),
+      base::BindOnce(&PdfCompositorServiceTest::OnCompositeToPdfCallback,
                      base::Unretained(this)));
   run_loop_->Run();
 }
@@ -175,7 +182,7 @@ TEST_F(PdfCompositorServiceTest, InvokeCallbackOnSuccess) {
   CallCompositorWithSuccess(std::move(compositor_));
 }
 
-TEST_F(PdfCompositorServiceTest, ServiceInstances) {
+TEST_F(PdfCompositorServiceTest, MultipleServiceInstances) {
   // One service can bind multiple interfaces.
   mojom::PdfCompositorPtr another_compositor;
   ASSERT_FALSE(another_compositor);
@@ -186,6 +193,57 @@ TEST_F(PdfCompositorServiceTest, ServiceInstances) {
   // Terminating one interface won't affect another.
   compositor_.reset();
   CallCompositorWithSuccess(std::move(another_compositor));
+}
+
+TEST_F(PdfCompositorServiceTest, IndependentServiceInstances) {
+  // Create a new connection 2.
+  mojom::PdfCompositorPtr compositor2;
+  ASSERT_FALSE(compositor2);
+  connector()->BindInterface(mojom::kServiceName, &compositor2);
+  ASSERT_TRUE(compositor2);
+
+  // Original connection add subframe 1.
+  auto handle = LoadFileInSharedMemory();
+  ASSERT_TRUE(handle.IsValid());
+  mojo::ScopedSharedBufferHandle buffer_handle =
+      mojo::WrapSharedMemoryHandle(handle, handle.GetSize(), true);
+  compositor_->AddSubframeMap(1u, 2u);
+  compositor_->AddSubframeContent(1u, std::move(buffer_handle),
+                                  std::vector<uint32_t>());
+
+  // Original connection can use this subframe 1.
+  EXPECT_CALL(*this, CallbackOnIsReadyStatus(true)).Times(1);
+  std::vector<uint32_t> subframe_content_ids({2u});
+  compositor_->IsReadyToComposite(
+      4u, 0u, subframe_content_ids,
+      base::BindOnce(&PdfCompositorServiceTest::OnIsReadyToCompositeCallback,
+                     base::Unretained(this)));
+  run_loop_->Run();
+
+  // Connection 2 doesn't know about subframe 2.
+  EXPECT_CALL(*this, CallbackOnIsReadyStatus(false)).Times(1);
+  compositor2->IsReadyToComposite(
+      5u, 0u, subframe_content_ids,
+      base::BindOnce(&PdfCompositorServiceTest::OnIsReadyToCompositeCallback,
+                     base::Unretained(this)));
+  run_loop_ = std::make_unique<base::RunLoop>();
+  run_loop_->Run();
+
+  // Add info about subframe 2 to connection 2 so it can use it.
+  EXPECT_CALL(*this, CallbackOnIsReadyStatus(true)).Times(1);
+  auto handle2 = LoadFileInSharedMemory();
+  ASSERT_TRUE(handle2.IsValid());
+  mojo::ScopedSharedBufferHandle buffer_handle2 =
+      mojo::WrapSharedMemoryHandle(handle2, handle2.GetSize(), true);
+  compositor2->AddSubframeMap(3u, 2u);
+  compositor2->AddSubframeContent(3u, std::move(buffer_handle2),
+                                  std::vector<uint32_t>());
+  compositor2->IsReadyToComposite(
+      4u, 0u, subframe_content_ids,
+      base::BindOnce(&PdfCompositorServiceTest::OnIsReadyToCompositeCallback,
+                     base::Unretained(this)));
+  run_loop_ = std::make_unique<base::RunLoop>();
+  run_loop_->Run();
 }
 
 }  // namespace printing
