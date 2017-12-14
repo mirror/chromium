@@ -199,11 +199,8 @@ void AudioInputDeviceManager::OpenedOnIOThread(
 
   MediaStreamDevice media_stream_device(device.type, device.id, device.name);
   media_stream_device.session_id = session_id;
-  media_stream_device.input =
-      input_params.value_or(media::AudioParameters::UnavailableDeviceParams());
+  media_stream_device.input = input_params;
   media_stream_device.matched_output_device_id = matched_output_device_id;
-
-  DCHECK(media_stream_device.input.IsValid());
 
   devices_.push_back(media_stream_device);
 

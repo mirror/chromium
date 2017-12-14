@@ -569,13 +569,13 @@ void UserMediaProcessor::OnStreamGenerated(
     return;
   }
 
-  media_stream_device_observer_->AddStream(label, audio_devices, video_devices,
-                                           weak_factory_.GetWeakPtr());
+  MediaStreamDevices overridden_audio_devices = audio_devices,
+                     overridden_video_devices = video_devices;
+  for (auto* devices : {&overridden_audio_devices, &overridden_video_devices}) {
+    for (auto& device : *devices) {
+      if (!device.input)
+        device.input = media::AudioParameters::UnavailableDeviceParams();
 
-  current_request_info_->set_state(RequestInfo::State::GENERATED);
-
-  for (const auto* devices : {&audio_devices, &video_devices}) {
-    for (const auto& device : *devices) {
       WebRtcLogMessage(base::StringPrintf(
           "UMCI::OnStreamGenerated. request_id=%d, device id=\"%s\", "
           "device name=\"%s\"",
@@ -583,16 +583,22 @@ void UserMediaProcessor::OnStreamGenerated(
     }
   }
 
+  media_stream_device_observer_->AddStream(label, overridden_audio_devices,
+                                           overridden_video_devices,
+                                           weak_factory_.GetWeakPtr());
+
+  current_request_info_->set_state(RequestInfo::State::GENERATED);
+
   DCHECK(!current_request_info_->web_request().IsNull());
   blink::WebVector<blink::WebMediaStreamTrack> audio_track_vector(
-      audio_devices.size());
-  CreateAudioTracks(audio_devices,
+      overridden_audio_devices.size());
+  CreateAudioTracks(overridden_audio_devices,
                     current_request_info_->web_request().AudioConstraints(),
                     &audio_track_vector);
 
   blink::WebVector<blink::WebMediaStreamTrack> video_track_vector(
-      video_devices.size());
-  CreateVideoTracks(video_devices, &video_track_vector);
+      overridden_video_devices.size());
+  CreateVideoTracks(overridden_video_devices, &video_track_vector);
 
   blink::WebString blink_id = blink::WebString::FromUTF8(label);
   current_request_info_->web_stream()->Initialize(blink_id, audio_track_vector,

@@ -65,13 +65,11 @@ MediaStreamDevice::MediaStreamDevice(MediaStreamType type,
     : type(type),
       id(id),
       video_facing(media::MEDIA_VIDEO_FACING_NONE),
-      name(name),
-      input(media::AudioParameters::AUDIO_FAKE,
-            static_cast<media::ChannelLayout>(channel_layout),
-            sample_rate,
-            16,
-            frames_per_buffer) {
-  DCHECK(input.IsValid());
+      name(name) {
+  input.emplace(media::AudioParameters::AUDIO_FAKE,
+                static_cast<media::ChannelLayout>(channel_layout), sample_rate,
+                16, frames_per_buffer);
+  DCHECK(input->IsValid());
 }
 
 MediaStreamDevice::MediaStreamDevice(const MediaStreamDevice& other) = default;
@@ -80,10 +78,19 @@ MediaStreamDevice::~MediaStreamDevice() {}
 
 bool MediaStreamDevice::IsSameDevice(
     const MediaStreamDevice& other_device) const {
+  int sample_rate = input ? input->sample_rate() : 0,
+      other_sample_rate =
+          other_device.input ? other_device.input->sample_rate() : 0;
+  media::ChannelLayout channel_layout = input ? input->channel_layout()
+                                              : media::CHANNEL_LAYOUT_NONE,
+                       other_channel_layout =
+                           other_device.input
+                               ? other_device.input->channel_layout()
+                               : media::CHANNEL_LAYOUT_NONE;
+
   return type == other_device.type && name == other_device.name &&
-         id == other_device.id &&
-         input.sample_rate() == other_device.input.sample_rate() &&
-         input.channel_layout() == other_device.input.channel_layout() &&
+         id == other_device.id && sample_rate == other_sample_rate &&
+         channel_layout == other_channel_layout &&
          session_id == other_device.session_id;
 }
 
