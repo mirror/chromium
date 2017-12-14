@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8cc40ec_bb0e0d25",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T04:29:05Z",
+      "side": 1,
+      "message": "We could add the comment from the other file too about \"We have a non-redirect response\"",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ed6358_3ae3daf5",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T04:29:05Z",
+      "side": 1,
+      "message": "TODO format is a bit more conventional in command form \"Add Content-Length...\" or \"Consider adding Content-Length...\"\n\nI\u0027m wondering through the advantage of doing this. We\u0027ve had this TODO for 3 years:\nhttps://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_blob_reader.cc?l\u003d58\u0026rcl\u003d15e434d97da06bd2b9709b2aa65aa936aedbd277\n\nCan you help me understand why it\u0027s useful to have content-length?",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df8fa7b_dbbd43ab",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T04:29:05Z",
+      "side": 1,
+      "message": "BTW I\u0027m finding these Blob fields really confusing. ServiceWorkerResponse has a BlobPtr field but it\u0027s moved out to be a separate parameter in OnResponseBlob(response, blob). Meanwhile uuid and size are empty. It\u0027d be nice for cleanup/document this better. I think we\u0027re in a weird transitional phase because we are supporting both Mojo and non-Mojo blobs.",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c695c9d_7d230630",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T04:29:05Z",
+      "side": 1,
+      "message": "I think we can remove blob_size_, it\u0027s always 0.",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa768671_a76fb757",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T04:29:05Z",
+      "side": 1,
+      "message": "These expectations could be hard to understand, so we can change it to something like this:\n\n// We should get a valid response once the headers arrive.\nclient_.RunUntilResponseReceived();\nEXPECT_EQ(200, info.headers-\u003eresponse_code());\nExpectResponseInfo(info, *CreateResponseInfoFromServiceWorker());\n\n// However, since the blob is broken we should get an error while transferring the body.\nclient_.RunUntilComplete();\nEXPECT_EQ(net::ERR_OUT_OF_MEMORY, client_.completion_status().error_code);",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472fa459_47ab90b7",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T04:29:05Z",
+      "side": 1,
+      "message": "I think this whole TODO can be deleted now (and we can mark the bug Fixed)",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c58aad_51fa4f55",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-12-14T04:29:05Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e524efa50b4a3f2fd9d2db172b0acc406f677436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
