@@ -80,26 +80,24 @@ Polymer({
 
     /**
      * List of third party VPN providers.
-     * @type {!Array<!chrome.networkingPrivate.ThirdPartyVPNProperties>}
-     * @private
+     * @private {!Array<!chrome.networkingPrivate.ThirdPartyVPNProperties>}
      */
     thirdPartyVpnProviders_: {
       type: Array,
       value: function() {
         return [];
-      }
+      },
     },
 
     /**
      * List of Arc VPN providers.
-     * @type {!Array<!settings.ArcVpnProvider>}
-     * @private
+     * @private {!Array<!settings.ArcVpnProvider>}
      */
     arcVpnProviders_: {
       type: Array,
       value: function() {
         return [];
-      }
+      },
     },
 
     /** @private {!Map<string, string>} */
