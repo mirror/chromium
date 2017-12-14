@@ -13,6 +13,9 @@
 #include "core/intersection_observer/IntersectionObserverEntry.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
+#include "core/paint/RemoteFramePainter.h"
+#include "platform/graphics/GraphicsContext.h"
+#include "platform/graphics/paint/CullRect.h"
 
 namespace blink {
 
@@ -135,6 +138,20 @@ void RemoteFrameView::FrameRectsChanged() {
   remote_frame_->Client()->FrameRectsChanged(new_rect);
 }
 
+void RemoteFrameView::Paint(GraphicsContext& context,
+                            const GlobalPaintFlags flags,
+                            const CullRect& rect) const {
+  // Painting remote frames is only for printing.
+  if (!context.Printing())
+    return;
+
+  IntRect bound(FrameRect());
+  if (!rect.IntersectsCullRect(bound))
+    return;
+
+  RemoteFramePainter(*this).paint(context, rect);
+}
+
 void RemoteFrameView::UpdateGeometry() {
   if (LayoutEmbeddedContent* layout = remote_frame_->OwnerLayoutObject())
     layout->UpdateGeometry(*this);
@@ -218,6 +235,10 @@ bool RemoteFrameView::CanThrottleRendering() const {
   if (subtree_throttled_)
     return true;
   return hidden_for_throttling_;
+}
+
+void RemoteFrameView::Print(const IntRect& rect, uint32_t content_id) const {
+  remote_frame_->Client()->Print(rect, content_id);
 }
 
 void RemoteFrameView::Trace(blink::Visitor* visitor) {
