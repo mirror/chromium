@@ -102,6 +102,7 @@ jumbo_source_set("unit_tests") {
     "ParsedContentDispositionTest.cpp",
     "ParsedContentHeaderFieldParametersTest.cpp",
     "ParsedContentTypeTest.cpp",
+    "mime/ContentTypeTest.cpp",
     "mime/MIMETypeRegistryTest.cpp",
   ]
 
