@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6d2f99c_a79d9e0d",
+        "filename": "ios/chrome/browser/ui/omnibox/clipping_textfield.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-12-14T17:02:14Z",
+      "side": 1,
+      "message": "What happens if the super call returns NO?",
+      "revId": "c3abf4f334443d0140e983fe02addf944efb39a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
