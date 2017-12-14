@@ -1692,7 +1692,7 @@ void AppsGridView::CalculateDropTarget() {
   views::View::ConvertPointToTarget(drag_view_, this, &point);
   // Ensure that the drop target location is correct if RTL.
   point.set_x(GetMirroredXInView(point.x()));
-  if (!IsPointWithinDragBuffer(point)) {
+  if (!IsPointWithinDragBuffer(point, true)) {
     // Reset the reorder target to the original position if the cursor is
     // outside the drag buffer.
     if (IsDraggingForReparentInRootLevelGridView()) {
@@ -2235,7 +2235,7 @@ void AppsGridView::DispatchDragEventToDragAndDropHost(
 }
 
 void AppsGridView::MaybeStartPageFlipTimer(const gfx::Point& drag_point) {
-  if (!IsPointWithinDragBuffer(drag_point))
+  if (!IsPointWithinDragBuffer(drag_point, false))
     StopPageFlipTimer();
   int new_page_flip_target = -1;
 
@@ -2539,18 +2539,22 @@ void AppsGridView::DeleteItemViewAtIndex(int index) {
   delete item_view;
 }
 
-bool AppsGridView::IsPointWithinDragBuffer(const gfx::Point& point) const {
-  if (is_fullscreen_app_list_enabled_) {
-    gfx::Point point_in_screen = point;
-    ConvertPointToScreen(this, &point_in_screen);
-    const display::Display display =
-        display::Screen::GetScreen()->GetDisplayNearestView(
-            GetWidget()->GetNativeView());
-    return display.work_area().Contains(point_in_screen);
+bool AppsGridView::IsPointWithinDragBuffer(const gfx::Point& point,
+                                           bool reorder) const {
+  // Reorder
+  if (reorder) {
+    gfx::Rect rect(GetLocalBounds());
+    rect.Inset(-kDragBufferPx, -kDragBufferPx, -kDragBufferPx, -kDragBufferPx);
+    return rect.Contains(point);
   }
-  gfx::Rect rect(GetLocalBounds());
-  rect.Inset(-kDragBufferPx, -kDragBufferPx, -kDragBufferPx, -kDragBufferPx);
-  return rect.Contains(point);
+
+  // Page flip
+  gfx::Point point_in_screen = point;
+  ConvertPointToScreen(this, &point_in_screen);
+  const display::Display display =
+      display::Screen::GetScreen()->GetDisplayNearestView(
+          GetWidget()->GetNativeView());
+  return display.work_area().Contains(point_in_screen);
 }
 
 void AppsGridView::ButtonPressed(views::Button* sender,

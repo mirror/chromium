@@ -428,8 +428,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   void DeleteItemViewAtIndex(int index);
 
   // Returns true if |point| lies within the bounds of this grid view plus a
-  // buffer area surrounding it.
-  bool IsPointWithinDragBuffer(const gfx::Point& point) const;
+  // buffer area surrounding it. It is used for re-ordering if |reorder|
+  // is true; otherwise, it is for page flip.
+  bool IsPointWithinDragBuffer(const gfx::Point& point, bool reorder) const;
 
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
