@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80e29025_9eae7385",
+        "filename": "ui/views/layout/grid_layout.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T16:52:32Z",
+      "side": 1,
+      "message": "This could trivially be replaced with host-\u003eSetLayoutManager(std::make_unique\u003cGridLayout\u003e(host));\nnow. I\u0027ll do it separately.",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 50
+      },
+      "revId": "87999abdbb1d86ae9e4c669acf0da5e552fdb15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
