@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c2e575_281d027a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-14T13:11:28Z",
+      "side": 1,
+      "message": "Can you give further explanation to point #1? I don\u0027t understand it.",
+      "revId": "605fdc6b7bdfadb36578529c71e36c3de87f7445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4467455_ec4f0d7e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-14T13:11:28Z",
+      "side": 1,
+      "message": "What about \u003cinput type\u003d\"text\" role\u003d\"spinbutton\"\u003e",
+      "revId": "605fdc6b7bdfadb36578529c71e36c3de87f7445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224754f2_be88c25f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-14T13:11:28Z",
+      "side": 1,
+      "message": "This looks like an unnecessary change? Just added braces?",
+      "revId": "605fdc6b7bdfadb36578529c71e36c3de87f7445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d46dc7cd_9a4ab244",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-14T13:11:28Z",
+      "side": 1,
+      "message": "Why is target no longer used?",
+      "revId": "605fdc6b7bdfadb36578529c71e36c3de87f7445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

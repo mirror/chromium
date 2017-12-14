@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8f6d366_68980955",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-14T13:11:28Z",
+      "side": 0,
+      "message": "Is this comment no longer true?",
+      "revId": "54794b55e781258bde11a417eaa69f8c69c08671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb87399_e0e0976d",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-14T13:11:28Z",
+      "side": 0,
+      "message": "Why is this removed?",
+      "revId": "54794b55e781258bde11a417eaa69f8c69c08671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
