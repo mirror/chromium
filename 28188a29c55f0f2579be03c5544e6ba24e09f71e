@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb06bf22_08ef033a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-14T22:49:35Z",
+      "side": 1,
+      "message": "Nit: does this need to be static?\n\nNit: put this with the other native method at the bottom.",
+      "range": {
+        "startLine": 150,
+        "startChar": 12,
+        "endLine": 150,
+        "endChar": 18
+      },
+      "revId": "28188a29c55f0f2579be03c5544e6ba24e09f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd6e91b_0b1a88a0",
+        "filename": "chrome/browser/android/webapk/webapk_installer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-14T22:49:35Z",
+      "side": 1,
+      "message": "jint?",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 27
+      },
+      "revId": "28188a29c55f0f2579be03c5544e6ba24e09f71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
