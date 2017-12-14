@@ -16,6 +16,24 @@
       "revId": "5f575d14ae9ff79d0e47c80757215f87460ce0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0266c2fc_45d94ced",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-12-14T20:28:12Z",
+      "side": 1,
+      "message": "Let me have a play - there is one wrinkle - there is a DCHECK to make sure that settingsWillBeDismissed is actually called before the SettingsNavigationController is dealloced; but it\u0027s not easy to call it via the view controller hierarchy from a unit test. The reason it\u0027s not easy, is that you have to create a UIWindow and a root view controller to host the settings navigation controller (otherwise the view controller will complain about not being presented in a visible window). That would be ok, but doing *that* causes a problem with the pop viewController method calling through unwrappedControllerIfNeeded:... trying to be clever and returning a different view controller than the one expected 🙄 and the test breaks.\n\nFixing that tangle isn\u0027t something I think we should do here, so we\u0027ll still need a settingsWillBeDismissed call to manually trigger that cleanup to avoid DCHECKing in dealloc in the unit tests. Or we just delete the DCHECK.\n\nOne other thing is that it\u0027s also not quite equivalent to put the cleanup code for the other presented viewcontrollers in viewWillDisappear: using the same trick - because at the moment this code only runs when the root view controller (SettingsNavigationController) dismisses... not when just a sub-presented view controller dismisses... does that make sense? Due to this, I think for safety it\u0027s best not to change the behavior in this CL?",
+      "parentUuid": "cdeec7fa_96c46da8",
+      "revId": "5f575d14ae9ff79d0e47c80757215f87460ce0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
