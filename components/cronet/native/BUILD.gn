@@ -6,6 +6,8 @@ source_set("cronet_native_impl") {
   sources = [
     "buffer.cc",
     "buffer.h",
+    "engine.cc",
+    "engine.h",
     "executors.cc",
     "include/cronet_c.h",
     "runnables.cc",
@@ -71,6 +73,7 @@ source_set("cronet_native_tests") {
   ]
   sources = [
     "buffer_test.cc",
+    "engine_test.cc",
     "executors_test.cc",
     "test_util.cc",
     "test_util.h",
