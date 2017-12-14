@@ -34,6 +34,24 @@
       "revId": "bac259c1acfd784f17e7befffbdcb17562ab67e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7ddc05_cebda947",
+        "filename": "testing/buildbot/chromium.gpu.fyi.json",
+        "patchSetId": 20
+      },
+      "lineNbr": 10777,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-14T23:15:32Z",
+      "side": 1,
+      "message": "You\u0027re certainly welcome to run this on the Windows 10 bot on the chromium.gpu.fyi waterfall, and in fact I\u0027d encourage you to do so. Just modify the generator script instead, and don\u0027t put it on the optional tryservers yet.",
+      "parentUuid": "8f171002_021d5134",
+      "revId": "bac259c1acfd784f17e7befffbdcb17562ab67e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
