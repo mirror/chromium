@@ -4,10 +4,12 @@
 
 #include "tools/gn/scope.h"
 
+#include <iostream>
 #include <memory>
 
 #include "base/logging.h"
 #include "tools/gn/parse_tree.h"
+#include "tools/gn/source_file.h"
 #include "tools/gn/template.h"
 
 namespace {
@@ -51,14 +53,16 @@ Scope::Scope(Scope* parent)
       mutable_containing_(parent),
       settings_(parent->settings()),
       mode_flags_(0),
-      item_collector_(nullptr) {}
+      item_collector_(nullptr),
+      affected_files_(parent->affected_files_) {}
 
 Scope::Scope(const Scope* parent)
     : const_containing_(parent),
       mutable_containing_(nullptr),
       settings_(parent->settings()),
       mode_flags_(0),
-      item_collector_(nullptr) {}
+      item_collector_(nullptr),
+      affected_files_(parent->affected_files_) {}
 
 Scope::~Scope() = default;
 
@@ -403,6 +407,9 @@ bool Scope::NonRecursiveMergeTo(Scope* dest,
     dest->templates_[current_name] = pair.second;
   }
 
+  // Propogate affected files.
+  dest->affected_files_.insert(affected_files_.begin(), affected_files_.end());
+
   return true;
 }
 
@@ -501,6 +508,10 @@ const SourceDir& Scope::GetSourceDir() const {
   return source_dir_;
 }
 
+void Scope::AddAffectedFile(const SourceFile& affected_file) {
+  affected_files_.insert(affected_file);
+}
+
 Scope::ItemVector* Scope::GetItemCollector() {
   if (item_collector_)
     return item_collector_;
@@ -537,6 +548,29 @@ void Scope::AddProvider(ProgrammaticProvider* p) {
 void Scope::RemoveProvider(ProgrammaticProvider* p) {
   DCHECK(programmatic_providers_.find(p) != programmatic_providers_.end());
   programmatic_providers_.erase(p);
+}
+
+void Scope::Print() const {
+  std::cout << "affected files: " << std::endl;
+  for (const auto& affected_file : affected_files_) {
+    std::cout << "\t" << affected_file.value() << std::endl;
+  }
+
+  Scope::KeyValueMap scope_values;
+  this->GetCurrentScopeValues(&scope_values);
+  if (scope_values.empty()) {
+    std::cout << std::string("{ }") << std::endl;
+    return;
+  }
+
+  std::string result = "{\n";
+  for (const auto& pair : scope_values) {
+    result += "  " + pair.first.as_string() + " = " +
+              pair.second.ToString(true) + "\n";
+  }
+  result += "}";
+
+  std::cout << result << std::endl;
 }
 
 // static
