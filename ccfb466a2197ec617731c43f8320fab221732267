@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "53c8a153_88348de2",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-14T21:40:39Z",
+      "side": 1,
+      "message": "Leaving this as per discusses offlien.",
+      "parentUuid": "a7f35aeb_d7e8726a",
+      "revId": "ccfb466a2197ec617731c43f8320fab221732267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0da88212_7ac5268d",
         "filename": "ash/wm/overview/window_selector.cc",
         "patchSetId": 2
@@ -172,6 +190,24 @@
       "side": 1,
       "message": "It seems to me that the stacking order of |item_widget_| and its window of the WindowSelectorItem is not right. Theoretically it should not happen. Can you double check?",
       "parentUuid": "c89da7a2_b14d4af3",
+      "revId": "ccfb466a2197ec617731c43f8320fab221732267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2a1130_cb793d68",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-12-14T21:40:39Z",
+      "side": 1,
+      "message": "As discussed, it makes sense to focus this since this gets focused on normal enter overview. Changed the comment a bit.",
+      "parentUuid": "6c70f9e9_c3bd95a9",
       "revId": "ccfb466a2197ec617731c43f8320fab221732267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
