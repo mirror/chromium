@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1f0c5a0_85ee2933",
+        "filename": "chrome/browser/extensions/install_verifier_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-14T04:24:35Z",
+      "side": 1,
+      "message": "If you decide to follow the parametrized test comment below, it would be easier to test a single thing per method (IsFromStore or MustRemainDisabled) instead of two things at once.\n\nI suggest 4 parametrized tests:\nTestIsFromStore\nTestIsNotFromStore\nTestMustRemainDisabled\nTestCanRemainEnabled\n\nEach of the test uses the matching \u003clocation, update_url\u003e pairs.",
+      "range": {
+        "startLine": 56,
+        "startChar": 65,
+        "endLine": 56,
+        "endChar": 66
+      },
+      "revId": "e9d7b870d64ded3ffa7afb2bacefcd4e56d79240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ba62b4_8cdc12f6",
+        "filename": "chrome/browser/extensions/install_verifier_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-12-14T04:24:35Z",
+      "side": 1,
+      "message": "This screams parametrized test. \nMaybe it\u0027s worth splitting this into two parametrized tests (TestIsFromStoreAndMustRemainDisabled vs TestIsFromStoreAndCanRemainEnabled) which call a common method (something like \"void VerifyMustRemainDisabled(const Extension* extension, boolean expect_remains_disabled)\") with different values of expect_remains_disabled.\n\nExample parametrized test: https://cs.chromium.org/chromium/src/chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc?l\u003d785\u0026rcl\u003da4ee7012ac4d2103ed1a891d61c618b18828b973",
+      "range": {
+        "startLine": 75,
+        "startChar": 20,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "e9d7b870d64ded3ffa7afb2bacefcd4e56d79240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
