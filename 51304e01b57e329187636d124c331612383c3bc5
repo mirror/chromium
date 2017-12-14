@@ -70,6 +70,30 @@
       "revId": "51304e01b57e329187636d124c331612383c3bc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8fa2ec_43f9bb2a",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1133169
+      },
+      "writtenOn": "2017-12-14T14:46:36Z",
+      "side": 1,
+      "message": "Done. I decided to use URL instead of hash as it\u0027s already available in ImportedBookmarkEntry structure.\n\nTests use places.sqlite and favicons.sqlite databases from Firefox 57.0.1 profile. These files are quite big (5MB each - places.sqlite file for Firefox 48 is 1MB). They are clean files created on Firefox startup, just with additional google.com bookmark.",
+      "parentUuid": "ba7bc547_e177d1f3",
+      "range": {
+        "startLine": 724,
+        "startChar": 0,
+        "endLine": 725,
+        "endChar": 65
+      },
+      "revId": "51304e01b57e329187636d124c331612383c3bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
