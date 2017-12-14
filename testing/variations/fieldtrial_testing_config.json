@@ -815,7 +815,10 @@
                     ]
                 },
                 {
-                    "name": "3Hours",
+                    "name": "Default"
+                },
+                {
+                    "name": "Enabled_3_Hours",
                     "params": {
                         "time_since_backgrounded_in_mins": "180"
                     },
