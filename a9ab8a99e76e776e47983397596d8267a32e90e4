@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b95787a_1c2b2f55",
+        "filename": "net/tools/dafsa/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T03:11:01Z",
+      "side": 1,
+      "message": "I\u0027d say to only run on commit, unless they are extremely fast.",
+      "revId": "a9ab8a99e76e776e47983397596d8267a32e90e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26f1f22_fa356ec8",
+        "filename": "net/tools/dafsa/dafsa_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T03:11:01Z",
+      "side": 1,
+      "message": "I wouldn\u0027t call this file \u0027utils\u0027, it\u0027s just dafsa.",
+      "revId": "a9ab8a99e76e776e47983397596d8267a32e90e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ab9838_4b54f607",
+        "filename": "net/tools/dafsa/dafsa_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T03:11:01Z",
+      "side": 1,
+      "message": "It is enforced at line 209 so used \"required\" instead.",
+      "range": {
+        "startLine": 16,
+        "startChar": 22,
+        "endLine": 16,
+        "endChar": 29
+      },
+      "revId": "a9ab8a99e76e776e47983397596d8267a32e90e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96481f01_46763f48",
+        "filename": "net/tools/dafsa/dafsa_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T03:11:01Z",
+      "side": 1,
+      "message": "That\u0027s kinda iffy wording for bytes?",
+      "revId": "a9ab8a99e76e776e47983397596d8267a32e90e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2ff6c7_ab8e1f12",
+        "filename": "net/tools/dafsa/dafsa_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T03:11:01Z",
+      "side": 1,
+      "message": "This is the only two places where \u0027domain\u0027 is called out. Technically this library is generic.",
+      "revId": "a9ab8a99e76e776e47983397596d8267a32e90e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd2d94b_3ee22c66",
+        "filename": "net/tools/dafsa/dafsa_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T03:11:01Z",
+      "side": 1,
+      "message": "You are the first person I ever see using python\u0027s id(). It works, but that\u0027s unconventional. :)",
+      "revId": "a9ab8a99e76e776e47983397596d8267a32e90e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c80958_687d526d",
+        "filename": "net/tools/dafsa/dafsa_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T03:11:01Z",
+      "side": 1,
+      "message": "I\u0027d recommend to prefix all internal function with an underscore, and keep the remaining public API grouped.",
+      "revId": "a9ab8a99e76e776e47983397596d8267a32e90e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db13c35_8af92d28",
+        "filename": "net/tools/dafsa/dafsa_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T03:11:01Z",
+      "side": 1,
+      "message": "Double space",
+      "range": {
+        "startLine": 380,
+        "startChar": 58,
+        "endLine": 380,
+        "endChar": 60
+      },
+      "revId": "a9ab8a99e76e776e47983397596d8267a32e90e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21dbaed_db181b56",
+        "filename": "tools/media_engagement_preload/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-12-14T03:11:01Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 38,
+        "startChar": 9,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "a9ab8a99e76e776e47983397596d8267a32e90e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
