@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2df4a413_4a65b738",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-14T20:08:10Z",
+      "side": 1,
+      "message": "I am cargo-culting this from |NavigationControllerTest.Back|.  After SendRendererInitiatedNavigationRequest call above, then pending main frame is the right one from site-per-process perspective.\n\nI am not sure what is the right thing to do here.  Alternative approach would be to change the URLs so that they are same-origin (e.g. they only differ by path).  Do you think this might be also acceptable?  It might be seen as less magical than what I am doing right now...",
+      "range": {
+        "startLine": 995,
+        "startChar": 23,
+        "endLine": 995,
+        "endChar": 37
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726db7a0_fabbeac4",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1656,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-14T20:08:10Z",
+      "side": 1,
+      "message": "Because of the redirect on line 1655 we will commit |url2|, not |url1| - the old test code was incorrect.",
+      "range": {
+        "startLine": 1656,
+        "startChar": 72,
+        "endLine": 1656,
+        "endChar": 76
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc0c62e2_3f8c3f48",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-14T20:08:10Z",
+      "side": 1,
+      "message": "We are going back (see line 1720) to |url1|, not to |url2| - the old test code was incorrect here.",
+      "range": {
+        "startLine": 1746,
+        "startChar": 48,
+        "endLine": 1746,
+        "endChar": 52
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4905b4be_9feea490",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1861,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-14T20:08:10Z",
+      "side": 1,
+      "message": "I hear from Nasko that NavigationSimulator is the right way to simulate navigations from unit tests and that eventually we should migrate unit tests to use NavigationSimulator where possible.  FWIW, NavigationSimulator does fix problems in unit tests here (the previous code wouldn\u0027t do the \"process swap\" simulation right and would hit a CanCommitOrigin-related kill after other changes in this CL).\n\nLooks good?",
+      "range": {
+        "startLine": 1861,
+        "startChar": 2,
+        "endLine": 1861,
+        "endChar": 52
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e4ec2c_3fa45b77",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1874,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-14T20:08:10Z",
+      "side": 1,
+      "message": "Can\u0027t use NavigationSimulator, because we need to inspect the pending entry below (which will disappear once the navigation is done / is fully simulated).",
+      "range": {
+        "startLine": 1874,
+        "startChar": 2,
+        "endLine": 1874,
+        "endChar": 25
+      },
+      "revId": "8d9ce25723362ca9d623f433e24a4c2ef7674287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

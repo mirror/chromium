@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "144b99df_717c3d7b",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1855,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-14T20:08:10Z",
+      "side": 0,
+      "message": "This is |has_user_gesture|.  I notice that |NavigationSimulator::has_user_gesture_| is default-initialized to |true| in https://cs.chromium.org/chromium/src/content/public/test/navigation_simulator.h?rcl\u003da79793994cb8f772fd9f6039a4c45535d53091d6\u0026l\u003d353",
+      "range": {
+        "startLine": 1855,
+        "startChar": 63,
+        "endLine": 1855,
+        "endChar": 68
+      },
+      "revId": "d20e560e704a6f8d7e72daf86a33ffa0187c9293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
