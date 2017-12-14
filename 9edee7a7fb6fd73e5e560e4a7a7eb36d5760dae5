@@ -16,6 +16,24 @@
       "revId": "9edee7a7fb6fd73e5e560e4a7a7eb36d5760dae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a642c2c_68bc61f7",
+        "filename": "third_party/WebKit/Source/platform/heap/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-12-14T13:04:18Z",
+      "side": 1,
+      "message": "Rebased an made this public_deps \u003d ... again. In one of the previous PS it didn\u0027t work. :)",
+      "parentUuid": "162b928a_4c203bd5",
+      "revId": "9edee7a7fb6fd73e5e560e4a7a7eb36d5760dae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
