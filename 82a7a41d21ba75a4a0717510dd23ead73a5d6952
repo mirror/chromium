@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "15eed5b8_ab05ffb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-14T21:45:54Z",
+      "side": 1,
+      "message": "nit: enforcement",
+      "range": {
+        "startLine": 15,
+        "startChar": 39,
+        "endLine": 15,
+        "endChar": 49
+      },
+      "revId": "82a7a41d21ba75a4a0717510dd23ead73a5d6952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc9218bb_c38f7e89",
         "filename": "content/browser/dom_storage/dom_storage_browsertest.cc",
         "patchSetId": 2
@@ -22,6 +45,103 @@
       "revId": "82a7a41d21ba75a4a0717510dd23ead73a5d6952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d39bb02e_8eeb0cd3",
+        "filename": "content/browser/dom_storage/dom_storage_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-14T21:45:54Z",
+      "side": 1,
+      "message": "If this will never work on windows, perhaps we can just #ifdef the whole test?",
+      "revId": "82a7a41d21ba75a4a0717510dd23ead73a5d6952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc85795_79b21068",
+        "filename": "content/browser/dom_storage/dom_storage_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-14T21:45:54Z",
+      "side": 1,
+      "message": "As a sanity check, perhaps check that the main frame\u0027s SiteInstance is \"file:\" here as well?",
+      "revId": "82a7a41d21ba75a4a0717510dd23ead73a5d6952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0823bbf0_0247bc58",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-14T21:45:54Z",
+      "side": 1,
+      "message": "Maybe update this comment to explain why file: is now excluded? (I.e., some of what you put down in the unittest comment.)",
+      "revId": "82a7a41d21ba75a4a0717510dd23ead73a5d6952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cddfdf67_782b793e",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-14T21:45:54Z",
+      "side": 1,
+      "message": "nit: !origin.SchemeIsFile()",
+      "range": {
+        "startLine": 415,
+        "startChar": 32,
+        "endLine": 415,
+        "endChar": 67
+      },
+      "revId": "82a7a41d21ba75a4a0717510dd23ead73a5d6952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28acf97e_a5e9e24f",
+        "filename": "content/browser/site_instance_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-14T21:45:54Z",
+      "side": 1,
+      "message": "nit: maybe add quotes around \"file:\" and \"file://\" to make it clear these are actual values and not prefixes? (Though I guess the test makes it clear as well)",
+      "range": {
+        "startLine": 336,
+        "startChar": 10,
+        "endLine": 336,
+        "endChar": 15
+      },
+      "revId": "82a7a41d21ba75a4a0717510dd23ead73a5d6952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
