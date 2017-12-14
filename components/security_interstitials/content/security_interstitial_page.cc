@@ -41,7 +41,6 @@ SecurityInterstitialPage::SecurityInterstitialPage(
     safe_browsing::UpdatePrefsBeforeSecurityInterstitial(
         controller_->GetPrefService());
   }
-  SetUpMetrics();
 
   // Creating interstitial_page_ without showing it leaks memory, so don't
   // create it here.
@@ -66,6 +65,11 @@ void SecurityInterstitialPage::DontCreateViewForTesting() {
   create_view_ = false;
 }
 
+std::string SecurityInterstitialPage::OnReadyToShowHTMLContents() {
+  SetUpMetricsOnShow();
+  return GetHTMLContents();
+}
+
 std::string SecurityInterstitialPage::GetHTMLContents() {
   base::DictionaryValue load_time_data;
   PopulateInterstitialStrings(&load_time_data);
@@ -85,6 +89,7 @@ void SecurityInterstitialPage::Show() {
   if (!create_view_)
     interstitial_page_->DontCreateViewForTesting();
 
+  SetUpMetricsOnShow();
   interstitial_page_->Show();
 
   controller_->set_interstitial_page(interstitial_page_);
@@ -103,7 +108,7 @@ void SecurityInterstitialPage::UpdateMetricsAfterSecurityInterstitial() {
   }
 }
 
-void SecurityInterstitialPage::SetUpMetrics() {
+void SecurityInterstitialPage::SetUpMetricsOnShow() {
   // Remember the initial state of the extended reporting pref, to be compared
   // to the same data when the interstitial is closed.
   PrefService* prefs = controller_->GetPrefService();

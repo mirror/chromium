@@ -37,20 +37,26 @@ class SecurityInterstitialPage : public content::InterstitialPageDelegate {
 
   // Creates an interstitial and shows it. This is used for the pre-committed
   // interstitials code path, when an interstitial is generated as an
-  // overlay.
+  // overlay. For committed interstitials, use OnReadyToShowHTMLContents() which
+  // prepares the page to be shown but doesn't actually show it, just returning
+  // the HTML contents to the caller to display.
   virtual void Show();
 
   // Prevents creating the actual interstitial view for testing.
   void DontCreateViewForTesting();
 
-  // InterstitialPageDelegate method:
-  std::string GetHTMLContents() override;
+  // Sets up the security interstitial page to be shown and returns its HTML
+  // contents for the caller to display.
+  std::string OnReadyToShowHTMLContents();
 
   // Must be called when the interstitial is closed, to give subclasses a chance
   // to e.g. update metrics.
   virtual void OnInterstitialClosing() = 0;
 
  protected:
+  // InterstitialPageDelegate method:
+  std::string GetHTMLContents() override;
+
   // Returns true if the interstitial should create a new navigation entry.
   virtual bool ShouldCreateNewNavigation() const = 0;
 
@@ -73,7 +79,7 @@ class SecurityInterstitialPage : public content::InterstitialPageDelegate {
   void UpdateMetricsAfterSecurityInterstitial();
 
  private:
-  void SetUpMetrics();
+  void SetUpMetricsOnShow();
 
   // The WebContents with which this interstitial page is
   // associated. Not available in ~SecurityInterstitialPage, since it
