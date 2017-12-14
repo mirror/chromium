@@ -16,6 +16,24 @@
       "revId": "41bba78de7841a9c5abdd3c842bbca8c2a5d46a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750b8497_d5c6a745",
+        "filename": "components/viz/service/display/surface_aggregator_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-12-14T16:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e9842de_477abf4c",
+      "revId": "41bba78de7841a9c5abdd3c842bbca8c2a5d46a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
