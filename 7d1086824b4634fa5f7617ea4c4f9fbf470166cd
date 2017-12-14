@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fd44844a_389e8825",
+        "filename": "content/renderer/push_messaging/push_messaging_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-14T09:41:28Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s currently a way, but we could remove blink::InterfaceRegistry and provide direct access to RenderFrameImpl\u0027s BinderRegistry and AssociatedInterfaceRegistry instead. Then it would be possible to create a mojo connection to an in-renderer interface on a frame from the blink side.",
+      "parentUuid": "e783e881_c581bae2",
+      "revId": "7d1086824b4634fa5f7617ea4c4f9fbf470166cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dcfd40b_371e9c11",
         "filename": "third_party/WebKit/Source/modules/push_messaging/PushMessagingBridge.cpp",
         "patchSetId": 1
