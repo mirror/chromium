@@ -12,6 +12,7 @@
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
+#include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/grit/generated_resources.h"
@@ -21,11 +22,9 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/chromeos/resources/grit/ui_chromeos_resources.h"
-#include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_id.h"
-#include "ui/message_center/public/cpp/message_center_switches.h"
 
 namespace arc {
 
@@ -34,30 +33,6 @@ namespace {
 const char kLowDiskSpaceId[] = "arc_low_disk";
 const char kNotifierId[] = "arc_boot_error";
 const char kStoragePage[] = "storage";
-
-class LowDiskSpaceErrorNotificationDelegate
-    : public message_center::NotificationDelegate {
- public:
-  explicit LowDiskSpaceErrorNotificationDelegate(
-      content::BrowserContext* context)
-      : context_(context) {}
-
-  // message_center::NotificationDelegate
-  void ButtonClick(int button_index) override {
-    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-    chrome::ShowSettingsSubPageForProfile(Profile::FromBrowserContext(context_),
-                                          kStoragePage);
-  }
-
- private:
-  ~LowDiskSpaceErrorNotificationDelegate() override = default;
-
-  // Passed from ArcBootErrorNotification, so owned by ProfileManager.
-  // Thus, touching this on UI thread while the message loop is running
-  // should be safe.
-  content::BrowserContext* const context_;
-  DISALLOW_COPY_AND_ASSIGN(LowDiskSpaceErrorNotificationDelegate);
-};
 
 void ShowLowDiskSpaceErrorNotification(content::BrowserContext* context) {
   // We suppress the low-disk notification when there are multiple users on an
@@ -83,6 +58,7 @@ void ShowLowDiskSpaceErrorNotification(content::BrowserContext* context) {
       user_manager::UserManager::Get()->GetPrimaryUser()->GetAccountId();
   notifier_id.profile_id = account_id.GetUserEmail();
 
+  Profile* profile = Profile::FromBrowserContext(context);
   std::unique_ptr<message_center::Notification> notification =
       message_center::Notification::CreateSystemNotification(
           message_center::NOTIFICATION_TYPE_SIMPLE, kLowDiskSpaceId,
@@ -94,11 +70,20 @@ void ShowLowDiskSpaceErrorNotification(content::BrowserContext* context) {
               IDR_DISK_SPACE_NOTIFICATION_CRITICAL)),
           l10n_util::GetStringUTF16(IDS_ARC_NOTIFICATION_DISPLAY_SOURCE),
           GURL(), notifier_id, optional_fields,
-          new LowDiskSpaceErrorNotificationDelegate(context),
+          new message_center::HandleNotificationClickDelegate(
+              base::BindRepeating(
+                  [](Profile* profile, base::Optional<int> button_index) {
+                    if (button_index) {
+                      DCHECK_EQ(0, *button_index);
+                      chrome::ShowSettingsSubPageForProfile(profile,
+                                                            kStoragePage);
+                    }
+                  },
+                  profile)),
           kNotificationStorageFullIcon,
           message_center::SystemNotificationWarningLevel::CRITICAL_WARNING);
-  message_center::MessageCenter::Get()->AddNotification(
-      std::move(notification));
+  NotificationDisplayService::GetForProfile(profile)->Display(
+      NotificationHandler::Type::TRANSIENT, *notification);
 }
 
 // Singleton factory for ArcBootErrorNotificationFactory.
@@ -116,7 +101,9 @@ class ArcBootErrorNotificationFactory
 
  private:
   friend base::DefaultSingletonTraits<ArcBootErrorNotificationFactory>;
-  ArcBootErrorNotificationFactory() = default;
+  ArcBootErrorNotificationFactory() {
+    DependsOn(NotificationDisplayServiceFactory::GetInstance());
+  }
   ~ArcBootErrorNotificationFactory() override = default;
 };
 
