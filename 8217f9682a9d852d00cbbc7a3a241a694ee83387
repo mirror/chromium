@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b744ee9_1d673117",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/geolocation-emulation-tests-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T19:30:34Z",
+      "side": 1,
+      "message": "It might be flaky to dump without override. Let\u0027s instead compare with original one (before enabling override).",
+      "revId": "8217f9682a9d852d00cbbc7a3a241a694ee83387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
