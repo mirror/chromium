@@ -42,7 +42,7 @@ using ::testing::NotNull;
 
 namespace content {
 
-namespace {
+namespace audio_renderer_host_unittest {
 const int kStreamId = 50;
 const char kSecurityOrigin[] = "http://localhost";
 const char kDefaultDeviceId[] = "";
@@ -89,8 +89,6 @@ class FakeAudioManagerWithAssociations : public media::FakeAudioManager {
  private:
   std::map<std::string, std::string> associations_;
 };
-
-}  // namespace
 
 class MockAudioRendererHost : public AudioRendererHost {
  public:
@@ -587,4 +585,5 @@ TEST_F(AudioRendererHostTest, CreateFailsForInvalidRenderFrame) {
 
 // TODO(hclam): Add tests for data conversation in low latency mode.
 
+}  // namespace audio_renderer_host_unittest
 }  // namespace content
