@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e20e3870_76b7dde4",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T20:12:03Z",
+      "side": 1,
+      "message": "super-duper-nit: lift this above the previous line since we get the isolate there, too?",
+      "revId": "d7499b08398b8b7fb8dea792763d70a72420b7ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b297520_17c0c2c2",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T20:12:03Z",
+      "side": 1,
+      "message": "super-nit: val-\u003eIsTrue() is both faster and more concise",
+      "revId": "d7499b08398b8b7fb8dea792763d70a72420b7ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7356d3cc_f86371c2",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T20:12:03Z",
+      "side": 1,
+      "message": "super-nit: WDYT of moving the ToLocalChecked closer to here? It took me a moment to realize that this is why ToLocalChecked is justified.",
+      "revId": "d7499b08398b8b7fb8dea792763d70a72420b7ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
