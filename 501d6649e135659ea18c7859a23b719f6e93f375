@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91467aa6_376ee1fa",
+        "filename": "third_party/WebKit/Source/platform/Histogram.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T19:24:08Z",
+      "side": 0,
+      "message": "I removed this because it\u0027s really only used in the one test, and we already have a way of injecting virtual time for tests.\n\nIt may be we want to use base::TickClock* more in the future, but that\u0027s outside the scope of this CL.",
+      "revId": "501d6649e135659ea18c7859a23b719f6e93f375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
