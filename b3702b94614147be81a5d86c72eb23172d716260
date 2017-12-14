@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fba9adb9_64fb842e",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:27:23Z",
+      "side": 1,
+      "message": "Usually, that gets added in the same CL that will move the data to logs. Since it\u0027s protobuf, it can happen later.",
+      "parentUuid": "cd61c876_2e41d274",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 36
+      },
+      "revId": "b3702b94614147be81a5d86c72eb23172d716260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d30d0fc0_65682742",
         "filename": "components/data_reduction_proxy/proto/client_config.proto",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T21:10:58Z",
       "side": 1,
       "message": "Would it be better to create a new DeviceInfo message and add total_device_memory_kb to it ?\nSo it\u0027ll be easier to add other device information in the future (if the protocol is updated)?\n\nmessage DeviceInfo {\n optional int64 total_device_memory_kb \u003d 1;\n}",
+      "range": {
+        "startLine": 149,
+        "startChar": 17,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "b3702b94614147be81a5d86c72eb23172d716260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9e48b6_8f677d12",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:27:23Z",
+      "side": 1,
+      "message": "sgtm. Done.",
+      "parentUuid": "d30d0fc0_65682742",
       "range": {
         "startLine": 149,
         "startChar": 17,
@@ -107,6 +155,30 @@
       "side": 1,
       "message": "This should be memory used by the page ?",
       "parentUuid": "a51a3ecb_290c5176",
+      "range": {
+        "startLine": 111,
+        "startChar": 17,
+        "endLine": 111,
+        "endChar": 39
+      },
+      "revId": "b3702b94614147be81a5d86c72eb23172d716260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa7a5c6_3695a75e",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-12-14T21:27:23Z",
+      "side": 1,
+      "message": "Per buettner@, it is a lot easier to have the device memory here as well as in the client config for analysis.\n\nMemory used by page is going to be added later; there will be 3 total CLs: this, memory_at_load_time and renderer_out_of_memory;",
+      "parentUuid": "88ab6651_694eaa68",
       "range": {
         "startLine": 111,
         "startChar": 17,
