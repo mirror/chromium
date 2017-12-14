@@ -352,13 +352,17 @@ static bool GetDeviceChannels(AudioDeviceID device,
   // > 8 channel devices, we must use the total channel count instead of the
   // channel count of the preferred layout.
   int total_channel_count = 0;
-  if (GetDeviceTotalChannelCount(device,
-                                 element == AUElement::OUTPUT
-                                     ? kAudioDevicePropertyScopeOutput
-                                     : kAudioDevicePropertyScopeInput,
-                                 &total_channel_count) &&
-      total_channel_count > kMaxConcurrentChannels) {
+  bool total_channel_count_result = GetDeviceTotalChannelCount(
+      device,
+      element == AUElement::OUTPUT ? kAudioDevicePropertyScopeOutput
+                                   : kAudioDevicePropertyScopeInput,
+      &total_channel_count);
+  if (total_channel_count_result &&
+      (total_channel_count > kMaxConcurrentChannels ||
+       element == AUElement::INPUT)) {
     *channels = total_channel_count;
+    DVLOG(1) << (element == AUElement::OUTPUT ? "Output" : "Input")
+             << " channels: " << *channels;
     return true;
   }
 

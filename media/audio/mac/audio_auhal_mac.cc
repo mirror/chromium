@@ -441,14 +441,6 @@ bool AUHALStream::ConfigureAUHAL() {
   if (!local_audio_unit->is_valid())
     return false;
 
-  // Enable output as appropriate.
-  UInt32 enable_io = 1;
-  OSStatus result = AudioUnitSetProperty(
-      local_audio_unit->audio_unit(), kAudioOutputUnitProperty_EnableIO,
-      kAudioUnitScope_Output, AUElement::OUTPUT, &enable_io, sizeof(enable_io));
-  if (result != noErr)
-    return false;
-
   if (!SetStreamFormat(params_.channels(), params_.sample_rate(),
                        local_audio_unit->audio_unit(), &output_format_)) {
     return false;

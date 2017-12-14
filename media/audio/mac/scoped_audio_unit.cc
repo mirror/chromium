@@ -33,9 +33,27 @@ ScopedAudioUnit::ScopedAudioUnit(AudioDeviceID device, AUElement element) {
     return;
   }
 
+  UInt32 enable_io = element == AUElement::INPUT ? 1 : 0;
+  AudioUnitSetProperty(audio_unit, kAudioOutputUnitProperty_EnableIO,
+                       kAudioUnitScope_Input, AUElement::INPUT, &enable_io,
+                       sizeof(enable_io));
+  if (result != noErr) {
+    OSSTATUS_DLOG(ERROR, result) << "Failed to set enable IO on input.";
+    return;
+  }
+
+  enable_io = element == AUElement::OUTPUT ? 1 : 0;
+  AudioUnitSetProperty(audio_unit, kAudioOutputUnitProperty_EnableIO,
+                       kAudioUnitScope_Output, AUElement::OUTPUT, &enable_io,
+                       sizeof(enable_io));
+  if (result != noErr) {
+    OSSTATUS_DLOG(ERROR, result) << "Failed to set enable IO on output.";
+    return;
+  }
+
   result = AudioUnitSetProperty(
       audio_unit, kAudioOutputUnitProperty_CurrentDevice,
-      kAudioUnitScope_Global, element, &device, sizeof(AudioDeviceID));
+      kAudioUnitScope_Global, 0, &device, sizeof(AudioDeviceID));
   if (result == noErr) {
     audio_unit_ = audio_unit;
     return;
