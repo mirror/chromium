@@ -93,6 +93,16 @@ std::string* GetPasswordV10() {
 // Caches and returns the password from the KeyStorage or null if there is no
 // service. Is thread-safe.
 std::string* GetPasswordV11() {
+  // ========================================================================================
+  // ERASEME(brettw) this slightly mitigates
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=795019
+
+  static bool first_time = true;
+  if (first_time) {
+    sleep(5);
+    first_time = false;
+  }
+
   base::AutoLock auto_lock(g_cache.Get().lock);
   if (!g_cache.Get().is_password_v11_cached) {
     std::unique_ptr<KeyStorageLinux> key_storage = g_key_storage_provider();
