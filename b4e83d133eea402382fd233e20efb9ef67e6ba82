@@ -94,6 +94,30 @@
       "revId": "b4e83d133eea402382fd233e20efb9ef67e6ba82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29833ab1_637ca452",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T07:14:47Z",
+      "side": 1,
+      "message": "To make this test you just have to modify MockMojoMediaStreamDispatcherHost::GenerateStream()[1] to make sure the audio MediaStreamDevice it returns has a nonempty |matched_output_device_id|.\n\nThen you have to verify that the matched_output_device_id remains nonempty after getUserMedia() returns. \n\n[1] https://cs.chromium.org/chromium/src/content/renderer/media/mock_mojo_media_stream_dispatcher_host.cc?gsn\u003dMockMojoMediaStreamDispatcherHost\u0026l\u003d23",
+      "parentUuid": "1a00fce3_d5210f4b",
+      "range": {
+        "startLine": 1391,
+        "startChar": 32,
+        "endLine": 1391,
+        "endChar": 59
+      },
+      "revId": "b4e83d133eea402382fd233e20efb9ef67e6ba82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
