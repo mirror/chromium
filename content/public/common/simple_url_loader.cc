@@ -34,14 +34,18 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_request_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "services/network/public/interfaces/data_pipe_getter.mojom.h"
 #include "storage/common/data_element.h"
 
 namespace content {
 
+const size_t SimpleURLLoader::kMaxBoundedStringDownloadSize = 1024 * 1024;
+const size_t SimpleURLLoader::kMaxUploadStringSizeToCopy = 256 * 1024;
+
 namespace {
 
 // This file contains SimpleURLLoaderImpl, several BodyHandler implementations,
-// and BodyReader.
+// BodyReader, and StringStreamer.
 //
 // SimpleURLLoaderImpl implements URLLoaderClient and drives the URLLoader.
 //
@@ -54,6 +58,112 @@ namespace {
 // the BodyPipe. This isn't handled by the SimpleURLLoader as some BodyHandlers
 // consume data off thread, so having it as a separate class allows the data
 // pipe to be used off thread, reducing use of the main thread.
+//
+// StringStreamer is a class to stream a string to the network service, rather
+// than to copy it all at once.
+
+class StringUploadDataPipeGetter : public network::mojom::DataPipeGetter {
+ public:
+  explicit StringUploadDataPipeGetter(const std::string& upload_string)
+      : data_pipe_getter_binding_(this), upload_string_(upload_string) {}
+  ~StringUploadDataPipeGetter() override = default;
+
+  // Returns a new DataPipeGetter for reading the string the streamer was
+  // created with, destroying any previously active one, and any previously
+  // active data pipe as well.
+  network::mojom::DataPipeGetterPtr CreateDataPipeGetter() {
+    data_pipe_getter_binding_.Close();
+
+    // Close any previous body pipe, to avoid confusion between the two, if this
+    // is a retry.
+    ResetBodyPipe();
+
+    network::mojom::DataPipeGetterPtr data_pipe_getter;
+    data_pipe_getter_binding_.Bind(mojo::MakeRequest(&data_pipe_getter));
+    return data_pipe_getter;
+  }
+
+  void Read(mojo::ScopedDataPipeProducerHandle pipe,
+            ReadCallback callback) override {
+    // Close any previous body pipe, to avoid confusion between the two, if the
+    // consumer wants to restart reading from the file.
+    ResetBodyPipe();
+
+    std::move(callback).Run(net::OK, upload_string_.length());
+    upload_body_pipe_ = std::move(pipe);
+    handle_watcher_ = std::make_unique<mojo::SimpleWatcher>(
+        FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL);
+    handle_watcher_->Watch(
+        upload_body_pipe_.get(),
+        // Don't bother watching for close - rely on read pipes for errors.
+        MOJO_HANDLE_SIGNAL_WRITABLE, MOJO_WATCH_CONDITION_SATISFIED,
+        base::BindRepeating(&StringUploadDataPipeGetter::MojoReadyCallback,
+                            base::Unretained(this)));
+    WriteData();
+  }
+
+ private:
+  void MojoReadyCallback(MojoResult result,
+                         const mojo::HandleSignalsState& state) {
+    WriteData();
+  }
+
+  void WriteData() {
+    DCHECK_LE(write_position_, upload_string_.length());
+
+    while (true) {
+      uint32_t write_size = static_cast<uint32_t>(
+          std::min(static_cast<size_t>(32 * 1024),
+                   upload_string_.length() - write_position_));
+      if (write_size == 0) {
+        // Upload is done. Close the uplaod body pipe and wait for another call
+        // to Read().
+        handle_watcher_.reset();
+        upload_body_pipe_.reset();
+        return;
+      }
+
+      int result =
+          upload_body_pipe_->WriteData(upload_string_.data() + write_position_,
+                                       &write_size, MOJO_WRITE_DATA_FLAG_NONE);
+      if (result == MOJO_RESULT_SHOULD_WAIT) {
+        handle_watcher_->ArmOrNotify();
+        return;
+      }
+
+      if (result != MOJO_RESULT_OK) {
+        // Ignore the pipe being closed - the upload may still be retried with
+        // another call to Read.
+        handle_watcher_.reset();
+        upload_body_pipe_.reset();
+        return;
+      }
+
+      write_position_ += write_size;
+      DCHECK_LE(write_position_, upload_string_.length());
+    }
+  }
+
+  // Closes the body pipe, and resets the position the class is writing from.
+  // Should be called either when a new binding is created, or a new read
+  // through the file is started.
+  void ResetBodyPipe() {
+    handle_watcher_.reset();
+    upload_body_pipe_.reset();
+    write_position_ = 0;
+  }
+
+  mojo::Binding<network::mojom::DataPipeGetter> data_pipe_getter_binding_;
+
+  mojo::ScopedDataPipeProducerHandle upload_body_pipe_;
+  // Must be below |write_pipe_|, so it's deleted first.
+  std::unique_ptr<mojo::SimpleWatcher> handle_watcher_;
+  size_t write_position_ = 0;
+
+  const std::string upload_string_;
+
+  DISALLOW_COPY_AND_ASSIGN(StringUploadDataPipeGetter);
+};
 
 class BodyHandler;
 
@@ -84,6 +194,8 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
       const OnRedirectCallback& on_redirect_callback) override;
   void SetAllowPartialResults(bool allow_partial_results) override;
   void SetAllowHttpErrorResults(bool allow_http_error_results) override;
+  void AttachStringForUpload(const std::string& upload_data,
+                             const std::string& upload_content_type) override;
   void AttachFileForUpload(const base::FilePath& upload_file_path,
                            const std::string& upload_content_type) override;
   void SetRetryOptions(int max_retries, int retry_mode) override;
@@ -203,6 +315,8 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
 
   mojo::Binding<mojom::URLLoaderClient> client_binding_;
   mojom::URLLoaderPtr url_loader_;
+
+  std::unique_ptr<StringUploadDataPipeGetter> string_upload_data_pipe_getter_;
 
   // Per-request state. Always non-null, but re-created on redirect.
   std::unique_ptr<RequestState> request_state_;
@@ -843,6 +957,32 @@ void SimpleURLLoaderImpl::SetAllowHttpErrorResults(
   allow_http_error_results_ = allow_http_error_results;
 }
 
+void SimpleURLLoaderImpl::AttachStringForUpload(
+    const std::string& upload_data,
+    const std::string& upload_content_type) {
+  // Currently only allow a single string to be attached.
+  DCHECK(!resource_request_->request_body);
+  DCHECK(resource_request_->method != "GET" &&
+         resource_request_->method != "HEAD");
+
+  resource_request_->request_body = new ResourceRequestBody();
+
+  if (upload_data.length() <= kMaxUploadStringSizeToCopy) {
+    int copy_length = static_cast<int>(upload_data.length());
+    DCHECK_EQ(static_cast<size_t>(copy_length), upload_data.length());
+    resource_request_->request_body->AppendBytes(upload_data.c_str(),
+                                                 copy_length);
+  } else {
+    // Don't attach the upload body here.  A new pipe will need to be created
+    // each time the request is tried.
+    string_upload_data_pipe_getter_ =
+        std::make_unique<StringUploadDataPipeGetter>(upload_data);
+  }
+
+  resource_request_->headers.SetHeader(net::HttpRequestHeaders::kContentType,
+                                       upload_content_type);
+}
+
 void SimpleURLLoaderImpl::AttachFileForUpload(
     const base::FilePath& upload_file_path,
     const std::string& upload_content_type) {
@@ -873,6 +1013,17 @@ void SimpleURLLoaderImpl::SetRetryOptions(int max_retries, int retry_mode) {
 
   remaining_retries_ = max_retries;
   retry_mode_ = retry_mode;
+
+#if DCHECK_IS_ON()
+  if (max_retries > 0 && resource_request_->request_body) {
+    for (const storage::DataElement& element :
+         *resource_request_->request_body->elements()) {
+      // Data pipes are single-used, so can't retry uploads when there's a data
+      // pipe.
+      DCHECK(element.type() != storage::DataElement::TYPE_DATA_PIPE);
+    }
+  }
+#endif  // DCHECK_IS_ON()
 }
 
 int SimpleURLLoaderImpl::NetError() const {
@@ -950,6 +1101,13 @@ void SimpleURLLoaderImpl::StartRequest(
   client_binding_.Bind(mojo::MakeRequest(&client_ptr));
   client_binding_.set_connection_error_handler(base::BindOnce(
       &SimpleURLLoaderImpl::OnConnectionError, base::Unretained(this)));
+  // Data pipes aren't reuseable, so need to create another one, if uploading a
+  // string via a data pipe.
+  if (string_upload_data_pipe_getter_) {
+    resource_request_->request_body = new ResourceRequestBody();
+    resource_request_->request_body->AppendDataPipe(
+        string_upload_data_pipe_getter_->CreateDataPipeGetter());
+  }
   url_loader_factory->CreateLoaderAndStart(
       mojo::MakeRequest(&url_loader_), 0 /* routing_id */, 0 /* request_id */,
       0 /* options */, *resource_request_, std::move(client_ptr),
