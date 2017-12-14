@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65c0bf95_31e9f41e",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-12-14T12:57:53Z",
+      "side": 1,
+      "message": "The current failures are due to this DCHECK. Should we DCHECK in HandleAccessRequestResponse? devices are not yet opened in HandleAccessRequestResponse and therefore it\u0027s possible for |input| to be empty. HandleAccessRequestResponse is a callback run from RequestMediaAccessPermission() where, MediaStreamDevices are set without |input|.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/media/webrtc/tab_capture_access_handler.cc?l\u003d43 is one such example. There are many such cases.\n\nI think we should add checks for |input| instead of DCHECKs in HandleAccessRequestResponse.",
+      "range": {
+        "startLine": 1548,
+        "startChar": 27,
+        "endLine": 1548,
+        "endChar": 0
+      },
+      "revId": "89a42f425507ba91573376c34d3e12daebaaa43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
