@@ -194,6 +194,14 @@ external/wpt/html/syntax/parsing-html-fragments/the-input-byte-stream-004.html [
 external/wpt/html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-candidate-remove-addEventListener.html [ Skip ]
 external/wpt/html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-candidate-remove-onerror.html [ Skip ]
 
+# Manual end-to-end Async Clipboard tests (reading and writing to clipboard).
+# Note: These require Clipboard permission to be granted.
+external/wpt/clipboard-apis/async-navigator-clipboard-basics.https.html [ Skip ]
+external/wpt/clipboard-apis/async-write-dttext-read-dttext-manual.https.html [ Skip ]
+external/wpt/clipboard-apis/async-write-dttext-read-text-manual.https.html [ Skip ]
+external/wpt/clipboard-apis/async-write-text-read-dttext-manual.https.html [ Skip ]
+external/wpt/clipboard-apis/async-write-text-read-text-manual.https.html [ Skip ]
+
 # CSS Writing Modes Level 3: Following tests require writing-mode: sideways-*, which we do not plan to support today.
 external/wpt/css/css-writing-modes/block-flow-direction-slr-043.xht [ Skip ]
 external/wpt/css/css-writing-modes/block-flow-direction-slr-047.xht [ Skip ]
