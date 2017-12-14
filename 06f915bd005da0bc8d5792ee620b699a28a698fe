@@ -70,6 +70,24 @@
       "revId": "06f915bd005da0bc8d5792ee620b699a28a698fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42941e8e_d63cca12",
+        "filename": "services/device/device_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-12-14T00:16:41Z",
+      "side": 1,
+      "message": "oops, thanks for the suggestion!\n\nI think it is fine for public_ip_address_geolocation_provider to be created on the IO thread, +amoylan@ WDYT?",
+      "parentUuid": "6a91f2ab_6139fc98",
+      "revId": "06f915bd005da0bc8d5792ee620b699a28a698fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
