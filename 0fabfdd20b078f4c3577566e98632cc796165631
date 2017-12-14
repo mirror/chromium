@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5403d61_d681d37c",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-12-14T03:43:38Z",
+      "side": 1,
+      "message": "That won\u0027t work because we need to call it from NativeUnitTest.java.",
+      "parentUuid": "81594a2e_9456d8a4",
+      "revId": "0fabfdd20b078f4c3577566e98632cc796165631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5a98d48_87d04759",
         "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-14T02:58:08Z",
       "side": 1,
       "message": "If this is just for tests, we could use reflection to call it.\n\nE.g.: https://cs.chromium.org/chromium/src/build/android/incremental_install/java/org/chromium/incrementalinstall/ClassLoaderPatcher.java?rcl\u003dc24f6f7d1b280440342a5a80d33ca6a02a395bf2\u0026l\u003d36",
+      "revId": "0fabfdd20b078f4c3577566e98632cc796165631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d9e6034_30866526",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-12-14T03:43:38Z",
+      "side": 1,
+      "message": "Yes we could, but jbudorick prefers to avoid reflection.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/762125/2/testing/android/native_test/java/src/org/chromium/native_test/NativeUnitTest.java#47\n\nI don\u0027t mind either way though.",
+      "parentUuid": "c5a98d48_87d04759",
       "revId": "0fabfdd20b078f4c3577566e98632cc796165631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
