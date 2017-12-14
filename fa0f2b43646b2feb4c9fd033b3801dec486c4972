@@ -211,6 +211,30 @@
       "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b52968a_e3cd0eca",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 32
+      },
+      "lineNbr": 1293,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T22:36:08Z",
+      "side": 1,
+      "message": "Maybe the test isn\u0027t creating any tabs? It is the case that when the tabstrip goes empty we don\u0027t immediately destroy the window. We post a task that deletes the browser. I don\u0027t know enough about this api to know how it hooks in it. How does the extension code find a browser and target it? I suspect this problem isn\u0027t specific to just locked fullscreen. Are there other checks in extension code to early out if the tabstrip is empty?",
+      "parentUuid": "e1a53b08_f0558dfa",
+      "range": {
+        "startLine": 1293,
+        "startChar": 18,
+        "endLine": 1293,
+        "endChar": 60
+      },
+      "revId": "fa0f2b43646b2feb4c9fd033b3801dec486c4972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
