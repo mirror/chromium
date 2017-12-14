@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b43a136c_17933095",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkFolderRow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-14T17:51:45Z",
+      "side": 1,
+      "message": "This generally looks good, but I\u0027m worried about possible performance issues if we have deeply nested folders with a TON bookmarks in each.\n\nCan we run a test? I have a test account with a ton of bookmarks already seeded.. I\u0027ll send you some details.",
+      "revId": "3263bf4522736b3e9faa76a2e08c6cb7d9e9f0aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c6ff91_9e4c42d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkFolderRow.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-14T17:51:45Z",
+      "side": 1,
+      "message": "I wonder if subfolder should be counted in the child count?\n\nFor example, if I have a folder with 3 sub-folders and no bookmarks, does it really make sense to show \"0 bookamrks\"?",
+      "range": {
+        "startLine": 68,
+        "startChar": 52,
+        "endLine": 68,
+        "endChar": 72
+      },
+      "revId": "3263bf4522736b3e9faa76a2e08c6cb7d9e9f0aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
