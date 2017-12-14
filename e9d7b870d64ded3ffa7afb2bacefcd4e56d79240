@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8a7bbe44_5abdac97",
+        "filename": "chrome/browser/extensions/install_verifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-14T20:19:19Z",
+      "side": 1,
+      "message": "nit: kForceOn is preferred.",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 13
+      },
+      "revId": "e9d7b870d64ded3ffa7afb2bacefcd4e56d79240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1f0c5a0_85ee2933",
         "filename": "chrome/browser/extensions/install_verifier_unittest.cc",
         "patchSetId": 4
@@ -108,6 +131,30 @@
       "side": 1,
       "message": "Personally, I do still find that much more verbose and harder to read than the current version, but I\u0027ll let Istiaque chime in if he has a preference. :)",
       "parentUuid": "1c4df57f_5048bf37",
+      "range": {
+        "startLine": 75,
+        "startChar": 20,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "e9d7b870d64ded3ffa7afb2bacefcd4e56d79240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93cc943_326384a2",
+        "filename": "chrome/browser/extensions/install_verifier_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-12-14T20:19:19Z",
+      "side": 1,
+      "message": "I\u0027m slightly leaning towards the current version compared to the param version due to readability.",
+      "parentUuid": "7ef3ac7f_d32e8341",
       "range": {
         "startLine": 75,
         "startChar": 20,
