@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "05b14a71_8c0a202a",
+        "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-14T08:08:45Z",
+      "side": 1,
+      "message": "https://stackoverflow.com/questions/1067226/c-multi-line-macro-do-while0-vs-scope-block\n\nhistogram_macros.h also uses this pattern.",
+      "parentUuid": "d119fda7_03639ff1",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 4
+      },
+      "revId": "6c31d013d3102b7175c265c87a7db605f19c50d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cbd77ed_8c2de39c",
         "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T07:09:24Z",
       "side": 1,
       "message": "I\u0027m a little afraid that object constructions in macros causes multiple object instantiations in a way that may affect performance. Macros for histograms are relatively complicated and out of callers\u0027 control. It might be nice to have a local variable even for sample too?",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 77
+      },
+      "revId": "6c31d013d3102b7175c265c87a7db605f19c50d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4c0e8f_f15810ca",
+        "filename": "chrome/browser/page_load_metrics/observers/multi_tab_loading_page_load_metrics_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-14T08:08:45Z",
+      "side": 1,
+      "message": "Added a local variable for the sample value.\n\nFor the histogram name, reading histogram_macros_internal.h, it looks like the parameter is evaluated only once when the static value for the histogram is created. (if DCHECK is on, it\u0027s evaluated every time in order to check its consistency.)\n\nWe could use a local variable, but it would make the string construction happen every time even if DCHECK is off.",
+      "parentUuid": "4cbd77ed_8c2de39c",
       "range": {
         "startLine": 80,
         "startChar": 8,
