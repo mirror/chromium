@@ -129,6 +129,7 @@ Buffer::Buffer(BufferManager* manager, GLuint service_id)
       size_(0),
       deleted_(false),
       is_client_side_array_(false),
+      webgl_transform_feedback_binding_count_(0),
       service_id_(service_id),
       initial_target_(0),
       usage_(GL_STATIC_DRAW) {
@@ -427,6 +428,15 @@ void BufferManager::ValidateAndDoBufferData(
     return;
   }
 
+  if (feature_info_ && feature_info_->IsWebGLContext() &&
+      context_state->bound_transform_feedback &&
+      context_state->bound_transform_feedback->active() &&
+      buffer->BoundForWebGLTransformFeedback()) {
+    ERRORSTATE_SET_GL_ERROR(error_state, GL_INVALID_OPERATION, "glBufferData",
+                            "buffer is used by active transform feedback");
+    return;
+  }
+
   DoBufferData(error_state, buffer, target, size, usage, data);
 
   if (context_state->bound_transform_feedback.get()) {
@@ -478,8 +488,12 @@ void BufferManager::DoBufferData(
 void BufferManager::ValidateAndDoBufferSubData(
   ContextState* context_state, GLenum target, GLintptr offset, GLsizeiptr size,
   const GLvoid * data) {
-  Buffer* buffer = RequestBufferAccess(
-      context_state, target, offset, size, "glBufferSubData");
+  bool allow_transform_feedback =
+      !context_state->bound_transform_feedback ||
+      !context_state->bound_transform_feedback->active();
+  Buffer* buffer =
+      RequestBufferAccess(context_state, target, offset, size,
+                          "glBufferSubData", allow_transform_feedback);
   if (!buffer) {
     return;
   }
@@ -500,12 +514,17 @@ void BufferManager::ValidateAndDoCopyBufferSubData(
     ContextState* context_state, GLenum readtarget, GLenum writetarget,
     GLintptr readoffset, GLintptr writeoffset, GLsizeiptr size) {
   const char* func_name = "glCopyBufferSubData";
-  Buffer* readbuffer = RequestBufferAccess(
-      context_state, readtarget, readoffset, size, func_name);
+  bool allow_transform_feedback =
+      !context_state->bound_transform_feedback ||
+      !context_state->bound_transform_feedback->active();
+  Buffer* readbuffer =
+      RequestBufferAccess(context_state, readtarget, readoffset, size,
+                          func_name, allow_transform_feedback);
   if (!readbuffer)
     return;
-  Buffer* writebuffer = RequestBufferAccess(
-      context_state, writetarget, writeoffset, size, func_name);
+  Buffer* writebuffer =
+      RequestBufferAccess(context_state, writetarget, writeoffset, size,
+                          func_name, allow_transform_feedback);
   if (!writebuffer)
     return;
 
@@ -619,10 +638,6 @@ bool BufferManager::SetTarget(Buffer* buffer, GLenum target) {
     // After being bound to non ELEMENT_ARRAY_BUFFER target, a buffer cannot
     // be bound to ELEMENT_ARRAY_BUFFER target.
 
-    // Note that we don't force the WebGL 2 rule that a buffer bound to
-    // TRANSFORM_FEEDBACK_BUFFER target should not be bound to any other
-    // targets, because that is not a security threat, so we only enforce it
-    // in the WebGL2RenderingContextBase.
     switch (buffer->initial_target()) {
       case GL_ELEMENT_ARRAY_BUFFER:
         switch (target) {
@@ -759,13 +774,15 @@ Buffer* BufferManager::RequestBufferAccess(ContextState* context_state,
                                            GLenum target,
                                            GLintptr offset,
                                            GLsizeiptr size,
-                                           const char* func_name) {
+                                           const char* func_name,
+                                           bool allow_transform_feedback) {
   DCHECK(context_state);
   ErrorState* error_state = context_state->GetErrorState();
 
   Buffer* buffer = GetBufferInfoForTarget(context_state, target);
   if (!RequestBufferAccess(error_state, buffer, func_name,
-                           "bound to target 0x%04x", target)) {
+                           allow_transform_feedback, "bound to target 0x%04x",
+                           target)) {
     return nullptr;
   }
   if (!buffer->CheckRange(offset, size)) {
@@ -780,26 +797,32 @@ Buffer* BufferManager::RequestBufferAccess(ContextState* context_state,
 
 Buffer* BufferManager::RequestBufferAccess(ContextState* context_state,
                                            GLenum target,
-                                           const char* func_name) {
+                                           const char* func_name,
+                                           bool allow_transform_feedback) {
   DCHECK(context_state);
   ErrorState* error_state = context_state->GetErrorState();
 
   Buffer* buffer = GetBufferInfoForTarget(context_state, target);
-  return RequestBufferAccess(
-      error_state, buffer, func_name,
-      "bound to target 0x%04x", target) ? buffer : nullptr;
+  return RequestBufferAccess(error_state, buffer, func_name,
+                             allow_transform_feedback, "bound to target 0x%04x",
+                             target)
+             ? buffer
+             : nullptr;
 }
 
 bool BufferManager::RequestBufferAccess(ErrorState* error_state,
                                         Buffer* buffer,
                                         const char* func_name,
-                                        const char* error_message_format, ...) {
+                                        bool allow_transform_feedback,
+                                        const char* error_message_format,
+                                        ...) {
   DCHECK(error_state);
 
   va_list varargs;
   va_start(varargs, error_message_format);
-  bool result = RequestBufferAccessV(error_state, buffer, func_name,
-                                     error_message_format, varargs);
+  bool result =
+      RequestBufferAccessV(error_state, buffer, func_name, error_message_format,
+                           varargs, allow_transform_feedback);
   va_end(varargs);
   return result;
 }
@@ -809,8 +832,10 @@ bool BufferManager::RequestBufferAccess(ErrorState* error_state,
                                         GLintptr offset,
                                         GLsizeiptr size,
                                         const char* func_name,
+                                        bool allow_transform_feedback,
                                         const char* error_message) {
-  if (!RequestBufferAccess(error_state, buffer, func_name, error_message)) {
+  if (!RequestBufferAccess(error_state, buffer, func_name,
+                           allow_transform_feedback, error_message)) {
     return false;
   }
   if (!buffer->CheckRange(offset, size)) {
@@ -829,7 +854,8 @@ bool BufferManager::RequestBuffersAccess(
     const std::vector<GLsizeiptr>& variable_sizes,
     GLsizei count,
     const char* func_name,
-    const char* message_tag) {
+    const char* message_tag,
+    bool allow_transform_feedback) {
   DCHECK(error_state);
   DCHECK(bindings);
   for (size_t ii = 0; ii < variable_sizes.size(); ++ii) {
@@ -844,10 +870,18 @@ bool BufferManager::RequestBuffersAccess(
       return false;
     }
     if (buffer->GetMappedRange()) {
-      std::string msg = base::StringPrintf(
-          "%s : buffer is mapped at index %zu", message_tag, ii);
+      std::string msg = base::StringPrintf("%s : buffer at index %zu is mapped",
+                                           message_tag, ii);
       ERRORSTATE_SET_GL_ERROR(
           error_state, GL_INVALID_OPERATION, func_name, msg.c_str());
+      return false;
+    }
+    if (!allow_transform_feedback && buffer->BoundForWebGLTransformFeedback()) {
+      std::string msg = base::StringPrintf(
+          "%s : buffer at index %zu is also bound for transform feedback",
+          message_tag, ii);
+      ERRORSTATE_SET_GL_ERROR(error_state, GL_INVALID_OPERATION, func_name,
+                              msg.c_str());
       return false;
     }
     GLsizeiptr size = bindings->GetEffectiveBufferSize(ii);
@@ -856,7 +890,7 @@ bool BufferManager::RequestBuffersAccess(
     if (size < required_size.ValueOrDefault(
             std::numeric_limits<GLsizeiptr>::max())) {
       std::string msg = base::StringPrintf(
-          "%s : buffer or buffer range not large enough at index %zu",
+          "%s : buffer or buffer range at index %zu not large enough",
           message_tag, ii);
       ERRORSTATE_SET_GL_ERROR(
           error_state, GL_INVALID_OPERATION, func_name, msg.c_str());
@@ -870,7 +904,8 @@ bool BufferManager::RequestBufferAccessV(ErrorState* error_state,
                                          Buffer* buffer,
                                          const char* func_name,
                                          const char* error_message_format,
-                                         va_list varargs) {
+                                         va_list varargs,
+                                         bool allow_transform_feedback) {
   DCHECK(error_state);
 
   if (!buffer || buffer->IsDeleted()) {
@@ -884,6 +919,15 @@ bool BufferManager::RequestBufferAccessV(ErrorState* error_state,
     std::string message_tag = base::StringPrintV(error_message_format, varargs);
     std::string msg = base::StringPrintf("%s : buffer is mapped",
                                          message_tag.c_str());
+    ERRORSTATE_SET_GL_ERROR(error_state, GL_INVALID_OPERATION, func_name,
+                            msg.c_str());
+    return false;
+  }
+  if (!allow_transform_feedback && buffer->BoundForWebGLTransformFeedback()) {
+    std::string message_tag = base::StringPrintV(error_message_format, varargs);
+    std::string msg =
+        base::StringPrintf("%s : buffer is also bound for transform feedback",
+                           message_tag.c_str());
     ERRORSTATE_SET_GL_ERROR(error_state, GL_INVALID_OPERATION, func_name,
                             msg.c_str());
     return false;

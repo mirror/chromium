@@ -6183,6 +6183,12 @@ void GLES2DecoderImpl::DoBindTransformFeedback(
   }
   LogClientServiceForInfo(transform_feedback, client_id, function_name);
   transform_feedback->DoBindTransformFeedback(target);
+  if (feature_info_->IsWebGLContext()) {
+    if (state_.bound_transform_feedback) {
+      state_.bound_transform_feedback->SetBoundForWebGLTransformFeedback(false);
+    }
+    transform_feedback->SetBoundForWebGLTransformFeedback(true);
+  }
   state_.bound_transform_feedback = transform_feedback;
 }
 
@@ -9379,6 +9385,7 @@ bool GLES2DecoderImpl::ValidateUniformBlockBackings(const char* func_name) {
     uint32_t index = info.binding;
     uniform_block_sizes[index] = static_cast<GLsizeiptr>(info.data_size);
   }
+
   return buffer_manager()->RequestBuffersAccess(
       state_.GetErrorState(), state_.indexed_uniform_buffer_bindings.get(),
       uniform_block_sizes, 1, func_name, "uniform buffers");
@@ -10510,12 +10517,10 @@ error::Error GLES2DecoderImpl::DoDrawArrays(
         return error::kNoError;
       }
       if (!buffer_manager()->RequestBuffersAccess(
-              state_.GetErrorState(),
-              state_.bound_transform_feedback.get(),
-              state_.current_program->GetTransformFeedbackVaryingSizes(),
-              count,
-              function_name,
-              "transformfeedback buffers")) {
+              state_.GetErrorState(), state_.bound_transform_feedback.get(),
+              state_.current_program->GetTransformFeedbackVaryingSizes(), count,
+              function_name, "transformfeedback buffers",
+              true /* allow_transform_feedback */)) {
         return error::kNoError;
       }
     }
@@ -11857,8 +11862,9 @@ error::Error GLES2DecoderImpl::HandleReadPixels(uint32_t immediate_data_size,
     if (!buffer) {
       return error::kInvalidArguments;
     }
-    if (!buffer_manager()->RequestBufferAccess(
-            state_.GetErrorState(), buffer, func_name, "pixel pack buffer")) {
+    if (!buffer_manager()->RequestBufferAccess(state_.GetErrorState(), buffer,
+                                               func_name, false,
+                                               "pixel pack buffer")) {
       return error::kNoError;
     }
     uint32_t size = 0;
@@ -13646,7 +13652,7 @@ bool GLES2DecoderImpl::ValidateCompressedTexFuncData(const char* function_name,
   if (buffer &&
       !buffer_manager()->RequestBufferAccess(
           state_.GetErrorState(), buffer, reinterpret_cast<GLintptr>(data),
-          static_cast<GLsizeiptr>(bytes_required), function_name,
+          static_cast<GLsizeiptr>(bytes_required), function_name, false,
           "pixel unpack buffer")) {
     return false;
   }
@@ -15319,6 +15325,7 @@ error::Error GLES2DecoderImpl::HandleTexSubImage3D(
           "pixel unpack buffer should not be mapped to client memory");
       return error::kNoError;
     }
+
     params = state_.GetUnpackParams(ContextState::k3D);
   } else {
     if (!pixels_shm_id && pixels_shm_offset)
@@ -18795,8 +18802,10 @@ error::Error GLES2DecoderImpl::HandleMapBufferRange(
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, func_name, "length is zero");
     return error::kNoError;
   }
+  bool allow_transform_feedback = !state_.bound_transform_feedback ||
+                                  !state_.bound_transform_feedback->active();
   Buffer* buffer = buffer_manager()->RequestBufferAccess(
-      &state_, target, offset, size, func_name);
+      &state_, target, offset, size, func_name, allow_transform_feedback);
   if (!buffer) {
     // An error is already set.
     return error::kNoError;
@@ -18808,7 +18817,7 @@ error::Error GLES2DecoderImpl::HandleMapBufferRange(
     if (state_.bound_transform_feedback->UsesBuffer(
             used_binding_count, buffer)) {
       LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, func_name,
-                         "active transform feedback is using this buffer");
+                         "bound transform feedback is using this buffer");
       return error::kNoError;
     }
   }
