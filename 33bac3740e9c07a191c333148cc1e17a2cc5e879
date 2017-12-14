@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c486ba8f_1e4fec95",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/command_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T17:23:21Z",
+      "side": 1,
+      "message": "Do you know what this looks like visually? Maybe Katie could\npatch it in and check it.\n\nI suspect it might work better if we pass a bounding rect,\notherwise the location and size might be odd.",
+      "revId": "33bac3740e9c07a191c333148cc1e17a2cc5e879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc148a3_e0b3ed5d",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/desktop_automation_handler.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-12-14T17:23:21Z",
+      "side": 1,
+      "message": "This logic sounds good, but how about abstracting it into our own\nsmart GetFocus function? We may want to use it in several other places\nwhere we call GetFocus now...",
+      "revId": "33bac3740e9c07a191c333148cc1e17a2cc5e879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
