@@ -379,6 +379,7 @@ RequestResult AccessOfflineFile(
   tab_helper->SetOfflinePage(
       *offline_page,
       offline_header,
+      true, /*is_trusted*/
       network_state == NetworkState::PROHIBITIVELY_SLOW_NETWORK);
 
   *offline_file_path = offline_page->file_path;
