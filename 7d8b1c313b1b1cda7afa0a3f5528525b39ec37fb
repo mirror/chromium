@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "487ebdb2_389cf84f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10717,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-14T17:03:51Z",
+      "side": 1,
+      "message": "nit: \"web development\"",
+      "range": {
+        "startLine": 10717,
+        "startChar": 166,
+        "endLine": 10717,
+        "endChar": 178
+      },
+      "revId": "7d8b1c313b1b1cda7afa0a3f5528525b39ec37fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06e89c2_111e4a14",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 10718,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-12-14T17:03:51Z",
+      "side": 1,
+      "message": "nit: this policy is a list, while the command-line flag isn\u0027t a list (not sure what the command-line flag takes as an argument - a comma-separated list?)\n\nEither way, maybe clarify this a bit.",
+      "range": {
+        "startLine": 10718,
+        "startChar": 34,
+        "endLine": 10718,
+        "endChar": 38
+      },
+      "revId": "7d8b1c313b1b1cda7afa0a3f5528525b39ec37fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
