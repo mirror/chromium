@@ -18,6 +18,7 @@
 namespace base {
 class FilePath;
 class SequencedTaskRunner;
+class TaskRunner;
 }  // namespace base
 
 namespace net {
@@ -47,12 +48,16 @@ class SQLitePersistentCookieStore
   // Deletes the cookies whose origins match those given in |cookies|.
   void DeleteAllInList(const std::list<CookieOrigin>& cookies);
 
-  // Closes the database backend and fires |callback| on the worker
-  // thread. After Close() is called, further calls to the
-  // PersistentCookieStore methods will do nothing, with Load() and
-  // LoadCookiesForKey() additionally calling their callback methods
-  // with an empty vector of CanonicalCookies.
-  void Close(const base::Closure& callback);
+  // Closes the database backend asynchronously After Close() is
+  // called, further calls to the PersistentCookieStore methods will
+  // do nothing, with Load() and LoadCookiesForKey() additionally
+  // calling their callback methods with an empty vector of
+  // CanonicalCookies.
+  // If a non-null |writes_blocked_task_runner| is passed to close, a
+  // task will be posted to that task runner that will block on completion
+  // of all writes currently in process in the database.  This task runner
+  // must have the WithBaseSyncPrimitives trait set.
+  void Close(const scoped_refptr<base::TaskRunner>& writes_blocked_task_runner);
 
   // CookieMonster::PersistentCookieStore:
   void Load(const LoadedCallback& loaded_callback) override;
