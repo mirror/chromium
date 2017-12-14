@@ -164,6 +164,30 @@
       "revId": "50facff30e24e5f79d0400564cbf3b00e1add0d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b157edf_0a68d5e2",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-14T01:22:51Z",
+      "side": 1,
+      "message": "UMA ends up acting like a random sampling, so you\u0027re right that the absolute values won\u0027t be all that meaningful in UMA, but relative changes in those values will be useful. So even small constant increases in metadata or decode stages (contention, etc) will show up here. For UKM we\u0027ll be able to isolate each value independently (by subtracting successive values) if we like.\n\nFor UMA one alternative would be to pre-subtract these values so that we measure load -\u003e metadata, metadata -\u003e first frame, metadata -\u003e have_enough. Presubtracting may yield negative values though because all of the above operations happen on the render thread while the generated events happen on the media, compositor threads. Hence why I set the frame processing CB before we even start the pipeline.\n\nAnother option would be recording the time at which we attempt pipeline start and using that as the baseline for first frame, have_enough. But  this will also be dominated by network time / JS time since we\u0027re waiting for packets to be appended off the network.\n\nI\u0027m open to changing to this if you feel strongly, but AFAIK there\u0027s no way to avoid network influence regardless of the approach we take. The best we could do would be to isolate each stage from the other for UMA specifically (since UKM would already have this ability).",
+      "parentUuid": "426012aa_6f9cde58",
+      "range": {
+        "startLine": 755,
+        "startChar": 23,
+        "endLine": 755,
+        "endChar": 29
+      },
+      "revId": "50facff30e24e5f79d0400564cbf3b00e1add0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
