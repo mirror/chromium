@@ -2436,6 +2436,35 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Arc.ArcSetup.ArcBootContinueCodeVerificationResult"
+    enum="ArcBootContinueCodeVerificationResult">
+  <owner>elijahtaylor@google.com</owner>
+  <owner>xzhou@google.com</owner>
+  <summary>Code verification result for arc boot continue.</summary>
+</histogram>
+
+<histogram name="Arc.ArcSetup.ArcCodeRelocationResult"
+    enum="ArcCodeRelocationResult">
+  <owner>elijahtaylor@google.com</owner>
+  <owner>xzhou@google.com</owner>
+  <summary>Host code relocation result.</summary>
+</histogram>
+
+<histogram name="Arc.ArcSetup.ArcCodeVerificationResult"
+    enum="ArcCodeVerificationResult">
+  <owner>elijahtaylor@google.com</owner>
+  <owner>xzhou@google.com</owner>
+  <summary>
+    Code verification result for host generated code for boot for login screen.
+  </summary>
+</histogram>
+
+<histogram name="Arc.ArcSetup.SendArcVerificationTime" units="ms">
+  <owner>elijahtaylor@google.com</owner>
+  <owner>xzhou@google.com</owner>
+  <summary>Time needed to verify host generated code.</summary>
+</histogram>
+
 <histogram name="Arc.boot_progress" units="ms">
   <owner>elijahtaylor@google.com</owner>
   <owner>shihuis@google.com</owner>
