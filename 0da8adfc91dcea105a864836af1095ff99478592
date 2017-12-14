@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6e517c5_a692d2c6",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-12-14T17:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a316e53_9a6263b9",
+      "range": {
+        "startLine": 50,
+        "startChar": 14,
+        "endLine": 50,
+        "endChar": 21
+      },
+      "revId": "0da8adfc91dcea105a864836af1095ff99478592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cf5900d_fde73e89",
         "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0da8adfc91dcea105a864836af1095ff99478592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39e4202_dab64b6a",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-12-14T17:39:31Z",
+      "side": 1,
+      "message": "If there is no \"/\" then find_last_of will return -1 (as an unsigned int probably) which +1 will make 0. And then I call substr(0) which will just return the same string.\n\nSince we are explicitly asking for the LIGHT version and because there is one-to-one mapping between component type and  /run/imageloader/rtanalytics-* paths, I think it\u0027s not necessary to surface from the API.",
+      "parentUuid": "2cf5900d_fde73e89",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 47
+      },
+      "revId": "0da8adfc91dcea105a864836af1095ff99478592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
