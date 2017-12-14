@@ -19,32 +19,30 @@
 
 namespace internal {
 
+const char kHistogramPrefixMultiTabLoading[] =
+    "PageLoad.Clients.MultiTabLoading.";
+const char kHistogramPrefixMultiTabLoading2OrMore[] =
+    "PageLoad.Clients.MultiTabLoading.2OrMore.";
+const char kHistogramPrefixMultiTabLoading5OrMore[] =
+    "PageLoad.Clients.MultiTabLoading.5OrMore.";
+
 const char kHistogramMultiTabLoadingNumTabsWithInflightLoad[] =
     "PageLoad.Clients.MultiTabLoading.NumTabsWithInflightLoad";
-const char kHistogramMultiTabLoadingFirstContentfulPaint[] =
-    "PageLoad.Clients.MultiTabLoading.PaintTiming."
-    "NavigationToFirstContentfulPaint";
-const char kHistogramMultiTabLoadingForegroundToFirstContentfulPaint[] =
-    "PageLoad.Clients.MultiTabLoading.PaintTiming."
-    "ForegroundToFirstContentfulPaint";
-const char kHistogramMultiTabLoadingFirstMeaningfulPaint[] =
-    "PageLoad.Clients.MultiTabLoading.Experimental.PaintTiming."
-    "NavigationToFirstMeaningfulPaint";
-const char kHistogramMultiTabLoadingForegroundToFirstMeaningfulPaint[] =
-    "PageLoad.Clients.MultiTabLoading.Experimental.PaintTiming."
-    "ForegroundToFirstMeaningfulPaint";
-const char kHistogramMultiTabLoadingDomContentLoaded[] =
-    "PageLoad.Clients.MultiTabLoading.DocumentTiming."
-    "NavigationToDOMContentLoadedEventFired";
-const char kBackgroundHistogramMultiTabLoadingDomContentLoaded[] =
-    "PageLoad.Clients.MultiTabLoading.DocumentTiming."
-    "NavigationToDOMContentLoadedEventFired.Background";
-const char kHistogramMultiTabLoadingLoad[] =
-    "PageLoad.Clients.MultiTabLoading.DocumentTiming."
-    "NavigationToLoadEventFired";
-const char kBackgroundHistogramMultiTabLoadingLoad[] =
-    "PageLoad.Clients.MultiTabLoading.DocumentTiming."
-    "NavigationToLoadEventFired.Background";
+const char kHistogramSuffixFirstContentfulPaint[] =
+    "PaintTiming.NavigationToFirstContentfulPaint";
+const char kHistogramSuffixForegroundToFirstContentfulPaint[] =
+    "PaintTiming.ForegroundToFirstContentfulPaint";
+const char kHistogramSuffixFirstMeaningfulPaint[] =
+    "Experimental.PaintTiming.NavigationToFirstMeaningfulPaint";
+const char kHistogramSuffixForegroundToFirstMeaningfulPaint[] =
+    "Experimental.PaintTiming.ForegroundToFirstMeaningfulPaint";
+const char kHistogramSuffixDomContentLoaded[] =
+    "DocumentTiming.NavigationToDOMContentLoadedEventFired";
+const char kBackgroundHistogramSuffixDomContentLoaded[] =
+    "DocumentTiming.NavigationToDOMContentLoadedEventFired.Background";
+const char kHistogramSuffixLoad[] = "DocumentTiming.NavigationToLoadEventFired";
+const char kBackgroundHistogramSuffixLoad[] =
+    "DocumentTiming.NavigationToLoadEventFired.Background";
 
 }  // namespace internal
 
@@ -76,19 +74,39 @@ MultiTabLoadingPageLoadMetricsObserver::OnCommit(
                                             : STOP_OBSERVING;
 }
 
+#define RECORD_HISTOGRAMS(suffix, sample)                                      \
+  do {                                                                         \
+    base::TimeDelta sample_value(sample);                                      \
+    PAGE_LOAD_HISTOGRAM(                                                       \
+        std::string(internal::kHistogramPrefixMultiTabLoading).append(suffix), \
+        sample_value);                                                         \
+    if (num_loading_tabs_when_started_ >= 2) {                                 \
+      PAGE_LOAD_HISTOGRAM(                                                     \
+          std::string(internal::kHistogramPrefixMultiTabLoading2OrMore)        \
+              .append(suffix),                                                 \
+          sample_value);                                                       \
+    }                                                                          \
+    if (num_loading_tabs_when_started_ >= 5) {                                 \
+      PAGE_LOAD_HISTOGRAM(                                                     \
+          std::string(internal::kHistogramPrefixMultiTabLoading5OrMore)        \
+              .append(suffix),                                                 \
+          sample_value);                                                       \
+    }                                                                          \
+  } while (false)
+
 void MultiTabLoadingPageLoadMetricsObserver::OnFirstContentfulPaintInPage(
     const page_load_metrics::mojom::PageLoadTiming& timing,
     const page_load_metrics::PageLoadExtraInfo& info) {
   if (WasStartedInForegroundOptionalEventInForeground(
           timing.paint_timing->first_contentful_paint, info)) {
-    PAGE_LOAD_HISTOGRAM(internal::kHistogramMultiTabLoadingFirstContentfulPaint,
-                        timing.paint_timing->first_contentful_paint.value());
+    RECORD_HISTOGRAMS(internal::kHistogramSuffixFirstContentfulPaint,
+                      timing.paint_timing->first_contentful_paint.value());
   }
 
   if (WasStartedInBackgroundOptionalEventInForeground(
           timing.paint_timing->first_contentful_paint, info)) {
-    PAGE_LOAD_HISTOGRAM(
-        internal::kHistogramMultiTabLoadingForegroundToFirstContentfulPaint,
+    RECORD_HISTOGRAMS(
+        internal::kHistogramSuffixForegroundToFirstContentfulPaint,
         timing.paint_timing->first_contentful_paint.value() -
             info.first_foreground_time.value());
   }
@@ -100,13 +118,13 @@ void MultiTabLoadingPageLoadMetricsObserver::
         const page_load_metrics::PageLoadExtraInfo& info) {
   if (WasStartedInForegroundOptionalEventInForeground(
           timing.paint_timing->first_meaningful_paint, info)) {
-    PAGE_LOAD_HISTOGRAM(internal::kHistogramMultiTabLoadingFirstMeaningfulPaint,
-                        timing.paint_timing->first_meaningful_paint.value());
+    RECORD_HISTOGRAMS(internal::kHistogramSuffixFirstMeaningfulPaint,
+                      timing.paint_timing->first_meaningful_paint.value());
   }
   if (WasStartedInBackgroundOptionalEventInForeground(
           timing.paint_timing->first_meaningful_paint, info)) {
-    PAGE_LOAD_HISTOGRAM(
-        internal::kHistogramMultiTabLoadingForegroundToFirstMeaningfulPaint,
+    RECORD_HISTOGRAMS(
+        internal::kHistogramSuffixForegroundToFirstMeaningfulPaint,
         timing.paint_timing->first_meaningful_paint.value() -
             info.first_foreground_time.value());
   }
@@ -117,12 +135,12 @@ void MultiTabLoadingPageLoadMetricsObserver::OnDomContentLoadedEventStart(
     const page_load_metrics::PageLoadExtraInfo& info) {
   if (WasStartedInForegroundOptionalEventInForeground(
           timing.document_timing->dom_content_loaded_event_start, info)) {
-    PAGE_LOAD_HISTOGRAM(
-        internal::kHistogramMultiTabLoadingDomContentLoaded,
+    RECORD_HISTOGRAMS(
+        internal::kHistogramSuffixDomContentLoaded,
         timing.document_timing->dom_content_loaded_event_start.value());
   } else {
-    PAGE_LOAD_HISTOGRAM(
-        internal::kBackgroundHistogramMultiTabLoadingDomContentLoaded,
+    RECORD_HISTOGRAMS(
+        internal::kBackgroundHistogramSuffixDomContentLoaded,
         timing.document_timing->dom_content_loaded_event_start.value());
   }
 }
@@ -132,11 +150,11 @@ void MultiTabLoadingPageLoadMetricsObserver::OnLoadEventStart(
     const page_load_metrics::PageLoadExtraInfo& info) {
   if (WasStartedInForegroundOptionalEventInForeground(
           timing.document_timing->load_event_start, info)) {
-    PAGE_LOAD_HISTOGRAM(internal::kHistogramMultiTabLoadingLoad,
-                        timing.document_timing->load_event_start.value());
+    RECORD_HISTOGRAMS(internal::kHistogramSuffixLoad,
+                      timing.document_timing->load_event_start.value());
   } else {
-    PAGE_LOAD_HISTOGRAM(internal::kBackgroundHistogramMultiTabLoadingLoad,
-                        timing.document_timing->load_event_start.value());
+    RECORD_HISTOGRAMS(internal::kBackgroundHistogramSuffixLoad,
+                      timing.document_timing->load_event_start.value());
   }
 }
 
