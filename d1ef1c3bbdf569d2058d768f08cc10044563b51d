@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e817426_509a6723",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/CSSPropertyNames.cpp.tmpl",
+        "patchSetId": 29
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-12-14T03:47:14Z",
+      "side": 0,
+      "message": "\\o/",
+      "revId": "d1ef1c3bbdf569d2058d768f08cc10044563b51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
