@@ -44,16 +44,23 @@
         color: var(--paper-grey-800);
         text-align: center;
       }
+
+      .more-code {
+        text-align: center;
+        background: var(--paper-grey-200);
+      }
     </style>
     <div id="scroll-container" hidden="[[!codeText_]]">
+      <div class="more-code" hidden="[[!truncatedBefore_]]">...</div>
       <div id="main">
         <div id="line-numbers">
-          <span>[[computeLineNumbersContent_(codeText_)]]</span>
+          <span>[[lineNumbers_]]</span>
         </div>
         <div id="source">
           <span>[[codeText_]]</span>
         </div>
       </div>
+        <div class="more-code" hidden="[[!truncatedAfter_]]">...</div>
     </div>
     <div id="no-code" hidden="[[codeText_]]">[[couldNotDisplayCode]]</div>
   </template>
