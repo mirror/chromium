@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "975033a4_87deb71b",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-12-14T21:34:21Z",
+      "side": 1,
+      "message": "can you use:\nbase::FilePath(mount_point).BaseName().value();\ne.g. this should correctly handle \"/run/imageloader/rtanalytics0light/1.0/\"\n\n(or even make mount_point_ a file path).",
+      "revId": "f0d737f6a43af6a5275e473f207a9767c066e6d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
