@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3620e51c_a694e45c",
+        "filename": "content/common/service_worker/service_worker_types.typemap",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-14T09:58:20Z",
+      "side": 1,
+      "message": "Why we have such a file?",
+      "revId": "1129b0a676991d835847ac1170996026bc11945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "991103b8_79cb52e8",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-14T09:58:20Z",
+      "side": 1,
+      "message": "I suppose an empty client info \u003d\u003d blink::mojom::ServiceWorkerClientInfo() strictly, is it true? If we can make sure about this, later we can just pass a null ServiceWorkerClientInfoPtr via Mojo to the renderer process to indicate an empty client info, then this function will disappear.",
+      "range": {
+        "startLine": 170,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 43
+      },
+      "revId": "1129b0a676991d835847ac1170996026bc11945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72716bc_de812ea1",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-12-14T09:58:20Z",
+      "side": 1,
+      "message": "Should we also initialize |frame_type| as kTopLevel in .mojom file?",
+      "range": {
+        "startLine": 176,
+        "startChar": 13,
+        "endLine": 176,
+        "endChar": 63
+      },
+      "revId": "1129b0a676991d835847ac1170996026bc11945a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
