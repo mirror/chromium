@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eda3cfca_0835a918",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-14T20:09:43Z",
+      "side": 1,
+      "message": "Not sure if I\u0027m understanding it right, but isn\u0027t that name actually consistent in the current scheme since it does set the delegate, while VrShellDelegate ought to be renamed to VrShellDelegateProvider?\n\nOverall I think that the current GVR device / delegate provider / delegate naming scheme is extremely confusing, but changing that seems beyond the scope of this CL, and I can\u0027t think of good names offhand.",
+      "parentUuid": "d1ef3101_88f1bae7",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "5534d9e55672324a8c10540af3f1b574ce2e8885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bc9c2a2_ca46c98a",
         "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.h",
         "patchSetId": 12
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2dc2190e_16ac9b9d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-14T20:09:43Z",
+      "side": 1,
+      "message": "Done, using a getter returning a Clone() since the RequestPresentCallback takes ownership.",
+      "parentUuid": "4bc9c2a2_ca46c98a",
+      "revId": "5534d9e55672324a8c10540af3f1b574ce2e8885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7acb93e8_e362691d",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 12
@@ -53,6 +95,30 @@
       "writtenOn": "2017-12-11T22:21:27Z",
       "side": 1,
       "message": "Why are we exposing this option if we never change it?",
+      "range": {
+        "startLine": 576,
+        "startChar": 21,
+        "endLine": 576,
+        "endChar": 48
+      },
+      "revId": "5534d9e55672324a8c10540af3f1b574ce2e8885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffb12c42_9c576ee4",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-14T20:09:43Z",
+      "side": 1,
+      "message": "The upcoming AHardwareBuffer path won\u0027t use it. OpenVR doesn\u0027t currently actually wait for the transfer notification, but I checked with billorr@ and he agrees to make the wait there explicit. (Currently it\u0027s implicit based on mojo call ordering.)\n\nI think it\u0027s still logically conditional for the Renderer side, so I\u0027d prefer to keep it as an option even if this side always sets it to true.",
+      "parentUuid": "7acb93e8_e362691d",
       "range": {
         "startLine": 576,
         "startChar": 21,
