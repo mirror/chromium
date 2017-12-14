@@ -59,6 +59,10 @@ GRPC_SUPPORT_EXPORT
 // has any effect before |start| is called.
 + (void)setMetricsEnabled:(BOOL)metricsEnabled;
 
+// Sets the QUIC user agent ID.  This method only has any effect before |start|
+// is called.
++ (void)setQuicUserAgentId:(NSString*)quicUserAgentId;
+
 // Set HTTP Cache type to be used by CronetEngine.  This method only has any
 // effect before |start| is called.  See HttpCacheType enum for available
 // options.
