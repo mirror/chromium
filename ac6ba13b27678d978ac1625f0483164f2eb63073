@@ -1,0 +1,480 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f5f0519_12d8bee3",
+        "filename": "ash/metrics/user_metrics_recorder_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "optional nit: check this (index 0) first",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b0fed8_dcfe8d23",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "optional nit: update this comment: \"// The app list and back button items are not movable.\"",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c42f576_c3a1f403",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: match definition order here with declaration order in header",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90524d94_4e95caff",
+        "filename": "ash/public/cpp/shelf_model_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "Should this be 7?",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f682fbe5_2db07287",
+        "filename": "ash/public/cpp/shelf_model_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "Should we increment all these AddAt indices?",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8287bc6_084c710a",
+        "filename": "ash/public/cpp/shelf_types.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: \"button, which\"",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b4c35e_2b95c197",
+        "filename": "ash/public/interfaces/shelf.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: \"button, which\" and please indent all comments by one more space",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6164649_6b2a21e4",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: add a blank line above",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5729f1d4_8a3f2b8d",
+        "filename": "ash/shelf/back_button.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: \"ShelfView\" here and below",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b2f235_40620951",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: Comment like below (or provide one comment for both):\n// Set the delegate and title string for the back button.",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9559e8f8_f1de2bc1",
+        "filename": "ash/shelf/shelf_controller_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "Expand this test to check that ShelfController initializes the back button too.",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b032505f_73c50d84",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "Use IsTabletModeEnabled() here (and move it above this helper class)",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065e151c_666f3c9d",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: I still don\u0027t like \"clamshell mode\" (it\u0027s not applicable to chromebox desktop units), consider \"only exists in tablet mode. When tablet mode is disabled, punt\"",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d8f011_6cfb81e8",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "optional nit: assign this in the header file",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9255f7a1_c291c14c",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: move this to the end of the function",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fe62cc_5921101c",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: update comment",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939e61dd_84a08dae",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1553,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "optional nit: feel free to shortcut and just paint a circle if !tablet_mode",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112e12d7_6c9f962b",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1555,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "Should this actually divide the x and y coords by two, or just kShelfButtonSize?",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919fe75b_cb1bd9e4",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: \"The back button\", \"the app list item\", \"the browser shortcut\", and \"app shortcuts\"",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72208f28_1a2fa76c",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "nit: \"button at index\"",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e10732_a764dfa1",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "Can we set the back button as not focusable when tablet mode is disabled/off?",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48adcc09_98858752",
+        "filename": "ash/shelf/shelf_window_watcher_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "\" and back button\" like line 393 (ditto elsewhere?)",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb844ce_8c44ce49",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "\" and back button\"",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4654fa8e_79adc7e3",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "\"Skip the app list and back button items if they exist\"",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e429ddde_74212dc3",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1249,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "Copy this comment below and fix this one for the back button",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878f2edf_f87ebcb6",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "remove this",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b973feeb_18d63dec",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "Please address this and restore the checks above if possible.",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6eec4f_0cc579f0",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_test_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 1,
+      "message": "Remove these logs",
+      "revId": "ac6ba13b27678d978ac1625f0483164f2eb63073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

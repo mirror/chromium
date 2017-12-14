@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d32744f0_a7c2369c",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1913,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 0,
+      "message": "Why remove const here?",
+      "revId": "782d382349a9c57ee66b50a94eb5ea0e5395b201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5492dfa2_8068d319",
+        "filename": "ash/shelf/shelf_view_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T00:46:07Z",
+      "side": 0,
+      "message": "Can we keep these extra checks that the app list button can\u0027t be dragged, and the ones below that nothing can be dragged in front of the app list button? It\u0027d also be nice to check both of those things for the back button too.",
+      "revId": "782d382349a9c57ee66b50a94eb5ea0e5395b201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
