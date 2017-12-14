@@ -673,6 +673,7 @@ test("browser_tests") {
       "../browser/net/network_connection_tracker_browsertest.cc",
       "../browser/speech/extension_api/tts_extension_apitest.cc",
       "../browser/speech/speech_recognition_browsertest.cc",
+      "../browser/spellchecker/spellcheck_mac_view_browsertest.mm",
       "../browser/spellchecker/spellcheck_service_browsertest.cc",
       "../browser/ssl/cert_verifier_browser_test.cc",
       "../browser/ssl/cert_verifier_browser_test.h",
@@ -1653,7 +1654,9 @@ test("browser_tests") {
         ]
       }
       if (toolkit_views) {
-        sources -= [ "../browser/ui/views/select_file_dialog_extension_browsertest.cc" ]
+        sources -= [
+          "../browser/ui/views/select_file_dialog_extension_browsertest.cc",
+        ]
       }
       if (is_win || is_linux) {
         sources +=
@@ -1910,7 +1913,9 @@ test("browser_tests") {
       }
     }
     if (enable_mdns) {
-      sources += [ "../browser/ui/webui/local_discovery/local_discovery_ui_browsertest.cc" ]
+      sources += [
+        "../browser/ui/webui/local_discovery/local_discovery_ui_browsertest.cc",
+      ]
     }
     if (use_brlapi) {
       deps += [ "//build/linux/libbrlapi" ]
@@ -2240,6 +2245,7 @@ test("unit_tests") {
     "../browser/media/media_engagement_contents_observer_unittest.cc",
     "../browser/media/media_engagement_score_unittest.cc",
     "../browser/media/media_engagement_service_unittest.cc",
+    "../browser/media/media_engagement_session_unittest.cc",
     "../browser/media/media_storage_id_salt_unittest.cc",
     "../browser/media/midi_permission_context_unittest.cc",
     "../browser/media/midi_sysex_permission_context_unittest.cc",
@@ -2486,7 +2492,6 @@ test("unit_tests") {
     "../common/mac/cfbundle_blocker_unittest.mm",
     "../common/mac/mock_launchd.cc",
     "../common/mac/mock_launchd.h",
-    "../common/media_router/discovery/media_sink_internal_unittest.cc",
     "../common/media_router/issue_unittest.cc",
     "../common/media_router/media_route_unittest.cc",
     "../common/media_router/media_sink_unittest.cc",
@@ -2654,7 +2659,10 @@ test("unit_tests") {
   }
 
   if (enable_dice_support) {
-    sources += [ "../browser/signin/dice_response_handler_unittest.cc" ]
+    sources += [
+      "../browser/signin/dice_response_handler_unittest.cc",
+      "../browser/signin/dice_tab_helper_unittest.cc",
+    ]
   }
 
   if (enable_offline_pages) {
@@ -2916,7 +2924,7 @@ test("unit_tests") {
       "../browser/media/router/discovery/dial/device_description_service_unittest.cc",
       "../browser/media/router/discovery/dial/dial_device_data_unittest.cc",
       "../browser/media/router/discovery/dial/dial_media_sink_service_impl_unittest.cc",
-      "../browser/media/router/discovery/dial/dial_media_sink_service_proxy_unittest.cc",
+      "../browser/media/router/discovery/dial/dial_media_sink_service_unittest.cc",
       "../browser/media/router/discovery/dial/dial_registry_unittest.cc",
       "../browser/media/router/discovery/dial/dial_service_unittest.cc",
       "../browser/media/router/discovery/dial/safe_dial_device_description_parser_unittest.cc",
@@ -2924,8 +2932,9 @@ test("unit_tests") {
       "../browser/media/router/discovery/mdns/cast_media_sink_service_unittest.cc",
       "../browser/media/router/discovery/mdns/dns_sd_registry_unittest.cc",
       "../browser/media/router/discovery/media_sink_discovery_metrics_unittest.cc",
-      "../browser/media/router/discovery/media_sink_service_base_unittest.cc",
       "../browser/media/router/event_page_request_manager_unittest.cc",
+      "../common/media_router/discovery/media_sink_internal_unittest.cc",
+      "../common/media_router/discovery/media_sink_service_base_unittest.cc",
 
       # TODO(crbug.com/646627):
       # Move media_router_ui_service_factory_unittest.cc to chrome/browser/ui.
@@ -2976,7 +2985,9 @@ test("unit_tests") {
     }
 
     if (is_win) {
-      sources += [ "../browser/notifications/notification_platform_bridge_win_unittest.cc" ]
+      sources += [
+        "../browser/notifications/notification_platform_bridge_win_unittest.cc",
+      ]
     }
   }
 
@@ -3398,7 +3409,9 @@ test("unit_tests") {
           [ "../browser/extensions/external_registry_loader_win_unittest.cc" ]
     }
     if (is_chromeos) {
-      sources += [ "../browser/extensions/api/file_system/consent_provider_unittest.cc" ]
+      sources += [
+        "../browser/extensions/api/file_system/consent_provider_unittest.cc",
+      ]
     } else {
       sources += [
         "../browser/extensions/api/messaging/native_message_process_host_unittest.cc",
@@ -3628,7 +3641,9 @@ test("unit_tests") {
     ]
 
     if (is_mac && !mac_views_browser) {
-      sources += [ "../browser/ui/startup/session_crashed_infobar_delegate_unittest.cc" ]
+      sources += [
+        "../browser/ui/startup/session_crashed_infobar_delegate_unittest.cc",
+      ]
     }
   }
   if (enable_webrtc) {
@@ -4566,7 +4581,9 @@ if (is_android) {
           "../browser/ui/views/keyboard_access_browsertest.cc",
         ]
         if (!use_ozone) {
-          sources += [ "../browser/ui/libgtkui/select_file_dialog_interactive_uitest.cc" ]
+          sources += [
+            "../browser/ui/libgtkui/select_file_dialog_interactive_uitest.cc",
+          ]
           deps += [ "//build/config/linux/gtk" ]
         }
       }
