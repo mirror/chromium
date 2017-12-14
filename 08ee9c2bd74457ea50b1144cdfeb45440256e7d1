@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "90497b6c_8130ecad",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34431,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-12-14T02:36:51Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve removed MSE.AudioSampleFormat and MSE.AudioSamplesPerSecond* for now.\nIf we want to deprecate or remove those other metrics, let\u0027s do that in a separate CL.",
+      "parentUuid": "fb2ba551_1638b883",
+      "revId": "08ee9c2bd74457ea50b1144cdfeb45440256e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aec714a4_7856338e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "08ee9c2bd74457ea50b1144cdfeb45440256e7d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bc90ed_4b5cc76e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34443,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-12-14T02:36:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aec714a4_7856338e",
+      "revId": "08ee9c2bd74457ea50b1144cdfeb45440256e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
