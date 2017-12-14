@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7bf623b0_588b83c3",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2318,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T21:01:53Z",
+      "side": 1,
+      "message": "I see.  Would you mind renaming the test to \"HardwarMirrorDetection\" and add comment?",
+      "parentUuid": "7c191ac6_21dba7d1",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f67adba8_ab85c698",
         "filename": "ash/system/screen_layout_observer_unittest.cc",
         "patchSetId": 12
@@ -253,6 +271,24 @@
       "side": 1,
       "message": "This is used to update display list so that display manager knows we have two displays now.",
       "parentUuid": "7da1c1f8_16a74d6d",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60430556_7bac0f89",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-12-14T21:01:53Z",
+      "side": 1,
+      "message": "My question was why we need. The original test was to verify that the device will be correctly restored when you connect the display, and this changes the scenario.\nYou may add new scenario if that helps.",
+      "parentUuid": "5c0b6b75_6fe40474",
       "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
