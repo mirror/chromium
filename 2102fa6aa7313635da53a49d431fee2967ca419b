@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99496d0e_e45a19c5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/UIUtils.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1988,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-12-14T00:05:22Z",
+      "side": 0,
+      "message": "this makes sense in case of nested elements inside link. Let\u0027s keep it",
+      "range": {
+        "startLine": 1988,
+        "startChar": 11,
+        "endLine": 1988,
+        "endChar": 21
+      },
+      "revId": "2102fa6aa7313635da53a49d431fee2967ca419b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
