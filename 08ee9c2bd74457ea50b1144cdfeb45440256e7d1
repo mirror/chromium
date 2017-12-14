@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ca7048a_efb8a6b9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34431,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-14T00:07:03Z",
+      "side": 1,
+      "message": "Not worth having? Is anything actually using this?",
+      "revId": "08ee9c2bd74457ea50b1144cdfeb45440256e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec714a4_7856338e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34443,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-12-14T00:07:03Z",
+      "side": 1,
+      "message": "Probably not worth having either.",
+      "revId": "08ee9c2bd74457ea50b1144cdfeb45440256e7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
