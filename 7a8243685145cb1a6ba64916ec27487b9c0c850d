@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cfe160c_7b34a321",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-14T18:31:14Z",
+      "side": 1,
+      "message": "this turns off this type of reload for chrome as well, right? is that ok?",
+      "revId": "7a8243685145cb1a6ba64916ec27487b9c0c850d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
