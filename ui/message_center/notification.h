@@ -57,6 +57,9 @@ enum class ButtonType {
 enum class SettingsButtonHandler {
   NONE,     // No button. This is the default.
   TRAY,     // Button shown, the tray handles clicks. Only used on Chrome OS.
+            // TODO(tetsui): Remove as this will be replaced by INLINE.
+  INLINE,   // Button shown, notification's inline setting handles clicks.
+            // Only used on Chrome OS.
   DELEGATE  // Button shown, notification's delegate handles action.
 };
 
@@ -444,6 +447,16 @@ class MESSAGE_CENTER_EXPORT Notification {
   bool should_show_settings_button() const {
     return optional_fields_.settings_button_handler !=
            SettingsButtonHandler::NONE;
+  }
+
+  bool use_inline_settings() const {
+    return optional_fields_.settings_button_handler ==
+           SettingsButtonHandler::INLINE;
+  }
+
+  void set_settings_button_handler(
+      SettingsButtonHandler settings_button_handler) {
+    optional_fields_.settings_button_handler = settings_button_handler;
   }
 
   FullscreenVisibility fullscreen_visibility() const {
