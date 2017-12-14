@@ -7,6 +7,7 @@
 #include "core/layout/ng/layout_ng_block_flow.h"
 #include "core/paint/PaintInfo.h"
 #include "core/paint/ng/ng_box_fragment_painter.h"
+#include "core/paint/ng/ng_fragment_painter.h"
 #include "core/paint/ng/ng_paint_fragment.h"
 
 namespace blink {
@@ -22,7 +23,7 @@ void NGBlockFlowPainter::PaintBoxFragment(const NGPaintFragment& fragment,
                                           const PaintInfo& paint_info,
                                           const LayoutPoint& paint_offset) {
   PaintInfo ng_paint_info(paint_info);
-  NGBoxFragmentPainter(fragment).Paint(ng_paint_info, paint_offset);
+  NGFragmentPainter(fragment).Paint(ng_paint_info, paint_offset);
 }
 
 bool NGBlockFlowPainter::NodeAtPoint(
