@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99342e8e_c0e6e64f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchHeuristics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-14T18:44:28Z",
+      "side": 1,
+      "message": "nit: JavaDocs for these public methods",
+      "revId": "d5a48c3b0e285b838ff2a01a72afea10606c573b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
