@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "541321f3_a8cbb084",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-12-14T08:30:08Z",
+      "side": 1,
+      "message": "Do we want to wrap an AXObject in general, or will this be a consumer of AXEvents which has its own data?",
+      "parentUuid": "5eb0d3b2_0bd5d7f1",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48c70115_acf7b1c0",
         "filename": "third_party/WebKit/Source/core/frame/Window.idl",
         "patchSetId": 3
