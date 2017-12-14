@@ -45,6 +45,10 @@ DEFINE_NODE_FACTORY(HTMLTemplateElement)
 
 HTMLTemplateElement::~HTMLTemplateElement() {}
 
+bool HTMLTemplateElement::HasNonInBodyInsertionMode() const {
+  return false;
+}
+
 DocumentFragment* HTMLTemplateElement::content() const {
   if (!content_)
     content_ = TemplateContentDocumentFragment::Create(

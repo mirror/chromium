@@ -35,6 +35,8 @@ class CORE_EXPORT HTMLHeadElement final : public HTMLElement {
  public:
   DECLARE_NODE_FACTORY(HTMLHeadElement);
 
+  bool HasNonInBodyInsertionMode() const override;
+
  private:
   explicit HTMLHeadElement(Document&);
 };

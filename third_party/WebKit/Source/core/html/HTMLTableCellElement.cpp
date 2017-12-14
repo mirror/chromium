@@ -172,4 +172,7 @@ void HTMLTableCellElement::setRowSpan(unsigned n) {
   SetUnsignedIntegralAttribute(rowspanAttr, n, kDefaultRowSpan);
 }
 
+bool HTMLTableCellElement::HasNonInBodyInsertionMode() const {
+  return false;
+}
 }  // namespace blink

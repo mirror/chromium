@@ -104,4 +104,8 @@ const AtomicString& HTMLTableColElement::Width() const {
   return getAttribute(widthAttr);
 }
 
+bool HTMLTableColElement::HasNonInBodyInsertionMode() const {
+  return false;
+}
+
 }  // namespace blink

@@ -141,4 +141,8 @@ HTMLCollection* HTMLTableRowElement::cells() {
   return EnsureCachedCollection<HTMLCollection>(kTRCells);
 }
 
+bool HTMLTableRowElement::HasNonInBodyInsertionMode() const {
+  return false;
+}
+
 }  // namespace blink

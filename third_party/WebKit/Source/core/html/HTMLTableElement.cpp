@@ -621,6 +621,10 @@ const AtomicString& HTMLTableElement::Summary() const {
   return getAttribute(summaryAttr);
 }
 
+bool HTMLTableElement::HasNonInBodyInsertionMode() const {
+  return false;
+}
+
 void HTMLTableElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(shared_cell_style_);
   HTMLElement::Trace(visitor);

@@ -2055,4 +2055,8 @@ void HTMLSelectElement::DidMutateSubtree() {
   popup_->UpdateFromElement(PopupMenu::kByDOMChange);
 }
 
+bool HTMLSelectElement::HasNonInBodyInsertionMode() const {
+  return false;
+}
+
 }  // namespace blink
