@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "7f992d40_9bd68322",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-14T14:27:11Z",
+      "side": 1,
+      "message": "I\u0027d suggest to leave this as it is for this CL, and try to follow Matt\u0027s idea[1] in a follow-up CL. \n\n[1] Use ImportClientCertAndKeyFromFile instead and change it not to use X509Certificate. Filed crbug.com/794925 as a task for myself so I don\u0027t forget.",
+      "parentUuid": "a7dfc45a_9da9db44",
+      "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0dfbaab_13ab516a",
         "filename": "chromeos/network/client_cert_resolver_unittest.cc",
         "patchSetId": 3
@@ -123,6 +141,24 @@
       "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0f4d49_4c8dfa08",
+        "filename": "chromeos/network/client_cert_resolver_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-12-14T14:27:11Z",
+      "side": 1,
+      "message": "Good idea; done the first part as you suggested, will do the second part in a follow-up. I\u0027ve changed the naming of those kRandomNonStaticConstVar to random_non_static_const_var.",
+      "parentUuid": "7dae7f16_251201f7",
+      "revId": "74724ed5f1d1dbe345af2ebdc8cdd01df25d4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
