@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2f50ae3_72d93c3f",
+        "filename": "chrome/browser/chromeos/arc/user_session/arc_user_session_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-12-14T13:34:07Z",
+      "side": 1,
+      "message": "Could you document in which case this is necessary?",
+      "revId": "e1483c93d0056c99982fc48b37f91ff5de065f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
