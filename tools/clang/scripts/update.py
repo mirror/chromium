@@ -51,7 +51,7 @@ LLVM_BOOTSTRAP_INSTALL_DIR = os.path.join(THIRD_PARTY_DIR,
 CHROME_TOOLS_SHIM_DIR = os.path.join(LLVM_DIR, 'tools', 'chrometools')
 LLVM_BUILD_DIR = os.path.join(CHROMIUM_DIR, 'third_party', 'llvm-build',
                               'Release+Asserts')
-LLD_BUILD_DIR = os.path.join(LLVM_BUILD_DIR, 'lld')
+THREADS_ENABLED_BUILD_DIR = os.path.join(LLVM_BUILD_DIR, 'threads_enabled')
 COMPILER_RT_BUILD_DIR = os.path.join(LLVM_BUILD_DIR, 'compiler-rt')
 CLANG_DIR = os.path.join(LLVM_DIR, 'tools', 'clang')
 LLD_DIR = os.path.join(LLVM_DIR, 'tools', 'lld')
@@ -616,11 +616,14 @@ def UpdateClang(args):
 
   # Build lld. This is done separately from the rest of the build because lld
   # requires threading support.
-  print 'Building lld'
-  if os.path.exists(LLD_BUILD_DIR):
-    RmTree(LLD_BUILD_DIR)
-  EnsureDirExists(LLD_BUILD_DIR)
-  os.chdir(LLD_BUILD_DIR)
+  tools_with_threading = [ 'lld', 'llvm-cov', 'llvm-profdata' ]
+  print 'Building the following tools with threading support: %s' % (
+        str(tools_with_threading))
+
+  if os.path.exists(THREADS_ENABLED_BUILD_DIR):
+    RmTree(THREADS_ENABLED_BUILD_DIR)
+  EnsureDirExists(THREADS_ENABLED_BUILD_DIR)
+  os.chdir(THREADS_ENABLED_BUILD_DIR)
 
   lld_cmake_args = base_cmake_args + [
       '-DCMAKE_C_FLAGS=' + ' '.join(cflags),
@@ -650,7 +653,7 @@ def UpdateClang(args):
   RmCmakeCache('.')
   RunCommand(['cmake'] + lld_cmake_args + [LLVM_DIR], msvc_arch='x64',
              env=deployment_env)
-  RunCommand(['ninja', 'lld'], msvc_arch='x64')
+  RunCommand(['ninja'] + tools_with_threading, msvc_arch='x64')
 
   # Build clang and other tools.
   CreateChromeToolsShim()
@@ -681,15 +684,16 @@ def UpdateClang(args):
              msvc_arch='x64', env=deployment_env)
   RunCommand(['ninja'], msvc_arch='x64')
 
-  # Copy in the threaded version of lld.
+  # Copy in the threaded version of lld and other tools.
   if sys.platform == 'win32':
-    CopyFile(os.path.join(LLD_BUILD_DIR, 'bin', 'lld-link.exe'),
+    CopyFile(os.path.join(THREADS_ENABLED_BUILD_DIR, 'bin', 'lld-link.exe'),
              os.path.join(LLVM_BUILD_DIR, 'bin'))
-    CopyFile(os.path.join(LLD_BUILD_DIR, 'bin', 'lld.pdb'),
+    CopyFile(os.path.join(THREADS_ENABLED_BUILD_DIR, 'bin', 'lld.pdb'),
              os.path.join(LLVM_BUILD_DIR, 'bin'))
   else:
-    CopyFile(os.path.join(LLD_BUILD_DIR, 'bin', 'lld'),
-             os.path.join(LLVM_BUILD_DIR, 'bin'))
+    for tool in tools_with_threading:
+      CopyFile(os.path.join(THREADS_ENABLED_BUILD_DIR, 'bin', tool),
+               os.path.join(LLVM_BUILD_DIR, 'bin'))
 
   if chrome_tools:
     # If any Chromium tools were built, install those now.
