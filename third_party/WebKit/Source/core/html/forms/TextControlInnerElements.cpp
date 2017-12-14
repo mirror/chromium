@@ -26,6 +26,7 @@
 
 #include "core/html/forms/TextControlInnerElements.h"
 
+#include "core/css/StyleChangeReason.h"
 #include "core/css/resolver/StyleAdjuster.h"
 #include "core/dom/Document.h"
 #include "core/dom/NodeComputedStyle.h"
@@ -144,6 +145,8 @@ TextControlInnerEditorElement::CustomStyleForLayoutObject() {
   // Using StyleAdjuster::adjustComputedStyle updates unwanted style. We'd like
   // to apply only editing-related and alignment-related.
   StyleAdjuster::AdjustStyleForEditing(*inner_editor_style);
+  if (!is_visible_)
+    inner_editor_style->SetOpacity(0);
   return inner_editor_style;
 }
 
