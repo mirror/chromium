@@ -133,10 +133,12 @@ class WebStateObserver {
   virtual void DidSuppressDialog(WebState* web_state) {}
 
   // Called on form submission. |user_initiated| is true if the user
-  // interacted with the page.
+  // interacted with the page. |is_main_frame| is true if the submitted form is
+  // in the main frame.
   virtual void DocumentSubmitted(WebState* web_state,
                                  const std::string& form_name,
-                                 bool user_initiated) {}
+                                 bool user_initiated,
+                                 bool is_main_frame) {}
 
   // Called when the user is typing on a form field, with |params.input_missing|
   // indicating if there is any error when parsing the form field information.

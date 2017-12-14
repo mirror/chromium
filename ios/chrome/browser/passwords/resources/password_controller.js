@@ -149,6 +149,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    * @return {string} The password form.
    */
   __gCrWeb['getPasswordForm'] = function(name) {
+      debugger;
     var el = __gCrWeb.common.getFormElementFromIdentifier(name);
     if (!el)
       return 'noPasswordsFound';
