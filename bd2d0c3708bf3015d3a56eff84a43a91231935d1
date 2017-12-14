@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b58663eb_5f579d7e",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-14T19:52:42Z",
+      "side": 1,
+      "message": "The private constructor breaks MakeUnique, so I\u0027ll keep this as it matches other throttles.",
+      "parentUuid": "d1be7221_bfdb54ee",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62ffa810_1ae0c4c9",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T18:55:02Z",
       "side": 1,
       "message": "is this necessary? Looks like this should be a noop because you ReplaceComponents above. same below.\n\nAlso, maybe just clear out the port on initial_url_ when you save it initially on line 33, so that you don\u0027t have to ReplaceComponents on each use here.",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6893b6cb_ca4ce831",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-14T19:52:42Z",
+      "side": 1,
+      "message": "Good catch. I started handling it both ways and didn\u0027t remove the other one. Removing the port first on both makes the conditional here a lot simpler.",
+      "parentUuid": "62ffa810_1ae0c4c9",
       "range": {
         "startLine": 55,
         "startChar": 20,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f7f1f254_e35910ec",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-14T19:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8294b59b_692314e1",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 49
+      },
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c43fc823_0c9ab41f",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_browsertest.cc",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-12-14T18:55:02Z",
       "side": 1,
       "message": "nit: add an ExpectTotalCount(..., 0) here to make it clear that the histogram count came from this navigation\n\n... actually, it might be better to just define the HistogramTester here instead of as a member on the test fixture. Then you don\u0027t have to do the ExpectTotalCount(..., 0) check because the histogram tester expectations are a snapshot from when it was instantiated.",
+      "range": {
+        "startLine": 79,
+        "startChar": 79,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b0ff04_7a650a82",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-14T19:52:42Z",
+      "side": 1,
+      "message": "Sure. It\u0027s set up and reset in the Setup/TearDown methods, but it\u0027s probably much clearer to just put it locally in the test (especially since there\u0027s only one so far). Done.",
+      "parentUuid": "c43fc823_0c9ab41f",
       "range": {
         "startLine": 79,
         "startChar": 79,
@@ -108,6 +204,24 @@
       "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354acc43_d5b5ebb4",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-14T19:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61adcadb_d5638efb",
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "a558a714_e9dca8a6",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-14T19:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62829976_ab9dfbaf",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 15
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94561021_95511ba3",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
         "patchSetId": 7
@@ -285,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "ac2ade80_303905af",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-14T19:52:42Z",
+      "side": 1,
+      "message": "Fixed. Moved the ReplaceComponents in-line here and changed the result to be const GURL\u0026.",
+      "parentUuid": "b123120c_7fdbc3be",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 6
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "251fb994_628e72a8",
         "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
         "patchSetId": 7
@@ -305,6 +353,30 @@
       "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6434937_2f199dec",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1189840
+      },
+      "writtenOn": "2017-12-14T19:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "251fb994_628e72a8",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 63
+      },
+      "revId": "529ffdf616463d524387c1f3107ce65b7bc6aa98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
