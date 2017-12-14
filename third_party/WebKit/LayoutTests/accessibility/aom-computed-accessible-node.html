@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<script src="../resources/gc.js"></script>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<!--
+
+Accessibility Object Model
+Explainer: https://github.com/WICG/aom/blob/master/explainer.md
+Spec: https://wicg.github.io/aom/spec/
+
+-->
+
+<p id="button" name="axButton" role="button">Click Me</p>
+
+<script>
+
+test(function(t) {
+    assert_true(internals.runtimeFlags.accessibilityObjectModelEnabled);
+}, "Make sure that Accessibility Object Model is enabled");
+
+promise_test(() => {
+    var element = document.getElementById("button");
+    return window.getComputedAccessibleNode(element).then(computedAXNode => {
+      assert_true(computedAXNode != null);
+    });
+}, 'Ensure that a non null value is returned from getComputedAccessibleNode');
+
+promise_test(() => {
+    var element = document.getElementById("button");
+    return window.getComputedAccessibleNode(element).then(computedAXNode => {
+      assert_equals(computedAXNode.role, "button");
+    });
+}, "ComputedAccessibilityNode.role");
+
+promise_test(() => {
+    var element = document.getElementById("button");
+    return window.getComputedAccessibleNode(element).then(computedAXNode => {
+      assert_equals(computedAXNode.name, "axButton");
+    });
+}, "ComputedAccessibilityNode.name");
+</script>
