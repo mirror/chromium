@@ -859,7 +859,9 @@ void UserMediaProcessor::CreateAudioTracks(
     // be removed.
     for (auto& device : overridden_audio_devices) {
       device.matched_output_device_id = "";
-      device.matched_output = media::AudioParameters::UnavailableDeviceParams();
+      // Audio parameters must be invalid in order to ensure that the matched
+      // output device will not be used.
+      device.matched_output = media::AudioParameters();
     }
   }
 
@@ -981,7 +983,8 @@ void UserMediaProcessor::DelayedGetUserMediaRequestFailed(
       return;
     case MEDIA_DEVICE_NO_HARDWARE:
       web_request.RequestFailed(
-          blink::WebUserMediaRequest::Error::kDevicesNotFound);
+          blink::WebUserMediaRequest::Error::kDevicesNotFound,
+          "Requested device not found");
       return;
     case MEDIA_DEVICE_INVALID_SECURITY_ORIGIN_DEPRECATED:
       NOTREACHED();

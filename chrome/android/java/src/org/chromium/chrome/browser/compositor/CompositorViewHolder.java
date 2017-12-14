@@ -227,6 +227,13 @@ public class CompositorViewHolder extends FrameLayout
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom,
                     int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                // Have content pick up the size and browser control information when the content
+                // view got laid out. Successive calls with the same values are ignored by
+                // ViewAndroid that stores the size.
+                View view = getActiveView();
+                if (view != null) {
+                    setSize(getActiveWebContents(), view, view.getWidth(), view.getHeight());
+                }
                 onViewportChanged();
 
                 // If there's an event that needs to occur after the keyboard is hidden, post
@@ -394,6 +401,7 @@ public class CompositorViewHolder extends FrameLayout
 
     @Override
     public boolean dispatchDragEvent(DragEvent e) {
+        if (mTabVisible == null) return false;
         ContentViewCore contentViewCore = mTabVisible.getContentViewCore();
         if (contentViewCore == null) return false;
 
@@ -701,9 +709,7 @@ public class CompositorViewHolder extends FrameLayout
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (changed) {
-            onViewportChanged();
-        }
+        if (changed) onViewportChanged();
         super.onLayout(changed, l, t, r, b);
 
         invalidateAccessibilityProvider();
@@ -935,7 +941,6 @@ public class CompositorViewHolder extends FrameLayout
         if (view == null || (tab.isNativePage() && view == tab.getView())) return;
         tab.setTopControlsHeight(getTopControlsHeightPixels(), controlsResizeView());
         tab.setBottomControlsHeight(getBottomControlsHeightPixels());
-        setSize(tab.getWebContents(), view, getWidth(), getHeight());
     }
 
     /**
