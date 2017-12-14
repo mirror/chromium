@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0ca9bfd_7752d171",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T12:38:33Z",
+      "side": 1,
+      "message": "Based on the failed tests, it turns out that the Mojo calls are coming on the IO thread, so you have to restore the if sections you had in the previous patchset.",
+      "revId": "0e4de6ccd71360da589079dfc4bdf1d25a7012f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4074605_86957b59",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T12:38:33Z",
+      "side": 1,
+      "message": "Based on the test errors, remove this DCHECK.",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 21
+      },
+      "revId": "0e4de6ccd71360da589079dfc4bdf1d25a7012f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5226e1_171e454d",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T12:38:33Z",
+      "side": 1,
+      "message": "Remove empty line",
+      "revId": "0e4de6ccd71360da589079dfc4bdf1d25a7012f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd4e34c_f8f83701",
+        "filename": "content/browser/renderer_host/media/peer_connection_tracker_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T12:38:33Z",
+      "side": 1,
+      "message": "Remove empty line.",
+      "revId": "0e4de6ccd71360da589079dfc4bdf1d25a7012f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6f8cd2_3b527c2c",
+        "filename": "content/common/media/peer_connection_tracker.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T12:38:33Z",
+      "side": 1,
+      "message": "Remove trailing whitespace.",
+      "range": {
+        "startLine": 15,
+        "startChar": 46,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "0e4de6ccd71360da589079dfc4bdf1d25a7012f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
