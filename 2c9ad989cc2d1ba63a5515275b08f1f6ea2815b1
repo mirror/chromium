@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03964aca_9ab57f37",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-12-14T23:57:35Z",
+      "side": 1,
+      "message": "Could you revise this comment a bit more? Maybe:\n\nPreviously there was a bug where we didn\u0027t Flush this context\u0027s work before synchronizing with the compositor, and on some platforms ...",
+      "range": {
+        "startLine": 397,
+        "startChar": 7,
+        "endLine": 397,
+        "endChar": 37
+      },
+      "revId": "2c9ad989cc2d1ba63a5515275b08f1f6ea2815b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
