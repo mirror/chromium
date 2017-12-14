@@ -1478,6 +1478,10 @@ void HTMLCanvasElement::UnregisterContentsLayer(WebLayer* web_layer) {
   GraphicsLayer::UnregisterContentsLayer(web_layer);
 }
 
+void HTMLCanvasElement::OnSurfaceIdUpdated(viz::FrameSinkId frame_sink_id,
+                                           uint32_t parent_id,
+                                           base::UnguessableToken nonce) {}
+
 FontSelector* HTMLCanvasElement::GetFontSelector() {
   return GetDocument().GetStyleEngine().GetFontSelector();
 }
