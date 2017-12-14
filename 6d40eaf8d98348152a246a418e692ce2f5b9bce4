@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108ee1b3_95cd6685",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-12-14T16:30:45Z",
+      "side": 1,
+      "message": "I think this is probably safe, but I\u0027d prefer that, in this CL, we add this flag to --gtest-filter-file rather than replace it. We can remove --gtest-filter-file separately.",
+      "revId": "6d40eaf8d98348152a246a418e692ce2f5b9bce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
