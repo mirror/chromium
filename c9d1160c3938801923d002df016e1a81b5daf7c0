@@ -53,6 +53,23 @@
     },
     {
       "key": {
+        "uuid": "e2ab3ccc_d193ba7b",
+        "filename": "chromeos/dbus/event_logger_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-14T09:11:22Z",
+      "side": 1,
+      "message": "sorry, one important comment that i missed (i\u0027ll blame jetlag): DBusClient classes are used when chrome is a client of d-bus services provided by system daemons: specifically, when chrome makes method calls to those services and listens for signals emitted by them.\n\nin this class, chrome is instead emitting signals on kEventLoggerServicePath, which presumably belongs to your new daemon, not to chrome. if you want to chrome to emit signals, you need to make chrome register a new d-bus service and emit the signals on it. your code should be in chromeos/dbus/services. you\u0027ll probably want to give your class a public method that other classes within chrome can call to instruct it to emit signals.\n\ni\u0027ll add a new section about this at https://chromium.googlesource.com/chromiumos/docs/+/master/dbus_best_practices.md, but see https://chromium.googlesource.com/chromiumos/docs/+/master/dbus_in_chrome.md#creating-chrome-d_bus-services: \"Receiving method calls or emitting signals requires exporting a service.\"",
+      "revId": "c9d1160c3938801923d002df016e1a81b5daf7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25279018_66508d9e",
         "filename": "chromeos/dbus/event_logger_client.cc",
         "patchSetId": 2
