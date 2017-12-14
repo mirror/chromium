@@ -1,0 +1,300 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f269fcb8_81d6c9dd",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "Is there a way to ASSERT not-on-ui-thread here?",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d77b74f_266787dc",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "Maybe do parsed_printers-\u003ereserve(printer_list.size())",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ef760e_ebcfd515",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "Suggest slightly more descriptive logging on all of these warnings, for instance this should probably be \"Skipping enterprise printer entry which is not a dictionary\"",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d09f58_84870910",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "I think this may not be the best way to factor stuff out of ExternalPrintersImpl to control complexity.  \n\nMy guess is it would be cleaner if you instead pull all the stuff that runs off the UI thread into a separate class, instead of just the printer list filtering stuff.\n\nI think this would simplify many of your scheduling things, where you hop back and forth between contexts twice when you could (I think) get away with a single back-and-forth hop.\n\nThis is well into opinionated territory though.",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80934af8_a12a75a7",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "Comments on these variables?",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b118a5_0b458bd5",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "Comment?",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b04a94_85c5caa0",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "Is there a reason this is after the feature flag check?  Seems like it should be at the top.",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a28698_16855c41",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me what the right thing to do here vis-a-vis the observer protocol.  Should we schedule a callback here with a null ptr so that observer-consumers can do something sensible instead of hanging indefinitely?",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879cb4eb_b466de81",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "Can another SetData come in while a previous ParsePrinters call is still outstanding?  If so, is that OK?  \n\nIf this is OK, this deserves a big comment about why it\u0027s ok.",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd3fa45_4708570d",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "The flow here seems a little strange to me.  Let me attempt ASCII art to explain what I think is going on:\n\nUI Thread                             Other context\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d                             \u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nSetData() \n                                      ParsePrinters()\nOnParsingComplete()\nMaybeRecomputePrinters()\n                                      ComputePrinters()\nOnComputationComplete()\n\nWould it be better to pull ParsePrinters into ExternalPrintersImpl and have it call ComputePrinters() directly instead of doing a second round trip to the UI thread?",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 67
+      },
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4e4122_f43e1249",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "Suggest printers_.reset()  instead as I think that\u0027s clearer that you\u0027re freeing memory.",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ede321bc_629fb99e",
+        "filename": "chrome/browser/chromeos/printing/external_printers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "nit:  You need temp_list_ptr, but don\u0027t need temp_list (you can std::move(printers_cache_) below directly in the postTaskAndReply function).\n\nBut if you think it\u0027s clearer this way, no worries.",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93494cfb_e7d542ab",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "probably overzealous grammar nit: s/have/has",
+      "range": {
+        "startLine": 38,
+        "startChar": 39,
+        "endLine": 38,
+        "endChar": 43
+      },
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca18d14b_ab8e827f",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "The wording here is a bit confusing; maybe the comment wasn\u0027t fully updated after a revision?  Do you really mean that there is a condition in which this returns nullptr, but a separate condition of invalidity which returns an empty vector?",
+      "range": {
+        "startLine": 67,
+        "startChar": 55,
+        "endLine": 68,
+        "endChar": 32
+      },
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfd4fef_206c4ca0",
+        "filename": "chrome/browser/chromeos/printing/external_printers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "I can see why you did vector-of-pointers, but it\u0027s also true that this is a bit of the implementation leaking through to the API, which is unfortunate.  It would be more natural, I think, to return const std::vector\u003cPrinter\u003e* here.\n\nIt\u0027s plausible to do, I think -- you\u0027d have to change your storage strategy from cache-with-pointer-references to something like included_ and excluded_ vectors, but it\u0027s also a fair bit of work for not a lot of API gain, so your call if you want to do it.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 69
+      },
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4ead19c_1b2ef75b",
+        "filename": "chrome/browser/chromeos/printing/external_printers_pref_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-12-14T22:45:01Z",
+      "side": 1,
+      "message": "Why are you declaring these here instead of just using the ExternalPrinters values directly?",
+      "revId": "b90fbe615f48b9222f2b0c0aee68a460596d754b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
