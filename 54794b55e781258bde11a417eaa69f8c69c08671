@@ -33,6 +33,23 @@
       "revId": "54794b55e781258bde11a417eaa69f8c69c08671",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d169d86_2328ea2c",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-12-14T18:47:51Z",
+      "side": 0,
+      "message": "I don\u0027t like removing these comments. Even if they seem redundant, it\u0027s much quicker for to browse the code blocks looking through the comments.",
+      "revId": "54794b55e781258bde11a417eaa69f8c69c08671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
