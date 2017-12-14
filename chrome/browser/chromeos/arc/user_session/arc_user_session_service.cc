@@ -46,6 +46,7 @@ ArcUserSessionService::ArcUserSessionService(content::BrowserContext* context,
 }
 
 ArcUserSessionService::~ArcUserSessionService() {
+  session_manager::SessionManager::Get()->RemoveObserver(this);
   arc_bridge_service_->intent_helper()->RemoveObserver(this);
 }
 
