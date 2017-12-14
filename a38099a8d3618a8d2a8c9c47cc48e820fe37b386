@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90839ec1_e74eca3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/StartupPageLoadMetricsObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-14T14:46:37Z",
+      "side": 1,
+      "message": "I think this will work well. The bit is unset after the first navigation is finished regardless whether or not the navigation was successfully committed. When the user refreshes a page, a new navigation will be created, it will have a new navigationId and the bit will be unset. I\u0027ll add a test for this scenario.\n\nThe sRunningApplicationStart bit is also unset when we start 2nd navigation in ChromeTabbedActivity.createTabModelSelector and it happens before StartupPageLoadMetricsObserver.onNewNavigation() is called.",
+      "parentUuid": "b9f8aad0_0359b1ae",
+      "range": {
+        "startLine": 28,
+        "startChar": 43,
+        "endLine": 28,
+        "endChar": 68
+      },
+      "revId": "a38099a8d3618a8d2a8c9c47cc48e820fe37b386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f04c003a_8d5367b7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "a38099a8d3618a8d2a8c9c47cc48e820fe37b386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856260de_72309d18",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 83226,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-12-14T14:46:37Z",
+      "side": 1,
+      "message": "It\u0027s the latter. Thanks, your wording is much better.\n\nI\u0027ve also updated the description for NavigationCommit histogram, I hope it\u0027s less confusing now.",
+      "parentUuid": "f04c003a_8d5367b7",
+      "revId": "a38099a8d3618a8d2a8c9c47cc48e820fe37b386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
