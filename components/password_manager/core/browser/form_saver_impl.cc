@@ -120,14 +120,19 @@ void FormSaverImpl::SaveImpl(
     if (!pending.username_value.empty())
       DeleteEmptyUsernameCredentials(pending, best_matches);
   } else {
-    if (old_primary_key)
+    //    LOG(ERROR) << "UpdateLogin " << pending;
+    if (old_primary_key) {
+      //      LOG(ERROR) << "old key " << *old_primary_key;
       store_->UpdateLoginWithPrimaryKey(pending, *old_primary_key);
-    else
+    } else {
+      //      LOG(ERROR) << "update w/o old key";
       store_->UpdateLogin(pending);
+    }
   }
 
   if (credentials_to_update) {
     for (const PasswordForm& credential : *credentials_to_update) {
+      //      LOG(ERROR) << "credential update " << credential;
       store_->UpdateLogin(credential);
     }
   }

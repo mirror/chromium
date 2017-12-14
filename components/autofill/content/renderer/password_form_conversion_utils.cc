@@ -763,8 +763,9 @@ bool GetPasswordForm(
   // Convert |all_possible_usernames| to PossibleUsernamesVector.
   autofill::PossibleUsernamesVector other_possible_usernames;
   for (WebInputElement possible_username : all_possible_usernames) {
-    other_possible_usernames.push_back(
-        MakePossibleUsernamePair(possible_username));
+    auto pair = MakePossibleUsernamePair(possible_username);
+    if (!pair.first.empty())
+      other_possible_usernames.push_back(std::move(pair));
   }
   password_form->other_possible_usernames.swap(other_possible_usernames);
 
