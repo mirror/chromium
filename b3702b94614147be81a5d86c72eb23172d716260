@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd61c876_2e41d274",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1255087
+      },
+      "writtenOn": "2017-12-14T21:10:58Z",
+      "side": 1,
+      "message": "Will you be making corresponding google3 proto changes as well ?",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 36
+      },
+      "revId": "b3702b94614147be81a5d86c72eb23172d716260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30d0fc0_65682742",
+        "filename": "components/data_reduction_proxy/proto/client_config.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1255087
+      },
+      "writtenOn": "2017-12-14T21:10:58Z",
+      "side": 1,
+      "message": "Would it be better to create a new DeviceInfo message and add total_device_memory_kb to it ?\nSo it\u0027ll be easier to add other device information in the future (if the protocol is updated)?\n\nmessage DeviceInfo {\n optional int64 total_device_memory_kb \u003d 1;\n}",
+      "range": {
+        "startLine": 149,
+        "startChar": 17,
+        "endLine": 149,
+        "endChar": 39
+      },
+      "revId": "b3702b94614147be81a5d86c72eb23172d716260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a51a3ecb_290c5176",
         "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
         "patchSetId": 4
@@ -36,6 +82,30 @@
       "writtenOn": "2017-12-14T21:09:47Z",
       "side": 1,
       "message": "It allows for automating the server pipeline more easily.",
+      "parentUuid": "a51a3ecb_290c5176",
+      "range": {
+        "startLine": 111,
+        "startChar": 17,
+        "endLine": 111,
+        "endChar": 39
+      },
+      "revId": "b3702b94614147be81a5d86c72eb23172d716260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ab6651_694eaa68",
+        "filename": "components/data_reduction_proxy/proto/pageload_metrics.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1255087
+      },
+      "writtenOn": "2017-12-14T21:10:58Z",
+      "side": 1,
+      "message": "This should be memory used by the page ?",
       "parentUuid": "a51a3ecb_290c5176",
       "range": {
         "startLine": 111,
