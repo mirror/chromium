@@ -51,6 +51,24 @@
       "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a38b444_7b6359ac",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T14:54:34Z",
+      "side": 1,
+      "message": "If that\u0027s the case, could probably assign it to null if the GN variable \"requires_sdk_api_level_23\" is set. That\u0027s basically an \"is_monochrome\" flag to android_apk.",
+      "parentUuid": "d3aa0723_e1b79a7f",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
