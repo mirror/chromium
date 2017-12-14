@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ef656c_fe669f5e",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T23:24:43Z",
+      "side": 1,
+      "message": "This block is one of the changes, and it was already a bit hard to read. How about this?\n\nmode_t mode \u003d (from_stat.st_mode \u0026 01777) | S_IRUSR | S_IXUSR | S_IWUSR;                                                           \nif (mkdir(target_path.value().c_str(), mode) \u003d\u003d 0)\n  continue;\nif (errno \u003d\u003d EEXIST \u0026\u0026 !open_exclusive)\n  continue;",
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a7e406_82ed50a8",
+        "filename": "base/files/file_util_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T23:24:43Z",
+      "side": 1,
+      "message": "Can you explain why we don\u0027t apply these flags when |open_exclusive| is true?",
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93972c62_a71255ca",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T23:24:43Z",
+      "side": 1,
+      "message": "BTW, you can use FPL() from line 64 to make these shorter.",
+      "range": {
+        "startLine": 1057,
+        "startChar": 33,
+        "endLine": 1057,
+        "endChar": 50
+      },
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7242b8_704659f4",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2000,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-12-14T23:24:43Z",
+      "side": 1,
+      "message": "we fail -\u003e copying fails? You and I haven\u0027t failed.",
+      "range": {
+        "startLine": 2000,
+        "startChar": 16,
+        "endLine": 2000,
+        "endChar": 23
+      },
+      "revId": "f24cad68f532d66fe956e8fe4e79e9c7efe2a2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
