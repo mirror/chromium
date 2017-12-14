@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66e93251_c01fadc8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T23:19:28Z",
+      "side": 1,
+      "message": "Merge this with iPhone 7? Call it \"iPhone 7/8\".",
+      "revId": "a51df83e1e49cf05fd12d5f0a595303d63aa7164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4329e28_f1d5c2b6",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T23:19:28Z",
+      "side": 1,
+      "message": "Same thing here.",
+      "revId": "a51df83e1e49cf05fd12d5f0a595303d63aa7164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c63439_1c934cdf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-12-14T23:19:28Z",
+      "side": 1,
+      "message": "Let\u0027s leave this one and drop Nexus 5X!",
+      "revId": "a51df83e1e49cf05fd12d5f0a595303d63aa7164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
