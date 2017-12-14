@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "9120d15f_bf47eb3f",
+        "filename": "net/disk_cache/simple/simple_entry_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-12-14T15:35:42Z",
+      "side": 1,
+      "message": "\u003e also DCHECKs that Create/Open aren\u0027t called on an entry in doomed state).\n\nSo turns out this can happen, before this CL, under following interleaving:\n\n1. I/O thread: some op (read/write) is dispatched to a disk thread.\n2. disk thread: begin disk I/O\n3. I/O thread: CreateEntry called on same key. The entry is in active_entries_, so it just \n   queues up a CreateEntryInternal on its big queue\n4. disk thread: disk I/O failed, doom the entries files, and report failure to I/O thread\n5. I/O thread: notice op failed, mark self as doomed, removing from active_entries_\n6. CreateEntryInternal runs, and since the state isn\u0027t STATE_UNITIALIZED (it\u0027s STATE_FAILED),\n   just returns the entry out to the caller of CreateEntry. Since it\u0027s in STATE_FAILED, all \n   ops will fail on it.\n\nNot immediately sure what to do about it yet, and even if it\u0027s completely a bug. \n\nNote that this can\u0027t happen if the doom is initiated on the I/O thread, since that yanks the entry out of active_entries_  immediately. (The weird/hard-to-think-about case are when both happen though)...",
+      "parentUuid": "fb8f58a2_4cb559d4",
+      "range": {
+        "startLine": 1240,
+        "startChar": 7,
+        "endLine": 1240,
+        "endChar": 77
+      },
+      "revId": "f747b589b720cded2aa0f1ab368f0c5af8477575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04054ea2_7fd71b9d",
         "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
         "patchSetId": 18
