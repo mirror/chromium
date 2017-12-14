@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed39d649_e147cd81",
+        "filename": "chrome/android/java/res/values-v16/styles.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-14T16:07:49Z",
+      "side": 1,
+      "message": "nit: add a comment here about listPreferredItemPaddingStart/End not being supported on older versions of Android \u0026 reference the bug number",
+      "revId": "7a51c92a6f422469b452ba72b637dc30bdc433a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d55df7_bdeb7737",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-12-14T16:07:49Z",
+      "side": 1,
+      "message": "I thought this didn\u0027t work on Android version 17 (that it would \"be ignored on Android 4.2.* when rendering\")? Should this be in a values-v18/styles.xml?",
+      "range": {
+        "startLine": 780,
+        "startChar": 6,
+        "endLine": 781,
+        "endChar": 86
+      },
+      "revId": "7a51c92a6f422469b452ba72b637dc30bdc433a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
