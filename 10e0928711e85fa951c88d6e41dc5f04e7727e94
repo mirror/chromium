@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34f02d47_818b9978",
+        "filename": "components/crash/core/common/crash_key_breakpad_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-12-14T15:48:44Z",
+      "side": 1,
+      "message": "You could also have the block and WithBreakpadRefSync return a bool, which could be a dummy false or true in the two other functions, and the correct return value for this one. Not worth templatizing on the return type, and the throwaway values are just as weird, so I have no strong preference.",
+      "revId": "10e0928711e85fa951c88d6e41dc5f04e7727e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
