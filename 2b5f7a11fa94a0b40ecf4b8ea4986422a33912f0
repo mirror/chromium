@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "62b2ebf8_bc3f23b2",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T21:43:15Z",
+      "side": 1,
+      "message": "Sorry, missed this. Yes you are right, let\u0027s remove them.",
+      "parentUuid": "6e5416cc_24c866a4",
+      "revId": "2b5f7a11fa94a0b40ecf4b8ea4986422a33912f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d902c15_368bd4db",
         "filename": "ash/display/window_tree_host_manager.cc",
         "patchSetId": 8

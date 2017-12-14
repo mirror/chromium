@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fdbb7aa1_49d4d3af",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2318,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T21:43:15Z",
+      "side": 1,
+      "message": "Sure, Done",
+      "parentUuid": "7bf623b0_588b83c3",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f67adba8_ab85c698",
         "filename": "ash/system/screen_layout_observer_unittest.cc",
         "patchSetId": 12
@@ -289,6 +307,24 @@
       "side": 1,
       "message": "My question was why we need. The original test was to verify that the device will be correctly restored when you connect the display, and this changes the scenario.\nYou may add new scenario if that helps.",
       "parentUuid": "5c0b6b75_6fe40474",
+      "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9cbad4_5bbfca09",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1093,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-12-14T21:43:15Z",
+      "side": 1,
+      "message": "Ah, I see. it is initially one display, then preferences are loaded. And then another one is added. Ok, I changed the scenario back.",
+      "parentUuid": "60430556_7bac0f89",
       "revId": "6b3a4d406fdee8f80c13bf5bd5e9f5847a0e6ca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
