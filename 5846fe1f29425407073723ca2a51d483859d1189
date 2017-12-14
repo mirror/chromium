@@ -420,6 +420,30 @@
     },
     {
       "key": {
+        "uuid": "3076508d_ee75e31a",
+        "filename": "chromeos/cryptohome/async_method_caller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-12-14T19:20:21Z",
+      "side": 1,
+      "message": "It never hurts to run \u0027git cl format\u0027 anyway; we only enforce it in some directories, but it is always considered correct. This is how clang formats this:\n\nvoid AsyncCallStatusForPrivacyCA(\n    int async_id,\n    chromeos::attestation::PrivacyCAOperationStatus return_status,\n    const std::string\u0026 return_data) override {",
+      "parentUuid": "7f306801_5043d941",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 6
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d55b0e23_0aa95713",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 2
