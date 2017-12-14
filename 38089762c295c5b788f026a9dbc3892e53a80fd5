@@ -122,6 +122,24 @@
       "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88bc1eb5_34e4d5e0",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-12-14T19:27:38Z",
+      "side": 1,
+      "message": "My purview is purely security, and I don\u0027t think this has a direct security impact either way. There is a developer ergonomics/resilience against mis-use argument that a tricky API can harm security indirectly, but I don\u0027t see any huge/likely risks along those lines here. So I\u0027d say you should do whatever has the best ergonomics for your intended developer community (you, primiano, et al.).",
+      "parentUuid": "9dcb95cf_59070001",
+      "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
