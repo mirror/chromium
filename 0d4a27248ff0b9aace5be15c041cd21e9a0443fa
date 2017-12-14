@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37b6bf58_ad6284ff",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFaceSource.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-12-14T02:10:40Z",
+      "side": 1,
+      "message": "I think this invalidates |key|.\n(Will create a patch)",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 22
+      },
+      "revId": "0d4a27248ff0b9aace5be15c041cd21e9a0443fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
