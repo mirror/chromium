@@ -1,0 +1,186 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fedd935_305fe5f4",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-14T19:32:06Z",
+      "side": 1,
+      "message": "DVLOG",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 6
+      },
+      "revId": "33756b0f789c6154e408abe63ac6f2fdc2f0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369f6aa6_0e4f2301",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-14T19:32:06Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 128,
+        "startChar": 19,
+        "endLine": 128,
+        "endChar": 36
+      },
+      "revId": "33756b0f789c6154e408abe63ac6f2fdc2f0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7775dd0a_85b95124",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-14T19:32:06Z",
+      "side": 1,
+      "message": "nit:\n\n  return predictor_ \u0026\u0026 predictor_-\u003eis_query_enabled();",
+      "revId": "33756b0f789c6154e408abe63ac6f2fdc2f0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176a23d1_9c4c7162",
+        "filename": "components/assist_ranker/base_predictor.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-14T19:32:06Z",
+      "side": 1,
+      "message": "nit: no need for {}",
+      "revId": "33756b0f789c6154e408abe63ac6f2fdc2f0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dfd0d8_a618397c",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-14T19:32:06Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "33756b0f789c6154e408abe63ac6f2fdc2f0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27492d0a_6ec1dd94",
+        "filename": "components/assist_ranker/binary_classifier_predictor.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-14T19:32:06Z",
+      "side": 1,
+      "message": "inference_module_ \u003d std::make_unique...",
+      "revId": "33756b0f789c6154e408abe63ac6f2fdc2f0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7309d922_8b04dee7",
+        "filename": "components/assist_ranker/binary_classifier_predictor_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-14T19:32:06Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "33756b0f789c6154e408abe63ac6f2fdc2f0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca40c220_77c47509",
+        "filename": "components/assist_ranker/binary_classifier_predictor_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-14T19:32:06Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "33756b0f789c6154e408abe63ac6f2fdc2f0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305987c9_c82628e9",
+        "filename": "components/assist_ranker/predictor_config.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-14T19:32:06Z",
+      "side": 1,
+      "message": "is this really constexpr?\n\nDoesn\u0027t the feature_whitelist get allocated/returned at runtime?",
+      "revId": "33756b0f789c6154e408abe63ac6f2fdc2f0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c956bbd6_0af3ece4",
+        "filename": "components/assist_ranker/ranker_example_util.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-12-14T19:32:06Z",
+      "side": 1,
+      "message": "return true instead of break for kBoolValue and kInt32Value?\n\nThen NOTREACHED() and return false for the default case? And/or omit the default case (so the compiler can try to detect omitted cases) and NOTREACHED() + return false outside the switch?",
+      "revId": "33756b0f789c6154e408abe63ac6f2fdc2f0d08b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
