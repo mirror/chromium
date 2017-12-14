@@ -575,16 +575,16 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
     }
   }
 
-  void SetProtection(void* data,
-                     size_t length,
-                     Protection protection) override {
+  void SetProtection(void* data, size_t length, Protection protection) {
+    CHECK(SetProtection(data, protection, length));
+  }
+
+  bool SetProtection(void* data, Protection protection, size_t length) {
     switch (protection) {
       case Protection::kNoAccess:
-        CHECK(WTF::SetSystemPagesAccess(data, length, WTF::PageInaccessible));
-        return;
+        return WTF::SetSystemPagesAccess(data, length, WTF::PageInaccessible);
       case Protection::kReadWrite:
-        CHECK(WTF::SetSystemPagesAccess(data, length, WTF::PageReadWrite));
-        return;
+        return WTF::SetSystemPagesAccess(data, length, WTF::PageReadWrite);
       default:
         NOTREACHED();
     }
