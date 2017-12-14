@@ -36,6 +36,7 @@ class CORE_EXPORT DeclaredStylePropertyMap final : public StylePropertyMap {
   void ForEachProperty(const IterationCallback&) override;
   void SetProperty(CSSPropertyID, const CSSValue*) override;
   void RemoveProperty(CSSPropertyID) override;
+  void RemoveCustomProperty(const AtomicString&) override;
 
  private:
   Member<StyleRule> owner_rule_;

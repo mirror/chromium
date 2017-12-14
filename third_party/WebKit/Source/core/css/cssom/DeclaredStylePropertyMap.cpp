@@ -33,6 +33,11 @@ void DeclaredStylePropertyMap::RemoveProperty(CSSPropertyID property_id) {
   owner_rule_->MutableProperties().RemoveProperty(property_id);
 }
 
+void DeclaredStylePropertyMap::RemoveCustomProperty(
+    const AtomicString& property_name) {
+  owner_rule_->MutableProperties().RemoveProperty(property_name);
+}
+
 void DeclaredStylePropertyMap::ForEachProperty(
     const IterationCallback& callback) {
   const CSSPropertyValueSet& declared_style_set = owner_rule_->Properties();
