@@ -66,7 +66,7 @@ void SSLErrorNavigationThrottle::ShowInterstitial(
       net::MapCertStatusToNetError(handle->GetSSLInfo().cert_status);
 
   // Get the error page content before giving up ownership of |blocking_page|.
-  std::string error_page_content = blocking_page->GetHTMLContents();
+  std::string error_page_content = blocking_page->OnReadyToShowHTMLContents();
 
   SSLErrorTabHelper::AssociateBlockingPage(handle->GetWebContents(),
                                            handle->GetNavigationId(),

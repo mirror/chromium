@@ -350,7 +350,8 @@
 -NoSessionRestoreTest.SessionCookiesCloseAllBrowsers
 -NoSessionRestoreTest.SessionStorage
 -NoSessionRestoreTest.SubdomainCookiesClearedOnCloseAllBrowsers
--PolicyTest.CertificateTransparencyEnforcementDisabledForUrls
+-PolicyTest.CertificateTransparencyEnforcementDisabledForUrls/0
+-PolicyTest.CertificateTransparencyEnforcementDisabledForUrls/1
 -PolicyTest.ExtensionInstallSources
 -PolicyTest.ForceGoogleSafeSearch
 -ProfileBrowserTest.SendHPKPReport
