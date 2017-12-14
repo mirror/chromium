@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/bind.h"
 #include "base/containers/circular_deque.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -195,11 +196,54 @@ TestMockTimeTaskRunner::TestMockTimeTaskRunner(Type type)
 TestMockTimeTaskRunner::TestMockTimeTaskRunner(Time start_time,
                                                TimeTicks start_ticks,
                                                Type type)
-    : now_(start_time), now_ticks_(start_ticks), tasks_lock_cv_(&tasks_lock_) {
-  if (type == Type::kBoundToThread) {
-    RunLoop::RegisterDelegateForCurrentThread(this);
-    thread_task_runner_handle_ = std::make_unique<ThreadTaskRunnerHandle>(
-        MakeRefCounted<NonOwningProxyTaskRunner>(this));
+    : now_(start_time),
+      now_ticks_(start_ticks),
+      tasks_non_empty_cv_(&tasks_lock_) {
+  switch (type) {
+    case Type::kStandalone: {
+      // No custom setup required.
+      break;
+    }
+    case Type::kBoundToThread: {
+      thread_task_runner_handle_ = std::make_unique<ThreadTaskRunnerHandle>(
+          MakeRefCounted<NonOwningProxyTaskRunner>(this));
+      RunLoop::RegisterDelegateForCurrentThread(this);
+      break;
+    }
+    // Refer to "override scenario" comments throughout this file for
+    // documentation on how this mode works.
+    case Type::kTakeOverThread: {
+      overridden_task_runner_ = ThreadTaskRunnerHandle::Get();
+      DCHECK(overridden_task_runner_);
+      thread_task_runner_handle_override_scope_ =
+          ThreadTaskRunnerHandle::OverrideForTesting(
+              MakeRefCounted<NonOwningProxyTaskRunner>(this),
+              ThreadTaskRunnerHandle::OverrideType::kTakeOverThread);
+
+      // Override the existing Delegate and tell it to always quit-when-idle
+      // unless all of these conditions hold:
+      //   1) The Run() call was induced by RunLoop::Run().
+      //   2) There are no |tasks_| remaining in this TestMockTimeTaskRunner.
+      //   3) This TestMockTimeTaskRunner wasn't itself asked to quit the
+      //      topmost Run() instance when idle.
+      // When the overridden Delegate keeps control of Run() (i.e. isn't told to
+      // quit-when-idle): Run() will block in the overridden Delegate until
+      // either it receives work from another source (e.g. system) or this
+      // TestMockTimeTaskRunner receives work and wakes up the overridden
+      // Delegate by posting a no-op task to it.
+      overridden_delegate_ =
+          RunLoop::OverrideDelegateForCurrentThreadForTesting(
+              this, Bind(
+                        [](TestMockTimeTaskRunner* self) {
+                          AutoLock scoped_lock(self->tasks_lock_);
+                          return !self->runs_were_run_loop_induced_.top() ||
+                                 !self->tasks_.empty() ||
+                                 self->ShouldQuitWhenIdle();
+                        },
+                        Unretained(this)));
+      DCHECK(overridden_delegate_);
+      break;
+    }
   }
 }
 
@@ -293,10 +337,26 @@ bool TestMockTimeTaskRunner::PostDelayedTask(const Location& from_here,
                                              OnceClosure task,
                                              TimeDelta delay) {
   AutoLock scoped_lock(tasks_lock_);
+
+  const bool was_empty = tasks_.empty();
+
   tasks_.push(TestOrderedPendingTask(from_here, std::move(task), now_ticks_,
                                      delay, next_task_ordinal_++,
                                      TestPendingTask::NESTABLE));
-  tasks_lock_cv_.Signal();
+
+  // Unblock upon receiving work from idle. Note: this is done after posting the
+  // task as some platforms' kernels prioritize the signaled thread (which would
+  // have no work if signaled before pushing |task| into |tasks_|).
+  if (was_empty) {
+    if (overridden_delegate_) {
+      // Wake the running overridden Delegate in the override scenario.
+      overridden_task_runner_->PostTask(FROM_HERE, Bind(&DoNothing));
+    } else {
+      // Merely signal the blocked CV in non-override scenarios.
+      tasks_non_empty_cv_.Signal();
+    }
+  }
+
   return true;
 }
 
@@ -319,7 +379,8 @@ void TestMockTimeTaskRunner::OnAfterTaskRun() {
   // Empty default implementation.
 }
 
-void TestMockTimeTaskRunner::ProcessAllTasksNoLaterThan(TimeDelta max_delta) {
+void TestMockTimeTaskRunner::ProcessAllTasksNoLaterThan(TimeDelta max_delta,
+                                                        bool run_loop_induced) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_GE(max_delta, TimeDelta());
 
@@ -331,6 +392,16 @@ void TestMockTimeTaskRunner::ProcessAllTasksNoLaterThan(TimeDelta max_delta) {
     undo_override = ThreadTaskRunnerHandle::OverrideForTesting(this);
   }
 
+  // In the override scenario: first flush any remaining tasks previously handed
+  // over to |overridden_delegate_|. This Run() call also guarantees that
+  // |overridden_delegate_| tasks from other sources get a chance to run before
+  // declaring idle even if |tasks_.empty()|.
+  if (overridden_delegate_) {
+    runs_were_run_loop_induced_.push(true);
+    overridden_delegate_->Run(true);
+    runs_were_run_loop_induced_.pop();
+  }
+
   const TimeTicks original_now_ticks = NowTicks();
   while (!quit_run_loop_) {
     OnBeforeSelectingTask();
@@ -340,8 +411,28 @@ void TestMockTimeTaskRunner::ProcessAllTasksNoLaterThan(TimeDelta max_delta) {
     // If tasks were posted with a negative delay, task_info.GetTimeToRun() will
     // be less than |now_ticks_|. ForwardClocksUntilTickTime() takes care of not
     // moving the clock backwards in this case.
-    ForwardClocksUntilTickTime(task_info.GetTimeToRun());
-    std::move(task_info.task).Run();
+    auto task_time = task_info.GetTimeToRun();
+    ForwardClocksUntilTickTime(task_time);
+
+    if (overridden_delegate_) {
+      // In the override scenario: forward the dequeued task and any other
+      // scheduled for the same time to the underlying Delegate and run it.
+      do {
+        overridden_task_runner_->PostTask(task_info.location,
+                                          std::move(task_info.task));
+      } while (DequeueNextTask(task_time, TimeDelta(), &task_info));
+      // This Run() will return when the underlying Delegate processed all the
+      // tasks handed to it (becomes idle) unless
+      // |tasks_.empty() && !ShouldQuitWhenIdle()| as declared in the
+      // OverrideDelegateForCurrentThreadForTesting() call above.
+      runs_were_run_loop_induced_.push(run_loop_induced);
+      overridden_delegate_->Run(true);
+      runs_were_run_loop_induced_.pop();
+    } else {
+      // Simply run the dequeued task in the non-override scenario.
+      std::move(task_info.task).Run();
+    }
+
     OnAfterTaskRun();
   }
 }
@@ -393,20 +484,31 @@ void TestMockTimeTaskRunner::Run(bool application_tasks_allowed) {
 
     // Peek into |tasks_| to perform one of two things:
     //   A) If there are no remaining tasks, wait until one is posted and
-    //      restart from the top.
+    //      restart from the top (can't happen in the override scenario, see
+    //      below).
     //   B) If there is a remaining delayed task. Fast-forward to reach the next
     //      round of tasks.
     TimeDelta auto_fast_forward_by;
     {
       AutoLock scoped_lock(tasks_lock_);
       if (tasks_.empty()) {
+        // This can't happen in the override scenario as the
+        // RunUntileIdle()/FastForwardBy() which consumes the last task will
+        // remain stuck in |overridden_delegate_->Run()| until a new task
+        // arrives per the overriding ShouldQuitWhenIdleCallback used (and this
+        // loop didn't start with |tasks_.empty()| per the logic preceding it).
+        DCHECK(!overridden_delegate_);
         while (tasks_.empty())
-          tasks_lock_cv_.Wait();
+          tasks_non_empty_cv_.Wait();
         continue;
       }
       auto_fast_forward_by = tasks_.top().GetTimeToRun() - now_ticks_;
     }
-    FastForwardBy(auto_fast_forward_by);
+    // Fast-forward time just enough to run the next set of tasks, then go back
+    // to top to check idle conditions again.
+    const TimeTicks original_now_ticks = NowTicks();
+    ProcessAllTasksNoLaterThan(auto_fast_forward_by, true);
+    ForwardClocksUntilTickTime(original_now_ticks + auto_fast_forward_by);
   }
   quit_run_loop_ = false;
 }
@@ -414,11 +516,16 @@ void TestMockTimeTaskRunner::Run(bool application_tasks_allowed) {
 void TestMockTimeTaskRunner::Quit() {
   DCHECK(thread_checker_.CalledOnValidThread());
   quit_run_loop_ = true;
+  if (overridden_delegate_)
+    overridden_delegate_->Quit();
 }
 
 void TestMockTimeTaskRunner::EnsureWorkScheduled() {
-  // Nothing to do: TestMockTimeTaskRunner::Run() will always process tasks and
-  // doesn't need an extra kick on nested runs.
+  // Nothing to do in TestMockTimeTaskRunner: TestMockTimeTaskRunner::Run() will
+  // always process tasks and doesn't need an extra kick on nested runs.
+
+  if (overridden_delegate_)
+    overridden_delegate_->EnsureWorkScheduled();
 }
 
 }  // namespace base

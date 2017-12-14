@@ -6,7 +6,6 @@
 
 #include "base/bind_helpers.h"
 #include "base/logging.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/synchronization/condition_variable.h"
 #include "base/synchronization/lock.h"
@@ -22,20 +21,20 @@ namespace test {
 
 namespace {
 
-std::unique_ptr<MessageLoop> CreateMessageLoopForMainThreadType(
+MessageLoop::Type GetMessageLoopTypeForMainThreadType(
     ScopedTaskEnvironment::MainThreadType main_thread_type) {
   switch (main_thread_type) {
     case ScopedTaskEnvironment::MainThreadType::DEFAULT:
-      return std::make_unique<MessageLoop>(MessageLoop::TYPE_DEFAULT);
+      return MessageLoop::TYPE_DEFAULT;
     case ScopedTaskEnvironment::MainThreadType::MOCK_TIME:
-      return nullptr;
+      return MessageLoop::TYPE_DEFAULT;
     case ScopedTaskEnvironment::MainThreadType::UI:
-      return std::make_unique<MessageLoop>(MessageLoop::TYPE_UI);
+      return MessageLoop::TYPE_UI;
     case ScopedTaskEnvironment::MainThreadType::IO:
-      return std::make_unique<MessageLoop>(MessageLoop::TYPE_IO);
+      return MessageLoop::TYPE_IO;
   }
   NOTREACHED();
-  return nullptr;
+  return MessageLoop::TYPE_DEFAULT;
 }
 
 }  // namespace
@@ -88,11 +87,11 @@ ScopedTaskEnvironment::ScopedTaskEnvironment(
     MainThreadType main_thread_type,
     ExecutionMode execution_control_mode)
     : execution_control_mode_(execution_control_mode),
-      message_loop_(CreateMessageLoopForMainThreadType(main_thread_type)),
+      message_loop_(GetMessageLoopTypeForMainThreadType(main_thread_type)),
       mock_time_task_runner_(
           main_thread_type == MainThreadType::MOCK_TIME
               ? MakeRefCounted<TestMockTimeTaskRunner>(
-                    TestMockTimeTaskRunner::Type::kBoundToThread)
+                    TestMockTimeTaskRunner::Type::kTakeOverThread)
               : nullptr),
       task_tracker_(new TestTaskTracker()) {
   CHECK(!TaskScheduler::GetInstance());
@@ -136,10 +135,9 @@ ScopedTaskEnvironment::~ScopedTaskEnvironment() {
 
 scoped_refptr<base::SingleThreadTaskRunner>
 ScopedTaskEnvironment::GetMainThreadTaskRunner() {
-  if (message_loop_)
-    return message_loop_->task_runner();
-  DCHECK(mock_time_task_runner_);
-  return mock_time_task_runner_;
+  if (mock_time_task_runner_)
+    return mock_time_task_runner_;
+  return message_loop_.task_runner();
 }
 
 void ScopedTaskEnvironment::RunUntilIdle() {

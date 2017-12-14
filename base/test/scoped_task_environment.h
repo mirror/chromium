@@ -7,12 +7,12 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_scheduler/lazy_task_runner.h"
 
 namespace base {
 
-class MessageLoop;
 class TaskScheduler;
 class TestMockTimeTaskRunner;
 
@@ -65,6 +65,9 @@ class ScopedTaskEnvironment {
     // TODO(gab): Make this the default |main_thread_type|.
     // TODO(gab): Also mock the TaskScheduler's clock simultaneously (this
     // currently only mocks the main thread's clock).
+    // TODO(gab): Every thread type is now mockable (since introduction of
+    // TestMockTimeTaskRunner::Type::kTakeOverThread). Update this API to allow
+    // MOCK_TIME to be mixed with any thread type.
     MOCK_TIME,
     // The main thread pumps UI messages.
     UI,
@@ -113,11 +116,12 @@ class ScopedTaskEnvironment {
 
   const ExecutionMode execution_control_mode_;
 
-  // Exactly one of these will be non-null to provide the task environment on
-  // the main thread. Users of this class should NOT rely on the presence of a
-  // MessageLoop beyond (Thread|Sequenced)TaskRunnerHandle and RunLoop as
-  // the backing implementation of each MainThreadType may change over time.
-  const std::unique_ptr<MessageLoop> message_loop_;
+  // Note: Users of this class should NOT rely on the presence of a MessageLoop
+  // beyond (Thread|Sequenced)TaskRunnerHandle and RunLoop as the backing
+  // implementation of each MainThreadType may change over time.
+  MessageLoop message_loop_;
+
+  // Non-null in MOCK_TIME mode.
   const scoped_refptr<TestMockTimeTaskRunner> mock_time_task_runner_;
 
   const TaskScheduler* task_scheduler_ = nullptr;

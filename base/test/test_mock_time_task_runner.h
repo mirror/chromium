@@ -31,6 +31,11 @@ class ThreadTaskRunnerHandle;
 // Runs pending tasks in the order of the tasks' post time + delay, and keeps
 // track of a mock (virtual) tick clock time that can be fast-forwarded.
 //
+// Note: A base::test::ScopedTaskEnvironment of type MOCK_TIME is preferred over
+// an explicit TestMockTimeTaskRunner. Only use a TestMockTimeTaskRunner in
+// tests that explictly need to simulate timings across multiple threads (e.g. a
+// regression test for a race condition).
+//
 // TestMockTimeTaskRunner has the following properties:
 //
 //   - Methods RunsTasksInCurrentSequence() and Post[Delayed]Task() can be
@@ -46,8 +51,8 @@ class ThreadTaskRunnerHandle;
 //     a TimeDelta, and that adding this delta to the starting values of Time
 //     and TickTime is still within their respective range.
 //
-// A TestMockTimeTaskRunner of Type::kBoundToThread has the following additional
-// properties:
+// A TestMockTimeTaskRunner of Type::kBoundToThread or Type::kTakeOverThread has
+// the following additional properties:
 //   - Thread/SequencedTaskRunnerHandle refers to it on its thread.
 //   - It can be driven by a RunLoop on the thread it was created on.
 //     RunLoop::Run() will result in running non-delayed tasks until idle and
@@ -59,7 +64,6 @@ class ThreadTaskRunnerHandle;
 //     delayed ones), it will block until more are posted. As usual,
 //     RunLoop::RunUntilIdle() is equivalent to RunLoop::Run() followed by an
 //     immediate RunLoop::QuitWhenIdle().
-//    -
 //
 // This is a slightly more sophisticated version of TestSimpleTaskRunner, in
 // that it supports running delayed tasks in the correct temporal order.
@@ -115,6 +119,9 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
     DISALLOW_COPY_AND_ASSIGN(ScopedContext);
   };
 
+  // Recall of mention at the top: prefer a base::test::ScopedTaskEnvironment
+  // over a TestMockTimeTaskRunner except in tests that explicitly need to
+  // simulate timings across multiple threads.
   enum class Type {
     // A TestMockTimeTaskRunner which can only be driven directly through its
     // API. Thread/SequencedTaskRunnerHandle will refer to it only in the scope
@@ -122,8 +129,16 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
     kStandalone,
     // A TestMockTimeTaskRunner which will associate to the thread it is created
     // on, enabling RunLoop to drive it and making
-    // Thread/SequencedTaskRunnerHandle refer to it on that thread.
+    // Thread/SequencedTaskRunnerHandle refer to it on that thread. There must
+    // not be an existing RunLoop::Delegate (e.g. MessageLoop) on this thread.
     kBoundToThread,
+    // Akin to kBoundToThread (RunLoop drives it and
+    // Thread/SequencedTaskRunnerHandle refers to it) but mocks time over an
+    // existing RunLoop::Delegate, forwarding tasks to it as they become ripe.
+    // This mode overrides the current RunLoop::Delegate and
+    // ThreadTaskRunnerHandle in this thread's environment. The current
+    // RunLoop::Delegate must outlive this TestMockTimeTaskRunner.
+    kTakeOverThread,
   };
 
   // Constructs an instance whose virtual time will start at the Unix epoch, and
@@ -184,6 +199,9 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
 
   // Called before the next task to run is selected, so that subclasses have a
   // last chance to make sure all tasks are posted.
+  // TODO(gab): Remove OnBeforeSelectingTask() and OnAfterTaskRun(). They are
+  // poorly supported in the kTakeOverThread mode and only have a single user
+  // which should be refactored.
   virtual void OnBeforeSelectingTask();
 
   // Called after the current mock time has been incremented so that subclasses
@@ -192,6 +210,9 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
 
   // Called after each task is run so that subclasses may perform additional
   // activities, e.g., pump additional task runners.
+  // TODO(gab): Remove OnBeforeSelectingTask() and OnAfterTaskRun(). They are
+  // poorly supported in the kTakeOverThread mode and only have a single user
+  // which should be refactored.
   virtual void OnAfterTaskRun();
 
  private:
@@ -212,7 +233,12 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
   // non-negative |max_delta|, runs all tasks with a remaining delay less than
   // or equal to |max_delta|, and moves virtual time forward as needed for each
   // processed task. Pass in TimeDelta::Max() as |max_delta| to run all tasks.
-  void ProcessAllTasksNoLaterThan(TimeDelta max_delta);
+  // |run_loop_induced| should be explicitly set to true if this is called as
+  // part of Run() in the override scenario so that calls to
+  // ShouldQuitWhenIdle() know to always quit-when-idle in non-Run() scenarios
+  // (i.e. FastForward*() calls).
+  void ProcessAllTasksNoLaterThan(TimeDelta max_delta,
+                                  bool run_loop_induced = false);
 
   // Forwards |now_ticks_| until it equals |later_ticks|, and forwards |now_| by
   // the same amount. Calls OnAfterTimePassed() if |later_ticks| > |now_ticks_|.
@@ -247,8 +273,24 @@ class TestMockTimeTaskRunner : public SingleThreadTaskRunner,
   size_t next_task_ordinal_ = 0;
 
   mutable Lock tasks_lock_;
-  ConditionVariable tasks_lock_cv_;
+  ConditionVariable tasks_non_empty_cv_;
+
+  // Non-null in TestMockTimeTaskRunners of Type::kBoundToThread to take
+  // ownership of the thread it was created on.
   std::unique_ptr<ThreadTaskRunnerHandle> thread_task_runner_handle_;
+
+  // Non-null in TestMockTimeTaskRunners of Type::kTakeOverThread to control
+  // the overridden RunLoop::Delegate.
+  scoped_refptr<SingleThreadTaskRunner> overridden_task_runner_;
+  ScopedClosureRunner thread_task_runner_handle_override_scope_;
+  RunLoop::Delegate* overridden_delegate_ = nullptr;
+  // A stack which flags whether each (nested) Run() call on the overridden
+  // Delegate was entered as a result of a RunLoop::Run() call (it can also be
+  // entered as a result of a FastForward*() call). If the topmost
+  // |overridden_delegate_->Run()| call serves a RunLoop::Run() call, it will
+  // keep control if it ever becomes idle while |tasks_.empty()|. When merely
+  // serving a FastForward*() call, it will always quit-when-idle.
+  std::stack<bool> runs_were_run_loop_induced_;
 
   // Set to true in RunLoop::Delegate::Quit() to signal the topmost
   // RunLoop::Delegate::Run() instance to stop, reset to false when it does.
