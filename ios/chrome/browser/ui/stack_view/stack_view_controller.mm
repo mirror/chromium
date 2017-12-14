@@ -3198,6 +3198,23 @@ NSString* const kTransitionToolbarAnimationKey =
 }
 
 - (void)alignDisplayViewsToViewport {
+  NSLog(@"%.20f %.20f",
+        AlignRectOriginAndSizeToPixels([_mainCardSet displayView].frame)
+            .size.width,
+        [_scrollView frame].size.width);
+  NSLog(@"%.20f %.20f",
+        AlignRectOriginAndSizeToPixels([_mainCardSet displayView].frame)
+            .size.height,
+        [_scrollView frame].size.height);
+  NSLog(@"%.20f %.20f",
+        AlignRectOriginAndSizeToPixels([_otrCardSet displayView].frame)
+            .size.width,
+        [_scrollView frame].size.width);
+  NSLog(@"%.20f %.20f",
+        AlignRectOriginAndSizeToPixels([_otrCardSet displayView].frame)
+            .size.height,
+        [_scrollView frame].size.height);
+
   DCHECK(CGSizeEqualToSize(
       AlignRectOriginAndSizeToPixels([_mainCardSet displayView].frame).size,
       [_scrollView frame].size));
