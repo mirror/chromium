@@ -188,6 +188,7 @@ class WebLayerTreeView {
   // Input properties ---------------------------------------------------
   virtual void SetEventListenerProperties(WebEventListenerClass,
                                           WebEventListenerProperties) {}
+  virtual void SetWheelEventListenerRects(const WebVector<WebRect>&) {}
   virtual void UpdateEventRectsForSubframeIfNecessary() {}
   virtual void SetHaveScrollEventHandlers(bool) {}
 
@@ -199,6 +200,9 @@ class WebLayerTreeView {
   virtual WebEventListenerProperties EventListenerProperties(
       WebEventListenerClass) const {
     return WebEventListenerProperties::kNothing;
+  }
+  virtual WebVector<WebRect> WheelEventListenerRects() const {
+    return WebVector<WebRect>();
   }
   virtual bool HaveScrollEventHandlers() const { return false; }
 
