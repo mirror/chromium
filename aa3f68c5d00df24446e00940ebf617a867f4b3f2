@@ -52,6 +52,24 @@
       "revId": "aa3f68c5d00df24446e00940ebf617a867f4b3f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f3397a_3fc780df",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptedIdleTaskController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-12-14T07:06:41Z",
+      "side": 1,
+      "message": "Ah, HashMap::erase() accepts end().\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/HashTable.h?dr\u003dCSs\u0026l\u003d1509",
+      "parentUuid": "16bb4ced_32e87357",
+      "revId": "aa3f68c5d00df24446e00940ebf617a867f4b3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
