@@ -50,8 +50,8 @@
 // MessagePumpMac.
 @protocol CrAppProtocol
 // Must return true if -[NSApplication sendEvent:] is currently on the stack.
-// See the comment for |CreateAutoreleasePool()| in the cc file for why this is
-// necessary.
+// See the comment for |ShouldCreateAutoreleasePool()| in the cc file for why
+// this is necessary.
 - (BOOL)isHandlingSendEvent;
 @end
 #endif  // !defined(OS_IOS)
@@ -62,22 +62,6 @@ namespace base {
 class RunLoop;
 class TimeTicks;
 
-// AutoreleasePoolType is a proxy type for autorelease pools. Its definition
-// depends on the translation unit (TU) in which this header appears. In pure
-// C++ TUs, it is defined as a forward C++ class declaration (that is never
-// defined), because autorelease pools are an Objective-C concept. In Automatic
-// Reference Counting (ARC) Objective-C TUs, it is similarly defined as a
-// forward C++ class declaration, because clang will not allow the type
-// "NSAutoreleasePool" in such TUs. Finally, in Manual Retain Release (MRR)
-// Objective-C TUs, it is a type alias for NSAutoreleasePool. In all cases, a
-// method that takes or returns an NSAutoreleasePool* can use
-// AutoreleasePoolType* instead.
-#if !defined(__OBJC__) || __has_feature(objc_arc)
-class AutoreleasePoolType;
-#else   // !defined(__OBJC__) || __has_feature(objc_arc)
-typedef NSAutoreleasePool AutoreleasePoolType;
-#endif  // !defined(__OBJC__) || __has_feature(objc_arc)
-
 class BASE_EXPORT MessagePumpCFRunLoopBase : public MessagePump {
  public:
   // MessagePump:
@@ -87,7 +71,7 @@ class BASE_EXPORT MessagePumpCFRunLoopBase : public MessagePump {
   void SetTimerSlack(TimerSlack timer_slack) override;
 
  protected:
-  // Needs access to CreateAutoreleasePool.
+  // Needs access to ShouldCreateAutoreleasePool.
   friend class MessagePumpScopedAutoreleasePool;
   friend class TestMessagePumpCFRunLoopBase;
 
@@ -112,11 +96,9 @@ class BASE_EXPORT MessagePumpCFRunLoopBase : public MessagePump {
   // |delegateless_work_| is true.  |delegate| can be NULL.
   void SetDelegate(Delegate* delegate);
 
-  // Return an autorelease pool to wrap around any work being performed.
-  // In some cases, CreateAutoreleasePool may return nil intentionally to
-  // preventing an autorelease pool from being created, allowing any
-  // objects autoreleased by work to fall into the current autorelease pool.
-  virtual AutoreleasePoolType* CreateAutoreleasePool();
+  // Whether a new autorelease pool should be created  to wrap around any work
+  // being performed.
+  virtual bool ShouldCreateAutoreleasePool();
 
   // Enable and disable entries in |enabled_modes_| to match |mode_mask|.
   void SetModeMask(int mode_mask);
@@ -357,9 +339,9 @@ class MessagePumpCrApplication : public MessagePumpNSApplication {
   ~MessagePumpCrApplication() override;
 
  protected:
-  // Returns nil if NSApp is currently in the middle of calling
+  // Returns false if NSApp is currently in the middle of calling
   // -sendEvent.  Requires NSApp implementing CrAppProtocol.
-  AutoreleasePoolType* CreateAutoreleasePool() override;
+  bool ShouldCreateAutoreleasePool() override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MessagePumpCrApplication);

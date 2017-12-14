@@ -23,6 +23,13 @@
 #import <AppKit/AppKit.h>
 #endif  // !defined(OS_IOS)
 
+#if !defined(OS_IOS)
+extern "C" {
+void objc_autoreleasePoolPop(void* pool);
+void* objc_autoreleasePoolPush(void);
+}
+#endif
+
 namespace base {
 
 namespace {
@@ -121,15 +128,18 @@ const CFStringRef kMessageLoopExclusiveRunLoopMode =
 // case where an autorelease pool needs to be passed in.
 class MessagePumpScopedAutoreleasePool {
  public:
-  explicit MessagePumpScopedAutoreleasePool(MessagePumpCFRunLoopBase* pump) :
-      pool_(pump->CreateAutoreleasePool()) {
+  explicit MessagePumpScopedAutoreleasePool(MessagePumpCFRunLoopBase* pump)
+      : pool_token_(nullptr) {
+    if (pump->ShouldCreateAutoreleasePool())
+      pool_token_ = objc_autoreleasePoolPush();
   }
    ~MessagePumpScopedAutoreleasePool() {
-    [pool_ drain];
+     if (pool_token_ != nullptr)
+       objc_autoreleasePoolPop(pool_token_);
   }
 
  private:
-  NSAutoreleasePool* pool_;
+  void* pool_token_;
   DISALLOW_COPY_AND_ASSIGN(MessagePumpScopedAutoreleasePool);
 };
 
@@ -316,9 +326,9 @@ void MessagePumpCFRunLoopBase::SetDelegate(Delegate* delegate) {
   }
 }
 
-// Base version returns a standard NSAutoreleasePool.
-AutoreleasePoolType* MessagePumpCFRunLoopBase::CreateAutoreleasePool() {
-  return [[NSAutoreleasePool alloc] init];
+// Base version always returns true;
+bool MessagePumpCFRunLoopBase::ShouldCreateAutoreleasePool() {
+  return true;
 }
 
 void MessagePumpCFRunLoopBase::SetModeMask(int mode_mask) {
@@ -879,10 +889,8 @@ MessagePumpCrApplication::~MessagePumpCrApplication() {
 // CrApplication is responsible for setting handlingSendEvent to true just
 // before it sends the event through the event handling mechanism, and
 // returning it to its previous value once the event has been sent.
-AutoreleasePoolType* MessagePumpCrApplication::CreateAutoreleasePool() {
-  if (MessagePumpMac::IsHandlingSendEvent())
-    return nil;
-  return MessagePumpNSApplication::CreateAutoreleasePool();
+bool MessagePumpCrApplication::ShouldCreateAutoreleasePool() {
+  return !MessagePumpMac::IsHandlingSendEvent();
 }
 
 // static
