@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bba7ed88_d307c557",
+        "filename": "content/browser/dom_storage/dom_storage_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-14T19:39:47Z",
+      "side": 1,
+      "message": "The renderer kills are specific to the mojo implementation of storage (e.g. the test wouldn\u0027t fail before this CL when implemented as part of the DOMStorageBrowserTest test suite).",
+      "range": {
+        "startLine": 126,
+        "startChar": 23,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "d20e560e704a6f8d7e72daf86a33ffa0187c9293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdaea9e7_c673b2de",
+        "filename": "content/browser/dom_storage/dom_storage_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-14T19:39:47Z",
+      "side": 1,
+      "message": "This test used to fail before this CL.",
+      "range": {
+        "startLine": 127,
+        "startChar": 23,
+        "endLine": 127,
+        "endChar": 51
+      },
+      "revId": "d20e560e704a6f8d7e72daf86a33ffa0187c9293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39b67989_d2cf5e9d",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-12-14T19:39:47Z",
+      "side": 1,
+      "message": "|git cl lint| made me do it...",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "d20e560e704a6f8d7e72daf86a33ffa0187c9293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
