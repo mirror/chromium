@@ -140,6 +140,7 @@ source_set("internal") {
   deps = [
     "//base:i18n",
     "//base/third_party/dynamic_annotations",
+    "//components/crash/core/common:crash_key",
     "//components/data_use_measurement/core",
     "//components/json_schema",
     "//components/prefs",
