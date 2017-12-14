@@ -411,11 +411,14 @@ void FeatureInfo::InitializeFeatures() {
   AddExtensionString("GL_CHROMIUM_copy_texture");
   AddExtensionString("GL_CHROMIUM_deschedule");
   AddExtensionString("GL_CHROMIUM_get_error_query");
+  AddExtensionString("GL_CHROMIUM_image");
   AddExtensionString("GL_CHROMIUM_lose_context");
+  AddExtensionString("GL_CHROMIUM_ordering_barrier");
   AddExtensionString("GL_CHROMIUM_pixel_transfer_buffer_object");
   AddExtensionString("GL_CHROMIUM_rate_limit_offscreen_context");
   AddExtensionString("GL_CHROMIUM_resize");
   AddExtensionString("GL_CHROMIUM_resource_safe");
+  AddExtensionString("GL_CHROMIUM_sync_point");
   AddExtensionString("GL_CHROMIUM_strict_attribs");
   AddExtensionString("GL_CHROMIUM_texture_mailbox");
   AddExtensionString("GL_CHROMIUM_trace_marker");
