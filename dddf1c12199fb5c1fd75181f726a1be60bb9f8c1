@@ -22,6 +22,30 @@
       "revId": "dddf1c12199fb5c1fd75181f726a1be60bb9f8c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a879f229_03976774",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-12-14T20:57:37Z",
+      "side": 1,
+      "message": "I think it\u0027s safest to default to an invalid value for cases like this where the choice should be explicit. I got bitten by that earlier when I hadn\u0027t updated the layout test mock yet. The transportMethod defaulted to zero which was interpreted as SUBMIT_AS_TEXTURE_HANDLE, leading to a confusing assertion failure on Windows.\n\nThe NONE value isn\u0027t actively used, but it\u0027ll be caught in the last \"else\" branch of VRDisplay::submitFrame as an invalid value. (I\u0027m planning to split that out into separate functions in a followup CL.)",
+      "parentUuid": "0c7b0b0c_8ad962a3",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 6
+      },
+      "revId": "dddf1c12199fb5c1fd75181f726a1be60bb9f8c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
