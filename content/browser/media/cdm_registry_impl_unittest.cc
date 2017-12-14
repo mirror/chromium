@@ -42,14 +42,16 @@ class CdmRegistryImplTest : public testing::Test {
                 const std::string& path,
                 const std::string& supported_codecs,
                 std::string supported_key_system,
-                bool supports_sub_key_systems = false) {
+                bool supports_sub_key_systems = false,
+                bool supports_persistent_licenses = false) {
     const std::vector<std::string> codecs =
         base::SplitString(supported_codecs, kCodecDelimiter,
                           base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
     cdm_registry_.RegisterCdm(
         CdmInfo(name, kTestCdmGuid, base::Version(version),
                 base::FilePath::FromUTF8Unsafe(path), kTestFileSystemId, codecs,
-                supported_key_system, supports_sub_key_systems));
+                supported_key_system, supports_sub_key_systems,
+                supports_persistent_licenses));
   }
 
   bool IsRegistered(const std::string& name, const std::string& version) {
@@ -75,7 +77,7 @@ class CdmRegistryImplTest : public testing::Test {
 
 TEST_F(CdmRegistryImplTest, Register) {
   Register(kTestCdmName, kVersion1, kTestPath, kTestCodecs, kTestKeySystem,
-           true);
+           true, true);
   std::vector<CdmInfo> cdms = cdm_registry_.GetAllRegisteredCdms();
   ASSERT_EQ(1u, cdms.size());
   CdmInfo cdm = cdms[0];
@@ -88,6 +90,7 @@ TEST_F(CdmRegistryImplTest, Register) {
   EXPECT_EQ("avc1", cdm.supported_codecs[1]);
   EXPECT_EQ(kTestKeySystem, cdm.supported_key_system);
   EXPECT_TRUE(cdm.supports_sub_key_systems);
+  EXPECT_TRUE(cdm.supports_persistent_licenses);
 }
 
 TEST_F(CdmRegistryImplTest, ReRegister) {
