@@ -118,11 +118,11 @@ class OopPixelTest : public testing::Test {
                             options.msaa_sample_count, options.use_lcd_text,
                             options.use_distance_field_text,
                             options.pixel_config);
-    gl->RasterCHROMIUM(display_item_list.get(), options.bitmap_rect.x(),
-                       options.bitmap_rect.y(), options.playback_rect.x(),
-                       options.playback_rect.y(), options.playback_rect.width(),
-                       options.playback_rect.height(), options.post_translate_x,
-                       options.post_translate_y, options.post_scale);
+    gl->RasterCHROMIUM(
+        display_item_list.get(), nullptr,
+        options.bitmap_rect.OffsetFromOrigin(), options.playback_rect,
+        gfx::Vector2dF(options.post_translate_x, options.post_translate_y),
+        options.post_scale);
     gl->EndRasterCHROMIUM();
     gl->Flush();
 
