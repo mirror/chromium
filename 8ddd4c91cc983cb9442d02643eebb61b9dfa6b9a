@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f0549ee_f04ccc65",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-14T06:30:08Z",
+      "side": 1,
+      "message": "nit: column_span since it\u0027s no longer compile-time",
+      "revId": "8ddd4c91cc983cb9442d02643eebb61b9dfa6b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6442c8_43dcd005",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-14T06:30:08Z",
+      "side": 1,
+      "message": "when is there no combobox? (is that just non-harmony?) Can we DCHECK or include some code with IsSecondaryUiMaterial() so we get a reminder to simplify this when IsSecondaryUiMaterial() gets deleted.",
+      "revId": "8ddd4c91cc983cb9442d02643eebb61b9dfa6b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9507c4a1_2bc0d7b2",
+        "filename": "chrome/browser/ui/views/page_info/permission_selector_row.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-12-14T06:30:08Z",
+      "side": 1,
+      "message": "since it starts as a base::Optional, this doesn\u0027t quite reset the preferred size to what it was before.. Does giving the label a maximum width of 0 work, instead of calling SetPreferredSize(gfx::Size())?",
+      "revId": "8ddd4c91cc983cb9442d02643eebb61b9dfa6b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
