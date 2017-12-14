@@ -70,6 +70,24 @@
       "revId": "cfc08be7a0e431cde74e66f0c0986affd7eec2b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8234cf_3b43e9a7",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-12-14T22:42:48Z",
+      "side": 1,
+      "message": "Thanks for improving the security of our code! Would you also please add a code comment explaining why we\u0027re using these safer structures so that future devs (myself included) don\u0027t go about changing it due to their security-holes ignorance?",
+      "parentUuid": "23536c55_87067612",
+      "revId": "cfc08be7a0e431cde74e66f0c0986affd7eec2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
