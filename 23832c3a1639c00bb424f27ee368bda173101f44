@@ -52,6 +52,24 @@
       "revId": "23832c3a1639c00bb424f27ee368bda173101f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46f6262_93c91c9b",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.pdl",
+        "patchSetId": 2
+      },
+      "lineNbr": 4917,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-12-14T10:56:22Z",
+      "side": 1,
+      "message": "I don\u0027t know of anyone using the individual error events for anything but \"continuing\" them all currently. Let\u0027s deprecate the old override, if another use for it pops up we can revisit it, otherwise remove it completely soon?",
+      "parentUuid": "18836bf3_1d9e39e3",
+      "revId": "23832c3a1639c00bb424f27ee368bda173101f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
