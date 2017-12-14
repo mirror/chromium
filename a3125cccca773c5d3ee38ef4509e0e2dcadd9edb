@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9956d7a7_d4c71d0f",
+        "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-12-14T08:52:36Z",
+      "side": 1,
+      "message": "Actually, changing this to a const pointer is harder than I thought, as ultimately this origin gets stored in a URLSecurityOriginMap, which then lets you get it back out non-const to ultimately be returned by SecurityOrigin::Create(const KURL\u0026). I do wonder if that should make a copy somewhere in there, but for now leaving this as non-const seems the best thing to do.\n\nThat does remind me though that in this refactor I\u0027m currently missing adding origins for blob URLs to the URLSecurityOriginMap (as that was done by blob specific code a few abstraction layers away from this code). WPT tests will catch that once I start running tests with this new code path though...",
+      "parentUuid": "617fb374_b0d0a1e1",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "a3125cccca773c5d3ee38ef4509e0e2dcadd9edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cbdfb4a_6bad4578",
         "filename": "third_party/WebKit/Source/core/html/PublicURLManager.cpp",
         "patchSetId": 3
