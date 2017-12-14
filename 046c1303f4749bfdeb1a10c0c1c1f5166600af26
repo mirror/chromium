@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "242a03c2_090bfd2f",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T23:55:36Z",
+      "side": 1,
+      "message": "See patchset 6, for clearing the size approach.",
+      "parentUuid": "555f9721_2f456a15",
+      "revId": "046c1303f4749bfdeb1a10c0c1c1f5166600af26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dea1ad48_9d60f120",
         "filename": "chrome/common/extensions/api/developer_private.idl",
         "patchSetId": 4
