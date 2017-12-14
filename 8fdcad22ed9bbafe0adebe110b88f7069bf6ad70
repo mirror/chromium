@@ -68,6 +68,30 @@
       "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9be248_b97accf7",
+        "filename": "components/data_use_measurement/core/data_use_ascriber.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-12-14T17:28:00Z",
+      "side": 1,
+      "message": "Yeah, naming is hard. I found \"Complete\" to be very confusing when I first tried to understand this code. Here, I was trying to keep the \"DidFinishLoad\" terminology to help readers understand what event it is tied to. It could just by \"OnDidFinishLoad\" but was trying to qualify that it was the DidFinishLoad for the main frame (and not subframes). \n\nI found myself reading these names as OnPage:{LoadCommit,ResourceLoad,LoadComplete}.\nIf we name them OnPageLoad*, then we have OnPageLoadResourceLoad? Kinda prefer just the OnPage* prefix but don\u0027t feel strongly.\n\nMy best idea for \"better\" name for OnPageLoadComplete is OnPageLoadConcluded. Maybe we should discuss offline.",
+      "parentUuid": "53c211cc_b2b1f9ab",
+      "range": {
+        "startLine": 54,
+        "startChar": 17,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "8fdcad22ed9bbafe0adebe110b88f7069bf6ad70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
