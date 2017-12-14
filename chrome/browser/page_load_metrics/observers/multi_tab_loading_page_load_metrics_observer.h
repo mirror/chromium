@@ -15,15 +15,18 @@ class NavigationHandle;
 namespace internal {
 
 // Exposed for tests.
+extern const char kHistogramPrefixMultiTabLoading[];
+extern const char kHistogramPrefixMultiTabLoading2OrMore[];
+extern const char kHistogramPrefixMultiTabLoading5OrMore[];
 extern const char kHistogramMultiTabLoadingNumTabsWithInflightLoad[];
-extern const char kHistogramMultiTabLoadingFirstContentfulPaint[];
-extern const char kHistogramMultiTabLoadingForegroundToFirstContentfulPaint[];
-extern const char kHistogramMultiTabLoadingFirstMeaningfulPaint[];
-extern const char kHistogramMultiTabLoadingForegroundToFirstMeaningfulPaint[];
-extern const char kHistogramMultiTabLoadingDomContentLoaded[];
-extern const char kBackgroundHistogramMultiTabLoadingDomContentLoaded[];
-extern const char kHistogramMultiTabLoadingLoad[];
-extern const char kBackgroundHistogramMultiTabLoadingLoad[];
+extern const char kHistogramSuffixFirstContentfulPaint[];
+extern const char kHistogramSuffixForegroundToFirstContentfulPaint[];
+extern const char kHistogramSuffixFirstMeaningfulPaint[];
+extern const char kHistogramSuffixForegroundToFirstMeaningfulPaint[];
+extern const char kHistogramSuffixDomContentLoaded[];
+extern const char kBackgroundHistogramSuffixDomContentLoaded[];
+extern const char kHistogramSuffixLoad[];
+extern const char kBackgroundHistogramSuffixLoad[];
 
 }  // namespace internal
 
