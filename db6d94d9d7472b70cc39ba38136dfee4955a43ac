@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b42015b_3d64074f",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-14T21:29:10Z",
+      "side": 1,
+      "message": "Is it possible for HTTP URLs to be same/different from visible?",
+      "range": {
+        "startLine": 87,
+        "startChar": 29,
+        "endLine": 87,
+        "endChar": 72
+      },
+      "revId": "db6d94d9d7472b70cc39ba38136dfee4955a43ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f789eeda_6c6019fe",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever_private.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-14T21:29:10Z",
+      "side": 1,
+      "message": "Do we rename things to *_DO_NOT_USE or *_DEPRECATED in these cases?",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "db6d94d9d7472b70cc39ba38136dfee4955a43ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
