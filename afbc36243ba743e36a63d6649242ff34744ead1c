@@ -16,6 +16,23 @@
       "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d40828_7901d3e9",
+        "filename": "base/android/java/templates/NativeLibraries.template",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-12-14T14:41:43Z",
+      "side": 1,
+      "message": "I suspect apk_merge.py will not like this. I\u0027m think it\u0027s the case that we still expect classes.dex to be the same for arm64 and arm32 when merging.\n\nCan this be queried somehow? There appear to be some Build fields with related info, but not sure if it tells you when your own APK was built for...",
+      "revId": "afbc36243ba743e36a63d6649242ff34744ead1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
