@@ -106,7 +106,9 @@ void AsyncCallbackHelper(Flag* flag,
   }
 }
 
-WaitableEventWatcher::WaitableEventWatcher() {
+WaitableEventWatcher::WaitableEventWatcher(
+    scoped_refptr<SequencedTaskRunner> task_runner)
+    : task_runner_(std::move(task_runner)) {
   sequence_checker_.DetachFromSequence();
 }
 
@@ -125,7 +127,6 @@ WaitableEventWatcher::~WaitableEventWatcher() {
 bool WaitableEventWatcher::StartWatching(WaitableEvent* event,
                                          EventCallback callback) {
   DCHECK(sequence_checker_.CalledOnValidSequence());
-  DCHECK(SequencedTaskRunnerHandle::Get());
 
   // A user may call StartWatching from within the callback function. In this
   // case, we won't know that we have finished watching, expect that the Flag
@@ -148,15 +149,14 @@ bool WaitableEventWatcher::StartWatching(WaitableEvent* event,
       kernel->signaled_ = false;
 
     // No hairpinning - we can't call the delegate directly here. We have to
-    // post a task to the SequencedTaskRunnerHandle as usual.
-    SequencedTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                               std::move(internal_callback));
+    // post a task to |task_runner_| as usual.
+    task_runner_->PostTask(FROM_HERE, std::move(internal_callback));
     return true;
   }
 
   kernel_ = kernel;
-  waiter_ = new AsyncWaiter(SequencedTaskRunnerHandle::Get(),
-                            std::move(internal_callback), cancel_flag_.get());
+  waiter_ = new AsyncWaiter(task_runner_, std::move(internal_callback),
+                            cancel_flag_.get());
   event->Enqueue(waiter_);
 
   return true;
