@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fbc03ac_14e02663",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-14T00:18:53Z",
+      "side": 1,
+      "message": "should this be child-\u003eDispatchOnSizeChanged too?",
+      "revId": "79a80b16cce5835b0871b79da9286e6d83065672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
