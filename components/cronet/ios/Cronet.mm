@@ -55,6 +55,7 @@ BOOL gHttp2Enabled;
 BOOL gQuicEnabled;
 BOOL gBrotliEnabled;
 BOOL gMetricsEnabled;
+NSString* gQuicUserAgentId;
 cronet::URLRequestContextConfig::HttpCacheType gHttpCache;
 QuicHintVector gQuicHints;
 NSString* gExperimentalOptions;
@@ -199,6 +200,11 @@ class CronetHttpProtocolHandlerDelegate
   gMetricsEnabled = metricsEnabled;
 }
 
++ (void)setQuicUserAgentId:(NSString*)quicUserAgentId {
+  [self checkNotStarted];
+  gQuicUserAgentId = quicUserAgentId;
+}
+
 + (BOOL)addQuicHint:(NSString*)host port:(int)port altPort:(int)altPort {
   [self checkNotStarted];
 
@@ -321,6 +327,8 @@ class CronetHttpProtocolHandlerDelegate
   gChromeNet.Get()->set_http2_enabled(gHttp2Enabled);
   gChromeNet.Get()->set_quic_enabled(gQuicEnabled);
   gChromeNet.Get()->set_brotli_enabled(gBrotliEnabled);
+  gChromeNet.Get()->set_quic_user_agent_id(
+      base::SysNSStringToUTF8(gQuicUserAgentId));
   gChromeNet.Get()->set_experimental_options(
       base::SysNSStringToUTF8(gExperimentalOptions));
   gChromeNet.Get()->set_http_cache(gHttpCache);
