@@ -16,6 +16,24 @@
       "revId": "c5170abac56ba6d4ffbdcbf3abda5100232a3d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bca7dda_57545ee9",
+        "filename": "third_party/WebKit/Source/platform/HistogramTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-12-14T20:32:31Z",
+      "side": 1,
+      "message": "(in case it\u0027s not obvious, s/ScopedClockOverride/ScopedMockClock/g)",
+      "parentUuid": "96f05bf2_98365771",
+      "revId": "c5170abac56ba6d4ffbdcbf3abda5100232a3d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
