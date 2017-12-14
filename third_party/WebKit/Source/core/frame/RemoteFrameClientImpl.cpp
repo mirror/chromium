@@ -172,4 +172,9 @@ void RemoteFrameClientImpl::UpdateRenderThrottlingStatus(
                                                      subtree_throttled);
 }
 
+void RemoteFrameClientImpl::Print(const IntRect& rect,
+                                  uint32_t content_id) const {
+  return web_frame_->Client()->Print(rect, content_id);
+}
+
 }  // namespace blink
