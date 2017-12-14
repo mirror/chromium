@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b856012e_2d8a1e9d",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T18:44:57Z",
+      "side": 0,
+      "message": "Thanks for catching. Looks like I missed this. It\u0027s removed now.",
+      "parentUuid": "d952267c_26c6138f",
+      "range": {
+        "startLine": 240,
+        "startChar": 14,
+        "endLine": 240,
+        "endChar": 29
+      },
+      "revId": "410c205dcccaaeca0070d25b500d23bbccf7da77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6661d692_65108c1a",
         "filename": "chrome/browser/vr/elements/button.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T18:32:08Z",
       "side": 0,
       "message": "Is the idea that subclasses should implement the foreground?",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 24
+      },
+      "revId": "410c205dcccaaeca0070d25b500d23bbccf7da77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf61ec0_c69e9a89",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T18:44:57Z",
+      "side": 0,
+      "message": "Yes, that\u0027s right. Often the foreground will be child elements.",
+      "parentUuid": "6661d692_65108c1a",
       "range": {
         "startLine": 39,
         "startChar": 14,

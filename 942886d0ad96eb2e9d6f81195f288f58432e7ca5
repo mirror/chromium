@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "047daee5_ffdc7d05",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T18:44:57Z",
+      "side": 1,
+      "message": "pressed \u003d hovered + down. You can, eg, press down on a button and move the reticle on and off a button while the controller button is still down.",
+      "parentUuid": "d336c4c1_c2b83f35",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 14
+      },
+      "revId": "942886d0ad96eb2e9d6f81195f288f58432e7ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da95bc1a_f38f1cf4",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-14T18:32:08Z",
       "side": 1,
       "message": "when is first true?",
+      "range": {
+        "startLine": 590,
+        "startChar": 7,
+        "endLine": 590,
+        "endChar": 12
+      },
+      "revId": "942886d0ad96eb2e9d6f81195f288f58432e7ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f742a9_32889a7b",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T18:44:57Z",
+      "side": 1,
+      "message": "Hah. Good catch! first is unnecessary. I\u0027ve removed it and cleaned up the related code.",
+      "parentUuid": "da95bc1a_f38f1cf4",
       "range": {
         "startLine": 590,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "984ed0c2_a0fb0fa7",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T18:44:57Z",
+      "side": 1,
+      "message": "Sure can. Done.",
+      "parentUuid": "908337e7_155e8a0f",
+      "range": {
+        "startLine": 614,
+        "startChar": 2,
+        "endLine": 614,
+        "endChar": 11
+      },
+      "revId": "942886d0ad96eb2e9d6f81195f288f58432e7ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6f6d824_3b607cea",
         "filename": "chrome/browser/vr/ui_scene_creator.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "942886d0ad96eb2e9d6f81195f288f58432e7ca5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee02c0e_a4a6c7ff",
+        "filename": "chrome/browser/vr/ui_scene_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T18:44:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6f6d824_3b607cea",
+      "range": {
+        "startLine": 184,
+        "startChar": 21,
+        "endLine": 184,
+        "endChar": 40
+      },
+      "revId": "942886d0ad96eb2e9d6f81195f288f58432e7ca5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
