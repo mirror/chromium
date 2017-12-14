@@ -142,6 +142,30 @@
       "revId": "b4e83d133eea402382fd233e20efb9ef67e6ba82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad92eab_c2279bdd",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1391,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-12-14T09:51:28Z",
+      "side": 1,
+      "message": "renderToAssociatedSink is a request coming from the application that is interpreted the following way:\n\n* renderToAssociatedSink true means that, if the input device has an associated output device, the audio of a remote stream should go to that associated device.\n\n* renderToAssociatedSink false means that, even if the input device has an associated output device, the audio of the remote stream should go to the default output device.\n\nWhen there is no associated device, audio will go to the default output device regardless of the value of renderToAssociatedSink.\n\nThe test you just added is exactly what\u0027s needed, so you probably figured this out already.",
+      "parentUuid": "463abda3_8b8e55d4",
+      "range": {
+        "startLine": 1391,
+        "startChar": 32,
+        "endLine": 1391,
+        "endChar": 59
+      },
+      "revId": "b4e83d133eea402382fd233e20efb9ef67e6ba82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
