@@ -63,6 +63,30 @@
       "revId": "7a51c92a6f422469b452ba72b637dc30bdc433a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac32a38_1d326715",
+        "filename": "chrome/android/java/res/values-v17/styles.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-12-14T23:47:17Z",
+      "side": 1,
+      "message": "Based on my testing api 17, there is no crash but the padding was much smaller than normal, but after another thinking, I realized it might be the devices\u0027 customized value.\n\nAndroid doc\nhttps://developer.android.com/reference/android/R.attr.html#listPreferredItemPaddingStart\n\nSo I think current approach is the right one.",
+      "parentUuid": "acd77894_10d96a89",
+      "range": {
+        "startLine": 780,
+        "startChar": 6,
+        "endLine": 781,
+        "endChar": 86
+      },
+      "revId": "7a51c92a6f422469b452ba72b637dc30bdc433a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
