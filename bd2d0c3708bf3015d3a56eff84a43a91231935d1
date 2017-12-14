@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1be7221_bfdb54ee",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T18:55:02Z",
+      "side": 1,
+      "message": "optional nit: I think base::MakeUnique\u003cTypedNavigationTimingThrottle\u003e(handle) is preferred.",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ffa810_1ae0c4c9",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T18:55:02Z",
+      "side": 1,
+      "message": "is this necessary? Looks like this should be a noop because you ReplaceComponents above. same below.\n\nAlso, maybe just clear out the port on initial_url_ when you save it initially on line 33, so that you don\u0027t have to ReplaceComponents on each use here.",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8294b59b_692314e1",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T18:55:02Z",
+      "side": 1,
+      "message": "optional nit: these could all be member variables instead of pointers. doesn\u0027t really matter but makes it a little nicer that consumers don\u0027t have to worry about checking for nullptrs",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 49
+      },
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c43fc823_0c9ab41f",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T18:55:02Z",
+      "side": 1,
+      "message": "nit: add an ExpectTotalCount(..., 0) here to make it clear that the histogram count came from this navigation\n\n... actually, it might be better to just define the HistogramTester here instead of as a member on the test fixture. Then you don\u0027t have to do the ExpectTotalCount(..., 0) check because the histogram tester expectations are a snapshot from when it was instantiated.",
+      "range": {
+        "startLine": 79,
+        "startChar": 79,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61adcadb_d5638efb",
+        "filename": "chrome/browser/ssl/typed_navigation_timing_throttle_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-12-14T18:55:02Z",
+      "side": 1,
+      "message": "Could you add test cases for the www and port-stripping logic as well?",
+      "revId": "bd2d0c3708bf3015d3a56eff84a43a91231935d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
