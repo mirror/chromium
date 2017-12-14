@@ -121,9 +121,11 @@ class StackViewControllerTest : public BlockCleanupTest {
                      activeCardSet:static_cast<CardSet*>(main_card_set_)
         applicationCommandEndpoint:nil];
     // Resize the view and call VC lifecycle events
-    [view_controller_ view].frame =
-        CGRectMake(0.0, 0.0, kViewportDimension, kViewportDimension);
+    CGRect frame = CGRectMake(0.0, 0.0, kViewportDimension, kViewportDimension);
+    [view_controller_ view].frame = frame;
+
     // Simulate displaying the view.
+    [view_controller_ prepareForDisplayAtSize:frame.size];
     [view_controller_ viewWillAppear:NO];
   }
   void TearDown() override {
