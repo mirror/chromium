@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0527fb81_54e2185b",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-14T18:03:31Z",
+      "side": 1,
+      "message": "Nit: this currently goes under the Modifiers group. Maybe put it under Element access?",
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622c386f_a56ed2e7",
+        "filename": "chrome/installer/zucchini/ensemble_matcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-14T18:03:31Z",
+      "side": 1,
+      "message": "How does the caller know about these?",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 77
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01dfe13d_06c04009",
+        "filename": "chrome/installer/zucchini/ensemble_matcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-14T18:03:31Z",
+      "side": 1,
+      "message": "Typo",
+      "range": {
+        "startLine": 26,
+        "startChar": 71,
+        "endLine": 26,
+        "endChar": 77
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac553a21_9a71adbc",
+        "filename": "chrome/installer/zucchini/ensemble_matcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-14T18:03:31Z",
+      "side": 1,
+      "message": "I think this interface requires a lot of work from the caller side when iterating over element matches/separators. The number of separators vs matches varies, hence the caller must check for size of both with conditions on |i \u003c num_sep| and |i \u003c num_elements| while looping.\nAlternatives:\n1-Iterate over elements in |new|, and have a mean to query it\u0027s associated element in |old| (where None or Identical are possible responses). It also becomes more obvious that |new| elements are ordered in patch, whether there is a match or not.\n2-Represent everything as an ElementMatch in the same vector. A separator is represented as an ElementMatch where |old| element is the entire image and exe_type is kExeTypeNoOp. Not sure how to represent Identical matches then.",
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1989d9_a12015da",
+        "filename": "chrome/installer/zucchini/ensemble_matcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-14T18:03:31Z",
+      "side": 1,
+      "message": "Typo",
+      "range": {
+        "startLine": 55,
+        "startChar": 48,
+        "endLine": 55,
+        "endChar": 54
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b928eb8f_e28f67cb",
+        "filename": "chrome/installer/zucchini/zucchini_tools.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-12-14T18:03:31Z",
+      "side": 1,
+      "message": "Does it need to be a pointer?",
+      "range": {
+        "startLine": 122,
+        "startChar": 35,
+        "endLine": 122,
+        "endChar": 42
+      },
+      "revId": "b939f3de0d57d4e4be65a5e95ae453893e9bab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
