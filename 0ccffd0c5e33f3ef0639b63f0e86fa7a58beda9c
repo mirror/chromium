@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "042cf1f4_4bd8dfb3",
+        "filename": "components/ui_metrics/sadtab_metrics_types.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-14T06:26:35Z",
+      "side": 1,
+      "message": "This is not related to this change, right?\nIf so, can we split this into a separate CL instead?",
+      "range": {
+        "startLine": 10,
+        "startChar": 32,
+        "endLine": 10,
+        "endChar": 66
+      },
+      "revId": "0ccffd0c5e33f3ef0639b63f0e86fa7a58beda9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ecd491_b132b0fb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 30794,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-12-14T06:26:35Z",
+      "side": 1,
+      "message": "Since we never launched publicly with this histogram, can we just delete this?",
+      "range": {
+        "startLine": 30794,
+        "startChar": 4,
+        "endLine": 30794,
+        "endChar": 23
+      },
+      "revId": "0ccffd0c5e33f3ef0639b63f0e86fa7a58beda9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
