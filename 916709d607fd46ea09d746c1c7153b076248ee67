@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68ddd5c4_c1521188",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl_mock.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-12-14T17:19:50Z",
+      "side": 1,
+      "message": "Minor nitpick: doesn\u0027t this need to be ordered alphabetically?",
+      "revId": "916709d607fd46ea09d746c1c7153b076248ee67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc450a5_8d13b719",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-12-14T17:19:50Z",
+      "side": 1,
+      "message": "The -\u003e This?",
+      "revId": "916709d607fd46ea09d746c1c7153b076248ee67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
