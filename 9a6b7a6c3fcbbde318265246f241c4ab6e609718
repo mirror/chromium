@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cde68b30_2921a87c",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-14T23:43:51Z",
+      "side": 1,
+      "message": "This mostly comes from my misunderstanding of how the tag attributes and aria attributes work together. I\u0027ve split these cases and added a test to check for name\u003d\"\" and aria-label\u003d\"\", but not sure if this is necessary.",
+      "parentUuid": "a4358592_c543044a",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4949c3c_c373967b",
         "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76107111_eacdb205",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-14T23:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4949c3c_c373967b",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "059af5b7_f36c85b7",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-computed-accessible-node.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-14T23:43:51Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "93508b35_7721dc8b",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56f035c5_59e8a731",
         "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1a0b27_15835fc0",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-14T23:43:51Z",
+      "side": 1,
+      "message": "Probably! This comes from me not understanding which name means what. Done.",
+      "parentUuid": "56f035c5_59e8a731",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "30cda283_17d0a988",
+        "filename": "third_party/WebKit/Source/core/dom/ComputedAccessibleNode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-14T23:43:51Z",
+      "side": 1,
+      "message": "I\u0027ve left a comment, can make it a TODO if better.",
+      "parentUuid": "541321f3_a8cbb084",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48c70115_acf7b1c0",
         "filename": "third_party/WebKit/Source/core/frame/Window.idl",
         "patchSetId": 3
@@ -119,6 +209,24 @@
       "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8934a68e_76f85bf3",
+        "filename": "third_party/WebKit/Source/core/frame/Window.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1256034
+      },
+      "writtenOn": "2017-12-14T23:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48c70115_acf7b1c0",
+      "revId": "9a6b7a6c3fcbbde318265246f241c4ab6e609718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
