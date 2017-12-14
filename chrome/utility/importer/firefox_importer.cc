@@ -80,6 +80,25 @@ bool CanImportURL(const GURL& url) {
   return true;
 }
 
+// Initializes |favicon_url| and |png_data| members of given FaviconUsageData
+// structure with provided favicon data. Returns true if data is valid.
+bool SetFaviconData(favicon_base::FaviconUsageData* usage,
+                    GURL icon_url,
+                    const std::vector<unsigned char>& icon_data) {
+  DCHECK(usage);
+
+  // Don't bother importing favicons with invalid URLs.
+  if (!icon_url.is_valid())
+    return false;
+
+  usage->favicon_url = std::move(icon_url);
+
+  // Data must be valid.
+  return !icon_data.empty() &&
+         importer::ReencodeFavicon(&icon_data[0], icon_data.size(),
+                                   &usage->png_data);
+}
+
 }  // namespace
 
 struct FirefoxImporter::BookmarkItem {
@@ -208,6 +227,10 @@ void FirefoxImporter::ImportBookmarks() {
   if (!db.Open(file))
     return;
 
+  // |moz_favicons| table might be not available in places.sqlite database
+  // (Firefox 5 profile). Look in favicons.sqlite database in such case.
+  bool moz_favicons_exists = db.IsSQLValid("SELECT count(*) FROM moz_favicons");
+
   // Get the bookmark folders that we are interested in.
   int toolbar_folder_id = LoadNodeIDByGUID(&db, "toolbar_____");
   int menu_folder_id = LoadNodeIDByGUID(&db, "menu________");
@@ -227,7 +250,7 @@ void FirefoxImporter::ImportBookmarks() {
   GetTopBookmarkFolder(&db, unsorted_folder_id, &list);
   size_t count = list.size();
   for (size_t i = 0; i < count; ++i)
-    GetWholeBookmarkFolder(&db, &list, i, NULL);
+    GetWholeBookmarkFolder(&db, &list, i, moz_favicons_exists, nullptr);
 
   std::vector<ImportedBookmarkEntry> bookmarks;
   std::vector<importer::SearchEngineInfo> search_engines;
@@ -343,10 +366,17 @@ void FirefoxImporter::ImportBookmarks() {
   if (!search_engines.empty() && !cancelled()) {
     bridge_->SetKeywords(search_engines, false);
   }
-  if (!favicon_map.empty() && !cancelled()) {
+
+  if (!cancelled()) {
     favicon_base::FaviconUsageDataList favicons;
-    LoadFavicons(&db, favicon_map, &favicons);
-    bridge_->SetFavicons(favicons);
+    if (!moz_favicons_exists) {
+      DCHECK(favicon_map.empty());
+      LoadFavicons(bookmarks, &favicons);
+    } else if (!favicon_map.empty()) {
+      LoadFavicons(&db, favicon_map, &favicons);
+    }
+    if (!favicons.empty())
+      bridge_->SetFavicons(favicons);
   }
 }
 
@@ -705,21 +735,25 @@ void FirefoxImporter::GetTopBookmarkFolder(sql::Connection* db,
 void FirefoxImporter::GetWholeBookmarkFolder(sql::Connection* db,
                                              BookmarkList* list,
                                              size_t position,
+                                             bool moz_favicons_exists,
                                              bool* empty_folder) {
   if (position >= list->size()) {
     NOTREACHED();
     return;
   }
 
-  const char query[] =
+  std::string query =
       "SELECT b.id, h.url, COALESCE(b.title, h.title), "
-      "b.type, k.keyword, b.dateAdded, h.favicon_id "
+      "b.type, k.keyword, b.dateAdded ";
+  if (moz_favicons_exists)
+    query += ", h.favicon_id ";
+  query +=
       "FROM moz_bookmarks b "
       "LEFT JOIN moz_places h ON b.fk = h.id "
       "LEFT JOIN moz_keywords k ON k.id = b.keyword_id "
       "WHERE b.type IN (1,2) AND b.parent = ? "
       "ORDER BY b.position";
-  sql::Statement s(db->GetUniqueStatement(query));
+  sql::Statement s(db->GetUniqueStatement(query.c_str()));
   s.BindInt(0, (*list)[position]->id);
 
   BookmarkList temp_list;
@@ -732,7 +766,7 @@ void FirefoxImporter::GetWholeBookmarkFolder(sql::Connection* db,
     item->type = static_cast<BookmarkItemType>(s.ColumnInt(3));
     item->keyword = s.ColumnString(4);
     item->date_added = base::Time::FromTimeT(s.ColumnInt64(5)/1000000);
-    item->favicon = s.ColumnInt64(6);
+    item->favicon = moz_favicons_exists ? s.ColumnInt64(6) : 0;
     item->empty_folder = true;
 
     temp_list.push_back(std::move(item));
@@ -745,7 +779,7 @@ void FirefoxImporter::GetWholeBookmarkFolder(sql::Connection* db,
     list->push_back(std::move(bookmark));
     // Recursive add bookmarks in sub-folders.
     if (list->back()->type == TYPE_FOLDER) {
-      GetWholeBookmarkFolder(db, list, list->size() - 1,
+      GetWholeBookmarkFolder(db, list, list->size() - 1, moz_favicons_exists,
                              &list->back()->empty_folder);
     }
   }
@@ -765,22 +799,67 @@ void FirefoxImporter::LoadFavicons(
        i != favicon_map.end(); ++i) {
     s.BindInt64(0, i->first);
     if (s.Step()) {
-      favicon_base::FaviconUsageData usage;
-
-      usage.favicon_url = GURL(s.ColumnString(0));
-      if (!usage.favicon_url.is_valid())
-        continue;  // Don't bother importing favicons with invalid URLs.
-
       std::vector<unsigned char> data;
-      s.ColumnBlobAsVector(1, &data);
-      if (data.empty())
-        continue;  // Data definitely invalid.
+      if (!s.ColumnBlobAsVector(1, &data))
+        continue;
 
-      if (!importer::ReencodeFavicon(&data[0], data.size(), &usage.png_data))
-        continue;  // Unable to decode.
+      favicon_base::FaviconUsageData usage;
+      if (!SetFaviconData(&usage, GURL(s.ColumnString(0)), data))
+        continue;
 
       usage.urls = i->second;
       favicons->push_back(usage);
+    }
+    s.Reset(true);
+  }
+}
+
+void FirefoxImporter::LoadFavicons(
+    const std::vector<ImportedBookmarkEntry>& bookmarks,
+    favicon_base::FaviconUsageDataList* favicons) {
+  DCHECK(favicons);
+
+  base::FilePath file = source_path_.AppendASCII("favicons.sqlite");
+  if (!base::PathExists(file))
+    return;
+
+  sql::Connection db;
+  if (!db.Open(file))
+    return;
+
+  sql::Statement s(db.GetUniqueStatement(
+      "SELECT i.id, i.icon_url, i.data "
+      "FROM moz_icons i "
+      "INNER JOIN moz_icons_to_pages m ON i.id = m.icon_id "
+      "INNER JOIN moz_pages_w_icons p ON p.id = m.page_id "
+      "WHERE p.page_url = ?"));
+  if (!s.is_valid())
+    return;
+
+  // Icon id to an index in |favicons| vector mapping.
+  std::map<uint64_t, favicon_base::FaviconUsageDataList::size_type> icon_cache;
+
+  for (const auto& entry : bookmarks) {
+    s.BindString(0, entry.url.spec());
+    if (s.Step()) {
+      uint64_t icon_id = s.ColumnInt64(0);
+      auto it = icon_cache.find(icon_id);
+      if (it != icon_cache.end()) {
+        favicons->at(it->second).urls.insert(entry.url);
+        continue;
+      }
+
+      std::vector<unsigned char> data;
+      if (!s.ColumnBlobAsVector(2, &data))
+        continue;
+
+      favicon_base::FaviconUsageData usage;
+      if (!SetFaviconData(&usage, GURL(s.ColumnString(1)), data))
+        continue;
+
+      usage.urls.insert(entry.url);
+      favicons->push_back(usage);
+      icon_cache[icon_id] = favicons->size() - 1;
     }
     s.Reset(true);
   }
