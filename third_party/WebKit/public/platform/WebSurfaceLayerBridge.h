@@ -8,9 +8,11 @@
 #include "WebCommon.h"
 #include "WebLayer.h"
 #include "WebLayerTreeView.h"
+#include "base/unguessable_token.h"
 
 namespace viz {
 class FrameSinkId;
+class SurfaceId;
 }
 
 namespace blink {
@@ -24,6 +26,11 @@ class BLINK_PLATFORM_EXPORT WebSurfaceLayerBridgeObserver {
   // Called when new a SurfaceLayer is created.
   virtual void RegisterContentsLayer(WebLayer*) = 0;
   virtual void UnregisterContentsLayer(WebLayer*) = 0;
+
+  // Added for pip
+  virtual void OnSurfaceIdUpdated(viz::FrameSinkId frame_sink_id,
+                                  uint32_t parent_id,
+                                  base::UnguessableToken nonce) = 0;
 };
 
 // Maintains and exposes the SurfaceLayer.
@@ -35,6 +42,7 @@ class BLINK_PLATFORM_EXPORT WebSurfaceLayerBridge {
   virtual ~WebSurfaceLayerBridge();
   virtual WebLayer* GetWebLayer() const = 0;
   virtual const viz::FrameSinkId& GetFrameSinkId() const = 0;
+  virtual viz::SurfaceId GetCurrentSurfaceId() = 0;
 };
 
 }  // namespace blink

@@ -28,21 +28,34 @@ MediaRemotingInterstitial::MediaRemotingInterstitial(
           this,
           &MediaRemotingInterstitial::ToggleInterstitialTimerFired),
       video_element_(&videoElement) {
-  SetShadowPseudoId(AtomicString("-internal-media-remoting-interstitial"));
-  background_image_ = HTMLImageElement::Create(GetDocument());
+  // SetShadowPseudoId(AtomicString("-internal-media-remoting-interstitial"));
+  // background_image_ = HTMLImageElement::Create(GetDocument());
+  // background_image_->SetShadowPseudoId(
+  //     AtomicString("-internal-media-remoting-background-image"));
+  // background_image_->SetSrc(videoElement.getAttribute(HTMLNames::posterAttr));
+  // AppendChild(background_image_);
+
+  // cast_icon_ = HTMLDivElement::Create(GetDocument());
+  // cast_icon_->SetShadowPseudoId(
+  //     AtomicString("-internal-media-remoting-cast-icon"));
+  // AppendChild(cast_icon_);
+
+  // cast_text_message_ = HTMLDivElement::Create(GetDocument());
+  // cast_text_message_->SetShadowPseudoId(
+  //     AtomicString("-internal-media-remoting-cast-text-message"));
+  // AppendChild(cast_text_message_);
+
+  // TEMPORARY FOR DEMO YES TOTALLY JUST REUSED THIS
+  SetShadowPseudoId(AtomicString("-internal-picture-in-picture-interstitial"));
+
+  background_image_ = HTMLImageElement::Create(videoElement.GetDocument());
   background_image_->SetShadowPseudoId(
-      AtomicString("-internal-media-remoting-background-image"));
+      AtomicString("-internal-picture-in-picture-background-image"));
   background_image_->SetSrc(videoElement.getAttribute(HTMLNames::posterAttr));
   AppendChild(background_image_);
 
-  cast_icon_ = HTMLDivElement::Create(GetDocument());
-  cast_icon_->SetShadowPseudoId(
-      AtomicString("-internal-media-remoting-cast-icon"));
-  AppendChild(cast_icon_);
-
   cast_text_message_ = HTMLDivElement::Create(GetDocument());
-  cast_text_message_->SetShadowPseudoId(
-      AtomicString("-internal-media-remoting-cast-text-message"));
+  cast_text_message_->SetShadowPseudoId(AtomicString("-internal-picture-in-picture-message"));
   AppendChild(cast_text_message_);
 }
 
@@ -50,18 +63,23 @@ void MediaRemotingInterstitial::Show(
     const WebString& remote_device_friendly_name) {
   if (should_be_visible_)
     return;
-  if (remote_device_friendly_name.IsEmpty()) {
-    cast_text_message_->setInnerText(
-        GetVideoElement().GetLocale().QueryString(
-            WebLocalizedString::kMediaRemotingCastToUnknownDeviceText),
-        ASSERT_NO_EXCEPTION);
-  } else {
-    cast_text_message_->setInnerText(
-        GetVideoElement().GetLocale().QueryString(
-            WebLocalizedString::kMediaRemotingCastText,
-            remote_device_friendly_name),
-        ASSERT_NO_EXCEPTION);
-  }
+  // if (remote_device_friendly_name.IsEmpty()) {
+  //   cast_text_message_->setInnerText(
+  //       GetVideoElement().GetLocale().QueryString(
+  //           WebLocalizedString::kMediaRemotingCastToUnknownDeviceText),
+  //       ASSERT_NO_EXCEPTION);
+  // } else {
+  //   cast_text_message_->setInnerText(
+  //       GetVideoElement().GetLocale().QueryString(
+  //           WebLocalizedString::kMediaRemotingCastText,
+  //           remote_device_friendly_name),
+  //       ASSERT_NO_EXCEPTION);
+  // }
+
+  cast_text_message_->setInnerText(
+      GetVideoElement().GetLocale().QueryString(
+          WebLocalizedString::kPictureInPictureInterstitialText),
+      ASSERT_NO_EXCEPTION);
   if (toggle_insterstitial_timer_.IsActive())
     toggle_insterstitial_timer_.Stop();
   should_be_visible_ = true;

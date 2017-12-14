@@ -29,6 +29,11 @@ namespace gfx {
 class Size;
 }  // namespace size
 
+namespace viz {
+class FrameSinkId;
+class SurfaceId;
+}  // namespace viz
+
 namespace content {
 
 // This class manages all RenderFrame based media related managers at the
@@ -53,6 +58,9 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   // Gets the MediaPlayerId of the fullscreen video if it exists.
   const base::Optional<MediaPlayerId>& GetFullscreenVideoMediaPlayerId() const;
 
+  // Gets the MediaPlayerId of the pip video if it exists.
+  const base::Optional<MediaPlayerId>& GetPictureInPictureVideoMediaPlayerId() const;
+
   // WebContentsObserver implementation.
   void WebContentsDestroyed() override;
   void RenderFrameDeleted(RenderFrameHost* render_frame_host) override;
@@ -66,6 +74,8 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   // merging the logic of effectively fullscreen, hiding media controls and
   // fullscreening video element to the same place.
   void RequestPersistentVideo(bool value);
+
+  bool IsActivePlayer(const MediaPlayerId& player) const;
 
   bool has_audio_wake_lock_for_testing() const {
     return has_audio_wake_lock_for_testing_;
@@ -100,6 +110,16 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   void OnMediaMutedStatusChanged(RenderFrameHost* render_frame_host,
                                  int delegate_id,
                                  bool muted);
+  void OnPictureInPicture(RenderFrameHost* render_frame_host,
+                          int delegate_id,
+                          viz::FrameSinkId frame_sink_id,
+                          const gfx::Size& size);
+  void OnUpdatePictureInPictureSurfaceId(RenderFrameHost* render_frame_host,
+                                         int delegate_id,
+                                         viz::FrameSinkId frame_sink_id,
+                                         uint32_t parent_id,
+                                         base::UnguessableToken nonce,
+                                         const gfx::Size& size);
 
   // Clear |render_frame_host|'s tracking entry for its WakeLocks.
   void ClearWakeLocks(RenderFrameHost* render_frame_host);
@@ -127,6 +147,10 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   void RemoveAllMediaPlayerEntries(RenderFrameHost* render_frame_host,
                                    ActiveMediaPlayerMap* player_map,
                                    std::set<MediaPlayerId>* removed_players);
+  // Returns whether |id| was found in the |player_map|.
+  // TODO: that should actually be a `static` method.
+  bool FindMediaPlayerEntry(const MediaPlayerId& id,
+                            const ActiveMediaPlayerMap& player_map) const;
 
   // Convenience method that casts web_contents() to a WebContentsImpl*.
   WebContentsImpl* web_contents_impl() const;
@@ -137,6 +161,7 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   device::mojom::WakeLockPtr audio_wake_lock_;
   device::mojom::WakeLockPtr video_wake_lock_;
   base::Optional<MediaPlayerId> fullscreen_player_;
+  base::Optional<MediaPlayerId> pip_player_;
   bool has_audio_wake_lock_for_testing_;
   bool has_video_wake_lock_for_testing_;
 
