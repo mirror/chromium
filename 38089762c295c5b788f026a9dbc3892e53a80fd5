@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b8cd323d_af28c4b5",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-14T13:52:36Z",
+      "side": 1,
+      "message": "Initially I did have it as an early return but which is why the comment is as it was but primiano@ suggested to change to a CHECK. Changing back to a early return.",
+      "parentUuid": "98d65246_5167bd17",
+      "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79c8ade2_3af90181",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 14
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "565a1d7a_f35b2bb7",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-14T13:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79c8ade2_3af90181",
+      "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "542408b2_d4e4a538",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 14
@@ -65,6 +101,24 @@
       "writtenOn": "2017-12-13T19:44:49Z",
       "side": 1,
       "message": "If it returns null on failure, what\u0027s the need for the `bool success`?",
+      "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dcb95cf_59070001",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-12-14T13:52:36Z",
+      "side": 1,
+      "message": "primiano@ suggested to retain a consistent API with the other methods, we have both. I initially did have no success but added on his suggestion. Happy to change either way.",
+      "parentUuid": "542408b2_d4e4a538",
       "revId": "38089762c295c5b788f026a9dbc3892e53a80fd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
