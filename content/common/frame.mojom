@@ -218,6 +218,11 @@ interface FrameHost {
       string ip,
       uint32 cert_status);
 
+  // Sent by the renderer to indicate that a same document navigation
+  // started in the renderer process.
+  DidCommitSameDocumentNavigation(
+      DidCommitProvisionalLoadParams params);
+
   // Sent when the frame changes its window.name.
   DidChangeName(string name, string unique_name);
 
