@@ -580,13 +580,12 @@ void ChromeContentClient::AddContentDecryptionModules(
       // CdmInfo needs |path| to be the actual Widevine library,
       // not the adapter, so adjust as necessary. It will be in the
       // same directory as the installed adapter.
-      // TODO(xhwang): Pass |is_persistent_license_supported| to CdmInfo.
       const base::Version version(WIDEVINE_CDM_VERSION_STRING);
       DCHECK(version.IsValid());
-      cdms->push_back(
-          content::CdmInfo(kWidevineCdmDisplayName, kWidevineCdmGuid, version,
-                           cdm_path, kWidevineCdmFileSystemId, codecs_supported,
-                           kWidevineKeySystem, false));
+      cdms->push_back(content::CdmInfo(
+          kWidevineCdmDisplayName, kWidevineCdmGuid, version, cdm_path,
+          kWidevineCdmFileSystemId, codecs_supported,
+          is_persistent_license_supported, kWidevineKeySystem, false));
     }
 #endif  // defined(WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT)
 
@@ -603,6 +602,8 @@ void ChromeContentClient::AddContentDecryptionModules(
       // A variant of ECK key system that has a different GUID.
       const char kExternalClearKeyDifferentGuidTestKeySystem[] =
           "org.chromium.externalclearkey.differentguid";
+      // ECK implementation supports persistent licenses.
+      constexpr bool is_persistent_license_supported = true;
 
       // Register kExternalClearKeyDifferentGuidTestKeySystem first separately.
       // Otherwise, it'll be treated as a sub-key-system of normal
@@ -611,15 +612,15 @@ void ChromeContentClient::AddContentDecryptionModules(
       cdms->push_back(content::CdmInfo(
           media::kClearKeyCdmDisplayName, media::kClearKeyCdmDifferentGuid,
           base::Version("0.1.0.0"), clear_key_cdm_path,
-          media::kClearKeyCdmFileSystemId, {},
+          media::kClearKeyCdmFileSystemId, {}, is_persistent_license_supported,
           kExternalClearKeyDifferentGuidTestKeySystem, false));
 
       // Supported codecs are hard-coded in ExternalClearKeyProperties.
-      cdms->push_back(
-          content::CdmInfo(media::kClearKeyCdmDisplayName,
-                           media::kClearKeyCdmGuid, base::Version("0.1.0.0"),
-                           clear_key_cdm_path, media::kClearKeyCdmFileSystemId,
-                           {}, kExternalClearKeyKeySystem, true));
+      cdms->push_back(content::CdmInfo(
+          media::kClearKeyCdmDisplayName, media::kClearKeyCdmGuid,
+          base::Version("0.1.0.0"), clear_key_cdm_path,
+          media::kClearKeyCdmFileSystemId, {}, is_persistent_license_supported,
+          kExternalClearKeyKeySystem, true));
     }
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
   }
