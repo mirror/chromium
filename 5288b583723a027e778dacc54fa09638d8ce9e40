@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "0a50a776_1c6821e7",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-14T13:25:54Z",
+      "side": 1,
+      "message": "Moving this inside a signin namespace would be good, but that is out of scope for this CL. We\u0027re currently working on building an \"Identity Service\" that will hide this AccountInfo inside the service and expose a MOJO version of it to the rest of the code. So I think we\u0027ll have to deal with this namespace change once we convert our clients to the Identity Service.",
+      "parentUuid": "385446de_cfb3f83d",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fa39471_0f135ae4",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 13
@@ -98,6 +116,24 @@
       "writtenOn": "2017-12-13T23:40:58Z",
       "side": 1,
       "message": "perhaps signin_promo_container?",
+      "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4394390c_be3f09dc",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-12-14T13:25:54Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "347f16d2_0ac3e30f",
       "revId": "5288b583723a027e778dacc54fa09638d8ce9e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
