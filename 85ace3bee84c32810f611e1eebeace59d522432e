@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af04e998_a9df02aa",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7340,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-12-14T21:27:09Z",
+      "side": 1,
+      "message": "vmpstr@, different from our conversation yesterday, I think I want to keep this pattern for now. We need to call Flush on the StashingImageProvider - but that method doesn\u0027t exist on ImageProvider (and doesn\u0027t really make sense there?), so passing this in to PaintOpSerializer so we don\u0027t lose type info.",
+      "range": {
+        "startLine": 7340,
+        "startChar": 35,
+        "endLine": 7340,
+        "endChar": 58
+      },
+      "revId": "85ace3bee84c32810f611e1eebeace59d522432e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
