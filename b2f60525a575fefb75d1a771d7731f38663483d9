@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b28b0ce1_84ed8907",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T18:51:03Z",
+      "side": 1,
+      "message": "Up to you. Basically let\u0027s remove this when no longer useful. Maybe add a TODO so that we don\u0027t forget.",
+      "parentUuid": "bddb7460_7a2cb1bf",
+      "range": {
+        "startLine": 62,
+        "startChar": 6,
+        "endLine": 62,
+        "endChar": 12
+      },
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd32289d_474850d3",
         "filename": "chrome/browser/resources/print_preview/new/app.js",
         "patchSetId": 6
@@ -116,6 +140,29 @@
       "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35c36892_425c9b76",
+        "filename": "chrome/browser/resources/print_preview/new/app.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T18:51:03Z",
+      "side": 1,
+      "message": "When does this happen? Does the observer even trigger if this is not set?",
+      "range": {
+        "startLine": 234,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 0
+      },
+      "revId": "b2f60525a575fefb75d1a771d7731f38663483d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5abe6592_187e67dc",
+        "filename": "chrome/test/data/webui/print_preview/new_print_preview_ui_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-12-14T18:51:03Z",
+      "side": 1,
+      "message": "It is a bit odd to include two separate Mocha test files here, and use one as a library for helper methods, and only run tests from the other one. Same happens with PrintPreviewRestoreStateTest, just noticed.\n\nCan we move anything useful outside of print_preview_tests.js to a test_util.js file, and include that instead? See example similar file from Settings at https://cs.chromium.org/chromium/src/chrome/test/data/webui/settings/test_util.js.",
+      "range": {
+        "startLine": 53,
+        "startChar": 6,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "bd3df9d53ae72f89ba9c0dcc297db439e9b4138c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
