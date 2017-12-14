@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "813319e5_061229f3",
+        "filename": "chrome/browser/installable/installable_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-12-14T23:07:16Z",
+      "side": 1,
+      "message": "This doesn\u0027t even need to be a static method - I suggested moving it into the anonymous namespace in this file. :)",
+      "range": {
+        "startLine": 135,
+        "startChar": 14,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "d7d0a9b12ed493bd8fbab57eb9015a6c4dea1acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
