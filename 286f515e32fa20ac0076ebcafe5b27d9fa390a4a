@@ -16,6 +16,24 @@
       "revId": "286f515e32fa20ac0076ebcafe5b27d9fa390a4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5b011e_37450aba",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 0,
+      "message": "\u003e Wow, gmock is gone. Yay!\n\n:)",
+      "parentUuid": "897d19b8_d2e6fcb9",
+      "revId": "286f515e32fa20ac0076ebcafe5b27d9fa390a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

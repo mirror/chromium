@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0a3afe16_743742eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "To my understanding, the test line is used for QA testers to verify regression fixes. I am happy to add Test: unit_tests, but that seems not terribly useful.",
+      "parentUuid": "b350e2bc_05268c31",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51f7c283_d449ec46",
         "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4be437f_3bda2343",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51f7c283_d449ec46",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a71a87c8_8d57bcf2",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "379a3598_c337e483",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf6a99e8_f068699e",
         "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a298a011_80189215",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf6a99e8_f068699e",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3ea6d0bc_31005b9e",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09822a2_ae9c395b",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e93618a7_2a407c3e",
         "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb3aea3_0bf9a465",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e93618a7_2a407c3e",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "8655c05f_e46f7b83",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d5659d3_9c15a1dd",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b1eb5ba_8abf9114",
         "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2017-12-14T06:05:49Z",
       "side": 1,
       "message": "Is it necessary to reset browser context in arc_service_manager before Profile destruction?",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25863b3b_1a627362",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "doesn\u0027t seem so, but I guess it can\u0027t hurt.",
+      "parentUuid": "6b1eb5ba_8abf9114",
       "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a7ccbcf1_61d6b6da",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "why do you say that? It seems that in prod ArcServiceLauncher owns both ASMs, but there\u0027s no ASL here.",
+      "parentUuid": "41fb489e_de6b5263",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6efc678c_fcf8c6ee",
         "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
         "patchSetId": 2
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "9e99ac28_0271dac1",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "member variables in test fixtures are supposed to be protected or public according to the gtest style guide.",
+      "parentUuid": "6efc678c_fcf8c6ee",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0cea48d_c6cea5b8",
         "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
         "patchSetId": 2
@@ -183,6 +363,24 @@
       "writtenOn": "2017-12-14T06:05:49Z",
       "side": 1,
       "message": "Could you use constant?",
+      "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8742ab28_00058663",
+        "filename": "chrome/browser/chromeos/arc/notification/arc_provision_notification_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-12-14T21:51:00Z",
+      "side": 1,
+      "message": "Do you mean in this test file or in the production code? To what advantage is a constant in this case?",
+      "parentUuid": "c0cea48d_c6cea5b8",
       "revId": "74377e1e8a8378d8ebf11e59dd99f85cc159156c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
