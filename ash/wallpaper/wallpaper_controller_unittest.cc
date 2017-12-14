@@ -26,6 +26,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/task_scheduler/task_scheduler.h"
 #include "chromeos/chromeos_switches.h"
+#include "components/wallpaper/wallpaper_resizer.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -366,9 +367,9 @@ class WallpaperControllerTest : public AshTestBase,
     wallpaper_user_info->is_ephemeral = false;
     wallpaper_user_info->has_gaia_account = true;
 
-    controller_->decode_requests_for_testing_.clear();
     controller_->current_user_wallpaper_info_ = wallpaper::WallpaperInfo();
-    controller_->wallpaper_count_for_testing_ = 0;
+    ClearWallpaperCount();
+    ClearDecodeFilePaths();
 
     return wallpaper_user_info;
   }
@@ -469,6 +470,16 @@ class WallpaperControllerTest : public AshTestBase,
         child_large_file, kWallpaperSize, kWallpaperSize, kWallpaperColor));
   }
 
+  // A convenience wrapper of |AshTestBase::UpdateDisplay|. Display update
+  // normally triggers |ShowUserWallpaper| which goes through a pending list,
+  // so waiting for pending list to reach a stable state is required.
+  void UpdateDisplayAndRunUntilIdle(const std::string& display_specs) {
+    AshTestBase::UpdateDisplay(display_specs);
+    ResetRunLoop();
+    WaitForPendingListEmpty();
+    RunAllTasksUntilIdle();
+  }
+
   void WaitForPendingListEmpty() {
     while (controller_->pending_list_.size() != 0)
       run_loop_->Run();
@@ -482,6 +493,16 @@ class WallpaperControllerTest : public AshTestBase,
   bool ShouldCalculateColors() { return controller_->ShouldCalculateColors(); }
 
   int GetWallpaperCount() { return controller_->wallpaper_count_for_testing_; }
+
+  wallpaper::WallpaperType GetWallpaperType() {
+    return controller_->current_wallpaper_->wallpaper_info().type;
+  }
+
+  void ClearWallpaperCount() { controller_->wallpaper_count_for_testing_ = 0; }
+
+  void ClearDecodeFilePaths() {
+    controller_->decode_requests_for_testing_.clear();
+  }
 
   bool CompareDecodeFilePaths(const std::vector<base::FilePath> expected) {
     if (controller_->decode_requests_for_testing_.size() != expected.size())
@@ -657,7 +678,7 @@ TEST_F(WallpaperControllerTest, ChangeWallpaperQuick) {
 }
 
 TEST_F(WallpaperControllerTest, ResizeCustomWallpaper) {
-  UpdateDisplay("320x200");
+  UpdateDisplayAndRunUntilIdle("320x200");
 
   gfx::ImageSkia image = CreateImage(640, 480, kWallpaperColor);
 
@@ -682,32 +703,32 @@ TEST_F(WallpaperControllerTest, ResizeCustomWallpaper) {
 
 TEST_F(WallpaperControllerTest, GetMaxDisplaySize) {
   // Device scale factor shouldn't affect the native size.
-  UpdateDisplay("1000x300*2");
+  UpdateDisplayAndRunUntilIdle("1000x300*2");
   EXPECT_EQ("1000x300",
             WallpaperController::GetMaxDisplaySizeInNative().ToString());
 
   // Rotated display should return the rotated size.
-  UpdateDisplay("1000x300*2/r");
+  UpdateDisplayAndRunUntilIdle("1000x300*2/r");
   EXPECT_EQ("300x1000",
             WallpaperController::GetMaxDisplaySizeInNative().ToString());
 
   // UI Scaling shouldn't affect the native size.
-  UpdateDisplay("1000x300*2@1.5");
+  UpdateDisplayAndRunUntilIdle("1000x300*2@1.5");
   EXPECT_EQ("1000x300",
             WallpaperController::GetMaxDisplaySizeInNative().ToString());
 
   // First display has maximum size.
-  UpdateDisplay("400x300,100x100");
+  UpdateDisplayAndRunUntilIdle("400x300,100x100");
   EXPECT_EQ("400x300",
             WallpaperController::GetMaxDisplaySizeInNative().ToString());
 
   // Second display has maximum size.
-  UpdateDisplay("400x300,500x600");
+  UpdateDisplayAndRunUntilIdle("400x300,500x600");
   EXPECT_EQ("500x600",
             WallpaperController::GetMaxDisplaySizeInNative().ToString());
 
   // Maximum width and height belongs to different displays.
-  UpdateDisplay("400x300,100x500");
+  UpdateDisplayAndRunUntilIdle("400x300,100x500");
   EXPECT_EQ("400x500",
             WallpaperController::GetMaxDisplaySizeInNative().ToString());
 }
@@ -729,7 +750,7 @@ TEST_F(WallpaperControllerTest, DontScaleWallpaperWithCenterLayout) {
   gfx::ImageSkia image_low_res = CreateImage(
       low_resolution.width(), low_resolution.height(), kWallpaperColor);
 
-  UpdateDisplay("1200x600*2");
+  UpdateDisplayAndRunUntilIdle("1200x600*2");
   {
     SCOPED_TRACE(base::StringPrintf("1200x600*2 high resolution"));
     controller_->SetWallpaperImage(
@@ -747,7 +768,7 @@ TEST_F(WallpaperControllerTest, DontScaleWallpaperWithCenterLayout) {
                                    low_resolution.height(), kWallpaperColor);
   }
 
-  UpdateDisplay("1200x600");
+  UpdateDisplayAndRunUntilIdle("1200x600");
   {
     SCOPED_TRACE(base::StringPrintf("1200x600 high resolution"));
     controller_->SetWallpaperImage(
@@ -765,7 +786,7 @@ TEST_F(WallpaperControllerTest, DontScaleWallpaperWithCenterLayout) {
                                    low_resolution.height(), kWallpaperColor);
   }
 
-  UpdateDisplay("1200x600/u@1.5");  // 1.5 ui scale
+  UpdateDisplayAndRunUntilIdle("1200x600/u@1.5");  // 1.5 ui scale
   {
     SCOPED_TRACE(base::StringPrintf("1200x600/u@1.5 high resolution"));
     controller_->SetWallpaperImage(
@@ -853,6 +874,7 @@ TEST_F(WallpaperControllerTest, SetCustomWallpaper) {
       type, *image.bitmap(), true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::CUSTOMIZED);
   wallpaper::WallpaperInfo wallpaper_info;
   EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id_1, &wallpaper_info,
                                                 true /* is_persistent */));
@@ -885,6 +907,7 @@ TEST_F(WallpaperControllerTest, SetOnlineWallpaper) {
                                   url, layout, true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::ONLINE);
   wallpaper::WallpaperInfo wallpaper_info;
   EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id_1, &wallpaper_info,
                                                 true /*is_persistent=*/));
@@ -920,12 +943,13 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForRegularAccount) {
   // Verify |SetDefaultWallpaper| removes the previously set custom wallpaper
   // info, and the large default wallpaper is set successfully with the correct
   // file path.
-  UpdateDisplay("1600x1200");
+  UpdateDisplayAndRunUntilIdle("1600x1200");
   controller_->SetDefaultWallpaper(InitializeUser(account_id_1),
                                    wallpaper_files_id_1,
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::DEFAULT);
   EXPECT_TRUE(CompareDecodeFilePaths(
       {wallpaper_dir_->GetPath().Append(default_large_wallpaper_name)}));
 
@@ -938,12 +962,13 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForRegularAccount) {
   // Verify |SetDefaultWallpaper| removes the previously set custom wallpaper
   // info, and the small default wallpaper is set successfully with the correct
   // file path.
-  UpdateDisplay("800x600");
+  UpdateDisplayAndRunUntilIdle("800x600");
   controller_->SetDefaultWallpaper(InitializeUser(account_id_1),
                                    wallpaper_files_id_1,
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::DEFAULT);
   EXPECT_TRUE(CompareDecodeFilePaths(
       {wallpaper_dir_->GetPath().Append(default_small_wallpaper_name)}));
 
@@ -954,16 +979,17 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForRegularAccount) {
 
   SimulateSettingCustomWallpaper(account_id_1);
   // Verify that when screen is rotated, |SetDefaultWallpaper| removes the
-  // previously set custom wallpaper info, and the large default wallpaper is
+  // previously set custom wallpaper info, and the small default wallpaper is
   // set successfully with the correct file path.
-  UpdateDisplay("1200x800/r");
+  UpdateDisplayAndRunUntilIdle("800x600/r");
   controller_->SetDefaultWallpaper(InitializeUser(account_id_1),
                                    wallpaper_files_id_1,
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::DEFAULT);
   EXPECT_TRUE(CompareDecodeFilePaths(
-      {wallpaper_dir_->GetPath().Append(default_large_wallpaper_name)}));
+      {wallpaper_dir_->GetPath().Append(default_small_wallpaper_name)}));
 
   EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id_1, &wallpaper_info,
                                                 true /*is_persistent=*/));
@@ -981,7 +1007,7 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForChildAccount) {
 
   // Verify the large child wallpaper is set successfully with the correct file
   // path.
-  UpdateDisplay("1600x1200");
+  UpdateDisplayAndRunUntilIdle("1600x1200");
   mojom::WallpaperUserInfoPtr wallpaper_user_info =
       InitializeUser(child_account_id);
   wallpaper_user_info->type = user_manager::USER_TYPE_CHILD;
@@ -990,12 +1016,13 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForChildAccount) {
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::DEFAULT);
   EXPECT_TRUE(CompareDecodeFilePaths(
       {wallpaper_dir_->GetPath().Append(child_large_wallpaper_name)}));
 
   // Verify the small child wallpaper is set successfully with the correct file
   // path.
-  UpdateDisplay("800x600");
+  UpdateDisplayAndRunUntilIdle("800x600");
   wallpaper_user_info = InitializeUser(child_account_id);
   wallpaper_user_info->type = user_manager::USER_TYPE_CHILD;
   controller_->SetDefaultWallpaper(std::move(wallpaper_user_info),
@@ -1003,6 +1030,7 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForChildAccount) {
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::DEFAULT);
   EXPECT_TRUE(CompareDecodeFilePaths(
       {wallpaper_dir_->GetPath().Append(child_small_wallpaper_name)}));
 }
@@ -1031,24 +1059,26 @@ TEST_F(WallpaperControllerTest, SetDefaultWallpaperForGuestSession) {
   // Verify that during a guest session, |SetDefaultWallpaper| removes the user
   // custom wallpaper info, but a guest specific wallpaper should be set,
   // instead of the regular default wallpaper.
-  UpdateDisplay("1600x1200");
+  UpdateDisplayAndRunUntilIdle("1600x1200");
   controller_->SetDefaultWallpaper(InitializeUser(account_id_1),
                                    wallpaper_files_id_1,
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::DEFAULT);
   EXPECT_TRUE(controller_->GetUserWallpaperInfo(account_id_1, &wallpaper_info,
                                                 true /* is_persistent */));
   EXPECT_EQ(wallpaper_info, default_wallpaper_info);
   EXPECT_TRUE(CompareDecodeFilePaths(
       {wallpaper_dir_->GetPath().Append(guest_large_wallpaper_name)}));
 
-  UpdateDisplay("800x600");
+  UpdateDisplayAndRunUntilIdle("800x600");
   controller_->SetDefaultWallpaper(InitializeUser(account_id_1),
                                    wallpaper_files_id_1,
                                    true /*show_wallpaper=*/);
   RunAllTasksUntilIdle();
   EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::DEFAULT);
   EXPECT_TRUE(CompareDecodeFilePaths(
       {wallpaper_dir_->GetPath().Append(guest_small_wallpaper_name)}));
 }
@@ -1207,23 +1237,79 @@ TEST_F(WallpaperControllerTest, ShowCustomWallpaperWithCorrectResolution) {
   base::FilePath small_wallpaper_path =
       GetCustomWallpaperPath(WallpaperController::kSmallWallpaperSubDir,
                              wallpaper_files_id_1, file_name_1);
+  base::FilePath large_wallpaper_path =
+      GetCustomWallpaperPath(WallpaperController::kLargeWallpaperSubDir,
+                             wallpaper_files_id_1, file_name_1);
 
   CreateAndSaveWallpapers(account_id_1);
   controller_->ShowUserWallpaper(InitializeUser(account_id_1));
   WaitForPendingListEmpty();
   RunAllTasksUntilIdle();
-  EXPECT_EQ(1, GetWallpaperCount());
-
   // Display is initialized to 800x600. The small resolution custom wallpaper is
   // expected. A second decode request with small resolution default wallpaper
   // is also expected. (Because unit tests don't support actual wallpaper
-  // decoding, it falls back the default wallpaper.)
+  // decoding, it falls back to the default wallpaper.)
+  EXPECT_EQ(1, GetWallpaperCount());
   EXPECT_TRUE(CompareDecodeFilePaths(
       {small_wallpaper_path,
        wallpaper_dir_->GetPath().Append(default_small_wallpaper_name)}));
 
-  // TODO(crbug.com/776464): Add tests for large resolution custom wallpapers
-  // after |UpdateWallpaper| is migrated.
+  // Hook up another 800x600 display. This shouldn't trigger a reload.
+  ClearWallpaperCount();
+  ClearDecodeFilePaths();
+  UpdateDisplayAndRunUntilIdle("800x600,800x600");
+  EXPECT_EQ(0, GetWallpaperCount());
+  EXPECT_TRUE(CompareDecodeFilePaths({}));
+
+  // Detach the secondary display.
+  UpdateDisplayAndRunUntilIdle("800x600");
+  // Hook up a 2000x2000 display. The large resolution custom wallpaper should
+  // be loaded.
+  ClearWallpaperCount();
+  ClearDecodeFilePaths();
+  UpdateDisplayAndRunUntilIdle("800x600,2000x2000");
+  EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {large_wallpaper_path,
+       wallpaper_dir_->GetPath().Append(default_large_wallpaper_name)}));
+
+  // Detach the secondary display.
+  UpdateDisplayAndRunUntilIdle("800x600");
+  // Hook up the 2000x2000 display again. The large resolution default wallpaper
+  // should persist. Test for crbug/165788.
+  ClearWallpaperCount();
+  ClearDecodeFilePaths();
+  UpdateDisplayAndRunUntilIdle("800x600,2000x2000");
+  EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {large_wallpaper_path,
+       wallpaper_dir_->GetPath().Append(default_large_wallpaper_name)}));
+}
+
+// After the display is rotated, the sign in wallpaper should be kept. Test for
+// crbug.com/794725.
+TEST_F(WallpaperControllerTest, SigninWallpaperIsKeptAfterRotation) {
+  CreateDefaultWallpapers();
+
+  UpdateDisplayAndRunUntilIdle("800x600");
+  controller_->ShowSigninWallpaper();
+  RunAllTasksUntilIdle();
+  // Display is initialized to 800x600. The small resolution default wallpaper
+  // is expected.
+  EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::DEFAULT);
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {wallpaper_dir_->GetPath().Append(default_small_wallpaper_name)}));
+
+  ClearWallpaperCount();
+  ClearDecodeFilePaths();
+  // After rotating the display, the small resolution default wallpaper should
+  // still be expected, instead of a custom wallpaper.
+  UpdateDisplayAndRunUntilIdle("800x600/r");
+  EXPECT_EQ(1, GetWallpaperCount());
+  EXPECT_EQ(GetWallpaperType(), wallpaper::DEFAULT);
+  EXPECT_TRUE(CompareDecodeFilePaths(
+      {wallpaper_dir_->GetPath().Append(default_small_wallpaper_name)}));
 }
 
 // If clients call |ShowUserWallpaper| twice with the same account id, the
