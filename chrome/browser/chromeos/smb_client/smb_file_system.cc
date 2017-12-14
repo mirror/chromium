@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/smb_client/smb_file_system.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/smb_provider_client.h"
@@ -105,7 +106,10 @@ AbortCallback SmbFileSystem::GetMetadata(
     const base::FilePath& entry_path,
     ProvidedFileSystemInterface::MetadataFieldMask fields,
     const ProvidedFileSystemInterface::GetMetadataCallback& callback) {
-  NOTIMPLEMENTED();
+  GetSmbProviderClient()->GetMetadataEntry(
+      GetMountId(), entry_path,
+      base::BindOnce(&SmbFileSystem::HandleRequestGetMetadataEntryCallback,
+                     weak_ptr_factory_.GetWeakPtr(), fields, callback));
   return AbortCallback();
 }
 
@@ -292,6 +296,38 @@ void SmbFileSystem::HandleRequestReadDirectoryCallback(
   }
   // TODO(allenvic): Implement has_more.
   callback.Run(TranslateError(error), entry_list, false /* has_more */);
+}
+
+void SmbFileSystem::HandleRequestGetMetadataEntryCallback(
+    ProvidedFileSystemInterface::MetadataFieldMask fields,
+    const ProvidedFileSystemInterface::GetMetadataCallback& callback,
+    smbprovider::ErrorType error,
+    const smbprovider::DirectoryEntry& entry) const {
+  if (error != smbprovider::ERROR_OK) {
+    callback.Run(base::WrapUnique<file_system_provider::EntryMetadata>(nullptr),
+                 TranslateError(error));
+  }
+  std::unique_ptr<file_system_provider::EntryMetadata> entry_metadata;
+  if (fields &
+      ProvidedFileSystemInterface::MetadataField::METADATA_FIELD_IS_DIRECTORY) {
+    entry_metadata->is_directory = std::make_unique<bool>(entry.is_directory());
+  }
+  if (fields &
+      ProvidedFileSystemInterface::MetadataField::METADATA_FIELD_NAME) {
+    entry_metadata->name = std::make_unique<std::string>(entry.name());
+  }
+  if (fields &
+      ProvidedFileSystemInterface::MetadataField::METADATA_FIELD_SIZE) {
+    entry_metadata->size = std::make_unique<int64_t>(entry.size());
+  }
+  if (fields & ProvidedFileSystemInterface::MetadataField::
+                   METADATA_FIELD_MODIFICATION_TIME) {
+    entry_metadata->modification_time = std::make_unique<base::Time>(
+        base::Time::FromTimeT(entry.last_modified_time()));
+  }
+  // TODO(allenvic): Implement MIME_TYPE and THUMBNAIL.
+  callback.Run(std::move(entry_metadata),
+               TranslateError(smbprovider::ERROR_OK));
 }
 
 base::WeakPtr<file_system_provider::ProvidedFileSystemInterface>
