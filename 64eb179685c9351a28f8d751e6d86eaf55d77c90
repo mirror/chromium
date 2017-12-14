@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b53f299_3aa20914",
+        "filename": "components/cronet/ios/test/cronet_http_test.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-12-14T16:50:06Z",
+      "side": 1,
+      "message": "Let\u0027s check that the response was successful.",
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce181d17_c2bb68fa",
         "filename": "ios/net/crn_http_protocol_handler.mm",
         "patchSetId": 3
@@ -64,6 +81,29 @@
         "startChar": 8,
         "endLine": 926,
         "endChar": 23
+      },
+      "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31630b1_4cf4adc1",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-12-14T16:50:06Z",
+      "side": 1,
+      "message": "It looks like a copy of an existing method.",
+      "range": {
+        "startLine": 953,
+        "startChar": 0,
+        "endLine": 965,
+        "endChar": 1
       },
       "revId": "64eb179685c9351a28f8d751e6d86eaf55d77c90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
