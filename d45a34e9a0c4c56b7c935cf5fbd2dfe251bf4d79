@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff747bd9_399c70be",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-14T21:07:13Z",
+      "side": 1,
+      "message": "discussed in person, trimmed down the amount of state necessary and will have the few lines duplicated for now",
+      "parentUuid": "e34e6ad1_9e564aeb",
+      "revId": "d45a34e9a0c4c56b7c935cf5fbd2dfe251bf4d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f3c16a4_fdd27ca0",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-12-12T23:03:31Z",
       "side": 1,
       "message": "this is being called every 100ms in the settimeout loop. seems redundant to call in here.",
+      "revId": "d45a34e9a0c4c56b7c935cf5fbd2dfe251bf4d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909b30ee_0dcc87a0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-14T21:07:13Z",
+      "side": 1,
+      "message": "Things have changed around a bit now, but I\u0027m fine to remove this if it\u0027s clouding things here.",
+      "parentUuid": "7f3c16a4_fdd27ca0",
       "revId": "d45a34e9a0c4c56b7c935cf5fbd2dfe251bf4d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1d902c30_5cb8b896",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-14T21:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cd95da0_47a90189",
+      "revId": "d45a34e9a0c4c56b7c935cf5fbd2dfe251bf4d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6667cf3d_fdd18555",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-12-12T23:03:31Z",
       "side": 1,
       "message": "this means the progress bar should go from 70% to 95% during retrieving?",
+      "revId": "d45a34e9a0c4c56b7c935cf5fbd2dfe251bf4d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecba8abb_9fa64c02",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-14T21:07:13Z",
+      "side": 1,
+      "message": "Yep",
+      "parentUuid": "6667cf3d_fdd18555",
       "revId": "d45a34e9a0c4c56b7c935cf5fbd2dfe251bf4d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "38e8f918_4b86a27c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/audits2Dialog.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-14T21:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698cf3e9_243d5698",
+      "revId": "d45a34e9a0c4c56b7c935cf5fbd2dfe251bf4d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f05f8be3_79db4c67",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/audits2Dialog.css",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "5551b692_ac46c4cd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/audits2Dialog.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-14T21:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f05f8be3_79db4c67",
+      "revId": "d45a34e9a0c4c56b7c935cf5fbd2dfe251bf4d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d59a560b_40767987",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/audits2Dialog.css",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "d45a34e9a0c4c56b7c935cf5fbd2dfe251bf4d79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85730e58_95bfee74",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/audits2Dialog.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-12-14T21:07:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d59a560b_40767987",
+      "revId": "d45a34e9a0c4c56b7c935cf5fbd2dfe251bf4d79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
