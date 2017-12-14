@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5295be4_f11ff598",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-14T00:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb052ee4_3d769989",
+      "range": {
+        "startLine": 303,
+        "startChar": 37,
+        "endLine": 303,
+        "endChar": 43
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c08ec5a1_d0daaabc",
         "filename": "components/update_client/protocol_builder.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-12-13T00:12:35Z",
       "side": 1,
       "message": "can we add the new code in the else if clause instead of changing the entire if statement?",
+      "range": {
+        "startLine": 306,
+        "startChar": 13,
+        "endLine": 306,
+        "endChar": 22
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dded859_05d1bf5b",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-14T00:34:02Z",
+      "side": 1,
+      "message": "Move this change to another CL.",
+      "parentUuid": "c08ec5a1_d0daaabc",
       "range": {
         "startLine": 306,
         "startChar": 13,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "e998e326_d3cf511a",
+        "filename": "components/update_client/update_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-14T00:34:02Z",
+      "side": 1,
+      "message": "Move to another CL.",
+      "parentUuid": "e80d45d0_3c2f29f6",
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8317665b_0939d870",
         "filename": "extensions/browser/updater/update_data_provider.h",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c1e17ebe_e84955f7",
+        "filename": "extensions/browser/updater/update_data_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-14T00:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8317665b_0939d870",
+      "range": {
+        "startLine": 49,
+        "startChar": 29,
+        "endLine": 49,
+        "endChar": 30
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53ecdcde_30ba3a67",
         "filename": "extensions/browser/updater/update_service.cc",
         "patchSetId": 1
@@ -99,6 +189,30 @@
       "writtenOn": "2017-12-13T00:12:35Z",
       "side": 1,
       "message": "can this be some kind of smart pointer?",
+      "range": {
+        "startLine": 104,
+        "startChar": 19,
+        "endLine": 104,
+        "endChar": 20
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0e6293_5c77f955",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-14T00:34:02Z",
+      "side": 1,
+      "message": "ExtensionCache is obtained through the browser client, which I think should outlive UpdateService.",
+      "parentUuid": "53ecdcde_30ba3a67",
       "range": {
         "startLine": 104,
         "startChar": 19,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "e77d7af7_7fc1aedd",
+        "filename": "extensions/browser/updater/update_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-14T00:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8b4ad81_619d0553",
+      "range": {
+        "startLine": 132,
+        "startChar": 20,
+        "endLine": 132,
+        "endChar": 24
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "324b30a8_0ac1c3bb",
         "filename": "extensions/browser/updater/update_service.h",
         "patchSetId": 1
@@ -148,6 +286,24 @@
       "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5776a7_ee4234fe",
+        "filename": "extensions/browser/updater/update_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-14T00:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "324b30a8_0ac1c3bb",
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "8086e0e0_47c8b509",
+        "filename": "extensions/browser/updater/update_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-14T00:34:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "516ca392_12c33a85",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 32
+      },
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a7a05f9_e4dc5e41",
         "filename": "extensions/browser/updater/update_service_factory.cc",
         "patchSetId": 1
@@ -188,6 +368,24 @@
       "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7447adf_a1954b5b",
+        "filename": "extensions/browser/updater/update_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-12-14T00:34:02Z",
+      "side": 1,
+      "message": "This function is a virtual function, with a fixed prototype (derived from BrowserContextKeyedServiceFactory), we can\u0027t return a smart pointer here. \n\nKeyedService* BuildServiceInstanceFor(content::BrowserContext* context) const override;",
+      "parentUuid": "4a7a05f9_e4dc5e41",
+      "revId": "34ef115d28abcd595ff9a691ded3e205e28a4ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
