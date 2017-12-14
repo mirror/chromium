@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "256ed172_0128bfac",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-14T16:54:52Z",
+      "side": 1,
+      "message": "Don\u0027t you want to remove this flag or enable the feature too?",
+      "range": {
+        "startLine": 104,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 47
+      },
+      "revId": "175ad2d83cb8584c91e32bf2a37f8c874c3e8b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebffb9c8_f1ef6546",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-12-14T16:54:52Z",
+      "side": 1,
+      "message": "Not a big fan of that usage, as here it does not wait for anything. How about introducing a new method to check the task counter? It can be used both for the check here and inside of waitForPendingUpdates.",
+      "range": {
+        "startLine": 298,
+        "startChar": 46,
+        "endLine": 298,
+        "endChar": 67
+      },
+      "revId": "175ad2d83cb8584c91e32bf2a37f8c874c3e8b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
