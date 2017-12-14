@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30508b0f_c2d694e6",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathAVX.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-14T18:30:41Z",
+      "side": 1,
+      "message": "Can\u0027t the namespace (AVX) be defined here instead of in VectorMathImpl.cpp file? I think it makes the cpp file simpler to read with fewer #ifdefs.",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6b7788_6e2fa9ed",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-14T18:30:41Z",
+      "side": 1,
+      "message": "Should this be\n\n#if defined(__AVX__)\nnamespace AVX {\n#else\nnamespace SSE2 {\n#endif",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99afbe12_cbf9c8d7",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-14T18:30:41Z",
+      "side": 1,
+      "message": "Where is AVX::kBitsPerRegister defined?  In immintrin.h?",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8513b5d1_aa812a7c",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-14T18:30:41Z",
+      "side": 1,
+      "message": "Where is AVX::kPackedFloatsPerRegister defined?  In immintrin.h?",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00719f22_bb38e496",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-14T18:30:41Z",
+      "side": 1,
+      "message": "Maybe check for CPUSupportsAVX() first?",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1c8902a_6f0f2fca",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-14T18:30:41Z",
+      "side": 1,
+      "message": "Maybe check for CPUSupportsAVX() first?",
+      "revId": "c0de2553d55b6440df559b791df904d751d330c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
