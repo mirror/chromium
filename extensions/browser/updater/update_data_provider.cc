@@ -22,27 +22,39 @@
 
 namespace extensions {
 
-UpdateDataProvider::UpdateDataProvider(content::BrowserContext* context,
+UpdateDataProvider::ExtensionUpdateData::ExtensionUpdateData()
+    : is_corrupt_reinstall(false) {}
+
+UpdateDataProvider::ExtensionUpdateData::ExtensionUpdateData(
+    const ExtensionUpdateData& other) = default;
+
+UpdateDataProvider::ExtensionUpdateData::~ExtensionUpdateData() {}
+
+UpdateDataProvider::UpdateDataProvider(content::BrowserContext* browser_context,
                                        InstallCallback install_callback)
-    : context_(context), install_callback_(std::move(install_callback)) {}
+    : browser_context_(browser_context),
+      install_callback_(std::move(install_callback)) {}
 
 UpdateDataProvider::~UpdateDataProvider() {}
 
 void UpdateDataProvider::Shutdown() {
-  context_ = nullptr;
+  browser_context_ = nullptr;
 }
 
 void UpdateDataProvider::GetData(
+    const std::map<std::string, ExtensionUpdateData>& update_info,
     const std::vector<std::string>& ids,
     std::vector<update_client::CrxComponent>* data) {
-  if (!context_)
+  if (!browser_context_)
     return;
-  const ExtensionRegistry* registry = ExtensionRegistry::Get(context_);
-  const ExtensionPrefs* extension_prefs = ExtensionPrefs::Get(context_);
+  const ExtensionRegistry* registry = ExtensionRegistry::Get(browser_context_);
+  const ExtensionPrefs* extension_prefs = ExtensionPrefs::Get(browser_context_);
   for (const auto& id : ids) {
     const Extension* extension = registry->GetInstalledExtension(id);
     if (!extension)
       continue;
+    DCHECK(update_info.count(id) > 0);
+    const ExtensionUpdateData& extension_data = update_info.at(id);
     data->push_back(update_client::CrxComponent());
     update_client::CrxComponent* info = &data->back();
     std::string pubkey_bytes;
@@ -50,13 +62,16 @@ void UpdateDataProvider::GetData(
     info->pk_hash.resize(crypto::kSHA256Length, 0);
     crypto::SHA256HashString(pubkey_bytes, info->pk_hash.data(),
                              info->pk_hash.size());
-    info->version = *extension->version();
+    info->version = extension_data.is_corrupt_reinstall
+                        ? base::Version("0.0.0.0")
+                        : *extension->version();
     info->allows_background_download = false;
     info->requires_network_encryption = true;
     info->installer = base::MakeRefCounted<ExtensionInstaller>(
         id, extension->path(),
         base::BindOnce(&UpdateDataProvider::RunInstallCallback, this));
-    if (!ExtensionsBrowserClient::Get()->IsExtensionEnabled(id, context_)) {
+    if (!ExtensionsBrowserClient::Get()->IsExtensionEnabled(id,
+                                                            browser_context_)) {
       int disabled_reasons = extension_prefs->GetDisableReasons(id);
       if (disabled_reasons == extensions::disable_reason::DISABLE_NONE ||
           disabled_reasons >= extensions::disable_reason::DISABLE_REASON_LAST) {
@@ -69,6 +84,7 @@ void UpdateDataProvider::GetData(
           info->disabled_reasons.push_back(enum_value);
       }
     }
+    info->install_source = extension_data.install_source;
   }
 }
 
@@ -77,7 +93,7 @@ void UpdateDataProvider::RunInstallCallback(
     const std::string& public_key,
     const base::FilePath& unpacked_dir,
     UpdateClientCallback update_client_callback) {
-  if (!context_) {
+  if (!browser_context_) {
     base::PostTaskWithTraits(
         FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
         base::BindOnce(base::IgnoreResult(&base::DeleteFile), unpacked_dir,
@@ -88,7 +104,7 @@ void UpdateDataProvider::RunInstallCallback(
   DCHECK(!install_callback_.is_null());
   content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
       ->PostTask(FROM_HERE,
-                 base::BindOnce(std::move(install_callback_), context_,
+                 base::BindOnce(std::move(install_callback_), browser_context_,
                                 extension_id, public_key, unpacked_dir,
                                 std::move(update_client_callback)));
 }
