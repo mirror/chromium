@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d5ab66f_67437322",
+        "filename": "build/config/android/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-12-14T17:08:00Z",
+      "side": 1,
+      "message": "I did check, it works as expected with this flag only. Checked a few .o files and the native library.",
+      "parentUuid": "563d3f06_5063d879",
+      "range": {
+        "startLine": 217,
+        "startChar": 17,
+        "endLine": 217,
+        "endChar": 28
+      },
+      "revId": "6a42cd00033d272c22f4e228bf37fe4f4c46d23a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ba8af6_319afddf",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
