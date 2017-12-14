@@ -20,7 +20,7 @@ namespace device {
 
 // Simple request context producer that immediately produces a
 // TestURLRequestContextGetter.
-void TestRequestContextProducer(
+void PublicIpAddressTestRequestContextProducer(
     const scoped_refptr<base::SingleThreadTaskRunner>& network_task_runner,
     base::OnceCallback<void(scoped_refptr<net::URLRequestContextGetter>)>
         response_callback) {
@@ -64,9 +64,9 @@ class PublicIpAddressLocationNotifierTest : public testing::Test {
                 base::TestMockTimeTaskRunner::Type::kBoundToThread)),
         mock_time_scoped_context_(mock_time_task_runner_.get()),
         network_change_notifier_(net::NetworkChangeNotifier::CreateMock()),
-        notifier_(
-            base::Bind(&TestRequestContextProducer, mock_time_task_runner_),
-            std::string() /* api_key */) {}
+        notifier_(base::BindOnce(&PublicIpAddressTestRequestContextProducer,
+                                 mock_time_task_runner_),
+                  std::string() /* api_key */) {}
 
   // Returns the current TestURLFetcher (if any) and advances the test fetcher
   // id for disambiguation from subsequent tests.
