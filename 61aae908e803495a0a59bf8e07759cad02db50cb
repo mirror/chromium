@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ee66613_4e0871fa",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2057,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-12-14T04:24:14Z",
+      "side": 1,
+      "message": "std::make_unique\u003cExtractSmartClipDataCallback\u003e(std::move(callback))",
+      "range": {
+        "startLine": 2057,
+        "startChar": 50,
+        "endLine": 2057,
+        "endChar": 62
+      },
+      "revId": "61aae908e803495a0a59bf8e07759cad02db50cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
