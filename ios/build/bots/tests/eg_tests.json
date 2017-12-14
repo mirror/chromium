@@ -5,6 +5,8 @@
   "tests": [
     {
       "app": "ios_chrome_ui_egtests",
+      "sharding": "ios/chrome/browser/ui",
+      "shard size": 6,
       "xctest": true
     },
     {
