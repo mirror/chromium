@@ -171,6 +171,29 @@
       "revId": "0846a03d09a71953549202294edcee70e1c3e7d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918e74ec_1b3d8057",
+        "filename": "third_party/WebKit/public/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1250573
+      },
+      "writtenOn": "2017-12-14T04:16:02Z",
+      "side": 1,
+      "message": "From the discussion on blink-dev [1], we want to point out that public/web/ is implemented on Source/{core,modules,platform}/exported/.\n\nCan you add a sentence here about this?\n\n[1] - https://groups.google.com/a/chromium.org/forum/#!msg/blink-dev/InNI54L0GZ0/fqugGnFuCAAJ",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 15
+      },
+      "revId": "0846a03d09a71953549202294edcee70e1c3e7d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
