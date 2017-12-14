@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "9159635f_553ac1ec",
+        "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-12-14T16:51:29Z",
+      "side": 1,
+      "message": "Could you explain why GetDevicePolicyWallpaperFilePath() won\u0027t work if it only accesses static members of WallpaperController? How is it different from this use here? https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/chromeos/login/signin_screen_handler.cc?type\u003dcs\u0026l\u003d892 Thanks!",
+      "parentUuid": "5c027fa3_b42a646c",
+      "revId": "3ec88e8254923ceb5f856952e1ea4ceab29b398e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78f2222d_b317d268",
         "filename": "chrome/browser/ui/ash/wallpaper_policy_handler.cc",
         "patchSetId": 9
