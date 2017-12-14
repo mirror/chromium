@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b9254e9_2043d907",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-12-14T23:55:28Z",
+      "side": 0,
+      "message": "Looks like this had a bunch of code to be used when the SpellCheckStatus is kAutomatic.  Is that whole codepath already dead today?",
+      "range": {
+        "startLine": 115,
+        "startChar": 9,
+        "endLine": 115,
+        "endChar": 34
+      },
+      "revId": "9faa2ca77263b22ff002452f545d217b4c7a0f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
