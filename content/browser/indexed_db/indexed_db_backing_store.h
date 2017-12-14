@@ -60,6 +60,10 @@ class LevelDBDatabase;
 class LevelDBFactory;
 struct IndexedDBDataLossInfo;
 struct IndexedDBValue;
+namespace indexed_db_backing_store_unittest {
+class IndexedDBBackingStoreTest;
+FORWARD_DECLARE_TEST(IndexedDBBackingStoreTest, ReadCorruptionInfo);
+}  // namespace indexed_db_backing_store_unittest
 
 class CONTENT_EXPORT IndexedDBBackingStore
     : public base::RefCounted<IndexedDBBackingStore> {
@@ -619,7 +623,9 @@ class CONTENT_EXPORT IndexedDBBackingStore
   void CleanPrimaryJournalIgnoreReturn();
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(IndexedDBBackingStoreTest, ReadCorruptionInfo);
+  FRIEND_TEST_ALL_PREFIXES(
+      indexed_db_backing_store_unittest::IndexedDBBackingStoreTest,
+      ReadCorruptionInfo);
 
   static scoped_refptr<IndexedDBBackingStore> Create(
       IndexedDBFactory* indexed_db_factory,

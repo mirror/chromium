@@ -25,8 +25,8 @@
 #include "testing/gtest_mac.h"
 
 namespace content {
+namespace test_input_client_mac_unittest {
 
-namespace {
 const int64_t kTaskDelayMs = 200;
 
 class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
@@ -140,8 +140,6 @@ void CallOnMessageReceived(scoped_refptr<TextInputClientMessageFilter> filter,
   filter->OnMessageReceived(message);
 }
 
-}  // namespace
-
 // Test Cases //////////////////////////////////////////////////////////////////
 
 TEST_F(TextInputClientMacTest, GetCharacterIndex) {
@@ -226,4 +224,5 @@ TEST_F(TextInputClientMacTest, TimeoutRectForRange) {
   EXPECT_NSEQ(NSZeroRect, rect);
 }
 
+}  // namespace test_input_client_mac_unittest
 }  // namespace content

@@ -50,8 +50,7 @@ using ::testing::InvokeWithoutArgs;
 using ::testing::SaveArg;
 
 namespace content {
-
-namespace {
+namespace media_stream_dispatcher_host_unittest {
 
 constexpr int kProcessId = 5;
 constexpr int kRenderId = 6;
@@ -73,8 +72,6 @@ void AudioInputDevicesEnumerated(base::Closure quit_closure,
   }
   quit_closure.Run();
 }
-
-}  // anonymous namespace
 
 class MockMediaStreamDispatcherHost : public MediaStreamDispatcherHost,
                                       public mojom::MediaStreamDeviceObserver {
@@ -881,4 +878,5 @@ TEST_F(MediaStreamDispatcherHostTest, Salt) {
   EXPECT_EQ(device_id2, host_->opened_device_.id);
 }
 
+}  // namespace media_stream_dispatcher_host_unittest
 };  // namespace content

@@ -115,6 +115,28 @@ class HostZoomMapObserver;
 class PepperPlaybackObserver;
 #endif
 
+namespace navigation_controller_impl_unittest {
+class NavigationControllerTest;
+FORWARD_DECLARE_TEST(NavigationControllerTest, HistoryNavigate);
+}  // namespace navigation_controller_impl_unittest
+
+namespace web_contents_impl_unittest {
+class WebContentsImplTest;
+FORWARD_DECLARE_TEST(WebContentsImplTest, NoJSMessageOnInterstitials);
+FORWARD_DECLARE_TEST(WebContentsImplTest, UpdateTitle);
+FORWARD_DECLARE_TEST(WebContentsImplTest, FindOpenerRVHWhenPending);
+FORWARD_DECLARE_TEST(WebContentsImplTest, CrossSiteCantPreemptAfterUnload);
+FORWARD_DECLARE_TEST(WebContentsImplTest, PendingContentsDestroyed);
+FORWARD_DECLARE_TEST(WebContentsImplTest, PendingContentsShown);
+FORWARD_DECLARE_TEST(WebContentsImplTest, FrameTreeShape);
+FORWARD_DECLARE_TEST(WebContentsImplTest, GetLastActiveTime);
+FORWARD_DECLARE_TEST(WebContentsImplTest,
+                     LoadResourceFromMemoryCacheWithBadSecurityInfo);
+FORWARD_DECLARE_TEST(WebContentsImplTest, LoadResourceWithEmptySecurityInfo);
+FORWARD_DECLARE_TEST(WebContentsImplTest, ResetJavaScriptDialogOnUserNavigate);
+FORWARD_DECLARE_TEST(WebContentsImplTest, ParseDownloadHeaders);
+}  // namespace web_contents_impl_unittest
+
 // Factory function for the implementations that content knows about. Takes
 // ownership of |delegate|.
 WebContentsView* CreateWebContentsView(
@@ -912,24 +934,34 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   friend class WebContentsObserver;
   friend class WebContents;  // To implement factory methods.
 
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest, NoJSMessageOnInterstitials);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest, UpdateTitle);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest, FindOpenerRVHWhenPending);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest,
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
+                           NoJSMessageOnInterstitials);
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
+                           UpdateTitle);
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
+                           FindOpenerRVHWhenPending);
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
                            CrossSiteCantPreemptAfterUnload);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest, PendingContentsDestroyed);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest, PendingContentsShown);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest, FrameTreeShape);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest, GetLastActiveTime);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest,
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
+                           PendingContentsDestroyed);
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
+                           PendingContentsShown);
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
+                           FrameTreeShape);
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
+                           GetLastActiveTime);
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
                            LoadResourceFromMemoryCacheWithBadSecurityInfo);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest,
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
                            LoadResourceWithEmptySecurityInfo);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest,
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
                            ResetJavaScriptDialogOnUserNavigate);
-  FRIEND_TEST_ALL_PREFIXES(WebContentsImplTest, ParseDownloadHeaders);
+  FRIEND_TEST_ALL_PREFIXES(web_contents_impl_unittest::WebContentsImplTest,
+                           ParseDownloadHeaders);
   FRIEND_TEST_ALL_PREFIXES(FormStructureBrowserTest, HTMLFiles);
-  FRIEND_TEST_ALL_PREFIXES(NavigationControllerTest, HistoryNavigate);
+  FRIEND_TEST_ALL_PREFIXES(
+      navigation_controller_impl_unittest::NavigationControllerTest,
+      HistoryNavigate);
   FRIEND_TEST_ALL_PREFIXES(RenderFrameHostManagerTest, PageDoesBackAndReload);
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessBrowserTest, CrossSiteIframe);
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessBrowserTest,
