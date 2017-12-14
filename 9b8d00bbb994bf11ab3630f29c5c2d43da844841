@@ -34,6 +34,24 @@
       "revId": "9b8d00bbb994bf11ab3630f29c5c2d43da844841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23924be3_0717e265",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1608,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-12-14T08:42:56Z",
+      "side": 1,
+      "message": "Out of curiosity, can the enabling of the GeoLanguage feature also be toggled dynamically? If so, it seems like similar concerns apply.",
+      "parentUuid": "46147558_4185a8eb",
+      "revId": "9b8d00bbb994bf11ab3630f29c5c2d43da844841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
