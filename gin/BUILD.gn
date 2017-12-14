@@ -4,7 +4,6 @@
 
 import("//testing/test.gni")
 import("//v8/gni/v8.gni")
-import("//tools/v8_context_snapshot/v8_context_snapshot.gni")
 
 component("gin") {
   sources = [
@@ -83,9 +82,6 @@ component("gin") {
       "$root_out_dir/natives_blob.bin",
       "$root_out_dir/snapshot_blob.bin",
     ]
-    if (use_v8_context_snapshot) {
-      data += [ "$root_out_dir/v8_context_snapshot.bin" ]
-    }
   }
 
   defines = [ "GIN_IMPLEMENTATION" ]
@@ -102,10 +98,7 @@ component("gin") {
     libs = [ "CoreFoundation.framework" ]
   }
 
-  configs += [
-    "//tools/v8_context_snapshot:use_v8_context_snapshot",
-    "//v8:external_startup_data",
-  ]
+  configs += [ "//v8:external_startup_data" ]
 }
 
 executable("gin_shell") {
@@ -122,10 +115,7 @@ executable("gin_shell") {
     "//v8",
   ]
 
-  configs += [
-    "//tools/v8_context_snapshot:use_v8_context_snapshot",
-    "//v8:external_startup_data",
-  ]
+  configs += [ "//v8:external_startup_data" ]
 }
 
 source_set("gin_test") {
@@ -152,14 +142,10 @@ source_set("gin_test") {
   ]
   deps = [
     "//base/test:test_support",
-    "//tools/v8_context_snapshot",
     "//v8",
   ]
 
-  configs += [
-    "//tools/v8_context_snapshot:use_v8_context_snapshot",
-    "//v8:external_startup_data",
-  ]
+  configs += [ "//v8:external_startup_data" ]
 }
 
 test("gin_unittests") {
