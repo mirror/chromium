@@ -1379,7 +1379,7 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, DelayedTCP) {
   base::ScopedMockTimeMessageLoopTaskRunner test_task_runner;
   auto failing_resolver = std::make_unique<MockHostResolver>();
   failing_resolver->set_ondemand_mode(true);
-  failing_resolver->rules()->AddSimulatedFailure("*google.com");
+  //failing_resolver->rules()->AddSimulatedFailure("*google.com");
   session_deps_.host_resolver = std::move(failing_resolver);
 
   HttpRequestInfo request_info;
@@ -1387,6 +1387,13 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, DelayedTCP) {
   request_info.url = GURL("https://www.google.com");
 
   Initialize(request_info);
+
+// handshake will fail asynchronously after mock data is unpaused.
+MockQuicData quic_data;
+quic_data.AddRead(ASYNC, ERR_IO_PENDING); // Pause
+quic_data.AddRead(ASYNC, ERR_FAILED);
+quic_data.AddWrite(ASYNC, ERR_FAILED);
+quic_data.AddSocketDataToFactory(session_deps_.socket_factory.get());
 
   // Enable delayed TCP and set time delay for waiting job.
   QuicStreamFactory* quic_stream_factory = session_->quic_stream_factory();
@@ -1400,6 +1407,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, DelayedTCP) {
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
+// So handshake will not immediately succeed
+crypto_client_stream_factory_.set_handshake_mode(
+    MockCryptoClientStream::ZERO_RTT);
+quic_stream_factory->set_require_confirmation(true);
+
   request_ =
       job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
                              HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
@@ -1407,30 +1419,54 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, DelayedTCP) {
   EXPECT_TRUE(job_controller_->alternative_job());
   EXPECT_TRUE(job_controller_->main_job()->is_waiting());
 
-  // The alternative job stalls as host resolution hangs when creating the QUIC
-  // request and controller should resume the main job after delay.
+// Host resolution is not complete; main job will not be resumed.
+ASSERT_FALSE(test_task_runner->HasPendingTask());
+
+// Allow host resolution to complete, mock_host_resolver will post a task to
+// resolve pending requests
+session_deps_.host_resolver->ResolveAllPending();
+ASSERT_EQ(1u, test_task_runner->GetPendingTaskCount());
+ // Run task posted by MockHostResolver that will complete host resolution
+test_task_runner->FastForwardBy(test_task_runner->NextPendingTaskDelay());
+
+// QuicStreamFactory::OnIOComplete() called, which calls Impl::Job::OnResultAfterQuicHostResolution(),
+// which sets should_notify_, but we never get to the Impl::Job::RunLoop() part
+// of code!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+// JobController::ResumeMainJob is posted (with delay)
+// due to OnConnectionInitialized() being called after successful host resolution.
+
+// Task to resume main job should be posted.
   EXPECT_TRUE(test_task_runner->HasPendingTask());
-  EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
+  EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());   // 2 here, WHY????????????
   EXPECT_CALL(*job_factory_.main_job(), Resume()).Times(1);
   test_task_runner->FastForwardBy(base::TimeDelta::FromMicroseconds(15));
   EXPECT_FALSE(test_task_runner->HasPendingTask());
 
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
+EXPECT_FALSE(job_controller_->main_job()->is_waiting());
+
+  quic_data.GetSequencedSocketData()->Resume();
+
+// DoInitConnectionComplete() will fail with QUIC_PROTOCOL_ERROR;
+// Job::OnStreamFailedCallback will be posted by Job::RunLoop().
 
   // |alternative_job| fails but should not report status to Request.
   EXPECT_CALL(request_delegate_, OnStreamFailed(_, _, _)).Times(0);
+
 
   EXPECT_FALSE(JobControllerPeer::main_job_is_blocked(job_controller_));
   // OnStreamFailed will post a task to resume the main job immediately but
   // won't call Resume() on the main job since it's been resumed already.
   EXPECT_CALL(*job_factory_.main_job(), Resume()).Times(0);
-  // Now unblock Resolver so that alternate job (and QuicStreamFactory::Job) can
+  /*// Now unblock Resolver so that alternate job (and QuicStreamFactory::Job) can
   // be cleaned up.
   session_deps_.host_resolver->ResolveAllPending();
   EXPECT_EQ(1u, test_task_runner->GetPendingTaskCount());
   test_task_runner->FastForwardUntilNoTasksRemain();
-  EXPECT_FALSE(job_controller_->alternative_job());
+  EXPECT_FALSE(job_controller_->alternative_job());*/
 }
 
 // Regression test for crbug.com/789560.

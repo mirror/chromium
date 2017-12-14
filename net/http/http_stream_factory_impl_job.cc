@@ -195,6 +195,8 @@ HttpStreamFactoryImpl::Job::Job(Delegate* delegate,
       using_spdy_(false),
       should_reconsider_proxy_(false),
       quic_request_(session_->quic_stream_factory()),
+      expect_quic_host_resolution_(false),
+      should_notify_delegate_of_result_after_quic_host_resolution_(false),
       using_existing_quic_session_(false),
       establishing_tunnel_(false),
       was_alpn_negotiated_(false),
@@ -570,6 +572,11 @@ void HttpStreamFactoryImpl::Job::RunLoop(int result) {
   TRACE_EVENT0(kNetTracingCategory, "HttpStreamFactoryImpl::Job::RunLoop");
   result = DoLoop(result);
 
+  if (should_notify_delegate_of_result_after_quic_host_resolution_) {
+    should_notify_delegate_of_result_after_quic_host_resolution_ = false;
+    delegate_->OnConnectionInitialized(this, result);
+  }
+
   if (result == ERR_IO_PENDING)
     return;
 
@@ -841,7 +848,8 @@ void HttpStreamFactoryImpl::Job::ResumeInitConnection() {
 int HttpStreamFactoryImpl::Job::DoInitConnection() {
   net_log_.BeginEvent(NetLogEventType::HTTP_STREAM_JOB_INIT_CONNECTION);
   int result = DoInitConnectionImpl();
-  if (result != ERR_SPDY_SESSION_ALREADY_EXISTS)
+  if (result != ERR_SPDY_SESSION_ALREADY_EXISTS &&
+      !expect_quic_host_resolution_)
     delegate_->OnConnectionInitialized(this, result);
 
   return result;
@@ -911,6 +919,7 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
                                    request_info_.privacy_mode, priority_,
                                    ssl_config->GetCertVerifyFlags(), url,
                                    net_log_, &net_error_details_, io_callback_);
+
     if (rv == OK) {
       using_existing_quic_session_ = true;
     } else {
@@ -921,6 +930,13 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
             quic_request_.GetTimeDelayForWaitingJob());
       }
     }
+
+    int result_after_quic_host_resolution;
+    expect_quic_host_resolution_ = quic_request_.GetResultAfterHostResolution(
+        &result_after_quic_host_resolution,
+        base::BindRepeating(&Job::OnResultAfterQuicHostResolution,
+                            base::Unretained(this)));
+
     return rv;
   }
 
@@ -994,6 +1010,16 @@ int HttpStreamFactoryImpl::Job::DoInitConnectionImpl() {
       quic_version_, server_ssl_config_, proxy_ssl_config_,
       request_info_.privacy_mode, net_log_, connection_.get(),
       resolution_callback, io_callback_);
+}
+
+void HttpStreamFactoryImpl::Job::OnResultAfterQuicHostResolution(int result) {
+  DCHECK(expect_quic_host_resolution_);
+  DCHECK(!should_notify_delegate_of_result_after_quic_host_resolution_);
+  expect_quic_host_resolution_ = false;
+  if (result == ERR_IO_PENDING)
+    delegate_->OnConnectionInitialized(this, result);
+  else
+    should_notify_delegate_of_result_after_quic_host_resolution_ = true;
 }
 
 int HttpStreamFactoryImpl::Job::DoInitConnectionComplete(int result) {
