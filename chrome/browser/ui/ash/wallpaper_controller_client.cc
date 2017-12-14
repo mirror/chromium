@@ -101,6 +101,8 @@ void WallpaperControllerClient::Init() {
       ->GetConnector()
       ->BindInterface(ash::mojom::kServiceName, &wallpaper_controller_);
   BindAndSetClient();
+  // TODO(xdai): Get current device policy enforced flag from
+  // WallpaperPolicyHandler::IsDeviceWallpaperPolicyEnforced() and set here.
 }
 
 void WallpaperControllerClient::InitForTesting(
@@ -216,6 +218,20 @@ void WallpaperControllerClient::OpenWallpaperPicker() {
   // TODO(crbug.com/776464): Inline the implementation after WallpaperManager
   // is removed.
   chromeos::WallpaperManager::Get()->OpenWallpaperPicker();
+}
+
+void WallpaperControllerClient::OnDeviceWallpaperChanged() {
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(true /*enforced=*/);
+}
+
+void WallpaperControllerClient::OnDeviceWallpaperPolicyCleared() {
+  wallpaper_controller_->SetDeviceWallpaperPolicyEnforced(false /*enforced=*/);
+}
+
+void WallpaperControllerClient::GetDeviceWallpaperFilePath(
+    ash::mojom::WallpaperController::GetDevicePolicyWallpaperFilePathCallback
+        callback) {
+  wallpaper_controller_->GetDevicePolicyWallpaperFilePath(std::move(callback));
 }
 
 void WallpaperControllerClient::FlushForTesting() {
