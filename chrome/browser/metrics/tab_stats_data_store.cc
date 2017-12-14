@@ -5,14 +5,25 @@
 #include "chrome/browser/metrics/tab_stats_data_store.h"
 
 #include <algorithm>
+#include <utility>
 
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
+#include "content/public/browser/web_contents.h"
 
 namespace metrics {
+
+namespace {
+
+TabStatsDataStore::WebContentsID GetNewWebContentsId() {
+  static TabStatsDataStore::WebContentsID web_contents_id = 0U;
+  return ++web_contents_id;
+}
+
+}  // namespace
 
 TabStatsDataStore::TabsStats::TabsStats()
     : total_tab_count(0U),
@@ -23,7 +34,7 @@ TabStatsDataStore::TabsStats::TabsStats()
 
 TabStatsDataStore::TabStatsDataStore(PrefService* pref_service)
     : pref_service_(pref_service) {
-  DCHECK(pref_service != nullptr);
+  DCHECK(pref_service);
   tab_stats_.total_tab_count_max =
       pref_service->GetInteger(prefs::kTabStatsTotalTabCountMax);
   tab_stats_.max_tab_per_window =
@@ -31,6 +42,8 @@ TabStatsDataStore::TabStatsDataStore(PrefService* pref_service)
   tab_stats_.window_count_max =
       pref_service->GetInteger(prefs::kTabStatsWindowCountMax);
 }
+
+TabStatsDataStore::~TabStatsDataStore() {}
 
 void TabStatsDataStore::OnWindowAdded() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -44,16 +57,50 @@ void TabStatsDataStore::OnWindowRemoved() {
   tab_stats_.window_count--;
 }
 
-void TabStatsDataStore::OnTabsAdded(size_t tab_count) {
+void TabStatsDataStore::OnTabAdded(content::WebContents* web_contents) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  tab_stats_.total_tab_count += tab_count;
+  DCHECK(web_contents);
+  DCHECK(!base::ContainsKey(existing_tabs_, web_contents));
+  ++tab_stats_.total_tab_count;
+  existing_tabs_.insert(std::make_pair(web_contents, GetNewWebContentsId()));
+  for (auto& interval_map : interval_maps_) {
+    AddTabToInterval(interval_map.get(), web_contents, false);
+  }
   UpdateTotalTabCountMaxIfNeeded();
 }
 
-void TabStatsDataStore::OnTabsRemoved(size_t tab_count) {
+void TabStatsDataStore::OnTabRemoved(content::WebContents* web_contents) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK_LE(tab_count, tab_stats_.total_tab_count);
-  tab_stats_.total_tab_count -= tab_count;
+  DCHECK(web_contents);
+  DCHECK(base::ContainsKey(existing_tabs_, web_contents));
+  DCHECK_GT(tab_stats_.total_tab_count, 0U);
+  --tab_stats_.total_tab_count;
+  WebContentsID web_contents_id = GetWebContentsID(web_contents);
+  existing_tabs_.erase(web_contents);
+  for (auto& interval_map : interval_maps_) {
+    auto iter = interval_map->find(web_contents_id);
+    DCHECK(iter != interval_map->end());
+    iter->second.exists_currently = false;
+  }
+}
+
+void TabStatsDataStore::OnTabReplaced(content::WebContents* old_contents,
+                                      content::WebContents* new_contents) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(old_contents);
+  DCHECK(new_contents);
+  DCHECK(base::ContainsKey(existing_tabs_, old_contents));
+  DCHECK_GT(tab_stats_.total_tab_count, 0U);
+  WebContentsID old_web_contents_id = existing_tabs_[old_contents];
+  existing_tabs_.erase(old_contents);
+  existing_tabs_.insert(std::make_pair(new_contents, GetNewWebContentsId()));
+  WebContentsID new_web_contents_id = existing_tabs_[new_contents];
+  for (auto& interval_map : interval_maps_) {
+    auto iter = interval_map->find(old_web_contents_id);
+    DCHECK(iter != interval_map->end());
+    interval_map->insert(std::make_pair(new_web_contents_id, iter->second));
+    interval_map->erase(iter);
+  }
 }
 
 void TabStatsDataStore::UpdateMaxTabsPerWindowIfNeeded(size_t value) {
@@ -83,6 +130,54 @@ void TabStatsDataStore::ResetMaximumsToCurrentState() {
   }
 }
 
+void TabStatsDataStore::OnTabAudible(content::WebContents* web_contents) {
+  DCHECK(base::ContainsKey(existing_tabs_, web_contents));
+  for (auto& interval_map : interval_maps_) {
+    auto iter = interval_map->find(GetWebContentsID(web_contents));
+    DCHECK(iter != interval_map->end());
+    iter->second.visible_or_audible_during_interval = true;
+  }
+}
+
+void TabStatsDataStore::OnTabInteraction(content::WebContents* web_contents) {
+  DCHECK(base::ContainsKey(existing_tabs_, web_contents));
+  // Mark the tab as interacted with in all the intervals.
+  for (auto& interval_map : interval_maps_) {
+    auto iter = interval_map->find(GetWebContentsID(web_contents));
+    DCHECK(iter != interval_map->end());
+    iter->second.interacted_during_interval = true;
+  }
+}
+
+void TabStatsDataStore::OnTabVisible(content::WebContents* web_contents) {
+  DCHECK(base::ContainsKey(existing_tabs_, web_contents));
+  // Mark the tab as visible in all the intervals.
+  for (auto& interval_map : interval_maps_) {
+    auto iter = interval_map->find(GetWebContentsID(web_contents));
+    DCHECK(iter != interval_map->end());
+    iter->second.visible_or_audible_during_interval = true;
+  }
+}
+
+TabStatsDataStore::TabsStateDuringIntervalMap*
+TabStatsDataStore::AddInterval() {
+  // Creates the interval and initialize its data.
+  std::unique_ptr<TabsStateDuringIntervalMap> interval_map =
+      std::make_unique<TabsStateDuringIntervalMap>();
+  ResetIntervalData(interval_map.get());
+  interval_maps_.emplace_back(std::move(interval_map));
+  return interval_maps_.back().get();
+}
+
+void TabStatsDataStore::ResetIntervalData(
+    TabsStateDuringIntervalMap* interval_map) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(interval_map);
+  interval_map->clear();
+  for (auto& iter : existing_tabs_)
+    AddTabToInterval(interval_map, iter.first, true);
+}
+
 void TabStatsDataStore::UpdateTotalTabCountMaxIfNeeded() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (tab_stats_.total_tab_count <= tab_stats_.total_tab_count_max)
@@ -99,6 +194,29 @@ void TabStatsDataStore::UpdateWindowCountMaxIfNeeded() {
   tab_stats_.window_count_max = tab_stats_.window_count;
   pref_service_->SetInteger(prefs::kTabStatsWindowCountMax,
                             tab_stats_.window_count_max);
+}
+
+void TabStatsDataStore::AddTabToInterval(
+    TabsStateDuringIntervalMap* interval_map,
+    content::WebContents* web_contents,
+    bool existed_before_interval) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(interval_map);
+  DCHECK(web_contents);
+  bool visible_or_audible =
+      web_contents->IsVisible() || web_contents->IsCurrentlyAudible();
+  (*interval_map)[GetWebContentsID(web_contents)] = {
+      existed_before_interval,
+      true,  // exists_currently
+      visible_or_audible,
+      false  // interacted_during_interval
+  };
+}
+
+TabStatsDataStore::WebContentsID TabStatsDataStore::GetWebContentsID(
+    content::WebContents* web_contents) {
+  DCHECK(base::ContainsKey(existing_tabs_, web_contents));
+  return existing_tabs_[web_contents];
 }
 
 }  // namespace metrics
