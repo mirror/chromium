@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26e31bf9_2a924919",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T15:24:25Z",
+      "side": 1,
+      "message": "I suggest you split the description into 3 paragraphs:\n\nBackground:\nImagine the focused element F scrolled out of its container C\u0027s viewable area.\nNow we intuitively expect spatnav to look for a focus candidate in C first.\n\nProblem:\nWhen the focused element is \"scrolled out\", spatnav starts its search for\nfocus candidates up at the document root.\n\nSolution:\n.... [tell me about the solution]",
+      "revId": "a7211c646ce7b65f31c681132541897f7fced5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda92123_a5c437d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T15:24:25Z",
+      "side": 1,
+      "message": "It sounds like the root cause is the same as crbug.com/770103? Would it be possible to fix both symptoms at once?",
+      "range": {
+        "startLine": 18,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 4
+      },
+      "revId": "a7211c646ce7b65f31c681132541897f7fced5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec94833c_a717da6e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-12-14T15:24:25Z",
+      "side": 1,
+      "message": "Here we leave starting_rect uninitialized. Why? Hmm, I see that AdvanceFocusDirectionallyInContainer has a case for empty starting_rect... So this fix makes AdvanceFocusDirectionallyInContainer use the currently focused element as its starting rectangle?",
+      "revId": "a7211c646ce7b65f31c681132541897f7fced5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
