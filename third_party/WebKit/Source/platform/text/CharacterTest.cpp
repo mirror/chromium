@@ -34,21 +34,30 @@ TEST(CharacterTest, HammerEmojiVsCJKIdeographOrSymbol) {
 
 static void TestSpecificUChar32RangeIdeograph(UChar32 range_start,
                                               UChar32 range_end,
-                                              bool before = true) {
-  if (before)
-    EXPECT_FALSE(Character::IsCJKIdeographOrSymbol(range_start - 1));
-  EXPECT_TRUE(Character::IsCJKIdeographOrSymbol(range_start));
-  EXPECT_TRUE(Character::IsCJKIdeographOrSymbol(
-      (UChar32)((uint64_t)range_start + (uint64_t)range_end) / 2));
-  EXPECT_TRUE(Character::IsCJKIdeographOrSymbol(range_end));
-  EXPECT_FALSE(Character::IsCJKIdeographOrSymbol(range_end + 1));
+                                              bool before = true,
+                                              bool after = true) {
+  if (before) {
+    EXPECT_FALSE(Character::IsCJKIdeographOrSymbol(range_start - 1))
+        << std::hex << (range_start - 1);
+  }
+  EXPECT_TRUE(Character::IsCJKIdeographOrSymbol(range_start))
+      << std::hex << range_start;
+  UChar32 mid = static_cast<UChar32>(
+      (static_cast<uint64_t>(range_start) + range_end) / 2);
+  EXPECT_TRUE(Character::IsCJKIdeographOrSymbol(mid)) << std::hex << mid;
+  EXPECT_TRUE(Character::IsCJKIdeographOrSymbol(range_end))
+      << std::hex << range_end;
+  if (after) {
+    EXPECT_FALSE(Character::IsCJKIdeographOrSymbol(range_end + 1))
+        << std::hex << (range_end + 1);
+  }
 }
 
 TEST(CharacterTest, TestIsCJKIdeograph) {
   // The basic CJK Unified Ideographs block.
-  TestSpecificUChar32RangeIdeograph(0x4E00, 0x9FFF);
+  TestSpecificUChar32RangeIdeograph(0x4E00, 0x9FFF, false);
   // CJK Unified Ideographs Extension A.
-  TestSpecificUChar32RangeIdeograph(0x3400, 0x4DBF, false);
+  TestSpecificUChar32RangeIdeograph(0x3400, 0x4DBF, false, false);
   // CJK Unified Ideographs Extension A and Kangxi Radicals.
   TestSpecificUChar32RangeIdeograph(0x2E80, 0x2FDF);
   // CJK Strokes.
@@ -56,12 +65,12 @@ TEST(CharacterTest, TestIsCJKIdeograph) {
   // CJK Compatibility Ideographs.
   TestSpecificUChar32RangeIdeograph(0xF900, 0xFAFF);
   // CJK Unified Ideographs Extension B.
-  TestSpecificUChar32RangeIdeograph(0x20000, 0x2A6DF);
+  TestSpecificUChar32RangeIdeograph(0x20000, 0x2A6DF, true, false);
   // CJK Unified Ideographs Extension C.
   // CJK Unified Ideographs Extension D.
-  TestSpecificUChar32RangeIdeograph(0x2A700, 0x2B81F);
+  TestSpecificUChar32RangeIdeograph(0x2A700, 0x2B81F, false, false);
   // CJK Compatibility Ideographs Supplement.
-  TestSpecificUChar32RangeIdeograph(0x2F800, 0x2FA1F);
+  TestSpecificUChar32RangeIdeograph(0x2F800, 0x2FA1F, false, false);
 }
 
 static void TestSpecificUChar32RangeIdeographSymbol(UChar32 range_start,
