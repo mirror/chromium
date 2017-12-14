@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4186737_c9adcf69",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2582,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-12-14T01:17:20Z",
+      "side": 1,
+      "message": "not sure if this default direction is correct though..",
+      "revId": "0fe7387b82bc8715d6e72c6074d946a6283dbb8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
