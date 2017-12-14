@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5246a5a4_bd90514c",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T19:54:31Z",
+      "side": 1,
+      "message": "nit: use |#if defined(OS_WIN)| like elsewhere, here and below",
+      "revId": "3710d073b56ba7ff55f4f0157b187f245ec685af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454eea7b_0aa3e4ef",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1360,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T19:54:31Z",
+      "side": 1,
+      "message": "nit: be consistent describing move/select (not select here)",
+      "revId": "3710d073b56ba7ff55f4f0157b187f245ec685af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852baace_7c37fc5b",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1399,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T19:54:31Z",
+      "side": 1,
+      "message": "nit: remove \u0027goes\u0027 here and below (line 1422)?",
+      "revId": "3710d073b56ba7ff55f4f0157b187f245ec685af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1693ed84_7a8b00da",
+        "filename": "ui/views/controls/textfield/textfield_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T19:54:31Z",
+      "side": 1,
+      "message": "ditto nit on preprocessor checks",
+      "revId": "3710d073b56ba7ff55f4f0157b187f245ec685af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a4aa75_224e6b6b",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T19:54:31Z",
+      "side": 1,
+      "message": "ditto nit on preprocessor checks",
+      "revId": "3710d073b56ba7ff55f4f0157b187f245ec685af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d014da0_2f26de0b",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-12-14T19:54:31Z",
+      "side": 1,
+      "message": "nit: be consistent in phrasing if possible (why denote trailing here but not elsewhere?), ditto below (and avoid abbreviation \u0027punct\u0027)",
+      "revId": "3710d073b56ba7ff55f4f0157b187f245ec685af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
