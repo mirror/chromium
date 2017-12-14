@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "666922a5_5cde0f6e",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-12-14T22:19:25Z",
+      "side": 0,
+      "message": "Hooray for fewer delegate methods!",
+      "revId": "2d97d1fddf424fc2a4d07a82ef500070da5aa255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
