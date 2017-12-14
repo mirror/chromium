@@ -161,7 +161,7 @@ static_library("browser") {
       "password_reuse_detector_consumer.h",
     ]
 
-    if (is_win || is_mac || (is_linux && !is_chromeos)) {
+    if (is_win || is_mac || is_linux || is_chromeos) {
       sources += [
         "hash_password_manager.cc",
         "hash_password_manager.h",
@@ -376,7 +376,7 @@ source_set("unit_tests") {
       "password_reuse_detector_unittest.cc",
     ]
   }
-  if (is_win || is_mac || (is_linux && !is_chromeos)) {
+  if (is_win || is_mac || is_linux || is_chromeos) {
     sources += [ "hash_password_manager_unittest.cc" ]
   }
   deps = [

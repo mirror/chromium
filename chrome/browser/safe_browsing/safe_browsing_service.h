@@ -31,9 +31,20 @@
 #include "chrome/browser/safe_browsing/incident_reporting/delayed_analysis_callback.h"
 #endif
 
+#if defined(OS_CHROMEOS)
+#include "components/password_manager/core/browser/hash_password_manager.h"
+#include "components/signin/core/account_id/account_id.h"
+#endif
+
 class PrefChangeRegistrar;
 class PrefService;
 class Profile;
+
+#if defined(OS_CHROMEOS)
+namespace chromeos {
+class UserContext;
+}
+#endif
 
 namespace content {
 class DownloadManager;
@@ -207,6 +218,13 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   // Sends serialized download report to backend.
   virtual void SendSerializedDownloadReport(const std::string& report);
 
+#if defined(OS_CHROMEOS)
+  void AddPendingGaiaPasswordData(const chromeos::UserContext& user_context);
+  void AddGaiaPasswordData(const AccountId& account_id);
+  void SaveGaiaPasswordHash(Profile* profile);
+  void RemovePendingGaiaPasswordData(const AccountId& account_id);
+#endif
+
  protected:
   // Creates the safe browsing service.  Need to initialize before using.
   SafeBrowsingService(V4FeatureList::V4UsageStatus v4_usage_status =
@@ -354,6 +372,15 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
       navigation_observer_manager_;
 
   std::unique_ptr<TriggerManager> trigger_manager_;
+
+#if defined(OS_CHROMEOS)
+  // Keeps track of AccountID to GAIA password hash and salt mapping for each
+  // user.
+  std::map<AccountId, password_manager::SyncPasswordData>
+      gaia_password_data_map_;
+  std::unique_ptr<std::pair<AccountId, password_manager::SyncPasswordData>>
+      pending_gaia_password_data_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingService);
 };

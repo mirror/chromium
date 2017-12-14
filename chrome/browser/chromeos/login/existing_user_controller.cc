@@ -50,6 +50,7 @@
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/system/device_disabling_manager.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/signin/easy_unlock_service.h"
 #include "chrome/browser/ui/aura/accessibility/automation_manager_aura.h"
 #include "chrome/browser/ui/webui/chromeos/login/l10n_util.h"
@@ -569,6 +570,13 @@ void ExistingUserController::PerformLogin(
 
   BootTimesRecorder::Get()->RecordLoginAttempted();
 
+  // Calculate hash for plain-text password and save it with safe browsing
+  // service.
+  safe_browsing::SafeBrowsingService* sb_service =
+      g_browser_process->safe_browsing_service();
+  if (sb_service)
+    sb_service->AddPendingGaiaPasswordData(user_context);
+
   // Use the same LoginPerformer for subsequent login as it has state
   // such as Authenticator instance.
   if (!login_performer_.get() || num_login_attempts_ <= 1) {
@@ -823,6 +831,13 @@ void ExistingUserController::OnAuthFailure(const AuthFailure& failure) {
 
   PerformLoginFinishedActions(false /* don't start auto login timer */);
 
+  // Since login failed, clear the pending password hash in safe browsing
+  // service.
+  safe_browsing::SafeBrowsingService* sb_service =
+      g_browser_process->safe_browsing_service();
+  if (sb_service)
+    sb_service->RemovePendingGaiaPasswordData(last_login_attempt_account_id_);
+
   if (ChromeUserManager::Get()
           ->GetUserFlow(last_login_attempt_account_id_)
           ->HandleLoginFailure(failure)) {
@@ -888,6 +903,13 @@ void ExistingUserController::OnAuthFailure(const AuthFailure& failure) {
 }
 
 void ExistingUserController::OnAuthSuccess(const UserContext& user_context) {
+  // On successful login, move pending password hash data to
+  // |SafeBrowsingService::gaia_password_data_map_|.
+  safe_browsing::SafeBrowsingService* sb_service =
+      g_browser_process->safe_browsing_service();
+  if (sb_service)
+    sb_service->AddGaiaPasswordData(user_context.GetAccountId());
+
   is_login_in_progress_ = false;
   login_display_->set_signin_completed(true);
 
@@ -972,6 +994,13 @@ void ExistingUserController::OnProfilePrepared(Profile* profile,
     auth_status_consumer_->OnAuthSuccess(
         UserContext(last_login_attempt_account_id_));
   }
+
+  // Now profile is ready, saves the corresponding entry in
+  // |SafeBrowsingService::gaia_password_data_map_| as profile preferences.
+  safe_browsing::SafeBrowsingService* sb_service =
+      g_browser_process->safe_browsing_service();
+  if (sb_service)
+    sb_service->SaveGaiaPasswordHash(profile);
 }
 
 void ExistingUserController::OnOffTheRecordAuthSuccess() {

@@ -91,6 +91,10 @@
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/login/auth/key.h"
+#include "chromeos/login/auth/user_context.h"
+#include "components/password_manager/core/browser/hash_password_manager.h"
+#include "components/password_manager/core/common/password_manager_pref_names.h"
 #endif
 
 #if !defined(SAFE_BROWSING_DB_LOCAL)
@@ -791,6 +795,23 @@ class SafeBrowsingServiceTest : public InProcessBrowserTest {
   const safe_browsing::HitReport& hit_report() {
     return ui_manager()->hit_report_;
   }
+
+#if defined(OS_CHROMEOS)
+  std::map<AccountId, password_manager::SyncPasswordData>
+  gaia_password_data_map() {
+    SafeBrowsingService* sb_service =
+        g_browser_process->safe_browsing_service();
+    return sb_service
+               ? sb_service->gaia_password_data_map_
+               : std::map<AccountId, password_manager::SyncPasswordData>();
+  }
+  std::pair<AccountId, password_manager::SyncPasswordData>*
+  pending_gaia_password_data() {
+    SafeBrowsingService* sb_service =
+        g_browser_process->safe_browsing_service();
+    return sb_service ? sb_service->pending_gaia_password_data_.get() : nullptr;
+  }
+#endif
 
  protected:
   StrictMock<MockObserver> observer_;
@@ -1640,6 +1661,37 @@ IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceTest, StartAndStop) {
   WaitForIOAndCheckEnabled(sb_service, false);
   EXPECT_FALSE(csd_service->enabled());
 }
+
+#if defined(OS_CHROMEOS)
+IN_PROC_BROWSER_TEST_F(SafeBrowsingServiceTest, AddAndRemoveGaiaPasswordData) {
+  SafeBrowsingService* sb_service = g_browser_process->safe_browsing_service();
+  EXPECT_TRUE(!pending_gaia_password_data());
+  EXPECT_EQ(0u, gaia_password_data_map().size());
+
+  chromeos::UserContext user_context;
+  user_manager::User* user =
+      chromeos::ProfileHelper::Get()->GetUserByProfile(browser()->profile());
+  EXPECT_TRUE(!!user);
+  AccountId account_id(user->GetAccountId());
+  user_context.SetKey(chromeos::Key("password"));
+  user_context.SetAccountId(account_id);
+
+  sb_service->AddPendingGaiaPasswordData(user_context);
+
+  EXPECT_TRUE(pending_gaia_password_data() &&
+              pending_gaia_password_data()->first == account_id);
+
+  sb_service->AddGaiaPasswordData(account_id);
+  EXPECT_TRUE(!pending_gaia_password_data());
+  EXPECT_EQ(1u, gaia_password_data_map().size());
+
+  sb_service->SaveGaiaPasswordHash(browser()->profile());
+  EXPECT_TRUE(browser()->profile()->GetPrefs()->HasPrefPath(
+      password_manager::prefs::kSyncPasswordHash));
+  EXPECT_TRUE(browser()->profile()->GetPrefs()->HasPrefPath(
+      password_manager::prefs::kSyncPasswordLengthAndHashSalt));
+}
+#endif
 
 // Parameterised fixture to permit running the same test for Window and Worker
 // scopes.
