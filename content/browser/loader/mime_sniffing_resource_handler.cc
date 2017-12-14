@@ -152,6 +152,7 @@ void MimeSniffingResourceHandler::OnResponseStarted(
     // MIME sniffing should be disabled for a request initiated by fetch().
     if (request_context_type_ != REQUEST_CONTEXT_TYPE_FETCH &&
         ShouldSniffContent(request(), response_.get())) {
+      // Don't sniff.
       controller->Resume();
       return;
     }

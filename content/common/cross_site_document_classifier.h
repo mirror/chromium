@@ -30,6 +30,12 @@ enum CrossSiteDocumentMimeType {
 
 class CONTENT_EXPORT CrossSiteDocumentClassifier {
  public:
+  enum class Result {
+    kNo,
+    kPossiblyWithMoreData,
+    kYes,
+  };
+
   // Returns the representative mime type enum value of the mime type of
   // response. For example, this returns the same value for all text/xml mime
   // type families such as application/xml, application/rss+xml.
@@ -56,9 +62,9 @@ class CONTENT_EXPORT CrossSiteDocumentClassifier {
                                    const GURL& website_origin,
                                    const std::string& access_control_origin);
 
-  static bool SniffForHTML(base::StringPiece data);
-  static bool SniffForXML(base::StringPiece data);
-  static bool SniffForJSON(base::StringPiece data);
+  static Result SniffForHTML(base::StringPiece data);
+  static Result SniffForXML(base::StringPiece data);
+  static Result SniffForJSON(base::StringPiece data);
 
  private:
   CrossSiteDocumentClassifier();  // Not instantiable.
