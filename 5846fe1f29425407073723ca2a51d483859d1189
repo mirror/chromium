@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "6372b4e6_fcffdbc2",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T19:11:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8a4adcc9_6ab6a638",
+      "range": {
+        "startLine": 41,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 37
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af2daa0d_c13cecde",
         "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
         "patchSetId": 2
@@ -159,6 +183,24 @@
       "revId": "5846fe1f29425407073723ca2a51d483859d1189",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0503361_ef4070da",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T19:11:57Z",
+      "side": 1,
+      "message": "It\u0027s called RescheduleIfNeeded. If it\u0027s not needed, no rescheduling. I can have two methods like in the attestation observer but that seems overkill. So I renamed to make it more obvious it handles errors.",
+      "parentUuid": "af2daa0d_c13cecde",
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "01a8107c_3682cd64",
+        "filename": "chromeos/attestation/attestation_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T19:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52255814_7abaa1be",
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8e5f4a9_bcb7f0f9",
         "filename": "chromeos/attestation/attestation_constants.h",
         "patchSetId": 2
@@ -239,6 +299,30 @@
       "revId": "5846fe1f29425407073723ca2a51d483859d1189",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc23659_e122457a",
+        "filename": "chromeos/attestation/attestation_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T19:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8e5f4a9_bcb7f0f9",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 9
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +349,30 @@
     },
     {
       "key": {
+        "uuid": "ddc43d08_23493291",
+        "filename": "chromeos/attestation/attestation_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T19:11:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c99efcbe_b659c829",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 9
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2f0c989_d72fcdf7",
         "filename": "chromeos/cryptohome/async_method_caller.cc",
         "patchSetId": 2
@@ -285,6 +393,30 @@
       "revId": "5846fe1f29425407073723ca2a51d483859d1189",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f306801_5043d941",
+        "filename": "chromeos/cryptohome/async_method_caller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-12-14T19:11:57Z",
+      "side": 1,
+      "message": "I run \"git cl format\" to format the CLs when I get a presubmit complaint, this seems accepted in Chromium. This also seems to fit the guidelines to try to align params, but if you can\u0027t (line too long) go to a 4 spaces indent.",
+      "parentUuid": "c2f0c989_d72fcdf7",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 6
+      },
+      "revId": "5846fe1f29425407073723ca2a51d483859d1189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
