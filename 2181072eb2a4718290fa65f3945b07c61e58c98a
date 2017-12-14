@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a829062c_3386dff0",
+        "filename": "third_party/WebKit/LayoutTests/css-parser/color3_hsl-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-12-14T14:20:02Z",
+      "side": 1,
+      "message": "We should also update the expected values for these tests.",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 4
+      },
+      "revId": "2181072eb2a4718290fa65f3945b07c61e58c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
