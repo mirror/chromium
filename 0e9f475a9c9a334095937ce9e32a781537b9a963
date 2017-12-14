@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6272bce_d40649db",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-14T06:23:19Z",
+      "side": 1,
+      "message": "I think we should take care of range headers, and we need to use ReadRange?",
+      "revId": "0e9f475a9c9a334095937ce9e32a781537b9a963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b7c62dc_46d3ceb5",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-12-14T06:23:19Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0e9f475a9c9a334095937ce9e32a781537b9a963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
