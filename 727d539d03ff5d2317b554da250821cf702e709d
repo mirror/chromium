@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc78633d_df2b2c4c",
+        "filename": "chrome/browser/ui/views/payments/credit_card_editor_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-12-14T22:50:27Z",
+      "side": 1,
+      "message": "I like that you removed the local here. Easier to reason about. I encourage you to do that on line 211 above.",
+      "range": {
+        "startLine": 249,
+        "startChar": 34,
+        "endLine": 249,
+        "endChar": 67
+      },
+      "revId": "727d539d03ff5d2317b554da250821cf702e709d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
