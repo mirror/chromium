@@ -317,11 +317,13 @@ TEST_F(WebStateImplTest, ObserverTest) {
   ASSERT_FALSE(observer->submit_document_info());
   const std::string kTestFormName("form-name");
   BOOL user_initiated = true;
-  web_state_->OnDocumentSubmitted(kTestFormName, user_initiated);
+  BOOL is_main_frame = false;
+  web_state_->OnDocumentSubmitted(kTestFormName, user_initiated, is_main_frame);
   ASSERT_TRUE(observer->submit_document_info());
   EXPECT_EQ(web_state_.get(), observer->submit_document_info()->web_state);
   EXPECT_EQ(kTestFormName, observer->submit_document_info()->form_name);
   EXPECT_EQ(user_initiated, observer->submit_document_info()->user_initiated);
+  EXPECT_EQ(is_main_frame, observer->submit_document_info()->is_main_frame);
 
   // Test that FormActivityRegistered() is called.
   ASSERT_FALSE(observer->form_activity_info());

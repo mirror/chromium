@@ -152,6 +152,7 @@
                                                  fieldType:@""
                                                       type:nil
                                                 typedValue:@" "
+                                               isMainFrame:@YES
                                                   webState:strongSelf->_webState
                                          completionHandler:retrieveHandler];
   };
