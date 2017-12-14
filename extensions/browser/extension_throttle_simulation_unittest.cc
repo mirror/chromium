@@ -24,9 +24,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/rand_util.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "base/time/time.h"
 #include "extensions/browser/extension_throttle_manager.h"
-#include "extensions/browser/extension_throttle_test_support.h"
 #include "net/base/request_priority.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
@@ -318,14 +318,14 @@ class MockExtensionThrottleEntry : public ExtensionThrottleEntry {
   TimeTicks ImplGetTimeNow() const override { return fake_clock_.NowTicks(); }
 
   void SetFakeNow(const TimeTicks& fake_time) {
-    fake_clock_.set_now(fake_time);
+    fake_clock_.SetNowTicks(fake_time);
   }
 
  protected:
   ~MockExtensionThrottleEntry() override {}
 
  private:
-  mutable TestTickClock fake_clock_;
+  mutable base::SimpleTestTickClock fake_clock_;
   BackoffEntry backoff_entry_;
 };
 

@@ -29,7 +29,7 @@ class SkewedTickClock : public base::TickClock {
   base::TimeTicks NowTicks() final;
 
  private:
-  base::TimeTicks SkewTicks(base::TimeTicks now);
+  base::TimeTicks SkewTicks(base::TimeTicks now) const;
   base::TickClock* clock_;  // Not owned.
   double skew_;
   base::TimeTicks last_skew_set_time_;

@@ -8,7 +8,7 @@
 
 namespace base {
 
-SimpleTestTickClock::SimpleTestTickClock() = default;
+SimpleTestTickClock::SimpleTestTickClock(TimeTicks ticks) : now_ticks_(ticks) {}
 
 SimpleTestTickClock::~SimpleTestTickClock() = default;
 

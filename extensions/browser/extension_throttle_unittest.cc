@@ -10,10 +10,10 @@
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "base/time/time.h"
 #include "extensions/browser/extension_throttle_entry.h"
 #include "extensions/browser/extension_throttle_manager.h"
-#include "extensions/browser/extension_throttle_test_support.h"
 #include "net/base/load_flags.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_completion_callback.h"
@@ -76,7 +76,7 @@ class MockExtensionThrottleEntry : public ExtensionThrottleEntry {
   }
 
   void ResetToBlank(const TimeTicks& time_now) {
-    fake_clock_.set_now(time_now);
+    fake_clock_.SetNowTicks(time_now);
 
     GetBackoffEntry()->Reset();
     set_sliding_window_release_time(time_now);
@@ -85,7 +85,7 @@ class MockExtensionThrottleEntry : public ExtensionThrottleEntry {
   // Overridden for tests.
   TimeTicks ImplGetTimeNow() const override { return fake_clock_.NowTicks(); }
 
-  void set_fake_now(const TimeTicks& now) { fake_clock_.set_now(now); }
+  void set_fake_now(const TimeTicks& now) { fake_clock_.SetNowTicks(now); }
 
   void set_exponential_backoff_release_time(const TimeTicks& release_time) {
     GetBackoffEntry()->SetCustomReleaseTime(release_time);
@@ -103,7 +103,7 @@ class MockExtensionThrottleEntry : public ExtensionThrottleEntry {
   ~MockExtensionThrottleEntry() override {}
 
  private:
-  mutable TestTickClock fake_clock_;
+  mutable base::SimpleTestTickClock fake_clock_;
   BackoffEntry backoff_entry_;
 };
 
