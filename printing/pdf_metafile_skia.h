@@ -62,6 +62,9 @@ class PRINTING_EXPORT PdfMetafileSkia : public Metafile {
 
   bool SaveTo(base::File* file) const override;
 
+  bool FinishFrameContent();
+  std::vector<uint32_t> GetSubframeContentIDs() const;
+
   // Return a new metafile containing just the current page in draft mode.
   std::unique_ptr<PdfMetafileSkia> GetMetafileForCurrentPage(
       SkiaDocumentType type);
