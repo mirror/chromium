@@ -42,6 +42,16 @@ media_perception::ComponentState GetComponentStateForComponentStatus(
   return component_state;
 }
 
+// Pulls out the version number from a mount_point location for the media
+// perception component. Mount points look like
+// /run/imageloader/rtanalytics-light/1.0, where 1.0 is the version string.
+std::unique_ptr<std::string> ExtractVersionFromMountPoint(
+    const std::string& mount_point) {
+  std::string version = mount_point;
+  return std::make_unique<std::string>(
+      version.substr(version.find_last_of("/") + 1));
+}
+
 }  // namespace
 
 // static
@@ -143,6 +153,7 @@ void MediaPerceptionAPIManager::LoadComponentCallback(
   // If the new component is loaded, override the mount point.
   mount_point_ = mount_point;
   component_state.status = media_perception::COMPONENT_STATUS_INSTALLED;
+  component_state.version = ExtractVersionFromMountPoint(mount_point_);
   std::move(callback).Run(std::move(component_state));
   return;
 }
