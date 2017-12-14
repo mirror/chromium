@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46fee5a9_149b05a5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 25330,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-12-14T15:50:18Z",
+      "side": 0,
+      "message": "Histograms should never get deleted from this file. Please use the obsolete tag. Random example:\n\n\u003chistogram name\u003d\"Accessibility.State\" enum\u003d\"BooleanEnabled\"\u003e\n  \u003cobsolete\u003e\n    Deprecated 12/2016 in Issue 672205 with the addition of\n    Accessibility.ModeFlag.\n  \u003c/obsolete\u003e\n  \u003cowner\u003edmazzoni@chromium.org\u003c/owner\u003e\n  \u003cowner\u003ekenjibaheux@google.com\u003c/owner\u003e\n  \u003csummary\u003e\n    Whether Chrome has enabled accessibility support because it detects\n    supported assistive technology running, or due to being manually enabled via\n    a command-line flag (checked once 45 secs after startup).\n  \u003c/summary\u003e\n\u003c/histogram\u003e",
+      "range": {
+        "startLine": 25324,
+        "startChar": 0,
+        "endLine": 25330,
+        "endChar": 12
+      },
+      "revId": "8da2ab335438e7a3525efb843eac628c4249dc26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
