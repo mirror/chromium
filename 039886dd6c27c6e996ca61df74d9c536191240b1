@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6069c0a2_50d8b725",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T17:42:35Z",
+      "side": 1,
+      "message": "Doing a layout before measuring makes a lot of sense, but I\u0027d prefer that the layout not happen within this measurement function (and thereby changing its const-ness).\n\nCan you please create a separate, non-const \"prepare-to-measure\" function in which elements can do layout like this in advance of the call to GetPreferredTextureSize?",
+      "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2605fc1c_b79d50d8",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T17:42:35Z",
+      "side": 1,
+      "message": "this comment seems superfluous now that the variable has units in its name.",
+      "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a464fd72_4451229e",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T17:42:35Z",
+      "side": 1,
+      "message": "can you please add a comment explaining the difference between this size and the element\u0027s size?",
+      "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb729bf_5b42d8c4",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T17:42:35Z",
+      "side": 1,
+      "message": "This conversion (by multiplying and dividing by kTextPixelPerDMM) is repeated in a number of places, which seems error prone. Could you please create two conversion routines with clear names and use these instead?",
+      "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92caff6_24172529",
+        "filename": "chrome/browser/vr/elements/text.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T17:42:35Z",
+      "side": 1,
+      "message": "nit: this feels a bit too generic. maybe text layout mode?",
+      "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
