@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54b87204_b7744d17",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-14T16:20:31Z",
+      "side": 1,
+      "message": "i is zero at this point, so maybe just Vadd(source1p, source_stride1, source2p, ...)?  And maybe just use 1 for the strides?",
+      "revId": "21268853f0015bbc2ed93a67114d0e17d1e06ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e7fecf_8bf63bec",
+        "filename": "third_party/WebKit/Source/platform/audio/cpu/x86/VectorMathX86.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-12-14T16:20:31Z",
+      "side": 1,
+      "message": "This check appears to be common.  Shouldn\u0027t it be part of SplitFramesToProcess?  Or is this intended to ensure that i is updated the correct amount after running the SSE code?",
+      "revId": "21268853f0015bbc2ed93a67114d0e17d1e06ba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
