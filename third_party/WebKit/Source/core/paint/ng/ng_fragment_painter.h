@@ -11,6 +11,7 @@
 namespace blink {
 
 class LayoutPoint;
+class NGPhysicalFragment;
 class NGPaintFragment;
 struct PaintInfo;
 
@@ -21,12 +22,32 @@ class NGFragmentPainter : public ObjectPainterBase {
 
  public:
   NGFragmentPainter(const NGPaintFragment& paint_fragment)
-      : paint_fragment_(paint_fragment) {}
+      : fragment_(paint_fragment) {}
+
+  void PaintAllPhasesAtomically(const PaintInfo&, const LayoutPoint&);
+  void Paint(const PaintInfo&, const LayoutPoint&);
 
   void PaintOutline(const PaintInfo&, const LayoutPoint& paint_offset);
 
+  void PaintInlineChildren(const PaintInfo&,
+                           const LayoutPoint& paint_offset) const;
+  void PaintInlineChildrenOutlines(const PaintInfo&,
+                                   const LayoutPoint& paint_offset) const;
+  void PaintInlineChild(const NGPaintFragment&,
+                        const PaintInfo&,
+                        const LayoutPoint& paint_offset) const;
+  void PaintInlineChildBoxUsingLegacyFallback(
+      const NGPhysicalFragment&,
+      const PaintInfo&,
+      const LayoutPoint& paint_offset) const;
+  void PaintTextChild(const NGPaintFragment&,
+                      const PaintInfo&,
+                      const LayoutPoint& paint_offset) const;
+
+  static bool RequiresLegacyFallback(const NGPhysicalFragment&);
+
  private:
-  const NGPaintFragment& paint_fragment_;
+  const NGPaintFragment& fragment_;
 };
 
 }  // namespace blink

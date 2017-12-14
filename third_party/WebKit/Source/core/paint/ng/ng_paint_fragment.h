@@ -61,7 +61,8 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
   LayoutRect VisualRect() const override { return visual_rect_; }
   LayoutRect VisualOverflowRect() const;
   LayoutRect OverflowClipRect(const LayoutPoint& location,
-                              OverlayScrollbarClipBehavior) const {
+                              OverlayScrollbarClipBehavior =
+                                  kIgnorePlatformOverlayScrollbarSize) const {
     return {location, VisualRect().Size()};
   }
 

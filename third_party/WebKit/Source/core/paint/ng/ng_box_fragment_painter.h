@@ -72,23 +72,20 @@ class NGBoxFragmentPainter : public BoxPainterBase {
   void PaintBoxDecorationBackgroundWithRect(const PaintInfo&,
                                             const LayoutPoint&,
                                             const LayoutRect&);
-  void PaintAllPhasesAtomically(const PaintInfo&, const LayoutPoint&);
   void PaintChildren(const Vector<std::unique_ptr<NGPaintFragment>>&,
                      const PaintInfo&,
                      const LayoutPoint&);
   void PaintInlineChildren(const Vector<std::unique_ptr<NGPaintFragment>>&,
                            const PaintInfo&,
                            const LayoutPoint&);
-  void PaintInlineChildBoxUsingLegacyFallback(const NGPhysicalFragment&,
-                                              const PaintInfo&,
-                                              const LayoutPoint&);
-  void PaintText(const NGPaintFragment&,
-                 const PaintInfo&,
-                 const LayoutPoint& paint_offset);
-  void PaintObject(const PaintInfo&, const LayoutPoint&);
+  void PaintBlock(const PaintInfo&, const LayoutPoint& paint_offset);
   void PaintInlineObject(const PaintInfo&, const LayoutPoint&);
+  void PaintBlockFlowContents(const PaintInfo&, const LayoutPoint&);
   void PaintContents(const PaintInfo&, const LayoutPoint&);
   void PaintFloats(const PaintInfo&, const LayoutPoint&);
+  void PaintFloatingChildren(const Vector<std::unique_ptr<NGPaintFragment>>&,
+                             const PaintInfo&,
+                             const LayoutPoint&);
   void PaintMask(const PaintInfo&, const LayoutPoint&);
   void PaintClippingMask(const PaintInfo&, const LayoutPoint&);
   void PaintOverflowControlsIfNeeded(const PaintInfo&, const LayoutPoint&);
@@ -100,6 +97,7 @@ class NGBoxFragmentPainter : public BoxPainterBase {
                        const LayoutRect&,
                        const Color& background_color,
                        BackgroundBleedAvoidance = kBackgroundBleedNone);
+  void PaintScrollHitTestDisplayItem(const PaintInfo&);
 
   bool VisibleToHitTestRequest(const HitTestRequest&) const;
   bool HitTestChildren(HitTestResult&,

@@ -25,7 +25,7 @@ class NGTextFragmentPainter {
  public:
   explicit NGTextFragmentPainter(const NGPaintFragment&);
 
-  void Paint(const Document&, const PaintInfo&, const LayoutPoint&);
+  void Paint(const PaintInfo&, const LayoutPoint&);
 
  private:
   const NGPaintFragment& fragment_;
