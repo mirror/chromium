@@ -58,8 +58,12 @@ struct NGInlineBoxState {
   // is set.
   LayoutUnit line_left_position;
   LayoutUnit line_right_position;
-  LayoutUnit borders_paddings_block_start;
-  LayoutUnit borders_paddings_block_end;
+  LayoutUnit margin_line_left;
+  LayoutUnit margin_line_right;
+  LayoutUnit margin_border_padding_line_left;
+  LayoutUnit margin_border_padding_line_right;
+  LayoutUnit border_padding_block_start;
+  LayoutUnit border_padding_block_end;
   NGBorderEdges border_edges;
 
   Vector<NGPendingPositions> pending_descendants;
@@ -83,8 +87,7 @@ struct NGInlineBoxState {
   // Create a box fragment for this box.
   void SetNeedsBoxFragment(bool when_empty);
   void SetLineRightForBoxFragment(const NGInlineItem&,
-                                  const NGInlineItemResult&,
-                                  LayoutUnit position);
+                                  const NGInlineItemResult&);
 
   // Returns if the text style can be added without open-tag.
   // Text with different font or vertical-align needs to be wrapped with an
@@ -108,8 +111,7 @@ class CORE_EXPORT NGInlineLayoutStateStack {
   // Push a box state stack.
   NGInlineBoxState* OnOpenTag(const NGInlineItem&,
                               const NGInlineItemResult&,
-                              const NGLineBoxFragmentBuilder::ChildList&,
-                              LayoutUnit position);
+                              const NGLineBoxFragmentBuilder::ChildList&);
   NGInlineBoxState* OnOpenTag(const ComputedStyle&,
                               const NGLineBoxFragmentBuilder::ChildList&);
 
@@ -119,11 +121,18 @@ class CORE_EXPORT NGInlineLayoutStateStack {
                                FontBaseline);
 
   // Compute all the pending positioning at the end of a line.
-  void OnEndPlaceItems(NGLineBoxFragmentBuilder::ChildList*,
-                       FontBaseline,
-                       LayoutUnit position);
+  void OnEndPlaceItems(NGLineBoxFragmentBuilder::ChildList*, FontBaseline);
 
   LayoutObject* ContainingLayoutObjectForAbsolutePositionObjects() const;
+
+  bool HasBoxFragments() const { return !box_data_list_.IsEmpty(); }
+  void CreateBoxFragments(NGLineBoxFragmentBuilder::ChildList*);
+  void PrepareForReorder(NGLineBoxFragmentBuilder::ChildList*);
+  void UpdateAfterReorder(NGLineBoxFragmentBuilder::ChildList*);
+  LayoutUnit PositionItems(NGLineBoxFragmentBuilder::ChildList*);
+  void CreateBoxFragmentsAfterReorder(NGLineBoxFragmentBuilder::ChildList*,
+                                      unsigned start = 0,
+                                      unsigned max_box_data_index = 0);
 
  private:
   // End of a box state, either explicitly by close tag, or implicitly at the
@@ -135,7 +144,6 @@ class CORE_EXPORT NGInlineLayoutStateStack {
   void AddBoxFragmentPlaceholder(NGInlineBoxState*,
                                  NGLineBoxFragmentBuilder::ChildList*,
                                  FontBaseline);
-  void CreateBoxFragments(NGLineBoxFragmentBuilder::ChildList*);
 
   enum PositionPending { kPositionNotPending, kPositionPending };
 
@@ -151,16 +159,28 @@ class CORE_EXPORT NGInlineLayoutStateStack {
 
   // Data for a box fragment placeholder. See AddBoxFragmentPlaceholder().
   // This is a transient object only while building a line box.
-  struct BoxFragmentPlaceholder {
+  struct BoxData {
     unsigned fragment_start;
     unsigned fragment_end;
     const NGInlineItem* item;
     NGLogicalSize size;
     NGBorderEdges border_edges;
+    LayoutUnit margin_line_left;
+    LayoutUnit margin_line_right;
+    LayoutUnit margin_border_padding_line_left;
+    LayoutUnit margin_border_padding_line_right;
+    NGLogicalOffset offset;
+    unsigned box_data_index = 0;
   };
 
+  scoped_refptr<NGLayoutResult> CreateBoxFragment(
+      const BoxData&,
+      NGLineBoxFragmentBuilder::ChildList*,
+      unsigned start,
+      unsigned end) const;
+
   Vector<NGInlineBoxState, 4> stack_;
-  Vector<BoxFragmentPlaceholder, 4> box_placeholders_;
+  Vector<BoxData, 4> box_data_list_;
 };
 
 }  // namespace blink
