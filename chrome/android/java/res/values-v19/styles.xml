@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+
+<resources>
+    <!-- ListMenuButton -->
+    <style name="ListMenuItemStyle">
+      <item name="android:paddingStart">?android:attr/listPreferredItemPaddingStart</item>
+      <item name="android:paddingEnd">?android:attr/listPreferredItemPaddingEnd</item>
+    </style>
+</resources>
