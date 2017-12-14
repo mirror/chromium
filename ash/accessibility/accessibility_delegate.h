@@ -21,13 +21,6 @@ class ASH_EXPORT AccessibilityDelegate {
  public:
   virtual ~AccessibilityDelegate() {}
 
-  // Invoked to toggle spoken feedback for accessibility
-  virtual void ToggleSpokenFeedback(
-      AccessibilityNotificationVisibility notify) = 0;
-
-  // Returns true if spoken feedback is enabled.
-  virtual bool IsSpokenFeedbackEnabled() const = 0;
-
   // Invoked to enable the screen magnifier.
   virtual void SetMagnifierEnabled(bool enabled) = 0;
 
@@ -118,10 +111,6 @@ class ASH_EXPORT AccessibilityDelegate {
 
   // Play tick sound indicating spoken feedback will be toggled after countdown.
   virtual void PlaySpokenFeedbackToggleCountdown(int tick_count) = 0;
-
-  // Forward an accessibility gesture from the touch exploration controller to
-  // ChromeVox.
-  virtual void HandleAccessibilityGesture(ui::AXGesture gesture) = 0;
 
   // NOTE: Prefer adding methods to AccessibilityController, see class comment.
 };

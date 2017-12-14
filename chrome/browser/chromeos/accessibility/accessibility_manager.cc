@@ -243,7 +243,6 @@ AccessibilityManager::AccessibilityManager()
       switch_access_pref_handler_(
           ash::prefs::kAccessibilitySwitchAccessEnabled),
       sticky_keys_enabled_(false),
-      spoken_feedback_enabled_(false),
       autoclick_enabled_(false),
       autoclick_delay_ms_(ash::AutoclickController::GetDefaultAutoclickDelay()),
       virtual_keyboard_enabled_(false),
@@ -447,7 +446,7 @@ void AccessibilityManager::EnableSpokenFeedback(
   spoken_feedback_notification_ = ash::A11Y_NOTIFICATION_NONE;
 }
 
-void AccessibilityManager::UpdateSpokenFeedbackFromPref() {
+void AccessibilityManager::OnSpokenFeedbackChanged() {
   if (!profile_)
     return;
 
@@ -459,11 +458,6 @@ void AccessibilityManager::UpdateSpokenFeedbackFromPref() {
         profile_, base::Bind(&AccessibilityManager::PostSwitchChromeVoxProfile,
                              weak_ptr_factory_.GetWeakPtr()));
   }
-
-  if (spoken_feedback_enabled_ == enabled)
-    return;
-
-  spoken_feedback_enabled_ = enabled;
 
   AccessibilityStatusEventDetails details(ACCESSIBILITY_TOGGLE_SPOKEN_FEEDBACK,
                                           enabled,
@@ -485,12 +479,8 @@ void AccessibilityManager::UpdateSpokenFeedbackFromPref() {
 }
 
 bool AccessibilityManager::IsSpokenFeedbackEnabled() const {
-  return spoken_feedback_enabled_;
-}
-
-void AccessibilityManager::ToggleSpokenFeedback(
-    ash::AccessibilityNotificationVisibility notify) {
-  EnableSpokenFeedback(!IsSpokenFeedbackEnabled(), notify);
+  return profile_ && profile_->GetPrefs()->GetBoolean(
+                         ash::prefs::kAccessibilitySpokenFeedbackEnabled);
 }
 
 void AccessibilityManager::EnableHighContrast(bool enabled) {
@@ -613,13 +603,14 @@ bool AccessibilityManager::PlaySpokenFeedbackToggleCountdown(int tick_count) {
                      : SOUND_SPOKEN_FEEDBACK_TOGGLE_COUNTDOWN_LOW);
 }
 
-void AccessibilityManager::HandleAccessibilityGesture(ui::AXGesture gesture) {
+void AccessibilityManager::HandleAccessibilityGesture(
+    const std::string& gesture) {
   extensions::EventRouter* event_router =
       extensions::EventRouter::Get(profile());
   CHECK(event_router);
 
   std::unique_ptr<base::ListValue> event_args(new base::ListValue());
-  event_args->AppendString(ui::ToString(gesture));
+  event_args->AppendString(gesture);
   std::unique_ptr<extensions::Event> event(new extensions::Event(
       extensions::events::ACCESSIBILITY_PRIVATE_ON_ACCESSIBILITY_GESTURE,
       extensions::api::accessibility_private::OnAccessibilityGesture::
@@ -1062,7 +1053,7 @@ void AccessibilityManager::UpdateBrailleImeState() {
                 extension_ime_util::kBrailleImeEngineId);
   bool is_enabled = (it != preload_engines.end());
   bool should_be_enabled =
-      (spoken_feedback_enabled_ && braille_display_connected_);
+      (IsSpokenFeedbackEnabled() && braille_display_connected_);
   if (is_enabled == should_be_enabled)
     return;
   if (should_be_enabled)
@@ -1139,7 +1130,7 @@ void AccessibilityManager::SetProfile(Profile* profile) {
                    base::Unretained(this)));
     pref_change_registrar_->Add(
         ash::prefs::kAccessibilitySpokenFeedbackEnabled,
-        base::Bind(&AccessibilityManager::UpdateSpokenFeedbackFromPref,
+        base::Bind(&AccessibilityManager::OnSpokenFeedbackChanged,
                    base::Unretained(this)));
     pref_change_registrar_->Add(
         ash::prefs::kAccessibilityHighContrastEnabled,
@@ -1227,7 +1218,6 @@ void AccessibilityManager::SetProfile(Profile* profile) {
     UpdateBrailleImeState();
   UpdateAlwaysShowMenuFromPref();
   UpdateStickyKeysFromPref();
-  UpdateSpokenFeedbackFromPref();
   UpdateAutoclickFromPref();
   UpdateAutoclickDelayFromPref();
   UpdateVirtualKeyboardFromPref();
@@ -1237,6 +1227,9 @@ void AccessibilityManager::SetProfile(Profile* profile) {
   UpdateTapDraggingFromPref();
   UpdateSelectToSpeakFromPref();
   UpdateSwitchAccessFromPref();
+
+  // TODO(warx): reconcile once the prefs registration above is moved to ash.
+  OnSpokenFeedbackChanged();
 
   // Update the panel height in the shelf layout manager when the profile
   // changes, since the shelf layout manager doesn't exist in the login profile.
@@ -1292,7 +1285,8 @@ void AccessibilityManager::NotifyAccessibilityStatusChanged(
   if (details.notification_type != ACCESSIBILITY_MANAGER_SHUTDOWN &&
       details.notification_type != ACCESSIBILITY_TOGGLE_HIGH_CONTRAST_MODE &&
       details.notification_type != ACCESSIBILITY_TOGGLE_LARGE_CURSOR &&
-      details.notification_type != ACCESSIBILITY_TOGGLE_MONO_AUDIO) {
+      details.notification_type != ACCESSIBILITY_TOGGLE_MONO_AUDIO &&
+      details.notification_type != ACCESSIBILITY_TOGGLE_SPOKEN_FEEDBACK) {
     ash::Shell::Get()->system_tray_notifier()->NotifyAccessibilityStatusChanged(
         details.notify);
   }
@@ -1394,7 +1388,13 @@ void AccessibilityManager::OnBrailleDisplayStateChanged(
     const DisplayState& display_state) {
   braille_display_connected_ = display_state.available;
   if (braille_display_connected_) {
-    EnableSpokenFeedback(true, ash::A11Y_NOTIFICATION_SHOW);
+    // TODO(crbug.com/594887): Fix for mash by moving notifying accessibility
+    // status change to ash for BrailleDisplayStateChanged.
+    if (GetAshConfig() == ash::Config::MASH)
+      return;
+
+    ash::Shell::Get()->accessibility_controller()->SetSpokenFeedbackEnabled(
+        true, ash::A11Y_NOTIFICATION_SHOW);
   }
   UpdateBrailleImeState();
 
