@@ -16,6 +16,24 @@
       "revId": "bac259c1acfd784f17e7befffbdcb17562ab67e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f171002_021d5134",
+        "filename": "testing/buildbot/chromium.gpu.fyi.json",
+        "patchSetId": 20
+      },
+      "lineNbr": 10777,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-12-14T22:33:47Z",
+      "side": 1,
+      "message": "Alright, I\u0027ll see about removing the test from the bot testspec in this CL and actually enabling the test whenever capacity becomes available.",
+      "parentUuid": "1d6d473a_de0a139a",
+      "revId": "bac259c1acfd784f17e7befffbdcb17562ab67e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
