@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14d6a2b6_ad8b3924",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-14T21:49:46Z",
+      "side": 1,
+      "message": "Added a OnMeasureSize method and a DCHECK before calling this method. Not sure if this is what you suggest.\nAlso I think I could override this method in all derived class of TexturedElement and probably remove the maximum_width parameter. But it is not very trivial to do so and probably better to do it in a follow up CL.",
+      "parentUuid": "6069c0a2_50d8b725",
+      "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2605fc1c_b79d50d8",
         "filename": "chrome/browser/vr/elements/text.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bb3f34a4_c0df160e",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-14T21:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2605fc1c_b79d50d8",
+      "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a464fd72_4451229e",
         "filename": "chrome/browser/vr/elements/text.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-12-14T17:42:35Z",
       "side": 1,
       "message": "can you please add a comment explaining the difference between this size and the element\u0027s size?",
+      "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b1dc23_134c92e5",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-14T21:49:46Z",
+      "side": 1,
+      "message": "Sorry. This change (from text_width_ to text_size_) is no longer needed as we only use text_size_.width() anyway in this CL. I thought I need to have the text_height_ information but we could get it from font_height_dmms_. So this is no longer needed. Removed the change.",
+      "parentUuid": "a464fd72_4451229e",
       "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e52069c6_384b34aa",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-14T21:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deb729bf_5b42d8c4",
+      "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a92caff6_24172529",
         "filename": "chrome/browser/vr/elements/text.h",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82644e54_ed625a38",
+        "filename": "chrome/browser/vr/elements/text.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-12-14T21:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a92caff6_24172529",
+      "revId": "039886dd6c27c6e996ca61df74d9c536191240b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
