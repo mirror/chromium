@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "722a85e7_d3d1b9a3",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T05:00:34Z",
+      "side": 1,
+      "message": "please break these new classes out into other files.",
+      "revId": "94dccd494f1979e208f049a0523708a0f4b6e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6144014f_1b6705ed",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T05:00:34Z",
+      "side": 1,
+      "message": "Although this class was already here, I\u0027d prefer it in its own file as well.",
+      "revId": "94dccd494f1979e208f049a0523708a0f4b6e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ea5149_1f0ea698",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-12-14T05:00:34Z",
+      "side": 1,
+      "message": "please name the constants.",
+      "revId": "94dccd494f1979e208f049a0523708a0f4b6e803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
