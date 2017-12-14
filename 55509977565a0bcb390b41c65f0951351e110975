@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdfe6cc2_fa302930",
+        "filename": "content/renderer/history_serialization.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T12:58:25Z",
+      "side": 1,
+      "message": "Nit: these parens aren\u0027t necessary, since the dot operator has higher precedence than the unary * operator.\n\nDitto elsewhere, the reason I mention is this is it\u0027s actually usual to see it in this case: usually it\u0027s something like (*ptr2ptr)-\u003eF() instead.",
+      "range": {
+        "startLine": 114,
+        "startChar": 38,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "55509977565a0bcb390b41c65f0951351e110975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac12ef82_c8504707",
+        "filename": "third_party/WebKit/Source/modules/fetch/FormDataBytesConsumer.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T12:58:25Z",
+      "side": 1,
+      "message": "Nit: usually, when ownership isn\u0027t transferred, it\u0027s preferred to pass by const scoped_refptr\u003cT\u003e\u0026 or even T*.\n\n(It\u0027s also not 100% clear why this comment only applies to the data pipe consumer and not any of the other ones?)",
+      "range": {
+        "startLine": 130,
+        "startChar": 31,
+        "endLine": 130,
+        "endChar": 71
+      },
+      "revId": "55509977565a0bcb390b41c65f0951351e110975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abaa719c_78720892",
+        "filename": "third_party/WebKit/public/platform/WebHTTPBody.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-12-14T12:58:25Z",
+      "side": 1,
+      "message": "FWIW, it feels like this should be a union at some point.",
+      "revId": "55509977565a0bcb390b41c65f0951351e110975",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
