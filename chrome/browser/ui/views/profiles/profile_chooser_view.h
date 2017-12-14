@@ -17,6 +17,7 @@
 #include "chrome/browser/sync/sync_ui_util.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/profile_chooser_constants.h"
+#include "chrome/browser/ui/views/close_bubble_on_tab_activation_helper.h"
 #include "components/signin/core/browser/signin_header_helper.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "google_apis/gaia/oauth2_token_service.h"
@@ -178,6 +179,19 @@ class ProfileChooserView : public content::WebContentsDelegate,
   std::unique_ptr<AvatarMenu> avatar_menu_;
   Browser* const browser_;
 
+  // Active view mode.
+  profiles::BubbleViewMode view_mode_;
+
+  // The GAIA service type provided in the response header.
+  signin::GAIAServiceType gaia_service_type_;
+
+  // The current access point of sign in.
+  const signin_metrics::AccessPoint access_point_;
+
+  CloseBubbleOnTabActivationHelper close_bubble_helper_;
+
+  const int menu_width_;
+
   // Other profiles used in the "fast profile switcher" view.
   ButtonIndexes open_other_profile_indexes_map_;
 
@@ -215,17 +229,6 @@ class ProfileChooserView : public content::WebContentsDelegate,
 
   // Records the account id to remove.
   std::string account_id_to_remove_;
-
-  // Active view mode.
-  profiles::BubbleViewMode view_mode_;
-
-  // The GAIA service type provided in the response header.
-  signin::GAIAServiceType gaia_service_type_;
-
-  // The current access point of sign in.
-  const signin_metrics::AccessPoint access_point_;
-
-  const int menu_width_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileChooserView);
 };
