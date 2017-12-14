@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3b5e2c7_a3417d92",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-14T16:17:01Z",
+      "side": 1,
+      "message": "nit: None of these are scroll offset animations - let\u0027s separate with a newline and possibly add a comment.",
+      "revId": "eabd5407695600f403302c2c9eff0b30bff64558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5304f62a_9bed05f3",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-14T16:17:01Z",
+      "side": 1,
+      "message": "I\u0027m unclear on the value of current_frame_had_raf, if it did, then previous frame would have had a pending raf right?",
+      "range": {
+        "startLine": 930,
+        "startChar": 44,
+        "endLine": 930,
+        "endChar": 65
+      },
+      "revId": "eabd5407695600f403302c2c9eff0b30bff64558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10152f77_fbdf0060",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-14T16:17:01Z",
+      "side": 1,
+      "message": "Out of curiosity, can this cause us to report long main thread animations - or are we guaranteed a main frame with 0 animations after an animation ends?",
+      "revId": "eabd5407695600f403302c2c9eff0b30bff64558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76255cc6_aa21f74b",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-12-14T16:17:01Z",
+      "side": 1,
+      "message": "Dosen\u0027t this also need the next frame has pending raf so we can test pure raf animations?",
+      "revId": "eabd5407695600f403302c2c9eff0b30bff64558",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
