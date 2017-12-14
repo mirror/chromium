@@ -129,7 +129,6 @@ void ContextualSearchRankerLoggerImpl::LogLong(
   std::string feature = base::android::ConvertJavaStringToUTF8(env, j_feature);
   if (builder_)
     builder_->AddMetric(feature.c_str(), j_long);
-
   // Also write to Ranker if we're logging data needed to predict a decision.
   if (IsRankerQueryEnabled() && !has_predicted_decision_) {
     std::string hex_feature_key(HexHashFeatureName(feature));
