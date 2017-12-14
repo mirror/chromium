@@ -67,10 +67,17 @@ class EditorDropdownField implements EditorFieldView {
         final List<CharSequence> dropdownValues = getDropdownValues(dropdownKeyValues);
         ArrayAdapter<CharSequence> adapter;
         if (mFieldModel.getHint() != null) {
-            // Use the AddressDropDownAdapter and pass it a hint to be displayed as default.
-            adapter = new AddressDropDownAdapter<CharSequence>(context,
-                    R.layout.multiline_spinner_item, R.id.spinner_item, dropdownValues,
-                    mFieldModel.getHint().toString());
+            // Pass the hint to be displayed as default. If there is a '+' icon needed, use the
+            // appropriate class to display it.
+            if (mFieldModel.isPlusIconIncluded()) {
+                adapter = new HintedDropDownAdapterWithPlusIcon<CharSequence>(context,
+                        R.layout.multiline_spinner_item, R.id.spinner_item, dropdownValues,
+                        mFieldModel.getHint().toString());
+            } else {
+                adapter = new HintedDropDownAdapter<CharSequence>(context,
+                        R.layout.multiline_spinner_item, R.id.spinner_item, dropdownValues,
+                        mFieldModel.getHint().toString());
+            }
             // Wrap the TextView in the dropdown popup around with a FrameLayout to display the text
             // in multiple lines.
             // Note that the TextView in the dropdown popup is displayed in a DropDownListView for
@@ -78,11 +85,11 @@ class EditorDropdownField implements EditorFieldView {
             // in a single line.
             adapter.setDropDownViewResource(R.layout.payment_request_dropdown_item);
 
-            // If no value is selected, select the hint entry which is the last item in the adapter.
-            // Using getCount will not result in an out of bounds index because the hint value is
-            // ommited in the count.
+            // If no value is selected, select the hint entry which is the first item in the
+            // adapter. Using getCount will not result in an out of bounds index because the hint
+            // value is ommited in the count.
             if (mFieldModel.getValue() == null || mFieldModel.getValue().length() == 0) {
-                mSelectedIndex = adapter.getCount();
+                mSelectedIndex = 0;
             }
         } else {
             adapter = new DropdownFieldAdapter<CharSequence>(
